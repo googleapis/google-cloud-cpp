@@ -475,14 +475,14 @@ TEST(ObjectRequestsTest, UploadChunkContentRangeKnownSize) {
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadUnknownSize) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, "", 0U);
-  EXPECT_EQ("Content-Range: bytes 1024-1024/*", request.RangeHeader());
+  UploadChunkRequest request(url, 1024, std::string{}, 0U);
+  EXPECT_EQ("Content-Range: bytes */*", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadKnownSize) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2047, "", 2048U);
-  EXPECT_EQ("Content-Range: bytes 2047-2047/2048", request.RangeHeader());
+  UploadChunkRequest request(url, 2047, std::string{}, 2048U);
+  EXPECT_EQ("Content-Range: bytes */2048", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, QueryResumableUpload) {

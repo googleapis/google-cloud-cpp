@@ -514,15 +514,16 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r) {
 
 std::string UploadChunkRequest::RangeHeader() const {
   std::ostringstream os;
-  os << "Content-Range: bytes " << range_begin() << "-";
+  os << "Content-Range: bytes ";
   if (payload().empty()) {
     // This typically happens when the sender realizes too late that the
     // previous chunk was really the last chunk (e.g. the file is exactly a
-    // multiple of the quantum, reading the last chunk does not detect the EOF),
-    // the formatting of the range is special in this case.
-    os << range_begin();
+    // multiple of the quantum, reading the last chunk from a file, or sending
+    // it as part of a stream that does not detect the EOF), the formatting of
+    // the range is special in this case.
+    os << "*";
   } else {
-    os << range_begin() + payload().size() - 1;
+    os << range_begin() << "-" << range_begin() + payload().size() - 1;
   }
   if (source_size() == 0) {
     os << "/*";

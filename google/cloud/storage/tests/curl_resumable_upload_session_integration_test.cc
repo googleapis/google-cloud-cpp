@@ -147,6 +147,50 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(client_options);
+  auto client = CurlClient::Create(*client_options);
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  ResumableUploadRequest request(bucket_name, object_name);
+  request.set_multiple_options(IfGenerationMatch(0));
+
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
+      client->CreateResumableSession(request);
+
+  ASSERT_STATUS_OK(session);
+
+  std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
+  // Send 2 chunks sized to be round quantums.
+  StatusOr<ResumableUploadResponse> response =
+      (*session)->UploadChunk(contents, 0);
+  ASSERT_STATUS_OK(response.status());
+  response = (*session)->UploadChunk(contents, 0);
+  ASSERT_STATUS_OK(response.status());
+
+  // Consider a streaming upload where the application flushes before closing
+  // the stream *and* the flush sends all the data remaining in the stream.
+  // This can happen naturally when the upload is a round multiple of the
+  // upload quantum. In this case the stream is terminated by sending an empty
+  // chunk at the end, with the size of the previous chunks as an indication
+  // of "done".
+  response = (*session)->UploadChunk(std::string{}, 2 * contents.size());
+  ASSERT_STATUS_OK(response.status());
+
+  EXPECT_FALSE(response->payload.empty());
+  auto metadata =
+      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_EQ(object_name, metadata.name());
+  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(2 * contents.size(), metadata.size());
+
+  auto status =
+      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  ASSERT_STATUS_OK(status);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
