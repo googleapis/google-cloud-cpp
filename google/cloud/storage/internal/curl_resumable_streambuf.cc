@@ -69,13 +69,13 @@ std::streamsize CurlResumableStreambuf::xsputn(char const* s,
   if (!IsOpen()) {
     return traits_type::eof();
   }
+  current_ios_buffer_.append(s, static_cast<std::size_t>(count));
+  pbump(static_cast<int>(count));
+
   auto status = Flush(false);
   if (!status.ok()) {
     return traits_type::eof();
   }
-
-  current_ios_buffer_.append(s, static_cast<std::size_t>(count));
-  pbump(static_cast<int>(count));
   return count;
 }
 
@@ -90,10 +90,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   }
   // Shorten the buffer to the actual used size.
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
-  if (actual_size == 0) {
-    return last_response_;
-  }
-  if (actual_size <= max_buffer_size_ && !final_chunk) {
+  if (actual_size < max_buffer_size_ && !final_chunk) {
     return last_response_;
   }
 
@@ -104,8 +101,11 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
     upload_size =
         upload_session_->next_expected_byte() + current_ios_buffer_.size();
   } else {
-    trailing = current_ios_buffer_.substr(max_buffer_size_);
-    current_ios_buffer_.resize(max_buffer_size_);
+    auto chunk_count =
+        current_ios_buffer_.size() / UploadChunkRequest::kChunkSizeQuantum;
+    auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
+    trailing = current_ios_buffer_.substr(chunk_size);
+    current_ios_buffer_.resize(chunk_size);
   }
   hash_validator_->Update(current_ios_buffer_);
 
