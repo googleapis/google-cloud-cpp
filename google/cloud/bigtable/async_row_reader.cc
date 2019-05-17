@@ -64,18 +64,25 @@ std::shared_ptr<AsyncRowReader> AsyncRowReader::Create(
 
 future<AsyncRowReader::Response> AsyncRowReader::Next() {
   std::unique_lock<std::mutex> lk(mu_);
+  // If some rows are already waiting to be read, return the first one.
   if (!ready_rows_.empty()) {
     auto res = make_ready_future<Response>(
         optional<Row>(std::move(ready_rows_.front())));
     ready_rows_.pop();
     return res;
   }
+  // If this reader has already reached the end of stream or got a permanent
+  // error or there will be no more retries, return the status to the user
+  // immediately.
   if (whole_op_finished_) {
     if (whole_op_finished_->ok()) {
+      // Successful end of stream
       return make_ready_future<Response>(optional<Row>());
     }
-    return make_ready_future<Response>(*whole_op_finished_);
+    return make_ready_future<Response>(*whole_op_finished_);  // Error
   }
+  // We need to wait for more rows to come, so let's make a promise and return a
+  // future.
   promised_results_.emplace(promise<Response>());
   auto res = promised_results_.back().get_future();
   if (continue_reading_) {
@@ -119,7 +126,7 @@ void AsyncRowReader::MakeRequest() {
                grpc::CompletionQueue* cq) {
         return client->PrepareAsyncReadRows(context, request, cq);
       },
-      request, std::move(context),
+      std::move(request), std::move(context),
       [self](google::bigtable::v2::ReadRowsResponse r) {
         return self->OnDataReceived(std::move(r));
       },
@@ -130,15 +137,24 @@ future<bool> AsyncRowReader::OnDataReceived(
     google::bigtable::v2::ReadRowsResponse response) {
   std::unique_lock<std::mutex> lk(mu_);
   stream_res_override_ = ConsumeResponse(std::move(response));
-  // We've processed the response. Even if stream_res_override_ is not OK, we
-  // might have consumed some rows, so we might be able to satisfy some promises
-  // made to the user.
+  // We've processed the response.
   //
-  // It is crucial to make sure that we do it _before_ we send a new request not
-  // to accidentally reorder incoming results.
+  // If there were errors (e.g. malformed response from the server), we should
+  // interrupt this stream. Interrupting it will yield lower layers calling
+  // `OnStreamFinished` with a status unrelated to the real reason, so we store
+  // the actual reason in stream_res_override_ and proceed exactly the same way
+  // as if the stream was broken for other reasons.
   //
-  // In order to achieve it, we defer storing a continue_reading_ promise to the
-  // end of this function.
+  // Even if stream_res_override_ is not OK, we might have consumed some rows,
+  // so we might be able to satisfy some promises made to the user.
+  //
+  // It is crucial to make sure that we satisfy promises _before_ we send a new
+  // request not to accidentally reorder incoming results. In order to achieve
+  // it, we defer storing a continue_reading_ promise to the end of this
+  // function. Otherwise, someone might call `Next` and make lower layers fetch
+  // more data before we satisfy the promises based on this response. Holding
+  // the lock for the entire duration of this function would have helped but we
+  // shouldn't doing it when satisfying promises.
   std::vector<std::pair<promise<Response>, Row>> to_satisfy;
   while (!promised_results_.empty() && !ready_rows_.empty()) {
     to_satisfy.emplace_back(std::make_pair(std::move(promised_results_.front()),
@@ -155,11 +171,16 @@ future<bool> AsyncRowReader::OnDataReceived(
   lk.lock();
 
   if (!stream_res_override_.ok()) {
+    // If there was an error parsing the data, interrupt the stream.
     return make_ready_future<bool>(false);
   }
   if (!promised_results_.empty()) {
+    // If there are some rows after we've satisfied what we could, we should
+    // request for more data immediately.
     return make_ready_future<bool>(true);
   }
+  // No one is waiting for the data, so let's wait with asking for more until
+  // there is actually demand for it.
   continue_reading_.emplace(promise<bool>());
   return continue_reading_->get_future();
 }
@@ -198,13 +219,13 @@ void AsyncRowReader::OnStreamFinished(Status status) {
 
   if (status.ok()) {
     // We've successfuly finished the scan.
-    OperationComplete(Status(), lk);  // unlocks the lock
+    FinishScan(Status(), lk);  // unlocks the lock
     return;
   }
 
   if (!rpc_retry_policy_->OnFailure(status)) {
     // Can't retry.
-    OperationComplete(status, lk);  // unlocks the lock
+    FinishScan(status, lk);  // unlocks the lock
     return;
   }
   auto self = shared_from_this();
@@ -214,7 +235,7 @@ void AsyncRowReader::OnStreamFinished(Status status) {
       });
 }
 
-void AsyncRowReader::OperationComplete(Status status,
+void AsyncRowReader::FinishScan(Status status,
                                        std::unique_lock<std::mutex>& lk) {
   whole_op_finished_ = status;
   std::queue<promise<Response>> promised_results;
@@ -224,13 +245,13 @@ void AsyncRowReader::OperationComplete(Status status,
     auto& promise = promised_results.front();
     if (status.ok()) {
       promise.set_value(optional<Row>());
-      return;
+      continue;
     }
     promise.set_value(status);
   }
 }
 
-Status AsyncRowReader::ConsumeFromParser() {
+Status AsyncRowReader::DrainParser() {
   grpc::Status status;
   while (parser_->HasNext()) {
     Row parsed_row = parser_->Next(status);
@@ -252,7 +273,7 @@ Status AsyncRowReader::ConsumeResponse(
     if (!status.ok()) {
       return internal::MakeStatusFromRpcError(status);
     }
-    Status parser_status = ConsumeFromParser();
+    Status parser_status = DrainParser();
     if (!parser_status.ok()) {
       return parser_status;
     }

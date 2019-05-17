@@ -40,6 +40,10 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Objects of this class represent the state of reading rows via AsyncReadRows.
+ *
+ * @warning This is an early version of the asynchronous APIs for Cloud
+ *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+ *     is not subject to any SLA or deprecation policy.
  */
 class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
  public:
@@ -50,16 +54,6 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
 
   ~AsyncRowReader();
 
-  static std::shared_ptr<AsyncRowReader> Create(
-      CompletionQueue cq, std::shared_ptr<DataClient> client,
-      bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
-      RowSet row_set, std::int64_t rows_limit, Filter filter,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
-      MetadataUpdatePolicy metadata_update_policy,
-      std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
-
-  using Response = StatusOr<optional<Row>>;
   /**
    * Asynchronously obtain next row from a requested range.
    *
@@ -74,24 +68,44 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
    *     - in such a case and empty optional is returned, or (c) an unretriable
    *     error occurs or retry policy is exhausted.
    */
-  future<Response> Next();
+  future<StatusOr<optional<Row>>> Next();
 
  private:
+  using Response = StatusOr<optional<Row>>;
+  static std::shared_ptr<AsyncRowReader> Create(
+      CompletionQueue cq, std::shared_ptr<DataClient> client,
+      bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
+      RowSet row_set, std::int64_t rows_limit, Filter filter,
+      std::unique_ptr<RPCRetryPolicy> retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+      MetadataUpdatePolicy metadata_update_policy,
+      std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
+
   AsyncRowReader(
       CompletionQueue cq, std::shared_ptr<DataClient> client,
       bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
       RowSet row_set, std::int64_t rows_limit, Filter filter,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
+      std::unique_ptr<RPCRetryPolicy> retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   void MakeRequest();
+  /// Called when lower layers provide us with a response chunk.
   future<bool> OnDataReceived(google::bigtable::v2::ReadRowsResponse response);
+  /// Called when the whole stream finishes.
   void OnStreamFinished(Status status);
-  void OperationComplete(Status status, std::unique_lock<std::mutex>& lk);
-  Status ConsumeFromParser();
+  /**
+   * Enter a terminal state of the whole scan. No more attempts to read more
+   * data will be made.
+   */
+  void FinishScan(Status status, std::unique_lock<std::mutex>& lk);
+  /// Process everything that is accumulated in the parser.
+  Status DrainParser();
+  /// Parse the data from the response.
   Status ConsumeResponse(google::bigtable::v2::ReadRowsResponse response);
+
+  friend class Table;
 
   std::mutex mu_;
   CompletionQueue cq_;
@@ -114,11 +128,29 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   std::queue<Row> ready_rows_;
   /// The promises of rows which we have made, but couldn't satisfy yet.
   std::queue<promise<Response>> promised_results_;
-  /// The promise to the underlying stream to either continue reading or cancel.
+  /**
+   * The promise to the underlying stream to either continue reading or cancel.
+   *
+   * If the optional is empty, it means that either the whole scan is finished
+   * or the underlying layers are already trying to fetch more data.
+   *
+   * If the optional is not empty, the lower layers are waiting for this to be
+   * satisfied before they start fetching more data.
+   */
   optional<promise<bool>> continue_reading_;
   /// The final status of the operation.
   optional<Status> whole_op_finished_;
-  /// On end of stream, consider this error rather than what gRPC returns.
+  /**
+   * Override for overall stream status.
+   *
+   * If an error occurs while parsing the incoming chunks, we should stop and
+   * potentially retry. However, if we instruct the lower layers to prematurely
+   * finish the stream, the stream status will not reflect what the reason for
+   * finishing it was. In order to workaround it, we store the actual reason in
+   * this member. If it is not OK, the logic deciding whether to retry, should
+   * consider this status, rather than what the lower layers return as the
+   * stream status.
+   */
   Status stream_res_override_;
 };
 

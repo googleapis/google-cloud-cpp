@@ -193,7 +193,9 @@ commit_row: true
   ASSERT_EQ("r1", (*row)->row_key());
 
   row_future = reader->Next();
+  auto row_future2 = reader->Next();
   EXPECT_EQ(std::future_status::timeout, row_future.wait_for(1_ms));
+  EXPECT_EQ(std::future_status::timeout, row_future2.wait_for(1_ms));
 
   ASSERT_EQ(1U, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
@@ -203,6 +205,10 @@ commit_row: true
   row = row_future.get();
   ASSERT_STATUS_OK(row);
   ASSERT_FALSE(row->has_value());
+
+  auto row2 = row_future2.get();
+  ASSERT_STATUS_OK(row2);
+  ASSERT_FALSE(row2->has_value());
 }
 
 TEST_F(TableAsyncReadRowsTest, MultipleFuturesSatisfiedAtOnce) {
@@ -695,6 +701,7 @@ commit_row: true
   // Check that we started finishing the stream.
   ASSERT_EQ(1U, cq_impl_->size());
   row_future = reader->Next();
+  auto row_future2 = reader->Next();
   EXPECT_EQ(std::future_status::timeout, row_future.wait_for(1_ms));
 
   ASSERT_EQ(1U, cq_impl_->size());
@@ -705,6 +712,9 @@ commit_row: true
   row = row_future.get();
   ASSERT_FALSE(row);
   ASSERT_EQ(StatusCode::kInternal, row.status().code());
+  auto row2 = row_future2.get();
+  ASSERT_FALSE(row2);
+  ASSERT_EQ(StatusCode::kInternal, row2.status().code());
 
   // All following calls will keep returning EOF.
   row = reader->Next().get();

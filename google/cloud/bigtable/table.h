@@ -450,12 +450,14 @@ class Table {
   /**
    * Asynchronously reads a set of rows from the table.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    * @param row_set the rows to read from.
-   * @param rows_limit the maximum number of rows to read. Must be larger than
-   *     zero. Use `ReadRows(RowSet, Filter)` to read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
    *
    * @par Example
@@ -466,6 +468,10 @@ class Table {
 
   /**
    * Asynchronously reads a set of rows from the table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
    *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
