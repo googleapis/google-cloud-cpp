@@ -29,6 +29,9 @@ CurlResumableStreambuf::CurlResumableStreambuf(
       hash_validator_(std::move(hash_validator)),
       last_response_{400} {
   current_ios_buffer_.reserve(max_buffer_size_);
+  auto pbeg = &current_ios_buffer_[0];
+  auto pend = pbeg + current_ios_buffer_.size();
+  setp(pbeg, pend);
 }
 
 bool CurlResumableStreambuf::IsOpen() const {
@@ -45,15 +48,19 @@ CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
   if (!IsOpen()) {
     return traits_type::eof();
   }
+  if (traits_type::eq_int_type(ch, traits_type::eof())) {
+    // For ch == EOF this function must do nothing and return any value != EOF.
+    return 0;
+  }
+  // If the buffer is full flush it immediately.
   auto status = Flush(false);
   if (!status.ok()) {
     return traits_type::eof();
   }
-  if (!traits_type::eq_int_type(ch, traits_type::eof())) {
-    current_ios_buffer_.push_back(traits_type::to_char_type(ch));
-    pbump(1);
-  }
-  return 0;
+  // Push the character into the current buffer.
+  current_ios_buffer_.push_back(traits_type::to_char_type(ch));
+  pbump(1);
+  return ch;
 }
 
 int CurlResumableStreambuf::sync() {
@@ -69,8 +76,12 @@ std::streamsize CurlResumableStreambuf::xsputn(char const* s,
   if (!IsOpen()) {
     return traits_type::eof();
   }
+  current_ios_buffer_.assign(pbase(), pptr());
   current_ios_buffer_.append(s, static_cast<std::size_t>(count));
-  pbump(static_cast<int>(count));
+  auto pbeg = &current_ios_buffer_[0];
+  auto pend = pbeg + current_ios_buffer_.size();
+  setp(pbeg, pend);
+  pbump(static_cast<int>(current_ios_buffer_.size()));
 
   auto status = Flush(false);
   if (!status.ok()) {
@@ -99,13 +110,13 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   if (final_chunk) {
     current_ios_buffer_.resize(actual_size);
     upload_size =
-        upload_session_->next_expected_byte() + current_ios_buffer_.size();
+        upload_session_->next_expected_byte() + actual_size;
   } else {
     auto chunk_count =
-        current_ios_buffer_.size() / UploadChunkRequest::kChunkSizeQuantum;
+        actual_size / UploadChunkRequest::kChunkSizeQuantum;
     auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
-    trailing = current_ios_buffer_.substr(chunk_size);
-    current_ios_buffer_.resize(chunk_size);
+    trailing.assign(pbase() + chunk_size, pbase() + actual_size);
+    current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
   }
   hash_validator_->Update(current_ios_buffer_);
 
@@ -116,8 +127,10 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   }
   current_ios_buffer_.clear();
   current_ios_buffer_.reserve(max_buffer_size_);
-  setp(&current_ios_buffer_[0], &current_ios_buffer_[0] + max_buffer_size_);
   current_ios_buffer_.append(trailing);
+  auto pbeg = &current_ios_buffer_[0];
+  auto pend = pbeg + current_ios_buffer_.size();
+  setp(pbeg, pend);
   pbump(static_cast<int>(trailing.size()));
 
   if (final_chunk) {

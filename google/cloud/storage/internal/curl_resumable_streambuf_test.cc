@@ -184,6 +184,46 @@ TEST(CurlResumableStreambufTest, FlushAfterFullQuantum) {
   EXPECT_STATUS_OK(response);
 }
 
+/// @test Verify that a stream flushes when adding one character at a time.
+TEST(CurlResumableStreambufTest, OverflowFlushAtFullQuantum) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload(quantum, '*');
+
+  int count = 0;
+  EXPECT_CALL(*mock, UploadChunk(_, _))
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+        ++count;
+        EXPECT_EQ(1, count);
+        auto expected = payload;
+        EXPECT_EQ(expected, p);
+        EXPECT_EQ(0, s);
+        return make_status_or(ResumableUploadResponse{"", quantum - 1});
+      }))
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+        ++count;
+        EXPECT_EQ(2, count);
+        EXPECT_TRUE(p.empty());
+        EXPECT_EQ(payload.size(), s);
+        auto last_committed_byte = payload.size() - 1;
+        return make_status_or(
+            ResumableUploadResponse{"{}", last_committed_byte});
+      }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
+
+  CurlResumableStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+
+  for (auto const& c : payload) {
+    streambuf.sputc(c);
+  }
+  auto response = streambuf.Close();
+  EXPECT_STATUS_OK(response);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
