@@ -109,11 +109,9 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
   std::size_t upload_size = 0U;
   if (final_chunk) {
     current_ios_buffer_.resize(actual_size);
-    upload_size =
-        upload_session_->next_expected_byte() + actual_size;
+    upload_size = upload_session_->next_expected_byte() + actual_size;
   } else {
-    auto chunk_count =
-        actual_size / UploadChunkRequest::kChunkSizeQuantum;
+    auto chunk_count = actual_size / UploadChunkRequest::kChunkSizeQuantum;
     auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
     trailing.assign(pbase() + chunk_size, pbase() + actual_size);
     current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
