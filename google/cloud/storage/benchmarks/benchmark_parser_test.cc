@@ -40,6 +40,7 @@ TEST(StorageBenchmarksUtilsTest, ParseDuration) {
   EXPECT_EQ(s(42).count(), ParseDuration("42").count());
   EXPECT_EQ(s(m(42)).count(), ParseDuration("42m").count());
   EXPECT_EQ(s(h(3)).count(), ParseDuration("3h").count());
+  EXPECT_EQ(s(1800).count(), ParseDuration("1800s").count());
 }
 
 }  // namespace

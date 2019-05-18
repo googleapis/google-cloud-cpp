@@ -112,6 +112,9 @@ std::chrono::seconds ParseDuration(std::string const& val) {
   if (EndsWith(val, "m")) {
     return s * std::chrono::seconds(std::chrono::minutes(1));
   }
+  if (EndsWith(val, "s")) {
+    return s * std::chrono::seconds(std::chrono::seconds(1));
+  }
   return std::chrono::seconds(s);
 }
 

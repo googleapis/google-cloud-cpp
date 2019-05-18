@@ -53,7 +53,8 @@ constexpr std::int64_t kTB = 1000 * kGB;
 /// Parse a string as a byte size, with support for unit suffixes.
 std::int64_t ParseSize(std::string const& val);
 
-/// Parse a string as a duration in seconds, with support for a unit suffixes.
+/// Parse a string as a duration with support for hours (h), minutes (m), or
+/// second (s) suffixes.
 std::chrono::seconds ParseDuration(std::string const& val);
 
 }  // namespace storage_benchmarks

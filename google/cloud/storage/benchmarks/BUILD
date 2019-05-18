@@ -32,10 +32,7 @@ cc_library(
     ],
 )
 
-load(
-    ":storage_benchmark_programs.bzl",
-    "storage_benchmark_programs",
-)
+load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 
 [cc_binary(
     name = test.replace("/", "_").replace(".cc", ""),
