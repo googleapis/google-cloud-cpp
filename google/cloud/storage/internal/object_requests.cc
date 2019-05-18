@@ -233,8 +233,13 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
-  os << ", contents=\n"
-     << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
+  if (r.contents().size() > 1024) {
+    os << ", contents[0..1024]=\n"
+       << BinaryDataAsDebugString(r.contents().data(), 1024);
+  } else {
+    os << ", contents=\n"
+       << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
+  }
   return os << "}";
 }
 
@@ -287,6 +292,17 @@ std::string ReadObjectRangeRequest::RangeHeader() const {
     }
   }
   return "";
+}
+
+std::int64_t ReadObjectRangeRequest::StartingByte() const {
+  std::int64_t result = 0;
+  if (HasOption<ReadRange>()) {
+    result = (std::max)(result, GetOption<ReadRange>().value().begin);
+  }
+  if (HasOption<ReadFromOffset>()) {
+    result = (std::max)(result, GetOption<ReadFromOffset>().value());
+  }
+  return result;
 }
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {

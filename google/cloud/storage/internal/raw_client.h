@@ -23,9 +23,11 @@
 #include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/default_object_acl_requests.h"
 #include "google/cloud/storage/internal/empty_response.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/internal/notification_requests.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
@@ -79,7 +81,7 @@ class RawClient {
   virtual StatusOr<ObjectMetadata> CopyObject(CopyObjectRequest const&) = 0;
   virtual StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) = 0;
-  virtual StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObject(
+  virtual StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) = 0;
   virtual StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) = 0;

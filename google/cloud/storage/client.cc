@@ -48,15 +48,21 @@ StatusOr<Client> Client::CreateDefaultClient() {
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
-  auto streambuf = raw_client_->ReadObject(request);
-  if (!streambuf) {
-    ObjectReadStream error_stream(
-        google::cloud::internal::make_unique<
-            internal::ObjectReadErrorStreambuf>(std::move(streambuf).status()));
+  using google::cloud::internal::make_unique;
+
+  auto source = raw_client_->ReadObject(request);
+  if (!source) {
+    GCP_LOG(INFO) << "Error in  ReadObject() = " << source.status();
+    ObjectReadStream error_stream(make_unique<internal::ObjectReadStreambuf>(
+        request, std::move(source).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
-  return ObjectReadStream(*std::move(streambuf));
+  GCP_LOG(INFO) << "Non error ReadObject()";
+  auto stream = ObjectReadStream(
+      make_unique<internal::ObjectReadStreambuf>(request, *std::move(source)));
+  (void)stream.peek();
+  return stream;
 }
 
 ObjectWriteStream Client::WriteObjectImpl(
@@ -182,13 +188,6 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                                 std::string const& file_name) {
-  auto streambuf = raw_client_->ReadObject(request);
-  if (!streambuf) {
-    return streambuf.status();
-  }
-  // Open the download stream and immediately raise an exception on failure.
-  ObjectReadStream stream(*std::move(streambuf));
-
   auto report_error = [&request, file_name](char const* func, char const* what,
                                             Status const& status) {
     std::ostringstream msg;
@@ -196,6 +195,8 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
         << " - status.message=" << status.message();
     return Status(status.code(), std::move(msg).str());
   };
+
+  auto stream = ReadObjectImpl(request);
   if (!stream.status().ok()) {
     return report_error(__func__, "cannot open download source object",
                         stream.status());

@@ -63,7 +63,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
                       std::move(received_headers_)};
 }
 
-StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
+StatusOr<HttpResponse> CurlDownloadRequest::Read(std::string& buffer) {
   handle_.FlushDebug(__func__);
   auto status = Wait([this] {
     return curl_closed_ || buffer_.size() >= initial_buffer_size_;

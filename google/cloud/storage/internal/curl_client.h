@@ -93,7 +93,7 @@ class CurlClient : public RawClient,
       InsertObjectMediaRequest const& request) override;
   StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
-  StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObject(
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
   StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) override;
@@ -197,7 +197,7 @@ class CurlClient : public RawClient,
 
   StatusOr<ObjectMetadata> InsertObjectMediaXml(
       InsertObjectMediaRequest const& request);
-  StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObjectXml(
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectXml(
       ReadObjectRangeRequest const& request);
 
   /// Insert an object using uploadType=multipart.

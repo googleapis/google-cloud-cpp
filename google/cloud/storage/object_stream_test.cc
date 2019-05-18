@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/storage/internal/raw_client.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,10 +23,18 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+ObjectReadStream CreateReader() {
+  using google::cloud::internal::make_unique;
+  std::shared_ptr<internal::RawClient> client;
+  internal::ReadObjectRangeRequest request("test-bucket", "test-object");
+
+  auto buf = make_unique<internal::ObjectReadStreambuf>(
+      request, Status(StatusCode::kNotFound, "test-message"));
+  return ObjectReadStream(std::move(buf));
+}
+
 TEST(ObjectStream, ReadMoveConstructor) {
-  ObjectReadStream reader(
-      google::cloud::internal::make_unique<internal::ObjectReadErrorStreambuf>(
-          Status(StatusCode::kNotFound, "test-message")));
+  ObjectReadStream reader = CreateReader();
   reader.setstate(std::ios::badbit | std::ios::eofbit);
   EXPECT_TRUE(reader.bad());
   EXPECT_TRUE(reader.eof());
@@ -41,9 +50,7 @@ TEST(ObjectStream, ReadMoveConstructor) {
 }
 
 TEST(ObjectStream, ReadMoveAssignment) {
-  ObjectReadStream reader(
-      google::cloud::internal::make_unique<internal::ObjectReadErrorStreambuf>(
-          Status(StatusCode::kNotFound, "test-message")));
+  ObjectReadStream reader = CreateReader();
   reader.setstate(std::ios::badbit | std::ios::eofbit);
   EXPECT_NE(nullptr, reader.rdbuf());
 

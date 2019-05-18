@@ -122,7 +122,6 @@ add_library(storage_client
             internal/curl_resumable_upload_session.h
             internal/curl_resumable_upload_session.cc
             internal/curl_streambuf.h
-            internal/curl_streambuf.cc
             internal/default_object_acl_requests.h
             internal/default_object_acl_requests.cc
             internal/empty_response.h
@@ -155,6 +154,7 @@ add_library(storage_client
             internal/object_requests.cc
             internal/object_streambuf.h
             internal/object_streambuf.cc
+            internal/object_read_source.h
             internal/parse_rfc3339.h
             internal/parse_rfc3339.cc
             internal/patch_builder.h
@@ -166,6 +166,8 @@ add_library(storage_client
             internal/resumable_upload_session.h
             internal/retry_client.h
             internal/retry_client.cc
+            internal/retry_object_read_source.h
+            internal/retry_object_read_source.cc
             internal/retry_resumable_upload_session.h
             internal/retry_resumable_upload_session.cc
             internal/service_account_requests.h

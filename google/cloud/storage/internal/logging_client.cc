@@ -152,7 +152,7 @@ StatusOr<ObjectMetadata> LoggingClient::GetObjectMetadata(
   return MakeCall(*client_, &RawClient::GetObjectMetadata, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadStreambuf>> LoggingClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> LoggingClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   return MakeCallNoResponseLogging(*client_, &RawClient::ReadObject, request,
                                    __func__);
