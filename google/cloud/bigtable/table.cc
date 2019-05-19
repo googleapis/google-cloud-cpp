@@ -200,10 +200,10 @@ std::shared_ptr<AsyncRowReader> Table::AsyncReadRows(CompletionQueue& cq,
                                                      RowSet row_set,
                                                      Filter filter) {
   return AsyncRowReader::Create(
-      cq, impl_.client_, impl_.app_profile_id_, impl_.table_name_,
-      std::move(row_set), AsyncRowReader::NO_ROWS_LIMIT, std::move(filter),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      impl_.metadata_update_policy_,
+      cq, client_, app_profile_id_, table_name_, std::move(row_set),
+      AsyncRowReader::NO_ROWS_LIMIT, std::move(filter),
+      clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_,
       google::cloud::internal::make_unique<
           bigtable::internal::ReadRowsParserFactory>());
 }
@@ -213,10 +213,9 @@ std::shared_ptr<AsyncRowReader> Table::AsyncReadRows(CompletionQueue& cq,
                                                      std::int64_t rows_limit,
                                                      Filter filter) {
   return AsyncRowReader::Create(
-      cq, impl_.client_, impl_.app_profile_id_, impl_.table_name_,
-      std::move(row_set), rows_limit, std::move(filter),
-      impl_.rpc_retry_policy_->clone(), impl_.rpc_backoff_policy_->clone(),
-      impl_.metadata_update_policy_,
+      cq, client_, app_profile_id_, table_name_, std::move(row_set), rows_limit,
+      std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      metadata_update_policy_,
       google::cloud::internal::make_unique<
           bigtable::internal::ReadRowsParserFactory>());
 }
