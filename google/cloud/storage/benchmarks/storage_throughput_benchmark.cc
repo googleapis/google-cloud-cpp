@@ -16,6 +16,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/format_time_point.h"
 #include <future>
@@ -62,11 +63,11 @@
 
 namespace {
 namespace gcs = google::cloud::storage;
+namespace gcs_bm = google::cloud::storage_benchmarks;
 
 constexpr std::chrono::seconds kDefaultDuration(60);
 constexpr unsigned long kDefaultObjectCount = 1000;
-constexpr long kMiB = 1024 * 1024;
-constexpr unsigned long kChunkSize = 1 * kMiB;
+constexpr unsigned long kChunkSize = 1 * gcs_bm::kMiB;
 constexpr int kDefaultObjectChunkCount = 250;
 constexpr int kThroughputReportIntervalInChunks = 4;
 
@@ -90,11 +91,6 @@ struct Options {
   void ParseArgs(int& argc, char* argv[]);
   std::string ConsumeArg(int& argc, char* argv[], char const* arg_name);
 };
-
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
-std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
-                           std::size_t desired_size);
-std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen);
 
 enum OpType { OP_READ, OP_WRITE, OP_CREATE, OP_DELETE, OP_LAST };
 struct IterationResult {
@@ -145,7 +141,8 @@ int main(int argc, char* argv[]) try {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  auto bucket_name = MakeRandomBucketName(generator);
+  auto bucket_name =
+      gcs_bm::MakeRandomBucketName(generator, "gcs-cpp-throughput-bm-");
   auto meta =
       client
           .CreateBucket(bucket_name,
@@ -191,56 +188,12 @@ int main(int argc, char* argv[]) try {
 
 namespace {
 std::string Basename(std::string const& path) {
-  // Sure would be nice to be using C++17 where std::filesytem is a thing.
+  // Sure would be nice to be using C++17 where std::filesystem is a thing.
 #if _WIN32
   return path.substr(path.find_last_of('\\') + 1);
 #else
   return path.substr(path.find_last_of('/') + 1);
 #endif  // _WIN32
-}
-
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen) {
-  // The total length of this bucket name must be <= 63 characters,
-  static std::string const prefix = "gcs-cpp-thoughput-";
-  static std::size_t const kMaxBucketNameLength = 63;
-  std::size_t const max_random_characters =
-      kMaxBucketNameLength - prefix.size();
-  return prefix + google::cloud::internal::Sample(
-                      gen, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
-}
-
-std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
-                           std::size_t desired_size) {
-  std::string result;
-  result.reserve(desired_size);
-
-  // Create lines of 128 characters to start with, we can fill the remaining
-  // characters at the end.
-  constexpr int kLineSize = 128;
-  auto gen_random_line = [&gen](std::size_t count) {
-    return google::cloud::internal::Sample(gen, static_cast<int>(count - 1),
-                                           "abcdefghijklmnopqrstuvwxyz"
-                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "012456789"
-                                           " - _ : /") +
-           "\n";
-  };
-  while (result.size() + kLineSize < desired_size) {
-    result += gen_random_line(kLineSize);
-  }
-  if (result.size() < desired_size) {
-    result += gen_random_line(desired_size - result.size());
-  }
-
-  return result;
-}
-
-std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
-  return google::cloud::internal::Sample(gen, 128,
-                                         "abcdefghijklmnopqrstuvwxyz"
-                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                         "0123456789");
 }
 
 char const* ToString(OpType type) {
@@ -352,7 +305,7 @@ TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = MakeRandomData(generator, kChunkSize);
+  std::string random_data = gcs_bm::MakeRandomData(generator, kChunkSize);
   TestResult result;
   for (auto const& object_name : group) {
     auto tmp =
@@ -376,7 +329,7 @@ std::vector<std::string> CreateAllObjects(
   std::vector<std::string> object_names;
   object_names.reserve(options.object_count);
   for (long c = 0; c != options.object_count; ++c) {
-    object_names.emplace_back(MakeRandomObjectName(gen));
+    object_names.emplace_back(gcs_bm::MakeRandomObjectName(gen));
   }
 
   // Split the objects in more or less equally sized groups, launch a thread
@@ -413,7 +366,7 @@ TestResult RunTestThread(gcs::Client client, std::string const& bucket_name,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = MakeRandomData(generator, kChunkSize);
+  std::string random_data = gcs_bm::MakeRandomData(generator, kChunkSize);
 
   std::uniform_int_distribution<std::size_t> object_number_gen(
       0, object_names.size() - 1);
@@ -536,7 +489,7 @@ The options are:
     if (argument == "--help") {
     } else if (0 == argument.rfind(duration, 0)) {
       std::string val = argument.substr(duration.size());
-      this->duration = std::chrono::seconds(std::stoi(val));
+      this->duration = gcs_bm::ParseDuration(val);
     } else if (0 == argument.rfind(object_count, 0)) {
       auto arg = argument.substr(object_count.size());
       auto val = std::stol(arg);

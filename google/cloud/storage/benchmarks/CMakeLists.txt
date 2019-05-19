@@ -14,14 +14,82 @@
 # limitations under the License.
 # ~~~
 
-add_executable(storage_latency_benchmark storage_latency_benchmark.cc)
-target_link_libraries(storage_latency_benchmark
+add_library(storage_benchmarks benchmark_utils.h benchmark_utils.cc)
+target_link_libraries(storage_benchmarks
                       storage_client
                       storage_common_options
                       google_cloud_cpp_common_options)
 
-add_executable(storage_throughput_benchmark storage_throughput_benchmark.cc)
-target_link_libraries(storage_throughput_benchmark
-                      storage_client
-                      storage_common_options
-                      google_cloud_cpp_common_options)
+include(CreateBazelConfig)
+create_bazel_config(storage_benchmarks YEAR 2019)
+
+set(storage_benchmark_programs storage_latency_benchmark.cc
+    storage_throughput_benchmark.cc)
+
+foreach (fname ${storage_benchmark_programs})
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
+    add_executable(${target} ${fname})
+    target_link_libraries(${target}
+                          PRIVATE storage_benchmarks
+                                  storage_client
+                                  google_cloud_cpp_common
+                                  CURL::libcurl
+                                  Threads::Threads
+                                  nlohmann_json
+                                  storage_common_options)
+endforeach ()
+
+export_list_to_bazel("storage_benchmark_programs.bzl"
+                     "storage_benchmark_programs"
+                     YEAR
+                     2019)
+
+if (BUILD_TESTING)
+    # List the unit tests, then setup the targets and dependencies.
+    set(storage_benchmarks_unit_tests benchmark_parser_test.cc
+        benchmark_make_random_test.cc)
+
+    foreach (fname ${storage_benchmarks_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
+        if (BUILD_TESTING)
+            target_link_libraries(${target}
+                                  PRIVATE storage_benchmarks
+                                          storage_client_testing
+                                          google_cloud_cpp_testing
+                                          storage_client
+                                          GTest::gmock_main
+                                          GTest::gmock
+                                          GTest::gtest
+                                          CURL::libcurl
+                                          storage_common_options
+                                          nlohmann_json)
+            if (MSVC)
+                target_compile_options(${target} PRIVATE "/bigobj")
+            endif ()
+            add_test(NAME ${target} COMMAND ${target})
+        endif ()
+    endforeach ()
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("storage_benchmarks_unit_tests.bzl"
+                         "storage_benchmarks_unit_tests"
+                         YEAR
+                         2019)
+endif ()
