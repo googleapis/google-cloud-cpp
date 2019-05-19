@@ -33,7 +33,7 @@ using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 
-/// @test Verify that uploading a small creates a single chunk.
+/// @test Verify that uploading a small stream creates a single chunk.
 TEST(CurlResumableStreambufTest, SmallStream) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
@@ -224,7 +224,8 @@ TEST(CurlResumableStreambufTest, OverflowFlushAtFullQuantum) {
   EXPECT_STATUS_OK(response);
 }
 
-/// @test Verify that a stream flushes when adding one character at a time.
+/// @test Verify that a stream flushes when mixing operations that add one
+/// character at a time and operations that add buffers.
 TEST(CurlResumableStreambufTest, MixPutcPutn) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
