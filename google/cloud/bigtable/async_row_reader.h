@@ -76,8 +76,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
       CompletionQueue cq, std::shared_ptr<DataClient> client,
       bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
       RowSet row_set, std::int64_t rows_limit, Filter filter,
-      std::unique_ptr<RPCRetryPolicy> retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
@@ -85,8 +85,8 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
       CompletionQueue cq, std::shared_ptr<DataClient> client,
       bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
       RowSet row_set, std::int64_t rows_limit, Filter filter,
-      std::unique_ptr<RPCRetryPolicy> retry_policy,
-      std::unique_ptr<RPCBackoffPolicy> backoff_policy,
+      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 

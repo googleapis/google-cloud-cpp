@@ -477,6 +477,9 @@ class Table {
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    * @param row_set the rows to read from.
+   * @param rows_limit the maximum number of rows to read. Cannot be a negative
+   *     number or zero. Use `AsyncReadRows(CompletionQueue, RowSet, Filter)` to
+   *     read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
    *
    * @par Example
