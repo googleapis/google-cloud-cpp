@@ -208,7 +208,7 @@ sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget
+        libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
 ### OpenSUSE (Leap)

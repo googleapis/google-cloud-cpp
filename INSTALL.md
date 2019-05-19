@@ -206,7 +206,7 @@ Install the minimal development tools:
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget
+        libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
 OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
