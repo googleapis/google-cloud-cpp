@@ -137,7 +137,7 @@ void AsyncRowReader::MakeRequest() {
                grpc::CompletionQueue* cq) {
         return client->PrepareAsyncReadRows(context, request, cq);
       },
-      std::move(request), std::move(context),
+      request, std::move(context),
       [weak_self](google::bigtable::v2::ReadRowsResponse r) {
         auto self = weak_self.lock();
         return self ? self->OnDataReceived(std::move(r))
