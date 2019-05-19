@@ -126,8 +126,23 @@ class AsyncRowReader : public std::enable_shared_from_this<AsyncRowReader> {
   std::string last_read_row_key_;
   /// The queue of rows which we already received but no one has asked for them.
   std::queue<Row> ready_rows_;
-  /// The promises of rows which we have made, but couldn't satisfy yet.
-  std::queue<promise<Response>> promised_results_;
+  /**
+   * The promises of rows which we have made, but couldn't satisfy yet.
+   *
+   * We want this object to exist for as long as we haven't satisfied all the
+   * promises it made or the user has a pointer to it. This means that we want
+   * to interrupt the stream of responses when we detect that the user has no
+   * more pointers to this object.
+   *
+   * Usually we'd give both the user and the underlying layers `shared_ptr<>`s
+   * to this object. This wouldn't allow us to easily tell, whether the user
+   * holds any pointer to it. In order to workaround it, the lower layers will
+   * hold `weak_ptr<>`s, so in order to extend this object's lifetime until all
+   * promises are satisfied, we keep a self-reference next to every unsatisfied
+   * promise.
+   */
+  std::queue<std::pair<promise<Response>, std::shared_ptr<AsyncRowReader>>>
+      promised_results_;
   /**
    * The promise to the underlying stream to either continue reading or cancel.
    *

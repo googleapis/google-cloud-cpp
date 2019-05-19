@@ -131,11 +131,12 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
                    google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
+    throw Usage{"async-read-rows: <project-id> <instance-id> <table-id>"};
   }
 
   //! [async read rows]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
   using google::cloud::optional;
   using google::cloud::StatusOr;
   [](cbt::CompletionQueue cq, cbt::Table table) {
@@ -148,24 +149,28 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
         cbt::Filter::Latest(1));
     // Read and print the rows.
     auto reader = table.AsyncReadRows(cq, range, filter);
-    StatusOr<optional<cbt::Row>> row;
-    // Normally the user would not synchronously wait for the rows, but most
-    // likely use `.then()` to chain obtaining new rows instead. This is just
-    // for illustration.
-    for (row = reader->Next().get(); row && row->has_value();
-         row = reader->Next().get()) {
-      if ((*row)->cells().size() != 1) {
+    std::function<future<void>(future<StatusOr<optional<cbt::Row>>> fut)>
+        on_data;
+    on_data = [&on_data, reader](future<StatusOr<optional<cbt::Row>>> fut) {
+      StatusOr<optional<cbt::Row>> maybe_row = fut.get();
+      if (!maybe_row) {
+        throw std::runtime_error(maybe_row.status().message());
+      }
+      if (!*maybe_row) {
+        // End of scan.
+        return google::cloud::make_ready_future();
+      }
+      cbt::Row& row = **maybe_row;
+      if (row.cells().size() != 1) {
         std::ostringstream os;
-        os << "Unexpected number of cells in " << (*row)->row_key();
+        os << "Unexpected number of cells in " << row.row_key();
         throw std::runtime_error(os.str());
       }
-      auto const& cell = (*row)->cells().at(0);
+      auto const& cell = row.cells().at(0);
       std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
-    }
-    std::cout << std::flush;
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+      return reader->Next().then(on_data);
+    };
+    reader->Next().then(on_data).get();
   }
   //! [async read rows]
   (std::move(cq), std::move(table));
@@ -175,11 +180,13 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
                             google::cloud::bigtable::CompletionQueue cq,
                             std::vector<std::string> argv) {
   if (argv.size() != 2U) {
-    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
+    throw Usage{
+        "async-read-rows-with-limit: <project-id> <instance-id> <table-id>"};
   }
 
   //! [async read rows with limit]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
   using google::cloud::optional;
   using google::cloud::StatusOr;
   [](cbt::CompletionQueue cq, cbt::Table table) {
@@ -191,25 +198,29 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
         cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
         cbt::Filter::Latest(1));
     // Read and print the rows.
-    auto reader = table.AsyncReadRows(cq, range, 5, filter);
-    StatusOr<optional<cbt::Row>> row;
-    // Normally the user would not synchronously wait for the rows, but most
-    // likely use `.then()` to chain obtaining new rows instead. This is just
-    // for illustration.
-    for (row = reader->Next().get(); row && row->has_value();
-         row = reader->Next().get()) {
-      if ((*row)->cells().size() != 1) {
+    auto reader = table.AsyncReadRows(cq, range, filter);
+    std::function<future<void>(future<StatusOr<optional<cbt::Row>>> fut)>
+        on_data;
+    on_data = [&on_data, reader](future<StatusOr<optional<cbt::Row>>> fut) {
+      StatusOr<optional<cbt::Row>> maybe_row = fut.get();
+      if (!maybe_row) {
+        throw std::runtime_error(maybe_row.status().message());
+      }
+      if (!*maybe_row) {
+        // End of scan.
+        return google::cloud::make_ready_future();
+      }
+      cbt::Row& row = **maybe_row;
+      if (row.cells().size() != 1) {
         std::ostringstream os;
-        os << "Unexpected number of cells in " << (*row)->row_key();
+        os << "Unexpected number of cells in " << row.row_key();
         throw std::runtime_error(os.str());
       }
-      auto const& cell = (*row)->cells().at(0);
+      auto const& cell = row.cells().at(0);
       std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
-    }
-    std::cout << std::flush;
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+      return reader->Next().then(on_data);
+    };
+    reader->Next().then(on_data).get();
   }
   //! [async read rows with limit]
   (std::move(cq), std::move(table));

@@ -41,8 +41,8 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
       : cq_impl_(new bigtable::testing::MockCompletionQueue), cq_(cq_impl_) {}
 
   MockClientAsyncReaderInterface<btproto::ReadRowsResponse>& AddReader(
-      std::function<void(btproto::ReadRowsRequest const&)>
-          request_expectations) {
+      std::function<void(btproto::ReadRowsRequest const&)> request_expectations,
+      bool expect_a_read = true) {
     readers_.emplace_back(
         new MockClientAsyncReaderInterface<btproto::ReadRowsResponse>);
     reader_started_.push_back(false);
@@ -69,9 +69,11 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     EXPECT_CALL(reader, StartCall(_)).WillOnce(Invoke([idx, this](void*) {
       reader_started_[idx] = true;
     }));
-    // The last call, to which we'll return ok==false.
-    EXPECT_CALL(reader, Read(_, _))
-        .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {}));
+    if (expect_a_read) {
+      // The last call, to which we'll return ok==false.
+      EXPECT_CALL(reader, Read(_, _))
+          .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {}));
+    }
     return reader;
   }
 
@@ -840,6 +842,156 @@ commit_row: true
   row = reader->Next().get();
   ASSERT_STATUS_OK(row);
   ASSERT_FALSE(row->has_value());
+}
+
+TEST_F(TableAsyncReadRowsTest, DestroyReaderImmediately) {
+  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {}, false);
+
+  EXPECT_CALL(stream, Finish(_, _))
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+
+  auto reader = table_.AsyncReadRows(cq_, RowSet(), RowReader::NO_ROWS_LIMIT,
+                                     Filter::PassAllFilter());
+  reader.reset();
+
+  EXPECT_TRUE(reader_started_[0]);
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  ASSERT_EQ(0U, cq_impl_->size());
+}
+
+TEST_F(TableAsyncReadRowsTest, DestroyReaderMidStreamNoPromises) {
+  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+
+  EXPECT_CALL(stream, Read(_, _))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
+        *r = bigtable::testing::ReadRowsResponseFromString(
+            R"(
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)");
+      }))
+      .RetiresOnSaturation();
+  EXPECT_CALL(stream, Finish(_, _))
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+
+  auto reader = table_.AsyncReadRows(cq_, RowSet(), RowReader::NO_ROWS_LIMIT,
+                                     Filter::PassAllFilter());
+  auto row_future = reader->Next();
+
+  EXPECT_TRUE(reader_started_[0]);
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+
+  auto row = row_future.get();
+
+  ASSERT_EQ(0U, cq_impl_->size());  // The reader is waiting for us to call Next
+  reader.reset();                   // This should close the stream
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  ASSERT_EQ(0U, cq_impl_->size());
+}
+
+TEST_F(TableAsyncReadRowsTest, DestroyReaderMidStreamTwoPromises) {
+  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+
+  EXPECT_CALL(stream, Read(_, _))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
+        *r = bigtable::testing::ReadRowsResponseFromString(
+            R"(
+chunks {
+row_key: "r1"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)");
+      }))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
+        *r = bigtable::testing::ReadRowsResponseFromString(
+            R"(
+chunks {
+row_key: "r2"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+chunks {
+row_key: "r3"
+    family_name { value: "fam" }
+    qualifier { value: "col" }
+timestamp_micros: 42000
+value: "value"
+commit_row: true
+}
+)");
+      }))
+      .RetiresOnSaturation();
+  EXPECT_CALL(stream, Finish(_, _))
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+
+  auto reader = table_.AsyncReadRows(cq_, RowSet(), RowReader::NO_ROWS_LIMIT,
+                                     Filter::PassAllFilter());
+  auto row_future = reader->Next();
+
+  EXPECT_TRUE(reader_started_[0]);
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+
+  auto row = row_future.get();
+  row_future = reader->Next();
+  auto row_future2 = reader->Next();
+  auto eof_future = reader->Next();
+
+  ASSERT_EQ(1U, cq_impl_->size());  // We're waiting for the lower layer.
+
+  // This shouldn't close the stream, there are unsatisfied promises.
+  reader.reset();
+  ASSERT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(std::future_status::timeout, row_future.wait_for(1_ms));
+  EXPECT_EQ(std::future_status::timeout, row_future2.wait_for(1_ms));
+  EXPECT_EQ(std::future_status::timeout, eof_future.wait_for(1_ms));
+
+  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+
+  row = row_future.get();
+  ASSERT_STATUS_OK(row);
+  ASSERT_EQ("r2", (*row)->row_key());
+
+  auto row2 = row_future2.get();
+  ASSERT_STATUS_OK(row2);
+  ASSERT_EQ("r3", (*row2)->row_key());
+
+  ASSERT_EQ(1U, cq_impl_->size());
+
+  EXPECT_EQ(std::future_status::timeout, eof_future.wait_for(1_ms));
+  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(std::future_status::timeout, eof_future.wait_for(1_ms));
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  ASSERT_EQ(0U, cq_impl_->size());
+  auto eof_marker = eof_future.get();
+  ASSERT_STATUS_OK(eof_marker);
+  ASSERT_FALSE(*eof_marker);
 }
 
 }  // namespace

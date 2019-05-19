@@ -40,9 +40,19 @@ AsyncRowReader::AsyncRowReader(
       rows_count_(0) {}
 
 AsyncRowReader::~AsyncRowReader() {
-  assert(whole_op_finished_);
+  // At this point no one should be doing anything to the object, but acquire
+  // the mutex to make sure that modifications made in other threads are visible
+  // in this one.
+  std::unique_lock<std::mutex> lk(mu_);
   assert(promised_results_.empty());
-  assert(!continue_reading_.has_value());
+  if (!whole_op_finished_) {
+    // If we're finishing mid-stream, stop the stream.
+    if (continue_reading_) {
+      continue_reading_->set_value(false);
+    }
+    return;
+  }
+  assert(!continue_reading_);
 }
 
 std::shared_ptr<AsyncRowReader> AsyncRowReader::Create(
@@ -83,8 +93,9 @@ future<AsyncRowReader::Response> AsyncRowReader::Next() {
   }
   // We need to wait for more rows to come, so let's make a promise and return a
   // future.
-  promised_results_.emplace(promise<Response>());
-  auto res = promised_results_.back().get_future();
+  promised_results_.emplace(
+      std::make_pair(promise<Response>(), shared_from_this()));
+  auto res = promised_results_.back().first.get_future();
   if (continue_reading_) {
     // If `AsyncRowReader` was waiting to read more data, trigger it.
     optional<promise<bool>> continue_reading = std::move(continue_reading_);
@@ -118,7 +129,7 @@ void AsyncRowReader::MakeRequest() {
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);
 
-  auto self = shared_from_this();
+  auto weak_self = std::weak_ptr<AsyncRowReader>(shared_from_this());
   auto client = client_;
   cq_.MakeStreamingReadRpc(
       [client](grpc::ClientContext* context,
@@ -127,10 +138,16 @@ void AsyncRowReader::MakeRequest() {
         return client->PrepareAsyncReadRows(context, request, cq);
       },
       std::move(request), std::move(context),
-      [self](google::bigtable::v2::ReadRowsResponse r) {
-        return self->OnDataReceived(std::move(r));
+      [weak_self](google::bigtable::v2::ReadRowsResponse r) {
+        auto self = weak_self.lock();
+        return self ? self->OnDataReceived(std::move(r))
+                    : make_ready_future(false);
       },
-      [self](Status s) { self->OnStreamFinished(std::move(s)); });
+      [weak_self](Status s) {
+        if (auto self = weak_self.lock()) {
+          self->OnStreamFinished(std::move(s));
+        }
+      });
 }
 
 future<bool> AsyncRowReader::OnDataReceived(
@@ -155,7 +172,9 @@ future<bool> AsyncRowReader::OnDataReceived(
   // more data before we satisfy the promises based on this response. Holding
   // the lock for the entire duration of this function would have helped but we
   // shouldn't doing it when satisfying promises.
-  std::vector<std::pair<promise<Response>, Row>> to_satisfy;
+  std::vector<std::pair<
+      std::pair<promise<Response>, std::shared_ptr<AsyncRowReader>>, Row>>
+      to_satisfy;
   while (!promised_results_.empty() && !ready_rows_.empty()) {
     to_satisfy.emplace_back(std::make_pair(std::move(promised_results_.front()),
                                            std::move(ready_rows_.front())));
@@ -165,7 +184,7 @@ future<bool> AsyncRowReader::OnDataReceived(
 
   lk.unlock();
   for (auto& promise_and_row : to_satisfy) {
-    promise_and_row.first.set_value(
+    promise_and_row.first.first.set_value(
         optional<Row>(std::move(promise_and_row.second)));
   }
   lk.lock();
@@ -236,13 +255,15 @@ void AsyncRowReader::OnStreamFinished(Status status) {
 }
 
 void AsyncRowReader::FinishScan(Status status,
-                                       std::unique_lock<std::mutex>& lk) {
+                                std::unique_lock<std::mutex>& lk) {
   whole_op_finished_ = status;
-  std::queue<promise<Response>> promised_results;
+  std::queue<std::pair<promise<Response>, std::shared_ptr<AsyncRowReader>>>
+      promised_results;
   promised_results.swap(promised_results_);
+  auto continue_reading = std::move(continue_reading_);
   lk.unlock();
   for (; !promised_results.empty(); promised_results.pop()) {
-    auto& promise = promised_results.front();
+    auto& promise = promised_results.front().first;
     if (status.ok()) {
       promise.set_value(optional<Row>());
       continue;
