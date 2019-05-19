@@ -42,12 +42,12 @@ sed \
         removing_blanks=0;
       }
       {
-        if ("$0" != "") {
+        if ($0 != "") {
           removing_blanks = 0;
-          print "$0";
+          print $0;
         } else if (removing_blanks != 1) {
           removing_blanks = 1;
-          print "$0";
+          print $0;
         }
       }
     '

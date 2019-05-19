@@ -24,7 +24,7 @@ FROM opensuse/tumbleweed:${DISTRO_VERSION}
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget
+        libcurl-devel libopenssl-devel make tar wget zlib-devel
 # ```
 
 ## [END README.md]
