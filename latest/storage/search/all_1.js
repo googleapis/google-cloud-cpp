@@ -3,6 +3,8 @@ var searchData=
   ['backendcount',['BackendCount',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#ab169b4a4e7920707757787142c4bda02',1,'google::cloud::v0::LogSink']]],
   ['backoffpolicy',['BackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a0883868fbb34a196055da34973840304',1,'google::cloud::storage::v1']]],
   ['begin',['begin',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRangeData.html#a494939d04cbfcde6f8976bec85d7cf6b',1,'google::cloud::storage::v1::ReadRangeData::begin()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#aee6bb90a41aa973e37f6d69d81147c1c',1,'google::cloud::v0::IamBindings::begin()']]],
+  ['benchmark_5futils_2ecc',['benchmark_utils.cc',['../benchmark__utils_8cc.html',1,'']]],
+  ['benchmark_5futils_2eh',['benchmark_utils.h',['../benchmark__utils_8h.html',1,'']]],
   ['billing',['billing',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a217c79e85cbe1b3f9e9403850a0a3415',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['billing_5fas_5foptional',['billing_as_optional',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a0450de099efb45f47088defa1627f253',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['bindings',['bindings',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html#a94aea5b484c1e9f20529d33ee5de18fe',1,'google::cloud::v0::IamPolicy::bindings()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a494c1f66c64993db2b79c92c2f601660',1,'google::cloud::v0::IamBindings::bindings()']]],

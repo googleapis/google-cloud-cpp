@@ -17,6 +17,7 @@ var searchData=
   ['encryptiondatafrombinarykey',['EncryptionDataFromBinaryKey',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#aa905b77fdc5b6fc8a62dac1e89f412ae',1,'google::cloud::storage::v1']]],
   ['end',['end',['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#ab3f7705ec738faa1c60766db8b024fd5',1,'google::cloud::v0::IamBindings']]],
   ['endpoint',['endpoint',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ClientOptions.html#a2fe0d849848643991b531a3e4db51443',1,'google::cloud::storage::v1::ClientOptions']]],
+  ['endswith',['EndsWith',['../namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a0bcf039ecb97675643b5432a4e27282f',1,'google::cloud::storage_benchmarks']]],
   ['etag',['etag',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1HmacKeyMetadata.html#a57ebb882a6675b8d77088c4182c0cdc2',1,'google::cloud::storage::v1::HmacKeyMetadata::etag()'],['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html#a121b4db7d3addd58552cfa199bfdd013',1,'google::cloud::storage::v1::NotificationMetadata::etag()']]],
   ['event_5fbased_5fhold',['event_based_hold',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a857333e05e0cd376a8fbbf27f1f09f35',1,'google::cloud::storage::v1::ObjectMetadata']]],
   ['event_5ftype',['event_type',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1NotificationMetadata.html#aaf20ee124031d6cef9ffb07dbf3b2b21',1,'google::cloud::storage::v1::NotificationMetadata']]],
