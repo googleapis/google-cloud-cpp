@@ -594,6 +594,24 @@ class TableAdmin {
   }
 
   /**
+   * Asynchronously wait until a table is consistent with the given @p token.
+   *
+   * @param table_id the id of the table for which we want to check
+   *     consistency.
+   * @param consistency_token the consistency token of the table.
+   * @return the consistency status for the table.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async wait for consistency
+   */
+  google::cloud::future<StatusOr<Consistency>> AsyncWaitForConsistency(
+      CompletionQueue& cq, bigtable::TableId const& table_id,
+      bigtable::ConsistencyToken const& consistency_token);
+
+  /**
    * Delete all the rows in a table.
    *
    * @param table_id the id of the table within the instance associated with

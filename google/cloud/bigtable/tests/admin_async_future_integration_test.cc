@@ -330,12 +330,12 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
                                                              table_id.get());
           })
           .then([&](future<StatusOr<ConsistencyToken>> fut) {
-            auto result = fut.get();
-            EXPECT_STATUS_OK(result);
-            if (!result) {
-              return make_ready_future(StatusOr<Consistency>(result.status()));
+            auto token = fut.get();
+            EXPECT_STATUS_OK(token);
+            if (!token) {
+              return make_ready_future(StatusOr<Consistency>(token.status()));
             }
-            return table_admin.AsyncCheckConsistency(cq, table_id, *result);
+            return table_admin.AsyncWaitForConsistency(cq, table_id, *token);
           })
           .then([&](future<StatusOr<Consistency>> fut) {
             auto result = fut.get();
@@ -345,9 +345,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
             }
             // If there is an error we cannot check the result, but
             // we want to delete the table and continue.
-            // TODO(#1500) - use AsyncWaitForConsistency, otherwise this fails
-            // because we have not waited for "long enough".
-            //   EXPECT_EQ(*result, Consistency::kConsistent);
+            EXPECT_EQ(*result, Consistency::kConsistent);
             return table_admin.AsyncDeleteTable(cq, table_id.get());
           })
           .then([&](future<Status> fut) {
