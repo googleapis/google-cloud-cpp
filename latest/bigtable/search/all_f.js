@@ -38,6 +38,6 @@ var searchData=
   ['rpcbackoffpolicy',['RPCBackoffPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCBackoffPolicy.html',1,'google::cloud::bigtable::v0']]],
   ['rpcretrypolicy',['RPCRetryPolicy',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RPCRetryPolicy.html',1,'google::cloud::bigtable::v0']]],
   ['run',['Run',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#abb9bbf1fd0ffadb30470f649c7240f07',1,'google::cloud::bigtable::v0::CompletionQueue']]],
-  ['runasync',['RunAsync',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#aceb2b5f549e8331522f25c306d5c430f',1,'google::cloud::bigtable::v0::CompletionQueue']]],
+  ['runasync',['RunAsync',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1CompletionQueue.html#a1eb73257a335022928a7cebcd3029bf8',1,'google::cloud::bigtable::v0::CompletionQueue']]],
   ['runtimestatuserror',['RuntimeStatusError',['../../common/classgoogle_1_1cloud_1_1v0_1_1RuntimeStatusError.html',1,'google::cloud::v0::RuntimeStatusError'],['../../common/classgoogle_1_1cloud_1_1v0_1_1RuntimeStatusError.html#a0530e8de1a2eb8d6b37dc4b570d2f669',1,'google::cloud::v0::RuntimeStatusError::RuntimeStatusError()']]]
 ];
