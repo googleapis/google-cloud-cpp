@@ -35,7 +35,6 @@ bigtable_client_hdrs = [
     "instance_list_responses.h",
     "instance_update_config.h",
     "internal/async_bulk_apply.h",
-    "internal/async_check_consistency.h",
     "internal/async_longrunning_op.h",
     "internal/async_loop_op.h",
     "internal/async_op_traits.h",
