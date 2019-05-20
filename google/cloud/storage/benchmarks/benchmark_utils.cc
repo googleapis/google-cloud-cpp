@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include <cctype>
 #include <sstream>
 #include <stdexcept>
 
@@ -124,7 +125,7 @@ bool ParseBoolean(std::string const& val, bool default_value) {
   }
   auto lower = val;
   std::transform(lower.begin(), lower.end(), lower.begin(),
-                 [](char x) { return std::tolower(x); });
+                 [](char x) { return static_cast<char>(std::tolower(x)); });
   if (lower == "true") {
     return true;
   } else if (lower == "false") {
