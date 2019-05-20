@@ -650,6 +650,64 @@ TEST(FutureTestString, conform_2_10_4_2_c) {
 #endif  // 1
 }
 
+class MockFunctor {
+ public:
+  MockFunctor() : moved_from_() {}
+  MockFunctor(MockFunctor&& other) { other.moved_from_ = true; }
+  MockFunctor(MockFunctor const& other) = default;
+
+  void operator()(future<int>) {}
+
+  bool moved_from_;
+};
+
+TEST(FutureTestInt, RValueThenFunctorIsMoved) {
+  promise<int> promise;
+  future<int> fut = promise.get_future();
+  MockFunctor fun;
+  fut.then(std::move(fun));
+  promise.set_value(1);
+  EXPECT_TRUE(fun.moved_from_);
+}
+
+TEST(FutureTestInt, LValueThenFunctorIsCopied) {
+  promise<int> promise;
+  future<int> fut = promise.get_future();
+  MockFunctor fun;
+  fut.then(fun);
+  promise.set_value(1);
+  EXPECT_FALSE(fun.moved_from_);
+}
+
+class MockUnwrapFunctor {
+ public:
+  MockUnwrapFunctor() : moved_from_() {}
+  MockUnwrapFunctor(MockUnwrapFunctor&& other) { other.moved_from_ = true; }
+  MockUnwrapFunctor(MockUnwrapFunctor const& other) = default;
+
+  future<void> operator()(future<int>) { return make_ready_future(); }
+
+  bool moved_from_;
+};
+
+TEST(FutureTestInt, RValueThenUnwrapFunctorIsMoved) {
+  promise<int> promise;
+  future<int> fut = promise.get_future();
+  MockUnwrapFunctor fun;
+  fut.then(std::move(fun));
+  promise.set_value(1);
+  EXPECT_TRUE(fun.moved_from_);
+}
+
+TEST(FutureTestInt, LValueThenUnwrapFunctorIsCopied) {
+  promise<int> promise;
+  future<int> fut = promise.get_future();
+  MockUnwrapFunctor fun;
+  fut.then(fun);
+  promise.set_value(1);
+  EXPECT_FALSE(fun.moved_from_);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
