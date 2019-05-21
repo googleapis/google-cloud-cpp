@@ -63,6 +63,7 @@ if (NOT TARGET gprc_project)
                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                   -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:<INSTALL_DIR>
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                    -DgRPC_BUILD_TESTS=OFF

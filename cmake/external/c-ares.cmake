@@ -30,26 +30,28 @@ if (NOT TARGET c_ares_project)
                                                    ALWAYS_SHARED "cares")
 
     include(ExternalProject)
-    externalproject_add(c_ares_project
-                        EXCLUDE_FROM_ALL ON
-                        PREFIX "${CMAKE_BINARY_DIR}/external/c-ares"
-                        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
-                        URL ${GOOGLE_CLOUD_CPP_C_ARES_URL}
-                        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
-                        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-                                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                        BUILD_COMMAND ${CMAKE_COMMAND}
-                                      --build
-                                      <BINARY_DIR>
-                                      ${PARALLEL}
-                        BUILD_BYPRODUCTS ${c_ares_byproducts}
-                        LOG_DOWNLOAD ON
-                        LOG_CONFIGURE ON
-                        LOG_BUILD ON
-                        LOG_INSTALL ON)
+    externalproject_add(
+        c_ares_project
+        EXCLUDE_FROM_ALL ON
+        PREFIX "${CMAKE_BINARY_DIR}/external/c-ares"
+        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
+        URL ${GOOGLE_CLOUD_CPP_C_ARES_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_C_ARES_SHA256}
+        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+                   -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:<INSTALL_DIR>
+                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        BUILD_COMMAND ${CMAKE_COMMAND}
+                      --build
+                      <BINARY_DIR>
+                      ${PARALLEL}
+        BUILD_BYPRODUCTS ${c_ares_byproducts}
+        LOG_DOWNLOAD ON
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 
     if (TARGET google-cloud-cpp-dependencies)
         add_dependencies(google-cloud-cpp-dependencies c_ares_project)

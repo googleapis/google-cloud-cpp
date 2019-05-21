@@ -68,6 +68,7 @@ if (NOT TARGET curl_project)
                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                   -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:<INSTALL_DIR>
                    -DENABLE_ARES=ON
                    -DCURL_STATICLIB=$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>
                    -DCMAKE_DEBUG_POSTFIX=

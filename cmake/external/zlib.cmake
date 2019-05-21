@@ -27,27 +27,29 @@ if (NOT TARGET zlib_project)
     create_external_project_library_byproduct_list(zlib_byproducts "z")
 
     include(ExternalProject)
-    externalproject_add(zlib_project
-                        EXCLUDE_FROM_ALL ON
-                        PREFIX "${CMAKE_BINARY_DIR}/external/zlib"
-                        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
-                        URL ${GOOGLE_CLOUD_CPP_ZLIB_URL}
-                        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_ZLIB_SHA256}
-                        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-                                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                        BUILD_COMMAND ${CMAKE_COMMAND}
-                                      --build
-                                      <BINARY_DIR>
-                                      ${PARALLEL}
-                        BUILD_BYPRODUCTS ${zlib_byproducts}
-                        LOG_DOWNLOAD ON
-                        LOG_CONFIGURE ON
-                        LOG_BUILD ON
-                        LOG_INSTALL ON)
+    externalproject_add(
+        zlib_project
+        EXCLUDE_FROM_ALL ON
+        PREFIX "${CMAKE_BINARY_DIR}/external/zlib"
+        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
+        URL ${GOOGLE_CLOUD_CPP_ZLIB_URL}
+        URL_HASH SHA256=${GOOGLE_CLOUD_CPP_ZLIB_SHA256}
+        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+                   -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:<INSTALL_DIR>
+                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        BUILD_COMMAND ${CMAKE_COMMAND}
+                      --build
+                      <BINARY_DIR>
+                      ${PARALLEL}
+        BUILD_BYPRODUCTS ${zlib_byproducts}
+        LOG_DOWNLOAD ON
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 
     if (TARGET google-cloud-cpp-dependencies)
         add_dependencies(google-cloud-cpp-dependencies zlib_project)
