@@ -51,7 +51,7 @@ TEST(StorageBenchmarksUtilsTest, ParseBoolean) {
   EXPECT_EQ(true, ParseBoolean("True", false));
 
   EXPECT_EQ(false, ParseBoolean("false", true));
-  EXPECT_EQ(false, ParseBoolean("False", false));
+  EXPECT_EQ(false, ParseBoolean("False", true));
 }
 
 }  // namespace

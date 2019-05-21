@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <sstream>
 #include <stdexcept>
@@ -131,14 +132,15 @@ bool ParseBoolean(std::string const& val, bool default_value) {
   } else if (lower == "false") {
     return false;
   }
-  throw std::runtime_error("Cannot parse " + val + " as a boolean");
+  google::cloud::internal::ThrowRuntimeError(
+      "Cannot parse " + val + " as a boolean");
 }
 
 std::string Basename(std::string const& path) {
   // With C++17 we would use std::filesytem::path, until then do the poor's
   // person version.
 #if _WIN32
-  return path.substr(path.find_last_of('\\') + 1);
+  return path.substr(path.find_last_of('\\/') + 1);
 #else
   return path.substr(path.find_last_of('/') + 1);
 #endif  // _WIN32
@@ -165,22 +167,26 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
   while (next_arg != argv.end()) {
     std::string const& argument = *next_arg;
 
-    // Try to match argv[next_arg] against the options in `desc`
+    // Try to match `argument` against the options in `desc`
     bool matched = false;
     for (auto const& d : desc) {
       if (argument.rfind(d.option, 0) != 0) {
         // Not a match, keep searching
         continue;
       }
-      std::string val;
-      if (d.option.size() + 1 < argument.size()) {
-        val = argument.substr(d.option.size() + 1);
+      std::string val = argument.substr(d.option.size());
+      if (!val.empty() && val[0] != '=') {
+        // Matched a prefix of an option, keep searching.
+        continue;
+      }
+      if (!val.empty()) {
+        // The first character must be '=', remove it too.
+        val.erase(val.begin());
       }
       d.parser(val);
       // This is a match, consume the argument and stop the search.
       matched = true;
-      argv.erase(next_arg);
-      next_arg = argv.begin() + 1;
+      next_arg = argv.erase(next_arg);
       break;
     }
     // If it was not matched just skip it,

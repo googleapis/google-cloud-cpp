@@ -63,6 +63,27 @@ TEST(StorageBenchmarksParseArgsTest, Simple) {
   EXPECT_EQ(option2_val, "value2");
 }
 
+TEST(StorageBenchmarksParseArgsTest, PrefixArgument) {
+  std::string option1_with_suffix_val = "not-set";
+  std::string option1_val = "not-set";
+
+  std::vector<OptionDescriptor> desc{
+      {"--option1-with-suffix", "help-for-option1-with-suffix",
+       [&](std::string const& v) { option1_with_suffix_val = v; }},
+      {"--option1", "help-for-option1",
+       [&](std::string const& v) { option1_val = v; }},
+  };
+
+  auto unparsed =
+      OptionsParse(desc, {"command-name", "--option1-with-suffix=suffix1",
+                          "skip1", "skip2", "--option1=value1"});
+
+  EXPECT_THAT(unparsed,
+              ::testing::ElementsAre("command-name", "skip1", "skip2"));
+  EXPECT_EQ(option1_with_suffix_val, "suffix1");
+  EXPECT_EQ(option1_val, "value1");
+}
+
 }  // namespace
 }  // namespace storage_benchmarks
 }  // namespace cloud
