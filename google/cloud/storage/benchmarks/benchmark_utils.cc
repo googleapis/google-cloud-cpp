@@ -132,8 +132,8 @@ bool ParseBoolean(std::string const& val, bool default_value) {
   } else if (lower == "false") {
     return false;
   }
-  google::cloud::internal::ThrowRuntimeError(
-      "Cannot parse " + val + " as a boolean");
+  google::cloud::internal::ThrowRuntimeError("Cannot parse " + val +
+                                             " as a boolean");
 }
 
 std::string Basename(std::string const& path) {
