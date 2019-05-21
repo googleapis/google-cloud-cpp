@@ -596,6 +596,13 @@ class TableAdmin {
   /**
    * Asynchronously wait until a table is consistent with the given @p token.
    *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param table_id the id of the table for which we want to check
    *     consistency.
    * @param consistency_token the consistency token of the table.
