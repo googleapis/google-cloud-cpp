@@ -334,7 +334,7 @@ TableAdmin::AsyncWaitForConsistency(
         : cq_(std::move(cq)),
           table_id_(std::move(table_id)),
           consistency_token_(std::move(consistency_token)),
-          table_admin_(std::move(table_admin)),
+          table_admin_(table_admin),
           polling_policy_(std::move(polling_policy)) {}
 
     void StartIteration() {
@@ -347,11 +347,11 @@ TableAdmin::AsyncWaitForConsistency(
 
     void OnCheckConsistency(StatusOr<Consistency> consistent) {
       auto self = shared_from_this();
-      if (consistent) {
+      if (consistent && *consistent == Consistency::kConsistent) {
         promise_.set_value(*consistent);
         return;
       }
-      auto status = consistent.status();
+      auto status = std::move(consistent).status();
       if (!polling_policy_->OnFailure(status)) {
         promise_.set_value(std::move(status));
         return;

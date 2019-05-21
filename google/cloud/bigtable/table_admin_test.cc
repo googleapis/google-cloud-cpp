@@ -14,6 +14,8 @@
 
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
+#include "google/cloud/bigtable/testing/mock_completion_queue.h"
+#include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -707,4 +709,168 @@ TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
   std::future<google::cloud::StatusOr<bigtable::Consistency>> result =
       tested.WaitForConsistencyCheck(table_id, consistency_token);
   EXPECT_FALSE(result.get());
+}
+
+using MockAsyncCheckConsistencyResponse =
+    google::cloud::bigtable::testing::MockAsyncResponseReader<
+        ::google::bigtable::admin::v2::CheckConsistencyResponse>;
+
+/**
+ * @test Verify that `bigtagble::TableAdmin::AsyncWaitForConsistency` works as
+ * expected, with multiple asynchronous calls.
+ */
+TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
+  using namespace ::testing;
+  using namespace google::cloud::testing_util::chrono_literals;
+  using google::cloud::internal::make_unique;
+
+  bigtable::TableAdmin tested(client_, "test-instance");
+
+  auto r1 = make_unique<MockAsyncCheckConsistencyResponse>();
+  EXPECT_CALL(*r1, Finish(_, _, _))
+      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
+                          grpc::Status* status, void*) {
+        ASSERT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+      }));
+  auto r2 = make_unique<MockAsyncCheckConsistencyResponse>();
+  EXPECT_CALL(*r2, Finish(_, _, _))
+      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
+                          grpc::Status* status, void*) {
+        ASSERT_NE(nullptr, response);
+        response->set_consistent(false);
+        *status = grpc::Status::OK;
+      }));
+  auto r3 = make_unique<MockAsyncCheckConsistencyResponse>();
+  EXPECT_CALL(*r3, Finish(_, _, _))
+      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
+                          grpc::Status* status, void*) {
+        ASSERT_NE(nullptr, response);
+        response->set_consistent(true);
+        *status = grpc::Status::OK;
+      }));
+
+  auto make_invoke = [](std::unique_ptr<MockAsyncCheckConsistencyResponse>& r) {
+    return [&r](grpc::ClientContext*,
+                btadmin::CheckConsistencyRequest const& request,
+                grpc::CompletionQueue*) {
+      EXPECT_EQ(
+          "projects/the-project/instances/test-instance/tables/test-table",
+          request.name());
+      // This is safe, see comments in MockAsyncResponseReader.
+      return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+          ::btadmin::CheckConsistencyResponse>>(r.get());
+    };
+  };
+
+  EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
+  EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
+      .WillOnce(Invoke(make_invoke(r1)))
+      .WillOnce(Invoke(make_invoke(r2)))
+      .WillOnce(Invoke(make_invoke(r3)));
+
+  bigtable::TableId table_id("test-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+
+  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl(
+      new bigtable::testing::MockCompletionQueue);
+  bigtable::CompletionQueue cq(cq_impl);
+
+  google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
+      tested.AsyncWaitForConsistency(cq, table_id, consistency_token);
+
+  // The future is not ready yet.
+  auto future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::timeout, future_status);
+
+  // Simulate the completions for each event.
+
+  // AsyncCheckConsistency() -> TRANSIENT
+  cq_impl->SimulateCompletion(cq, true);
+  future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::timeout, future_status);
+
+  // timer
+  cq_impl->SimulateCompletion(cq, true);
+  future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::timeout, future_status);
+
+  // AsyncCheckConsistency() -> !consistent
+  cq_impl->SimulateCompletion(cq, true);
+  future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::timeout, future_status);
+
+  // timer
+  cq_impl->SimulateCompletion(cq, true);
+  future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::timeout, future_status);
+
+  // AsyncCheckConsistency() -> consistent
+  cq_impl->SimulateCompletion(cq, true);
+  future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::ready, future_status);
+
+  // The future becomes ready on the first request that completes with a
+  // permanent error.
+  auto consistent = result.get();
+  ASSERT_STATUS_OK(consistent);
+
+  EXPECT_EQ(bigtable::Consistency::kConsistent, *consistent);
+}
+
+/**
+ * @test Verify that `bigtable::TableAdmin::AsyncWaitForConsistency` makes only
+ * one RPC attempt and reports errors on failure.
+ */
+TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
+  using namespace ::testing;
+  using namespace google::cloud::testing_util::chrono_literals;
+  using google::cloud::internal::make_unique;
+
+  bigtable::TableAdmin tested(client_, "test-instance");
+  auto reader = make_unique<MockAsyncCheckConsistencyResponse>();
+  EXPECT_CALL(*reader, Finish(_, _, _))
+      .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
+                          grpc::Status* status, void*) {
+        ASSERT_NE(nullptr, response);
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "oh no");
+      }));
+  EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
+  EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
+      .WillOnce(Invoke([&](grpc::ClientContext*,
+                           btadmin::CheckConsistencyRequest const& request,
+                           grpc::CompletionQueue*) {
+        EXPECT_EQ(
+            "projects/the-project/instances/test-instance/tables/test-table",
+            request.name());
+        // This is safe, see comments in MockAsyncResponseReader.
+        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            ::btadmin::CheckConsistencyResponse>>(reader.get());
+      }));
+
+  bigtable::TableId table_id("test-table");
+  bigtable::ConsistencyToken consistency_token("test-async-token");
+
+  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl(
+      new bigtable::testing::MockCompletionQueue);
+  bigtable::CompletionQueue cq(cq_impl);
+
+  google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
+      tested.AsyncWaitForConsistency(cq, table_id, consistency_token);
+
+  // The future is not ready yet.
+  auto future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::timeout, future_status);
+  cq_impl->SimulateCompletion(cq, true);
+
+  // The future becomes ready on the first request that completes with a
+  // permanent error.
+  future_status = result.wait_for(0_ms);
+  EXPECT_EQ(std::future_status::ready, future_status);
+
+  auto consistent = result.get();
+  EXPECT_FALSE(consistent.ok());
+
+  EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            consistent.status().code());
 }
