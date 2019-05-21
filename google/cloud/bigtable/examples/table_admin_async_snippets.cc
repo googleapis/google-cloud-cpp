@@ -342,11 +342,11 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
                              std::vector<std::string> argv) {
   if (argv.size() != 2U) {
     throw Usage{
-        "async-wait-for-consistency-check <project-id> <instance-id> "
+        "async-wait-for-consistency <project-id> <instance-id> "
         "<table-id> <consistency-token>"};
   }
 
-  //! [async wait for consistency check]
+  //! [async wait for consistency]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -364,13 +364,14 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
         std::cout << "The table " << table_id << " is now consistent with"
                   << " the token " << consistency_token << "\n";
       } else {
-        std::cout << "The table " << table_id << " is not yet consistent with"
-                  << " the token " << consistency_token << "\n";
+        std::cout << "Table is not yet consistent, Please try again"
+                  << " later with the same token (" << consistency_token
+                  << ")\n";
       }
     });
     final.get();  // block to simplify example.
   }
-  //! [async wait for consistency check]
+  //! [async wait for consistency]
   (std::move(admin), std::move(cq), argv[1], argv[2]);
 }
 }  // anonymous namespace
