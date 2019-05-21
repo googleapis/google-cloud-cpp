@@ -15,7 +15,7 @@ problems with the service itself.
 Remove the ones that do not apply.
 
 - Cloud Bigtable.
-- Cloud Storage (under development).
+- Cloud Storage.
 - Cloud Firestore (commnunity supported).
 
 ### What version of `google-cloud-cpp` are you using?
