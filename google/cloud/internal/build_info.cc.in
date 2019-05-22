@@ -35,7 +35,10 @@ std::string language_version() {
     // NOLINTNEXTLINE(readability-redundant-string-init)
     std::string v =
         R"""(@CMAKE_CXX_COMPILER_ID@-@CMAKE_CXX_COMPILER_VERSION@)""";
-    std::replace(v.begin(), v.end(), ' ', '_');
+    auto pos = v.find(' ');
+    if (pos != std::string::npos) {
+      v = v.substr(0, pos);
+    }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     v += "-ex";
 #else
