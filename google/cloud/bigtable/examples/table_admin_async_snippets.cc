@@ -340,7 +340,7 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
 void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
                              google::cloud::bigtable::CompletionQueue cq,
                              std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 3U) {
     throw Usage{
         "async-wait-for-consistency <project-id> <instance-id> "
         "<table-id> <consistency-token>"};
