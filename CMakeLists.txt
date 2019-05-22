@@ -109,17 +109,6 @@ be set to:
 * package: use CMake's `find_package()` to find the dependencies. This is the
   recommended configuration for compiling and installing google-cloud-cpp.
 
-* vcpkg: use github.com/Microsoft/vcpkg to find the dependencies. vcpkg
-  largely behaves as `package`, but we have a few bugs in our CMake
-  configuration that need to be cleaned up. This option will be changed to
-  behave exactly as `package` once we fix these problems.
-
-* pkg-config: use pkg-config(1) to find the dependencies. Sometimes the
-  dependencies are installed in the system, but the CMake configuration files
-  to support them are not. WARNING: this option may be removed in the future,
-  we think that modern CMake features like `ExternalProject` and `find_package`
-  are better options for dependency management.
-
 To experiment with different configurations developers can override the setting
 for one or more dependencies. For example, you could set
 `GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER` to `package` and
