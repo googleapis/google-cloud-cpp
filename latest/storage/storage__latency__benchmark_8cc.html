@@ -71,9 +71,6 @@ $(function() {
 <div class="title">storage_latency_benchmark.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>A latency benchmark for the Google Cloud Storage C++ client library.  
-<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;google/cloud/internal/build_info.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/getenv.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/random.h&quot;</code><br />
@@ -97,24 +94,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="storage__latency__benchmark_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A latency benchmark for the Google Cloud Storage C++ client library. </p>
-<p>This program measures the latency to upload and download small (~1 MiB) objects to Google Cloud Storage using the C++ client library. The program repeats the "experiment" of uploading or downloading the file many times, and reports all the results of this experiment. An external script performs statistical analysis on the results to estimate likely values for p95 and p99 of the latency.</p>
-<p>The program first creates a Bucket that will contain all the Objects used in the test. The Bucket is deleted at the end of the test. The name of the Bucket is selected at random, that way multiple instances of this test can run simultaneously. The Bucket uses the <code>REGIONAL</code> storage class, in a region set via the command-line.</p>
-<p>After creating this Bucket the program creates a prescribed number of objects, selecting random names for all these objects. All the objects have the same contents, but the contents are generated at random.</p>
-<p>Once the object creation phase is completed, the program starts N threads, each thread executes a simple loop:</p><ul>
-<li>Pick one of the objects at random, with equal probability for each Object.</li>
-<li>Pick, with equal probably, at action (<code>read</code> or <code>write</code>) at random.</li>
-<li>If the action was <code>write</code> then write a new version of the object.</li>
-<li>If the action was <code>read</code> then read the given object.</li>
-<li>Capture the time taken to read and/or write the object.</li>
-</ul>
-<p>The loop runs for a prescribed number of seconds, at the end of the loop the program prints the captured performance data.</p>
-<p>Then the program remotes all the objects in the bucket, and reports the time taken to delete each one.</p>
-<p>A helper script in this directory can generate pretty graphs from the report. </p>
-
-<p class="definition">Definition in file <a class="el" href="storage__latency__benchmark_8cc_source.html">storage_latency_benchmark.cc</a>.</p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="aa1aa1c6a8f3bbed5b167bc2d4511b969"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1aa1c6a8f3bbed5b167bc2d4511b969">&#9670;&nbsp;</a></span>OpType</h2>
 
@@ -127,7 +107,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storage__latency__benchmark_8cc_source.html#l00096">96</a> of file <a class="el" href="storage__latency__benchmark_8cc_source.html">storage_latency_benchmark.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storage__latency__benchmark_8cc_source.html#l00079">79</a> of file <a class="el" href="storage__latency__benchmark_8cc_source.html">storage_latency_benchmark.cc</a>.</p>
 
 </div>
 </div>
@@ -158,7 +138,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storage__latency__benchmark_8cc_source.html#l00121">121</a> of file <a class="el" href="storage__latency__benchmark_8cc_source.html">storage_latency_benchmark.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storage__latency__benchmark_8cc_source.html#l00106">106</a> of file <a class="el" href="storage__latency__benchmark_8cc_source.html">storage_latency_benchmark.cc</a>.</p>
 
 </div>
 </div>

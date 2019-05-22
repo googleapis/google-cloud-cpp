@@ -65,6 +65,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
@@ -72,6 +73,12 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html">OptionDescriptor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a command-line option.  <a href="structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aa002fe77870a73fd22ba859b589af07a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#aa002fe77870a73fd22ba859b589af07a">MakeRandomBucketName</a> (google::cloud::internal::DefaultPRNG &amp;gen, std::string const  &amp;prefix)</td></tr>
@@ -91,6 +98,17 @@ Functions</h2></td></tr>
 <tr class="memitem:ada45824f183c9d3cf47ce6b19834b01b"><td class="memItemLeft" align="right" valign="top">std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#ada45824f183c9d3cf47ce6b19834b01b">ParseDuration</a> (std::string const  &amp;val)</td></tr>
 <tr class="memdesc:ada45824f183c9d3cf47ce6b19834b01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a string as a duration with support for hours (h), minutes (m), or second (s) suffixes.  <a href="#ada45824f183c9d3cf47ce6b19834b01b">More...</a><br /></td></tr>
 <tr class="separator:ada45824f183c9d3cf47ce6b19834b01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a445aad3f078468c176fb3b53ad403042"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a445aad3f078468c176fb3b53ad403042">ParseBoolean</a> (std::string const  &amp;val, bool default_value)</td></tr>
+<tr class="memdesc:a445aad3f078468c176fb3b53ad403042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a string as a boolean, with a default value if the string is empty.  <a href="#a445aad3f078468c176fb3b53ad403042">More...</a><br /></td></tr>
+<tr class="separator:a445aad3f078468c176fb3b53ad403042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ca3fab093b3f63c32c539ff8e2c5bea"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a4ca3fab093b3f63c32c539ff8e2c5bea">Basename</a> (std::string const &amp;path)</td></tr>
+<tr class="separator:a4ca3fab093b3f63c32c539ff8e2c5bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca39cf76966f777135d58d4d95da428"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#afca39cf76966f777135d58d4d95da428">BuildUsage</a> (std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html">OptionDescriptor</a> &gt; const  &amp;desc, std::string const  &amp;command_path)</td></tr>
+<tr class="memdesc:afca39cf76966f777135d58d4d95da428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the <code>Usage</code> string from a list of command-line option descriptions.  <a href="#afca39cf76966f777135d58d4d95da428">More...</a><br /></td></tr>
+<tr class="separator:afca39cf76966f777135d58d4d95da428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d5b88b84062053d82814cc70833e75"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a09d5b88b84062053d82814cc70833e75">OptionsParse</a> (std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html">OptionDescriptor</a> &gt; const  &amp;desc, std::vector&lt; std::string &gt; argv)</td></tr>
+<tr class="memdesc:a09d5b88b84062053d82814cc70833e75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse <code>argv</code> using the descriptions in <code>desc</code>, return unparsed arguments.  <a href="#a09d5b88b84062053d82814cc70833e75">More...</a><br /></td></tr>
+<tr class="separator:a09d5b88b84062053d82814cc70833e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -112,6 +130,58 @@ Variables</h2></td></tr>
 <tr class="separator:ad123c18c458fc3866f79f9d90141894d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="a4ca3fab093b3f63c32c539ff8e2c5bea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ca3fab093b3f63c32c539ff8e2c5bea">&#9670;&nbsp;</a></span>Basename()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage_benchmarks::Basename </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00139">139</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+
+</div>
+</div>
+<a id="afca39cf76966f777135d58d4d95da428"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afca39cf76966f777135d58d4d95da428">&#9670;&nbsp;</a></span>BuildUsage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage_benchmarks::BuildUsage </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html">OptionDescriptor</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>command_path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build the <code>Usage</code> string from a list of command-line option descriptions. </p>
+
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00149">149</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+
+</div>
+</div>
 <a id="a0bcf039ecb97675643b5432a4e27282f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0bcf039ecb97675643b5432a4e27282f">&#9670;&nbsp;</a></span>EndsWith()</h2>
 
@@ -138,7 +208,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00066">66</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00068">68</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -171,7 +241,7 @@ Variables</h2></td></tr>
 <p>Create a random bucket name. </p>
 <p>Most benchmarks need to create a bucket to storage their data. Using a random bucket name makes it possible to run different instances of the benchmark without interacting with previous or concurrent instances. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00022">22</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00024">24</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -203,7 +273,7 @@ Variables</h2></td></tr>
 
 <p>Create a random chunk of data of a prescribed size. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00040">40</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00042">42</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -225,7 +295,71 @@ Variables</h2></td></tr>
 
 <p>Create a random object name. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00033">33</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00035">35</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+
+</div>
+</div>
+<a id="a09d5b88b84062053d82814cc70833e75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09d5b88b84062053d82814cc70833e75">&#9670;&nbsp;</a></span>OptionsParse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; google::cloud::storage_benchmarks::OptionsParse </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="structgoogle_1_1cloud_1_1storage__benchmarks_1_1OptionDescriptor.html">OptionDescriptor</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse <code>argv</code> using the descriptions in <code>desc</code>, return unparsed arguments. </p>
+
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00159">159</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+
+</div>
+</div>
+<a id="a445aad3f078468c176fb3b53ad403042"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a445aad3f078468c176fb3b53ad403042">&#9670;&nbsp;</a></span>ParseBoolean()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool google::cloud::storage_benchmarks::ParseBoolean </td>
+          <td>(</td>
+          <td class="paramtype">std::string const &amp;&#160;</td>
+          <td class="paramname"><em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>default_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Parse a string as a boolean, with a default value if the string is empty. </p>
+
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00123">123</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -247,7 +381,7 @@ Variables</h2></td></tr>
 
 <p>Parse a string as a duration with support for hours (h), minutes (m), or second (s) suffixes. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00107">107</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00109">109</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -269,7 +403,7 @@ Variables</h2></td></tr>
 
 <p>Parse a string as a byte size, with support for unit suffixes. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00076">76</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00078">78</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>

@@ -72,6 +72,8 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="benchmark__utils_8h_source.html">google/cloud/storage/benchmarks/benchmark_utils.h</a>&quot;</code><br />
+<code>#include &quot;google/cloud/internal/throw_delegate.h&quot;</code><br />
+<code>#include &lt;cctype&gt;</code><br />
 <code>#include &lt;sstream&gt;</code><br />
 <code>#include &lt;stdexcept&gt;</code><br />
 </div>
@@ -105,6 +107,17 @@ Functions</h2></td></tr>
 <tr class="memitem:ada45824f183c9d3cf47ce6b19834b01b"><td class="memItemLeft" align="right" valign="top">std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#ada45824f183c9d3cf47ce6b19834b01b">google::cloud::storage_benchmarks::ParseDuration</a> (std::string const  &amp;val)</td></tr>
 <tr class="memdesc:ada45824f183c9d3cf47ce6b19834b01b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a string as a duration with support for hours (h), minutes (m), or second (s) suffixes.  <a href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#ada45824f183c9d3cf47ce6b19834b01b">More...</a><br /></td></tr>
 <tr class="separator:ada45824f183c9d3cf47ce6b19834b01b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a445aad3f078468c176fb3b53ad403042"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a445aad3f078468c176fb3b53ad403042">google::cloud::storage_benchmarks::ParseBoolean</a> (std::string const  &amp;val, bool default_value)</td></tr>
+<tr class="memdesc:a445aad3f078468c176fb3b53ad403042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a string as a boolean, with a default value if the string is empty.  <a href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a445aad3f078468c176fb3b53ad403042">More...</a><br /></td></tr>
+<tr class="separator:a445aad3f078468c176fb3b53ad403042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ca3fab093b3f63c32c539ff8e2c5bea"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a4ca3fab093b3f63c32c539ff8e2c5bea">google::cloud::storage_benchmarks::Basename</a> (std::string const &amp;path)</td></tr>
+<tr class="separator:a4ca3fab093b3f63c32c539ff8e2c5bea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afca39cf76966f777135d58d4d95da428"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#afca39cf76966f777135d58d4d95da428">google::cloud::storage_benchmarks::BuildUsage</a> (std::vector&lt; OptionDescriptor &gt; const  &amp;desc, std::string const  &amp;command_path)</td></tr>
+<tr class="memdesc:afca39cf76966f777135d58d4d95da428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the <code>Usage</code> string from a list of command-line option descriptions.  <a href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#afca39cf76966f777135d58d4d95da428">More...</a><br /></td></tr>
+<tr class="separator:afca39cf76966f777135d58d4d95da428"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d5b88b84062053d82814cc70833e75"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a09d5b88b84062053d82814cc70833e75">google::cloud::storage_benchmarks::OptionsParse</a> (std::vector&lt; OptionDescriptor &gt; const  &amp;desc, std::vector&lt; std::string &gt; argv)</td></tr>
+<tr class="memdesc:a09d5b88b84062053d82814cc70833e75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse <code>argv</code> using the descriptions in <code>desc</code>, return unparsed arguments.  <a href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a09d5b88b84062053d82814cc70833e75">More...</a><br /></td></tr>
+<tr class="separator:a09d5b88b84062053d82814cc70833e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

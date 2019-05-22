@@ -71,9 +71,6 @@ $(function() {
 <div class="title">storage_throughput_benchmark.cc File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>A thoughput benchmark for the Google Cloud Storage C++ client library.  
-<a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;google/cloud/internal/build_info.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/getenv.h&quot;</code><br />
 <code>#include &quot;google/cloud/internal/random.h&quot;</code><br />
@@ -97,23 +94,7 @@ Functions</h2></td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="storage__throughput__benchmark_8cc.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A thoughput benchmark for the Google Cloud Storage C++ client library. </p>
-<p>This program first creates a Bucket that will contain all the Objects used in the test. The Bucket is deleted at the end of the test. The name of the Bucket is selected at random, that way multiple instances of this test can run simultaneously. The Bucket uses the <code>REGIONAL</code> storage class, in a region set via the command-line.</p>
-<p>After creating this Bucket the program creates a number of objects, all the objects have the same contents, but the contents are generated at random.</p>
-<p>The size of the objects can be configured in the command-line, but they are typically 250MiB is size. The program reports the time it takes to upload the first 10 MiB, the first 20 MiB, the first 30 MiB, and so forth until the total size of the object is uploaded.</p>
-<p>Once the object creation phase is completed, the program starts N threads, each thread executes a simple loop:</p><ul>
-<li>Pick one of the objects at random, with equal probability for each Object.</li>
-<li>Pick, with equal probably, an action (<code>read</code> or <code>write</code>) at random.</li>
-<li>If the action was <code>write</code> then write to the object, capturing throughput information, which is reported when the thread finishes running.</li>
-<li>If the action was <code>read</code> then read the object. Capture the time taken to read the first 10 MiB, the first 20 MiB, and so forth until the full object is read.</li>
-</ul>
-<p>The loop runs for a prescribed number of seconds. At the end of the loop the program prints the captured performance data.</p>
-<p>Then the program removes all the objects in the bucket and reports the time taken to delete each one.</p>
-<p>A helper script in this directory can generate pretty graphs from the report. </p>
-
-<p class="definition">Definition in file <a class="el" href="storage__throughput__benchmark_8cc_source.html">storage_throughput_benchmark.cc</a>.</p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="aa1aa1c6a8f3bbed5b167bc2d4511b969"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa1aa1c6a8f3bbed5b167bc2d4511b969">&#9670;&nbsp;</a></span>OpType</h2>
 
@@ -126,7 +107,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storage__throughput__benchmark_8cc_source.html#l00095">95</a> of file <a class="el" href="storage__throughput__benchmark_8cc_source.html">storage_throughput_benchmark.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storage__throughput__benchmark_8cc_source.html#l00081">81</a> of file <a class="el" href="storage__throughput__benchmark_8cc_source.html">storage_throughput_benchmark.cc</a>.</p>
 
 </div>
 </div>
@@ -157,7 +138,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storage__throughput__benchmark_8cc_source.html#l00120">120</a> of file <a class="el" href="storage__throughput__benchmark_8cc_source.html">storage_throughput_benchmark.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storage__throughput__benchmark_8cc_source.html#l00108">108</a> of file <a class="el" href="storage__throughput__benchmark_8cc_source.html">storage_throughput_benchmark.cc</a>.</p>
 
 </div>
 </div>
