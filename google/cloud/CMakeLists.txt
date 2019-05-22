@@ -191,6 +191,7 @@ if (BUILD_TESTING)
         iam_bindings_test.cc
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
+        internal/build_info_test.cc
         internal/filesystem_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
