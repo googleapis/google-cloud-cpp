@@ -186,13 +186,10 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
       d.parser(val);
       // This is a match, consume the argument and stop the search.
       matched = true;
-      next_arg = argv.erase(next_arg);
       break;
     }
-    // If it was not matched just skip it,
-    if (!matched) {
-      ++next_arg;
-    }
+    // If next_arg is matched against any option erase it, otherwise skip it.
+    next_arg = matched ? argv.erase(next_arg) : next_arg + 1;
   }
   return argv;
 }
