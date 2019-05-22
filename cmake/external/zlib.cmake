@@ -26,6 +26,19 @@ if (NOT TARGET zlib_project)
 
     create_external_project_library_byproduct_list(zlib_byproducts "z")
 
+    # to escape the semi-colon. Quoting does not work and escaping the semi-
+    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
+    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
+    # then be replaced by an escaped semi-colon by CMake. This allows us to use
+    # multiple directories for our RPATH. Normally, it'd make sense to use : as
+    # a delimiter since it is a typical path-list separator, but it is a special
+    # character in CMake.
+    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${CMAKE_PREFIX_PATH};<INSTALL_DIR>")
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_PREFIX_PATH
+                   "${GOOGLE_CLOUD_CPP_PREFIX_PATH}")
+
     include(ExternalProject)
     externalproject_add(
         zlib_project
@@ -34,12 +47,13 @@ if (NOT TARGET zlib_project)
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
         URL ${GOOGLE_CLOUD_CPP_ZLIB_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_ZLIB_SHA256}
+        LIST_SEPARATOR |
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
                    -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                   -DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:<INSTALL_DIR>
+                   -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
