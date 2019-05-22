@@ -57,6 +57,28 @@ std::int64_t ParseSize(std::string const& val);
 /// second (s) suffixes.
 std::chrono::seconds ParseDuration(std::string const& val);
 
+/// Parse a string as a boolean, with a default value if the string is empty.
+bool ParseBoolean(std::string const& val, bool default_value);
+
+/// Defines a command-line option.
+struct OptionDescriptor {
+  using OptionParser = std::function<void(std::string const&)>;
+
+  std::string option;
+  std::string help;
+  OptionParser parser;
+};
+
+/// Build the `Usage` string from a list of command-line option descriptions.
+std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
+                       std::string const& command_path);
+
+/**
+ * Parse @p argv using the descriptions in @p desc, return unparsed arguments.
+ */
+std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
+                                      std::vector<std::string> argv);
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google

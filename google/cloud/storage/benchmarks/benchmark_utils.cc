@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include <cctype>
 #include <sstream>
 #include <stdexcept>
 
@@ -116,6 +118,80 @@ std::chrono::seconds ParseDuration(std::string const& val) {
     return s * std::chrono::seconds(std::chrono::seconds(1));
   }
   return std::chrono::seconds(s);
+}
+
+bool ParseBoolean(std::string const& val, bool default_value) {
+  if (val.empty()) {
+    return default_value;
+  }
+  auto lower = val;
+  std::transform(lower.begin(), lower.end(), lower.begin(),
+                 [](char x) { return static_cast<char>(std::tolower(x)); });
+  if (lower == "true") {
+    return true;
+  } else if (lower == "false") {
+    return false;
+  }
+  google::cloud::internal::ThrowRuntimeError("Cannot parse " + val +
+                                             " as a boolean");
+}
+
+std::string Basename(std::string const& path) {
+  // With C++17 we would use std::filesytem::path, until then do the poor's
+  // person version.
+#if _WIN32
+  return path.substr(path.find_last_of("\\/") + 1);
+#else
+  return path.substr(path.find_last_of('/') + 1);
+#endif  // _WIN32
+}
+
+std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
+                       std::string const& command_path) {
+  std::ostringstream os;
+  os << "Usage: " << Basename(command_path) << " [options] <region>\n";
+  for (auto const& d : desc) {
+    os << "    " << d.option << ": " << d.help << "\n";
+  }
+  return std::move(os).str();
+}
+
+std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
+                                      std::vector<std::string> argv) {
+  if (argv.empty()) {
+    return argv;
+  }
+  std::string const usage = BuildUsage(desc, argv[0]);
+
+  auto next_arg = argv.begin() + 1;
+  while (next_arg != argv.end()) {
+    std::string const& argument = *next_arg;
+
+    // Try to match `argument` against the options in `desc`
+    bool matched = false;
+    for (auto const& d : desc) {
+      if (argument.rfind(d.option, 0) != 0) {
+        // Not a match, keep searching
+        continue;
+      }
+      std::string val = argument.substr(d.option.size());
+      if (!val.empty() && val[0] != '=') {
+        // Matched a prefix of an option, keep searching.
+        continue;
+      }
+      if (!val.empty()) {
+        // The first character must be '=', remove it too.
+        val.erase(val.begin());
+      }
+      d.parser(val);
+      // This is a match, consume the argument and stop the search.
+      matched = true;
+      break;
+    }
+    // If next_arg is matched against any option erase it, otherwise skip it.
+    next_arg = matched ? argv.erase(next_arg) : next_arg + 1;
+  }
+  return argv;
 }
 
 }  // namespace storage_benchmarks

@@ -53,8 +53,10 @@ export_list_to_bazel("storage_benchmark_programs.bzl"
 
 if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
-    set(storage_benchmarks_unit_tests benchmark_parser_test.cc
-        benchmark_make_random_test.cc)
+    set(storage_benchmarks_unit_tests
+        benchmark_parser_test.cc
+        benchmark_make_random_test.cc
+        benchmark_parse_args_test.cc)
 
     foreach (fname ${storage_benchmarks_unit_tests})
         string(REPLACE "/"

@@ -47,13 +47,13 @@ run_example ./storage_latency_benchmark \
 run_example ./storage_throughput_benchmark \
       --duration=1 \
       --object-count=8 \
-      --object-chunk-count=10 \
+      --object-size=10MiB \
       "${FAKE_REGION}"
 run_example ./storage_throughput_benchmark \
       --enable-xml-api=false \
       --duration=1 \
       --object-count=8 \
-      --object-chunk-count=10 \
+      --object-size=10MiB \
       "${FAKE_REGION}"
 
 if [[ "${EXIT_STATUS}" = "0" ]]; then

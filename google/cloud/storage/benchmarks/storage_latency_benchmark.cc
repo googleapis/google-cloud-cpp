@@ -23,74 +23,57 @@
 #include <iomanip>
 #include <sstream>
 
-/**
- * @file
- *
- * A latency benchmark for the Google Cloud Storage C++ client library.
- *
- * This program measures the latency to upload and download small (~1 MiB)
- * objects to Google Cloud Storage using the C++ client library. The program
- * repeats the "experiment" of uploading or downloading the file many times,
- * and reports all the results of this experiment. An external script performs
- * statistical analysis on the results to estimate likely values for p95 and p99
- * of the latency.
- *
- * The program first creates a Bucket that will contain all the Objects used in
- * the test.  The Bucket is deleted at the end of the test. The name of the
- * Bucket is selected at random, that way multiple instances of this test can
- * run simultaneously. The Bucket uses the `REGIONAL` storage class, in a region
- * set via the command-line.
- *
- * After creating this Bucket the program creates a prescribed number of
- * objects, selecting random names for all these objects. All the objects have
- * the same contents, but the contents are generated at random.
- *
- * Once the object creation phase is completed, the program starts N threads,
- * each thread executes a simple loop:
- * - Pick one of the objects at random, with equal probability for each Object.
- * - Pick, with equal probably, at action (`read` or `write`) at random.
- * - If the action was `write` then write a new version of the object.
- * - If the action was `read` then read the given object.
- * - Capture the time taken to read and/or write the object.
- *
- * The loop runs for a prescribed number of seconds, at the end of the loop the
- * program prints the captured performance data.
- *
- * Then the program remotes all the objects in the bucket, and reports the time
- * taken to delete each one.
- *
- * A helper script in this directory can generate pretty graphs from the report.
- */
-
 namespace {
 namespace gcs = google::cloud::storage;
 namespace gcs_bm = google::cloud::storage_benchmarks;
 
-constexpr std::chrono::seconds kDefaultDuration(60);
-constexpr long kDefaultObjectCount = 1000;
+char const kDescription[] = R"""(
+A latency benchmark for the Google Cloud Storage C++ client library.
+
+This program measures the latency to upload and download small (~1 MiB) objects
+to Google Cloud Storage using the C++ client library. The program repeats the
+"experiment" of uploading or downloading the file many times, and reports all
+the results of this experiment. An external script performs statistical analysis
+on the results to estimate likely values for p95 and p99 of the latency.
+
+The program first creates a Bucket that will contain all the Objects used in the
+test.  The Bucket is deleted at the end of the test. The name of the Bucket is
+selected at random, so multiple instances of this test can run simultaneously.
+The Bucket uses the `REGIONAL` storage class, in a region set via the
+command-line.
+
+After creating this Bucket the program creates a prescribed number of objects,
+selecting random names for all these objects. All the objects have the same
+contents, but the contents are generated at random.
+
+Once the object creation phase is completed, the program starts N threads, each
+thread executes a simple loop:
+- Pick one of the objects at random, with equal probability for each Object.
+- Pick, with equal probably, at action (`read` or `write`) at random.
+- If the action was `write` then write a new version of the object.
+- If the action was `read` then read the given object.
+- Capture the time taken to read and/or write the object.
+
+The loop runs for a prescribed number of seconds, at the end of the loop the
+program prints the captured performance data.
+
+Then the program removes all the objects in the bucket, and reports the time
+taken to delete each one.
+
+A helper script in this directory can generate pretty graphs from the output of
+this program.
+)""";
+
 constexpr long kBlobSize = gcs_bm::kMiB;
 
 struct Options {
   std::string region;
-  std::chrono::seconds duration;
-  long object_count;
-  int thread_count;
-  bool enable_connection_pool;
-  bool enable_xml_api;
-
-  Options()
-      : duration(kDefaultDuration),
-        object_count(kDefaultObjectCount),
-        enable_connection_pool(true),
-        enable_xml_api(true) {
-    thread_count = std::thread::hardware_concurrency();
-    if (thread_count == 0) {
-      thread_count = 1;
-    }
-  }
-
-  void ParseArgs(int& argc, char* argv[]);
-  std::string ConsumeArg(int& argc, char* argv[], char const* arg_name);
+  std::chrono::seconds duration = std::chrono::seconds(60);
+  long object_count = 1000;
+  int thread_count = 1;
+  bool enable_connection_pool = false;
+  bool enable_xml_api = false;
+  std::string project_id;
 };
 
 enum OpType { OP_READ, OP_WRITE, OP_CREATE, OP_DELETE, OP_LAST };
@@ -116,16 +99,12 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
                       Options const& options,
                       std::vector<std::string> const& object_names);
 
+Options ParseArgs(int argc, char* argv[]);
+
 }  // namespace
 
 int main(int argc, char* argv[]) try {
-  Options options;
-  options.ParseArgs(argc, argv);
-
-  if (!google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").has_value()) {
-    std::cerr << "GOOGLE_CLOUD_PROJECT environment variable must be set\n";
-    return 1;
-  }
+  Options options = ParseArgs(argc, argv);
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
@@ -136,6 +115,9 @@ int main(int argc, char* argv[]) try {
   }
   if (!options.enable_connection_pool) {
     client_options->set_connection_pool_size(0);
+  }
+  if (!options.project_id.empty()) {
+    client_options->set_project_id(options.project_id);
   }
   gcs::Client client(*std::move(client_options));
 
@@ -186,15 +168,6 @@ int main(int argc, char* argv[]) try {
 }
 
 namespace {
-std::string Basename(std::string const& path) {
-  // Sure would be nice to be using C++17 where std::filesytem is a thing.
-#if _WIN32
-  return path.substr(path.find_last_of('\\') + 1);
-#else
-  return path.substr(path.find_last_of('/') + 1);
-#endif  // _WIN32
-}
-
 char const* ToString(OpType type) {
   static char const* kOpTypeNames[] = {"READ", "WRITE", "CREATE", "DELETE",
                                        "LAST"};
@@ -422,84 +395,68 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
             << "ms\n";
 }
 
-void Options::ParseArgs(int& argc, char* argv[]) {
-  region = ConsumeArg(argc, argv, "region");
-}
+Options ParseArgs(int argc, char* argv[]) {
+  Options options;
+  bool wants_help = false;
+  bool wants_description = false;
+  std::vector<gcs_bm::OptionDescriptor> desc{
+      {"--help", "print usage information",
+       [&wants_help](std::string const& v) { wants_help = true; }},
+      {"--description", "print benchmark description",
+       [&wants_description](std::string const& v) {
+         wants_description = true;
+       }},
+      {"--duration", "set the total execution time for the benchmark",
+       [&options](std::string const& val) {
+         options.duration = gcs_bm::ParseDuration(val);
+       }},
+      {"--object-count", "set the number of objects created by the benchmark",
+       [&options](std::string const& val) {
+         options.object_count = std::stoi(val);
+       }},
+      {"--thread-count", "set the number of threads in the benchmark",
+       [&options](std::string const& val) {
+         options.thread_count = std::stoi(val);
+       }},
+      {"--enable-connection-pool", "enable the client library connection pool",
+       [&options](std::string const& val) {
+         options.enable_connection_pool = gcs_bm::ParseBoolean(val, true);
+       }},
+      {"--enable-xml-api", "enable the XML API for the benchmark",
+       [&options](std::string const& val) {
+         options.enable_xml_api = gcs_bm::ParseBoolean(val, true);
+       }},
+      {"--project-id", "use the given project id for the benchmark",
+       [&options](std::string const& val) { options.project_id = val; }},
+      {"--region", "use the given region for the benchmark",
+       [&options](std::string const& val) { options.region = val; }},
+  };
+  auto usage = gcs_bm::BuildUsage(desc, argv[0]);
 
-std::string Options::ConsumeArg(int& argc, char* argv[], char const* arg_name) {
-  std::string const duration = "--duration=";
-  std::string const object_count = "--object-count=";
-  std::string const thread_count = "--thread-count=";
-  std::string const enable_connection_pool = "--enable-connection-pool=";
-  std::string const enable_xml_api = "--enable-xml-api=";
-
-  std::string const usage = R""(
-[options] <region>
-The options are:
-    --help: produce this message.
-    --duration (in seconds): for how long should the test run.
-    --object-count: the number of objects to use in the benchmark.
-    --thread-count: the number of threads to use in the benchmark.
-    --enable-connection-pool: reuse connections across requests.
-    --enable-xml-api: configure read+write operations to use XML API.
-
-    region: a Google Cloud Storage region where all the objects used in this
-       test will be located.
-)"";
-
-  std::string error;
-  while (argc >= 2) {
-    std::string argument(argv[1]);
-    std::copy(argv + 2, argv + argc, argv + 1);
-    argc--;
-    if (argument == "--help") {
-    } else if (0 == argument.rfind(duration, 0)) {
-      std::string val = argument.substr(duration.size());
-      this->duration = gcs_bm::ParseDuration(val);
-    } else if (0 == argument.rfind(object_count, 0)) {
-      auto arg = argument.substr(object_count.size());
-      auto val = std::stol(arg);
-      if (val <= 0) {
-        error = "Invalid object-count argument (" + arg + ")";
-        break;
-      }
-      this->object_count = val;
-    } else if (0 == argument.rfind(thread_count, 0)) {
-      auto arg = argument.substr(object_count.size());
-      auto val = std::stoi(arg);
-      if (val <= 0) {
-        error = "Invalid thread-count argument (" + arg + ")";
-        break;
-      }
-      this->thread_count = val;
-    } else if (0 == argument.rfind(enable_connection_pool, 0)) {
-      auto arg = argument.substr(enable_connection_pool.size());
-      if (arg == "true" or arg == "yes" or arg == "1") {
-        this->enable_connection_pool = true;
-      } else if (arg == "false" or arg == "no" or arg == "0") {
-        this->enable_connection_pool = false;
-      } else {
-        error = "Invalid enable-connection-pool argument (" + arg + ")";
-        break;
-      }
-    } else if (0 == argument.rfind(enable_xml_api, 0)) {
-      auto arg = argument.substr(enable_xml_api.size());
-      if (arg == "true" or arg == "yes" or arg == "1") {
-        this->enable_xml_api = true;
-      } else if (arg == "false" or arg == "no" or arg == "0") {
-        this->enable_xml_api = false;
-      } else {
-        error = "Invalid enable-xml-api argument (" + arg + ")";
-        break;
-      }
-    } else {
-      return argument;
-    }
+  auto unparsed = gcs_bm::OptionsParse(desc, {argv, argv + argc});
+  if (wants_help) {
+    std::cout << usage << "\n";
   }
-  std::ostringstream os;
-  os << "Missing argument " << arg_name << "\n";
-  os << "Usage: " << Basename(argv[0]) << usage << "\n";
-  throw std::runtime_error(os.str());
+
+  if (wants_description) {
+    std::cout << kDescription << "\n";
+  }
+
+  if (unparsed.size() > 2U) {
+    std::ostringstream os;
+    os << "Unknown arguments or options\n" << usage << "\n";
+    throw std::runtime_error(std::move(os).str());
+  }
+  if (unparsed.size() == 2U) {
+    options.region = unparsed[1];
+  }
+  if (options.region.empty()) {
+    std::ostringstream os;
+    os << "Missing value for --region option" << usage << "\n";
+    throw std::runtime_error(std::move(os).str());
+  }
+
+  return options;
 }
 
 }  // namespace

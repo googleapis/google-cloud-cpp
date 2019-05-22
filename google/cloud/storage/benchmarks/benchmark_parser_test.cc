@@ -43,6 +43,17 @@ TEST(StorageBenchmarksUtilsTest, ParseDuration) {
   EXPECT_EQ(s(1800).count(), ParseDuration("1800s").count());
 }
 
+TEST(StorageBenchmarksUtilsTest, ParseBoolean) {
+  EXPECT_EQ(true, ParseBoolean("", true));
+  EXPECT_EQ(false, ParseBoolean("", false));
+
+  EXPECT_EQ(true, ParseBoolean("true", false));
+  EXPECT_EQ(true, ParseBoolean("True", false));
+
+  EXPECT_EQ(false, ParseBoolean("false", true));
+  EXPECT_EQ(false, ParseBoolean("False", true));
+}
+
 }  // namespace
 }  // namespace storage_benchmarks
 }  // namespace cloud
