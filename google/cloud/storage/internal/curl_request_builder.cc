@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
+#include "google/cloud/internal/build_info.h"
 #include "google/cloud/storage/version.h"
 
 namespace google {
@@ -118,8 +119,9 @@ std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
   static std::string const user_agent_suffix = [] {
-    std::string agent = "gcloud-cpp/" + storage::version_string();
+    std::string agent = "gcloud-cpp/" + storage::version_string() + " ";
     agent += curl_version();
+    agent += " " + google::cloud::internal::compiler();
     return agent;
   }();
   return user_agent_suffix;
