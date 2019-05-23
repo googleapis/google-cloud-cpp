@@ -342,6 +342,8 @@ function run_all_table_admin_async_examples {
       "${project_id}" "${INSTANCE}" "${TABLE}" | awk '{print $5}')"
   run_example ./table_admin_async_snippets async-check-consistency \
       "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
+  run_example ./table_admin_async_snippets async-wait-for-consistency \
+      "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
   run_example ./table_admin_async_snippets async-drop-rows-by-prefix \
       "${project_id}" "${INSTANCE}" "${TABLE}" "${ROW_KEY}"
   run_example ./table_admin_async_snippets async-drop-all-rows \

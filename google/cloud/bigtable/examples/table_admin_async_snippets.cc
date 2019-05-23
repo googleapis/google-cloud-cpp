@@ -336,6 +336,44 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   //! [async generate consistency token]
   (std::move(admin), std::move(cq), argv[1]);
 }
+
+void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
+                             google::cloud::bigtable::CompletionQueue cq,
+                             std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{
+        "async-wait-for-consistency <project-id> <instance-id> "
+        "<table-id> <consistency-token>"};
+  }
+
+  //! [async wait for consistency]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
+     std::string consistency_token) {
+    future<StatusOr<cbt::Consistency>> result = admin.AsyncWaitForConsistency(
+        cq, cbt::TableId(table_id), cbt::ConsistencyToken(consistency_token));
+
+    auto final = result.then([&](future<StatusOr<cbt::Consistency>> f) {
+      auto consistent = f.get();
+      if (!consistent) {
+        throw std::runtime_error(consistent.status().message());
+      }
+      if (*consistent == cbt::Consistency::kConsistent) {
+        std::cout << "The table " << table_id << " is now consistent with"
+                  << " the token " << consistency_token << "\n";
+      } else {
+        std::cout << "Table is not yet consistent, Please try again"
+                  << " later with the same token (" << consistency_token
+                  << ")\n";
+      }
+    });
+    final.get();  // block to simplify example.
+  }
+  //! [async wait for consistency]
+  (std::move(admin), std::move(cq), argv[1], argv[2]);
+}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -353,6 +391,7 @@ int main(int argc, char* argv[]) try {
       {"async-drop-all-rows", &AsyncDropAllRows},
       {"async-check-consistency", &AsyncCheckConsistency},
       {"async-generate-consistency-token", &AsyncGenerateConsistencyToken},
+      {"async-wait-for-consistency", &AsyncWaitForConsistency},
   };
 
   google::cloud::bigtable::CompletionQueue cq;

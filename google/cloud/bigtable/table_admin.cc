@@ -306,6 +306,74 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
       });
 }
 
+google::cloud::future<StatusOr<Consistency>>
+TableAdmin::AsyncWaitForConsistency(
+    CompletionQueue& cq, TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  class AsyncWaitForConsistencyState
+      : public std::enable_shared_from_this<AsyncWaitForConsistencyState> {
+   public:
+    static future<StatusOr<Consistency>> Create(
+        CompletionQueue cq, TableId table_id,
+        ConsistencyToken consistency_token, TableAdmin const& table_admin,
+        std::unique_ptr<PollingPolicy> polling_policy) {
+      std::shared_ptr<AsyncWaitForConsistencyState> state(
+          new AsyncWaitForConsistencyState(
+              std::move(cq), std::move(table_id), std::move(consistency_token),
+              table_admin, std::move(polling_policy)));
+
+      state->StartIteration();
+      return state->promise_.get_future();
+    }
+
+   private:
+    AsyncWaitForConsistencyState(CompletionQueue cq, TableId table_id,
+                                 ConsistencyToken consistency_token,
+                                 TableAdmin const& table_admin,
+                                 std::unique_ptr<PollingPolicy> polling_policy)
+        : cq_(std::move(cq)),
+          table_id_(std::move(table_id)),
+          consistency_token_(std::move(consistency_token)),
+          table_admin_(table_admin),
+          polling_policy_(std::move(polling_policy)) {}
+
+    void StartIteration() {
+      auto self = shared_from_this();
+      table_admin_.AsyncCheckConsistency(cq_, table_id_, consistency_token_)
+          .then([self](future<StatusOr<Consistency>> f) {
+            self->OnCheckConsistency(f.get());
+          });
+    }
+
+    void OnCheckConsistency(StatusOr<Consistency> consistent) {
+      auto self = shared_from_this();
+      if (consistent && *consistent == Consistency::kConsistent) {
+        promise_.set_value(*consistent);
+        return;
+      }
+      auto status = std::move(consistent).status();
+      if (!polling_policy_->OnFailure(status)) {
+        promise_.set_value(std::move(status));
+        return;
+      }
+      cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
+          .then([self](future<std::chrono::system_clock::time_point>) {
+            self->StartIteration();
+          });
+    }
+
+    CompletionQueue cq_;
+    TableId table_id_;
+    ConsistencyToken consistency_token_;
+    TableAdmin table_admin_;
+    std::unique_ptr<PollingPolicy> polling_policy_;
+    google::cloud::promise<StatusOr<Consistency>> promise_;
+  };
+
+  return AsyncWaitForConsistencyState::Create(cq, table_id, consistency_token,
+                                              *this, clone_polling_policy());
+}
+
 Status TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
   btadmin::DropRowRangeRequest request;
