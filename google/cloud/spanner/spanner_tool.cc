@@ -108,7 +108,7 @@ int CreateDatabase(std::vector<std::string> args) {
   spanner::CreateDatabaseRequest request;
   google::longrunning::Operation operation;
   request.set_parent("projects/" + project + "/instances/" + instance);
-  request.set_create_statement("CREATE DATABASE " + database);
+  request.set_create_statement("CREATE DATABASE `" + database + "`");
 
   grpc::ClientContext context;
   grpc::Status status = stub->CreateDatabase(&context, request, &operation);
@@ -123,6 +123,40 @@ int CreateDatabase(std::vector<std::string> args) {
   std::cout << operation.DebugString() << "\n";
 
   return WaitForOperation(std::move(channel), std::move(operation));
+}
+
+int DropDatabase(std::vector<std::string> args) {
+  if (args.size() != 3U) {
+    std::cerr << "drop-database <project> <instance> <database>\n";
+    return 1;
+  }
+  auto const& project = args[0];
+  auto const& instance = args[1];
+  auto const& database = args[2];
+
+  namespace spanner = google::spanner::admin::database::v1;
+
+  std::shared_ptr<grpc::ChannelCredentials> cred =
+      grpc::GoogleDefaultCredentials();
+  std::shared_ptr<grpc::Channel> channel =
+      grpc::CreateChannel("spanner.googleapis.com", cred);
+  auto stub = spanner::DatabaseAdmin::NewStub(channel);
+
+  spanner::DropDatabaseRequest request;
+  google::protobuf::Empty response;
+  request.set_database("projects/" + project + "/instances/" + instance +
+                       "/databases/" + database);
+
+  grpc::ClientContext context;
+  grpc::Status status = stub->DropDatabase(&context, request, &response);
+
+  if (!status.ok()) {
+    std::cerr << "FAILED: " << status.error_code() << ": "
+              << status.error_message() << "\n";
+    return 1;
+  }
+
+  return 0;
 }
 
 int CreateTimeseriesTable(std::vector<std::string> args) {
@@ -354,6 +388,7 @@ int main(int argc, char* argv[]) {
   std::map<std::string, CommandType> commands = {
       {"list-databases", &ListDatabases},
       {"create-database", &CreateDatabase},
+      {"drop-database", &DropDatabase},
       {"create-timeseries-table", &CreateTimeseriesTable},
       {"populate-timeseries", &PopulateTimeseriesTable},
   };
