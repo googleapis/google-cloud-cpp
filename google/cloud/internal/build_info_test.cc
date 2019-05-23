@@ -27,7 +27,12 @@ using ::testing::MatchesRegex;
 TEST(BuildInfo, LanguageVersion) {
   auto lv = language_version();
   EXPECT_THAT(lv, ::testing::AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
+#ifndef _WIN32
   EXPECT_THAT(lv, MatchesRegex(R"([0-9A-Za-z_.-]+)"));
+#else
+  // Brackets for regex above don't work on windows.
+  EXPECT_THAT(lv, Not(HasSubstr(" ")));
+#endif
 }
 
 }  // namespace
