@@ -306,6 +306,19 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
       });
 }
 
+google::cloud::future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
+    bigtable::TableId const& table_id,
+    bigtable::ConsistencyToken const& consistency_token) {
+  CompletionQueue cq;
+  std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
+
+  return AsyncWaitForConsistency(cq, table_id, consistency_token)
+      .then([cq](future<StatusOr<Consistency>> f) mutable {
+        cq.Shutdown();
+        return f.get();
+      });
+}
+
 google::cloud::future<StatusOr<Consistency>>
 TableAdmin::AsyncWaitForConsistency(
     CompletionQueue& cq, TableId const& table_id,
@@ -508,35 +521,6 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
                                     : Consistency::kInconsistent;
         ;
       });
-}
-StatusOr<Consistency> TableAdmin::WaitForConsistencyCheckImpl(
-    bigtable::TableId const& table_id,
-    bigtable::ConsistencyToken const& consistency_token) {
-  grpc::Status status;
-  btadmin::CheckConsistencyRequest request;
-  request.set_name(TableName(table_id.get()));
-  request.set_consistency_token(consistency_token.get());
-  MetadataUpdatePolicy metadata_update_policy(
-      instance_name(), MetadataParamTypes::NAME, table_id.get());
-
-  // TODO(#1918) - make use of polling policy deadlines
-  auto polling_policy = clone_polling_policy();
-  do {
-    auto response = ClientUtils::MakeCall(
-        *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy, &AdminClient::CheckConsistency, request,
-        "CheckConsistency", status, true);
-
-    if (status.ok()) {
-      if (response.consistent()) {
-        return Consistency::kConsistent;
-      }
-    } else if (polling_policy->IsPermanentError(status)) {
-      return bigtable::internal::MakeStatusFromRpcError(status);
-    }
-  } while (!polling_policy->Exhausted());
-
-  return bigtable::internal::MakeStatusFromRpcError(status);
 }
 
 std::string TableAdmin::InstanceName() const {

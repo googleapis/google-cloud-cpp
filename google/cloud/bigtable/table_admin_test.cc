@@ -652,65 +652,6 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   EXPECT_FALSE(tested.CheckConsistency(table_id, consistency_token));
 }
 
-/**
- * @test Verify that `bigtagble::TableAdmin::CheckConsistency` works as
- * expected, with multiple asynchronous calls.
- */
-TEST_F(TableAdminTest, AsyncCheckConsistencySimple) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
-  bigtable::TableAdmin tested(client_, "the-async-instance");
-  std::string expected_text = R"""(
-      name: 'projects/the-project/instances/the-async-instance/tables/the-async-table'
-      consistency_token: 'test-async-token'
-)""";
-
-  auto mock_for_false = MockRpcMultiCallFactory<
-      btadmin::CheckConsistencyRequest,
-      btadmin::CheckConsistencyResponse>::Create(expected_text, false);
-  auto mock_for_true = MockRpcMultiCallFactory<
-      btadmin::CheckConsistencyRequest,
-      btadmin::CheckConsistencyResponse>::Create(expected_text, true);
-
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
-      .WillOnce(Invoke(mock_for_false))
-      .WillOnce(Invoke(mock_for_false))
-      .WillOnce(Invoke(mock_for_false))
-      .WillOnce(Invoke(mock_for_false))
-      .WillOnce(Invoke(mock_for_true));
-
-  bigtable::TableId table_id("the-async-table");
-  bigtable::ConsistencyToken consistency_token("test-async-token");
-  // After all the setup, make the actual call we want to test.
-  std::future<google::cloud::StatusOr<bigtable::Consistency>> result =
-      tested.WaitForConsistencyCheck(table_id, consistency_token);
-  auto actual = result.get();
-  EXPECT_STATUS_OK(actual);
-  EXPECT_EQ(bigtable::Consistency::kConsistent, *actual);
-}
-
-/**
- * @test Verify that `bigtable::TableAdmin::CheckConsistency` makes only
- * one RPC attempt and reports errors on failure.
- */
-TEST_F(TableAdminTest, AsyncCheckConsistencyFailure) {
-  using namespace ::testing;
-  using namespace google::cloud::testing_util::chrono_literals;
-
-  bigtable::TableAdmin tested(client_, "the-async-instance");
-  EXPECT_CALL(*client_, CheckConsistency(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-
-  bigtable::TableId table_id("other-async-table");
-  bigtable::ConsistencyToken consistency_token("test-async-token");
-
-  std::future<google::cloud::StatusOr<bigtable::Consistency>> result =
-      tested.WaitForConsistencyCheck(table_id, consistency_token);
-  EXPECT_FALSE(result.get());
-}
-
 using MockAsyncCheckConsistencyResponse =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         ::google::bigtable::admin::v2::CheckConsistencyResponse>;
