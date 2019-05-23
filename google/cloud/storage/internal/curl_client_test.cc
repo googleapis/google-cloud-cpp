@@ -234,11 +234,6 @@ TEST_P(CurlClientTest, ReadObjectJson) {
 }
 
 TEST_P(CurlClientTest, WriteObject) {
-  std::string const error_type = GetParam();
-  if (error_type != "credentials-failure") {
-    // TODO(#1735) - enable this test when ObjectWriteStream uses StatusOr.
-    return;
-  }
   auto actual =
       client_->WriteObject(InsertObjectStreamingRequest("bkt", "obj")).status();
   CheckStatus(actual);
