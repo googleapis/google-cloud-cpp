@@ -144,6 +144,17 @@ class Crc32cHashValidator : public HashValidator {
   std::string received_hash_;
 };
 
+class ReadObjectRangeRequest;
+class InsertObjectStreamingRequest;
+
+/// Create a hash validator configured by @p request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    ReadObjectRangeRequest const& request);
+
+/// Create a hash validator configured by @p request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    InsertObjectStreamingRequest const& request);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
