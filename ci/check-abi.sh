@@ -70,12 +70,8 @@ check_library() {
 exit_status=0
 # We are keeping the library list alphabetical for now, there is no preferred
 # order otherwise.
-for library in google_cloud_cpp_common storage_client; do
+for library in bigtable_client google_cloud_cpp_common storage_client; do
   check_library "${library}" || exit_status=1
 done
-
-# For these libraries we run the check, but ignore any errors.
-check_library bigtable_client || \
-  echo "${COLOR_RED}ABI/API checks failed for ${library}${COLOR_RESET}"
 
 exit ${exit_status}
