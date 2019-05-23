@@ -585,13 +585,9 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc wait for consistency check
    */
-  std::future<StatusOr<Consistency>> WaitForConsistencyCheck(
+  google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
       bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token) {
-    return std::async(std::launch::async,
-                      &TableAdmin::WaitForConsistencyCheckImpl, this, table_id,
-                      consistency_token);
-  }
+      bigtable::ConsistencyToken const& consistency_token);
 
   /**
    * Asynchronously wait until a table is consistent with the given @p token.
@@ -667,14 +663,6 @@ class TableAdmin {
   }
 
  private:
-  /**
-   * Implements the polling loop for `WaitForConsistencyCheck` on a
-   * separate thread
-   */
-  StatusOr<Consistency> WaitForConsistencyCheckImpl(
-      bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
-
   //@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy& policy) {

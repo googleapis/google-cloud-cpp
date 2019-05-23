@@ -640,6 +640,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
 
   //! [wait for consistency check]
   namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id) {
     StatusOr<cbt::ConsistencyToken> consistency_token =
@@ -647,20 +648,24 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
     if (!consistency_token) {
       throw std::runtime_error(consistency_token.status().message());
     }
-    std::future<StatusOr<cbt::Consistency>> consistent_future =
-        admin.WaitForConsistencyCheck(cbt::TableId(table_id),
-                                      *consistency_token);
-    auto is_consistent = consistent_future.get();
-    if (!is_consistent) {
-      throw std::runtime_error(is_consistent.status().message());
-    }
-    if (*is_consistent == cbt::Consistency::kConsistent) {
-      std::cout << "Table is consistent with token " << consistency_token->get()
-                << "\n";
-    } else {
-      std::cout << "Table is not yet consistent, Please try again later with"
+    future<StatusOr<cbt::Consistency>> consistent_future =
+        admin.WaitForConsistency(cbt::TableId(table_id), *consistency_token);
+    auto final = consistent_future.then(
+        [&consistency_token](future<StatusOr<cbt::Consistency>> f) {
+          auto is_consistent = f.get();
+          if (!is_consistent) {
+            throw std::runtime_error(is_consistent.status().message());
+          }
+          if (*is_consistent == cbt::Consistency::kConsistent) {
+            std::cout << "Table is consistent with token "
+                      << consistency_token->get() << "\n";
+          } else {
+            std::cout
+                << "Table is not yet consistent, Please try again later with"
                 << " the same token (" << consistency_token->get() << ")\n";
-    }
+          }
+        });
+    final.get();  // simplify example by blocking until operation is done.
   }
   //! [wait for consistency check]
   (std::move(admin), table_id);
