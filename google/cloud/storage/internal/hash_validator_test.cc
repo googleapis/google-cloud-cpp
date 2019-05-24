@@ -218,6 +218,80 @@ TEST(CompositeHashValidator, Missing) {
   EXPECT_FALSE(result.is_mismatch);
 }
 
+TEST(CreateHashValidator, Read_Null) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableCrc32cChecksum(true),
+                                                    DisableMD5Hash(true)));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
+}
+
+TEST(CreateHashValidator, Read_OnlyCrc32c) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash(true)));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(QUICK_FOX_CRC32C_CHECKSUM, result.computed);
+}
+
+TEST(CreateHashValidator, Read_OnlyMD5) {
+  auto validator = CreateHashValidator(
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(true)));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(QUICK_FOX_MD5_HASH, result.computed);
+}
+
+TEST(CreateHashValidator, Read_Both) {
+  auto validator =
+      CreateHashValidator(ReadObjectRangeRequest("test-bucket", "test-object"));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_MD5_HASH));
+  EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_CRC32C_CHECKSUM));
+}
+
+TEST(CreateHashValidator, Write_Null) {
+  auto validator = CreateHashValidator(
+      InsertObjectStreamingRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(true),
+                                DisableMD5Hash(true)));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_TRUE(result.computed.empty());
+}
+
+TEST(CreateHashValidator, Write_OnlyCrc32c) {
+  auto validator = CreateHashValidator(
+      InsertObjectStreamingRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableMD5Hash(true)));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(QUICK_FOX_CRC32C_CHECKSUM, result.computed);
+}
+
+TEST(CreateHashValidator, Write_OnlyMD5) {
+  auto validator = CreateHashValidator(
+      InsertObjectStreamingRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(true)));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_EQ(QUICK_FOX_MD5_HASH, result.computed);
+}
+
+TEST(CreateHashValidator, Write_Both) {
+  auto validator = CreateHashValidator(
+      InsertObjectStreamingRequest("test-bucket", "test-object"));
+  validator->Update("The quick brown fox jumps over the lazy dog");
+  auto result = std::move(*validator).Finish();
+  EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_MD5_HASH));
+  EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_CRC32C_CHECKSUM));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

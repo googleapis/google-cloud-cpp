@@ -14,8 +14,10 @@
 
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/object_metadata.h"
 #include <crc32c/crc32c.h>
@@ -135,6 +137,39 @@ HashValidator::Result Crc32cHashValidator::Finish() && {
   auto computed = Base64Encode(hash);
   bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};
+}
+
+std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
+                                                   bool disable_crc32c) {
+  if (disable_md5 && disable_crc32c) {
+    return google::cloud::internal::make_unique<NullHashValidator>();
+  }
+  if (disable_md5) {
+    return google::cloud::internal::make_unique<Crc32cHashValidator>();
+  }
+  if (disable_crc32c) {
+    return google::cloud::internal::make_unique<MD5HashValidator>();
+  }
+  return google::cloud::internal::make_unique<CompositeValidator>(
+      google::cloud::internal::make_unique<Crc32cHashValidator>(),
+      google::cloud::internal::make_unique<MD5HashValidator>());
+}
+
+/// Create a HashValidator for a download request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    ReadObjectRangeRequest const& request) {
+  if (request.HasOption<ReadRange>()) {
+    return google::cloud::internal::make_unique<NullHashValidator>();
+  }
+  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
+                             request.HasOption<DisableCrc32cChecksum>());
+}
+
+/// Create a HashValidator for an upload request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    InsertObjectStreamingRequest const& request) {
+  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
+                             request.HasOption<DisableCrc32cChecksum>());
 }
 
 }  // namespace internal
