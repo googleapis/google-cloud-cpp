@@ -55,6 +55,7 @@ class CurlDownloadRequest {
         logging_enabled_(rhs.logging_enabled_),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
+        in_multi_(rhs.in_multi_),
         factory_(std::move(rhs.factory_)),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_),
@@ -70,6 +71,7 @@ class CurlDownloadRequest {
     logging_enabled_ = rhs.logging_enabled_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
+    in_multi_ = rhs.in_multi_;
     factory_ = std::move(rhs.factory_);
     closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
@@ -148,9 +150,10 @@ class CurlDownloadRequest {
   std::string payload_;
   std::string user_agent_;
   CurlReceivedHeaders received_headers_;
-  bool logging_enabled_;
+  bool logging_enabled_ = false;
   CurlHandle handle_;
   CurlMulti multi_;
+  bool in_multi_ = false;
   std::shared_ptr<CurlHandleFactory> factory_;
 
   std::string buffer_;
@@ -161,10 +164,10 @@ class CurlDownloadRequest {
   // 2. Once that callback returns 0, this class needs to know
   //
   // The closing_ flag is set when we enter step 1.
-  bool closing_;
+  bool closing_ = false;
   // The curl_closed_ flag is set when we enter step 2, or when the transfer
   // completes.
-  bool curl_closed_;
+  bool curl_closed_ = false;
 
   std::size_t initial_buffer_size_;
 };
