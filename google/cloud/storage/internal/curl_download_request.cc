@@ -73,13 +73,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_;
   if (curl_closed_) {
-    // Remove the handle from the CURLM* interface and wait for the response.
-    auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-    status = AsStatus(error, __func__);
-    if (!status.ok()) {
-      return status;
-    }
-
+    // Wait for the response code for a closed stream.
     buffer_.swap(buffer);
     buffer_.clear();
     StatusOr<long> http_code = handle_.GetResponseCode();
@@ -176,43 +170,54 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
   if (!status.ok()) {
     return status;
   }
-  if (running_handles == 0) {
-    // The only way we get here is if the handle "completed", and therefore the
-    // transfer either failed or was successful. Pull all the messages out of
-    // the info queue until we get the message about our handle.
-    int remaining;
-    while (auto msg = curl_multi_info_read(multi_.get(), &remaining)) {
-      if (msg->easy_handle != handle_.handle_.get()) {
-        // Return an error if this is the wrong handle. This should never
-        // happen, if it does we are using the libcurl API incorrectly. But it
-        // is better to give a meaningful error message in this case.
-        std::ostringstream os;
-        os << __func__ << " unknown handle returned by curl_multi_info_read()"
-           << ", msg.msg=[" << msg->msg << "]"
-           << ", result=[" << msg->data.result
-           << "]=" << curl_easy_strerror(msg->data.result);
-        return Status(StatusCode::kUnknown, std::move(os).str());
-      }
-      status = CurlHandle::AsStatus(msg->data.result, __func__);
-      GCP_LOG(DEBUG) << __func__ << "() status=" << status
-                     << ", remaining=" << remaining
-                     << ", running_handles=" << running_handles
-                     << ", closing=" << closing_ << ", closed=" << curl_closed_;
-      // Whatever the status is, the transfer is done.
-      curl_closed_ = true;
-      // Ignore errors when closing the handle. They are expected because
-      // libcurl may have received a block of data, but the WriteCallback()
-      // (see above) tells libcurl that it cannot receive more data.
-      if (closing_) {
-        continue;
-      }
-      if (!status.ok()) {
-        return status;
-      }
+  if (running_handles != 0) {
+    return running_handles;
+  }
+
+  // The only way we get here is if the handle "completed", and therefore the
+  // transfer either failed or was successful. Pull all the messages out of
+  // the info queue until we get the message about our handle.
+  int remaining;
+  while (auto msg = curl_multi_info_read(multi_.get(), &remaining)) {
+    if (msg->easy_handle != handle_.handle_.get()) {
+      // Return an error if this is the wrong handle. This should never
+      // happen, if it does we are using the libcurl API incorrectly. But it
+      // is better to give a meaningful error message in this case.
+      std::ostringstream os;
+      os << __func__ << " unknown handle returned by curl_multi_info_read()"
+         << ", msg.msg=[" << msg->msg << "]"
+         << ", result=[" << msg->data.result
+         << "]=" << curl_easy_strerror(msg->data.result);
+      return Status(StatusCode::kUnknown, std::move(os).str());
+    }
+    status = CurlHandle::AsStatus(msg->data.result, __func__);
+    GCP_LOG(DEBUG) << __func__ << "() status=" << status
+                   << ", remaining=" << remaining
+                   << ", running_handles=" << running_handles
+                   << ", closing=" << closing_ << ", closed=" << curl_closed_;
+    // Whatever the status is, the transfer is done, we need to remove it
+    // from the CURLM* interface.
+    curl_closed_ = true;
+    auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+
+    // Ignore errors when closing the handle. They are expected because
+    // libcurl may have received a block of data, but the WriteCallback()
+    // (see above) tells libcurl that it cannot receive more data.
+    if (closing_) {
+      continue;
+    }
+    if (!status.ok()) {
+      return status;
+    }
+    // In the extremely unlikely case that removing the handle from CURLM* was
+    // an error, return that as a status.
+    status = AsStatus(error, __func__);
+    if (!status.ok()) {
+      return status;
     }
   }
   return running_handles;
-}
+}  // namespace internal
 
 Status CurlDownloadRequest::WaitForHandles(int& repeats) {
   int const timeout_ms = 1;
