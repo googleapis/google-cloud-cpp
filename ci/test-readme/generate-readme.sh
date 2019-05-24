@@ -37,7 +37,7 @@ echo "### Debian (Stretch)"
 badge debian
 "${BINDIR}/extract-readme.sh" "${BINDIR}/Dockerfile.debian"
 
-echo "### Fedora (29)"
+echo "### Fedora (30)"
 badge fedora
 "${BINDIR}/extract-readme.sh" "${BINDIR}/Dockerfile.fedora"
 

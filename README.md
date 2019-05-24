@@ -86,7 +86,7 @@ at the [Beta](#versioning) quality level:
 - [Install Dependencies](#install-dependencies)
   - [CentOS (7)](#centos-7)
   - [Debian (Stretch)](#debian-stretch)
-  - [Fedora (29)](#fedora-29)
+  - [Fedora (30)](#fedora-30)
   - [OpenSuSE (Tumbleweed)](#opensuse-tumbleweed)
   - [OpenSuSE (Leap)](#opensuse-leap)
   - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
@@ -186,7 +186,7 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
         pkg-config tar wget zlib1g-dev
 ```
 
-### Fedora (29)
+### Fedora (30)
 
 [![Kokoro install fedora status][kokoro-install-fedora-shield]][kokoro-install-fedora-link]
 

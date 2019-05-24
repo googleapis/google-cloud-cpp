@@ -156,7 +156,7 @@ these dependencies.
 
 ## Table of Contents
 
-- [Fedora 29](#fedora-29)
+- [Fedora 30](#fedora-30)
 - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
 - [openSUSE (Leap)](#opensuse-leap)
 - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
@@ -167,7 +167,7 @@ these dependencies.
 END_OF_PREAMBLE
 
 echo
-echo "### Fedora (29)"
+echo "### Fedora (30)"
 "${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.fedora"
 
 echo
