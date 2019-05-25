@@ -120,7 +120,8 @@ class ServiceAccountCredentials : public Credentials {
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader(
+        clock_.now(), [this] { return Refresh(); });
   }
 
   /**
@@ -243,7 +244,7 @@ class ServiceAccountCredentials : public Credentials {
         access_token.value("access_token", "");
     auto expires_in =
         std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = std::chrono::system_clock::now() + expires_in;
+    auto new_expiration = clock_.now() + expires_in;
 
     return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                         new_expiration};

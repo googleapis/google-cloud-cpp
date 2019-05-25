@@ -84,7 +84,9 @@ class AuthorizedUserCredentials : public Credentials {
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader(
+        std::chrono::system_clock::now(),
+        [this] { return Refresh(); });
   }
 
  private:

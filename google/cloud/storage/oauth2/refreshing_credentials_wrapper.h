@@ -38,8 +38,10 @@ class RefreshingCredentialsWrapper {
   };
 
   template <typename RefreshFunctor>
-  StatusOr<std::string> AuthorizationHeader(RefreshFunctor refresh_fn) const {
-    if (IsValid()) {
+  StatusOr<std::string> AuthorizationHeader(
+      std::chrono::system_clock::time_point now, RefreshFunctor refresh_fn)
+      const {
+    if (IsValid(now)) {
       return temporary_token.token;
     }
 
@@ -62,7 +64,8 @@ class RefreshingCredentialsWrapper {
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
    */
-  bool IsExpired() const;
+  bool IsExpired(
+      std::chrono::system_clock::time_point now) const;
 
   /**
    * Returns whether the current access token should be considered valid.
@@ -70,7 +73,8 @@ class RefreshingCredentialsWrapper {
    * This method should be used to determine whether a Credentials object needs
    * to be refreshed.
    */
-  bool IsValid() const;
+  bool IsValid(
+      std::chrono::system_clock::time_point now) const;
 
  private:
   mutable TemporaryToken temporary_token;

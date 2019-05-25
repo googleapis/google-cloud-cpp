@@ -21,14 +21,16 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-bool RefreshingCredentialsWrapper::IsExpired() const {
-  auto now = std::chrono::system_clock::now();
+bool RefreshingCredentialsWrapper::IsExpired(
+    std::chrono::system_clock::time_point now)
+const {
   return now > (temporary_token.expiration_time -
                 GoogleOAuthAccessTokenExpirationSlack());
 }
 
-bool RefreshingCredentialsWrapper::IsValid() const {
-  return !temporary_token.token.empty() && !IsExpired();
+bool RefreshingCredentialsWrapper::IsValid(
+    std::chrono::system_clock::time_point now) const {
+  return !temporary_token.token.empty() && !IsExpired(now);
 }
 
 }  // namespace oauth2

@@ -77,11 +77,30 @@ constexpr char kJsonKeyfileContents[] = R"""({
 })""";
 constexpr char kSubjectForGrant[] = "user@foo.bar";
 
+struct FakeClock : public std::chrono::system_clock {
+ public:
+  static long now_value;
+
+  // gmock doesn't easily allow copying mock objects, but we require this
+  // struct to be copyable. So while the usual approach would be mocking this
+  // method and defining its return value in each test, we instead override
+  // this method and hard-code the return value for all instances.
+  static std::chrono::system_clock::time_point now() {
+    return std::chrono::system_clock::from_time_t(
+        static_cast<std::time_t>(now_value));
+  }
+
+  static void reset_clock() { now_value = kFixedJwtTimestamp; }
+};
+
+long FakeClock::now_value = kFixedJwtTimestamp;
+
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() override {
     MockHttpRequestBuilder::mock =
         std::make_shared<MockHttpRequestBuilder::Impl>();
+    FakeClock::reset_clock();
   }
   void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
 
@@ -95,18 +114,6 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
 
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
-};
-
-struct FakeClock : public std::chrono::system_clock {
- public:
-  // gmock doesn't easily allow copying mock objects, but we require this
-  // struct to be copyable. So while the usual approach would be mocking this
-  // method and defining its return value in each test, we instead override
-  // this method and hard-code the return value for all instances.
-  static std::chrono::system_clock::time_point now() {
-    return std::chrono::system_clock::from_time_t(
-        static_cast<std::time_t>(kFixedJwtTimestamp));
-  }
 };
 
 void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
@@ -350,6 +357,110 @@ TEST_F(ServiceAccountCredentialsTest, ParseMissingFieldFails) {
     EXPECT_THAT(actual.status().message(), HasSubstr(" field is missing"));
     EXPECT_THAT(actual.status().message(), HasSubstr("test-data"));
   }
+}
+
+/// @test Verify that refreshing a credential updates the timestamps.
+TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+
+  auto make_request_assertion = [&info](long timestamp) {
+    return [timestamp, &info](std::string const& p) {
+      std::string const prefix =
+          std::string("grant_type=") + kGrantParamEscaped;
+      EXPECT_THAT(p, HasSubstr(prefix));
+      EXPECT_THAT(p, HasSubstr("&assertion="));
+
+      std::string assertion = p.substr(prefix.size());
+      assertion = assertion.substr(std::strlen("&assertion="));
+      std::cerr << "\n  ** p = " << p << std::endl;
+      std::cerr << "  ** assertion = " << assertion << std::endl;
+
+      std::istringstream is(assertion);
+      std::string encoded_header;
+      std::getline(is, encoded_header, '.');
+      std::string encoded_payload;
+      std::getline(is, encoded_payload, '.');
+
+      auto header_bytes = internal::UrlsafeBase64Decode(encoded_header);
+      std::string header_str{header_bytes.begin(), header_bytes.end()};
+      auto payload_bytes = internal::UrlsafeBase64Decode(encoded_payload);
+      std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
+
+      std::cerr << "\n  ** encoded_header = " << encoded_header << "\n";
+      std::cerr << "\n  ** encoded_payload = " << encoded_payload << "\n";
+      std::cerr << "\n  ** header = " << header_str << "\n";
+      auto header = internal::nl::json::parse(header_str);
+      EXPECT_EQ("RS256", header.value("alg", ""));
+      EXPECT_EQ("JWT", header.value("typ", ""));
+      EXPECT_EQ(info->private_key_id, header.value("kid", ""));
+
+      std::cerr << "\n  ** payload = " << payload_str << "\n";
+      auto payload = internal::nl::json::parse(payload_str);
+      EXPECT_EQ(timestamp, payload.value("iat", 0));
+      EXPECT_EQ(timestamp + 3600, payload.value("exp", 0));
+      EXPECT_EQ(info->client_email, payload.value("iss", ""));
+      EXPECT_EQ(info->token_uri, payload.value("aud", ""));
+
+      // Hard-coded in this order in ServiceAccountCredentials class.
+      std::string token = "mock-token-value-" + std::to_string(timestamp);
+      internal::nl::json response{{"token_type", "Mock-Type"},
+                                  {"access_token", token},
+                                  {"expires_in", 3600}};
+      return HttpResponse{200, response.dump(), {}};
+    };
+  };
+
+  // Setup the mock request / response for the first Refresh().
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  auto const clock_value_1 = 10000;
+  auto const clock_value_2 = 20000;
+  EXPECT_CALL(*mock_request, MakeRequest(_))
+      .WillOnce(Invoke(make_request_assertion(clock_value_1)))
+      .WillOnce(Invoke(make_request_assertion(clock_value_2)));
+
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_builder, BuildRequest())
+      .WillOnce(Invoke([mock_request] {
+        MockHttpRequest result;
+        result.mock = mock_request;
+        return result;
+      }));
+
+  std::string expected_header =
+      "Content-Type: application/x-www-form-urlencoded";
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header))).Times(2);
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(
+          Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
+            std::cerr << "\n\n s = " << s << std::endl;
+            EXPECT_EQ(kGrantParamUnescaped, s);
+            auto t =
+                std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
+            std::copy(kGrantParamEscaped,
+                      kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
+            return t;
+          }));
+
+  FakeClock::now_value = clock_value_1;
+  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
+      *info);
+  // Call Refresh to obtain the access token for our authorization header.
+  auto authorization_header = credentials.AuthorizationHeader();
+  ASSERT_STATUS_OK(authorization_header);
+  EXPECT_EQ("Authorization: Mock-Type mock-token-value-10000",
+            *authorization_header);
+
+  // Advance the clock past the expiration time of the token and then get a
+  // new header.
+  FakeClock::now_value = clock_value_2;
+  EXPECT_GT(clock_value_2 - clock_value_1, 2 * 3600);
+  authorization_header = credentials.AuthorizationHeader();
+  ASSERT_STATUS_OK(authorization_header);
+  EXPECT_EQ("Authorization: Mock-Type mock-token-value-20000",
+            *authorization_header);
 }
 
 /// @test Verify that we can create sign blobs using a service account.
