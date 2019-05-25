@@ -242,6 +242,62 @@ TEST(ObjectRequestsTest, ReadObjectRange) {
   EXPECT_THAT(actual, HasSubstr("end=1024"));
 }
 
+TEST(ObjectRequestsTest, ReadObjectRange_RequiresRangeHeader) {
+  EXPECT_FALSE(ReadObjectRangeRequest("test-bucket", "test-object")
+                   .RequiresRangeHeader());
+  EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
+                  .set_multiple_options(ReadRange(0, 2048))
+                  .RequiresRangeHeader());
+  EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
+                  .set_multiple_options(ReadFromOffset(1024))
+                  .RequiresRangeHeader());
+  EXPECT_FALSE(ReadObjectRangeRequest("test-bucket", "test-object")
+                   .set_multiple_options(ReadFromOffset(0))
+                   .RequiresRangeHeader());
+  EXPECT_TRUE(
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(ReadRange(0, 2048), ReadFromOffset(1024))
+          .RequiresRangeHeader());
+}
+
+TEST(ObjectRequestsTest, ReadObjectRange_RequiresNoCache) {
+  EXPECT_FALSE(
+      ReadObjectRangeRequest("test-bucket", "test-object").RequiresNoCache());
+  EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
+                  .set_multiple_options(ReadRange(0, 2048))
+                  .RequiresNoCache());
+  EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
+                  .set_multiple_options(ReadFromOffset(1024))
+                  .RequiresNoCache());
+  EXPECT_FALSE(ReadObjectRangeRequest("test-bucket", "test-object")
+                   .set_multiple_options(ReadFromOffset(0))
+                   .RequiresNoCache());
+  EXPECT_TRUE(
+      ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_multiple_options(ReadRange(0, 2048), ReadFromOffset(1024))
+          .RequiresNoCache());
+}
+
+TEST(ObjectRequestsTest, ReadObjectRange_RangeHeader) {
+  EXPECT_EQ("",
+            ReadObjectRangeRequest("test-bucket", "test-object").RangeHeader());
+  EXPECT_EQ("Range: bytes=0-2047",
+            ReadObjectRangeRequest("test-bucket", "test-object")
+                .set_multiple_options(ReadRange(0, 2048))
+                .RangeHeader());
+  EXPECT_EQ("Range: bytes=1024-",
+            ReadObjectRangeRequest("test-bucket", "test-object")
+                .set_multiple_options(ReadFromOffset(1024))
+                .RangeHeader());
+  EXPECT_EQ("", ReadObjectRangeRequest("test-bucket", "test-object")
+                    .set_multiple_options(ReadFromOffset(0))
+                    .RangeHeader());
+  EXPECT_EQ("Range: bytes=1024-2047",
+            ReadObjectRangeRequest("test-bucket", "test-object")
+                .set_multiple_options(ReadRange(0, 2048), ReadFromOffset(1024))
+                .RangeHeader());
+}
+
 TEST(ObjectRequestsTest, RangeResponseParse) {
   auto actual = ReadObjectRangeResponse::FromHttpResponse(
       CreateRangeRequestResponse("bytes 100-200/20000"));

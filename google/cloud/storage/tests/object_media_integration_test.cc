@@ -686,6 +686,89 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   EXPECT_STATUS_OK(status);
 }
 
+/// @test Read a portion of a relatively large object using the JSON API.
+TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
+  // The testbench always requires multiple iterations to copy this object.
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // This produces a 64 KiB text object, normally applications should download
+  // much larger chunks from GCS, but it is really hard to figure out what is
+  // broken when the error messages are in the MiB ranges.
+  long const chunk = 16 * 1024L;
+  long const lines = 4 * chunk / 128;
+  std::string large_text;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
+
+  // Create a iostream to read the object back.
+  auto stream =
+      client->ReadObject(bucket_name, object_name, ReadFromOffset(2 * chunk),
+                         IfGenerationNotMatch(0));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(2 * chunk, actual.size());
+  EXPECT_EQ(large_text.substr(2 * chunk), actual);
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Read a portion of a relatively large object using the XML API.
+TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
+  // The testbench always requires multiple iterations to copy this object.
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // This produces a 64 KiB text object, normally applications should download
+  // much larger chunks from GCS, but it is really hard to figure out what is
+  // broken when the error messages are in the MiB ranges.
+  long const chunk = 16 * 1024L;
+  long const lines = 4 * chunk / 128;
+  std::string large_text;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
+
+  // Create a iostream to read the object back.
+  auto stream =
+      client->ReadObject(bucket_name, object_name, ReadFromOffset(2 * chunk));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(2 * chunk, actual.size());
+  EXPECT_EQ(large_text.substr(2 * chunk), actual);
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:0"),

@@ -255,6 +255,40 @@ std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r) {
   return os << "}";
 }
 
+bool ReadObjectRangeRequest::RequiresNoCache() const {
+  if (HasOption<ReadRange>()) {
+    return true;
+  }
+  return HasOption<ReadFromOffset>() &&
+         GetOption<ReadFromOffset>().value() != 0;
+}
+
+bool ReadObjectRangeRequest::RequiresRangeHeader() const {
+  return RequiresNoCache();
+}
+
+std::string ReadObjectRangeRequest::RangeHeader() const {
+  if (HasOption<ReadRange>() && HasOption<ReadFromOffset>()) {
+    auto range = GetOption<ReadRange>().value();
+    auto offset = GetOption<ReadFromOffset>().value();
+    auto begin = (std::max)(range.begin, offset);
+    return "Range: bytes=" + std::to_string(begin) + "-" +
+           std::to_string(range.end - 1);
+  }
+  if (HasOption<ReadRange>()) {
+    auto range = GetOption<ReadRange>().value();
+    return "Range: bytes=" + std::to_string(range.begin) + "-" +
+           std::to_string(range.end - 1);
+  }
+  if (HasOption<ReadFromOffset>()) {
+    auto offset = GetOption<ReadFromOffset>().value();
+    if (offset != 0) {
+      return "Range: bytes=" + std::to_string(offset) + "-";
+    }
+  }
+  return "";
+}
+
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r) {
   os << "ReadObjectRangeRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();

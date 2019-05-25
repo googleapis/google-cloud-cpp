@@ -201,10 +201,14 @@ class ReadObjectRangeRequest
     : public GenericObjectRequest<
           ReadObjectRangeRequest, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
-          IfMetagenerationMatch, IfMetagenerationNotMatch, ReadRange,
-          UserProject> {
+          IfMetagenerationMatch, IfMetagenerationNotMatch, ReadFromOffset,
+          ReadRange, UserProject> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
+
+  bool RequiresNoCache() const;
+  bool RequiresRangeHeader() const;
+  std::string RangeHeader() const;
 };
 
 std::ostream& operator<<(std::ostream& os, ReadObjectRangeRequest const& r);
