@@ -429,7 +429,7 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header))).Times(2);
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header))).Times(1);
   EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
       .Times(1);
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
