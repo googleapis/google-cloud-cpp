@@ -22,8 +22,7 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
 bool RefreshingCredentialsWrapper::IsExpired(
-    std::chrono::system_clock::time_point now)
-const {
+    std::chrono::system_clock::time_point now) const {
   return now > (temporary_token.expiration_time -
                 GoogleOAuthAccessTokenExpirationSlack());
 }

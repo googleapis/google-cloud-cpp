@@ -22,8 +22,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-using ::testing::ElementsAreArray;
 using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
 

@@ -114,8 +114,8 @@ class ServiceAccountCredentials : public Credentials {
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds_.AuthorizationHeader(
-        clock_.now(), [this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader(clock_.now(),
+                                                 [this] { return Refresh(); });
   }
 
   /**

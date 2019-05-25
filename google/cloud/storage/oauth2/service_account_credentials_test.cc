@@ -420,12 +420,11 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       .WillOnce(Invoke(make_request_assertion(clock_value_2)));
 
   auto mock_builder = MockHttpRequestBuilder::mock;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce(Invoke([mock_request] {
-        MockHttpRequest result;
-        result.mock = mock_request;
-        return result;
-      }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest result;
+    result.mock = mock_request;
+    return result;
+  }));
 
   std::string expected_header =
       "Content-Type: application/x-www-form-urlencoded";
