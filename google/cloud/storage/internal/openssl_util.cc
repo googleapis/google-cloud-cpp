@@ -262,6 +262,18 @@ std::vector<std::uint8_t> SignStringWithPem(
   return {signed_str.begin(), signed_str.end()};
 }
 
+std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str) {
+  if (str.empty()) {
+    return {};
+  }
+  std::string b64str = str;
+  std::replace(b64str.begin(), b64str.end(), '-', '+');
+  std::replace(b64str.begin(), b64str.end(), '_', '/');
+  // In some cases only 1 padding `=` is needed, but it is safe to always add
+  // 2.
+  b64str.append("==");
+  return Base64Decode(b64str);
+}
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

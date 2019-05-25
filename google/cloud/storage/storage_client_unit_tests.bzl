@@ -62,6 +62,7 @@ storage_client_unit_tests = [
     "internal/object_acl_requests_test.cc",
     "internal/object_requests_test.cc",
     "internal/object_streambuf_test.cc",
+    "internal/openssl_util_test.cc",
     "internal/parse_rfc3339_test.cc",
     "internal/patch_builder_test.cc",
     "internal/policy_document_request_test.cc",
