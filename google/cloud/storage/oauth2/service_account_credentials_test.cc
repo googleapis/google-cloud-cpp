@@ -373,8 +373,6 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
 
       std::string assertion = p.substr(prefix.size());
       assertion = assertion.substr(std::strlen("&assertion="));
-      std::cerr << "\n  ** p = " << p << std::endl;
-      std::cerr << "  ** assertion = " << assertion << std::endl;
 
       std::istringstream is(assertion);
       std::string encoded_header;
@@ -387,15 +385,11 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       auto payload_bytes = internal::UrlsafeBase64Decode(encoded_payload);
       std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
 
-      std::cerr << "\n  ** encoded_header = " << encoded_header << "\n";
-      std::cerr << "\n  ** encoded_payload = " << encoded_payload << "\n";
-      std::cerr << "\n  ** header = " << header_str << "\n";
       auto header = internal::nl::json::parse(header_str);
       EXPECT_EQ("RS256", header.value("alg", ""));
       EXPECT_EQ("JWT", header.value("typ", ""));
       EXPECT_EQ(info->private_key_id, header.value("kid", ""));
 
-      std::cerr << "\n  ** payload = " << payload_str << "\n";
       auto payload = internal::nl::json::parse(payload_str);
       EXPECT_EQ(timestamp, payload.value("iat", 0));
       EXPECT_EQ(timestamp + 3600, payload.value("exp", 0));
@@ -434,7 +428,6 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
       .WillRepeatedly(
           Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
-            std::cerr << "\n\n s = " << s << std::endl;
             EXPECT_EQ(kGrantParamUnescaped, s);
             auto t =
                 std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
