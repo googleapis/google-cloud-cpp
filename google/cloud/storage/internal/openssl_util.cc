@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -269,9 +269,13 @@ std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str) {
   std::string b64str = str;
   std::replace(b64str.begin(), b64str.end(), '-', '+');
   std::replace(b64str.begin(), b64str.end(), '_', '/');
-  // In some cases only 1 padding `=` is needed, but it is safe to always add
-  // 2.
-  b64str.append("==");
+  // To restore the padding there are only two cases:
+  //    https://en.wikipedia.org/wiki/Base64#Decoding_Base64_without_padding
+  if (b64str.length() % 4 == 2) {
+    b64str.append("==");
+  } else if (b64str.length() % 4 == 3) {
+    b64str.append("=");
+  }
   return Base64Decode(b64str);
 }
 }  // namespace internal
