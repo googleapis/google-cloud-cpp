@@ -16,14 +16,22 @@
 
 add_library(storage_benchmarks benchmark_utils.h benchmark_utils.cc)
 target_link_libraries(storage_benchmarks
-                      storage_client
-                      storage_common_options
-                      google_cloud_cpp_common_options)
+                      PUBLIC storage_client
+                      PRIVATE storage_common_options
+                              google_cloud_cpp_common_options)
+
+include(CheckSymbolExists)
+check_symbol_exists(getrusage sys/resource.h GOOGLE_CLOUD_CPP_HAS_GETRUSAGE)
+target_compile_definitions(
+    storage_benchmarks PUBLIC
+    GOOGLE_CLOUD_CPP_HAS_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAS_GETRUSAGE}>)
 
 include(CreateBazelConfig)
 create_bazel_config(storage_benchmarks YEAR 2019)
 
-set(storage_benchmark_programs storage_latency_benchmark.cc
+set(storage_benchmark_programs
+    storage_latency_benchmark.cc
+    storage_throughput_vs_cpu_benchmark.cc
     storage_throughput_benchmark.cc)
 
 foreach (fname ${storage_benchmark_programs})
@@ -43,7 +51,8 @@ foreach (fname ${storage_benchmark_programs})
                                   CURL::libcurl
                                   Threads::Threads
                                   nlohmann_json
-                                  storage_common_options)
+                                  storage_common_options
+                                  google_cloud_cpp_common_options)
 endforeach ()
 
 export_list_to_bazel("storage_benchmark_programs.bzl"

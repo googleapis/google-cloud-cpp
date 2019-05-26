@@ -19,6 +19,9 @@
 #include <chrono>
 #include <functional>
 #include <string>
+#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#include <sys/resource.h>
+#endif  // GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
 
 namespace google {
 namespace cloud {
@@ -78,6 +81,27 @@ std::string BuildUsage(std::vector<OptionDescriptor> const& desc,
  */
 std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
                                       std::vector<std::string> argv);
+
+class SimpleTimer {
+ public:
+  SimpleTimer() = default;
+
+  void Start();
+  void Stop();
+
+  std::chrono::microseconds elapsed_time() const { return elapsed_time_; }
+  std::chrono::microseconds cpu_time() const { return cpu_time_; }
+  std::string const& annotations() const { return annotations_; }
+
+ private:
+  std::chrono::steady_clock::time_point start_;
+  std::chrono::microseconds elapsed_time_;
+  std::chrono::microseconds cpu_time_;
+#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+  struct rusage start_usage_;
+#endif  // GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+  std::string annotations_;
+};
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
