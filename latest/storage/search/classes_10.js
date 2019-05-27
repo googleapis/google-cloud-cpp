@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['readfromoffset',['ReadFromOffset',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadFromOffset.html',1,'google::cloud::storage::v1']]],
   ['readrange',['ReadRange',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRange.html',1,'google::cloud::storage::v1']]],
   ['readrangedata',['ReadRangeData',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRangeData.html',1,'google::cloud::storage::v1']]],
   ['refreshingcredentialswrapper',['RefreshingCredentialsWrapper',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1RefreshingCredentialsWrapper.html',1,'google::cloud::storage::v1::oauth2']]],

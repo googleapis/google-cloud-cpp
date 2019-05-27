@@ -1,6 +1,7 @@
 var searchData=
 [
   ['raw_5fclient',['raw_client',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#af22c913881aa9ef8cb4a054ed619595a',1,'google::cloud::storage::v1::Client']]],
+  ['readfromoffset',['ReadFromOffset',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadFromOffset.html',1,'google::cloud::storage::v1']]],
   ['readobject',['ReadObject',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a80bbd702b90dd38287b9bf1248272dbe',1,'google::cloud::storage::v1::Client']]],
   ['readrange',['ReadRange',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRange.html',1,'google::cloud::storage::v1::ReadRange'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRange.html#a8068f8866f2dd75de48bad400382b87e',1,'google::cloud::storage::v1::ReadRange::ReadRange()'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRange.html#acbaf42f2aa3c3e04d0b5dc8558931621',1,'google::cloud::storage::v1::ReadRange::ReadRange(std::int64_t begin, std::int64_t end)']]],
   ['readrangedata',['ReadRangeData',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ReadRangeData.html',1,'google::cloud::storage::v1']]],
