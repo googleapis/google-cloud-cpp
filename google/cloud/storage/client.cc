@@ -48,19 +48,19 @@ StatusOr<Client> Client::CreateDefaultClient() {
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
-  using google::cloud::internal::make_unique;
-
   auto source = raw_client_->ReadObject(request);
   if (!source) {
     GCP_LOG(INFO) << "Error in  ReadObject() = " << source.status();
-    ObjectReadStream error_stream(make_unique<internal::ObjectReadStreambuf>(
-        request, std::move(source).status()));
+    ObjectReadStream error_stream(
+        google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
+            request, std::move(source).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
   GCP_LOG(INFO) << "Non error ReadObject()";
   auto stream = ObjectReadStream(
-      make_unique<internal::ObjectReadStreambuf>(request, *std::move(source)));
+      google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
+          request, *std::move(source)));
   (void)stream.peek();
   return stream;
 }
