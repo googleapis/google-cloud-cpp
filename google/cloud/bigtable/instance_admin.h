@@ -859,7 +859,9 @@ class InstanceAdmin {
    * @param instance_id the instance to look the profile in.
    * @param profile_id the id of the profile within that instance.
    * @param ignore_warnings if true, ignore safety checks when deleting the
-   *     application profile.
+   *     application profile. This value is to to `true` by default. Passing
+   *     `false` causes this function to fail even when no operations are
+   *     pending.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -869,7 +871,7 @@ class InstanceAdmin {
    */
   Status DeleteAppProfile(bigtable::InstanceId const& instance_id,
                           bigtable::AppProfileId const& profile_id,
-                          bool ignore_warnings = false);
+                          bool ignore_warnings = true);
 
   /**
    * Asynchronously delete an existing application profile.
@@ -880,7 +882,9 @@ class InstanceAdmin {
    * @param instance_id the instance to look the profile in.
    * @param profile_id the id of the profile within that instance.
    * @param ignore_warnings if true, ignore safety checks when deleting the
-   *     application profile.
+   *     application profile. This value is to to `true` by default. Passing
+   *     `false` causes this function to fail even when no operations are
+   *     pending.
    *
    * @return a future satisfied when either (a) the app profile is deleted or
    *     (b) an unretriable error occurs or (c) retry policy has been exhausted.
@@ -894,7 +898,7 @@ class InstanceAdmin {
   future<Status> AsyncDeleteAppProfile(CompletionQueue& cq,
                                        bigtable::InstanceId const& instance_id,
                                        bigtable::AppProfileId const& profile_id,
-                                       bool ignore_warnings = false);
+                                       bool ignore_warnings = true);
 
   /**
    * Gets the policy for @p instance_id.
