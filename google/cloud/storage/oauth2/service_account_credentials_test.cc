@@ -39,6 +39,7 @@ using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
+using ::testing::StartsWith;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::StrEq;
@@ -367,12 +368,10 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   auto make_request_assertion = [&info](long timestamp) {
     return [timestamp, &info](std::string const& p) {
       std::string const prefix =
-          std::string("grant_type=") + kGrantParamEscaped;
-      EXPECT_THAT(p, HasSubstr(prefix));
-      EXPECT_THAT(p, HasSubstr("&assertion="));
+          std::string("grant_type=") + kGrantParamEscaped + "&assertion=";
+      EXPECT_THAT(p, StartsWith(prefix));
 
       std::string assertion = p.substr(prefix.size());
-      assertion = assertion.substr(std::strlen("&assertion="));
 
       std::istringstream is(assertion);
       std::string encoded_header;
