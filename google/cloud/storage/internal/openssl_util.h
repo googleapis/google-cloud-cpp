@@ -71,6 +71,11 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
   return b64str;
 }
 
+/**
+ * Decodes a Url-safe Base64-encoded string.
+ */
+std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str);
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

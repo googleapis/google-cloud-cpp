@@ -95,32 +95,27 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class ServiceAccountCredentials : public Credentials {
  public:
-  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info)
-      : clock_() {
+  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
+      : info_(std::move(info)), clock_() {
     HttpRequestBuilderType request_builder(
-        info.token_uri, storage::internal::GetDefaultCurlHandleFactory());
-    auto assertion_components = std::move(AssertionComponentsFromInfo(info));
+        info_.token_uri, storage::internal::GetDefaultCurlHandleFactory());
+    request_builder.AddHeader(
+        "Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account
     // keyfiles downloaded from Cloud Console.
-    std::string payload("grant_type=");
-    payload +=
+    std::string grant_type("grant_type=");
+    grant_type +=
         request_builder
             .MakeEscapedString("urn:ietf:params:oauth:grant-type:jwt-bearer")
             .get();
-    payload += "&assertion=";
-    payload += MakeJWTAssertion(assertion_components.first,
-                                assertion_components.second, info.private_key);
-    payload_ = std::move(payload);
-
-    request_builder.AddHeader(
-        "Content-Type: application/x-www-form-urlencoded");
+    grant_type_ = std::move(grant_type);
     request_ = request_builder.BuildRequest();
-    info_ = info;
   }
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader(clock_.now(),
+                                                 [this] { return Refresh(); });
   }
 
   /**
@@ -217,7 +212,13 @@ class ServiceAccountCredentials : public Credentials {
   }
 
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    auto response = request_.MakeRequest(payload_);
+    auto assertion_components = std::move(AssertionComponentsFromInfo(info_));
+    std::string payload = grant_type_;
+    payload += "&assertion=";
+    payload += MakeJWTAssertion(assertion_components.first,
+                                assertion_components.second, info_.private_key);
+
+    auto response = request_.MakeRequest(payload);
     if (!response) {
       return std::move(response).status();
     }
@@ -243,14 +244,14 @@ class ServiceAccountCredentials : public Credentials {
         access_token.value("access_token", "");
     auto expires_in =
         std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = std::chrono::system_clock::now() + expires_in;
+    auto new_expiration = clock_.now() + expires_in;
 
     return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                         new_expiration};
   }
 
   typename HttpRequestBuilderType::RequestType request_;
-  std::string payload_;
+  std::string grant_type_;
   ServiceAccountCredentialsInfo info_;
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
