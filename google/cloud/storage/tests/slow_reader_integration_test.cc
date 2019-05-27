@@ -139,10 +139,9 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
       return client->ReadObject(
           bucket_name, object_name,
           CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
-          ReadRange(offset, object_size));
+          ReadFromOffset(offset));
     }
-    return client->ReadObject(bucket_name, object_name,
-                              ReadRange(offset, object_size));
+    return client->ReadObject(bucket_name, object_name, ReadFromOffset(offset));
   };
 
   ObjectReadStream stream = make_reader(0);
