@@ -13,14 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hash_validator.h"
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/internal/make_unique.h"
-#include "google/cloud/log.h"
-#include "google/cloud/status.h"
+#include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/object_metadata.h"
-#include <crc32c/crc32c.h>
 
 namespace google {
 namespace cloud {
@@ -54,89 +50,6 @@ HashValidator::Result CompositeValidator::Finish() && {
   computed += "," + right_->Name() + "=" + right_result.computed;
   bool is_mismatch = left_result.is_mismatch || right_result.is_mismatch;
   return Result{std::move(received), std::move(computed), is_mismatch};
-}
-
-MD5HashValidator::MD5HashValidator() : context_{} { MD5_Init(&context_); }
-
-void MD5HashValidator::Update(std::string const& payload) {
-  MD5_Update(&context_, payload.c_str(), payload.size());
-}
-
-void MD5HashValidator::ProcessMetadata(ObjectMetadata const& meta) {
-  if (meta.md5_hash().empty()) {
-    // When using the XML API the metadata is empty, but the headers are not. In
-    // that case we do not want to replace the received hash with an empty
-    // value.
-    return;
-  }
-  received_hash_ = meta.md5_hash();
-}
-
-void MD5HashValidator::ProcessHeader(std::string const& key,
-                                     std::string const& value) {
-  if (key != "x-goog-hash") {
-    return;
-  }
-  auto pos = value.find("md5=");
-  if (pos == std::string::npos) {
-    return;
-  }
-  auto end = value.find(',', pos);
-  if (end == std::string::npos) {
-    received_hash_ = value.substr(pos + 4);
-    return;
-  }
-  received_hash_ = value.substr(pos + 4, end - pos - 4);
-}
-
-HashValidator::Result MD5HashValidator::Finish() && {
-  std::string hash(MD5_DIGEST_LENGTH, ' ');
-  MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &context_);
-  auto computed = Base64Encode(hash);
-  bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
-  return Result{std::move(received_hash_), std::move(computed), is_mismatch};
-}
-
-Crc32cHashValidator::Crc32cHashValidator() : current_(0) {}
-
-void Crc32cHashValidator::Update(std::string const& payload) {
-  current_ = crc32c::Extend(
-      current_, reinterpret_cast<std::uint8_t const*>(payload.data()),
-      payload.size());
-}
-
-void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {
-  if (meta.crc32c().empty()) {
-    // When using the XML API the metadata is empty, but the headers are not. In
-    // that case we do not want to replace the received hash with an empty
-    // value.
-    return;
-  }
-  received_hash_ = meta.crc32c();
-}
-
-void Crc32cHashValidator::ProcessHeader(std::string const& key,
-                                        std::string const& value) {
-  if (key != "x-goog-hash") {
-    return;
-  }
-  auto pos = value.find("crc32c=");
-  if (pos == std::string::npos) {
-    return;
-  }
-  auto end = value.find(',', pos);
-  if (end == std::string::npos) {
-    received_hash_ = value.substr(pos + 7);
-    return;
-  }
-  received_hash_ = value.substr(pos + 7, end - pos - 7);
-}
-
-HashValidator::Result Crc32cHashValidator::Finish() && {
-  std::string const hash = google::cloud::internal::EncodeBigEndian(current_);
-  auto computed = Base64Encode(hash);
-  bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
-  return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,

@@ -133,6 +133,8 @@ add_library(storage_client
             internal/generic_request.h
             internal/hash_validator.h
             internal/hash_validator.cc
+            internal/hash_validator_impl.h
+            internal/hash_validator_impl.cc
             internal/hmac_key_requests.h
             internal/hmac_key_requests.cc
             internal/http_response.h

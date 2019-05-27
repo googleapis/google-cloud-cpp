@@ -16,10 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HASH_VALIDATOR_H_
 
 #include "google/cloud/storage/version.h"
-#include <openssl/md5.h>
 #include <memory>
 #include <string>
-#include <utility>
 
 namespace google {
 namespace cloud {
@@ -100,48 +98,6 @@ class CompositeValidator : public HashValidator {
  private:
   std::unique_ptr<HashValidator> left_;
   std::unique_ptr<HashValidator> right_;
-};
-
-/**
- * A validator based on MD5 hashes.
- */
-class MD5HashValidator : public HashValidator {
- public:
-  MD5HashValidator();
-
-  MD5HashValidator(MD5HashValidator const&) = delete;
-  MD5HashValidator& operator=(MD5HashValidator const&) = delete;
-
-  std::string Name() const override { return "md5"; }
-  void Update(std::string const& payload) override;
-  void ProcessMetadata(ObjectMetadata const& meta) override;
-  void ProcessHeader(std::string const& key, std::string const& value) override;
-  Result Finish() && override;
-
- private:
-  MD5_CTX context_;
-  std::string received_hash_;
-};
-
-/**
- * A validator based on CRC32C checksums.
- */
-class Crc32cHashValidator : public HashValidator {
- public:
-  Crc32cHashValidator();
-
-  Crc32cHashValidator(Crc32cHashValidator const&) = delete;
-  Crc32cHashValidator& operator=(Crc32cHashValidator const&) = delete;
-
-  std::string Name() const override { return "crc32c"; }
-  void Update(std::string const& payload) override;
-  void ProcessMetadata(ObjectMetadata const& meta) override;
-  void ProcessHeader(std::string const& key, std::string const& value) override;
-  Result Finish() && override;
-
- private:
-  std::uint32_t current_;
-  std::string received_hash_;
 };
 
 class ReadObjectRangeRequest;
