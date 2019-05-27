@@ -59,8 +59,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
-  // Construct a large object, or at least large enough that it is not
-  // downloaded in the first chunk.
+  // Construct an object large enough to not be downloaded in the first chunk.
   auto large_text = CreateLargeText(16 * 1024 * 1024);
 
   // Create an object with the contents to download.
@@ -68,7 +67,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
       bucket_name, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
 
-  // Create an iostream to read the object back, when running against the
+  // Create an iostream to read the object back. When running against the
   // testbench we can fail quickly by asking the testbench to break the stream
   // in the middle.
   ObjectReadStream stream;
@@ -126,8 +125,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
-  // Construct a large object, or at least large enough that it is not
-  // downloaded in the first chunk.
+  // Construct an object large enough to not be downloaded in the first chunk.
   auto large_text = CreateLargeText(16 * 1024 * 1024);
 
   // Create an object with the contents to download.
@@ -135,7 +133,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
       bucket_name, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
 
-  // Create an iostream to read the object back, when running against the
+  // Create an iostream to read the object back. When running against the
   // testbench we can fail quickly by asking the testbench to break the stream
   // in the middle.
   auto slow_reader_period = std::chrono::seconds(UsingTestbench() ? 1 : 400);
