@@ -469,6 +469,7 @@ def objects_get_common(bucket_name, object_name, revision):
         headers = {
             'Content-Range': content_range,
             'x-goog-hash': revision.x_goog_hash_header(),
+            'x-goog-generation': revision.generation
         }
         return flask.Response(streamer(), status=200, headers=headers)
 
@@ -479,6 +480,7 @@ def objects_get_common(bucket_name, object_name, revision):
     content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
     response.headers['Content-Range'] = content_range
     response.headers['x-goog-hash'] = revision.x_goog_hash_header()
+    response.headers['x-goog-generation'] = revision.generation
     return response
 
 
