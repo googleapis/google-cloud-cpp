@@ -445,10 +445,13 @@ def objects_get_common(bucket_name, object_name, revision):
     if range_header is not None:
         m = re.match('bytes=([0-9]+)-([0-9]+)', range_header)
         if m:
-            print("\n\n\nmatch = %s\n\n" % m)
             begin = int(m.group(1))
             end = int(m.group(2))
             response_payload = response_payload[begin:end + 1]
+        m = re.match('bytes=([0-9]+)-$', range_header)
+        if m:
+            begin = int(m.group(1))
+            response_payload = response_payload[begin:]
     # Process custom headers to test error conditions.
     instructions = flask.request.headers.get('x-goog-testbench-instructions')
     if instructions == 'return-broken-stream':

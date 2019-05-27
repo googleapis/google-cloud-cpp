@@ -564,16 +564,10 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
     return status;
   }
   builder.AddQueryParameter("alt", "media");
-  if (request.HasOption<ReadRange>()) {
-    auto range = request.GetOption<ReadRange>().value();
-    std::string header = "Range: bytes=" + std::to_string(range.begin) + "-" +
-                         std::to_string(range.end - 1);
-    builder.AddHeader(header);
-    // When doing a range read we need to disable decompression because range
-    // reads do not work in that case:
-    //   https://cloud.google.com/storage/docs/transcoding#range
-    // and
-    //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+  if (request.RequiresRangeHeader()) {
+    builder.AddHeader(request.RangeHeader());
+  }
+  if (request.RequiresNoCache()) {
     builder.AddHeader("Cache-Control: no-transform");
   }
 
@@ -1295,16 +1289,10 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
   // QuotaUser cannot be set, checked by the caller.
   // UserIp cannot be set, checked by the caller.
 
-  if (request.HasOption<ReadRange>()) {
-    auto range = request.GetOption<ReadRange>().value();
-    std::string header = "Range: bytes=" + std::to_string(range.begin) + "-" +
-                         std::to_string(range.end - 1);
-    builder.AddHeader(header);
-    // When doing a range read we need to disable decompression because range
-    // reads do not work in that case:
-    //   https://cloud.google.com/storage/docs/transcoding#range
-    // and
-    //   https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+  if (request.RequiresRangeHeader()) {
+    builder.AddHeader(request.RangeHeader());
+  }
+  if (request.RequiresNoCache()) {
     builder.AddHeader("Cache-Control: no-transform");
   }
 

@@ -48,6 +48,15 @@ inline std::ostream& operator<<(std::ostream& os, ReadRangeData const& rhs) {
             << "}";
 }
 
+/**
+ * Download all the data from the GCS object starting at the given offset.
+ */
+struct ReadFromOffset
+    : public internal::ComplexOption<ReadFromOffset, std::int64_t> {
+  using ComplexOption::ComplexOption;
+  static char const* name() { return "read-offset"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

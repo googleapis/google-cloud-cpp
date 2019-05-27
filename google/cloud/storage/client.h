@@ -910,7 +910,8 @@ class Client {
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `ReadRange`, and `UserProject`.
+   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, and
+   *     `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1055,7 +1056,8 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *   Valid types for this operation include `IfGenerationMatch`,
    *   `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *   `IfMetagenerationNotMatch`, `Generation`, `ReadRange`, and `UserProject`.
+   *   `IfMetagenerationNotMatch`, `Generation`, `ReadFromOffset`, `ReadRange`,
+   *   and `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.

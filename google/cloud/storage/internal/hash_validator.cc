@@ -158,7 +158,7 @@ std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
 /// Create a HashValidator for a download request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
-  if (request.HasOption<ReadRange>()) {
+  if (request.RequiresRangeHeader()) {
     return google::cloud::internal::make_unique<NullHashValidator>();
   }
   return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
