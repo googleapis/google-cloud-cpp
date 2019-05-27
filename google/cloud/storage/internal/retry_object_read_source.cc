@@ -29,49 +29,36 @@ RetryObjectReadSource::RetryObjectReadSource(
       current_offset_(request_.StartingByte()) {}
 
 StatusOr<HttpResponse> RetryObjectReadSource::Read(std::string& buffer) {
-  GCP_LOG(INFO) << __func__ << "() current_offset=" << current_offset_
-                << " child=" << static_cast<bool>(child_);
+  GCP_LOG(INFO) << __func__ << "() current_offset=" << current_offset_;
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
   auto response = child_->Read(buffer);
   if (!response) {
-    GCP_LOG(DEBUG) << __func__ << "() current_offset=" << current_offset_
-                   << " child=" << static_cast<bool>(child_)
-                   << " status=" << response.status()
-                   << " size=" << buffer.size();
     // A Read() request failed, most likely that means the connection closed,
-    // try to create a new child.
+    // try to create a new child. The current child is no longer usable, we will
+    // try to create a new one and replace it. Should that fail the current
+    // child would be erased anyway so we reset it here.
+    child_.reset();
     request_.set_option(ReadFromOffset(current_offset_));
     if (generation_) {
       request_.set_option(Generation(*generation_));
     }
     auto new_child = client_->ReadObjectNotWrapped(request_);
-    GCP_LOG(DEBUG) << __func__ << "() current_offset=" << current_offset_
-                   << " child=" << static_cast<bool>(child_)
-                   << " status=" << response.status()
-                   << " new_child=" << new_child.status();
     if (!new_child) {
       // Failing to create a new child is an unrecoverable error: the
       // ReadObjectNotWrapped() function already retried multiple times.
-      child_.reset();
       return new_child.status();
     }
-    child_ = *std::move(new_child);
-    response = child_->Read(buffer);
-    GCP_LOG(DEBUG) << __func__ << "() current_offset=" << current_offset_
-                   << "child=" << static_cast<bool>(child_)
-                   << " status=" << response.status()
-                   << " size=" << buffer.size();
+    // Repeat the Read() request on the new child.
+    response = (*new_child)->Read(buffer);
     if (!response) {
-      child_.reset();
+      // This is a permanent failure, we created a new child but it turned out
+      // to be unusable.
       return response;
     }
+    child_ = *std::move(new_child);
   }
-  GCP_LOG(DEBUG) << __func__ << "() current_offset=" << current_offset_
-                 << " child=" << static_cast<bool>(child_)
-                 << " status=" << response.status()
-                 << " size=" << buffer.size();
   // assert(response.ok());
   auto g = response->headers.find("x-goog-generation");
   if (g != response->headers.end()) {
