@@ -55,16 +55,14 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
 
   StatusOr<HttpResponse> response = source_->Read(current_ios_buffer_);
   if (!response.ok()) {
-    ReportError(std::move(response).status());
-    return status_;
+    return std::move(response).status();
   }
   for (auto const& kv : response->headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
   if (response->status_code >= 300) {
-    ReportError(AsStatus(*response));
-    return status_;
+    return AsStatus(*response);
   }
 
   if (!current_ios_buffer_.empty()) {

@@ -50,18 +50,23 @@ ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
   auto source = raw_client_->ReadObject(request);
   if (!source) {
-    GCP_LOG(INFO) << "Error in  ReadObject() = " << source.status();
     ObjectReadStream error_stream(
         google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
             request, std::move(source).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
-  GCP_LOG(INFO) << "Non error ReadObject()";
   auto stream = ObjectReadStream(
       google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
           request, *std::move(source)));
   (void)stream.peek();
+#if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // Without exceptions the streambuf cannot report errors, so we have to
+  // manually update the status bits.
+  if (!stream.status().ok()) {
+    stream.setstate(std::ios::badbit | std::ios::eofbit);
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   return stream;
 }
 
