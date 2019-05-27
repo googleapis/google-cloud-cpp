@@ -612,7 +612,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  // This produces a 64 KiB text object, normally applications should download
+  // This produces a 64 KiB text object. Normally applications should download
   // much larger chunks from GCS, but it is really hard to figure out what is
   // broken when the error messages are in the MiB ranges.
   long const chunk = 16 * 1024L;
@@ -654,7 +654,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  // This produces a 64 KiB text object, normally applications should download
+  // This produces a 64 KiB text object. Normally applications should download
   // much larger chunks from GCS, but it is really hard to figure out what is
   // broken when the error messages are in the MiB ranges.
   long const chunk = 16 * 1024L;
@@ -695,7 +695,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  // This produces a 64 KiB text object, normally applications should download
+  // This produces a 64 KiB text object. Normally applications should download
   // much larger chunks from GCS, but it is really hard to figure out what is
   // broken when the error messages are in the MiB ranges.
   long const chunk = 16 * 1024L;
@@ -737,7 +737,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  // This produces a 64 KiB text object, normally applications should download
+  // This produces a 64 KiB text object. Normally applications should download
   // much larger chunks from GCS, but it is really hard to figure out what is
   // broken when the error messages are in the MiB ranges.
   long const chunk = 16 * 1024L;
