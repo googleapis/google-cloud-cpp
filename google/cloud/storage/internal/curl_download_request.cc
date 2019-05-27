@@ -97,7 +97,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::Read(std::string& buffer) {
   GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_
                  << ", code=100";
-  return HttpResponse{100, {}, {}};
+  return HttpResponse{100, {}, std::move(received_headers_)};
 }
 
 void CurlDownloadRequest::SetOptions() {
