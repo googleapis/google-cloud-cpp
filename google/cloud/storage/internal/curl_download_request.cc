@@ -31,8 +31,6 @@ namespace internal {
 CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
     : headers_(nullptr, &curl_slist_free_all),
       multi_(nullptr, &curl_multi_cleanup),
-      closing_(false),
-      curl_closed_(false),
       initial_buffer_size_(initial_buffer_size) {
   buffer_.reserve(initial_buffer_size);
 }
@@ -48,10 +46,13 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
   }
 
   // Now remove the handle from the CURLM* interface and wait for the response.
-  auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-  status = AsStatus(error, __func__);
-  if (!status.ok()) {
-    return status;
+  if (in_multi_) {
+    auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+    in_multi_ = false;
+    status = AsStatus(error, __func__);
+    if (!status.ok()) {
+      return status;
+    }
   }
 
   StatusOr<long> http_code = handle_.GetResponseCode();
@@ -73,13 +74,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
   GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
                  << ", closing=" << closing_ << ", closed=" << curl_closed_;
   if (curl_closed_) {
-    // Remove the handle from the CURLM* interface and wait for the response.
-    auto error = curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-    status = AsStatus(error, __func__);
-    if (!status.ok()) {
-      return status;
-    }
-
+    // Wait for the response code for a closed stream.
     buffer_.swap(buffer);
     buffer_.clear();
     StatusOr<long> http_code = handle_.GetResponseCode();
@@ -107,6 +102,9 @@ StatusOr<HttpResponse> CurlDownloadRequest::GetMore(std::string& buffer) {
 
 void CurlDownloadRequest::SetOptions() {
   ResetOptions();
+  if (in_multi_) {
+    return;
+  }
   auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
   if (error != CURLM_OK) {
     // This indicates that we are using the API incorrectly, the application
@@ -114,6 +112,7 @@ void CurlDownloadRequest::SetOptions() {
     // "Right Thing"[tm] here.
     google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
   }
+  in_multi_ = true;
 }
 
 void CurlDownloadRequest::ResetOptions() {
@@ -162,6 +161,13 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
 }
 
 StatusOr<int> CurlDownloadRequest::PerformWork() {
+  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
+                 << ", closing=" << closing_ << ", closed=" << curl_closed_
+                 << ", in_multi=" << in_multi_;
+  if (!in_multi_) {
+    return 0;
+  }
+
   // Block while there is work to do, apparently newer versions of libcurl do
   // not need this loop and curl_multi_perform() blocks until there is no more
   // work, but is it pretty harmless to keep here.
@@ -197,9 +203,27 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
       GCP_LOG(DEBUG) << __func__ << "() status=" << status
                      << ", remaining=" << remaining
                      << ", running_handles=" << running_handles
-                     << ", closing=" << closing_ << ", closed=" << curl_closed_;
-      // Whatever the status is, the transfer is done.
+                     << ", closing=" << closing_ << ", closed=" << curl_closed_
+                     << ", in_multi=" << in_multi_;
+      // Whatever the status is, the transfer is done, we need to remove it
+      // from the CURLM* interface.
       curl_closed_ = true;
+      Status multi_remove_status;
+      if (in_multi_) {
+        // In the extremely unlikely case that removing the handle from CURLM*
+        // was an error, return that as a status.
+        multi_remove_status = AsStatus(
+            curl_multi_remove_handle(multi_.get(), handle_.handle_.get()),
+            __func__);
+        in_multi_ = false;
+      }
+
+      GCP_LOG(DEBUG) << __func__ << "() status=" << status
+                     << ", remaining=" << remaining
+                     << ", running_handles=" << running_handles
+                     << ", closing=" << closing_ << ", closed=" << curl_closed_
+                     << ", in_multi=" << in_multi_;
+
       // Ignore errors when closing the handle. They are expected because
       // libcurl may have received a block of data, but the WriteCallback()
       // (see above) tells libcurl that it cannot receive more data.
@@ -208,6 +232,9 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
       }
       if (!status.ok()) {
         return status;
+      }
+      if (!multi_remove_status.ok()) {
+        return multi_remove_status;
       }
     }
   }

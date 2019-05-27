@@ -58,7 +58,8 @@ class CurlDownloadRequest {
         factory_(std::move(rhs.factory_)),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_),
-        initial_buffer_size_(rhs.initial_buffer_size_) {
+        initial_buffer_size_(rhs.initial_buffer_size_),
+        in_multi_(rhs.in_multi_) {
     ResetOptions();
   }
 
@@ -74,6 +75,7 @@ class CurlDownloadRequest {
     closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
     initial_buffer_size_ = rhs.initial_buffer_size_;
+    in_multi_ = rhs.in_multi_;
     ResetOptions();
     return *this;
   }
@@ -148,25 +150,36 @@ class CurlDownloadRequest {
   std::string payload_;
   std::string user_agent_;
   CurlReceivedHeaders received_headers_;
-  bool logging_enabled_;
+  bool logging_enabled_ = false;
   CurlHandle handle_;
   CurlMulti multi_;
   std::shared_ptr<CurlHandleFactory> factory_;
 
   std::string buffer_;
-  // Closing the handle happens in two steps.
+
+  // Explicitly closing the handle happens in two steps.
   // 1. First the application (or higher-level class), calls Close(). This class
   //    needs to notify libcurl that the transfer is terminated by returning 0
   //    from the callback.
-  // 2. Once that callback returns 0, this class needs to know
+  // 2. Once that callback returns 0, this class needs to wait until libcurl
+  //    stops using the handle, which happens via PerformWork().
+  //
+  // Closing also happens automatically when the transfer completes successfully
+  // or when the connection is dropped due to some error. In both cases
+  // PerformWork() sets the curl_closed_ flags to true.
   //
   // The closing_ flag is set when we enter step 1.
-  bool closing_;
+  bool closing_ = false;
   // The curl_closed_ flag is set when we enter step 2, or when the transfer
   // completes.
-  bool curl_closed_;
+  bool curl_closed_ = false;
 
   std::size_t initial_buffer_size_;
+
+  // Track whether `handle_` has been added to `multi_` or not. The exact
+  // lifecycle for the handle depends on the libcurl version, and using this
+  // flag makes the code less elegant, but less prone to bugs.
+  bool in_multi_ = false;
 };
 
 }  // namespace internal

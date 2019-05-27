@@ -59,8 +59,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
-  // Construct a large object, or at least large enough that it is not
-  // downloaded in the first chunk.
+  // Construct an object large enough to not be downloaded in the first chunk.
   auto large_text = CreateLargeText(16 * 1024 * 1024);
 
   // Create an object with the contents to download.
@@ -68,7 +67,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
       bucket_name, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
 
-  // Create an iostream to read the object back, when running against the
+  // Create an iostream to read the object back. When running against the
   // testbench we can fail quickly by asking the testbench to break the stream
   // in the middle.
   ObjectReadStream stream;
@@ -103,6 +102,74 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
       EXPECT_STATUS_OK(status);
       return;
     }
+    EXPECT_STATUS_OK(stream.status());
+    if (slow_reader_period < max_slow_reader_period) {
+      slow_reader_period += std::chrono::minutes(1);
+    }
+  }
+  std::cout << " DONE\n";
+  EXPECT_STATUS_OK(stream.status());
+
+  stream.Close();
+  EXPECT_STATUS_OK(stream.status());
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string const bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+  auto file_name = MakeRandomObjectName();
+
+  // Construct an object large enough to not be downloaded in the first chunk.
+  auto large_text = CreateLargeText(16 * 1024 * 1024);
+
+  // Create an object with the contents to download.
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  // Create an iostream to read the object back. When running against the
+  // testbench we can fail quickly by asking the testbench to break the stream
+  // in the middle.
+  auto slow_reader_period = std::chrono::seconds(UsingTestbench() ? 1 : 400);
+
+  auto make_reader = [this, bucket_name, object_name, &client](int64_t offset) {
+    if (UsingTestbench()) {
+      return client->ReadObject(
+          bucket_name, object_name,
+          CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
+          ReadRange(offset, 16 * 1024 * 1024));
+    }
+    return client->ReadObject(bucket_name, object_name,
+                              ReadRange(offset, 16 * 1024 * 1024));
+  };
+
+  ObjectReadStream stream = make_reader(0);
+
+  auto const max_slow_reader_period = std::chrono::minutes(10);
+  std::vector<char> buffer;
+  long const size = 1024 * 1024;
+  buffer.resize(size);
+  stream.read(buffer.data(), size);
+  EXPECT_STATUS_OK(stream.status());
+
+  std::cout << "Reading " << std::flush;
+  std::int64_t offset = 0;
+  while (!stream.eof()) {
+    std::cout << ' ' << slow_reader_period.count() << "s" << std::flush;
+    std::this_thread::sleep_for(slow_reader_period);
+    stream.read(buffer.data(), size);
+    if (!stream.status().ok()) {
+      std::cout << " restart after (" << stream.status() << ")" << std::flush;
+      stream = make_reader(offset);
+      continue;
+    }
+    offset += stream.gcount();
     EXPECT_STATUS_OK(stream.status());
     if (slow_reader_period < max_slow_reader_period) {
       slow_reader_period += std::chrono::minutes(1);
