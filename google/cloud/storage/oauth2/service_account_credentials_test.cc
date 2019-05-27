@@ -39,9 +39,9 @@ using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
 using ::testing::An;
 using ::testing::HasSubstr;
-using ::testing::StartsWith;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::StartsWith;
 using ::testing::StrEq;
 
 constexpr char kAltScopeForTest[] =
