@@ -1,6 +1,7 @@
 var searchData=
 [
   ['effective_5ftime',['effective_time',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketRetentionPolicy.html#a3c7a61750fcc3afe38c4bfab158f9efb',1,'google::cloud::storage::v1::BucketRetentionPolicy']]],
+  ['elapsed_5ftime',['elapsed_time',['../classgoogle_1_1cloud_1_1storage__benchmarks_1_1SimpleTimer.html#ac667b28d294d377f10387de911933658',1,'google::cloud::storage_benchmarks::SimpleTimer']]],
   ['elements',['elements',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentCondition.html#a95ffbcb62f419e56bfcd32f78e39f0ec',1,'google::cloud::storage::v1::PolicyDocumentCondition']]],
   ['email_5faddress',['email_address',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ServiceAccount.html#acd4877f09fc95bff2e5f80a685faa1f3',1,'google::cloud::storage::v1::ServiceAccount']]],
   ['emplace',['emplace',['../../common/classgoogle_1_1cloud_1_1v0_1_1optional.html#a1c6b7e3e7273d8cad73c2d1ce7ea5a64',1,'google::cloud::v0::optional']]],

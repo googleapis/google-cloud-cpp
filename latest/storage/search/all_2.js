@@ -38,6 +38,7 @@ var searchData=
   ['copyobject',['CopyObject',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a43908fc7da011466d1f7217e9efe9e8f',1,'google::cloud::storage::v1::Client']]],
   ['cors',['cors',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#a25efddd4d109814e66dce5f734a054c1',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['corsentry',['CorsEntry',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1CorsEntry.html',1,'google::cloud::storage::v1']]],
+  ['cpu_5ftime',['cpu_time',['../classgoogle_1_1cloud_1_1storage__benchmarks_1_1SimpleTimer.html#a1fb499dd5c710106e778a0ad5d4f63d9',1,'google::cloud::storage_benchmarks::SimpleTimer']]],
   ['crc32c',['crc32c',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ObjectMetadata.html#a3d4bf6eb95f359170be8dd36f7329190',1,'google::cloud::storage::v1::ObjectMetadata']]],
   ['crc32cchecksumvalue',['Crc32cChecksumValue',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1Crc32cChecksumValue.html',1,'google::cloud::storage::v1']]],
   ['createanonymouscredentials',['CreateAnonymousCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#aec685561bf9c69b308c6059d7b3762db',1,'google::cloud::storage::v1::oauth2']]],
