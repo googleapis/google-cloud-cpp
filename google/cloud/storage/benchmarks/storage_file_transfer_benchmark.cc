@@ -116,8 +116,7 @@ int main(int argc, char* argv[]) try {
   std::ofstream(filename, std::ios::binary)
       << gcs_bm::MakeRandomData(generator, options.file_size);
   std::cout << " DONE\n"
-            << "# File: " << filename << "\n"
-            << std::flush;
+            << "# File: " << filename << "\n";
 
   auto deadline = std::chrono::system_clock::now() + options.duration;
   for (auto now = std::chrono::system_clock::now(); now < deadline;
