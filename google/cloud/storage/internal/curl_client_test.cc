@@ -219,12 +219,18 @@ TEST_P(CurlClientTest, GetObjectMetadata) {
 }
 
 TEST_P(CurlClientTest, ReadObjectXml) {
+  if (GetParam() == "libcurl-failure") {
+    return;
+  }
   auto actual =
       client_->ReadObject(ReadObjectRangeRequest("bkt", "obj")).status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, ReadObjectJson) {
+  if (GetParam() == "libcurl-failure") {
+    return;
+  }
   auto actual =
       client_
           ->ReadObject(ReadObjectRangeRequest("bkt", "obj")

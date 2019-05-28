@@ -48,15 +48,26 @@ StatusOr<Client> Client::CreateDefaultClient() {
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
-  auto streambuf = raw_client_->ReadObject(request);
-  if (!streambuf) {
+  auto source = raw_client_->ReadObject(request);
+  if (!source) {
     ObjectReadStream error_stream(
-        google::cloud::internal::make_unique<
-            internal::ObjectReadErrorStreambuf>(std::move(streambuf).status()));
+        google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
+            request, std::move(source).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
-  return ObjectReadStream(*std::move(streambuf));
+  auto stream = ObjectReadStream(
+      google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
+          request, *std::move(source)));
+  (void)stream.peek();
+#if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  // Without exceptions the streambuf cannot report errors, so we have to
+  // manually update the status bits.
+  if (!stream.status().ok()) {
+    stream.setstate(std::ios::badbit | std::ios::eofbit);
+  }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  return stream;
 }
 
 ObjectWriteStream Client::WriteObjectImpl(
@@ -182,13 +193,6 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                                 std::string const& file_name) {
-  auto streambuf = raw_client_->ReadObject(request);
-  if (!streambuf) {
-    return streambuf.status();
-  }
-  // Open the download stream and immediately raise an exception on failure.
-  ObjectReadStream stream(*std::move(streambuf));
-
   auto report_error = [&request, file_name](char const* func, char const* what,
                                             Status const& status) {
     std::ostringstream msg;
@@ -196,6 +200,8 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
         << " - status.message=" << status.message();
     return Status(status.code(), std::move(msg).str());
   };
+
+  auto stream = ReadObjectImpl(request);
   if (!stream.status().ok()) {
     return report_error(__func__, "cannot open download source object",
                         stream.status());

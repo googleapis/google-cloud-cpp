@@ -16,7 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H_
 
 #include "google/cloud/status_or.h"
+#include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include <iostream>
 
@@ -35,7 +37,12 @@ namespace internal {
  */
 class ObjectReadStreambuf : public std::basic_streambuf<char> {
  public:
-  ObjectReadStreambuf() : std::basic_streambuf<char>() {}
+  ObjectReadStreambuf(ReadObjectRangeRequest const& request,
+                      std::unique_ptr<ObjectReadSource> source);
+
+  /// Create a streambuf in a permanent error status.
+  ObjectReadStreambuf(ReadObjectRangeRequest const& request, Status status);
+
   ~ObjectReadStreambuf() override = default;
 
   ObjectReadStreambuf(ObjectReadStreambuf&&) noexcept = delete;
@@ -43,38 +50,31 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   ObjectReadStreambuf(ObjectReadStreambuf const&) = delete;
   ObjectReadStreambuf& operator=(ObjectReadStreambuf const&) = delete;
 
-  virtual void Close() = 0;
-  virtual bool IsOpen() const = 0;
-  virtual Status const& status() const = 0;
-  virtual std::string const& received_hash() const = 0;
-  virtual std::string const& computed_hash() const = 0;
-  virtual std::multimap<std::string, std::string> const& headers() const = 0;
-};
-
-/**
- * A read stream in a permanent error state.
- */
-class ObjectReadErrorStreambuf : public ObjectReadStreambuf {
- public:
-  explicit ObjectReadErrorStreambuf(Status status)
-      : status_(std::move(status)) {}
-
-  void Close() override {}
-  bool IsOpen() const override { return false; }
-  Status const& status() const override { return status_; }
-  std::string const& received_hash() const override { return received_hash_; }
-  std::string const& computed_hash() const override { return computed_hash_; }
-  std::multimap<std::string, std::string> const& headers() const override {
+  bool IsOpen() const;
+  void Close();
+  Status const& status() const { return status_; }
+  std::string const& received_hash() const {
+    return hash_validator_result_.received;
+  }
+  std::string const& computed_hash() const {
+    return hash_validator_result_.computed;
+  }
+  std::multimap<std::string, std::string> const& headers() const {
     return headers_;
   }
 
- protected:
-  int_type underflow() override { return traits_type::eof(); }
-
  private:
+  int_type ReportError(Status status);
+  void SetEmptyRegion();
+  StatusOr<int_type> Peek();
+
+  int_type underflow() override;
+
+  std::unique_ptr<ObjectReadSource> source_;
+  std::string current_ios_buffer_;
+  std::unique_ptr<HashValidator> hash_validator_;
+  HashValidator::Result hash_validator_result_;
   Status status_;
-  std::string received_hash_;
-  std::string computed_hash_;
   std::multimap<std::string, std::string> headers_;
 };
 

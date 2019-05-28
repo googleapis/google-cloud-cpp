@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
+#include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
 #include <sstream>
 #include <thread>
@@ -242,13 +243,24 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
                   &RawClient::GetObjectMetadata, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectReadStreambuf>> RetryClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
     ReadObjectRangeRequest const& request) {
   auto retry_policy = retry_policy_->clone();
   auto backoff_policy = backoff_policy_->clone();
   auto is_idempotent = idempotency_policy_->IsIdempotent(request);
   return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
                   &RawClient::ReadObject, request, __func__);
+}
+
+StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
+    ReadObjectRangeRequest const& request) {
+  auto child = ReadObjectNotWrapped(request);
+  if (!child) {
+    return child;
+  }
+  auto self = shared_from_this();
+  return std::unique_ptr<ObjectReadSource>(
+      new RetryObjectReadSource(self, request, *std::move(child)));
 }
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>> RetryClient::WriteObject(

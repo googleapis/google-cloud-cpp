@@ -18,6 +18,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 
 namespace google {
@@ -35,7 +36,7 @@ namespace internal {
  * @see `CurlRequest` for simpler transfers where the size of the payload is
  *     known and relatively small.
  */
-class CurlDownloadRequest {
+class CurlDownloadRequest : public ObjectReadSource {
  public:
   explicit CurlDownloadRequest(std::size_t initial_buffer_size);
 
@@ -80,8 +81,8 @@ class CurlDownloadRequest {
     return *this;
   }
 
-  bool IsOpen() const { return !curl_closed_; }
-  StatusOr<HttpResponse> Close();
+  bool IsOpen() const override { return !curl_closed_; }
+  StatusOr<HttpResponse> Close() override;
 
   /**
    * Waits for additional data or the end of the transfer.
@@ -93,7 +94,7 @@ class CurlDownloadRequest {
    *     of this parameter are completely replaced with the new data.
    * @returns 100-Continue if the transfer is not yet completed.
    */
-  StatusOr<HttpResponse> GetMore(std::string& buffer);
+  StatusOr<HttpResponse> Read(std::string& buffer) override;
 
  private:
   friend class CurlRequestBuilder;

@@ -23,30 +23,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-TEST(ObjectStreambufTest, ReadErrorStreambuf) {
-  Status expected(StatusCode::kUnknown, "test-message");
-  ObjectReadErrorStreambuf streambuf(expected);
-
-  EXPECT_EQ(expected, streambuf.status());
-
-  // Peek one character, should return the EOF value.
-  EXPECT_EQ(ObjectReadErrorStreambuf::traits_type::eof(), streambuf.sgetc());
-
-  EXPECT_FALSE(streambuf.IsOpen());
-
-  streambuf.Close();
-  EXPECT_FALSE(streambuf.IsOpen());
-
-  // These are mostly to increase code coverage, we want to find the important
-  // missing coverage, and adding 4 lines of tests saves us guessing later.
-  EXPECT_EQ("", streambuf.computed_hash());
-  EXPECT_EQ("", streambuf.received_hash());
-  EXPECT_TRUE(streambuf.headers().empty());
-
-  // The error status should still be set.
-  EXPECT_EQ(expected, streambuf.status());
-}
-
 TEST(ObjectStreambufTest, WriteErrorStreambuf) {
   Status expected(StatusCode::kUnknown, "test-message");
   ObjectWriteErrorStreambuf streambuf(expected);

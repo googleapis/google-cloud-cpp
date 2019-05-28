@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_STREAM_H_
 
 #include "google/cloud/storage/internal/object_streambuf.h"
-#include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
 #include <ios>
 #include <iostream>

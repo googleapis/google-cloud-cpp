@@ -29,7 +29,8 @@ namespace internal {
 /**
  * Decorates a `RawClient` to retry each operation.
  */
-class RetryClient : public RawClient {
+class RetryClient : public RawClient,
+                    public std::enable_shared_from_this<RetryClient> {
  public:
   struct DefaultPolicies {};
 
@@ -73,8 +74,13 @@ class RetryClient : public RawClient {
       CopyObjectRequest const& request) override;
   StatusOr<ObjectMetadata> GetObjectMetadata(
       GetObjectMetadataRequest const& request) override;
-  StatusOr<std::unique_ptr<ObjectReadStreambuf>> ReadObject(
+
+  /// Call ReadObject() but do not wrap the result in a RetryObjectReadSource.
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectNotWrapped(
+      ReadObjectRangeRequest const&);
+  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
+
   StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
       InsertObjectStreamingRequest const&) override;
   StatusOr<ListObjectsResponse> ListObjects(ListObjectsRequest const&) override;

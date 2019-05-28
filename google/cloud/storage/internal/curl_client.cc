@@ -18,7 +18,6 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_resumable_streambuf.h"
 #include "google/cloud/storage/internal/curl_resumable_upload_session.h"
-#include "google/cloud/storage/internal/curl_streambuf.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
@@ -548,7 +547,7 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
+StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
   if (!request.HasOption<IfMetagenerationNotMatch>() &&
       !request.HasOption<IfGenerationNotMatch>() &&
@@ -571,18 +570,8 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObject(
     builder.AddHeader("Cache-Control: no-transform");
   }
 
-  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
-      builder.BuildDownloadRequest(std::string{}),
-      client_options().download_buffer_size(), CreateHashValidator(request)));
-  auto peek = buf->Peek();
-  if (!peek) {
-    buf->Close();
-    return Status(peek.status().code(),
-                  peek.status().message() +
-                      ", object_name=" + request.object_name() +
-                      ", bucket_name=" + request.bucket_name());
-  }
-  return std::unique_ptr<ObjectReadStreambuf>(std::move(buf));
+  return std::unique_ptr<ObjectReadSource>(
+      new CurlDownloadRequest(builder.BuildDownloadRequest(std::string{})));
 }
 
 StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObject(
@@ -1247,7 +1236,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   });
 }
 
-StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
+StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
     ReadObjectRangeRequest const& request) {
   CurlRequestBuilder builder(xml_download_endpoint_ + "/" +
                                  request.bucket_name() + "/" +
@@ -1296,18 +1285,8 @@ StatusOr<std::unique_ptr<ObjectReadStreambuf>> CurlClient::ReadObjectXml(
     builder.AddHeader("Cache-Control: no-transform");
   }
 
-  std::unique_ptr<CurlReadStreambuf> buf(new CurlReadStreambuf(
-      builder.BuildDownloadRequest(std::string{}),
-      client_options().download_buffer_size(), CreateHashValidator(request)));
-  auto peek = buf->Peek();
-  if (!peek) {
-    buf->Close();
-    return Status(peek.status().code(),
-                  peek.status().message() +
-                      ", object_name=" + request.object_name() +
-                      ", bucket_name=" + request.bucket_name());
-  }
-  return std::unique_ptr<ObjectReadStreambuf>(std::move(buf));
+  return std::unique_ptr<ObjectReadSource>(
+      new CurlDownloadRequest(builder.BuildDownloadRequest(std::string{})));
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(

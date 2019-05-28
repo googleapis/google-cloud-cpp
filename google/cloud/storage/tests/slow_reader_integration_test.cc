@@ -60,7 +60,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   auto file_name = MakeRandomObjectName();
 
   // Construct an object large enough to not be downloaded in the first chunk.
-  auto large_text = CreateLargeText(16 * 1024 * 1024);
+  auto large_text = CreateLargeText(4 * 1024 * 1024);
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
@@ -84,24 +84,19 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   auto const max_slow_reader_period = std::chrono::minutes(10);
   std::vector<char> buffer;
   long const size = 1024 * 1024;
+  std::int64_t read_count = 0;
   buffer.resize(size);
   stream.read(buffer.data(), size);
+  read_count += stream.gcount();
   EXPECT_STATUS_OK(stream.status());
 
   std::cout << "Reading " << std::flush;
   while (!stream.eof()) {
-    std::cout << ' ' << slow_reader_period.count() << "s" << std::flush;
+    std::cout << ' ' << slow_reader_period.count() << "s (" << read_count << ")"
+              << std::flush;
     std::this_thread::sleep_for(slow_reader_period);
     stream.read(buffer.data(), size);
-    if (!stream.status().ok()) {
-      // TODO(#2655) - automatically restart the download.
-      // Until recently, the code crashed before this point, so mark this as a
-      // "success", though obviously (#2655) we want to do better.
-      std::cout << " DONE (" << stream.status() << ")\n";
-      auto status = client->DeleteObject(bucket_name, object_name);
-      EXPECT_STATUS_OK(status);
-      return;
-    }
+    read_count += stream.gcount();
     EXPECT_STATUS_OK(stream.status());
     if (slow_reader_period < max_slow_reader_period) {
       slow_reader_period += std::chrono::minutes(1);
@@ -126,7 +121,8 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
   auto file_name = MakeRandomObjectName();
 
   // Construct an object large enough to not be downloaded in the first chunk.
-  auto large_text = CreateLargeText(16 * 1024 * 1024);
+  auto const object_size = 4 * 1024 * 1024L;
+  auto large_text = CreateLargeText(object_size);
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
@@ -143,10 +139,9 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
       return client->ReadObject(
           bucket_name, object_name,
           CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
-          ReadRange(offset, 16 * 1024 * 1024));
+          ReadFromOffset(offset));
     }
-    return client->ReadObject(bucket_name, object_name,
-                              ReadRange(offset, 16 * 1024 * 1024));
+    return client->ReadObject(bucket_name, object_name, ReadFromOffset(offset));
   };
 
   ObjectReadStream stream = make_reader(0);
@@ -161,7 +156,8 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
   std::cout << "Reading " << std::flush;
   std::int64_t offset = 0;
   while (!stream.eof()) {
-    std::cout << ' ' << slow_reader_period.count() << "s" << std::flush;
+    std::cout << ' ' << slow_reader_period.count() << "s (" << offset << ")"
+              << std::flush;
     std::this_thread::sleep_for(slow_reader_period);
     stream.read(buffer.data(), size);
     if (!stream.status().ok()) {

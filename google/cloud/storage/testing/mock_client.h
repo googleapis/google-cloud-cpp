@@ -60,7 +60,7 @@ class MockClient : public google::cloud::storage::internal::RawClient {
                StatusOr<storage::ObjectMetadata>(
                    internal::GetObjectMetadataRequest const&));
   MOCK_METHOD1(ReadObject,
-               StatusOr<std::unique_ptr<internal::ObjectReadStreambuf>>(
+               StatusOr<std::unique_ptr<internal::ObjectReadSource>>(
                    internal::ReadObjectRangeRequest const&));
   MOCK_METHOD1(WriteObject,
                StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(

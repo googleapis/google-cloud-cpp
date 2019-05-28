@@ -51,7 +51,7 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   // for that purpose.
   std::iterator_traits<std::string::iterator>::difference_type count = 0;
   do {
-    response = download.GetMore(buffer);
+    response = download.Read(buffer);
     EXPECT_STATUS_OK(response);
     count += std::count(buffer.begin(), buffer.end(), '\n');
   } while (response->status_code == 100);
