@@ -86,12 +86,22 @@ class SimpleTimer {
  public:
   SimpleTimer() = default;
 
+  /// Start the timer, call before the code being measured.
   void Start();
+
+  /// Stop the timer, call after the code being measured.
   void Stop();
 
+  //@{
+  /**
+   * @name Measurement results.
+   *
+   * @note The values are only valid after calling Start() and Stop().
+   */
   std::chrono::microseconds elapsed_time() const { return elapsed_time_; }
   std::chrono::microseconds cpu_time() const { return cpu_time_; }
   std::string const& annotations() const { return annotations_; }
+  //@}
 
  private:
   std::chrono::steady_clock::time_point start_;

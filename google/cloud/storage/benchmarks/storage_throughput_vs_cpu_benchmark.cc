@@ -89,7 +89,7 @@ struct Options {
   bool disable_md5 = false;
 };
 
-enum OpType { OP_UPLOAD, OP_DOWNLOAD, OP_LAST };
+enum OpType { OP_UPLOAD, OP_DOWNLOAD };
 struct IterationResult {
   OpType op;
   std::uint64_t object_size;
@@ -207,10 +207,13 @@ int main(int argc, char* argv[]) try {
 
 namespace {
 char const* ToString(OpType type) {
-  static char const* kOpTypeNames[] = {"UPLOAD", "DOWNLOAD", "LAST"};
-  static_assert(OP_LAST + 1 == (sizeof(kOpTypeNames) / sizeof(kOpTypeNames[0])),
-                "Mismatched size for OpType names array");
-  return kOpTypeNames[type];
+  switch (type) {
+    case OP_DOWNLOAD:
+      return "DOWNLOAD";
+    case OP_UPLOAD:
+      return "UPLOAD";
+  }
+  return nullptr;  // silence g++ error.
 }
 
 std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
@@ -251,8 +254,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
   gcs_bm::SimpleTimer timer;
-  // This obviously depends on the size of the objects, but a good estimate is
-  // for the upload + download bandwidth is 250MiB/s
+  // This obviously depends on the size of the objects, but a good estimate for
+  // the upload + download bandwidth is 250MiB/s.
   constexpr long expected_bandwidth = 250 * gcs_bm::kMiB;
   auto const median_size =
       (options.minimum_object_size + options.minimum_object_size) / 2;
