@@ -22,6 +22,7 @@
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/text_format.h>
 #include <type_traits>
+#include <unordered_set>
 
 namespace btadmin = ::google::bigtable::admin::v2;
 
