@@ -89,6 +89,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a2c0e38770175f425b13506cf1fd973ce"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a2c0e38770175f425b13506cf1fd973ce">MakeRandomObjectName</a> (google::cloud::internal::DefaultPRNG &amp;gen)</td></tr>
 <tr class="memdesc:a2c0e38770175f425b13506cf1fd973ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a random object name.  <a href="#a2c0e38770175f425b13506cf1fd973ce">More...</a><br /></td></tr>
 <tr class="separator:a2c0e38770175f425b13506cf1fd973ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdac69d4c59dba7036cb4cc1c0658fc5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#acdac69d4c59dba7036cb4cc1c0658fc5">MakeRandomFileName</a> (google::cloud::internal::DefaultPRNG &amp;gen)</td></tr>
+<tr class="memdesc:acdac69d4c59dba7036cb4cc1c0658fc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a random local filename.  <a href="#acdac69d4c59dba7036cb4cc1c0658fc5">More...</a><br /></td></tr>
+<tr class="separator:acdac69d4c59dba7036cb4cc1c0658fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ca2a02886fe2183ff5a2a27d0b018eb"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a6ca2a02886fe2183ff5a2a27d0b018eb">MakeRandomData</a> (google::cloud::internal::DefaultPRNG &amp;gen, std::size_t desired_size)</td></tr>
 <tr class="memdesc:a6ca2a02886fe2183ff5a2a27d0b018eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a random chunk of data of a prescribed size.  <a href="#a6ca2a02886fe2183ff5a2a27d0b018eb">More...</a><br /></td></tr>
 <tr class="separator:a6ca2a02886fe2183ff5a2a27d0b018eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,7 +151,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00139">139</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00147">147</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -180,7 +183,7 @@ Variables</h2></td></tr>
 
 <p>Build the <code>Usage</code> string from a list of command-line option descriptions. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00149">149</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00157">157</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -210,7 +213,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00068">68</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00076">76</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -275,6 +278,28 @@ Variables</h2></td></tr>
 
 <p>Create a random chunk of data of a prescribed size. </p>
 
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00050">50</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+
+</div>
+</div>
+<a id="acdac69d4c59dba7036cb4cc1c0658fc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdac69d4c59dba7036cb4cc1c0658fc5">&#9670;&nbsp;</a></span>MakeRandomFileName()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string google::cloud::storage_benchmarks::MakeRandomFileName </td>
+          <td>(</td>
+          <td class="paramtype">google::cloud::internal::DefaultPRNG &amp;&#160;</td>
+          <td class="paramname"><em>gen</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Create a random local filename. </p>
+
 <p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00042">42</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
@@ -329,7 +354,7 @@ Variables</h2></td></tr>
 
 <p>Parse <code>argv</code> using the descriptions in <code>desc</code>, return unparsed arguments. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00159">159</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00167">167</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -361,7 +386,7 @@ Variables</h2></td></tr>
 
 <p>Parse a string as a boolean, with a default value if the string is empty. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00123">123</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00131">131</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -383,7 +408,7 @@ Variables</h2></td></tr>
 
 <p>Parse a string as a duration with support for hours (h), minutes (m), or second (s) suffixes. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00109">109</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00117">117</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -405,7 +430,7 @@ Variables</h2></td></tr>
 
 <p>Parse a string as a byte size, with support for unit suffixes. </p>
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00078">78</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8cc_source.html#l00086">86</a> of file <a class="el" href="benchmark__utils_8cc_source.html">benchmark_utils.cc</a>.</p>
 
 </div>
 </div>
@@ -422,7 +447,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00053">53</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00056">56</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -438,7 +463,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00048">48</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00051">51</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -454,7 +479,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00051">51</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00054">54</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -470,7 +495,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00046">46</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00049">49</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -486,7 +511,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00052">52</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00055">55</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -502,7 +527,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00047">47</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00050">50</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -518,7 +543,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00054">54</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00057">57</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
@@ -534,7 +559,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00049">49</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="benchmark__utils_8h_source.html#l00052">52</a> of file <a class="el" href="benchmark__utils_8h_source.html">benchmark_utils.h</a>.</p>
 
 </div>
 </div>
