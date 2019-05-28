@@ -28,12 +28,13 @@ RetryObjectReadSource::RetryObjectReadSource(
       child_(std::move(child)),
       current_offset_(request_.StartingByte()) {}
 
-StatusOr<HttpResponse> RetryObjectReadSource::Read(std::string& buffer) {
+StatusOr<HttpResponse> RetryObjectReadSource::Read(char* buf, std::size_t& n) {
   GCP_LOG(INFO) << __func__ << "() current_offset=" << current_offset_;
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
-  auto response = child_->Read(buffer);
+  std::size_t size = n;
+  auto response = child_->Read(buf, size);
   if (!response) {
     // A Read() request failed, most likely that means the connection closed,
     // try to create a new child. The current child is no longer usable, we will
@@ -51,7 +52,7 @@ StatusOr<HttpResponse> RetryObjectReadSource::Read(std::string& buffer) {
       return new_child.status();
     }
     // Repeat the Read() request on the new child.
-    response = (*new_child)->Read(buffer);
+    response = (*new_child)->Read(buf, size);
     if (!response) {
       // This is a permanent failure, we created a new child but it turned out
       // to be unusable.
@@ -59,12 +60,13 @@ StatusOr<HttpResponse> RetryObjectReadSource::Read(std::string& buffer) {
     }
     child_ = *std::move(new_child);
   }
+  n = size;
   // assert(response.ok());
   auto g = response->headers.find("x-goog-generation");
   if (g != response->headers.end()) {
     generation_ = std::stoll(g->second);
   }
-  current_offset_ += buffer.size();
+  current_offset_ += n;
   return response;
 }
 

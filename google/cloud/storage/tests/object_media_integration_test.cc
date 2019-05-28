@@ -769,6 +769,69 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
   EXPECT_STATUS_OK(status);
 }
 
+/// @test Read a relatively large object using chunks of different sizes.
+TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
+  // The testbench always requires multiple iterations to copy this object.
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // This produces a 4 MiB text object. Normally applications should download
+  // much larger chunks from GCS, but it is really hard to figure out what is
+  // broken when the error messages are in the MiB ranges.
+  auto const object_size = 4 * 1024 * 1024LL;
+  auto const lines = object_size / 128;
+  std::string large_text;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, 127,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
+
+  // Create a iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name, object_name);
+
+  // Read the object with a random mix of std::getline(), and stream.read()
+  // it is unlikely that any application would actually read like this,
+  // nevertheless the library should work in this case.
+  std::string actual;
+  actual.reserve(object_size);
+  auto const maximum_chunk_size = 256 * 1024L;
+  auto const minimum_chunk_size = 16;
+  std::vector<char> buffer(maximum_chunk_size);
+  std::uniform_int_distribution<int> chunk_size_generator(0,
+                                                          maximum_chunk_size);
+  do {
+    auto size = chunk_size_generator(generator_);
+    if (size < minimum_chunk_size) {
+      std::string line;
+      std::getline(stream, line);
+      actual.append(line);
+      actual.append("\n");
+    } else {
+      stream.read(buffer.data(), buffer.size());
+      actual.append(buffer.data(), buffer.data() + stream.gcount());
+    }
+  } while (stream);
+
+  EXPECT_EQ(object_size, actual.size());
+  EXPECT_EQ(large_text, actual);
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:0"),

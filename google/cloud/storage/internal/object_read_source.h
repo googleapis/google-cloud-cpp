@@ -38,9 +38,13 @@ class ObjectReadSource {
   virtual ~ObjectReadSource() = default;
 
   virtual bool IsOpen() const = 0;
+
+  /// Actively close a download, even if not all the data has been read.
   virtual StatusOr<HttpResponse> Close() = 0;
 
-  virtual StatusOr<HttpResponse> Read(std::string& buffer) = 0;
+  /// Read more data from the download, returning any HTTP headers and error
+  /// codes.
+  virtual StatusOr<HttpResponse> Read(char* buf, std::size_t& n) = 0;
 };
 
 /**
@@ -52,7 +56,7 @@ class ObjectReadErrorSource : public ObjectReadSource {
 
   bool IsOpen() const override { return false; }
   StatusOr<HttpResponse> Close() override { return status_; }
-  StatusOr<HttpResponse> Read(std::string&) override { return status_; }
+  StatusOr<HttpResponse> Read(char*, std::size_t&) override { return status_; }
 
  private:
   Status status_;

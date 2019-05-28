@@ -40,7 +40,7 @@ class RetryObjectReadSource : public ObjectReadSource {
 
   bool IsOpen() const override { return child_ && child_->IsOpen(); }
   StatusOr<HttpResponse> Close() override { return child_->Close(); }
-  StatusOr<HttpResponse> Read(std::string& buffer) override;
+  StatusOr<HttpResponse> Read(char* buf, std::size_t& n) override;
 
  private:
   std::shared_ptr<RetryClient> client_;
