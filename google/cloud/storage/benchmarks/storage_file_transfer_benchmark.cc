@@ -137,7 +137,8 @@ int main(int argc, char* argv[]) try {
               << upload_elapsed.count() << ',' << gbps << ',' << ms.count()
               << ',' << MiBs << ',' << object_metadata.status().code() << "\n";
     if (!object_metadata) {
-      std::cout << "# Error in FileUpload: " << object_metadata.status();
+      std::cout << "# Error in FileUpload: " << object_metadata.status()
+                << "\n";
       continue;
     }
 
