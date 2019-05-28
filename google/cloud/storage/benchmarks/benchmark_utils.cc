@@ -194,6 +194,65 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
   return argv;
 }
 
+void SimpleTimer::Start() {
+#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+  (void)getrusage(RUSAGE_THREAD, &start_usage_);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  start_ = std::chrono::steady_clock::now();
+}
+
+void SimpleTimer::Stop() {
+  using namespace std::chrono;
+  elapsed_time_ = duration_cast<microseconds>(steady_clock::now() - start_);
+
+#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+  auto as_usec = [](timeval const& tv) {
+    return microseconds(seconds(tv.tv_sec)) + microseconds(tv.tv_usec);
+  };
+
+  struct rusage now {};
+  (void)getrusage(RUSAGE_THREAD, &now);
+  auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
+  auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
+  cpu_time_ = utime + stime;
+  double cpu_fraction = 0;
+  if (elapsed_time_.count() != 0) {
+    cpu_fraction =
+        (cpu_time_).count() / static_cast<double>(elapsed_time_.count());
+  }
+  now.ru_minflt -= start_usage_.ru_minflt;
+  now.ru_majflt -= start_usage_.ru_majflt;
+  now.ru_nswap -= start_usage_.ru_nswap;
+  now.ru_inblock -= start_usage_.ru_inblock;
+  now.ru_oublock -= start_usage_.ru_oublock;
+  now.ru_msgsnd -= start_usage_.ru_msgsnd;
+  now.ru_msgrcv -= start_usage_.ru_msgrcv;
+  now.ru_nsignals -= start_usage_.ru_nsignals;
+  now.ru_nvcsw -= start_usage_.ru_nvcsw;
+  now.ru_nivcsw -= start_usage_.ru_nivcsw;
+
+  std::ostringstream os;
+  os << "# user time                    =" << utime.count() << " us\n"
+     << "# system time                  =" << stime.count() << " us\n"
+     << "# CPU fraction                 =" << cpu_fraction << "\n"
+     << "# maximum resident set size    =" << now.ru_maxrss << " KiB\n"
+     << "# integral shared memory size  =" << now.ru_ixrss << " KiB\n"
+     << "# integral unshared data size  =" << now.ru_idrss << " KiB\n"
+     << "# integral unshared stack size =" << now.ru_isrss << " KiB\n"
+     << "# soft page faults             =" << now.ru_minflt << "\n"
+     << "# hard page faults             =" << now.ru_majflt << "\n"
+     << "# swaps                        =" << now.ru_nswap << "\n"
+     << "# block input operations       =" << now.ru_inblock << "\n"
+     << "# block output operations      =" << now.ru_oublock << "\n"
+     << "# IPC messages sent            =" << now.ru_msgsnd << "\n"
+     << "# IPC messages received        =" << now.ru_msgrcv << "\n"
+     << "# signals received             =" << now.ru_nsignals << "\n"
+     << "# voluntary context switches   =" << now.ru_nvcsw << "\n"
+     << "# involuntary context switches =" << now.ru_nivcsw << "\n";
+  annotations_ = std::move(os).str();
+#endif  // GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google
