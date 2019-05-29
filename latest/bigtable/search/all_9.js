@@ -14,6 +14,8 @@ var searchData=
   ['kok',['kOk',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9cae69fa9a656f76dd8a4d89f21992b2d3a',1,'google::cloud::v0']]],
   ['koutofrange',['kOutOfRange',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9caf2fcb517cfc19949e909cbc2607e0f27',1,'google::cloud::v0']]],
   ['kpermissiondenied',['kPermissionDenied',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9cadc0b458db7d0dd510aae0367dfafc4af',1,'google::cloud::v0']]],
+  ['kpredicatematched',['kPredicateMatched',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abfb3593b7a9e0b1db2a5687a000a502fa7001266baacd9352eff6c4d02bd28949',1,'google::cloud::bigtable::v0']]],
+  ['kpredicatenotmatched',['kPredicateNotMatched',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#abfb3593b7a9e0b1db2a5687a000a502fa3d03f694ad8deda1585437bc609f7950',1,'google::cloud::bigtable::v0']]],
   ['kresourceexhausted',['kResourceExhausted',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca70b1deeb4d30d0e807ebaf0b14d63246',1,'google::cloud::v0']]],
   ['kunauthenticated',['kUnauthenticated',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9cad676439e57a5d7a9a4dd2cd09f5300a2',1,'google::cloud::v0']]],
   ['kunavailable',['kUnavailable',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a23ae1845ce352d2f981f2ade512e9b9ca8a1714a85ad21a1c4814b260d2cd24dd',1,'google::cloud::v0']]],
