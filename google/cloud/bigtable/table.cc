@@ -218,9 +218,9 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
   return result;
 }
 
-StatusOr<bool> Table::CheckAndMutateRow(std::string row_key, Filter filter,
-                                        std::vector<Mutation> true_mutations,
-                                        std::vector<Mutation> false_mutations) {
+StatusOr<MutationBranch> Table::CheckAndMutateRow(
+    std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+    std::vector<Mutation> false_mutations) {
   grpc::Status status;
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
@@ -243,10 +243,11 @@ StatusOr<bool> Table::CheckAndMutateRow(std::string row_key, Filter filter,
   if (!status.ok()) {
     return bigtable::internal::MakeStatusFromRpcError(status);
   }
-  return response.predicate_matched();
+  return response.predicate_matched() ? MutationBranch::kPredicateMatched
+                                      : MutationBranch::kPredicateNotMatched;
 }
 
-future<StatusOr<bool>> Table::AsyncCheckAndMutateRow(
+future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
     std::vector<Mutation> false_mutations, CompletionQueue& cq) {
   btproto::CheckAndMutateRowRequest request;
@@ -275,12 +276,14 @@ future<StatusOr<bool>> Table::AsyncCheckAndMutateRow(
              },
              std::move(request), cq)
       .then([](future<StatusOr<btproto::CheckAndMutateRowResponse>> f)
-                -> StatusOr<bool> {
+                -> StatusOr<MutationBranch> {
         auto response = f.get();
         if (!response) {
           return response.status();
         }
-        return response->predicate_matched();
+        return response->predicate_matched()
+                   ? MutationBranch::kPredicateMatched
+                   : MutationBranch::kPredicateNotMatched;
       });
 }
 

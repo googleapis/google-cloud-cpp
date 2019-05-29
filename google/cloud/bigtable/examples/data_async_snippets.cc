@@ -145,7 +145,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
     cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
         cbt::Filter::Latest(1), cbt::Filter::ValueRegex("on"));
-    future<StatusOr<bool>> branch_future =
+    future<StatusOr<cbt::MutationBranch>> branch_future =
         table.AsyncCheckAndMutateRow(row_key, std::move(predicate),
                                      {cbt::SetCell("fam", "flip-flop", "off"),
                                       cbt::SetCell("fam", "flop-flip", "on")},
@@ -154,13 +154,16 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                                      cq);
 
     branch_future
-        .then([](future<StatusOr<bool>> f) {
+        .then([](future<StatusOr<cbt::MutationBranch>> f) {
           auto response = f.get();
           if (!response) {
             throw std::runtime_error(response.status().message());
           }
-          std::cout << "The predicate " << (response ? "was" : "was not")
-                    << " matched\n";
+          if (*response == cbt::MutationBranch::kPredicateMatched) {
+            std::cout << "The predicate was matched\n";
+          } else {
+            std::cout << "The predicate was not matched\n";
+          }
         })
         .get();  // block to simplify the example.
   }
