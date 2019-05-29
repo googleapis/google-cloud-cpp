@@ -32,7 +32,15 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-enum class Consistency { kConsistent, kInconsistent };
+/// The result of checking replication against a given token.
+enum class Consistency {
+  /// Some of the mutations created before the consistency token have not been
+  /// received by all the table replicas.
+  kInconsistent,
+  /// All mutations created before the consistency token have been received by
+  /// all the table replicas.
+  kConsistent,
+};
 
 /**
  * Implements the API to administer tables in a Cloud Bigtable instance.
