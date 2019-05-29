@@ -41,10 +41,10 @@ inline namespace BIGTABLE_CLIENT_NS {
 /// The branch taken by a Table::CheckAndMutateRow operation.
 enum class MutationBranch {
   /// The predicate provided to CheckAndMutateRow did not match and the
-  /// corresponding mutations (if any) were applied.
+  /// `false_mutations` (if any) were applied.
   kPredicateNotMatched,
-  /// The predicate provided to CheckAndMutateRow matched and the corresponding
-  /// mutations (if any) were applied.
+  /// The predicate provided to CheckAndMutateRow matched and the
+  /// `true_mutations` (if any) were applied.
   kPredicateMatched,
 };
 
