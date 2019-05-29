@@ -21,10 +21,15 @@ target_link_libraries(storage_benchmarks
                               google_cloud_cpp_common_options)
 
 include(CheckSymbolExists)
-check_symbol_exists(getrusage sys/resource.h GOOGLE_CLOUD_CPP_HAS_GETRUSAGE)
+check_symbol_exists(getrusage sys/resource.h GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
+check_symbol_exists(RUSAGE_THREAD sys/resource.h
+                    GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
 target_compile_definitions(
-    storage_benchmarks PUBLIC
-    GOOGLE_CLOUD_CPP_HAS_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAS_GETRUSAGE}>)
+    storage_benchmarks
+    PUBLIC
+    GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
+    GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
+    )
 
 include(CreateBazelConfig)
 create_bazel_config(storage_benchmarks YEAR 2019)

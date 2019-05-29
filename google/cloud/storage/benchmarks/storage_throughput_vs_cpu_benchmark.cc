@@ -407,6 +407,14 @@ Options ParseArgs(int argc, char* argv[]) {
     throw std::runtime_error(std::move(os).str());
   }
 
+  if (!gcs_bm::SimpleTimer::SupportPerThreadUsage() &&
+      options.thread_count > 1) {
+    std::ostringstream os;
+    os << "Your platform does not support per-thread usage metrics"
+          " (see getrusage(2)). Running more than one thread is not supported.";
+    throw std::runtime_error(std::move(os).str());
+  }
+
   return options;
 }
 

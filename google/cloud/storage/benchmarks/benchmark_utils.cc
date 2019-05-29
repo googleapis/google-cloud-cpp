@@ -194,9 +194,19 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
   return argv;
 }
 
+namespace {
+int rusage_who() {
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  return RUSAGE_THREAD;
+#else
+  return RUSAGE_SELF;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+}
+}  // namespace
+
 void SimpleTimer::Start() {
-#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
-  (void)getrusage(RUSAGE_THREAD, &start_usage_);
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+  (void)getrusage(rusage_who(), &start_usage_);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   start_ = std::chrono::steady_clock::now();
 }
@@ -205,13 +215,13 @@ void SimpleTimer::Stop() {
   using namespace std::chrono;
   elapsed_time_ = duration_cast<microseconds>(steady_clock::now() - start_);
 
-#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   auto as_usec = [](timeval const& tv) {
     return microseconds(seconds(tv.tv_sec)) + microseconds(tv.tv_usec);
   };
 
   struct rusage now {};
-  (void)getrusage(RUSAGE_THREAD, &now);
+  (void)getrusage(rusage_who(), &now);
   auto utime = as_usec(now.ru_utime) - as_usec(start_usage_.ru_utime);
   auto stime = as_usec(now.ru_stime) - as_usec(start_usage_.ru_stime);
   cpu_time_ = utime + stime;
@@ -250,7 +260,15 @@ void SimpleTimer::Stop() {
      << "# voluntary context switches   =" << now.ru_nvcsw << "\n"
      << "# involuntary context switches =" << now.ru_nivcsw << "\n";
   annotations_ = std::move(os).str();
-#endif  // GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
+}
+
+bool SimpleTimer::SupportPerThreadUsage() {
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  return true;
+#else
+  return false;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
 }  // namespace storage_benchmarks

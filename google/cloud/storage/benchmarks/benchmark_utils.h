@@ -19,9 +19,9 @@
 #include <chrono>
 #include <functional>
 #include <string>
-#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 #include <sys/resource.h>
-#endif  // GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
 namespace google {
 namespace cloud {
@@ -103,13 +103,15 @@ class SimpleTimer {
   std::string const& annotations() const { return annotations_; }
   //@}
 
+  static bool SupportPerThreadUsage();
+
  private:
   std::chrono::steady_clock::time_point start_;
   std::chrono::microseconds elapsed_time_;
   std::chrono::microseconds cpu_time_;
-#if GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   struct rusage start_usage_;
-#endif  // GOOGLE_CLOUD_CPP_HAS_GETRUSAGE
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   std::string annotations_;
 };
 
