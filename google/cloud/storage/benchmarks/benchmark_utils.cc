@@ -194,6 +194,7 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
   return argv;
 }
 
+#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 namespace {
 int rusage_who() {
 #if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
@@ -203,6 +204,7 @@ int rusage_who() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 }  // namespace
+#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
 void SimpleTimer::Start() {
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
