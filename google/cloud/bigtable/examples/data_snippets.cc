@@ -471,7 +471,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     // If the predicate matches, change the latest value to "off", otherwise,
     // change the latest value to "on".  Modify the "flop-flip" column at the
     // same time.
-    StatusOr<bool> branch =
+    StatusOr<cbt::MutationBranch> branch =
         table.CheckAndMutateRow(row_key, std::move(predicate),
                                 {cbt::SetCell("fam", "flip-flop", "off"),
                                  cbt::SetCell("fam", "flop-flip", "on")},
@@ -481,8 +481,11 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     if (!branch) {
       throw std::runtime_error(branch.status().message());
     }
-    std::cout << "The predicate " << (*branch ? "was" : "was not")
-              << " matched\n";
+    if (*branch == cbt::MutationBranch::kPredicateMatched) {
+      std::cout << "The predicate was matched\n";
+    } else {
+      std::cout << "The predicate was not matched\n";
+    }
   }
   //! [check and mutate]
   (std::move(table), row_key);
@@ -508,15 +511,18 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table, int argc,
         cbt::Filter::Latest(1));
     // If the predicate matches, do nothing, otherwise set the
     // "had-test-column" to "false":
-    StatusOr<bool> branch = table.CheckAndMutateRow(
+    StatusOr<cbt::MutationBranch> branch = table.CheckAndMutateRow(
         row_key, std::move(predicate), {},
         {cbt::SetCell("fam", "had-test-column", "false")});
 
     if (!branch) {
       throw std::runtime_error(branch.status().message());
     }
-    std::cout << "The CheckAndMutateRow() predicate "
-              << (*branch ? "was" : "was not") << " matched\n";
+    if (*branch == cbt::MutationBranch::kPredicateMatched) {
+      std::cout << "The predicate was matched\n";
+    } else {
+      std::cout << "The predicate was not matched\n";
+    }
   }
   //! [check and mutate not present]
   (std::move(table), row_key);

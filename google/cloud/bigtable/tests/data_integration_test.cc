@@ -328,7 +328,7 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
       {bigtable::SetCell(family4, "c2", 0_ms, "v2000")},
       {bigtable::SetCell(family4, "c3", 0_ms, "v3000")});
   ASSERT_STATUS_OK(result);
-  EXPECT_TRUE(*result);
+  EXPECT_EQ(bigtable::MutationBranch::kPredicateMatched, *result);
   std::vector<bigtable::Cell> expected{{key, family4, "c1", 0, "v1000"},
                                        {key, family4, "c2", 0, "v2000"}};
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());
@@ -346,7 +346,7 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
       {bigtable::SetCell(family4, "c2", 0_ms, "v2000")},
       {bigtable::SetCell(family4, "c3", 0_ms, "v3000")});
   ASSERT_STATUS_OK(result);
-  EXPECT_FALSE(*result);
+  EXPECT_EQ(bigtable::MutationBranch::kPredicateNotMatched, *result);
   std::vector<bigtable::Cell> expected{{key, family4, "c1", 0, "v1000"},
                                        {key, family4, "c3", 0, "v3000"}};
   auto actual = ReadRows(table, bigtable::Filter::PassAllFilter());

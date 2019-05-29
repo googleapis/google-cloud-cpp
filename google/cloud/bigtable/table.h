@@ -38,6 +38,16 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+/// The branch taken by a Table::CheckAndMutateRow operation.
+enum class MutationBranch {
+  /// The predicate provided to CheckAndMutateRow did not match and the
+  /// `false_mutations` (if any) were applied.
+  kPredicateNotMatched,
+  /// The predicate provided to CheckAndMutateRow matched and the
+  /// `true_mutations` (if any) were applied.
+  kPredicateMatched,
+};
+
 class MutationBatcher;
 
 /**
@@ -488,9 +498,9 @@ class Table {
    * @par Check for Cell Presence Example
    * @snippet data_snippets.cc check and mutate not present
    */
-  StatusOr<bool> CheckAndMutateRow(std::string row_key, Filter filter,
-                                   std::vector<Mutation> true_mutations,
-                                   std::vector<Mutation> false_mutations);
+  StatusOr<MutationBranch> CheckAndMutateRow(
+      std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
+      std::vector<Mutation> false_mutations);
 
   /**
    * Make an asynchronous request to conditionally mutate a row.
@@ -517,7 +527,7 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async check and mutate
    */
-  future<StatusOr<bool>> AsyncCheckAndMutateRow(
+  future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
       std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
       std::vector<Mutation> false_mutations, CompletionQueue& cq);
 
