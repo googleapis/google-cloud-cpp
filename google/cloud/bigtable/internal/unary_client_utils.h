@@ -27,7 +27,6 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-namespace noex {
 /**
  * Helper functions to make (unary) gRPC calls under the right policies.
  *
@@ -209,7 +208,6 @@ struct UnaryClientUtils {
   }
 };
 
-}  // namespace noex
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -27,9 +27,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class Table;
-namespace noex {
-class Table;
-}  // namespace noex
 namespace internal {
 class AsyncBulkMutatorNoex;
 class AsyncRetryBulkApply;

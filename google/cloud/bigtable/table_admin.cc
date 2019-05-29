@@ -39,7 +39,7 @@ constexpr TableAdmin::TableView TableAdmin::REPLICATION_VIEW;
 constexpr TableAdmin::TableView TableAdmin::FULL;
 
 /// Shortcuts to avoid typing long names over and over.
-using ClientUtils = bigtable::internal::noex::UnaryClientUtils<AdminClient>;
+using ClientUtils = bigtable::internal::UnaryClientUtils<AdminClient>;
 
 StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
                                                  TableConfig config) {
