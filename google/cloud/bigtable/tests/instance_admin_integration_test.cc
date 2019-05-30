@@ -309,7 +309,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   ASSERT_STATUS_OK(cluster_check);
   std::string cluster_name_prefix =
       instance_admin_->project_name() + "/instances/" + id + "/clusters/";
-  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check->name());
+  EXPECT_EQ(cluster_name_prefix + cluster_id, cluster_check->name());
 
   // Update cluster
   google::cloud::StatusOr<btadmin::Cluster> cluster_copy;

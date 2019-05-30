@@ -658,11 +658,11 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
           }
           if (*is_consistent == cbt::Consistency::kConsistent) {
             std::cout << "Table is consistent with token "
-                      << consistency_token->get() << "\n";
+                      << *consistency_token << "\n";
           } else {
             std::cout
                 << "Table is not yet consistent, Please try again later with"
-                << " the same token (" << consistency_token->get() << ")\n";
+                << " the same token (" << *consistency_token << ")\n";
           }
         });
     final.get();  // simplify example by blocking until operation is done.
@@ -721,7 +721,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
     if (!token) {
       throw std::runtime_error(token.status().message());
     }
-    std::cout << "generated token is : " << token->get() << "\n";
+    std::cout << "generated token is : " << *token << "\n";
   }
   //! [generate consistency token]
   (std::move(admin), table_id);

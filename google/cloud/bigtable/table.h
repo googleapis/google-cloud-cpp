@@ -32,6 +32,7 @@
 #include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/disjunction.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 
@@ -164,6 +165,18 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  *     alternative idempotency policies.
  */
 class Table {
+ private:
+  // We need to eliminate some function overloads from resolution, and that
+  // requires a bit of infrastructure in the private section.
+  template <typename P>
+  struct valid_policy : google::cloud::internal::disjunction<
+                            std::is_base_of<RPCBackoffPolicy, P>,
+                            std::is_base_of<RPCRetryPolicy, P>,
+                            std::is_base_of<IdempotentMutationPolicy, P>> {};
+
+  template <typename... Policies>
+  struct valid_policies : internal::conjunction<valid_policy<Policies>...> {};
+
  public:
   /**
    * Constructor with default policies.
@@ -259,11 +272,13 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename... Policies>
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
+  template <typename P, typename... Policies,
+            typename std::enable_if<valid_policies<P, Policies...>::value,
+                                    int>::type = 0>
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id, P&& p,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
-    ChangePolicies(std::forward<Policies>(policies)...);
+    ChangePolicies(std::forward<P>(p), std::forward<Policies>(policies)...);
   }
 
   /**
@@ -320,12 +335,14 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename... Policies>
+  template <typename P, typename... Policies,
+            typename std::enable_if<valid_policies<P, Policies...>::value,
+                                    int>::type = 0>
   Table(std::shared_ptr<DataClient> client,
         bigtable::AppProfileId app_profile_id, std::string const& table_id,
-        Policies&&... policies)
+        P&& p, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
-    ChangePolicies(std::forward<Policies>(policies)...);
+    ChangePolicies(std::forward<P>(p), std::forward<Policies>(policies)...);
   }
 
   std::string const& table_name() const { return table_name_; }

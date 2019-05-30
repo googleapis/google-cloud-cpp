@@ -314,7 +314,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
               return make_ready_future(
                   StatusOr<btadmin::Table>(result.status()));
             }
-            return table_admin.AsyncCreateTable(cq, table_id.get(),
+            return table_admin.AsyncCreateTable(cq, table_id,
                                                 table_config);
           })
           .then([&](future<StatusOr<btadmin::Table>> fut) {
@@ -324,10 +324,10 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
               return make_ready_future(
                   StatusOr<ConsistencyToken>(result.status()));
             }
-            EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id.get()));
+            EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
             CreateCells(table, created_cells);
             return table_admin.AsyncGenerateConsistencyToken(cq,
-                                                             table_id.get());
+                                                             table_id);
           })
           .then([&](future<StatusOr<ConsistencyToken>> fut) {
             auto token = fut.get();
@@ -346,7 +346,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
             // If there is an error we cannot check the result, but
             // we want to delete the table and continue.
             EXPECT_EQ(*result, Consistency::kConsistent);
-            return table_admin.AsyncDeleteTable(cq, table_id.get());
+            return table_admin.AsyncDeleteTable(cq, table_id);
           })
           .then([&](future<Status> fut) {
             Status delete_result = fut.get();
