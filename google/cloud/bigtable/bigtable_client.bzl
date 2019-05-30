@@ -56,7 +56,6 @@ bigtable_client_hdrs = [
     "internal/rpc_policy_parameters.inc",
     "internal/rpc_policy_parameters.h",
     "internal/rowreaderiterator.h",
-    "internal/strong_type.h",
     "internal/unary_client_utils.h",
     "idempotent_mutation_policy.h",
     "mutation_batcher.h",
