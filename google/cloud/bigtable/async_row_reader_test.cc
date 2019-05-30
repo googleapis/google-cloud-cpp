@@ -796,8 +796,7 @@ INSTANTIATE_TEST_CASE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
                         Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
                                CancelMode::OTHER_EXCEPT)
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-                        Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
-                               CancelMode::OTHER_EXCEPT)
+                        Values(CancelMode::FALSE_VALUE)
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 );
 
