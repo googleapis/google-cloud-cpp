@@ -82,7 +82,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
 /// @test A test for lazy behaviour of metadata .
 TEST_F(MetadataUpdatePolicyTest, SimpleLazy) {
   auto const x_google_request_params = "name=" + kTableName;
-  auto created = bigtable::MetadataUpdatePolicy::FromClusterId(
+  auto created = bigtable::MetadataUpdatePolicy::FromTableId(
       kInstanceName, bigtable::MetadataParamTypes::NAME, kTableId);
   EXPECT_EQ(x_google_request_params, created.value());
 }
