@@ -743,7 +743,7 @@ class InstanceAdmin {
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
       std::string const& instance_id,
-      bigtable::AppProfileId const& profile_id);
+      std::string const& profile_id);
 
   /**
    * Asynchronously fetch the information about an existing application profile.
@@ -764,7 +764,7 @@ class InstanceAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> AsyncGetAppProfile(
       CompletionQueue& cq, std::string const& instance_id,
-      bigtable::AppProfileId const& profile_id);
+      std::string const& profile_id);
 
   /**
    * Updates an existing application profile.
@@ -787,7 +787,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc update app profile routing
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      std::string instance_id, bigtable::AppProfileId profile_id,
+      std::string instance_id, std::string profile_id,
       AppProfileUpdateConfig config);
 
   /**
@@ -816,7 +816,7 @@ class InstanceAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncUpdateAppProfile(CompletionQueue& cq, std::string instance_id,
-                        bigtable::AppProfileId profile_id,
+                        std::string profile_id,
                         AppProfileUpdateConfig config);
 
   /**
@@ -869,7 +869,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc delete app profile
    */
   Status DeleteAppProfile(std::string const& instance_id,
-                          bigtable::AppProfileId const& profile_id,
+                          std::string const& profile_id,
                           bool ignore_warnings = true);
 
   /**
@@ -896,7 +896,7 @@ class InstanceAdmin {
    */
   future<Status> AsyncDeleteAppProfile(CompletionQueue& cq,
                                        std::string const& instance_id,
-                                       bigtable::AppProfileId const& profile_id,
+                                       std::string const& profile_id,
                                        bool ignore_warnings = true);
 
   /**

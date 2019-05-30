@@ -24,7 +24,6 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -58,7 +57,7 @@ class RowReader {
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   RowReader(std::shared_ptr<DataClient> client,
-            bigtable::AppProfileId app_profile_id, std::string table_name,
+            std::string app_profile_id, std::string table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
@@ -130,7 +129,7 @@ class RowReader {
   void MakeRequest();
 
   std::shared_ptr<DataClient> client_;
-  bigtable::AppProfileId app_profile_id_;
+  std::string app_profile_id_;
   std::string table_name_;
   RowSet row_set_;
   std::int64_t rows_limit_;

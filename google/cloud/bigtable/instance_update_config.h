@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_UPDATE_CONFIG_H_
 
 #include "google/cloud/bigtable/cluster_config.h"
-#include "google/cloud/bigtable/internal/strong_type.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <google/bigtable/admin/v2/common.pb.h>

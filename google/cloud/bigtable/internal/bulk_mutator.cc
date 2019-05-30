@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/log.h"
 #include <numeric>
 
@@ -27,7 +26,7 @@ namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
-BulkMutatorState::BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
+BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
                                    std::string const& table_name,
                                    IdempotentMutationPolicy& idempotent_policy,
                                    BulkMutation mut) {
@@ -180,7 +179,7 @@ std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
   return result;
 }
 
-BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
+BulkMutator::BulkMutator(std::string const& app_profile_id,
                          std::string const& table_name,
                          IdempotentMutationPolicy& idempotent_policy,
                          BulkMutation mut)

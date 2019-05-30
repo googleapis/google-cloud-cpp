@@ -67,7 +67,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+  bt::internal::BulkMutator mutator(std::string(""),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
@@ -125,7 +125,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId("test-id"),
+  bt::internal::BulkMutator mutator(std::string("test-id"),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
@@ -192,7 +192,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+  bt::internal::BulkMutator mutator(std::string(""),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
@@ -255,7 +255,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+  bt::internal::BulkMutator mutator(std::string(""),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
@@ -318,7 +318,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+  bt::internal::BulkMutator mutator(std::string(""),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
@@ -397,7 +397,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+  bt::internal::BulkMutator mutator(std::string(""),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
@@ -460,7 +460,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
+  bt::internal::BulkMutator mutator(std::string(""),
                                     std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 

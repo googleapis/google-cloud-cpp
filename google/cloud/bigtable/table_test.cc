@@ -98,7 +98,7 @@ TEST_F(TableTest, ChangePolicies) {
 }
 
 TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
-  bigtable::Table table(client_, bigtable::AppProfileId("test-profile-id"),
+  bigtable::Table table(client_, std::string("test-profile-id"),
                         std::string("some-table"), bigtable::AlwaysRetryMutationPolicy(),
                         bigtable::LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("test-profile-id", table.app_profile_id());

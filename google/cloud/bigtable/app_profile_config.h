@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_APP_PROFILE_CONFIG_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_APP_PROFILE_CONFIG_H_
 
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 
@@ -30,9 +29,9 @@ class AppProfileConfig {
       google::bigtable::admin::v2::CreateAppProfileRequest proto)
       : proto_(std::move(proto)) {}
 
-  static AppProfileConfig MultiClusterUseAny(AppProfileId profile_id);
+  static AppProfileConfig MultiClusterUseAny(std::string profile_id);
   static AppProfileConfig SingleClusterRouting(
-      AppProfileId profile_id, std::string cluster_id,
+      std::string profile_id, std::string cluster_id,
       bool allow_transactional_writes = false);
 
   AppProfileConfig& set_ignore_warnings(bool value) {

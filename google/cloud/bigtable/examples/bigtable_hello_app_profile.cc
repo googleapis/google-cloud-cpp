@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) try {
 
   // Access Cloud Bigtable using a different profile
   //! [read with app profile]
-  cbt::Table read(data_client, cbt::AppProfileId(profile_id), table_id);
+  cbt::Table read(data_client, std::string(profile_id), table_id);
 
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));

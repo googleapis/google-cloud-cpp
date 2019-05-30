@@ -122,7 +122,7 @@ void AsyncCreateAppProfile(
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string profile_id) {
     cbt::AppProfileConfig config = cbt::AppProfileConfig::MultiClusterUseAny(
-        cbt::AppProfileId(profile_id));
+        std::string(profile_id));
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.AsyncCreateAppProfile(cq, std::string(instance_id),
                                              config);
@@ -271,7 +271,7 @@ void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
     future<void> final =
         instance_admin
             .AsyncGetAppProfile(cq, std::string(instance_id),
-                                cbt::AppProfileId(app_profile_id))
+                                std::string(app_profile_id))
             .then([](google::cloud::future<
                       StatusOr<google::bigtable::admin::v2::AppProfile>>
                          f) {
@@ -557,7 +557,7 @@ void AsyncUpdateAppProfile(
      std::string instance_id, std::string profile_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.AsyncUpdateAppProfile(
-            cq, std::string(instance_id), cbt::AppProfileId(profile_id),
+            cq, std::string(instance_id), std::string(profile_id),
             cbt::AppProfileUpdateConfig()
                 .set_description("new description")
                 .set_ignore_warnings(true));
@@ -646,7 +646,7 @@ void AsyncDeleteAppProfile(
      std::string instance_id, std::string app_profile_id) {
     future<google::cloud::Status> status_future =
         instance_admin.AsyncDeleteAppProfile(cq, std::string(instance_id),
-                                             cbt::AppProfileId(app_profile_id),
+                                             std::string(app_profile_id),
                                              /*ignore_warnings=*/true);
 
     google::cloud::Status status = status_future.get();

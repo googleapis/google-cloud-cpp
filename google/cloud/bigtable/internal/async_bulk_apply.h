@@ -21,7 +21,6 @@
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
 #include "google/cloud/bigtable/internal/async_retry_op.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/make_unique.h"
@@ -48,7 +47,7 @@ class AsyncRetryBulkApply
       IdempotentMutationPolicy& idempotent_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<bigtable::DataClient> client,
-      bigtable::AppProfileId const& app_profile_id,
+      std::string const& app_profile_id,
       std::string const& table_name, BulkMutation mut);
 
  private:
@@ -57,7 +56,7 @@ class AsyncRetryBulkApply
                       IdempotentMutationPolicy& idempotent_policy,
                       MetadataUpdatePolicy metadata_update_policy,
                       std::shared_ptr<bigtable::DataClient> client,
-                      bigtable::AppProfileId const& app_profile_id,
+                      std::string const& app_profile_id,
                       std::string const& table_name, BulkMutation mut);
 
   void StartIterationIfNeeded(CompletionQueue cq);

@@ -18,7 +18,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-AppProfileConfig AppProfileConfig::MultiClusterUseAny(AppProfileId profile_id) {
+AppProfileConfig AppProfileConfig::MultiClusterUseAny(std::string profile_id) {
   AppProfileConfig tmp;
   tmp.proto_.set_app_profile_id(std::move(profile_id));
   tmp.proto_.mutable_app_profile()
@@ -28,7 +28,7 @@ AppProfileConfig AppProfileConfig::MultiClusterUseAny(AppProfileId profile_id) {
 }
 
 AppProfileConfig AppProfileConfig::SingleClusterRouting(
-    AppProfileId profile_id, std::string cluster_id,
+    std::string profile_id, std::string cluster_id,
     bool allow_transactional_writes) {
   AppProfileConfig tmp;
   tmp.proto_.set_app_profile_id(std::move(profile_id));

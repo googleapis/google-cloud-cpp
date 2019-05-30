@@ -570,7 +570,7 @@ void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
     auto config = cbt::AppProfileConfig::MultiClusterUseAny(
-        cbt::AppProfileId(profile_id));
+        std::string(profile_id));
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
         instance_admin.CreateAppProfile(std::string(instance_id), config);
     if (!profile) {
@@ -600,7 +600,7 @@ void CreateAppProfileCluster(
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id, std::string cluster_id) {
     auto config = cbt::AppProfileConfig::SingleClusterRouting(
-        cbt::AppProfileId(profile_id), std::string(cluster_id));
+        std::string(profile_id), std::string(cluster_id));
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
         instance_admin.CreateAppProfile(std::string(instance_id), config);
     if (!profile) {
@@ -627,7 +627,7 @@ void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string profile_id) {
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
         instance_admin.GetAppProfile(std::string(instance_id),
-                                     cbt::AppProfileId(profile_id));
+                                     std::string(profile_id));
     if (!profile) {
       throw std::runtime_error(profile.status().message());
     }
@@ -659,7 +659,7 @@ void UpdateAppProfileDescription(
      std::string profile_id, std::string description) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.UpdateAppProfile(
-            std::string(instance_id), cbt::AppProfileId(profile_id),
+            std::string(instance_id), std::string(profile_id),
             cbt::AppProfileUpdateConfig().set_description(description));
     auto profile = profile_future.get();
     if (!profile) {
@@ -691,7 +691,7 @@ void UpdateAppProfileRoutingAny(
      std::string profile_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.UpdateAppProfile(std::string(instance_id),
-                                        cbt::AppProfileId(profile_id),
+                                        std::string(profile_id),
                                         cbt::AppProfileUpdateConfig()
                                             .set_multi_cluster_use_any()
                                             .set_ignore_warnings(true));
@@ -726,7 +726,7 @@ void UpdateAppProfileRoutingSingleCluster(
      std::string profile_id, std::string cluster_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.UpdateAppProfile(
-            std::string(instance_id), cbt::AppProfileId(profile_id),
+            std::string(instance_id), std::string(profile_id),
             cbt::AppProfileUpdateConfig()
                 .set_single_cluster_routing(std::string(cluster_id))
                 .set_ignore_warnings(true));
@@ -799,7 +799,7 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id, bool ignore_warnings) {
     google::cloud::Status status = instance_admin.DeleteAppProfile(
-        std::string(instance_id), cbt::AppProfileId(profile_id),
+        std::string(instance_id), std::string(profile_id),
         ignore_warnings);
     if (!status.ok()) {
       throw std::runtime_error(status.message());

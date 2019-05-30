@@ -374,14 +374,14 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
                        ->AsyncCreateAppProfile(
                            cq, std::string(instance_id),
                            bigtable::AppProfileConfig::MultiClusterUseAny(
-                               bigtable::AppProfileId(id1)))
+                               std::string(id1)))
                        .get();
   ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_
                        ->AsyncCreateAppProfile(
                            cq, std::string(instance_id),
                            bigtable::AppProfileConfig::MultiClusterUseAny(
-                               bigtable::AppProfileId(id2)))
+                               std::string(id2)))
                        .get();
   ASSERT_STATUS_OK(profile_2);
 
@@ -394,7 +394,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   auto detail_1 =
       instance_admin_
           ->AsyncGetAppProfile(cq, std::string(instance_id),
-                               bigtable::AppProfileId(id1))
+                               std::string(id1))
           .get();
   ASSERT_STATUS_OK(detail_1);
   EXPECT_EQ(detail_1->name(), profile_1->name());
@@ -404,7 +404,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   auto detail_2 =
       instance_admin_
           ->AsyncGetAppProfile(cq, std::string(instance_id),
-                               bigtable::AppProfileId(id2))
+                               std::string(id2))
           .get();
   ASSERT_STATUS_OK(detail_2);
   EXPECT_EQ(detail_2->name(), profile_2->name());
@@ -412,14 +412,14 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   EXPECT_THAT(detail_2->name(), HasSubstr(id2));
 
   auto profile_updated_future = instance_admin_->AsyncUpdateAppProfile(
-      cq, std::string(instance_id), bigtable::AppProfileId(id2),
+      cq, std::string(instance_id), std::string(id2),
       bigtable::AppProfileUpdateConfig().set_description("new description"));
 
   auto update_2 = profile_updated_future.get();
   auto detail_2_after_update =
       instance_admin_
           ->AsyncGetAppProfile(cq, std::string(instance_id),
-                               bigtable::AppProfileId(id2))
+                               std::string(id2))
           .get();
   ASSERT_STATUS_OK(detail_2_after_update);
   EXPECT_EQ("new description", update_2->description());
@@ -428,7 +428,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   ASSERT_STATUS_OK(
       instance_admin_
           ->AsyncDeleteAppProfile(cq, std::string(instance_id),
-                                  bigtable::AppProfileId(id1),
+                                  std::string(id1),
                                   /*ignore_warnings=*/true)
           .get());
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
@@ -439,7 +439,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   ASSERT_STATUS_OK(
       instance_admin_
           ->AsyncDeleteAppProfile(cq, std::string(instance_id),
-                                  bigtable::AppProfileId(id2),
+                                  std::string(id2),
                                   /*ignore_warnings=*/true)
           .get());
   current_profiles = instance_admin_->ListAppProfiles(instance_id);

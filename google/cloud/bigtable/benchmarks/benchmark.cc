@@ -91,7 +91,7 @@ std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
 
 BenchmarkResult Benchmark::PopulateTable() {
   bigtable::Table table(MakeDataClient(),
-                        bigtable::AppProfileId(setup_.app_profile_id()),
+                        std::string(setup_.app_profile_id()),
                         setup_.table_id());
   std::cout << "Populating table " << setup_.table_id() << " " << std::flush;
   std::vector<std::future<BenchmarkResult>> tasks;

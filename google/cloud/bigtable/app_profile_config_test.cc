@@ -21,7 +21,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 TEST(AppProfileConfig, MultiClusterUseAny) {
-  auto proto = AppProfileConfig::MultiClusterUseAny(AppProfileId("my-profile"))
+  auto proto = AppProfileConfig::MultiClusterUseAny("my-profile")
                    .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
@@ -34,14 +34,14 @@ TEST(AppProfileConfig, MultiClusterUseAny) {
 }
 
 TEST(AppProfileConfig, SetIgnoreWarnings) {
-  auto proto = AppProfileConfig::MultiClusterUseAny(AppProfileId("my-profile"))
+  auto proto = AppProfileConfig::MultiClusterUseAny("my-profile")
                    .set_ignore_warnings(true)
                    .as_proto();
   EXPECT_TRUE(proto.ignore_warnings());
 }
 
 TEST(AppProfileConfig, SetDescription) {
-  auto proto = AppProfileConfig::MultiClusterUseAny(AppProfileId("my-profile"))
+  auto proto = AppProfileConfig::MultiClusterUseAny("my-profile")
                    .set_description("my description")
                    .as_proto();
   EXPECT_EQ("my description", proto.app_profile().description());
@@ -49,7 +49,7 @@ TEST(AppProfileConfig, SetDescription) {
 
 TEST(AppProfileConfig, SingleClusterRouting) {
   auto proto = AppProfileConfig::SingleClusterRouting(
-                   AppProfileId("my-profile"), std::string("the-cluster"), false)
+                   "my-profile", "the-cluster", false)
                    .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   ASSERT_TRUE(proto.app_profile().has_single_cluster_routing());
@@ -60,7 +60,7 @@ TEST(AppProfileConfig, SingleClusterRouting) {
 
 TEST(AppProfileConfig, SingleClusterRoutingWithTransactionalWrites) {
   auto proto = AppProfileConfig::SingleClusterRouting(
-                   AppProfileId("my-profile"), std::string("the-cluster"), true)
+                   "my-profile", "the-cluster", true)
                    .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   ASSERT_TRUE(proto.app_profile().has_single_cluster_routing());

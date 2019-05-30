@@ -561,7 +561,7 @@ InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
     std::string const& instance_id,
-    bigtable::AppProfileId const& profile_id) {
+    std::string const& profile_id) {
   grpc::Status status;
   btadmin::GetAppProfileRequest request;
   request.set_name(InstanceName(instance_id) + "/appProfiles/" +
@@ -581,7 +581,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
                                   std::string const& instance_id,
-                                  bigtable::AppProfileId const& profile_id) {
+                                  std::string const& profile_id) {
   btadmin::GetAppProfileRequest request;
   request.set_name(InstanceName(instance_id) + "/appProfiles/" +
                    profile_id);
@@ -599,7 +599,7 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
 }
 
 future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
-    std::string instance_id, bigtable::AppProfileId profile_id,
+    std::string instance_id, std::string profile_id,
     AppProfileUpdateConfig config) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
@@ -615,7 +615,7 @@ future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
                                      std::string instance_id,
-                                     bigtable::AppProfileId profile_id,
+                                     std::string profile_id,
                                      AppProfileUpdateConfig config) {
   auto request = std::move(config).as_proto();
   request.mutable_app_profile()->set_name(
@@ -697,7 +697,7 @@ InstanceAdmin::AsyncListAppProfiles(CompletionQueue& cq,
 }
 
 Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
-                                       bigtable::AppProfileId const& profile_id,
+                                       std::string const& profile_id,
                                        bool ignore_warnings) {
   grpc::Status status;
   btadmin::DeleteAppProfileRequest request;
@@ -715,7 +715,7 @@ Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
 
 future<Status> InstanceAdmin::AsyncDeleteAppProfile(
     CompletionQueue& cq, std::string const& instance_id,
-    bigtable::AppProfileId const& profile_id, bool ignore_warnings) {
+    std::string const& profile_id, bool ignore_warnings) {
   btadmin::DeleteAppProfileRequest request;
   request.set_name(InstanceName(instance_id) + "/appProfiles/" +
                    profile_id);

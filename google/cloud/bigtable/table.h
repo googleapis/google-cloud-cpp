@@ -28,7 +28,6 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/disjunction.h"
@@ -186,7 +185,7 @@ class Table {
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : Table(std::move(client), AppProfileId(""), table_id) {}
+      : Table(std::move(client), std::string{}, table_id) {}
 
   /**
    * Constructor with default policies.
@@ -205,7 +204,7 @@ class Table {
    * @snippet bigtable_hello_app_profile.cc read with app profile
    */
   Table(std::shared_ptr<DataClient> client,
-        bigtable::AppProfileId app_profile_id, std::string const& table_id)
+        std::string app_profile_id, std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(std::string(TableName(client_, table_id))),
@@ -338,7 +337,7 @@ class Table {
             typename std::enable_if<valid_policies<P, Policies...>::value,
                                     int>::type = 0>
   Table(std::shared_ptr<DataClient> client,
-        bigtable::AppProfileId app_profile_id, std::string const& table_id,
+        std::string app_profile_id, std::string const& table_id,
         P&& p, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
     ChangePolicies(std::forward<P>(p), std::forward<Policies>(policies)...);
