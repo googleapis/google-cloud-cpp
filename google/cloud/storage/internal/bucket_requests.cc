@@ -183,6 +183,10 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
 
   result.location_ = json.value("location", "");
 
+  if (json.count("locationType") != 0) {
+    result.location_type_ = json.value("locationType", "");
+  }
+
   if (json.count("logging") != 0) {
     auto logging = json["logging"];
     BucketLogging l;
@@ -339,6 +343,8 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   }
 
   SetIfNotEmpty(metadata_as_json, "location", meta.location());
+
+  SetIfNotEmpty(metadata_as_json, "locationType", meta.location_type());
 
   if (meta.has_logging()) {
     json l;

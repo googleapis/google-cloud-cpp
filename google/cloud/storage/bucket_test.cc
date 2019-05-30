@@ -136,6 +136,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
       "updated": "2018-05-19T19:31:24Z",
       "metageneration": "4",
       "location": "US",
+      "locationType": "regional",
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
@@ -217,6 +218,7 @@ TEST_F(BucketTest, UpdateBucket) {
       "updated": "2018-05-19T19:31:24Z",
       "metageneration": 7,
       "location": "US",
+      "locationType": "regional",
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";

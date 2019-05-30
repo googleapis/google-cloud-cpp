@@ -737,6 +737,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
     return *this;
   }
 
+  std::string const& location_type() const { return location_type_; }
+
   //@{
   /// @name Accessors and modifiers for logging configuration.
   bool has_logging() const { return logging_.has_value(); }
@@ -870,6 +872,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::map<std::string, std::string> labels_;
   google::cloud::optional<BucketLifecycle> lifecycle_;
   std::string location_;
+  std::string location_type_;
   google::cloud::optional<BucketLogging> logging_;
   std::int64_t project_number_;
   google::cloud::optional<BucketRetentionPolicy> retention_policy_;
