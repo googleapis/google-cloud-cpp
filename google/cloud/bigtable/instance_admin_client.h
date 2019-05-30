@@ -28,9 +28,6 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // Forward declare some classes so we can be friends.
 class InstanceAdmin;
-namespace noex {
-class InstanceAdmin;
-}  // namespace noex
 namespace internal {
 template <typename Client, typename ResponseType>
 class AsyncLongrunningOp;
@@ -93,7 +90,6 @@ class InstanceAdminClient {
   // classes that do use them friends.
  protected:
   friend class InstanceAdmin;
-  friend class noex::InstanceAdmin;
   template <typename Client, typename ResponseType>
   friend class internal::AsyncLongrunningOp;
   template <typename Client, typename Response>

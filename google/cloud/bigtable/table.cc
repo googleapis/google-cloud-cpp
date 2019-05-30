@@ -60,7 +60,7 @@ Row TransformReadModifyWriteRowResponse(Response& response) {
 
 }  // namespace
 
-using ClientUtils = bigtable::internal::noex::UnaryClientUtils<DataClient>;
+using ClientUtils = bigtable::internal::UnaryClientUtils<DataClient>;
 
 static_assert(std::is_copy_assignable<bigtable::Table>::value,
               "bigtable::Table must be CopyAssignable");
