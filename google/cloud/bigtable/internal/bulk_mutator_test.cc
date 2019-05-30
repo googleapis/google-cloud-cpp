@@ -67,8 +67,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string(""),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
@@ -125,8 +124,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string("test-id"),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("test-id", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
@@ -192,8 +190,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string(""),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -255,8 +252,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string(""),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -318,8 +314,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string(""),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -397,8 +392,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string(""),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -460,8 +454,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(std::string(""),
-                                    std::string("foo/bar/baz/table"), *policy,
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
                                     std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());

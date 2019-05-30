@@ -79,16 +79,16 @@ bool IsIdOrNamePresentInClusterList(
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone,
+    std::string const& instance_id, std::string const& zone,
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
-  std::string instance_id(id);
-  std::string display_name("Integration Tests " + id);
+  // This cannot have more than 30 characters.
+  auto display_name = ("Integration Tests " + instance_id).substr(0, 30);
   auto cluster_config =
       bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
-                                  {{id + "-c1", cluster_config}});
+                                  {{instance_id + "-c1", cluster_config}});
   config.set_type(instance_type);
   return config;
 }
@@ -179,34 +179,33 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
 /// @test Verify that cluster async future CRUD operations work as expected.
 TEST_F(InstanceAdminAsyncFutureIntegrationTest,
        CreateListGetDeleteClusterTest) {
-  std::string id =
+  std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string cluster_id_str = id + "-cl2";
+  std::string cluster_id = instance_id + "-cl2";
 
   google::cloud::bigtable::CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
 
   // create instance prerequisites for cluster operations
-  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->AsyncCreateInstance(cq, instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
   // Make an asynchronous request, but immediately block because this is just a
   // test.
-  auto clusters_list_before = instance_admin_->AsyncListClusters(cq, id).get();
+  auto clusters_list_before =
+      instance_admin_->AsyncListClusters(cq, instance_id).get();
   ASSERT_STATUS_OK(clusters_list_before);
   EXPECT_TRUE(clusters_list_before->failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
       << " retrieve the information for some locations. This is typically due"
       << " to an outage or some other transient condition.";
   ASSERT_FALSE(IsIdOrNamePresentInClusterList(clusters_list_before->clusters,
-                                              cluster_id_str));
+                                              cluster_id));
   // create cluster
-  std::string cluster_id(cluster_id_str);
   auto cluster_config =
       bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -214,7 +213,8 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
           ->AsyncCreateCluster(cq, cluster_config, instance_id, cluster_id)
           .get();
   ASSERT_FALSE(cluster->name().empty());
-  auto clusters_list_after = instance_admin_->AsyncListClusters(cq, id).get();
+  auto clusters_list_after =
+      instance_admin_->AsyncListClusters(cq, instance_id).get();
   ASSERT_STATUS_OK(clusters_list_after);
   EXPECT_TRUE(clusters_list_after->failed_locations.empty())
       << "The Cloud Bigtable service (or emulator) reports that it could not"
@@ -224,15 +224,15 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
       IsClusterPresent(clusters_list_before->clusters, cluster->name()));
   EXPECT_TRUE(IsClusterPresent(clusters_list_after->clusters, cluster->name()));
   EXPECT_TRUE(IsIdOrNamePresentInClusterList(clusters_list_after->clusters,
-                                             cluster_id_str));
+                                             cluster_id));
 
   // Get cluster
   google::cloud::future<google::cloud::StatusOr<btadmin::Cluster>> fut =
       instance_admin_->AsyncGetCluster(cq, instance_id, cluster_id);
   auto cluster_check = fut.get();
   ASSERT_STATUS_OK(cluster_check);
-  std::string cluster_name_prefix =
-      instance_admin_->project_name() + "/instances/" + id + "/clusters/";
+  std::string cluster_name_prefix = instance_admin_->project_name() +
+                                    "/instances/" + instance_id + "/clusters/";
   EXPECT_EQ(cluster_name_prefix + cluster_id, cluster_check->name());
 
   // Update cluster
@@ -253,23 +253,21 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
-  ASSERT_STATUS_OK(instance_admin_
-                       ->AsyncDeleteCluster(cq, std::move(instance_id),
-                                            std::move(cluster_id))
-                       .get());
+  ASSERT_STATUS_OK(
+      instance_admin_->AsyncDeleteCluster(cq, instance_id, cluster_id).get());
   auto clusters_list_after_delete =
-      instance_admin_->AsyncListClusters(cq, id).get();
+      instance_admin_->AsyncListClusters(cq, instance_id).get();
   ASSERT_STATUS_OK(clusters_list_after_delete);
   // Make an asynchronous request, but immediately block because this is just a
   // test.
-  auto status = instance_admin_->AsyncDeleteInstance(id, cq).get();
+  auto status = instance_admin_->AsyncDeleteInstance(instance_id, cq).get();
   ASSERT_STATUS_OK(status);
-  EXPECT_TRUE(
-      IsClusterPresent(clusters_list_after->clusters,
-                       instance_details->name() + "/clusters/" + id + "-cl2"));
-  EXPECT_FALSE(
-      IsClusterPresent(clusters_list_after_delete->clusters,
-                       instance_details->name() + "/clusters/" + id + "-cl2"));
+  EXPECT_TRUE(IsClusterPresent(
+      clusters_list_after->clusters,
+      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
+  EXPECT_FALSE(IsClusterPresent(
+      clusters_list_after_delete->clusters,
+      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
   EXPECT_FALSE(
       IsClusterPresent(clusters_list_after_delete->clusters, cluster->name()));
   cq.Shutdown();
@@ -447,7 +445,6 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
   std::thread pool([&cq] { cq.Run(); });
 
   // create instance prerequisites for cluster operations
-  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
@@ -459,11 +456,10 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
       {"serviceAccount:" + std::string(flag_service_account)});
 
   auto initial_policy =
-      instance_admin_->AsyncSetIamPolicy(cq, instance_id, iam_bindings).get();
+      instance_admin_->AsyncSetIamPolicy(cq, id, iam_bindings).get();
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy =
-      instance_admin_->AsyncGetIamPolicy(cq, instance_id).get();
+  auto fetched_policy = instance_admin_->AsyncGetIamPolicy(cq, id).get();
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version, fetched_policy->version);

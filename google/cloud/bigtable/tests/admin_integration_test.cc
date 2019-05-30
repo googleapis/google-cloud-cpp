@@ -247,8 +247,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // be production clusters (and therefore have at least 3 nodes each), and
   // they must be in different zones. Also, the display name cannot be longer
   // than 30 characters.
-  std::string instance_id(id);
-  std::string display_name(("IT " + id).substr(0, 30));
+  auto display_name = ("IT " + id).substr(0, 30);
   auto cluster_config_1 =
       bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone(),
                               3, bigtable::ClusterConfig::HDD);
@@ -256,7 +255,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
       bigtable::testing::TableTestEnvironment::replication_zone(), 3,
       bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
-      instance_id, display_name,
+      id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
   // Create the new instance.

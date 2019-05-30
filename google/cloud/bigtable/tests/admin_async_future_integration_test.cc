@@ -247,7 +247,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
   using namespace google::cloud::testing_util::chrono_literals;
 
   std::string id = bigtable::testing::TableTestEnvironment::RandomInstanceId();
-  std::string const random_table_id = RandomTableId();
+  std::string const table_id = RandomTableId();
 
   auto project_id = bigtable::testing::TableTestEnvironment::project_id();
 
@@ -262,12 +262,11 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
 
   auto data_client = bigtable::CreateDefaultDataClient(
       project_id, id, bigtable::ClientOptions());
-  bigtable::Table table(data_client, random_table_id);
+  bigtable::Table table(data_client, table_id);
 
-  std::string instance_id(id);
   // Abbreviate "Integration Test" as "IT" because the display name cannot be
   // longer than 30 characters.
-  std::string display_name(("IT " + id).substr(0, 30));
+  auto display_name = ("IT " + id).substr(0, 30);
 
   // Replication needs at least two clusters
   auto cluster_config_1 =
@@ -277,10 +276,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
       bigtable::testing::TableTestEnvironment::replication_zone(), 3,
       bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
-      instance_id, display_name,
+      id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
-
-  std::string table_id(random_table_id);
 
   std::string const column_family1 = "family1";
   std::string const column_family2 = "family2";

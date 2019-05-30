@@ -68,16 +68,16 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone,
+    std::string const& instance_id, std::string const& zone,
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
-  std::string instance_id(id);
-  std::string display_name("Integration Tests " + id);
+  // The description cannot exceed 30 characters
+  auto display_name = ("IT " + instance_id).substr(0, 30);
   auto cluster_config =
       bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
-                                  {{id + "-c1", cluster_config}});
+                                  {{instance_id + "-c1", cluster_config}});
   config.set_type(instance_type);
   return config;
 }
@@ -264,21 +264,20 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 
 /// @test Verify that cluster CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
-  std::string id =
+  std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string cluster_id_str = id + "-cl2";
+  std::string cluster_id_str = instance_id + "-cl2";
 
   // create instance prerequisites for cluster operations
-  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
   // create cluster
-  auto clusters_before = instance_admin_->ListClusters(id);
+  auto clusters_before = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_before);
   ASSERT_FALSE(IsClusterPresent(clusters_before->clusters, cluster_id_str))
       << "Cluster (" << cluster_id_str << ") already exists."
@@ -290,7 +289,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  auto clusters_after = instance_admin_->ListClusters(id);
+  auto clusters_after = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_after);
   EXPECT_FALSE(IsClusterPresent(clusters_before->clusters, cluster->name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after->clusters, cluster->name()));
@@ -298,8 +297,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   // Get cluster
   auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
   ASSERT_STATUS_OK(cluster_check);
-  std::string cluster_name_prefix =
-      instance_admin_->project_name() + "/instances/" + id + "/clusters/";
+  std::string cluster_name_prefix = instance_admin_->project_name() +
+                                    "/instances/" + instance_id + "/clusters/";
   EXPECT_EQ(cluster_name_prefix + cluster_id, cluster_check->name());
 
   // Update cluster
@@ -319,29 +318,27 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
-  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(std::move(instance_id),
-                                                  std::move(cluster_id)));
-  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(instance_id, cluster_id));
+  auto clusters_after_delete = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_after_delete);
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
-  EXPECT_TRUE(
-      IsClusterPresent(clusters_after->clusters,
-                       instance_details->name() + "/clusters/" + id + "-cl2"));
-  EXPECT_FALSE(
-      IsClusterPresent(clusters_after_delete->clusters,
-                       instance_details->name() + "/clusters/" + id + "-cl2"));
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+  EXPECT_TRUE(IsClusterPresent(
+      clusters_after->clusters,
+      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
+  EXPECT_FALSE(IsClusterPresent(
+      clusters_after_delete->clusters,
+      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
 }
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
-  std::string id =
+  std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // create instance prerequisites for cluster operations
-  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
@@ -350,21 +347,22 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
       "roles/bigtable.reader",
       {"serviceAccount:" + std::string(flag_service_account)});
 
-  auto initial_policy = instance_admin_->SetIamPolicy(id, iam_bindings);
+  auto initial_policy =
+      instance_admin_->SetIamPolicy(instance_id, iam_bindings);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = instance_admin_->GetIamPolicy(id);
+  auto fetched_policy = instance_admin_->GetIamPolicy(instance_id);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version, fetched_policy->version);
   EXPECT_EQ(initial_policy->etag, fetched_policy->etag);
 
   auto permission_set = instance_admin_->TestIamPermissions(
-      id, {"bigtable.tables.list", "bigtable.tables.delete"});
+      instance_id, {"bigtable.tables.list", "bigtable.tables.delete"});
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2U, permission_set->size());
-  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id));
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
 int main(int argc, char* argv[]) {

@@ -399,10 +399,8 @@ TEST_F(InstanceAdminTest, GetCluster) {
   bigtable::InstanceAdmin tested(client_);
   auto mock = create_cluster();
   EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
-  std::string instance_id("the-instance");
-  std::string cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  auto cluster = tested.GetCluster(instance_id, cluster_id);
+  auto cluster = tested.GetCluster("the-instance", "the-cluster");
   ASSERT_STATUS_OK(cluster);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
             cluster->name());
@@ -419,7 +417,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
   std::string instance_id("other-instance");
   std::string cluster_id("other-cluster");
 
-  ASSERT_FALSE(tested.GetCluster(instance_id, cluster_id));
+  ASSERT_FALSE(tested.GetCluster("the-instance", "the-cluster"));
 }
 
 /// @test Verify recoverable errors for GetCluster
@@ -440,10 +438,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
       .WillOnce(Invoke(mock_cluster));
 
   // After all the setup, make the actual call we want to test.
-  std::string instance_id("the-instance");
-  std::string cluster_id("the-cluster");
-  // After all the setup, make the actual call we want to test.
-  auto cluster = tested.GetCluster(instance_id, cluster_id);
+  auto cluster = tested.GetCluster("the-instance", "the-cluster");
   ASSERT_STATUS_OK(cluster);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
             cluster->name());
@@ -460,10 +455,8 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   auto mock = MockRpcFactory<btadmin::DeleteClusterRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
-  std::string instance_id("the-instance");
-  std::string cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  ASSERT_STATUS_OK(tested.DeleteCluster(instance_id, cluster_id));
+  ASSERT_STATUS_OK(tested.DeleteCluster("the-instance", "the-cluster"));
 }
 
 /// @test Verify unrecoverable error for DeleteCluster
@@ -473,10 +466,8 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  std::string instance_id("other-instance");
-  std::string cluster_id("other-cluster");
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster(instance_id, cluster_id).ok());
+  EXPECT_FALSE(tested.DeleteCluster("the-instance", "the-cluster").ok());
 }
 
 /// @test Verify that recoverable error for DeleteCluster
@@ -487,10 +478,8 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  std::string instance_id("other-instance");
-  std::string cluster_id("other-cluster");
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster(instance_id, cluster_id).ok());
+  EXPECT_FALSE(tested.DeleteCluster("the-instance", "the-cluster").ok());
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.

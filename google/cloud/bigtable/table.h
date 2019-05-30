@@ -210,7 +210,7 @@ class Table {
         std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
-        table_name_(std::string(TableName(client_, table_id))),
+        table_name_(TableName(client_, table_id)),
         table_id_(table_id),
         rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),

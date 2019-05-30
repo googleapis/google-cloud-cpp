@@ -438,7 +438,7 @@ StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return std::string(*response.mutable_consistency_token());
+  return std::move(*response.mutable_consistency_token());
 }
 
 future<StatusOr<std::string>> TableAdmin::AsyncGenerateConsistencyToken(
@@ -464,7 +464,7 @@ future<StatusOr<std::string>> TableAdmin::AsyncGenerateConsistencyToken(
         if (!result) {
           return result.status();
         }
-        return std::string(*result->mutable_consistency_token());
+        return std::move(*result->mutable_consistency_token());
       });
 }
 

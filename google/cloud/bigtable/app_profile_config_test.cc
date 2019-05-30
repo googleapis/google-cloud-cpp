@@ -95,7 +95,7 @@ TEST(AppProfileUpdateConfig, SetMultiClusterUseAny) {
 
 TEST(AppProfileUpdateConfig, SetSingleClusterRouting) {
   auto proto = AppProfileUpdateConfig()
-                   .set_single_cluster_routing(std::string("c1"), true)
+                   .set_single_cluster_routing("c1", true)
                    .as_proto();
   EXPECT_TRUE(proto.app_profile().has_single_cluster_routing());
   EXPECT_EQ("c1", proto.app_profile().single_cluster_routing().cluster_id());
@@ -112,7 +112,7 @@ TEST(AppProfileUpdateConfig, SetSeveral) {
                    .set_etag("e1")
                    .set_etag("abcdef")
                    .set_multi_cluster_use_any()
-                   .set_single_cluster_routing(std::string("c1"), true)
+                   .set_single_cluster_routing("c1", true)
                    .as_proto();
   EXPECT_EQ("bar", proto.app_profile().description());
   EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "description"));
