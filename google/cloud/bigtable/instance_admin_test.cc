@@ -815,8 +815,8 @@ class AsyncDeleteClusterTest : public ::testing::Test {
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
     user_future_ = instance_admin.AsyncDeleteCluster(
-        cq_, std::string("test-instance"),
-        std::string("the-cluster"));
+        cq_, "test-instance",
+        "the-cluster");
   }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
@@ -899,7 +899,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
     user_future_ = instance_admin.AsyncSetIamPolicy(
-        cq_, std::string("test-instance"),
+        cq_, "test-instance",
         google::cloud::IamBindings("writer",
                                    {"abc@gmail.com", "xyz@gmail.com"}),
         "test-tag");

@@ -19,7 +19,7 @@ namespace bigtable = google::cloud::bigtable;
 
 TEST(InstanceConfigTest, Constructor) {
   bigtable::InstanceConfig config(
-      std::string("my-instance"), std::string("pretty name"),
+      "my-instance", "pretty name",
       {{"my-cluster", {"somewhere", 7, bigtable::ClusterConfig::SSD}}});
   auto proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
