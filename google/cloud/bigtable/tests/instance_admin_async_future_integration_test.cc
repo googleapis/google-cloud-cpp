@@ -83,8 +83,8 @@ bigtable::InstanceConfig IntegrationTestConfig(
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
-  bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name("Integration Tests " + id);
+  std::string instance_id(id);
+  std::string display_name("Integration Tests " + id);
   auto cluster_config =
       bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
@@ -188,7 +188,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   std::thread pool([&cq] { cq.Run(); });
 
   // create instance prerequisites for cluster operations
-  bigtable::InstanceId instance_id(id);
+  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
@@ -206,7 +206,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest,
   ASSERT_FALSE(IsIdOrNamePresentInClusterList(clusters_list_before->clusters,
                                               cluster_id_str));
   // create cluster
-  bigtable::ClusterId cluster_id(cluster_id_str);
+  std::string cluster_id(cluster_id_str);
   auto cluster_config =
       bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -372,14 +372,14 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
 
   auto profile_1 = instance_admin_
                        ->AsyncCreateAppProfile(
-                           cq, bigtable::InstanceId(instance_id),
+                           cq, std::string(instance_id),
                            bigtable::AppProfileConfig::MultiClusterUseAny(
                                bigtable::AppProfileId(id1)))
                        .get();
   ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_
                        ->AsyncCreateAppProfile(
-                           cq, bigtable::InstanceId(instance_id),
+                           cq, std::string(instance_id),
                            bigtable::AppProfileConfig::MultiClusterUseAny(
                                bigtable::AppProfileId(id2)))
                        .get();
@@ -393,7 +393,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
 
   auto detail_1 =
       instance_admin_
-          ->AsyncGetAppProfile(cq, bigtable::InstanceId(instance_id),
+          ->AsyncGetAppProfile(cq, std::string(instance_id),
                                bigtable::AppProfileId(id1))
           .get();
   ASSERT_STATUS_OK(detail_1);
@@ -403,7 +403,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
 
   auto detail_2 =
       instance_admin_
-          ->AsyncGetAppProfile(cq, bigtable::InstanceId(instance_id),
+          ->AsyncGetAppProfile(cq, std::string(instance_id),
                                bigtable::AppProfileId(id2))
           .get();
   ASSERT_STATUS_OK(detail_2);
@@ -412,13 +412,13 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
   EXPECT_THAT(detail_2->name(), HasSubstr(id2));
 
   auto profile_updated_future = instance_admin_->AsyncUpdateAppProfile(
-      cq, bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      cq, std::string(instance_id), bigtable::AppProfileId(id2),
       bigtable::AppProfileUpdateConfig().set_description("new description"));
 
   auto update_2 = profile_updated_future.get();
   auto detail_2_after_update =
       instance_admin_
-          ->AsyncGetAppProfile(cq, bigtable::InstanceId(instance_id),
+          ->AsyncGetAppProfile(cq, std::string(instance_id),
                                bigtable::AppProfileId(id2))
           .get();
   ASSERT_STATUS_OK(detail_2_after_update);
@@ -427,7 +427,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
 
   ASSERT_STATUS_OK(
       instance_admin_
-          ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
+          ->AsyncDeleteAppProfile(cq, std::string(instance_id),
                                   bigtable::AppProfileId(id1),
                                   /*ignore_warnings=*/true)
           .get());
@@ -438,7 +438,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, AsyncListAppProfilesTest) {
 
   ASSERT_STATUS_OK(
       instance_admin_
-          ->AsyncDeleteAppProfile(cq, bigtable::InstanceId(instance_id),
+          ->AsyncDeleteAppProfile(cq, std::string(instance_id),
                                   bigtable::AppProfileId(id2),
                                   /*ignore_warnings=*/true)
           .get());
@@ -462,7 +462,7 @@ TEST_F(InstanceAdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
   std::thread pool([&cq] { cq.Run(); });
 
   // create instance prerequisites for cluster operations
-  bigtable::InstanceId instance_id(id);
+  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =

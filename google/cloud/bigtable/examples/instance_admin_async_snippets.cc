@@ -47,11 +47,11 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string zone) {
-    cbt::DisplayName display_name("Put description here");
+    std::string display_name("Put description here");
     std::string cluster_id = instance_id + "-c1";
     cbt::ClusterConfig cluster_config =
         cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
-    cbt::InstanceConfig config(cbt::InstanceId(instance_id), display_name,
+    cbt::InstanceConfig config(std::string(instance_id), display_name,
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
@@ -89,8 +89,8 @@ void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
         cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
         instance_admin.AsyncCreateCluster(cq, cluster_config,
-                                          cbt::InstanceId(instance_id),
-                                          cbt::ClusterId(cluster_id));
+                                          std::string(instance_id),
+                                          std::string(cluster_id));
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for cluster creation to complete " << std::flush;
@@ -124,7 +124,7 @@ void AsyncCreateAppProfile(
     cbt::AppProfileConfig config = cbt::AppProfileConfig::MultiClusterUseAny(
         cbt::AppProfileId(profile_id));
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
-        instance_admin.AsyncCreateAppProfile(cq, cbt::InstanceId(instance_id),
+        instance_admin.AsyncCreateAppProfile(cq, std::string(instance_id),
                                              config);
 
     // Show how to perform additional work while the long running operation
@@ -230,8 +230,8 @@ void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string cluster_id) {
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
-        instance_admin.AsyncGetCluster(cq, cbt::InstanceId(instance_id),
-                                       cbt::ClusterId(cluster_id));
+        instance_admin.AsyncGetCluster(cq, std::string(instance_id),
+                                       std::string(cluster_id));
 
     future<google::cloud::Status> final = cluster_future.then(
         [](google::cloud::future<
@@ -270,7 +270,7 @@ void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string instance_id, std::string app_profile_id) {
     future<void> final =
         instance_admin
-            .AsyncGetAppProfile(cq, cbt::InstanceId(instance_id),
+            .AsyncGetAppProfile(cq, std::string(instance_id),
                                 cbt::AppProfileId(app_profile_id))
             .then([](google::cloud::future<
                       StatusOr<google::bigtable::admin::v2::AppProfile>>
@@ -307,7 +307,7 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
     future<StatusOr<google::cloud::IamPolicy>> policy_future =
-        instance_admin.AsyncGetIamPolicy(cq, cbt::InstanceId(instance_id));
+        instance_admin.AsyncGetIamPolicy(cq, std::string(instance_id));
 
     future<void> final = policy_future.then(
         [](google::cloud::future<StatusOr<google::cloud::IamPolicy>> f) {
@@ -508,8 +508,8 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string instance_id, std::string cluster_id) {
     future<void> final =
         instance_admin
-            .AsyncGetCluster(cq, cbt::InstanceId(instance_id),
-                             cbt::ClusterId(cluster_id))
+            .AsyncGetCluster(cq, std::string(instance_id),
+                             std::string(cluster_id))
             .then([instance_admin,
                    cq](future<StatusOr<google::bigtable::admin::v2::Cluster>>
                            f) mutable {
@@ -557,7 +557,7 @@ void AsyncUpdateAppProfile(
      std::string instance_id, std::string profile_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.AsyncUpdateAppProfile(
-            cq, cbt::InstanceId(instance_id), cbt::AppProfileId(profile_id),
+            cq, std::string(instance_id), cbt::AppProfileId(profile_id),
             cbt::AppProfileUpdateConfig()
                 .set_description("new description")
                 .set_ignore_warnings(true));
@@ -616,8 +616,8 @@ void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string cluster_id) {
     future<google::cloud::Status> status_future =
-        instance_admin.AsyncDeleteCluster(cq, cbt::InstanceId(instance_id),
-                                          cbt::ClusterId(cluster_id));
+        instance_admin.AsyncDeleteCluster(cq, std::string(instance_id),
+                                          std::string(cluster_id));
 
     google::cloud::Status status = status_future.get();
     if (!status.ok()) {
@@ -645,7 +645,7 @@ void AsyncDeleteAppProfile(
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string app_profile_id) {
     future<google::cloud::Status> status_future =
-        instance_admin.AsyncDeleteAppProfile(cq, cbt::InstanceId(instance_id),
+        instance_admin.AsyncDeleteAppProfile(cq, std::string(instance_id),
                                              cbt::AppProfileId(app_profile_id),
                                              /*ignore_warnings=*/true);
 
@@ -678,7 +678,7 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string role, std::string member) {
     future<StatusOr<IamPolicy>> updated_future =
-        instance_admin.AsyncGetIamPolicy(cq, cbt::InstanceId(instance_id))
+        instance_admin.AsyncGetIamPolicy(cq, std::string(instance_id))
             .then([cq, instance_admin, role, member, instance_id](
                       future<StatusOr<IamPolicy>> current_future) mutable {
               auto current = current_future.get();
@@ -689,7 +689,7 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
               google::cloud::IamBindings bindings = current->bindings;
               bindings.AddMember(role, member);
               return instance_admin.AsyncSetIamPolicy(
-                  cq, cbt::InstanceId(instance_id), bindings, current->etag);
+                  cq, std::string(instance_id), bindings, current->etag);
             });
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.

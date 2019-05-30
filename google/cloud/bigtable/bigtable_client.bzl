@@ -21,7 +21,6 @@ bigtable_client_hdrs = [
     "app_profile_config.h",
     "async_operation.h",
     "async_row_reader.h",
-    "bigtable_strong_types.h",
     "cell.h",
     "client_options.h",
     "cluster_config.h",

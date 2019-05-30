@@ -28,7 +28,7 @@ namespace internal {
 namespace btproto = google::bigtable::v2;
 
 BulkMutatorState::BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
-                                   bigtable::TableId const& table_name,
+                                   std::string const& table_name,
                                    IdempotentMutationPolicy& idempotent_policy,
                                    BulkMutation mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
@@ -181,7 +181,7 @@ std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
 }
 
 BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
-                         bigtable::TableId const& table_name,
+                         std::string const& table_name,
                          IdempotentMutationPolicy& idempotent_policy,
                          BulkMutation mut)
     : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}

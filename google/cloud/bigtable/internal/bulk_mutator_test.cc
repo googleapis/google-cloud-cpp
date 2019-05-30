@@ -68,7 +68,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
@@ -126,7 +126,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId("test-id"),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
@@ -193,7 +193,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -256,7 +256,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -319,7 +319,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -398,7 +398,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
@@ -461,7 +461,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
   bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
+                                    std::string("foo/bar/baz/table"),
                                     *policy, std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());

@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_ADMIN_H_
 
 #include "google/cloud/bigtable/admin_client.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/column_family.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
@@ -550,7 +549,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc check consistency
    */
   StatusOr<Consistency> CheckConsistency(
-      bigtable::TableId const& table_id,
+      std::string const& table_id,
       std::string const& consistency_token);
 
   /**
@@ -575,7 +574,7 @@ class TableAdmin {
    * @snippet table_admin_async_snippets.cc async check consistency
    */
   future<StatusOr<Consistency>> AsyncCheckConsistency(
-      CompletionQueue& cq, bigtable::TableId const& table_id,
+      CompletionQueue& cq, std::string const& table_id,
       std::string const& consistency_token);
 
   /**
@@ -594,7 +593,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc wait for consistency check
    */
   google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
-      bigtable::TableId const& table_id,
+      std::string const& table_id,
       std::string const& consistency_token);
 
   /**
@@ -619,7 +618,7 @@ class TableAdmin {
    * @snippet table_admin_async_snippets.cc async wait for consistency
    */
   google::cloud::future<StatusOr<Consistency>> AsyncWaitForConsistency(
-      CompletionQueue& cq, bigtable::TableId const& table_id,
+      CompletionQueue& cq, std::string const& table_id,
       std::string const& consistency_token);
 
   /**
@@ -666,7 +665,7 @@ class TableAdmin {
   }
 
   /// Return the fully qualified name of a Cluster.
-  std::string ClusterName(bigtable::ClusterId const& cluster_id) {
+  std::string ClusterName(std::string const& cluster_id) {
     return instance_name() + "/clusters/" + cluster_id;
   }
 

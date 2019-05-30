@@ -51,7 +51,7 @@ MetadataUpdatePolicy MetadataUpdatePolicy::FromTableId(
 MetadataUpdatePolicy MetadataUpdatePolicy::FromClusterId(
     std::string const& resource_name,
     MetadataParamTypes const& metadata_param_type,
-    bigtable::ClusterId const& cluster_id) {
+    std::string const& cluster_id) {
   MetadataUpdatePolicy policy(resource_name, metadata_param_type);
   policy.value_ += "/clusters/" + cluster_id;
   return policy;

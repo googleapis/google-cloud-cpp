@@ -72,8 +72,8 @@ bigtable::InstanceConfig IntegrationTestConfig(
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
-  bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name("Integration Tests " + id);
+  std::string instance_id(id);
+  std::string display_name("Integration Tests " + id);
   auto cluster_config =
       bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
@@ -158,12 +158,12 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
-      bigtable::InstanceId(instance_id),
+      std::string(instance_id),
       bigtable::AppProfileConfig::MultiClusterUseAny(
           bigtable::AppProfileId(id1)));
   ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_->CreateAppProfile(
-      bigtable::InstanceId(instance_id),
+      std::string(instance_id),
       bigtable::AppProfileConfig::MultiClusterUseAny(
           bigtable::AppProfileId(id2)));
   ASSERT_STATUS_OK(profile_2);
@@ -174,39 +174,39 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
   auto detail_1 = instance_admin_->GetAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1));
+      std::string(instance_id), bigtable::AppProfileId(id1));
   ASSERT_STATUS_OK(detail_1);
   EXPECT_EQ(detail_1->name(), profile_1->name());
   EXPECT_THAT(detail_1->name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_1->name(), HasSubstr(id1));
 
   auto detail_2 = instance_admin_->GetAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+      std::string(instance_id), bigtable::AppProfileId(id2));
   ASSERT_STATUS_OK(detail_2);
   EXPECT_EQ(detail_2->name(), profile_2->name());
   EXPECT_THAT(detail_2->name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_2->name(), HasSubstr(id2));
 
   auto profile_updated_future = instance_admin_->UpdateAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      std::string(instance_id), bigtable::AppProfileId(id2),
       bigtable::AppProfileUpdateConfig().set_description("new description"));
 
   auto update_2 = profile_updated_future.get();
   auto detail_2_after_update = instance_admin_->GetAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+      std::string(instance_id), bigtable::AppProfileId(id2));
   ASSERT_STATUS_OK(detail_2_after_update);
   EXPECT_EQ("new description", update_2->description());
   EXPECT_EQ("new description", detail_2_after_update->description());
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1), true));
+      std::string(instance_id), bigtable::AppProfileId(id1), true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2), true));
+      std::string(instance_id), bigtable::AppProfileId(id2), true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
@@ -279,7 +279,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   std::string cluster_id_str = id + "-cl2";
 
   // create instance prerequisites for cluster operations
-  bigtable::InstanceId instance_id(id);
+  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
@@ -293,7 +293,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
       << "Cluster (" << cluster_id_str << ") already exists."
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
-  bigtable::ClusterId cluster_id(cluster_id_str);
+  std::string cluster_id(cluster_id_str);
   auto cluster_config =
       bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
@@ -348,7 +348,7 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // create instance prerequisites for cluster operations
-  bigtable::InstanceId instance_id(id);
+  std::string instance_id(id);
   auto instance_config = IntegrationTestConfig(
       id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =

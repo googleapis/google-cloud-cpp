@@ -162,8 +162,8 @@ InstanceAdmin::AsyncCreateInstance(CompletionQueue& cq,
 }
 
 future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
-    ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
-    bigtable::ClusterId const& cluster_id) {
+    ClusterConfig cluster_config, std::string const& instance_id,
+    std::string const& cluster_id) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
 
@@ -178,8 +178,8 @@ future<StatusOr<btadmin::Cluster>> InstanceAdmin::CreateCluster(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
                                   ClusterConfig cluster_config,
-                                  bigtable::InstanceId const& instance_id,
-                                  bigtable::ClusterId const& cluster_id) {
+                                  std::string const& instance_id,
+                                  std::string const& cluster_id) {
   auto cluster = std::move(cluster_config).as_proto();
   cluster.set_location(project_name() + "/locations/" + cluster.location());
   btadmin::CreateClusterRequest request;
@@ -287,8 +287,8 @@ Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
 }
 
 future<Status> InstanceAdmin::AsyncDeleteCluster(
-    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
-    bigtable::ClusterId const& cluster_id) {
+    CompletionQueue& cq, std::string const& instance_id,
+    std::string const& cluster_id) {
   btadmin::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
 
@@ -336,8 +336,8 @@ future<Status> InstanceAdmin::AsyncDeleteInstance(
 }
 
 StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
-    bigtable::InstanceId const& instance_id,
-    bigtable::ClusterId const& cluster_id) {
+    std::string const& instance_id,
+    std::string const& cluster_id) {
   grpc::Status status;
   auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
@@ -356,8 +356,8 @@ StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
 }
 
 future<StatusOr<btadmin::Cluster>> InstanceAdmin::AsyncGetCluster(
-    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
-    bigtable::ClusterId const& cluster_id) {
+    CompletionQueue& cq, std::string const& instance_id,
+    std::string const& cluster_id) {
   promise<StatusOr<btadmin::Cluster>> p;
   auto result = p.get_future();
   btadmin::GetClusterRequest request;
@@ -503,8 +503,8 @@ InstanceAdmin::AsyncUpdateCluster(CompletionQueue& cq,
       std::move(request), cq);
 }
 
-Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
-                                    bigtable::ClusterId const& cluster_id) {
+Status InstanceAdmin::DeleteCluster(std::string const& instance_id,
+                                    std::string const& cluster_id) {
   grpc::Status status;
   btadmin::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
@@ -521,7 +521,7 @@ Status InstanceAdmin::DeleteCluster(bigtable::InstanceId const& instance_id,
 }
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
-    bigtable::InstanceId const& instance_id, AppProfileConfig config) {
+    std::string const& instance_id, AppProfileConfig config) {
   grpc::Status status;
   auto request = std::move(config).as_proto();
   request.set_parent(InstanceName(instance_id));
@@ -541,7 +541,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
-                                     bigtable::InstanceId const& instance_id,
+                                     std::string const& instance_id,
                                      AppProfileConfig config) {
   auto request = std::move(config).as_proto();
   request.set_parent(InstanceName(instance_id));
@@ -560,7 +560,7 @@ InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
 }
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
-    bigtable::InstanceId const& instance_id,
+    std::string const& instance_id,
     bigtable::AppProfileId const& profile_id) {
   grpc::Status status;
   btadmin::GetAppProfileRequest request;
@@ -580,7 +580,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
-                                  bigtable::InstanceId const& instance_id,
+                                  std::string const& instance_id,
                                   bigtable::AppProfileId const& profile_id) {
   btadmin::GetAppProfileRequest request;
   request.set_name(InstanceName(instance_id) + "/appProfiles/" +
@@ -599,7 +599,7 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
 }
 
 future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
-    bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+    std::string instance_id, bigtable::AppProfileId profile_id,
     AppProfileUpdateConfig config) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
@@ -614,7 +614,7 @@ future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
-                                     bigtable::InstanceId instance_id,
+                                     std::string instance_id,
                                      bigtable::AppProfileId profile_id,
                                      AppProfileUpdateConfig config) {
   auto request = std::move(config).as_proto();
@@ -696,7 +696,7 @@ InstanceAdmin::AsyncListAppProfiles(CompletionQueue& cq,
       cq);
 }
 
-Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
+Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
                                        bigtable::AppProfileId const& profile_id,
                                        bool ignore_warnings) {
   grpc::Status status;
@@ -714,7 +714,7 @@ Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
 }
 
 future<Status> InstanceAdmin::AsyncDeleteAppProfile(
-    CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+    CompletionQueue& cq, std::string const& instance_id,
     bigtable::AppProfileId const& profile_id, bool ignore_warnings) {
   btadmin::DeleteAppProfileRequest request;
   request.set_name(InstanceName(instance_id) + "/appProfiles/" +
@@ -766,7 +766,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
 }
 
 future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncGetIamPolicy(
-    CompletionQueue& cq, InstanceId const& instance_id) {
+    CompletionQueue& cq, std::string const& instance_id) {
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(InstanceName(instance_id));
 
@@ -829,7 +829,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
 }
 
 future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
-    CompletionQueue& cq, InstanceId const& instance_id,
+    CompletionQueue& cq, std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
   ::google::iam::v1::Policy policy;
   policy.set_etag(etag);

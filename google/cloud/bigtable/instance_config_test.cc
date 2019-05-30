@@ -19,7 +19,7 @@ namespace bigtable = google::cloud::bigtable;
 
 TEST(InstanceConfigTest, Constructor) {
   bigtable::InstanceConfig config(
-      bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),
+      std::string("my-instance"), std::string("pretty name"),
       {{"my-cluster", {"somewhere", 7, bigtable::ClusterConfig::SSD}}});
   auto proto = config.as_proto();
   EXPECT_EQ("my-instance", proto.instance_id());
@@ -33,7 +33,7 @@ TEST(InstanceConfigTest, Constructor) {
 
 TEST(InstanceConfigTest, ConstructorManyClusters) {
   bigtable::InstanceConfig config(
-      bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),
+      std::string("my-instance"), std::string("pretty name"),
       {
           {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
           {"cluster-2", {"elsewhere", 7, bigtable::ClusterConfig::HDD}},
@@ -57,7 +57,7 @@ TEST(InstanceConfigTest, ConstructorManyClusters) {
 
 TEST(InstanceConfigTest, SetLabels) {
   bigtable::InstanceConfig config(
-      bigtable::InstanceId("my-instance"), bigtable::DisplayName("pretty name"),
+      std::string("my-instance"), std::string("pretty name"),
       {
           {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
       });

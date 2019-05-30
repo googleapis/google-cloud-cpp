@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_CONFIG_H_
 
 #include "google/cloud/bigtable/cluster_config.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.pb.h>
 #include <google/bigtable/admin/v2/common.pb.h>
@@ -31,7 +30,7 @@ inline namespace BIGTABLE_CLIENT_NS {
 /// Specify the initial configuration for a new instance.
 class InstanceConfig {
  public:
-  InstanceConfig(InstanceId instance_id, DisplayName display_name,
+  InstanceConfig(std::string instance_id, std::string display_name,
                  std::vector<std::pair<std::string, ClusterConfig>> clusters) {
     // TODO(#2589) - validate the `clusters` parameter.
     proto_.set_instance_id(std::move(instance_id));

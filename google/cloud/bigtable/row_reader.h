@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H_
 
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
@@ -51,7 +50,7 @@ class RowReader {
    */
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
-  RowReader(std::shared_ptr<DataClient> client, bigtable::TableId table_name,
+  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
@@ -59,7 +58,7 @@ class RowReader {
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
   RowReader(std::shared_ptr<DataClient> client,
-            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
+            bigtable::AppProfileId app_profile_id, std::string table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
@@ -132,7 +131,7 @@ class RowReader {
 
   std::shared_ptr<DataClient> client_;
   bigtable::AppProfileId app_profile_id_;
-  bigtable::TableId table_name_;
+  std::string table_name_;
   RowSet row_set_;
   std::int64_t rows_limit_;
   Filter filter_;

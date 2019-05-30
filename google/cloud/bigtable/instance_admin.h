@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_H_
 
 #include "google/cloud/bigtable/app_profile_config.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/cluster_config.h"
 #include "google/cloud/bigtable/cluster_list_responses.h"
 #include "google/cloud/bigtable/completion_queue.h"
@@ -175,8 +174,8 @@ class InstanceAdmin {
 
   /// Return the fully qualified name of the given cluster_id in give
   /// instance_id.
-  std::string ClusterName(bigtable::InstanceId const& instance_id,
-                          bigtable::ClusterId const& cluster_id) const {
+  std::string ClusterName(std::string const& instance_id,
+                          std::string const& cluster_id) const {
     return InstanceName(instance_id) + "/clusters/" + cluster_id;
   }
 
@@ -248,8 +247,8 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc create cluster
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> CreateCluster(
-      ClusterConfig cluster_config, bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id);
+      ClusterConfig cluster_config, std::string const& instance_id,
+      std::string const& cluster_id);
 
   /**
    * Create a new cluster (asynchronously).
@@ -278,8 +277,8 @@ class InstanceAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncCreateCluster(
       CompletionQueue& cq, ClusterConfig cluster_config,
-      bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id);
+      std::string const& instance_id,
+      std::string const& cluster_id);
 
   /**
    * Update an existing instance of Cloud Bigtable.
@@ -611,8 +610,8 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc delete cluster
    */
-  Status DeleteCluster(bigtable::InstanceId const& instance_id,
-                       bigtable::ClusterId const& cluster_id);
+  Status DeleteCluster(std::string const& instance_id,
+                       std::string const& cluster_id);
 
   /**
    * Sends an asynchronous request to delete a cluster.
@@ -638,8 +637,8 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async delete cluster
    */
   future<Status> AsyncDeleteCluster(CompletionQueue& cq,
-                                    bigtable::InstanceId const& instance_id,
-                                    bigtable::ClusterId const& cluster_id);
+                                    std::string const& instance_id,
+                                    std::string const& cluster_id);
 
   /**
    * Gets the specified cluster of an instance in the project.
@@ -656,8 +655,8 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc get cluster
    */
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
-      bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id);
+      std::string const& instance_id,
+      std::string const& cluster_id);
 
   /**
    * Sends an asynchronous request to get information about existing cluster of
@@ -686,8 +685,8 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async get cluster
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncGetCluster(
-      CompletionQueue& cq, bigtable::InstanceId const& instance_id,
-      bigtable::ClusterId const& cluster_id);
+      CompletionQueue& cq, std::string const& instance_id,
+      std::string const& cluster_id);
 
   /**
    * Create a new application profile.
@@ -706,7 +705,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc create app profile cluster
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> CreateAppProfile(
-      bigtable::InstanceId const& instance_id, AppProfileConfig config);
+      std::string const& instance_id, AppProfileConfig config);
 
   /**
    * Asynchronously create a new application profile.
@@ -726,7 +725,7 @@ class InstanceAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncCreateAppProfile(CompletionQueue& cq,
-                        bigtable::InstanceId const& instance_id,
+                        std::string const& instance_id,
                         AppProfileConfig config);
 
   /**
@@ -743,7 +742,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc get app profile
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
-      bigtable::InstanceId const& instance_id,
+      std::string const& instance_id,
       bigtable::AppProfileId const& profile_id);
 
   /**
@@ -764,7 +763,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async get app profile
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> AsyncGetAppProfile(
-      CompletionQueue& cq, bigtable::InstanceId const& instance_id,
+      CompletionQueue& cq, std::string const& instance_id,
       bigtable::AppProfileId const& profile_id);
 
   /**
@@ -788,7 +787,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc update app profile routing
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      bigtable::InstanceId instance_id, bigtable::AppProfileId profile_id,
+      std::string instance_id, bigtable::AppProfileId profile_id,
       AppProfileUpdateConfig config);
 
   /**
@@ -816,7 +815,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async update app profile
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  AsyncUpdateAppProfile(CompletionQueue& cq, bigtable::InstanceId instance_id,
+  AsyncUpdateAppProfile(CompletionQueue& cq, std::string instance_id,
                         bigtable::AppProfileId profile_id,
                         AppProfileUpdateConfig config);
 
@@ -869,7 +868,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc delete app profile
    */
-  Status DeleteAppProfile(bigtable::InstanceId const& instance_id,
+  Status DeleteAppProfile(std::string const& instance_id,
                           bigtable::AppProfileId const& profile_id,
                           bool ignore_warnings = true);
 
@@ -896,7 +895,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async delete app profile
    */
   future<Status> AsyncDeleteAppProfile(CompletionQueue& cq,
-                                       bigtable::InstanceId const& instance_id,
+                                       std::string const& instance_id,
                                        bigtable::AppProfileId const& profile_id,
                                        bool ignore_warnings = true);
 
@@ -932,7 +931,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async get iam policy
    */
   future<StatusOr<google::cloud::IamPolicy>> AsyncGetIamPolicy(
-      CompletionQueue& cq, InstanceId const& instance_id);
+      CompletionQueue& cq, std::string const& instance_id);
 
   /**
    * Sets the IAM policy for an instance.
@@ -981,7 +980,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async set iam policy
    */
   future<StatusOr<google::cloud::IamPolicy>> AsyncSetIamPolicy(
-      CompletionQueue& cq, InstanceId const& instance_id,
+      CompletionQueue& cq, std::string const& instance_id,
       google::cloud::IamBindings const& iam_bindings,
       std::string const& etag = std::string{});
 

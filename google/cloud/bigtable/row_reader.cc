@@ -60,7 +60,7 @@ static_assert(std::is_same<decltype(++std::declval<RowReader::iterator>()),
               "RowReader::iterator &>");
 
 RowReader::RowReader(
-    std::shared_ptr<DataClient> client, bigtable::TableId table_name,
+    std::shared_ptr<DataClient> client, std::string table_name,
     RowSet row_set, std::int64_t rows_limit, Filter filter,
     std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
@@ -74,7 +74,7 @@ RowReader::RowReader(
 
 RowReader::RowReader(
     std::shared_ptr<DataClient> client, bigtable::AppProfileId app_profile_id,
-    bigtable::TableId table_name, RowSet row_set, std::int64_t rows_limit,
+    std::string table_name, RowSet row_set, std::int64_t rows_limit,
     Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
     std::unique_ptr<RPCBackoffPolicy> backoff_policy,
     MetadataUpdatePolicy metadata_update_policy,

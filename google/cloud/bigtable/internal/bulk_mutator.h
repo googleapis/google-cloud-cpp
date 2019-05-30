@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BULK_MUTATOR_H_
 
 #include "google/cloud/bigtable/async_operation.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
@@ -33,7 +32,7 @@ namespace internal {
 class BulkMutatorState {
  public:
   BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
-                   bigtable::TableId const& table_name,
+                   std::string const& table_name,
                    IdempotentMutationPolicy& idempotent_policy,
                    BulkMutation mut);
 
@@ -117,7 +116,7 @@ class BulkMutatorState {
 class BulkMutator {
  public:
   BulkMutator(bigtable::AppProfileId const& app_profile_id,
-              bigtable::TableId const& table_name,
+              std::string const& table_name,
               IdempotentMutationPolicy& idempotent_policy, BulkMutation mut);
 
   /// Return true if there are pending mutations in the mutator

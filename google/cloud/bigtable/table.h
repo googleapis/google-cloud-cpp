@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H_
 
 #include "google/cloud/bigtable/async_row_reader.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
@@ -209,7 +208,7 @@ class Table {
         bigtable::AppProfileId app_profile_id, std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
-        table_name_(bigtable::TableId(TableName(client_, table_id))),
+        table_name_(std::string(TableName(client_, table_id))),
         table_id_(table_id),
         rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),

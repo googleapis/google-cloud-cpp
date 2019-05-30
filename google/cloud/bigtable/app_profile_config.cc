@@ -28,7 +28,7 @@ AppProfileConfig AppProfileConfig::MultiClusterUseAny(AppProfileId profile_id) {
 }
 
 AppProfileConfig AppProfileConfig::SingleClusterRouting(
-    AppProfileId profile_id, ClusterId cluster_id,
+    AppProfileId profile_id, std::string cluster_id,
     bool allow_transactional_writes) {
   AppProfileConfig tmp;
   tmp.proto_.set_app_profile_id(std::move(profile_id));

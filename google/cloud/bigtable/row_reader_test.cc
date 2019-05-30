@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
@@ -175,7 +174,7 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -199,7 +198,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -234,7 +233,7 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
   parser_factory_->AddParser(std::move(parser));
   bigtable::AppProfileId app_profile_id("test-id");
   bigtable::RowReader reader(
-      client_, app_profile_id, bigtable::TableId(""), bigtable::RowSet(),
+      client_, app_profile_id, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -262,7 +261,7 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -293,7 +292,7 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -333,7 +332,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -362,7 +361,7 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -401,7 +400,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet("r1", "r2"),
+      client_, std::string(""), bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -442,7 +441,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -486,7 +485,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet("r1", "r2"),
+      client_, std::string(""), bigtable::RowSet("r1", "r2"),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -518,7 +517,7 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -551,7 +550,7 @@ TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""),
+      client_, std::string(""),
       bigtable::RowSet(bigtable::RowRange::Closed("r1", "r2")),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
@@ -572,7 +571,7 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
   EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
 
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(), 442,
+      client_, std::string(""), bigtable::RowSet(), 442,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
@@ -609,7 +608,7 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(), 42,
+      client_, std::string(""), bigtable::RowSet(), 42,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
@@ -642,7 +641,7 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(), 1,
+      client_, std::string(""), bigtable::RowSet(), 1,
       bigtable::Filter::PassAllFilter(), std::move(retry_policy_),
       std::move(backoff_policy_), metadata_update_policy_,
       std::move(parser_factory_));
@@ -671,7 +670,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -694,7 +693,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
   auto id = google::cloud::LogSink::Instance().AddBackend(backend);
 
   std::unique_ptr<bigtable::RowReader> reader(new bigtable::RowReader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_)));
@@ -731,7 +730,7 @@ TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
   EXPECT_CALL(*parser_factory_, CreateHook()).Times(0);
 
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
@@ -776,7 +775,7 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
 
   parser_factory_->AddParser(std::move(parser));
   bigtable::RowReader reader(
-      client_, bigtable::TableId(""), bigtable::RowSet(),
+      client_, std::string(""), bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));
