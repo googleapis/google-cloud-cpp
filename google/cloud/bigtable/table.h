@@ -166,12 +166,15 @@ class Table {
  private:
   // We need to eliminate some function overloads from resolution, and that
   // requires a bit of infrastructure in the private section.
+
+  /// A meta function to check if @p P is a valid Policy type.
   template <typename P>
   struct valid_policy : google::cloud::internal::disjunction<
                             std::is_base_of<RPCBackoffPolicy, P>,
                             std::is_base_of<RPCRetryPolicy, P>,
                             std::is_base_of<IdempotentMutationPolicy, P>> {};
 
+  /// A meta function to check if all the @p Policies are valid policy types.
   template <typename... Policies>
   struct valid_policies : internal::conjunction<valid_policy<Policies>...> {};
 
@@ -270,13 +273,13 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename P, typename... Policies,
-            typename std::enable_if<valid_policies<P, Policies...>::value,
+  template <typename... Policies,
+            typename std::enable_if<valid_policies<Policies...>::value,
                                     int>::type = 0>
-  Table(std::shared_ptr<DataClient> client, std::string const& table_id, P&& p,
+  Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
-    ChangePolicies(std::forward<P>(p), std::forward<Policies>(policies)...);
+    ChangePolicies(std::forward<Policies>(policies)...);
   }
 
   /**
@@ -333,13 +336,13 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename P, typename... Policies,
-            typename std::enable_if<valid_policies<P, Policies...>::value,
+  template <typename... Policies,
+            typename std::enable_if<valid_policies<Policies...>::value,
                                     int>::type = 0>
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
-        std::string const& table_id, P&& p, Policies&&... policies)
+        std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
-    ChangePolicies(std::forward<P>(p), std::forward<Policies>(policies)...);
+    ChangePolicies(std::forward<Policies>(policies)...);
   }
 
   std::string const& table_name() const { return table_name_; }
