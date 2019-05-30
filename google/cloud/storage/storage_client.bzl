@@ -41,7 +41,6 @@ storage_client_hdrs = [
     "internal/curl_wrappers.h",
     "internal/curl_client.h",
     "internal/curl_resumable_upload_session.h",
-    "internal/curl_streambuf.h",
     "internal/default_object_acl_requests.h",
     "internal/empty_response.h",
     "internal/format_time_point.h",

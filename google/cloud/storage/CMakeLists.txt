@@ -121,7 +121,6 @@ add_library(storage_client
             internal/curl_client.cc
             internal/curl_resumable_upload_session.h
             internal/curl_resumable_upload_session.cc
-            internal/curl_streambuf.h
             internal/default_object_acl_requests.h
             internal/default_object_acl_requests.cc
             internal/empty_response.h
