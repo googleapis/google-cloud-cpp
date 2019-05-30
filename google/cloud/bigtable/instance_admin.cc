@@ -610,8 +610,8 @@ future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
 
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
-                                     std::string instance_id,
-                                     std::string profile_id,
+                                     std::string const& instance_id,
+                                     std::string const& profile_id,
                                      AppProfileUpdateConfig config) {
   auto request = std::move(config).as_proto();
   request.mutable_app_profile()->set_name(

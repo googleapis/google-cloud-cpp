@@ -811,8 +811,9 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async update app profile
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  AsyncUpdateAppProfile(CompletionQueue& cq, std::string instance_id,
-                        std::string profile_id, AppProfileUpdateConfig config);
+  AsyncUpdateAppProfile(CompletionQueue& cq, std::string const& instance_id,
+                        std::string const& profile_id,
+                        AppProfileUpdateConfig config);
 
   /**
    * List the application profiles in an instance.
