@@ -30,6 +30,5 @@ var searchData=
   ['getterminatehandler',['GetTerminateHandler',['../../common/namespacegoogle_1_1cloud_1_1v0.html#a716e318a23d6d8784964e2cd4cca3949',1,'google::cloud::v0']]],
   ['google',['google',['../namespacegoogle.html',1,'']]],
   ['google_20cloud_20platform_20bigtable_20c_2b_2b_20client_20library',['Google Cloud Platform Bigtable C++ Client Library',['../index.html',1,'']]],
-  ['noex',['noex',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0_1_1noex.html',1,'google::cloud::bigtable::v0']]],
   ['v0',['v0',['../namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html',1,'google::cloud::bigtable::v0'],['../../common/namespacegoogle_1_1cloud_1_1v0.html',1,'google::cloud::v0']]]
 ];
