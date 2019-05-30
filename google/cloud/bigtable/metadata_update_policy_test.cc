@@ -90,10 +90,9 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy) {
 /// @test Another test for lazy behaviour of metadata.
 TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
   auto const x_google_request_params =
-      "name=" + kInstanceName + "/clusters/test_cluster";
-  std::string cluster_id(kClusterId);
+      "name=" + kInstanceName + "/clusters/" + kClusterId;
   auto created = bigtable::MetadataUpdatePolicy::FromClusterId(
-      kInstanceName, bigtable::MetadataParamTypes::NAME, cluster_id);
+      kInstanceName, bigtable::MetadataParamTypes::NAME, kClusterId);
   EXPECT_EQ(x_google_request_params, created.value());
 }
 
@@ -101,8 +100,7 @@ TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
 TEST_F(MetadataUpdatePolicyTest, SimpleClusterId_Test) {
   auto const x_google_request_params =
       "parent=" + kInstanceName + "/clusters/" + kClusterId;
-  std::string cluster_id(kClusterId);
   auto created = bigtable::MetadataUpdatePolicy::FromClusterId(
-      kInstanceName, bigtable::MetadataParamTypes::PARENT, cluster_id);
+      kInstanceName, bigtable::MetadataParamTypes::PARENT, kClusterId);
   EXPECT_EQ(x_google_request_params, created.value());
 }

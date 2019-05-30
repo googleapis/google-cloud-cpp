@@ -414,10 +414,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
   EXPECT_CALL(*client_, GetCluster(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  std::string instance_id("other-instance");
-  std::string cluster_id("other-cluster");
-
-  ASSERT_FALSE(tested.GetCluster("the-instance", "the-cluster"));
+  ASSERT_FALSE(tested.GetCluster("other-instance", "the-cluster"));
 }
 
 /// @test Verify recoverable errors for GetCluster
@@ -467,7 +464,7 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster("the-instance", "the-cluster").ok());
+  EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
 }
 
 /// @test Verify that recoverable error for DeleteCluster
@@ -479,7 +476,7 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster("the-instance", "the-cluster").ok());
+  EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.

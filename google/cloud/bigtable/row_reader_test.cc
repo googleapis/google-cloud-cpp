@@ -231,9 +231,8 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
   }
 
   parser_factory_->AddParser(std::move(parser));
-  std::string app_profile_id("test-id");
   bigtable::RowReader reader(
-      client_, app_profile_id, "", bigtable::RowSet(),
+      client_, "test-id", "", bigtable::RowSet(),
       bigtable::RowReader::NO_ROWS_LIMIT, bigtable::Filter::PassAllFilter(),
       std::move(retry_policy_), std::move(backoff_policy_),
       metadata_update_policy_, std::move(parser_factory_));

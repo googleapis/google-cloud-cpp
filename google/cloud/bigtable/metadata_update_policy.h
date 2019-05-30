@@ -89,7 +89,7 @@ class MetadataUpdatePolicy {
       MetadataParamTypes const& metadata_param_type,
       std::string const& table_id);
 
-  // TODO(coryan) - create a bug because this seems to be unused.
+  // TODO(#2704) - this seems to be used only in tests, remove or use.
   /**
    * Constructor with default metadata pair.
    *
