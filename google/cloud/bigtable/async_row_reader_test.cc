@@ -687,7 +687,13 @@ TEST_F(TableAsyncReadRowsTest, PerserFailure) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
-enum class CancelMode { FALSE_VALUE, STD_EXCEPT, OTHER_EXCEPT };
+enum class CancelMode {
+  FALSE_VALUE,
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  STD_EXCEPT,
+  OTHER_EXCEPT,
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+};
 
 class TableAsyncReadRowsCancelMidStreamTest
     : public TableAsyncReadRowsTest,
