@@ -595,13 +595,12 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
 }
 
 future<StatusOr<btadmin::AppProfile>> InstanceAdmin::UpdateAppProfile(
-    std::string instance_id, std::string profile_id,
+    std::string const& instance_id, std::string const& profile_id,
     AppProfileUpdateConfig config) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
 
-  return AsyncUpdateAppProfile(cq, std::move(instance_id),
-                               std::move(profile_id), std::move(config))
+  return AsyncUpdateAppProfile(cq, instance_id, profile_id, std::move(config))
       .then([cq](future<StatusOr<btadmin::AppProfile>> f) mutable {
         cq.Shutdown();
         return f.get();

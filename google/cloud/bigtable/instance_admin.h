@@ -783,7 +783,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc update app profile routing
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>> UpdateAppProfile(
-      std::string instance_id, std::string profile_id,
+      std::string const& instance_id, std::string const& profile_id,
       AppProfileUpdateConfig config);
 
   /**
