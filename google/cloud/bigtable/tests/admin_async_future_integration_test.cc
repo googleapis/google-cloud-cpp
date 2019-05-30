@@ -314,20 +314,17 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
               return make_ready_future(
                   StatusOr<btadmin::Table>(result.status()));
             }
-            return table_admin.AsyncCreateTable(cq, table_id,
-                                                table_config);
+            return table_admin.AsyncCreateTable(cq, table_id, table_config);
           })
           .then([&](future<StatusOr<btadmin::Table>> fut) {
             StatusOr<btadmin::Table> result = fut.get();
             EXPECT_STATUS_OK(result);
             if (!result) {
-              return make_ready_future(
-                  StatusOr<std::string>(result.status()));
+              return make_ready_future(StatusOr<std::string>(result.status()));
             }
             EXPECT_THAT(result->name(), ::testing::HasSubstr(table_id));
             CreateCells(table, created_cells);
-            return table_admin.AsyncGenerateConsistencyToken(cq,
-                                                             table_id);
+            return table_admin.AsyncGenerateConsistencyToken(cq, table_id);
           })
           .then([&](future<StatusOr<std::string>> fut) {
             auto token = fut.get();

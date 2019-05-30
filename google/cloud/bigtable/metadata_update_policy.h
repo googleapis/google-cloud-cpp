@@ -84,9 +84,10 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param table_id table_id used in RPC call.
    */
-  static MetadataUpdatePolicy FromTableId(std::string const& resource_name,
-                       MetadataParamTypes const& metadata_param_type,
-                       std::string const& table_id);
+  static MetadataUpdatePolicy FromTableId(
+      std::string const& resource_name,
+      MetadataParamTypes const& metadata_param_type,
+      std::string const& table_id);
 
   // TODO(coryan) - create a bug because this seems to be unused.
   /**
@@ -98,9 +99,10 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param cluster_id cluster_id of the cluster.
    */
-  static MetadataUpdatePolicy FromClusterId(std::string const& resource_name,
-                       MetadataParamTypes const& metadata_param_type,
-                       std::string const& cluster_id);
+  static MetadataUpdatePolicy FromClusterId(
+      std::string const& resource_name,
+      MetadataParamTypes const& metadata_param_type,
+      std::string const& cluster_id);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) = default;

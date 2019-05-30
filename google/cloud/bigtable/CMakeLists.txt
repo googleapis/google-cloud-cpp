@@ -154,7 +154,7 @@ add_library(bigtable_client
             internal/rpc_policy_parameters.h
             internal/rowreaderiterator.h
             internal/rowreaderiterator.cc
-    internal/unary_client_utils.h
+            internal/unary_client_utils.h
             idempotent_mutation_policy.h
             idempotent_mutation_policy.cc
             mutation_batcher.h
@@ -184,7 +184,7 @@ add_library(bigtable_client
             table_admin.cc
             table_config.h
             table_config.cc
-    version.h
+            version.h
             version.cc)
 target_link_libraries(bigtable_client
                       PUBLIC bigtable_protos

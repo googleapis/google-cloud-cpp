@@ -119,7 +119,8 @@ TEST(AsyncLongrunningOpFutureSimpleTest, NoOperation) {
   auto fut = internal::StartAsyncLongrunningOp<
       AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
       __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
-      MetadataUpdatePolicy::FromTableId("instance_id", MetadataParamTypes::NAME, "table_id"),
+      MetadataUpdatePolicy::FromTableId("instance_id", MetadataParamTypes::NAME,
+                                        "table_id"),
       std::make_shared<testing::MockAdminClient>(), cq,
       make_ready_future<StatusOr<longrunning::Operation>>(
           Status(StatusCode::kUnavailable, "")));

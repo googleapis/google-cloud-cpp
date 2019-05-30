@@ -41,10 +41,10 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
 
 MetadataUpdatePolicy MetadataUpdatePolicy::FromTableId(
     std::string const& resource_name,
-    MetadataParamTypes const& metadata_param_type, std::string const& table_id)
-{
-   MetadataUpdatePolicy policy(resource_name, metadata_param_type);
-    policy.value_ += "/tables/" + table_id;
+    MetadataParamTypes const& metadata_param_type,
+    std::string const& table_id) {
+  MetadataUpdatePolicy policy(resource_name, metadata_param_type);
+  policy.value_ += "/tables/" + table_id;
   return policy;
 }
 

@@ -298,8 +298,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // Wait until all the mutations before the `consistency_token` have propagated
   // everywhere.
   google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
-      table_admin.WaitForConsistency(random_table_id,
-                                     *consistency_token);
+      table_admin.WaitForConsistency(random_table_id, *consistency_token);
   auto is_consistent = result.get();
   ASSERT_STATUS_OK(is_consistent);
   EXPECT_EQ(bigtable::Consistency::kConsistent, *is_consistent);

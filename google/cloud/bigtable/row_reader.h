@@ -56,10 +56,9 @@ class RowReader {
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
-  RowReader(std::shared_ptr<DataClient> client,
-            std::string app_profile_id, std::string table_name,
-            RowSet row_set, std::int64_t rows_limit, Filter filter,
-            std::unique_ptr<RPCRetryPolicy> retry_policy,
+  RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
+            std::string table_name, RowSet row_set, std::int64_t rows_limit,
+            Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);

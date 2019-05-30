@@ -314,9 +314,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string cluster_id, std::string zone) {
     auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
-        instance_admin.CreateCluster(cluster_config,
-                                     instance_id,
-                                     cluster_id);
+        instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
 
     // Applications can wait asynchronously, in this example we just block.
     auto cluster = cluster_future.get();
@@ -408,8 +406,7 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string cluster_id) {
     // GetCluster first and then modify it.
     StatusOr<google::bigtable::admin::v2::Cluster> cluster =
-        instance_admin.GetCluster(instance_id,
-                                  cluster_id);
+        instance_admin.GetCluster(instance_id, cluster_id);
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -445,8 +442,7 @@ void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string cluster_id) {
     StatusOr<google::bigtable::admin::v2::Cluster> cluster =
-        instance_admin.GetCluster(instance_id,
-                                  cluster_id);
+        instance_admin.GetCluster(instance_id, cluster_id);
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -468,8 +464,8 @@ void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string cluster_id) {
-    google::cloud::Status status = instance_admin.DeleteCluster(
-        instance_id, cluster_id);
+    google::cloud::Status status =
+        instance_admin.DeleteCluster(instance_id, cluster_id);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
@@ -569,8 +565,7 @@ void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
-    auto config = cbt::AppProfileConfig::MultiClusterUseAny(
-        profile_id);
+    auto config = cbt::AppProfileConfig::MultiClusterUseAny(profile_id);
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
         instance_admin.CreateAppProfile(instance_id, config);
     if (!profile) {
@@ -599,8 +594,8 @@ void CreateAppProfileCluster(
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id, std::string cluster_id) {
-    auto config = cbt::AppProfileConfig::SingleClusterRouting(
-        profile_id, cluster_id);
+    auto config =
+        cbt::AppProfileConfig::SingleClusterRouting(profile_id, cluster_id);
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
         instance_admin.CreateAppProfile(instance_id, config);
     if (!profile) {
@@ -626,8 +621,7 @@ void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
-        instance_admin.GetAppProfile(instance_id,
-                                     profile_id);
+        instance_admin.GetAppProfile(instance_id, profile_id);
     if (!profile) {
       throw std::runtime_error(profile.status().message());
     }
@@ -690,8 +684,7 @@ void UpdateAppProfileRoutingAny(
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
-        instance_admin.UpdateAppProfile(instance_id,
-                                        profile_id,
+        instance_admin.UpdateAppProfile(instance_id, profile_id,
                                         cbt::AppProfileUpdateConfig()
                                             .set_multi_cluster_use_any()
                                             .set_ignore_warnings(true));
@@ -799,8 +792,7 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id, bool ignore_warnings) {
     google::cloud::Status status = instance_admin.DeleteAppProfile(
-        instance_id, profile_id,
-        ignore_warnings);
+        instance_id, profile_id, ignore_warnings);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }

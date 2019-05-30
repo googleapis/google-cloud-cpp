@@ -118,10 +118,9 @@ int main(int argc, char* argv[]) try {
       // If the user requests only one thread, use the current thread.
       launch_policy = std::launch::deferred;
     }
-    tasks.emplace_back(
-        std::async(launch_policy, RunBenchmark, std::ref(benchmark),
-                   setup.app_profile_id(),
-                   setup.table_id(), setup.test_duration()));
+    tasks.emplace_back(std::async(launch_policy, RunBenchmark,
+                                  std::ref(benchmark), setup.app_profile_id(),
+                                  setup.table_id(), setup.test_duration()));
   }
 
   // Wait for the threads and combine all the results.

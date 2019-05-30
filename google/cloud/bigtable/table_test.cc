@@ -98,8 +98,8 @@ TEST_F(TableTest, ChangePolicies) {
 }
 
 TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
-  bigtable::Table table(client_, "test-profile-id",
-                        "some-table", bigtable::AlwaysRetryMutationPolicy(),
+  bigtable::Table table(client_, "test-profile-id", "some-table",
+                        bigtable::AlwaysRetryMutationPolicy(),
                         bigtable::LimitedErrorCountRetryPolicy(42));
   EXPECT_EQ("test-profile-id", table.app_profile_id());
   EXPECT_THAT(table.table_name(), ::testing::HasSubstr("some-table"));

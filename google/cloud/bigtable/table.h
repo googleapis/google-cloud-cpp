@@ -203,8 +203,8 @@ class Table {
    * @par Example Using AppProfile
    * @snippet bigtable_hello_app_profile.cc read with app profile
    */
-  Table(std::shared_ptr<DataClient> client,
-        std::string app_profile_id, std::string const& table_id)
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
         table_name_(std::string(TableName(client_, table_id))),
@@ -336,9 +336,8 @@ class Table {
   template <typename P, typename... Policies,
             typename std::enable_if<valid_policies<P, Policies...>::value,
                                     int>::type = 0>
-  Table(std::shared_ptr<DataClient> client,
-        std::string app_profile_id, std::string const& table_id,
-        P&& p, Policies&&... policies)
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id, P&& p, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
     ChangePolicies(std::forward<P>(p), std::forward<Policies>(policies)...);
   }

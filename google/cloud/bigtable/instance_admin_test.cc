@@ -574,8 +574,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
  protected:
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncGetIamPolicy(
-        cq_, "test-instance");
+    user_future_ = instance_admin.AsyncGetIamPolicy(cq_, "test-instance");
   }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
@@ -814,9 +813,8 @@ class AsyncDeleteClusterTest : public ::testing::Test {
  protected:
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncDeleteCluster(
-        cq_, "test-instance",
-        "the-cluster");
+    user_future_ =
+        instance_admin.AsyncDeleteCluster(cq_, "test-instance", "the-cluster");
   }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;

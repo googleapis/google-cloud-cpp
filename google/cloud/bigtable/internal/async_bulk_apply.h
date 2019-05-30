@@ -47,8 +47,8 @@ class AsyncRetryBulkApply
       IdempotentMutationPolicy& idempotent_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::shared_ptr<bigtable::DataClient> client,
-      std::string const& app_profile_id,
-      std::string const& table_name, BulkMutation mut);
+      std::string const& app_profile_id, std::string const& table_name,
+      BulkMutation mut);
 
  private:
   AsyncRetryBulkApply(std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,

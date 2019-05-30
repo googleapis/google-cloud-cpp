@@ -507,8 +507,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc generate consistency token
    */
-  StatusOr<std::string> GenerateConsistencyToken(
-      std::string const& table_id);
+  StatusOr<std::string> GenerateConsistencyToken(std::string const& table_id);
 
   /**
    * Make an asynchronous request to generates consistency token for a table.
@@ -548,9 +547,8 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc check consistency
    */
-  StatusOr<Consistency> CheckConsistency(
-      std::string const& table_id,
-      std::string const& consistency_token);
+  StatusOr<Consistency> CheckConsistency(std::string const& table_id,
+                                         std::string const& consistency_token);
 
   /**
    * Make an asynchronous request to check consistency of a table.
@@ -593,8 +591,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc wait for consistency check
    */
   google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
-      std::string const& table_id,
-      std::string const& consistency_token);
+      std::string const& table_id, std::string const& consistency_token);
 
   /**
    * Asynchronously wait until a table is consistent with the given @p token.

@@ -114,8 +114,7 @@ class BulkMutatorState {
 /// Keep the state in the Table::BulkApply() member function.
 class BulkMutator {
  public:
-  BulkMutator(std::string const& app_profile_id,
-              std::string const& table_name,
+  BulkMutator(std::string const& app_profile_id, std::string const& table_name,
               IdempotentMutationPolicy& idempotent_policy, BulkMutation mut);
 
   /// Return true if there are pending mutations in the mutator

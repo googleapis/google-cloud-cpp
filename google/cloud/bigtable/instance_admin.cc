@@ -336,8 +336,7 @@ future<Status> InstanceAdmin::AsyncDeleteInstance(
 }
 
 StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
-    std::string const& instance_id,
-    std::string const& cluster_id) {
+    std::string const& instance_id, std::string const& cluster_id) {
   grpc::Status status;
   auto rpc_policy = clone_rpc_retry_policy();
   auto backoff_policy = clone_rpc_backoff_policy();
@@ -560,12 +559,10 @@ InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
 }
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
-    std::string const& instance_id,
-    std::string const& profile_id) {
+    std::string const& instance_id, std::string const& profile_id) {
   grpc::Status status;
   btadmin::GetAppProfileRequest request;
-  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
-                   profile_id);
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" + profile_id);
 
   auto result = ClientUtils::MakeCall(
       *(client_), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -583,8 +580,7 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
                                   std::string const& instance_id,
                                   std::string const& profile_id) {
   btadmin::GetAppProfileRequest request;
-  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
-                   profile_id);
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" + profile_id);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
@@ -701,8 +697,7 @@ Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
                                        bool ignore_warnings) {
   grpc::Status status;
   btadmin::DeleteAppProfileRequest request;
-  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
-                   profile_id);
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" + profile_id);
   request.set_ignore_warnings(ignore_warnings);
 
   ClientUtils::MakeNonIdemponentCall(
@@ -717,8 +712,7 @@ future<Status> InstanceAdmin::AsyncDeleteAppProfile(
     CompletionQueue& cq, std::string const& instance_id,
     std::string const& profile_id, bool ignore_warnings) {
   btadmin::DeleteAppProfileRequest request;
-  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
-                   profile_id);
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" + profile_id);
   request.set_ignore_warnings(ignore_warnings);
 
   std::shared_ptr<InstanceAdminClient> client(client_);

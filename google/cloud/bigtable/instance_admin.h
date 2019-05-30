@@ -277,8 +277,7 @@ class InstanceAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::Cluster>> AsyncCreateCluster(
       CompletionQueue& cq, ClusterConfig cluster_config,
-      std::string const& instance_id,
-      std::string const& cluster_id);
+      std::string const& instance_id, std::string const& cluster_id);
 
   /**
    * Update an existing instance of Cloud Bigtable.
@@ -655,8 +654,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc get cluster
    */
   StatusOr<google::bigtable::admin::v2::Cluster> GetCluster(
-      std::string const& instance_id,
-      std::string const& cluster_id);
+      std::string const& instance_id, std::string const& cluster_id);
 
   /**
    * Sends an asynchronous request to get information about existing cluster of
@@ -724,8 +722,7 @@ class InstanceAdmin {
    * @snippet instance_admin_async_snippets.cc async create app profile
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
-  AsyncCreateAppProfile(CompletionQueue& cq,
-                        std::string const& instance_id,
+  AsyncCreateAppProfile(CompletionQueue& cq, std::string const& instance_id,
                         AppProfileConfig config);
 
   /**
@@ -742,8 +739,7 @@ class InstanceAdmin {
    * @snippet bigtable_instance_admin_snippets.cc get app profile
    */
   StatusOr<google::bigtable::admin::v2::AppProfile> GetAppProfile(
-      std::string const& instance_id,
-      std::string const& profile_id);
+      std::string const& instance_id, std::string const& profile_id);
 
   /**
    * Asynchronously fetch the information about an existing application profile.
@@ -816,8 +812,7 @@ class InstanceAdmin {
    */
   future<StatusOr<google::bigtable::admin::v2::AppProfile>>
   AsyncUpdateAppProfile(CompletionQueue& cq, std::string instance_id,
-                        std::string profile_id,
-                        AppProfileUpdateConfig config);
+                        std::string profile_id, AppProfileUpdateConfig config);
 
   /**
    * List the application profiles in an instance.
