@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) try {
     }
     tasks.emplace_back(
         std::async(launch_policy, RunBenchmark, std::ref(benchmark),
-                   std::string(setup.app_profile_id()),
+                   setup.app_profile_id(),
                    setup.table_id(), setup.test_duration()));
   }
 

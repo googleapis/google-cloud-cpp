@@ -649,7 +649,7 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
       throw std::runtime_error(consistency_token.status().message());
     }
     future<StatusOr<cbt::Consistency>> consistent_future =
-        admin.WaitForConsistency(std::string(table_id), *consistency_token);
+        admin.WaitForConsistency(table_id, *consistency_token);
     auto final = consistent_future.then(
         [&consistency_token](future<StatusOr<cbt::Consistency>> f) {
           auto is_consistent = f.get();
@@ -687,7 +687,7 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   [](cbt::TableAdmin admin, std::string table_id,
      std::string consistency_token) {
     StatusOr<cbt::Consistency> result = admin.CheckConsistency(
-        std::string(table_id), std::string(consistency_token));
+        table_id, consistency_token);
     if (!result) {
       throw std::runtime_error(result.status().message());
     }

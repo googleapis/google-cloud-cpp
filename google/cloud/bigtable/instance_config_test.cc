@@ -33,7 +33,7 @@ TEST(InstanceConfigTest, Constructor) {
 
 TEST(InstanceConfigTest, ConstructorManyClusters) {
   bigtable::InstanceConfig config(
-      std::string("my-instance"), std::string("pretty name"),
+      "my-instance", "pretty name",
       {
           {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
           {"cluster-2", {"elsewhere", 7, bigtable::ClusterConfig::HDD}},
@@ -57,7 +57,7 @@ TEST(InstanceConfigTest, ConstructorManyClusters) {
 
 TEST(InstanceConfigTest, SetLabels) {
   bigtable::InstanceConfig config(
-      std::string("my-instance"), std::string("pretty name"),
+      "my-instance", "pretty name",
       {
           {"cluster-1", {"somewhere", 7, bigtable::ClusterConfig::SSD}},
       });

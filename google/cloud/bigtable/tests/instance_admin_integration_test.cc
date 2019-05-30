@@ -158,14 +158,14 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
-      std::string(instance_id),
+      instance_id,
       bigtable::AppProfileConfig::MultiClusterUseAny(
-          std::string(id1)));
+          id1));
   ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_->CreateAppProfile(
-      std::string(instance_id),
+      instance_id,
       bigtable::AppProfileConfig::MultiClusterUseAny(
-          std::string(id2)));
+          id2));
   ASSERT_STATUS_OK(profile_2);
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
@@ -174,39 +174,39 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
   auto detail_1 = instance_admin_->GetAppProfile(
-      std::string(instance_id), std::string(id1));
+      instance_id, id1);
   ASSERT_STATUS_OK(detail_1);
   EXPECT_EQ(detail_1->name(), profile_1->name());
   EXPECT_THAT(detail_1->name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_1->name(), HasSubstr(id1));
 
   auto detail_2 = instance_admin_->GetAppProfile(
-      std::string(instance_id), std::string(id2));
+      instance_id, id2);
   ASSERT_STATUS_OK(detail_2);
   EXPECT_EQ(detail_2->name(), profile_2->name());
   EXPECT_THAT(detail_2->name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_2->name(), HasSubstr(id2));
 
   auto profile_updated_future = instance_admin_->UpdateAppProfile(
-      std::string(instance_id), std::string(id2),
+      instance_id, id2,
       bigtable::AppProfileUpdateConfig().set_description("new description"));
 
   auto update_2 = profile_updated_future.get();
   auto detail_2_after_update = instance_admin_->GetAppProfile(
-      std::string(instance_id), std::string(id2));
+      instance_id, id2);
   ASSERT_STATUS_OK(detail_2_after_update);
   EXPECT_EQ("new description", update_2->description());
   EXPECT_EQ("new description", detail_2_after_update->description());
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
-      std::string(instance_id), std::string(id1), true));
+      instance_id, id1, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
-      std::string(instance_id), std::string(id2), true));
+      instance_id, id2, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));

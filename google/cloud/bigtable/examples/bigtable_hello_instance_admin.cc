@@ -81,8 +81,8 @@ int main(int argc, char* argv[]) try {
 
     // production instance needs at least 3 nodes
     auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
-    cbt::InstanceConfig config(std::string(instance_id),
-                               std::string("Sample Instance"),
+    cbt::InstanceConfig config(instance_id,
+                               "Sample Instance",
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 

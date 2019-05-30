@@ -286,8 +286,8 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
      std::string consistency_token) {
     future<void> final =
         admin
-            .AsyncCheckConsistency(cq, std::string(table_id),
-                                   std::string(consistency_token))
+            .AsyncCheckConsistency(cq, table_id,
+                                   consistency_token)
             .then([consistency_token](future<StatusOr<cbt::Consistency>> f) {
               auto consistency = f.get();
               if (!consistency) {
@@ -353,7 +353,7 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
      std::string consistency_token) {
     future<StatusOr<cbt::Consistency>> result = admin.AsyncWaitForConsistency(
-        cq, std::string(table_id), std::string(consistency_token));
+        cq, table_id, consistency_token);
 
     auto final = result.then([&](future<StatusOr<cbt::Consistency>> f) {
       auto consistent = f.get();

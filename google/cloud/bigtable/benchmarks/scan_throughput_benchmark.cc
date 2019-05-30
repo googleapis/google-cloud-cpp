@@ -88,7 +88,7 @@ int main(int argc, char* argv[]) try {
     auto start = std::chrono::steady_clock::now();
     auto combined =
         RunBenchmark(benchmark, data_client, setup.table_size(),
-                     std::string(setup.app_profile_id()),
+                     setup.app_profile_id(),
                      setup.table_id(), scan_size, setup.test_duration());
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
