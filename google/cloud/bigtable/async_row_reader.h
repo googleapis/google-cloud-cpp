@@ -205,8 +205,11 @@ class AsyncRowReader {
     bool const break_recursion = recursion_level >= 100;
     on_row_(std::move(row)).then([this, break_recursion](future<bool> fut) {
       bool should_cancel;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       try {
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
         should_cancel = !fut.get();
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       } catch (std::exception& ex) {
         Cancel(std::string("future<> returned from the user callback threw an "
                            "exception: ") +
@@ -218,6 +221,7 @@ class AsyncRowReader {
             "exception");
         return;
       }
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       if (should_cancel) {
         Cancel("User cancelled");
         return;

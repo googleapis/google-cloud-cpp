@@ -743,6 +743,7 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
     case CancelMode::FALSE_VALUE:
       promises_from_user_cb_[0].set_value(false);
       break;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     case CancelMode::STD_EXCEPT:
       try {
         throw std::runtime_error("user threw std::exception");
@@ -757,6 +758,7 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
         promises_from_user_cb_[0].set_exception(std::current_exception());
       }
       break;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
 
   ASSERT_EQ(1U, cq_impl_->size());
@@ -784,8 +786,14 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
 }
 
 INSTANTIATE_TEST_CASE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
                         Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
-                               CancelMode::OTHER_EXCEPT));
+                               CancelMode::OTHER_EXCEPT)
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+                        Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
+                               CancelMode::OTHER_EXCEPT)
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+);
 
 TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
