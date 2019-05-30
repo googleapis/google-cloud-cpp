@@ -20,7 +20,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 AppProfileConfig AppProfileConfig::MultiClusterUseAny(AppProfileId profile_id) {
   AppProfileConfig tmp;
-  tmp.proto_.set_app_profile_id(std::move(profile_id.get()));
+  tmp.proto_.set_app_profile_id(std::move(profile_id));
   tmp.proto_.mutable_app_profile()
       ->mutable_multi_cluster_routing_use_any()
       ->Clear();
@@ -31,10 +31,10 @@ AppProfileConfig AppProfileConfig::SingleClusterRouting(
     AppProfileId profile_id, ClusterId cluster_id,
     bool allow_transactional_writes) {
   AppProfileConfig tmp;
-  tmp.proto_.set_app_profile_id(std::move(profile_id.get()));
+  tmp.proto_.set_app_profile_id(std::move(profile_id));
   auto& routing =
       *tmp.proto_.mutable_app_profile()->mutable_single_cluster_routing();
-  routing.set_cluster_id(std::move(cluster_id.get()));
+  routing.set_cluster_id(std::move(cluster_id));
   routing.set_allow_transactional_writes(allow_transactional_writes);
   return tmp;
 }

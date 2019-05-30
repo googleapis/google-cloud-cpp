@@ -110,8 +110,8 @@ void RowReader::MakeRequest() {
   processed_chunks_count_ = 0;
 
   google::bigtable::v2::ReadRowsRequest request;
-  request.set_table_name(table_name_.get());
-  request.set_app_profile_id(app_profile_id_.get());
+  request.set_table_name(table_name_);
+  request.set_app_profile_id(app_profile_id_);
 
   auto row_set_proto = row_set_.as_proto();
   request.mutable_rows()->Swap(&row_set_proto);

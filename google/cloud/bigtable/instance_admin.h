@@ -177,7 +177,7 @@ class InstanceAdmin {
   /// instance_id.
   std::string ClusterName(bigtable::InstanceId const& instance_id,
                           bigtable::ClusterId const& cluster_id) const {
-    return InstanceName(instance_id.get()) + "/clusters/" + cluster_id.get();
+    return InstanceName(instance_id) + "/clusters/" + cluster_id;
   }
 
   /**

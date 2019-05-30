@@ -184,8 +184,8 @@ InstanceAdmin::AsyncCreateCluster(CompletionQueue& cq,
   cluster.set_location(project_name() + "/locations/" + cluster.location());
   btadmin::CreateClusterRequest request;
   request.mutable_cluster()->Swap(&cluster);
-  request.set_parent(project_name() + "/instances/" + instance_id.get());
-  request.set_cluster_id(cluster_id.get());
+  request.set_parent(project_name() + "/instances/" + instance_id);
+  request.set_cluster_id(cluster_id);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
@@ -524,7 +524,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
     bigtable::InstanceId const& instance_id, AppProfileConfig config) {
   grpc::Status status;
   auto request = std::move(config).as_proto();
-  request.set_parent(InstanceName(instance_id.get()));
+  request.set_parent(InstanceName(instance_id));
 
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
@@ -544,7 +544,7 @@ InstanceAdmin::AsyncCreateAppProfile(CompletionQueue& cq,
                                      bigtable::InstanceId const& instance_id,
                                      AppProfileConfig config) {
   auto request = std::move(config).as_proto();
-  request.set_parent(InstanceName(instance_id.get()));
+  request.set_parent(InstanceName(instance_id));
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
@@ -564,8 +564,8 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
     bigtable::AppProfileId const& profile_id) {
   grpc::Status status;
   btadmin::GetAppProfileRequest request;
-  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
-                   profile_id.get());
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
+                   profile_id);
 
   auto result = ClientUtils::MakeCall(
       *(client_), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -583,8 +583,8 @@ InstanceAdmin::AsyncGetAppProfile(CompletionQueue& cq,
                                   bigtable::InstanceId const& instance_id,
                                   bigtable::AppProfileId const& profile_id) {
   btadmin::GetAppProfileRequest request;
-  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
-                   profile_id.get());
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
+                   profile_id);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
@@ -619,7 +619,7 @@ InstanceAdmin::AsyncUpdateAppProfile(CompletionQueue& cq,
                                      AppProfileUpdateConfig config) {
   auto request = std::move(config).as_proto();
   request.mutable_app_profile()->set_name(
-      InstanceName(instance_id.get() + "/appProfiles/" + profile_id.get()));
+      InstanceName(instance_id + "/appProfiles/" + profile_id));
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::AsyncStartPollAfterRetryUnaryRpc<
@@ -701,8 +701,8 @@ Status InstanceAdmin::DeleteAppProfile(bigtable::InstanceId const& instance_id,
                                        bool ignore_warnings) {
   grpc::Status status;
   btadmin::DeleteAppProfileRequest request;
-  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
-                   profile_id.get());
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
+                   profile_id);
   request.set_ignore_warnings(ignore_warnings);
 
   ClientUtils::MakeNonIdemponentCall(
@@ -717,8 +717,8 @@ future<Status> InstanceAdmin::AsyncDeleteAppProfile(
     CompletionQueue& cq, bigtable::InstanceId const& instance_id,
     bigtable::AppProfileId const& profile_id, bool ignore_warnings) {
   btadmin::DeleteAppProfileRequest request;
-  request.set_name(InstanceName(instance_id.get()) + "/appProfiles/" +
-                   profile_id.get());
+  request.set_name(InstanceName(instance_id) + "/appProfiles/" +
+                   profile_id);
   request.set_ignore_warnings(ignore_warnings);
 
   std::shared_ptr<InstanceAdminClient> client(client_);
@@ -768,7 +768,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
 future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncGetIamPolicy(
     CompletionQueue& cq, InstanceId const& instance_id) {
   ::google::iam::v1::GetIamPolicyRequest request;
-  request.set_resource(InstanceName(instance_id.get()));
+  request.set_resource(InstanceName(instance_id));
 
   std::shared_ptr<InstanceAdminClient> client(client_);
   return internal::StartRetryAsyncUnaryRpc(
@@ -843,7 +843,7 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
   }
 
   ::google::iam::v1::SetIamPolicyRequest request;
-  request.set_resource(InstanceName(instance_id.get()));
+  request.set_resource(InstanceName(instance_id));
   *request.mutable_policy() = std::move(policy);
 
   std::shared_ptr<InstanceAdminClient> client(client_);

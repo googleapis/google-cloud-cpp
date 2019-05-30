@@ -667,7 +667,7 @@ class TableAdmin {
 
   /// Return the fully qualified name of a Cluster.
   std::string ClusterName(bigtable::ClusterId const& cluster_id) {
-    return instance_name() + "/clusters/" + cluster_id.get();
+    return instance_name() + "/clusters/" + cluster_id;
   }
 
  private:

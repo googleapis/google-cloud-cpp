@@ -22,9 +22,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-using AppProfileId =
-    internal::StrongType<std::string, struct AppProfileIdParam>;
-
+using AppProfileId = std::string;
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

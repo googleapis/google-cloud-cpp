@@ -76,7 +76,7 @@ Status Table::Apply(SingleRowMutation mut) {
   // Build the RPC request, try to minimize copying.
   btproto::MutateRowRequest request;
   SetCommonTableOperationRequest<btproto::MutateRowRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
   mut.MoveTo(request);
 
   bool const is_idempotent =
@@ -112,7 +112,7 @@ Status Table::Apply(SingleRowMutation mut) {
 future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   google::bigtable::v2::MutateRowRequest request;
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
   mut.MoveTo(request);
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
 
@@ -225,7 +225,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   SetCommonTableOperationRequest<btproto::CheckAndMutateRowRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -253,7 +253,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   SetCommonTableOperationRequest<btproto::CheckAndMutateRowRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
   *request.mutable_predicate_filter() = std::move(filter).as_proto();
   for (auto& m : true_mutations) {
     *request.add_true_mutations() = std::move(m.op);
@@ -302,7 +302,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
   btproto::SampleRowKeysRequest request;
   btproto::SampleRowKeysResponse response;
   SetCommonTableOperationRequest<btproto::SampleRowKeysRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
 
   while (true) {
     grpc::ClientContext client_context;
@@ -337,7 +337,7 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
     btproto::ReadModifyWriteRowRequest request) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
 
   grpc::Status status;
   auto response = ClientUtils::MakeNonIdemponentCall(
@@ -356,7 +356,7 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
     ::google::bigtable::v2::ReadModifyWriteRowRequest request) {
   SetCommonTableOperationRequest<
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
-      request, app_profile_id_.get(), table_name_.get());
+      request, app_profile_id_, table_name_);
 
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(

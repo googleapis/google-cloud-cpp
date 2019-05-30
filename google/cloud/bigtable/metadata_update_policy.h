@@ -85,10 +85,11 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param table_id table_id used in RPC call.
    */
-  MetadataUpdatePolicy(std::string const& resource_name,
+  static MetadataUpdatePolicy FromTableId(std::string const& resource_name,
                        MetadataParamTypes const& metadata_param_type,
                        std::string const& table_id);
 
+  // TODO(coryan) - create a bug because this seems to be unused.
   /**
    * Constructor with default metadata pair.
    *
@@ -98,9 +99,9 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param cluster_id cluster_id of the cluster.
    */
-  MetadataUpdatePolicy(std::string const& resource_name,
+  static MetadataUpdatePolicy FromClusterId(std::string const& resource_name,
                        MetadataParamTypes const& metadata_param_type,
-                       bigtable::ClusterId const& cluster_id);
+                       std::string const& cluster_id);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) = default;

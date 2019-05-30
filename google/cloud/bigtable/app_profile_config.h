@@ -98,7 +98,7 @@ class AppProfileUpdateConfig {
       ClusterId const& cluster_id, bool allow_transactional_writes = false) {
     proto_.mutable_app_profile()
         ->mutable_single_cluster_routing()
-        ->set_cluster_id(cluster_id.get());
+        ->set_cluster_id(cluster_id);
     proto_.mutable_app_profile()
         ->mutable_single_cluster_routing()
         ->set_allow_transactional_writes(allow_transactional_writes);

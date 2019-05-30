@@ -22,11 +22,11 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-using ConsistencyToken =
-    internal::StrongType<std::string, struct ConsistencyTokenParam>;
-using ClusterId = internal::StrongType<std::string, struct ClusterTag>;
-using InstanceId = internal::StrongType<std::string, struct InstanceTag>;
-using TableId = internal::StrongType<std::string, struct TableParam>;
+using ConsistencyToken = std::string;
+using ClusterId  = std::string;
+using InstanceId = std::string;
+using TableId    = std::string;
+using DisplayName = std::string;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -39,19 +39,22 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   api_client_header_ = std::move(api_client_header);
 }
 
-MetadataUpdatePolicy::MetadataUpdatePolicy(
+MetadataUpdatePolicy MetadataUpdatePolicy::FromTableId(
     std::string const& resource_name,
     MetadataParamTypes const& metadata_param_type, std::string const& table_id)
-    : MetadataUpdatePolicy(resource_name, metadata_param_type) {
-  value_ += "/tables/" + table_id;
+{
+   MetadataUpdatePolicy policy(resource_name, metadata_param_type);
+    policy.value_ += "/tables/" + table_id;
+  return policy;
 }
 
-MetadataUpdatePolicy::MetadataUpdatePolicy(
+MetadataUpdatePolicy MetadataUpdatePolicy::FromClusterId(
     std::string const& resource_name,
     MetadataParamTypes const& metadata_param_type,
-    bigtable::ClusterId const& cluster_id)
-    : MetadataUpdatePolicy(resource_name, metadata_param_type) {
-  value_ += "/clusters/" + cluster_id.get();
+    bigtable::ClusterId const& cluster_id) {
+  MetadataUpdatePolicy policy(resource_name, metadata_param_type);
+  policy.value_ += "/clusters/" + cluster_id;
+  return policy;
 }
 
 void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
