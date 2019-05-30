@@ -779,6 +779,7 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
     case CancelMode::FALSE_VALUE:
       ASSERT_THAT(stream_status.message(), HasSubstr("User cancelled"));
       break;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     case CancelMode::STD_EXCEPT:
       ASSERT_THAT(stream_status.message(),
                   HasSubstr("user threw std::exception"));
@@ -786,6 +787,7 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
     case CancelMode::OTHER_EXCEPT:
       ASSERT_THAT(stream_status.message(), HasSubstr("unknown exception"));
       break;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   }
 
   ASSERT_EQ(0U, cq_impl_->size());
