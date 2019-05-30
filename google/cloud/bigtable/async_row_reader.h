@@ -51,6 +51,16 @@ class AsyncRowReader {
   AsyncRowReader(AsyncRowReader const&) = delete;
 
  private:
+  static_assert(google::cloud::internal::is_invocable<RowFunctor, Row>::value,
+                "RowFunctor has to invocable with Row.");
+  static_assert(
+      google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
+      "RowFunctor has to invocable with Status.");
+  static_assert(
+      std::is_same<google::cloud::internal::invoke_result_t<RowFunctor, Row>,
+                   future<bool>>::value,
+      "RowFunctor should return a future<bool>.");
+
   /**
    * These objects delete themselves once they're not needed anymore.
    *
