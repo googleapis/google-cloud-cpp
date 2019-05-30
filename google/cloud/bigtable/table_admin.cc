@@ -308,7 +308,7 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
 
 google::cloud::future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
     bigtable::TableId const& table_id,
-    bigtable::ConsistencyToken const& consistency_token) {
+    std::string const& consistency_token) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
 
@@ -322,13 +322,13 @@ google::cloud::future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
 google::cloud::future<StatusOr<Consistency>>
 TableAdmin::AsyncWaitForConsistency(
     CompletionQueue& cq, TableId const& table_id,
-    bigtable::ConsistencyToken const& consistency_token) {
+    std::string const& consistency_token) {
   class AsyncWaitForConsistencyState
       : public std::enable_shared_from_this<AsyncWaitForConsistencyState> {
    public:
     static future<StatusOr<Consistency>> Create(
         CompletionQueue cq, TableId table_id,
-        ConsistencyToken consistency_token, TableAdmin const& table_admin,
+        std::string consistency_token, TableAdmin const& table_admin,
         std::unique_ptr<PollingPolicy> polling_policy) {
       std::shared_ptr<AsyncWaitForConsistencyState> state(
           new AsyncWaitForConsistencyState(
@@ -341,7 +341,7 @@ TableAdmin::AsyncWaitForConsistency(
 
    private:
     AsyncWaitForConsistencyState(CompletionQueue cq, TableId table_id,
-                                 ConsistencyToken consistency_token,
+                                 std::string consistency_token,
                                  TableAdmin const& table_admin,
                                  std::unique_ptr<PollingPolicy> polling_policy)
         : cq_(std::move(cq)),
@@ -377,7 +377,7 @@ TableAdmin::AsyncWaitForConsistency(
 
     CompletionQueue cq_;
     TableId table_id_;
-    ConsistencyToken consistency_token_;
+    std::string consistency_token_;
     TableAdmin table_admin_;
     std::unique_ptr<PollingPolicy> polling_policy_;
     google::cloud::promise<StatusOr<Consistency>> promise_;
@@ -423,7 +423,7 @@ future<Status> TableAdmin::AsyncDropAllRows(CompletionQueue& cq,
       });
 }
 
-StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
+StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
     std::string const& table_id) {
   grpc::Status status;
   btadmin::GenerateConsistencyTokenRequest request;
@@ -439,10 +439,10 @@ StatusOr<ConsistencyToken> TableAdmin::GenerateConsistencyToken(
   if (!status.ok()) {
     return internal::MakeStatusFromRpcError(status);
   }
-  return ConsistencyToken(*response.mutable_consistency_token());
+  return std::string(*response.mutable_consistency_token());
 }
 
-future<StatusOr<ConsistencyToken>> TableAdmin::AsyncGenerateConsistencyToken(
+future<StatusOr<std::string>> TableAdmin::AsyncGenerateConsistencyToken(
     CompletionQueue& cq, std::string const& table_id) {
   btadmin::GenerateConsistencyTokenRequest request;
   request.set_name(TableName(table_id));
@@ -460,18 +460,18 @@ future<StatusOr<ConsistencyToken>> TableAdmin::AsyncGenerateConsistencyToken(
              },
              std::move(request), cq)
       .then([](future<StatusOr<btadmin::GenerateConsistencyTokenResponse>> fut)
-                -> StatusOr<ConsistencyToken> {
+                -> StatusOr<std::string> {
         auto result = fut.get();
         if (!result) {
           return result.status();
         }
-        return ConsistencyToken(*result->mutable_consistency_token());
+        return std::string(*result->mutable_consistency_token());
       });
 }
 
 StatusOr<Consistency> TableAdmin::CheckConsistency(
     bigtable::TableId const& table_id,
-    bigtable::ConsistencyToken const& consistency_token) {
+    std::string const& consistency_token) {
   grpc::Status status;
   btadmin::CheckConsistencyRequest request;
   request.set_name(TableName(table_id));
@@ -494,7 +494,7 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
 
 future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
     CompletionQueue& cq, bigtable::TableId const& table_id,
-    bigtable::ConsistencyToken const& consistency_token) {
+    std::string const& consistency_token) {
   btadmin::CheckConsistencyRequest request;
   request.set_name(TableName(table_id));
   request.set_consistency_token(consistency_token);

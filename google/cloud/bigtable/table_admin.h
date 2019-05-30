@@ -508,7 +508,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc generate consistency token
    */
-  StatusOr<ConsistencyToken> GenerateConsistencyToken(
+  StatusOr<std::string> GenerateConsistencyToken(
       std::string const& table_id);
 
   /**
@@ -532,7 +532,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_async_snippets.cc async generate consistency token
    */
-  future<StatusOr<ConsistencyToken>> AsyncGenerateConsistencyToken(
+  future<StatusOr<std::string>> AsyncGenerateConsistencyToken(
       CompletionQueue& cq, std::string const& table_id);
 
   /**
@@ -551,7 +551,7 @@ class TableAdmin {
    */
   StatusOr<Consistency> CheckConsistency(
       bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
+      std::string const& consistency_token);
 
   /**
    * Make an asynchronous request to check consistency of a table.
@@ -576,7 +576,7 @@ class TableAdmin {
    */
   future<StatusOr<Consistency>> AsyncCheckConsistency(
       CompletionQueue& cq, bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
+      std::string const& consistency_token);
 
   /**
    * Checks consistency of a table with multiple calls using a separate thread
@@ -595,7 +595,7 @@ class TableAdmin {
    */
   google::cloud::future<StatusOr<Consistency>> WaitForConsistency(
       bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
+      std::string const& consistency_token);
 
   /**
    * Asynchronously wait until a table is consistent with the given @p token.
@@ -620,7 +620,7 @@ class TableAdmin {
    */
   google::cloud::future<StatusOr<Consistency>> AsyncWaitForConsistency(
       CompletionQueue& cq, bigtable::TableId const& table_id,
-      bigtable::ConsistencyToken const& consistency_token);
+      std::string const& consistency_token);
 
   /**
    * Delete all the rows in a table.

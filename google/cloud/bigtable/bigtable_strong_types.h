@@ -22,7 +22,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-using ConsistencyToken = std::string;
 using ClusterId  = std::string;
 using InstanceId = std::string;
 using TableId    = std::string;

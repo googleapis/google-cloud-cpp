@@ -628,7 +628,7 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
   EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillOnce(Invoke(mock));
 
   bigtable::TableId table_id("the-table");
-  bigtable::ConsistencyToken consistency_token("test-token");
+  std::string consistency_token("test-token");
   // After all the setup, make the actual call we want to test.
   auto result = tested.CheckConsistency(table_id, consistency_token);
   ASSERT_STATUS_OK(result);
@@ -647,7 +647,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   bigtable::TableId table_id("other-table");
-  bigtable::ConsistencyToken consistency_token("test-token");
+  std::string consistency_token("test-token");
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.CheckConsistency(table_id, consistency_token));
 }
@@ -711,7 +711,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
       .WillOnce(Invoke(make_invoke(r3)));
 
   bigtable::TableId table_id("test-table");
-  bigtable::ConsistencyToken consistency_token("test-async-token");
+  std::string consistency_token("test-async-token");
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl(
       new bigtable::testing::MockCompletionQueue);
@@ -790,7 +790,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
       }));
 
   bigtable::TableId table_id("test-table");
-  bigtable::ConsistencyToken consistency_token("test-async-token");
+  std::string consistency_token("test-async-token");
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl(
       new bigtable::testing::MockCompletionQueue);
