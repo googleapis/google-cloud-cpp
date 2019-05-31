@@ -105,7 +105,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
         metadata_update_policy_(std::move(metadata_update_policy)),
         parser_factory_(std::move(parser_factory)),
         rows_count_(0),
-        whole_op_finished_() {}
+        whole_op_finished_(),
+        recursion_level_() {}
 
   void MakeRequest() {
     status_ = Status();
@@ -164,18 +165,17 @@ class AsyncRowReader : public std::enable_shared_from_this<
     // overcome this is to always switch thread to a CompletionQueue thread.
     // Switching thread for every row has a non-trivial cost, though. To find a
     // good balance, we allow for recursion no deeper than 100 and achieve it by
-    // tracking the level by a `thread_local`.
+    // tracking the level in `recursion_level_`.
     //
     // The magic value 100 is arbitrary, but back-of-the-envelope calculation
     // indicates it should cap this stack usage to below 100K. Default stack
     // size is usually 1MB.
-    thread_local int recursion_level = 0;
     struct CountFrame {
       explicit CountFrame(int& cntr) : cntr(++cntr){};
       ~CountFrame() { --cntr; }
       int& cntr;
     };
-    CountFrame frame(recursion_level);
+    CountFrame frame(recursion_level_);
 
     if (ready_rows_.empty()) {
       if (whole_op_finished_) {
@@ -196,7 +196,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
     ready_rows_.pop();
 
     auto self = this->shared_from_this();
-    bool const break_recursion = recursion_level >= 100;
+    bool const break_recursion = recursion_level_ >= 100;
     on_row_(std::move(row)).then([self, break_recursion](future<bool> fut) {
       bool should_cancel;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -405,6 +405,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
    * stored here (unless a different error had already been stored).
    */
   Status status_;
+  /// Tracks the level of recursion of TryGiveRowToUser
+  int recursion_level_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
