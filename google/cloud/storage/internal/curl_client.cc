@@ -124,10 +124,12 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
   }
   builder.SetMethod(method)
       .SetDebugLogging(options_.enable_http_tracing())
-      .SetCurlShare(share_.get())
       .AddUserAgentPrefix(options_.user_agent_prefix())
       .AddHeader(auth_header.value())
       .AddHeader("x-goog-api-client: " + x_goog_api_client());
+  if (share_) {
+    builder.SetCurlShare(share_.get());
+  }
   return Status();
 }
 
@@ -252,9 +254,16 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
           shared_from_this(), std::move(response->upload_session_url)));
 }
 
+CURLSH* CreateCurlShared(ClientOptions const& options) {
+  if (options.enable_curl_shared()) {
+    return curl_share_init();
+  }
+  return nullptr;
+}
+
 CurlClient::CurlClient(ClientOptions options)
     : options_(std::move(options)),
-      share_(curl_share_init(), &curl_share_cleanup),
+      share_(CreateCurlShared(options_), &curl_share_cleanup),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(options_)),
       upload_factory_(CreateHandleFactory(options_)),
@@ -276,13 +285,16 @@ CurlClient::CurlClient(ClientOptions options)
     xml_download_endpoint_ = "https://storage-download.googleapis.com";
   }
 
-  curl_share_setopt(share_.get(), CURLSHOPT_LOCKFUNC, CurlShareLockCallback);
-  curl_share_setopt(share_.get(), CURLSHOPT_UNLOCKFUNC,
-                    CurlShareUnlockCallback);
-  curl_share_setopt(share_.get(), CURLSHOPT_USERDATA, this);
-  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
-  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
-  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+  if (share_) {
+    curl_share_setopt(share_.get(), CURLSHOPT_LOCKFUNC, CurlShareLockCallback);
+    curl_share_setopt(share_.get(), CURLSHOPT_UNLOCKFUNC,
+                      CurlShareUnlockCallback);
+    curl_share_setopt(share_.get(), CURLSHOPT_USERDATA, this);
+    curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
+    curl_share_setopt(share_.get(), CURLSHOPT_SHARE,
+                      CURL_LOCK_DATA_SSL_SESSION);
+    curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+  }
 
   CurlInitializeOnce(options);
 }

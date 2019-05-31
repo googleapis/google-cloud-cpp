@@ -177,6 +177,18 @@ TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
   EXPECT_TRUE(client_options.enable_ssl_locking_callbacks());
 }
 
+TEST_F(ClientOptionsTest, SetEnableCurlShared) {
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(opts);
+  ClientOptions client_options = *opts;
+  auto default_value = client_options.enable_curl_shared();
+  EXPECT_TRUE(default_value);
+  client_options.set_enable_curl_shared(false);
+  EXPECT_FALSE(client_options.enable_curl_shared());
+  client_options.set_enable_curl_shared(true);
+  EXPECT_TRUE(client_options.enable_curl_shared());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

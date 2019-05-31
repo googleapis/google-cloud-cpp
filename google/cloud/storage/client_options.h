@@ -147,6 +147,17 @@ class ClientOptions {
     return *this;
   }
 
+  /**
+   * Applications may want to disable the CURL shared resources to workaround
+   * bugs in the libcurl implementation.
+   * TODO(coryan) - Link a bug or code showing a bug, DO NOT MERGE.
+   */
+  bool enable_curl_shared() const { return enable_curl_shared_; }
+  ClientOptions& set_enable_curl_shared(bool v) {
+    enable_curl_shared_ = v;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -165,6 +176,7 @@ class ClientOptions {
   std::size_t maximum_simple_upload_size_;
   bool enable_ssl_locking_callbacks_ = true;
   bool enable_sigpipe_handler_ = true;
+  bool enable_curl_shared_ = true;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
