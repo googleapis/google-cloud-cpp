@@ -102,8 +102,9 @@ commands to your `WORKSPACE` file:
 # Update the version and SHA256 digest as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.7.0.tar.gz",
-    sha256 = "06bc735a117ec7ea92ea580e7f2ffa4b1cd7539e0e04f847bf500588d7f0fe90",
+    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.9.0.tar.gz",
+    strip_prefix = "google-cloud-cpp-0.9.0",
+    sha256 = "a072103546cfa041ad8bfc599fe5a20c58e005a1a0ee18e94b2554dc3d485604",
 )
 
 load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
