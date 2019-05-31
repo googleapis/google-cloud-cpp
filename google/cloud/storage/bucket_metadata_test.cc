@@ -129,6 +129,7 @@ BucketMetadata CreateBucketMetadataForTest() {
         }]
       },
       "location": "US",
+      "locationType": "regional",
       "logging": {
         "logBucket": "test-log-bucket",
         "logObjectPrefix": "test-log-prefix"
@@ -223,6 +224,7 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(expected_action_1, actual.lifecycle().rule.at(1).action());
 
   EXPECT_EQ("US", actual.location());
+  EXPECT_EQ("regional", actual.location_type());
 
   // logging
   EXPECT_EQ("test-log-bucket", actual.logging().log_bucket);
@@ -304,6 +306,9 @@ TEST(BucketMetadataTest, IOStream) {
 
   // lifecycle()
   EXPECT_THAT(actual, HasSubstr("age=30"));
+
+  // location_type()
+  EXPECT_THAT(actual, HasSubstr("location_type=regional"));
 
   // logging()
   EXPECT_THAT(actual, HasSubstr("test-log-bucket"));
@@ -411,6 +416,10 @@ TEST(BucketMetadataTest, ToJsonString) {
   // location()
   ASSERT_EQ(1U, actual.count("location")) << actual;
   EXPECT_EQ("US", actual.value("location", ""));
+
+  // location_type()
+  ASSERT_EQ(1U, actual.count("locationType")) << actual;
+  EXPECT_EQ("regional", actual.value("locationType", ""));
 
   // logging()
   ASSERT_EQ(1U, actual.count("logging")) << actual;
