@@ -68,7 +68,7 @@ class RPCBackoffPolicy {
    */
   virtual std::chrono::milliseconds OnCompletion(
       google::cloud::Status const& status) = 0;
-  // TODO(coryan) - remove ::grpc::Status version.
+  // TODO(#2344) - remove ::grpc::Status version.
   virtual std::chrono::milliseconds OnCompletion(grpc::Status const& s) = 0;
 };
 
@@ -90,7 +90,7 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
   void Setup(grpc::ClientContext& context) const override;
   std::chrono::milliseconds OnCompletion(
       google::cloud::Status const& status) override;
-  // TODO(coryan) - remove ::grpc::Status version.
+  // TODO(#2344) - remove ::grpc::Status version.
   std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
 
  private:
