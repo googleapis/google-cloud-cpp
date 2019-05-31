@@ -61,6 +61,27 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
       testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
+  EXPECT_CALL(*mock, UploadChunk(_))
+      .WillOnce(Invoke([&](std::string const& p) {
+        EXPECT_EQ(payload, p);
+        return StatusOr<ResumableUploadResponse>(
+            AsStatus(HttpResponse{503, "uh oh", {}}));
+      }));
+
+  LoggingResumableUploadSession session(std::move(mock));
+
+  auto result = session.UploadChunk(payload);
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_EQ("uh oh", result.status().message());
+
+  EXPECT_EQ(1U, CountLines("[UNAVAILABLE]"));
+}
+
+TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  std::string const payload = "test-payload-data";
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         EXPECT_EQ(payload, p);

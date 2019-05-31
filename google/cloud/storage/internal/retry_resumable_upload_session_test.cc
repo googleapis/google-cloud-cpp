@@ -260,6 +260,10 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
 
   StatusOr<ResumableUploadResponse> response = session.UploadChunk(payload);
   EXPECT_FALSE(response.ok());
+  EXPECT_EQ(response.status().code(), TransientError().code());
+  EXPECT_THAT(response.status().message(), HasSubstr("Retry policy exhausted"));
+
+  std::cout << response.status() << "\n\n\n";
 }
 
 /// @test Verify that too many transients on ResetSession results in a failure.

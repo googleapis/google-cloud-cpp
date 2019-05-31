@@ -96,9 +96,6 @@ StatusOr<HttpResponse> CurlResumableStreambuf::DoClose() {
 }
 
 StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
-  if (!IsOpen()) {
-    return last_response_;
-  }
   // Shorten the buffer to the actual used size.
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
   std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
