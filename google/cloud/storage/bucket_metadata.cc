@@ -87,6 +87,7 @@ bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs) {
          lhs.iam_configuration_ == rhs.iam_configuration_ &&
          lhs.project_number_ == rhs.project_number_ &&
          lhs.lifecycle_ == rhs.lifecycle_ && lhs.location_ == rhs.location_ &&
+         lhs.location_type_ == rhs.location_type_ &&
          lhs.logging_ == rhs.logging_ && lhs.labels_ == rhs.labels_ &&
          lhs.retention_policy_ == rhs.retention_policy_ &&
          lhs.versioning_ == rhs.versioning_ && lhs.website_ == rhs.website_;
@@ -158,6 +159,8 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
   }
 
   os << ", location=" << rhs.location();
+
+  os << ", location_type=" << rhs.location_type();
 
   if (rhs.has_logging()) {
     os << ", logging=" << rhs.logging();

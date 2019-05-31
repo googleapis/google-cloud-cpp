@@ -107,6 +107,7 @@ TEST(ListBucketsResponseTest, Parse) {
       "updated": "2018-05-19T19:31:24Z",
       "metageneration": "4",
       "location": "US",
+      "locationType": "regional",
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
@@ -120,6 +121,7 @@ TEST(ListBucketsResponseTest, Parse) {
       "updated": "2018-05-19T19:31:24Z",
       "metageneration": "4",
       "location": "US",
+      "locationType": "regional",
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""";
@@ -193,6 +195,7 @@ BucketMetadata CreateBucketMetadataForTest() {
       "updated": "2018-05-19T19:31:24Z",
       "metageneration": "4",
       "location": "US",
+      "locationType": "regional",
       "storageClass": "STANDARD",
       "etag": "XYZ="
 })""")
