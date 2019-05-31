@@ -61,12 +61,11 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
       testing::MockResumableUploadSession>();
 
   std::string const payload = "test-payload-data";
-  EXPECT_CALL(*mock, UploadChunk(_))
-      .WillOnce(Invoke([&](std::string const& p) {
-        EXPECT_EQ(payload, p);
-        return StatusOr<ResumableUploadResponse>(
-            AsStatus(HttpResponse{503, "uh oh", {}}));
-      }));
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    EXPECT_EQ(payload, p);
+    return StatusOr<ResumableUploadResponse>(
+        AsStatus(HttpResponse{503, "uh oh", {}}));
+  }));
 
   LoggingResumableUploadSession session(std::move(mock));
 
