@@ -329,6 +329,41 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(ObjectIntegrationTest, BasicReadWriteNoShared) {
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+
+  Client client(options->set_enable_curl_shared(false));
+
+  std::string bucket_name = flag_bucket_name;
+  auto object1 = MakeRandomObjectName();
+  auto object2 = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta =
+      client.InsertObject(bucket_name, object1, expected, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  auto writer = client.WriteObject(bucket_name, object2, IfGenerationMatch(0));
+  writer.write(expected.data(), expected.size());
+  writer.Close();
+  ASSERT_STATUS_OK(writer.metadata());
+
+  auto stream = client.ReadObject(bucket_name, object1);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  stream = client.ReadObject(bucket_name, object2);
+  actual = std::string(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto status = client.DeleteObject(bucket_name, object2);
+  EXPECT_STATUS_OK(status);
+  status = client.DeleteObject(bucket_name, object1);
+  EXPECT_STATUS_OK(status);
+}
+
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
