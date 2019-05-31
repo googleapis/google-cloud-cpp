@@ -61,8 +61,11 @@ class CurlResumableStreambuf : public ObjectWriteStreambuf {
   StatusOr<HttpResponse> DoClose() override;
 
  private:
-  /// Flush the libcurl buffer and swap it with the iostream buffer.
-  StatusOr<HttpResponse> Flush(bool final_chunk);
+  /// Flush any data if possible.
+  StatusOr<HttpResponse> Flush();
+
+  /// Flush any remaining data and commit the upload.
+  StatusOr<HttpResponse> FlushFinal();
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 

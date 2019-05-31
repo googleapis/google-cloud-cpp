@@ -575,7 +575,7 @@ std::string UploadChunkRequest::RangeHeader() const {
   } else {
     os << range_begin() << "-" << range_begin() + payload().size() - 1;
   }
-  if (source_size() == 0) {
+  if (!last_chunk_) {
     os << "/*";
   } else {
     os << "/" << source_size();

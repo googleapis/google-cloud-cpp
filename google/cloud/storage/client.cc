@@ -135,16 +135,11 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
        << "): cannot open upload file source";
     return Status(StatusCode::kNotFound, std::move(os).str());
   }
-  // This function only works for regular files, and the `storage::Client`
-  // class checks before calling it.
-  std::uint64_t source_size = google::cloud::internal::file_size(file_name);
-
-  return UploadStreamResumable(source, source_size, request);
+  return UploadStreamResumable(source, request);
 }
 
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
-    std::istream& source, std::uint64_t source_size,
-    internal::ResumableUploadRequest const& request) {
+    std::istream& source, internal::ResumableUploadRequest const& request) {
   StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
       raw_client()->CreateResumableSession(request);
   if (!session_status) {
@@ -166,13 +161,16 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     std::string buffer(chunk_size, '\0');
     source.read(&buffer[0], buffer.size());
     auto gcount = static_cast<std::size_t>(source.gcount());
-    if (gcount < buffer.size()) {
-      source_size = session->next_expected_byte() + gcount;
-    }
+    bool final_chunk = (gcount < buffer.size());
+    auto source_size = session->next_expected_byte() + gcount;
     buffer.resize(gcount);
 
     auto expected = session->next_expected_byte() + gcount - 1;
-    upload_response = session->UploadChunk(buffer, source_size);
+    if (!final_chunk) {
+      upload_response = session->UploadChunk(buffer);
+    } else {
+      upload_response = session->UploadFinalChunk(buffer, source_size);
+    }
     if (!upload_response) {
       return std::move(upload_response).status();
     }

@@ -33,6 +33,31 @@ using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 
+/// @test Verify that uploading an empty stream creates a single chunk.
+TEST(CurlResumableStreambufTest, EmptyStream) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+
+  int count = 0;
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+        ++count;
+        EXPECT_EQ(1, count);
+        EXPECT_TRUE(p.empty());
+        EXPECT_EQ(0U, s);
+        return make_status_or(ResumableUploadResponse{"{}", 0});
+      }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
+
+  CurlResumableStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+  auto response = streambuf.Close();
+  EXPECT_STATUS_OK(response);
+}
+
 /// @test Verify that uploading a small stream creates a single chunk.
 TEST(CurlResumableStreambufTest, SmallStream) {
   auto mock = google::cloud::internal::make_unique<
@@ -42,7 +67,7 @@ TEST(CurlResumableStreambufTest, SmallStream) {
   std::string const payload = "small test payload";
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadChunk(_, _))
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(1, count);
@@ -73,15 +98,14 @@ TEST(CurlResumableStreambufTest, EmptyTrailer) {
   std::string const payload(quantum, '*');
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
-        ++count;
-        EXPECT_EQ(1, count);
-        EXPECT_EQ(payload, p);
-        EXPECT_EQ(0, s);
-        auto last_committed_byte = payload.size() - 1;
-        return make_status_or(ResumableUploadResponse{"", last_committed_byte});
-      }))
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    EXPECT_EQ(payload, p);
+    auto last_committed_byte = payload.size() - 1;
+    return make_status_or(ResumableUploadResponse{"", last_committed_byte});
+  }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -112,15 +136,14 @@ TEST(CurlResumableStreambufTest, FlushAfterLargePayload) {
   std::string const payload_2("trailer");
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
-        ++count;
-        EXPECT_EQ(1, count);
-        EXPECT_EQ(payload_1, p);
-        EXPECT_EQ(0, s);
-        auto last_commited_byte = p.size() - 1;
-        return make_status_or(ResumableUploadResponse{"", last_commited_byte});
-      }))
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    EXPECT_EQ(payload_1, p);
+    auto last_commited_byte = p.size() - 1;
+    return make_status_or(ResumableUploadResponse{"", last_commited_byte});
+  }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -152,16 +175,14 @@ TEST(CurlResumableStreambufTest, FlushAfterFullQuantum) {
   std::string const payload_2(quantum, '*');
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
-        ++count;
-        EXPECT_EQ(1, count);
-        auto expected =
-            payload_1 + payload_2.substr(0, quantum - payload_1.size());
-        EXPECT_EQ(expected, p);
-        EXPECT_EQ(0, s);
-        return make_status_or(ResumableUploadResponse{"", quantum - 1});
-      }))
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
+    EXPECT_EQ(expected, p);
+    return make_status_or(ResumableUploadResponse{"", quantum - 1});
+  }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -193,15 +214,14 @@ TEST(CurlResumableStreambufTest, OverflowFlushAtFullQuantum) {
   std::string const payload(quantum, '*');
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
-        ++count;
-        EXPECT_EQ(1, count);
-        auto expected = payload;
-        EXPECT_EQ(expected, p);
-        EXPECT_EQ(0, s);
-        return make_status_or(ResumableUploadResponse{"", quantum - 1});
-      }))
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    auto expected = payload;
+    EXPECT_EQ(expected, p);
+    return make_status_or(ResumableUploadResponse{"", quantum - 1});
+  }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);
@@ -235,16 +255,14 @@ TEST(CurlResumableStreambufTest, MixPutcPutn) {
   std::string const payload_2(quantum, '*');
 
   int count = 0;
-  EXPECT_CALL(*mock, UploadChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
-        ++count;
-        EXPECT_EQ(1, count);
-        auto expected =
-            payload_1 + payload_2.substr(0, quantum - payload_1.size());
-        EXPECT_EQ(expected, p);
-        EXPECT_EQ(0, s);
-        return make_status_or(ResumableUploadResponse{"", quantum - 1});
-      }))
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    ++count;
+    EXPECT_EQ(1, count);
+    auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
+    EXPECT_EQ(expected, p);
+    return make_status_or(ResumableUploadResponse{"", quantum - 1});
+  }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
         ++count;
         EXPECT_EQ(2, count);

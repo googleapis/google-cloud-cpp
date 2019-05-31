@@ -68,12 +68,12 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         return make_status_or(ResumableUploadResponse{"", 2 * size - 1, ""});
       }));
 
-  auto upload = session.UploadChunk(payload, 0U);
+  auto upload = session.UploadChunk(payload);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(size - 1, upload->last_committed_byte);
   EXPECT_EQ(size, session.next_expected_byte());
 
-  upload = session.UploadChunk(payload, 2 * size);
+  upload = session.UploadFinalChunk(payload, 2 * size);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size - 1, upload->last_committed_byte);
   EXPECT_EQ(2 * size, session.next_expected_byte());
@@ -103,9 +103,9 @@ TEST(CurlResumableUploadSessionTest, Reset) {
         return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, ""});
       }));
 
-  auto upload = session.UploadChunk(payload, 0U);
+  auto upload = session.UploadChunk(payload);
   EXPECT_EQ(size, session.next_expected_byte());
-  upload = session.UploadChunk(payload, 0U);
+  upload = session.UploadChunk(payload);
   EXPECT_FALSE(upload.ok());
   EXPECT_EQ(size, session.next_expected_byte());
   EXPECT_EQ(url1, session.session_id());
@@ -133,9 +133,9 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
         return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, ""});
       }));
 
-  auto upload = session.UploadChunk(payload, 0U);
+  auto upload = session.UploadChunk(payload);
   EXPECT_EQ(size, session.next_expected_byte());
-  upload = session.UploadChunk(payload, 0U);
+  upload = session.UploadChunk(payload);
   EXPECT_STATUS_OK(upload);
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_EQ(url2, session.session_id());

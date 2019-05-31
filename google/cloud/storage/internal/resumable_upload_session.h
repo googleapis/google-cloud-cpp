@@ -40,6 +40,17 @@ class ResumableUploadSession {
    * @return The result of uploading the chunk.
    */
   virtual StatusOr<ResumableUploadResponse> UploadChunk(
+      std::string const& buffer) = 0;
+
+  /**
+   * Uploads a chunk and returns the resulting response.
+   *
+   * @param buffer the chunk to upload
+   * @param upload_size the total size of the upload, use `0` if the size is not
+   *   known.
+   * @return The result of uploading the chunk.
+   */
+  virtual StatusOr<ResumableUploadResponse> UploadFinalChunk(
       std::string const& buffer, std::uint64_t upload_size) = 0;
 
   /// Resets the session by querying its current state.

@@ -34,6 +34,9 @@ class CurlResumableUploadSession : public ResumableUploadSession {
       : client_(std::move(client)), session_id_(std::move(session_id)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
+      std::string const& buffer) override;
+
+  StatusOr<ResumableUploadResponse> UploadFinalChunk(
       std::string const& buffer, std::uint64_t upload_size) override;
 
   StatusOr<ResumableUploadResponse> ResetSession() override;
