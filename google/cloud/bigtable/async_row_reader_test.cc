@@ -88,6 +88,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     return *readers_.back();
   }
 
+  // Start Table::AsyncReadRows.
   void ReadRows(int row_limit = RowReader::NO_ROWS_LIMIT) {
     table_.AsyncReadRows(cq_,
                          [this](Row row) {
@@ -105,6 +106,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
                          RowSet(), row_limit, Filter::PassAllFilter());
   }
 
+  /// Expect a row whose row key is equal to this function's argument.
   void ExpectRow(std::string const& row) {
     row_promises_.emplace(promise<std::string>());
     row_futures_.emplace_back(row_promises_.back().get_future());
@@ -113,6 +115,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     expected_rows_.push(row);
   }
 
+  /// A wrapper around ExpectRow to expect many rows.
   void ExpectRows(std::vector<std::string> const& rows) {
     for (auto const& row : rows) {
       ExpectRow(row);
@@ -123,17 +126,24 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   bigtable::CompletionQueue cq_;
   std::vector<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>*>
       readers_;
-  // Whether `Start()` was called on a reader at the respective index.
+  // Whether `Start()` was called on i-th retry attempt.
   std::vector<bool> reader_started_;
   std::queue<promise<std::string>> row_promises_;
+  /**
+   * Future at idx i corresponse to i-th expected row. It will be satisfied
+   * when the relevant `on_row` callback of AsyncReadRows is called.
+   */
   std::vector<future<std::string>> row_futures_;
   std::queue<std::string> expected_rows_;
   promise<Status> stream_status_promise_;
+  /// Future which will be satisfied with the status passed in on_finished.
   future<Status> stream_status_future_;
+  /// I-th promise corresponds to the future returned from the ith on_row cb.
   std::vector<promise<bool>> promises_from_user_cb_;
   std::queue<future<bool>> futures_from_user_cb_;
 };
 
+/// @test Verify that successfully reading a sinle row works.
 TEST_F(TableAsyncReadRowsTest, SingleRow) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -184,6 +194,7 @@ TEST_F(TableAsyncReadRowsTest, SingleRow) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Like SingleRow, but the future returned from the cb is satisfied.
 TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -231,6 +242,7 @@ TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Verify that reading 2 rows delivered in 2 responses works.
 TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -299,6 +311,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Like MultipleChunks but the future returned from on_row is satisfied.
 TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -364,6 +377,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Verify that a single row can span mutiple responses.
 TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -423,6 +437,7 @@ TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Verify that parser fails if the stream finishes prematurely.
 TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -462,6 +477,7 @@ TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
   ASSERT_FALSE(stream_status_future_.get().ok());
 }
 
+/// @test Check that we ignore HandleEndOfStream errors if enough rows were read
 TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -516,6 +532,7 @@ TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+/// @test Verify that permanent errors are not retried and properly passed.
 TEST_F(TableAsyncReadRowsTest, PermanentFailure) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -540,6 +557,7 @@ TEST_F(TableAsyncReadRowsTest, PermanentFailure) {
   ASSERT_EQ(StatusCode::kPermissionDenied, stream_status.code());
 }
 
+/// @test Verify that transient errors are retried.
 TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
   auto& stream2 = AddReader([](btproto::ReadRowsRequest const& req) {
     // Verify that we're not asking for the same rows again.
@@ -551,6 +569,7 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
   });
   auto& stream1 = AddReader([](btproto::ReadRowsRequest const& req) {});
 
+  // Make it a bit trickier by delivering the error while parsing second row.
   EXPECT_CALL(stream1, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
         *r = bigtable::testing::ReadRowsResponseFromString(
@@ -634,7 +653,8 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
-TEST_F(TableAsyncReadRowsTest, PerserFailure) {
+/// @test Verify proper handling of bogus responses from the service.
+TEST_F(TableAsyncReadRowsTest, ParserFailure) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
   EXPECT_CALL(stream, Read(_, _))
@@ -695,6 +715,7 @@ enum class CancelMode {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 };
 
+/// @test Verify canceling the stream by satisfying the futures with false
 class TableAsyncReadRowsCancelMidStreamTest
     : public TableAsyncReadRowsTest,
       public WithParamInterface<CancelMode> {};
@@ -802,6 +823,7 @@ INSTANTIATE_TEST_CASE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
                         Values(CancelMode::FALSE_VALUE));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
+/// @test Like CancelMidStream but after the underlying stream has finished.
 TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 
@@ -875,6 +897,7 @@ TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
   ASSERT_EQ(StatusCode::kCancelled, stream_status.code());
 }
 
+/// @test Verify that the recursion described in TryGiveRowToUser is bounded.
 TEST_F(TableAsyncReadRowsTest, DeepStack) {
   auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
 

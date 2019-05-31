@@ -43,8 +43,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  *
  */
 template <typename RowFunctor, typename FinishFunctor>
-class AsyncRowReader {
+class AsyncRowReader : public std::enable_shared_from_this<
+                           AsyncRowReader<RowFunctor, FinishFunctor>> {
  public:
+  // Special value to be used as rows_limit indicating no limit.
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
   // Callbacks keep pointers to these objects.
   AsyncRowReader(AsyncRowReader&&) = delete;
@@ -52,27 +54,16 @@ class AsyncRowReader {
 
  private:
   static_assert(google::cloud::internal::is_invocable<RowFunctor, Row>::value,
-                "RowFunctor has to invocable with Row.");
+                "RowFunctor must be invocable with Row.");
   static_assert(
       google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
-      "RowFunctor has to invocable with Status.");
+      "RowFunctor must be invocable with Status.");
   static_assert(
       std::is_same<google::cloud::internal::invoke_result_t<RowFunctor, Row>,
                    future<bool>>::value,
       "RowFunctor should return a future<bool>.");
 
-  /**
-   * These objects delete themselves once they're not needed anymore.
-   *
-   * The reason for that is the life cycle bound to internal state. Normally,
-   * one expresses the lifetime as "as long as the user or lower layers hold a
-   * reference". This doesn't work in this case because the object might be in a
-   * state when neither the user nor the lower layers hold a reference to it
-   * (when we're waiting for the user to ask for more data).
-   */
-  ~AsyncRowReader() = default;
-
-  static AsyncRowReader* Create(
+  static std::shared_ptr<AsyncRowReader> Create(
       CompletionQueue cq, std::shared_ptr<DataClient> client,
       bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
       RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
@@ -81,12 +72,12 @@ class AsyncRowReader {
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory) {
-    AsyncRowReader* res = new AsyncRowReader(
+    std::shared_ptr<AsyncRowReader> res(new AsyncRowReader(
         std::move(cq), std::move(client), std::move(app_profile_id),
         std::move(table_name), std::move(on_row), std::move(on_finish),
         std::move(row_set), rows_limit, std::move(filter),
         std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
-        std::move(metadata_update_policy), std::move(parser_factory));
+        std::move(metadata_update_policy), std::move(parser_factory)));
     res->MakeRequest();
     return res;
   }
@@ -113,11 +104,11 @@ class AsyncRowReader {
         rpc_backoff_policy_(std::move(rpc_backoff_policy)),
         metadata_update_policy_(std::move(metadata_update_policy)),
         parser_factory_(std::move(parser_factory)),
-        rows_count_(0) {}
+        rows_count_(0),
+        whole_op_finished_() {}
 
   void MakeRequest() {
-    std::unique_lock<std::mutex> lk(mu_);
-    stream_res_override_ = Status();
+    status_ = Status();
     google::bigtable::v2::ReadRowsRequest request;
 
     request.set_app_profile_id(app_profile_id_.get());
@@ -139,6 +130,7 @@ class AsyncRowReader {
     metadata_update_policy_.Setup(*context);
 
     auto client = client_;
+    auto self = this->shared_from_this();
     cq_.MakeStreamingReadRpc(
         [client](grpc::ClientContext* context,
                  google::bigtable::v2::ReadRowsRequest const& request,
@@ -146,29 +138,25 @@ class AsyncRowReader {
           return client->PrepareAsyncReadRows(context, request, cq);
         },
         request, std::move(context),
-        [this](google::bigtable::v2::ReadRowsResponse r) {
-          return OnDataReceived(std::move(r));
+        [self](google::bigtable::v2::ReadRowsResponse r) {
+          return self->OnDataReceived(std::move(r));
         },
-        [this](Status s) { OnStreamFinished(std::move(s)); });
+        [self](Status s) { self->OnStreamFinished(std::move(s)); });
   }
 
   /**
    * Called when the user asks for more rows via satisfying the future returned
    * from the row callback.
    */
-  void UserWantsRows() {
-    std::unique_lock<std::mutex> lk(mu_);
-    TryGiveRowToUser(lk);
-  }
+  void UserWantsRows() { TryGiveRowToUser(); }
+
   /**
    * Attempt to call a user callback.
    *
    * If no rows are ready, this will not call the callback immediately and
    * instead ask lower layers for more data.
-   *
-   * It unlocks the lock.
    */
-  void TryGiveRowToUser(std::unique_lock<std::mutex>& lk) {
+  void TryGiveRowToUser() {
     // The user is likely to ask for more rows immediately after receiving a
     // row, which means that this function will be called recursively. The depth
     // of the recursion can be as deep as the size of ready_rows_, which might
@@ -192,16 +180,13 @@ class AsyncRowReader {
     if (ready_rows_.empty()) {
       if (whole_op_finished_) {
         // The scan is finished for good, there will be no more rows.
-        lk.unlock();
-        on_finish_(*whole_op_finished_);
-        delete this;
+        on_finish_(status_);
         return;
       }
-      assert(continue_reading_);
+      // assert(continue_reading_);
       // No rows, but we can fetch some.
       auto continue_reading = std::move(continue_reading_);
       continue_reading_.reset();
-      lk.unlock();
       continue_reading->set_value(true);
       return;
     }
@@ -210,64 +195,65 @@ class AsyncRowReader {
     auto row = std::move(ready_rows_.front());
     ready_rows_.pop();
 
-    lk.unlock();
-
+    auto self = this->shared_from_this();
     bool const break_recursion = recursion_level >= 100;
-    on_row_(std::move(row)).then([this, break_recursion](future<bool> fut) {
+    on_row_(std::move(row)).then([self, break_recursion](future<bool> fut) {
       bool should_cancel;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       try {
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
         should_cancel = !fut.get();
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       } catch (std::exception& ex) {
-        Cancel(std::string("future<> returned from the user callback threw an "
-                           "exception: ") +
-               ex.what());
+        self->Cancel(
+            std::string("future<> returned from the user callback threw an "
+                        "exception: ") +
+            ex.what());
         return;
       } catch (...) {
-        Cancel(
+        self->Cancel(
             "future<> returned from the user callback threw an unknown "
             "exception");
         return;
       }
+#else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+      should_cancel = !fut.get();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       if (should_cancel) {
-        Cancel("User cancelled");
+        self->Cancel("User cancelled");
         return;
       }
       if (break_recursion) {
-        cq_.RunAsync([this](CompletionQueue&) { UserWantsRows(); });
+        self->cq_.RunAsync([self](CompletionQueue&) { self->UserWantsRows(); });
         return;
       }
-      UserWantsRows();
+      self->UserWantsRows();
     });
   }
+
   /// Called when lower layers provide us with a response chunk.
   future<bool> OnDataReceived(google::bigtable::v2::ReadRowsResponse response) {
-    std::unique_lock<std::mutex> lk(mu_);
-    assert(!whole_op_finished_);
-    assert(!continue_reading_);
-    stream_res_override_ = ConsumeResponse(std::move(response));
+    // assert(!whole_op_finished_);
+    // assert(!continue_reading_);
+    // assert(status_.ok());
+    status_ = ConsumeResponse(std::move(response));
     // We've processed the response.
     //
     // If there were errors (e.g. malformed response from the server), we should
     // interrupt this stream. Interrupting it will yield lower layers calling
     // `OnStreamFinished` with a status unrelated to the real reason, so we
-    // store the actual reason in stream_res_override_ and proceed exactly the
+    // store the actual reason in status_ and proceed exactly the
     // same way as if the stream was broken for other reasons.
     //
-    // Even if stream_res_override_ is not OK, we might have consumed some rows,
+    // Even if status_ is not OK, we might have consumed some rows,
     // but, don't give them to the user yet. We want to keep the invariant that
     // either the user doesn't hold a `future<>` when we're fetching more rows.
     // Retries (successful or not) will do it. Improving this behavior makes
     // little sense because parser errors are very unexpected and probably not
     // retriable anyway.
 
-    if (stream_res_override_.ok()) {
+    if (status_.ok()) {
       continue_reading_.emplace(promise<bool>());
       auto res = continue_reading_->get_future();
-      TryGiveRowToUser(lk);  // unlocks the lock
+      TryGiveRowToUser();
       return res;
     }
     return make_ready_future<bool>(false);
@@ -275,15 +261,15 @@ class AsyncRowReader {
 
   /// Called when the whole stream finishes.
   void OnStreamFinished(Status status) {
-    std::unique_lock<std::mutex> lk(mu_);
-    if (!stream_res_override_.ok()) {
-      status = stream_res_override_;
+    // assert(!continue_reading_);
+    if (status_.ok()) {
+      status_ = std::move(status);
     }
     grpc::Status parser_status;
     parser_->HandleEndOfStream(parser_status);
-    if (!parser_status.ok() && status.ok()) {
+    if (!parser_status.ok() && status_.ok()) {
       // If there stream finished with an error ignore what the parser says.
-      status = internal::MakeStatusFromRpcError(parser_status);
+      status_ = internal::MakeStatusFromRpcError(parser_status);
     }
 
     // In the unlikely case when we have already reached the requested
@@ -291,7 +277,7 @@ class AsyncRowReader {
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
-      status = Status();
+      status_ = Status();
     }
 
     if (!last_read_row_key_.empty()) {
@@ -303,28 +289,31 @@ class AsyncRowReader {
     // If we receive an error, but the retriable set is empty, consider it a
     // success.
     if (row_set_.IsEmpty()) {
-      status = Status();
+      status_ = Status();
     }
 
-    if (status.ok()) {
+    if (status_.ok()) {
       // We've successfully finished the scan.
-      FinishScan(Status(), lk);  // unlocks the lock
+      whole_op_finished_ = true;
+      TryGiveRowToUser();
       return;
     }
 
-    if (!rpc_retry_policy_->OnFailure(status)) {
+    if (!rpc_retry_policy_->OnFailure(status_)) {
       // Can't retry.
-      FinishScan(status, lk);  // unlocks the lock
+      whole_op_finished_ = true;
+      TryGiveRowToUser();
       return;
     }
-    cq_.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status))
-        .then([this](future<std::chrono::system_clock::time_point>) {
-          MakeRequest();
+    auto self = this->shared_from_this();
+    cq_.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status_))
+        .then([self](future<std::chrono::system_clock::time_point>) {
+          self->MakeRequest();
         });
   }
+
   /// User satisfied the future returned from the row callback with false.
   void Cancel(std::string const& reason) {
-    std::unique_lock<std::mutex> lk(mu_);
     ready_rows_ = std::queue<Row>();
     auto continue_reading = std::move(continue_reading_);
     continue_reading_.reset();
@@ -332,25 +321,16 @@ class AsyncRowReader {
     if (!continue_reading) {
       // If we're not in the middle of the stream fire some user callbacks, but
       // also override the overall status.
-      assert(whole_op_finished_);
-      *whole_op_finished_ = std::move(status);
-      TryGiveRowToUser(lk);
+      // assert(whole_op_finished_);
+      status_ = std::move(status);
+      TryGiveRowToUser();
       return;
     }
-    lk.unlock();
     // If we are in the middle of the stream, cancel the stream.
-    stream_res_override_ = std::move(status);
+    status_ = std::move(status);
     continue_reading->set_value(false);
   }
-  /**
-   * Enter a terminal state of the whole scan. No more attempts to read more
-   * data will be made.
-   */
-  void FinishScan(Status status, std::unique_lock<std::mutex>& lk) {
-    whole_op_finished_ = status;
-    assert(!continue_reading_);
-    TryGiveRowToUser(lk);
-  }
+
   /// Process everything that is accumulated in the parser.
   Status DrainParser() {
     grpc::Status status;
@@ -365,6 +345,7 @@ class AsyncRowReader {
     }
     return Status();
   }
+
   /// Parse the data from the response.
   Status ConsumeResponse(google::bigtable::v2::ReadRowsResponse response) {
     for (auto& chunk : *response.mutable_chunks()) {
@@ -414,21 +395,16 @@ class AsyncRowReader {
    * satisfied before they start fetching more data.
    */
   optional<promise<bool>> continue_reading_;
-  bool user_wants_more_rows_;
   /// The final status of the operation.
-  optional<Status> whole_op_finished_;
+  bool whole_op_finished_;
   /**
-   * Override for overall stream status.
+   * The status of the last retry attempt_.
    *
-   * If an error occurs while parsing the incoming chunks, we should stop and
-   * potentially retry. However, if we instruct the lower layers to prematurely
-   * finish the stream, the stream status will not reflect what the reason for
-   * finishing it was. In order to workaround it, we store the actual reason in
-   * this member. If it is not OK, the logic deciding whether to retry, should
-   * consider this status, rather than what the lower layers return as the
-   * stream status.
+   * It is reset to OK at the beginning of every retry. If an error is
+   * encountered (be it while parsing the response or on stream finish), it is
+   * stored here (unless a different error had already been stored).
    */
-  Status stream_res_override_;
+  Status status_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS
