@@ -46,7 +46,7 @@ template <typename RowFunctor, typename FinishFunctor>
 class AsyncRowReader : public std::enable_shared_from_this<
                            AsyncRowReader<RowFunctor, FinishFunctor>> {
  public:
-  // Special value to be used as rows_limit indicating no limit.
+  /// Special value to be used as rows_limit indicating no limit.
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
   // Callbacks keep pointers to these objects.
   AsyncRowReader(AsyncRowReader&&) = delete;
