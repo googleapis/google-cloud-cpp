@@ -34,6 +34,7 @@ var searchData=
   ['listobjectsreader',['ListObjectsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a2bdfb31b677518fbbe2952008086c236',1,'google::cloud::storage::v1']]],
   ['loadcredsfrompath',['LoadCredsFromPath',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#ab5659b42793b27fcc7f3e2a82c3f73cf',1,'google::cloud::storage::v1::oauth2']]],
   ['location',['location',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#ad38349a77eb4cfdd40bc42fbd6f20f42',1,'google::cloud::storage::v1::BucketMetadata']]],
+  ['location_5ftype',['location_type',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#aa739ac205890c0aa8ae355f4fb2abdd5',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['lockbucketretentionpolicy',['LockBucketRetentionPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a9a03bd2204141b3ac8780c077720d734',1,'google::cloud::storage::v1::Client']]],
   ['locked_5ftime',['locked_time',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketPolicyOnly.html#ad9dd97cd8a7b08bbfde9d54fa04e1c08',1,'google::cloud::storage::v1::BucketPolicyOnly']]],
   ['log',['Log',['../../common/classgoogle_1_1cloud_1_1v0_1_1LogSink.html#a048aefabcaf25c79f4297b85afbd09e0',1,'google::cloud::v0::LogSink']]],
