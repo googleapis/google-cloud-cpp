@@ -192,10 +192,10 @@ TEST(OptionalTest, CopyAssign_Lvalue) {
   Observable::reset_counters();
   Observable original("foo");
   OptionalObservable other(original);
-  EXPECT_EQ("foo", other.value().str());
+  EXPECT_EQ("foo", original.str());
+  EXPECT_EQ("foo", other->str());
   EXPECT_EQ(0, Observable::move_constructor);
   EXPECT_EQ(1, Observable::copy_constructor);
-  EXPECT_EQ(original.str(), other->str());
 }
 
 TEST(OptionalTest, CopyAssignment_NoValue_NoValue) {
