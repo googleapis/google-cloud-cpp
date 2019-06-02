@@ -12,14 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/format_time_point.h"
-#include "google/cloud/storage/internal/parse_rfc3339.h"
+#include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 namespace {
 
@@ -87,7 +86,6 @@ TEST(FormatV4SignedUrlScopeTest, Base) {
 
 }  // namespace
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

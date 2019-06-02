@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H_
 
+#include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/internal/parse_rfc3339.h"
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/storage/version.h"
 #include <chrono>
@@ -164,7 +164,8 @@ class LifecycleRule {
 
   static LifecycleRuleCondition CreatedBefore(std::string const& timestamp) {
     LifecycleRuleCondition result;
-    result.created_before.emplace(internal::ParseRfc3339(timestamp));
+    result.created_before.emplace(
+        google::cloud::internal::ParseRfc3339(timestamp));
     return result;
   }
 

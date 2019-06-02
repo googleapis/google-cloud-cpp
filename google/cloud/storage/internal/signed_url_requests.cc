@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include <algorithm>
 #include <cctype>
@@ -155,8 +155,9 @@ std::string V4SignUrlRequest::CanonicalRequest(
 }
 
 std::string V4SignUrlRequest::StringToSign(std::string const& client_id) const {
-  return "GOOG4-RSA-SHA256\n" + FormatV4SignedUrlTimestamp(timestamp_) + "\n" +
-         Scope() + "\n" + CanonicalRequestHash(client_id);
+  return "GOOG4-RSA-SHA256\n" +
+         google::cloud::internal::FormatV4SignedUrlTimestamp(timestamp_) +
+         "\n" + Scope() + "\n" + CanonicalRequestHash(client_id);
 }
 
 std::chrono::system_clock::time_point V4SignUrlRequest::DefaultTimestamp() {
@@ -173,7 +174,8 @@ std::string V4SignUrlRequest::CanonicalRequestHash(
 }
 
 std::string V4SignUrlRequest::Scope() const {
-  return FormatV4SignedUrlScope(timestamp_) + "/auto/storage/goog4_request";
+  return google::cloud::internal::FormatV4SignedUrlScope(timestamp_) +
+         "/auto/storage/goog4_request";
 }
 
 std::multimap<std::string, std::string>
@@ -181,7 +183,8 @@ V4SignUrlRequest::CanonicalQueryParameters(std::string const& client_id) const {
   return {
       {"X-Goog-Algorithm", "GOOG4-RSA-SHA256"},
       {"X-Goog-Credential", client_id + "/" + Scope()},
-      {"X-Goog-Date", FormatV4SignedUrlTimestamp(timestamp_)},
+      {"X-Goog-Date",
+       google::cloud::internal::FormatV4SignedUrlTimestamp(timestamp_)},
       {"X-Goog-Expires", std::to_string(expires_.count())},
       {"X-Goog-SignedHeaders", SignedHeaders()},
   };

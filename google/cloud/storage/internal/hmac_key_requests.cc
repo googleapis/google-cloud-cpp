@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/hmac_key_requests.h"
-#include "google/cloud/storage/internal/parse_rfc3339.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include <iostream>
 
 namespace google {
@@ -37,10 +37,11 @@ StatusOr<HmacKeyMetadata> HmacKeyMetadataParser::FromJson(
   result.state_ = json.value("state", "");
   if (json.count("timeCreated") != 0) {
     result.time_created_ =
-        internal::ParseRfc3339(json.value("timeCreated", ""));
+        google::cloud::internal::ParseRfc3339(json.value("timeCreated", ""));
   }
   if (json.count("updated") != 0) {
-    result.updated_ = internal::ParseRfc3339(json.value("updated", ""));
+    result.updated_ =
+        google::cloud::internal::ParseRfc3339(json.value("updated", ""));
   }
   return result;
 }

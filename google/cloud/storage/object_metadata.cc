@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_metadata.h"
-#include "google/cloud/storage/internal/format_time_point.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -85,7 +85,7 @@ std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {
   }
 
   os << ", retention_expiration_time="
-     << internal::FormatRfc3339(rhs.retention_expiration_time())
+     << google::cloud::internal::FormatRfc3339(rhs.retention_expiration_time())
      << ", self_link=" << rhs.self_link() << ", size=" << rhs.size()
      << ", storage_class=" << rhs.storage_class()
      << ", temporary_hold=" << std::boolalpha << rhs.temporary_hold()

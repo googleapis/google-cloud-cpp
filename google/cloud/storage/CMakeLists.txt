@@ -125,8 +125,6 @@ add_library(storage_client
             internal/default_object_acl_requests.cc
             internal/empty_response.h
             internal/empty_response.cc
-            internal/format_time_point.h
-            internal/format_time_point.cc
             internal/generate_message_boundary.h
             internal/generic_object_request.h
             internal/generic_request.h
@@ -156,8 +154,6 @@ add_library(storage_client
             internal/object_streambuf.h
             internal/object_streambuf.cc
             internal/object_read_source.h
-            internal/parse_rfc3339.h
-            internal/parse_rfc3339.cc
             internal/patch_builder.h
             internal/policy_document_request.h
             internal/policy_document_request.cc
@@ -250,9 +246,6 @@ if (MSVC)
     # want to disable for everything. But for these files the usage is "safe".
     # This is a relatively obscure feature to add compile flags to just one
     # source:
-    set_property(SOURCE internal/parse_rfc3339.cc
-                 APPEND_STRING
-                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
     set_property(SOURCE internal/object_requests.cc
                  APPEND_STRING
                  PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
@@ -340,7 +333,6 @@ if (BUILD_TESTING)
         internal/curl_wrappers_disable_sigpipe_handler_test.cc
         internal/curl_wrappers_enable_sigpipe_handler_test.cc
         internal/default_object_acl_requests_test.cc
-        internal/format_time_point_test.cc
         internal/generate_message_boundary_test.cc
         internal/hash_validator_test.cc
         internal/hmac_key_requests_test.cc
@@ -355,7 +347,6 @@ if (BUILD_TESTING)
         internal/object_requests_test.cc
         internal/object_streambuf_test.cc
         internal/openssl_util_test.cc
-        internal/parse_rfc3339_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/retry_client_test.cc

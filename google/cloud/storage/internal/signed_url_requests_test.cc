@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
-#include "google/cloud/storage/internal/format_time_point.h"
-#include "google/cloud/storage/internal/parse_rfc3339.h"
+#include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -33,7 +33,8 @@ TEST(V2SignedUrlRequests, Sign) {
   EXPECT_EQ("test-object", request.object_name());
 
   request.set_multiple_options(
-      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
+      ExpirationTime(
+          google::cloud::internal::ParseRfc3339("2018-12-03T12:00:00Z")),
       MD5HashValue("rmYdCNHKFXam78uCt7xQLw=="), ContentType("text/plain"),
       AddExtensionHeader("x-goog-meta-foo", "bar"),
       AddExtensionHeader("x-goog-meta-foo", "baz"),
@@ -66,7 +67,8 @@ TEST(V2SignedUrlRequests, SigningAccount) {
   EXPECT_FALSE(request.signing_account_delegates().has_value());
 
   request.set_multiple_options(
-      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
+      ExpirationTime(
+          google::cloud::internal::ParseRfc3339("2018-12-03T12:00:00Z")),
       MD5HashValue("rmYdCNHKFXam78uCt7xQLw=="), ContentType("text/plain"),
       AddExtensionHeader("x-goog-meta-foo", "bar"),
       AddExtensionHeader("x-goog-meta-foo", "baz"),
@@ -90,7 +92,8 @@ TEST(V2SignedUrlRequests, SignEscaped) {
   EXPECT_EQ("test- -?-+-/-:-&-object", request.object_name());
 
   request.set_multiple_options(
-      ExpirationTime(ParseRfc3339("2018-12-03T12:00:00Z")),
+      ExpirationTime(
+          google::cloud::internal::ParseRfc3339("2018-12-03T12:00:00Z")),
       WithMarker("foo+bar"));
 
   // Used this command to get the date in seconds:
@@ -115,7 +118,8 @@ TEST(V2SignedUrlRequests, SubResource) {
   EXPECT_EQ("test-object", request.object_name());
 
   request.set_multiple_options(
-      WithAcl(), ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")));
+      WithAcl(), ExpirationTime(google::cloud::internal::ParseRfc3339(
+                     "2019-02-26T13:14:15Z")));
 
   EXPECT_EQ("acl", request.sub_resource());
 
@@ -143,7 +147,8 @@ TEST(V2SignedUrlRequests, SubResourceMultiple) {
 
   request.set_multiple_options(
       WithAcl(), WithBilling(),
-      ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")));
+      ExpirationTime(
+          google::cloud::internal::ParseRfc3339("2019-02-26T13:14:15Z")));
 
   EXPECT_EQ("billing", request.sub_resource());
 
@@ -166,7 +171,9 @@ TEST(V2SignedUrlRequests, RepeatedHeader) {
   EXPECT_EQ("test-object", request.object_name());
 
   request.set_multiple_options(
-      WithTagging(), ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")),
+      WithTagging(),
+      ExpirationTime(
+          google::cloud::internal::ParseRfc3339("2019-02-26T13:14:15Z")),
       AddExtensionHeader("X-Goog-Meta-Reviewer", "test-meta-1"),
       AddExtensionHeader("x-goog-meta-reviewer", "not-encoded- -?-+-/-:-&-"));
 
@@ -192,7 +199,8 @@ TEST(V2SignedUrlRequests, EncodeQueryParameter) {
   EXPECT_EQ("test-object.txt", request.object_name());
 
   request.set_multiple_options(
-      ExpirationTime(ParseRfc3339("2019-02-26T13:14:15Z")),
+      ExpirationTime(
+          google::cloud::internal::ParseRfc3339("2019-02-26T13:14:15Z")),
       WithResponseContentType("text/html"));
 
   EXPECT_EQ("", request.sub_resource());
@@ -220,7 +228,8 @@ TEST(V4SignUrlRequest, SigningAccount) {
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
   request.set_multiple_options(
-      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for),
       SigningAccount("another-account@example.com"),
       SigningAccountDelegates({"test-delegate1", "test-delegate2"}));
   ASSERT_TRUE(request.signing_account().has_value());
@@ -234,8 +243,9 @@ TEST(V4SignedUrlRequests, CanonicalQueryStringBasic) {
   V4SignUrlRequest request("GET", "test-bucket", "test-object");
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
-  request.set_multiple_options(SignedUrlTimestamp(ParseRfc3339(date)),
-                               SignedUrlDuration(valid_for));
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for));
 
   std::string expected =
       "X-Goog-Algorithm=GOOG4-RSA-SHA256"
@@ -252,7 +262,8 @@ TEST(V4SignedUrlRequests, CanonicalQueryStringSingleHeader) {
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
   request.set_multiple_options(
-      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for),
       AddExtensionHeader("host", "storage.googleapis.com"));
 
   std::string expected =
@@ -270,8 +281,8 @@ TEST(V4SignedUrlRequests, CanonicalQueryStringMultiHeader) {
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
   request.set_multiple_options(
-      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
-      WithUserProject("test-project"),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for), WithUserProject("test-project"),
       AddExtensionHeader("host", "storage.googleapis.com"), WithGeneration(7),
       AddExtensionHeader("Content-Type", "application/octet-stream"));
 
@@ -289,15 +300,17 @@ TEST(V4SignedUrlRequests, CanonicalRequestBasic) {
   V4SignUrlRequest request("GET", "test-bucket", "test-object");
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
-  request.set_multiple_options(SignedUrlTimestamp(ParseRfc3339(date)),
-                               SignedUrlDuration(valid_for));
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for));
 
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
   EXPECT_EQ("", request.sub_resource());
-  EXPECT_EQ("20190201T090000Z",
-            FormatV4SignedUrlTimestamp(request.timestamp()));
+  EXPECT_EQ(
+      "20190201T090000Z",
+      google::cloud::internal::FormatV4SignedUrlTimestamp(request.timestamp()));
   EXPECT_EQ(valid_for, request.expires());
 
   std::string expected_canonical_request = R"""(GET
@@ -330,8 +343,9 @@ TEST(V4SignedUrlRequests, CanonicalRequestFull) {
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
   request.set_multiple_options(
-      SignedUrlTimestamp(ParseRfc3339(date)), SignedUrlDuration(valid_for),
-      WithUserProject("test-project"), WithGeneration(7),
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for), WithUserProject("test-project"),
+      WithGeneration(7),
       AddExtensionHeader("Content-Type", "application/octet-stream"),
       AddExtensionHeader("Cache-Control", "    no-cache,    max-age=3600   "),
       WithAcl());
@@ -340,8 +354,9 @@ TEST(V4SignedUrlRequests, CanonicalRequestFull) {
   EXPECT_EQ("test-bucket", request.bucket_name());
   EXPECT_EQ("test-object", request.object_name());
   EXPECT_EQ("acl", request.sub_resource());
-  EXPECT_EQ("20190201T090000Z",
-            FormatV4SignedUrlTimestamp(request.timestamp()));
+  EXPECT_EQ(
+      "20190201T090000Z",
+      google::cloud::internal::FormatV4SignedUrlTimestamp(request.timestamp()));
   EXPECT_EQ(valid_for, request.expires());
 
   std::string expected_canonical_request = R"""(GET

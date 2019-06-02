@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include <fstream>
 #include <future>
 #include <iomanip>
@@ -100,7 +100,8 @@ int main(int argc, char* argv[]) try {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
   std::cout << "# Start time: "
-            << gcs::internal::FormatRfc3339(std::chrono::system_clock::now())
+            << google::cloud::internal::FormatRfc3339(
+                   std::chrono::system_clock::now())
             << "\n# Region: " << options.region
             << "\n# Duration: " << options.duration.count() << "s"
             << "\n# File Size: " << options.file_size

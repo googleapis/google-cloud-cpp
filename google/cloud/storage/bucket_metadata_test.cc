@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/storage_class.h"
 #include <gmock/gmock.h>
@@ -188,7 +188,7 @@ TEST(BucketMetadataTest, Parse) {
   ASSERT_TRUE(actual.iam_configuration().bucket_policy_only.has_value());
   EXPECT_TRUE(actual.iam_configuration().bucket_policy_only->enabled);
   EXPECT_EQ("2020-01-02T03:04:05Z",
-            internal::FormatRfc3339(
+            google::cloud::internal::FormatRfc3339(
                 actual.iam_configuration().bucket_policy_only->locked_time));
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
@@ -242,7 +242,8 @@ TEST(BucketMetadataTest, Parse) {
   // retentionPolicy
   ASSERT_TRUE(actual.has_retention_policy());
   EXPECT_EQ("2018-10-01T12:34:56Z",
-            internal::FormatRfc3339(actual.retention_policy().effective_time));
+            google::cloud::internal::FormatRfc3339(
+                actual.retention_policy().effective_time));
   EXPECT_EQ(std::chrono::seconds(86400),
             actual.retention_policy().retention_period);
   EXPECT_FALSE(actual.retention_policy().is_locked);
@@ -598,8 +599,8 @@ TEST(BucketMetadataTest, SetIamConfiguration) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   BucketIamConfiguration new_configuration;
-  new_configuration.bucket_policy_only =
-      BucketPolicyOnly{true, internal::ParseRfc3339("2019-02-03T04:05:06Z")};
+  new_configuration.bucket_policy_only = BucketPolicyOnly{
+      true, google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z")};
   copy.set_iam_configuration(new_configuration);
   ASSERT_TRUE(copy.has_iam_configuration());
   EXPECT_EQ(new_configuration, copy.iam_configuration());
@@ -699,7 +700,7 @@ TEST(BucketMetadataTest, SetRetentionPolicy) {
   auto expected = CreateBucketMetadataForTest();
   BucketRetentionPolicy new_retention_policy{
       std::chrono::seconds(3600),
-      internal::ParseRfc3339("2019-11-01T00:00:00Z"),
+      google::cloud::internal::ParseRfc3339("2019-11-01T00:00:00Z"),
       true,
   };
   auto copy = expected;
@@ -1085,8 +1086,8 @@ TEST(BucketMetadataPatchBuilder, ResetName) {
 TEST(BucketMetadataPatchBuilder, SetRetentionPolicy) {
   BucketMetadataPatchBuilder builder;
   builder.SetRetentionPolicy(BucketRetentionPolicy{
-      std::chrono::seconds(60), internal::ParseRfc3339("2018-01-01T00:00:00Z"),
-      false});
+      std::chrono::seconds(60),
+      google::cloud::internal::ParseRfc3339("2018-01-01T00:00:00Z"), false});
 
   auto actual_patch = builder.BuildPatch();
   auto actual_json = internal::nl::json::parse(actual_patch);
