@@ -20,6 +20,7 @@ google_cloud_cpp_deps()
 
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
+# Configure @com_google_googleapis to only compile C++ and gRPC:
 switched_rules_by_language(
     name = "com_google_googleapis_imports",
     cc = True,  # C++ support is only "Partially implemented", roll our own.

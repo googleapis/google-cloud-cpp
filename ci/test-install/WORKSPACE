@@ -14,7 +14,7 @@
 
 # This WORKSPACE verifies that the google-cloud-cpp libraries can be loaded
 # into a different Bazel project.
-workspace(name="com_github_googleapis_google_cloud_cpp_test_install")
+workspace(name = "com_github_googleapis_google_cloud_cpp_test_install")
 
 # Applications should use (maybe with a different version):
 #
@@ -27,13 +27,25 @@ workspace(name="com_github_googleapis_google_cloud_cpp_test_install")
 #
 # But we want to test that the *current* version is correct.
 local_repository(
-    name="com_github_googleapis_google_cloud_cpp",
-    path="../..",
+    name = "com_github_googleapis_google_cloud_cpp",
+    path = "../..",
 )
 
 load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+
 google_cloud_cpp_deps()
+
+# Configure @com_google_googleapis to only compile C++ and gRPC:
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,  # C++ support is only "Partially implemented", roll our own.
+    grpc = True,
+)
+
 # Have to manually call the corresponding function for gRPC:
 #   https://github.com/bazelbuild/bazel/issues/1550
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
 grpc_deps()
