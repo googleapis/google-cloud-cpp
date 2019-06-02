@@ -59,6 +59,8 @@ if (NOT TARGET googleapis_project)
         "googleapis_cpp_api_http_protos"
         "googleapis_cpp_api_annotations_protos"
         "googleapis_cpp_api_auth_protos"
+        "googleapis_cpp_api_resource_protos"
+        "googleapis_cpp_type_expr_protos"
         "googleapis_cpp_iam_v1_policy_protos"
         "googleapis_cpp_iam_v1_iam_policy_protos"
         "googleapis_cpp_rpc_error_details_protos"
@@ -169,6 +171,8 @@ function (gooogleapis_project_create_all_libraries)
              api_http
              api_annotations
              api_auth
+             api_resource
+             type_expr
              rpc_status
              rpc_error_details
              longrunning_operations
@@ -194,7 +198,9 @@ function (gooogleapis_project_create_all_libraries)
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           googleapis-c++::iam_v1_policy_protos
                           googleapis-c++::api_annotations_protos
-                          googleapis-c++::api_http_protos)
+                          googleapis-c++::api_http_protos
+                          googleapis-c++::api_resource_protos
+                          googleapis-c++::type_expr_protos)
     set_property(TARGET googleapis-c++::rpc_status_protos
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
