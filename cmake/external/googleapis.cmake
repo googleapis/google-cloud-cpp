@@ -26,10 +26,10 @@ if (NOT TARGET googleapis_project)
     # downloaded from GitHub.
     set(
         GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-        "https://github.com/googleapis/googleapis/archive/6a3277c0656219174ff7c345f31fb20a90b30b97.tar.gz"
+        "https://github.com/googleapis/googleapis/archive/a8ee1416f4c588f2ab92da72e7c1f588c784d3e6.tar.gz"
         )
     set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-        "793f1fe9d3adf28900792b4151b7cb2fa4ef14ae1e14ea4e7faa2be14be7a301")
+        "6b8a9b2bcb4476e9a5a9872869996f0d639c8d5df76dd8a893e79201f211b1cf")
 
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")

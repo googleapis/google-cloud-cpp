@@ -46,7 +46,7 @@ cc_library(
     hdrs = bigtable_client_hdrs + ["version_info.h"],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_googleapis//:bigtable_protos",
+        "@com_google_googleapis//:bigtable_protos",
     ],
 )
 
@@ -60,7 +60,6 @@ cc_library(
         ":bigtable_client",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud:google_cloud_cpp_testing",
-        "@com_github_googleapis_googleapis//:bigtable_protos",
         "@com_google_googletest//:gtest",
     ],
 )
