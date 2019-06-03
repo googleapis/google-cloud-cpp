@@ -183,7 +183,13 @@ class AsyncRowReader : public std::enable_shared_from_this<
         on_finish_(status_);
         return;
       }
-      // assert(continue_reading_);
+      if (!continue_reading_) {
+        // TODO(#1402): replace with GCP_ASSERT(continue_reading_);
+        Terminate(
+            "No rows are ready and we can't continue reading. This is a bug, "
+            "please report it at "
+            "https://github.com/googleapis/google-cloud-cpp/issues/new");
+      }
       // No rows, but we can fetch some.
       auto continue_reading = std::move(continue_reading_);
       continue_reading_.reset();
