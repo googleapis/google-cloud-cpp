@@ -16,7 +16,6 @@ var searchData=
   ['bigtable_5finstance_5fadmin_5fsnippets_2ecc',['bigtable_instance_admin_snippets.cc',['../bigtable__instance__admin__snippets_8cc.html',1,'']]],
   ['bigtable_5fopencensus_2ecc',['bigtable_opencensus.cc',['../bigtable__opencensus_8cc.html',1,'']]],
   ['bigtable_5fquickstart_2ecc',['bigtable_quickstart.cc',['../bigtable__quickstart_8cc.html',1,'']]],
-  ['bigtable_5fstrong_5ftypes_2eh',['bigtable_strong_types.h',['../bigtable__strong__types_8h.html',1,'']]],
   ['bindings',['bindings',['../../common/structgoogle_1_1cloud_1_1v0_1_1IamPolicy.html#a94aea5b484c1e9f20529d33ee5de18fe',1,'google::cloud::v0::IamPolicy::bindings()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1IamBindings.html#a494c1f66c64993db2b79c92c2f601660',1,'google::cloud::v0::IamBindings::bindings()']]],
   ['blockallfilter',['BlockAllFilter',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a8d10d0cdaa286ed3887c859299d15632',1,'google::cloud::bigtable::v0::Filter']]],
   ['bulkapply',['BulkApply',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a6468a7850ecf45a3dbc633b0bffdd134',1,'google::cloud::bigtable::v0::Table']]],
