@@ -10,6 +10,10 @@ bazel-*
 # Backup files for Emacs
 *~
 
+# Ignore cmake output
+CMakeCache.txt
+CMakeFiles/
+
 # Ignore IDEA / IntelliJ files
 .idea/
 cmake-build-*/
