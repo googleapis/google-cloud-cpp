@@ -385,7 +385,7 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
                                                            Filter filter) {
   class AsyncReadRowHandler {
    public:
-    AsyncReadRowHandler() : row_("", {}), row_received_() {}
+    AsyncReadRowHandler() : row_("", {}) {}
 
     future<StatusOr<std::pair<bool, Row>>> GetFuture() {
       return row_promise_.get_future();
@@ -413,7 +413,7 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
 
    private:
     Row row_;
-    bool row_received_;
+    bool row_received_{};
     promise<StatusOr<std::pair<bool, Row>>> row_promise_;
   };
 
