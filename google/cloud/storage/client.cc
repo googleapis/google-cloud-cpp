@@ -166,10 +166,10 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     buffer.resize(gcount);
 
     auto expected = session->next_expected_byte() + gcount - 1;
-    if (!final_chunk) {
-      upload_response = session->UploadChunk(buffer);
-    } else {
+    if (final_chunk) {
       upload_response = session->UploadFinalChunk(buffer, source_size);
+    } else {
+      upload_response = session->UploadChunk(buffer);
     }
     if (!upload_response) {
       return std::move(upload_response).status();

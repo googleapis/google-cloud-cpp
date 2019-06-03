@@ -102,8 +102,8 @@ StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
   current_ios_buffer_.resize(actual_size);
   hash_validator_->Update(current_ios_buffer_);
 
-  StatusOr<ResumableUploadResponse> result;
-  result = upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
+  StatusOr<ResumableUploadResponse> result =
+      upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
   if (!result.ok()) {
     // This was an unrecoverable error, time to signal an error.
     return std::move(result).status();
@@ -116,7 +116,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
   upload_session_.reset();
 
   // If `result.ok() == false` we never get to this point, so the last response
-  // was actually successful, represent that by a HTTP 200 status code.
+  // was actually successful. Represent that by a HTTP 200 status code.
   last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
   return last_response_;
 }
@@ -137,9 +137,9 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush() {
   current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
   hash_validator_->Update(current_ios_buffer_);
 
-  StatusOr<ResumableUploadResponse> result;
-  result = upload_session_->UploadChunk(current_ios_buffer_);
-  if (!result.ok()) {
+  StatusOr<ResumableUploadResponse> result =
+      upload_session_->UploadChunk(current_ios_buffer_);
+  if (!result) {
     // This was an unrecoverable error, time to signal an error.
     return std::move(result).status();
   }
@@ -153,7 +153,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush() {
   pbump(static_cast<int>(not_sent.size()));
 
   // If `result.ok() == false` we never get to this point, so the last response
-  // was actually successful, represent that by a HTTP 200 status code.
+  // was actually successful. Represent that by a HTTP 200 status code.
   last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
   return last_response_;
 }

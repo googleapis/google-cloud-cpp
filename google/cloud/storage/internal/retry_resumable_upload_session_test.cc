@@ -266,7 +266,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
   std::cout << response.status() << "\n\n\n";
 }
 
-/// @test Verify that too many transients on ResetSession results in a failure.
+/// @test Verify that too many transients on ResetSession result in a failure.
 TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
@@ -368,7 +368,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
   EXPECT_EQ(PermanentError().code(), response.status().code());
 }
 
-/// @test Verify that too many transients on UploadFinalChuk results in a
+/// @test Verify that too many transients on UploadFinalChunk result in a
 /// failure.
 TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   auto mock = google::cloud::internal::make_unique<
