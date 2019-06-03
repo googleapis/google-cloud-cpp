@@ -12,6 +12,5 @@ var searchData=
   ['bigtable_5fhello_5fworld_2ecc',['bigtable_hello_world.cc',['../bigtable__hello__world_8cc.html',1,'']]],
   ['bigtable_5finstance_5fadmin_5fsnippets_2ecc',['bigtable_instance_admin_snippets.cc',['../bigtable__instance__admin__snippets_8cc.html',1,'']]],
   ['bigtable_5fopencensus_2ecc',['bigtable_opencensus.cc',['../bigtable__opencensus_8cc.html',1,'']]],
-  ['bigtable_5fquickstart_2ecc',['bigtable_quickstart.cc',['../bigtable__quickstart_8cc.html',1,'']]],
-  ['bigtable_5fstrong_5ftypes_2eh',['bigtable_strong_types.h',['../bigtable__strong__types_8h.html',1,'']]]
+  ['bigtable_5fquickstart_2ecc',['bigtable_quickstart.cc',['../bigtable__quickstart_8cc.html',1,'']]]
 ];
