@@ -68,16 +68,16 @@ bool IsClusterPresent(std::vector<btadmin::Cluster> const& clusters,
 }
 
 bigtable::InstanceConfig IntegrationTestConfig(
-    std::string const& id, std::string const& zone,
+    std::string const& instance_id, std::string const& zone,
     bigtable::InstanceConfig::InstanceType instance_type =
         bigtable::InstanceConfig::DEVELOPMENT,
     int32_t serve_node = 0) {
-  bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name("Integration Tests " + id);
+  // The description cannot exceed 30 characters
+  auto display_name = ("IT " + instance_id).substr(0, 30);
   auto cluster_config =
       bigtable::ClusterConfig(zone, serve_node, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(instance_id, display_name,
-                                  {{id + "-c1", cluster_config}});
+                                  {{instance_id + "-c1", cluster_config}});
   config.set_type(instance_type);
   return config;
 }
@@ -158,14 +158,10 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
-      bigtable::InstanceId(instance_id),
-      bigtable::AppProfileConfig::MultiClusterUseAny(
-          bigtable::AppProfileId(id1)));
+      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id1));
   ASSERT_STATUS_OK(profile_1);
   auto profile_2 = instance_admin_->CreateAppProfile(
-      bigtable::InstanceId(instance_id),
-      bigtable::AppProfileConfig::MultiClusterUseAny(
-          bigtable::AppProfileId(id2)));
+      instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id2));
   ASSERT_STATUS_OK(profile_2);
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
@@ -173,40 +169,35 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_EQ(1U, count_matching_profiles(id1, *current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
-  auto detail_1 = instance_admin_->GetAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1));
+  auto detail_1 = instance_admin_->GetAppProfile(instance_id, id1);
   ASSERT_STATUS_OK(detail_1);
   EXPECT_EQ(detail_1->name(), profile_1->name());
   EXPECT_THAT(detail_1->name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_1->name(), HasSubstr(id1));
 
-  auto detail_2 = instance_admin_->GetAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  auto detail_2 = instance_admin_->GetAppProfile(instance_id, id2);
   ASSERT_STATUS_OK(detail_2);
   EXPECT_EQ(detail_2->name(), profile_2->name());
   EXPECT_THAT(detail_2->name(), HasSubstr(instance_id));
   EXPECT_THAT(detail_2->name(), HasSubstr(id2));
 
   auto profile_updated_future = instance_admin_->UpdateAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2),
+      instance_id, id2,
       bigtable::AppProfileUpdateConfig().set_description("new description"));
 
   auto update_2 = profile_updated_future.get();
-  auto detail_2_after_update = instance_admin_->GetAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2));
+  auto detail_2_after_update = instance_admin_->GetAppProfile(instance_id, id2);
   ASSERT_STATUS_OK(detail_2_after_update);
   EXPECT_EQ("new description", update_2->description());
   EXPECT_EQ("new description", detail_2_after_update->description());
 
-  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id1), true));
+  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id1, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
   EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
 
-  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(
-      bigtable::InstanceId(instance_id), bigtable::AppProfileId(id2), true));
+  ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id2, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
   EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
@@ -273,33 +264,32 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 
 /// @test Verify that cluster CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
-  std::string id =
+  std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  std::string cluster_id_str = id + "-cl2";
+  std::string cluster_id_str = instance_id + "-cl2";
 
   // create instance prerequisites for cluster operations
-  bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
   // create cluster
-  auto clusters_before = instance_admin_->ListClusters(id);
+  auto clusters_before = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_before);
   ASSERT_FALSE(IsClusterPresent(clusters_before->clusters, cluster_id_str))
       << "Cluster (" << cluster_id_str << ") already exists."
       << " This is unexpected, as the cluster ids are"
       << " generated at random.";
-  bigtable::ClusterId cluster_id(cluster_id_str);
+  std::string cluster_id(cluster_id_str);
   auto cluster_config =
       bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
-  auto clusters_after = instance_admin_->ListClusters(id);
+  auto clusters_after = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_after);
   EXPECT_FALSE(IsClusterPresent(clusters_before->clusters, cluster->name()));
   EXPECT_TRUE(IsClusterPresent(clusters_after->clusters, cluster->name()));
@@ -307,9 +297,9 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   // Get cluster
   auto cluster_check = instance_admin_->GetCluster(instance_id, cluster_id);
   ASSERT_STATUS_OK(cluster_check);
-  std::string cluster_name_prefix =
-      instance_admin_->project_name() + "/instances/" + id + "/clusters/";
-  EXPECT_EQ(cluster_name_prefix + cluster_id.get(), cluster_check->name());
+  std::string cluster_name_prefix = instance_admin_->project_name() +
+                                    "/instances/" + instance_id + "/clusters/";
+  EXPECT_EQ(cluster_name_prefix + cluster_id, cluster_check->name());
 
   // Update cluster
   google::cloud::StatusOr<btadmin::Cluster> cluster_copy;
@@ -328,29 +318,27 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
   EXPECT_EQ(4, check_cluster_after_update->serve_nodes());
 
   // Delete cluster
-  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(std::move(instance_id),
-                                                  std::move(cluster_id)));
-  auto clusters_after_delete = instance_admin_->ListClusters(id);
+  ASSERT_STATUS_OK(instance_admin_->DeleteCluster(instance_id, cluster_id));
+  auto clusters_after_delete = instance_admin_->ListClusters(instance_id);
   ASSERT_STATUS_OK(clusters_after_delete);
-  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(id));
-  EXPECT_TRUE(
-      IsClusterPresent(clusters_after->clusters,
-                       instance_details->name() + "/clusters/" + id + "-cl2"));
-  EXPECT_FALSE(
-      IsClusterPresent(clusters_after_delete->clusters,
-                       instance_details->name() + "/clusters/" + id + "-cl2"));
+  ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+  EXPECT_TRUE(IsClusterPresent(
+      clusters_after->clusters,
+      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
+  EXPECT_FALSE(IsClusterPresent(
+      clusters_after_delete->clusters,
+      instance_details->name() + "/clusters/" + instance_id + "-cl2"));
 }
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
-  std::string id =
+  std::string instance_id =
       "it-" + google::cloud::internal::Sample(
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   // create instance prerequisites for cluster operations
-  bigtable::InstanceId instance_id(id);
   auto instance_config = IntegrationTestConfig(
-      id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
@@ -359,21 +347,22 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
       "roles/bigtable.reader",
       {"serviceAccount:" + std::string(flag_service_account)});
 
-  auto initial_policy = instance_admin_->SetIamPolicy(id, iam_bindings);
+  auto initial_policy =
+      instance_admin_->SetIamPolicy(instance_id, iam_bindings);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = instance_admin_->GetIamPolicy(id);
+  auto fetched_policy = instance_admin_->GetIamPolicy(instance_id);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version, fetched_policy->version);
   EXPECT_EQ(initial_policy->etag, fetched_policy->etag);
 
   auto permission_set = instance_admin_->TestIamPermissions(
-      id, {"bigtable.tables.list", "bigtable.tables.delete"});
+      instance_id, {"bigtable.tables.list", "bigtable.tables.delete"});
   ASSERT_STATUS_OK(permission_set);
 
   EXPECT_EQ(2U, permission_set->size());
-  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(id));
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
 int main(int argc, char* argv[]) {

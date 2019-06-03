@@ -67,9 +67,8 @@ TEST(MultipleRowsMutatorTest, Simple) {
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   grpc::ClientContext context;
@@ -125,9 +124,8 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId("test-id"),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("test-id", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   grpc::ClientContext context;
@@ -192,9 +190,8 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -255,9 +252,8 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -318,9 +314,8 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Invoke(r2.release()->MakeMockReturner()));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice: for the r1 and r2 cases.
@@ -397,9 +392,8 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
       }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   // This work will be in BulkApply(), but this is the test for BulkMutator in
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
@@ -460,9 +454,8 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
           }));
 
   auto policy = bt::DefaultIdempotentMutationPolicy();
-  bt::internal::BulkMutator mutator(bigtable::AppProfileId(""),
-                                    bigtable::TableId("foo/bar/baz/table"),
-                                    *policy, std::move(mut));
+  bt::internal::BulkMutator mutator("", "foo/bar/baz/table", *policy,
+                                    std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
   grpc::ClientContext context;

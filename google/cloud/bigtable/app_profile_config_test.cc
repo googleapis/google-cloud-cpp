@@ -21,8 +21,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 TEST(AppProfileConfig, MultiClusterUseAny) {
-  auto proto = AppProfileConfig::MultiClusterUseAny(AppProfileId("my-profile"))
-                   .as_proto();
+  auto proto = AppProfileConfig::MultiClusterUseAny("my-profile").as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   EXPECT_TRUE(proto.app_profile().has_multi_cluster_routing_use_any());
 
@@ -34,23 +33,23 @@ TEST(AppProfileConfig, MultiClusterUseAny) {
 }
 
 TEST(AppProfileConfig, SetIgnoreWarnings) {
-  auto proto = AppProfileConfig::MultiClusterUseAny(AppProfileId("my-profile"))
+  auto proto = AppProfileConfig::MultiClusterUseAny("my-profile")
                    .set_ignore_warnings(true)
                    .as_proto();
   EXPECT_TRUE(proto.ignore_warnings());
 }
 
 TEST(AppProfileConfig, SetDescription) {
-  auto proto = AppProfileConfig::MultiClusterUseAny(AppProfileId("my-profile"))
+  auto proto = AppProfileConfig::MultiClusterUseAny("my-profile")
                    .set_description("my description")
                    .as_proto();
   EXPECT_EQ("my description", proto.app_profile().description());
 }
 
 TEST(AppProfileConfig, SingleClusterRouting) {
-  auto proto = AppProfileConfig::SingleClusterRouting(
-                   AppProfileId("my-profile"), ClusterId("the-cluster"), false)
-                   .as_proto();
+  auto proto =
+      AppProfileConfig::SingleClusterRouting("my-profile", "the-cluster", false)
+          .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   ASSERT_TRUE(proto.app_profile().has_single_cluster_routing());
   auto& routing = proto.app_profile().single_cluster_routing();
@@ -59,9 +58,9 @@ TEST(AppProfileConfig, SingleClusterRouting) {
 }
 
 TEST(AppProfileConfig, SingleClusterRoutingWithTransactionalWrites) {
-  auto proto = AppProfileConfig::SingleClusterRouting(
-                   AppProfileId("my-profile"), ClusterId("the-cluster"), true)
-                   .as_proto();
+  auto proto =
+      AppProfileConfig::SingleClusterRouting("my-profile", "the-cluster", true)
+          .as_proto();
   EXPECT_EQ("my-profile", proto.app_profile_id());
   ASSERT_TRUE(proto.app_profile().has_single_cluster_routing());
   auto& routing = proto.app_profile().single_cluster_routing();
@@ -96,7 +95,7 @@ TEST(AppProfileUpdateConfig, SetMultiClusterUseAny) {
 
 TEST(AppProfileUpdateConfig, SetSingleClusterRouting) {
   auto proto = AppProfileUpdateConfig()
-                   .set_single_cluster_routing(bigtable::ClusterId("c1"), true)
+                   .set_single_cluster_routing("c1", true)
                    .as_proto();
   EXPECT_TRUE(proto.app_profile().has_single_cluster_routing());
   EXPECT_EQ("c1", proto.app_profile().single_cluster_routing().cluster_id());
@@ -113,7 +112,7 @@ TEST(AppProfileUpdateConfig, SetSeveral) {
                    .set_etag("e1")
                    .set_etag("abcdef")
                    .set_multi_cluster_use_any()
-                   .set_single_cluster_routing(bigtable::ClusterId("c1"), true)
+                   .set_single_cluster_routing("c1", true)
                    .as_proto();
   EXPECT_EQ("bar", proto.app_profile().description());
   EXPECT_TRUE(HasFieldNameOnce(proto.update_mask(), "description"));

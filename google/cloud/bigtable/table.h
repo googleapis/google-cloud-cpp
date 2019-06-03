@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H_
 
 #include "google/cloud/bigtable/async_row_reader.h"
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
@@ -29,9 +28,9 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/internal/disjunction.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 
@@ -164,6 +163,21 @@ inline std::string TableName(std::shared_ptr<DataClient> client,
  *     alternative idempotency policies.
  */
 class Table {
+ private:
+  // We need to eliminate some function overloads from resolution, and that
+  // requires a bit of infrastructure in the private section.
+
+  /// A meta function to check if @p P is a valid Policy type.
+  template <typename P>
+  struct valid_policy : google::cloud::internal::disjunction<
+                            std::is_base_of<RPCBackoffPolicy, P>,
+                            std::is_base_of<RPCRetryPolicy, P>,
+                            std::is_base_of<IdempotentMutationPolicy, P>> {};
+
+  /// A meta function to check if all the @p Policies are valid policy types.
+  template <typename... Policies>
+  struct valid_policies : internal::conjunction<valid_policy<Policies>...> {};
+
  public:
   /**
    * Constructor with default policies.
@@ -174,7 +188,7 @@ class Table {
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
    */
   Table(std::shared_ptr<DataClient> client, std::string const& table_id)
-      : Table(std::move(client), AppProfileId(""), table_id) {}
+      : Table(std::move(client), std::string{}, table_id) {}
 
   /**
    * Constructor with default policies.
@@ -192,11 +206,11 @@ class Table {
    * @par Example Using AppProfile
    * @snippet bigtable_hello_app_profile.cc read with app profile
    */
-  Table(std::shared_ptr<DataClient> client,
-        bigtable::AppProfileId app_profile_id, std::string const& table_id)
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id)
       : client_(std::move(client)),
         app_profile_id_(std::move(app_profile_id)),
-        table_name_(bigtable::TableId(TableName(client_, table_id))),
+        table_name_(TableName(client_, table_id)),
         table_id_(table_id),
         rpc_retry_policy_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
@@ -259,7 +273,9 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename... Policies>
+  template <typename... Policies,
+            typename std::enable_if<valid_policies<Policies...>::value,
+                                    int>::type = 0>
   Table(std::shared_ptr<DataClient> client, std::string const& table_id,
         Policies&&... policies)
       : Table(std::move(client), table_id) {
@@ -320,16 +336,17 @@ class Table {
    * @par Modified Retry Policy Example
    * @snippet data_snippets.cc apply custom retry
    */
-  template <typename... Policies>
-  Table(std::shared_ptr<DataClient> client,
-        bigtable::AppProfileId app_profile_id, std::string const& table_id,
-        Policies&&... policies)
+  template <typename... Policies,
+            typename std::enable_if<valid_policies<Policies...>::value,
+                                    int>::type = 0>
+  Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
+        std::string const& table_id, Policies&&... policies)
       : Table(std::move(client), std::move(app_profile_id), table_id) {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
 
-  std::string const& table_name() const { return table_name_.get(); }
-  std::string const& app_profile_id() const { return app_profile_id_.get(); }
+  std::string const& table_name() const { return table_name_; }
+  std::string const& app_profile_id() const { return app_profile_id_; }
   std::string const& project_id() const { return client_->project_id(); }
   std::string const& instance_id() const { return client_->instance_id(); }
   std::string const& table_id() const { return table_id_; }
@@ -778,8 +795,8 @@ class Table {
 
   friend class MutationBatcher;
   std::shared_ptr<DataClient> client_;
-  bigtable::AppProfileId app_profile_id_;
-  bigtable::TableId table_name_;
+  std::string app_profile_id_;
+  std::string table_name_;
   std::string table_id_;
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;

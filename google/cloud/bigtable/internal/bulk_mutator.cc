@@ -15,7 +15,6 @@
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/log.h"
 #include <numeric>
 
@@ -27,8 +26,8 @@ namespace internal {
 
 namespace btproto = google::bigtable::v2;
 
-BulkMutatorState::BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
-                                   bigtable::TableId const& table_name,
+BulkMutatorState::BulkMutatorState(std::string const& app_profile_id,
+                                   std::string const& table_name,
                                    IdempotentMutationPolicy& idempotent_policy,
                                    BulkMutation mut) {
   // Every time the client library calls MakeOneRequest(), the data in the
@@ -37,8 +36,8 @@ BulkMutatorState::BulkMutatorState(bigtable::AppProfileId const& app_profile_id,
   // Move the mutations to the "pending" request proto, this is a zero copy
   // optimization.
   mut.MoveTo(&pending_mutations_);
-  pending_mutations_.set_app_profile_id(app_profile_id.get());
-  pending_mutations_.set_table_name(table_name.get());
+  pending_mutations_.set_app_profile_id(app_profile_id);
+  pending_mutations_.set_table_name(table_name);
 
   // As we receive successful responses, we shrink the size of the request (only
   // those pending are resent).  But if any fails we want to report their index
@@ -180,8 +179,8 @@ std::vector<FailedMutation> BulkMutatorState::OnRetryDone() && {
   return result;
 }
 
-BulkMutator::BulkMutator(bigtable::AppProfileId const& app_profile_id,
-                         bigtable::TableId const& table_name,
+BulkMutator::BulkMutator(std::string const& app_profile_id,
+                         std::string const& table_name,
                          IdempotentMutationPolicy& idempotent_policy,
                          BulkMutation mut)
     : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}

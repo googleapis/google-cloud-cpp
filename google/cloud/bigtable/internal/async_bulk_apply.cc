@@ -27,8 +27,8 @@ future<std::vector<FailedMutation>> AsyncRetryBulkApply::Create(
     IdempotentMutationPolicy& idempotent_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::shared_ptr<bigtable::DataClient> client,
-    bigtable::AppProfileId const& app_profile_id,
-    bigtable::TableId const& table_name, BulkMutation mut) {
+    std::string const& app_profile_id, std::string const& table_name,
+    BulkMutation mut) {
   std::shared_ptr<AsyncRetryBulkApply> bulk_apply(new AsyncRetryBulkApply(
       std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
       idempotent_policy, std::move(metadata_update_policy), std::move(client),
@@ -43,8 +43,8 @@ AsyncRetryBulkApply::AsyncRetryBulkApply(
     IdempotentMutationPolicy& idempotent_policy,
     MetadataUpdatePolicy metadata_update_policy,
     std::shared_ptr<bigtable::DataClient> client,
-    bigtable::AppProfileId const& app_profile_id,
-    bigtable::TableId const& table_name, BulkMutation mut)
+    std::string const& app_profile_id, std::string const& table_name,
+    BulkMutation mut)
     : rpc_retry_policy_(std::move(rpc_retry_policy)),
       rpc_backoff_policy_(std::move(rpc_backoff_policy)),
       metadata_update_policy_(std::move(metadata_update_policy)),

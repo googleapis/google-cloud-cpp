@@ -285,9 +285,7 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
      std::string consistency_token) {
     future<void> final =
-        admin
-            .AsyncCheckConsistency(cq, cbt::TableId(table_id),
-                                   cbt::ConsistencyToken(consistency_token))
+        admin.AsyncCheckConsistency(cq, table_id, consistency_token)
             .then([consistency_token](future<StatusOr<cbt::Consistency>> f) {
               auto consistency = f.get();
               if (!consistency) {
@@ -321,16 +319,15 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id) {
-    future<StatusOr<cbt::ConsistencyToken>> token_future =
+    future<StatusOr<std::string>> token_future =
         admin.AsyncGenerateConsistencyToken(cq, table_id);
-    auto final =
-        token_future.then([](future<StatusOr<cbt::ConsistencyToken>> f) {
-          auto token = f.get();
-          if (!token) {
-            throw std::runtime_error(token.status().message());
-          }
-          std::cout << "generated token is : " << token->get() << "\n";
-        });
+    auto final = token_future.then([](future<StatusOr<std::string>> f) {
+      auto token = f.get();
+      if (!token) {
+        throw std::runtime_error(token.status().message());
+      }
+      std::cout << "generated token is : " << *token << "\n";
+    });
     final.get();  // block to simplify example.
   }
   //! [async generate consistency token]
@@ -352,8 +349,8 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
      std::string consistency_token) {
-    future<StatusOr<cbt::Consistency>> result = admin.AsyncWaitForConsistency(
-        cq, cbt::TableId(table_id), cbt::ConsistencyToken(consistency_token));
+    future<StatusOr<cbt::Consistency>> result =
+        admin.AsyncWaitForConsistency(cq, table_id, consistency_token);
 
     auto final = result.then([&](future<StatusOr<cbt::Consistency>> f) {
       auto consistent = f.get();

@@ -21,7 +21,6 @@ bigtable_client_hdrs = [
     "app_profile_config.h",
     "async_operation.h",
     "async_row_reader.h",
-    "bigtable_strong_types.h",
     "cell.h",
     "client_options.h",
     "cluster_config.h",
@@ -57,7 +56,6 @@ bigtable_client_hdrs = [
     "internal/rpc_policy_parameters.inc",
     "internal/rpc_policy_parameters.h",
     "internal/rowreaderiterator.h",
-    "internal/strong_type.h",
     "internal/unary_client_utils.h",
     "idempotent_mutation_policy.h",
     "mutation_batcher.h",
@@ -75,7 +73,6 @@ bigtable_client_hdrs = [
     "table.h",
     "table_admin.h",
     "table_config.h",
-    "table_strong_types.h",
     "version.h",
 ]
 

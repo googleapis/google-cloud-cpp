@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_READER_H_
 
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/internal/readrowsparser.h"
@@ -25,7 +24,6 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -51,17 +49,16 @@ class RowReader {
    */
   static std::int64_t constexpr NO_ROWS_LIMIT = 0;
 
-  RowReader(std::shared_ptr<DataClient> client, bigtable::TableId table_name,
+  RowReader(std::shared_ptr<DataClient> client, std::string table_name,
             RowSet row_set, std::int64_t rows_limit, Filter filter,
             std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
-  RowReader(std::shared_ptr<DataClient> client,
-            bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
-            RowSet row_set, std::int64_t rows_limit, Filter filter,
-            std::unique_ptr<RPCRetryPolicy> retry_policy,
+  RowReader(std::shared_ptr<DataClient> client, std::string app_profile_id,
+            std::string table_name, RowSet row_set, std::int64_t rows_limit,
+            Filter filter, std::unique_ptr<RPCRetryPolicy> retry_policy,
             std::unique_ptr<RPCBackoffPolicy> backoff_policy,
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
@@ -131,8 +128,8 @@ class RowReader {
   void MakeRequest();
 
   std::shared_ptr<DataClient> client_;
-  bigtable::AppProfileId app_profile_id_;
-  bigtable::TableId table_name_;
+  std::string app_profile_id_;
+  std::string table_name_;
   RowSet row_set_;
   std::int64_t rows_limit_;
   Filter filter_;

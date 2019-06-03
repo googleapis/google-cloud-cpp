@@ -247,8 +247,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // be production clusters (and therefore have at least 3 nodes each), and
   // they must be in different zones. Also, the display name cannot be longer
   // than 30 characters.
-  bigtable::InstanceId instance_id(id);
-  bigtable::DisplayName display_name(("IT " + id).substr(0, 30));
+  auto display_name = ("IT " + id).substr(0, 30);
   auto cluster_config_1 =
       bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone(),
                               3, bigtable::ClusterConfig::HDD);
@@ -256,7 +255,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
       bigtable::testing::TableTestEnvironment::replication_zone(), 3,
       bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
-      instance_id, display_name,
+      id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
 
   // Create the new instance.
@@ -298,8 +297,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // Wait until all the mutations before the `consistency_token` have propagated
   // everywhere.
   google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
-      table_admin.WaitForConsistency(bigtable::TableId(random_table_id),
-                                     *consistency_token);
+      table_admin.WaitForConsistency(random_table_id, *consistency_token);
   auto is_consistent = result.get();
   ASSERT_STATUS_OK(is_consistent);
   EXPECT_EQ(bigtable::Consistency::kConsistent, *is_consistent);

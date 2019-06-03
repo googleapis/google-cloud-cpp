@@ -643,13 +643,13 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id) {
-    StatusOr<cbt::ConsistencyToken> consistency_token =
+    StatusOr<std::string> consistency_token =
         admin.GenerateConsistencyToken(table_id);
     if (!consistency_token) {
       throw std::runtime_error(consistency_token.status().message());
     }
     future<StatusOr<cbt::Consistency>> consistent_future =
-        admin.WaitForConsistency(cbt::TableId(table_id), *consistency_token);
+        admin.WaitForConsistency(table_id, *consistency_token);
     auto final = consistent_future.then(
         [&consistency_token](future<StatusOr<cbt::Consistency>> f) {
           auto is_consistent = f.get();
@@ -657,12 +657,12 @@ void WaitForConsistencyCheck(google::cloud::bigtable::TableAdmin admin,
             throw std::runtime_error(is_consistent.status().message());
           }
           if (*is_consistent == cbt::Consistency::kConsistent) {
-            std::cout << "Table is consistent with token "
-                      << consistency_token->get() << "\n";
+            std::cout << "Table is consistent with token " << *consistency_token
+                      << "\n";
           } else {
             std::cout
                 << "Table is not yet consistent, Please try again later with"
-                << " the same token (" << consistency_token->get() << ")\n";
+                << " the same token (" << *consistency_token << ")\n";
           }
         });
     final.get();  // simplify example by blocking until operation is done.
@@ -686,8 +686,8 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id,
      std::string consistency_token) {
-    StatusOr<cbt::Consistency> result = admin.CheckConsistency(
-        cbt::TableId(table_id), cbt::ConsistencyToken(consistency_token));
+    StatusOr<cbt::Consistency> result =
+        admin.CheckConsistency(table_id, consistency_token);
     if (!result) {
       throw std::runtime_error(result.status().message());
     }
@@ -716,12 +716,11 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id) {
-    StatusOr<cbt::ConsistencyToken> token =
-        admin.GenerateConsistencyToken(table_id);
+    StatusOr<std::string> token = admin.GenerateConsistencyToken(table_id);
     if (!token) {
       throw std::runtime_error(token.status().message());
     }
-    std::cout << "generated token is : " << token->get() << "\n";
+    std::cout << "generated token is : " << *token << "\n";
   }
   //! [generate consistency token]
   (std::move(admin), table_id);

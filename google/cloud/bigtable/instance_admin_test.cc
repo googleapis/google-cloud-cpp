@@ -399,10 +399,8 @@ TEST_F(InstanceAdminTest, GetCluster) {
   bigtable::InstanceAdmin tested(client_);
   auto mock = create_cluster();
   EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
-  bigtable::InstanceId instance_id("the-instance");
-  bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  auto cluster = tested.GetCluster(instance_id, cluster_id);
+  auto cluster = tested.GetCluster("the-instance", "the-cluster");
   ASSERT_STATUS_OK(cluster);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
             cluster->name());
@@ -416,10 +414,7 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
   EXPECT_CALL(*client_, GetCluster(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  bigtable::InstanceId instance_id("other-instance");
-  bigtable::ClusterId cluster_id("other-cluster");
-
-  ASSERT_FALSE(tested.GetCluster(instance_id, cluster_id));
+  ASSERT_FALSE(tested.GetCluster("other-instance", "the-cluster"));
 }
 
 /// @test Verify recoverable errors for GetCluster
@@ -440,10 +435,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
       .WillOnce(Invoke(mock_cluster));
 
   // After all the setup, make the actual call we want to test.
-  bigtable::InstanceId instance_id("the-instance");
-  bigtable::ClusterId cluster_id("the-cluster");
-  // After all the setup, make the actual call we want to test.
-  auto cluster = tested.GetCluster(instance_id, cluster_id);
+  auto cluster = tested.GetCluster("the-instance", "the-cluster");
   ASSERT_STATUS_OK(cluster);
   EXPECT_EQ("projects/the-project/instances/the-instance/clusters/the-cluster",
             cluster->name());
@@ -460,10 +452,8 @@ TEST_F(InstanceAdminTest, DeleteCluster) {
   auto mock = MockRpcFactory<btadmin::DeleteClusterRequest, Empty>::Create(
       expected_text);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _)).WillOnce(Invoke(mock));
-  bigtable::InstanceId instance_id("the-instance");
-  bigtable::ClusterId cluster_id("the-cluster");
   // After all the setup, make the actual call we want to test.
-  ASSERT_STATUS_OK(tested.DeleteCluster(instance_id, cluster_id));
+  ASSERT_STATUS_OK(tested.DeleteCluster("the-instance", "the-cluster"));
 }
 
 /// @test Verify unrecoverable error for DeleteCluster
@@ -473,10 +463,8 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
-  bigtable::InstanceId instance_id("other-instance");
-  bigtable::ClusterId cluster_id("other-cluster");
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster(instance_id, cluster_id).ok());
+  EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
 }
 
 /// @test Verify that recoverable error for DeleteCluster
@@ -487,10 +475,8 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
       .WillRepeatedly(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
 
-  bigtable::InstanceId instance_id("other-instance");
-  bigtable::ClusterId cluster_id("other-cluster");
   // After all the setup, make the actual call we want to test.
-  EXPECT_FALSE(tested.DeleteCluster(instance_id, cluster_id).ok());
+  EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
 }
 
 /// @test Verify positive scenario for InstanceAdmin::GetIamPolicy.
@@ -574,8 +560,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
  protected:
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncGetIamPolicy(
-        cq_, google::cloud::bigtable::InstanceId("test-instance"));
+    user_future_ = instance_admin.AsyncGetIamPolicy(cq_, "test-instance");
   }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
@@ -814,9 +799,8 @@ class AsyncDeleteClusterTest : public ::testing::Test {
  protected:
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
-    user_future_ = instance_admin.AsyncDeleteCluster(
-        cq_, google::cloud::bigtable::InstanceId("test-instance"),
-        google::cloud::bigtable::ClusterId("the-cluster"));
+    user_future_ =
+        instance_admin.AsyncDeleteCluster(cq_, "test-instance", "the-cluster");
   }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
@@ -899,7 +883,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
   void Start() {
     bigtable::InstanceAdmin instance_admin(client_);
     user_future_ = instance_admin.AsyncSetIamPolicy(
-        cq_, bigtable::InstanceId("test-instance"),
+        cq_, "test-instance",
         google::cloud::IamBindings("writer",
                                    {"abc@gmail.com", "xyz@gmail.com"}),
         "test-tag");

@@ -58,10 +58,10 @@ void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string zone) {
-    cbt::DisplayName display_name("Put description here");
+    std::string display_name("Put description here");
     std::string cluster_id = instance_id + "-c1";
     auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
-    cbt::InstanceConfig config(cbt::InstanceId(instance_id), display_name,
+    cbt::InstanceConfig config(instance_id, display_name,
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
@@ -96,10 +96,10 @@ void CreateDevInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string zone) {
-    cbt::DisplayName display_name("Put description here");
+    std::string display_name("Put description here");
     std::string cluster_id = instance_id + "-c1";
     auto cluster_config = cbt::ClusterConfig(zone, 0, cbt::ClusterConfig::HDD);
-    cbt::InstanceConfig config(cbt::InstanceId(instance_id), display_name,
+    cbt::InstanceConfig config(instance_id, display_name,
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::DEVELOPMENT);
 
@@ -136,11 +136,11 @@ void CreateReplicatedInstance(
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string zone_a, std::string zone_b) {
-    cbt::DisplayName display_name("Put description here");
+    std::string display_name("Put description here");
     auto c1 = instance_id + "-c1";
     auto c2 = instance_id + "-c2";
     cbt::InstanceConfig config(
-        cbt::InstanceId(instance_id), display_name,
+        instance_id, display_name,
         {{c1, cbt::ClusterConfig(zone_a, 3, cbt::ClusterConfig::HDD)},
          {c2, cbt::ClusterConfig(zone_b, 3, cbt::ClusterConfig::HDD)}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
@@ -314,9 +314,7 @@ void CreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string cluster_id, std::string zone) {
     auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
     future<StatusOr<google::bigtable::admin::v2::Cluster>> cluster_future =
-        instance_admin.CreateCluster(cluster_config,
-                                     cbt::InstanceId(instance_id),
-                                     cbt::ClusterId(cluster_id));
+        instance_admin.CreateCluster(cluster_config, instance_id, cluster_id);
 
     // Applications can wait asynchronously, in this example we just block.
     auto cluster = cluster_future.get();
@@ -408,8 +406,7 @@ void UpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string cluster_id) {
     // GetCluster first and then modify it.
     StatusOr<google::bigtable::admin::v2::Cluster> cluster =
-        instance_admin.GetCluster(cbt::InstanceId(instance_id),
-                                  cbt::ClusterId(cluster_id));
+        instance_admin.GetCluster(instance_id, cluster_id);
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -445,8 +442,7 @@ void GetCluster(google::cloud::bigtable::InstanceAdmin instance_admin, int argc,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string cluster_id) {
     StatusOr<google::bigtable::admin::v2::Cluster> cluster =
-        instance_admin.GetCluster(cbt::InstanceId(instance_id),
-                                  cbt::ClusterId(cluster_id));
+        instance_admin.GetCluster(instance_id, cluster_id);
     if (!cluster) {
       throw std::runtime_error(cluster.status().message());
     }
@@ -468,8 +464,8 @@ void DeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
   namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string cluster_id) {
-    google::cloud::Status status = instance_admin.DeleteCluster(
-        cbt::InstanceId(instance_id), cbt::ClusterId(cluster_id));
+    google::cloud::Status status =
+        instance_admin.DeleteCluster(instance_id, cluster_id);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
@@ -493,9 +489,9 @@ void RunInstanceOperations(
   namespace cbt = google::cloud::bigtable;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string cluster_id, std::string zone) {
-    cbt::DisplayName display_name("Put description here");
+    std::string display_name("Put description here");
     auto cluster_config = cbt::ClusterConfig(zone, 3, cbt::ClusterConfig::HDD);
-    cbt::InstanceConfig config(cbt::InstanceId(instance_id), display_name,
+    cbt::InstanceConfig config(instance_id, display_name,
                                {{cluster_id, cluster_config}});
     config.set_type(cbt::InstanceConfig::PRODUCTION);
 
@@ -569,10 +565,9 @@ void CreateAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
-    auto config = cbt::AppProfileConfig::MultiClusterUseAny(
-        cbt::AppProfileId(profile_id));
+    auto config = cbt::AppProfileConfig::MultiClusterUseAny(profile_id);
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
-        instance_admin.CreateAppProfile(cbt::InstanceId(instance_id), config);
+        instance_admin.CreateAppProfile(instance_id, config);
     if (!profile) {
       throw std::runtime_error(profile.status().message());
     }
@@ -599,10 +594,10 @@ void CreateAppProfileCluster(
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id, std::string cluster_id) {
-    auto config = cbt::AppProfileConfig::SingleClusterRouting(
-        cbt::AppProfileId(profile_id), cbt::ClusterId(cluster_id));
+    auto config =
+        cbt::AppProfileConfig::SingleClusterRouting(profile_id, cluster_id);
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
-        instance_admin.CreateAppProfile(cbt::InstanceId(instance_id), config);
+        instance_admin.CreateAppProfile(instance_id, config);
     if (!profile) {
       throw std::runtime_error(profile.status().message());
     }
@@ -626,8 +621,7 @@ void GetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
     StatusOr<google::bigtable::admin::v2::AppProfile> profile =
-        instance_admin.GetAppProfile(cbt::InstanceId(instance_id),
-                                     cbt::AppProfileId(profile_id));
+        instance_admin.GetAppProfile(instance_id, profile_id);
     if (!profile) {
       throw std::runtime_error(profile.status().message());
     }
@@ -659,7 +653,7 @@ void UpdateAppProfileDescription(
      std::string profile_id, std::string description) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.UpdateAppProfile(
-            cbt::InstanceId(instance_id), cbt::AppProfileId(profile_id),
+            instance_id, profile_id,
             cbt::AppProfileUpdateConfig().set_description(description));
     auto profile = profile_future.get();
     if (!profile) {
@@ -690,8 +684,7 @@ void UpdateAppProfileRoutingAny(
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
-        instance_admin.UpdateAppProfile(cbt::InstanceId(instance_id),
-                                        cbt::AppProfileId(profile_id),
+        instance_admin.UpdateAppProfile(instance_id, profile_id,
                                         cbt::AppProfileUpdateConfig()
                                             .set_multi_cluster_use_any()
                                             .set_ignore_warnings(true));
@@ -726,9 +719,9 @@ void UpdateAppProfileRoutingSingleCluster(
      std::string profile_id, std::string cluster_id) {
     future<StatusOr<google::bigtable::admin::v2::AppProfile>> profile_future =
         instance_admin.UpdateAppProfile(
-            cbt::InstanceId(instance_id), cbt::AppProfileId(profile_id),
+            instance_id, profile_id,
             cbt::AppProfileUpdateConfig()
-                .set_single_cluster_routing(cbt::ClusterId(cluster_id))
+                .set_single_cluster_routing(cluster_id)
                 .set_ignore_warnings(true));
     auto profile = profile_future.get();
     if (!profile) {
@@ -799,8 +792,7 @@ void DeleteAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string profile_id, bool ignore_warnings) {
     google::cloud::Status status = instance_admin.DeleteAppProfile(
-        cbt::InstanceId(instance_id), cbt::AppProfileId(profile_id),
-        ignore_warnings);
+        instance_id, profile_id, ignore_warnings);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }

@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_METADATA_UPDATE_POLICY_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_METADATA_UPDATE_POLICY_H_
 
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include <grpcpp/grpcpp.h>
 #include <memory>
@@ -85,10 +84,12 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param table_id table_id used in RPC call.
    */
-  MetadataUpdatePolicy(std::string const& resource_name,
-                       MetadataParamTypes const& metadata_param_type,
-                       std::string const& table_id);
+  static MetadataUpdatePolicy FromTableId(
+      std::string const& resource_name,
+      MetadataParamTypes const& metadata_param_type,
+      std::string const& table_id);
 
+  // TODO(#2704) - this seems to be used only in tests, remove or use.
   /**
    * Constructor with default metadata pair.
    *
@@ -98,9 +99,10 @@ class MetadataUpdatePolicy {
    *     x-goog-request-params.
    * @param cluster_id cluster_id of the cluster.
    */
-  MetadataUpdatePolicy(std::string const& resource_name,
-                       MetadataParamTypes const& metadata_param_type,
-                       bigtable::ClusterId const& cluster_id);
+  static MetadataUpdatePolicy FromClusterId(
+      std::string const& resource_name,
+      MetadataParamTypes const& metadata_param_type,
+      std::string const& cluster_id);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) = default;

@@ -83,7 +83,7 @@ struct LatencyBenchmarkResult {
 
 /// Run an iteration of the test.
 LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                                    bigtable::AppProfileId app_profile_id,
+                                    std::string app_profile_id,
                                     std::string const& table_id,
                                     std::chrono::seconds test_duration);
 
@@ -118,10 +118,9 @@ int main(int argc, char* argv[]) try {
       // If the user requests only one thread, use the current thread.
       launch_policy = std::launch::deferred;
     }
-    tasks.emplace_back(
-        std::async(launch_policy, RunBenchmark, std::ref(benchmark),
-                   bigtable::AppProfileId(setup.app_profile_id()),
-                   setup.table_id(), setup.test_duration()));
+    tasks.emplace_back(std::async(launch_policy, RunBenchmark,
+                                  std::ref(benchmark), setup.app_profile_id(),
+                                  setup.table_id(), setup.test_duration()));
   }
 
   // Wait for the threads and combine all the results.
@@ -207,7 +206,7 @@ OperationResult RunOneReadRow(bigtable::Table& table, std::string row_key) {
 }
 
 LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                                    bigtable::AppProfileId app_profile_id,
+                                    std::string app_profile_id,
                                     std::string const& table_id,
                                     std::chrono::seconds test_duration) {
   LatencyBenchmarkResult result = {};
