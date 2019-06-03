@@ -36,7 +36,7 @@ if (NOT TARGET protobuf_project)
     # multiple directories for our RPATH. Normally, it'd make sense to use : as
     # a delimiter since it is a typical path-list separator, but it is a special
     # character in CMake.
-    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib")
     string(REPLACE ";"
                    "|"
                    GOOGLE_CLOUD_CPP_INSTALL_RPATH
@@ -79,6 +79,12 @@ if (NOT TARGET protobuf_project)
             -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
             -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
             -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+            # Protobuf installs using `CMAKE_INSTALL_LIBDIR`, as it should,
+            # which expands to `lib` or `lib64`. But hard-codes RPATH to
+            # `$ORIGIN/../lib`, so change the default `LIBDIR` to something
+            # that works.
+            #     https://github.com/protocolbuffers/protobuf/pull/6204
+            -DCMAKE_INSTALL_LIBDIR=lib
             -Dprotobuf_BUILD_TESTS=OFF
             -Dprotobuf_DEBUG_POSTFIX=
             -H<SOURCE_DIR>/cmake
