@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/table.h"
 //! [bigtable includes]
 #include <google/protobuf/text_format.h>
+#include <sstream>
 
 namespace {
 struct Usage {
@@ -126,6 +127,101 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
   (std::move(table), std::move(cq), argv[1]);
 }
 
+void AsyncReadRows(google::cloud::bigtable::Table table,
+                   google::cloud::bigtable::CompletionQueue cq,
+                   std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{"async-read-rows: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async read rows]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::make_ready_future;
+  using google::cloud::promise;
+  using google::cloud::Status;
+  [](cbt::CompletionQueue cq, cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000010", "key-000020");
+    // Filter the results, only include values from the "col0" column in the
+    // "fam" column family, and only get the latest value.
+    auto filter = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+        cbt::Filter::Latest(1));
+    promise<Status> stream_status_promise;
+    // Read and print the rows.
+    table.AsyncReadRows(cq,
+                        [](cbt::Row row) {
+                          if (row.cells().size() != 1) {
+                            std::cout << "Unexpected number of cells in "
+                                      << row.row_key() << "\n";
+                            return make_ready_future(false);
+                          }
+                          auto const& cell = row.cells().at(0);
+                          std::cout << cell.row_key() << " = [" << cell.value()
+                                    << "]\n";
+                          return make_ready_future(true);
+                        },
+                        [&stream_status_promise](Status stream_status) {
+                          stream_status_promise.set_value(stream_status);
+                        },
+                        range, filter);
+    Status stream_status = stream_status_promise.get_future().get();
+    if (!stream_status.ok()) {
+      throw std::runtime_error(stream_status.message());
+    }
+  }
+  //! [async read rows]
+  (std::move(cq), std::move(table));
+}
+
+void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
+                            google::cloud::bigtable::CompletionQueue cq,
+                            std::vector<std::string> argv) {
+  if (argv.size() != 2U) {
+    throw Usage{
+        "async-read-rows-with-limit: <project-id> <instance-id> <table-id>"};
+  }
+
+  //! [async read rows with limit]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::make_ready_future;
+  using google::cloud::promise;
+  using google::cloud::Status;
+  [](cbt::CompletionQueue cq, cbt::Table table) {
+    // Create the range of rows to read.
+    auto range = cbt::RowRange::Range("key-000010", "key-000020");
+    // Filter the results, only include values from the "col0" column in the
+    // "fam" column family, and only get the latest value.
+    auto filter = cbt::Filter::Chain(
+        cbt::Filter::ColumnRangeClosed("fam", "col0", "col0"),
+        cbt::Filter::Latest(1));
+    promise<Status> stream_status_promise;
+    // Read and print the rows.
+    table.AsyncReadRows(cq,
+                        [](cbt::Row row) {
+                          if (row.cells().size() != 1) {
+                            std::cout << "Unexpected number of cells in "
+                                      << row.row_key() << "\n";
+                            return make_ready_future(false);
+                          }
+                          auto const& cell = row.cells().at(0);
+                          std::cout << cell.row_key() << " = [" << cell.value()
+                                    << "]\n";
+                          return make_ready_future(true);
+                        },
+                        [&stream_status_promise](Status stream_status) {
+                          stream_status_promise.set_value(stream_status);
+                        },
+                        range, filter);
+    Status stream_status = stream_status_promise.get_future().get();
+    if (!stream_status.ok()) {
+      throw std::runtime_error(stream_status.message());
+    }
+  }
+  //! [async read rows with limit]
+  (std::move(cq), std::move(table));
+}
+
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
@@ -212,6 +308,8 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"async-apply", &AsyncApply},
       {"async-bulk-apply", &AsyncBulkApply},
+      {"async-read-rows", &AsyncReadRows},
+      {"async-read-rows-with-limit", &AsyncReadRowsWithLimit},
       {"async-check-and-mutate", &AsyncCheckAndMutate},
       {"async-read-modify-write", &AsyncReadModifyWrite}};
 
