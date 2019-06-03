@@ -407,7 +407,7 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
       if (status.ok()) {
         row_promise_.set_value(std::make_pair(false, Row("", {})));
       } else {
-        row_promise_.set_value(status);
+        row_promise_.set_value(std::move(status));
       }
     }
 
