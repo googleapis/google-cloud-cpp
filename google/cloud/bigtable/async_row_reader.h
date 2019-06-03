@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_ROW_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ASYNC_ROW_READER_H_
 
-#include "google/cloud/bigtable/bigtable_strong_types.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
@@ -26,7 +25,6 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/table_strong_types.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/optional.h"
@@ -65,10 +63,9 @@ class AsyncRowReader : public std::enable_shared_from_this<
 
   static std::shared_ptr<AsyncRowReader> Create(
       CompletionQueue cq, std::shared_ptr<DataClient> client,
-      bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
-      RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-      std::int64_t rows_limit, Filter filter,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::string app_profile_id, std::string table_name, RowFunctor on_row,
+      FinishFunctor on_finish, RowSet row_set, std::int64_t rows_limit,
+      Filter filter, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory) {
@@ -84,10 +81,9 @@ class AsyncRowReader : public std::enable_shared_from_this<
 
   AsyncRowReader(
       CompletionQueue cq, std::shared_ptr<DataClient> client,
-      bigtable::AppProfileId app_profile_id, bigtable::TableId table_name,
-      RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-      std::int64_t rows_limit, Filter filter,
-      std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
+      std::string app_profile_id, std::string table_name, RowFunctor on_row,
+      FinishFunctor on_finish, RowSet row_set, std::int64_t rows_limit,
+      Filter filter, std::unique_ptr<RPCRetryPolicy> rpc_retry_policy,
       std::unique_ptr<RPCBackoffPolicy> rpc_backoff_policy,
       MetadataUpdatePolicy metadata_update_policy,
       std::unique_ptr<internal::ReadRowsParserFactory> parser_factory)
@@ -112,8 +108,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
     status_ = Status();
     google::bigtable::v2::ReadRowsRequest request;
 
-    request.set_app_profile_id(app_profile_id_.get());
-    request.set_table_name(table_name_.get());
+    request.set_app_profile_id(app_profile_id_);
+    request.set_table_name(table_name_);
     auto row_set_proto = row_set_.as_proto();
     request.mutable_rows()->Swap(&row_set_proto);
 
@@ -367,8 +363,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
   std::mutex mu_;
   CompletionQueue cq_;
   std::shared_ptr<DataClient> client_;
-  bigtable::AppProfileId app_profile_id_;
-  bigtable::TableId table_name_;
+  std::string app_profile_id_;
+  std::string table_name_;
   RowFunctor on_row_;
   FinishFunctor on_finish_;
   RowSet row_set_;
