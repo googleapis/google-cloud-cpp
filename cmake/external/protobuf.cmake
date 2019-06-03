@@ -83,7 +83,7 @@ if (NOT TARGET protobuf_project)
             # which expands to `lib` or `lib64`. But hard-codes RPATH to
             # `$ORIGIN/../lib`, so change the default `LIBDIR` to something
             # that works.
-            #     https://github.com/protocolbuffers/protobuf/pull/6204
+            # https://github.com/protocolbuffers/protobuf/pull/6204
             -DCMAKE_INSTALL_LIBDIR=lib
             -Dprotobuf_BUILD_TESTS=OFF
             -Dprotobuf_DEBUG_POSTFIX=
