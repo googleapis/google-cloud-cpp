@@ -17,9 +17,11 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
+    "value.h",
     "version.h",
 ]
 
 spanner_client_srcs = [
+    "value.cc",
     "version.cc",
 ]
