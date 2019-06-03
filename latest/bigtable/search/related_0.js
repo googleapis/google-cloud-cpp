@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bulkmutation',['BulkMutation',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1FailedMutation.html#afe72aeec710b8ca7cfe9b70ddeed4a3d',1,'google::cloud::bigtable::v0::FailedMutation']]]
+  ['asyncrowreader',['AsyncRowReader',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ad412d520181f2cb36c1af7cb68455f7b',1,'google::cloud::bigtable::v0::DataClient']]]
 ];

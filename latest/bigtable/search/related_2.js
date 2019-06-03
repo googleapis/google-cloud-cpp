@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['future',['future',['../../common/classgoogle_1_1cloud_1_1v0_1_1future.html#acba1c206f9365d980493bbd3520adb25',1,'google::cloud::v0::future::future()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1future.html#a71efa7eadf567e13f34076e5bd60fc70',1,'google::cloud::v0::future::future()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html#acba1c206f9365d980493bbd3520adb25',1,'google::cloud::v0::future&lt; void &gt;::future()']]]
+  ['clientoptionstesttraits',['ClientOptionsTestTraits',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClientOptions.html#a07235e798afd1a96be44330a0cd7d431',1,'google::cloud::bigtable::v0::ClientOptions']]]
 ];

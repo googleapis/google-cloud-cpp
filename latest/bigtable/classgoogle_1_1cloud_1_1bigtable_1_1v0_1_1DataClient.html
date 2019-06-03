@@ -112,6 +112,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a8c4b98b663c521ba2a62f60f2dbc450b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8e2db2fd029376255a1958b577a530e"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientAsyncReaderInterface&lt; google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ab8e2db2fd029376255a1958b577a530e">AsyncReadRows</a> (grpc::ClientContext *context, const google::bigtable::v2::ReadRowsRequest &amp;request, grpc::CompletionQueue *cq, void *tag)=0</td></tr>
 <tr class="separator:ab8e2db2fd029376255a1958b577a530e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b6eb4476f998de9db498c18ba7f24bb"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::ReadRowsResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a6b6eb4476f998de9db498c18ba7f24bb">PrepareAsyncReadRows</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::ReadRowsRequest &amp;request, ::grpc::CompletionQueue *cq)=0</td></tr>
+<tr class="separator:a6b6eb4476f998de9db498c18ba7f24bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad26a4da6215afbfe88fefa44e5c4d664"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt; grpc::ClientReaderInterface&lt; google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ad26a4da6215afbfe88fefa44e5c4d664">SampleRowKeys</a> (grpc::ClientContext *context, google::bigtable::v2::SampleRowKeysRequest const &amp;request)=0</td></tr>
 <tr class="separator:ad26a4da6215afbfe88fefa44e5c4d664"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a43352e9c26888b01fc71942b42f0a3ee"><td class="memItemLeft" align="right" valign="top">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::SampleRowKeysResponse &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#a43352e9c26888b01fc71942b42f0a3ee">AsyncSampleRowKeys</a> (::grpc::ClientContext *context, const ::google::bigtable::v2::SampleRowKeysRequest &amp;request, ::grpc::CompletionQueue *cq, void *tag)=0</td></tr>
@@ -129,6 +131,9 @@ Friends</h2></td></tr>
 <tr class="separator:af888815e80064bc9fa1035c6265da86e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacf259f8252fe5ea37e9b45049c199db"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#aacf259f8252fe5ea37e9b45049c199db">RowReader</a></td></tr>
 <tr class="separator:aacf259f8252fe5ea37e9b45049c199db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad412d520181f2cb36c1af7cb68455f7b"><td class="memTemplParams" colspan="2">template&lt;typename RowFunctor , typename FinishFunctor &gt; </td></tr>
+<tr class="memitem:ad412d520181f2cb36c1af7cb68455f7b"><td class="memTemplItemLeft" align="right" valign="top">class&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1DataClient.html#ad412d520181f2cb36c1af7cb68455f7b">AsyncRowReader</a></td></tr>
+<tr class="separator:ad412d520181f2cb36c1af7cb68455f7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Connects to Cloud Bigtable's data manipulation APIs. </p>
@@ -648,6 +653,48 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a6b6eb4476f998de9db498c18ba7f24bb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b6eb4476f998de9db498c18ba7f24bb">&#9670;&nbsp;</a></span>PrepareAsyncReadRows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual std::unique_ptr&lt;::grpc::ClientAsyncReaderInterface&lt; ::google::bigtable::v2::ReadRowsResponse&gt; &gt; google::cloud::bigtable::v0::DataClient::PrepareAsyncReadRows </td>
+          <td>(</td>
+          <td class="paramtype">::grpc::ClientContext *&#160;</td>
+          <td class="paramname"><em>context</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const ::google::bigtable::v2::ReadRowsRequest &amp;&#160;</td>
+          <td class="paramname"><em>request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">::grpc::CompletionQueue *&#160;</td>
+          <td class="paramname"><em>cq</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a383725d5b6abeebeeb9f7c66c5bc3e8c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a383725d5b6abeebeeb9f7c66c5bc3e8c">&#9670;&nbsp;</a></span>project_id()</h2>
 
@@ -816,6 +863,32 @@ Friends</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Friends And Related Function Documentation</h2>
+<a id="ad412d520181f2cb36c1af7cb68455f7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad412d520181f2cb36c1af7cb68455f7b">&#9670;&nbsp;</a></span>AsyncRowReader</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename RowFunctor , typename FinishFunctor &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1AsyncRowReader.html">AsyncRowReader</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="data__client_8h_source.html#l00097">97</a> of file <a class="el" href="data__client_8h_source.html">data_client.h</a>.</p>
+
+</div>
+</div>
 <a id="aacf259f8252fe5ea37e9b45049c199db"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aacf259f8252fe5ea37e9b45049c199db">&#9670;&nbsp;</a></span>RowReader</h2>
 
