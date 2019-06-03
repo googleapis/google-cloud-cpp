@@ -965,6 +965,108 @@ TEST_F(TableAsyncReadRowsTest, DeepStack) {
   ASSERT_EQ(0U, cq_impl_->size());
 }
 
+TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
+  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+
+  EXPECT_CALL(stream, Read(_, _))
+      .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
+        *r = bigtable::testing::ReadRowsResponseFromString(
+            R"(
+              chunks {
+                row_key: "000"
+                family_name { value: "fam" }
+                qualifier { value: "col" }
+                timestamp_micros: 42000
+                value: "value"
+                commit_row: true
+              })");
+      }))
+      .RetiresOnSaturation();
+  EXPECT_CALL(stream, Finish(_, _))
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+
+  auto row_future = table_.AsyncReadRow(cq_, "000", Filter::PassAllFilter());
+
+  EXPECT_TRUE(reader_started_[0]);
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+
+  EXPECT_TRUE(Unsatisfied(row_future));
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+
+  // We return data only after the whole stream is finished.
+  ASSERT_TRUE(Unsatisfied(row_future));
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+
+  auto row = row_future.get();
+  ASSERT_STATUS_OK(row);
+  ASSERT_TRUE(row->first);
+  ASSERT_EQ("000", row->second.row_key());
+
+  ASSERT_EQ(0U, cq_impl_->size());
+}
+
+TEST_F(TableAsyncReadRowsTest, ReadRowNotFound) {
+  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+
+  EXPECT_CALL(stream, Finish(_, _))
+      .WillOnce(Invoke(
+          [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+
+  auto row_future = table_.AsyncReadRow(cq_, "000", Filter::PassAllFilter());
+
+  EXPECT_TRUE(reader_started_[0]);
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  EXPECT_TRUE(Unsatisfied(row_future));
+
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+
+  auto row = row_future.get();
+  ASSERT_STATUS_OK(row);
+  ASSERT_FALSE(row->first);
+}
+
+TEST_F(TableAsyncReadRowsTest, ReadRowError) {
+  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+
+  EXPECT_CALL(stream, Finish(_, _))
+      .WillOnce(Invoke([](grpc::Status* status, void*) {
+        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "");
+      }));
+
+  auto row_future = table_.AsyncReadRow(cq_, "000", Filter::PassAllFilter());
+
+  EXPECT_TRUE(reader_started_[0]);
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+
+  ASSERT_EQ(1U, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  ASSERT_EQ(1U, cq_impl_->size());
+  EXPECT_TRUE(Unsatisfied(row_future));
+
+  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+
+  auto row = row_future.get();
+  ASSERT_FALSE(row);
+  ASSERT_EQ(StatusCode::kPermissionDenied, row.status().code());
+}
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

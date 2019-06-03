@@ -222,6 +222,55 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
   (std::move(cq), std::move(table));
 }
 
+void AsyncReadRow(google::cloud::bigtable::Table table,
+                  google::cloud::bigtable::CompletionQueue cq,
+                  std::vector<std::string> argv) {
+  if (argv.size() != 3U) {
+    throw Usage{
+        "async-read-row <project-id> <instance-id> <table-id> <row-key>"};
+  }
+
+  //! [async read row]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::CompletionQueue cq, google::cloud::bigtable::Table table,
+     std::string row_key) {
+    // Filter the results, only include the latest value on each cell.
+    cbt::Filter filter = cbt::Filter::Latest(1);
+    table.AsyncReadRow(cq, row_key, std::move(filter))
+        .then(
+            [row_key](future<StatusOr<std::pair<bool, cbt::Row>>> row_future) {
+              // Read a row, this returns a tuple (bool, row)
+              auto tuple = row_future.get();
+              if (!tuple) {
+                throw std::runtime_error(tuple.status().message());
+              }
+              if (!tuple->first) {
+                std::cout << "Row " << row_key << " not found\n";
+                return;
+              }
+              std::cout << "key: " << tuple->second.row_key() << "\n";
+              for (auto& cell : tuple->second.cells()) {
+                std::cout << "    " << cell.family_name() << ":"
+                          << cell.column_qualifier() << " = <";
+                if (cell.column_qualifier() == "counter") {
+                  // This example uses "counter" to store 64-bit numbers in
+                  // big-endian format, extract them as follows:
+                  std::cout
+                      << cell.decode_big_endian_integer<std::int64_t>().value();
+                } else {
+                  std::cout << cell.value();
+                }
+                std::cout << ">\n";
+              }
+            })
+        .get();  // block to simplify the example
+  }
+  //! [async read row]
+  (std::move(cq), std::move(table), std::move(argv[2]));
+}
+
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
@@ -310,6 +359,7 @@ int main(int argc, char* argv[]) try {
       {"async-bulk-apply", &AsyncBulkApply},
       {"async-read-rows", &AsyncReadRows},
       {"async-read-rows-with-limit", &AsyncReadRowsWithLimit},
+      {"async-read-row", &AsyncReadRow},
       {"async-check-and-mutate", &AsyncCheckAndMutate},
       {"async-read-modify-write", &AsyncReadModifyWrite}};
 

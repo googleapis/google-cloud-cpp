@@ -380,6 +380,55 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       });
 }
 
+future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
+                                                           std::string row_key,
+                                                           Filter filter) {
+  class AsyncReadRowHandler {
+   public:
+    AsyncReadRowHandler() : row_("", {}), row_received_() {}
+
+    future<StatusOr<std::pair<bool, Row>>> GetFuture() {
+      return row_promise_.get_future();
+    }
+
+    future<bool> OnRow(Row row) {
+      // assert(!row_received_);
+      row_ = std::move(row);
+      row_received_ = true;
+      return make_ready_future(false);
+    }
+
+    void OnStreamFinished(Status status) {
+      if (row_received_) {
+        // If we got a row we don't need to care about the stream status.
+        row_promise_.set_value(std::make_pair(true, std::move(row_)));
+        return;
+      }
+      if (status.ok()) {
+        row_promise_.set_value(std::make_pair(false, Row("", {})));
+      } else {
+        row_promise_.set_value(status);
+      }
+    }
+
+   private:
+    Row row_;
+    bool row_received_;
+    promise<StatusOr<std::pair<bool, Row>>> row_promise_;
+  };
+
+  RowSet row_set(std::move(row_key));
+  std::int64_t const rows_limit = 1;
+  auto handler = std::make_shared<AsyncReadRowHandler>();
+  AsyncReadRows(cq,
+                [handler](Row row) { return handler->OnRow(std::move(row)); },
+                [handler](Status status) {
+                  handler->OnStreamFinished(std::move(status));
+                },
+                std::move(row_set), rows_limit, std::move(filter));
+  return handler->GetFuture();
+}
+
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

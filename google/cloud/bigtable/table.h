@@ -716,6 +716,37 @@ class Table {
             bigtable::internal::ReadRowsParserFactory>());
   }
 
+  /**
+   * Asynchronously read and return a single row from the table.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param row_key the row to read.
+   * @param filter a filter expression, can be used to select a subset of the
+   *     column families and columns in the row.
+   * @returns a future satisfied when the operation completes, failes
+   *     permanently or keeps failing transiently, but the retry policy has been
+   *     exhausted. The future will return a tuple. The first element is a
+   *     boolean, with value `false` if the row does not exist.  If the first
+   *     element is `true` the second element has the contents of the Row.  Note
+   *     that the contents may be empty if the filter expression removes all
+   *     column families and columns.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet data_async_snippets.cc async read row
+   */
+  future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(CompletionQueue& cq,
+                                                      std::string row_key,
+                                                      Filter filter);
+
  private:
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
