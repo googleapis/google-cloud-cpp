@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/hmac_key_metadata.h"
-#include "google/cloud/storage/internal/format_time_point.h"
+#include "google/cloud/internal/format_time_point.h"
 
 namespace google {
 namespace cloud {
@@ -24,9 +24,10 @@ std::ostream& operator<<(std::ostream& os, HmacKeyMetadata const& rhs) {
             << ", access_id=" << rhs.access_id() << ", etag=" << rhs.etag()
             << ", project_id=" << rhs.project_id()
             << ", service_account_email=" << rhs.service_account_email()
-            << ", state=" << rhs.state()
-            << ", time_created=" << internal::FormatRfc3339(rhs.time_created())
-            << ", updated=" << internal::FormatRfc3339(rhs.updated()) << "}";
+            << ", state=" << rhs.state() << ", time_created="
+            << google::cloud::internal::FormatRfc3339(rhs.time_created())
+            << ", updated="
+            << google::cloud::internal::FormatRfc3339(rhs.updated()) << "}";
 }
 
 }  // namespace STORAGE_CLIENT_NS

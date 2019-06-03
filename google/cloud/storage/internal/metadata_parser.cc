@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/metadata_parser.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <sstream>
 
 namespace google {
@@ -120,7 +120,7 @@ std::chrono::system_clock::time_point ParseTimestampField(
   if (json.count(field_name) == 0) {
     return std::chrono::system_clock::time_point{};
   }
-  return ParseRfc3339(json[field_name]);
+  return google::cloud::internal::ParseRfc3339(json[field_name]);
 }
 
 }  // namespace internal

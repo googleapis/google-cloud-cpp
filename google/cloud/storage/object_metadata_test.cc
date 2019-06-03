@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_metadata.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/parse_rfc3339.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -138,7 +138,7 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("baz", actual.name());
   EXPECT_EQ("user-qux", actual.owner().entity);
   EXPECT_EQ("user-qux-id-123", actual.owner().entity_id);
-  EXPECT_EQ(internal::ParseRfc3339("2019-01-01T00:00:00Z"),
+  EXPECT_EQ(google::cloud::internal::ParseRfc3339("2019-01-01T00:00:00Z"),
             actual.retention_expiration_time());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());

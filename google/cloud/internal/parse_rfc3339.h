@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARSE_RFC3339_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARSE_RFC3339_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H_
 
-#include "google/cloud/storage/version.h"
+#include "google/cloud/version.h"
 #include <chrono>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Parses @p timestamp assuming it is in RFC-3339 format.
@@ -42,9 +41,8 @@ std::chrono::system_clock::time_point ParseRfc3339(
     std::string const& timestamp);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARSE_RFC3339_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H_

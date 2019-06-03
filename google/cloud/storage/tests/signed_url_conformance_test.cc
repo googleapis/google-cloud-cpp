@@ -104,20 +104,20 @@ TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
     if (headers.empty()) {
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
-          SignedUrlTimestamp(internal::ParseRfc3339(date)),
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"));
     } else if (headers.size() == 1) {
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
-          SignedUrlTimestamp(internal::ParseRfc3339(date)),
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"),
           AddExtensionHeader(headers.at(0).first, headers.at(0).second));
     } else if (headers.size() == 2) {
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
-          SignedUrlTimestamp(internal::ParseRfc3339(date)),
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"),
           AddExtensionHeader(headers.at(0).first, headers.at(0).second),
@@ -125,7 +125,7 @@ TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
     } else if (headers.size() == 3) {
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
-          SignedUrlTimestamp(internal::ParseRfc3339(date)),
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"),
           AddExtensionHeader(headers.at(0).first, headers.at(0).second),

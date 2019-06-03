@@ -12,17 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_FORMAT_TIME_POINT_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_FORMAT_TIME_POINT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H_
 
-#include "google/cloud/storage/version.h"
+#include "google/cloud/version.h"
 #include <chrono>
 #include <string>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 /**
  * Formats @p tp as a RFC-3339 timestamp.
@@ -50,9 +49,8 @@ std::string FormatV4SignedUrlTimestamp(
 std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_FORMAT_TIME_POINT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H_

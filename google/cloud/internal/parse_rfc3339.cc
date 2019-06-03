@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/parse_rfc3339.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <cstdio>
@@ -172,8 +172,7 @@ std::chrono::seconds ParseOffset(char const*& buffer,
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 std::chrono::system_clock::time_point ParseRfc3339(
     std::string const& timestamp) {
@@ -211,7 +210,6 @@ std::chrono::system_clock::time_point ParseRfc3339(
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

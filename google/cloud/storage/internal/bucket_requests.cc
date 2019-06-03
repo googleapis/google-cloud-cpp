@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include <sstream>
@@ -80,7 +80,8 @@ StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     }
     if (condition.count("createdBefore") != 0) {
       result.condition_.created_before.emplace(
-          internal::ParseRfc3339(condition.value("createdBefore", "")));
+          google::cloud::internal::ParseRfc3339(
+              condition.value("createdBefore", "")));
     }
     if (condition.count("isLive") != 0) {
       result.condition_.is_live.emplace(
@@ -319,7 +320,8 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
         condition["age"] = *c.age;
       }
       if (c.created_before.has_value()) {
-        condition["createdBefore"] = internal::FormatRfc3339(*c.created_before);
+        condition["createdBefore"] =
+            google::cloud::internal::FormatRfc3339(*c.created_before);
       }
       if (c.is_live) {
         condition["isLive"] = *c.is_live;

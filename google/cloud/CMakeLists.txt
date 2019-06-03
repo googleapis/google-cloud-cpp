@@ -111,6 +111,8 @@ add_library(google_cloud_cpp_common
             internal/disjunction.h
             internal/filesystem.h
             internal/filesystem.cc
+            internal/format_time_point.h
+            internal/format_time_point.cc
             internal/future_base.h
             internal/future_fwd.h
             internal/future_impl.h
@@ -121,6 +123,8 @@ add_library(google_cloud_cpp_common
             internal/getenv.cc
             internal/ios_flags_saver.h
             internal/make_unique.h
+            internal/parse_rfc3339.h
+            internal/parse_rfc3339.cc
             internal/port_platform.h
             internal/random.h
             internal/random.cc
@@ -149,6 +153,16 @@ target_include_directories(google_cloud_cpp_common
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+if (MSVC)
+    # MSVC warns about using sscanf(), this is a valuable warning, so we do not
+    # want to disable for everything. But for these files the usage is "safe".
+    # This is a relatively obscure feature to add compile flags to just one
+    # source:
+    set_property(SOURCE internal/parse_rfc3339.cc
+                 APPEND_STRING
+                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+endif ()
+
 set_target_properties(
     google_cloud_cpp_common
     PROPERTIES
@@ -193,8 +207,10 @@ if (BUILD_TESTING)
         internal/big_endian_test.cc
         internal/build_info_test.cc
         internal/filesystem_test.cc
+        internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
+        internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
         internal/throw_delegate_test.cc

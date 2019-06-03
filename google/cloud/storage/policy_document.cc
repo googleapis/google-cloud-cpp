@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/policy_document.h"
-#include "google/cloud/storage/internal/format_time_point.h"
+#include "google/cloud/internal/format_time_point.h"
 #include <algorithm>
 #include <iostream>
 #include <numeric>
@@ -42,7 +42,8 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentCondition const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs) {
   os << "PolicyDocument={";
-  os << "expiration=" << internal::FormatRfc3339(rhs.expiration) << ", ";
+  os << "expiration=" << google::cloud::internal::FormatRfc3339(rhs.expiration)
+     << ", ";
   os << "conditions=[";
   for (auto i = 0u; i < rhs.conditions.size(); ++i) {
     os << rhs.conditions[i];
@@ -55,8 +56,8 @@ std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentResult const& rhs) {
   return os << "PolicyDocumentResult={"
-            << "access_id=" << rhs.access_id
-            << ", expiration=" << internal::FormatRfc3339(rhs.expiration)
+            << "access_id=" << rhs.access_id << ", expiration="
+            << google::cloud::internal::FormatRfc3339(rhs.expiration)
             << ", policy=" << rhs.policy << ", signature=" << rhs.signature
             << "}";
 }

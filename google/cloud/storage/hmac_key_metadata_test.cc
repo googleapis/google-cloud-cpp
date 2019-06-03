@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/hmac_key_metadata.h"
-#include "google/cloud/storage/internal/format_time_point.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/storage/internal/hmac_key_requests.h"
 #include <gmock/gmock.h>
 
@@ -52,8 +52,9 @@ TEST(HmacKeyMetadataTest, Parser) {
   EXPECT_EQ("test-service-account-email", hmac.service_account_email());
   EXPECT_EQ(HmacKeyMetadata::state_active(), hmac.state());
   EXPECT_EQ("2019-03-01T12:13:14Z",
-            internal::FormatRfc3339(hmac.time_created()));
-  EXPECT_EQ("2019-03-02T12:13:14Z", internal::FormatRfc3339(hmac.updated()));
+            google::cloud::internal::FormatRfc3339(hmac.time_created()));
+  EXPECT_EQ("2019-03-02T12:13:14Z",
+            google::cloud::internal::FormatRfc3339(hmac.updated()));
 
   EXPECT_EQ("ACTIVE", HmacKeyMetadata::state_active());
   EXPECT_EQ("INACTIVE", HmacKeyMetadata::state_inactive());

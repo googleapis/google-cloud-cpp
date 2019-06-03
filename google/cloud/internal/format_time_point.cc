@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/format_time_point.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <cstdio>
@@ -61,8 +61,7 @@ std::tm AsUtcTm(std::chrono::system_clock::time_point tp) {
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
@@ -97,7 +96,6 @@ std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp) {
 }
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

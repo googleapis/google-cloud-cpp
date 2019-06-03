@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/bucket_metadata.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/status.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_requests.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
@@ -52,8 +52,8 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
 std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs) {
   google::cloud::internal::IosFlagsSaver save_format(os);
   return os << "BucketPolicyOnly={enabled=" << std::boolalpha << rhs.enabled
-            << ", locked_time=" << internal::FormatRfc3339(rhs.locked_time)
-            << "}";
+            << ", locked_time="
+            << google::cloud::internal::FormatRfc3339(rhs.locked_time) << "}";
 }
 
 std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs) {
@@ -72,7 +72,7 @@ std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs) {
 std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs) {
   return os << "BucketRetentionPolicy={retention_period="
             << rhs.retention_period.count() << "s, effective_time="
-            << internal::FormatRfc3339(rhs.effective_time)
+            << google::cloud::internal::FormatRfc3339(rhs.effective_time)
             << ", locked=" << rhs.is_locked << "}";
 }
 
@@ -183,7 +183,8 @@ std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs) {
     os << ", retention_policy.retention_period="
        << rhs.retention_policy().retention_period.count()
        << ", retention_policy.effective_time="
-       << internal::FormatRfc3339(rhs.retention_policy().effective_time)
+       << google::cloud::internal::FormatRfc3339(
+              rhs.retention_policy().effective_time)
        << ", retention_policy.is_locked=" << std::boolalpha
        << rhs.retention_policy().is_locked;
   }
@@ -383,7 +384,8 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetLifecycle(
       condition["age"] = *c.age;
     }
     if (c.created_before.has_value()) {
-      condition["createdBefore"] = internal::FormatRfc3339(*c.created_before);
+      condition["createdBefore"] =
+          google::cloud::internal::FormatRfc3339(*c.created_before);
     }
     if (c.is_live.has_value()) {
       condition["isLive"] = *c.is_live;

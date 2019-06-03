@@ -118,14 +118,14 @@ TEST(LifecycleRuleTest, MaxAge) {
 TEST(LifecycleRuleTest, CreatedBeforeString) {
   auto condition = LifecycleRule::CreatedBefore("2018-07-01T12:00:00Z");
   ASSERT_TRUE(condition.created_before.has_value());
-  auto expected = internal::ParseRfc3339("2018-07-01T12:00:00Z");
+  auto expected = google::cloud::internal::ParseRfc3339("2018-07-01T12:00:00Z");
   EXPECT_EQ(expected, condition.created_before.value());
 }
 
 /// @test Verify that LifecycleRule::CreatedBefore(time_point) works as
 /// expected.
 TEST(LifecycleRuleTest, CreatedBeforeTimePoint) {
-  auto expected = internal::ParseRfc3339("2018-07-01T12:00:00Z");
+  auto expected = google::cloud::internal::ParseRfc3339("2018-07-01T12:00:00Z");
   auto condition = LifecycleRule::CreatedBefore(expected);
   ASSERT_TRUE(condition.created_before.has_value());
   EXPECT_EQ(expected, condition.created_before.value());

@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -76,7 +76,8 @@ class CreateSignedPolicyDocTest : public ::testing::Test {
 
 PolicyDocument CreatePolicyDocumentForTest() {
   PolicyDocument result;
-  result.expiration = internal::ParseRfc3339("2010-06-16T11:11:11Z");
+  result.expiration =
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
   result.conditions.emplace_back(
       PolicyDocumentCondition::StartsWith("key", ""));
   result.conditions.emplace_back(
@@ -103,7 +104,7 @@ TEST_F(CreateSignedPolicyDocTest, Sign) {
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com", actual->access_id);
 
   EXPECT_EQ("2010-06-16T11:11:11Z",
-            internal::FormatRfc3339(actual->expiration));
+            google::cloud::internal::FormatRfc3339(actual->expiration));
 
   EXPECT_EQ(
       "eyJjb25kaXRpb25zIjpbeyJhY2wiOiJidWNrZXQtb3duZXItcmVhZCJ9LHsiYnVja2V0Ijoi"
