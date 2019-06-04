@@ -28,7 +28,7 @@ example:
 
 ```bash
 $ export PROJECT_ID=my-test-project
-``` 
+```
 
 ## Creating a Docker image for the test program
 
@@ -84,7 +84,7 @@ Then create the service account:
 
 ```bash
 $ gcloud iam service-accounts create ${SA_NAME} \
-    --display-name="Service account to repro deadlock" 
+    --display-name="Service account to repro deadlock"
 ```
 
 Grant the service account admin permissions on GCS, we do not need them, but
@@ -118,7 +118,7 @@ $ rm /dev/shm/key.json
 
 ## Startup the program
 
-This directory contains a "almost-ready" YAML file 
+This directory contains a "almost-ready" YAML file
 
 ```bash
 $ sed -e "s/@PROJECT_ID@/${PROJECT_ID}/" \

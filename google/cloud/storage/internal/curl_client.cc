@@ -1193,7 +1193,6 @@ void CurlClient::UnlockShared(curl_lock_data data) {
   std::ostringstream os;
   os << __func__ << "() - invalid or unknown data argument=" << data;
   google::cloud::Terminate(os.str().c_str());
-
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(

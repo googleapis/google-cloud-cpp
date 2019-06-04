@@ -16,10 +16,8 @@
 
 set -e
 
-docker build -t gcr.io/${PROJECT_ID}/storage-deadlock-regression \
+docker build -t "gcr.io/${PROJECT_ID}/storage-deadlock-regression" \
     -f google/cloud/storage/tests/write_deadlock_regression/Dockerfile .
-docker tag gcr.io/${PROJECT_ID}/storage-deadlock-regression \
-    gcr.io/${PROJECT_ID}/storage-deadlock-regression:latest
-docker push gcr.io/${PROJECT_ID}/storage-deadlock-regression:latest
+docker push "gcr.io/${PROJECT_ID}/storage-deadlock-regression:latest"
 
 exit 0
