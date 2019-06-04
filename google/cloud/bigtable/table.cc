@@ -395,6 +395,13 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
       // assert(!row_received_);
       row_ = std::move(row);
       row_received_ = true;
+      // Don't satisfy the promise before `OnStreamFinished`.
+      //
+      // The `CompletionQueue`, which this object holds a reference to, should
+      // not be shut down before `OnStreamFinished` is called. In order to make
+      // sure of that, satisying the `promise<>` is deferred untill then - the
+      // user shouldn't shutown the `CompleetionQue` before this whole
+      // operations is done.
       return make_ready_future(false);
     }
 
