@@ -49,8 +49,8 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 ### v1.1.x - 2019-06
 
 * Implemented option to read an object starting from an offset.
-* Automatically restart downloads on error. With this change the download is 
-  restarted from the last received byte, and using the object generation used 
+* Automatically restart downloads on error. With this change the download is
+  restarted from the last received byte, and using the object generation used
   in the original download as well. (#2693)
 * Bugfixes:
   * Service account credentials not refreshing properly. (#2691)
