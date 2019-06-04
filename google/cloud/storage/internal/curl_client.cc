@@ -1161,9 +1161,9 @@ void CurlClient::LockShared(curl_lock_data data) {
     case CURL_LOCK_DATA_CONNECT:
       mu_connect_.lock();
       return;
-    case CURL_LOCK_DATA_NONE:
-    case CURL_LOCK_DATA_COOKIE:
-    case CURL_LOCK_DATA_LAST:
+    default:
+      // We use a default because different versions of libcurl have different
+      // values in the `curl_lock_data` enum.
       break;
   }
   std::ostringstream os;
@@ -1185,9 +1185,9 @@ void CurlClient::UnlockShared(curl_lock_data data) {
     case CURL_LOCK_DATA_CONNECT:
       mu_connect_.unlock();
       return;
-    case CURL_LOCK_DATA_NONE:
-    case CURL_LOCK_DATA_COOKIE:
-    case CURL_LOCK_DATA_LAST:
+    default:
+      // We use a default because different versions of libcurl have different
+      // values in the `curl_lock_data` enum.
       break;
   }
   std::ostringstream os;
