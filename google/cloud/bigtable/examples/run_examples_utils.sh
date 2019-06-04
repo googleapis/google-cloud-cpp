@@ -624,6 +624,8 @@ function run_all_data_async_examples {
       "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_async_snippets async-read-rows-with-limit \
       "${project_id}" "${instance_id}" "${TABLE}"
+  run_example ./data_async_snippets async-read-row \
+      "${project_id}" "${instance_id}" "${TABLE}" "${APPLY_ROW_KEY}"
 
   run_example ./data_async_snippets async-apply \
       "${project_id}" "${instance_id}" "${TABLE}" "${CHECK_AND_MUTATE_ROW_KEY}"

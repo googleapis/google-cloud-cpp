@@ -296,6 +296,34 @@ TEST_F(DataAsyncFutureIntegrationTest, TableReadRowsAllRows) {
 
   CheckEqualUnordered(created, actual);
 }
+
+TEST_F(DataAsyncFutureIntegrationTest, TableReadRowTest) {
+  auto table = GetTable();
+  std::string const row_key1 = "row-key-1";
+  std::string const row_key2 = "row-key-2";
+
+  std::vector<bigtable::Cell> created{
+      {row_key1, "family1", "c1", 1000, "v1000"},
+      {row_key2, "family1", "c2", 2000, "v2000"}};
+  std::vector<bigtable::Cell> expected{
+      {row_key1, "family1", "c1", 1000, "v1000"}};
+
+  CreateCells(table, created);
+
+  CompletionQueue cq;
+  std::thread pool([&cq] { cq.Run(); });
+
+  auto row_cell =
+      table.AsyncReadRow(cq, row_key1, bigtable::Filter::PassAllFilter()).get();
+  ASSERT_STATUS_OK(row_cell);
+  std::vector<bigtable::Cell> actual;
+  actual.emplace_back(row_cell->second.cells().at(0));
+
+  cq.Shutdown();
+  pool.join();
+
+  CheckEqualUnordered(expected, actual);
+}
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
