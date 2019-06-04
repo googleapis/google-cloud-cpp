@@ -106,7 +106,7 @@ if (NOT TARGET protobuf_project)
 
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     add_dependencies(protobuf::libprotobuf protobuf_project)
-    set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
+    set_library_properties_for_external_project(protobuf::libprotobuf protobuf ALWAYS_LIB)
     set_property(TARGET protobuf::libprotobuf
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES

@@ -74,6 +74,6 @@ if (NOT TARGET c_ares_project)
 
     add_library(c-ares::cares INTERFACE IMPORTED)
     set_library_properties_for_external_project(c-ares::cares cares
-                                                ALWAYS_SHARED)
+                                                ALWAYS_SHARED ALWAYS_LIB)
     add_dependencies(c-ares::cares c_ares_project)
 endif ()

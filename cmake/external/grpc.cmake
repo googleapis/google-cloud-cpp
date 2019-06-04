@@ -95,18 +95,18 @@ if (NOT TARGET gprc_project)
 
     add_library(gRPC::address_sorting INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::address_sorting
-                                                address_sorting)
+            address_sorting ALWAYS_LIB)
     add_dependencies(gRPC::address_sorting grpc_project)
 
     add_library(gRPC::gpr INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::gpr gpr)
+    set_library_properties_for_external_project(gRPC::gpr gpr ALWAYS_LIB)
     add_dependencies(gRPC::gpr grpc_project)
     set_property(TARGET gRPC::gpr
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES c-ares::cares)
 
     add_library(gRPC::grpc INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::grpc grpc)
+    set_library_properties_for_external_project(gRPC::grpc grpc ALWAYS_LIB)
     add_dependencies(gRPC::grpc grpc_project)
     set_property(TARGET gRPC::grpc
                  APPEND
@@ -118,7 +118,7 @@ if (NOT TARGET gprc_project)
                           protobuf::libprotobuf)
 
     add_library(gRPC::grpc++ INTERFACE IMPORTED)
-    set_library_properties_for_external_project(gRPC::grpc++ grpc++)
+    set_library_properties_for_external_project(gRPC::grpc++ grpc++ ALWAYS_LIB)
     add_dependencies(gRPC::grpc++ grpc_project)
     set_property(TARGET gRPC::grpc++
                  APPEND

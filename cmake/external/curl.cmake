@@ -97,7 +97,7 @@ if (NOT TARGET curl_project)
     include(ExternalProjectHelper)
     add_library(CURL::libcurl INTERFACE IMPORTED)
     add_dependencies(CURL::libcurl curl_project)
-    set_library_properties_for_external_project(CURL::libcurl curl)
+    set_library_properties_for_external_project(CURL::libcurl curl ALWAYS_LIB)
     set_property(TARGET CURL::libcurl
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
