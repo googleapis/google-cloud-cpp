@@ -2875,8 +2875,7 @@ class Client {
       internal::ResumableUploadRequest const& request);
 
   StatusOr<ObjectMetadata> UploadStreamResumable(
-      std::istream& source, std::uint64_t source_size,
-      internal::ResumableUploadRequest const& request);
+      std::istream& source, internal::ResumableUploadRequest const& request);
 
   Status DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
                           std::string const& file_name);

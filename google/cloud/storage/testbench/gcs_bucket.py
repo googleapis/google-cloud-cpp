@@ -599,6 +599,7 @@ class GcsBucket(object):
         begin = next_byte
         end = next_byte + len(request.data)
         total = end
+        final_chunk = False
         content_range = request.headers.get('content-range')
         if content_range is not None:
             if content_range.startswith('bytes */*'):
@@ -609,11 +610,15 @@ class GcsBucket(object):
                     response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
                 response.status_code = 308
                 return response
-            match = re.match('bytes \*/([0-9]+)', content_range)
+            match = re.match('bytes \*/(\\*|[0-9]+)', content_range)
             if match:
-                total = int(match.group(1))
+                if match.group(1) == '*':
+                    total = 0
+                else:
+                    total = int(match.group(1))
+                    final_chunk = True
             else:
-                match = re.match('bytes ([0-9]+)-([0-9]+)/(\*|[0-9]+)', content_range)
+                match = re.match('bytes ([0-9]+)-([0-9]+)/(\\*|[0-9]+)', content_range)
                 if not match:
                     raise error_response.ErrorResponse(
                         'Invalid Content-Range in upload %s' % content_range,
@@ -624,6 +629,7 @@ class GcsBucket(object):
                     total = 0
                 else:
                     total = int(match.group(3))
+                    final_chunk = True
 
                 if begin != next_byte:
                     raise error_response.ErrorResponse(
@@ -638,7 +644,7 @@ class GcsBucket(object):
         next_byte = len(upload.get('media', ''))
         upload['next_byte'] = next_byte
         response_payload = ''
-        if total != 0 and next_byte >= total:
+        if final_chunk and next_byte >= total:
             upload['done'] = True
             object_name = upload.get('object_name')
             object_path, blob = testbench_utils.get_object(

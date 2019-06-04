@@ -50,7 +50,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
 
   std::string const contents = LoremIpsum();
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk(contents, contents.size());
+      (*session)->UploadFinalChunk(contents, contents.size());
 
   ASSERT_STATUS_OK(response);
   EXPECT_FALSE(response->payload.empty());
@@ -82,13 +82,13 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
 
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk(contents, 2 * contents.size());
+      (*session)->UploadChunk(contents);
   ASSERT_STATUS_OK(response.status());
 
   response = (*session)->ResetSession();
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadChunk(contents, 2 * contents.size());
+  response = (*session)->UploadFinalChunk(contents, 2 * contents.size());
   ASSERT_STATUS_OK(response);
 
   EXPECT_FALSE(response->payload.empty());
@@ -121,7 +121,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
 
   StatusOr<ResumableUploadResponse> response =
-      (*old_session)->UploadChunk(contents, 3 * contents.size());
+      (*old_session)->UploadChunk(contents);
   ASSERT_STATUS_OK(response.status());
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -129,10 +129,10 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   EXPECT_EQ(contents.size(), (*session)->next_expected_byte());
   old_session->reset();
 
-  response = (*session)->UploadChunk(contents, 3 * contents.size());
+  response = (*session)->UploadChunk(contents);
   ASSERT_STATUS_OK(response);
 
-  response = (*session)->UploadChunk(contents, 3 * contents.size());
+  response = (*session)->UploadFinalChunk(contents, 3 * contents.size());
   ASSERT_STATUS_OK(response);
 
   EXPECT_FALSE(response->payload.empty());
@@ -165,9 +165,9 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   std::string const contents(UploadChunkRequest::kChunkSizeQuantum, '0');
   // Send 2 chunks sized to be round quantums.
   StatusOr<ResumableUploadResponse> response =
-      (*session)->UploadChunk(contents, 0);
+      (*session)->UploadChunk(contents);
   ASSERT_STATUS_OK(response.status());
-  response = (*session)->UploadChunk(contents, 0);
+  response = (*session)->UploadChunk(contents);
   ASSERT_STATUS_OK(response.status());
 
   // Consider a streaming upload where the application flushes before closing
@@ -176,7 +176,7 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   // upload quantum. In this case the stream is terminated by sending an empty
   // chunk at the end, with the size of the previous chunks as an indication
   // of "done".
-  response = (*session)->UploadChunk(std::string{}, 2 * contents.size());
+  response = (*session)->UploadFinalChunk(std::string{}, 2 * contents.size());
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_FALSE(response->payload.empty());
@@ -185,6 +185,36 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
+
+  auto status =
+      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_F(CurlResumableUploadIntegrationTest, Empty) {
+  auto client_options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(client_options);
+  auto client = CurlClient::Create(*client_options);
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  ResumableUploadRequest request(bucket_name, object_name);
+  request.set_multiple_options(IfGenerationMatch(0));
+
+  StatusOr<std::unique_ptr<ResumableUploadSession>> session =
+      client->CreateResumableSession(request);
+
+  ASSERT_STATUS_OK(session);
+
+  auto response = (*session)->UploadFinalChunk(std::string{}, 0U);
+  ASSERT_STATUS_OK(response.status());
+
+  EXPECT_FALSE(response->payload.empty());
+  auto metadata =
+      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_EQ(object_name, metadata.name());
+  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(0U, metadata.size());
 
   auto status =
       client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));

@@ -401,12 +401,21 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
  public:
   UploadChunkRequest() = default;
   UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
+                     std::string payload)
+      : GenericRequest(),
+        upload_session_url_(std::move(upload_session_url)),
+        range_begin_(range_begin),
+        payload_(std::move(payload)),
+        source_size_(0),
+        last_chunk_(false) {}
+  UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
                      std::string payload, std::uint64_t source_size)
       : GenericRequest(),
         upload_session_url_(std::move(upload_session_url)),
         range_begin_(range_begin),
         payload_(std::move(payload)),
-        source_size_(source_size) {}
+        source_size_(source_size),
+        last_chunk_(true) {}
 
   std::string const& upload_session_url() const { return upload_session_url_; }
   std::uint64_t range_begin() const { return range_begin_; }
@@ -436,6 +445,7 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
   std::uint64_t range_begin_ = 0U;
   std::string payload_;
   std::uint64_t source_size_ = 0U;
+  bool last_chunk_ = false;
 };
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);

@@ -37,10 +37,35 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
 }  // namespace
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
+    std::string const& buffer) {
+  Status last_status;
+  while (!retry_policy_->IsExhausted()) {
+    auto result = session_->UploadChunk(buffer);
+    if (result.ok()) {
+      return result;
+    }
+    last_status = std::move(result).status();
+    if (!retry_policy_->OnFailure(last_status)) {
+      return ReturnError(std::move(last_status), *retry_policy_, __func__);
+    }
+    auto delay = backoff_policy_->OnCompletion();
+    std::this_thread::sleep_for(delay);
+
+    result = ResetSession();
+    if (!result.ok()) {
+      return result;
+    }
+  }
+  std::ostringstream os;
+  os << "Retry policy exhausted in " << __func__ << ": " << last_status;
+  return Status(last_status.code(), os.str());
+}
+
+StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
     std::string const& buffer, std::uint64_t upload_size) {
   Status last_status;
   while (!retry_policy_->IsExhausted()) {
-    auto result = session_->UploadChunk(buffer, upload_size);
+    auto result = session_->UploadFinalChunk(buffer, upload_size);
     if (result.ok()) {
       return result;
     }

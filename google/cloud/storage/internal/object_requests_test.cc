@@ -517,28 +517,34 @@ TEST(ObjectRequestsTest, UploadChunk) {
   EXPECT_THAT(actual, HasSubstr("<Content-Range: bytes 0-5/2048>"));
 }
 
-TEST(ObjectRequestsTest, UploadChunkContentRangeUnknownSize) {
+TEST(ObjectRequestsTest, UploadChunkContentRangeNotLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, "1234", 0U);
+  UploadChunkRequest request(url, 1024, "1234");
   EXPECT_EQ("Content-Range: bytes 1024-1027/*", request.RangeHeader());
 }
 
-TEST(ObjectRequestsTest, UploadChunkContentRangeKnownSize) {
+TEST(ObjectRequestsTest, UploadChunkContentRangeLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, "1234", 2048U);
-  EXPECT_EQ("Content-Range: bytes 1024-1027/2048", request.RangeHeader());
+  UploadChunkRequest request(url, 2045, "1234", 2048U);
+  EXPECT_EQ("Content-Range: bytes 2045-2048/2048", request.RangeHeader());
 }
 
-TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadUnknownSize) {
+TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadNotLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 1024, std::string{}, 0U);
+  UploadChunkRequest request(url, 1024, std::string{});
   EXPECT_EQ("Content-Range: bytes */*", request.RangeHeader());
 }
 
-TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadKnownSize) {
+TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
   UploadChunkRequest request(url, 2047, std::string{}, 2048U);
   EXPECT_EQ("Content-Range: bytes */2048", request.RangeHeader());
+}
+
+TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadEmpty) {
+  std::string const url = "https://unused.googleapis.com/test-only";
+  UploadChunkRequest request(url, 1024, std::string{}, 0U);
+  EXPECT_EQ("Content-Range: bytes */0", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, QueryResumableUpload) {

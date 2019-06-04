@@ -53,7 +53,7 @@ CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
     return 0;
   }
   // If the buffer is full flush it immediately.
-  auto status = Flush(false);
+  auto status = Flush();
   if (!status.ok()) {
     return traits_type::eof();
   }
@@ -64,7 +64,7 @@ CurlResumableStreambuf::int_type CurlResumableStreambuf::overflow(int_type ch) {
 }
 
 int CurlResumableStreambuf::sync() {
-  auto status = Flush(false);
+  auto status = Flush();
   if (!status.ok()) {
     return traits_type::eof();
   }
@@ -83,7 +83,7 @@ std::streamsize CurlResumableStreambuf::xsputn(char const* s,
   setp(pbeg, pend);
   pbump(static_cast<int>(current_ios_buffer_.size()));
 
-  auto status = Flush(false);
+  auto status = Flush();
   if (!status.ok()) {
     return traits_type::eof();
   }
@@ -92,51 +92,68 @@ std::streamsize CurlResumableStreambuf::xsputn(char const* s,
 
 StatusOr<HttpResponse> CurlResumableStreambuf::DoClose() {
   GCP_LOG(INFO) << __func__ << "()";
-  return Flush(true);
+  return FlushFinal();
 }
 
-StatusOr<HttpResponse> CurlResumableStreambuf::Flush(bool final_chunk) {
+StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
+  // Shorten the buffer to the actual used size.
+  auto actual_size = static_cast<std::size_t>(pptr() - pbase());
+  std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
+  current_ios_buffer_.resize(actual_size);
+  hash_validator_->Update(current_ios_buffer_);
+
+  StatusOr<ResumableUploadResponse> result =
+      upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
+  if (!result) {
+    // This was an unrecoverable error, time to signal an error.
+    return std::move(result).status();
+  }
+  // Reset the iostream put area with valid pointers, but empty.
+  current_ios_buffer_.resize(1);
+  auto pbeg = &current_ios_buffer_[0];
+  setp(pbeg, pbeg);
+
+  upload_session_.reset();
+
+  // If `result.ok() == false` we never get to this point, so the last response
+  // was actually successful. Represent that by a HTTP 200 status code.
+  last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
+  return last_response_;
+}
+
+StatusOr<HttpResponse> CurlResumableStreambuf::Flush() {
   if (!IsOpen()) {
     return last_response_;
   }
   // Shorten the buffer to the actual used size.
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
-  if (actual_size < max_buffer_size_ && !final_chunk) {
+  if (actual_size < max_buffer_size_) {
     return last_response_;
   }
 
-  std::string trailing;
-  std::size_t upload_size = 0U;
-  if (final_chunk) {
-    current_ios_buffer_.resize(actual_size);
-    upload_size = upload_session_->next_expected_byte() + actual_size;
-  } else {
-    auto chunk_count = actual_size / UploadChunkRequest::kChunkSizeQuantum;
-    auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
-    trailing.assign(pbase() + chunk_size, pbase() + actual_size);
-    current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
-  }
+  auto chunk_count = actual_size / UploadChunkRequest::kChunkSizeQuantum;
+  auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
+  std::string not_sent(pbase() + chunk_size, pbase() + actual_size);
+  current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
   hash_validator_->Update(current_ios_buffer_);
 
-  auto result = upload_session_->UploadChunk(current_ios_buffer_, upload_size);
-  if (!result.ok()) {
+  StatusOr<ResumableUploadResponse> result =
+      upload_session_->UploadChunk(current_ios_buffer_);
+  if (!result) {
     // This was an unrecoverable error, time to signal an error.
     return std::move(result).status();
   }
+  // Reset the put area, preserve any data not setn.
   current_ios_buffer_.clear();
   current_ios_buffer_.reserve(max_buffer_size_);
-  current_ios_buffer_.append(trailing);
+  current_ios_buffer_.append(not_sent);
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
-  pbump(static_cast<int>(trailing.size()));
-
-  if (final_chunk) {
-    upload_session_.reset();
-  }
+  pbump(static_cast<int>(not_sent.size()));
 
   // If `result.ok() == false` we never get to this point, so the last response
-  // was actually successful, represent that by a HTTP 200 status code.
+  // was actually successful. Represent that by a HTTP 200 status code.
   last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
   return last_response_;
 }

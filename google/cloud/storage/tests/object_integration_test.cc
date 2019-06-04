@@ -435,6 +435,31 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // Create the object, but only if it does not exist already.
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  ObjectMetadata meta = os.metadata().value();
+  ASSERT_EQ(object_name, meta.name());
+  ASSERT_EQ(bucket_name, meta.bucket());
+  ASSERT_EQ(0U, meta.size());
+
+  // Create a iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_TRUE(actual.empty());
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
