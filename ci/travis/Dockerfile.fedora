@@ -59,4 +59,3 @@ RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtab
 WORKDIR /var/tmp/ci
 COPY install-bazel.sh /var/tmp/ci
 RUN /var/tmp/ci/install-bazel.sh
-

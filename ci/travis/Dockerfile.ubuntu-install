@@ -41,6 +41,7 @@ RUN apt update && \
         python-pip \
         shellcheck \
         tar \
+        unzip \
         wget \
         zlib1g-dev
 
@@ -172,3 +173,8 @@ RUN cmake --build cmake-out/googletest --target install -- -j ${NCPU}
 RUN ldconfig
 
 RUN find /usr/local -type d | xargs chmod 777
+
+# Install Bazel too.
+WORKDIR /var/tmp/ci
+COPY install-bazel.sh /var/tmp/ci
+RUN /var/tmp/ci/install-bazel.sh

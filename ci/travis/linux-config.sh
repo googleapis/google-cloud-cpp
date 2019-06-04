@@ -19,7 +19,7 @@ set -eu
 if [[ -n "${IMAGE+x}" ]]; then
   echo "IMAGE is already defined."
 else
-  readonly IMAGE="${DISTRO}-${DISTRO_VERSION}"
+  readonly IMAGE="gcpp-ci-${DISTRO}-${DISTRO_VERSION}"
   suffix=""
   if [[ -n "${CC:-}" ]]; then
     suffix="${suffix}-${CC}"

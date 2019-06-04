@@ -21,15 +21,17 @@ export CXX=g++
 export DISTRO=ubuntu
 export DISTRO_VERSION=18.04
 
+in_docker_script="ci/travis/build-docker.sh"
+
 if [[ "${BUILD_NAME+x}" != "x" ]]; then
  echo "The BUILD_NAME is not defined or is empty. Fix the Kokoro .cfg file."
  exit 1
 elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
-  export BUILD_TYPE=Debug
   export CC=clang
   export CXX=clang++
-  export CMAKE_FLAGS="-DSANITIZE_ADDRESS=yes"
+  export BAZEL_CONFIG="asan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "centos-7" ]]; then
   # Compile under centos:7. This distro uses gcc-4.8.
   export DISTRO=centos
@@ -116,9 +118,68 @@ fi
 echo "================================================================"
 
 echo "================================================================"
-echo "Running the full build $(date)."
-export NEEDS_CCACHE=no
-"${PROJECT_ROOT}/ci/travis/build-linux.sh"
+echo "Capture Docker version to troubleshoot $(date)."
+sudo docker version
+echo "================================================================"
+
+echo "================================================================"
+echo "Running the full build inside docker $(date)."
+# The default user for a Docker container has uid 0 (root). To avoid creating
+# root-owned files in the build directory we tell docker to use the current
+# user ID, if known.
+docker_uid="${UID:-0}"
+docker_user="${USER:-root}"
+docker_home_prefix="${PWD}/cmake-out/home"
+if [[ "${docker_uid}" == "0" ]]; then
+  # If the UID is 0, then the HOME directory will be set to /root, and we
+  # need to mount the ccache files is /root/.ccache.
+  docker_home_prefix="${PWD}/cmake-out/root"
+fi
+
+readonly DOCKER_HOME="${docker_home_prefix}/${IMAGE}${suffix}"
+mkdir -p "${DOCKER_HOME}"
+
+# When running on Travis the build gets a tty, and docker can produce nicer
+# output in that case, but on Kokoro the script does not get a tty, and Docker
+# terminates the program if we pass the `-it` flag in that case.
+interactive_flag="-t"
+if [[ -t 0 ]]; then
+  interactive_flag="-it"
+fi
+
+# We use an array for the flags so they are easier to document.
+docker_flags=("--cap-add" "SYS_PTRACE" )
+
+sudo docker run \
+     --cap-add SYS_PTRACE \
+     "${interactive_flag}" \
+     --env DISTRO="${DISTRO}" \
+     --env DISTRO_VERSION="${DISTRO_VERSION}" \
+     --env CXX="${CXX}" \
+     --env CC="${CC}" \
+     --env NCPU="${NCPU:-4}" \
+     --env NEEDS_CCACHE="no" \
+     --env BUILD_TYPE="${BUILD_TYPE:-Release}" \
+     --env BUILD_TESTING="${BUILD_TESTING:=yes}" \
+     --env USE_LIBCXX="${USE_LIBCXX:-}" \
+     --env CHECK_ABI="${CHECK_ABI:-}" \
+     --env UPDATE_ABI="${UPDATE_ABI:-}" \
+     --env CHECK_STYLE="${CHECK_STYLE:-}" \
+     --env GENERATE_DOCS="${GENERATE_DOCS:-}" \
+     --env TEST_INSTALL="${TEST_INSTALL:-}" \
+     --env CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
+     --env BAZEL_CONFIG="${BAZEL_CONFIG:-}" \
+     --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
+     --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
+     --env TERM="${TERM:-dumb}" \
+     --user "${docker_uid}" \
+     --volume "${PWD}":/v \
+     --env HOME="/h" \
+     --env USER="${docker_user}" \
+     --volume "${DOCKER_HOME}:/h" \
+     --workdir /v \
+     "${IMAGE}:tip" \
+     "/v/${in_docker_script}"
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
@@ -131,4 +192,7 @@ echo "================================================================"
 "${PROJECT_ROOT}/ci/travis/dump-reports.sh"
 echo "================================================================"
 
+echo
+echo "Build script finished with ${exit_status} exit status $(date)."
+echo
 exit ${exit_status}

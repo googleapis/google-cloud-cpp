@@ -38,17 +38,6 @@ echo "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 echo "================================================================"
 
-ls -l
-echo "================================================================"
-ls -l /v
-echo "================================================================"
-echo $HOME
-ls -ld $HOME
-ls -l $HOME
-echo "================================================================"
-
-
-
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
 if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=("--config" "${BAZEL_CONFIG}")

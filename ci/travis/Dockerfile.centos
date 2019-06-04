@@ -29,6 +29,7 @@ RUN yum makecache && yum install -y \
     gcc \
     gcc-c++ \
     git \
+    make \
     openssl-devel \
     python \
     python-pip \
@@ -53,4 +54,7 @@ RUN sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
 RUN tar x -C /usr/local -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
 
-RUN yum makecache && yum install -y make
+# Install Bazel too.
+WORKDIR /var/tmp/ci
+COPY install-bazel.sh /var/tmp/ci
+RUN /var/tmp/ci/install-bazel.sh
