@@ -1,0 +1,54 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Clang Sanitizers, use with (for example):
+#
+# --client_env=CXX=clang++ --client_env=CC=clang --config asan
+#
+
+# --config asan: Address Sanitizer
+build:asan --strip=never
+build:asan --copt=-fsanitize=address
+build:asan --copt=-O0
+build:asan --copt=-fno-omit-frame-pointer
+build:asan --linkopt=-fsanitize=address
+build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
+build:asan --action_env=LSAN_OPTIONS=report_objects=1
+
+# --config tsan: Thread Sanitizer
+build:tsan --strip=never
+build:tsan --copt=-fsanitize=thread
+build:tsan --copt=-fno-omit-frame-pointer
+build:tsan --linkopt=-fsanitize=thread
+build:tsan --action_env=TSAN_OPTIONS=halt_on_error=1:second_deadlock_stack=1
+
+# --config ubsan: Undefined Behavior Sanitizer
+build:ubsan --strip=never
+build:ubsan --copt=-fsanitize=undefined
+build:ubsan --copt=-fno-omit-frame-pointer
+build:ubsan --linkopt=-fsanitize=undefined
+build:ubsan --linkopt=-lubsan
+build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
+
+# TODO(#62): this does not work unless libc++ (or libstdc++) are also compiled
+# with -fsanitize=memory.
+# --config tsan: Memory Sanitizer
+# build:msan --strip=never
+# build:msan --copt=-fsanitize=memory
+# build:msan --copt=-O0
+# build:msan --copt=-fno-omit-frame-pointer
+# build:msan --copt=-fsanitize-memory-track-origins
+# build:msan --copt=-fsanitize-memory-use-after-dtor
+# build:msan --linkopt=-fsanitize=memory
+# build:msan --action_env=MSAN_OPTIONS=poison_in_dtor=1

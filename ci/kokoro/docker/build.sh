@@ -21,15 +21,17 @@ export CXX=g++
 export DISTRO=ubuntu
 export DISTRO_VERSION=18.04
 
+in_docker_script="ci/travis/build-docker.sh"
+
 if [[ "${BUILD_NAME+x}" != "x" ]]; then
  echo "The BUILD_NAME is not defined or is empty. Fix the Kokoro .cfg file."
  exit 1
 elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
-  export BUILD_TYPE=Debug
   export CC=clang
   export CXX=clang++
-  export CMAKE_FLAGS="-DSANITIZE_ADDRESS=yes"
+  export BAZEL_CONFIG="asan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "centos-7" ]]; then
   # Compile under centos:7. This distro uses gcc-4.8.
   export DISTRO=centos
@@ -116,9 +118,127 @@ fi
 echo "================================================================"
 
 echo "================================================================"
-echo "Running the full build $(date)."
-export NEEDS_CCACHE=no
-"${PROJECT_ROOT}/ci/travis/build-linux.sh"
+echo "Capture Docker version to troubleshoot $(date)."
+sudo docker version
+echo "================================================================"
+
+echo "================================================================"
+echo "Running the full build inside docker $(date)."
+# The default user for a Docker container has uid 0 (root). To avoid creating
+# root-owned files in the build directory we tell docker to use the current
+# user ID, if known.
+docker_uid="${UID:-0}"
+docker_user="${USER:-root}"
+docker_home_prefix="${PWD}/cmake-out/home"
+if [[ "${docker_uid}" == "0" ]]; then
+  # If the UID is 0, then the HOME directory will be set to /root, and we
+  # need to mount the ccache files is /root/.ccache.
+  docker_home_prefix="${PWD}/cmake-out/root"
+fi
+
+readonly DOCKER_HOME="${docker_home_prefix}/${IMAGE}${suffix}"
+mkdir -p "${DOCKER_HOME}"
+
+# We use an array for the flags so they are easier to document.
+docker_flags=(
+    # Enable ptrace as it is needed by s
+    "--cap-add" "SYS_PTRACE"
+
+    # The name and version of the, this is used to call linux-config.sh
+    "--env" "DISTRO=${DISTRO}"
+    "--env" "DISTRO_VERSION=${DISTRO_VERSION}"
+
+    # The C++ and C compiler, both Bazel and CMake use this environment variable
+    # to select the compiler binary.
+    "--env" "CXX=${CXX}"
+    "--env" "CC=${CC}"
+
+    # The number of CPUs, probably should be removed, the scripts can detect
+    # this themselves in Kokoro (it was a problem on Travis).
+    "--env" "NCPU=${NCPU:-4}"
+
+    # Disable ccache(1) for Kokoro build builds we do not cache data between
+    # builds.
+    "--env" "NEEDS_CCACHE=no"
+
+    # The type of the build for CMake.
+    "--env" "BUILD_TYPE=${BUILD_TYPE:-Release}"
+    # Additional flags to enable CMake features.
+    "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
+
+    # The type of the build for Bazel.
+    "--env" "BAZEL_CONFIG=${BAZEL_CONFIG:-}"
+
+    # With CMake we can disable the tests, this is useful for package
+    # maintainers and we need to test it.
+    "--env" "BUILD_TESTING=${BUILD_TESTING:=yes}"
+
+    # If set, enable using libc++ with CMake.
+    "--env" "USE_LIBCXX=${USE_LIBCXX:-}"
+
+    # If set, use Clang's static analyzer. Currently there is no build that
+    # uses this feature, it may have rotten.
+    "--env" "SCAN_BUILD=${SCAN_BUILD:-}"
+
+    # If set, run the check-abi.sh script.
+    "--env" "CHECK_ABI=${CHECK_ABI:-}"
+
+    # If set, run the check-abi.sh script and *then* update the API/ABI
+    # baseline.
+    "--env" "UPDATE_ABI=${UPDATE_ABI:-}"
+
+    # If set, run the scripts to check (and fix) the code formatting (i.e.
+    # clang-format, cmake-format, and buildifier).
+    "--env" "CHECK_STYLE=${CHECK_STYLE:-}"
+
+    # If set, run the scripts to generate Doxygen docs. Note that the scripts
+    # to upload said docs are not part of the build, they run afterwards on
+    # Travis.
+    "--env" "GENERATE_DOCS=${GENERATE_DOCS:-}"
+
+    # If set, execute tests to verify `make install` works and produces working
+    # installations.
+    "--env" "TEST_INSTALL=${TEST_INSTALL:-}"
+
+    # Configure the location of the Cloud Bigtable command-line tool and
+    # emulator.
+    "--env" "CBT=/usr/local/google-cloud-sdk/bin/cbt"
+    "--env" "CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
+
+    # Let the Docker image script know what kind of terminal we are using, that
+    # produces properly colorized error messages.
+    "--env" "TERM=${TERM:-dumb}"
+
+    # Run the docker script and this user id. Because the docker image gets to
+    # write in ${PWD} you typically want this to be your user id.
+    "--user" "${docker_uid}"
+
+    # Bazel needs this environment variable to work correctly.
+    "--env" "USER=${docker_user}"
+
+    # We give Bazel and CMake a fake $HOME inside the docker image. Bazel caches
+    # build byproducts in this directory. CMake (when ccache is enabled) uses
+    # it to store $HOME/.ccache
+
+    # Make the fake directory available inside the docker image as `/h`.
+    "--volume" "${DOCKER_HOME}:/h"
+    "--env" "HOME=/h"
+
+    # Mount the current directory (which is the top-level directory for the
+    # project) as `/v` inside the docker image, and move to that directory.
+    "--volume" "${PWD}:/v"
+    "--workdir" "/v"
+)
+
+# When running on Travis the build gets a tty, and docker can produce nicer
+# output in that case, but on Kokoro the script does not get a tty, and Docker
+# terminates the program if we pass the `-it` flag in that case.
+if [[ -t 0 ]]; then
+  docker_flags+=("-it")
+fi
+
+# Run the docker image with that giant collection of flags.
+sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" "/v/${in_docker_script}"
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
@@ -131,4 +251,7 @@ echo "================================================================"
 "${PROJECT_ROOT}/ci/travis/dump-reports.sh"
 echo "================================================================"
 
+echo
+echo "Build script finished with ${exit_status} exit status $(date)."
+echo
 exit ${exit_status}

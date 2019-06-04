@@ -54,3 +54,8 @@ RUN sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
     grep -q '^a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a '
 RUN tar x -C /usr/local -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
 RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
+
+# Install Bazel too.
+WORKDIR /var/tmp/ci
+COPY install-bazel.sh /var/tmp/ci
+RUN /var/tmp/ci/install-bazel.sh
