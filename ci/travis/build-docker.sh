@@ -223,6 +223,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
         echo /var/tmp/staging/usr/local/include/google/cloud/storage ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/internal ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/oauth2 ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/storage/testing ; \
         /bin/true) | grep -q /var/tmp; then
       echo "${COLOR_YELLOW}Installed directories do not match expectation.${COLOR_RESET}"
       echo "${COLOR_RED}Found:"
