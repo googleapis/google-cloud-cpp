@@ -27,10 +27,10 @@ template <typename T>
 void TestBasicSemantics(T init) {
   Value const v{init};
 
-  EXPECT_TRUE(v.is<T>()) << v;
-  EXPECT_FALSE(v.is_null()) << v;
+  EXPECT_TRUE(v.is<T>());
+  EXPECT_FALSE(v.is_null());
 
-  EXPECT_EQ(init, *v.get<T>()) << v;
+  EXPECT_EQ(init, *v.get<T>());
   EXPECT_EQ(init, static_cast<T>(v));
 
   Value const copy = v;

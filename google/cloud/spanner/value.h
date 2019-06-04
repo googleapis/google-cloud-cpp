@@ -113,7 +113,7 @@ class Value {
    */
   template <typename T>
   bool is() const {
-    return IsType(T{});
+    return type_.code() == TypeCodeMap::GetCode(T{});
   }
 
   /**
@@ -168,12 +168,13 @@ class Value {
   }
 
   /**
-   * Outputs the contained value and type, formatted as a string.
+   * Allows Google Test to print internal debugging information when test
+   * assertions fail.
    *
-   * This is intended for debugging and human consumption only, not machine
-   * consumption as the output format may change without notice.
+   * @warning This is intended for debugging and human consumption only, not
+   * machine consumption as the output format may change without notice.
    */
-  friend std::ostream& operator<<(std::ostream& os, Value v);
+  friend void PrintTo(Value const& v, std::ostream* os);
 
  private:
   // A private argument type and constructor that's used by the public
@@ -187,12 +188,15 @@ class Value {
     value_.set_null_value(google::protobuf::NullValue::NULL_VALUE);
   }
 
-  // Tag-dispatched function overloads. The argument type is important, the
-  // value is ignored.
-  bool IsType(bool) const;
-  bool IsType(std::int64_t) const;
-  bool IsType(double) const;
-  bool IsType(std::string) const;
+  struct TypeCodeMap {
+    using Code = google::spanner::v1::TypeCode;
+    // Tag-dispatched function overloads. The argument type is important, the
+    // value is ignored.
+    static Code GetCode(bool) { return Code::BOOL; }
+    static Code GetCode(std::int64_t) { return Code::INT64; }
+    static Code GetCode(double) { return Code::FLOAT64; }
+    static Code GetCode(std::string) { return Code::STRING; }
+  };
 
   // Tag-dispatched function overloads. The argument type is important, the
   // value is ignored.

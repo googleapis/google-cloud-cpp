@@ -81,50 +81,12 @@ bool operator==(Value a, Value b) {
   }
 }
 
-std::ostream& operator<<(std::ostream& os, Value v) {
-  auto const& code = v.type_.code();
-  auto const* const descriptor = google::spanner::v1::TypeCode_descriptor();
-  os << "Value{" << descriptor->FindValueByNumber(code)->name() << ":";
-  if (v.is_null()) return os << "(null)}";
-  switch (code) {
-    case google::spanner::v1::TypeCode::BOOL:
-      os << *v.get<bool>();
-      break;
-    case google::spanner::v1::TypeCode::INT64:
-      os << *v.get<std::int64_t>();
-      break;
-    case google::spanner::v1::TypeCode::FLOAT64:
-      os << *v.get<double>();
-      break;
-    case google::spanner::v1::TypeCode::STRING:
-      os << *v.get<std::string>();
-      break;
-  }
-  return os << "}";
+void PrintTo(Value const& v, std::ostream* os) {
+  *os << v.type_.ShortDebugString() << "; " << v.value_.ShortDebugString();
 }
 
 bool Value::is_null() const {
   return value_.kind_case() == google::protobuf::Value::kNullValue;
-}
-
-//
-// Value::IsType
-//
-
-bool Value::IsType(bool) const {
-  return type_.code() == google::spanner::v1::TypeCode::BOOL;
-}
-
-bool Value::IsType(std::int64_t) const {
-  return type_.code() == google::spanner::v1::TypeCode::INT64;
-}
-
-bool Value::IsType(double) const {
-  return type_.code() == google::spanner::v1::TypeCode::FLOAT64;
-}
-
-bool Value::IsType(std::string) const {
-  return type_.code() == google::spanner::v1::TypeCode::STRING;
 }
 
 //
