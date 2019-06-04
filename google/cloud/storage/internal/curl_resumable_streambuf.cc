@@ -104,7 +104,7 @@ StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
 
   StatusOr<ResumableUploadResponse> result =
       upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
-  if (!result.ok()) {
+  if (!result) {
     // This was an unrecoverable error, time to signal an error.
     return std::move(result).status();
   }
