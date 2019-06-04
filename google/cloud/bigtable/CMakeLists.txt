@@ -40,7 +40,16 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
+
+if ("$ENV{GENERATE_DOCS_FOR_GOOGLEAPIDEV}" STREQUAL "true")
+  set(DOXYGEN_TAGFILES "\
+${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/\
+${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.\
+${GOOGLE_CLOUD_CPP_VERSION_MINOR}.\
+${GOOGLE_CLOUD_CPP_VERSION_PATCH}/")
+else()
+  set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
+endif()
 
 include(GoogleCloudCppCommon)
 if (TARGET bigtable-docs AND TARGET cloud-docs)

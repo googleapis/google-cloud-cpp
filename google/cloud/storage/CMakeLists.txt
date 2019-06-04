@@ -36,7 +36,16 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/tests/*"
     "*/google/cloud/storage/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
+
+if ("$ENV{GENERATE_DOCS_FOR_GOOGLEAPIDEV}" STREQUAL "true")
+  set(DOXYGEN_TAGFILES "\
+${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/\
+${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.\
+${GOOGLE_CLOUD_CPP_VERSION_MINOR}.\
+${GOOGLE_CLOUD_CPP_VERSION_PATCH}/")
+else()
+  set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
+endif()
 
 include(GoogleCloudCppCommon)
 if (TARGET storage-docs AND TARGET cloud-docs)
