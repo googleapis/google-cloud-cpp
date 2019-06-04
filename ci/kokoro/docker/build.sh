@@ -139,47 +139,106 @@ fi
 readonly DOCKER_HOME="${docker_home_prefix}/${IMAGE}${suffix}"
 mkdir -p "${DOCKER_HOME}"
 
+# We use an array for the flags so they are easier to document.
+docker_flags=(
+    # Enable ptrace as it is needed by s
+    "--cap-add" "SYS_PTRACE"
+
+    # The name and version of the, this is used to call linux-config.sh
+    "--env" "DISTRO=${DISTRO}"
+    "--env" "DISTRO_VERSION=${DISTRO_VERSION}"
+
+    # The C++ and C compiler, both Bazel and CMake use this environment variable
+    # to select the compiler binary.
+    "--env" "CXX=${CXX}"
+    "--env" "CC=${CC}"
+
+    # The number of CPUs, probably should be removed, the scripts can detect
+    # this themselves in Kokoro (it was a problem on Travis).
+    "--env" "NCPU=${NCPU:-4}"
+
+    # Disable ccache(1) for Kokoro build builds we do not cache data between
+    # builds.
+    "--env" "NEEDS_CCACHE=no"
+
+    # The type of the build for CMake.
+    "--env" "BUILD_TYPE=${BUILD_TYPE:-Release}"
+    # Additional flags to enable CMake features.
+    "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
+
+    # The type of the build for Bazel.
+    "--env" "BAZEL_CONFIG=${BAZEL_CONFIG:-}"
+
+    # With CMake we can disable the tests, this is useful for package
+    # maintainers and we need to test it.
+    "--env" "BUILD_TESTING=${BUILD_TESTING:=yes}"
+
+    # If set, enable using libc++ with CMake.
+    "--env" "USE_LIBCXX=${USE_LIBCXX:-}"
+
+    # If set, use Clang's static analyzer. Currently there is no build that
+    # uses this feature, it may have rotten.
+    "--env" "SCAN_BUILD=${SCAN_BUILD:-}"
+
+    # If set, run the check-abi.sh script.
+    "--env" "CHECK_ABI=${CHECK_ABI:-}"
+
+    # If set, run the check-abi.sh script and *then* update the API/ABI
+    # baseline.
+    "--env" "UPDATE_ABI=${UPDATE_ABI:-}"
+
+    # If set, run the scripts to check (and fix) the code formatting (i.e.
+    # clang-format, cmake-format, and buildifier).
+    "--env" "CHECK_STYLE=${CHECK_STYLE:-}"
+
+    # If set, run the scripts to generate Doxygen docs. Note that the scripts
+    # to upload said docs are not part of the build, they run afterwards on
+    # Travis.
+    "--env" "GENERATE_DOCS=${GENERATE_DOCS:-}"
+
+    # If set, execute tests to verify `make install` works and produces working
+    # installations.
+    "--env" "TEST_INSTALL=${TEST_INSTALL:-}"
+
+    # Configure the location of the Cloud Bigtable command-line tool and
+    # emulator.
+    "--env" "CBT=/usr/local/google-cloud-sdk/bin/cbt"
+    "--env" "CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator"
+
+    # Let the Docker image script know what kind of terminal we are using, that
+    # produces properly colorized error messages.
+    "--env" "TERM=${TERM:-dumb}"
+
+    # Run the docker script and this user id. Because the docker image gets to
+    # write in ${PWD} you typically want this to be your user id.
+    "--user" "${docker_uid}"
+
+    # Bazel needs this environment variable to work correctly.
+    "--env" "USER=${docker_user}"
+
+    # We give Bazel and CMake a fake $HOME inside the docker image. Bazel caches
+    # build byproducts in this directory. CMake (when ccache is enabled) uses
+    # it to store $HOME/.ccache
+
+    # Make the fake directory available inside the docker image as `/h`.
+    "--volume" "${DOCKER_HOME}:/h"
+    "--env" "HOME=/h"
+
+    # Mount the current directory (which is the top-level directory for the
+    # project) as `/v` inside the docker image, and move to that directory.
+    "--volume" "${PWD}:/v"
+    "--workdir" "/v"
+)
+
 # When running on Travis the build gets a tty, and docker can produce nicer
 # output in that case, but on Kokoro the script does not get a tty, and Docker
 # terminates the program if we pass the `-it` flag in that case.
-interactive_flag="-t"
 if [[ -t 0 ]]; then
-  interactive_flag="-it"
+  docker_flags+=("-it")
 fi
 
-# We use an array for the flags so they are easier to document.
-docker_flags=("--cap-add" "SYS_PTRACE" )
-
-sudo docker run \
-     --cap-add SYS_PTRACE \
-     "${interactive_flag}" \
-     --env DISTRO="${DISTRO}" \
-     --env DISTRO_VERSION="${DISTRO_VERSION}" \
-     --env CXX="${CXX}" \
-     --env CC="${CC}" \
-     --env NCPU="${NCPU:-4}" \
-     --env NEEDS_CCACHE="no" \
-     --env BUILD_TYPE="${BUILD_TYPE:-Release}" \
-     --env BUILD_TESTING="${BUILD_TESTING:=yes}" \
-     --env USE_LIBCXX="${USE_LIBCXX:-}" \
-     --env CHECK_ABI="${CHECK_ABI:-}" \
-     --env UPDATE_ABI="${UPDATE_ABI:-}" \
-     --env CHECK_STYLE="${CHECK_STYLE:-}" \
-     --env GENERATE_DOCS="${GENERATE_DOCS:-}" \
-     --env TEST_INSTALL="${TEST_INSTALL:-}" \
-     --env CMAKE_FLAGS="${CMAKE_FLAGS:-}" \
-     --env BAZEL_CONFIG="${BAZEL_CONFIG:-}" \
-     --env CBT=/usr/local/google-cloud-sdk/bin/cbt \
-     --env CBT_EMULATOR=/usr/local/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
-     --env TERM="${TERM:-dumb}" \
-     --user "${docker_uid}" \
-     --volume "${PWD}":/v \
-     --env HOME="/h" \
-     --env USER="${docker_user}" \
-     --volume "${DOCKER_HOME}:/h" \
-     --workdir /v \
-     "${IMAGE}:tip" \
-     "/v/${in_docker_script}"
+# Run the docker image with that giant collection of flags.
+sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" "/v/${in_docker_script}"
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
