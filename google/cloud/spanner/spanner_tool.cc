@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/status.h"
-#include "google/cloud/storage/internal/format_time_point.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <google/spanner/v1/spanner.grpc.pb.h>
@@ -272,8 +272,7 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
         " VALUES (@name, @time, @value)");
     auto& fields = *request.mutable_params()->mutable_fields();
     fields["name"].set_string_value(std::move(series_name));
-    fields["time"].set_string_value(
-        google::cloud::storage::internal::FormatRfc3339(ts));
+    fields["time"].set_string_value(google::cloud::internal::FormatRfc3339(ts));
     fields["value"].set_string_value(std::to_string(value));
     auto& types = *request.mutable_param_types();
     types["time"].set_code(spanner::TIMESTAMP);
