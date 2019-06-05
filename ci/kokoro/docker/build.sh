@@ -42,10 +42,10 @@ elif [[ "${BUILD_NAME}" = "noex" ]]; then
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
-  export BUILD_TYPE=Debug
   export CC=clang
   export CXX=clang++
-  export CMAKE_FLAGS="-DSANITIZE_UNDEFINED=yes"
+  export BAZEL_CONFIG="ubsan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
   # as errors.
