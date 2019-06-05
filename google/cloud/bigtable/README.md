@@ -52,9 +52,11 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
   * `Table::CheckAndMutateRow` returns `StatusOr<bool>` to indicate which
     branch of the predicate was taken in the atomic change. Meanwhile,
     `AsyncCheckAndMutateRow()` returned a `future<StatusOr<proto-with-long-name>>`.
-    Changed the async version to return `future<StatusOr<bool>>`.
+    Changed the async and sync versions to return
+    `future<StatusOr<MutationBranch>>`. `MutationBranch` is an `enum` as
+    `StatusOr<bool>` is too eay to use incorrectly.
   * Removed the `Collection` template parameter from `Table::SampleRows`.
-  * Fixed the last function, WaitForConsistencyCheck, that returned
+  * Fixed the last function, `WaitForConsistencyCheck`, that returned
     `std::future` to return `google::cloud::future<>`. The function name
     changed too, to be more consistent with similar functions.
   * Remove all the "strong types" for bigtable, such as `InstanceId`,
