@@ -172,7 +172,7 @@ set_target_properties(
     google_cloud_cpp_common
     PROPERTIES
         VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+        ${GOOGLE_CLOUD_CPP_VERSION}
         SOVERSION
         ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
