@@ -42,7 +42,31 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v0.10.x - TBD
+### v0.11.x - TBD
+
+### v0.10.x - 2019-06
+
+* **Breaking Changes**
+  * The return type for WaitForConsistencyCheck() was a `future<StatusOr<bool>>`
+    where most related functions return a `bigtable::Consistency` enum.
+  * `Table::CheckAndMutateRow` returns `StatusOr<bool>` to indicate which
+    branch of the predicate was taken in the atomic change. Meanwhile,
+    `AsyncCheckAndMutateRow()` returned a `future<StatusOr<proto-with-long-name>>`.
+    Changed the async and sync versions to return
+    `future<StatusOr<MutationBranch>>`. `MutationBranch` is an `enum` as
+    `StatusOr<bool>` is too eay to use incorrectly.
+  * Removed the `Collection` template parameter from `Table::SampleRows`.
+  * Fixed the last function, `WaitForConsistencyCheck`, that returned
+    `std::future` to return `google::cloud::future<>`. The function name
+    changed too, to be more consistent with similar functions.
+  * Remove all the "strong types" for bigtable, such as `InstanceId`,
+    `ClusterId`, `TableId`, etc. This changed some of the constructors for
+    `bigtable::Table` and several member functions in `bigtable::Table`,
+    `bigtable::TableAdmin`, and `bigtable::InstanceAdmin`.
+* Changes:
+  * Implemented TableAdmin::AsyncWaitForConsistency.
+  * Implemented Table::AsyncReadRows.
+  * DeleteAppProfile defaults to `ignore_warnings=true`.
 
 ### v0.9.x - 2019-05
 
