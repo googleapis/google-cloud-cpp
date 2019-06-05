@@ -57,10 +57,10 @@ elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
   export CC=clang
   export CXX=clang++
-  export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
   export DISTRO=fedora
   export DISTRO_VERSION=30
-  export USE_LIBCXX=yes
+  export BAZEL_CONFIG="libcxx"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "shared" ]]; then
   # Compile with shared libraries. Needs to have the dependencies pre-installed.
   export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON

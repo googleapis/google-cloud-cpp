@@ -77,10 +77,6 @@ if (NOT TARGET gprc_project)
                    -DgRPC_SSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
-                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
-                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
-                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
-                   >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>

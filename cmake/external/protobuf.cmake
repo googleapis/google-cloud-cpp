@@ -83,11 +83,6 @@ if (NOT TARGET protobuf_project)
             -Dprotobuf_DEBUG_POSTFIX=
             -H<SOURCE_DIR>/cmake
             -B<BINARY_DIR>
-            $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
-            -DCMAKE_CXX_FLAGS=-stdlib=libc++
-            # This is needed for protoc
-            -DCMAKE_EXE_LINKER_FLAGS=-Wl,-lc++abi
-            -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>
