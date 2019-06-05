@@ -25,9 +25,11 @@ set(GOOGLE_CLOUD_CPP_VERSION_MINOR 8)
 set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
 
 string(CONCAT GOOGLE_CLOUD_CPP_VERSION
-    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}" "."
-    "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
-    "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
+              "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
+              "."
+              "${GOOGLE_CLOUD_CPP_VERSION_MINOR}"
+              "."
+              "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in internal/version_info.h)
@@ -168,13 +170,11 @@ if (MSVC)
                  PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 endif ()
 
-set_target_properties(
-    google_cloud_cpp_common
-    PROPERTIES
-        VERSION
-        ${GOOGLE_CLOUD_CPP_VERSION}
-        SOVERSION
-        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+set_target_properties(google_cloud_cpp_common
+                      PROPERTIES VERSION
+                                 ${GOOGLE_CLOUD_CPP_VERSION}
+                                 SOVERSION
+                                 ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
 create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)

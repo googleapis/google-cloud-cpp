@@ -42,12 +42,13 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 if ("${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
-  set(DOXYGEN_TAGFILES "\
+    set(DOXYGEN_TAGFILES "\
 ${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/\
 ${GOOGLE_CLOUD_CPP_VERSION}/")
 else()
-  set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
-endif()
+    set(DOXYGEN_TAGFILES
+        "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
+endif ()
 
 include(GoogleCloudCppCommon)
 if (TARGET bigtable-docs AND TARGET cloud-docs)
