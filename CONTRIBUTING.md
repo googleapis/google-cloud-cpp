@@ -253,26 +253,10 @@ which combinations are tested regularly.
    above.  Builds with this configuration can be substantially slower.
  * `CMAKE_FLAGS`: if set, these additional cmake flags are used to configure
    the build.  The more interesting flags include:
-   * `-DSANITIZE_ADDRESS=yes`: use the
-     [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html),
-     if available, on this build.
-   * `-DSANITIZE_UNDEFINED=yes`: use the
-     [UndefinedBehaviorSanitizer](https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html),
-     if available, on this build.
-   * `-DSANITIZE_THREAD=yes`: use the
-     [ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html),
-     if available, on this build.
-   * `-DSANITIZE_MEMORY=yes`: use the
-     [MemorySanitizer](https://clang.llvm.org/docs/MemorySanitizer.html),
-     if available, on this build.
-     This is rarely used because it requires a C++ library compiled with the
-     same options to avoid false positives.
-   * All the sanitizers require Clang, remember to select the compiler as
-     described above.
- * `-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes`: configure the build to run `clang-tidy`
-   for the Google Cloud C++ Libraries.  Check the
-   [configuration file](.clang-tidy) for details on what `clang-tidy` options
-   we use.
+   * `-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes`: configure the build to run
+     `clang-tidy` for the Google Cloud C++ Libraries.  Check the
+     [configuration file](.clang-tidy) for details on what `clang-tidy` options
+     we use.
  * `CREATE_GRAPHVIZ`: if set to `yes`, use `CMake` to generate a dependency
    graph of each target. This is useful when troubleshooting dependencies, or
    simply when trying to document them.

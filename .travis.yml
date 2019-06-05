@@ -17,7 +17,6 @@ sudo: required
 language: cpp
 
 # TODO(#19) - this is a skeleton matrix, needs to be designed and completed.
-# TODO(#62) - enable a SANITIZE_MEMORY=yes build when we eliminate the false positives
 matrix:
   include:
     - # Generate code coverage information and upload to codecov.io.
