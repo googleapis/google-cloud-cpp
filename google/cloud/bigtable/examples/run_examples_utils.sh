@@ -133,9 +133,6 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets run \
       "${project_id}" "${RUN_INSTANCE}" "${RUN_INSTANCE}-c1" "${zone_id}"
 
-  run_example ./bigtable_instance_admin_snippets create-instance \
-      "${project_id}" "${INSTANCE}" "${zone_id}"
-
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_instance_admin_snippets
