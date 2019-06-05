@@ -43,7 +43,7 @@ build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
 
 # TODO(#62): this does not work unless libc++ (or libstdc++) are also compiled
 # with -fsanitize=memory.
-# --config tsan: Memory Sanitizer
+# --config msan: Memory Sanitizer
 # build:msan --strip=never
 # build:msan --copt=-fsanitize=memory
 # build:msan --copt=-O0
@@ -52,3 +52,9 @@ build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
 # build:msan --copt=-fsanitize-memory-use-after-dtor
 # build:msan --linkopt=-fsanitize=memory
 # build:msan --action_env=MSAN_OPTIONS=poison_in_dtor=1
+
+# --config libcxx: Compile and link using libc++.
+build:libcxx --cxxopt=-stdlib=libc++
+build:libcxx --linkopt=-stdlib=libc++
+build:libcxx --linkopt=-lc++
+build:libcxx --linkopt=-lc++abi

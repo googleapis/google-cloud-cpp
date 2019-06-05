@@ -59,10 +59,6 @@ if (NOT TARGET crc32c_project)
                    -DCRC32C_USE_GLOG=OFF
                    -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                   $<$<BOOL:${GOOGLE_CLOUD_CPP_USE_LIBCXX}>:
-                   -DCMAKE_CXX_FLAGS=-stdlib=libc++
-                   -DCMAKE_SHARED_LINKER_FLAGS=-Wl,-lc++abi
-                   >
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>

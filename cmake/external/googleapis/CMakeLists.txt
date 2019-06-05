@@ -28,8 +28,6 @@ set(GOOGLEAPIS_CPP_PROTOS_VERSION_PATCH 0)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-option(GOOGLE_CLOUD_CPP_USE_LIBCXX "Build with libcxx and libcxxabi" OFF)
-
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}")
 find_package(ProtobufTargets REQUIRED)
 find_package(gRPC REQUIRED)
@@ -49,12 +47,6 @@ endif ()
 include(CompileProtos)
 
 add_library(googleapis_cpp_common_flags INTERFACE)
-if (GOOGLE_CLOUD_CPP_USE_LIBCXX)
-    target_compile_options(googleapis_cpp_common_flags
-                           INTERFACE "-stdlib=libc++")
-    target_link_libraries(googleapis_cpp_common_flags
-                          INTERFACE "-stdlib=libc++" "c++abi")
-endif ()
 
 include(SelectMSVCRuntime)
 
