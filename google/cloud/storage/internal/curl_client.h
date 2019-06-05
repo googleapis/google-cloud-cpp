@@ -224,6 +224,7 @@ class CurlClient : public RawClient,
   std::string xml_download_endpoint_;
   std::string iam_endpoint_;
 
+  // These mutexes are used to protect different portions of `share_`.
   std::mutex mu_share_;
   std::mutex mu_dns_;
   std::mutex mu_ssl_session_;
@@ -231,7 +232,7 @@ class CurlClient : public RawClient,
   CurlShare share_;
 
   std::mutex mu_;
-  google::cloud::internal::DefaultPRNG generator_;
+  google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
 
   // The factories must be listed *after* the CurlShare. libcurl keeps a
   // usage count on each CURLSH* handle, which is only released once the CURL*
