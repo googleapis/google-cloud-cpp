@@ -63,11 +63,11 @@ function (set_library_properties_for_external_project _target _lib)
 
     if (${F_OPT_ALWAYS_LIB})
         set(_libpath "${CMAKE_BINARY_DIR}/external/lib/${_libfullname}")
-    else ()
+    else()
         set(
             _libpath
             "${CMAKE_BINARY_DIR}/external/${CMAKE_INSTALL_LIBDIR}/${_libfullname}"
-        )
+            )
     endif ()
 
     set(_includepath "${CMAKE_BINARY_DIR}/external/include")

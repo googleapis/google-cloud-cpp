@@ -95,7 +95,7 @@ if (NOT TARGET gprc_project)
 
     add_library(gRPC::address_sorting INTERFACE IMPORTED)
     set_library_properties_for_external_project(gRPC::address_sorting
-            address_sorting ALWAYS_LIB)
+                                                address_sorting ALWAYS_LIB)
     add_dependencies(gRPC::address_sorting grpc_project)
 
     add_library(gRPC::gpr INTERFACE IMPORTED)
