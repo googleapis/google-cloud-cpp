@@ -24,6 +24,11 @@ set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
 set(GOOGLE_CLOUD_CPP_VERSION_MINOR 8)
 set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
 
+string(CONCAT GOOGLE_CLOUD_CPP_VERSION
+    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}" "."
+    "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
+    "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
+
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in internal/version_info.h)
 
