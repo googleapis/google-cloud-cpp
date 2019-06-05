@@ -44,7 +44,18 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.1.x - TBD
+### v1.2.x - TBD
+
+### v1.1.x - 2019-06
+
+* Implemented option to read an object starting from an offset.
+* Automatically restart downloads on error. With this change the download is
+  restarted from the last received byte, and using the object generation used
+  in the original download as well. (#2693)
+* Bugfixes:
+  * Service account credentials not refreshing properly. (#2691)
+  * Fix build for macOS+CMake. (#2698)
+  * WriteObject now supports empty streams. (#2714)
 
 ### v1.0.x - 2019-05
 
