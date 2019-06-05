@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/log.h"
+#include <google/protobuf/util/field_comparator.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <cmath>
 #include <ios>
 #include <string>
@@ -28,11 +30,43 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-template <typename T>
-Status CheckValidity(Value const& v) {
-  if (!v.is<T>()) return Status(StatusCode::kInvalidArgument, "wrong type");
-  if (v.is_null()) return Status(StatusCode::kInvalidArgument, "null value");
-  return {};  // OK status
+// Compares two sets of Type and Value protos for equality. This method calls
+// itself recursively to compare subtypes and subvalues.
+bool Equal(google::spanner::v1::Type const& pt1,
+           google::protobuf::Value const& pv1,
+           google::spanner::v1::Type const& pt2,
+           google::protobuf::Value const& pv2) {
+  if (pt1.code() != pt2.code()) return false;
+  if (pv1.kind_case() != pv2.kind_case()) return false;
+  switch (pt1.code()) {
+    case google::spanner::v1::TypeCode::BOOL:
+      return pv1.bool_value() == pv2.bool_value();
+    case google::spanner::v1::TypeCode::INT64:
+      return pv1.string_value() == pv2.string_value();
+    case google::spanner::v1::TypeCode::FLOAT64:
+      // NaN should always compare not equal, even to itself.
+      if (pv1.string_value() == "NaN" || pv2.string_value() == "NaN")
+        return false;
+      return pv1.string_value() == pv2.string_value() &&
+             pv1.number_value() == pv2.number_value();
+    case google::spanner::v1::TypeCode::STRING:
+      return pv1.string_value() == pv2.string_value();
+    case google::spanner::v1::TypeCode::ARRAY: {
+      auto const& etype1 = pt1.array_element_type();
+      auto const& etype2 = pt2.array_element_type();
+      if (etype1.code() != etype2.code()) return false;
+      auto const& v1 = pv1.list_value().values();
+      auto const& v2 = pv2.list_value().values();
+      if (v1.size() != v2.size()) return false;
+      for (int i = 0; i < v1.size(); ++i) {
+        if (!Equal(etype1, v1.Get(i), etype1, v2.Get(i))) {
+          return false;
+        }
+      }
+    }
+    default:
+      return true;
+  }
 }
 
 }  // namespace
@@ -64,21 +98,7 @@ Value::Value(std::string v) {
 }
 
 bool operator==(Value a, Value b) {
-  if (a.type_.code() != b.type_.code()) return false;
-  if (a.is_null() != b.is_null()) return false;
-  if (a.is_null()) return true;  // They are both null
-  switch (a.type_.code()) {
-    case google::spanner::v1::TypeCode::BOOL:
-      return *a.get<bool>() == *b.get<bool>();
-    case google::spanner::v1::TypeCode::INT64:
-      return *a.get<std::int64_t>() == *b.get<std::int64_t>();
-    case google::spanner::v1::TypeCode::FLOAT64:
-      return *a.get<double>() == *b.get<double>();
-    case google::spanner::v1::TypeCode::STRING:
-      return *a.get<std::string>() == *b.get<std::string>();
-    default:
-      return false;
-  }
+  return Equal(a.type_, a.value_, b.type_, b.value_);
 }
 
 void PrintTo(Value const& v, std::ostream* os) {
@@ -89,20 +109,49 @@ bool Value::is_null() const {
   return value_.kind_case() == google::protobuf::Value::kNullValue;
 }
 
+bool Value::ProtoEqual(google::protobuf::Message const& m1,
+                       google::protobuf::Message const& m2) {
+  return google::protobuf::util::MessageDifferencer::Equals(m1, m2);
+}
+
+//
+// Value::GetType
+//
+
+google::spanner::v1::Type Value::GetType(bool) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::BOOL);
+  return t;
+}
+
+google::spanner::v1::Type Value::GetType(std::int64_t) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::INT64);
+  return t;
+}
+
+google::spanner::v1::Type Value::GetType(double) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::FLOAT64);
+  return t;
+}
+
+google::spanner::v1::Type Value::GetType(std::string const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::STRING);
+  return t;
+}
+
 //
 // Value::GetValue
 //
 
-StatusOr<bool> Value::GetValue(bool) const {
-  auto const status = CheckValidity<bool>(*this);
-  if (!status.ok()) return status;
-  return value_.bool_value();
+bool Value::GetValue(bool, google::protobuf::Value const& pv) {
+  return pv.bool_value();
 }
 
-StatusOr<std::int64_t> Value::GetValue(std::int64_t) const {
-  auto const status = CheckValidity<std::int64_t>(*this);
-  if (!status.ok()) return status;
-  auto const& s = value_.string_value();
+std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv) {
+  auto const& s = pv.string_value();
   std::size_t processed = 0;
   long long x = std::stoll(s, &processed, 10);
   if (processed != s.size()) {
@@ -111,23 +160,20 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t) const {
   return {x};
 }
 
-StatusOr<double> Value::GetValue(double) const {
-  auto const status = CheckValidity<double>(*this);
-  if (!status.ok()) return status;
-  if (value_.kind_case() == google::protobuf::Value::kStringValue) {
-    std::string const& s = value_.string_value();
+double Value::GetValue(double, google::protobuf::Value const& pv) {
+  if (pv.kind_case() == google::protobuf::Value::kStringValue) {
+    std::string const& s = pv.string_value();
     auto const inf = std::numeric_limits<double>::infinity();
     if (s == "-Infinity") return -inf;
     if (s == "Infinity") return inf;
     return std::nan(s.c_str());
   }
-  return value_.number_value();
+  return pv.number_value();
 }
 
-StatusOr<std::string> Value::GetValue(std::string) const {
-  auto const status = CheckValidity<std::string>(*this);
-  if (!status.ok()) return status;
-  return value_.string_value();
+std::string Value::GetValue(std::string const&,
+                            google::protobuf::Value const& pv) {
+  return pv.string_value();
 }
 
 }  // namespace SPANNER_CLIENT_NS

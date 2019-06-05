@@ -51,6 +51,7 @@ TEST(Value, BasicSemantics) {
   for (auto x : {false, true}) {
     SCOPED_TRACE("Testing: bool " + std::to_string(x));
     TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<bool>(5, x));
   }
 
   auto const min64 = std::numeric_limits<std::int64_t>::min();
@@ -58,6 +59,7 @@ TEST(Value, BasicSemantics) {
   for (auto x : std::vector<std::int64_t>{min64, -1, 0, 1, max64}) {
     SCOPED_TRACE("Testing: std::int64_t " + std::to_string(x));
     TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<std::int64_t>(5, x));
   }
 
   // Note: We skip testing the NaN case here because NaN always compares not
@@ -66,11 +68,13 @@ TEST(Value, BasicSemantics) {
   for (auto x : {-inf, -1.0, -0.5, 0.0, 0.5, 1.0, inf}) {
     SCOPED_TRACE("Testing: double " + std::to_string(x));
     TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<double>(5, x));
   }
 
   for (auto x : std::vector<std::string>{"", "f", "foo", "12345678901234567"}) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
     TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<std::string>(5, x));
   }
 }
 
@@ -127,6 +131,48 @@ TEST(Value, MixingTypes) {
   EXPECT_NE(null_b, b);
   EXPECT_NE(null_b, null_a);
   EXPECT_NE(null_b, a);
+}
+
+TEST(Value, SpannerArray) {
+  using ArrayInt64 = std::vector<std::int64_t>;
+  using ArrayDouble = std::vector<double>;
+
+  ArrayInt64 const ai = {1, 2, 3};
+  Value const vi(ai);
+  EXPECT_EQ(vi, vi);
+  EXPECT_FALSE(vi.is_null());
+  EXPECT_TRUE(vi.is<ArrayInt64>());
+  EXPECT_FALSE(vi.is<ArrayDouble>());
+  EXPECT_EQ(ai, static_cast<ArrayInt64>(vi));
+  EXPECT_TRUE(vi.get<ArrayInt64>().ok());
+  EXPECT_FALSE(vi.get<ArrayDouble>().ok());
+  EXPECT_EQ(ai, *vi.get<ArrayInt64>());
+
+  ArrayDouble const ad = {1.0, 2.0, 3.0};
+  Value const vd(ad);
+  EXPECT_EQ(vd, vd);
+  EXPECT_NE(vi, vd);
+  EXPECT_FALSE(vd.is_null());
+  EXPECT_TRUE(vd.is<ArrayDouble>());
+  EXPECT_FALSE(vd.is<ArrayInt64>());
+  EXPECT_EQ(ad, static_cast<ArrayDouble>(vd));
+  EXPECT_TRUE(vd.get<ArrayDouble>().ok());
+  EXPECT_EQ(ad, *vd.get<ArrayDouble>());
+
+  Value const null_vi = Value::MakeNull<ArrayInt64>();
+  EXPECT_EQ(null_vi, null_vi);
+  EXPECT_NE(null_vi, vi);
+  EXPECT_NE(null_vi, vd);
+  EXPECT_FALSE(null_vi.get<ArrayInt64>().ok());
+  EXPECT_FALSE(null_vi.get<ArrayDouble>().ok());
+
+  Value const null_vd = Value::MakeNull<ArrayDouble>();
+  EXPECT_EQ(null_vd, null_vd);
+  EXPECT_NE(null_vd, null_vi);
+  EXPECT_NE(null_vd, vd);
+  EXPECT_NE(null_vd, vi);
+  EXPECT_FALSE(null_vd.get<ArrayDouble>().ok());
+  EXPECT_FALSE(null_vd.get<ArrayInt64>().ok());
 }
 
 }  // namespace SPANNER_CLIENT_NS

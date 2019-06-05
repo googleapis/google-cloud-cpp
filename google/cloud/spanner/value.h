@@ -42,6 +42,10 @@ inline namespace SPANNER_CLIENT_NS {
  *     INT64        | std::int64_t
  *     FLOAT64      | double
  *     STRING       | std::string
+ *     ARRAY        | std::vector<T>  // [1]
+ *
+ * [1] The type `T` may be any of the other supported types, except for
+ *     ARRAY/std::vector.
  *
  * This is a regular C++ value type with support for copy, move, equality, etc,
  * but there is no default constructor because there is no default type.
@@ -86,11 +90,26 @@ class Value {
   Value& operator=(Value const&) = default;
   Value& operator=(Value&&) = default;
 
-  /// Constructs a non-null instance with the specified value and type.
+  /// Constructs a non-null instance with the specified type and value.
   explicit Value(bool v);
   explicit Value(std::int64_t v);
   explicit Value(double v);
   explicit Value(std::string v);
+
+  /**
+   * Constructs a non-null instance with a Spanner ARRAY of the specified type
+   * and values.
+   *
+   * The type `T` may be any valid type shown above, except vectors of vectors
+   * are not allowed.
+   */
+  template <typename T>  // TODO(#59): add an enabler to disallow T==vector
+  explicit Value(std::vector<T> const& v) {
+    type_ = GetType(v);
+    for (auto const& e : v) {
+      *value_.mutable_list_value()->add_values() = std::move(Value(e).value_);
+    }
+  }
 
   friend bool operator==(Value a, Value b);
   friend bool operator!=(Value a, Value b) { return !(a == b); }
@@ -113,7 +132,7 @@ class Value {
    */
   template <typename T>
   bool is() const {
-    return type_.code() == TypeCodeMap::GetCode(T{});
+    return ProtoEqual(type_, GetType(T{}));
   }
 
   /**
@@ -140,7 +159,9 @@ class Value {
    */
   template <typename T>
   StatusOr<T> get() const {
-    return GetValue(T{});
+    auto const status = HasValue<T>(type_, value_);
+    if (!status.ok()) return status;
+    return GetValue(T{}, value_);
   }
 
   /**
@@ -164,7 +185,7 @@ class Value {
    */
   template <typename T>
   explicit operator T() const {
-    return *get<T>();
+    return GetValue(T{}, value_);
   }
 
   /**
@@ -188,22 +209,52 @@ class Value {
     value_.set_null_value(google::protobuf::NullValue::NULL_VALUE);
   }
 
-  struct TypeCodeMap {
-    using Code = google::spanner::v1::TypeCode;
-    // Tag-dispatched function overloads. The argument type is important, the
-    // value is ignored.
-    static Code GetCode(bool) { return Code::BOOL; }
-    static Code GetCode(std::int64_t) { return Code::INT64; }
-    static Code GetCode(double) { return Code::FLOAT64; }
-    static Code GetCode(std::string) { return Code::STRING; }
-  };
+  // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
+  // argument type is the tag, the argument value is ignored.
+  static google::spanner::v1::Type GetType(bool);
+  static google::spanner::v1::Type GetType(std::int64_t);
+  static google::spanner::v1::Type GetType(double);
+  static google::spanner::v1::Type GetType(std::string const&);
+  template <typename T>
+  static google::spanner::v1::Type GetType(std::vector<T> const&) {
+    google::spanner::v1::Type t;
+    t.set_code(google::spanner::v1::TypeCode::ARRAY);
+    *t.mutable_array_element_type() = GetType(T{});  // Recursive call
+    return t;
+  }
 
-  // Tag-dispatched function overloads. The argument type is important, the
-  // value is ignored.
-  StatusOr<bool> GetValue(bool) const;
-  StatusOr<std::int64_t> GetValue(std::int64_t) const;
-  StatusOr<double> GetValue(double) const;
-  StatusOr<std::string> GetValue(std::string) const;
+  // Returns true if the given `Type` and `Value` can be converted to the
+  // specified C++ type `T`.
+  template <typename T>
+  static Status HasValue(google::spanner::v1::Type const& pt,
+                         google::protobuf::Value const& pv) {
+    if (!ProtoEqual(GetType(T{}), pt))
+      return Status(StatusCode::kInvalidArgument, "wrong type");
+    if (pv.kind_case() == google::protobuf::Value::kNullValue)
+      return Status(StatusCode::kInvalidArgument, "null value");
+    return {};  // OK Status
+  }
+
+  // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
+  // first argument type is the tag, the first argument value is ignored.
+  static bool GetValue(bool, google::protobuf::Value const&);
+  static std::int64_t GetValue(std::int64_t, google::protobuf::Value const&);
+  static double GetValue(double, google::protobuf::Value const&);
+  static std::string GetValue(std::string const&,
+                              google::protobuf::Value const&);
+  template <typename T>
+  static std::vector<T> GetValue(std::vector<T> const&,
+                                 google::protobuf::Value const& pv) {
+    std::vector<T> v;
+    for (auto const& e : pv.list_value().values()) {
+      v.push_back(GetValue(T{}, e));
+    }
+    return v;
+  }
+
+  // Helper to compare protos for equality.
+  static bool ProtoEqual(google::protobuf::Message const& m1,
+                         google::protobuf::Message const& m2);
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
