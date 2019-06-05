@@ -54,9 +54,9 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
     `AsyncCheckAndMutateRow()` returned a `future<StatusOr<proto-with-long-name>>`.
     Changed the async version to return `future<StatusOr<bool>>`.
   * Removed the `Collection` template parameter from `Table::SampleRows`.
-  * Fixed the last function that returned `std::future` to return
-    `google::cloud::future<>`. The function name changed too, to be more
-    consistent with similar functions.
+  * Fixed the last function, WaitForConsistencyCheck, that returned
+    `std::future` to return `google::cloud::future<>`. The function name
+    changed too, to be more consistent with similar functions.
   * Remove all the "strong types" for bigtable, such as `InstanceId`,
     `ClusterId`, `TableId`, etc. This changed some of the constructors for
     `bigtable::Table` and several member functions in `bigtable::Table`,
