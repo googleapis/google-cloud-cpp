@@ -87,6 +87,30 @@ void StorageIntegrationTest::WriteRandomLines(std::ostream& upload,
   }
 }
 
+std::string StorageIntegrationTest::MakeRandomData(std::size_t desired_size) {
+  std::size_t const line_size = 128;
+  auto generate_random_line = [this](std::size_t line_size) {
+    std::string const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        "abcdefghijklmnopqrstuvwxyz"
+        "0123456789"
+        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
+    return google::cloud::internal::Sample(
+               generator_, static_cast<int>(line_size - 1), characters) +
+           "\n";
+  };
+
+  std::string text;
+  auto const line_count = desired_size / line_size;
+  for (std::size_t i = 0; i != line_count; ++i) {
+    text += generate_random_line(line_size);
+  }
+  if (text.size() < desired_size) {
+    text += generate_random_line(desired_size - text.size());
+  }
+  return text;
+}
+
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud

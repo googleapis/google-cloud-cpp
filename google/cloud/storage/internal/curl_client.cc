@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/terminate_handler.h"
 
 namespace google {
 namespace cloud {
@@ -29,15 +30,16 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-extern "C" void CurlShareLockCallback(CURL*, curl_lock_data, curl_lock_access,
-                                      void* userptr) {
+extern "C" void CurlShareLockCallback(CURL*, curl_lock_data data,
+                                      curl_lock_access, void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
-  client->LockShared();
+  client->LockShared(data);
 }
 
-extern "C" void CurlShareUnlockCallback(CURL*, curl_lock_data, void* userptr) {
+extern "C" void CurlShareUnlockCallback(CURL*, curl_lock_data data,
+                                        void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
-  client->UnlockShared();
+  client->UnlockShared(data);
 }
 
 std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
@@ -1145,9 +1147,53 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
   return ReturnEmptyResponse(builder.BuildRequest().MakeRequest(std::string{}));
 }
 
-void CurlClient::LockShared() { mu_.lock(); }
+void CurlClient::LockShared(curl_lock_data data) {
+  switch (data) {
+    case CURL_LOCK_DATA_SHARE:
+      mu_share_.lock();
+      return;
+    case CURL_LOCK_DATA_DNS:
+      mu_dns_.lock();
+      return;
+    case CURL_LOCK_DATA_SSL_SESSION:
+      mu_ssl_session_.lock();
+      return;
+    case CURL_LOCK_DATA_CONNECT:
+      mu_connect_.lock();
+      return;
+    default:
+      // We use a default because different versions of libcurl have different
+      // values in the `curl_lock_data` enum.
+      break;
+  }
+  std::ostringstream os;
+  os << __func__ << "() - invalid or unknown data argument=" << data;
+  google::cloud::Terminate(os.str().c_str());
+}
 
-void CurlClient::UnlockShared() { mu_.unlock(); }
+void CurlClient::UnlockShared(curl_lock_data data) {
+  switch (data) {
+    case CURL_LOCK_DATA_SHARE:
+      mu_share_.unlock();
+      return;
+    case CURL_LOCK_DATA_DNS:
+      mu_dns_.unlock();
+      return;
+    case CURL_LOCK_DATA_SSL_SESSION:
+      mu_ssl_session_.unlock();
+      return;
+    case CURL_LOCK_DATA_CONNECT:
+      mu_connect_.unlock();
+      return;
+    default:
+      // We use a default because different versions of libcurl have different
+      // values in the `curl_lock_data` enum.
+      break;
+  }
+  std::ostringstream os;
+  os << __func__ << "() - invalid or unknown data argument=" << data;
+  google::cloud::Terminate(os.str().c_str());
+}
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
     InsertObjectMediaRequest const& request) {

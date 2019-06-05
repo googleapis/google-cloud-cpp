@@ -178,8 +178,8 @@ class CurlClient : public RawClient,
   StatusOr<std::string> AuthorizationHeader(
       std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&);
 
-  void LockShared();
-  void UnlockShared();
+  void LockShared(curl_lock_data data);
+  void UnlockShared(curl_lock_data data);
 
  protected:
   // The constructor is private because the class must always be created
@@ -224,9 +224,15 @@ class CurlClient : public RawClient,
   std::string xml_download_endpoint_;
   std::string iam_endpoint_;
 
+  // These mutexes are used to protect different portions of `share_`.
+  std::mutex mu_share_;
+  std::mutex mu_dns_;
+  std::mutex mu_ssl_session_;
+  std::mutex mu_connect_;
+  CurlShare share_;
+
   std::mutex mu_;
-  CurlShare share_ /* GUARDED_BY(mu_) */;
-  google::cloud::internal::DefaultPRNG generator_;
+  google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
 
   // The factories must be listed *after* the CurlShare. libcurl keeps a
   // usage count on each CURLSH* handle, which is only released once the CURL*

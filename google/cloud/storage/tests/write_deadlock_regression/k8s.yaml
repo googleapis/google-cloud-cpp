@@ -1,0 +1,53 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Start a large scale download using Kubernetes and the Cloud C++ GCS Library.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: storage-write-deadlock-regression
+  labels:
+    app: storage-write-deadlock-regression
+    source-version: "@VERSION@"
+spec:
+  # Adjust this number if needed.
+  replicas: 150
+  selector:
+    matchLabels:
+      app: storage-write-deadlock-regression
+  template:
+    metadata:
+      labels:
+        app: storage-write-deadlock-regression
+    spec:
+      volumes:
+        - name: google-cloud-key
+          secret:
+            secretName: storage-key
+      containers:
+        - name: storage-write-deadlock-regression
+          image: gcr.io/@PROJECT_ID@/storage-deadlock-regression:latest
+          args: [/r/object_write_deadlock_regression_test,
+                 @PROJECT_ID@, @BUCKET_NAME@, --gtest_repeat=1000]
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: google-cloud-key
+              mountPath: /var/secrets/google
+          env:
+            - name: GCLOUD_PROJECT
+              value: @PROJECT_ID@
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/google/key.json
