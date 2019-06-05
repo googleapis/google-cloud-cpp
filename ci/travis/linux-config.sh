@@ -36,14 +36,6 @@ else
       suffix="${suffix}-tidy"
   elif echo "${CMAKE_FLAGS}" | grep -Eq TEST_INSTALL=yes; then
       suffix="${suffix}-install"
-  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_ADDRESS=yes; then
-      suffix="${suffix}-asan"
-  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_UNDEFINED=yes; then
-      suffix="${suffix}-ubsan"
-  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_MEMORY=yes; then
-      suffix="${suffix}-msan"
-  elif echo "${CMAKE_FLAGS}" | grep -Eq SANITIZE_THREAD=yes; then
-      suffix="${suffix}-tsan"
   elif echo "${CMAKE_FLAGS}" | grep -Eq GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no; then
       suffix="${suffix}-noex"
   fi

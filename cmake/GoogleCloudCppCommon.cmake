@@ -32,9 +32,6 @@ endif ()
 # If possible, enable a code coverage build type.
 include(EnableCoverage)
 
-# Include the functions to enable Clang sanitizers.
-include(EnableSanitizers)
-
 # Include support for clang-tidy if available
 include(EnableClangTidy)
 

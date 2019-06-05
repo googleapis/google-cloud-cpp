@@ -240,20 +240,6 @@ if [ "${GENERATE_DOCS}" = "yes" ]; then
   cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
 fi
 
-# Some of the sanitizers only emit errors and do not change the error code
-# of the tests, find any such errors and report them as a build failure.
-echo
-echo -n "Searching for sanitizer errors in the test log: "
-if grep -qe '^/v/.*\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log; then
-  echo "${COLOR_RED}some sanitizer errors found."
-  echo
-  grep -e '^/v/.*\.cc:[0-9][0-9]*' Testing/Temporary/LastTest.log
-  echo "${COLOR_RESET}"
-  exit 1
-else
-  echo "${COLOR_GREEN}no sanitizer errors found.${COLOR_RESET}"
-fi
-
 # Collect the output from the Clang static analyzer and provide instructions to
 # the developers on how to do that locally.
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
