@@ -121,7 +121,7 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
         res.instances = std::move(acc->instances);
         std::move(acc->failed_locations.begin(), acc->failed_locations.end(),
                   std::back_inserter(res.failed_locations));
-        return std::move(res);
+        return res;
       });
 }
 
@@ -467,7 +467,7 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
         res.clusters = std::move(acc->clusters);
         std::move(acc->failed_locations.begin(), acc->failed_locations.end(),
                   std::back_inserter(res.failed_locations));
-        return std::move(res);
+        return res;
       });
 }
 

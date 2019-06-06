@@ -32,10 +32,20 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export CXX=clang++
   export BAZEL_CONFIG="asan"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
-elif [[ "${BUILD_NAME}" = "centos-7" ]]; then
+elif [[ "${BUILD_NAME}" = "centos-7" ]] || [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
   # Compile under centos:7. This distro uses gcc-4.8.
   export DISTRO=centos
   export DISTRO_VERSION=7
+elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
+  # Compile under fedora:30. This distro uses gcc-9.
+  export DISTRO=fedora
+  export DISTRO_VERSION=30
+elif [[ "${BUILD_NAME}" = "clang-8" ]]; then
+  # Compile under fedora:30. This distro uses clang-8.
+  export CC=clang
+  export CXX=clang++
+  export DISTRO=fedora
+  export DISTRO_VERSION=30
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
   # Compile with -fno-exceptions
   export DISTRO_VERSION=16.04
