@@ -86,7 +86,7 @@ void LogSink::Log(LogRecord log_record) {
   // must make a copy if needed.  But if there is only one backend we can give
   // the backend an opportunity to optimize things by transferring ownership of
   // the LogRecord to it.
-  if (1U == copy.size()) {
+  if (copy.size() == 1) {
     copy.begin()->second->ProcessWithOwnership(std::move(log_record));
     return;
   }

@@ -38,7 +38,7 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
 void AsyncApply(google::cloud::bigtable::Table table,
                 google::cloud::bigtable::CompletionQueue cq,
                 std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-apply <project-id> <instance-id> <table-id> <row-key>"};
   }
 
@@ -72,7 +72,7 @@ void AsyncApply(google::cloud::bigtable::Table table,
 void AsyncBulkApply(google::cloud::bigtable::Table table,
                     google::cloud::bigtable::CompletionQueue cq,
                     std::vector<std::string> argv) {
-  if (argv.size() != 1U) {
+  if (argv.size() != 1) {
     throw Usage{"async-bulk-apply <project-id> <instance-id> <table-id>"};
   }
 
@@ -129,7 +129,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
 void AsyncReadRows(google::cloud::bigtable::Table table,
                    google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
-  if (argv.size() != 1U) {
+  if (argv.size() != 1) {
     throw Usage{"async-read-rows <project-id> <instance-id> <table-id>"};
   }
 
@@ -176,7 +176,7 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
 void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
                             google::cloud::bigtable::CompletionQueue cq,
                             std::vector<std::string> argv) {
-  if (argv.size() != 1U) {
+  if (argv.size() != 1) {
     throw Usage{
         "async-read-rows-with-limit <project-id> <instance-id> <table-id>"};
   }
@@ -224,7 +224,7 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
 void AsyncReadRow(google::cloud::bigtable::Table table,
                   google::cloud::bigtable::CompletionQueue cq,
                   std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{
         "async-read-row <project-id> <instance-id> <table-id> <row-key>"};
   }
@@ -273,7 +273,7 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{
         "async-check-and-mutate <project-id> <instance-id> <table-id>"
         " <row-key>"};
@@ -317,7 +317,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{
         "async-read-modify-write <project-id> <instance-id> <table-id>"
         " <row-key>"};

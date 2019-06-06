@@ -442,9 +442,9 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
 
  private:
   std::string upload_session_url_;
-  std::uint64_t range_begin_ = 0U;
+  std::uint64_t range_begin_ = 0;
   std::string payload_;
-  std::uint64_t source_size_ = 0U;
+  std::uint64_t source_size_ = 0;
   bool last_chunk_ = false;
 };
 

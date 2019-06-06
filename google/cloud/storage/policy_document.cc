@@ -45,7 +45,7 @@ std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs) {
   os << "expiration=" << google::cloud::internal::FormatRfc3339(rhs.expiration)
      << ", ";
   os << "conditions=[";
-  for (auto i = 0u; i < rhs.conditions.size(); ++i) {
+  for (auto i = 0U; i != rhs.conditions.size(); ++i) {
     os << rhs.conditions[i];
     if (i + 1 < rhs.conditions.size()) {
       os << ", ";

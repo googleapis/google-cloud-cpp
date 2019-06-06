@@ -88,7 +88,7 @@ void CompletionQueueImpl::ForgetOperation(void* tag) {
   std::lock_guard<std::mutex> lk(mu_);
   auto const num_erased =
       pending_ops_.erase(reinterpret_cast<std::intptr_t>(tag));
-  if (1U != num_erased) {
+  if (num_erased != 1) {
     google::cloud::internal::ThrowRuntimeError(
         "assertion failure: searching for async op tag when trying to "
         "unregister");

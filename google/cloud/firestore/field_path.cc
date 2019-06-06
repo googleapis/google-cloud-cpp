@@ -95,8 +95,8 @@ bool operator==(FieldPath const& lhs, FieldPath const& rhs) {
 bool operator<(FieldPath const& lhs, FieldPath const& rhs) {
   auto const lhs_size = lhs.parts_.size();
   auto const rhs_size = rhs.parts_.size();
-  auto const min_length = std::min(lhs_size, rhs_size);
-  for (auto i = 0u; i < min_length; i++) {
+  auto const min_length = (std::min)(lhs_size, rhs_size);
+  for (auto i = 0U; i != min_length; i++) {
     if (lhs.parts_[i] < rhs.parts_[i]) {
       return true;
     }

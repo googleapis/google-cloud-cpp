@@ -229,9 +229,9 @@ class ServiceAccountCredentials : public Credentials {
     auto access_token =
         storage::internal::nl::json::parse(response->payload, nullptr, false);
     if (access_token.is_discarded() ||
-        access_token.count("access_token") == 0U or
-        access_token.count("expires_in") == 0U or
-        access_token.count("token_type") == 0U) {
+        access_token.count("access_token") == 0 or
+        access_token.count("expires_in") == 0 or
+        access_token.count("token_type") == 0) {
       response->payload +=
           "Could not find all required fields in response (access_token,"
           " expires_in, token_type).";

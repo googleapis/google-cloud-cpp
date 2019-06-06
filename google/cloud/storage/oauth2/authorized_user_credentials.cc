@@ -37,7 +37,7 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
   char const token_uri_key[] = "token_uri";  // Not required; often not present.
   for (auto const& key :
        {client_id_key, client_secret_key, refresh_token_key}) {
-    if (credentials.count(key) == 0U) {
+    if (credentials.count(key) == 0) {
       return Status(StatusCode::kInvalidArgument,
                     "Invalid AuthorizedUserCredentials, the " +
                         std::string(key) +

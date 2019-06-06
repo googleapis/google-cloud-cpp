@@ -591,7 +591,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
   IamPolicy policy;
   policy.version = 0;
   policy.etag = json.value("etag", "");
-  if (json.count("bindings") != 0U) {
+  if (json.count("bindings") != 0) {
     if (!json["bindings"].is_array()) {
       std::ostringstream os;
       os << "Invalid IamPolicy payload, expected array for 'bindings' field."
@@ -600,7 +600,7 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
     }
     for (auto const& kv : json["bindings"].items()) {
       auto binding = kv.value();
-      if (binding.count("role") == 0U or binding.count("members") == 0U) {
+      if (binding.count("role") == 0 or binding.count("members") == 0) {
         std::ostringstream os;
         os << "Invalid IamPolicy payload, expected 'role' and 'members'"
            << " fields for element #" << kv.key() << ". payload=" << payload;

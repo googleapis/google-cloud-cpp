@@ -35,7 +35,7 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
 void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-create-table <project-id> <instance-id> <table-id>"};
   }
 
@@ -70,7 +70,7 @@ void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
 void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
                      google::cloud::bigtable::CompletionQueue cq,
                      std::vector<std::string> argv) {
-  if (argv.size() != 1U) {
+  if (argv.size() != 1) {
     throw Usage{"async-list-tables <project-id> <instance-id>"};
   }
 
@@ -103,7 +103,7 @@ void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
 void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
                    google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-get-table <project-id> <instance-id> <table-id>"};
   }
 
@@ -142,7 +142,7 @@ void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
 void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-delete-table <project-id> <instance-id> <table-id>"};
   }
 
@@ -171,7 +171,7 @@ void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
 void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-modify-table <project-id> <instance-id> <table-id>"};
   }
 
@@ -212,7 +212,7 @@ void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
 void AsyncDropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
                            google::cloud::bigtable::CompletionQueue cq,
                            std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
         "async-drop-rows-by-prefix <project-id> <instance-id> <table-id> "
         "<row-key>"};
@@ -243,7 +243,7 @@ void AsyncDropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
 void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-drop-all-rows <project-id> <instance-id> <table-id>"};
   }
 
@@ -272,7 +272,7 @@ void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
 void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
                            google::cloud::bigtable::CompletionQueue cq,
                            std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
         "async-check-consistency <project-id> <instance-id> <table-id> "
         "<consistency_token>"};
@@ -308,7 +308,7 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
 void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
                                    google::cloud::bigtable::CompletionQueue cq,
                                    std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{
         "async-generate-consistency-token <project-id> <instance-id> "
         "<table-id>"};
@@ -337,7 +337,7 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
 void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
                              google::cloud::bigtable::CompletionQueue cq,
                              std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
         "async-wait-for-consistency <project-id> <instance-id> "
         "<table-id> <consistency-token>"};

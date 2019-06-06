@@ -42,7 +42,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
   char const client_email_key[] = "client_email";
   for (auto const& key :
        {private_key_id_key, private_key_key, client_email_key}) {
-    if (credentials.count(key) == 0U) {
+    if (credentials.count(key) == 0) {
       return Status(StatusCode::kInvalidArgument,
                     "Invalid ServiceAccountCredentials, the " +
                         std::string(key) +
@@ -56,7 +56,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     }
   }
   // The token_uri field may be missing, but may not be empty:
-  if (credentials.count(token_uri_key) != 0U &&
+  if (credentials.count(token_uri_key) != 0 &&
       credentials.value(token_uri_key, "").empty()) {
     return Status(StatusCode::kInvalidArgument,
                   "Invalid ServiceAccountCredentials, the " +
