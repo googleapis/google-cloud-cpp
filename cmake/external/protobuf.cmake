@@ -22,9 +22,9 @@ if (NOT TARGET protobuf_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_PROTOBUF_URL
-        "https://github.com/google/protobuf/archive/v3.6.1.tar.gz")
+        "https://github.com/google/protobuf/archive/v3.7.1.tar.gz")
     set(GOOGLE_CLOUD_CPP_PROTOBUF_SHA256
-        "3d4e589d81b2006ca603c1ab712c9715a76227293032d05b26fca603f90b3f5b")
+        "f1748989842b46fa208b2a6e4e2785133cfcc3e4d43c17fecb023733f0f5443f")
 
     set_external_project_build_parallel_level(PARALLEL)
 
@@ -36,7 +36,7 @@ if (NOT TARGET protobuf_project)
     # multiple directories for our RPATH. Normally, it'd make sense to use : as
     # a delimiter since it is a typical path-list separator, but it is a special
     # character in CMake.
-    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib")
     string(REPLACE ";"
                    "|"
                    GOOGLE_CLOUD_CPP_INSTALL_RPATH
@@ -79,6 +79,12 @@ if (NOT TARGET protobuf_project)
             -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
             -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
             -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+            # Protobuf installs using `CMAKE_INSTALL_LIBDIR`, as it should,
+            # which expands to `lib` or `lib64`. But hard-codes RPATH to
+            # `$ORIGIN/../lib`, so change the default `LIBDIR` to something
+            # that works.
+            # https://github.com/protocolbuffers/protobuf/pull/6204
+            -DCMAKE_INSTALL_LIBDIR=lib
             -Dprotobuf_BUILD_TESTS=OFF
             -Dprotobuf_DEBUG_POSTFIX=
             -H<SOURCE_DIR>/cmake
@@ -100,7 +106,8 @@ if (NOT TARGET protobuf_project)
 
     add_library(protobuf::libprotobuf INTERFACE IMPORTED)
     add_dependencies(protobuf::libprotobuf protobuf_project)
-    set_library_properties_for_external_project(protobuf::libprotobuf protobuf)
+    set_library_properties_for_external_project(protobuf::libprotobuf protobuf
+                                                ALWAYS_LIB)
     set_property(TARGET protobuf::libprotobuf
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
