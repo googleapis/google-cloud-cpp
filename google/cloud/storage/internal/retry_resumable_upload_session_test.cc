@@ -104,7 +104,7 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(3, count);
-        return make_status_or(ResumableUploadResponse{"", 0U, {}});
+        return make_status_or(ResumableUploadResponse{"", 0, {}});
       }))
       .WillOnce(Invoke([&]() {
         ++count;
@@ -244,12 +244,12 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadChunk) {
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(2, count);
-        return make_status_or(ResumableUploadResponse{"", 0U, {}});
+        return make_status_or(ResumableUploadResponse{"", 0, {}});
       }))
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(4, count);
-        return make_status_or(ResumableUploadResponse{"", 0U, {}});
+        return make_status_or(ResumableUploadResponse{"", 0, {}});
       }));
 
   // We only tolerate 4 transient errors, the first call to UploadChunk() will
@@ -312,7 +312,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(3, count);
-        return make_status_or(ResumableUploadResponse{"", 0U, {}});
+        return make_status_or(ResumableUploadResponse{"", 0, {}});
       }));
 
   // We only tolerate 4 transient errors, the first call to UploadChunk() will
@@ -413,12 +413,12 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(2, count);
-        return make_status_or(ResumableUploadResponse{"", 0U, {}});
+        return make_status_or(ResumableUploadResponse{"", 0, {}});
       }))
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(4, count);
-        return make_status_or(ResumableUploadResponse{"", 0U, {}});
+        return make_status_or(ResumableUploadResponse{"", 0, {}});
       }));
 
   // We only tolerate 4 transient errors, the first call to UploadChunk() will

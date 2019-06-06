@@ -44,7 +44,7 @@ extern "C" void CurlShareUnlockCallback(CURL*, curl_lock_data data,
 
 std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
     ClientOptions const& options) {
-  if (options.connection_pool_size() == 0U) {
+  if (options.connection_pool_size() == 0) {
     return std::make_shared<DefaultCurlHandleFactory>();
   }
   return std::make_shared<PooledCurlHandleFactory>(

@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) try {
   int const report_worker_progress_rate = 500000;
   // The size of the thread pool pushing data to Cloud Bigtable
   std::size_t const thread_pool_size = []() -> std::size_t {
-    if (std::thread::hardware_concurrency() != 0U) {
+    if (std::thread::hardware_concurrency() != 0) {
       return std::thread::hardware_concurrency() - 1;
     }
     return 1;

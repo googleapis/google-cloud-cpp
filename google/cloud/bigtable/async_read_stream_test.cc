@@ -337,7 +337,7 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
       request, std::move(context),
       [&result, &server_barrier](btproto::MutateRowsResponse r) {
         result.reads.emplace_back(std::move(r));
-        if (result.reads.size() == 3U) {
+        if (result.reads.size() == 3) {
           server_barrier.Lift();
         }
         return make_ready_future(true);
@@ -422,7 +422,7 @@ TEST_F(AsyncReadStreamTest, Return3LastIsBlocked) {
   auto on_read = [&client_barrier, &server_barrier,
                   &result](btproto::MutateRowsResponse r) {
     result.reads.emplace_back(std::move(r));
-    if (result.reads.size() == 3U) {
+    if (result.reads.size() == 3) {
       client_barrier.Wait();
       server_barrier.Lift();
     }
@@ -473,7 +473,7 @@ TEST_F(AsyncReadStreamTest, CancelWhileBlocked) {
   HandlerResult result;
   auto on_read = [&client_barrier, &result](btproto::MutateRowsResponse r) {
     result.reads.emplace_back(std::move(r));
-    if (result.reads.size() == 2U) {
+    if (result.reads.size() == 2) {
       client_barrier.Wait();
       return make_ready_future(false);
     }
@@ -536,7 +536,7 @@ TEST_F(AsyncReadStreamTest, DoubleCancel) {
   auto on_read = [&read_received_barrier, &cancel_done_read_barrier,
                   &result](btproto::MutateRowsResponse r) {
     result.reads.emplace_back(std::move(r));
-    if (result.reads.size() == 2U) {
+    if (result.reads.size() == 2) {
       read_received_barrier.Lift();
       cancel_done_read_barrier.Wait();
     }

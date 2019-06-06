@@ -537,7 +537,7 @@ StatusOr<RewriteObjectResponse> RewriteObjectResponse::FromHttpResponse(
   result.object_size = ParseUnsignedLongField(object, "objectSize");
   result.done = object.value("done", false);
   result.rewrite_token = object.value("rewriteToken", "");
-  if (object.count("resource") != 0U) {
+  if (object.count("resource") != 0) {
     auto parsed = internal::ObjectMetadataParser::FromJson(object["resource"]);
     if (!parsed.ok()) {
       return std::move(parsed).status();

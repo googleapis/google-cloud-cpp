@@ -441,12 +441,12 @@ Options ParseArgs(int argc, char* argv[]) {
     std::cout << kDescription << "\n";
   }
 
-  if (unparsed.size() > 2U) {
+  if (unparsed.size() > 2) {
     std::ostringstream os;
     os << "Unknown arguments or options\n" << usage << "\n";
     throw std::runtime_error(std::move(os).str());
   }
-  if (unparsed.size() == 2U) {
+  if (unparsed.size() == 2) {
     options.region = unparsed[1];
   }
   if (options.region.empty()) {

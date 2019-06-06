@@ -38,8 +38,8 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
 void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
-    throw Usage{"async-create-instance: <project-id> <instance-id> <zone>"};
+  if (argv.size() != 3) {
+    throw Usage{"async-create-instance <project-id> <instance-id> <zone>"};
   }
   //! [async create instance]
   namespace cbt = google::cloud::bigtable;
@@ -75,7 +75,7 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 4U) {
+  if (argv.size() != 4) {
     throw Usage{
         "async-create-cluster <project-id> <instance-id> <cluster-id> <zone>"};
   }
@@ -109,7 +109,7 @@ void AsyncCreateAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
         "async-create-app-profile <project-id> <instance-id> <profile-id>"};
   }
@@ -143,8 +143,8 @@ void AsyncCreateAppProfile(
 void AsyncGetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
-    throw Usage{"async-get-instance: <project-id> <instance-id>"};
+  if (argv.size() != 2) {
+    throw Usage{"async-get-instance <project-id> <instance-id>"};
   }
 
   //! [async get instance]
@@ -176,8 +176,8 @@ void AsyncGetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 1U) {
-    throw Usage{"async-list-instances: <project-id>"};
+  if (argv.size() != 1) {
+    throw Usage{"async-list-instances <project-id>"};
   }
 
   //! [async list instances]
@@ -217,8 +217,8 @@ void AsyncListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                      google::cloud::bigtable::CompletionQueue cq,
                      std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
-    throw Usage{"async-get-cluster: <project-id> <instance-id> <cluster-id>"};
+  if (argv.size() != 3) {
+    throw Usage{"async-get-cluster <project-id> <instance-id> <cluster-id>"};
   }
 
   //! [async get cluster]
@@ -254,9 +254,9 @@ void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
-        "async-get-app-profile: <project-id> <instance-id> <app_profile-id>"};
+        "async-get-app-profile <project-id> <instance-id> <app_profile-id>"};
   }
 
   //! [async get app profile]
@@ -291,8 +291,8 @@ void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
-    throw Usage{"async-get-iam-policy: <project-id> <instance-id>"};
+  if (argv.size() != 2) {
+    throw Usage{"async-get-iam-policy <project-id> <instance-id>"};
   }
 
   //! [async get iam policy]
@@ -322,7 +322,7 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-list-clusters: <project-id> <instance-id>"};
   }
 
@@ -365,7 +365,7 @@ void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  if (argv.size() != 1U) {
+  if (argv.size() != 1) {
     throw Usage{"async-list-all-clusters: <project-id>"};
   }
 
@@ -407,7 +407,7 @@ void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-list-app-profiles: <project-id> <instance-id>"};
   }
 
@@ -443,7 +443,7 @@ void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"update-instance: <project-id> <instance-id>"};
   }
 
@@ -491,7 +491,7 @@ void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{"async-update-cluster <project-id> <instance-id> <cluster-id>"};
   }
 
@@ -538,7 +538,7 @@ void AsyncUpdateAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{"update-cluster: <project-id> <instance-id> <profile-id>"};
   }
 
@@ -573,7 +573,7 @@ void AsyncUpdateAppProfile(
 void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 2) {
     throw Usage{"async-delete-instance: <project-id> <instance-id> "};
   }
 
@@ -598,7 +598,7 @@ void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
         "async-delete-cluster: <project-id> <instance-id> <cluster-id> "};
   }
@@ -625,7 +625,7 @@ void AsyncDeleteAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 3) {
     throw Usage{
         "async-delete-app-profile <project-id> <instance-id> "
         "<app-profile-id> "};
@@ -653,7 +653,7 @@ void AsyncDeleteAppProfile(
 void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (argv.size() < 2U) {
+  if (argv.size() < 2) {
     throw Usage{
         "async-set-iam-policy: <project-id> <instance-id>"
         " <permission> <new-member>\n"
@@ -710,7 +710,7 @@ void AsyncTestIamPermissions(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() < 2U) {
+  if (argv.size() < 2) {
     throw Usage{
         "async-test-iam-permissions: <project-id> <resource-id> "
         "[permission ...]"};

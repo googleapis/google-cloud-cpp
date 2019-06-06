@@ -27,7 +27,7 @@ StatusOr<NotificationMetadata> NotificationMetadataParser::FromJson(
   }
   NotificationMetadata result{};
 
-  if (json.count("custom_attributes") != 0U) {
+  if (json.count("custom_attributes") != 0) {
     for (auto const& kv : json["custom_attributes"].items()) {
       result.custom_attributes_.emplace(kv.key(),
                                         kv.value().get<std::string>());
@@ -35,7 +35,7 @@ StatusOr<NotificationMetadata> NotificationMetadataParser::FromJson(
   }
   result.etag_ = json.value("etag", "");
 
-  if (json.count("event_types") != 0U) {
+  if (json.count("event_types") != 0) {
     for (auto const& kv : json["event_types"].items()) {
       result.event_types_.emplace_back(kv.value().get<std::string>());
     }

@@ -99,7 +99,7 @@ TEST_P(CurlClientTest, UploadChunk) {
   auto actual =
       client_
           ->UploadChunk(UploadChunkRequest(
-              "http://localhost:0/invalid-session-id", 0U, std::string{}, 0U))
+              "http://localhost:0/invalid-session-id", 0, std::string{}, 0))
           .status();
   CheckStatus(actual);
 }
@@ -179,7 +179,7 @@ TEST_P(CurlClientTest, TestBucketIamPermissions) {
 TEST_P(CurlClientTest, LockBucketRetentionPolicy) {
   auto actual = client_
                     ->LockBucketRetentionPolicy(
-                        LockBucketRetentionPolicyRequest("bkt", 0U))
+                        LockBucketRetentionPolicyRequest("bkt", 0))
                     .status();
   CheckStatus(actual);
 }

@@ -70,7 +70,7 @@ TEST(AppProfileConfig, SingleClusterRoutingWithTransactionalWrites) {
 
 bool HasFieldNameOnce(google::protobuf::FieldMask const& mask,
                       std::string const& name) {
-  return 1U == std::count(mask.paths().begin(), mask.paths().end(), name);
+  return std::count(mask.paths().begin(), mask.paths().end(), name) == 1;
 }
 
 TEST(AppProfileUpdateConfig, SetDescription) {

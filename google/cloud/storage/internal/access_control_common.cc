@@ -35,7 +35,7 @@ Status AccessControlCommon::ParseFromJson(AccessControlCommon& result,
   result.kind_ = json.value("kind", "");
   result.role_ = json.value("role", "");
   result.self_link_ = json.value("selfLink", "");
-  if (json.count("projectTeam") != 0U) {
+  if (json.count("projectTeam") != 0) {
     auto tmp = json["projectTeam"];
     ProjectTeam p;
     p.project_number = tmp.value("projectNumber", "");

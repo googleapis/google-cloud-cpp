@@ -206,7 +206,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
 
   ASSERT_STATUS_OK(session);
 
-  auto response = (*session)->UploadFinalChunk(std::string{}, 0U);
+  auto response = (*session)->UploadFinalChunk(std::string{}, 0);
   ASSERT_STATUS_OK(response.status());
 
   EXPECT_FALSE(response->payload.empty());
