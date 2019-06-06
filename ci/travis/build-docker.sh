@@ -151,6 +151,32 @@ if [ -n "${ccache_command}" ]; then
   "${ccache_command}" --zero-stats --cleanup --max-size="${max_size}"
 fi
 
+# Collect the output from the Clang static analyzer and provide instructions to
+# the developers on how to do that locally.
+if [[ "${SCAN_BUILD:-}" = "yes" ]]; then
+  if [[ -n "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]]; then
+    cp -r /tmp/scan-build-* /v/scan-cmake-out
+  fi
+  if [[ -r scan-cmake-out/index.html ]]; then
+    cat <<_EOF_;
+
+${COLOR_RED}
+scan-build detected errors.  Please read the log for details. To
+run scan-build locally and examine the HTML output install and configure Docker,
+then run:
+
+BUILD_NAME=scan-build ./ci/kokoro/docker/build.sh
+
+The HTML output will be copied into the scan-cmake-out subdirectory.
+${COLOR_RESET}
+_EOF_
+    exit 1
+  else
+    echo
+    echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
+  fi
+fi
+
 if [ "${BUILD_TESTING:-}" = "yes" ]; then
   # Run the tests and output any failures.
   echo
@@ -238,31 +264,4 @@ if [ "${GENERATE_DOCS}" = "yes" ]; then
   echo
   echo "${COLOR_YELLOW}Generating Doxygen documentation at: $(date).${COLOR_RESET}"
   cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
-fi
-
-# Collect the output from the Clang static analyzer and provide instructions to
-# the developers on how to do that locally.
-if [ "${SCAN_BUILD:-}" = "yes" ]; then
-  if [ -n "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]; then
-    cp -r /tmp/scan-build-* /v/scan-cmake-out
-  fi
-  if [ -r scan-cmake-out/index.html ]; then
-    cat <<_EOF_;
-
-${COLOR_RED}
-scan-build detected errors.  Please read the log for details. To
-run scan-build locally and examine the HTML output install and configure Docker,
-then run:
-
-DISTRO=ubuntu DISTRO_VERSION=18.04 SCAN_BUILD=yes NCPU=8 CXX=clang++ CC=clang \
-    ./ci/travis/build-linux.sh
-
-The HTML output will be copied into the scan-cmake-out subdirectory.
-${COLOR_RESET}
-_EOF_
-    exit 1
-  else
-    echo
-    echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
-  fi
 fi
