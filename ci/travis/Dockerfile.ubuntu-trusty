@@ -53,14 +53,9 @@ RUN pip install flask httpbin gevent gunicorn crc32c
 
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
-WORKDIR /var/tmp/install/cbt-components
-RUN wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
-RUN sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
-    grep -q '^a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a '
-RUN tar x -C /usr/local -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
-RUN /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
+COPY . /var/tmp/ci
+WORKDIR /var/tmp/downloads
+RUN /var/tmp/ci/install-cloud-sdk.sh
 
-# Install Bazel too.
-WORKDIR /var/tmp/ci
-COPY install-bazel.sh /var/tmp/ci
+# Install Bazel because some of the builds need it.
 RUN /var/tmp/ci/install-bazel.sh

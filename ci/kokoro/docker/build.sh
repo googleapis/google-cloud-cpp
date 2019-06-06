@@ -108,6 +108,7 @@ echo "Creating Docker image with all the development tools $(date)."
 # is an error, so disabling from this point on is the right choice.
 set +e
 mkdir -p "${BUILD_OUTPUT}"
+echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 "${PROJECT_ROOT}/ci/install-retry.sh" \
     "${PROJECT_ROOT}/ci/travis/install-linux.sh" \
     >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null
