@@ -21,7 +21,6 @@ readonly TARBALL="google-cloud-sdk-233.0.0-linux-x86_64.tar.gz"
 readonly SHA256="a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a"
 wget -q "${SITE}/${TARBALL}"
 
-echo "${SHA256} ${TARBALL}" >check.sha256.txt
-sha256sum --check check.sha256.txt
+echo "${SHA256} ${TARBALL}" | sha256sum --check -
 tar x -C /usr/local -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
 /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
