@@ -143,8 +143,7 @@ std::string Benchmark::MakeKey(long id) const {
   return os.str();
 }
 
-void Benchmark::PrintThroughputResult(std::ostream& os,
-                                      std::string const& test_name,
+void Benchmark::PrintThroughputResult(std::ostream& os, std::string const&,
                                       std::string const& phase,
                                       BenchmarkResult const& result) const {
   auto row_throughput = 1000 * result.row_count / result.elapsed.count();

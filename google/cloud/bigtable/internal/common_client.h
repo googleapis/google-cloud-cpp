@@ -72,7 +72,7 @@ class CommonClient {
   StubPtr Stub() {
     std::unique_lock<std::mutex> lk(mu_);
     CheckConnections(lk);
-    auto stub = stubs_[GetIndex(lk)];
+    auto stub = stubs_[GetIndex()];
     return stub;
   }
 
@@ -80,7 +80,7 @@ class CommonClient {
   ChannelPtr Channel() {
     std::unique_lock<std::mutex> lk(mu_);
     CheckConnections(lk);
-    auto channel = channels_[GetIndex(lk)];
+    auto channel = channels_[GetIndex()];
     return channel;
   }
 
@@ -116,7 +116,7 @@ class CommonClient {
   }
 
   /// Get the current index for round-robin over connections.
-  std::size_t GetIndex(std::unique_lock<std::mutex>& lk) {
+  std::size_t GetIndex() {
     std::size_t current = current_index_++;
     // Round robin through the connections.
     if (current_index_ >= stubs_.size()) {

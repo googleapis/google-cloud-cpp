@@ -79,7 +79,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     if (expect_a_read) {
       // The last call, to which we'll return ok==false.
       EXPECT_CALL(reader, Read(_, _))
-          .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {}));
+          .WillOnce(Invoke([](btproto::ReadRowsResponse*, void*) {}));
     }
     return reader;
   }
@@ -145,7 +145,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
 
 /// @test Verify that successfully reading a sinle row works.
 TEST_F(TableAsyncReadRowsTest, SingleRow) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -196,7 +196,7 @@ TEST_F(TableAsyncReadRowsTest, SingleRow) {
 
 /// @test Like SingleRow, but the future returned from the cb is satisfied.
 TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -244,7 +244,7 @@ TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
 
 /// @test Verify that reading 2 rows delivered in 2 responses works.
 TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -313,7 +313,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
 
 /// @test Like MultipleChunks but the future returned from on_row is satisfied.
 TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -379,7 +379,7 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
 
 /// @test Verify that a single row can span mutiple responses.
 TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -439,7 +439,7 @@ TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
 
 /// @test Verify that parser fails if the stream finishes prematurely.
 TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -479,7 +479,7 @@ TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
 
 /// @test Check that we ignore HandleEndOfStream errors if enough rows were read
 TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -534,7 +534,7 @@ TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
 
 /// @test Verify that permanent errors are not retried and properly passed.
 TEST_F(TableAsyncReadRowsTest, PermanentFailure) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {
@@ -567,7 +567,7 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
     auto const& range = rows.row_ranges(0);
     EXPECT_EQ("r1", range.start_key_open());
   });
-  auto& stream1 = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream1 = AddReader([](btproto::ReadRowsRequest const&) {});
 
   // Make it a bit trickier by delivering the error while parsing second row.
   EXPECT_CALL(stream1, Read(_, _))
@@ -655,7 +655,7 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
 
 /// @test Verify proper handling of bogus responses from the service.
 TEST_F(TableAsyncReadRowsTest, ParserFailure) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -721,7 +721,7 @@ class TableAsyncReadRowsCancelMidStreamTest
       public WithParamInterface<CancelMode> {};
 
 TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -825,7 +825,7 @@ INSTANTIATE_TEST_CASE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
 
 /// @test Like CancelMidStream but after the underlying stream has finished.
 TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   // First two rows are going to be processed, but third will cause the parser
   // to fail (row order violation). This will result in finishing the stream
@@ -899,7 +899,7 @@ TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
 
 /// @test Verify that the recursion described in TryGiveRowToUser is bounded.
 TEST_F(TableAsyncReadRowsTest, DeepStack) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   auto large_response = bigtable::testing::ReadRowsResponseFromString(
       R"(
@@ -966,7 +966,7 @@ TEST_F(TableAsyncReadRowsTest, DeepStack) {
 }
 
 TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Read(_, _))
       .WillOnce(Invoke([](btproto::ReadRowsResponse* r, void*) {
@@ -1015,7 +1015,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
 }
 
 TEST_F(TableAsyncReadRowsTest, ReadRowNotFound) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Finish(_, _))
       .WillOnce(Invoke(
@@ -1041,7 +1041,7 @@ TEST_F(TableAsyncReadRowsTest, ReadRowNotFound) {
 }
 
 TEST_F(TableAsyncReadRowsTest, ReadRowError) {
-  auto& stream = AddReader([](btproto::ReadRowsRequest const& req) {});
+  auto& stream = AddReader([](btproto::ReadRowsRequest const&) {});
 
   EXPECT_CALL(stream, Finish(_, _))
       .WillOnce(Invoke([](grpc::Status* status, void*) {

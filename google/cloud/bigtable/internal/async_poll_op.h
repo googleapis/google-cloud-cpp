@@ -36,7 +36,7 @@ namespace internal {
  * the operation to be polled.
  */
 struct PrototypePollOpStartCallback {
-  void operator()(CompletionQueue&, bool finished, grpc::Status&) const {}
+  void operator()(CompletionQueue&, bool, grpc::Status&) const {}
 };
 
 /**

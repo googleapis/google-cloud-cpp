@@ -52,7 +52,7 @@ class ObjectReadErrorSource : public ObjectReadSource {
 
   bool IsOpen() const override { return false; }
   StatusOr<HttpResponse> Close() override { return status_; }
-  StatusOr<HttpResponse> Read(std::string& buffer) override { return status_; }
+  StatusOr<HttpResponse> Read(std::string&) override { return status_; }
 
  private:
   Status status_;

@@ -654,7 +654,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
   // This operation should fail because the object already exists.
   testing_util::ExpectException<std::ios::failure>(
       [&] { os.Close(); },
-      [&](std::ios::failure const& ex) {
+      [&](std::ios::failure const&) {
         EXPECT_FALSE(os.metadata().ok());
         EXPECT_EQ(StatusCode::kFailedPrecondition,
                   os.metadata().status().code());

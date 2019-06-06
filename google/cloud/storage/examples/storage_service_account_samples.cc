@@ -35,7 +35,7 @@ char const* ConsumeArg(int& argc, char* argv[]) {
 
 std::string command_usage;
 
-void PrintUsage(int argc, char* argv[], std::string const& msg) {
+void PrintUsage(int, char* argv[], std::string const& msg) {
   std::string const cmd = argv[0];
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
@@ -45,7 +45,7 @@ void PrintUsage(int argc, char* argv[], std::string const& msg) {
 }
 
 void GetServiceAccount(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
+                       char*[]) {
   if (argc != 1) {
     throw Usage{"get-service-account"};
   }
@@ -90,8 +90,7 @@ void GetServiceAccountForProject(google::cloud::storage::Client client,
   (std::move(client), project_id);
 }
 
-void ListHmacKeys(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
+void ListHmacKeys(google::cloud::storage::Client client, int& argc, char*[]) {
   if (argc != 1) {
     throw Usage{"list-hmac-keys"};
   }

@@ -73,10 +73,9 @@ class NullHashValidator : public HashValidator {
   NullHashValidator() = default;
 
   std::string Name() const override { return "null"; }
-  void Update(std::string const& payload) override {}
-  void ProcessMetadata(ObjectMetadata const& meta) override {}
-  void ProcessHeader(std::string const& key,
-                     std::string const& value) override {}
+  void Update(std::string const&) override {}
+  void ProcessMetadata(ObjectMetadata const&) override {}
+  void ProcessHeader(std::string const&, std::string const&) override {}
   Result Finish() && override { return Result{}; }
 };
 

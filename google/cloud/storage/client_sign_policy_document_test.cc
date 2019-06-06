@@ -133,7 +133,7 @@ TEST_F(CreateSignedPolicyDocTest, SignRemote) {
   EXPECT_CALL(*mock, SignBlob(_))
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce(
-          Invoke([&expected_signed_blob](internal::SignBlobRequest const& r) {
+          Invoke([&expected_signed_blob](internal::SignBlobRequest const&) {
             return make_status_or(internal::SignBlobResponse{
                 "test-key-id", expected_signed_blob});
           }));

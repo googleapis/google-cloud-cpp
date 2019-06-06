@@ -27,7 +27,7 @@ CurlResumableStreambuf::CurlResumableStreambuf(
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
-      last_response_{400} {
+      last_response_{400, {}, {}} {
   current_ios_buffer_.reserve(max_buffer_size_);
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();

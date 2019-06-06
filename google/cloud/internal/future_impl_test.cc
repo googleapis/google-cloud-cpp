@@ -110,7 +110,7 @@ TEST(FutureImplBaseTest, AbandonReady) {
 
 // @test Verify that we can create continuations.
 TEST(ContinuationVoidTest, Constructor) {
-  auto functor = [](std::shared_ptr<future_shared_state<void>> state) {};
+  auto functor = [](std::shared_ptr<future_shared_state<void>>) {};
 
   using tested_type = continuation<decltype(functor), void>;
 
@@ -450,7 +450,7 @@ TEST(FutureImplInt, SetContinuationAlreadySatisfied) {
 
 // @test Verify that we can create continuations.
 TEST(ContinuationIntTest, Constructor) {
-  auto functor = [](std::shared_ptr<future_shared_state<int>> state) {};
+  auto functor = [](std::shared_ptr<future_shared_state<int>>) {};
 
   using tested_type = continuation<decltype(functor), int>;
 

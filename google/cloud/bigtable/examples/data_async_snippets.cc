@@ -38,16 +38,15 @@ void PrintUsage(std::string const& cmd, std::string const& msg) {
 void AsyncApply(google::cloud::bigtable::Table table,
                 google::cloud::bigtable::CompletionQueue cq,
                 std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
-    throw Usage{"async-apply: <project-id> <instance-id> <table-id> <row-key>"};
+  if (argv.size() != 2U) {
+    throw Usage{"async-apply <project-id> <instance-id> <table-id> <row-key>"};
   }
 
   //! [async-apply]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
-     std::string row_key) {
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string row_key) {
     auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::system_clock::now().time_since_epoch());
 
@@ -67,20 +66,20 @@ void AsyncApply(google::cloud::bigtable::Table table,
     std::cout << "Successfully applied mutation\n";
   }
   //! [async-apply]
-  (std::move(table), std::move(cq), argv[1], argv[2]);
+  (std::move(table), std::move(cq), argv[1]);
 }
 
 void AsyncBulkApply(google::cloud::bigtable::Table table,
                     google::cloud::bigtable::CompletionQueue cq,
                     std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
-    throw Usage{"async-bulk-apply: <project-id> <instance-id> <table-id>"};
+  if (argv.size() != 1U) {
+    throw Usage{"async-bulk-apply <project-id> <instance-id> <table-id>"};
   }
 
   //! [bulk async-bulk-apply]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id) {
+  [](cbt::Table table, cbt::CompletionQueue cq) {
     // Write several rows in a single operation, each row has some trivial data.
     cbt::BulkMutation bulk;
     for (int i = 0; i != 5000; ++i) {
@@ -124,14 +123,14 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example
   }
   //! [bulk async-bulk-apply]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq));
 }
 
 void AsyncReadRows(google::cloud::bigtable::Table table,
                    google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
-    throw Usage{"async-read-rows: <project-id> <instance-id> <table-id>"};
+  if (argv.size() != 1U) {
+    throw Usage{"async-read-rows <project-id> <instance-id> <table-id>"};
   }
 
   //! [async read rows]
@@ -177,9 +176,9 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
 void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
                             google::cloud::bigtable::CompletionQueue cq,
                             std::vector<std::string> argv) {
-  if (argv.size() != 2U) {
+  if (argv.size() != 1U) {
     throw Usage{
-        "async-read-rows-with-limit: <project-id> <instance-id> <table-id>"};
+        "async-read-rows-with-limit <project-id> <instance-id> <table-id>"};
   }
 
   //! [async read rows with limit]
@@ -225,7 +224,7 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
 void AsyncReadRow(google::cloud::bigtable::Table table,
                   google::cloud::bigtable::CompletionQueue cq,
                   std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 2U) {
     throw Usage{
         "async-read-row <project-id> <instance-id> <table-id> <row-key>"};
   }
@@ -268,13 +267,13 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example
   }
   //! [async read row]
-  (std::move(cq), std::move(table), std::move(argv[2]));
+  (std::move(cq), std::move(table), argv[1]);
 }
 
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 2U) {
     throw Usage{
         "async-check-and-mutate <project-id> <instance-id> <table-id>"
         " <row-key>"};
@@ -284,8 +283,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
-     std::string row_key) {
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string row_key) {
     // Check if the latest value of the flip-flop column is "on".
     cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnRangeClosed("fam", "flip-flop", "flip-flop"),
@@ -313,13 +311,13 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example.
   }
   //! [async check and mutate]
-  (std::move(table), std::move(cq), argv[1], argv[2]);
+  (std::move(table), std::move(cq), argv[1]);
 }
 
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  if (argv.size() != 3U) {
+  if (argv.size() != 2U) {
     throw Usage{
         "async-read-modify-write <project-id> <instance-id> <table-id>"
         " <row-key>"};
@@ -329,8 +327,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](cbt::Table table, cbt::CompletionQueue cq, std::string table_id,
-     std::string row_key) {
+  [](cbt::Table table, cbt::CompletionQueue cq, std::string row_key) {
     future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
         row_key, cq,
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
@@ -345,7 +342,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
         .get();  // block to simplify example.
   }
   //! [async read modify write]
-  (std::move(table), std::move(cq), argv[1], argv[2]);
+  (std::move(table), std::move(cq), argv[1]);
 }
 }  // anonymous namespace
 
@@ -398,7 +395,7 @@ int main(int argc, char* argv[]) try {
   std::string const project_id = argv[2];
   std::string const instance_id = argv[3];
   std::string const table_id = argv[4];
-  std::transform(argv + 4, argv + argc, std::back_inserter(args),
+  std::transform(argv + 5, argv + argc, std::back_inserter(args),
                  [](char* x) { return std::string(x); });
 
   auto command = commands.find(command_name);

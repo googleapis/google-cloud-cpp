@@ -117,7 +117,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(
-          Invoke([expected_id, &reader](grpc::ClientContext* ctx,
+          Invoke([expected_id, &reader](grpc::ClientContext*,
                                         btproto::MutateRowsRequest const& req) {
             EXPECT_EQ(expected_id, req.app_profile_id());
             return reader.release()->AsUniqueMocked();

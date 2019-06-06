@@ -114,7 +114,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
           btadmin::Table>;
   auto reader = google::cloud::internal::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::Table* table, grpc::Status* status, void*) {
+      .WillOnce(Invoke([](btadmin::Table*, grpc::Status* status, void*) {
         *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh");
       }));
 
@@ -167,7 +167,7 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
       ::google::cloud::bigtable::testing::MockAsyncResponseReader<
           btadmin::Table>;
 
-  auto finish_failure = [](btadmin::Table* table, grpc::Status* status, void*) {
+  auto finish_failure = [](btadmin::Table*, grpc::Status* status, void*) {
     *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 

@@ -58,7 +58,7 @@ class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
 
   bool HasNext() const override { return !rows_.empty(); }
 
-  Row Next(grpc::Status& status) override {
+  Row Next(grpc::Status&) override {
     Row row = rows_.front();
     rows_.pop_front();
     return row;
@@ -116,7 +116,7 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
   bool OnFailure(grpc::Status const& status) override {
     return OnFailureHook(status);
   }
-  bool OnFailure(google::cloud::Status const& status) override { return true; }
+  bool OnFailure(google::cloud::Status const&) override { return true; }
 };
 
 class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
@@ -125,14 +125,14 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
     google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
-  void Setup(grpc::ClientContext& context) const override {}
+  void Setup(grpc::ClientContext&) const override {}
   MOCK_METHOD1(OnCompletionHook,
                std::chrono::milliseconds(grpc::Status const& s));
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
     return OnCompletionHook(s);
   }
   std::chrono::milliseconds OnCompletion(
-      google::cloud::Status const& s) override {
+      google::cloud::Status const&) override {
     return std::chrono::milliseconds(0);
   }
 };
@@ -220,11 +220,11 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
     testing::InSequence s;
     std::string expected_id = "test-id";
     EXPECT_CALL(*client_, ReadRows(_, _))
-        .WillOnce(Invoke([expected_id, &stream](grpc::ClientContext* ctx,
-                                                ReadRowsRequest req) {
-          EXPECT_EQ(expected_id, req.app_profile_id());
-          return stream->AsUniqueMocked();
-        }));
+        .WillOnce(Invoke(
+            [expected_id, &stream](grpc::ClientContext*, ReadRowsRequest req) {
+              EXPECT_EQ(expected_id, req.app_profile_id());
+              return stream->AsUniqueMocked();
+            }));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));

@@ -24,7 +24,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 // An empty callback just to test things.
-extern "C" void test_cb(int mode, int type, char const* file, int line) {}
+extern "C" void test_cb(int /*mode*/, int /*type*/, char const* /*file*/,
+                        int /*line*/) {}
 
 /// @test Verify that installing the libraries
 TEST(CurlWrappers, LockingDisabledTest) {

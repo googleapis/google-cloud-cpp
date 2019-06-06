@@ -51,8 +51,7 @@ auto create_list_instances_lambda = [](std::string expected_token,
                                        std::string returned_token,
                                        std::vector<std::string> instance_ids) {
   return [expected_token, returned_token, instance_ids](
-             grpc::ClientContext* ctx,
-             btadmin::ListInstancesRequest const& request,
+             grpc::ClientContext*, btadmin::ListInstancesRequest const& request,
              btadmin::ListInstancesResponse* response) {
     auto const project_name = "projects/" + kProjectId;
     EXPECT_EQ(project_name, request.parent());
@@ -72,7 +71,7 @@ auto create_list_instances_lambda = [](std::string expected_token,
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
 auto create_cluster = []() {
-  return [](grpc::ClientContext* ctx, btadmin::GetClusterRequest const& request,
+  return [](grpc::ClientContext*, btadmin::GetClusterRequest const& request,
             btadmin::Cluster* response) {
     EXPECT_NE(nullptr, response);
     response->set_name(request.name());
@@ -81,8 +80,7 @@ auto create_cluster = []() {
 };
 
 auto create_policy = []() {
-  return [](grpc::ClientContext* ctx,
-            ::google::iam::v1::GetIamPolicyRequest const& request,
+  return [](grpc::ClientContext*, ::google::iam::v1::GetIamPolicyRequest const&,
             ::google::iam::v1::Policy* response) {
     EXPECT_NE(nullptr, response);
     response->set_version(3);
@@ -92,7 +90,7 @@ auto create_policy = []() {
 };
 
 auto create_policy_with_params = []() {
-  return [](grpc::ClientContext* ctx,
+  return [](grpc::ClientContext*,
             ::google::iam::v1::SetIamPolicyRequest const& request,
             ::google::iam::v1::Policy* response) {
     EXPECT_NE(nullptr, response);
@@ -103,28 +101,28 @@ auto create_policy_with_params = []() {
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_clusters_lambda =
-    [](std::string expected_token, std::string returned_token,
-       std::string instance_id, std::vector<std::string> cluster_ids) {
-      return [expected_token, returned_token, instance_id, cluster_ids](
-                 grpc::ClientContext* ctx,
-                 btadmin::ListClustersRequest const& request,
-                 btadmin::ListClustersResponse* response) {
-        auto const instance_name =
-            "projects/" + kProjectId + "/instances/" + instance_id;
-        EXPECT_EQ(instance_name, request.parent());
-        EXPECT_EQ(expected_token, request.page_token());
+auto create_list_clusters_lambda = [](std::string expected_token,
+                                      std::string returned_token,
+                                      std::string instance_id,
+                                      std::vector<std::string> cluster_ids) {
+  return [expected_token, returned_token, instance_id, cluster_ids](
+             grpc::ClientContext*, btadmin::ListClustersRequest const& request,
+             btadmin::ListClustersResponse* response) {
+    auto const instance_name =
+        "projects/" + kProjectId + "/instances/" + instance_id;
+    EXPECT_EQ(instance_name, request.parent());
+    EXPECT_EQ(expected_token, request.page_token());
 
-        EXPECT_NE(nullptr, response);
-        for (auto const& cluster_id : cluster_ids) {
-          auto& cluster = *response->add_clusters();
-          cluster.set_name(instance_name + "/clusters/" + cluster_id);
-        }
-        // Return the right token.
-        response->set_next_page_token(returned_token);
-        return grpc::Status::OK;
-      };
-    };
+    EXPECT_NE(nullptr, response);
+    for (auto const& cluster_id : cluster_ids) {
+      auto& cluster = *response->add_clusters();
+      cluster.set_name(instance_name + "/clusters/" + cluster_id);
+    }
+    // Return the right token.
+    response->set_next_page_token(returned_token);
+    return grpc::Status::OK;
+  };
+};
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -144,7 +142,7 @@ struct MockRpcFactory {
   /// Refactor the boilerplate common to most tests.
   static std::function<SignatureType> Create(std::string expected_request) {
     return std::function<SignatureType>(
-        [expected_request](grpc::ClientContext* ctx, RequestType const& request,
+        [expected_request](grpc::ClientContext*, RequestType const& request,
                            ResponseType* response) {
           RequestType expected;
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
@@ -240,11 +238,11 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btadmin::ListInstancesRequest const& request,
-         btadmin::ListInstancesResponse* response) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      };
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     btadmin::ListInstancesRequest const&,
+                                     btadmin::ListInstancesResponse*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
   EXPECT_CALL(*client_, ListInstances(_, _, _))
@@ -346,11 +344,11 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, btadmin::ListClustersRequest const& request,
-         btadmin::ListClustersResponse* response) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      };
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     btadmin::ListClustersRequest const&,
+                                     btadmin::ListClustersResponse*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
   std::string const& instance_id = "the-instance";
   auto batch0 =
       create_list_clusters_lambda("", "token-001", instance_id, {"t0", "t1"});
@@ -422,9 +420,9 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btadmin::GetClusterRequest const& request,
-                                     btadmin::Cluster* response) {
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     btadmin::GetClusterRequest const&,
+                                     btadmin::Cluster*) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
@@ -516,11 +514,11 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
 
-  auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, iamproto::GetIamPolicyRequest const& request,
-         iamproto::Policy* response) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      };
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     iamproto::GetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
   auto mock_policy = create_policy();
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
@@ -666,11 +664,11 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
 
-  auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx, iamproto::SetIamPolicyRequest const& request,
-         iamproto::Policy* response) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      };
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     iamproto::SetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
   auto mock_policy = create_policy_with_params();
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
@@ -695,8 +693,7 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
   bigtable::InstanceAdmin tested(client_);
 
   auto mock_permission_set =
-      [](grpc::ClientContext* ctx,
-         iamproto::TestIamPermissionsRequest const& request,
+      [](grpc::ClientContext*, iamproto::TestIamPermissionsRequest const&,
          iamproto::TestIamPermissionsResponse* response) {
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
@@ -740,16 +737,14 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
-  auto mock_recoverable_failure =
-      [](grpc::ClientContext* ctx,
-         iamproto::TestIamPermissionsRequest const& request,
-         iamproto::TestIamPermissionsResponse* response) {
-        return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
-      };
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     iamproto::TestIamPermissionsRequest const&,
+                                     iamproto::TestIamPermissionsResponse*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
 
   auto mock_permission_set =
-      [](grpc::ClientContext* ctx,
-         iamproto::TestIamPermissionsRequest const& request,
+      [](grpc::ClientContext*, iamproto::TestIamPermissionsRequest const&,
          iamproto::TestIamPermissionsResponse* response) {
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};

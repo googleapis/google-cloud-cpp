@@ -126,7 +126,8 @@ class CurlRequestBuilder {
    * use them.
    */
   template <typename Option, typename T>
-  CurlRequestBuilder& AddOption(ComplexOption<Option, T> const& p) {
+  CurlRequestBuilder& AddOption(ComplexOption<Option, T> const&) {
+    // Ignore other options.
     return *this;
   }
 

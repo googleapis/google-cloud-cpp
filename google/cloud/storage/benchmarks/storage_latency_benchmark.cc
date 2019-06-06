@@ -402,11 +402,9 @@ Options ParseArgs(int argc, char* argv[]) {
   bool wants_description = false;
   std::vector<gcs_bm::OptionDescriptor> desc{
       {"--help", "print usage information",
-       [&wants_help](std::string const& v) { wants_help = true; }},
+       [&wants_help](std::string const&) { wants_help = true; }},
       {"--description", "print benchmark description",
-       [&wants_description](std::string const& v) {
-         wants_description = true;
-       }},
+       [&wants_description](std::string const&) { wants_description = true; }},
       {"--duration", "set the total execution time for the benchmark",
        [&options](std::string const& val) {
          options.duration = gcs_bm::ParseDuration(val);

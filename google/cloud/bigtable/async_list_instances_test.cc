@@ -234,10 +234,10 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
       .WillOnce(Invoke(create_list_instances_lambda("token_1", {"instance_1"},
                                                     {"failed_loc_1"})));
   EXPECT_CALL(*instances_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke([](btproto::ListInstancesResponse* response,
-                          grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
-      }));
+      .WillOnce(Invoke(
+          [](btproto::ListInstancesResponse*, grpc::Status* status, void*) {
+            *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
+          }));
   EXPECT_CALL(*instances_reader_3_, Finish(_, _, _))
       .WillOnce(Invoke(
           create_list_instances_lambda("", {"instance_2"}, {"failed_loc_2"})));

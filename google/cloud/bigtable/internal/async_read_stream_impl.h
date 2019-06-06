@@ -283,7 +283,7 @@ class AsyncReadStreamImpl
   }
 
   /// Handle the result of a Discard() call.
-  void OnDiscard(bool ok, Response r) {
+  void OnDiscard(bool ok, Response) {
     if (!ok) {
       Finish();
       return;

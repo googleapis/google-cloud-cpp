@@ -62,7 +62,7 @@ class MockHttpRequest {
 class MockHttpRequestBuilder {
  public:
   explicit MockHttpRequestBuilder(
-      std::string url, std::shared_ptr<internal::CurlHandleFactory> factory) {
+      std::string url, std::shared_ptr<internal::CurlHandleFactory>) {
     mock->Constructor(std::move(url));
   }
 

@@ -775,7 +775,7 @@ class Table {
       CompletionQueue& cq,
       ::google::bigtable::v2::ReadModifyWriteRowRequest request);
 
-  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request) {
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest&) {
     // no-op for empty list
   }
 

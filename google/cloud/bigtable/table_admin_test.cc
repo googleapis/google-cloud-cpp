@@ -53,26 +53,25 @@ class TableAdminTest : public ::testing::Test {
 auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
-  return
-      [expected_token, returned_token, table_names](
-          grpc::ClientContext* ctx, btadmin::ListTablesRequest const& request,
-          btadmin::ListTablesResponse* response) {
-        auto const instance_name =
-            "projects/" + kProjectId + "/instances/" + kInstanceId;
-        EXPECT_EQ(instance_name, request.parent());
-        EXPECT_EQ(btadmin::Table::FULL, request.view());
-        EXPECT_EQ(expected_token, request.page_token());
+  return [expected_token, returned_token, table_names](
+             grpc::ClientContext*, btadmin::ListTablesRequest const& request,
+             btadmin::ListTablesResponse* response) {
+    auto const instance_name =
+        "projects/" + kProjectId + "/instances/" + kInstanceId;
+    EXPECT_EQ(instance_name, request.parent());
+    EXPECT_EQ(btadmin::Table::FULL, request.view());
+    EXPECT_EQ(expected_token, request.page_token());
 
-        EXPECT_NE(nullptr, response);
-        for (auto const& table_name : table_names) {
-          auto& table = *response->add_tables();
-          table.set_name(instance_name + "/tables/" + table_name);
-          table.set_granularity(btadmin::Table::MILLIS);
-        }
-        // Return the right token.
-        response->set_next_page_token(returned_token);
-        return grpc::Status::OK;
-      };
+    EXPECT_NE(nullptr, response);
+    for (auto const& table_name : table_names) {
+      auto& table = *response->add_tables();
+      table.set_name(instance_name + "/tables/" + table_name);
+      table.set_granularity(btadmin::Table::MILLIS);
+    }
+    // Return the right token.
+    response->set_next_page_token(returned_token);
+    return grpc::Status::OK;
+  };
 };
 
 /**
@@ -93,7 +92,7 @@ struct MockRpcFactory {
   /// Refactor the boilerplate common to most tests.
   static std::function<SignatureType> Create(std::string expected_request) {
     return std::function<SignatureType>(
-        [expected_request](grpc::ClientContext* ctx, RequestType const& request,
+        [expected_request](grpc::ClientContext*, RequestType const& request,
                            ResponseType* response) {
           if (response == nullptr) {
             return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
@@ -133,7 +132,7 @@ struct MockRpcMultiCallFactory {
   static std::function<SignatureType> Create(std::string expected_request,
                                              bool expected_result) {
     return std::function<SignatureType>(
-        [expected_request, expected_result](grpc::ClientContext* ctx,
+        [expected_request, expected_result](grpc::ClientContext*,
                                             RequestType const& request,
                                             ResponseType* response) {
           if (response == nullptr) {
@@ -193,9 +192,9 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btadmin::ListTablesRequest const& request,
-                                     btadmin::ListTablesResponse* response) {
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     btadmin::ListTablesRequest const&,
+                                     btadmin::ListTablesResponse*) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
@@ -245,9 +244,9 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
-  auto mock_recoverable_failure = [](grpc::ClientContext* ctx,
-                                     btadmin::ListTablesRequest const& request,
-                                     btadmin::ListTablesResponse* response) {
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     btadmin::ListTablesRequest const&,
+                                     btadmin::ListTablesResponse*) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables(_, _, _))

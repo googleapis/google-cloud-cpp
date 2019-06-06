@@ -34,7 +34,7 @@ namespace internal {
  * the operation to be executed in a loop.
  */
 struct PrototypeLoopOperationStartCallback {
-  void operator()(CompletionQueue&, bool finished) const {}
+  void operator()(CompletionQueue&, bool) const {}
 };
 
 template <typename Operation>

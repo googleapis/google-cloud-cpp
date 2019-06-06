@@ -2839,7 +2839,7 @@ class Client {
   StatusOr<ObjectMetadata> UploadFileImpl(std::string const& file_name,
                                           std::string const& bucket_name,
                                           std::string const& object_name,
-                                          std::true_type has_resumable_option,
+                                          std::true_type,
                                           Options&&... options) {
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
@@ -2850,10 +2850,11 @@ class Client {
   // the options. In this case we can use InsertObjectMediaRequest because it
   // is safe.
   template <typename... Options>
-  StatusOr<ObjectMetadata> UploadFileImpl(
-      std::string const& file_name, std::string const& bucket_name,
-      std::string const& object_name,
-      std::false_type does_not_have_resumable_option, Options&&... options) {
+  StatusOr<ObjectMetadata> UploadFileImpl(std::string const& file_name,
+                                          std::string const& bucket_name,
+                                          std::string const& object_name,
+                                          std::false_type,
+                                          Options&&... options) {
     if (UseSimpleUpload(file_name)) {
       internal::InsertObjectMediaRequest request(bucket_name, object_name,
                                                  std::string{});

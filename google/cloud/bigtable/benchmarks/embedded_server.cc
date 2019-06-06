@@ -51,15 +51,14 @@ class BigtableImpl final : public btproto::Bigtable::Service {
                   [&generator]() { return MakeRandomValue(generator); });
   }
 
-  grpc::Status MutateRow(grpc::ServerContext* context,
-                         btproto::MutateRowRequest const* request,
-                         btproto::MutateRowResponse* response) override {
+  grpc::Status MutateRow(grpc::ServerContext*, btproto::MutateRowRequest const*,
+                         btproto::MutateRowResponse*) override {
     ++mutate_row_count_;
     return grpc::Status::OK;
   }
 
   grpc::Status MutateRows(
-      grpc::ServerContext* context, btproto::MutateRowsRequest const* request,
+      grpc::ServerContext*, btproto::MutateRowsRequest const* request,
       grpc::ServerWriter<btproto::MutateRowsResponse>* writer) override {
     ++mutate_rows_count_;
     btproto::MutateRowsResponse msg;
@@ -73,7 +72,7 @@ class BigtableImpl final : public btproto::Bigtable::Service {
   }
 
   grpc::Status ReadRows(
-      grpc::ServerContext* context, btproto::ReadRowsRequest const* request,
+      grpc::ServerContext*, btproto::ReadRowsRequest const* request,
       grpc::ServerWriter<btproto::ReadRowsResponse>* writer) override {
     ++read_rows_count_;
     std::int64_t rows_limit = 10000;
@@ -135,7 +134,7 @@ class TableAdminImpl final : public btadmin::BigtableTableAdmin::Service {
  public:
   TableAdminImpl() : create_table_count_(0), delete_table_count_(0) {}
 
-  grpc::Status CreateTable(grpc::ServerContext* context,
+  grpc::Status CreateTable(grpc::ServerContext*,
                            btadmin::CreateTableRequest const* request,
                            btadmin::Table* response) override {
     ++create_table_count_;
@@ -143,9 +142,9 @@ class TableAdminImpl final : public btadmin::BigtableTableAdmin::Service {
     return grpc::Status::OK;
   }
 
-  grpc::Status DeleteTable(grpc::ServerContext* context,
-                           btadmin::DeleteTableRequest const* request,
-                           ::google::protobuf::Empty* response) override {
+  grpc::Status DeleteTable(grpc::ServerContext*,
+                           btadmin::DeleteTableRequest const*,
+                           ::google::protobuf::Empty*) override {
     ++delete_table_count_;
     return grpc::Status::OK;
   }
