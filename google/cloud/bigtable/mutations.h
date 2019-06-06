@@ -261,10 +261,10 @@ class SingleRowMutation {
 
   friend class Table;
 
-  SingleRowMutation(SingleRowMutation&& rhs) = default;
-  SingleRowMutation& operator=(SingleRowMutation&& rhs) = default;
-  SingleRowMutation(SingleRowMutation const& rhs) = default;
-  SingleRowMutation& operator=(SingleRowMutation const& rhs) = default;
+  SingleRowMutation(SingleRowMutation&&) = default;
+  SingleRowMutation& operator=(SingleRowMutation&&) = default;
+  SingleRowMutation(SingleRowMutation const&) = default;
+  SingleRowMutation& operator=(SingleRowMutation const&) = default;
 
   /// Move the contents into a bigtable::v2::MutateRowsRequest::Entry.
   void MoveTo(google::bigtable::v2::MutateRowsRequest::Entry* entry) {

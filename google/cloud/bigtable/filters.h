@@ -48,10 +48,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class Filter {
  public:
-  Filter(Filter&& rhs) noexcept = default;
-  Filter& operator=(Filter&& rhs) noexcept = default;
-  Filter(Filter const& rhs) = default;
-  Filter& operator=(Filter const& rhs) = default;
+  Filter(Filter&&) noexcept = default;
+  Filter& operator=(Filter&&) noexcept = default;
+  Filter(Filter const&) = default;
+  Filter& operator=(Filter const&) = default;
 
   /// Return a filter that passes on all data.
   static Filter PassAllFilter() {

@@ -176,8 +176,8 @@ class TableAdmin {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
 
-  TableAdmin(TableAdmin const& table_admin) = default;
-  TableAdmin& operator=(TableAdmin const& table_admin) = default;
+  TableAdmin(TableAdmin const&) = default;
+  TableAdmin& operator=(TableAdmin const&) = default;
 
   //@{
   /// @name Convenience shorthands for the schema views.

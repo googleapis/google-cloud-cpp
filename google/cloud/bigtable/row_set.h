@@ -34,10 +34,10 @@ class RowSet {
   /// Create an empty set.
   RowSet() {}
 
-  RowSet(RowSet&& rhs) noexcept = default;
-  RowSet& operator=(RowSet&& rhs) noexcept = default;
-  RowSet(RowSet const& rhs) = default;
-  RowSet& operator=(RowSet const& rhs) = default;
+  RowSet(RowSet&&) noexcept = default;
+  RowSet& operator=(RowSet&&) noexcept = default;
+  RowSet(RowSet const&) = default;
+  RowSet& operator=(RowSet const&) = default;
 
   template <typename... Arg>
   RowSet(Arg&&... a) {

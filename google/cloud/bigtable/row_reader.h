@@ -63,7 +63,7 @@ class RowReader {
             MetadataUpdatePolicy metadata_update_policy,
             std::unique_ptr<internal::ReadRowsParserFactory> parser_factory);
 
-  RowReader(RowReader&& rhs) noexcept = default;
+  RowReader(RowReader&&) noexcept = default;
 
   ~RowReader();
 

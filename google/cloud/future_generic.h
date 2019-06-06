@@ -135,7 +135,7 @@ class promise final : private internal::promise_base<T> {
   promise() = default;
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
-  promise(promise&& rhs) noexcept = default;
+  promise(promise&&) noexcept = default;
 
   /// Abandons the shared state in `*this`, if any, and transfers the shared
   /// state from @p rhs.
