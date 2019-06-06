@@ -15,6 +15,7 @@
 ARG DISTRO_VERSION=18.04
 FROM ubuntu:${DISTRO_VERSION}
 
+ARG ADDITIONAL_APT_PACKAGES=""
 RUN apt update && \
     apt install -y \
         abi-compliance-checker \
@@ -43,7 +44,7 @@ RUN apt update && \
         tar \
         unzip \
         wget \
-        zlib1g-dev
+        zlib1g-dev ${ADDITIONAL_APT_PACKAGES}
 
 # By default, Ubuntu 18.04 does not install the alternatives for clang-format
 # and clang-tidy, so we need to manually install those.
