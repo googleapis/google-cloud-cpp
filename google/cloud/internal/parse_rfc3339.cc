@@ -97,7 +97,7 @@ std::chrono::system_clock::time_point ParseDateTime(
   // Advance the pointer for all the characters read.
   buffer += pos;
 
-  std::tm tm{0};
+  std::tm tm{};
   tm.tm_year = year - 1900;
   tm.tm_mon = month - 1;
   tm.tm_mday = day;

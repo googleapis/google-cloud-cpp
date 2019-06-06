@@ -183,7 +183,7 @@ class CurlHandle {
   [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
                                         void* param);
   template <typename T>
-  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, T unused) {
+  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, T) {
     std::string param = "complex-type=<";
     param += typeid(T).name();
     param += ">";

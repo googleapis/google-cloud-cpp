@@ -214,10 +214,10 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
       .WillOnce(Invoke(create_list_profiles_lambda("token_1", {"profile_1"})));
   EXPECT_CALL(*profiles_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::ListAppProfilesResponse* response,
-                          grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
-      }));
+      .WillOnce(Invoke(
+          [](btadmin::ListAppProfilesResponse*, grpc::Status* status, void*) {
+            *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
+          }));
   EXPECT_CALL(*profiles_reader_3_, Finish(_, _, _))
       .WillOnce(Invoke(create_list_profiles_lambda("", {"profile_2"})));
 

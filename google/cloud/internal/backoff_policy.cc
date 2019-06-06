@@ -25,9 +25,7 @@ std::unique_ptr<BackoffPolicy> ExponentialBackoffPolicy::clone() const {
       google::cloud::internal::make_unique<ExponentialBackoffPolicy>(*this);
   // Force OnCompletion() to reseed the generator.
   tmp->generator_.reset();
-  // Older versions of GCC (4.9) and Clang (Apple Xcode 7.3) need this
-  // explicit move-constructor.
-  return std::move(tmp);
+  return std::unique_ptr<BackoffPolicy>(std::move(tmp));
 }
 
 std::chrono::milliseconds ExponentialBackoffPolicy::OnCompletion() {

@@ -289,7 +289,7 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   // Patch the iam_configuration().
   BucketMetadata desired_state = *insert_meta;
   BucketIamConfiguration iam_configuration;
-  iam_configuration.bucket_policy_only = BucketPolicyOnly{true};
+  iam_configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
   desired_state.set_iam_configuration(std::move(iam_configuration));
 
   StatusOr<BucketMetadata> patched =

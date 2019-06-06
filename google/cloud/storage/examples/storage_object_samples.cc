@@ -39,7 +39,7 @@ char const* ConsumeArg(int& argc, char* argv[]) {
 
 std::string command_usage;
 
-void PrintUsage(int argc, char* argv[], std::string const& msg) {
+void PrintUsage(int, char* argv[], std::string const& msg) {
   std::string const cmd = argv[0];
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
@@ -147,8 +147,8 @@ void InsertObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, contents);
 }
 
-void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
-                                   int& argc, char* argv[]) {
+void InsertObjectStrictIdempotency(google::cloud::storage::Client, int& argc,
+                                   char* argv[]) {
   if (argc != 4) {
     throw Usage{
         "insert-object-strict-idempotency <bucket-name> <object-name> "
@@ -187,7 +187,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client unused,
   (bucket_name, object_name, contents);
 }
 
-void InsertObjectModifiedRetry(google::cloud::storage::Client unused, int& argc,
+void InsertObjectModifiedRetry(google::cloud::storage::Client, int& argc,
                                char* argv[]) {
   if (argc != 4) {
     throw Usage{
@@ -893,35 +893,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name);
 }
 
-void ReadObjectUnauthenticated(google::cloud::storage::Client client, int& argc,
-                               char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [download_public_file] [START storage_download_public_file]
-  namespace gcs = google::cloud::storage;
-  [](std::string bucket_name, std::string object_name) {
-    // Create a client that does not authenticate with the server.
-    gcs::Client client{gcs::oauth2::CreateAnonymousCredentials()};
-
-    // Read an object, the object must have been made public.
-    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
-
-    int count = 0;
-    std::string line;
-    while (std::getline(stream, line, '\n')) {
-      ++count;
-    }
-    std::cout << "The object has " << count << " lines\n";
-  }
-  //! [download_public_file] [END storage_download_public_file]
-  (bucket_name, object_name);
-}
-
-void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
+void GenerateEncryptionKey(google::cloud::storage::Client, int& argc, char*[]) {
   if (argc != 1) {
     throw Usage{"generate-encryption-key"};
   }
@@ -963,6 +935,33 @@ void GenerateEncryptionKey(google::cloud::storage::Client client, int& argc,
   std::cout << "Base64 encoded key = " << data.key << "\n"
             << "Base64 encoded SHA256 of key = " << data.sha256 << "\n";
   //! [generate encryption key] [END storage_generate_encryption_key]
+}
+
+void ReadObjectUnauthenticated(google::cloud::storage::Client, int& argc,
+                               char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+  //! [download_public_file] [START storage_download_public_file]
+  namespace gcs = google::cloud::storage;
+  [](std::string bucket_name, std::string object_name) {
+    // Create a client that does not authenticate with the server.
+    gcs::Client client{gcs::oauth2::CreateAnonymousCredentials()};
+
+    // Read an object, the object must have been made public.
+    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+
+    int count = 0;
+    std::string line;
+    while (std::getline(stream, line, '\n')) {
+      ++count;
+    }
+    std::cout << "The object has " << count << " lines\n";
+  }
+  //! [download_public_file] [END storage_download_public_file]
+  (bucket_name, object_name);
 }
 
 void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
@@ -1032,7 +1031,7 @@ void ComposeObject(google::cloud::storage::Client client, int& argc,
   auto destination_object_name = ConsumeArg(argc, argv);
   std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
   while (argc > 1) {
-    compose_objects.push_back({ConsumeArg(argc, argv)});
+    compose_objects.push_back({ConsumeArg(argc, argv), {}, {}});
   }
   //! [compose object] [START storage_compose_file]
   namespace gcs = google::cloud::storage;
@@ -1069,7 +1068,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
   auto base64_aes256_key = ConsumeArg(argc, argv);
   std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
   while (argc > 1) {
-    compose_objects.push_back({ConsumeArg(argc, argv)});
+    compose_objects.push_back({ConsumeArg(argc, argv), {}, {}});
   }
   //! [compose object from encrypted objects]
   namespace gcs = google::cloud::storage;

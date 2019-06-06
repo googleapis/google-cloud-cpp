@@ -53,8 +53,8 @@ class BigtableImpl final : public google::bigtable::v2::Bigtable::Service {
   BigtableImpl() {}
   grpc::Status ReadRows(
       grpc::ServerContext* context,
-      google::bigtable::v2::ReadRowsRequest const* request,
-      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>* writer) {
+      google::bigtable::v2::ReadRowsRequest const*,
+      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>*) {
     GetClientMetadata(context, client_metadata_);
     return grpc::Status::OK;
   }
@@ -71,15 +71,14 @@ class TableAdminImpl final
 
   grpc::Status CreateTable(
       grpc::ServerContext* context,
-      google::bigtable::admin::v2::CreateTableRequest const* request,
-      google::bigtable::admin::v2::Table* response) override {
+      google::bigtable::admin::v2::CreateTableRequest const*,
+      google::bigtable::admin::v2::Table*) override {
     GetClientMetadata(context, client_metadata_);
     return grpc::Status::OK;
   }
-  grpc::Status GetTable(
-      grpc::ServerContext* context,
-      google::bigtable::admin::v2::GetTableRequest const* request,
-      google::bigtable::admin::v2::Table* response) override {
+  grpc::Status GetTable(grpc::ServerContext* context,
+                        google::bigtable::admin::v2::GetTableRequest const*,
+                        google::bigtable::admin::v2::Table*) override {
     GetClientMetadata(context, client_metadata_);
     return grpc::Status::OK;
   }

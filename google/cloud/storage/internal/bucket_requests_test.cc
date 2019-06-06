@@ -385,7 +385,7 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration) {
   original.reset_encryption();
   BucketMetadata updated = original;
   BucketIamConfiguration configuration;
-  configuration.bucket_policy_only = BucketPolicyOnly{true};
+  configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
   updated.set_iam_configuration(std::move(configuration));
   PatchBucketRequest request("test-bucket", original, updated);
 
@@ -399,7 +399,7 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration) {
 TEST(PatchBucketRequestTest, DiffResetIamConfiguration) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketIamConfiguration configuration;
-  configuration.bucket_policy_only = BucketPolicyOnly{true};
+  configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
   original.set_iam_configuration(std::move(configuration));
   BucketMetadata updated = original;
   updated.reset_iam_configuration();

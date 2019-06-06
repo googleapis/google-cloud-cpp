@@ -271,8 +271,8 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
 
   // Compose new of object using previously created object
   auto composed_object_name = MakeRandomObjectName();
-  std::vector<ComposeSourceObject> source_objects = {{object_name},
-                                                     {object_name}};
+  std::vector<ComposeSourceObject> source_objects = {{object_name, {}, {}},
+                                                     {object_name, {}, {}}};
   StatusOr<ObjectMetadata> composed_meta = client->ComposeObject(
       bucket_name, source_objects, composed_object_name,
       WithObjectMetadata(ObjectMetadata().set_content_type("plain/text")));
@@ -309,8 +309,8 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
 
   // Compose new of object using previously created object
   auto composed_object_name = MakeRandomObjectName();
-  std::vector<ComposeSourceObject> source_objects = {{object_name},
-                                                     {object_name}};
+  std::vector<ComposeSourceObject> source_objects = {{object_name, {}, {}},
+                                                     {object_name, {}, {}}};
   StatusOr<ObjectMetadata> composed_meta = client->ComposeObject(
       bucket_name, source_objects, composed_object_name, EncryptionKey(key));
   ASSERT_STATUS_OK(composed_meta);
@@ -457,8 +457,8 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto composed_object_name = MakeRandomObjectName();
-  std::vector<ComposeSourceObject> source_objects = {{object_name},
-                                                     {object_name}};
+  std::vector<ComposeSourceObject> source_objects = {{object_name, {}, {}},
+                                                     {object_name, {}, {}}};
 
   // This operation should fail because the source object does not exist.
   auto meta =

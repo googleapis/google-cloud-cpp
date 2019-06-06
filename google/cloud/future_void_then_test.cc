@@ -33,7 +33,7 @@ TEST(FutureTestVoid, ThenSimple) {
   EXPECT_TRUE(fut.valid());
 
   bool called = false;
-  future<void> next = fut.then([&called](future<void> r) { called = true; });
+  future<void> next = fut.then([&called](future<void>) { called = true; });
   EXPECT_FALSE(fut.valid());
   EXPECT_TRUE(next.valid());
   EXPECT_FALSE(called);
@@ -54,7 +54,7 @@ TEST(FutureTestVoid, ThenException) {
   EXPECT_TRUE(fut.valid());
 
   bool called = false;
-  future<void> next = fut.then([&called](future<void> r) {
+  future<void> next = fut.then([&called](future<void>) {
     called = true;
     internal::ThrowRuntimeError("test message");
   });
@@ -86,7 +86,7 @@ TEST(FutureTestVoid, ThenUnwrap) {
 
   promise<std::string> pp;
   bool called = false;
-  auto cont = [&pp, &called](future<void> r) {
+  auto cont = [&pp, &called](future<void>) {
     called = true;
     return pp.get_future();
   };
@@ -148,7 +148,7 @@ TEST(FutureTestVoid, ThenByCopy) {
   EXPECT_TRUE(fut.valid());
 
   bool called = false;
-  auto callable = [&called](future<void> r) { called = true; };
+  auto callable = [&called](future<void>) { called = true; };
   future<void> next = fut.then(callable);
   EXPECT_FALSE(fut.valid());
   EXPECT_TRUE(next.valid());
@@ -347,7 +347,7 @@ TEST(FutureTestVoid, conform_2_3_8_a) {
   promise<void> p;
   future<void> f = p.get_future();
 
-  future<void> next = f.then([&](future<void> r) {});
+  future<void> next = f.then([&](future<void>) {});
   EXPECT_TRUE(next.valid());
 }
 
@@ -358,7 +358,7 @@ TEST(FutureTestVoid, conform_2_3_8_b) {
   future<void> f = p.get_future();
 
   bool called = false;
-  future<void> next = f.then([&](future<void> r) { called = true; });
+  future<void> next = f.then([&](future<void>) { called = true; });
   EXPECT_TRUE(next.valid());
   EXPECT_FALSE(called);
 
@@ -374,7 +374,7 @@ TEST(FutureTestVoid, conform_2_3_8_c) {
 
   p.set_value();
   bool called = false;
-  future<void> next = f.then([&](future<void> r) { called = true; });
+  future<void> next = f.then([&](future<void>) { called = true; });
   EXPECT_TRUE(next.valid());
   EXPECT_TRUE(called);
 }
@@ -386,7 +386,7 @@ TEST(FutureTestVoid, conform_2_3_8_d) {
   promise<void> p;
   future<void> f = p.get_future();
 
-  future<int> next = f.then([&](future<void> r) -> int { return 42; });
+  future<int> next = f.then([&](future<void>) -> int { return 42; });
   EXPECT_TRUE(next.valid());
   p.set_value();
   EXPECT_EQ(std::future_status::ready, next.wait_for(0_ms));
@@ -400,7 +400,7 @@ TEST(FutureTestVoid, conform_2_3_8_e) {
   promise<void> p;
   future<void> f = p.get_future();
 
-  future<void> next = f.then([&](future<void> r) {
+  future<void> next = f.then([&](future<void>) {
     internal::ThrowRuntimeError("test exception in functor");
   });
   EXPECT_TRUE(next.valid());

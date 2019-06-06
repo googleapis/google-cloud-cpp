@@ -201,7 +201,7 @@ class future_shared_state_base {
   bool is_ready_unlocked() const { return current_state_ != state::not_ready; }
 
   /// Satisfy the shared state using an exception.
-  void set_exception(std::exception_ptr ex, std::unique_lock<std::mutex>& lk) {
+  void set_exception(std::exception_ptr ex, std::unique_lock<std::mutex>&) {
     if (is_ready_unlocked()) {
       ThrowFutureError(std::future_errc::promise_already_satisfied, __func__);
     }
@@ -537,7 +537,7 @@ class future_shared_state<void> final : private future_shared_state_base {
   }
 
  private:
-  void set_value(std::unique_lock<std::mutex> const& lk) {
+  void set_value(std::unique_lock<std::mutex> const&) {
     if (is_ready_unlocked()) {
       ThrowFutureError(std::future_errc::promise_already_satisfied, __func__);
     }

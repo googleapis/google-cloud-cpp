@@ -34,10 +34,10 @@ inline namespace BIGTABLE_CLIENT_NS {
  */
 class ReadModifyWriteRule {
  public:
-  ReadModifyWriteRule(ReadModifyWriteRule&& rhs) noexcept = default;
-  ReadModifyWriteRule& operator=(ReadModifyWriteRule&& rhs) noexcept = default;
-  ReadModifyWriteRule(ReadModifyWriteRule const& rhs) = default;
-  ReadModifyWriteRule& operator=(ReadModifyWriteRule const& rhs) = default;
+  ReadModifyWriteRule(ReadModifyWriteRule&&) noexcept = default;
+  ReadModifyWriteRule& operator=(ReadModifyWriteRule&&) noexcept = default;
+  ReadModifyWriteRule(ReadModifyWriteRule const&) = default;
+  ReadModifyWriteRule& operator=(ReadModifyWriteRule const&) = default;
 
   /// Create an operation that appends a string value.
   static ReadModifyWriteRule AppendValue(std::string family_name,

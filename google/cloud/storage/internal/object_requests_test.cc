@@ -971,7 +971,7 @@ TEST(PatchObjectRequestTest, Builder) {
 }
 
 TEST(ComposeObjectRequestTest, SimpleCompose) {
-  ComposeSourceObject object1{"object1"}, object2{"object2"};
+  ComposeSourceObject object1{"object1", {}, {}}, object2{"object2", {}, {}};
   object1.object_name = "object1";
   object1.generation.emplace(1L);
   object1.if_generation_match.emplace(1L);

@@ -793,7 +793,8 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    * `BucketMetadata` object is used to update or patch the bucket.
    */
   BucketMetadata& set_retention_policy(std::chrono::seconds retention_period) {
-    return set_retention_policy(BucketRetentionPolicy{retention_period});
+    return set_retention_policy(BucketRetentionPolicy{
+        retention_period, std::chrono::system_clock::time_point{}, false});
   }
 
   BucketMetadata& reset_retention_policy() {
@@ -955,7 +956,8 @@ class BucketMetadataPatchBuilder {
       std::chrono::seconds retention_period) {
     // This is the only parameter that the application can set, so make it easy
     // for them to set it.
-    return SetRetentionPolicy(BucketRetentionPolicy{retention_period});
+    return SetRetentionPolicy(BucketRetentionPolicy{
+        retention_period, std::chrono::system_clock::time_point{}, false});
   }
   BucketMetadataPatchBuilder& ResetRetentionPolicy();
 

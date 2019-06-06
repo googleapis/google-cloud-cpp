@@ -153,7 +153,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
     internal::OptionalRow row;
     grpc::Status status = AdvanceOrFail(row);
     if (status.ok()) {
-      return std::move(row);
+      return row;
     }
     row.reset();
 
@@ -162,7 +162,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
     // an error at end of stream for example), there is no need to
     // retry and we have no good value for rows_limit anyway.
     if (rows_limit_ != NO_ROWS_LIMIT && rows_limit_ <= rows_count_) {
-      return std::move(row);
+      return row;
     }
 
     if (!last_read_row_key_.empty()) {
@@ -173,7 +173,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
 
     // If we receive an error, but the retriable set is empty, stop.
     if (row_set_.IsEmpty()) {
-      return std::move(row);
+      return row;
     }
 
     if (!retry_policy_->OnFailure(status)) {

@@ -120,7 +120,7 @@ class ObjectWriteErrorStreambuf : public ObjectWriteStreambuf {
       : status_(std::move(status)) {}
 
   bool IsOpen() const override { return is_open_; }
-  bool ValidateHash(ObjectMetadata const& meta) override { return false; }
+  bool ValidateHash(ObjectMetadata const&) override { return false; }
   std::string const& received_hash() const override { return string_; }
   std::string const& computed_hash() const override { return string_; }
   std::string const& resumable_session_id() const override { return string_; }

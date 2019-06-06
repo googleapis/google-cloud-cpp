@@ -186,7 +186,7 @@ TEST(CompletionQueueTest, Noop) {
   std::thread t([&cq]() { cq.Run(); });
 
   std::promise<void> promise;
-  cq.RunAsync([&promise](CompletionQueue& cq) { promise.set_value(); });
+  cq.RunAsync([&promise](CompletionQueue&) { promise.set_value(); });
 
   promise.get_future().get();
 

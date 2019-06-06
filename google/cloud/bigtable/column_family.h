@@ -143,10 +143,10 @@ class GcRule {
 
   //@{
   /// @name Use default constructors and assignments.
-  GcRule(GcRule&& rhs) noexcept = default;
-  GcRule& operator=(GcRule&& rhs) noexcept = default;
-  GcRule(GcRule const& rhs) = default;
-  GcRule& operator=(GcRule const& rhs) = default;
+  GcRule(GcRule&&) noexcept = default;
+  GcRule& operator=(GcRule&&) noexcept = default;
+  GcRule(GcRule const&) = default;
+  GcRule& operator=(GcRule const&) = default;
   //@}
 
  private:
@@ -208,11 +208,11 @@ class ColumnFamilyModification {
 
   //@{
   /// @name Use default constructors and assignments.
-  ColumnFamilyModification(ColumnFamilyModification&& rhs) noexcept = default;
-  ColumnFamilyModification& operator=(ColumnFamilyModification&& rhs) noexcept =
+  ColumnFamilyModification(ColumnFamilyModification&&) noexcept = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification&&) noexcept =
       default;
-  ColumnFamilyModification(ColumnFamilyModification const& rhs) = default;
-  ColumnFamilyModification& operator=(ColumnFamilyModification const& rhs) =
+  ColumnFamilyModification(ColumnFamilyModification const&) = default;
+  ColumnFamilyModification& operator=(ColumnFamilyModification const&) =
       default;
   //@}
 

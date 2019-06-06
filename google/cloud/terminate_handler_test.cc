@@ -26,7 +26,7 @@ void CustomHandler(const char* msg) {
   abort();
 }
 
-void CustomHandlerOld(const char* msg) { abort(); }
+void CustomHandlerOld(const char*) { abort(); }
 }  // namespace
 
 TEST(TerminateHandler, UnsetTerminates) {

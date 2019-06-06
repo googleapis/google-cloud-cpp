@@ -71,7 +71,8 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
       credentials.value(token_uri_key, default_token_uri),
-  };
+      /*scopes*/ {},
+      /*subject*/ {}};
 }
 
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
@@ -173,8 +174,11 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
   std::string private_key(buf_mem->data, buf_mem->length);
 
   return ServiceAccountCredentialsInfo{std::move(service_account_id),
-                                       "--unknown--", std::move(private_key),
-                                       default_token_uri};
+                                       "--unknown--",
+                                       std::move(private_key),
+                                       default_token_uri,
+                                       /*scopes*/ {},
+                                       /*subject*/ {}};
 }
 
 }  // namespace oauth2

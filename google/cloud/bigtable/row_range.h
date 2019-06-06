@@ -39,10 +39,10 @@ class RowRange {
   explicit RowRange(::google::bigtable::v2::RowRange rhs)
       : row_range_(std::move(rhs)) {}
 
-  RowRange(RowRange&& rhs) noexcept = default;
-  RowRange& operator=(RowRange&& rhs) noexcept = default;
-  RowRange(RowRange const& rhs) = default;
-  RowRange& operator=(RowRange const& rhs) = default;
+  RowRange(RowRange&&) noexcept = default;
+  RowRange& operator=(RowRange&&) noexcept = default;
+  RowRange(RowRange const&) = default;
+  RowRange& operator=(RowRange const&) = default;
 
   /// Return the infinite range, i.e., a range including all possible keys.
   static RowRange InfiniteRange() { return RowRange(); }

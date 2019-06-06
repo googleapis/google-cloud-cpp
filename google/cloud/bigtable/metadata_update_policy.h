@@ -104,9 +104,9 @@ class MetadataUpdatePolicy {
       MetadataParamTypes const& metadata_param_type,
       std::string const& cluster_id);
 
-  MetadataUpdatePolicy(MetadataUpdatePolicy&& rhs) noexcept = default;
-  MetadataUpdatePolicy(MetadataUpdatePolicy const& rhs) = default;
-  MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const& rhs) = default;
+  MetadataUpdatePolicy(MetadataUpdatePolicy&&) noexcept = default;
+  MetadataUpdatePolicy(MetadataUpdatePolicy const&) = default;
+  MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const&) = default;
 
   // Update the ClientContext for the next call.
   void Setup(grpc::ClientContext& context) const;

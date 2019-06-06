@@ -237,10 +237,10 @@ TEST_F(AsyncListClustersTest, FailuresAreRetried) {
       .WillOnce(Invoke(create_list_clusters_lambda("token_1", {"cluster_1"},
                                                    {"failed_loc_1"})));
   EXPECT_CALL(*clusters_reader_2_, Finish(_, _, _))
-      .WillOnce(Invoke([](btproto::ListClustersResponse* response,
-                          grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
-      }));
+      .WillOnce(Invoke(
+          [](btproto::ListClustersResponse*, grpc::Status* status, void*) {
+            *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
+          }));
   EXPECT_CALL(*clusters_reader_3_, Finish(_, _, _))
       .WillOnce(Invoke(
           create_list_clusters_lambda("", {"cluster_2"}, {"failed_loc_2"})));

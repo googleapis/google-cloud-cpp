@@ -266,9 +266,9 @@ TEST(StrictIdempotencyPolicyTest, PatchObjectIfMetagenerationMatch) {
 
 TEST(StrictIdempotencyPolicyTest, ComposeObject) {
   StrictIdempotencyPolicy policy;
-  internal::ComposeObjectRequest request("test-bucket-name",
-                                         {ComposeSourceObject{"source-1"}},
-                                         "test-object-name");
+  internal::ComposeObjectRequest request(
+      "test-bucket-name", {ComposeSourceObject{"source-1", {}, {}}},
+      "test-object-name");
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 

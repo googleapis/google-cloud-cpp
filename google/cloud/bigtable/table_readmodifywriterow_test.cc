@@ -31,7 +31,7 @@ using namespace testing;
 auto create_rules_lambda = [](std::string expected_request_string,
                               std::string generated_response_string) {
   return [expected_request_string, generated_response_string](
-             grpc::ClientContext* ctx,
+             grpc::ClientContext*,
              btproto::ReadModifyWriteRowRequest const& request,
              btproto::ReadModifyWriteRowResponse* response) {
     btproto::ReadModifyWriteRowRequest expected_request;

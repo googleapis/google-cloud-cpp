@@ -141,7 +141,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
       auto* reader =
           new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
       EXPECT_CALL(*reader, Read(_, _))
-          .WillOnce(Invoke([](btproto::MutateRowsResponse* r, void*) {}));
+          .WillOnce(Invoke([](btproto::MutateRowsResponse*, void*) {}));
       // Just like in the outer loop, we need to reverse the order to counter
       // the gmocks expectation matching order (from latest added to first).
       for (auto result_piece_it = exchange.res.rbegin();

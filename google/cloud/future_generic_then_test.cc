@@ -92,7 +92,7 @@ TEST(FutureTestInt, ThenUnwrap) {
 
   promise<std::string> pp;
   bool called = false;
-  auto cont = [&pp, &called](future<int> r) {
+  auto cont = [&pp, &called](future<int>) {
     called = true;
     return pp.get_future();
   };
@@ -316,7 +316,7 @@ TEST(FutureTestInt, conform_2_3_5) {
   EXPECT_TRUE(
       (std::is_same<future<long>, decltype(f.then(long_callable))>::value));
 
-  auto string_callable = [](future<int> f) -> std::string { return "42"; };
+  auto string_callable = [](future<int>) -> std::string { return "42"; };
   EXPECT_TRUE((std::is_same<future<std::string>,
                             decltype(f.then(string_callable))>::value));
 }
@@ -357,7 +357,7 @@ TEST(FutureTestInt, conform_2_3_8_a) {
   promise<int> p;
   future<int> f = p.get_future();
 
-  future<void> next = f.then([&](future<int> r) {});
+  future<void> next = f.then([&](future<int>) {});
   EXPECT_TRUE(next.valid());
 }
 
@@ -368,7 +368,7 @@ TEST(FutureTestInt, conform_2_3_8_b) {
   future<int> f = p.get_future();
 
   bool called = false;
-  future<void> next = f.then([&](future<int> r) { called = true; });
+  future<void> next = f.then([&](future<int>) { called = true; });
   EXPECT_TRUE(next.valid());
   EXPECT_FALSE(called);
 
@@ -384,7 +384,7 @@ TEST(FutureTestInt, conform_2_3_8_c) {
 
   p.set_value(42);
   bool called = false;
-  future<void> next = f.then([&](future<int> r) { called = true; });
+  future<void> next = f.then([&](future<int>) { called = true; });
   EXPECT_TRUE(next.valid());
   EXPECT_TRUE(called);
 }
@@ -410,7 +410,7 @@ TEST(FutureTestInt, conform_2_3_8_e) {
   promise<int> p;
   future<int> f = p.get_future();
 
-  future<void> next = f.then([&](future<int> r) {
+  future<void> next = f.then([&](future<int>) {
     internal::ThrowRuntimeError("test exception in functor");
   });
   EXPECT_TRUE(next.valid());

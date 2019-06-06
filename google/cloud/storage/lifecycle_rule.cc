@@ -27,7 +27,7 @@ std::ostream& operator<<(std::ostream& os, LifecycleRuleAction const& rhs) {
 }
 
 LifecycleRuleAction LifecycleRule::Delete() {
-  return LifecycleRuleAction{"Delete"};
+  return LifecycleRuleAction{"Delete", {}};
 }
 
 LifecycleRuleAction LifecycleRule::SetStorageClassStandard() {

@@ -59,7 +59,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
     return std::unique_ptr<RPCBackoffPolicy>();
   }
 
-  void Setup(grpc::ClientContext& context) const override {}
+  void Setup(grpc::ClientContext&) const override {}
 
   int num_calls_from_last_clone_;
 };
@@ -84,7 +84,7 @@ class SharedBackoffPolicyMock : public bigtable::RPCBackoffPolicy {
         new SharedBackoffPolicyMock(*this));
   }
 
-  void Setup(grpc::ClientContext& context) const override {}
+  void Setup(grpc::ClientContext&) const override {}
 
   int NumCallsFromLastClone() { return state_->num_calls_from_last_clone_; }
 

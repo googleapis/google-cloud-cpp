@@ -157,8 +157,9 @@ TEST_F(ObjectCopyTest, ComposeObject) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  auto actual = client.ComposeObject(
-      "test-bucket-name", {{"object1"}, {"object2"}}, "test-object-name");
+  auto actual = client.ComposeObject("test-bucket-name",
+                                     {{"object1", {}, {}}, {"object2", {}, {}}},
+                                     "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -168,13 +169,15 @@ TEST_F(ObjectCopyTest, ComposeObjectTooManyFailures) {
       mock, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
         return client
-            .ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+            .ComposeObject("test-bucket-name",
+                           {{"object1", {}, {}}, {"object2", {}, {}}},
                            "test-object-name")
             .status();
       },
       [](Client& client) {
         return client
-            .ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+            .ComposeObject("test-bucket-name",
+                           {{"object1", {}, {}}, {"object2", {}, {}}},
                            "test-object-name", IfGenerationMatch(7))
             .status();
       },
@@ -186,7 +189,8 @@ TEST_F(ObjectCopyTest, ComposeObjectPermanentFailure) {
       *client, EXPECT_CALL(*mock, ComposeObject(_)),
       [](Client& client) {
         return client
-            .ComposeObject("test-bucket-name", {{"object1"}, {"object2"}},
+            .ComposeObject("test-bucket-name",
+                           {{"object1", {}, {}}, {"object2", {}, {}}},
                            "test-object-name")
             .status();
       },
