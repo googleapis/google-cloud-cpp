@@ -58,7 +58,7 @@ inline namespace SPANNER_CLIENT_NS {
  *     std::string msg = "hello";
  *     spanner::Value v(msg);
  *     assert(v.is<std::string>());
- *     assert(!v.is_null());
+ *     assert(!v.is_null<std::string>());
  *     StatusOr<std::string> copy = v.get<std::string>();
  *     if (copy) {
  *       std::cout << *copy;  // prints "hello"
@@ -68,7 +68,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  *     spanner::Value v = spanner::Value::MakeNull<std::int64_t>();
  *     assert(v.is<std::int64_t>());
- *     assert(v.is_null());
+ *     assert(v.is_null<std::int64_t>());
  *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
  *     if (!i) {
  *       std::cerr << "error: " << i.status();
@@ -114,9 +114,6 @@ class Value {
   friend bool operator==(Value a, Value b);
   friend bool operator!=(Value a, Value b) { return !(a == b); }
 
-  /// Returns true if there is no contained value.
-  bool is_null() const;
-
   /**
    * Returns true if the contained value is of the specified type `T`.
    *
@@ -136,6 +133,23 @@ class Value {
   }
 
   /**
+   * Returns true if is<T>() and the contained value is "null".
+   *
+   * Example:
+   *
+   *     spanner::Value v{true};
+   *     assert(!v.is_null<bool>());
+   *
+   *     spanner::Value null_v = spanner::Value::MakeNull<bool>();
+   *     assert(v.is_null<bool>());
+   *     assert(!v.is_null<std::int64_t>());
+   */
+  template <typename T>
+  bool is_null() const {
+    return is<T>() && value_.kind_case() == google::protobuf::Value::kNullValue;
+  }
+
+  /**
    * Returns the contained value wrapped in a `google::cloud::StatusOr<T>`.
    *
    * If the specified type `T` is wrong or if the contained value is "null",
@@ -151,7 +165,7 @@ class Value {
    *
    *     // Now using a "null" std::int64_t
    *     v = spanner::Value::MakeNull<std::int64_t>();
-   *     assert(v.is_null());
+   *     assert(v.is_null<std::int64_t>());
    *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
    *     if (!i) {
    *       std::cerr << "Could not get integer: " << i.status();
@@ -165,12 +179,11 @@ class Value {
   }
 
   /**
-   * Returns the contained value iff it is not null and the the specified `T` is
-   * correct.
+   * Returns the contained value iff is<T>() and !is_null<T>().
    *
-   * It is the caller's responsibility to ensure that this the specifed type
+   * It is the caller's responsibility to ensure that the specified type
    * `T` is correct (e.g., with `is<T>()`) and that the value is not "null"
-   * (e.g., with `!v.is_null()`). Otherwise, the behavior is undefined.
+   * (e.g., with `!v.is_null<T>()`). Otherwise, the behavior is undefined.
    *
    * This is mostly useful if writing generic code where casting is needed.
    *

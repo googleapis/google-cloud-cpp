@@ -105,10 +105,6 @@ void PrintTo(Value const& v, std::ostream* os) {
   *os << v.type_.ShortDebugString() << "; " << v.value_.ShortDebugString();
 }
 
-bool Value::is_null() const {
-  return value_.kind_case() == google::protobuf::Value::kNullValue;
-}
-
 bool Value::ProtoEqual(google::protobuf::Message const& m1,
                        google::protobuf::Message const& m2) {
   return google::protobuf::util::MessageDifferencer::Equals(m1, m2);

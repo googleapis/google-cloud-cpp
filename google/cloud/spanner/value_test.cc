@@ -28,7 +28,7 @@ void TestBasicSemantics(T init) {
   Value const v{init};
 
   EXPECT_TRUE(v.is<T>());
-  EXPECT_FALSE(v.is_null());
+  EXPECT_FALSE(v.is_null<T>());
 
   EXPECT_EQ(init, *v.get<T>());
   EXPECT_EQ(init, static_cast<T>(v));
@@ -42,7 +42,7 @@ void TestBasicSemantics(T init) {
   // Tests a null Value of type `T`.
   Value const null = Value::MakeNull<T>();
   EXPECT_TRUE(null.is<T>());
-  EXPECT_TRUE(null.is_null());
+  EXPECT_TRUE(null.is_null<T>());
   EXPECT_FALSE(null.get<T>().ok());
   EXPECT_NE(null, v);
 }
@@ -82,7 +82,7 @@ TEST(Value, DoubleNaN) {
   double const nan = std::nan("NaN");
   Value v{nan};
   EXPECT_TRUE(v.is<double>());
-  EXPECT_FALSE(v.is_null());
+  EXPECT_FALSE(v.is_null<double>());
   EXPECT_TRUE(std::isnan(*v.get<double>()));
 
   // Since IEEE 754 defines that nan is not equal to itself, then a Value with
@@ -96,36 +96,40 @@ TEST(Value, MixingTypes) {
   using B = std::int64_t;
 
   Value a(A{});
-  EXPECT_FALSE(a.is_null());
   EXPECT_TRUE(a.is<A>());
+  EXPECT_FALSE(a.is_null<A>());
   EXPECT_TRUE(a.get<A>().ok());
   EXPECT_FALSE(a.is<B>());
+  EXPECT_FALSE(a.is_null<B>());
   EXPECT_FALSE(a.get<B>().ok());
 
   Value null_a = Value::MakeNull<A>();
-  EXPECT_TRUE(null_a.is_null());
   EXPECT_TRUE(null_a.is<A>());
+  EXPECT_TRUE(null_a.is_null<A>());
   EXPECT_FALSE(null_a.get<A>().ok());
   EXPECT_FALSE(null_a.is<B>());
+  EXPECT_FALSE(null_a.is_null<B>());
   EXPECT_FALSE(null_a.get<B>().ok());
 
   EXPECT_NE(null_a, a);
 
   Value b(B{});
-  EXPECT_FALSE(b.is_null());
   EXPECT_TRUE(b.is<B>());
+  EXPECT_FALSE(b.is_null<B>());
   EXPECT_TRUE(b.get<B>().ok());
   EXPECT_FALSE(b.is<A>());
+  EXPECT_FALSE(b.is_null<A>());
   EXPECT_FALSE(b.get<A>().ok());
 
   EXPECT_NE(b, a);
   EXPECT_NE(b, null_a);
 
   Value null_b = Value::MakeNull<B>();
-  EXPECT_TRUE(null_b.is_null());
   EXPECT_TRUE(null_b.is<B>());
+  EXPECT_TRUE(null_b.is_null<B>());
   EXPECT_FALSE(null_b.get<B>().ok());
   EXPECT_FALSE(null_b.is<A>());
+  EXPECT_FALSE(null_b.is_null<A>());
   EXPECT_FALSE(null_b.get<A>().ok());
 
   EXPECT_NE(null_b, b);
@@ -140,8 +144,8 @@ TEST(Value, SpannerArray) {
   ArrayInt64 const ai = {1, 2, 3};
   Value const vi(ai);
   EXPECT_EQ(vi, vi);
-  EXPECT_FALSE(vi.is_null());
   EXPECT_TRUE(vi.is<ArrayInt64>());
+  EXPECT_FALSE(vi.is_null<ArrayInt64>());
   EXPECT_FALSE(vi.is<ArrayDouble>());
   EXPECT_EQ(ai, static_cast<ArrayInt64>(vi));
   EXPECT_TRUE(vi.get<ArrayInt64>().ok());
@@ -152,8 +156,8 @@ TEST(Value, SpannerArray) {
   Value const vd(ad);
   EXPECT_EQ(vd, vd);
   EXPECT_NE(vi, vd);
-  EXPECT_FALSE(vd.is_null());
   EXPECT_TRUE(vd.is<ArrayDouble>());
+  EXPECT_FALSE(vd.is_null<ArrayDouble>());
   EXPECT_FALSE(vd.is<ArrayInt64>());
   EXPECT_EQ(ad, static_cast<ArrayDouble>(vd));
   EXPECT_TRUE(vd.get<ArrayDouble>().ok());
