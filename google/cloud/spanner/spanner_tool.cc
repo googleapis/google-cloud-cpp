@@ -258,15 +258,14 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
 
   std::cout << "Transaction: " << read_write_transaction.id() << "\n";
 
-  // TODO(coryan) - use this when we update the protos to have .set_seqno()
-  // std::int64_t seqno = 0;
+  std::int64_t seqno = 0;
   auto insert_one = [&](std::string series_name,
                         std::chrono::system_clock::time_point ts,
                         std::int64_t value) {
     spanner::ExecuteSqlRequest request;
     request.set_session(session.name());
     request.mutable_transaction()->set_id(read_write_transaction.id());
-    // request.set_seqno(seqno++);
+    request.set_seqno(seqno++);
     request.set_sql(
         "INSERT INTO timeseries (name, ts, value)"
         " VALUES (@name, @time, @value)");
@@ -283,7 +282,6 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     if (!status.ok()) {
       std::cerr << "INSERT INTO FAILED: [" << status.error_code() << "] - "
                 << status.error_message() << "\n";
-      // TODO - use the grpc::Status -> google::cloud::Status translator.
       return google::cloud::Status(google::cloud::StatusCode::kUnknown,
                                    status.error_message());
     }
@@ -292,8 +290,6 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
     return google::cloud::Status();
   };
 
-#if 0
-  // TODO(coryan) - use this when we update the protos to have .set_seqno()
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<int> d(0, 100);
@@ -306,13 +302,6 @@ int PopulateTimeseriesTable(std::vector<std::string> args) {
       insert_one(series_name, ts, d(gen));
     }
   }
-#else
-  auto status =
-      insert_one("some-time-series", std::chrono::system_clock::now(), 42);
-  if (!status.ok()) {
-    return 1;
-  }
-#endif  // 0
 
   grpc::ClientContext context;
   spanner::CommitRequest request;
