@@ -17,6 +17,9 @@
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(googleapis CONFIG REQUIRED)
 
+include(EnableClangTidy)
+include(EnableWerror)
+
 # TODO(#43) - generate version_info.h in the source directory and commit it.
 configure_file(version_info.h.in version_info.h)
 add_library(spanner_client
@@ -37,6 +40,8 @@ set_target_properties(spanner_client
                                  "${SPANNER_CLIENT_VERSION}"
                                  SOVERSION
                                  "${SPANNER_CLIENT_VERSION_MAJOR}")
+google_cloud_cpp_add_clang_tidy(spanner_client)
+google_cloud_cpp_add_common_options(spanner_client)
 
 add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 
@@ -92,6 +97,9 @@ function (spanner_client_define_tests)
                                       GTest::gmock_main
                                       GTest::gmock
                                       GTest::gtest)
+        google_cloud_cpp_add_clang_tidy(${target})
+        google_cloud_cpp_add_common_options(${target})
+
         # With googletest it is relatively easy to exceed the default number of
         # sections (~65,000) in a single .obj file. Add the /bigobj option to
         # all the tests, even if it is not needed.

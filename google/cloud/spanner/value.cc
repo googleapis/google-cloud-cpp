@@ -45,8 +45,9 @@ bool Equal(google::spanner::v1::Type const& pt1,
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::FLOAT64:
       // NaN should always compare not equal, even to itself.
-      if (pv1.string_value() == "NaN" || pv2.string_value() == "NaN")
+      if (pv1.string_value() == "NaN" || pv2.string_value() == "NaN") {
         return false;
+      }
       return pv1.string_value() == pv2.string_value() &&
              pv1.number_value() == pv2.number_value();
     case google::spanner::v1::TypeCode::STRING:
@@ -63,6 +64,7 @@ bool Equal(google::spanner::v1::Type const& pt1,
           return false;
         }
       }
+      return true;
     }
     default:
       return true;
@@ -97,7 +99,7 @@ Value::Value(std::string v) {
   value_.set_string_value(std::move(v));
 }
 
-bool operator==(Value a, Value b) {
+bool operator==(Value const& a, Value const& b) {
   return Equal(a.type_, a.value_, b.type_, b.value_);
 }
 
@@ -153,7 +155,7 @@ std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv) {
   if (processed != s.size()) {
     GCP_LOG(FATAL) << "Failed to parse number from string: \"" << s << "\"";
   }
-  return {x};
+  return x;
 }
 
 double Value::GetValue(double, google::protobuf::Value const& pv) {

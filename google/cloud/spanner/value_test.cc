@@ -89,7 +89,8 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
-  for (auto x : std::vector<std::string>{"", "f", "foo", "12345678901234567"}) {
+  for (auto const& x :
+       std::vector<std::string>{"", "f", "foo", "12345678901234567"}) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::string>(5, x));

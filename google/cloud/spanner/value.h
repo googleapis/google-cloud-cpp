@@ -133,8 +133,8 @@ class Value {
     }
   }
 
-  friend bool operator==(Value a, Value b);
-  friend bool operator!=(Value a, Value b) { return !(a == b); }
+  friend bool operator==(Value const& a, Value const& b);
+  friend bool operator!=(Value const& a, Value const& b) { return !(a == b); }
 
   /**
    * Returns true if the contained value is of the specified type `T`.
