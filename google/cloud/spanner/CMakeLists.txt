@@ -52,15 +52,12 @@ export_variables_to_bazel("spanner_client_version.bzl"
                           SPANNER_CLIENT_VERSION_MINOR
                           SPANNER_CLIENT_VERSION_PATCH)
 
-# We need the GCS client library because we use the RFC 3339 formatting
-# functions are in that library.
-#
-# TODO(#44) - remove the dependency on the storage client.
-find_package(storage_client CONFIG REQUIRED)
+find_package(google_cloud_cpp_common CONFIG REQUIRED)
 
 add_executable(spanner_tool spanner_tool.cc)
 target_link_libraries(spanner_tool
-                      PRIVATE googleapis-c++::spanner_client storage_client)
+                      PRIVATE googleapis-c++::spanner_client
+                              google_cloud_cpp_common)
 
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
