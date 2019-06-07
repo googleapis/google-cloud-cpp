@@ -165,11 +165,11 @@ BucketMetadata CreateBucketMetadataForTest() {
 TEST(BucketMetadataTest, Parse) {
   auto actual = CreateBucketMetadataForTest();
 
-  EXPECT_EQ(2U, actual.acl().size());
+  EXPECT_EQ(2, actual.acl().size());
   EXPECT_EQ("acl-id-0", actual.acl().at(0).id());
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
   EXPECT_TRUE(actual.billing().requester_pays);
-  EXPECT_EQ(2U, actual.cors().size());
+  EXPECT_EQ(2, actual.cors().size());
   auto expected_cors_0 =
       CorsEntry{3600, {"GET", "HEAD"}, {"cross-origin-example.com"}, {}};
   EXPECT_EQ(expected_cors_0, actual.cors().at(0));
@@ -177,7 +177,7 @@ TEST(BucketMetadataTest, Parse) {
       CorsEntry{{}, {"GET", "HEAD"}, {"another-example.com"}, {"Content-Type"}};
   EXPECT_EQ(expected_cors_1, actual.cors().at(1));
   EXPECT_TRUE(actual.default_event_based_hold());
-  EXPECT_EQ(1U, actual.default_acl().size());
+  EXPECT_EQ(1, actual.default_acl().size());
   EXPECT_EQ("user-test-user-3", actual.default_acl().at(0).entity());
   EXPECT_EQ(
       "projects/test-project-name/locations/us-central1/keyRings/"
@@ -192,7 +192,7 @@ TEST(BucketMetadataTest, Parse) {
                 actual.iam_configuration().bucket_policy_only->locked_time));
   EXPECT_EQ("test-bucket", actual.id());
   EXPECT_EQ("storage#bucket", actual.kind());
-  EXPECT_EQ(2U, actual.labels().size());
+  EXPECT_EQ(2, actual.labels().size());
   EXPECT_TRUE(actual.has_label("label-key-1"));
   EXPECT_EQ("label-value-1", actual.label("label-key-1"));
   EXPECT_FALSE(actual.has_label("not-a-label-key"));
@@ -205,7 +205,7 @@ TEST(BucketMetadataTest, Parse) {
 #endif  // GOOGLE_CLOUD_CPP_EXCEPTIONS
 
   EXPECT_TRUE(actual.has_lifecycle());
-  EXPECT_EQ(2U, actual.lifecycle().rule.size());
+  EXPECT_EQ(2, actual.lifecycle().rule.size());
   LifecycleRuleCondition expected_condition_0 =
       LifecycleRule::ConditionConjunction(
           LifecycleRule::MaxAge(30),
@@ -347,7 +347,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   // acl()
   ASSERT_EQ(1U, actual.count("acl")) << actual;
   EXPECT_TRUE(actual["acl"].is_array()) << actual;
-  EXPECT_EQ(2U, actual["acl"].size()) << actual;
+  EXPECT_EQ(2, actual["acl"].size()) << actual;
   EXPECT_EQ("user-test-user", actual["acl"][0].value("entity", ""));
   EXPECT_EQ("user-test-user2", actual["acl"][1].value("entity", ""));
 
@@ -358,7 +358,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   // cors()
   ASSERT_EQ(1U, actual.count("cors")) << actual;
   EXPECT_TRUE(actual["cors"].is_array()) << actual;
-  EXPECT_EQ(2U, actual["cors"].size()) << actual;
+  EXPECT_EQ(2, actual["cors"].size()) << actual;
   EXPECT_EQ(3600, actual["cors"][0].value("maxAgeSeconds", 0));
 
   // default_event_based_hold()
@@ -368,7 +368,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   // default_acl()
   ASSERT_EQ(1U, actual.count("defaultObjectAcl")) << actual;
   EXPECT_TRUE(actual["defaultObjectAcl"].is_array()) << actual;
-  EXPECT_EQ(1U, actual["defaultObjectAcl"].size()) << actual;
+  EXPECT_EQ(1, actual["defaultObjectAcl"].size()) << actual;
   EXPECT_EQ("user-test-user-3",
             actual["defaultObjectAcl"][0].value("entity", ""));
 
@@ -394,7 +394,7 @@ TEST(BucketMetadataTest, ToJsonString) {
   // lifecycle()
   ASSERT_EQ(1U, actual.count("lifecycle")) << actual;
   EXPECT_TRUE(actual["lifecycle"].is_object()) << actual;
-  EXPECT_EQ(1U, actual["lifecycle"].count("rule")) << actual["lifecycle"];
+  EXPECT_EQ(1, actual["lifecycle"].count("rule")) << actual["lifecycle"];
   EXPECT_TRUE(actual["lifecycle"]["rule"].is_array()) << actual["lifecycle"];
   ASSERT_EQ(2U, actual["lifecycle"]["rule"].size());
   auto rule = actual["lifecycle"]["rule"][0];
@@ -589,7 +589,7 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
   access.set_role("READER");
   default_acl.push_back(access);
   copy.set_default_acl(std::move(default_acl));
-  EXPECT_EQ(2U, copy.default_acl().size());
+  EXPECT_EQ(2, copy.default_acl().size());
   EXPECT_EQ("allAuthenticatedUsers", copy.default_acl().at(1).entity());
   EXPECT_NE(expected, copy);
 }
@@ -855,15 +855,15 @@ TEST(BucketMetadataPatchBuilder, SetCors) {
   ASSERT_EQ(1U, json.count("cors")) << json;
   ASSERT_TRUE(json["cors"].is_array()) << json;
   ASSERT_EQ(2U, json["cors"].size()) << json;
-  EXPECT_EQ(0U, json["cors"][0].count("maxAgeSeconds")) << json;
-  EXPECT_EQ(1U, json["cors"][0].count("method")) << json;
-  EXPECT_EQ(0U, json["cors"][0].count("origin")) << json;
-  EXPECT_EQ(1U, json["cors"][0].count("responseHeader")) << json;
+  EXPECT_EQ(0, json["cors"][0].count("maxAgeSeconds")) << json;
+  EXPECT_EQ(1, json["cors"][0].count("method")) << json;
+  EXPECT_EQ(0, json["cors"][0].count("origin")) << json;
+  EXPECT_EQ(1, json["cors"][0].count("responseHeader")) << json;
 
-  EXPECT_EQ(1U, json["cors"][1].count("maxAgeSeconds")) << json;
-  EXPECT_EQ(0U, json["cors"][1].count("method")) << json;
-  EXPECT_EQ(1U, json["cors"][1].count("origin")) << json;
-  EXPECT_EQ(0U, json["cors"][1].count("responseHeader")) << json;
+  EXPECT_EQ(1, json["cors"][1].count("maxAgeSeconds")) << json;
+  EXPECT_EQ(0, json["cors"][1].count("method")) << json;
+  EXPECT_EQ(1, json["cors"][1].count("origin")) << json;
+  EXPECT_EQ(0, json["cors"][1].count("responseHeader")) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, ResetCors) {

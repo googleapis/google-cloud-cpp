@@ -214,7 +214,7 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
       internal::ObjectMetadataParser::FromString(response->payload).value();
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
-  EXPECT_EQ(0U, metadata.size());
+  EXPECT_EQ(0, metadata.size());
 
   auto status =
       client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));

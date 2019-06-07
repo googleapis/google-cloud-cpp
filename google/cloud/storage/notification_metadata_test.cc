@@ -140,7 +140,7 @@ TEST(NotificationMetadataTest, MutableEventTypes) {
   auto copy = expected;
   EXPECT_EQ(expected, copy);
   copy.mutable_event_types().pop_back();
-  EXPECT_EQ(3U, copy.event_type_size());
+  EXPECT_EQ(3, copy.event_type_size());
   EXPECT_NE(expected, copy);
 }
 
@@ -150,9 +150,9 @@ TEST(NotificationMetadataTest, AppendEventTypes) {
   auto copy = expected;
   EXPECT_EQ(expected, copy);
   copy.mutable_event_types().clear();
-  EXPECT_EQ(0U, copy.event_type_size());
+  EXPECT_EQ(0, copy.event_type_size());
   copy.append_event_type(event_type::ObjectFinalize());
-  EXPECT_EQ(1U, copy.event_type_size());
+  EXPECT_EQ(1, copy.event_type_size());
   EXPECT_EQ("OBJECT_FINALIZE", copy.event_type(0));
   EXPECT_NE(expected, copy);
 }

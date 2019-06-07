@@ -29,9 +29,9 @@ TEST(IamBindingsTest, DefaultConstructor) {
 
   auto iam_bindings = IamBindings(bindings_vector);
 
-  EXPECT_EQ(1U, iam_bindings.bindings().size());
+  EXPECT_EQ(1, iam_bindings.bindings().size());
   EXPECT_EQ("writer", iam_bindings.bindings().begin()->first);
-  EXPECT_EQ(2U, iam_bindings.bindings().begin()->second.size());
+  EXPECT_EQ(2, iam_bindings.bindings().begin()->second.size());
 }
 
 TEST(IamBindingsTest, AddMemberTestRoleExists) {
@@ -46,7 +46,7 @@ TEST(IamBindingsTest, AddMemberTestRoleExists) {
 
   iam_bindings.AddMember(role, "jkl@gmail.com");
 
-  EXPECT_EQ(3U, iam_bindings.bindings().begin()->second.size());
+  EXPECT_EQ(3, iam_bindings.bindings().begin()->second.size());
 }
 
 TEST(IamBindingsTest, AddMemberTestNewRole) {
@@ -62,7 +62,7 @@ TEST(IamBindingsTest, AddMemberTestNewRole) {
   std::string new_role = "reader";
   iam_bindings.AddMember(new_role, "jkl@gmail.com");
 
-  EXPECT_EQ(2U, iam_bindings.bindings().size());
+  EXPECT_EQ(2, iam_bindings.bindings().size());
 }
 
 TEST(IamBindingsTest, AddMembersTestRoleExists) {
@@ -77,7 +77,7 @@ TEST(IamBindingsTest, AddMembersTestRoleExists) {
   std::set<std::string> new_members = {"jkl@gmail.com", "pqr@gmail.com"};
   iam_bindings.AddMembers(role, new_members);
 
-  EXPECT_EQ(4U, iam_bindings.bindings().begin()->second.size());
+  EXPECT_EQ(4, iam_bindings.bindings().begin()->second.size());
 }
 
 TEST(IamBindingsTest, AddMembersTestIamBindingParma) {
@@ -94,7 +94,7 @@ TEST(IamBindingsTest, AddMembersTestIamBindingParma) {
   auto iam_binding_for_addition = IamBinding(role, new_members);
   iam_bindings.AddMembers(iam_binding_for_addition);
 
-  EXPECT_EQ(4U, iam_bindings.bindings().begin()->second.size());
+  EXPECT_EQ(4, iam_bindings.bindings().begin()->second.size());
 }
 
 TEST(IamBindingsTest, AddMembersTestNewRole) {
@@ -111,7 +111,7 @@ TEST(IamBindingsTest, AddMembersTestNewRole) {
   std::set<std::string> new_members = {"jkl@gmail.com", "pqr@gmail.com"};
   iam_bindings.AddMembers(new_role, new_members);
 
-  EXPECT_EQ(2U, iam_bindings.bindings().size());
+  EXPECT_EQ(2, iam_bindings.bindings().size());
 }
 
 TEST(IamBindingsTest, RemoveMemberTest) {

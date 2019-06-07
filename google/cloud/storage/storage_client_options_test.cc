@@ -127,7 +127,7 @@ TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
   auto default_size = client_options.download_buffer_size();
   EXPECT_NE(0U, default_size);
   client_options.SetDownloadBufferSize(1024);
-  EXPECT_EQ(1024U, client_options.download_buffer_size());
+  EXPECT_EQ(1024, client_options.download_buffer_size());
   client_options.SetDownloadBufferSize(0);
   EXPECT_EQ(default_size, client_options.download_buffer_size());
 }
@@ -139,7 +139,7 @@ TEST_F(ClientOptionsTest, SetUploadBufferSize) {
   auto default_size = client_options.upload_buffer_size();
   EXPECT_NE(0U, default_size);
   client_options.SetUploadBufferSize(1024);
-  EXPECT_EQ(1024U, client_options.upload_buffer_size());
+  EXPECT_EQ(1024, client_options.upload_buffer_size());
   client_options.SetUploadBufferSize(0);
   EXPECT_EQ(default_size, client_options.upload_buffer_size());
 }
@@ -160,9 +160,9 @@ TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
   auto default_size = client_options.maximum_simple_upload_size();
   EXPECT_NE(0U, default_size);
   client_options.set_maximum_simple_upload_size(1024);
-  EXPECT_EQ(1024U, client_options.maximum_simple_upload_size());
+  EXPECT_EQ(1024, client_options.maximum_simple_upload_size());
   client_options.set_maximum_simple_upload_size(0);
-  EXPECT_EQ(0U, client_options.maximum_simple_upload_size());
+  EXPECT_EQ(0, client_options.maximum_simple_upload_size());
 }
 
 TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {

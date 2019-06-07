@@ -98,7 +98,7 @@ TEST(ListBucketsReaderTest, Empty) {
       ListBucketsRequest("foo-bar-baz").set_multiple_options(Prefix("dir/")),
       [mock](ListBucketsRequest const& r) { return mock->ListBuckets(r); });
   auto count = std::distance(reader.begin(), reader.end());
-  EXPECT_EQ(0U, count);
+  EXPECT_EQ(0, count);
 }
 
 TEST(ListBucketsReaderTest, PermanentFailure) {

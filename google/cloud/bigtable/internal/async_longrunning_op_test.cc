@@ -98,7 +98,7 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
       make_ready_future<StatusOr<longrunning::Operation>>(std::move(op_arg)));
 
   EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl->size());
+  EXPECT_EQ(1, cq_impl->size());
 
   cq_impl->SimulateCompletion(cq, true);
 
@@ -183,7 +183,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
     auto fut = operation(cq_, std::move(context_));
 
     EXPECT_EQ(std::future_status::timeout, fut.wait_for(1_ms));
-    EXPECT_EQ(1U, cq_impl_->size());
+    EXPECT_EQ(1, cq_impl_->size());
 
     cq_impl_->SimulateCompletion(cq_, true);
     EXPECT_TRUE(cq_impl_->empty());

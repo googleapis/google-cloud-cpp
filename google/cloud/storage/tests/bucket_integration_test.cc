@@ -74,7 +74,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   for (auto&& b : buckets) {
     current_buckets.emplace_back(std::move(b).value());
   }
-  EXPECT_EQ(1U, name_counter(bucket_name, current_buckets));
+  EXPECT_EQ(1, name_counter(bucket_name, current_buckets));
 
   StatusOr<BucketMetadata> get_meta = client->GetBucketMetadata(bucket_name);
   ASSERT_STATUS_OK(get_meta);
@@ -109,7 +109,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       client->PatchBucket(bucket_name, *updated_meta, desired_state);
   ASSERT_STATUS_OK(patched);
   EXPECT_EQ(storage_class::Standard(), patched->storage_class());
-  EXPECT_EQ(1U, patched->lifecycle().rule.size());
+  EXPECT_EQ(1, patched->lifecycle().rule.size());
 
   // Patch the metadata again, this time remove billing and website settings.
   patched = client->PatchBucket(
@@ -125,7 +125,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   for (auto&& b : buckets) {
     current_buckets.emplace_back(std::move(b).value());
   }
-  EXPECT_EQ(0U, name_counter(bucket_name, current_buckets));
+  EXPECT_EQ(0, name_counter(bucket_name, current_buckets));
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
@@ -222,7 +222,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   ASSERT_STATUS_OK(patched);
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1U, std::count_if(patched->acl().begin(), patched->acl().end(),
+  EXPECT_EQ(1, std::count_if(patched->acl().begin(), patched->acl().end(),
                               [](BucketAccessControl const& x) {
                                 return x.entity() == "allAuthenticatedUsers";
                               }));
@@ -236,7 +236,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
   // default_acl() - cannot compare for equality because many fields are updated
   // with unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1U, std::count_if(patched->default_acl().begin(),
+  EXPECT_EQ(1, std::count_if(patched->default_acl().begin(),
                               patched->default_acl().end(),
                               [](ObjectAccessControl const& x) {
                                 return x.entity() == "allAuthenticatedUsers";
@@ -553,7 +553,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                              [create](NotificationMetadata const& x) {
                                return x.id() == create->id();
                              });
-  EXPECT_EQ(1U, count) << "create=" << *create;
+  EXPECT_EQ(1, count) << "create=" << *create;
 
   auto get = client->GetNotification(bucket_name, create->id());
   ASSERT_STATUS_OK(get);
@@ -569,7 +569,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
                         [create](NotificationMetadata const& x) {
                           return x.id() == create->id();
                         });
-  EXPECT_EQ(0U, count) << "create=" << *create;
+  EXPECT_EQ(0, count) << "create=" << *create;
 
   status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);

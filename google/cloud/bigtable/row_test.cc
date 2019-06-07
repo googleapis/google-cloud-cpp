@@ -23,15 +23,15 @@ TEST(RowTest, RowInstantiation) {
   bigtable::Cell cell(row_key, "family", "column", 42, "value");
   bigtable::Row row(row_key, {cell});
 
-  EXPECT_EQ(1U, row.cells().size());
+  EXPECT_EQ(1, row.cells().size());
   EXPECT_EQ(row_key, row.cells().begin()->row_key());
 
   bigtable::Row empty_row(row_key, {});
-  EXPECT_EQ(0U, empty_row.cells().size());
+  EXPECT_EQ(0, empty_row.cells().size());
   EXPECT_EQ(empty_row.cells().begin(), empty_row.cells().end());
 
   bigtable::Cell cell2(row_key, "family", "column", 43, "val");
   bigtable::Row two_cells_row(row_key, {cell, cell2});
-  EXPECT_EQ(2U, two_cells_row.cells().size());
+  EXPECT_EQ(2, two_cells_row.cells().size());
   EXPECT_EQ(std::next(two_cells_row.cells().begin())->value(), cell2.value());
 }

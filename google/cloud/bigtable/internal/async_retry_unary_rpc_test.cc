@@ -94,7 +94,7 @@ TEST(AsyncRetryUnaryRpcTest, ImmediatelySucceeds) {
       },
       request, cq);
 
-  EXPECT_EQ(1U, impl->size());
+  EXPECT_EQ(1, impl->size());
   impl->SimulateCompletion(cq, true);
 
   EXPECT_TRUE(impl->empty());
@@ -148,7 +148,7 @@ TEST(AsyncRetryUnaryRpcTest, PermanentFailure) {
       },
       request, cq);
 
-  EXPECT_EQ(1U, impl->size());
+  EXPECT_EQ(1, impl->size());
   impl->SimulateCompletion(cq, true);
 
   EXPECT_TRUE(impl->empty());
@@ -224,15 +224,15 @@ TEST(AsyncRetryUnaryRpcTest, TooManyTransientFailures) {
   // Because the maximum number of failures is 2 we expect 3 calls (the 3rd
   // failure is the "too many" case). In between the calls there are timers
   // executed, but there is no timer after the 3rd failure.
-  EXPECT_EQ(1U, impl->size());  // simulate the call completing
+  EXPECT_EQ(1, impl->size());  // simulate the call completing
   impl->SimulateCompletion(cq, true);
-  EXPECT_EQ(1U, impl->size());  // simulate the timer completing
+  EXPECT_EQ(1, impl->size());  // simulate the timer completing
   impl->SimulateCompletion(cq, true);
-  EXPECT_EQ(1U, impl->size());  // simulate the call completing
+  EXPECT_EQ(1, impl->size());  // simulate the call completing
   impl->SimulateCompletion(cq, true);
-  EXPECT_EQ(1U, impl->size());  // simulate the timer completing
+  EXPECT_EQ(1, impl->size());  // simulate the timer completing
   impl->SimulateCompletion(cq, true);
-  EXPECT_EQ(1U, impl->size());  // simulate the call completing
+  EXPECT_EQ(1, impl->size());  // simulate the call completing
   impl->SimulateCompletion(cq, true);
   EXPECT_TRUE(impl->empty());
 
@@ -285,7 +285,7 @@ TEST(AsyncRetryUnaryRpcTest, VoidReturnImmediatelySucceeds) {
       },
       request, cq);
 
-  EXPECT_EQ(1U, impl->size());
+  EXPECT_EQ(1, impl->size());
   impl->SimulateCompletion(cq, true);
 
   EXPECT_TRUE(impl->empty());

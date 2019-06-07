@@ -914,7 +914,7 @@ TEST(BucketRequestsTest, LockBucketRetentionPolicyRequest) {
   LockBucketRetentionPolicyRequest request("test-bucket", 12345U);
   request.set_multiple_options(UserProject("project-for-billing"));
   EXPECT_EQ("test-bucket", request.bucket_name());
-  EXPECT_EQ(12345U, request.metageneration());
+  EXPECT_EQ(12345, request.metageneration());
 
   std::ostringstream os;
   os << request;

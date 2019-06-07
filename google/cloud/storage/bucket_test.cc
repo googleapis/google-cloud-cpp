@@ -477,7 +477,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
       .WillOnce(Invoke(
           [expected](internal::LockBucketRetentionPolicyRequest const& r) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
-            EXPECT_EQ(42U, r.metageneration());
+            EXPECT_EQ(42, r.metageneration());
             return make_status_or(expected);
           }));
   Client client{std::shared_ptr<internal::RawClient>(mock),

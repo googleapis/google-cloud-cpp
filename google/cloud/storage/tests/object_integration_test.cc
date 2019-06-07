@@ -82,7 +82,7 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   for (auto&& o : objects) {
     current_list.emplace_back(std::move(o).value());
   }
-  EXPECT_EQ(1U, name_counter(object_name, current_list));
+  EXPECT_EQ(1, name_counter(object_name, current_list));
 
   StatusOr<ObjectMetadata> get_meta = client->GetObjectMetadata(
       bucket_name, object_name, Generation(insert_meta->generation()),
@@ -154,7 +154,7 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
     current_list.emplace_back(std::move(o).value());
   }
 
-  EXPECT_EQ(0U, name_counter(object_name, current_list));
+  EXPECT_EQ(0, name_counter(object_name, current_list));
 }
 
 TEST_F(ObjectIntegrationTest, FullPatch) {
@@ -215,7 +215,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
 
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
-  EXPECT_EQ(1U, std::count_if(patched->acl().begin(), patched->acl().end(),
+  EXPECT_EQ(1, std::count_if(patched->acl().begin(), patched->acl().end(),
                               [](ObjectAccessControl const& x) {
                                 return x.entity() == "allAuthenticatedUsers";
                               }));

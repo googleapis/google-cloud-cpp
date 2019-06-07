@@ -235,13 +235,13 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   ASSERT_STATUS_OK(meta);
   EXPECT_EQ(object_name, meta->name());
   EXPECT_EQ(bucket_name, meta->bucket());
-  EXPECT_EQ(0U, meta->size());
+  EXPECT_EQ(0, meta->size());
 
   // Create a iostream to read the object back.
   auto stream = client->ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_TRUE(actual.empty());
-  EXPECT_EQ(0U, actual.size());
+  EXPECT_EQ(0, actual.size());
   EXPECT_EQ("", actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);

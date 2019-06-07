@@ -36,7 +36,7 @@ TEST(BenchmarksSetup, Basic) {
   EXPECT_EQ("foo", setup.project_id());
   EXPECT_EQ("bar", setup.instance_id());
   EXPECT_EQ("profile", setup.app_profile_id());
-  EXPECT_EQ(0U, setup.table_id().find("pre"));
+  EXPECT_EQ(0, setup.table_id().find("pre"));
   std::size_t expected = 4 + kTableIdRandomLetters;
   EXPECT_EQ(expected, setup.table_id().size());
 

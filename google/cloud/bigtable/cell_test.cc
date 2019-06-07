@@ -34,7 +34,7 @@ TEST(CellTest, Simple) {
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
   EXPECT_EQ(timestamp, cell.timestamp().count());
   EXPECT_EQ(value, cell.value());
-  EXPECT_EQ(0U, cell.labels().size());
+  EXPECT_EQ(0, cell.labels().size());
 }
 
 /// Test for checking numeric value in bigtable::Cell
@@ -51,7 +51,7 @@ TEST(CellTest, SimpleNumericValue) {
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
   EXPECT_EQ(timestamp, cell.timestamp().count());
-  EXPECT_EQ(0U, cell.labels().size());
+  EXPECT_EQ(0, cell.labels().size());
   auto decoded = cell.decode_big_endian_integer<std::int64_t>();
   EXPECT_STATUS_OK(decoded);
   EXPECT_EQ(value, *decoded);
@@ -71,7 +71,7 @@ TEST(CellTest, SimpleNumericNegativeValue) {
   EXPECT_EQ(family_name, cell.family_name());
   EXPECT_EQ(column_qualifier, cell.column_qualifier());
   EXPECT_EQ(timestamp, cell.timestamp().count());
-  EXPECT_EQ(0U, cell.labels().size());
+  EXPECT_EQ(0, cell.labels().size());
   auto decoded = cell.decode_big_endian_integer<std::int64_t>();
   EXPECT_STATUS_OK(decoded);
   EXPECT_EQ(value, *decoded);

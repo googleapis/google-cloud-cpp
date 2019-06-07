@@ -587,7 +587,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
   auto policy = user_future_.get();
   ASSERT_STATUS_OK(policy);
@@ -611,7 +611,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto policy = user_future_.get();
@@ -635,7 +635,7 @@ TEST_F(InstanceAdminTest, SetIamPolicy) {
   auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
   ASSERT_STATUS_OK(policy);
 
-  EXPECT_EQ(1U, policy->bindings.size());
+  EXPECT_EQ(1, policy->bindings.size());
   EXPECT_EQ("test-tag", policy->etag);
 }
 
@@ -681,7 +681,7 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
   ASSERT_STATUS_OK(policy);
 
-  EXPECT_EQ(1U, policy->bindings.size());
+  EXPECT_EQ(1, policy->bindings.size());
   EXPECT_EQ("test-tag", policy->etag);
 }
 
@@ -710,7 +710,7 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
       tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
   ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set->size());
+  EXPECT_EQ(2, permission_set->size());
 }
 
 /// @test Test for unrecoverable errors for InstanceAdmin::TestIamPermissions.
@@ -761,7 +761,7 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
       tested.TestIamPermissions(resource, {"writer", "reader", "owner"});
   ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set->size());
+  EXPECT_EQ(2, permission_set->size());
 }
 
 using MockAsyncDeleteClusterReader =
@@ -820,7 +820,7 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteCluster) {
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
   auto status = user_future_.get();
   ASSERT_STATUS_OK(status);
@@ -841,7 +841,7 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto status = user_future_.get();
@@ -914,12 +914,12 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
   auto policy = user_future_.get();
   ASSERT_STATUS_OK(policy);
 
-  EXPECT_EQ(1U, policy->bindings.size());
+  EXPECT_EQ(1, policy->bindings.size());
   EXPECT_EQ("test-tag", policy->etag);
 }
 
@@ -939,7 +939,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto policy = user_future_.get();
@@ -1008,11 +1008,11 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
 
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
   auto permission_set = user_future_.get();
   ASSERT_STATUS_OK(permission_set);
-  EXPECT_EQ(2U, permission_set->size());
+  EXPECT_EQ(2, permission_set->size());
 }
 
 /// @test Test unrecoverable errors for InstanceAdmin::AsyncTestIamPermissions.
@@ -1031,7 +1031,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
 
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto permission_set = user_future_.get();
