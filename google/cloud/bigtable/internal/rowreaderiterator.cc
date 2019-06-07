@@ -29,21 +29,19 @@ RowReaderIterator::RowReaderIterator() : owner_() {}
 
 // Defined here because it needs to see the definition of RowReader
 RowReaderIterator& RowReaderIterator::operator++() {
-  if (owner_ == nullptr) {
-    // This is the `end()` iterator, using operator++ on it is UB, we can do
-    // whatever we want, we chose to do nothing.
-    return *this;
-  }
-  if (!row_) {
+  if (owner_ != nullptr && !row_) {
     // If the iterator dereferences to a bad status, the next value is end().
     owner_ = nullptr;
     return *this;
   }
+  // TODO(#1402): GCP_ASSERT(owner_);  // assert it's not end()
   Advance();
   return *this;
 }
 
 void RowReaderIterator::Advance() {
+  // clang-tidy complains that owner_ can be nullptr. It can indeed.
+  // NOLINTNEXTLINE(clang-analyzer-core.CallAndMessage)
   auto status_or_optional_row = owner_->Advance();
   if (!status_or_optional_row) {
     row_ = StatusOr<Row>(std::move(status_or_optional_row).status());
