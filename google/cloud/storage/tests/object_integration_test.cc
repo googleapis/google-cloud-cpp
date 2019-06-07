@@ -216,9 +216,9 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
   EXPECT_EQ(1, std::count_if(patched->acl().begin(), patched->acl().end(),
-                              [](ObjectAccessControl const& x) {
-                                return x.entity() == "allAuthenticatedUsers";
-                              }));
+                             [](ObjectAccessControl const& x) {
+                               return x.entity() == "allAuthenticatedUsers";
+                             }));
 
   EXPECT_EQ(desired.cache_control(), patched->cache_control());
   EXPECT_EQ(desired.content_disposition(), patched->content_disposition());

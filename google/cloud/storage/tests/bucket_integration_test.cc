@@ -223,9 +223,9 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // acl() - cannot compare for equality because many fields are updated with
   // unknown values (entity_id, etag, etc)
   EXPECT_EQ(1, std::count_if(patched->acl().begin(), patched->acl().end(),
-                              [](BucketAccessControl const& x) {
-                                return x.entity() == "allAuthenticatedUsers";
-                              }));
+                             [](BucketAccessControl const& x) {
+                               return x.entity() == "allAuthenticatedUsers";
+                             }));
 
   // billing()
   EXPECT_EQ(desired_state.billing_as_optional(),
@@ -237,10 +237,10 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // default_acl() - cannot compare for equality because many fields are updated
   // with unknown values (entity_id, etag, etc)
   EXPECT_EQ(1, std::count_if(patched->default_acl().begin(),
-                              patched->default_acl().end(),
-                              [](ObjectAccessControl const& x) {
-                                return x.entity() == "allAuthenticatedUsers";
-                              }));
+                             patched->default_acl().end(),
+                             [](ObjectAccessControl const& x) {
+                               return x.entity() == "allAuthenticatedUsers";
+                             }));
 
   // encryption() - TODO(#1003) - verify the key was correctly used.
 
