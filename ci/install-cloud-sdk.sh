@@ -17,10 +17,10 @@
 set -eu
 
 readonly SITE="https://dl.google.com/dl/cloudsdk/channels/rapid/downloads"
-readonly TARBALL="google-cloud-sdk-233.0.0-linux-x86_64.tar.gz"
-readonly SHA256="a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a"
+readonly TARBALL="google-cloud-sdk-249.0.0-linux-x86_64.tar.gz"
+readonly SHA256="942754d32963b4937eae0a6f5ac04a09a3f5d6ce04d3d515c2bd2bfd07975328"
 wget -q "${SITE}/${TARBALL}"
 
 echo "${SHA256} ${TARBALL}" | sha256sum --check -
-tar x -C /usr/local -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
+tar x -C /usr/local -f "${TARBALL}"
 /usr/local/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
