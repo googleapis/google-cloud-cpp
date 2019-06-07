@@ -134,7 +134,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
                     [](std::string const& line) {
                       return line.rfind("x-goog-hash: md5=", 0) == 0;
                     });
-  EXPECT_EQ(0U, count);
+  EXPECT_EQ(0, count);
 
   auto status = client.DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);

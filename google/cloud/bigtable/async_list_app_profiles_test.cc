@@ -114,7 +114,7 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
   Start();
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto res = user_future_.get();
@@ -161,15 +161,15 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
   Start();
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto res = user_future_.get();
@@ -224,19 +224,19 @@ TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
   Start();
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);  // the timer
 
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
-  EXPECT_EQ(1U, cq_impl_->size());
+  EXPECT_EQ(1, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto res = user_future_.get();

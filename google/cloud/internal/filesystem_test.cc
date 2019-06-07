@@ -42,38 +42,38 @@ TEST(FilesystemTest, PermissionsOperatorBitand) {
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitor) {
-  EXPECT_EQ(0707U, static_cast<unsigned>(perms::owner_all | perms::others_all));
+  EXPECT_EQ(0707, static_cast<unsigned>(perms::owner_all | perms::others_all));
   EXPECT_EQ(perms::owner_all, perms::owner_all | perms::owner_exec);
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitxor) {
-  EXPECT_EQ(0707U, static_cast<unsigned>(perms::owner_all ^ perms::others_all));
-  EXPECT_EQ(0600U, static_cast<unsigned>(perms::owner_all ^ perms::owner_exec));
+  EXPECT_EQ(0707, static_cast<unsigned>(perms::owner_all ^ perms::others_all));
+  EXPECT_EQ(0600, static_cast<unsigned>(perms::owner_all ^ perms::owner_exec));
 }
 
 TEST(FilesystemTest, PermissionsNegate) {
-  EXPECT_EQ(07077U, static_cast<unsigned>(~perms::owner_all));
-  EXPECT_EQ(07677U, static_cast<unsigned>(~perms::owner_exec));
-  EXPECT_EQ(07707U, static_cast<unsigned>(~perms::group_all));
-  EXPECT_EQ(07770U, static_cast<unsigned>(~perms::others_all));
+  EXPECT_EQ(07077, static_cast<unsigned>(~perms::owner_all));
+  EXPECT_EQ(07677, static_cast<unsigned>(~perms::owner_exec));
+  EXPECT_EQ(07707, static_cast<unsigned>(~perms::group_all));
+  EXPECT_EQ(07770, static_cast<unsigned>(~perms::others_all));
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitandEquals) {
   perms lhs = perms::owner_all;
   lhs &= perms::others_all;
-  EXPECT_EQ(0U, static_cast<unsigned>(lhs));
+  EXPECT_EQ(0, static_cast<unsigned>(lhs));
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitorEquals) {
   perms lhs = perms::owner_all;
   lhs |= perms::others_all;
-  EXPECT_EQ(0707U, static_cast<unsigned>(lhs));
+  EXPECT_EQ(0707, static_cast<unsigned>(lhs));
 }
 
 TEST(FilesystemTest, PermissionsOperatorBitxorEquals) {
   perms lhs = perms::owner_all;
   lhs ^= perms::owner_exec;
-  EXPECT_EQ(0600U, static_cast<unsigned>(lhs));
+  EXPECT_EQ(0600, static_cast<unsigned>(lhs));
 }
 
 TEST(FilesystemTest, StatusDirectory) {
@@ -278,7 +278,7 @@ TEST(FilesystemTest, FileSize) {
   std::error_code ec;
   auto size = file_size(file_name, ec);
   EXPECT_FALSE(static_cast<bool>(ec));
-  EXPECT_EQ(1000U, size);
+  EXPECT_EQ(1000, size);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -288,7 +288,7 @@ TEST(FilesystemTest, FileSizeEmpty) {
   std::error_code ec;
   auto size = file_size(file_name, ec);
   EXPECT_FALSE(static_cast<bool>(ec));
-  EXPECT_EQ(0U, size);
+  EXPECT_EQ(0, size);
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 

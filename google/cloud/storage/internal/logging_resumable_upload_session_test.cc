@@ -73,7 +73,7 @@ TEST_F(LoggingResumableUploadSessionTest, UploadChunk) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_EQ(1U, CountLines("[UNAVAILABLE]"));
+  EXPECT_EQ(1, CountLines("[UNAVAILABLE]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
@@ -95,8 +95,8 @@ TEST_F(LoggingResumableUploadSessionTest, UploadFinalChunk) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_EQ(1U, CountLines("upload_size=" + std::to_string(513 * 1024UL)));
-  EXPECT_EQ(1U, CountLines("[UNAVAILABLE]"));
+  EXPECT_EQ(1, CountLines("upload_size=" + std::to_string(513 * 1024UL)));
+  EXPECT_EQ(1, CountLines("[UNAVAILABLE]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
@@ -114,7 +114,7 @@ TEST_F(LoggingResumableUploadSessionTest, ResetSession) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
   EXPECT_EQ("uh oh", result.status().message());
 
-  EXPECT_EQ(1U, CountLines("[FAILED_PRECONDITION]"));
+  EXPECT_EQ(1, CountLines("[FAILED_PRECONDITION]"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
@@ -130,7 +130,7 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   auto result = session.next_expected_byte();
   EXPECT_EQ(512 * 1024, result);
 
-  EXPECT_EQ(1U, CountLines(std::to_string(512 * 1024)));
+  EXPECT_EQ(1, CountLines(std::to_string(512 * 1024)));
 }
 
 }  // namespace

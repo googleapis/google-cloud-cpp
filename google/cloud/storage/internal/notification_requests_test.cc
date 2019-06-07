@@ -48,15 +48,15 @@ TEST(NotificationRequestTest, Parse) {
       "topic": "test-topic"
   })""")
                     .value();
-  EXPECT_EQ(2U, actual.custom_attributes().size());
+  EXPECT_EQ(2, actual.custom_attributes().size());
   EXPECT_TRUE(actual.has_custom_attribute("test-ca-1"));
   EXPECT_EQ("value1", actual.custom_attribute("test-ca-1"));
   EXPECT_TRUE(actual.has_custom_attribute("test-ca-2"));
   EXPECT_EQ("value2", actual.custom_attribute("test-ca-2"));
 
   EXPECT_EQ("XYZ=", actual.etag());
-  EXPECT_EQ(4U, actual.event_type_size());
-  EXPECT_EQ(4U, actual.event_types().size());
+  EXPECT_EQ(4, actual.event_type_size());
+  EXPECT_EQ(4, actual.event_types().size());
   EXPECT_EQ(event_type::ObjectFinalize(), actual.event_type(0));
   EXPECT_EQ(event_type::ObjectMetadataUpdate(), actual.event_type(1));
   EXPECT_EQ(event_type::ObjectDelete(), actual.event_type(2));

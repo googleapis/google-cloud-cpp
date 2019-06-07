@@ -166,7 +166,7 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   auto response = request.BuildRequest().MakeRequest(std::string{});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(200, response->status_code);
-  EXPECT_EQ(1U, response->headers.count("x-test-empty"));
+  EXPECT_EQ(1, response->headers.count("x-test-empty"));
   EXPECT_EQ("", response->headers.find("x-test-empty")->second);
   EXPECT_LE(1U, response->headers.count("x-test-foo"));
   EXPECT_EQ("bar", response->headers.find("x-test-foo")->second);
@@ -210,11 +210,11 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   nl::json args = parsed["args"];
   EXPECT_EQ("full", args.value("projection", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("userProject"));
-  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+  EXPECT_EQ(0, args.count("userProject"));
+  EXPECT_EQ(0, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationNotMatch"));
 }
 
 /// @test Verify that the UserProject parameter is included if set.
@@ -233,11 +233,11 @@ TEST(CurlRequestTest, WellKnownQueryParameters_UserProject) {
   nl::json args = parsed["args"];
   EXPECT_EQ("a-project", args.value("userProject", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("projection"));
-  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+  EXPECT_EQ(0, args.count("projection"));
+  EXPECT_EQ(0, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationNotMatch"));
 }
 
 /// @test Verify that the IfGenerationMatch parameter is included if set.
@@ -256,11 +256,11 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationMatch) {
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationMatch", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("projection"));
-  EXPECT_EQ(0U, args.count("userProject"));
-  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+  EXPECT_EQ(0, args.count("projection"));
+  EXPECT_EQ(0, args.count("userProject"));
+  EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationNotMatch"));
 }
 
 /// @test Verify that the IfGenerationNotMatch parameter is included if set.
@@ -279,11 +279,11 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfGenerationNotMatch) {
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("projection"));
-  EXPECT_EQ(0U, args.count("userProject"));
-  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+  EXPECT_EQ(0, args.count("projection"));
+  EXPECT_EQ(0, args.count("userProject"));
+  EXPECT_EQ(0, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationNotMatch"));
 }
 
 /// @test Verify that the IfMetagenerationMatch parameter is included if set.
@@ -302,11 +302,11 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationMatch) {
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationMatch", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("projection"));
-  EXPECT_EQ(0U, args.count("userProject"));
-  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+  EXPECT_EQ(0, args.count("projection"));
+  EXPECT_EQ(0, args.count("userProject"));
+  EXPECT_EQ(0, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationNotMatch"));
 }
 
 /// @test Verify that the IfMetagenerationNotMatch parameter is included if set.
@@ -325,11 +325,11 @@ TEST(CurlRequestTest, WellKnownQueryParameters_IfMetagenerationNotMatch) {
   nl::json args = parsed["args"];
   EXPECT_EQ("42", args.value("ifMetagenerationNotMatch", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("projection"));
-  EXPECT_EQ(0U, args.count("userProject"));
-  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifGenerationNotMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationMatch"));
+  EXPECT_EQ(0, args.count("projection"));
+  EXPECT_EQ(0, args.count("userProject"));
+  EXPECT_EQ(0, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0, args.count("ifGenerationNotMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationMatch"));
 }
 
 /// @test Verify that the well-known query parameters are included if set.
@@ -352,9 +352,9 @@ TEST(CurlRequestTest, WellKnownQueryParameters_Multiple) {
   EXPECT_EQ("7", args.value("ifMetagenerationMatch", ""));
   EXPECT_EQ("42", args.value("ifGenerationNotMatch", ""));
   // The other well known parameters are not set.
-  EXPECT_EQ(0U, args.count("projection"));
-  EXPECT_EQ(0U, args.count("ifGenerationMatch"));
-  EXPECT_EQ(0U, args.count("ifMetagenerationNotMatch"));
+  EXPECT_EQ(0, args.count("projection"));
+  EXPECT_EQ(0, args.count("ifGenerationMatch"));
+  EXPECT_EQ(0, args.count("ifMetagenerationNotMatch"));
 }
 
 class MockLogBackend : public google::cloud::LogBackend {

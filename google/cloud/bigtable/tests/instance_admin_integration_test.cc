@@ -154,8 +154,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
             });
       };
 
-  EXPECT_EQ(0U, count_matching_profiles(id1, *initial_profiles));
-  EXPECT_EQ(0U, count_matching_profiles(id2, *initial_profiles));
+  EXPECT_EQ(0, count_matching_profiles(id1, *initial_profiles));
+  EXPECT_EQ(0, count_matching_profiles(id2, *initial_profiles));
 
   auto profile_1 = instance_admin_->CreateAppProfile(
       instance_id, bigtable::AppProfileConfig::MultiClusterUseAny(id1));
@@ -166,8 +166,8 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
 
   auto current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
-  EXPECT_EQ(1U, count_matching_profiles(id1, *current_profiles));
-  EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
+  EXPECT_EQ(1, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(1, count_matching_profiles(id2, *current_profiles));
 
   auto detail_1 = instance_admin_->GetAppProfile(instance_id, id1);
   ASSERT_STATUS_OK(detail_1);
@@ -194,14 +194,14 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id1, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
-  EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
-  EXPECT_EQ(1U, count_matching_profiles(id2, *current_profiles));
+  EXPECT_EQ(0, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(1, count_matching_profiles(id2, *current_profiles));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteAppProfile(instance_id, id2, true));
   current_profiles = instance_admin_->ListAppProfiles(instance_id);
   ASSERT_STATUS_OK(current_profiles);
-  EXPECT_EQ(0U, count_matching_profiles(id1, *current_profiles));
-  EXPECT_EQ(0U, count_matching_profiles(id2, *current_profiles));
+  EXPECT_EQ(0, count_matching_profiles(id1, *current_profiles));
+  EXPECT_EQ(0, count_matching_profiles(id2, *current_profiles));
 
   ASSERT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
@@ -361,7 +361,7 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
       instance_id, {"bigtable.tables.list", "bigtable.tables.delete"});
   ASSERT_STATUS_OK(permission_set);
 
-  EXPECT_EQ(2U, permission_set->size());
+  EXPECT_EQ(2, permission_set->size());
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 

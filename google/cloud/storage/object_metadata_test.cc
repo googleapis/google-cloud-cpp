@@ -111,7 +111,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
 TEST(ObjectMetadataTest, Parse) {
   auto actual = CreateObjectMetadataForTest();
 
-  EXPECT_EQ(2U, actual.acl().size());
+  EXPECT_EQ(2, actual.acl().size());
   EXPECT_EQ("acl-id-0", actual.acl().at(0).id());
   EXPECT_EQ("foo-bar", actual.bucket());
   EXPECT_EQ("no-cache", actual.cache_control());
@@ -131,7 +131,7 @@ TEST(ObjectMetadataTest, Parse) {
       "https://www.googleapis.com/storage/v1/b/foo-bar/o/"
       "baz?generation=12345&alt=media",
       actual.media_link());
-  EXPECT_EQ(2U, actual.metadata().size());
+  EXPECT_EQ(2, actual.metadata().size());
   EXPECT_TRUE(actual.has_metadata("foo"));
   EXPECT_EQ("bar", actual.metadata("foo"));
   EXPECT_EQ(4, actual.metageneration());
@@ -142,7 +142,7 @@ TEST(ObjectMetadataTest, Parse) {
             actual.retention_expiration_time());
   EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());
-  EXPECT_EQ(102400U, actual.size());
+  EXPECT_EQ(102400, actual.size());
   EXPECT_EQ("STANDARD", actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
   auto magic_timestamp = 1526758274L;

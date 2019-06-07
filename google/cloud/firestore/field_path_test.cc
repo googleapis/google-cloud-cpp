@@ -207,5 +207,5 @@ TEST(FieldPath, Compare) {
 TEST(FieldPath, Size) {
   auto const field_path = firestore::FieldPath::FromString("a.b.c");
   ASSERT_TRUE(field_path.valid());
-  EXPECT_EQ(3U, field_path.size());
+  EXPECT_EQ(3, field_path.size());
 }

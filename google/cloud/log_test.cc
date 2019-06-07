@@ -119,25 +119,25 @@ TEST(LogSinkTest, LogToClog) {
   GCP_LOG(NOTICE) << "test message";
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
-  EXPECT_EQ(0U, LogSink::Instance().BackendCount());
+  EXPECT_EQ(0, LogSink::Instance().BackendCount());
   LogSink::Instance().ClearBackends();
 }
 
 TEST(LogSinkTest, ClogMultiple) {
   LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
-  EXPECT_EQ(1U, LogSink::Instance().BackendCount());
+  EXPECT_EQ(1, LogSink::Instance().BackendCount());
   LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
-  EXPECT_EQ(1U, LogSink::Instance().BackendCount());
+  EXPECT_EQ(1, LogSink::Instance().BackendCount());
   LogSink::EnableStdClog();
   EXPECT_FALSE(LogSink::Instance().empty());
-  EXPECT_EQ(1U, LogSink::Instance().BackendCount());
+  EXPECT_EQ(1, LogSink::Instance().BackendCount());
   LogSink::Instance().set_minimum_severity(Severity::GCP_LS_NOTICE);
   GCP_LOG(NOTICE) << "test message";
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
-  EXPECT_EQ(0U, LogSink::Instance().BackendCount());
+  EXPECT_EQ(0, LogSink::Instance().BackendCount());
 }
 
 namespace {

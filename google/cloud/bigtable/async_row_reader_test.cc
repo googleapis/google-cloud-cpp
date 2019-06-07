@@ -563,7 +563,7 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
     // Verify that we're not asking for the same rows again.
     EXPECT_TRUE(req.has_rows());
     auto const& rows = req.rows();
-    EXPECT_EQ(1U, rows.row_ranges_size());
+    EXPECT_EQ(1, rows.row_ranges_size());
     auto const& range = rows.row_ranges(0);
     EXPECT_EQ("r1", range.start_key_open());
   });

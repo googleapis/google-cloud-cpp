@@ -98,7 +98,7 @@ TEST(ListHmacKeysReaderTest, Empty) {
       ListHmacKeysRequest("test-project-id"),
       [mock](ListHmacKeysRequest const& r) { return mock->ListHmacKeys(r); });
   auto count = std::distance(reader.begin(), reader.end());
-  EXPECT_EQ(0U, count);
+  EXPECT_EQ(0, count);
 }
 
 TEST(ListHmacKeysReaderTest, PermanentFailure) {

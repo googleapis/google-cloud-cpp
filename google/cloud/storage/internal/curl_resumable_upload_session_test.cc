@@ -51,13 +51,13 @@ TEST(CurlResumableUploadSessionTest, Simple) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_EQ(0U, session.next_expected_byte());
+  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_EQ(payload, request.payload());
-        EXPECT_EQ(0U, request.source_size());
-        EXPECT_EQ(0U, request.range_begin());
+        EXPECT_EQ(0, request.source_size());
+        EXPECT_EQ(0, request.range_begin());
         return make_status_or(ResumableUploadResponse{"", size - 1, ""});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const& request) {
@@ -88,7 +88,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_EQ(0U, session.next_expected_byte());
+  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{"", size - 1, ""});
@@ -124,7 +124,7 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   std::string const payload = "test payload";
   auto const size = payload.size();
 
-  EXPECT_EQ(0U, session.next_expected_byte());
+  EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{"", size - 1, ""});

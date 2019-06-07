@@ -119,7 +119,7 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFuture) {
       },
       request, std::move(context));
 
-  EXPECT_EQ(1U, impl->size());
+  EXPECT_EQ(1, impl->size());
   impl->SimulateCompletion(cq, true);
   EXPECT_TRUE(impl->empty());
 
@@ -167,7 +167,7 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFutureFailure) {
       },
       request, std::move(context));
 
-  EXPECT_EQ(1U, impl->size());
+  EXPECT_EQ(1, impl->size());
   impl->SimulateCompletion(cq, true);
   EXPECT_TRUE(impl->empty());
 

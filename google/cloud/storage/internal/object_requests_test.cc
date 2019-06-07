@@ -448,8 +448,8 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
       internal::ObjectMetadataParser::FromString(object1).value();
 
   auto actual = RewriteObjectResponse::FromHttpResponse(text).value();
-  EXPECT_EQ(7U, actual.total_bytes_rewritten);
-  EXPECT_EQ(42U, actual.object_size);
+  EXPECT_EQ(7, actual.total_bytes_rewritten);
+  EXPECT_EQ(42, actual.object_size);
   EXPECT_FALSE(actual.done);
   EXPECT_EQ("abcd-test-token", actual.rewrite_token);
   EXPECT_EQ(expected_resource, actual.resource);
@@ -505,9 +505,9 @@ TEST(ObjectRequestsTest, UploadChunk) {
       "&upload_id=xa298sd_sdlkj2";
   UploadChunkRequest request(url, 0, "abc123", 2048);
   EXPECT_EQ(url, request.upload_session_url());
-  EXPECT_EQ(0U, request.range_begin());
-  EXPECT_EQ(5U, request.range_end());
-  EXPECT_EQ(2048U, request.source_size());
+  EXPECT_EQ(0, request.range_begin());
+  EXPECT_EQ(5, request.range_end());
+  EXPECT_EQ(2048, request.source_size());
   EXPECT_EQ("Content-Range: bytes 0-5/2048", request.RangeHeader());
 
   std::ostringstream os;
@@ -571,7 +571,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponse) {
                     .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(2000U, actual.last_committed_byte);
+  EXPECT_EQ(2000, actual.last_committed_byte);
 
   std::ostringstream os;
   os << actual;
@@ -587,7 +587,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNoLocation) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(2000U, actual.last_committed_byte);
+  EXPECT_EQ(2000, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
@@ -597,7 +597,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
@@ -609,7 +609,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
                     .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
@@ -618,7 +618,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
                     .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
@@ -628,7 +628,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
@@ -638,7 +638,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
@@ -648,7 +648,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
@@ -658,7 +658,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0U, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);
 }
 
 ObjectMetadata CreateObjectMetadataForTest() {

@@ -46,7 +46,7 @@ TEST(CurlResumableStreambufTest, EmptyStream) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_TRUE(p.empty());
-        EXPECT_EQ(0U, s);
+        EXPECT_EQ(0, s);
         return make_status_or(ResumableUploadResponse{"{}", 0, {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));

@@ -713,8 +713,8 @@ TEST_F(RowReaderTest, BeginThrowsAfterImmediateCancelNoExcept) {
                     [&expected_message](std::string const& line) {
                       return line.find(expected_message) != std::string::npos;
                     });
-  EXPECT_EQ(0U, count) << "Unexpected log captured: "
-                       << backend->log_lines.front();
+  EXPECT_EQ(0, count) << "Unexpected log captured: "
+                      << backend->log_lines.front();
 }
 
 TEST_F(RowReaderTest, RowReaderConstructorDoesNotCallRpc) {
