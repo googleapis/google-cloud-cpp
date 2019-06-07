@@ -15,12 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 
+#include "google/cloud/optional.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include <google/protobuf/struct.pb.h>
 #include <google/spanner/v1/type.pb.h>
 #include <ostream>
 #include <string>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -47,11 +49,12 @@ inline namespace SPANNER_CLIENT_NS {
  * [1] The type `T` may be any of the other supported types, except for
  *     ARRAY/std::vector.
  *
- * This is a regular C++ value type with support for copy, move, equality, etc,
- * but there is no default constructor because there is no default type.
+ * Value is a regular C++ value type with support for copy, move, equality,
+ * etc, but there is no default constructor because there is no default type.
  * Callers may create instances by passing any of the supported values (shown
  * in the table above) to the constructor. "Null" values are created using the
- * `Value::MakeNull<T>()` factory function.
+ * `Value::MakeNull<T>()` factory function or by passing an empty `optional<T>`
+ * to the Value constructor..
  *
  * Example with a non-null value:
  *
@@ -70,16 +73,21 @@ inline namespace SPANNER_CLIENT_NS {
  *     assert(v.is<std::int64_t>());
  *     assert(v.is_null<std::int64_t>());
  *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
- *     if (!i) {
- *       std::cerr << "error: " << i.status();
- *     }
+ *     assert(!i.ok());  // Can't get the value becuase v is null
+ *     StatusOr<optional<std::int64_t> j = v.get<optional<std::int64_t>>();
+ *     assert(j.ok());  // OK because an empty option can represent the null
  */
 class Value {
  public:
-  /// Factory to construct a "null" Value of the specified type `T`.
+  /**
+   * Factory to construct a "null" Value of the specified type `T`.
+   *
+   * This is equivalent to passing to the constructor an `optional<T>` without
+   * a value, though this factory may result in clearer code at the call site.
+   */
   template <typename T>
   static Value MakeNull() {
-    return Value(Null<T>{});
+    return Value(optional<T>{});
   }
 
   Value() = delete;
@@ -97,8 +105,22 @@ class Value {
   explicit Value(std::string v);
 
   /**
-   * Constructs a non-null instance with a Spanner ARRAY of the specified type
-   * and values.
+   * Constructs a non-null instance if `opt` has a value, otherwise constructs
+   * a null instance.
+   */
+  template <typename T>
+  explicit Value(optional<T> const& opt) {
+    if (opt.has_value()) {
+      *this = Value(*opt);
+    } else {
+      type_ = GetType(T{});
+      value_.set_null_value(google::protobuf::NullValue::NULL_VALUE);
+    }
+  }
+
+  /**
+   * Constructs an instance from a Spanner ARRAY of the specified type and
+   * values.
    *
    * The type `T` may be any valid type shown above, except vectors of vectors
    * are not allowed.
@@ -117,15 +139,18 @@ class Value {
   /**
    * Returns true if the contained value is of the specified type `T`.
    *
-   * All Value instances have some type, even null values.
+   * All Value instances have some type, even null values. `T` may be an
+   * `optional<U>`, in which case it will return the same value as `is<U>()`.
    *
    * Example:
    *
    *     spanner::Value v{true};
-   *     assert(v.is<bool>());
+   *     assert(v.is<bool>());  // Same as the following
+   *     assert(v.is<optional<bool>>());
    *
    *     spanner::Value null_v = spanner::Value::MakeNull<bool>();
-   *     assert(v.is<bool>());
+   *     assert(v.is<bool>());  // Same as the following
+   *     assert(v.is<optional<bool>>());
    */
   template <typename T>
   bool is() const {
@@ -135,14 +160,20 @@ class Value {
   /**
    * Returns true if is<T>() and the contained value is "null".
    *
+   * `T` may be an `optional<U>`, in which case it will return the same value
+   * as `is_null<U>()`.
+   *
    * Example:
    *
    *     spanner::Value v{true};
-   *     assert(!v.is_null<bool>());
+   *     assert(!v.is_null<bool>());  // Same as the following
+   *     assert(!v.is_null<optional<bool>>());
    *
    *     spanner::Value null_v = spanner::Value::MakeNull<bool>();
-   *     assert(v.is_null<bool>());
-   *     assert(!v.is_null<std::int64_t>());
+   *     assert(v.is_null<bool>());  // Same as the following
+   *     assert(v.is_null<optional<bool>>());
+   *     assert(!v.is_null<std::int64_t>());  // Same as the following
+   *     assert(!v.is_null<optional<std::int64_t>>());
    */
   template <typename T>
   bool is_null() const {
@@ -152,8 +183,10 @@ class Value {
   /**
    * Returns the contained value wrapped in a `google::cloud::StatusOr<T>`.
    *
-   * If the specified type `T` is wrong or if the contained value is "null",
-   * then a non-OK Status will be returned instead of the value.
+   * Requires `is<T>()` is true, otherwise a non-OK Status will be returned. If
+   * `is_null<T>()` is true, a non-OK Status is returned, unless the specified
+   * type `T` is an `optional<U>`, in which case a valueless optional is
+   * returned to indicate the nullness.
    *
    * Example:
    *
@@ -170,11 +203,18 @@ class Value {
    *     if (!i) {
    *       std::cerr << "Could not get integer: " << i.status();
    *     }
+   *
+   *     StatusOr<optional<std::int64_t>> j = v.get<optional<std::int64_t>();
+   *     assert(j.ok());  // Since we know the types match in this example
+   *     assert(!v->has_value());  // Since we know v was null in this example
    */
   template <typename T>
   StatusOr<T> get() const {
-    auto const status = HasValue<T>(type_, value_);
-    if (!status.ok()) return status;
+    if (!is<T>()) return Status(StatusCode::kInvalidArgument, "wrong type");
+    if (value_.kind_case() == google::protobuf::Value::kNullValue) {
+      if (is_optional<T>::value) return T{};
+      return Status(StatusCode::kInvalidArgument, "null value");
+    }
     return GetValue(T{}, value_);
   }
 
@@ -198,7 +238,7 @@ class Value {
    */
   template <typename T>
   explicit operator T() const {
-    return GetValue(T{}, value_);
+    return *get<T>();
   }
 
   /**
@@ -211,16 +251,11 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os);
 
  private:
-  // A private argument type and constructor that's used by the public
-  // MakeNull<T>() factory function for constructing "null" Values with the
-  // specified type.
+  // Metafunction that returns true if `T` is an optional<U>
   template <typename T>
-  struct Null {};
+  struct is_optional : std::false_type {};
   template <typename T>
-  explicit Value(Null<T>) {
-    *this = Value(T{});
-    value_.set_null_value(google::protobuf::NullValue::NULL_VALUE);
-  }
+  struct is_optional<optional<T>> : std::true_type {};
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
   // argument type is the tag, the argument value is ignored.
@@ -229,23 +264,15 @@ class Value {
   static google::spanner::v1::Type GetType(double);
   static google::spanner::v1::Type GetType(std::string const&);
   template <typename T>
+  static google::spanner::v1::Type GetType(optional<T> const&) {
+    return GetType(T{});
+  }
+  template <typename T>
   static google::spanner::v1::Type GetType(std::vector<T> const&) {
     google::spanner::v1::Type t;
     t.set_code(google::spanner::v1::TypeCode::ARRAY);
     *t.mutable_array_element_type() = GetType(T{});  // Recursive call
     return t;
-  }
-
-  // Returns true if the given `Type` and `Value` can be converted to the
-  // specified C++ type `T`.
-  template <typename T>
-  static Status HasValue(google::spanner::v1::Type const& pt,
-                         google::protobuf::Value const& pv) {
-    if (!ProtoEqual(GetType(T{}), pt))
-      return Status(StatusCode::kInvalidArgument, "wrong type");
-    if (pv.kind_case() == google::protobuf::Value::kNullValue)
-      return Status(StatusCode::kInvalidArgument, "null value");
-    return {};  // OK Status
   }
 
   // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
@@ -255,6 +282,11 @@ class Value {
   static double GetValue(double, google::protobuf::Value const&);
   static std::string GetValue(std::string const&,
                               google::protobuf::Value const&);
+  template <typename T>
+  static optional<T> GetValue(optional<T> const&,
+                              google::protobuf::Value const& pv) {
+    return GetValue(T{}, pv);
+  }
   template <typename T>
   static std::vector<T> GetValue(std::vector<T> const&,
                                  google::protobuf::Value const& pv) {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/optional.h"
 #include <gmock/gmock.h>
 #include <cmath>
 #include <limits>
@@ -29,22 +30,30 @@ void TestBasicSemantics(T init) {
 
   EXPECT_TRUE(v.is<T>());
   EXPECT_FALSE(v.is_null<T>());
-
+  EXPECT_TRUE(v.get<T>().ok());
   EXPECT_EQ(init, *v.get<T>());
   EXPECT_EQ(init, static_cast<T>(v));
 
-  Value const copy = v;
+  Value copy = v;
   EXPECT_EQ(copy, v);
-
   Value const moved = std::move(copy);
   EXPECT_EQ(moved, v);
 
   // Tests a null Value of type `T`.
   Value const null = Value::MakeNull<T>();
+
   EXPECT_TRUE(null.is<T>());
   EXPECT_TRUE(null.is_null<T>());
   EXPECT_FALSE(null.get<T>().ok());
-  EXPECT_NE(null, v);
+  EXPECT_TRUE(null.is<optional<T>>());
+  EXPECT_TRUE(null.is_null<optional<T>>());
+  EXPECT_TRUE(null.get<optional<T>>().ok());
+  EXPECT_EQ(optional<T>{}, *null.get<optional<T>>());
+
+  Value copy_null = null;
+  EXPECT_EQ(copy_null, null);
+  Value const moved_null = std::move(copy_null);
+  EXPECT_EQ(moved_null, null);
 }
 
 TEST(Value, BasicSemantics) {
@@ -52,6 +61,9 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: bool " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<bool>(5, x));
+    std::vector<optional<bool>> v(5, x);
+    v.resize(10, x);
+    TestBasicSemantics(v);
   }
 
   auto const min64 = std::numeric_limits<std::int64_t>::min();
@@ -60,6 +72,9 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: std::int64_t " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::int64_t>(5, x));
+    std::vector<optional<std::int64_t>> v(5, x);
+    v.resize(10, x);
+    TestBasicSemantics(v);
   }
 
   // Note: We skip testing the NaN case here because NaN always compares not
@@ -69,12 +84,18 @@ TEST(Value, BasicSemantics) {
     SCOPED_TRACE("Testing: double " + std::to_string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<double>(5, x));
+    std::vector<optional<double>> v(5, x);
+    v.resize(10, x);
+    TestBasicSemantics(v);
   }
 
   for (auto x : std::vector<std::string>{"", "f", "foo", "12345678901234567"}) {
     SCOPED_TRACE("Testing: std::string " + std::string(x));
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::string>(5, x));
+    std::vector<optional<std::string>> v(5, x);
+    v.resize(10, x);
+    TestBasicSemantics(v);
   }
 }
 
