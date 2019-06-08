@@ -19,6 +19,10 @@ find_package(googleapis CONFIG REQUIRED)
 
 include(EnableClangTidy)
 include(EnableWerror)
+set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
+set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
+set(DOXYGEN_PROJECT_NUMBER "${SPANNER_VERSION}")
+include(EnableDoxygen)
 
 # TODO(#43) - generate version_info.h in the source directory and commit it.
 configure_file(version_info.h.in version_info.h)

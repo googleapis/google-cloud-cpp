@@ -38,16 +38,16 @@ inline namespace SPANNER_CLIENT_NS {
  * with how they map to the Spanner types
  * (https://cloud.google.com/spanner/docs/data-types):
  *
- *     Spanner Type | C++ Type
- *     -----------------------
- *     BOOL         | bool
- *     INT64        | std::int64_t
- *     FLOAT64      | double
- *     STRING       | std::string
- *     ARRAY        | std::vector<T>  // [1]
+ * Spanner Type | C++ Type
+ * ------------ | --------
+ * BOOL         | `bool`
+ * INT64        | `std::int64_t`
+ * FLOAT64      | `double`
+ * STRING       | `std::string`
+ * ARRAY        | `std::vector<T>`  // [1]
  *
  * [1] The type `T` may be any of the other supported types, except for
- *     ARRAY/std::vector.
+ *     ARRAY/`std::vector`.
  *
  * Value is a regular C++ value type with support for copy, move, equality,
  * etc, but there is no default constructor because there is no default type.
@@ -219,7 +219,7 @@ class Value {
   }
 
   /**
-   * Returns the contained value iff is<T>() and !is_null<T>().
+   * Returns the contained value iff `is<T>()` and `!is_null<T>()`.
    *
    * It is the caller's responsibility to ensure that the specified type
    * `T` is correct (e.g., with `is<T>()`) and that the value is not "null"
