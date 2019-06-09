@@ -20,10 +20,6 @@
 #include <ios>
 #include <string>
 
-// Implementation note: See
-// https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/type.proto
-// for details about how Spanner types should be encoded.
-
 namespace google {
 namespace cloud {
 namespace spanner {
@@ -74,29 +70,23 @@ bool Equal(google::spanner::v1::Type const& pt1,
 }  // namespace
 
 Value::Value(bool v) {
-  type_ = GetType(bool{});
-  value_.set_bool_value(v);
+  type_ = MakeTypeProto(v);
+  value_ = MakeValueProto(v);
 }
 
 Value::Value(std::int64_t v) {
-  type_ = GetType(std::int64_t{});
-  value_.set_string_value(std::to_string(v));
+  type_ = MakeTypeProto(v);
+  value_ = MakeValueProto(v);
 }
 
 Value::Value(double v) {
-  type_ = GetType(double{});
-  if (std::isnan(v)) {
-    value_.set_string_value("NaN");
-  } else if (std::isinf(v)) {
-    value_.set_string_value(v < 0 ? "-Infinity" : "Infinity");
-  } else {
-    value_.set_number_value(v);
-  }
+  type_ = MakeTypeProto(v);
+  value_ = MakeValueProto(v);
 }
 
 Value::Value(std::string v) {
-  type_ = GetType(std::string{});
-  value_.set_string_value(std::move(v));
+  type_ = MakeTypeProto(v);
+  value_ = MakeValueProto(std::move(v));
 }
 
 bool operator==(Value const& a, Value const& b) {
@@ -113,31 +103,65 @@ bool Value::ProtoEqual(google::protobuf::Message const& m1,
 }
 
 //
-// Value::GetType
+// Value::MakeTypeProto
 //
 
-google::spanner::v1::Type Value::GetType(bool) {
+google::spanner::v1::Type Value::MakeTypeProto(bool) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::BOOL);
   return t;
 }
 
-google::spanner::v1::Type Value::GetType(std::int64_t) {
+google::spanner::v1::Type Value::MakeTypeProto(std::int64_t) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::INT64);
   return t;
 }
 
-google::spanner::v1::Type Value::GetType(double) {
+google::spanner::v1::Type Value::MakeTypeProto(double) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::FLOAT64);
   return t;
 }
 
-google::spanner::v1::Type Value::GetType(std::string const&) {
+google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::STRING);
   return t;
+}
+
+//
+// Value::MakeValueProto
+//
+
+google::protobuf::Value Value::MakeValueProto(bool b) {
+  google::protobuf::Value v;
+  v.set_bool_value(b);
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(std::int64_t i) {
+  google::protobuf::Value v;
+  v.set_string_value(std::to_string(i));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(double d) {
+  google::protobuf::Value v;
+  if (std::isnan(d)) {
+    v.set_string_value("NaN");
+  } else if (std::isinf(d)) {
+    v.set_string_value(d < 0 ? "-Infinity" : "Infinity");
+  } else {
+    v.set_number_value(d);
+  }
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(std::string s) {
+  google::protobuf::Value v;
+  v.set_string_value(std::move(s));
+  return v;
 }
 
 //

@@ -99,12 +99,8 @@ class Value {
    */
   template <typename T>
   explicit Value(optional<T> const& opt) {
-    if (opt.has_value()) {
-      *this = Value(*opt);
-    } else {
-      type_ = GetType(T{});
-      value_.set_null_value(google::protobuf::NullValue::NULL_VALUE);
-    }
+    type_ = MakeTypeProto(T{});
+    value_ = MakeValueProto(opt);
   }
 
   /**
@@ -116,10 +112,8 @@ class Value {
    */
   template <typename T>  // TODO(#59): add an enabler to disallow T==vector
   explicit Value(std::vector<T> const& v) {
-    type_ = GetType(v);
-    for (auto const& e : v) {
-      *value_.mutable_list_value()->add_values() = std::move(Value(e).value_);
-    }
+    type_ = MakeTypeProto(v);
+    value_ = MakeValueProto(v);
   }
 
   friend bool operator==(Value const& a, Value const& b);
@@ -143,7 +137,7 @@ class Value {
    */
   template <typename T>
   bool is() const {
-    return ProtoEqual(type_, GetType(T{}));
+    return ProtoEqual(type_, MakeTypeProto(T{}));
   }
 
   /**
@@ -248,20 +242,42 @@ class Value {
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
   // argument type is the tag, the argument value is ignored.
-  static google::spanner::v1::Type GetType(bool);
-  static google::spanner::v1::Type GetType(std::int64_t);
-  static google::spanner::v1::Type GetType(double);
-  static google::spanner::v1::Type GetType(std::string const&);
+  static google::spanner::v1::Type MakeTypeProto(bool);
+  static google::spanner::v1::Type MakeTypeProto(std::int64_t);
+  static google::spanner::v1::Type MakeTypeProto(double);
+  static google::spanner::v1::Type MakeTypeProto(std::string const&);
   template <typename T>
-  static google::spanner::v1::Type GetType(optional<T> const&) {
-    return GetType(T{});
+  static google::spanner::v1::Type MakeTypeProto(optional<T> const&) {
+    return MakeTypeProto(T{});
   }
   template <typename T>
-  static google::spanner::v1::Type GetType(std::vector<T> const&) {
+  static google::spanner::v1::Type MakeTypeProto(std::vector<T> const&) {
     google::spanner::v1::Type t;
     t.set_code(google::spanner::v1::TypeCode::ARRAY);
-    *t.mutable_array_element_type() = GetType(T{});  // Recursive call
+    *t.mutable_array_element_type() = MakeTypeProto(T{});  // Recursive call
     return t;
+  }
+
+  // Encodes the argument as a protobuf according to the rules described in
+  // https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/type.proto
+  static google::protobuf::Value MakeValueProto(bool b);
+  static google::protobuf::Value MakeValueProto(std::int64_t i);
+  static google::protobuf::Value MakeValueProto(double d);
+  static google::protobuf::Value MakeValueProto(std::string s);
+  template <typename T>
+  static google::protobuf::Value MakeValueProto(optional<T> const& opt) {
+    if (opt.has_value()) return MakeValueProto(*opt);
+    google::protobuf::Value v;
+    v.set_null_value(google::protobuf::NullValue::NULL_VALUE);
+    return v;
+  }
+  template <typename T>
+  static google::protobuf::Value MakeValueProto(std::vector<T> const& vec) {
+    google::protobuf::Value v;
+    for (auto const& e : vec) {
+      *v.mutable_list_value()->add_values() = MakeValueProto(e);
+    }
+    return v;
   }
 
   // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
