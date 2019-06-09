@@ -74,17 +74,17 @@ bool Equal(google::spanner::v1::Type const& pt1,
 }  // namespace
 
 Value::Value(bool v) {
-  type_.set_code(google::spanner::v1::TypeCode::BOOL);
+  type_ = GetType(bool{});
   value_.set_bool_value(v);
 }
 
 Value::Value(std::int64_t v) {
-  type_.set_code(google::spanner::v1::TypeCode::INT64);
+  type_ = GetType(std::int64_t{});
   value_.set_string_value(std::to_string(v));
 }
 
 Value::Value(double v) {
-  type_.set_code(google::spanner::v1::TypeCode::FLOAT64);
+  type_ = GetType(double{});
   if (std::isnan(v)) {
     value_.set_string_value("NaN");
   } else if (std::isinf(v)) {
@@ -95,7 +95,7 @@ Value::Value(double v) {
 }
 
 Value::Value(std::string v) {
-  type_.set_code(google::spanner::v1::TypeCode::STRING);
+  type_ = GetType(std::string{});
   value_.set_string_value(std::move(v));
 }
 

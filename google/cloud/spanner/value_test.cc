@@ -40,7 +40,7 @@ void TestBasicSemantics(T init) {
   EXPECT_EQ(moved, v);
 
   // Tests a null Value of type `T`.
-  Value const null = Value::MakeNull<T>();
+  Value const null = MakeNullValue<T>();
 
   EXPECT_TRUE(null.is<T>());
   EXPECT_TRUE(null.is_null<T>());
@@ -125,7 +125,7 @@ TEST(Value, MixingTypes) {
   EXPECT_FALSE(a.is_null<B>());
   EXPECT_FALSE(a.get<B>().ok());
 
-  Value null_a = Value::MakeNull<A>();
+  Value null_a = MakeNullValue<A>();
   EXPECT_TRUE(null_a.is<A>());
   EXPECT_TRUE(null_a.is_null<A>());
   EXPECT_FALSE(null_a.get<A>().ok());
@@ -146,7 +146,7 @@ TEST(Value, MixingTypes) {
   EXPECT_NE(b, a);
   EXPECT_NE(b, null_a);
 
-  Value null_b = Value::MakeNull<B>();
+  Value null_b = MakeNullValue<B>();
   EXPECT_TRUE(null_b.is<B>());
   EXPECT_TRUE(null_b.is_null<B>());
   EXPECT_FALSE(null_b.get<B>().ok());
@@ -185,14 +185,14 @@ TEST(Value, SpannerArray) {
   EXPECT_TRUE(vd.get<ArrayDouble>().ok());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
 
-  Value const null_vi = Value::MakeNull<ArrayInt64>();
+  Value const null_vi = MakeNullValue<ArrayInt64>();
   EXPECT_EQ(null_vi, null_vi);
   EXPECT_NE(null_vi, vi);
   EXPECT_NE(null_vi, vd);
   EXPECT_FALSE(null_vi.get<ArrayInt64>().ok());
   EXPECT_FALSE(null_vi.get<ArrayDouble>().ok());
 
-  Value const null_vd = Value::MakeNull<ArrayDouble>();
+  Value const null_vd = MakeNullValue<ArrayDouble>();
   EXPECT_EQ(null_vd, null_vd);
   EXPECT_NE(null_vd, null_vi);
   EXPECT_NE(null_vd, vd);

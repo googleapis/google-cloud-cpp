@@ -53,7 +53,7 @@ inline namespace SPANNER_CLIENT_NS {
  * etc, but there is no default constructor because there is no default type.
  * Callers may create instances by passing any of the supported values (shown
  * in the table above) to the constructor. "Null" values are created using the
- * `Value::MakeNull<T>()` factory function or by passing an empty `optional<T>`
+ * `MakeNullValue<T>()` factory function or by passing an empty `optional<T>`
  * to the Value constructor..
  *
  * Example with a non-null value:
@@ -69,7 +69,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * Example with a null:
  *
- *     spanner::Value v = spanner::Value::MakeNull<std::int64_t>();
+ *     spanner::Value v = spanner::MakeNullValue<std::int64_t>();
  *     assert(v.is<std::int64_t>());
  *     assert(v.is_null<std::int64_t>());
  *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
@@ -79,17 +79,6 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class Value {
  public:
-  /**
-   * Factory to construct a "null" Value of the specified type `T`.
-   *
-   * This is equivalent to passing to the constructor an `optional<T>` without
-   * a value, though this factory may result in clearer code at the call site.
-   */
-  template <typename T>
-  static Value MakeNull() {
-    return Value(optional<T>{});
-  }
-
   Value() = delete;
 
   /// Copy and move.
@@ -148,7 +137,7 @@ class Value {
    *     assert(v.is<bool>());  // Same as the following
    *     assert(v.is<optional<bool>>());
    *
-   *     spanner::Value null_v = spanner::Value::MakeNull<bool>();
+   *     spanner::Value null_v = spanner::MakeNullValue<bool>();
    *     assert(v.is<bool>());  // Same as the following
    *     assert(v.is<optional<bool>>());
    */
@@ -169,7 +158,7 @@ class Value {
    *     assert(!v.is_null<bool>());  // Same as the following
    *     assert(!v.is_null<optional<bool>>());
    *
-   *     spanner::Value null_v = spanner::Value::MakeNull<bool>();
+   *     spanner::Value null_v = spanner::MakeNullValue<bool>();
    *     assert(v.is_null<bool>());  // Same as the following
    *     assert(v.is_null<optional<bool>>());
    *     assert(!v.is_null<std::int64_t>());  // Same as the following
@@ -197,7 +186,7 @@ class Value {
    *     }
    *
    *     // Now using a "null" std::int64_t
-   *     v = spanner::Value::MakeNull<std::int64_t>();
+   *     v = spanner::MakeNullValue<std::int64_t>();
    *     assert(v.is_null<std::int64_t>());
    *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
    *     if (!i) {
@@ -232,7 +221,7 @@ class Value {
    *     spanner::Value v{true};
    *     bool b = static_cast<bool>(v);  // OK: b == true
    *
-   *     spanner::Value null_v = spanner::Value::MakeNull<std::int64_t>();
+   *     spanner::Value null_v = spanner::MakeNullValue<std::int64_t>();
    *     std::int64_t i = static_cast<std::int64_t>(null_v);  // UB! null
    *     bool bad = static_cast<bool>(null_v);  // UB! wrong type
    */
@@ -304,6 +293,18 @@ class Value {
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;
 };
+
+/**
+ * Factory to construct a "null" Value of the specified type `T`.
+ *
+ * This is equivalent to passing an `optional<T>` without a value to the
+ * constructor, though this factory may be easier to invoke and result in
+ * clearer code at the call site.
+ */
+template <typename T>
+Value MakeNullValue() {
+  return Value(optional<T>{});
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
