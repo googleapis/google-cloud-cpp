@@ -261,11 +261,11 @@ which combinations are tested regularly.
    graph of each target. This is useful when troubleshooting dependencies, or
    simply when trying to document them.
 
-### Upload generated document to personal github pages
+### Upload generated documentation to personal github pages
 
 If you are using your personal fork as the git origin, there is an easy way to
-upload generated doxygen document to your personal github pages. The following
-command will upload the documentation under
+upload generated doxygen documentation to your personal github pages. The
+following command will upload the documentation under
 `cmake-out/gcpp-ci-ubuntu-18.04-gcc-Release` to `my-fancy-feature` subdirectory
 in the gh-pages branch of your personal fork. The documentation will be publicly
 available at: `http://<username>.github.io/google-cloud-cpp/my-fancy-feature`.
