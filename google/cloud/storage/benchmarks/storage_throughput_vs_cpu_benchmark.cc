@@ -67,9 +67,14 @@ this loop until a prescribed *time* has elapsed:
   used during the download, and the status code for the download.
 - The program then deletes this object and starts another iteration.
 
-The loop runs for a prescribed number of seconds. Once the threads finish
-running their loops the program prints the captured performance data. The bucket
-is deleted after the program terminates.
+The loop stops when any of the following conditions are met:
+
+- The test has obtained more than a prescribed "maximum number of samples"
+- The test has obtained at least a prescribed "minimum number of samples" *and*
+  the test has been running for more than a prescribed "duration".
+
+Once the threads finish running their loops the program prints the captured
+performance data. The bucket is deleted after the program terminates.
 
 A helper script in this directory can generate pretty graphs from the output of
 this program.
@@ -85,6 +90,8 @@ struct Options {
   std::int64_t maximum_object_size = 256 * gcs_bm::kMiB;
   std::int64_t minimum_chunk_size = 128 * gcs_bm::kKiB;
   std::int64_t maximum_chunk_size = 4096 * gcs_bm::kKiB;
+  long minimum_sample_count = 0;
+  long maximum_sample_count = std::numeric_limits<long>::max();
   bool disable_crc32c = false;
   bool disable_md5 = false;
 };
@@ -221,7 +228,7 @@ std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
   return os << ToString(rhs.op) << ',' << rhs.object_size << ','
             << rhs.chunk_size << ',' << rhs.buffer_size << ','
             << rhs.elapsed_time.count() << ',' << rhs.cpu_time.count() << ','
-            << rhs.status;
+            << rhs.status << ',' << google::cloud::storage::version_string();
 }
 
 void PrintResults(TestResults const& results) {
@@ -264,8 +271,11 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   TestResults results;
   results.reserve(options.duration.count() * objects_per_second);
 
-  for (auto start = std::chrono::steady_clock::now(); start < deadline;
-       start = std::chrono::steady_clock::now()) {
+  long iteration_count = 0;
+  for (auto start = std::chrono::steady_clock::now();
+       iteration_count < options.maximum_sample_count &&
+       (iteration_count < options.minimum_sample_count || start < deadline);
+       start = std::chrono::steady_clock::now(), ++iteration_count) {
     auto object_name = gcs_bm::MakeRandomObjectName(generator);
     auto object_size = size_generator(generator);
     auto chunk_size = chunk_generator(generator);
@@ -335,10 +345,6 @@ Options ParseArgs(int argc, char* argv[]) {
        [&options](std::string const& val) { options.project_id = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
-      {"--duration", "set the total execution time for the benchmark",
-       [&options](std::string const& val) {
-         options.duration = gcs_bm::ParseDuration(val);
-       }},
       {"--thread-count", "set the number of threads in the benchmark",
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
@@ -358,6 +364,20 @@ Options ParseArgs(int argc, char* argv[]) {
       {"--maximum-chunk-size", "configure the maximum chunk size in the test",
        [&options](std::string const& val) {
          options.maximum_chunk_size = gcs_bm::ParseSize(val);
+       }},
+      {"--duration", "continue the test for at least this amount of time",
+       [&options](std::string const& val) {
+         options.duration = gcs_bm::ParseDuration(val);
+       }},
+      {"--minimum-sample-count",
+       "continue the test until at least this number of samples are obtained",
+       [&options](std::string const& val) {
+         options.minimum_sample_count = std::stol(val);
+       }},
+      {"--maximum-sample-count",
+       "stop the test when this number of samples are obtained",
+       [&options](std::string const& val) {
+         options.maximum_sample_count = std::stol(val);
        }},
       {"--disable-crc32", "disable CRC32C checksums",
        [&options](std::string const& val) {
@@ -395,14 +415,20 @@ Options ParseArgs(int argc, char* argv[]) {
 
   if (options.minimum_object_size > options.maximum_object_size) {
     std::ostringstream os;
-    os << "Invalid range for objects [" << options.minimum_object_size << ','
-       << options.maximum_object_size << "]";
+    os << "Invalid range for object size [" << options.minimum_object_size
+       << ',' << options.maximum_object_size << "]";
     throw std::runtime_error(std::move(os).str());
   }
   if (options.minimum_chunk_size > options.maximum_chunk_size) {
     std::ostringstream os;
-    os << "Invalid range for chunks [" << options.minimum_chunk_size << ','
+    os << "Invalid range for chunk size [" << options.minimum_chunk_size << ','
        << options.maximum_chunk_size << "]";
+    throw std::runtime_error(std::move(os).str());
+  }
+  if (options.minimum_sample_count > options.maximum_sample_count) {
+    std::ostringstream os;
+    os << "Invalid range for sample range [" << options.minimum_sample_count
+       << ',' << options.maximum_sample_count << "]";
     throw std::runtime_error(std::move(os).str());
   }
 
