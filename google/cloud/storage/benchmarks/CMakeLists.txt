@@ -22,6 +22,7 @@ target_link_libraries(storage_benchmarks
 
 include(CheckSymbolExists)
 check_symbol_exists(getrusage sys/resource.h GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
+set(CMAKE_REQUIRED_DEFINITIONS "-D_GNU_SOURCE=1")
 check_symbol_exists(RUSAGE_THREAD sys/resource.h
                     GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
 target_compile_definitions(
