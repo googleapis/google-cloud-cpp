@@ -272,8 +272,7 @@ publicly available at:
 `http://<username>.github.io/google-cloud-cpp/my-fancy-feature`.
 
 ```console
-TRAVIS_PULL_REQUEST=false \
-  DOCS_SUBDIR=my-fancy-feature \
+DOCS_SUBDIR=my-fancy-feature \
   GENERATE_DOCS=yes \
   BUILD_OUTPUT=cmake-out/gcpp-ci-ubuntu-18.04-gcc-Release \
   ./ci/travis/upload-docs.sh

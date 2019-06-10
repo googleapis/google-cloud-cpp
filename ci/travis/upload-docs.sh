@@ -24,7 +24,7 @@ if [ "${BUILD_OUTPUT:-}" == "" ]; then
   source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 fi
 
-if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
+if [ "${TRAVIS_PULL_REQUEST:-false}" != "false" ]; then
   echo "Skipping document generation as it is disabled for pull requests."
   exit 0
 fi
