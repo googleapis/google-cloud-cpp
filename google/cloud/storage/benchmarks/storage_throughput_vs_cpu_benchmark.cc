@@ -70,7 +70,7 @@ this loop until a prescribed *time* has elapsed:
 The loop stops when any of the following conditions are met:
 
 - The test has obtained more than a prescribed "maximum number of samples"
-- The test has obtained at east a prescribed "minimum number of samples" *and*
+- The test has obtained at least a prescribed "minimum number of samples" *and*
   the test has been running for more than a prescribed "duration".
 
 Once the threads finish running their loops the program prints the captured
