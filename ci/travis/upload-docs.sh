@@ -19,7 +19,10 @@ set -eu
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+
+if [ "${BUILD_OUTPUT:-}" == "" ]; then
+  source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+fi
 
 if [ "${TRAVIS_PULL_REQUEST}" != "false" ]; then
   echo "Skipping document generation as it is disabled for pull requests."
@@ -32,7 +35,10 @@ if [ "${GENERATE_DOCS:-}" != "yes" ]; then
 fi
 
 subdir=""
-case "${TRAVIS_BRANCH:-}" in
+if [ "${DOCS_SUBDIR:-}" != "" ]; then
+  subdir="${DOCS_SUBDIR}"
+else
+  case "${TRAVIS_BRANCH:-}" in
     master)
       subdir="latest"
       ;;
@@ -43,7 +49,8 @@ case "${TRAVIS_BRANCH:-}" in
       echo "Skipping document generation as it is only used in master and release branches."
       exit 0
       ;;
-esac
+  esac
+fi
 
 # The usual way to host documentation in ${GIT_NAME}.github.io/${PROJECT_NAME}
 # is to create a branch (gh-pages) and post the documentation in that branch.
