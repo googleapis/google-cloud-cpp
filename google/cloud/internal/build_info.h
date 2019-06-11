@@ -30,11 +30,11 @@ std::string language_version();
 /// The compiler flags.
 std::string compiler_flags();
 
-/// The git revision when the code was compiled.
-std::string gitrev();
-
 /// True if this is a release, false for the development branches.
 bool is_release();
+
+/// Build metadata injected by the build system.
+std::string build_metadata();
 
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS

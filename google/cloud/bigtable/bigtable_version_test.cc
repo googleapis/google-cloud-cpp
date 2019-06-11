@@ -46,7 +46,7 @@ TEST(StorageVersionTest, NoBuildInfoInRelease) {
     return;
   }
   EXPECT_THAT(version_string(),
-              Not(HasSubstr("+" + google::cloud::internal::gitrev())));
+              Not(HasSubstr("+" + google::cloud::internal::build_metadata())));
 }
 
 /// @test Verify the version has the build info for development builds.
@@ -55,7 +55,7 @@ TEST(StorageVersionTest, HasBuildInfoInDevelopment) {
     return;
   }
   EXPECT_THAT(version_string(),
-              HasSubstr("+" + google::cloud::internal::gitrev()));
+              HasSubstr("+" + google::cloud::internal::build_metadata()));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
