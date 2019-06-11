@@ -85,10 +85,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6528a96ceaf903ff8538eecce28060b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2800889deab5e9f48ded3b3cf5d85e05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#a2800889deab5e9f48ded3b3cf5d85e05">optional</a> (<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html">optional</a> &amp;&amp;rhs)</td></tr>
 <tr class="separator:a2800889deab5e9f48ded3b3cf5d85e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memTemplParams" colspan="2">template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memTemplParams" colspan="2">template&lt;typename U  = T, typename std::enable_if&lt; !std::is_same&lt; typename std::decay&lt; U &gt;::type, optional &gt;::value &amp;&amp;std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
 <tr class="memitem:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#aa2342ebfa85e212beaf5a09568dee5ed">optional</a> (U &amp;&amp;x)</td></tr>
 <tr class="separator:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memTemplParams" colspan="2">template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;!AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
+<tr class="memitem:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memTemplParams" colspan="2">template&lt;typename U  = T, typename std::enable_if&lt; !std::is_same&lt; typename std::decay&lt; U &gt;::type, optional &gt;::value &amp;&amp;std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;!AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </td></tr>
 <tr class="memitem:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memTemplItemLeft" align="right" valign="top">&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#aa2342ebfa85e212beaf5a09568dee5ed">optional</a> (U &amp;&amp;x)</td></tr>
 <tr class="separator:aa2342ebfa85e212beaf5a09568dee5ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cd83b7ff654b35b4e22aa7a1a57a436"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1optional.html#a2cd83b7ff654b35b4e22aa7a1a57a436">~optional</a> ()</td></tr>
@@ -257,7 +257,7 @@ template&lt;typename T &gt; </div>
 <div class="memtemplate">
 template&lt;typename T &gt; </div>
 <div class="memtemplate">
-template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
+template&lt;typename U  = T, typename std::enable_if&lt; !std::is_same&lt; typename std::decay&lt; U &gt;::type, optional &gt;::value &amp;&amp;std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -277,7 +277,7 @@ template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&l
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00074">74</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00076">76</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -289,7 +289,7 @@ template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&l
 <div class="memtemplate">
 template&lt;typename T &gt; </div>
 <div class="memtemplate">
-template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;!AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
+template&lt;typename U  = T, typename std::enable_if&lt; !std::is_same&lt; typename std::decay&lt; U &gt;::type, optional &gt;::value &amp;&amp;std::is_constructible&lt; T, U &amp;&amp;&gt;::value &amp;&amp;!AllowImplicit&lt; T, U &gt;::value, int &gt;::type  = 0&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -309,7 +309,7 @@ template&lt;typename U  = T, typename std::enable_if&lt; std::is_constructible&l
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00081">81</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00085">85</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -338,7 +338,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00084">84</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00088">88</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -369,7 +369,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00206">206</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00210">210</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -398,7 +398,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00198">198</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00202">202</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -427,7 +427,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00197">197</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00201">201</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -456,7 +456,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00153">153</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00157">157</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -485,7 +485,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00156">156</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00160">160</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -514,7 +514,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00163">163</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00167">167</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -543,7 +543,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00149">149</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00153">153</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -572,7 +572,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00152">152</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00156">156</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -602,7 +602,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00086">86</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00090">90</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -632,7 +632,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00107">107</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00111">111</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -664,7 +664,7 @@ template&lt;typename U  = T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00135">135</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00139">139</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -693,7 +693,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00200">200</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00204">204</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -722,7 +722,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00167">167</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00171">171</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -751,7 +751,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00171">171</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00175">175</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -780,7 +780,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00175">175</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00179">179</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -809,7 +809,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00180">180</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00184">184</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -841,7 +841,7 @@ template&lt;typename U &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00186">186</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00190">190</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
@@ -873,7 +873,7 @@ template&lt;typename U &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00192">192</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="optional_8h_source.html#l00196">196</a> of file <a class="el" href="optional_8h_source.html">optional.h</a>.</p>
 
 </div>
 </div>
