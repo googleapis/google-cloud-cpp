@@ -68,16 +68,20 @@ class optional {
     }
   }
   template <typename U = T,
-            typename std::enable_if<std::is_constructible<T, U&&>::value &&
-                                        AllowImplicit<T, U>::value,
-                                    int>::type = 0>
+            typename std::enable_if<
+                !std::is_same<typename std::decay<U>::type, optional>::value &&
+                    std::is_constructible<T, U&&>::value &&
+                    AllowImplicit<T, U>::value,
+                int>::type = 0>
   optional(U&& x) : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(x));
   }
   template <typename U = T,
-            typename std::enable_if<std::is_constructible<T, U&&>::value &&
-                                        !AllowImplicit<T, U>::value,
-                                    int>::type = 0>
+            typename std::enable_if<
+                !std::is_same<typename std::decay<U>::type, optional>::value &&
+                    std::is_constructible<T, U&&>::value &&
+                    !AllowImplicit<T, U>::value,
+                int>::type = 0>
   explicit optional(U&& x) : has_value_(true) {
     new (reinterpret_cast<T*>(&buffer_)) T(std::forward<U>(x));
   }

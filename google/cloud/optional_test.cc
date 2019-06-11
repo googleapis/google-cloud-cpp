@@ -385,6 +385,14 @@ TEST(OptionalTest, OptionalReturnWithoutValue) {
   EXPECT_FALSE(x.has_value());
 }
 
+TEST(OptionalTest, OptionalBoolCopy) {
+  // This test previously broke on gcc 4.8 because optional's converting
+  // constructor was being chosen instead of its copy constructor.
+  optional<bool> opt_b(false);
+  optional<bool> copy(opt_b);
+  EXPECT_EQ(copy, opt_b);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
