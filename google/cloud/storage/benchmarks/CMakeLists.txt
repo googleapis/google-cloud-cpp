@@ -20,10 +20,11 @@ target_link_libraries(storage_benchmarks
                       PRIVATE storage_common_options
                               google_cloud_cpp_common_options)
 
-include(CheckSymbolExists)
-check_symbol_exists(getrusage sys/resource.h GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
-check_symbol_exists(RUSAGE_THREAD sys/resource.h
-                    GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
+include(CheckCXXSymbolExists)
+check_cxx_symbol_exists(
+    getrusage sys/resource.h GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
+check_cxx_symbol_exists(RUSAGE_THREAD sys/resource.h
+                        GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
 target_compile_definitions(
     storage_benchmarks
     PUBLIC
