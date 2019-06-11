@@ -66,7 +66,8 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
   }
 
   if (!current_ios_buffer_.empty()) {
-    hash_validator_->Update(current_ios_buffer_);
+    hash_validator_->Update(current_ios_buffer_.data(),
+                            current_ios_buffer_.size());
     char* data = &current_ios_buffer_[0];
     setg(data, data, data + current_ios_buffer_.size());
     return traits_type::to_int_type(*data);
