@@ -73,7 +73,7 @@ add_library(google_cloud_cpp_common_options INTERFACE)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common_options)
 
 # Define a function to fetch the current git revision. Using a function creates
-# a new scope, so the variables
+# a new scope, so the CMake variables do not leak to the global namespace.
 function (google_cloud_cpp_initialize_git_head var)
     set(result "")
     # If we cannot find a `.git` directory do not even try to guess the git
