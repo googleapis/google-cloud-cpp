@@ -74,13 +74,6 @@ std::string compiler_flags() {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-std::string gitrev() {
-  // NOLINTNEXTLINE(readability-redundant-string-init)
-  static std::string const git_head = R"""(@GOOGLE_CLOUD_CPP_GIT_HEAD@)""";
-  return git_head;
-}
-
-// NOLINTNEXTLINE(readability-identifier-naming)
 bool is_release() {
   static bool const is_release = []() -> bool {
     // NOLINTNEXTLINE(readability-redundant-string-init)
@@ -92,6 +85,13 @@ bool is_release() {
   }();
 
   return is_release;
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+std::string build_metadata() {
+  // NOLINTNEXTLINE(readability-redundant-string-init)
+  static char const build_metadata[] = R"""(@GOOGLE_CLOUD_CPP_BUILD_METADATA@)""";
+  return build_metadata;
 }
 
 }  // namespace internal
