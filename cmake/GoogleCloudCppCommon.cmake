@@ -96,7 +96,8 @@ else()
         set(DOXYGEN_SOURCE_BROWSER YES)
         set(DOXYGEN_GENERATE_TAGFILE
             "${CMAKE_CURRENT_BINARY_DIR}/${GOOGLE_CLOUD_CPP_SUBPROJECT}.tag")
-        set(DOXYGEN_LAYOUT_FILE "${PROJECT_SOURCE_DIR}/DoxygenLayout.xml")
+        set(DOXYGEN_LAYOUT_FILE
+            "${PROJECT_SOURCE_DIR}/doc/config/DoxygenLayout.xml")
 
         doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
                          ${CMAKE_CURRENT_SOURCE_DIR}
