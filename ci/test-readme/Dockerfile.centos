@@ -15,6 +15,9 @@
 ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION}
 
+COPY ci/install-retry.sh /retry3
+RUN chmod +x /retry3
+
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
@@ -30,11 +33,11 @@ FROM centos:${DISTRO_VERSION}
 
 # ```bash
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install -y centos-release-scl
+RUN /retry3 yum install -y centos-release-scl
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
-RUN yum makecache && \
-    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
-        openssl-devel pkgconfig tar wget which zlib-devel
+RUN /retry3 yum makecache && \
+    /retry3 yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+        make openssl-devel pkgconfig tar wget which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 

@@ -88,10 +88,6 @@ http_archive(
 
 load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 google_cloud_cpp_deps()
-# Have to manually call the corresponding function for gRPC:
-#   https://github.com/bazelbuild/bazel/issues/1550
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-grpc_deps()
 ```
 
 Then you can link the libraries from your `BUILD` files:
@@ -817,8 +813,8 @@ rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum install -y centos-release-scl
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
-sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
-        openssl-devel pkgconfig tar wget which zlib-devel
+sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+        make openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
