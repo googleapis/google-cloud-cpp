@@ -51,7 +51,7 @@ $ gcloud iam service-accounts create ${SA_NAME} \
 ```
 
 Grant the service account `roles/storage.admin` permissions. The benchmarks
-create and delete their own buckets, this is the only role that grants these
+create and delete their own buckets. This is the only role that grants these
 permissions, and incidentally also grants permission to read, write, and delete
 objects:
 

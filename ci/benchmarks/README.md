@@ -28,4 +28,3 @@ $ gcloud builds submit \
 Please read the README file for the [storage](storage/README.md) benchmarks for
 more information on how to setup a GKE cluster and execute the benchmarks in
 this cluster.
-
