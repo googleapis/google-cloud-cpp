@@ -103,7 +103,7 @@ class CurlDownloadRequest : public ObjectReadSource {
    *     of this parameter are completely replaced with the new data.
    * @returns 100-Continue if the transfer is not yet completed.
    */
-  StatusOr<HttpResponse> Read(char* buf, std::size_t& n) override;
+  StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
  private:
   friend class CurlRequestBuilder;

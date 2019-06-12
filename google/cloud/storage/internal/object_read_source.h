@@ -26,6 +26,27 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
+ * The result of reading some data from the source.
+ *
+ * Reading data may result in several outcomes:
+ * - All of the data requested was read, and there is more available. Some
+ *   headers may have been received too.
+ * - All (or part, or none) of the data requested was read, and the connection
+ *   is closed with some success HTTP response code, some headers may have been
+ *   received too.
+ * - All (or part, or none) of the data requested was read, and the connection
+ *   was closed with some error HTTP response code. Some error payload, and some
+ *   headers are part of this response.
+ * - There was an error trying to read the data: we wrap this object in a
+ *   StatusOr for this case.
+ * - Parts When reading data the result
+ */
+struct ReadSourceResult {
+  std::size_t bytes_received;
+  HttpResponse response;
+};
+
+/**
  * A data source for ObjectReadStreambuf.
  *
  * This object represents an open download stream. It is an abstract class
@@ -44,7 +65,7 @@ class ObjectReadSource {
 
   /// Read more data from the download, returning any HTTP headers and error
   /// codes.
-  virtual StatusOr<HttpResponse> Read(char* buf, std::size_t& n) = 0;
+  virtual StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) = 0;
 };
 
 /**
@@ -56,7 +77,9 @@ class ObjectReadErrorSource : public ObjectReadSource {
 
   bool IsOpen() const override { return false; }
   StatusOr<HttpResponse> Close() override { return status_; }
-  StatusOr<HttpResponse> Read(char*, std::size_t&) override { return status_; }
+  StatusOr<ReadSourceResult> Read(char*, std::size_t) override {
+    return status_;
+  }
 
  private:
   Status status_;

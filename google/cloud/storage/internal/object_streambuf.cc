@@ -57,20 +57,20 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
 
   current_ios_buffer_.resize(128 * 1024);
   std::size_t n = current_ios_buffer_.size();
-  StatusOr<HttpResponse> response =
+  StatusOr<ReadSourceResult> read_result =
       source_->Read(current_ios_buffer_.data(), n);
-  // assert(n <= current_ios_buffer_.size())
-  current_ios_buffer_.resize(n);
-
-  if (!response.ok()) {
-    return std::move(response).status();
+  if (!read_result.ok()) {
+    return std::move(read_result).status();
   }
-  for (auto const& kv : response->headers) {
+  // assert(n <= current_ios_buffer_.size())
+  current_ios_buffer_.resize(read_result->bytes_received);
+
+  for (auto const& kv : read_result->response.headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
+  if (read_result->response.status_code >= 300) {
+    return AsStatus(read_result->response);
   }
 
   if (!current_ios_buffer_.empty()) {
@@ -137,26 +137,27 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     return offset;
   }
 
-  auto n = static_cast<std::size_t>(count - offset);
-  StatusOr<HttpResponse> response = source_->Read(s + offset, n);
+  StatusOr<ReadSourceResult> read_result =
+      source_->Read(s + offset, static_cast<std::size_t>(count - offset));
   GCP_LOG(INFO) << __func__ << "() - count=" << count
                 << ", in_avail=" << in_avail() << ", offset=" << offset
-                << ", n=" << n << ", status=" << response.status();
-  hash_validator_->Update(s + offset, n);
-  offset += n;
-
+                << ", status=" << read_result.status();
   // If there was an error set the internal state, but we still return the
   // number of bytes
-  if (response.ok()) {
-    for (auto const& kv : response->headers) {
-      hash_validator_->ProcessHeader(kv.first, kv.second);
-      headers_.emplace(kv.first, kv.second);
-    }
-    if (response->status_code >= 300) {
-      status_ = AsStatus(*response);
-    }
-  } else {
-    status_ = std::move(response).status();
+  if (!read_result) {
+    status_ = std::move(read_result).status();
+    return offset;
+  }
+
+  hash_validator_->Update(s + offset, read_result->bytes_received);
+  offset += read_result->bytes_received;
+
+  for (auto const& kv : read_result->response.headers) {
+    hash_validator_->ProcessHeader(kv.first, kv.second);
+    headers_.emplace(kv.first, kv.second);
+  }
+  if (read_result->response.status_code >= 300) {
+    status_ = AsStatus(read_result->response);
   }
 
   return offset;

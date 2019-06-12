@@ -113,7 +113,7 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
                       std::move(received_headers_)};
 }
 
-StatusOr<HttpResponse> CurlDownloadRequest::Read(char* buf, std::size_t& n) {
+StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   buffer_ = buf;
   buffer_offset_ = 0;
   buffer_size_ = n;
@@ -139,22 +139,30 @@ StatusOr<HttpResponse> CurlDownloadRequest::Read(char* buf, std::size_t& n) {
     return status;
   }
   TRACE_STATE();
-  n = buffer_offset_;
+  auto bytes_read = buffer_offset_;
   buffer_ = nullptr;
   buffer_offset_ = 0;
   buffer_size_ = 0;
   if (curl_closed_) {
-    // Wait for the response code for a closed stream.
-    StatusOr<long> http_code = handle_.GetResponseCode();
-    if (!http_code.ok()) {
-      return std::move(http_code).status();
-    }
-    TRACE_STATE() << ", code=" << http_code.value();
-    return HttpResponse{http_code.value(), std::string{},
-                        std::move(received_headers_)};
+    // Retrieve the response code for a closed stream. Note the use of
+    // `.value()`, this is equivalent to: assert(http_code.ok());
+    // The only way the previous call can fail indicates a bug in our code (or
+    // corrupted memory), the documentation for CURLINFO_RESPONSE_CODE:
+    //   https://curl.haxx.se/libcurl/c/CURLINFO_RESPONSE_CODE.html
+    // says:
+    //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
+    //   if not.
+    // if the option is not supported then we cannot use HTTP at all in libcurl
+    // and the whole class would fail.
+    long http_code = handle_.GetResponseCode().value();
+    TRACE_STATE() << ", code=" << http_code;
+    return ReadSourceResult{
+        bytes_read,
+        HttpResponse{http_code, std::string{}, std::move(received_headers_)}};
   }
   TRACE_STATE() << ", code=100";
-  return HttpResponse{100, {}, std::move(received_headers_)};
+  return ReadSourceResult{bytes_read,
+                          HttpResponse{100, {}, std::move(received_headers_)}};
 }
 
 void CurlDownloadRequest::SetOptions() {
