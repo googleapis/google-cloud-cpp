@@ -1,0 +1,56 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Start a large scale download using Kubernetes and the Cloud C++ GCS Library.
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: storage-throughput-vs-cpu
+  labels:
+    app: storage-throughput-vs-cpu
+spec:
+  parallelism: 20
+  completions: 20
+  template:
+    metadata:
+      labels:
+        app: storage-throughput-vs-cpu
+    spec:
+      restartPolicy: OnFailure
+      volumes:
+        - name: service-account-key
+          secret:
+            secretName: service-account-key
+      containers:
+        - name: benchmark-image
+          image: gcr.io/@PROJECT_ID@/google-cloud-cpp-benchmarks:@VERSION@
+          imagePullPolicy: Always
+          args: [
+            '/r/throughput-vs-cpu-driver.sh',
+            '@LOGGING_BUCKET@',
+            "--project-id=@PROJECT_ID@",
+            "--region=@REGION@",
+            "--minimum-sample-count=500",
+            "--duration=1h",
+            "--maximum-object-size=512MiB",
+            "--minimum-chunk-size=16MiB",
+            "--maximum-chunk-size=32MiB"
+          ]
+          volumeMounts:
+            - name: service-account-key
+              mountPath: /var/secrets/service-account-key
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: /var/secrets/service-account-key/key.json
