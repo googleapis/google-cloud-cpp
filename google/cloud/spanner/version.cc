@@ -27,7 +27,7 @@ std::string version_string() {
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
     if (!google::cloud::internal::is_release()) {
-      os << "+" << google::cloud::internal::gitrev();
+      os << "+" << google::cloud::internal::build_metadata();
     }
     return os.str();
   }();
