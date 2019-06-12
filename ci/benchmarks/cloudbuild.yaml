@@ -1,0 +1,87 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+steps:
+  # Try to pull the image from the container registry, if it exists that can
+  # speed up the build because previous layers are reused.
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args:
+      - '-c'
+      - 'docker pull gcr.io/${PROJECT_ID}/google-cloud-cpp-dependencies || exit 0'
+  # Then create the `google-cloud-cpp-dependencies` stage, using (if available)
+  # the image we just pulled as a cache. When there are no changes to the
+  # Dockerfile this caching can save 30 minutes or more.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+           '--target', 'google-cloud-cpp-dependencies',
+           '-t', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-dependencies',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-dependencies',
+           '-f', 'ci/benchmarks/Dockerfile',
+           '.']
+    timeout: 3600s
+  # Push the work done so far to the container registry, if any of the
+  # subsequent steps fail, the build will restart from this point when we
+  # retry.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-dependencies:latest']
+  # Repeat the process to build the google-cloud-cpp-build stage.
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args:
+      - '-c'
+      - 'docker pull gcr.io/${PROJECT_ID}/google-cloud-cpp-build || exit 0'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+           '--target', 'google-cloud-cpp-build',
+           '-t', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-build',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-dependencies',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-build',
+           '-f', 'ci/benchmarks/Dockerfile',
+           '.']
+    timeout: 3600s
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-build:latest']
+  # Repeat the process to build the final stage. This is the stage deployed to
+  # GKE.
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args:
+      - '-c'
+      - 'docker pull gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks || exit 0'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+           '-t', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-build',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks',
+           '--build-arg', 'CMAKE_BUILD_TYPE=${_CMAKE_BUILD_TYPE}',
+           '--build-arg', 'SHORT_SHA=${SHORT_SHA}',
+           '-f', 'ci/benchmarks/Dockerfile',
+           '.']
+    timeout: 3600s
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag',
+           'gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks:latest',
+           'gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks:${SHORT_SHA}']
+    timeout: 3600s
+options:
+  machineType: 'N1_HIGHCPU_8'
+substitutions:
+  _CMAKE_BUILD_TYPE: 'Release'
+timeout: 7200s
+images:
+  - 'gcr.io/${PROJECT_ID}/google-cloud-cpp-dependencies'
+  - 'gcr.io/${PROJECT_ID}/google-cloud-cpp-build'
+  - 'gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks'
+  - 'gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks:${SHORT_SHA}'
