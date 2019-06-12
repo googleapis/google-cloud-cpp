@@ -39,12 +39,16 @@ const std::string EMPTY_STRING_MD5_HASH = "1B2M2Y8AsgTpgAmY7PhCfg==";
 const std::string QUICK_FOX_CRC32C_CHECKSUM = "ImIEBA==";
 const std::string QUICK_FOX_MD5_HASH = "nhB9nTcrtoJr2B01QqQZ1g==";
 
+void UpdateValidator(HashValidator& validator, std::string const& buffer) {
+  validator.Update(buffer.data(), buffer.size());
+}
+
 TEST(NullHashValidatorTest, Simple) {
   NullHashValidator validator;
   validator.ProcessHeader("x-goog-hash", "md5=<placeholder-for-test>");
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   auto result = std::move(validator).Finish();
   EXPECT_TRUE(result.computed.empty());
   EXPECT_TRUE(result.received.empty());
@@ -61,9 +65,9 @@ TEST(MD5HashValidator, Empty) {
 
 TEST(MD5HashValidator, Simple) {
   MD5HashValidator validator;
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash", "md5=<invalid-value-for-test>");
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
@@ -73,9 +77,9 @@ TEST(MD5HashValidator, Simple) {
 
 TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
   MD5HashValidator validator;
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader(
       "x-goog-hash", "crc32c=<should-be-ignored>,md5=<invalid-value-for-test>");
   auto result = std::move(validator).Finish();
@@ -86,9 +90,9 @@ TEST(MD5HashValidator, MultipleHashesMd5AtEnd) {
 
 TEST(MD5HashValidator, MultipleHashes) {
   MD5HashValidator validator;
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader(
       "x-goog-hash", "md5=<invalid-value-for-test>,crc32c=<should-be-ignored>");
   auto result = std::move(validator).Finish();
@@ -110,9 +114,9 @@ TEST(Crc32cHashValidator, Empty) {
 
 TEST(Crc32cHashValidator, Simple) {
   Crc32cHashValidator validator;
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash", "crc32c=<invalid-value-for-test>");
   auto result = std::move(validator).Finish();
   EXPECT_EQ("<invalid-value-for-test>", result.received);
@@ -122,9 +126,9 @@ TEST(Crc32cHashValidator, Simple) {
 
 TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
   Crc32cHashValidator validator;
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash",
                           "md5=<ignored>,crc32c=<invalid-value-for-test>");
   auto result = std::move(validator).Finish();
@@ -135,9 +139,9 @@ TEST(Crc32cHashValidator, MultipleHashesCrc32cAtEnd) {
 
 TEST(Crc32cHashValidator, MultipleHashes) {
   Crc32cHashValidator validator;
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash",
                           "crc32c=<invalid-value-for-test>,md5=<ignored>");
   auto result = std::move(validator).Finish();
@@ -165,9 +169,9 @@ TEST(CompositeHashValidator, Simple) {
   CompositeValidator validator(
       google::cloud::internal::make_unique<Crc32cHashValidator>(),
       google::cloud::internal::make_unique<MD5HashValidator>());
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash", "crc32c=<invalid-crc32c-for-test>");
   validator.ProcessHeader("x-goog-hash", "md5=<invalid-md5-for-test>");
   auto result = std::move(validator).Finish();
@@ -183,9 +187,9 @@ TEST(CompositeHashValidator, ProcessMetadata) {
   CompositeValidator validator(
       google::cloud::internal::make_unique<Crc32cHashValidator>(),
       google::cloud::internal::make_unique<MD5HashValidator>());
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   auto object_metadata = internal::ObjectMetadataParser::FromJson(
                              internal::nl::json{
                                  {"crc32c", QUICK_FOX_CRC32C_CHECKSUM},
@@ -207,9 +211,9 @@ TEST(CompositeHashValidator, Missing) {
   CompositeValidator validator(
       google::cloud::internal::make_unique<Crc32cHashValidator>(),
       google::cloud::internal::make_unique<MD5HashValidator>());
-  validator.Update("The quick", 9);
-  validator.Update(" brown", 6);
-  validator.Update(" fox jumps over the lazy dog", 28);
+  UpdateValidator(validator, "The quick");
+  UpdateValidator(validator, " brown");
+  UpdateValidator(validator, " fox jumps over the lazy dog");
   validator.ProcessHeader("x-goog-hash", "crc32c=" + QUICK_FOX_CRC32C_CHECKSUM);
   auto result = std::move(validator).Finish();
   EXPECT_EQ("crc32c=" + QUICK_FOX_CRC32C_CHECKSUM + ",md5=", result.received);
