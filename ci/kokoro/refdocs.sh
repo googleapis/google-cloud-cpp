@@ -29,6 +29,12 @@ else
   echo "branch detected: ${BRANCH}"
 fi
 
+ADDITIONAL_CMAKE_FLAGS=""
+
+if [ "${BRANCH}" == "master" ]; then
+  ADDITIONAL_CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=on"
+fi
+
 # install docuploader
 python3 -m pip install gcp-docuploader
 
@@ -38,7 +44,8 @@ cmake -H. "-B${BUILD_DIR}" \
   -DBUILD_TESTING=OFF \
   -DCMAKE_BUILD_TYPE=Debug \
   -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-  -DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on
+  -DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on \
+  "${ADDITIONAL_CMAKE_FLAGS}"
 cmake --build "${BUILD_DIR}" -- -j `nproc`
 cmake --build "${BUILD_DIR}" --target install
 cmake --build "${BUILD_DIR}" --target doxygen-docs

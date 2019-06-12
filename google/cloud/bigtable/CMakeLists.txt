@@ -42,9 +42,14 @@ set(DOXYGEN_EXCLUDE_PATTERNS
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 if ("${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
+  if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
+    set(DOXYGEN_TAGFILES "\
+${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/master/")
+  else()
     set(DOXYGEN_TAGFILES "\
 ${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/\
 ${GOOGLE_CLOUD_CPP_VERSION}/")
+  endif()
 else()
     set(DOXYGEN_TAGFILES
         "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
