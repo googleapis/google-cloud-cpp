@@ -42,7 +42,6 @@ int main(int argc, char* argv[]) {
       client->CreateBucketForProject(
           bucket_name, project_id,
           gcs::BucketMetadata()
-              .set_location("us-east1")
               .set_storage_class(gcs::storage_class::Regional()));
 
   if (!bucket_metadata) {
