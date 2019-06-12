@@ -36,7 +36,7 @@ class HashValidator {
   virtual std::string Name() const = 0;
 
   /// Update the computed hash value with some portion of the data.
-  virtual void Update(std::string const& payload) = 0;
+  virtual void Update(char const* buf, std::size_t n) = 0;
 
   /// Update the received hash value based on a ObjectMetadata response.
   virtual void ProcessMetadata(ObjectMetadata const& meta) = 0;
@@ -73,7 +73,7 @@ class NullHashValidator : public HashValidator {
   NullHashValidator() = default;
 
   std::string Name() const override { return "null"; }
-  void Update(std::string const&) override {}
+  void Update(char const*, std::size_t) override {}
   void ProcessMetadata(ObjectMetadata const&) override {}
   void ProcessHeader(std::string const&, std::string const&) override {}
   Result Finish() && override { return Result{}; }
@@ -89,7 +89,7 @@ class CompositeValidator : public HashValidator {
       : left_(std::move(left)), right_(std::move(right)) {}
 
   std::string Name() const override { return "composite"; }
-  void Update(std::string const& payload) override;
+  void Update(char const* buf, std::size_t n) override;
   void ProcessMetadata(ObjectMetadata const& meta) override;
   void ProcessHeader(std::string const& key, std::string const& value) override;
   Result Finish() && override;

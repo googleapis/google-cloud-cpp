@@ -25,8 +25,8 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 MD5HashValidator::MD5HashValidator() : context_{} { MD5_Init(&context_); }
 
-void MD5HashValidator::Update(std::string const& payload) {
-  MD5_Update(&context_, payload.c_str(), payload.size());
+void MD5HashValidator::Update(char const* buf, std::size_t n) {
+  MD5_Update(&context_, buf, n);
 }
 
 void MD5HashValidator::ProcessMetadata(ObjectMetadata const& meta) {
@@ -66,10 +66,9 @@ HashValidator::Result MD5HashValidator::Finish() && {
 
 Crc32cHashValidator::Crc32cHashValidator() : current_(0) {}
 
-void Crc32cHashValidator::Update(std::string const& payload) {
-  current_ = crc32c::Extend(
-      current_, reinterpret_cast<std::uint8_t const*>(payload.data()),
-      payload.size());
+void Crc32cHashValidator::Update(char const* buf, std::size_t n) {
+  current_ =
+      crc32c::Extend(current_, reinterpret_cast<std::uint8_t const*>(buf), n);
 }
 
 void Crc32cHashValidator::ProcessMetadata(ObjectMetadata const& meta) {

@@ -36,7 +36,7 @@ class MD5HashValidator : public HashValidator {
   MD5HashValidator& operator=(MD5HashValidator const&) = delete;
 
   std::string Name() const override { return "md5"; }
-  void Update(std::string const& payload) override;
+  void Update(char const* buf, std::size_t n) override;
   void ProcessMetadata(ObjectMetadata const& meta) override;
   void ProcessHeader(std::string const& key, std::string const& value) override;
   Result Finish() && override;
@@ -57,7 +57,7 @@ class Crc32cHashValidator : public HashValidator {
   Crc32cHashValidator& operator=(Crc32cHashValidator const&) = delete;
 
   std::string Name() const override { return "crc32c"; }
-  void Update(std::string const& payload) override;
+  void Update(char const* buf, std::size_t n) override;
   void ProcessMetadata(ObjectMetadata const& meta) override;
   void ProcessHeader(std::string const& key, std::string const& value) override;
   Result Finish() && override;

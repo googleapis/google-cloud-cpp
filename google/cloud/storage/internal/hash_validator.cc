@@ -24,9 +24,9 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-void CompositeValidator::Update(std::string const& payload) {
-  left_->Update(payload);
-  right_->Update(payload);
+void CompositeValidator::Update(char const* buf, std::size_t n) {
+  left_->Update(buf, n);
+  right_->Update(buf, n);
 }
 
 void CompositeValidator::ProcessMetadata(ObjectMetadata const& meta) {

@@ -100,7 +100,8 @@ StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
   std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
   current_ios_buffer_.resize(actual_size);
-  hash_validator_->Update(current_ios_buffer_);
+  hash_validator_->Update(current_ios_buffer_.data(),
+                          current_ios_buffer_.size());
 
   StatusOr<ResumableUploadResponse> result =
       upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
@@ -135,7 +136,8 @@ StatusOr<HttpResponse> CurlResumableStreambuf::Flush() {
   auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
   std::string not_sent(pbase() + chunk_size, pbase() + actual_size);
   current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
-  hash_validator_->Update(current_ios_buffer_);
+  hash_validator_->Update(current_ios_buffer_.data(),
+                          current_ios_buffer_.size());
 
   StatusOr<ResumableUploadResponse> result =
       upload_session_->UploadChunk(current_ios_buffer_);
