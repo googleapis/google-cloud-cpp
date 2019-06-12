@@ -32,14 +32,51 @@ namespace oauth2 {
  *
  * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
  * file it points to will be loaded and used to create a credential of the
- * specified type. Otherwise, if running on a Google-hosted environment (e.g.
- * Compute Engine), credentials for the the environment's default service
- * account will be used.
+ * specified type. If the file specifies a service account, the credentials
+ * use the cloud-platform OAuth 2.0 scope, defined by
+ * `GoogleOAuthScopeCloudPlatform()`. To specify alternate scopes to be used in
+ * the case of service account credentials, use the overloaded version of this
+ * function.
+ *
+ * Otherwise, if running on a Google-hosted environment (e.g. Compute Engine),
+ * credentials for the the environment's default service account will be used.
  *
  * @see https://cloud.google.com/docs/authentication/production for details
  * about Application Default %Credentials.
  */
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials();
+
+/**
+ * Produces a Credentials type based on the runtime environment.
+ *
+ * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
+ * file it points to will be loaded and used to create a credential of the
+ * specified type. Otherwise, if running on a Google-hosted environment (e.g.
+ * Compute Engine), credentials for the the environment's default service
+ * account will be used.
+ *
+ * @param scopes the scopes to request during the authorization grant, if the
+ *     GOOGLE_APPLICATION_CREDENTIALS environment variable points to a service
+ *     account. If omitted, the cloud-platform scope, defined by
+ *     `GoogleOAuthScopeCloudPlatform()`, is used as a default.
+ * @param subject for domain-wide delegation, if the
+ *     GOOGLE_APPLICATION_CREDENTIALS environment variable points to a service
+ *     account; the email address of the user for which to request delegated
+ *     access. If omitted, no "subject" attribute is included in the
+ *     authorization grant.
+ *
+ * @see https://developers.google.com/identity/protocols/googlescopes for a list
+ *     of OAuth 2.0 scopes used with Google APIs.
+ *
+ * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+ *     for more information about domain-wide delegation.
+ *
+ * @see https://cloud.google.com/docs/authentication/production for details
+ * about Application Default %Credentials.
+ */
+StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject);
 
 //@{
 /**
