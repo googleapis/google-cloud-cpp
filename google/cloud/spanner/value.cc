@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/log.h"
+#include <google/protobuf/util/field_comparator.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <cmath>
 #include <ios>
 #include <string>
@@ -210,6 +212,14 @@ std::string Value::GetValue(std::string const&,
                             google::protobuf::Value const& pv,
                             google::spanner::v1::Type const&) {
   return pv.string_value();
+}
+
+bool Value::EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,
+                                        google::spanner::v1::Type const& b) {
+  google::protobuf::util::MessageDifferencer diff;
+  auto const* field = google::spanner::v1::StructType::Field::descriptor();
+  diff.IgnoreField(field->FindFieldByName("name"));
+  return diff.Compare(a, b);
 }
 
 }  // namespace SPANNER_CLIENT_NS
