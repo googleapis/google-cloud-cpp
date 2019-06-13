@@ -63,7 +63,7 @@ Status CurlDownloadRequest::Wait(Predicate predicate) {
     // it might continue to be unsatisfied even though the handles have
     // completed their work.
     if (*running_handles == 0 || predicate()) {
-      return Status();
+      break;
     }
     auto status = WaitForHandles(repeats);
     if (!status.ok()) {

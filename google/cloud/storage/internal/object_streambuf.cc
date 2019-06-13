@@ -97,7 +97,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
     if (hash_validator_result_.is_mismatch) {
       std::string msg;
       msg += __func__;
-      msg += "() - mismatched hashes in download";
+      msg += "(): mismatched hashes in download";
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       throw HashMismatchError(msg, hash_validator_result_.received,
                               hash_validator_result_.computed);
@@ -116,7 +116,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
 }
 
 std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
-  GCP_LOG(INFO) << __func__ << "() - count=" << count
+  GCP_LOG(INFO) << __func__ << "(): count=" << count
                 << ", in_avail=" << in_avail() << ", status=" << status_;
   // This function optimizes stream.read(), the data is copied directly from the
   // data source (typically libcurl) into a buffer provided by the application.
@@ -132,18 +132,18 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   gbump(static_cast<int>(from_internal));
   offset += from_internal;
   if (offset >= count) {
-    GCP_LOG(INFO) << __func__ << "() - count=" << count
+    GCP_LOG(INFO) << __func__ << "(): count=" << count
                   << ", in_avail=" << in_avail() << ", offset=" << offset;
     return offset;
   }
 
   StatusOr<ReadSourceResult> read_result =
       source_->Read(s + offset, static_cast<std::size_t>(count - offset));
-  GCP_LOG(INFO) << __func__ << "() - count=" << count
+  GCP_LOG(INFO) << __func__ << "(): count=" << count
                 << ", in_avail=" << in_avail() << ", offset=" << offset
                 << ", status=" << read_result.status();
   // If there was an error set the internal state, but we still return the
-  // number of bytes
+  // number of bytes.
   if (!read_result) {
     status_ = std::move(read_result).status();
     return offset;
