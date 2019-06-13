@@ -39,11 +39,8 @@ int main(int argc, char* argv[]) {
   }
 
   google::cloud::StatusOr<gcs::BucketMetadata> bucket_metadata =
-      client->CreateBucketForProject(
-          bucket_name, project_id,
-          gcs::BucketMetadata()
-              .set_location("us-east1")
-              .set_storage_class(gcs::storage_class::Regional()));
+      client->CreateBucketForProject(bucket_name, project_id,
+                                     gcs::BucketMetadata());
 
   if (!bucket_metadata) {
     std::cerr << "Error creating bucket " << bucket_name
