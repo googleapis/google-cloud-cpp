@@ -596,21 +596,37 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
       std::ostringstream os;
       os << "Invalid IamPolicy payload, expected array for 'bindings' field."
          << "  payload=" << payload;
-      google::cloud::internal::ThrowInvalidArgument(os.str());
+      return Status(StatusCode::kInvalidArgument, os.str());
     }
     for (auto const& kv : json["bindings"].items()) {
       auto binding = kv.value();
+      if (!binding.is_object()) {
+        std::ostringstream os;
+        os << "Invalid IamPolicy payload, expected objects for 'bindings' "
+              "entries."
+           << "  payload=" << payload;
+        return Status(StatusCode::kInvalidArgument, os.str());
+      }
+      for (auto const binding_kv : binding.items()) {
+        auto const& key = binding_kv.key();
+        if (key != "members" && key != "role") {
+          std::ostringstream os;
+          os << "Invalid IamPolicy payload, unexpected member '" << key
+             << "' in element #" << kv.key() << ". payload=" << payload;
+          return Status(StatusCode::kInvalidArgument, os.str());
+        }
+      }
       if (binding.count("role") == 0 or binding.count("members") == 0) {
         std::ostringstream os;
         os << "Invalid IamPolicy payload, expected 'role' and 'members'"
            << " fields for element #" << kv.key() << ". payload=" << payload;
-        google::cloud::internal::ThrowInvalidArgument(os.str());
+        return Status(StatusCode::kInvalidArgument, os.str());
       }
       if (!binding["members"].is_array()) {
         std::ostringstream os;
         os << "Invalid IamPolicy payload, expected array for 'members'"
            << " fields for element #" << kv.key() << ". payload=" << payload;
-        google::cloud::internal::ThrowInvalidArgument(os.str());
+        return Status(StatusCode::kInvalidArgument, os.str());
       }
       std::string role = binding.value("role", "");
       for (auto const& member : binding["members"].items()) {

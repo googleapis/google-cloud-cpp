@@ -731,20 +731,11 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingRole) {
 
        }},
   };
-
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        ParseIamPolicyFromString(expected_payload.dump());
-      } catch (std::exception const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("expected 'role' and 'members'"));
-        throw;
-      },
-      std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto res = ParseIamPolicyFromString(expected_payload.dump());
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("expected 'role' and 'members'"));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
@@ -756,19 +747,11 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringMissingMembers) {
                    }}},
   };
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        ParseIamPolicyFromString(expected_payload.dump());
-      } catch (std::exception const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("expected 'role' and 'members'"));
-        throw;
-      },
-      std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto res = ParseIamPolicyFromString(expected_payload.dump());
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("expected 'role' and 'members'"));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
@@ -781,19 +764,11 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidMembers) {
                    }}},
   };
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        ParseIamPolicyFromString(expected_payload.dump());
-      } catch (std::exception const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("expected array for 'members'"));
-        throw;
-      },
-      std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto res = ParseIamPolicyFromString(expected_payload.dump());
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("expected array for 'members'"));
 }
 
 TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
@@ -803,19 +778,44 @@ TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindings) {
       {"bindings", "invalid"},
   };
 
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(
-      try {
-        ParseIamPolicyFromString(expected_payload.dump());
-      } catch (std::exception const& ex) {
-        EXPECT_THAT(ex.what(), HasSubstr("expected array for 'bindings'"));
-        throw;
-      },
-      std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseIamPolicyFromString(expected_payload.dump()),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  auto res = ParseIamPolicyFromString(expected_payload.dump());
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("expected array for 'bindings'"));
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidBindingsEntries) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings", std::vector<nl::json>{"not_an_object"}},
+  };
+
+  auto res = ParseIamPolicyFromString(expected_payload.dump());
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("expected objects for 'bindings' entries"));
+}
+
+TEST(BucketRequestsTest, ParseIamPolicyFromStringInvalidExtras) {
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"etag", "XYZ="},
+      {"bindings",
+       {
+           nl::json{{"role", "roles/storage.admin"},
+                    {"members", std::vector<std::string>{"test-user-1"}},
+                    {"condition", "some_condition"}},
+       }},
+  };
+
+  auto res = ParseIamPolicyFromString(expected_payload.dump());
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("unexpected member 'condition' in element #0"));
 }
 
 TEST(BucketRequestsTest, SetIamPolicy) {

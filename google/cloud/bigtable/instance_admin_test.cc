@@ -490,6 +490,34 @@ TEST_F(InstanceAdminTest, GetIamPolicy) {
   tested.GetIamPolicy(resource);
 }
 
+/// @test Verify that IamPolicies with conditions cause failures.
+TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext*,
+                          ::google::iam::v1::GetIamPolicyRequest const&,
+                          ::google::iam::v1::Policy* response) {
+        EXPECT_NE(nullptr, response);
+        response->set_version(3);
+        response->set_etag("random-tag");
+        auto new_binding = response->add_bindings();
+        new_binding->set_role("writer");
+        new_binding->add_members("abc@gmail.com");
+        new_binding->add_members("xyz@gmail.com");
+        new_binding->set_allocated_condition(new google::type::Expr);
+
+        return grpc::Status::OK;
+      }));
+
+  std::string resource = "test-resource";
+  auto res = tested.GetIamPolicy(resource);
+  ASSERT_FALSE(res);
+  EXPECT_EQ(google::cloud::StatusCode::kUnimplemented, res.status().code());
+}
+
 /// @test Verify unrecoverable errors for InstanceAdmin::GetIamPolicy.
 TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
   using ::testing::_;

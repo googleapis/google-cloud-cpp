@@ -1023,12 +1023,23 @@ class InstanceAdmin {
       std::vector<std::string> const& permissions);
 
  private:
-  static inline google::cloud::IamPolicy ProtoToWrapper(
+  static inline StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
       google::iam::v1::Policy proto) {
     google::cloud::IamPolicy result;
     result.version = proto.version();
     result.etag = std::move(*proto.mutable_etag());
     for (auto& binding : *proto.mutable_bindings()) {
+      std::vector<const google::protobuf::FieldDescriptor*> field_descs;
+      binding.GetReflection()->ListFields(binding, &field_descs);
+      for (auto field_desc : field_descs) {
+        if (field_desc->name() != "members" && field_desc->name() != "role") {
+          std::stringstream os;
+          os << "IamBinding field \"" << field_desc->name()
+             << "\" is unknown to Bigtable C++ client. Please use a client in "
+                "another language.";
+          return Status(StatusCode::kUnimplemented, os.str());
+        }
+      }
       for (auto& member : *binding.mutable_members()) {
         result.bindings.AddMember(binding.role(), std::move(member));
       }
