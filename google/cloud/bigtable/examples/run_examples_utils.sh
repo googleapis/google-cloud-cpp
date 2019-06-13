@@ -568,8 +568,6 @@ run_all_data_examples() {
 
   run_example ./data_snippets row-exists \
       "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
-  run_example ./data_snippets get-family \
-      "${project_id}" "${instance_id}" "${TABLE}"
   run_example ./data_snippets delete-all-cells \
       "${project_id}" "${instance_id}" "${TABLE}" "${ROW_KEY_1}"
   run_example ./data_snippets delete-family-cells \

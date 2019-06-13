@@ -75,7 +75,7 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id);
 }
 
-void ListTables(google::cloud::bigtable::TableAdmin admin, int argc, char*[]) {
+void ListTables(google::cloud::bigtable::TableAdmin admin, int argc, char* []) {
   if (argc != 1) {
     throw Usage{"list-tables <project-id> <instance-id>"};
   }
@@ -399,7 +399,7 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
   std::string const table_id = ConsumeArg(argc, argv);
   std::string const family_name = ConsumeArg(argc, argv);
 
-  // [START bigtable_get_family_metadata]
+  // [START bigtable_get_family_metadata] [START bigtable_get_family]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id, std::string family_name) {
@@ -417,7 +417,7 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
     std::cout << "Column family metadata for <" << family_name << "> is "
               << pos->second.DebugString() << "\n";
   }
-  // [END bigtable_get_family_metadata]
+  // [END bigtable_get_family_metadata] [END bigtable_get_family]
   (std::move(admin), table_id, family_name);
 }
 
@@ -729,7 +729,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
 
 int main(int argc, char* argv[]) try {
   using CommandType =
-      std::function<void(google::cloud::bigtable::TableAdmin, int, char*[])>;
+      std::function<void(google::cloud::bigtable::TableAdmin, int, char* [])>;
 
   std::map<std::string, CommandType> commands = {
       {"create-table", &CreateTable},
