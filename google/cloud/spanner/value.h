@@ -159,8 +159,10 @@ class Value {
    * elements must have exactly the same field names. Any mismatch in in field
    * names results in undefined behavior.
    */
-  template <typename T>  // TODO(#59): add an enabler to disallow T==vector
+  template <typename T>
   explicit Value(std::vector<T> const& v) {
+    static_assert(!is_vector<typename std::decay<T>::type>::value,
+                  "vector of vector not allowed. See value.h documentation.");
     type_ = MakeTypeProto(v);
     value_ = MakeValueProto(v);
   }
@@ -302,6 +304,12 @@ class Value {
   struct is_optional : std::false_type {};
   template <typename T>
   struct is_optional<optional<T>> : std::true_type {};
+
+  // Metafunction that returns true if `T` is a std::vector<U>
+  template <typename T>
+  struct is_vector : std::false_type {};
+  template <typename... Ts>
+  struct is_vector<std::vector<Ts...>> : std::true_type {};
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
   // argument type is the tag, the argument value is ignored.
