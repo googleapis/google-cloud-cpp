@@ -602,12 +602,13 @@ StatusOr<IamPolicy> ParseIamPolicyFromString(std::string const& payload) {
       auto binding = kv.value();
       if (!binding.is_object()) {
         std::ostringstream os;
+        // TODO(#2732): Advise alternative API after it's implemented.
         os << "Invalid IamPolicy payload, expected objects for 'bindings' "
               "entries."
            << "  payload=" << payload;
         return Status(StatusCode::kInvalidArgument, os.str());
       }
-      for (auto const binding_kv : binding.items()) {
+      for (auto const& binding_kv : binding.items()) {
         auto const& key = binding_kv.key();
         if (key != "members" && key != "role") {
           std::ostringstream os;

@@ -1034,6 +1034,7 @@ class InstanceAdmin {
       for (auto field_desc : field_descs) {
         if (field_desc->name() != "members" && field_desc->name() != "role") {
           std::stringstream os;
+          // TODO(#2732): Advise alternative API after it's implemented.
           os << "IamBinding field \"" << field_desc->name()
              << "\" is unknown to Bigtable C++ client. Please use a client in "
                 "another language.";
