@@ -15,6 +15,8 @@
 ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION}
 
+COPY ci/install-retry.sh /retry3
+
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
@@ -29,12 +31,12 @@ FROM centos:${DISTRO_VERSION}
 # [Software Collections](https://www.softwarecollections.org/).
 
 # ```bash
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install -y centos-release-scl
+RUN /retry3 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN /retry3 yum install -y centos-release-scl
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
-RUN yum makecache && \
-    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
-        openssl-devel pkgconfig tar wget which zlib-devel
+RUN /retry3 yum makecache && \
+    /retry3 yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+        make openssl-devel pkgconfig tar wget which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
@@ -56,7 +58,7 @@ RUN (cd cmake-out && ctest --output-on-failure)
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -76,7 +78,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -95,7 +97,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN /retry3 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 RUN tar -xf cares-1_14_0.tar.gz
 WORKDIR /var/tmp/build/c-ares-cares-1_14_0
 RUN ./buildconf && ./configure && make -j $(nproc)
@@ -109,7 +111,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig

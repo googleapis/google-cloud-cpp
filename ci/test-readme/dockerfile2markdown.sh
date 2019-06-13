@@ -23,6 +23,7 @@ sed \
     -e 's/^# //' \
     -e 's/^WORKDIR /cd /' \
     -e 's/^RUN //' \
+    -e 's|/retry3 ||' \
     -e 's/^ENV /export /' \
     -e '/^COPY /d' \
     -e 's/update-alternatives/sudo update-alternatives/g' \

@@ -159,8 +159,8 @@ rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum install -y centos-release-scl
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
-sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool make \
-        openssl-devel pkgconfig tar wget which zlib-devel
+sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+        make openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
@@ -195,7 +195,8 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
+sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+        zlib-devel
 ```
 
 ### OpenSUSE (Tumbleweed)
@@ -265,7 +266,8 @@ We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 sudo apt update && sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt update && \
-sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
+sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget \
+        zlib1g-dev
 ```
 
 Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not

@@ -15,6 +15,8 @@
 ARG DISTRO_VERSION=bionic
 FROM ubuntu:${DISTRO_VERSION}
 
+COPY ci/install-retry.sh /retry3
+
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
@@ -25,8 +27,8 @@ FROM ubuntu:${DISTRO_VERSION}
 ## [START README.md]
 
 # ```bash
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
+RUN /retry3 apt update && \
+    /retry3 apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 # ```
@@ -49,7 +51,7 @@ RUN (cd cmake-out && ctest --output-on-failure)
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -71,7 +73,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -90,7 +92,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 RUN make -j $(nproc)
