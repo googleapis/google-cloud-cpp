@@ -50,7 +50,7 @@ void PrintUsage(int, char* argv[], std::string const& msg) {
             << command_usage << "\n";
 }
 
-void Apply(google::cloud::bigtable::Table table, int argc, char* []) {
+void Apply(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"apply <project-id> <instance-id> <table-id>"};
   }
@@ -134,7 +134,7 @@ void ApplyCustomRetry(google::cloud::bigtable::Table table, int argc,
   (table.project_id(), table.instance_id(), table.table_id(), row_key);
 }
 
-void BulkApply(google::cloud::bigtable::Table table, int argc, char* []) {
+void BulkApply(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"bulk-apply <project-id> <instance-id> <table-id>"};
   }
@@ -219,7 +219,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
   (std::move(table), row_key);
 }
 
-void ReadRows(google::cloud::bigtable::Table table, int argc, char* []) {
+void ReadRows(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
   }
@@ -254,7 +254,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char* []) {
 }
 
 void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
-                       char* []) {
+                       char*[]) {
   if (argc != 1) {
     throw Usage{"read-rows-with-limit: <project-id> <instance-id> <table-id>"};
   }
@@ -554,7 +554,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
   (std::move(table), row_key);
 }
 
-void SampleRows(google::cloud::bigtable::Table table, int argc, char* []) {
+void SampleRows(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"sample-rows: <project-id> <instance-id> <table-id>"};
   }
@@ -870,7 +870,7 @@ void RenameColumn(google::cloud::bigtable::Table table, int argc,
 
 // This command just generates data suitable for other examples to run. This
 // code is not extracted into the documentation.
-void InsertTestData(google::cloud::bigtable::Table table, int argc, char* []) {
+void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"insert-test-data <project-id> <instance-id> <table-id>"};
   }
@@ -916,7 +916,7 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char* []) {
 // This command just generates data suitable for other examples to run. This
 // code is not extracted into the documentation.
 void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
-                            char* []) {
+                            char*[]) {
   if (argc != 1) {
     throw Usage{
         "populate-table-hierarchy <project-id> <instance-id> <table-id>"};
@@ -948,7 +948,7 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
 
 int main(int argc, char* argv[]) try {
   using CommandType =
-      std::function<void(google::cloud::bigtable::Table, int, char* [])>;
+      std::function<void(google::cloud::bigtable::Table, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
       {"apply", &Apply},
