@@ -18,6 +18,8 @@
 #include <cmath>
 #include <limits>
 #include <string>
+#include <tuple>
+#include <type_traits>
 #include <vector>
 
 namespace google {
@@ -163,16 +165,27 @@ TEST(Value, SpannerArray) {
   using ArrayInt64 = std::vector<std::int64_t>;
   using ArrayDouble = std::vector<double>;
 
+  ArrayInt64 const empty = {};
+  Value const ve(empty);
+  EXPECT_EQ(ve, ve);
+  EXPECT_TRUE(ve.is<ArrayInt64>());
+  EXPECT_FALSE(ve.is_null<ArrayInt64>());
+  EXPECT_FALSE(ve.is<ArrayDouble>());
+  EXPECT_TRUE(ve.get<ArrayInt64>().ok());
+  EXPECT_FALSE(ve.get<ArrayDouble>().ok());
+  EXPECT_EQ(empty, *ve.get<ArrayInt64>());
+  EXPECT_EQ(empty, static_cast<ArrayInt64>(ve));
+
   ArrayInt64 const ai = {1, 2, 3};
   Value const vi(ai);
   EXPECT_EQ(vi, vi);
   EXPECT_TRUE(vi.is<ArrayInt64>());
   EXPECT_FALSE(vi.is_null<ArrayInt64>());
   EXPECT_FALSE(vi.is<ArrayDouble>());
-  EXPECT_EQ(ai, static_cast<ArrayInt64>(vi));
   EXPECT_TRUE(vi.get<ArrayInt64>().ok());
   EXPECT_FALSE(vi.get<ArrayDouble>().ok());
   EXPECT_EQ(ai, *vi.get<ArrayInt64>());
+  EXPECT_EQ(ai, static_cast<ArrayInt64>(vi));
 
   ArrayDouble const ad = {1.0, 2.0, 3.0};
   Value const vd(ad);
@@ -181,9 +194,9 @@ TEST(Value, SpannerArray) {
   EXPECT_TRUE(vd.is<ArrayDouble>());
   EXPECT_FALSE(vd.is_null<ArrayDouble>());
   EXPECT_FALSE(vd.is<ArrayInt64>());
-  EXPECT_EQ(ad, static_cast<ArrayDouble>(vd));
   EXPECT_TRUE(vd.get<ArrayDouble>().ok());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
+  EXPECT_EQ(ad, static_cast<ArrayDouble>(vd));
 
   Value const null_vi = MakeNullValue<ArrayInt64>();
   EXPECT_EQ(null_vi, null_vi);
@@ -199,6 +212,114 @@ TEST(Value, SpannerArray) {
   EXPECT_NE(null_vd, vi);
   EXPECT_FALSE(null_vd.get<ArrayDouble>().ok());
   EXPECT_FALSE(null_vd.get<ArrayInt64>().ok());
+}
+
+TEST(Value, SpannerStruct) {
+  // Using declarations to shorten the tests, making them more readable.
+  using std::int64_t;
+  using std::make_pair;
+  using std::make_tuple;
+  using std::pair;
+  using std::string;
+  using std::tuple;
+
+  auto tup1 = make_tuple(false, int64_t{123});
+  using T1 = decltype(tup1);
+  Value v1(tup1);
+  EXPECT_TRUE(v1.is<T1>());
+  EXPECT_FALSE(v1.is_null<T1>());
+  EXPECT_TRUE(v1.get<T1>().ok());
+  EXPECT_EQ(tup1, *v1.get<T1>());
+  EXPECT_EQ(v1, v1);
+
+  // Verify that wrapping an element in a pair doesn't affect its C++ type.
+  EXPECT_TRUE((v1.is<tuple<bool, int64_t>>()));
+  EXPECT_TRUE((v1.is<tuple<pair<string, bool>, int64_t>>()));
+  EXPECT_TRUE((v1.is<tuple<bool, pair<string, int64_t>>>()));
+  EXPECT_TRUE((v1.is<tuple<pair<string, bool>, pair<string, int64_t>>>()));
+
+  auto tup2 = make_tuple(false, make_pair(string("f2"), int64_t{123}));
+  using T2 = decltype(tup2);
+  Value v2(tup2);
+  EXPECT_TRUE(v2.is<T2>());
+  EXPECT_FALSE(v2.is_null<T2>());
+  EXPECT_TRUE(v2.get<T2>().ok());
+  EXPECT_EQ(tup2, *v2.get<T2>());
+  EXPECT_EQ(v2, v2);
+  EXPECT_NE(v2, v1);
+
+  // T1 is lacking field names, but otherwise the same as T2.
+  EXPECT_EQ(tup1, *v2.get<T1>());
+  EXPECT_NE(tup2, *v1.get<T2>());
+
+  auto tup3 = make_tuple(false, make_pair(string("Other"), int64_t{123}));
+  using T3 = decltype(tup3);
+  Value v3(tup3);
+  EXPECT_TRUE(v3.is<T3>());
+  EXPECT_FALSE(v3.is_null<T3>());
+  EXPECT_TRUE(v3.get<T3>().ok());
+  EXPECT_EQ(tup3, *v3.get<T3>());
+  EXPECT_EQ(v3, v3);
+  EXPECT_NE(v3, v2);
+  EXPECT_NE(v3, v1);
+
+  static_assert(std::is_same<T2, T3>::value, "Only diff is field name");
+
+  // v1 != v2, yet T2 works with v1 and vice versa
+  EXPECT_NE(v1, v2);
+  EXPECT_TRUE(v1.is<T2>());
+  EXPECT_FALSE(v1.is_null<T2>());
+  EXPECT_TRUE(v2.is<T1>());
+  EXPECT_FALSE(v2.is_null<T1>());
+
+  Value v_null(optional<T1>{});
+  EXPECT_TRUE(v_null.is<T1>());
+  EXPECT_TRUE(v_null.is<T2>());
+  EXPECT_TRUE(v_null.is_null<T1>());
+  EXPECT_TRUE(v_null.is_null<T2>());
+
+  EXPECT_NE(v1, v_null);
+  EXPECT_NE(v2, v_null);
+
+  auto array_struct = std::vector<T3>{
+      T3{false, {"age", 1}},
+      T3{true, {"age", 2}},
+      T3{false, {"age", 3}},
+  };
+  using T4 = decltype(array_struct);
+  Value v4(array_struct);
+  EXPECT_TRUE(v4.is<T4>());
+  EXPECT_FALSE(v4.is<T3>());
+  EXPECT_FALSE(v4.is<T2>());
+  EXPECT_FALSE(v4.is<T1>());
+
+  EXPECT_FALSE(v4.is_null<T4>());
+  EXPECT_TRUE(v4.get<T4>().ok());
+  EXPECT_EQ(array_struct, *v4.get<T4>());
+
+  auto empty = tuple<>{};
+  using T5 = decltype(empty);
+  Value v5(empty);
+  EXPECT_TRUE(v5.is<T5>());
+  EXPECT_FALSE(v5.is<T4>());
+  EXPECT_EQ(v5, v5);
+  EXPECT_NE(v5, v4);
+
+  EXPECT_FALSE(v5.is_null<T5>());
+  EXPECT_TRUE(v5.get<T5>().ok());
+  EXPECT_EQ(empty, *v5.get<T5>());
+
+  auto crazy = tuple<tuple<std::vector<optional<bool>>>>{};
+  using T6 = decltype(crazy);
+  Value v6(crazy);
+  EXPECT_TRUE(v6.is<T6>());
+  EXPECT_FALSE(v6.is<T5>());
+  EXPECT_EQ(v6, v6);
+  EXPECT_NE(v6, v5);
+
+  EXPECT_FALSE(v6.is_null<T6>());
+  EXPECT_TRUE(v6.get<T6>().ok());
+  EXPECT_EQ(crazy, *v6.get<T6>());
 }
 
 }  // namespace SPANNER_CLIENT_NS

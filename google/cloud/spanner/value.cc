@@ -14,8 +14,6 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/log.h"
-#include <google/protobuf/util/field_comparator.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <cmath>
 #include <ios>
 #include <string>
@@ -62,6 +60,23 @@ bool Equal(google::spanner::v1::Type const& pt1,
       }
       return true;
     }
+    case google::spanner::v1::TypeCode::STRUCT: {
+      auto const& fields1 = pt1.struct_type().fields();
+      auto const& fields2 = pt2.struct_type().fields();
+      if (fields1.size() != fields2.size()) return false;
+      auto const& v1 = pv1.list_value().values();
+      auto const& v2 = pv2.list_value().values();
+      if (fields1.size() != v1.size() || v1.size() != v2.size()) return false;
+      for (int i = 0; i < fields1.size(); ++i) {
+        auto const& f1 = fields1.Get(i);
+        auto const& f2 = fields2.Get(i);
+        if (f1.name() != f2.name()) return false;
+        if (!Equal(f1.type(), v1.Get(i), f2.type(), v2.Get(i))) {
+          return false;
+        }
+      }
+      return true;
+    }
     default:
       return true;
   }
@@ -95,11 +110,6 @@ bool operator==(Value const& a, Value const& b) {
 
 void PrintTo(Value const& v, std::ostream* os) {
   *os << v.type_.ShortDebugString() << "; " << v.value_.ShortDebugString();
-}
-
-bool Value::ProtoEqual(google::protobuf::Message const& m1,
-                       google::protobuf::Message const& m2) {
-  return google::protobuf::util::MessageDifferencer::Equals(m1, m2);
 }
 
 //
@@ -168,11 +178,13 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
 // Value::GetValue
 //
 
-bool Value::GetValue(bool, google::protobuf::Value const& pv) {
+bool Value::GetValue(bool, google::protobuf::Value const& pv,
+                     google::spanner::v1::Type const&) {
   return pv.bool_value();
 }
 
-std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv) {
+std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv,
+                             google::spanner::v1::Type const&) {
   auto const& s = pv.string_value();
   std::size_t processed = 0;
   long long x = std::stoll(s, &processed, 10);
@@ -182,7 +194,8 @@ std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv) {
   return x;
 }
 
-double Value::GetValue(double, google::protobuf::Value const& pv) {
+double Value::GetValue(double, google::protobuf::Value const& pv,
+                       google::spanner::v1::Type const&) {
   if (pv.kind_case() == google::protobuf::Value::kStringValue) {
     std::string const& s = pv.string_value();
     auto const inf = std::numeric_limits<double>::infinity();
@@ -194,7 +207,8 @@ double Value::GetValue(double, google::protobuf::Value const& pv) {
 }
 
 std::string Value::GetValue(std::string const&,
-                            google::protobuf::Value const& pv) {
+                            google::protobuf::Value const& pv,
+                            google::spanner::v1::Type const&) {
   return pv.string_value();
 }
 
