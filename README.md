@@ -195,7 +195,8 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
+sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+        zlib-devel
 ```
 
 ### OpenSUSE (Tumbleweed)
@@ -265,7 +266,8 @@ We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 sudo apt update && sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt update && \
-sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
+sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget \
+        zlib1g-dev
 ```
 
 Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not

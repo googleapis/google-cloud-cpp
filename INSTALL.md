@@ -155,7 +155,8 @@ Install the minimal development tools:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
+sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+        zlib-devel
 ```
 
 Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
@@ -572,7 +573,8 @@ We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 sudo apt update && sudo apt install -y software-properties-common
 sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 sudo apt update && \
-sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget zlib1g-dev
+sudo apt install -y cmake3 git gcc g++ make pkg-config tar wget \
+        zlib1g-dev
 ```
 
 Ubuntu:14.04 ships with a very old version of OpenSSL, this version is not
