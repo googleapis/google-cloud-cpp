@@ -138,6 +138,25 @@ class Value {
   explicit Value(std::string v);
 
   /**
+   * Constructs a non-null instance from common C++ literal types that closely,
+   * though not exactly, match supported Spanner types.
+   *
+   * An integer literal in C++ is of type `int`, which is not exactly an
+   * allowed Spanner type. This will be allowed but it will be implicitly up
+   * converted to a `std::int64_t`. Similarly, a C++ string literal will be
+   * implicitly converted to a `std::string`. For example:
+   *
+   *     spanner::Value v1(42);
+   *     assert(v1.is<std::int64_t>());
+   *
+   *     spanner::Value v2("hello");
+   *     assert(v2.is<std::string>());
+   */
+  explicit Value(int v);
+  /// @copydoc Value(int)
+  explicit Value(char const* v);
+
+  /**
    * Constructs a non-null instance if `opt` has a value, otherwise constructs
    * a null instance.
    */
@@ -317,6 +336,8 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::int64_t);
   static google::spanner::v1::Type MakeTypeProto(double);
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
+  static google::spanner::v1::Type MakeTypeProto(int);
+  static google::spanner::v1::Type MakeTypeProto(char const*);
   template <typename T>
   static google::spanner::v1::Type MakeTypeProto(optional<T> const&) {
     return MakeTypeProto(T{});
@@ -353,8 +374,10 @@ class Value {
       auto* field = struct_type.add_fields();
       *field->mutable_type() = MakeTypeProto(t);
     }
-    template <typename T>
-    void operator()(std::pair<std::string, T> const& p,
+    template <typename S, typename T,
+              typename std::enable_if<
+                  std::is_convertible<S, std::string>::value, int>::type = 0>
+    void operator()(std::pair<S, T> const& p,
                     google::spanner::v1::StructType& struct_type) const {
       auto* field = struct_type.add_fields();
       field->set_name(p.first);
@@ -368,6 +391,8 @@ class Value {
   static google::protobuf::Value MakeValueProto(std::int64_t i);
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
+  static google::protobuf::Value MakeValueProto(int i);
+  static google::protobuf::Value MakeValueProto(char const* s);
   template <typename T>
   static google::protobuf::Value MakeValueProto(optional<T> const& opt) {
     if (opt.has_value()) return MakeValueProto(*opt);
@@ -397,8 +422,10 @@ class Value {
     void operator()(T const& t, google::protobuf::ListValue& list_value) const {
       *list_value.add_values() = MakeValueProto(t);
     }
-    template <typename T>
-    void operator()(std::pair<std::string, T> const& p,
+    template <typename S, typename T,
+              typename std::enable_if<
+                  std::is_convertible<S, std::string>::value, int>::type = 0>
+    void operator()(std::pair<S, T> const& p,
                     google::protobuf::ListValue& list_value) const {
       *list_value.add_values() = MakeValueProto(p.second);
     }

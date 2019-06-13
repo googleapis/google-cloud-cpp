@@ -106,6 +106,16 @@ Value::Value(std::string v) {
   value_ = MakeValueProto(std::move(v));
 }
 
+Value::Value(int v) {
+  type_ = MakeTypeProto(v);
+  value_ = MakeValueProto(v);
+}
+
+Value::Value(char const* v) {
+  type_ = MakeTypeProto(v);
+  value_ = MakeValueProto(v);
+}
+
 bool operator==(Value const& a, Value const& b) {
   return Equal(a.type_, a.value_, b.type_, b.value_);
 }
@@ -142,6 +152,14 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
   return t;
 }
 
+google::spanner::v1::Type Value::MakeTypeProto(int) {
+  return MakeTypeProto(std::int64_t{});
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(char const*) {
+  return MakeTypeProto(std::string{});
+}
+
 //
 // Value::MakeValueProto
 //
@@ -174,6 +192,14 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
   google::protobuf::Value v;
   v.set_string_value(std::move(s));
   return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(int i) {
+  return MakeValueProto(std::int64_t{i});
+}
+
+google::protobuf::Value Value::MakeValueProto(char const* s) {
+  return MakeValueProto(std::string(s));
 }
 
 //
