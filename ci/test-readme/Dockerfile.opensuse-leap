@@ -15,6 +15,8 @@
 ARG DISTRO_VERSION=latest
 FROM opensuse/leap:${DISTRO_VERSION}
 
+COPY ci/install-retry.sh /retry3
+
 ## [START INSTALL.md]
 
 # Install the minimal development tools:
@@ -22,8 +24,8 @@ FROM opensuse/leap:${DISTRO_VERSION}
 ## [START README.md]
 
 # ```bash
-RUN zypper refresh && \
-    zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
+RUN /retry3 zypper refresh && \
+    /retry3 zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
         libcurl-devel libopenssl-devel make tar wget
 # ```
 
@@ -45,7 +47,7 @@ RUN (cd cmake-out && ctest --output-on-failure)
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -67,7 +69,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -86,15 +88,15 @@ RUN ldconfig
 # this library:
 
 # ```bash
-RUN zypper refresh && \
-    zypper install -y automake libtool
+RUN /retry3 zypper refresh && \
+    /retry3 zypper install -y automake libtool
 # ```
 
 # Manually install a newer version:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN /retry3 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 RUN tar -xf cares-1_14_0.tar.gz
 WORKDIR /var/tmp/build/c-ares-cares-1_14_0
 RUN ./buildconf && ./configure && make -j $(nproc)
@@ -109,15 +111,15 @@ RUN ldconfig
 # your workstation or build server:
 
 # ```bash
-RUN zypper refresh && \
-    zypper install -y which
+RUN /retry3 zypper refresh && \
+    /retry3 zypper install -y which
 # ```
 
 # Then gRPC can be manually installed using:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig

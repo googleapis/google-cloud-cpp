@@ -58,7 +58,7 @@ RUN (cd cmake-out && ctest --output-on-failure)
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -78,7 +78,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -97,7 +97,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN /retry3 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 RUN tar -xf cares-1_14_0.tar.gz
 WORKDIR /var/tmp/build/c-ares-cares-1_14_0
 RUN ./buildconf && ./configure && make -j $(nproc)
@@ -111,7 +111,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig

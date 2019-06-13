@@ -15,6 +15,8 @@
 ARG DISTRO_VERSION=30
 FROM fedora:${DISTRO_VERSION}
 
+COPY ci/install-retry.sh /retry3
+
 # Please keep the formatting below, it is used by `extract-readme.sh` and
 # `extract-install.md` to generate the contents of the top-level README.md and
 # INSTALL.md files.
@@ -26,8 +28,9 @@ FROM fedora:${DISTRO_VERSION}
 ## [START README.md]
 
 # ```bash
-RUN dnf makecache && \
-    dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig zlib-devel
+RUN /retry3 dnf makecache && \
+    /retry3 dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+        zlib-devel
 # ```
 
 ## [END README.md]
@@ -47,8 +50,8 @@ RUN (cd cmake-out && ctest --output-on-failure)
 # tools to compile the dependencies:
 
 # ```bash
-RUN dnf makecache && \
-    dnf install -y grpc-devel grpc-plugins \
+RUN /retry3 dnf makecache && \
+    /retry3 dnf install -y grpc-devel grpc-plugins \
         libcurl-devel protobuf-compiler tar wget zlib-devel
 # ```
 
@@ -58,7 +61,7 @@ RUN dnf makecache && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
