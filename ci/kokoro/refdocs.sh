@@ -56,7 +56,7 @@ if [[ -z "${CREDENTIALS_FILE:-}" ]]; then
   CREDENTIALS_FILE="${KOKORO_KEYSTORE_DIR}/73713_docuploader_service_account"
 fi
 
-if [[ -z "S{STAGING_BUCKET:-}" ]]; then
+if [[ -z "${STAGING_BUCKET:-}" ]]; then
   STAGING_BUCKET="docs-staging"
 fi
 
@@ -71,7 +71,8 @@ else
   branch=$(git branch --no-color --contains "${KOKORO_GITHUB_COMMIT}" \
     | grep -v HEAD | head -1)
   # Trim it with echo
-  branch=$(echo "${branch}")
+  # shellcheck disable=SC2116
+  branch="$(echo "${branch}")"
   echo "branch detected: ${branch}"
 fi
 
@@ -96,7 +97,7 @@ python3 -m pip install gcp-docuploader
 
 # Build doxygen docs
 cmake -H. "-B${BUILD_OUTPUT}" "${cmake_flags[@]}"
-cmake --build "${BUILD_OUTPUT}" -- -j $(nproc)
+cmake --build "${BUILD_OUTPUT}" -- -j "$(nproc)"
 cmake --build "${BUILD_OUTPUT}" --target install
 cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
 
