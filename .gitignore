@@ -17,5 +17,9 @@ cmake-build-*/
 # This is a staging directory used to upload the documents to gihub.io
 github-io-staging/
 
+# Ignore Visual Studio Code files
+.vsbuild/
+.vscode/
+
 google/cloud/storage/testbench/__pycache__/
 google/cloud/storage/testbench/*.pyc
