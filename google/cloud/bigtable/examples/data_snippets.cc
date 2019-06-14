@@ -576,39 +576,6 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void GetFamily(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"get-family <project-id> <instance-id> <table-id>"};
-  }
-
-  //! [get family] [START bigtable_get_family] [START bigtable_family_ref]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::Table table) {
-    // Create the range of rows to read.
-    cbt::RowRange range = cbt::RowRange::InfiniteRange();
-
-    // Filter the results, only get the latest value
-    cbt::Filter filter = cbt::Filter::Latest(1);
-
-    // Read and print the family name.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
-      if (row->cells().empty()) {
-        std::cout << "No cells for row " << row->row_key() << "\n";
-        continue;
-      }
-      cbt::Cell const& cell = row->cells().at(0);
-      std::cout << cell.family_name() << "\n";
-      break;
-    }
-  }
-  //! [get family] [END bigtable_get_family] [END bigtable_family_ref]
-  (std::move(table));
-}
-
 void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
                     char* argv[]) {
   if (argc != 2) {
@@ -1000,7 +967,6 @@ int main(int argc, char* argv[]) try {
       {"check-and-mutate-not-present", &CheckAndMutateNotPresent},
       {"read-modify-write", &ReadModifyWrite},
       {"sample-rows", &SampleRows},
-      {"get-family", &GetFamily},
       {"delete-all-cells", &DeleteAllCells},
       {"delete-family-cells", &DeleteFamilyCells},
       {"delete-selective-family-cells", &DeleteSelectiveFamilyCells},
