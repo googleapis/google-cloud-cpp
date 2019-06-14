@@ -86,36 +86,6 @@ bool Equal(google::spanner::v1::Type const& pt1,
 
 }  // namespace
 
-Value::Value(bool v) {
-  type_ = MakeTypeProto(v);
-  value_ = MakeValueProto(v);
-}
-
-Value::Value(std::int64_t v) {
-  type_ = MakeTypeProto(v);
-  value_ = MakeValueProto(v);
-}
-
-Value::Value(double v) {
-  type_ = MakeTypeProto(v);
-  value_ = MakeValueProto(v);
-}
-
-Value::Value(std::string v) {
-  type_ = MakeTypeProto(v);
-  value_ = MakeValueProto(std::move(v));
-}
-
-Value::Value(int v) {
-  type_ = MakeTypeProto(v);
-  value_ = MakeValueProto(v);
-}
-
-Value::Value(char const* v) {
-  type_ = MakeTypeProto(v);
-  value_ = MakeValueProto(v);
-}
-
 bool operator==(Value const& a, Value const& b) {
   return Equal(a.type_, a.value_, b.type_, b.value_);
 }
