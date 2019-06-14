@@ -46,8 +46,14 @@
 // nlohmann::json. This is safe because google/cloud/storage always includes
 // the nlohmann::json through this header, so after the first time our own
 // include guards are enough.
+#undef NLOHMANN_BASIC_JSON_TPL
+#undef NLOHMANN_BASIC_JSON_TPL_DECLARATION
 #undef NLOHMANN_JSON_HPP
 #undef NLOHMANN_JSON_FWD_HPP
+#undef NLOHMANN_JSON_SERIALIZE_ENUM
+#undef NLOHMANN_JSON_VERSION_MAJOR
+#undef NLOHMANN_JSON_VERSION_MINOR
+#undef NLOHMANN_JSON_VERSION_PATCH
 
 namespace nlohmann {
 //
