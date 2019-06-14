@@ -39,7 +39,6 @@ RUN apt update && \
         make \
         pkg-config \
         python-pip \
-        python3-pip \
         shellcheck \
         tar \
         unzip \

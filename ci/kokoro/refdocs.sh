@@ -25,6 +25,7 @@ readonly BUILD_OUTPUT="cmake-out/refdocs"
 upload_docs() {
   local docs_name="${1}"
   local docs_dir="${2}"
+  local branch="${3}"
   if [[ ! -d "${docs_dir}" ]]; then
     echo "Document not found at: ${docs_dir}, skipping"
     return 0
@@ -103,8 +104,11 @@ cmake --build "${BUILD_OUTPUT}" -- -j "$(nproc)"
 cmake --build "${BUILD_OUTPUT}" --target install
 cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
 
-upload_docs "google-cloud-common" "${BUILD_OUTPUT}/google/cloud/html"
-upload_docs "google-cloud-bigtable" "${BUILD_OUTPUT}/google/cloud/bigtable/html"
-upload_docs "google-cloud-storage" "${BUILD_OUTPUT}/google/cloud/storage/html"
+upload_docs "google-cloud-common" "${BUILD_OUTPUT}/google/cloud/html" \
+  "${branch}"
+upload_docs "google-cloud-bigtable" \
+  "${BUILD_OUTPUT}/google/cloud/bigtable/html" "${branch}"
+upload_docs "google-cloud-storage" "${BUILD_OUTPUT}/google/cloud/storage/html" \
+  "${branch}"
 upload_docs "google-cloud-firestore" \
-  "${BUILD_OUTPUT}/google/cloud/firestore/html"
+  "${BUILD_OUTPUT}/google/cloud/firestore/html" "${branch}"
