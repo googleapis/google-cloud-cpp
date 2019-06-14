@@ -1,4 +1,4 @@
-# Copyright 2018 Google Inc.
+# Copyright 2019 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not
 # use this file except in compliance with the License. You may obtain a copy of
@@ -21,7 +21,7 @@
 # configuration files are usable.
 
 cmake_minimum_required(VERSION 3.5)
-project(google-cloud-cpp-install-integration-test CXX C)
+project(google-cloud-cpp-bigtable-install-integration-test CXX C)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -32,10 +32,3 @@ find_package(bigtable_client REQUIRED)
 # Once the bigtable_client package is found, define new targets.
 add_executable(bigtable_install_test bigtable_install_test.cc)
 target_link_libraries(bigtable_install_test bigtable::client)
-
-find_package(CURL REQUIRED)
-find_package(storage_client REQUIRED)
-
-# Once the packages are found, define the targets.
-add_executable(storage_install_test storage_install_test.cc)
-target_link_libraries(storage_install_test storage_client)

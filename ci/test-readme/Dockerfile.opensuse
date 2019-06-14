@@ -94,8 +94,13 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
 
-WORKDIR /home/build/test-install-cmake
-COPY ci/test-install /home/build/test-install-cmake
+WORKDIR /home/build/test-install-cmake-bigtable
+COPY ci/test-install /home/build/test-install-cmake-bigtable
+RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)
+
+WORKDIR /home/build/test-install-cmake-storage
+COPY ci/test-install /home/build/test-install-cmake-storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j $(nproc)
 
