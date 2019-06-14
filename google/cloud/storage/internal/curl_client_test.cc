@@ -68,10 +68,10 @@ class CurlClientTest : public ::testing::Test,
       };
     } else if (error_type == "libcurl-failure") {
       google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                      "http://localhost:0");
+                                      "http://localhost:1");
       client_ =
           CurlClient::Create(ClientOptions(oauth2::CreateAnonymousCredentials())
-                                 .set_endpoint("http://localhost:0"));
+                                 .set_endpoint("http://localhost:1"));
       // We do not know what libcurl will return. Some kind of error, but varies
       // by version of libcurl. Just make sure it is an error and the CURL
       // details are included in the error message.
@@ -99,13 +99,13 @@ TEST_P(CurlClientTest, UploadChunk) {
   auto actual =
       client_
           ->UploadChunk(UploadChunkRequest(
-              "http://localhost:0/invalid-session-id", 0, std::string{}, 0))
+              "http://localhost:1/invalid-session-id", 0, std::string{}, 0))
           .status();
   CheckStatus(actual);
 }
 
 TEST_P(CurlClientTest, QueryResumableUpload) {
-  // Use http://localhost:0 to force a libcurl failure
+  // Use http://localhost:1 to force a libcurl failure
   auto actual = client_
                     ->QueryResumableUpload(QueryResumableUploadRequest(
                         "http://localhost:9/invalid-session-id"))
