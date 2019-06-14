@@ -75,7 +75,7 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), table_id);
 }
 
-void ListTables(google::cloud::bigtable::TableAdmin admin, int argc, char* []) {
+void ListTables(google::cloud::bigtable::TableAdmin admin, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"list-tables <project-id> <instance-id>"};
   }
@@ -729,7 +729,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
 
 int main(int argc, char* argv[]) try {
   using CommandType =
-      std::function<void(google::cloud::bigtable::TableAdmin, int, char* [])>;
+      std::function<void(google::cloud::bigtable::TableAdmin, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
       {"create-table", &CreateTable},
