@@ -89,8 +89,8 @@ TEST_F(ClientOptionsTest, SetEndpoint) {
 
 TEST_F(ClientOptionsTest, SetIamEndpoint) {
   ClientOptions options(oauth2::CreateAnonymousCredentials());
-  options.set_iam_endpoint("http://localhost:0/v2");
-  EXPECT_EQ("http://localhost:0/v2", options.iam_endpoint());
+  options.set_iam_endpoint("http://localhost:1/v2");
+  EXPECT_EQ("http://localhost:1/v2", options.iam_endpoint());
 }
 
 TEST_F(ClientOptionsTest, SetCredentials) {

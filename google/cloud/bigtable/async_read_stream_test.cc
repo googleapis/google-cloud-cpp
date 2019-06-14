@@ -174,7 +174,7 @@ TEST_F(AsyncReadStreamTest, MetaFunctions) {
 /// @test Verify that AsyncReadStream works even if the server does not exist.
 TEST_F(AsyncReadStreamTest, CannotConnect) {
   std::shared_ptr<grpc::Channel> channel =
-      grpc::CreateChannel("localhost:0", grpc::InsecureChannelCredentials());
+      grpc::CreateChannel("localhost:1", grpc::InsecureChannelCredentials());
   std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> stub =
       google::bigtable::v2::Bigtable::NewStub(channel);
 

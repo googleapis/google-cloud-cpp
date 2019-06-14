@@ -886,7 +886,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:0"),
+                    .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
 
   std::string bucket_name = flag_bucket_name;
@@ -907,9 +907,9 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
   google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:0");
+                                  "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:0"),
+                    .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
 
   std::string bucket_name = flag_bucket_name;
@@ -926,7 +926,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:0"),
+                    .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
 
   std::string bucket_name = flag_bucket_name;
@@ -945,9 +945,9 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
   google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:0");
+                                  "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:0"),
+                    .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
 
   std::string bucket_name = flag_bucket_name;
@@ -963,9 +963,9 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
   google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:0");
+                                  "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:0"),
+                    .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
 
   std::string bucket_name = flag_bucket_name;
@@ -979,9 +979,9 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
   google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:0");
+                                  "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
-                    .set_endpoint("http://localhost:0"),
+                    .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
 
   std::string bucket_name = flag_bucket_name;

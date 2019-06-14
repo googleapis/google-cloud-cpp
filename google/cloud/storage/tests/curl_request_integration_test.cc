@@ -57,7 +57,7 @@ TEST(CurlRequestTest, FailedGET) {
   // This test fails if somebody manages to run a https server on port 0 (you
   // can't, but just documenting the assumptions in this test).
   storage::internal::CurlRequestBuilder request(
-      "https://localhost:0/", storage::internal::GetDefaultCurlHandleFactory());
+      "https://localhost:1/", storage::internal::GetDefaultCurlHandleFactory());
 
   auto response = request.BuildRequest().MakeRequest(std::string{});
   EXPECT_FALSE(response.ok());
