@@ -164,3 +164,23 @@ function (google_cloud_cpp_install_headers target destination)
         install(FILES "${header}" DESTINATION "${destination}/${dir}")
     endforeach ()
 endfunction ()
+
+#
+# google_cloud_cpp_set_doxygen_tagfiles
+#
+# Set DOXYGEN_TAGFILES value in the parent scope depending on options
+#
+function (google_cloud_cpp_set_doxygen_tagfiles)
+    if ("${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
+        if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
+            set(DOXYGEN_TAGFILES "\
+${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/master/"
+                PARENT_SCOPE)
+        else()
+            set(DOXYGEN_TAGFILES "\
+${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/\
+${GOOGLE_CLOUD_CPP_VERSION}/"
+                PARENT_SCOPE)
+        endif ()
+    endif()
+endfunction()
