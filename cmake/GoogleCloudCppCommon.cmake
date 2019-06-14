@@ -179,8 +179,7 @@ ${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/master/"
         else()
             set(DOXYGEN_TAGFILES "\
 ${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../../google-cloud-common/\
-${GOOGLE_CLOUD_CPP_VERSION}/"
-                PARENT_SCOPE)
+${GOOGLE_CLOUD_CPP_VERSION}/" PARENT_SCOPE)
         endif ()
-    endif()
-endfunction()
+    endif ()
+endfunction ()

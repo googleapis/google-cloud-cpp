@@ -40,8 +40,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_TAGFILES
-    "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
+set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
 google_cloud_cpp_set_doxygen_tagfiles()
 
 include(GoogleCloudCppCommon)
