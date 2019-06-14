@@ -70,9 +70,11 @@ if [[ -z "${KOKORO_GITHUB_COMMIT:-}" ]]; then
 else
   branch=$(git branch --no-color --contains "${KOKORO_GITHUB_COMMIT}" \
     | grep -v HEAD | head -1)
-  # Trim it with echo
-  # shellcheck disable=SC2116
-  branch="$(echo "${branch}")"
+  # trim branch
+  shopt -s extglob
+  branch="${branch##*( )}"
+  branch="${branch%%*( )}"
+  shopt -u extglob
   echo "branch detected: ${branch}"
 fi
 
