@@ -72,7 +72,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
   auto status = client->DownloadToFile(bucket_name, object_name, file_name);
   ASSERT_STATUS_OK(status);
   // Create an iostream to read the object back.
-  std::ifstream stream(file_name);
+  std::ifstream stream(file_name, std::ios::binary);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
   auto expected_str = expected.str();
@@ -81,6 +81,8 @@ TEST_F(ObjectMediaIntegrationTest, XmlDownloadFile) {
 
   status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
+  // On Windows one must close the stream before removing the file.
+  stream.close();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -105,7 +107,7 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
                                        IfMetagenerationNotMatch(0));
   ASSERT_STATUS_OK(status);
   // Create an iostream to read the object back.
-  std::ifstream stream(file_name);
+  std::ifstream stream(file_name, std::ios::binary);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(actual.empty());
   auto expected_str = expected.str();
@@ -114,6 +116,8 @@ TEST_F(ObjectMediaIntegrationTest, JsonDownloadFile) {
 
   status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
+  // On Windows one must close the stream before removing the file.
+  stream.close();
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
@@ -195,7 +199,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   // Create a file with the contents to upload.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   WriteRandomLines(os, expected);
   os.close();
 
@@ -219,6 +223,53 @@ TEST_F(ObjectMediaIntegrationTest, UploadFile) {
   EXPECT_EQ(0, std::remove(file_name.c_str()));
 }
 
+TEST_F(ObjectMediaIntegrationTest, UploadFileBinary) {
+  if (UsingTestbench()) {
+    // The testbench does not support binary payloads.
+    return;
+  }
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  auto file_name = ::testing::TempDir() + MakeRandomObjectName();
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // Create a file with the contents to upload.
+  std::size_t const payload_size = 1024;  //* 1024;
+  std::vector<char> expected(payload_size, 0);
+  std::uniform_int_distribution<int> random_bytes(
+      std::numeric_limits<char>::min(), std::numeric_limits<char>::max());
+  std::generate_n(expected.begin(), payload_size, [this, &random_bytes] {
+    return static_cast<char>(random_bytes(generator_));
+  });
+
+  // Explicitly add a 0x1A, it is the EOF character on Windows and causes some
+  // interesting failures.
+  expected[payload_size / 4] = 0x1A;
+  std::ofstream os(file_name, std::ios::binary);
+  os.write(expected.data(), expected.size());
+  os.close();
+
+  StatusOr<ObjectMetadata> meta = client->UploadFile(
+      file_name, bucket_name, object_name, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
+  ASSERT_EQ(expected.size(), meta->size());
+
+  // Create a iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name, object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  ASSERT_FALSE(actual.empty());
+  EXPECT_EQ(expected.size(), actual.size()) << " meta=" << *meta;
+  EXPECT_THAT(actual, ::testing::ElementsAreArray(expected));
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(0, std::remove(file_name.c_str()));
+}
+
 TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);
@@ -228,7 +279,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileEmpty) {
   auto object_name = MakeRandomObjectName();
 
   // Create a file with the contents to upload.
-  std::ofstream(file_name).close();
+  std::ofstream(file_name, std::ios::binary).close();
 
   StatusOr<ObjectMetadata> meta = client->UploadFile(
       file_name, bucket_name, object_name, IfGenerationMatch(0));
@@ -273,7 +324,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileUploadFailure) {
   auto object_name = MakeRandomObjectName();
 
   // Create the file.
-  std::ofstream(file_name) << LoremIpsum();
+  std::ofstream(file_name, std::ios::binary) << LoremIpsum();
 
   // Create the object.
   StatusOr<ObjectMetadata> meta = client->InsertObject(
@@ -357,7 +408,7 @@ TEST_F(ObjectMediaIntegrationTest, XmlUploadFile) {
   };
 
   // Create a file with the contents to upload.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   for (int line = 0; line != 1000; ++line) {
     std::string random = generate_random_line() + "\n";
     os << line << ": " << random;
@@ -394,7 +445,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableBySize) {
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   // Create a file with the contents to upload.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   WriteRandomLines(os, expected);
   os.close();
 
@@ -434,7 +485,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableByOption) {
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   // Create a file with the contents to upload.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   WriteRandomLines(os, expected);
   os.close();
 
@@ -476,7 +527,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableQuantum) {
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   // Create a file with the contents to upload.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   static_assert(internal::UploadChunkRequest::kChunkSizeQuantum % 128 == 0,
                 "This test assumes the chunk quantum is a multiple of 128; it "
                 "needs fixing");
@@ -517,7 +568,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableNonQuantum) {
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
   // Create a file with the contents to upload.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   static_assert(internal::UploadChunkRequest::kChunkSizeQuantum % 256 == 0,
                 "This test assumes the chunk quantum is a multiple of 256; it "
                 "needs fixing");
@@ -555,7 +606,7 @@ TEST_F(ObjectMediaIntegrationTest, UploadFileResumableUploadFailure) {
   auto object_name = MakeRandomObjectName();
 
   // Create the file.
-  std::ofstream(file_name) << LoremIpsum();
+  std::ofstream(file_name, std::ios::binary) << LoremIpsum();
 
   // Trying to upload the file to a non-existing bucket should fail.
   StatusOr<ObjectMetadata> meta = client.UploadFile(
@@ -937,7 +988,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
-  std::ofstream(file_name) << LoremIpsum();
+  std::ofstream(file_name, std::ios::binary) << LoremIpsum();
 
   StatusOr<ObjectMetadata> meta =
       client.UploadFile(file_name, bucket_name, object_name);
