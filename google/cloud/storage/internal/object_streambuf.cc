@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_streambuf.h"
+#include "google/cloud/log.h"
 #include "google/cloud/storage/object_stream.h"
+#include <cstring>
 
 namespace google {
 namespace cloud {
@@ -53,22 +55,27 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
     return traits_type::eof();
   }
 
-  StatusOr<HttpResponse> response = source_->Read(current_ios_buffer_);
-  if (!response.ok()) {
-    return std::move(response).status();
+  current_ios_buffer_.resize(128 * 1024);
+  std::size_t n = current_ios_buffer_.size();
+  StatusOr<ReadSourceResult> read_result =
+      source_->Read(current_ios_buffer_.data(), n);
+  if (!read_result.ok()) {
+    return std::move(read_result).status();
   }
-  for (auto const& kv : response->headers) {
+  // assert(n <= current_ios_buffer_.size())
+  current_ios_buffer_.resize(read_result->bytes_received);
+
+  for (auto const& kv : read_result->response.headers) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
-  if (response->status_code >= 300) {
-    return AsStatus(*response);
+  if (read_result->response.status_code >= 300) {
+    return AsStatus(read_result->response);
   }
 
   if (!current_ios_buffer_.empty()) {
-    hash_validator_->Update(current_ios_buffer_.data(),
-                            current_ios_buffer_.size());
-    char* data = &current_ios_buffer_[0];
+    char* data = current_ios_buffer_.data();
+    hash_validator_->Update(data, current_ios_buffer_.size());
     setg(data, data, data + current_ios_buffer_.size());
     return traits_type::to_int_type(*data);
   }
@@ -90,7 +97,7 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
     if (hash_validator_result_.is_mismatch) {
       std::string msg;
       msg += __func__;
-      msg += "() - mismatched hashes in download";
+      msg += "(): mismatched hashes in download";
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       throw HashMismatchError(msg, hash_validator_result_.received,
                               hash_validator_result_.computed);
@@ -106,6 +113,54 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
   }
 
   return *next_char;
+}
+
+std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
+  GCP_LOG(INFO) << __func__ << "(): count=" << count
+                << ", in_avail=" << in_avail() << ", status=" << status_;
+  // This function optimizes stream.read(), the data is copied directly from the
+  // data source (typically libcurl) into a buffer provided by the application.
+  std::streamsize offset = 0;
+  if (!status_.ok()) {
+    return 0;
+  }
+
+  // Maybe the internal get area is enough to satisfy this request, no need to
+  // read more in that case:
+  auto from_internal = (std::min)(count, in_avail());
+  std::memcpy(s, gptr(), static_cast<std::size_t>(from_internal));
+  gbump(static_cast<int>(from_internal));
+  offset += from_internal;
+  if (offset >= count) {
+    GCP_LOG(INFO) << __func__ << "(): count=" << count
+                  << ", in_avail=" << in_avail() << ", offset=" << offset;
+    return offset;
+  }
+
+  StatusOr<ReadSourceResult> read_result =
+      source_->Read(s + offset, static_cast<std::size_t>(count - offset));
+  GCP_LOG(INFO) << __func__ << "(): count=" << count
+                << ", in_avail=" << in_avail() << ", offset=" << offset
+                << ", status=" << read_result.status();
+  // If there was an error set the internal state, but we still return the
+  // number of bytes.
+  if (!read_result) {
+    status_ = std::move(read_result).status();
+    return offset;
+  }
+
+  hash_validator_->Update(s + offset, read_result->bytes_received);
+  offset += read_result->bytes_received;
+
+  for (auto const& kv : read_result->response.headers) {
+    hash_validator_->ProcessHeader(kv.first, kv.second);
+    headers_.emplace(kv.first, kv.second);
+  }
+  if (read_result->response.status_code >= 300) {
+    status_ = AsStatus(read_result->response);
+  }
+
+  return offset;
 }
 
 ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {

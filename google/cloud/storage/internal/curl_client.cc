@@ -22,6 +22,7 @@
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/terminate_handler.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {

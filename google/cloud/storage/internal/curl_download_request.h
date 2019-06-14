@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_DOWNLOAD_REQUEST_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_DOWNLOAD_REQUEST_H_
 
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
@@ -38,9 +37,9 @@ namespace internal {
  */
 class CurlDownloadRequest : public ObjectReadSource {
  public:
-  explicit CurlDownloadRequest(std::size_t initial_buffer_size);
+  explicit CurlDownloadRequest();
 
-  ~CurlDownloadRequest() {
+  ~CurlDownloadRequest() override {
     if (!factory_) {
       return;
     }
@@ -59,8 +58,13 @@ class CurlDownloadRequest : public ObjectReadSource {
         factory_(std::move(rhs.factory_)),
         closing_(rhs.closing_),
         curl_closed_(rhs.curl_closed_),
-        initial_buffer_size_(rhs.initial_buffer_size_),
-        in_multi_(rhs.in_multi_) {
+        in_multi_(rhs.in_multi_),
+        paused_(rhs.paused_),
+        buffer_(rhs.buffer_),
+        buffer_size_(rhs.buffer_size_),
+        buffer_offset_(rhs.buffer_offset_),
+        spill_(std::move(rhs.spill_)),
+        spill_offset_(rhs.spill_offset_) {
     ResetOptions();
   }
 
@@ -75,8 +79,13 @@ class CurlDownloadRequest : public ObjectReadSource {
     factory_ = std::move(rhs.factory_);
     closing_ = rhs.closing_;
     curl_closed_ = rhs.curl_closed_;
-    initial_buffer_size_ = rhs.initial_buffer_size_;
     in_multi_ = rhs.in_multi_;
+    paused_ = rhs.paused_;
+    buffer_ = rhs.buffer_;
+    buffer_size_ = rhs.buffer_size_;
+    buffer_offset_ = rhs.buffer_offset_;
+    spill_ = std::move(rhs.spill_);
+    spill_offset_ = rhs.spill_offset_;
     ResetOptions();
     return *this;
   }
@@ -94,7 +103,7 @@ class CurlDownloadRequest : public ObjectReadSource {
    *     of this parameter are completely replaced with the new data.
    * @returns 100-Continue if the transfer is not yet completed.
    */
-  StatusOr<HttpResponse> Read(std::string& buffer) override;
+  StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) override;
 
  private:
   friend class CurlRequestBuilder;
@@ -109,33 +118,7 @@ class CurlDownloadRequest : public ObjectReadSource {
 
   /// Wait until a condition is met.
   template <typename Predicate>
-  Status Wait(Predicate&& predicate) {
-    int repeats = 0;
-    // We can assert that the current thread is the leader, because the
-    // predicate is satisfied, and the condition variable exited. Therefore,
-    // this thread must run the I/O event loop.
-    while (!predicate()) {
-      handle_.FlushDebug(__func__);
-      GCP_LOG(DEBUG) << __func__ << "() predicate is false"
-                     << ", curl.size=" << buffer_.size();
-      auto running_handles = PerformWork();
-      if (!running_handles.ok()) {
-        return std::move(running_handles).status();
-      }
-      // Only wait if there are CURL handles with pending work *and* the
-      // predicate is not satisfied. Note that if the predicate is ill-defined
-      // it might continue to be unsatisfied even though the handles have
-      // completed their work.
-      if (*running_handles == 0 || predicate()) {
-        return Status();
-      }
-      auto status = WaitForHandles(repeats);
-      if (!status.ok()) {
-        return status;
-      }
-    }
-    return Status();
-  }
+  Status Wait(Predicate predicate);
 
   /// Use libcurl to perform at least part of the transfer.
   StatusOr<int> PerformWork();
@@ -156,8 +139,6 @@ class CurlDownloadRequest : public ObjectReadSource {
   CurlMulti multi_;
   std::shared_ptr<CurlHandleFactory> factory_;
 
-  std::string buffer_;
-
   // Explicitly closing the handle happens in two steps.
   // 1. First the application (or higher-level class), calls Close(). This class
   //    needs to notify libcurl that the transfer is terminated by returning 0
@@ -175,12 +156,24 @@ class CurlDownloadRequest : public ObjectReadSource {
   // completes.
   bool curl_closed_ = false;
 
-  std::size_t initial_buffer_size_;
-
   // Track whether `handle_` has been added to `multi_` or not. The exact
   // lifecycle for the handle depends on the libcurl version, and using this
   // flag makes the code less elegant, but less prone to bugs.
   bool in_multi_ = false;
+
+  bool paused_ = false;
+
+  char* buffer_ = nullptr;
+  std::size_t buffer_size_ = 0;
+  std::size_t buffer_offset_ = 0;
+
+  // libcurl(1) will never pass a block larger than CURL_MAX_WRITE_SIZE to the
+  // WriteCallback. However, the callback *must* save all the bytes, returning
+  // less bytes read aborts the download (we do that on a Close(), but in
+  // general we do not). The application may have requested less bytes in the
+  // call to `Read()`, so we need a place to store the additional bytes.
+  std::vector<char> spill_;
+  std::size_t spill_offset_ = 0;
 };
 
 }  // namespace internal

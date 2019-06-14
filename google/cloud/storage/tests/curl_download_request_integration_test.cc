@@ -44,32 +44,35 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
 
   auto download = request.BuildDownloadRequest(std::string{});
 
-  StatusOr<HttpResponse> response;
-  std::string buffer;
+  StatusOr<ReadSourceResult> result;
+  char buffer[128 * 1024];
   // The type for std::count() is hard to guess, most likely it is
   // std::ptrdiff_t, but could be something else, just use the aliases defined
   // for that purpose.
   std::iterator_traits<std::string::iterator>::difference_type count = 0;
   do {
-    response = download.Read(buffer);
-    EXPECT_STATUS_OK(response);
-    count += std::count(buffer.begin(), buffer.end(), '\n');
-  } while (response->status_code == 100);
+    auto n = sizeof(buffer);
+    result = download.Read(buffer, n);
+    EXPECT_STATUS_OK(result);
+    EXPECT_LE(result->bytes_received, sizeof(buffer));
+    count += std::count(buffer, buffer + result->bytes_received, '\n');
+  } while (result->response.status_code == 100);
 
-  EXPECT_EQ(200, response->status_code)
-      << ", status_code=" << response->status_code
-      << ", payload=" << response->payload << ", headers={" << [&response] {
-           std::string result;
+  EXPECT_EQ(200, result->response.status_code)
+      << ", status_code=" << result->response.status_code
+      << ", payload=" << result->response.payload << ", headers={"
+      << [&result] {
+           std::string joined;
            char const* sep = "";
-           for (auto&& kv : response->headers) {
-             result += sep;
-             result += kv.first;
-             result += "=";
-             result += kv.second;
+           for (auto&& kv : result->response.headers) {
+             joined += sep;
+             joined += kv.first;
+             joined += "=";
+             joined += kv.second;
              sep = ", ";
            }
-           result += "}";
-           return result;
+           joined += "}";
+           return joined;
          }();
 
   EXPECT_EQ(kDownloadedLines, count);

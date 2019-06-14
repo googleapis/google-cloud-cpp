@@ -21,6 +21,7 @@
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/version.h"
 #include <iostream>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -69,9 +70,10 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
   StatusOr<int_type> Peek();
 
   int_type underflow() override;
+  std::streamsize xsgetn(char* s, std::streamsize count) override;
 
   std::unique_ptr<ObjectReadSource> source_;
-  std::string current_ios_buffer_;
+  std::vector<char> current_ios_buffer_;
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
   Status status_;

@@ -26,6 +26,30 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 /**
+ * The result of reading some data from the source.
+ *
+ * Reading data may result in several outcomes:
+ * - There was an error trying to read the data: we wrap this object in a
+ *   StatusOr for this case.
+ *
+ * Other reads are considered successful, even if the "read" an HTTP error code.
+ * Successful reads return:
+ *
+ * - How much of the data requested was read: returned in the `bytes_received`
+ *   field.
+ * - The HTTP error code for the full download. In-progress downloads have an
+ *   `response.status_code == 100` (CONTINUE).
+ * - At any point the call may return one or more headers, these headers are
+ *   in `response.headers`.
+ * - If the `response.status_code` was an error code (i.e >= 200) then the
+ *   `response.payload` *may* contain additional error payload.
+ */
+struct ReadSourceResult {
+  std::size_t bytes_received;
+  HttpResponse response;
+};
+
+/**
  * A data source for ObjectReadStreambuf.
  *
  * This object represents an open download stream. It is an abstract class
@@ -38,9 +62,13 @@ class ObjectReadSource {
   virtual ~ObjectReadSource() = default;
 
   virtual bool IsOpen() const = 0;
+
+  /// Actively close a download, even if not all the data has been read.
   virtual StatusOr<HttpResponse> Close() = 0;
 
-  virtual StatusOr<HttpResponse> Read(std::string& buffer) = 0;
+  /// Read more data from the download, returning any HTTP headers and error
+  /// codes.
+  virtual StatusOr<ReadSourceResult> Read(char* buf, std::size_t n) = 0;
 };
 
 /**
@@ -52,7 +80,9 @@ class ObjectReadErrorSource : public ObjectReadSource {
 
   bool IsOpen() const override { return false; }
   StatusOr<HttpResponse> Close() override { return status_; }
-  StatusOr<HttpResponse> Read(std::string&) override { return status_; }
+  StatusOr<ReadSourceResult> Read(char*, std::size_t) override {
+    return status_;
+  }
 
  private:
   Status status_;

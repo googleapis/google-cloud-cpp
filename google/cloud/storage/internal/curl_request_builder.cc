@@ -52,7 +52,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
 CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
     std::string payload) {
   ValidateBuilderState(__func__);
-  CurlDownloadRequest request(initial_buffer_size_);
+  CurlDownloadRequest request;
   request.url_ = std::move(url_);
   request.headers_ = std::move(headers_);
   request.user_agent_ = user_agent_prefix_ + UserAgentSuffix();

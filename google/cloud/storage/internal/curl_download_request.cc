@@ -28,22 +28,68 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-CurlDownloadRequest::CurlDownloadRequest(std::size_t initial_buffer_size)
+// Note that TRACE-level messages are disabled by default, even in
+// CMAKE_BUILD_TYPE=Debug builds. The level of detail created by the
+// TRACE_STATE() macro is only needed by the library developers when
+// troubleshooting this class.
+#define TRACE_STATE()                                                       \
+  GCP_LOG(TRACE) << __func__ << "(), buffer_size_=" << buffer_size_         \
+                 << ", buffer_offset_=" << buffer_offset_                   \
+                 << ", spill_.size()=" << spill_.size()                     \
+                 << ", spill_offset_=" << spill_offset_                     \
+                 << ", closing=" << closing_ << ", closed=" << curl_closed_ \
+                 << ", paused=" << paused_ << ", in_multi=" << in_multi_
+
+CurlDownloadRequest::CurlDownloadRequest()
     : headers_(nullptr, &curl_slist_free_all),
       multi_(nullptr, &curl_multi_cleanup),
-      initial_buffer_size_(initial_buffer_size) {
-  buffer_.reserve(initial_buffer_size);
+      spill_(CURL_MAX_WRITE_SIZE) {}
+
+template <typename Predicate>
+Status CurlDownloadRequest::Wait(Predicate predicate) {
+  int repeats = 0;
+  // We can assert that the current thread is the leader, because the
+  // predicate is satisfied, and the condition variable exited. Therefore,
+  // this thread must run the I/O event loop.
+  while (!predicate()) {
+    handle_.FlushDebug(__func__);
+    TRACE_STATE() << ", repeats=" << repeats;
+    auto running_handles = PerformWork();
+    if (!running_handles.ok()) {
+      return std::move(running_handles).status();
+    }
+    // Only wait if there are CURL handles with pending work *and* the
+    // predicate is not satisfied. Note that if the predicate is ill-defined
+    // it might continue to be unsatisfied even though the handles have
+    // completed their work.
+    if (*running_handles == 0 || predicate()) {
+      break;
+    }
+    auto status = WaitForHandles(repeats);
+    if (!status.ok()) {
+      return status;
+    }
+  }
+  return Status();
 }
 
 StatusOr<HttpResponse> CurlDownloadRequest::Close() {
+  TRACE_STATE();
   // Set the the closing_ flag to trigger a return 0 from the next read
   // callback, see the comments in the header file for more details.
   closing_ = true;
+
+  (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  paused_ = false;
+  TRACE_STATE();
+
   // Block until that callback is made.
   auto status = Wait([this] { return curl_closed_; });
   if (!status.ok()) {
+    TRACE_STATE() << ", status=" << status;
     return status;
   }
+  TRACE_STATE();
 
   // Now remove the handle from the CURLM* interface and wait for the response.
   if (in_multi_) {
@@ -51,53 +97,72 @@ StatusOr<HttpResponse> CurlDownloadRequest::Close() {
     in_multi_ = false;
     status = AsStatus(error, __func__);
     if (!status.ok()) {
+      TRACE_STATE() << ", status=" << status;
       return status;
     }
   }
 
   StatusOr<long> http_code = handle_.GetResponseCode();
   if (!http_code.ok()) {
+    TRACE_STATE() << ", http_code.status=" << http_code.status();
     return http_code.status();
   }
+  TRACE_STATE() << ", http_code.status=" << http_code.status()
+                << ", http_code=" << *http_code;
   return HttpResponse{http_code.value(), std::string{},
                       std::move(received_headers_)};
 }
 
-StatusOr<HttpResponse> CurlDownloadRequest::Read(std::string& buffer) {
+StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
+  buffer_ = buf;
+  buffer_offset_ = 0;
+  buffer_size_ = n;
+  if (n == 0) {
+    return Status(StatusCode::kInvalidArgument, "Empty buffer for Read()");
+  }
+
   handle_.FlushDebug(__func__);
-  auto status = Wait([this] {
-    return curl_closed_ || buffer_.size() >= initial_buffer_size_;
+  TRACE_STATE();
+
+  auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+  if (!status.ok()) {
+    TRACE_STATE() << ", status=" << status;
+    return status;
+  }
+  paused_ = false;
+  TRACE_STATE();
+
+  status = Wait([this] {
+    return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
   if (!status.ok()) {
     return status;
   }
-  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
-                 << ", closing=" << closing_ << ", closed=" << curl_closed_;
+  TRACE_STATE();
+  auto bytes_read = buffer_offset_;
+  buffer_ = nullptr;
+  buffer_offset_ = 0;
+  buffer_size_ = 0;
   if (curl_closed_) {
-    // Wait for the response code for a closed stream.
-    buffer_.swap(buffer);
-    buffer_.clear();
-    StatusOr<long> http_code = handle_.GetResponseCode();
-    if (!http_code.ok()) {
-      return std::move(http_code).status();
-    }
-    GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
-                   << ", closing=" << closing_ << ", closed=" << curl_closed_
-                   << ", code=" << *http_code;
-    return HttpResponse{http_code.value(), std::string{},
-                        std::move(received_headers_)};
+    // Retrieve the response code for a closed stream. Note the use of
+    // `.value()`, this is equivalent to: assert(http_code.ok());
+    // The only way the previous call can fail indicates a bug in our code (or
+    // corrupted memory), the documentation for CURLINFO_RESPONSE_CODE:
+    //   https://curl.haxx.se/libcurl/c/CURLINFO_RESPONSE_CODE.html
+    // says:
+    //   Returns CURLE_OK if the option is supported, and CURLE_UNKNOWN_OPTION
+    //   if not.
+    // if the option is not supported then we cannot use HTTP at all in libcurl
+    // and the whole class would fail.
+    long http_code = handle_.GetResponseCode().value();
+    TRACE_STATE() << ", code=" << http_code;
+    return ReadSourceResult{
+        bytes_read,
+        HttpResponse{http_code, std::string{}, std::move(received_headers_)}};
   }
-  buffer_.swap(buffer);
-  buffer_.clear();
-  buffer_.reserve(initial_buffer_size_);
-  status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
-  if (!status.ok()) {
-    return status;
-  }
-  GCP_LOG(DEBUG) << __func__ << "(), size=" << buffer.size()
-                 << ", closing=" << closing_ << ", closed=" << curl_closed_
-                 << ", code=100";
-  return HttpResponse{100, {}, std::move(received_headers_)};
+  TRACE_STATE() << ", code=100";
+  return ReadSourceResult{bytes_read,
+                          HttpResponse{100, {}, std::move(received_headers_)}};
 }
 
 void CurlDownloadRequest::SetOptions() {
@@ -143,27 +208,56 @@ void CurlDownloadRequest::ResetOptions() {
 std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
                                                std::size_t nmemb) {
   handle_.FlushDebug(__func__);
-  GCP_LOG(DEBUG) << __func__ << "() size=" << size << ", nmemb=" << nmemb
-                 << ", buffer.size=" << buffer_.size();
+  TRACE_STATE() << ", n=" << size * nmemb;
   // This transfer is closing, just return zero, that will make libcurl finish
   // any pending work, and will return the handle_ pointer from
   // curl_multi_info_read() in PerformWork(). That is the point where
   // `curl_closed_` is set.
   if (closing_) {
+    TRACE_STATE() << " closing";
     return 0;
   }
-  if (buffer_.size() >= initial_buffer_size_) {
+  if (buffer_offset_ >= buffer_size_) {
+    TRACE_STATE() << " *** PAUSING HANDLE ***";
+    paused_ = true;
     return CURL_READFUNC_PAUSE;
   }
 
-  buffer_.append(static_cast<char const*>(ptr), size * nmemb);
+  std::size_t free = buffer_size_ - buffer_offset_;
+
+  // Use the spill buffer first, if there is any...
+  auto copy_count = (std::min)(free, spill_offset_);
+  std::memcpy(buffer_ + buffer_offset_, spill_.data(), copy_count);
+  buffer_offset_ += copy_count;
+  std::memmove(spill_.data(), spill_.data() + copy_count,
+               spill_.size() - copy_count);
+  spill_offset_ -= copy_count;
+  free -= copy_count;
+  if (free == 0) {
+    TRACE_STATE() << " *** PAUSING HANDLE ***";
+    paused_ = true;
+    return CURL_READFUNC_PAUSE;
+  }
+  TRACE_STATE() << ", n=" << size * nmemb << ", copy_count=" << copy_count
+                << ", free=" << free;
+
+  if (size * nmemb < free) {
+    std::memcpy(buffer_ + buffer_offset_, ptr, size * nmemb);
+    buffer_offset_ += size * nmemb;
+    TRACE_STATE() << ", n=" << size * nmemb;
+    return size * nmemb;
+  }
+  std::memcpy(buffer_ + buffer_offset_, ptr, free);
+  buffer_offset_ += free;
+  spill_offset_ = size * nmemb - free;
+  std::memcpy(spill_.data(), static_cast<char*>(ptr) + free, spill_offset_);
+  TRACE_STATE() << ", n=" << size * nmemb << ", copy_count=" << copy_count
+                << ", free=" << free;
   return size * nmemb;
 }
 
 StatusOr<int> CurlDownloadRequest::PerformWork() {
-  GCP_LOG(DEBUG) << __func__ << "(), curl.size=" << buffer_.size()
-                 << ", closing=" << closing_ << ", closed=" << curl_closed_
-                 << ", in_multi=" << in_multi_;
+  TRACE_STATE();
   if (!in_multi_) {
     return 0;
   }
@@ -180,6 +274,7 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
   // Throw an exception if the result is unexpected, otherwise return.
   auto status = AsStatus(result, __func__);
   if (!status.ok()) {
+    TRACE_STATE() << ", status=" << status;
     return status;
   }
   if (running_handles == 0) {
@@ -200,11 +295,8 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
         return Status(StatusCode::kUnknown, std::move(os).str());
       }
       status = CurlHandle::AsStatus(msg->data.result, __func__);
-      GCP_LOG(DEBUG) << __func__ << "() status=" << status
-                     << ", remaining=" << remaining
-                     << ", running_handles=" << running_handles
-                     << ", closing=" << closing_ << ", closed=" << curl_closed_
-                     << ", in_multi=" << in_multi_;
+      TRACE_STATE() << ", status=" << status << ", remaining=" << remaining
+                    << ", running_handles=" << running_handles;
       // Whatever the status is, the transfer is done, we need to remove it
       // from the CURLM* interface.
       curl_closed_ = true;
@@ -218,11 +310,9 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
         in_multi_ = false;
       }
 
-      GCP_LOG(DEBUG) << __func__ << "() status=" << status
-                     << ", remaining=" << remaining
-                     << ", running_handles=" << running_handles
-                     << ", closing=" << closing_ << ", closed=" << curl_closed_
-                     << ", in_multi=" << in_multi_;
+      TRACE_STATE() << ", status=" << status << ", remaining=" << remaining
+                    << ", running_handles=" << running_handles
+                    << ", multi_remove_status=" << multi_remove_status;
 
       // Ignore errors when closing the handle. They are expected because
       // libcurl may have received a block of data, but the WriteCallback()
@@ -238,6 +328,7 @@ StatusOr<int> CurlDownloadRequest::PerformWork() {
       }
     }
   }
+  TRACE_STATE() << ", running_handles=" << running_handles;
   return running_handles;
 }
 
@@ -247,8 +338,8 @@ Status CurlDownloadRequest::WaitForHandles(int& repeats) {
   int numfds = 0;
   CURLMcode result =
       curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
-  GCP_LOG(DEBUG) << __func__ << "(): numfds=" << numfds << ", result=" << result
-                 << ", repeats=" << repeats;
+  TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
+                << ", repeats=" << repeats;
   Status status = AsStatus(result, __func__);
   if (!status.ok()) {
     return status;
