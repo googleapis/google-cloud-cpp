@@ -16,6 +16,7 @@
 
 option(GOOGLE_CLOUD_CPP_CLANG_TIDY
        "If set compiles the Cloud Cloud C++ Libraries with clang-tidy." "")
+mark_as_advanced(GOOGLE_CLOUD_CPP_CLANG_TIDY)
 
 if (${CMAKE_VERSION} VERSION_LESS "3.6")
     message(STATUS "clang-tidy is not enabled because cmake version is too old")
@@ -23,13 +24,14 @@ else()
     if (${CMAKE_VERSION} VERSION_LESS "3.8")
         message(WARNING "clang-tidy exit code ignored in this version of cmake")
     endif ()
-    find_program(CLANG_TIDY_EXE
+    find_program(GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM
                  NAMES "clang-tidy"
                  DOC "Path to clang-tidy executable")
-
-    if (NOT CLANG_TIDY_EXE)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM)
+    if (NOT GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM)
         message(STATUS "clang-tidy not found.")
     else()
-        message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+        message(
+            STATUS "clang-tidy found: ${GOOGLE_CLOUD_CPP_CLANG_TIDY_PROGRAM}")
     endif ()
 endif ()

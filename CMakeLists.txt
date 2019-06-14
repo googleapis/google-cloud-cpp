@@ -76,17 +76,23 @@ endif (APPLE)
 # configuration agnostic as to wether ccache is installed or not.
 option(
     GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available" ON)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
 
 if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
-    find_program(CCACHE_FOUND ccache NAMES /usr/bin/ccache)
-    if (CCACHE_FOUND)
-        message(STATUS "ccache found: ${CCACHE_FOUND}")
-        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CCACHE_FOUND}")
-        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CCACHE_FOUND}")
+    find_program(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM ccache NAMES /usr/bin/ccache)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
+    if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
+        message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set_property(GLOBAL
+                     PROPERTY RULE_LAUNCH_COMPILE
+                              "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set_property(GLOBAL
+                     PROPERTY RULE_LAUNCH_LINK
+                              "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
 
         set(GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE
-            "-DCMAKE_CXX_COMPILER_LAUNCHER=${CCACHE_FOUND}"
-            "-DCMAKE_CC_COMPILER_LAUNCHER=${CCACHE_FOUND}")
+            "-DCMAKE_CXX_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}"
+            "-DCMAKE_CC_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
     endif ()
 endif ()
 
@@ -122,6 +128,7 @@ set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
 # googleapis.dev hositng.
 option(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV
        "Use relative URLs in docs for googleapis.dev" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV)
 
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
