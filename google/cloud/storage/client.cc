@@ -95,7 +95,7 @@ bool Client::UseSimpleUpload(std::string const& file_name) const {
 
 StatusOr<ObjectMetadata> Client::UploadFileSimple(
     std::string const& file_name, internal::InsertObjectMediaRequest request) {
-  std::ifstream is(file_name);
+  std::ifstream is(file_name, std::ios::binary);
   if (!is.is_open()) {
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name
@@ -128,7 +128,7 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
 )""";
   }
 
-  std::ifstream source(file_name);
+  std::ifstream source(file_name, std::ios::binary);
   if (!source.is_open()) {
     std::ostringstream os;
     os << __func__ << "(" << request << ", " << file_name
@@ -206,7 +206,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   }
 
   // Open the destination file, and immediate raise an exception on failure.
-  std::ofstream os(file_name);
+  std::ofstream os(file_name, std::ios::binary);
   if (!os.is_open()) {
     return report_error(
         __func__, "cannot open download destination file",
