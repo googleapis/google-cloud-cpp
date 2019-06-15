@@ -23,13 +23,17 @@ cd "$(dirname "$0")/../../.."
 
 echo "================================================================"
 echo "Load Google Container Registry configuration parameters $(date)."
-readonly CONFIG_DIR="${KOKORO_GFILE_DIR}"
-source "${CONFIG_DIR}/gcr-configuration.sh"
+
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
+fi
 
 echo "================================================================"
 echo "Setup Google Container Registry access  $(date)."
-gcloud auth activate-service-account --key-file \
-  "${KOKORO_GFILE_DIR}/gcr-service-account.json"
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
+  gcloud auth activate-service-account --key-file \
+    "${KOKORO_GFILE_DIR}/gcr-service-account.json"
+fi
 gcloud auth configure-docker
 
 readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-install-${DISTRO}"
