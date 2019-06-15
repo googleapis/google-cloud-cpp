@@ -23,14 +23,16 @@ fi
 # work from the git root directory
 cd "$(dirname "$0")/../../"
 
-# First build the docker image with dependency installed
-docker build -t gcr.io/cloud-devrel-kokoro-resources/cpp/refdoc-base \
-  --build-arg NCPU="$(nproc)" \
-  -f ci/travis/Dockerfile.ubuntu-install ci
+if [[ "${BUILD_DOCKER_IMAGE:-false}" == "true" ]]; then
+  # First build the docker image with dependency installed
+  docker build -t gcr.io/cloud-devrel-kokoro-resources/cpp/refdoc-base \
+    --build-arg NCPU="$(nproc)" \
+    -f ci/travis/Dockerfile.ubuntu-install ci
 
-docker build -t "${TRAMPOLINE_IMAGE}" -f ci/kokoro/Dockerfile.refdocs ci
+  docker build -t "${TRAMPOLINE_IMAGE}" -f ci/kokoro/Dockerfile.refdocs ci
 
-gcloud auth configure-docker
-docker push "${TRAMPOLINE_IMAGE}"
+  gcloud auth configure-docker
+  docker push "${TRAMPOLINE_IMAGE}"
+fi
 
 exec ci/kokoro/trampoline.sh
