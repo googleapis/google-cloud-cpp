@@ -102,7 +102,7 @@ registry bucket.
 
 ```console
 $ gsutil iam ch serviceAccount:${FULL_SA_NAME}:roles/storage.admin \
-    gs://artifacts.${PROJECT_ID}.appspot.com/ 
+    gs://artifacts.${PROJECT_ID}.appspot.com/
 ```
 
 Create new keys for this service account and download then to a temporary place:
