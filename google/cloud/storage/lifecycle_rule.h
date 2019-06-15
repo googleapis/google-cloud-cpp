@@ -18,12 +18,12 @@
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/storage/version.h"
 #include <chrono>
 #include <iosfwd>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {

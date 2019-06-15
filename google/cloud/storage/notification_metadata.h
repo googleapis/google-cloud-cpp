@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_NOTIFICATION_METADATA_H_
 
 #include "google/cloud/status_or.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
 #include <map>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {

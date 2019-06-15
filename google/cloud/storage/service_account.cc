@@ -18,23 +18,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-StatusOr<ServiceAccount> ServiceAccount::ParseFromJson(
-    internal::nl::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  ServiceAccount result{};
-  result.kind_ = json.value("kind", "");
-  result.email_address_ = json.value("email_address", "");
-  return result;
-}
-
-StatusOr<ServiceAccount> ServiceAccount::ParseFromString(
-    std::string const& payload) {
-  auto json = internal::nl::json::parse(payload, nullptr, false);
-  return ParseFromJson(json);
-}
-
 std::ostream& operator<<(std::ostream& os, ServiceAccount const& rhs) {
   return os << "ServiceAccount={email_address=" << rhs.email_address()
             << ", kind=" << rhs.kind() << "}";

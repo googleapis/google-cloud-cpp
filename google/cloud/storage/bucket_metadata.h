@@ -18,7 +18,6 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/bucket_access_control.h"
 #include "google/cloud/storage/internal/common_metadata.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
