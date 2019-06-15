@@ -13,7 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=trusty
-FROM ubuntu:${DISTRO_VERSION}
+FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 COPY ci/install-retry.sh /retry3
 
@@ -30,10 +30,10 @@ COPY ci/install-retry.sh /retry3
 # We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 # ```bash
-RUN /retry3 apt update && apt install -y software-properties-common
+RUN apt update && apt install -y software-properties-common
 RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y
-RUN /retry3 apt update && \
-    /retry3 apt install -y cmake3 git gcc g++ make pkg-config tar wget \
+RUN apt update && \
+    apt install -y cmake3 git gcc g++ make pkg-config tar wget \
         zlib1g-dev
 # ```
 
@@ -42,7 +42,7 @@ RUN /retry3 apt update && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
+RUN wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 RUN tar xf openssl-1.0.2n.tar.gz
 WORKDIR /var/tmp/build/openssl-1.0.2n
 RUN ./config --shared
@@ -76,6 +76,9 @@ RUN (cd cmake-out && ctest --output-on-failure)
 ## [END IGNORED]
 
 ## [END README.md]
+
+FROM devtools
+COPY ci/install-retry.sh /retry3
 
 # #### libcurl.
 

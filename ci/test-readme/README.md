@@ -56,3 +56,67 @@ the README, INSTALL, or any other documentation, starts the docker build almost
 from the beginning. This is working as intended, we want these scripts to
 simulate the experience of a user downloading `google-cloud-cpp` on a fresh
 workstation.
+
+## HOWTO: Setup the Google Container Registry cache.
+
+These builds fail from time to time because the services to download packages
+have outages (more often than you would expect). These outages can last hours,
+the usual approach of "try N times with a backoff" do not work. To minimize the
+impact of these outages, we cache these images in Google Container Registry,
+and use the cache for all pull requests. Only pushes to master update the cache,
+and only if rebuilding the cache succeeded.
+
+Pick a project that will host the container images cache:
+
+```console
+$ PROJECT_ID=... # Most likely an existing project for builds.
+```
+
+We need to grant the service account full storage admin access to the bucket
+that will contain the containers. To this end we need to create the
+[bucket first](https://cloud.google.com/container-registry/docs/access-control):
+
+```console
+$ gcloud auth configure-docker
+$ docker pull hello-world:latest
+$ docker tag hello-world:latest gcr.io/${PROJECT_ID}/hello-world:latest
+$ docker push gcr.io/${PROJECT_ID}/hello-world:latest
+```
+
+Create a service account to access the Google Container Registry:
+
+```console
+$ SA_NAME=kokoro-gcr-updater-sa
+```
+
+Then create the service account:
+
+```console
+$ gcloud iam service-accounts create --project ${PROJECT_ID} ${SA_NAME} \
+    --display-name="Allows Kokoro builds to access GCR images."
+$ FULL_SA_NAME="${SA_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+```
+
+Grant the service account `roles/storage.admin` permissions on the container
+registry bucket.
+
+```console
+$ gsutil iam ch serviceAccount:${FULL_SA_NAME}:roles/storage.admin \
+    gs://artifacts.${PROJECT_ID}.appspot.com/ 
+```
+
+Create new keys for this service account and download then to a temporary place:
+
+```console
+$ gcloud iam service-accounts keys create /dev/shm/gcr-service-account.json \
+      --iam-account "${FULL_SA_NAME}"
+```
+
+Create a configuration file for the Kokoro script:
+
+```bash
+$ echo "PROJECT_ID=${PROJECT_ID}" >/dev/shm/gcr-configuration.sh
+```
+
+Copy the service account keys and configuration file to location where we keep
+Kokoro secrets (see .
