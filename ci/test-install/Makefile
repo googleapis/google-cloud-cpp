@@ -34,7 +34,7 @@ CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
 CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
 
 # A target using the Cloud Bigtable C++ client library.
-bigtable_install_test: bigtable_install_test.cc
+bigtable_install_test: bigtable/bigtable_install_test.cc
 	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 
 
@@ -46,5 +46,5 @@ GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
 GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
 
 # A target using the Google Cloud Storage C++ client library.
-storage_install_test: storage_install_test.cc
+storage_install_test: storage/storage_install_test.cc
 	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)

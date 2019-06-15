@@ -147,13 +147,18 @@ WORKDIR /home/build/test-install-plain-make
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
 
-WORKDIR /home/build/test-install-cmake
-COPY ci/test-install /home/build/test-install-cmake
+WORKDIR /home/build/test-install-cmake-bigtable
+COPY ci/test-install/bigtable /home/build/test-install-cmake-bigtable
+RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)
+
+WORKDIR /home/build/test-install-cmake-storage
+COPY ci/test-install/storage /home/build/test-install-cmake-storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j $(nproc)
 
 WORKDIR /home/build/test-submodule
 COPY ci/test-install /home/build/test-submodule
 COPY . /home/build/test-submodule/submodule/google-cloud-cpp
-RUN cmake -H. -Bcmake-out
+RUN cmake -Hsubmodule -Bcmake-out
 RUN cmake --build cmake-out -- -j $(nproc)

@@ -19,7 +19,7 @@ licenses(["notice"])  # Apache 2.0
 cc_binary(
     name = "bigtable_install_test",
     srcs = [
-        "bigtable_install_test.cc",
+        "bigtable/bigtable_install_test.cc",
     ],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
@@ -29,7 +29,7 @@ cc_binary(
 cc_binary(
     name = "storage_install_test",
     srcs = [
-        "storage_install_test.cc",
+        "storage/storage_install_test.cc",
     ],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
