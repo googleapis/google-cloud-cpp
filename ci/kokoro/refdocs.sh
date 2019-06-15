@@ -95,9 +95,6 @@ if [[ "${branch}" == "master" ]]; then
   cmake_flags+=("-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=on")
 fi
 
-# install docuploader
-python3 -m pip install gcp-docuploader
-
 # Build doxygen docs
 cmake -H. "-B${BUILD_OUTPUT}" "${cmake_flags[@]}"
 cmake --build "${BUILD_OUTPUT}" -- -j "$(nproc)"
