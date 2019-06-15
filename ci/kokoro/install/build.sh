@@ -17,15 +17,71 @@
 set -eu
 
 echo "================================================================"
-echo "Change working directory to project root."
+echo "Change working directory to project root $(date)."
 cd "$(dirname "$0")/../../.."
-echo "================================================================"
+
 
 echo "================================================================"
-printenv
+echo "Load Google Container Registry configuration parameters $(date)."
+
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
+fi
+
 echo "================================================================"
+echo "Setup Google Container Registry access  $(date)."
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
+  gcloud auth activate-service-account --key-file \
+    "${KOKORO_GFILE_DIR}/gcr-service-account.json"
+fi
+gcloud auth configure-docker
+
+readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-install-${DISTRO}"
+echo "================================================================"
+echo "Download existing image (if available) for ${DISTRO} $(date)."
+has_cache="/bin/false"
+if docker pull "${DEV_IMAGE}:latest"; then
+  echo "Existing image successfully downloaded."
+  has_cache="/bin/true"
+fi
+
+echo "================================================================"
+echo "Build base image with minimal development tools for ${DISTRO} $(date)."
+update_cache="/bin/false"
+
+devtools_flags=(
+  # Only build up to the stage that installs the minimal development tools, but
+  # does not compile any of our code.
+  "--target" "devtools"
+  # Create the image with the same tag as the cache we are using, so we can
+  # upload it.
+  "-t" "${DEV_IMAGE}:latest"
+  "-f" "ci/test-readme/Dockerfile.${DISTRO}"
+)
+
+if "${has_cache}"; then
+  devtools_flags+=("--cache-from=${DEV_IMAGE}:latest")
+fi
+
+if [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  devtools_flags+=("--no-cache")
+fi
+
+echo "Running docker build with " "${devtools_flags[@]}"
+if docker build "${devtools_flags[@]}" ci; then
+   update_cache="/bin/true"
+fi
+
+if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  echo "================================================================"
+  echo "Uploading updated base image for ${DISTRO} $(date)."
+  # Do not stop the build on a failure to update the cache.
+  docker push "${DEV_IMAGE}:latest" || /bin/true
+fi
 
 echo "================================================================"
 echo "Run validation script for README and INSTALL instructions on ${DISTRO}."
-sudo docker build -f "ci/test-readme/Dockerfile.${DISTRO}" .
+docker build \
+  "--cache-from=${DEV_IMAGE}:latest" \
+  -f "ci/test-readme/Dockerfile.${DISTRO}" .
 echo "================================================================"
