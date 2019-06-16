@@ -13,9 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=bionic
-FROM ubuntu:${DISTRO_VERSION}
-
-COPY ci/install-retry.sh /retry3
+FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
@@ -27,13 +25,16 @@ COPY ci/install-retry.sh /retry3
 ## [START README.md]
 
 # ```bash
-RUN /retry3 apt update && \
-    /retry3 apt install -y build-essential cmake git gcc g++ cmake \
+RUN apt update && \
+    apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 # ```
 
 ## [END README.md]
+
+FROM devtools
+COPY ci/install-retry.sh /retry3
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using

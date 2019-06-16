@@ -13,9 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=7
-FROM centos:${DISTRO_VERSION}
-
-COPY ci/install-retry.sh /retry3
+FROM centos:${DISTRO_VERSION} AS devtools
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
@@ -31,16 +29,19 @@ COPY ci/install-retry.sh /retry3
 # [Software Collections](https://www.softwarecollections.org/).
 
 # ```bash
-RUN /retry3 rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN /retry3 yum install -y centos-release-scl
+RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN yum install -y centos-release-scl
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
-RUN /retry3 yum makecache && \
-    /retry3 yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+RUN yum makecache && \
+    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
         make openssl-devel pkgconfig tar wget which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
 ## [END README.md]
+
+FROM devtools
+COPY ci/install-retry.sh /retry3
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using
