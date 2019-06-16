@@ -20,7 +20,6 @@ echo "================================================================"
 echo "Change working directory to project root $(date)."
 cd "$(dirname "$0")/../../.."
 
-
 echo "================================================================"
 echo "Load Google Container Registry configuration parameters $(date)."
 
@@ -29,7 +28,7 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
 fi
 
 echo "================================================================"
-echo "Setup Google Container Registry access  $(date)."
+echo "Setup Google Container Registry access $(date)."
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
   gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
@@ -39,15 +38,15 @@ gcloud auth configure-docker
 readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-install-${DISTRO}"
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
-has_cache="/bin/false"
+has_cache="false"
 if docker pull "${DEV_IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
-  has_cache="/bin/true"
+  has_cache="true"
 fi
 
 echo "================================================================"
 echo "Build base image with minimal development tools for ${DISTRO} $(date)."
-update_cache="/bin/false"
+update_cache="false"
 
 devtools_flags=(
   # Only build up to the stage that installs the minimal development tools, but
@@ -69,14 +68,14 @@ fi
 
 echo "Running docker build with " "${devtools_flags[@]}"
 if docker build "${devtools_flags[@]}" ci; then
-   update_cache="/bin/true"
+   update_cache="true"
 fi
 
 if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   echo "Uploading updated base image for ${DISTRO} $(date)."
   # Do not stop the build on a failure to update the cache.
-  docker push "${DEV_IMAGE}:latest" || /bin/true
+  docker push "${DEV_IMAGE}:latest" || true
 fi
 
 echo "================================================================"
