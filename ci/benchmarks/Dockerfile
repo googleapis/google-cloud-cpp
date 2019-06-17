@@ -95,7 +95,6 @@ COPY --from=google-cloud-cpp-build /usr/local/bin /usr/local/bin
 COPY --from=google-cloud-cpp-build /w/cmake-out/google/cloud/bigtable/benchmarks/*_benchmark /r/
 COPY --from=google-cloud-cpp-build /w/cmake-out/google/cloud/storage/benchmarks/*_benchmark /r/
 COPY --from=google-cloud-cpp-build /w/cmake-out/google/cloud/storage/examples/*_samples /r/
-COPY --from=google-cloud-cpp-build /w/ci/benchmarks/storage/*.sh /r
 RUN ldconfig
 
 CMD ["/bin/false"]
