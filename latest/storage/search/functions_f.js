@@ -3,8 +3,6 @@ var searchData=
   ['parseauthorizedusercredentials',['ParseAuthorizedUserCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a39ef57d7685d50944afff3e16c64a428',1,'google::cloud::storage::v1::oauth2']]],
   ['parseboolean',['ParseBoolean',['../namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a445aad3f078468c176fb3b53ad403042',1,'google::cloud::storage_benchmarks']]],
   ['parseduration',['ParseDuration',['../namespacegoogle_1_1cloud_1_1storage__benchmarks.html#ada45824f183c9d3cf47ce6b19834b01b',1,'google::cloud::storage_benchmarks']]],
-  ['parsefromjson',['ParseFromJson',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ServiceAccount.html#a2abb6f3bfed2507170d6a389343ba38b',1,'google::cloud::storage::v1::ServiceAccount']]],
-  ['parsefromstring',['ParseFromString',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1ServiceAccount.html#a44e7009155d36d75b69f9c4f92fcdf39',1,'google::cloud::storage::v1::ServiceAccount']]],
   ['parseserviceaccountcredentials',['ParseServiceAccountCredentials',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a67947fde32770a7bbe728d5f7a11ba3d',1,'google::cloud::storage::v1::oauth2']]],
   ['parseserviceaccountp12file',['ParseServiceAccountP12File',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a17a0bb42b8fd3d5232b79be3236cb854',1,'google::cloud::storage::v1::oauth2']]],
   ['parsesize',['ParseSize',['../namespacegoogle_1_1cloud_1_1storage__benchmarks.html#a0b5b4c9e4231702bf6556e199893c5b0',1,'google::cloud::storage_benchmarks']]],
