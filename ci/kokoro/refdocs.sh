@@ -42,7 +42,7 @@ upload_docs() {
   # Create docs metadata
   python3 -m docuploader create-metadata \
     --name "${docs_name}" \
-    --version "${docs_dir}" \
+    --version "${docs_version}" \
     --language cpp
 
   # Upload the docs
