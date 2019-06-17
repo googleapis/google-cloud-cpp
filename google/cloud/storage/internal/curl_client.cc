@@ -993,7 +993,7 @@ StatusOr<ServiceAccount> CurlClient::GetServiceAccount(
   if (!status.ok()) {
     return status;
   }
-  return ParseFromString<ServiceAccount>(
+  return CheckedFromString<ServiceAccountParser>(
       builder.BuildRequest().MakeRequest(std::string{}));
 }
 

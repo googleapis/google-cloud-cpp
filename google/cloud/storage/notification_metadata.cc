@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/notification_metadata.h"
+#include "google/cloud/storage/internal/notification_requests.h"
 
 namespace google {
 namespace cloud {

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/service_account.h"
+#include "google/cloud/storage/internal/service_account_requests.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,7 +25,7 @@ namespace {
 using ::testing::HasSubstr;
 
 ServiceAccount CreateServiceAccountForTest() {
-  return ServiceAccount::ParseFromString(R"""({
+  return internal::ServiceAccountParser::FromString(R"""({
       "email_address": "service-123@example.com",
       "kind": "storage#serviceAccount"
 })""")
@@ -41,7 +42,7 @@ TEST(ServiceAccountTest, Parse) {
 
 /// @test Verify that we parse JSON objects into ServiceAccount objects.
 TEST(ServiceAccountTest, ParseFailure) {
-  auto actual = ServiceAccount::ParseFromString("{123");
+  auto actual = internal::ServiceAccountParser::FromString("{123");
   EXPECT_FALSE(actual.ok());
 }
 

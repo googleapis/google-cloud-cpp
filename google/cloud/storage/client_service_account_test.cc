@@ -58,7 +58,7 @@ class ServiceAccountTest : public ::testing::Test {
 
 TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
   ServiceAccount expected =
-      ServiceAccount::ParseFromString(
+      internal::ServiceAccountParser::FromString(
           R"""({"email_address": "test-service-account@test-domain.com"})""")
           .value();
 
