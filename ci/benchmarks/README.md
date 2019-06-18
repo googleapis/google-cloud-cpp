@@ -20,7 +20,21 @@ Google Cloud Build:
 ```console
 $ gcloud builds submit \
     --substitutions=SHORT_SHA=$(git rev-parse --short HEAD) \
-    --config cloudbuild.yaml .
+    --config ci/benchmarks/cloudbuild.yaml .
+```
+
+## Automate the Docker image creation
+
+Finally we create a trigger to automatically build this Docker image on each
+commit to master:
+
+```console
+$ gcloud alpha builds triggers create github \
+    --project=${PROJECT_ID} \
+    --repo_name=google-cloud-cpp \
+    --repo_owner=googleapis \
+    --branch_pattern='master' \
+    --build_config=ci/benchmarks/cloudbuild.yaml
 ```
 
 ## Setting up GKE and other configuration
