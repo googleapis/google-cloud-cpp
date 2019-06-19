@@ -107,8 +107,8 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   }
 
   /// Expect a row whose row key is equal to this function's argument.
-  void ExpectRow(std::string const& row) {
-    row_promises_.emplace(promise<std::string>());
+  void ExpectRow(RowKeyType const& row) {
+    row_promises_.emplace(promise<RowKeyType>());
     row_futures_.emplace_back(row_promises_.back().get_future());
     promises_from_user_cb_.emplace_back(promise<bool>());
     futures_from_user_cb_.emplace(promises_from_user_cb_.back().get_future());
@@ -116,7 +116,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   }
 
   /// A wrapper around ExpectRow to expect many rows.
-  void ExpectRows(std::vector<std::string> const& rows) {
+  void ExpectRows(std::vector<RowKeyType> const& rows) {
     for (auto const& row : rows) {
       ExpectRow(row);
     }
@@ -128,13 +128,13 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
       readers_;
   // Whether `Start()` was called on i-th retry attempt.
   std::vector<bool> reader_started_;
-  std::queue<promise<std::string>> row_promises_;
+  std::queue<promise<RowKeyType>> row_promises_;
   /**
    * Future at idx i corresponse to i-th expected row. It will be satisfied
    * when the relevant `on_row` callback of AsyncReadRows is called.
    */
-  std::vector<future<std::string>> row_futures_;
-  std::queue<std::string> expected_rows_;
+  std::vector<future<RowKeyType>> row_futures_;
+  std::queue<RowKeyType> expected_rows_;
   promise<Status> stream_status_promise_;
   /// Future which will be satisfied with the status passed in on_finished.
   future<Status> stream_status_future_;
