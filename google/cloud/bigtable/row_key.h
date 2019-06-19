@@ -27,15 +27,14 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Defines the type for row keys.
  *
- * Inside Google row keys are not represented by `std::string`. They are a more
- * complex type. To minimize friction during imports we define the type using
- * a `decltype()` expression.
+ * Inside Google row keys are not represented by `std::string`. To minimize
+ * friction during imports we define the type using a `decltype()` expression.
  *
  * Users of the Cloud Bigtable C++ client library should treat this as a
- * complicated `typedef` for `std::string`. We have no plans to change this to
- * any other type in the foreseeable future. If we ever did we would treat such
- * a change as a reason to update the library major version number, and give
- * users time to migrate.
+ * complicated `typedef` for `std::string`. We have no plans to change the type
+ * in the external version of the C++ client library in the foreseeable future.
+ * If we ever did we would treat such a change as a reason to update the library
+ * major version number, and we would give users time to migrate.
  *
  * In other words, external users of the Cloud Bigtable C++ client should simply
  * write `std::string` where this type appears. For Google projects that must
@@ -44,6 +43,25 @@ inline namespace BIGTABLE_CLIENT_NS {
 using RowKeyType = std::decay<decltype(
     std::declval<google::bigtable::v2::Row>().key())>::type;
 
+namespace internal {
+inline bool IsEmptyRowKey(RowKeyType const& key) {
+  return key.empty();
+}
+
+inline bool IsEmptyRowKey(char const* key) {
+  return std::string{} == key;
+}
+
+#if __cplusplus >= 201703L
+inline bool IsEmptyRowKey(std::string_view const& key) {
+  return key.empty();
+}
+#endif  // __cplusplus
+
+inline int CompareRowKey(RowKeyType const& lhs, RowKeyType const& rhs) {
+  return lhs.compare(rhs);
+}
+}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
