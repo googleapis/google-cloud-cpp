@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_KEY_SAMPLE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_KEY_SAMPLE_H_
 
+#include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include <cstdint>
 #include <string>
@@ -35,7 +36,7 @@ struct RowKeySample {
    * is expected to produce an efficient sharding of the `Table::ReadRows()`
    * operation.
    */
-  std::string row_key;
+  RowKeyType row_key;
 
   /// An estimate of the table size for all the rows smaller than `row_key`.
   std::int64_t offset_bytes;

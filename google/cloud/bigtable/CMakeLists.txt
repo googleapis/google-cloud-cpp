@@ -166,6 +166,7 @@ add_library(bigtable_client
             polling_policy.cc
             read_modify_write_rule.h
             row.h
+            row_key.h
             row_key_sample.h
             row_range.h
             row_range.cc

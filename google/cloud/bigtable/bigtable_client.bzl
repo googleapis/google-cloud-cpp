@@ -63,6 +63,7 @@ bigtable_client_hdrs = [
     "polling_policy.h",
     "read_modify_write_rule.h",
     "row.h",
+    "row_key.h",
     "row_key_sample.h",
     "row_range.h",
     "row_reader.h",
