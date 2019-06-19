@@ -117,10 +117,9 @@ $ bq mk --project=${PROJECT_ID} storage_benchmarks_raw_logs
  ```console
 $ for container in storage-throughput-vs-cpu; do
   cat >filter.txt <<_EOF_
-resource.type="container"
+resource.type="k8s_container"
 resource.labels.container_name="${container}"
 resource.labels.cluster_name="storage-benchmarks-cluster"
-resource.labels.namespace_id="default"
 resource.labels.project_id="${PROJECT_ID}"
 _EOF_
   SINK_DEST="projects/${PROJECT_ID}/datasets/storage_benchmarks_raw_logs"
