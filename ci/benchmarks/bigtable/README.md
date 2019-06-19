@@ -45,7 +45,7 @@ multiple cores. We dedicate a cluster with larger virtual machines for it/
 
 ```console
 $ gcloud beta container clusters create --project=${PROJECT_ID} \
-      --zone=${BIGTABLE_BENCHMARKS_ZONE} --num-nodes=7 \
+      --zone=${BIGTABLE_BENCHMARKS_ZONE} --num-nodes=5 \
       --machine-type=n1-standard-4 --enable-stackdriver-kubernetes \
       bigtable-benchmarks-cluster
 ```
