@@ -160,10 +160,9 @@ $ for container in bigtable-endurance-test \
     bigtable-latency-benchmark bigtable-scan-benchmark \
     bigtable-throughput-benchmark; do
   cat >filter.txt <<_EOF_
-resource.type="container"
+resource.type="k8s_container"
 resource.labels.container_name="${container}"
 resource.labels.cluster_name="bigtable-benchmarks-cluster"
-resource.labels.namespace_id="default"
 resource.labels.project_id="${PROJECT_ID}"
 _EOF_
   SINK_DEST="projects/${PROJECT_ID}/datasets/bigtable_benchmarks_raw_logs"
