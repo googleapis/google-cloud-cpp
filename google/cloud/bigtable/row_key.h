@@ -40,22 +40,22 @@ inline namespace BIGTABLE_CLIENT_NS {
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using RowKeyType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Row>().key())>::type;
+using RowKeyType =
+    std::decay<decltype(std::declval<google::bigtable::v2::Row>().key())>::type;
+
+using ColumnQualifierType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
+
+using CellValueType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Cell>().value())>::type;
 
 namespace internal {
-inline bool IsEmptyRowKey(RowKeyType const& key) {
-  return key.empty();
-}
+inline bool IsEmptyRowKey(RowKeyType const& key) { return key.empty(); }
 
-inline bool IsEmptyRowKey(char const* key) {
-  return std::string{} == key;
-}
+inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 
 #if __cplusplus >= 201703L
-inline bool IsEmptyRowKey(std::string_view const& key) {
-  return key.empty();
-}
+inline bool IsEmptyRowKey(std::string_view const& key) { return key.empty(); }
 #endif  // __cplusplus
 
 inline int CompareRowKey(RowKeyType const& lhs, RowKeyType const& rhs) {

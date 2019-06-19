@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
+#include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status_or.h"
@@ -39,9 +40,9 @@ inline namespace BIGTABLE_CLIENT_NS {
 class Cell {
  public:
   /// Create a Cell and fill it with data.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::string value,
-       std::vector<std::string> labels)
+  template <typename KeyType, typename ColumnType, typename ValueType>
+  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
+       std::int64_t timestamp, ValueType value, std::vector<std::string> labels)
       : row_key_(std::move(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::move(column_qualifier)),
@@ -50,8 +51,9 @@ class Cell {
         labels_(std::move(labels)) {}
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::int64_t value,
+  template <typename KeyType, typename ColumnType>
+  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
+       std::int64_t timestamp, std::int64_t value,
        std::vector<std::string> labels)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp,
@@ -59,21 +61,23 @@ class Cell {
              std::move(labels)) {}
 
   /// Create a cell and fill it with data, but with empty labels.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::string value)
+  template <typename KeyType, typename ColumnType, typename ValueType>
+  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
+       std::int64_t timestamp, ValueType value)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp, std::move(value), {}) {}
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian, but
   /// with empty labels.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::int64_t value)
+  template <typename KeyType, typename ColumnType>
+  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
+       std::int64_t timestamp, std::int64_t value)
       : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp, std::move(value), {}) {}
+             std::move(column_qualifier), timestamp, value, {}) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  std::string const& row_key() const { return row_key_; }
+  RowKeyType const& row_key() const { return row_key_; }
 
   /// Return the family this cell belongs to. The returned value is not valid
   /// after this object is deleted.
@@ -81,7 +85,9 @@ class Cell {
 
   /// Return the column this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  std::string const& column_qualifier() const { return column_qualifier_; }
+  ColumnQualifierType const& column_qualifier() const {
+    return column_qualifier_;
+  }
 
   /// Return the timestamp of this cell.
   std::chrono::microseconds timestamp() const {
@@ -90,7 +96,7 @@ class Cell {
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
-  std::string const& value() const { return value_; }
+  CellValueType const& value() const { return value_; }
 
   /**
    * Interpret the value as a big-endian encoded `T` and return it.
@@ -109,11 +115,11 @@ class Cell {
   std::vector<std::string> const& labels() const { return labels_; }
 
  private:
-  std::string row_key_;
+  RowKeyType row_key_;
   std::string family_name_;
-  std::string column_qualifier_;
+  ColumnQualifierType column_qualifier_;
   std::int64_t timestamp_;
-  std::string value_;
+  CellValueType value_;
   std::vector<std::string> labels_;
 };
 
