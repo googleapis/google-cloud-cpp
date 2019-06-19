@@ -48,6 +48,8 @@ spec:
                   'bm-latency-instance',
                   # AppProfile.
                   'default',
+                  # Number of threads.
+                  '16',
                   # Duration for the benchmark, in seconds.
                   '3000' # ~50m
               ]

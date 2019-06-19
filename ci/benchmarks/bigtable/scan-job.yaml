@@ -49,7 +49,7 @@ spec:
                   # AppProfile, use the default.
                   'default',
                   # Number of threads
-                  '1',
+                  '16',
                   # Duration for the benchmark, in seconds.
                   '3000' # ~50m
               ]
