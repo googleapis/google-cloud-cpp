@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_H_
 
 #include "google/cloud/bigtable/cell.h"
+#include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include <vector>
 
@@ -33,18 +34,23 @@ inline namespace BIGTABLE_CLIENT_NS {
 class Row {
  public:
   /// Create a row from a list of cells.
-  Row(std::string row_key, std::vector<Cell> cells)
+  Row(RowKeyType row_key, std::vector<Cell> cells)
       : row_key_(std::move(row_key)), cells_(std::move(cells)) {}
+
+  /// Overload for configurations where `RowKeyType != std::string`.
+  template<typename... Unused>
+  Row(std::string row_key, std::vector<Cell> cells, Unused...)
+      : Row(RowKeyType(std::move(row_key)), std::move(cells)) {}
 
   /// Return the row key. The returned value is not valid
   /// after this object is deleted.
-  std::string const& row_key() const { return row_key_; }
+  RowKeyType const& row_key() const { return row_key_; }
 
   /// Return all cells.
   std::vector<Cell> const& cells() const { return cells_; }
 
  private:
-  std::string row_key_;
+  RowKeyType row_key_;
   std::vector<Cell> cells_;
 };
 
