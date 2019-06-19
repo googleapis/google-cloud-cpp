@@ -304,7 +304,6 @@ cc_library(
         "lib/x509asn1.h",
     ] + select({
         ":darwin": [
-            "lib/vtls/darwinssl.c",
         ],
         ":windows": CURL_WIN_SRCS,
         "//conditions:default": [
