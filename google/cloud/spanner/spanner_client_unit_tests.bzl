@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 spanner_client_unit_tests = [
+    "sql_statement_test.cc",
     "spanner_version_test.cc",
     "value_test.cc",
 ]

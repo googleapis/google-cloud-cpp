@@ -17,11 +17,13 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
+    "sql_statement.h",
     "value.h",
     "version.h",
 ]
 
 spanner_client_srcs = [
+    "sql_statement.cc",
     "value.cc",
     "version.cc",
 ]
