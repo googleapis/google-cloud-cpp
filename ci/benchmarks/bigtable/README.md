@@ -19,7 +19,7 @@ project and zone to run the benchmarks:
 ```console
 $ PROJECT_ID=... # The name of your project
                  # e.g., PROJECT_ID=$(gcloud config get-value project)
-$ BIGTABLE_BENCHMARKS_ZONE=... # e.g. us-central1-f 
+$ BIGTABLE_BENCHMARKS_ZONE=... # e.g. us-central1-f
 ```
 
 Create the Bigtable instances.
