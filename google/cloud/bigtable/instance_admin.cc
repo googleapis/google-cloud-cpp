@@ -20,6 +20,7 @@
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
+#include <google/protobuf/descriptor.h>
 #include <google/protobuf/text_format.h>
 #include <type_traits>
 #include <unordered_set>
@@ -931,6 +932,31 @@ InstanceAdmin::AsyncTestIamPermissions(
                   std::back_inserter(res));
         return res;
       });
+}
+
+StatusOr<google::cloud::IamPolicy> InstanceAdmin::ProtoToWrapper(
+    google::iam::v1::Policy proto) {
+  google::cloud::IamPolicy result;
+  result.version = proto.version();
+  result.etag = std::move(*proto.mutable_etag());
+  for (auto& binding : *proto.mutable_bindings()) {
+    std::vector<google::protobuf::FieldDescriptor const*> field_descs;
+    binding.GetReflection()->ListFields(binding, &field_descs);
+    for (auto field_desc : field_descs) {
+      if (field_desc->name() != "members" && field_desc->name() != "role") {
+        std::stringstream os;
+        // TODO(#2732): Advise alternative API after it's implemented.
+        os << "IamBinding field \"" << field_desc->name()
+           << "\" is unknown to Bigtable C++ client. Please use a client in "
+              "another language.";
+        return Status(StatusCode::kUnimplemented, os.str());
+      }
+    }
+    for (auto& member : *binding.mutable_members()) {
+      result.bindings.AddMember(binding.role(), std::move(member));
+    }
+  }
+  return result;
 }
 
 }  // namespace BIGTABLE_CLIENT_NS
