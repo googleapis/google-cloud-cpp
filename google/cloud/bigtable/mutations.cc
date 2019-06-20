@@ -19,7 +19,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-
 Mutation DeleteFromFamily(std::string family) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_family();

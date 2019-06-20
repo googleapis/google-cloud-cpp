@@ -204,7 +204,7 @@ std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
 /// A helper function to create a list of cells.
 void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
-  std::map<RowKeyType , bigtable::SingleRowMutation> mutations;
+  std::map<RowKeyType, bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     using namespace std::chrono;
     auto key = cell.row_key();

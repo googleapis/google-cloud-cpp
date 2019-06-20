@@ -90,8 +90,8 @@ class Cell {
             // ValueType is not an integral type. The case for integral types is
             // handled by the next overload, where the value is stored as a Big
             // Endian number.
-            typename std::enable_if<
-                !std::is_integral<ValueType>::value, int>::type = 0>
+            typename std::enable_if<!std::is_integral<ValueType>::value,
+                                    int>::type = 0>
   Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
        std::int64_t timestamp, ValueType value, std::vector<std::string> labels)
       : row_key_(std::forward<KeyType>(row_key)),
