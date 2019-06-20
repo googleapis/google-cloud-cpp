@@ -130,6 +130,7 @@ if (NOT TARGET googleapis_project)
                    -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
                    -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
                    -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+                   -DCMAKE_SKIP_INSTALL_RPATH=ON
                    -DGOOGLE_CLOUD_CPP_USE_LIBCXX=${GOOGLE_CLOUD_CPP_USE_LIBCXX}
                    ${_googleapis_toolchain_flag}
                    ${_googleapis_triplet_flag}
