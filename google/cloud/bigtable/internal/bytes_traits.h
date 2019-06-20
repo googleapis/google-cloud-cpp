@@ -24,10 +24,23 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+//@{
+/**
+ * @name Define functions to manipulate `std::string`.
+ *
+ * Inside google, some of the protos for Bigtable have a special mapping. The
+ * `bytes` fields do not map to `std::string`, but to a different type that has
+ * (unfortunately) a slightly different interface. These functions allow us to
+ * manipulate `std::string` and that internal type without having to change the
+ * library.
+ */
+/// Return true if the row key is empty.
 inline bool IsEmptyRowKey(std::string const& key) { return key.empty(); }
 
+/// Return true if the row key is empty.
 inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 
+/// Return `< 0` if `lhs < rhs`, 0 if `lhs == rhs`, and `> 0' otherwise.
 inline int CompareRowKey(std::string const& lhs, std::string const& rhs) {
   return lhs.compare(rhs);
 }
@@ -35,27 +48,33 @@ inline int CompareRowKey(std::string const& lhs, std::string const& rhs) {
 /// Returns true iff a < b and there is no string c such that a < c < b.
 bool ConsecutiveRowKeys(std::string const& a, std::string const& b);
 
+/// Return `< 0` if `lhs < rhs`, 0 if `lhs == rhs`, and `> 0' otherwise.
 inline int CompareColumnQualifiers(std::string const& lhs,
                                    std::string const& rhs) {
   return lhs.compare(rhs);
 }
 
+/// Decode a cell value assuming it contains a 64-bit int in Big Endian order.
 template <typename T>
 StatusOr<T> DecodeBigEndianCellValue(std::string const& c) {
   return google::cloud::internal::DecodeBigEndian<T>(std::string(c));
 }
 
+/// Return `< 0` if `lhs < rhs`, 0 if `lhs == rhs`, and `> 0' otherwise.
 inline int CompareCellValues(std::string const& lhs, std::string const& rhs) {
   return lhs.compare(rhs);
 }
 
+/// Append @p fragment to @p value.
 inline void AppendCellValue(std::string& value, std::string const& fragment) {
   value.append(fragment);
 }
 
+/// An adapter for `std::string::reserve()`.
 inline void ReserveCellValue(std::string& value, std::size_t reserve) {
   value.reserve(reserve);
 }
+//@}
 
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
