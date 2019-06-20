@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
+#include "google/cloud/bigtable/internal/bytes_traits.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
 #include <type_traits>
@@ -151,7 +151,7 @@ class Cell {
    */
   template <typename T>
   StatusOr<T> decode_big_endian_integer() const {
-    return google::cloud::internal::DecodeBigEndian<T>(value_);
+    return internal::DecodeBigEndianCellValue<T>(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.
