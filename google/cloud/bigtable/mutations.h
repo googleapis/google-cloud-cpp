@@ -313,7 +313,8 @@ class SingleRowMutation {
 
   /// Transfer the contents to @p request.
   void MoveTo(google::bigtable::v2::MutateRowRequest& request) {
-    request_.Swap(&request);
+    request.set_row_key(std::move(*request_.mutable_row_key()));
+    *request.mutable_mutations() = std::move(*request_.mutable_mutations());
   }
 
   /// Remove the contents of the mutation.
