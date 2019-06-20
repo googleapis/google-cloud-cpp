@@ -41,7 +41,8 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
                             "Row keys are expected in increasing order");
       return;
     }
-    std::swap(*chunk.mutable_row_key(), cell_.row);
+    using std::swap;
+    swap(*chunk.mutable_row_key(), cell_.row);
   }
 
   if (chunk.has_family_name()) {
@@ -50,11 +51,13 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
                             "New column family must specify qualifier");
       return;
     }
-    chunk.mutable_family_name()->mutable_value()->swap(cell_.family);
+    using std::swap;
+    swap(*chunk.mutable_family_name()->mutable_value(), cell_.family);
   }
 
   if (chunk.has_qualifier()) {
-    std::swap(*chunk.mutable_qualifier()->mutable_value(), cell_.column);
+    using std::swap;
+    swap(*chunk.mutable_qualifier()->mutable_value(), cell_.column);
   }
 
   if (cell_first_chunk_) {
@@ -66,16 +69,19 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
 
   if (cell_first_chunk_) {
     // Most common case, move the value
-    std::swap(*chunk.mutable_value(), cell_.value);
+    using std::swap;
+    swap(*chunk.mutable_value(), cell_.value);
   } else {
     internal::AppendCellValue(cell_.value, chunk.value());
   }
 
   cell_first_chunk_ = false;
 
-  // This is a hint we get about the total size
+  // This is a hint we get about the total size, use it to save some memory
+  // allocations.
   if (chunk.value_size() > 0) {
-    internal::ReserveCellValue(cell_.value, chunk.value_size());
+    internal::ReserveCellValue(cell_.value,
+                               static_cast<std::size_t>(chunk.value_size()));
   }
 
   // Last chunk in the cell has zero for value size

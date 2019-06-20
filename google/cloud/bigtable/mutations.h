@@ -51,8 +51,8 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
 
 /// Create a mutation to set a cell value.
 template <typename ColumnType, typename ValueType>
-Mutation SetCell(std::string family, ColumnType column,
-                 std::chrono::milliseconds timestamp, ValueType value) {
+Mutation SetCell(std::string family, ColumnType&& column,
+                 std::chrono::milliseconds timestamp, ValueType&& value) {
   Mutation m;
   auto& set_cell = *m.op.mutable_set_cell();
   set_cell.set_family_name(std::move(family));
@@ -69,7 +69,7 @@ Mutation SetCell(std::string family, ColumnType column,
  * These mutations are not idempotent and not retried by default.
  */
 template <typename ColumnType, typename ValueType>
-Mutation SetCell(std::string family, ColumnType column, ValueType value) {
+Mutation SetCell(std::string family, ColumnType&& column, ValueType&& value) {
   Mutation m;
   auto& set_cell = *m.op.mutable_set_cell();
   set_cell.set_family_name(std::move(family));
@@ -123,7 +123,7 @@ Mutation SetCell(std::string family, ColumnType column, ValueType value) {
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2,
           typename ColumnType>
-Mutation DeleteFromColumn(std::string family, ColumnType column,
+Mutation DeleteFromColumn(std::string family, ColumnType&& column,
                           std::chrono::duration<Rep1, Period1> timestamp_begin,
                           std::chrono::duration<Rep2, Period2> timestamp_end) {
   Mutation m;
@@ -169,7 +169,7 @@ Mutation DeleteFromColumn(std::string family, ColumnType column,
  */
 template <typename Rep1, typename Period1, typename ColumnType>
 Mutation DeleteFromColumnStartingFrom(
-    std::string family, ColumnType column,
+    std::string family, ColumnType&& column,
     std::chrono::duration<Rep1, Period1> timestamp_begin) {
   Mutation m;
   using namespace std::chrono;
@@ -212,7 +212,7 @@ Mutation DeleteFromColumnStartingFrom(
  */
 template <typename Rep2, typename Period2, typename ColumnType>
 Mutation DeleteFromColumnEndingAt(
-    std::string family, ColumnType column,
+    std::string family, ColumnType&& column,
     std::chrono::duration<Rep2, Period2> timestamp_end) {
   Mutation m;
   using namespace std::chrono;
@@ -226,7 +226,7 @@ Mutation DeleteFromColumnEndingAt(
 
 /// Delete all the values for the column.
 template <typename ColumnType>
-Mutation DeleteFromColumn(std::string family, ColumnType column) {
+Mutation DeleteFromColumn(std::string family, ColumnType&& column) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
@@ -281,8 +281,9 @@ class SingleRowMutation {
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(
       ::google::bigtable::v2::MutateRowsRequest::Entry entry) {
-    std::swap(*request_.mutable_row_key(), *entry.mutable_row_key());
-    request_.mutable_mutations()->Swap(entry.mutable_mutations());
+    using std::swap;
+    swap(*request_.mutable_row_key(), *entry.mutable_row_key());
+    swap(*request_.mutable_mutations(), *entry.mutable_mutations());
   }
 
   /// Create a row mutation from gRPC proto
@@ -291,7 +292,7 @@ class SingleRowMutation {
 
   // Add a mutation at the end.
   SingleRowMutation& emplace_back(Mutation mut) {
-    request_.add_mutations()->Swap(&mut.op);
+    *request_.add_mutations() = std::move(mut.op);
     return *this;
   }
 
@@ -308,7 +309,7 @@ class SingleRowMutation {
   /// Move the contents into a bigtable::v2::MutateRowsRequest::Entry.
   void MoveTo(google::bigtable::v2::MutateRowsRequest::Entry* entry) {
     entry->set_row_key(std::move(*request_.mutable_row_key()));
-    entry->mutable_mutations()->Swap(request_.mutable_mutations());
+    *entry->mutable_mutations() = std::move(*request_.mutable_mutations());
   }
 
   /// Transfer the contents to @p request.

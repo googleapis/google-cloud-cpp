@@ -46,8 +46,8 @@ inline namespace BIGTABLE_CLIENT_NS {
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using ColumnQualifierType = std::remove_cv<std::decay<decltype(
-    std::declval<google::bigtable::v2::Column>().qualifier())>::type>::type;
+using ColumnQualifierType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
 
 /**
  * Defines the type for cell values.
@@ -68,8 +68,8 @@ using ColumnQualifierType = std::remove_cv<std::decay<decltype(
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using CellValueType = std::remove_cv<std::decay<decltype(
-    std::declval<google::bigtable::v2::Cell>().value())>::type>::type;
+using CellValueType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Cell>().value())>::type;
 
 /**
  * The in-memory representation of a Bigtable cell.
@@ -92,8 +92,9 @@ class Cell {
             // Endian number.
             typename std::enable_if<!std::is_integral<ValueType>::value,
                                     int>::type = 0>
-  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
-       std::int64_t timestamp, ValueType value, std::vector<std::string> labels)
+  Cell(KeyType&& row_key, std::string family_name,
+       ColumnType&& column_qualifier, std::int64_t timestamp, ValueType&& value,
+       std::vector<std::string> labels)
       : row_key_(std::forward<KeyType>(row_key)),
         family_name_(std::move(family_name)),
         column_qualifier_(std::forward<ColumnType>(column_qualifier)),
@@ -103,9 +104,9 @@ class Cell {
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian.
   template <typename KeyType, typename ColumnType>
-  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
-       std::int64_t timestamp, std::int64_t value,
-       std::vector<std::string> labels)
+  Cell(KeyType&& row_key, std::string family_name,
+       ColumnType&& column_qualifier, std::int64_t timestamp,
+       std::int64_t value, std::vector<std::string> labels)
       : Cell(std::forward<KeyType>(row_key), std::move(family_name),
              std::forward<ColumnType>(column_qualifier), timestamp,
              google::cloud::internal::EncodeBigEndian(value),
@@ -113,8 +114,8 @@ class Cell {
 
   /// Create a cell and fill it with data, but with empty labels.
   template <typename KeyType, typename ColumnType, typename ValueType>
-  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
-       std::int64_t timestamp, ValueType value)
+  Cell(KeyType&& row_key, std::string family_name,
+       ColumnType&& column_qualifier, std::int64_t timestamp, ValueType&& value)
       : Cell(std::forward<KeyType>(row_key), std::move(family_name),
              std::forward<ColumnType>(column_qualifier), timestamp,
              std::forward<ValueType>(value), std::vector<std::string>{}) {}
