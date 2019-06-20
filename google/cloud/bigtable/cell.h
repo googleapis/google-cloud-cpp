@@ -20,6 +20,7 @@
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
+#include <type_traits>
 #include <vector>
 
 namespace google {
@@ -40,23 +41,28 @@ inline namespace BIGTABLE_CLIENT_NS {
 class Cell {
  public:
   /// Create a Cell and fill it with data.
-  template <typename KeyType, typename ColumnType, typename ValueType>
+  template <typename KeyType, typename ColumnType, typename ValueType,
+            // This function does not participate in overload resolution if
+            // ValueType is an integral type. That is handled by the next
+            // overload, where the value is stored as a Big Endian number.
+            typename std::enable_if<!std::is_integral<ValueType>::value,
+                                    int>::type = 0>
   Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
        std::int64_t timestamp, ValueType value, std::vector<std::string> labels)
-      : row_key_(std::move(row_key)),
+      : row_key_(std::forward<KeyType>(row_key)),
         family_name_(std::move(family_name)),
-        column_qualifier_(std::move(column_qualifier)),
+        column_qualifier_(std::forward<ColumnType>(column_qualifier)),
         timestamp_(timestamp),
-        value_(std::move(value)),
+        value_(std::forward<ValueType>(value)),
         labels_(std::move(labels)) {}
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian.
-  template <typename KeyType, typename ColumnType, typename... U>
+  template <typename KeyType, typename ColumnType>
   Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
        std::int64_t timestamp, std::int64_t value,
-       std::vector<std::string> labels, U...)
-      : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp,
+       std::vector<std::string> labels)
+      : Cell(std::forward<KeyType>(row_key), std::move(family_name),
+             std::forward<ColumnType>(column_qualifier), timestamp,
              google::cloud::internal::EncodeBigEndian(value),
              std::move(labels)) {}
 
@@ -64,9 +70,9 @@ class Cell {
   template <typename KeyType, typename ColumnType, typename ValueType>
   Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
        std::int64_t timestamp, ValueType value)
-      : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp, std::move(value),
-             std::vector<std::string>{}) {}
+      : Cell(std::forward<KeyType>(row_key), std::move(family_name),
+             std::forward<ColumnType>(column_qualifier), timestamp,
+             std::forward<ValueType>(value), std::vector<std::string>{}) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
