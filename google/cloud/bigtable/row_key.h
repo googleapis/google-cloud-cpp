@@ -54,10 +54,6 @@ inline bool IsEmptyRowKey(RowKeyType const& key) { return key.empty(); }
 
 inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 
-#if __cplusplus >= 201703L
-inline bool IsEmptyRowKey(std::string_view const& key) { return key.empty(); }
-#endif  // __cplusplus
-
 inline int CompareRowKey(RowKeyType const& lhs, RowKeyType const& rhs) {
   return lhs.compare(rhs);
 }
