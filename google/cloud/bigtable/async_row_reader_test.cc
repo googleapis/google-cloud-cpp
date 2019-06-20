@@ -107,16 +107,18 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
   }
 
   /// Expect a row whose row key is equal to this function's argument.
-  void ExpectRow(RowKeyType const& row) {
+  template <typename T>
+  void ExpectRow(T const& row) {
     row_promises_.emplace(promise<RowKeyType>());
     row_futures_.emplace_back(row_promises_.back().get_future());
     promises_from_user_cb_.emplace_back(promise<bool>());
     futures_from_user_cb_.emplace(promises_from_user_cb_.back().get_future());
-    expected_rows_.push(row);
+    expected_rows_.push(RowKeyType(row));
   }
 
   /// A wrapper around ExpectRow to expect many rows.
-  void ExpectRows(std::vector<RowKeyType> const& rows) {
+  template <typename T>
+  void ExpectRows(std::initializer_list<T> const& rows) {
     for (auto const& row : rows) {
       ExpectRow(row);
     }
