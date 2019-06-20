@@ -122,7 +122,7 @@ Mutation SetCell(std::string family, ColumnType column, ValueType value) {
  *   std::is_constructible<ColumnQualifierType, ColumnType>.
  */
 template <typename Rep1, typename Period1, typename Rep2, typename Period2,
-    typename ColumnType>
+          typename ColumnType>
 Mutation DeleteFromColumn(std::string family, ColumnType column,
                           std::chrono::duration<Rep1, Period1> timestamp_begin,
                           std::chrono::duration<Rep2, Period2> timestamp_end) {
@@ -253,50 +253,50 @@ class SingleRowMutation {
  public:
   /// Create an empty mutation.
   template <typename RowKey>
-  explicit SingleRowMutation(RowKey row_key)
-      : row_key_(std::forward<RowKey>(row_key)) {}
+  explicit SingleRowMutation(RowKey row_key) : request_() {
+    request_.set_row_key(std::forward<RowKey>(row_key));
+  }
 
   /// Create a row mutation from a initializer list.
   template <typename RowKey>
   SingleRowMutation(RowKey row_key, std::initializer_list<Mutation> list)
-      : row_key_(std::forward<RowKey>(row_key)) {
+      : request_() {
+    request_.set_row_key(std::forward<RowKey>(row_key));
     for (auto&& i : list) {
-      *ops_.Add() = i.op;
+      *request_.add_mutations() = i.op;
     }
   }
 
   /// Create a single-row multiple-cell mutation from a variadic list.
   template <typename RowKey, typename... M>
-  explicit SingleRowMutation(RowKey row_key, M&&... m)
-      : row_key_(std::forward<RowKey>(row_key)) {
+  explicit SingleRowMutation(RowKey row_key, M&&... m) : request_() {
     static_assert(
         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
         "The arguments passed to SingleRowMutation(std::string, ...) must be "
         "convertible to Mutation");
+    request_.set_row_key(std::forward<RowKey>(row_key));
     emplace_many(std::forward<M>(m)...);
   }
 
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(
-      ::google::bigtable::v2::MutateRowsRequest::Entry entry)
-      : row_key_(std::move(*entry.mutable_row_key())), ops_() {
-    ops_.Swap(entry.mutable_mutations());
+      ::google::bigtable::v2::MutateRowsRequest::Entry entry) {
+    request_.mutable_row_key()->swap(*entry.mutable_row_key());
+    request_.mutable_mutations()->Swap(entry.mutable_mutations());
   }
 
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest request)
-      : row_key_(std::move(*request.mutable_row_key())), ops_() {
-    ops_.Swap(request.mutable_mutations());
-  }
+      : request_(std::move(request)) {}
 
   // Add a mutation at the end.
   SingleRowMutation& emplace_back(Mutation mut) {
-    ops_.Add()->Swap(&mut.op);
+    request_.add_mutations()->Swap(&mut.op);
     return *this;
   }
 
   // Get the row key.
-  RowKeyType const& row_key() const { return row_key_; }
+  RowKeyType const& row_key() const { return request_.row_key(); }
 
   friend class Table;
 
@@ -307,21 +307,17 @@ class SingleRowMutation {
 
   /// Move the contents into a bigtable::v2::MutateRowsRequest::Entry.
   void MoveTo(google::bigtable::v2::MutateRowsRequest::Entry* entry) {
-    entry->set_row_key(std::move(row_key_));
-    entry->mutable_mutations()->Swap(&ops_);
+    entry->set_row_key(std::move(*request_.mutable_row_key()));
+    entry->mutable_mutations()->Swap(request_.mutable_mutations());
   }
 
   /// Transfer the contents to @p request.
   void MoveTo(google::bigtable::v2::MutateRowRequest& request) {
-    request.set_row_key(std::move(row_key_));
-    request.mutable_mutations()->Swap(&ops_);
+    request_.Swap(&request);
   }
 
   /// Remove the contents of the mutation.
-  void Clear() {
-    row_key_.clear();
-    ops_.Clear();
-  }
+  void Clear() { request_.Clear(); }
 
  private:
   /// Add multiple mutations to single row
@@ -334,8 +330,7 @@ class SingleRowMutation {
   void emplace_many(Mutation m) { emplace_back(std::move(m)); }
 
  private:
-  RowKeyType row_key_;
-  google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> ops_;
+  ::google::bigtable::v2::MutateRowRequest request_;
 };
 
 /**
