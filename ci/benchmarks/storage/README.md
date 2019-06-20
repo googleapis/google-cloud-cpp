@@ -6,15 +6,9 @@ Google Cloud Storage C++ client benchmarks. Please see the general
 
 ## Creating the Docker image
 
-The benchmarks run from a single Docker image. To build this image we use
-Google Cloud Build:
-
-```console
-$ cd $HOME/google-cloud-cpp
-$ gcloud builds submit \
-     --substitutions=SHORT_SHA=$(git rev-parse --short HEAD) \
-     --config cloudbuild.yaml .
-```
+The benchmarks run from a single Docker image. This image is automatically built
+by Google Cloud Build on each commit to `master`, but if you need to manually
+build it consult the [../README.md](../README.md).
 
 ## Create a GKE cluster for the Storage Benchmarks
 
@@ -33,8 +27,9 @@ Create the GKE clusters. All the performance benchmarks run in one cluster,
 because the work well with a single CPU for each.
 
 ```console
-$ gcloud container clusters create --zone=${STORAGE_BENCHMARKS_ZONE} \
-      --num-nodes=30 storage-benchmarks-cluster
+$ gcloud beta container clusters create --project=${PROJECT_ID} \
+      --zone=${STORAGE_BENCHMARKS_ZONE} --num-nodes=30 \
+      --enable-stackdriver-kubernetes storage-benchmarks-cluster
 ```
 
 Pick a name for the service account, for example:
@@ -46,7 +41,7 @@ $ SA_NAME=storage-benchmark-sa
 Then create the service account:
 
 ```console
-$ gcloud iam service-accounts create ${SA_NAME} \
+$ gcloud iam service-accounts create --project=${PROJECT_ID} ${SA_NAME} \
     --display-name="Service account to run GCS C++ Client Benchmarks"
 ```
 
@@ -71,7 +66,7 @@ $ gcloud iam service-accounts keys create /dev/shm/key.json \
 Copy the key to the GKE cluster:
 
 ```console
-$ gcloud container clusters get-credentials \
+$ gcloud container clusters get-credentials --project ${PROJECT_ID} \
           --zone "${STORAGE_BENCHMARKS_ZONE}" storage-benchmarks-cluster
 $ kubectl create secret generic service-account-key \
         --from-file=key.json=/dev/shm/key.json
@@ -79,7 +74,7 @@ $ kubectl create secret generic service-account-key \
 
 And then remove it from your machine:
 
-```bash
+```console
 $ rm /dev/shm/key.json
 ```
 
@@ -94,87 +89,47 @@ The benchmark uploads an object of random size, measures the throughput and CPU
 usage, then downloads the same object and measures the throughput and CPU
 utilization. The results are reported to the standard output as a CSV file.
 
-Create a bucket to store the benchmark results:
-
-```console
-$ LOGGING_BUCKET=... # e.g. ${PROJECT_ID}-benchmark-logs
-$ gsutil mb -l us gs://${LOGGING_BUCKET}
-```
-
 Start the deployment:
 
 ```console
-$ gcloud container clusters get-credentials \
-    --zone "${STORAGE_BENCHMARKS_ZONE}" storage-benchmarks-cluster
-$ VERSION=$(git rev-parse --short HEAD) # The image version.
 $ sed -e "s/@PROJECT_ID@/${PROJECT_ID}/" \
-      -e "s/@LOGGING_BUCKET@/${LOGGING_BUCKET}/" \
       -e "s/@REGION@/${STORAGE_BENCHMARKS_REGION}/" \
-      -e "s/@VERSION@/${VERSION}/" \
     ci/benchmarks/storage/throughput-vs-cpu-job.yaml | kubectl apply -f -
-```
-
-To upgrade the deployment to a new image:
-
-```console
-$ VERSION= ... # New version
-$ kubectl set image deployment/storage-throughput-vs-cpu \
-    "benchmark-image=gcr.io/${PROJECT_ID}/google-cloud-cpp-benchmarks:${VERSION}"
-$ kubectl rollout status -w deployment/storage-throughput-vs-cpu
 ```
 
 To restart the deployment
 
 ```console
 $ sed -e "s/@PROJECT_ID@/${PROJECT_ID}/" \
-      -e "s/@LOGGING_BUCKET@/${LOGGING_BUCKET}/" \
       -e "s/@REGION@/${STORAGE_BENCHMARKS_REGION}/" \
-      -e "s/@VERSION@/${VERSION}/" \
     ci/benchmarks/storage/throughput-vs-cpu-job.yaml | \
   kubectl replace --force -f -
 ```
 
-## Analyze Throughput-vs-CPU results.
+## Create the BigQuery Dataset for the logs
 
-If you haven't already, create a BigQuery dataset to hold the data:
-
-```console
-$ bq mk --dataset  \
-     --description "Holds data and results from GCS C++ Client Library Benchmarks" \
-     "${PROJECT_ID}:storage_benchmarks"
+ ```console
+$ bq mk --project=${PROJECT_ID} storage_benchmarks_raw_logs
 ```
 
-Create a table in this dataset to hold the benchmark results:
+## Create log sinks for the Storage Benchmarks
 
-```console
-$ TABLE_COLUMNS=(
-    "op:STRING"
-    "object_size:INT64"
-    "chunk_size:INT64"
-    "buffer_size:INT64"
-    "elapsed_us:INT64"
-    "cpu_us:INT64"
-    "status:STRING"
-    "version:STRING"
-)
-$ printf -v schema ",%s" "${TABLE_COLUMNS[@]}"
-$ schema=${schema:1}
-$ bq mk --table --description "Raw Data from throughput-vs-cpu benchmark" \
-    "${PROJECT_ID}:storage_benchmarks.throughput_vs_cpu_data" \
-    "${schema}"
+ ```console
+$ for container in storage-throughput-vs-cpu; do
+  cat >filter.txt <<_EOF_
+resource.type="k8s_container"
+resource.labels.container_name="${container}"
+resource.labels.cluster_name="storage-benchmarks-cluster"
+resource.labels.project_id="${PROJECT_ID}"
+_EOF_
+  SINK_DEST="projects/${PROJECT_ID}/datasets/storage_benchmarks_raw_logs"
+  gcloud logging sinks create  --project=${PROJECT_ID} ${container}-logs \
+    "bigquery.googleapis.com/${SINK_DEST}" \
+    --log-filter="$(cat filter.txt)"
+ done
 ```
 
-Make a list of all the objects:
-
-```console
-$ objects=$(gsutil ls gs://${PROJECT_ID}-benchmark-logs/throughput-vs-cpu/ | wc -l)
-$ max_errors=$(( ${objects} * 2 ))
-```
-
-Upload them to BigQuery:
-
-```console
-$ gsutil ls gs://${PROJECT_ID}-benchmark-logs/throughput-vs-cpu/ | \
-  xargs -I{} bq load --noreplace --skip_leading_rows=16 --max_bad_records=2 \
-       "${PROJECT_ID}:storage_benchmarks.throughput_vs_cpu_data" {}
-```
+You need to manually grant the "BigQuery Data Editor" role to a service account,
+as described in the program output. Navigate to
+`http://console.cloud.google.com/bigquery`, find the data set, client on
+"SHARE DATASET" and set the right permissions.
