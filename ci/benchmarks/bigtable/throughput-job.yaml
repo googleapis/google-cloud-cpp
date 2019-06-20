@@ -1,0 +1,61 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Start a large scale download using Kubernetes and the Cloud C++ GCS Library.
+
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: bigtable-throughput-benchmark
+  labels:
+    app: bigtable-throughput-benchmark
+spec:
+  schedule: '* */1 * * *' # hourly
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      parallelism: 1
+      completions: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          volumes:
+            - name: service-account-key
+              secret:
+                secretName: service-account-key
+          containers:
+            - name: bigtable-throughput-benchmark
+              image: gcr.io/@PROJECT_ID@/google-cloud-cpp-benchmarks:latest
+              imagePullPolicy: Always
+              args: [
+                  '/r/apply_read_latency_benchmark',
+                  # The project ID, we use sed to convert this to the actual
+                  # project ID because plain Kubernets YAML files do not have
+                  # "parameters".
+                  '@PROJECT_ID@',
+                  # Bigtable instance id
+                  'bm-throughput-instance',
+                  # AppProfile.
+                  'default',
+                  # Number of threads, 16 seems to saturate 1 vCPU
+                  '16',
+                  # Duration for the benchmark, in seconds.
+                  '3000' # ~50m
+              ]
+              volumeMounts:
+                - name: service-account-key
+                  mountPath: /var/secrets/service-account-key
+              env:
+                - name: GOOGLE_APPLICATION_CREDENTIALS
+                  value: /var/secrets/service-account-key/key.json
