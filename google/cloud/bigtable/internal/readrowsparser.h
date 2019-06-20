@@ -101,11 +101,11 @@ class ReadRowsParser {
  private:
   /// Holds partially formed data until a full Row is ready.
   struct ParseCell {
-    std::string row;
+    RowKeyType row;
     std::string family;
-    std::string column;
+    ColumnQualifierType column;
     int64_t timestamp;
-    std::string value;
+    CellValueType value;
     std::vector<std::string> labels;
   };
 
@@ -119,7 +119,7 @@ class ReadRowsParser {
   Cell MovePartialToCell();
 
   /// Row key for the current row.
-  std::string row_key_;
+  RowKeyType row_key_;
 
   /// Parsed cells of a yet unfinished row.
   std::vector<Cell> cells_;
@@ -131,7 +131,7 @@ class ReadRowsParser {
   ParseCell cell_;
 
   /// Set when a row is ready.
-  std::string last_seen_row_key_;
+  RowKeyType last_seen_row_key_;
 
   /// True iff cells_ make up a complete row.
   bool row_ready_;

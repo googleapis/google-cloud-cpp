@@ -49,6 +49,14 @@ inline int CompareCellValues(std::string const& lhs, std::string const& rhs) {
   return lhs.compare(rhs);
 }
 
+inline void AppendCellValue(std::string& value, std::string const& fragment) {
+  value.append(fragment);
+}
+
+inline void ReserveCellValue(std::string& value, std::size_t reserve) {
+  value.reserve(reserve);
+}
+
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

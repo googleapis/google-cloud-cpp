@@ -36,12 +36,12 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   }
 
   if (!chunk.row_key().empty()) {
-    if (last_seen_row_key_.compare(chunk.row_key()) >= 0) {
+    if (CompareRowKey(last_seen_row_key_, chunk.row_key()) >= 0) {
       status = grpc::Status(grpc::StatusCode::INTERNAL,
                             "Row keys are expected in increasing order");
       return;
     }
-    chunk.mutable_row_key()->swap(cell_.row);
+    std::swap(*chunk.mutable_row_key(), cell_.row);
   }
 
   if (chunk.has_family_name()) {
@@ -54,7 +54,7 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
   }
 
   if (chunk.has_qualifier()) {
-    chunk.mutable_qualifier()->mutable_value()->swap(cell_.column);
+    std::swap(*chunk.mutable_qualifier()->mutable_value(), cell_.column);
   }
 
   if (cell_first_chunk_) {
@@ -66,16 +66,16 @@ void ReadRowsParser::HandleChunk(ReadRowsResponse_CellChunk chunk,
 
   if (cell_first_chunk_) {
     // Most common case, move the value
-    chunk.mutable_value()->swap(cell_.value);
+    std::swap(*chunk.mutable_value(), cell_.value);
   } else {
-    cell_.value.append(chunk.value());
+    internal::AppendCellValue(cell_.value, chunk.value());
   }
 
   cell_first_chunk_ = false;
 
   // This is a hint we get about the total size
   if (chunk.value_size() > 0) {
-    cell_.value.reserve(chunk.value_size());
+    internal::ReserveCellValue(cell_.value, chunk.value_size());
   }
 
   // Last chunk in the cell has zero for value size
