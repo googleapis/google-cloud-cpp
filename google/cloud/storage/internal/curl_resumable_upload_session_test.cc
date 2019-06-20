@@ -58,14 +58,14 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(payload, request.payload());
         EXPECT_EQ(0, request.source_size());
         EXPECT_EQ(0, request.range_begin());
-        return make_status_or(ResumableUploadResponse{"", size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", size - 1, "", false});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
         EXPECT_EQ(payload, request.payload());
         EXPECT_EQ(2 * size, request.source_size());
         EXPECT_EQ(size, request.range_begin());
-        return make_status_or(ResumableUploadResponse{"", 2 * size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", 2 * size - 1, "", false});
       }));
 
   auto upload = session.UploadChunk(payload);
@@ -91,7 +91,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return make_status_or(ResumableUploadResponse{"", size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", size - 1, "", false});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return StatusOr<ResumableUploadResponse>(
@@ -100,7 +100,7 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   EXPECT_CALL(*mock, QueryResumableUpload(_))
       .WillOnce(Invoke([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(url1, request.upload_session_url());
-        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, ""});
+        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, "", false});
       }));
 
   auto upload = session.UploadChunk(payload);
@@ -127,10 +127,10 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   EXPECT_EQ(0, session.next_expected_byte());
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return make_status_or(ResumableUploadResponse{"", size - 1, ""});
+        return make_status_or(ResumableUploadResponse{"", size - 1, "", false});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, ""});
+        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, "", false});
       }));
 
   auto upload = session.UploadChunk(payload);

@@ -49,9 +49,11 @@ std::uint64_t CurlResumableUploadSession::next_expected_byte() const {
 
 void CurlResumableUploadSession::Update(
     StatusOr<ResumableUploadResponse> const& result) {
+  last_response_ = result;
   if (!result.ok()) {
     return;
   }
+  done_ = result->done;
   if (result->last_committed_byte == 0) {
     next_expected_ = 0;
   } else {

@@ -69,6 +69,12 @@ class ResumableUploadSession {
    * Note that the session id might change during an upload.
    */
   virtual std::string const& session_id() const = 0;
+
+  /// Returns whether the upload session has completed.
+  virtual bool done() const = 0;
+
+  /// Returns the last upload response encountered during the upload.
+  virtual StatusOr<ResumableUploadResponse> const& last_response() const = 0;
 };
 
 }  // namespace internal

@@ -476,6 +476,7 @@ struct ResumableUploadResponse {
   std::string upload_session_url;
   std::uint64_t last_committed_byte;
   std::string payload;
+  bool done;
 };
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);

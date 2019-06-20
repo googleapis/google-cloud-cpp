@@ -173,6 +173,9 @@ class MockResumableUploadSession
   MOCK_METHOD0(ResetSession, StatusOr<internal::ResumableUploadResponse>());
   MOCK_CONST_METHOD0(next_expected_byte, std::uint64_t());
   MOCK_CONST_METHOD0(session_id, std::string const&());
+  MOCK_CONST_METHOD0(done, bool());
+  MOCK_CONST_METHOD0(last_response,
+                     StatusOr<internal::ResumableUploadResponse> const&());
 };
 }  // namespace testing
 }  // namespace storage

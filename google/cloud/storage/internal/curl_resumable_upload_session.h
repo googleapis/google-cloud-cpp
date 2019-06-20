@@ -45,12 +45,20 @@ class CurlResumableUploadSession : public ResumableUploadSession {
 
   std::string const& session_id() const override { return session_id_; }
 
+  bool done() const override { return done_; }
+
+  StatusOr<ResumableUploadResponse> const& last_response() const override {
+    return last_response_;
+  }
+
  private:
   void Update(StatusOr<ResumableUploadResponse> const& result);
 
   std::shared_ptr<CurlClient> client_;
   std::string session_id_;
   std::uint64_t next_expected_ = 0;
+  bool done_ = false;
+  StatusOr<ResumableUploadResponse> last_response_;
 };
 
 }  // namespace internal

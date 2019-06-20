@@ -604,6 +604,7 @@ std::ostream& operator<<(std::ostream& os,
 StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     HttpResponse&& response) {
   ResumableUploadResponse result;
+  result.done = response.status_code == 200 || response.status_code == 201;
   result.last_committed_byte = 0;
   result.payload = std::move(response.payload);
   if (response.headers.find("location") != response.headers.end()) {

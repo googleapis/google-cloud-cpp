@@ -47,7 +47,7 @@ TEST(CurlResumableStreambufTest, EmptyStream) {
         EXPECT_EQ(1, count);
         EXPECT_TRUE(p.empty());
         EXPECT_EQ(0, s);
-        return make_status_or(ResumableUploadResponse{"{}", 0, {}});
+        return make_status_or(ResumableUploadResponse{"{}", 0, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
@@ -75,7 +75,7 @@ TEST(CurlResumableStreambufTest, SmallStream) {
         EXPECT_EQ(payload.size(), s);
         auto last_committed_byte = payload.size() - 1;
         return make_status_or(
-            ResumableUploadResponse{"{}", last_committed_byte, {}});
+            ResumableUploadResponse{"{}", last_committed_byte, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
@@ -103,7 +103,7 @@ TEST(CurlResumableStreambufTest, EmptyTrailer) {
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload, p);
     auto last_committed_byte = payload.size() - 1;
-    return make_status_or(ResumableUploadResponse{"", last_committed_byte, {}});
+    return make_status_or(ResumableUploadResponse{"", last_committed_byte, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -113,7 +113,7 @@ TEST(CurlResumableStreambufTest, EmptyTrailer) {
         EXPECT_EQ(quantum, s);
         auto last_committed_byte = quantum - 1;
         return make_status_or(
-            ResumableUploadResponse{"{}", last_committed_byte, {}});
+            ResumableUploadResponse{"{}", last_committed_byte, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
@@ -141,7 +141,7 @@ TEST(CurlResumableStreambufTest, FlushAfterLargePayload) {
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload_1, p);
     auto last_commited_byte = p.size() - 1;
-    return make_status_or(ResumableUploadResponse{"", last_commited_byte, {}});
+    return make_status_or(ResumableUploadResponse{"", last_commited_byte, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -151,7 +151,7 @@ TEST(CurlResumableStreambufTest, FlushAfterLargePayload) {
         EXPECT_EQ(payload_1.size() + payload_2.size(), s);
         auto last_committed_byte = payload_1.size() + payload_2.size() - 1;
         return make_status_or(
-            ResumableUploadResponse{"{}", last_committed_byte, {}});
+            ResumableUploadResponse{"{}", last_committed_byte, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(3 * quantum));
 
@@ -180,7 +180,7 @@ TEST(CurlResumableStreambufTest, FlushAfterFullQuantum) {
     EXPECT_EQ(1, count);
     auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
     EXPECT_EQ(expected, p);
-    return make_status_or(ResumableUploadResponse{"", quantum - 1, {}});
+    return make_status_or(ResumableUploadResponse{"", quantum - 1, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -191,7 +191,7 @@ TEST(CurlResumableStreambufTest, FlushAfterFullQuantum) {
         EXPECT_EQ(payload_1.size() + payload_2.size(), s);
         auto last_committed_byte = payload_1.size() + payload_2.size() - 1;
         return make_status_or(
-            ResumableUploadResponse{"{}", last_committed_byte, {}});
+            ResumableUploadResponse{"{}", last_committed_byte, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
@@ -219,7 +219,7 @@ TEST(CurlResumableStreambufTest, OverflowFlushAtFullQuantum) {
     EXPECT_EQ(1, count);
     auto expected = payload;
     EXPECT_EQ(expected, p);
-    return make_status_or(ResumableUploadResponse{"", quantum - 1, {}});
+    return make_status_or(ResumableUploadResponse{"", quantum - 1, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -229,7 +229,7 @@ TEST(CurlResumableStreambufTest, OverflowFlushAtFullQuantum) {
         EXPECT_EQ(payload.size(), s);
         auto last_committed_byte = payload.size() - 1;
         return make_status_or(
-            ResumableUploadResponse{"{}", last_committed_byte, {}});
+            ResumableUploadResponse{"{}", last_committed_byte, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
@@ -260,7 +260,7 @@ TEST(CurlResumableStreambufTest, MixPutcPutn) {
     EXPECT_EQ(1, count);
     auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
     EXPECT_EQ(expected, p);
-    return make_status_or(ResumableUploadResponse{"", quantum - 1, {}});
+    return make_status_or(ResumableUploadResponse{"", quantum - 1, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -271,7 +271,7 @@ TEST(CurlResumableStreambufTest, MixPutcPutn) {
         EXPECT_EQ(payload_1.size() + payload_2.size(), s);
         auto last_committed_byte = payload_1.size() + payload_2.size() - 1;
         return make_status_or(
-            ResumableUploadResponse{"{}", last_committed_byte, {}});
+            ResumableUploadResponse{"{}", last_committed_byte, {}, false});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
