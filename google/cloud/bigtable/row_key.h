@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_KEY_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_KEY_H_
 
+#include "google/cloud/bigtable/internal/bytes_traits.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <type_traits>
@@ -27,14 +28,17 @@ inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Defines the type for row keys.
  *
- * Inside Google row keys are not represented by `std::string`. To minimize
- * friction during imports we define the type using a `decltype()` expression.
+ * Inside Google some protobuf fields of type `bytes` are mapped to a different
+ * type than `std::string`. This is the case for row keys. We use this type to
+ * automatically detect what is the representation for this field and use the
+ * correct mapping.
  *
- * Users of the Cloud Bigtable C++ client library should treat this as a
- * complicated `typedef` for `std::string`. We have no plans to change the type
- * in the external version of the C++ client library in the foreseeable future.
- * If we ever did we would treat such a change as a reason to update the library
- * major version number, and we would give users time to migrate.
+ * External users of the Cloud Bigtable C++ client library should treat this as
+ * a complicated `typedef` for `std::string`. We have no plans to change the
+ * type in the external version of the C++ client library for the foreseeable
+ * future. In the eventuality that we do decide to change the type, this would
+ * be a reason update the library major version number, and we would give users
+ * time to migrate.
  *
  * In other words, external users of the Cloud Bigtable C++ client should simply
  * write `std::string` where this type appears. For Google projects that must
@@ -43,21 +47,6 @@ inline namespace BIGTABLE_CLIENT_NS {
 using RowKeyType =
     std::decay<decltype(std::declval<google::bigtable::v2::Row>().key())>::type;
 
-using ColumnQualifierType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
-
-using CellValueType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Cell>().value())>::type;
-
-namespace internal {
-inline bool IsEmptyRowKey(RowKeyType const& key) { return key.empty(); }
-
-inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
-
-inline int CompareRowKey(RowKeyType const& lhs, RowKeyType const& rhs) {
-  return lhs.compare(rhs);
-}
-}  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

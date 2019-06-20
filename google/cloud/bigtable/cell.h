@@ -28,6 +28,50 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 /**
+ * Defines the type for column qualifiers.
+ *
+ * Inside Google some protobuf fields of type `bytes` are mapped to a different
+ * type than `std::string`. This is the case for column qualifiers. We use this
+ * type to automatically detect what is the representation for this field and
+ * use the correct mapping.
+ *
+ * External users of the Cloud Bigtable C++ client library should treat this as
+ * a complicated `typedef` for `std::string`. We have no plans to change the
+ * type in the external version of the C++ client library for the foreseeable
+ * future. In the eventuality that we do decide to change the type, this would
+ * be a reason update the library major version number, and we would give users
+ * time to migrate.
+ *
+ * In other words, external users of the Cloud Bigtable C++ client should simply
+ * write `std::string` where this type appears. For Google projects that must
+ * compile both inside and outside Google, this alias may be convenient.
+ */
+using ColumnQualifierType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
+
+/**
+ * Defines the type for cell values.
+ *
+ * Inside Google some protobuf fields of type `bytes` are mapped to a different
+ * type than `std::string`. This is the case for column qualifiers. We use this
+ * type to automatically detect what is the representation for this field and
+ * use the correct mapping.
+ *
+ * External users of the Cloud Bigtable C++ client library should treat this as
+ * a complicated `typedef` for `std::string`. We have no plans to change the
+ * type in the external version of the C++ client library for the foreseeable
+ * future. In the eventuality that we do decide to change the type, this would
+ * be a reason update the library major version number, and we would give users
+ * time to migrate.
+ *
+ * In other words, external users of the Cloud Bigtable C++ client should simply
+ * write `std::string` where this type appears. For Google projects that must
+ * compile both inside and outside Google, this alias may be convenient.
+ */
+using CellValueType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Cell>().value())>::type;
+
+/**
  * The in-memory representation of a Bigtable cell.
  *
  * Bigtable stores data in rows, indexes by row keys.  Each row may contain

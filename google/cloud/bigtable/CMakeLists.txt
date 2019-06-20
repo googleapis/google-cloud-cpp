@@ -138,12 +138,15 @@ add_library(bigtable_client
             internal/async_retry_unary_rpc_and_poll.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
+            internal/bytes_traits.h
             internal/client_options_defaults.h
             internal/completion_queue_impl.h
             internal/completion_queue_impl.cc
             internal/common_client.h
             internal/common_client.cc
             internal/conjunction.h
+            internal/google_bytes_traits.h
+            internal/google_bytes_traits.cc
             internal/grpc_error_delegate.h
             internal/grpc_error_delegate.cc
             internal/poll_longrunning_operation.h
