@@ -19,7 +19,7 @@ include(external/c-ares)
 include(external/ssl)
 include(external/protobuf)
 
-if (NOT TARGET gprc_project)
+if (NOT TARGET grpc_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_GRPC_URL
