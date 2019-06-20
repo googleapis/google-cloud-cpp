@@ -281,7 +281,7 @@ class SingleRowMutation {
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(
       ::google::bigtable::v2::MutateRowsRequest::Entry entry) {
-    request_.mutable_row_key()->swap(*entry.mutable_row_key());
+    std::swap(*request_.mutable_row_key(), *entry.mutable_row_key());
     request_.mutable_mutations()->Swap(entry.mutable_mutations());
   }
 
