@@ -12,32 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BYTES_TRAITS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BYTES_TRAITS_H_
-
-#include "google/cloud/bigtable/internal/google_bytes_traits.h"
-#include "google/cloud/bigtable/version.h"
+#include "google/cloud/bigtable/internal/bytes_traits.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-inline bool IsEmptyRowKey(std::string const& key) { return key.empty(); }
 
-inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
-
-inline int CompareRowKey(std::string const& lhs, std::string const& rhs) {
-  return lhs.compare(rhs);
+bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
+  // The only way for two strings to be consecutive is for the
+  // second to be equal to the first with an appended zero char.
+  if (b.length() != a.length() + 1) {
+    return false;
+  }
+  if (b.back() != '\0') {
+    return false;
+  }
+  return b.compare(0, a.length(), a) == 0;
 }
-
-/// Returns true iff a < b and there is no string c such that a < c < b.
-bool ConsecutiveRowKeys(std::string const& a, std::string const& b);
-
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BYTES_TRAITS_H_

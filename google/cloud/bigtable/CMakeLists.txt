@@ -139,6 +139,7 @@ add_library(bigtable_client
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
             internal/bytes_traits.h
+            internal/bytes_traits.cc
             internal/client_options_defaults.h
             internal/completion_queue_impl.h
             internal/completion_queue_impl.cc
