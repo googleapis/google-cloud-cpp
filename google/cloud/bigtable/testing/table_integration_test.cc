@@ -204,10 +204,10 @@ std::vector<bigtable::Cell> TableIntegrationTest::MoveCellsFromReader(
 /// A helper function to create a list of cells.
 void TableIntegrationTest::CreateCells(
     bigtable::Table& table, std::vector<bigtable::Cell> const& cells) {
-  std::map<std::string, bigtable::SingleRowMutation> mutations;
+  std::map<RowKeyType , bigtable::SingleRowMutation> mutations;
   for (auto const& cell : cells) {
     using namespace std::chrono;
-    std::string key = cell.row_key();
+    auto key = cell.row_key();
     auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
     inserted.first->second.emplace_back(bigtable::SetCell(
         cell.family_name(), cell.column_qualifier(),
@@ -260,7 +260,7 @@ std::string TableIntegrationTest::RandomTableId() {
 }  // namespace testing
 
 int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  auto compare_row_key = lhs.row_key().compare(rhs.row_key());
+  auto compare_row_key = internal::CompareRowKey(lhs.row_key(), rhs.row_key());
   if (compare_row_key != 0) {
     return compare_row_key;
   }
@@ -268,8 +268,8 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (compare_family_name != 0) {
     return compare_family_name;
   }
-  auto compare_column_qualifier =
-      lhs.column_qualifier().compare(rhs.column_qualifier());
+  auto compare_column_qualifier = internal::CompareColumnQualifiers(
+      lhs.column_qualifier(), rhs.column_qualifier());
   if (compare_column_qualifier != 0) {
     return compare_column_qualifier;
   }
@@ -279,7 +279,7 @@ int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
   if (lhs.timestamp() > rhs.timestamp()) {
     return 1;
   }
-  auto compare_value = lhs.value().compare(rhs.value());
+  auto compare_value = internal::CompareCellValues(lhs.value(), rhs.value());
   if (compare_value != 0) {
     return compare_value;
   }
@@ -309,37 +309,8 @@ bool operator<(Cell const& lhs, Cell const& rhs) {
 void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   *os << "  row_key=" << cell.row_key() << ", family=" << cell.family_name()
       << ", column=" << cell.column_qualifier()
-      << ", timestamp=" << cell.timestamp().count() << ", value=<";
-  // Replace non-printable values with '.' to make the output more readable.
-  bool has_non_printable = false;
-  for (char c : cell.value()) {
-    if (std::isprint(c)) {
-      *os << c;
-    } else {
-      *os << '.';
-      has_non_printable = true;
-    }
-  }
-  *os << ">";
-  if (has_non_printable) {
-    *os << "(hex:";
-    // Also print the buffer has hex values.
-    for (char c : cell.value()) {
-      char buf[8];
-      std::snprintf(buf, sizeof(buf), "\\x%02x", static_cast<unsigned char>(c));
-      *os << buf;
-    }
-    *os << ")";
-  }
-  if (cell.value().size() == 8) {
-    // Sometimes the value represents a big-endian 64-bit integer, print it as
-    // such because it makes debugging much easier ...
-    static_assert(std::numeric_limits<unsigned char>::digits == 8,
-                  "This code assumes char is an 8-bit number");
-    *os << "[int64:" << cell.decode_big_endian_integer<std::int64_t>().value()
-        << "]";
-  }
-  *os << ", labels={";
+      << ", timestamp=" << cell.timestamp().count() << ", value=<"
+      << cell.value() << ">, labels={";
   char const* del = "";
   for (auto const& label : cell.labels()) {
     *os << del << label;

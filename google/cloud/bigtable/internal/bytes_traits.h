@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BYTES_TRAITS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_BYTES_TRAITS_H_
 
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/big_endian.h"
 
 namespace google {
 namespace cloud {
@@ -35,9 +35,18 @@ inline int CompareRowKey(std::string const& lhs, std::string const& rhs) {
 /// Returns true iff a < b and there is no string c such that a < c < b.
 bool ConsecutiveRowKeys(std::string const& a, std::string const& b);
 
+inline int CompareColumnQualifiers(std::string const& lhs,
+                                   std::string const& rhs) {
+  return lhs.compare(rhs);
+}
+
 template <typename T>
 StatusOr<T> DecodeBigEndianCellValue(std::string const& c) {
   return google::cloud::internal::DecodeBigEndian<T>(std::string(c));
+}
+
+inline int CompareCellValues(std::string const& lhs, std::string const& rhs) {
+  return lhs.compare(rhs);
 }
 
 }  // namespace internal
