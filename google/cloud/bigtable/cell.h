@@ -46,8 +46,8 @@ inline namespace BIGTABLE_CLIENT_NS {
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using ColumnQualifierType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
+using ColumnQualifierType = std::remove_cv<std::decay<decltype(
+    std::declval<google::bigtable::v2::Column>().qualifier())>::type>::type;
 
 /**
  * Defines the type for cell values.
@@ -68,8 +68,8 @@ using ColumnQualifierType = std::decay<decltype(
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using CellValueType = std::decay<decltype(
-    std::declval<google::bigtable::v2::Cell>().value())>::type;
+using CellValueType = std::remove_cv<std::decay<decltype(
+    std::declval<google::bigtable::v2::Cell>().value())>::type>::type;
 
 /**
  * The in-memory representation of a Bigtable cell.

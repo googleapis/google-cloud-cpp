@@ -44,8 +44,8 @@ inline namespace BIGTABLE_CLIENT_NS {
  * write `std::string` where this type appears. For Google projects that must
  * compile both inside and outside Google, this alias may be convenient.
  */
-using RowKeyType =
-    std::decay<decltype(std::declval<google::bigtable::v2::Row>().key())>::type;
+using RowKeyType = std::remove_cv<std::decay<decltype(
+    std::declval<google::bigtable::v2::Row>().key())>::type>::type;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
