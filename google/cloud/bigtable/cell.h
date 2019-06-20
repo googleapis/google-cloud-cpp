@@ -51,10 +51,10 @@ class Cell {
         labels_(std::move(labels)) {}
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian.
-  template <typename KeyType, typename ColumnType>
+  template <typename KeyType, typename ColumnType, typename... U>
   Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
        std::int64_t timestamp, std::int64_t value,
-       std::vector<std::string> labels)
+       std::vector<std::string> labels, U...)
       : Cell(std::move(row_key), std::move(family_name),
              std::move(column_qualifier), timestamp,
              google::cloud::internal::EncodeBigEndian(value),
@@ -65,15 +65,8 @@ class Cell {
   Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
        std::int64_t timestamp, ValueType value)
       : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp, std::move(value), {}) {}
-
-  /// Create a Cell and fill it with a 64-bit value encoded as big endian, but
-  /// with empty labels.
-  template <typename KeyType, typename ColumnType>
-  Cell(KeyType row_key, std::string family_name, ColumnType column_qualifier,
-       std::int64_t timestamp, std::int64_t value)
-      : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp, value, {}) {}
+             std::move(column_qualifier), timestamp, std::move(value),
+             std::vector<std::string>{}) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
