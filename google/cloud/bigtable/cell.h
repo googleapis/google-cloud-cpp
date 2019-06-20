@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
-#include "google/cloud/bigtable/internal/bytes_traits.h"
+#include "google/cloud/bigtable/internal/google_bytes_traits.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status_or.h"

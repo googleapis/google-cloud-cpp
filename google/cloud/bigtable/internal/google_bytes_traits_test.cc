@@ -12,25 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/bytes_traits.h"
+#include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include <gtest/gtest.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
+namespace {
 
-bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
-  // The only way for two strings to be consecutive is for the
-  // second to be equal to the first with an appended zero char.
-  if (b.length() != a.length() + 1) {
-    return false;
-  }
-  if (b.back() != '\0') {
-    return false;
-  }
-  return b.compare(0, a.length(), a) == 0;
+TEST(GoogleBytesTraitsTest, ConsecutiveRowKeys) {
+  EXPECT_FALSE(ConsecutiveRowKeys("a", "a"));
+  EXPECT_FALSE(ConsecutiveRowKeys("b", "a"));
+  EXPECT_FALSE(ConsecutiveRowKeys("a", "c"));
+  EXPECT_FALSE(ConsecutiveRowKeys("a", std::string("a\1", 2)));
+  EXPECT_TRUE(ConsecutiveRowKeys("a", std::string("a\0", 2)));
 }
+
+}  // namespace
 }  // namespace internal
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

@@ -12,5 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// This file is intentionally empty. Inside Google a different version contains
-// traits for the alternative C++ mapping of protobuf bytes.
+#include "google/cloud/bigtable/internal/google_bytes_traits.h"
+
+namespace google {
+namespace cloud {
+namespace bigtable {
+inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
+
+bool ConsecutiveRowKeys(std::string const& a, std::string const& b) {
+  // The only way for two strings to be consecutive is for the
+  // second to be equal to the first with an appended zero char.
+  if (b.length() != a.length() + 1) {
+    return false;
+  }
+  if (b.back() != '\0') {
+    return false;
+  }
+  return b.compare(0, a.length(), a) == 0;
+}
+}  // namespace internal
+}  // namespace BIGTABLE_CLIENT_NS
+}  // namespace bigtable
+}  // namespace cloud
+}  // namespace google

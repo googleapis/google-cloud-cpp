@@ -138,8 +138,6 @@ add_library(bigtable_client
             internal/async_retry_unary_rpc_and_poll.h
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
-            internal/bytes_traits.h
-            internal/bytes_traits.cc
             internal/client_options_defaults.h
             internal/completion_queue_impl.h
             internal/completion_queue_impl.cc
@@ -278,6 +276,7 @@ if (BUILD_TESTING)
         internal/async_retry_multi_page_test.cc
         internal/async_retry_unary_rpc_test.cc
         internal/bulk_mutator_test.cc
+        internal/google_bytes_traits_test.cc
         internal/grpc_error_delegate_test.cc
         internal/prefix_range_end_test.cc
         mutation_batcher_test.cc
