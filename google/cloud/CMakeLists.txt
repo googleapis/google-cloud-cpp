@@ -72,6 +72,8 @@ include(GoogleCloudCppCommon)
 add_library(google_cloud_cpp_common_options INTERFACE)
 google_cloud_cpp_add_common_options(google_cloud_cpp_common_options)
 
+find_package(OpenSSL REQUIRED)
+
 # Define a function to fetch the current git revision. Using a function creates
 # a new scope, so the CMake variables do not leak to the global namespace.
 function (google_cloud_cpp_initialize_git_head var)
@@ -158,6 +160,8 @@ add_library(google_cloud_cpp_common
             internal/getenv.cc
             internal/ios_flags_saver.h
             internal/make_unique.h
+            internal/openssl_util.h
+            internal/openssl_util.cc
             internal/parse_rfc3339.h
             internal/parse_rfc3339.cc
             internal/port_platform.h
@@ -180,7 +184,7 @@ add_library(google_cloud_cpp_common
             terminate_handler.cc
             version.h)
 target_link_libraries(google_cloud_cpp_common
-                      PUBLIC Threads::Threads
+                      PUBLIC Threads::Threads OpenSSL::SSL OpenSSL::Crypto
                       PRIVATE google_cloud_cpp_common_options)
 target_include_directories(google_cloud_cpp_common
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -243,6 +247,7 @@ if (BUILD_TESTING)
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/invoke_result_test.cc
+        internal/openssl_util_test.cc
         internal/parse_rfc3339_test.cc
         internal/random_test.cc
         internal/retry_policy_test.cc
@@ -304,6 +309,7 @@ set(
     )
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Common Components used by the Google Cloud C++ Client Libraries.")
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES "openssl")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_common")
 
 # Create and install the pkg-config files.

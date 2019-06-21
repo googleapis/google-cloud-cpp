@@ -12,19 +12,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H_
 
-#include "google/cloud/storage/oauth2/credential_constants.h"
-#include "google/cloud/storage/version.h"
+#include "google/cloud/internal/throw_delegate.h"
 #include <algorithm>
+#include <cstdint>
+#include <string>
 #include <vector>
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+
+/**
+ * Supported signing algorithms used in JWT auth flows.
+ *
+ * We currently only support RSA with SHA-256, but use this enum for
+ * readability and easy addition of support for other algorithms.
+ */
+enum class JwtSigningAlgorithms { RS256 };
 
 /**
  * Decodes a Base64-encoded string.
@@ -48,9 +56,9 @@ std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
  *   might want to use `Base64Encode()` or `HexEncode()` to convert this byte
  *   array to a format more suitable for transmission over HTTP.
  */
-std::vector<std::uint8_t> SignStringWithPem(
-    std::string const& str, std::string const& pem_contents,
-    storage::oauth2::JwtSigningAlgorithms alg);
+std::vector<std::uint8_t> SignStringWithPem(std::string const& str,
+                                            std::string const& pem_contents,
+                                            JwtSigningAlgorithms alg);
 
 /**
  * Returns a Base64-encoded version of @p bytes. Using the URL- and
@@ -77,9 +85,8 @@ inline std::string UrlsafeBase64Encode(Collection const& bytes) {
 std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str);
 
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OPENSSL_UTIL_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OPENSSL_UTIL_H_

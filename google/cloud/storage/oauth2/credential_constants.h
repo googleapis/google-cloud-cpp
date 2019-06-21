@@ -24,14 +24,6 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-/**
- * Supported signing algorithms used in JWT auth flows.
- *
- * We currently only support RSA with SHA-256, but use this enum for
- * readability and easy addition of support for other algorithms.
- */
-enum class JwtSigningAlgorithms { RS256 };
-
 /// The max lifetime in seconds of an access token.
 constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
   return std::chrono::seconds(3600);

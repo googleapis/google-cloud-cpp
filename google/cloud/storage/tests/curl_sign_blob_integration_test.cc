@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
@@ -39,7 +39,7 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   ASSERT_STATUS_OK(client);
   std::string service_account = flag_service_account;
 
-  auto encoded = Base64Encode(LoremIpsum());
+  auto encoded = ::google::cloud::internal::Base64Encode(LoremIpsum());
 
   SignBlobRequest request(service_account, encoded, {});
 
@@ -49,7 +49,7 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
   EXPECT_FALSE(response->key_id.empty());
   EXPECT_FALSE(response->signed_blob.empty());
 
-  auto decoded = Base64Decode(response->signed_blob);
+  auto decoded = ::google::cloud::internal::Base64Decode(response->signed_blob);
   EXPECT_FALSE(decoded.empty());
 }
 

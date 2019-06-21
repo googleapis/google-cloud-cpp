@@ -379,9 +379,11 @@ TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
       std::string encoded_payload;
       std::getline(is, encoded_payload, '.');
 
-      auto header_bytes = internal::UrlsafeBase64Decode(encoded_header);
+      auto header_bytes =
+          ::google::cloud::internal::UrlsafeBase64Decode(encoded_header);
       std::string header_str{header_bytes.begin(), header_bytes.end()};
-      auto payload_bytes = internal::UrlsafeBase64Decode(encoded_payload);
+      auto payload_bytes =
+          ::google::cloud::internal::UrlsafeBase64Decode(encoded_payload);
       std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
 
       auto header = internal::nl::json::parse(header_str);
@@ -505,7 +507,7 @@ x-goog-meta-foo:bar,baz
       "hRW9bSCCV8w1Ex+"
       "QxmB5z7P7zZn2pl7JAcL850emTo8f2tfv1xXWQGhACvIJeMdPmyjbc04Ye4M8Ljpkg3YhE6l"
       "4GwC2MnI8TkuoHe4Bj2MvA8mM8TVwIvpBs6Etsj6Jdaz4rg==";
-  EXPECT_EQ(expected_signed, internal::Base64Encode(*actual));
+  EXPECT_EQ(expected_signed, ::google::cloud::internal::Base64Encode(*actual));
 }
 
 /// @test Verify that we can get the client id from a service account.
@@ -660,7 +662,7 @@ char const kP12KeyFileMissingKey[] =
 void WriteBase64AsBinary(std::string const& filename, char const* data) {
   std::ofstream os(filename, std::ios::binary);
   os.exceptions(std::ios::badbit);
-  auto bytes = internal::Base64Decode(data);
+  auto bytes = ::google::cloud::internal::Base64Decode(data);
   for (unsigned char c : bytes) {
     os << c;
   }

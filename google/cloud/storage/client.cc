@@ -15,10 +15,10 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <openssl/md5.h>
 #include <fstream>
@@ -253,13 +253,15 @@ StatusOr<Client::SignBlobResponseRaw> Client::SignBlobImpl(
   // support signing, or because the signing account is different than the
   // credentials account. In either case, try to sign using the API.
   internal::SignBlobRequest sign_request(
-      signing_account_email, internal::Base64Encode(string_to_sign), {});
+      signing_account_email,
+      ::google::cloud::internal::Base64Encode(string_to_sign), {});
   auto response = raw_client()->SignBlob(sign_request);
   if (!response) {
     return response.status();
   }
-  return SignBlobResponseRaw{response->key_id,
-                             internal::Base64Decode(response->signed_blob)};
+  return SignBlobResponseRaw{
+      response->key_id,
+      ::google::cloud::internal::Base64Decode(response->signed_blob)};
 }
 
 StatusOr<std::string> Client::SignUrlV2(
@@ -271,7 +273,8 @@ StatusOr<std::string> Client::SignUrlV2(
   }
 
   internal::CurlHandle curl;
-  auto encoded = internal::Base64Encode(signed_blob->signed_blob);
+  auto encoded =
+      ::google::cloud::internal::Base64Encode(signed_blob->signed_blob);
   std::string signature = curl.MakeEscapedString(encoded).get();
 
   std::ostringstream os;
@@ -316,7 +319,7 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
   auto signing_email = SigningEmail(signing_account);
 
   auto string_to_sign = request.StringToSign();
-  auto base64_policy = internal::Base64Encode(string_to_sign);
+  auto base64_policy = ::google::cloud::internal::Base64Encode(string_to_sign);
   auto signed_blob = SignBlobImpl(signing_account, base64_policy);
   if (!signed_blob) {
     return signed_blob.status();
@@ -324,7 +327,7 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
 
   return PolicyDocumentResult{
       signing_email, request.policy_document().expiration, base64_policy,
-      internal::Base64Encode(signed_blob->signed_blob)};
+      ::google::cloud::internal::Base64Encode(signed_blob->signed_blob)};
 }
 
 }  // namespace STORAGE_CLIENT_NS

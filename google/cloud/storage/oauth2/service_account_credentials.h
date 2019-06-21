@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_SERVICE_ACCOUNT_CREDENTIALS_H_
 
+#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
-#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
@@ -138,8 +138,9 @@ class ServiceAccountCredentials : public Credentials {
                     "The current_credentials cannot sign blobs for " +
                         signing_account.value());
     }
-    return internal::SignStringWithPem(blob, info_.private_key,
-                                       JwtSigningAlgorithms::RS256);
+    return ::google::cloud::internal::SignStringWithPem(
+        blob, info_.private_key,
+        ::google::cloud::internal::JwtSigningAlgorithms::RS256);
   }
 
   std::string AccountEmail() const override { return info_.client_email; }
@@ -203,11 +204,15 @@ class ServiceAccountCredentials : public Credentials {
   std::string MakeJWTAssertion(storage::internal::nl::json const& header,
                                storage::internal::nl::json const& payload,
                                std::string const& pem_contents) const {
-    std::string encoded_header = internal::UrlsafeBase64Encode(header.dump());
-    std::string encoded_payload = internal::UrlsafeBase64Encode(payload.dump());
-    std::string encoded_signature = internal::UrlsafeBase64Encode(
-        internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
-                                    pem_contents, JwtSigningAlgorithms::RS256));
+    std::string encoded_header =
+        ::google::cloud::internal::UrlsafeBase64Encode(header.dump());
+    std::string encoded_payload =
+        ::google::cloud::internal::UrlsafeBase64Encode(payload.dump());
+    std::string encoded_signature =
+        ::google::cloud::internal::UrlsafeBase64Encode(
+            ::google::cloud::internal::SignStringWithPem(
+                encoded_header + '.' + encoded_payload, pem_contents,
+                ::google::cloud::internal::JwtSigningAlgorithms::RS256));
     return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
   }
 

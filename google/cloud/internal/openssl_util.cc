@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/internal/openssl_util.h"
 #include <openssl/bio.h>
 #include <openssl/buffer.h>
 #include <openssl/evp.h>
@@ -27,8 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
-inline namespace STORAGE_CLIENT_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 namespace {
@@ -175,8 +173,8 @@ std::string Base64Encode(std::vector<std::uint8_t> const& bytes) {
 
 std::vector<std::uint8_t> SignStringWithPem(
     std::string const& str, std::string const& pem_contents,
-    storage::oauth2::JwtSigningAlgorithms alg) {
-  using ::google::cloud::storage::oauth2::JwtSigningAlgorithms;
+    internal::JwtSigningAlgorithms alg) {
+  using ::google::cloud::internal::JwtSigningAlgorithms;
 
   // We check for failures several times, so we shorten this into a lambda
   // to avoid bloating the code with alloc/init checks.
@@ -279,7 +277,6 @@ std::vector<std::uint8_t> UrlsafeBase64Decode(std::string const& str) {
   return Base64Decode(b64str);
 }
 }  // namespace internal
-}  // namespace STORAGE_CLIENT_NS
-}  // namespace storage
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

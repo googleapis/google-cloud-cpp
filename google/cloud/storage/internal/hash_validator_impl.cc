@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/internal/hash_validator_impl.h"
 #include "google/cloud/internal/big_endian.h"
-#include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/storage/object_metadata.h"
 #include <crc32c/crc32c.h>
 
@@ -59,7 +59,7 @@ void MD5HashValidator::ProcessHeader(std::string const& key,
 HashValidator::Result MD5HashValidator::Finish() && {
   std::string hash(MD5_DIGEST_LENGTH, ' ');
   MD5_Final(reinterpret_cast<unsigned char*>(&hash[0]), &context_);
-  auto computed = Base64Encode(hash);
+  auto computed = ::google::cloud::internal::Base64Encode(hash);
   bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
@@ -100,7 +100,7 @@ void Crc32cHashValidator::ProcessHeader(std::string const& key,
 
 HashValidator::Result Crc32cHashValidator::Finish() && {
   std::string const hash = google::cloud::internal::EncodeBigEndian(current_);
-  auto computed = Base64Encode(hash);
+  auto computed = ::google::cloud::internal::Base64Encode(hash);
   bool is_mismatch = !received_hash_.empty() && (received_hash_ != computed);
   return Result{std::move(received_hash_), std::move(computed), is_mismatch};
 }
