@@ -41,10 +41,6 @@ class RowSet {
 
   template <typename... Arg>
   RowSet(Arg&&... a) {
-    // Generate a better error message when the parameters do not match.
-    static_assert(internal::conjunction<IsValidAppendAllArg<Arg>...>::value,
-                  "RowSet variadic constructor arguments must be convertible "
-                  "to bigtable::RowRange or std::string");
     AppendAll(std::forward<Arg&&>(a)...);
   }
 
@@ -56,8 +52,9 @@ class RowSet {
   /**
    * Add @p row_key to the set, minimize copies when possible.
    */
-  void Append(std::string row_key) {
-    *row_set_.add_row_keys() = std::move(row_key);
+  template <typename T>
+  void Append(T&& row_key) {
+    *row_set_.add_row_keys() = std::forward<T>(row_key);
   }
 
   /**
@@ -85,23 +82,13 @@ class RowSet {
   ::google::bigtable::v2::RowSet&& as_proto() && { return std::move(row_set_); }
 
  private:
-  template <typename T>
-  struct IsValidAppendAllArg {
-    using value_type = T;
-    using type =
-        std::integral_constant<bool,
-                               std::is_convertible<T, std::string>::value ||
-                                   std::is_convertible<T, RowRange>::value>;
-    static constexpr bool value = type::value;
-  };
-
   /// Append the arguments to the rowset.
   template <typename H, typename... Tail>
   void AppendAll(H&& head, Tail&&... a) {
     // We cannot use the initializer list expression here because the types
     // may be all different.
     Append(std::forward<H>(head));
-    AppendAll(std::forward<Tail&&>(a)...);
+    AppendAll(std::forward<Tail>(a)...);
   }
 
   /// Terminate the recursion.

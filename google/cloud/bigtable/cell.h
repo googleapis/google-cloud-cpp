@@ -15,16 +15,62 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_CELL_H_
 
+#include "google/cloud/bigtable/internal/google_bytes_traits.h"
+#include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
+#include <type_traits>
 #include <vector>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+/**
+ * Defines the type for column qualifiers.
+ *
+ * Inside Google some protobuf fields of type `bytes` are mapped to a different
+ * type than `std::string`. This is the case for column qualifiers. We use this
+ * type to automatically detect what is the representation for this field and
+ * use the correct mapping.
+ *
+ * External users of the Cloud Bigtable C++ client library should treat this as
+ * a complicated `typedef` for `std::string`. We have no plans to change the
+ * type in the external version of the C++ client library for the foreseeable
+ * future. In the eventuality that we do decide to change the type, this would
+ * be a reason update the library major version number, and we would give users
+ * time to migrate.
+ *
+ * In other words, external users of the Cloud Bigtable C++ client should simply
+ * write `std::string` where this type appears. For Google projects that must
+ * compile both inside and outside Google, this alias may be convenient.
+ */
+using ColumnQualifierType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Column>().qualifier())>::type;
+
+/**
+ * Defines the type for cell values.
+ *
+ * Inside Google some protobuf fields of type `bytes` are mapped to a different
+ * type than `std::string`. This is the case for column qualifiers. We use this
+ * type to automatically detect what is the representation for this field and
+ * use the correct mapping.
+ *
+ * External users of the Cloud Bigtable C++ client library should treat this as
+ * a complicated `typedef` for `std::string`. We have no plans to change the
+ * type in the external version of the C++ client library for the foreseeable
+ * future. In the eventuality that we do decide to change the type, this would
+ * be a reason update the library major version number, and we would give users
+ * time to migrate.
+ *
+ * In other words, external users of the Cloud Bigtable C++ client should simply
+ * write `std::string` where this type appears. For Google projects that must
+ * compile both inside and outside Google, this alias may be convenient.
+ */
+using CellValueType = std::decay<decltype(
+    std::declval<google::bigtable::v2::Cell>().value())>::type;
+
 /**
  * The in-memory representation of a Bigtable cell.
  *
@@ -39,41 +85,44 @@ inline namespace BIGTABLE_CLIENT_NS {
 class Cell {
  public:
   /// Create a Cell and fill it with data.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::string value,
+  template <typename KeyType, typename ColumnType, typename ValueType,
+            // This function does not participate in overload resolution if
+            // ValueType is not an integral type. The case for integral types is
+            // handled by the next overload, where the value is stored as a Big
+            // Endian number.
+            typename std::enable_if<!std::is_integral<ValueType>::value,
+                                    int>::type = 0>
+  Cell(KeyType&& row_key, std::string family_name,
+       ColumnType&& column_qualifier, std::int64_t timestamp, ValueType&& value,
        std::vector<std::string> labels)
-      : row_key_(std::move(row_key)),
+      : row_key_(std::forward<KeyType>(row_key)),
         family_name_(std::move(family_name)),
-        column_qualifier_(std::move(column_qualifier)),
+        column_qualifier_(std::forward<ColumnType>(column_qualifier)),
         timestamp_(timestamp),
-        value_(std::move(value)),
+        value_(std::forward<ValueType>(value)),
         labels_(std::move(labels)) {}
 
   /// Create a Cell and fill it with a 64-bit value encoded as big endian.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::int64_t value,
-       std::vector<std::string> labels)
-      : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp,
+  template <typename KeyType, typename ColumnType>
+  Cell(KeyType&& row_key, std::string family_name,
+       ColumnType&& column_qualifier, std::int64_t timestamp,
+       std::int64_t value, std::vector<std::string> labels)
+      : Cell(std::forward<KeyType>(row_key), std::move(family_name),
+             std::forward<ColumnType>(column_qualifier), timestamp,
              google::cloud::internal::EncodeBigEndian(value),
              std::move(labels)) {}
 
   /// Create a cell and fill it with data, but with empty labels.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::string value)
-      : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp, std::move(value), {}) {}
-
-  /// Create a Cell and fill it with a 64-bit value encoded as big endian, but
-  /// with empty labels.
-  Cell(std::string row_key, std::string family_name,
-       std::string column_qualifier, std::int64_t timestamp, std::int64_t value)
-      : Cell(std::move(row_key), std::move(family_name),
-             std::move(column_qualifier), timestamp, std::move(value), {}) {}
+  template <typename KeyType, typename ColumnType, typename ValueType>
+  Cell(KeyType&& row_key, std::string family_name,
+       ColumnType&& column_qualifier, std::int64_t timestamp, ValueType&& value)
+      : Cell(std::forward<KeyType>(row_key), std::move(family_name),
+             std::forward<ColumnType>(column_qualifier), timestamp,
+             std::forward<ValueType>(value), std::vector<std::string>{}) {}
 
   /// Return the row key this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  std::string const& row_key() const { return row_key_; }
+  RowKeyType const& row_key() const { return row_key_; }
 
   /// Return the family this cell belongs to. The returned value is not valid
   /// after this object is deleted.
@@ -81,7 +130,9 @@ class Cell {
 
   /// Return the column this cell belongs to. The returned value is not valid
   /// after this object is deleted.
-  std::string const& column_qualifier() const { return column_qualifier_; }
+  ColumnQualifierType const& column_qualifier() const {
+    return column_qualifier_;
+  }
 
   /// Return the timestamp of this cell.
   std::chrono::microseconds timestamp() const {
@@ -90,7 +141,7 @@ class Cell {
 
   /// Return the contents of this cell. The returned value is not valid after
   /// this object is deleted.
-  std::string const& value() const { return value_; }
+  CellValueType const& value() const { return value_; }
 
   /**
    * Interpret the value as a big-endian encoded `T` and return it.
@@ -102,18 +153,18 @@ class Cell {
    */
   template <typename T>
   StatusOr<T> decode_big_endian_integer() const {
-    return google::cloud::internal::DecodeBigEndian<T>(value_);
+    return internal::DecodeBigEndianCellValue<T>(value_);
   }
 
   /// Return the labels applied to this cell by label transformer read filters.
   std::vector<std::string> const& labels() const { return labels_; }
 
  private:
-  std::string row_key_;
+  RowKeyType row_key_;
   std::string family_name_;
-  std::string column_qualifier_;
+  ColumnQualifierType column_qualifier_;
   std::int64_t timestamp_;
-  std::string value_;
+  CellValueType value_;
   std::vector<std::string> labels_;
 };
 

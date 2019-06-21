@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -40,17 +41,6 @@ struct Mutation {
   google::bigtable::v2::Mutation op;
 };
 
-/// Create a mutation to set a cell value.
-Mutation SetCell(std::string family, std::string column,
-                 std::chrono::milliseconds timestamp, std::string value);
-
-/**
- * Create a mutation to set a cell value where the server sets the time.
- *
- * These mutations are not idempotent and not retried by default.
- */
-Mutation SetCell(std::string family, std::string column, std::string value);
-
 /**
  * A magic value where the server sets the timestamp.
  *
@@ -58,6 +48,36 @@ Mutation SetCell(std::string family, std::string column, std::string value);
  * and by default the client will not retry such mutations.
  */
 constexpr std::int64_t ServerSetTimestamp() { return -1; }
+
+/// Create a mutation to set a cell value.
+template <typename ColumnType, typename ValueType>
+Mutation SetCell(std::string family, ColumnType&& column,
+                 std::chrono::milliseconds timestamp, ValueType&& value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::forward<ColumnType>(column));
+  set_cell.set_timestamp_micros(
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp).count());
+  set_cell.set_value(std::forward<ValueType>(value));
+  return m;
+}
+
+/**
+ * Create a mutation to set a cell value where the server sets the time.
+ *
+ * These mutations are not idempotent and not retried by default.
+ */
+template <typename ColumnType, typename ValueType>
+Mutation SetCell(std::string family, ColumnType&& column, ValueType&& value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::forward<ColumnType>(column));
+  set_cell.set_timestamp_micros(ServerSetTimestamp());
+  set_cell.set_value(std::forward<ValueType>(value));
+  return m;
+}
 
 //@{
 /**
@@ -97,16 +117,20 @@ constexpr std::int64_t ServerSetTimestamp() { return -1; }
  * a formal parameter.
  *
  * @tparam Period2 similar formal parameter for the type of @p timestamp_end.
+ *
+ * @tparam ColumnType the type of the column qualifier. It should satisfy
+ *   std::is_constructible<ColumnQualifierType, ColumnType>.
  */
-template <typename Rep1, typename Period1, typename Rep2, typename Period2>
-Mutation DeleteFromColumn(std::string family, std::string column,
+template <typename Rep1, typename Period1, typename Rep2, typename Period2,
+          typename ColumnType>
+Mutation DeleteFromColumn(std::string family, ColumnType&& column,
                           std::chrono::duration<Rep1, Period1> timestamp_begin,
                           std::chrono::duration<Rep2, Period2> timestamp_end) {
   Mutation m;
   using namespace std::chrono;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
+  d.set_column_qualifier(std::forward<ColumnType>(column));
   d.mutable_time_range()->set_start_timestamp_micros(
       duration_cast<microseconds>(timestamp_begin).count());
   d.mutable_time_range()->set_end_timestamp_micros(
@@ -139,16 +163,19 @@ Mutation DeleteFromColumn(std::string family, std::string column,
  * are documented in `std::chrono::duration<>` (in brief, the length
  * of the tick in seconds, expressed as a `std::ratio<>`), for our
  * purposes it is simply a formal parameter.
+ *
+ * @tparam ColumnType the type of the column qualifier. It should satisfy
+ *   std::is_constructible<ColumnQualifierType, ColumnType>.
  */
-template <typename Rep1, typename Period1>
+template <typename Rep1, typename Period1, typename ColumnType>
 Mutation DeleteFromColumnStartingFrom(
-    std::string family, std::string column,
+    std::string family, ColumnType&& column,
     std::chrono::duration<Rep1, Period1> timestamp_begin) {
   Mutation m;
   using namespace std::chrono;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
+  d.set_column_qualifier(std::forward<ColumnType>(column));
   d.mutable_time_range()->set_start_timestamp_micros(
       duration_cast<microseconds>(timestamp_begin).count());
   return m;
@@ -179,23 +206,33 @@ Mutation DeleteFromColumnStartingFrom(
  * `std::chrono::duration<>` (in brief, the length of the tick in seconds,
  * expressed as a `std::ratio<>`), for our purposes it is simply a formal
  * parameter.
+ *
+ * @tparam ColumnType the type of the column qualifier. It should satisfy
+ *   std::is_constructible<ColumnQualifierType, ColumnType>.
  */
-template <typename Rep2, typename Period2>
+template <typename Rep2, typename Period2, typename ColumnType>
 Mutation DeleteFromColumnEndingAt(
-    std::string family, std::string column,
+    std::string family, ColumnType&& column,
     std::chrono::duration<Rep2, Period2> timestamp_end) {
   Mutation m;
   using namespace std::chrono;
   auto& d = *m.op.mutable_delete_from_column();
   d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
+  d.set_column_qualifier(std::forward<ColumnType>(column));
   d.mutable_time_range()->set_end_timestamp_micros(
       duration_cast<microseconds>(timestamp_end).count());
   return m;
 }
 
 /// Delete all the values for the column.
-Mutation DeleteFromColumn(std::string family, std::string column);
+template <typename ColumnType>
+Mutation DeleteFromColumn(std::string family, ColumnType&& column) {
+  Mutation m;
+  auto& d = *m.op.mutable_delete_from_column();
+  d.set_family_name(std::move(family));
+  d.set_column_qualifier(std::forward<ColumnType>(column));
+  return m;
+}
 //@}
 
 /// Create a mutation to delete all the cells in a column family.
@@ -215,49 +252,58 @@ Mutation DeleteFromRow();
 class SingleRowMutation {
  public:
   /// Create an empty mutation.
-  explicit SingleRowMutation(std::string row_key)
-      : row_key_(std::move(row_key)) {}
+  template <
+      typename RowKey,
+      typename std::enable_if<std::is_constructible<RowKeyType, RowKey>::value,
+                              int>::type = 0>
+  explicit SingleRowMutation(RowKey&& row_key) : request_() {
+    request_.set_row_key(RowKeyType(std::forward<RowKey>(row_key)));
+  }
 
   /// Create a row mutation from a initializer list.
-  SingleRowMutation(std::string row_key, std::initializer_list<Mutation> list)
-      : row_key_(std::move(row_key)) {
+  template <typename RowKey>
+  SingleRowMutation(RowKey&& row_key, std::initializer_list<Mutation> list)
+      : request_() {
+    request_.set_row_key(std::forward<RowKey>(row_key));
     for (auto&& i : list) {
-      *ops_.Add() = i.op;
+      *request_.add_mutations() = i.op;
     }
   }
 
   /// Create a single-row multiple-cell mutation from a variadic list.
-  template <typename... M>
-  explicit SingleRowMutation(std::string row_key, M&&... m)
-      : row_key_(std::move(row_key)) {
+  template <
+      typename RowKey, typename... M,
+      typename std::enable_if<std::is_constructible<RowKeyType, RowKey>::value,
+                              int>::type = 0>
+  explicit SingleRowMutation(RowKey&& row_key, M&&... m) : request_() {
     static_assert(
         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
         "The arguments passed to SingleRowMutation(std::string, ...) must be "
         "convertible to Mutation");
+    request_.set_row_key(std::forward<RowKey>(row_key));
     emplace_many(std::forward<M>(m)...);
   }
 
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(
-      ::google::bigtable::v2::MutateRowsRequest::Entry entry)
-      : row_key_(std::move(*entry.mutable_row_key())), ops_() {
-    ops_.Swap(entry.mutable_mutations());
+      ::google::bigtable::v2::MutateRowsRequest::Entry entry) {
+    using std::swap;
+    swap(*request_.mutable_row_key(), *entry.mutable_row_key());
+    swap(*request_.mutable_mutations(), *entry.mutable_mutations());
   }
 
   /// Create a row mutation from gRPC proto
   explicit SingleRowMutation(::google::bigtable::v2::MutateRowRequest request)
-      : row_key_(std::move(*request.mutable_row_key())), ops_() {
-    ops_.Swap(request.mutable_mutations());
-  }
+      : request_(std::move(request)) {}
 
   // Add a mutation at the end.
   SingleRowMutation& emplace_back(Mutation mut) {
-    ops_.Add()->Swap(&mut.op);
+    *request_.add_mutations() = std::move(mut.op);
     return *this;
   }
 
   // Get the row key.
-  std::string const& row_key() const { return row_key_; }
+  RowKeyType const& row_key() const { return request_.row_key(); }
 
   friend class Table;
 
@@ -268,21 +314,18 @@ class SingleRowMutation {
 
   /// Move the contents into a bigtable::v2::MutateRowsRequest::Entry.
   void MoveTo(google::bigtable::v2::MutateRowsRequest::Entry* entry) {
-    entry->set_row_key(std::move(row_key_));
-    entry->mutable_mutations()->Swap(&ops_);
+    entry->set_row_key(std::move(*request_.mutable_row_key()));
+    *entry->mutable_mutations() = std::move(*request_.mutable_mutations());
   }
 
   /// Transfer the contents to @p request.
   void MoveTo(google::bigtable::v2::MutateRowRequest& request) {
-    request.set_row_key(std::move(row_key_));
-    request.mutable_mutations()->Swap(&ops_);
+    request.set_row_key(std::move(*request_.mutable_row_key()));
+    *request.mutable_mutations() = std::move(*request_.mutable_mutations());
   }
 
   /// Remove the contents of the mutation.
-  void Clear() {
-    row_key_.clear();
-    ops_.Clear();
-  }
+  void Clear() { request_.Clear(); }
 
  private:
   /// Add multiple mutations to single row
@@ -295,8 +338,7 @@ class SingleRowMutation {
   void emplace_many(Mutation m) { emplace_back(std::move(m)); }
 
  private:
-  std::string row_key_;
-  google::protobuf::RepeatedPtrField<google::bigtable::v2::Mutation> ops_;
+  ::google::bigtable::v2::MutateRowRequest request_;
 };
 
 /**

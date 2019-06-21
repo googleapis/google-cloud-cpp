@@ -19,36 +19,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-Mutation SetCell(std::string family, std::string column,
-                 std::chrono::milliseconds timestamp, std::string value) {
-  Mutation m;
-  auto& set_cell = *m.op.mutable_set_cell();
-  set_cell.set_family_name(std::move(family));
-  set_cell.set_column_qualifier(std::move(column));
-  set_cell.set_timestamp_micros(
-      std::chrono::duration_cast<std::chrono::microseconds>(timestamp).count());
-  set_cell.set_value(std::move(value));
-  return m;
-}
-
-Mutation SetCell(std::string family, std::string column, std::string value) {
-  Mutation m;
-  auto& set_cell = *m.op.mutable_set_cell();
-  set_cell.set_family_name(std::move(family));
-  set_cell.set_column_qualifier(std::move(column));
-  set_cell.set_timestamp_micros(ServerSetTimestamp());
-  set_cell.set_value(std::move(value));
-  return m;
-}
-
-Mutation DeleteFromColumn(std::string family, std::string column) {
-  Mutation m;
-  auto& d = *m.op.mutable_delete_from_column();
-  d.set_family_name(std::move(family));
-  d.set_column_qualifier(std::move(column));
-  return m;
-}
-
 Mutation DeleteFromFamily(std::string family) {
   Mutation m;
   auto& d = *m.op.mutable_delete_from_family();

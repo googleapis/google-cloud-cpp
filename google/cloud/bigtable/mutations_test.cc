@@ -49,7 +49,8 @@ TEST(MutationsTest, SetCellNumericValue) {
   EXPECT_EQ("family", actual.op.set_cell().family_name());
   EXPECT_EQ("col", actual.op.set_cell().column_qualifier());
   EXPECT_EQ(1234000, actual.op.set_cell().timestamp_micros());
-  auto decoded = DecodeBigEndian<std::int64_t>(actual.op.set_cell().value());
+  auto decoded = bigtable::internal::DecodeBigEndianCellValue<std::int64_t>(
+      actual.op.set_cell().value());
   EXPECT_STATUS_OK(decoded);
   EXPECT_EQ(9876543210, *decoded);
 
@@ -58,7 +59,8 @@ TEST(MutationsTest, SetCellNumericValue) {
   ASSERT_TRUE(server_set.op.has_set_cell());
   EXPECT_EQ("fam", server_set.op.set_cell().family_name());
   EXPECT_EQ("col", server_set.op.set_cell().column_qualifier());
-  decoded = DecodeBigEndian<std::int64_t>(server_set.op.set_cell().value());
+  decoded = bigtable::internal::DecodeBigEndianCellValue<std::int64_t>(
+      server_set.op.set_cell().value());
   EXPECT_STATUS_OK(decoded);
   EXPECT_EQ(32234401, *decoded);
   EXPECT_EQ(bigtable::ServerSetTimestamp(),

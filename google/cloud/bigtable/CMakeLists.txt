@@ -144,6 +144,8 @@ add_library(bigtable_client
             internal/common_client.h
             internal/common_client.cc
             internal/conjunction.h
+            internal/google_bytes_traits.h
+            internal/google_bytes_traits.cc
             internal/grpc_error_delegate.h
             internal/grpc_error_delegate.cc
             internal/poll_longrunning_operation.h
@@ -166,6 +168,7 @@ add_library(bigtable_client
             polling_policy.cc
             read_modify_write_rule.h
             row.h
+            row_key.h
             row_key_sample.h
             row_range.h
             row_range.cc
@@ -273,6 +276,7 @@ if (BUILD_TESTING)
         internal/async_retry_multi_page_test.cc
         internal/async_retry_unary_rpc_test.cc
         internal/bulk_mutator_test.cc
+        internal/google_bytes_traits_test.cc
         internal/grpc_error_delegate_test.cc
         internal/prefix_range_end_test.cc
         mutation_batcher_test.cc

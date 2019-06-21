@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ROW_RANGE_H_
 
 #include "google/cloud/bigtable/internal/prefix_range_end.h"
+#include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
 #include <chrono>
@@ -48,16 +49,18 @@ class RowRange {
   static RowRange InfiniteRange() { return RowRange(); }
 
   /// Return the range starting at @p begin (included), with no upper limit.
-  static RowRange StartingAt(std::string begin) {
+  template <typename T>
+  static RowRange StartingAt(T&& begin) {
     RowRange result;
-    result.row_range_.set_start_key_closed(std::move(begin));
+    result.row_range_.set_start_key_closed(std::forward<T>(begin));
     return result;
   }
 
   /// Return the range ending at @p end (included), with no lower limit.
-  static RowRange EndingAt(std::string end) {
+  template <typename T>
+  static RowRange EndingAt(T&& end) {
     RowRange result;
-    result.row_range_.set_end_key_closed(std::move(end));
+    result.row_range_.set_end_key_closed(std::forward<T>(end));
     return result;
   }
 
@@ -72,54 +75,60 @@ class RowRange {
   }
 
   /// Return the range representing the interval [@p begin, @p end).
-  static RowRange Range(std::string begin, std::string end) {
-    return RightOpen(std::move(begin), std::move(end));
+  template <typename T, typename U>
+  static RowRange Range(T&& begin, U&& end) {
+    return RightOpen(std::forward<T>(begin), std::forward<U>(end));
   }
 
   /// Return a range that contains all the keys starting with @p prefix.
-  static RowRange Prefix(std::string prefix) {
+  template <typename T>
+  static RowRange Prefix(T&& prefix) {
     auto end = internal::PrefixRangeEnd(prefix);
-    return RightOpen(std::move(prefix), std::move(end));
+    return RightOpen(std::forward<T>(prefix), std::move(end));
   }
 
   //@{
   /// @name Less common, yet sometimes useful, ranges.
   /// Return a range representing the interval [@p begin, @p end).
-  static RowRange RightOpen(std::string begin, std::string end) {
+  template <typename T, typename U>
+  static RowRange RightOpen(T&& begin, U&& end) {
     RowRange result;
-    result.row_range_.set_start_key_closed(std::move(begin));
-    if (!end.empty()) {
-      result.row_range_.set_end_key_open(std::move(end));
+    result.row_range_.set_start_key_closed(std::forward<T>(begin));
+    if (!internal::IsEmptyRowKey(end)) {
+      result.row_range_.set_end_key_open(std::forward<U>(end));
     }
     return result;
   }
 
   /// Return a range representing the interval (@p begin, @p end].
-  static RowRange LeftOpen(std::string begin, std::string end) {
+  template <typename T, typename U>
+  static RowRange LeftOpen(T&& begin, U&& end) {
     RowRange result;
-    result.row_range_.set_start_key_open(std::move(begin));
-    if (!end.empty()) {
-      result.row_range_.set_end_key_closed(std::move(end));
+    result.row_range_.set_start_key_open(std::forward<T>(begin));
+    if (!internal::IsEmptyRowKey(end)) {
+      result.row_range_.set_end_key_closed(std::forward<U>(end));
     }
     return result;
   }
 
   /// Return a range representing the interval (@p begin, @p end).
-  static RowRange Open(std::string begin, std::string end) {
+  template <typename T, typename U>
+  static RowRange Open(T&& begin, U&& end) {
     RowRange result;
-    result.row_range_.set_start_key_open(std::move(begin));
-    if (!end.empty()) {
-      result.row_range_.set_end_key_open(std::move(end));
+    result.row_range_.set_start_key_open(std::forward<T>(begin));
+    if (!internal::IsEmptyRowKey(end)) {
+      result.row_range_.set_end_key_open(std::forward<U>(end));
     }
     return result;
   }
 
   /// Return a range representing the interval [@p begin, @p end].
-  static RowRange Closed(std::string begin, std::string end) {
+  template <typename T, typename U>
+  static RowRange Closed(T&& begin, U&& end) {
     RowRange result;
-    result.row_range_.set_start_key_closed(std::move(begin));
-    if (!end.empty()) {
-      result.row_range_.set_end_key_closed(std::move(end));
+    result.row_range_.set_start_key_closed(std::forward<T>(begin));
+    if (!internal::IsEmptyRowKey(end)) {
+      result.row_range_.set_end_key_closed(std::forward<U>(end));
     }
     return result;
   }
@@ -134,7 +143,10 @@ class RowRange {
   bool IsEmpty() const;
 
   /// Return true if @p key is in the range.
-  bool Contains(std::string const& key) const;
+  template <typename T>
+  bool Contains(T const& key) const {
+    return !BelowStart(key) && !AboveEnd(key);
+  }
 
   /**
    * Compute the intersection against another RowRange.
@@ -158,13 +170,25 @@ class RowRange {
 
  private:
   /// Private to avoid mistaken creation of uninitialized ranges.
-  RowRange() {}
+  RowRange() = default;
 
   /// Return true if @p key is below the start.
-  bool BelowStart(std::string const& key) const;
+  bool BelowStart(RowKeyType const& key) const;
 
   /// Return true if @p key is above the end.
-  bool AboveEnd(std::string const& key) const;
+  bool AboveEnd(RowKeyType const& key) const;
+
+  /// Overloads for types != RowKeyType.
+  template <typename T>
+  bool BelowStart(T const& key) const {
+    return BelowStart(RowKeyType(key));
+  }
+
+  /// Overloads for types != RowKeyType.
+  template <typename T>
+  bool AboveEnd(T const& key) const {
+    return AboveEnd(RowKeyType(key));
+  }
 
  private:
   ::google::bigtable::v2::RowRange row_range_;

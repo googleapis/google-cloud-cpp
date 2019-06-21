@@ -155,7 +155,7 @@ class RowReader {
   /// Number of rows read so far, used to set row_limit in retries.
   std::int64_t rows_count_;
   /// Holds the last read row key, for retries.
-  std::string last_read_row_key_;
+  RowKeyType last_read_row_key_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

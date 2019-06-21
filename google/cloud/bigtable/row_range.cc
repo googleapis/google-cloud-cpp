@@ -20,28 +20,11 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace btproto = ::google::bigtable::v2;
 
-namespace {
-
-/// Returns true iff a < b and there is no string c such that a < c < b.
-inline bool Consecutive(std::string const& a, std::string const& b) {
-  // The only way for two strings to be consecutive is for the
-  // second to be equal to the first with an appended zero char.
-  if (b.length() != a.length() + 1) {
-    return false;
-  }
-  if (b.back() != '\0') {
-    return false;
-  }
-  return b.compare(0, a.length(), a) == 0;
-}
-
-}  // anonymous namespace
-
 bool RowRange::IsEmpty() const {
-  std::string unused;
+  RowKeyType unused;
   // We do not want to copy the strings unnecessarily, so initialize a reference
   // pointing to *_key_closed() or *_key_open(), as needed.
-  std::string const* start = &unused;
+  auto const* start = &unused;
   bool start_open = false;
   switch (row_range_.start_key_case()) {
     case btproto::RowRange::kStartKeyClosed:
@@ -56,7 +39,7 @@ bool RowRange::IsEmpty() const {
   }
   // We need to initialize this to something to make g++ happy, but it cannot
   // be a value that is discarded in all switch() cases to make Clang happy.
-  std::string const* end = &row_range_.end_key_closed();
+  auto const* end = &row_range_.end_key_closed();
   bool end_open = false;
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::kEndKeyClosed:
@@ -72,23 +55,19 @@ bool RowRange::IsEmpty() const {
   }
 
   // Special case of an open interval of two consecutive strings.
-  if (start_open && end_open && Consecutive(*start, *end)) {
+  if (start_open && end_open && internal::ConsecutiveRowKeys(*start, *end)) {
     return true;
   }
 
   // Compare the strings as byte vectors (careful with unsigned chars).
-  int cmp = start->compare(*end);
+  int cmp = internal::CompareRowKey(*start, *end);
   if (cmp == 0) {
     return start_open || end_open;
   }
   return cmp > 0;
 }
 
-bool RowRange::Contains(std::string const& key) const {
-  return !BelowStart(key) && !AboveEnd(key);
-}
-
-bool RowRange::BelowStart(std::string const& key) const {
+bool RowRange::BelowStart(RowKeyType const& key) const {
   switch (row_range_.start_key_case()) {
     case btproto::RowRange::START_KEY_NOT_SET:
       break;
@@ -100,7 +79,7 @@ bool RowRange::BelowStart(std::string const& key) const {
   return false;
 }
 
-bool RowRange::AboveEnd(std::string const& key) const {
+bool RowRange::AboveEnd(RowKeyType const& key) const {
   switch (row_range_.end_key_case()) {
     case btproto::RowRange::END_KEY_NOT_SET:
       break;

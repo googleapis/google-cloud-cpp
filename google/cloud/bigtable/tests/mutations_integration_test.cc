@@ -35,9 +35,9 @@ class MutationIntegrationTest : public bigtable::testing::TableIntegrationTest {
    */
   void CreateCellsIgnoringTimestamp(bigtable::Table& table,
                                     std::vector<bigtable::Cell> const& cells) {
-    std::map<std::string, bigtable::SingleRowMutation> mutations;
+    std::map<bigtable::RowKeyType, bigtable::SingleRowMutation> mutations;
     for (auto const& cell : cells) {
-      std::string key = cell.row_key();
+      auto key = cell.row_key();
       auto inserted = mutations.emplace(key, bigtable::SingleRowMutation(key));
       inserted.first->second.emplace_back(bigtable::SetCell(
           cell.family_name(), cell.column_qualifier(), cell.value()));

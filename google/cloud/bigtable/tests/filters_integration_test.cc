@@ -301,16 +301,16 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
 
   auto result = ReadRows(table, bigtable::Filter::CellsRowLimit(3));
 
-  std::map<std::string, int> actual;
+  std::map<bigtable::RowKeyType, int> actual;
   for (auto const& cell : result) {
     auto inserted = actual.emplace(cell.row_key(), 0);
     inserted.first->second++;
   }
-  std::map<std::string, int> expected{{prefix + "/one-cell", 1},
-                                      {prefix + "/two-cells", 2},
-                                      {prefix + "/many", 3},
-                                      {prefix + "/many-columns", 3},
-                                      {prefix + "/complex", 3}};
+  std::map<bigtable::RowKeyType, int> expected{{prefix + "/one-cell", 1},
+                                               {prefix + "/two-cells", 2},
+                                               {prefix + "/many", 3},
+                                               {prefix + "/many-columns", 3},
+                                               {prefix + "/complex", 3}};
 
   EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
@@ -324,14 +324,14 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
   // the separator and the successor of "/" is "0".
   auto result = ReadRows(table, bigtable::Filter::CellsRowOffset(2));
 
-  std::map<std::string, int> actual;
+  std::map<bigtable::RowKeyType, int> actual;
   for (auto const& cell : result) {
     auto inserted = actual.emplace(cell.row_key(), 0);
     inserted.first->second++;
   }
-  std::map<std::string, int> expected{{prefix + "/many", 2},
-                                      {prefix + "/many-columns", 2},
-                                      {prefix + "/complex", 78}};
+  std::map<bigtable::RowKeyType, int> expected{{prefix + "/many", 2},
+                                               {prefix + "/many-columns", 2},
+                                               {prefix + "/complex", 78}};
 
   EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
