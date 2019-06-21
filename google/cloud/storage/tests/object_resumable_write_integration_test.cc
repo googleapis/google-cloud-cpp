@@ -158,10 +158,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  // Create the object, but only if it does not exist already.
+  // Start a resumable upload and finalize the upload.
   std::string session_id;
   {
     auto old_os =
@@ -175,7 +172,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   auto os = client->WriteObject(bucket_name, object_name,
                                 RestoreResumableUploadSession(session_id));
   EXPECT_FALSE(os.IsOpen());
-  // EXPECT_TRUE(os.eof());
   EXPECT_EQ(session_id, os.resumable_session_id());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
