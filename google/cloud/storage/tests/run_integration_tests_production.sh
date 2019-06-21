@@ -86,7 +86,7 @@ echo "Running GCS Projects.serviceAccount integration tests."
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}" "${TEST_SERVICE_ACCOUNT}"
+./service_account_integration_test "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}"
 
 echo
 echo "Running V4 Signed URL conformance tests."
