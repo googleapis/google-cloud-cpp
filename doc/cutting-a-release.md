@@ -93,12 +93,13 @@ git push --set-upstream origin "${RELEASE}.x"
 
 ## Generate and upload the documentation to googleapis.dev
 
-Manually run a kokoro job
-`prod:cloud-devrel/client-libraries/cpp/google-cloud-cpp/refdocs` with
-specifying the branch name (e.g. `v0.11.x`) as `Committish` field. This job will
-generate and upload the doxygen documentation to the staging bucket for
-googleapis.dev hosting. The uploaded documentation will be live generally in an
-hour at URLs like `https://googleapis.dev/cpp/google-cloud-bigtable/latest/`.
+Manually run a Kokoro job
+`cloud-devrel/client-libraries/cpp/google-cloud-cpp/refdocs` in the Cloud C++
+internal testing dashboard and specify the branch name (e.g. `v0.11.x`) in the
+`Committish` field. This job will generate and upload the doxygen documentation
+to the staging bucket for googleapis.dev hosting. The uploaded documentation
+will generally be live in an hour at URLs like
+`https://googleapis.dev/cpp/google-cloud-bigtable/latest/`.
 
 You are now finished with this "releases" clone of the repo that we created in
 the instructions above. You may now remove this directory.
