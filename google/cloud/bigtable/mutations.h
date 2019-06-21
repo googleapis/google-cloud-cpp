@@ -252,9 +252,13 @@ Mutation DeleteFromRow();
 class SingleRowMutation {
  public:
   /// Create an empty mutation.
-  template <typename RowKey>
+  template <
+      typename RowKey,
+      typename std::enable_if<
+          std::is_constructible<RowKeyType, RowKey>::value,
+          int>::type = 0>
   explicit SingleRowMutation(RowKey&& row_key) : request_() {
-    request_.set_row_key(std::forward<RowKey>(row_key));
+    request_.set_row_key(RowKeyType(std::forward<RowKey>(row_key)));
   }
 
   /// Create a row mutation from a initializer list.
@@ -268,7 +272,10 @@ class SingleRowMutation {
   }
 
   /// Create a single-row multiple-cell mutation from a variadic list.
-  template <typename RowKey, typename... M>
+  template <typename RowKey, typename... M,
+      typename std::enable_if<
+          std::is_constructible<RowKeyType, RowKey>::value,
+          int>::type = 0>
   explicit SingleRowMutation(RowKey&& row_key, M&&... m) : request_() {
     static_assert(
         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
