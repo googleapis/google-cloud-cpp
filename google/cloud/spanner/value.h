@@ -346,7 +346,7 @@ class Value {
     for (auto const& e : v) {
       if (!google::protobuf::util::MessageDifferencer::Equals(
               MakeTypeProto(e), t.array_element_type())) {
-        internal::ThrowInvalidArgument("Mismatched types");
+        google::cloud::internal::ThrowInvalidArgument("Mismatched types");
       }
     }
     return t;
