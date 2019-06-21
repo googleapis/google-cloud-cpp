@@ -65,7 +65,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -97,9 +96,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a66fe34b10818fccb39edbcd97d93b3a8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a66fe34b10818fccb39edbcd97d93b3a8">Append</a> (<a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowRange.html">RowRange</a> range)</td></tr>
 <tr class="memdesc:a66fe34b10818fccb39edbcd97d93b3a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>range</code> to the set.  <a href="#a66fe34b10818fccb39edbcd97d93b3a8">More...</a><br /></td></tr>
 <tr class="separator:a66fe34b10818fccb39edbcd97d93b3a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24a31aac31c687fafa9e407900bba03b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a24a31aac31c687fafa9e407900bba03b">Append</a> (std::string row_key)</td></tr>
-<tr class="memdesc:a24a31aac31c687fafa9e407900bba03b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>row_key</code> to the set, minimize copies when possible.  <a href="#a24a31aac31c687fafa9e407900bba03b">More...</a><br /></td></tr>
-<tr class="separator:a24a31aac31c687fafa9e407900bba03b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78b83995845c8bee88a5224b9d3b0e18"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a78b83995845c8bee88a5224b9d3b0e18"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a78b83995845c8bee88a5224b9d3b0e18">Append</a> (T &amp;&amp;row_key)</td></tr>
+<tr class="memdesc:a78b83995845c8bee88a5224b9d3b0e18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add <code>row_key</code> to the set, minimize copies when possible.  <a href="#a78b83995845c8bee88a5224b9d3b0e18">More...</a><br /></td></tr>
+<tr class="separator:a78b83995845c8bee88a5224b9d3b0e18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9940a926f143dfa76b8943fff048b79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html">RowSet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#ac9940a926f143dfa76b8943fff048b79">Intersect</a> (bigtable::RowRange const &amp;range) const</td></tr>
 <tr class="memdesc:ac9940a926f143dfa76b8943fff048b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modify this object to contain the ranges and keys inside <code>range</code>.  <a href="#ac9940a926f143dfa76b8943fff048b79">More...</a><br /></td></tr>
 <tr class="separator:ac9940a926f143dfa76b8943fff048b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -255,15 +255,17 @@ template&lt;typename... Arg&gt; </div>
 
 <p>Add <code>range</code> to the set. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00052">52</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00048">48</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
 
 </div>
 </div>
-<a id="a24a31aac31c687fafa9e407900bba03b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24a31aac31c687fafa9e407900bba03b">&#9670;&nbsp;</a></span>Append() <span class="overload">[2/2]</span></h2>
+<a id="a78b83995845c8bee88a5224b9d3b0e18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78b83995845c8bee88a5224b9d3b0e18">&#9670;&nbsp;</a></span>Append() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -271,7 +273,7 @@ template&lt;typename... Arg&gt; </div>
         <tr>
           <td class="memname">void google::cloud::bigtable::v0::RowSet::Append </td>
           <td>(</td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">T &amp;&amp;&#160;</td>
           <td class="paramname"><em>row_key</em></td><td>)</td>
           <td></td>
         </tr>
@@ -285,7 +287,7 @@ template&lt;typename... Arg&gt; </div>
 
 <p>Add <code>row_key</code> to the set, minimize copies when possible. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00059">59</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00056">56</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
 
 </div>
 </div>
@@ -312,7 +314,7 @@ template&lt;typename... Arg&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00084">84</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00081">81</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
 
 </div>
 </div>
@@ -339,7 +341,7 @@ template&lt;typename... Arg&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00085">85</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__set_8h_source.html#l00082">82</a> of file <a class="el" href="row__set_8h_source.html">row_set.h</a>.</p>
 
 </div>
 </div>

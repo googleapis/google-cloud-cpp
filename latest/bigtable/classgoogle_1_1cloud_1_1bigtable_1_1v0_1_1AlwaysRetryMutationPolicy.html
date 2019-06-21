@@ -93,7 +93,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implements a policy that retries all mutations. </p>
-<p>Notice that this will may result in non-idempotent mutations being resent to the server. Re-trying a <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a24adeb58de68ffc7a792f42b8391ce18" title="Create a mutation to set a cell value. ">SetCell()</a> mutation where the server selects the timestamp can result in multiple copies of the data stored with different timestamps. Only use this policy if your application is prepared to handle such problems, for example, by only querying the last value and setting garbage collection policies to delete the old values. </p>
+<p>Notice that this will may result in non-idempotent mutations being resent to the server. Re-trying a <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#afea3cbd65f75808ff66d96a00c7c958c" title="Create a mutation to set a cell value. ">SetCell()</a> mutation where the server selects the timestamp can result in multiple copies of the data stored with different timestamps. Only use this policy if your application is prepared to handle such problems, for example, by only querying the last value and setting garbage collection policies to delete the old values. </p>
 
 <p class="definition">Definition at line <a class="el" href="idempotent__mutation__policy_8h_source.html#l00074">74</a> of file <a class="el" href="idempotent__mutation__policy_8h_source.html">idempotent_mutation_policy.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>

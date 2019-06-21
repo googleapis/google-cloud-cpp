@@ -79,9 +79,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ad637321fb92838fe3e9affc228310583"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowKeySample.html#ad637321fb92838fe3e9affc228310583">row_key</a></td></tr>
-<tr class="memdesc:ad637321fb92838fe3e9affc228310583"><td class="mdescLeft">&#160;</td><td class="mdescRight">A row key value strictly larger than all the rows included in this sample.  <a href="#ad637321fb92838fe3e9affc228310583">More...</a><br /></td></tr>
-<tr class="separator:ad637321fb92838fe3e9affc228310583"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec05246f7438cbba8dadfd0ef1a43a87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a623f880e5c30b8694a6fc2fc435db64c">RowKeyType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowKeySample.html#aec05246f7438cbba8dadfd0ef1a43a87">row_key</a></td></tr>
+<tr class="memdesc:aec05246f7438cbba8dadfd0ef1a43a87"><td class="mdescLeft">&#160;</td><td class="mdescRight">A row key value strictly larger than all the rows included in this sample.  <a href="#aec05246f7438cbba8dadfd0ef1a43a87">More...</a><br /></td></tr>
+<tr class="separator:aec05246f7438cbba8dadfd0ef1a43a87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3164baf20d05f03c386dfc40a299f67"><td class="memItemLeft" align="right" valign="top">std::int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowKeySample.html#ac3164baf20d05f03c386dfc40a299f67">offset_bytes</a></td></tr>
 <tr class="memdesc:ac3164baf20d05f03c386dfc40a299f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">An estimate of the table size for all the rows smaller than <code>row_key</code>.  <a href="#ac3164baf20d05f03c386dfc40a299f67">More...</a><br /></td></tr>
 <tr class="separator:ac3164baf20d05f03c386dfc40a299f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -89,7 +89,7 @@ Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A simple wrapper to represent the response from <code>Table::SampleRowKeys()</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00027">27</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00028">28</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="ac3164baf20d05f03c386dfc40a299f67"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac3164baf20d05f03c386dfc40a299f67">&#9670;&nbsp;</a></span>offset_bytes</h2>
@@ -105,18 +105,18 @@ Public Attributes</h2></td></tr>
 
 <p>An estimate of the table size for all the rows smaller than <code>row_key</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00041">41</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00042">42</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
 
 </div>
 </div>
-<a id="ad637321fb92838fe3e9affc228310583"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad637321fb92838fe3e9affc228310583">&#9670;&nbsp;</a></span>row_key</h2>
+<a id="aec05246f7438cbba8dadfd0ef1a43a87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec05246f7438cbba8dadfd0ef1a43a87">&#9670;&nbsp;</a></span>row_key</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string google::cloud::bigtable::v0::RowKeySample::row_key</td>
+          <td class="memname"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a623f880e5c30b8694a6fc2fc435db64c">RowKeyType</a> google::cloud::bigtable::v0::RowKeySample::row_key</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -124,7 +124,7 @@ Public Attributes</h2></td></tr>
 <p>A row key value strictly larger than all the rows included in this sample. </p>
 <p>Note that the service may return row keys that do not exist in the Cloud Bigtable table. This should be interpreted as "a split point for sharding a <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a07fd0b3bc5b4fc17db8e3f099aaf9c33" title="Reads a set of rows from the table. ">Table::ReadRows()</a></code> call. That is calling <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a07fd0b3bc5b4fc17db8e3f099aaf9c33" title="Reads a set of rows from the table. ">Table::ReadRows()</a></code> to return all the rows in the range <code>[previous-sample-row-key, this-sample-row-key)</code> is expected to produce an efficient sharding of the <code><a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a07fd0b3bc5b4fc17db8e3f099aaf9c33" title="Reads a set of rows from the table. ">Table::ReadRows()</a></code> operation. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00038">38</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__key__sample_8h_source.html#l00039">39</a> of file <a class="el" href="row__key__sample_8h_source.html">row_key_sample.h</a>.</p>
 
 </div>
 </div>

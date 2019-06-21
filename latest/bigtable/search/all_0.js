@@ -14,7 +14,7 @@ var searchData=
   ['app_5fprofile_5fconfig_2ecc',['app_profile_config.cc',['../app__profile__config_8cc.html',1,'']]],
   ['app_5fprofile_5fconfig_2eh',['app_profile_config.h',['../app__profile__config_8h.html',1,'']]],
   ['app_5fprofile_5fid',['app_profile_id',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a1a7cd66e835b39b90bd0009ccffd3add',1,'google::cloud::bigtable::v0::Table']]],
-  ['append',['Append',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a66fe34b10818fccb39edbcd97d93b3a8',1,'google::cloud::bigtable::v0::RowSet::Append(RowRange range)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a24a31aac31c687fafa9e407900bba03b',1,'google::cloud::bigtable::v0::RowSet::Append(std::string row_key)']]],
+  ['append',['Append',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a66fe34b10818fccb39edbcd97d93b3a8',1,'google::cloud::bigtable::v0::RowSet::Append(RowRange range)'],['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1RowSet.html#a78b83995845c8bee88a5224b9d3b0e18',1,'google::cloud::bigtable::v0::RowSet::Append(T &amp;&amp;row_key)']]],
   ['appendvalue',['AppendValue',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ReadModifyWriteRule.html#a85d00f80657c8cc27f196ebb05e63a11',1,'google::cloud::bigtable::v0::ReadModifyWriteRule']]],
   ['apply',['Apply',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Table.html#a078643ebc15409656f987ffd37db658c',1,'google::cloud::bigtable::v0::Table']]],
   ['applylabeltransformer',['ApplyLabelTransformer',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Filter.html#a79a709ec84149b13378853a1a2fe4680',1,'google::cloud::bigtable::v0::Filter']]],

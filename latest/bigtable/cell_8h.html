@@ -62,15 +62,18 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a>  </div>
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">cell.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/bigtable/version.h</a>&quot;</code><br />
-<code>#include &quot;google/cloud/internal/big_endian.h&quot;</code><br />
+<div class="textblock"><code>#include &quot;google/cloud/bigtable/internal/google_bytes_traits.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="row__key_8h_source.html">google/cloud/bigtable/row_key.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="version_8h_source.html">google/cloud/bigtable/version.h</a>&quot;</code><br />
 <code>#include &quot;<a class="elRef" doxygen="/v/cmake-out/gcpp-ci-ubuntu-18.04-gcc-Release/google/cloud/cloud.tag:../common/" href="../common/status__or_8h.html">google/cloud/status_or.h</a>&quot;</code><br />
 <code>#include &lt;chrono&gt;</code><br />
+<code>#include &lt;type_traits&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div>
 <p><a href="cell_8h_source.html">Go to the source code of this file.</a></p>
@@ -93,6 +96,15 @@ Namespaces</h2></td></tr>
 <tr class="memitem:namespacegoogle_1_1cloud_1_1bigtable_1_1v0"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html">google::cloud::bigtable::v0</a></td></tr>
 <tr class="memdesc:namespacegoogle_1_1cloud_1_1bigtable_1_1v0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a686e153ae55133614a4fb2d6fe62a7dc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a686e153ae55133614a4fb2d6fe62a7dc">google::cloud::bigtable::v0::ColumnQualifierType</a> = std::decay&lt; decltype(std::declval&lt; google::bigtable::v2::Column &gt;().qualifier())&gt;::type</td></tr>
+<tr class="memdesc:a686e153ae55133614a4fb2d6fe62a7dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type for column qualifiers.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a686e153ae55133614a4fb2d6fe62a7dc">More...</a><br /></td></tr>
+<tr class="separator:a686e153ae55133614a4fb2d6fe62a7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfdf301633eb2b1a261ac487f4760ec5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#adfdf301633eb2b1a261ac487f4760ec5">google::cloud::bigtable::v0::CellValueType</a> = std::decay&lt; decltype(std::declval&lt; google::bigtable::v2::Cell &gt;().value())&gt;::type</td></tr>
+<tr class="memdesc:adfdf301633eb2b1a261ac487f4760ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type for cell values.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#adfdf301633eb2b1a261ac487f4760ec5">More...</a><br /></td></tr>
+<tr class="separator:adfdf301633eb2b1a261ac487f4760ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

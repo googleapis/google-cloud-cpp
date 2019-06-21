@@ -225,6 +225,15 @@ Classes</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:a6fd9b4a69047dfdcd3e57799ff905a8a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a6fd9b4a69047dfdcd3e57799ff905a8a">Instance</a> = ::google::bigtable::admin::v2::Instance</td></tr>
 <tr class="separator:a6fd9b4a69047dfdcd3e57799ff905a8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686e153ae55133614a4fb2d6fe62a7dc"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a686e153ae55133614a4fb2d6fe62a7dc">ColumnQualifierType</a> = std::decay&lt; decltype(std::declval&lt; google::bigtable::v2::Column &gt;().qualifier())&gt;::type</td></tr>
+<tr class="memdesc:a686e153ae55133614a4fb2d6fe62a7dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type for column qualifiers.  <a href="#a686e153ae55133614a4fb2d6fe62a7dc">More...</a><br /></td></tr>
+<tr class="separator:a686e153ae55133614a4fb2d6fe62a7dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfdf301633eb2b1a261ac487f4760ec5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#adfdf301633eb2b1a261ac487f4760ec5">CellValueType</a> = std::decay&lt; decltype(std::declval&lt; google::bigtable::v2::Cell &gt;().value())&gt;::type</td></tr>
+<tr class="memdesc:adfdf301633eb2b1a261ac487f4760ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type for cell values.  <a href="#adfdf301633eb2b1a261ac487f4760ec5">More...</a><br /></td></tr>
+<tr class="separator:adfdf301633eb2b1a261ac487f4760ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a623f880e5c30b8694a6fc2fc435db64c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a623f880e5c30b8694a6fc2fc435db64c">RowKeyType</a> = std::decay&lt; decltype(std::declval&lt; google::bigtable::v2::Row &gt;().key())&gt;::type</td></tr>
+<tr class="memdesc:a623f880e5c30b8694a6fc2fc435db64c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines the type for row keys.  <a href="#a623f880e5c30b8694a6fc2fc435db64c">More...</a><br /></td></tr>
+<tr class="separator:a623f880e5c30b8694a6fc2fc435db64c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbc5748c3e4f25b3a3ae8c8a1c694af7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#adbc5748c3e4f25b3a3ae8c8a1c694af7">ClientUtils</a> = bigtable::internal::UnaryClientUtils&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceAdminClient.html">InstanceAdminClient</a> &gt;</td></tr>
 <tr class="memdesc:adbc5748c3e4f25b3a3ae8c8a1c694af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shortcuts to avoid typing long names over and over.  <a href="#adbc5748c3e4f25b3a3ae8c8a1c694af7">More...</a><br /></td></tr>
 <tr class="separator:adbc5748c3e4f25b3a3ae8c8a1c694af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -281,15 +290,17 @@ Functions</h2></td></tr>
 <tr class="memitem:a7b8559b9505cedd0864d3111db45c2a0"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html">IdempotentMutationPolicy</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a7b8559b9505cedd0864d3111db45c2a0">DefaultIdempotentMutationPolicy</a> ()</td></tr>
 <tr class="memdesc:a7b8559b9505cedd0864d3111db45c2a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return an instance of the default <a class="el" href="classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1IdempotentMutationPolicy.html" title="Defines the interface to control which mutations are idempotent and therefore can be re-tried...">IdempotentMutationPolicy</a>.  <a href="#a7b8559b9505cedd0864d3111db45c2a0">More...</a><br /></td></tr>
 <tr class="separator:a7b8559b9505cedd0864d3111db45c2a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24adeb58de68ffc7a792f42b8391ce18"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a24adeb58de68ffc7a792f42b8391ce18">SetCell</a> (std::string family, std::string column, std::chrono::milliseconds timestamp, std::string value)</td></tr>
-<tr class="memdesc:a24adeb58de68ffc7a792f42b8391ce18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to set a cell value.  <a href="#a24adeb58de68ffc7a792f42b8391ce18">More...</a><br /></td></tr>
-<tr class="separator:a24adeb58de68ffc7a792f42b8391ce18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ee54eedf8ff1128df318fad639950ed"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a8ee54eedf8ff1128df318fad639950ed">SetCell</a> (std::string family, std::string column, std::string value)</td></tr>
-<tr class="memdesc:a8ee54eedf8ff1128df318fad639950ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to set a cell value where the server sets the time.  <a href="#a8ee54eedf8ff1128df318fad639950ed">More...</a><br /></td></tr>
-<tr class="separator:a8ee54eedf8ff1128df318fad639950ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44e6b92f0549ea6a98d04a82b0346119"><td class="memItemLeft" align="right" valign="top">constexpr std::int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a44e6b92f0549ea6a98d04a82b0346119">ServerSetTimestamp</a> ()</td></tr>
 <tr class="memdesc:a44e6b92f0549ea6a98d04a82b0346119"><td class="mdescLeft">&#160;</td><td class="mdescRight">A magic value where the server sets the timestamp.  <a href="#a44e6b92f0549ea6a98d04a82b0346119">More...</a><br /></td></tr>
 <tr class="separator:a44e6b92f0549ea6a98d04a82b0346119"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afea3cbd65f75808ff66d96a00c7c958c"><td class="memTemplParams" colspan="2">template&lt;typename ColumnType , typename ValueType &gt; </td></tr>
+<tr class="memitem:afea3cbd65f75808ff66d96a00c7c958c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#afea3cbd65f75808ff66d96a00c7c958c">SetCell</a> (std::string family, ColumnType &amp;&amp;column, std::chrono::milliseconds timestamp, ValueType &amp;&amp;value)</td></tr>
+<tr class="memdesc:afea3cbd65f75808ff66d96a00c7c958c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to set a cell value.  <a href="#afea3cbd65f75808ff66d96a00c7c958c">More...</a><br /></td></tr>
+<tr class="separator:afea3cbd65f75808ff66d96a00c7c958c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3ae0d1e968c2cb08bdb56ecc9861390"><td class="memTemplParams" colspan="2">template&lt;typename ColumnType , typename ValueType &gt; </td></tr>
+<tr class="memitem:af3ae0d1e968c2cb08bdb56ecc9861390"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#af3ae0d1e968c2cb08bdb56ecc9861390">SetCell</a> (std::string family, ColumnType &amp;&amp;column, ValueType &amp;&amp;value)</td></tr>
+<tr class="memdesc:af3ae0d1e968c2cb08bdb56ecc9861390"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to set a cell value where the server sets the time.  <a href="#af3ae0d1e968c2cb08bdb56ecc9861390">More...</a><br /></td></tr>
+<tr class="separator:af3ae0d1e968c2cb08bdb56ecc9861390"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a025435285286675f07acbdffe6810edb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a025435285286675f07acbdffe6810edb">DeleteFromFamily</a> (std::string family)</td></tr>
 <tr class="memdesc:a025435285286675f07acbdffe6810edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to delete all the cells in a column family.  <a href="#a025435285286675f07acbdffe6810edb">More...</a><br /></td></tr>
 <tr class="separator:a025435285286675f07acbdffe6810edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -316,46 +327,70 @@ Functions</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Create mutations to delete a range of cells from a column.</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>The following functions create a mutation that deletes all the cells in the given column family and, column within the given timestamp in the range.</p>
 <p>The function accepts any instantiation of <code>std::chrono::duration&lt;&gt;</code> for the <code>timestamp_begin</code> and <code>timestamp_end</code> parameters. For example:</p>
-<div class="fragment"><div class="line"><span class="keyword">using namespace </span>std::chrono_literals; <span class="comment">// C++14</span></div><div class="line"><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a49600fa2184026ec8e388d7c3b092f07">bigtable::DeleteFromColumn</a>(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col&quot;</span>, 0us, 10us)</div></div><!-- fragment --><p>The ending timestamp is exclusive, while the beginning timestamp is inclusive. That is, the interval is [<code>timestamp_begin</code>, <code>timestamp_end</code>). The value 0 is special and treated as "unbounded" for both the begin and end endpoints of the time range. The Cloud Bigtable server rejects invalid and empty ranges, i.e., any range where the endpoint is smaller or equal than to the initial endpoint unless either endpoint is 0.</p>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span>std::chrono_literals; <span class="comment">// C++14</span></div><div class="line"><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5eb99a2d7e290fcf71bf43174ba8cf75">bigtable::DeleteFromColumn</a>(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col&quot;</span>, 0us, 10us)</div></div><!-- fragment --><p>The ending timestamp is exclusive, while the beginning timestamp is inclusive. That is, the interval is [<code>timestamp_begin</code>, <code>timestamp_end</code>). The value 0 is special and treated as "unbounded" for both the begin and end endpoints of the time range. The Cloud Bigtable server rejects invalid and empty ranges, i.e., any range where the endpoint is smaller or equal than to the initial endpoint unless either endpoint is 0.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Rep1</td><td>a placeholder to match the Rep tparam for <code>timestamp_begin</code> type. The semantics of this template parameter are documented in std::chrono::duration&lt;&gt;` (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter.</td></tr>
     <tr><td class="paramname">Rep2</td><td>similar formal parameter for the type of <code>timestamp_end</code>.</td></tr>
     <tr><td class="paramname">Period1</td><td>a placeholder to match the Period tparam for <code>timestamp_begin</code> type. The semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the length of the tick in seconds,vexpressed as a <code>std::ratio&lt;&gt;</code>), for our purposes it is simply a formal parameter.</td></tr>
-    <tr><td class="paramname">Period2</td><td>similar formal parameter for the type of <code>timestamp_end</code>. </td></tr>
+    <tr><td class="paramname">Period2</td><td>similar formal parameter for the type of <code>timestamp_end</code>.</td></tr>
+    <tr><td class="paramname">ColumnType</td><td>the type of the column qualifier. It should satisfy std::is_constructible&lt;ColumnQualifierType, ColumnType&gt;. </td></tr>
   </table>
   </dd>
 </dl>
 </div></td></tr>
-<tr class="memitem:a49600fa2184026ec8e388d7c3b092f07"><td class="memTemplParams" colspan="2">template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 &gt; </td></tr>
-<tr class="memitem:a49600fa2184026ec8e388d7c3b092f07"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a49600fa2184026ec8e388d7c3b092f07">DeleteFromColumn</a> (std::string family, std::string column, std::chrono::duration&lt; Rep1, Period1 &gt; timestamp_begin, std::chrono::duration&lt; Rep2, Period2 &gt; timestamp_end)</td></tr>
-<tr class="separator:a49600fa2184026ec8e388d7c3b092f07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5eb99a2d7e290fcf71bf43174ba8cf75"><td class="memTemplParams" colspan="2">template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 , typename ColumnType &gt; </td></tr>
+<tr class="memitem:a5eb99a2d7e290fcf71bf43174ba8cf75"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5eb99a2d7e290fcf71bf43174ba8cf75">DeleteFromColumn</a> (std::string family, ColumnType &amp;&amp;column, std::chrono::duration&lt; Rep1, Period1 &gt; timestamp_begin, std::chrono::duration&lt; Rep2, Period2 &gt; timestamp_end)</td></tr>
+<tr class="separator:a5eb99a2d7e290fcf71bf43174ba8cf75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr><td colspan="2"><div class="groupHeader">The following functions create a mutation that deletes all the</div></td></tr>
 <tr><td colspan="2"><div class="groupText"><p>cells in the given column family and column, Delete up to <em>timestamp_end</em>, but excluding, <em>timestamp_end</em>.</p>
 <p>The function accepts any instantiation of <code>std::chrono::duration&lt;&gt;</code> for the <code>timestamp_end</code> For example:</p>
-<div class="fragment"><div class="line"><span class="keyword">using namespace </span>std::chrono_literals; <span class="comment">// C++14</span></div><div class="line"><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a49600fa2184026ec8e388d7c3b092f07">bigtable::DeleteFromColumn</a>(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col&quot;</span>, 10us)</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
+<div class="fragment"><div class="line"><span class="keyword">using namespace </span>std::chrono_literals; <span class="comment">// C++14</span></div><div class="line"><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a5eb99a2d7e290fcf71bf43174ba8cf75">bigtable::DeleteFromColumn</a>(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col&quot;</span>, 10us)</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Rep2</td><td>a placeholder to match the Rep tparam for <code>timestamp_end</code> type. The semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter.</td></tr>
-    <tr><td class="paramname">Period2</td><td>a placeholder to match the Period tparam for <code>timestamp_end</code> type. The semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the length of the tick in seconds, expressed as a <code>std::ratio&lt;&gt;</code>), for our purposes it is simply a formal parameter. </td></tr>
+    <tr><td class="paramname">Period2</td><td>a placeholder to match the Period tparam for <code>timestamp_end</code> type. The semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the length of the tick in seconds, expressed as a <code>std::ratio&lt;&gt;</code>), for our purposes it is simply a formal parameter.</td></tr>
+    <tr><td class="paramname">ColumnType</td><td>the type of the column qualifier. It should satisfy std::is_constructible&lt;ColumnQualifierType, ColumnType&gt;. </td></tr>
   </table>
   </dd>
 </dl>
 </div></td></tr>
-<tr class="memitem:a2d3eaf2c079b31351c90fd2cbf985821"><td class="memTemplParams" colspan="2">template&lt;typename Rep1 , typename Period1 &gt; </td></tr>
-<tr class="memitem:a2d3eaf2c079b31351c90fd2cbf985821"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a2d3eaf2c079b31351c90fd2cbf985821">DeleteFromColumnStartingFrom</a> (std::string family, std::string column, std::chrono::duration&lt; Rep1, Period1 &gt; timestamp_begin)</td></tr>
-<tr class="separator:a2d3eaf2c079b31351c90fd2cbf985821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd242a466253541d063f40f0465fcf10"><td class="memTemplParams" colspan="2">template&lt;typename Rep2 , typename Period2 &gt; </td></tr>
-<tr class="memitem:afd242a466253541d063f40f0465fcf10"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#afd242a466253541d063f40f0465fcf10">DeleteFromColumnEndingAt</a> (std::string family, std::string column, std::chrono::duration&lt; Rep2, Period2 &gt; timestamp_end)</td></tr>
-<tr class="separator:afd242a466253541d063f40f0465fcf10"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a295876d73956887335ac50b51fcbf326"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a295876d73956887335ac50b51fcbf326">DeleteFromColumn</a> (std::string family, std::string column)</td></tr>
-<tr class="memdesc:a295876d73956887335ac50b51fcbf326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the values for the column.  <a href="#a295876d73956887335ac50b51fcbf326">More...</a><br /></td></tr>
-<tr class="separator:a295876d73956887335ac50b51fcbf326"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e21c9ba8e32a0eef47f6962460b2b2f"><td class="memTemplParams" colspan="2">template&lt;typename Rep1 , typename Period1 , typename ColumnType &gt; </td></tr>
+<tr class="memitem:a6e21c9ba8e32a0eef47f6962460b2b2f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a6e21c9ba8e32a0eef47f6962460b2b2f">DeleteFromColumnStartingFrom</a> (std::string family, ColumnType &amp;&amp;column, std::chrono::duration&lt; Rep1, Period1 &gt; timestamp_begin)</td></tr>
+<tr class="separator:a6e21c9ba8e32a0eef47f6962460b2b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f3dbf8800a0341889790a5a0d538c7b"><td class="memTemplParams" colspan="2">template&lt;typename Rep2 , typename Period2 , typename ColumnType &gt; </td></tr>
+<tr class="memitem:a7f3dbf8800a0341889790a5a0d538c7b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a7f3dbf8800a0341889790a5a0d538c7b">DeleteFromColumnEndingAt</a> (std::string family, ColumnType &amp;&amp;column, std::chrono::duration&lt; Rep2, Period2 &gt; timestamp_end)</td></tr>
+<tr class="separator:a7f3dbf8800a0341889790a5a0d538c7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3666eec9752b2078a181dca113503ea7"><td class="memTemplParams" colspan="2">template&lt;typename ColumnType &gt; </td></tr>
+<tr class="memitem:a3666eec9752b2078a181dca113503ea7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a3666eec9752b2078a181dca113503ea7">DeleteFromColumn</a> (std::string family, ColumnType &amp;&amp;column)</td></tr>
+<tr class="memdesc:a3666eec9752b2078a181dca113503ea7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the values for the column.  <a href="#a3666eec9752b2078a181dca113503ea7">More...</a><br /></td></tr>
+<tr class="separator:a3666eec9752b2078a181dca113503ea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. </p>
 <p>Applications may need to link multiple versions of the Cloud Bigtable C++ client, for example, if they link a library that uses an older version of the client than they do. This namespace is inlined, so applications can use <code>bigtable::Foo</code> in their source, but the symbols are versioned, i.e., the symbol becomes <code>bigtable::v1::Foo</code>.</p>
 <p>Note that, consistent with the semver.org guidelines, the <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html" title="The inlined, versioned namespace for the Cloud Bigtable C++ client APIs. ">v0</a> version makes no guarantees with respect to backwards compatibility. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="adfdf301633eb2b1a261ac487f4760ec5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfdf301633eb2b1a261ac487f4760ec5">&#9670;&nbsp;</a></span>CellValueType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#adfdf301633eb2b1a261ac487f4760ec5">google::cloud::bigtable::v0::CellValueType</a> = typedef std::decay&lt;decltype( std::declval&lt;google::bigtable::v2::Cell&gt;().value())&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the type for cell values. </p>
+<p>Inside Google some protobuf fields of type <code>bytes</code> are mapped to a different type than <code>std::string</code>. This is the case for column qualifiers. We use this type to automatically detect what is the representation for this field and use the correct mapping.</p>
+<p>External users of the Cloud Bigtable C++ client library should treat this as a complicated <code>typedef</code> for <code>std::string</code>. We have no plans to change the type in the external version of the C++ client library for the foreseeable future. In the eventuality that we do decide to change the type, this would be a reason update the library major version number, and we would give users time to migrate.</p>
+<p>In other words, external users of the Cloud Bigtable C++ client should simply write <code>std::string</code> where this type appears. For Google projects that must compile both inside and outside Google, this alias may be convenient. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00072">72</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
+</div>
+</div>
 <a id="adbc5748c3e4f25b3a3ae8c8a1c694af7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adbc5748c3e4f25b3a3ae8c8a1c694af7">&#9670;&nbsp;</a></span>ClientUtils</h2>
 
@@ -374,6 +409,27 @@ Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a686e153ae55133614a4fb2d6fe62a7dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a686e153ae55133614a4fb2d6fe62a7dc">&#9670;&nbsp;</a></span>ColumnQualifierType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a686e153ae55133614a4fb2d6fe62a7dc">google::cloud::bigtable::v0::ColumnQualifierType</a> = typedef std::decay&lt;decltype( std::declval&lt;google::bigtable::v2::Column&gt;().qualifier())&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the type for column qualifiers. </p>
+<p>Inside Google some protobuf fields of type <code>bytes</code> are mapped to a different type than <code>std::string</code>. This is the case for column qualifiers. We use this type to automatically detect what is the representation for this field and use the correct mapping.</p>
+<p>External users of the Cloud Bigtable C++ client library should treat this as a complicated <code>typedef</code> for <code>std::string</code>. We have no plans to change the type in the external version of the C++ client library for the foreseeable future. In the eventuality that we do decide to change the type, this would be a reason update the library major version number, and we would give users time to migrate.</p>
+<p>In other words, external users of the Cloud Bigtable C++ client should simply write <code>std::string</code> where this type appears. For Google projects that must compile both inside and outside Google, this alias may be convenient. </p>
+
+<p class="definition">Definition at line <a class="el" href="cell_8h_source.html#l00050">50</a> of file <a class="el" href="cell_8h_source.html">cell.h</a>.</p>
+
+</div>
+</div>
 <a id="a6fd9b4a69047dfdcd3e57799ff905a8a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6fd9b4a69047dfdcd3e57799ff905a8a">&#9670;&nbsp;</a></span>Instance</h2>
 
@@ -387,6 +443,27 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="instance__update__config_8h_source.html#l00029">29</a> of file <a class="el" href="instance__update__config_8h_source.html">instance_update_config.h</a>.</p>
+
+</div>
+</div>
+<a id="a623f880e5c30b8694a6fc2fc435db64c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a623f880e5c30b8694a6fc2fc435db64c">&#9670;&nbsp;</a></span>RowKeyType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a623f880e5c30b8694a6fc2fc435db64c">google::cloud::bigtable::v0::RowKeyType</a> = typedef std::decay&lt;decltype(std::declval&lt;google::bigtable::v2::Row&gt;().key())&gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Defines the type for row keys. </p>
+<p>Inside Google some protobuf fields of type <code>bytes</code> are mapped to a different type than <code>std::string</code>. This is the case for row keys. We use this type to automatically detect what is the representation for this field and use the correct mapping.</p>
+<p>External users of the Cloud Bigtable C++ client library should treat this as a complicated <code>typedef</code> for <code>std::string</code>. We have no plans to change the type in the external version of the C++ client library for the foreseeable future. In the eventuality that we do decide to change the type, this would be a reason update the library major version number, and we would give users time to migrate.</p>
+<p>In other words, external users of the Cloud Bigtable C++ client should simply write <code>std::string</code> where this type appears. For Google projects that must compile both inside and outside Google, this alias may be convenient. </p>
+
+<p class="definition">Definition at line <a class="el" href="row__key_8h_source.html#l00048">48</a> of file <a class="el" href="row__key_8h_source.html">row_key.h</a>.</p>
 
 </div>
 </div>
@@ -670,13 +747,13 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a49600fa2184026ec8e388d7c3b092f07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a49600fa2184026ec8e388d7c3b092f07">&#9670;&nbsp;</a></span>DeleteFromColumn() <span class="overload">[1/2]</span></h2>
+<a id="a5eb99a2d7e290fcf71bf43174ba8cf75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5eb99a2d7e290fcf71bf43174ba8cf75">&#9670;&nbsp;</a></span>DeleteFromColumn() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 &gt; </div>
+template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 , typename ColumnType &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> google::cloud::bigtable::v0::DeleteFromColumn </td>
@@ -687,7 +764,7 @@ template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ColumnType &amp;&amp;&#160;</td>
           <td class="paramname"><em>column</em>, </td>
         </tr>
         <tr>
@@ -710,15 +787,17 @@ template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00102">102</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00126">126</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
-<a id="a295876d73956887335ac50b51fcbf326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a295876d73956887335ac50b51fcbf326">&#9670;&nbsp;</a></span>DeleteFromColumn() <span class="overload">[2/2]</span></h2>
+<a id="a3666eec9752b2078a181dca113503ea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3666eec9752b2078a181dca113503ea7">&#9670;&nbsp;</a></span>DeleteFromColumn() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename ColumnType &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> google::cloud::bigtable::v0::DeleteFromColumn </td>
@@ -729,7 +808,7 @@ template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ColumnType &amp;&amp;&#160;</td>
           <td class="paramname"><em>column</em>&#160;</td>
         </tr>
         <tr>
@@ -742,17 +821,17 @@ template&lt;typename Rep1 , typename Period1 , typename Rep2 , typename Period2 
 
 <p>Delete all the values for the column. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00044">44</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00229">229</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
-<a id="afd242a466253541d063f40f0465fcf10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd242a466253541d063f40f0465fcf10">&#9670;&nbsp;</a></span>DeleteFromColumnEndingAt()</h2>
+<a id="a7f3dbf8800a0341889790a5a0d538c7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f3dbf8800a0341889790a5a0d538c7b">&#9670;&nbsp;</a></span>DeleteFromColumnEndingAt()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Rep2 , typename Period2 &gt; </div>
+template&lt;typename Rep2 , typename Period2 , typename ColumnType &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> google::cloud::bigtable::v0::DeleteFromColumnEndingAt </td>
@@ -763,7 +842,7 @@ template&lt;typename Rep2 , typename Period2 &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ColumnType &amp;&amp;&#160;</td>
           <td class="paramname"><em>column</em>, </td>
         </tr>
         <tr>
@@ -780,17 +859,17 @@ template&lt;typename Rep2 , typename Period2 &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00184">184</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00214">214</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
-<a id="a2d3eaf2c079b31351c90fd2cbf985821"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d3eaf2c079b31351c90fd2cbf985821">&#9670;&nbsp;</a></span>DeleteFromColumnStartingFrom()</h2>
+<a id="a6e21c9ba8e32a0eef47f6962460b2b2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e21c9ba8e32a0eef47f6962460b2b2f">&#9670;&nbsp;</a></span>DeleteFromColumnStartingFrom()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Rep1 , typename Period1 &gt; </div>
+template&lt;typename Rep1 , typename Period1 , typename ColumnType &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> google::cloud::bigtable::v0::DeleteFromColumnStartingFrom </td>
@@ -801,7 +880,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ColumnType &amp;&amp;&#160;</td>
           <td class="paramname"><em>column</em>, </td>
         </tr>
         <tr>
@@ -818,7 +897,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00144">144</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00171">171</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
@@ -840,7 +919,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 
 <p>Create a mutation to delete all the cells in a column family. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00052">52</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00022">22</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
 
 </div>
 </div>
@@ -861,7 +940,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 
 <p>Create a mutation to delete all the cells in a row. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00059">59</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00029">29</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
 
 </div>
 </div>
@@ -968,7 +1047,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00175">175</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8h_source.html#l00199">199</a> of file <a class="el" href="row__range_8h_source.html">row_range.h</a>.</p>
 
 </div>
 </div>
@@ -1000,7 +1079,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 
 <p>Print a human-readable representation of the range, mostly for testing. </p>
 
-<p class="definition">Definition at line <a class="el" href="row__range_8cc_source.html#l00230">230</a> of file <a class="el" href="row__range_8cc_source.html">row_range.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8cc_source.html#l00209">209</a> of file <a class="el" href="row__range_8cc_source.html">row_range.cc</a>.</p>
 
 </div>
 </div>
@@ -1068,7 +1147,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="row__range_8cc_source.html#l00189">189</a> of file <a class="el" href="row__range_8cc_source.html">row_range.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="row__range_8cc_source.html#l00168">168</a> of file <a class="el" href="row__range_8cc_source.html">row_range.cc</a>.</p>
 
 </div>
 </div>
@@ -1088,17 +1167,19 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 </div><div class="memdoc">
 
 <p>A magic value where the server sets the timestamp. </p>
-<p>Notice that using this value in a <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a24adeb58de68ffc7a792f42b8391ce18" title="Create a mutation to set a cell value. ">SetCell()</a> mutation makes it non-idempotent, and by default the client will not retry such mutations. </p>
+<p>Notice that using this value in a <a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#afea3cbd65f75808ff66d96a00c7c958c" title="Create a mutation to set a cell value. ">SetCell()</a> mutation makes it non-idempotent, and by default the client will not retry such mutations. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00060">60</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00050">50</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
-<a id="a24adeb58de68ffc7a792f42b8391ce18"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24adeb58de68ffc7a792f42b8391ce18">&#9670;&nbsp;</a></span>SetCell() <span class="overload">[1/2]</span></h2>
+<a id="afea3cbd65f75808ff66d96a00c7c958c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afea3cbd65f75808ff66d96a00c7c958c">&#9670;&nbsp;</a></span>SetCell() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename ColumnType , typename ValueType &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> google::cloud::bigtable::v0::SetCell </td>
@@ -1109,7 +1190,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ColumnType &amp;&amp;&#160;</td>
           <td class="paramname"><em>column</em>, </td>
         </tr>
         <tr>
@@ -1121,7 +1202,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ValueType &amp;&amp;&#160;</td>
           <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
@@ -1134,15 +1215,17 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 
 <p>Create a mutation to set a cell value. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00022">22</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00054">54</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>
-<a id="a8ee54eedf8ff1128df318fad639950ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ee54eedf8ff1128df318fad639950ed">&#9670;&nbsp;</a></span>SetCell() <span class="overload">[2/2]</span></h2>
+<a id="af3ae0d1e968c2cb08bdb56ecc9861390"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3ae0d1e968c2cb08bdb56ecc9861390">&#9670;&nbsp;</a></span>SetCell() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename ColumnType , typename ValueType &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structgoogle_1_1cloud_1_1bigtable_1_1v0_1_1Mutation.html">Mutation</a> google::cloud::bigtable::v0::SetCell </td>
@@ -1153,13 +1236,13 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ColumnType &amp;&amp;&#160;</td>
           <td class="paramname"><em>column</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string&#160;</td>
+          <td class="paramtype">ValueType &amp;&amp;&#160;</td>
           <td class="paramname"><em>value</em>&#160;</td>
         </tr>
         <tr>
@@ -1173,7 +1256,7 @@ template&lt;typename Rep1 , typename Period1 &gt; </div>
 <p>Create a mutation to set a cell value where the server sets the time. </p>
 <p>These mutations are not idempotent and not retried by default. </p>
 
-<p class="definition">Definition at line <a class="el" href="mutations_8cc_source.html#l00034">34</a> of file <a class="el" href="mutations_8cc_source.html">mutations.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mutations_8h_source.html#l00072">72</a> of file <a class="el" href="mutations_8h_source.html">mutations.h</a>.</p>
 
 </div>
 </div>

@@ -87,32 +87,12 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a24adeb58de68ffc7a792f42b8391ce18"><td class="memItemLeft" align="right" valign="top">Mutation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a24adeb58de68ffc7a792f42b8391ce18">google::cloud::bigtable::v0::SetCell</a> (std::string family, std::string column, std::chrono::milliseconds timestamp, std::string value)</td></tr>
-<tr class="memdesc:a24adeb58de68ffc7a792f42b8391ce18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to set a cell value.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a24adeb58de68ffc7a792f42b8391ce18">More...</a><br /></td></tr>
-<tr class="separator:a24adeb58de68ffc7a792f42b8391ce18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ee54eedf8ff1128df318fad639950ed"><td class="memItemLeft" align="right" valign="top">Mutation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a8ee54eedf8ff1128df318fad639950ed">google::cloud::bigtable::v0::SetCell</a> (std::string family, std::string column, std::string value)</td></tr>
-<tr class="memdesc:a8ee54eedf8ff1128df318fad639950ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to set a cell value where the server sets the time.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a8ee54eedf8ff1128df318fad639950ed">More...</a><br /></td></tr>
-<tr class="separator:a8ee54eedf8ff1128df318fad639950ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a025435285286675f07acbdffe6810edb"><td class="memItemLeft" align="right" valign="top">Mutation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a025435285286675f07acbdffe6810edb">google::cloud::bigtable::v0::DeleteFromFamily</a> (std::string family)</td></tr>
 <tr class="memdesc:a025435285286675f07acbdffe6810edb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to delete all the cells in a column family.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a025435285286675f07acbdffe6810edb">More...</a><br /></td></tr>
 <tr class="separator:a025435285286675f07acbdffe6810edb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a701e766d44e856d4e11cbb7f80f1a9a2"><td class="memItemLeft" align="right" valign="top">Mutation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a701e766d44e856d4e11cbb7f80f1a9a2">google::cloud::bigtable::v0::DeleteFromRow</a> ()</td></tr>
 <tr class="memdesc:a701e766d44e856d4e11cbb7f80f1a9a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a mutation to delete all the cells in a row.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a701e766d44e856d4e11cbb7f80f1a9a2">More...</a><br /></td></tr>
 <tr class="separator:a701e766d44e856d4e11cbb7f80f1a9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr><td colspan="2"><div class="groupHeader">The following functions create a mutation that deletes all the</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>cells in the given column family and column, Delete up to <em>timestamp_end</em>, but excluding, <em>timestamp_end</em>.</p>
-<p>The function accepts any instantiation of <code>std::chrono::duration&lt;&gt;</code> for the <code>timestamp_end</code> For example:</p>
-<div class="fragment"><div class="line"><span class="keyword">using namespace </span>std::chrono_literals; <span class="comment">// C++14</span></div><div class="line"><a class="code" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a49600fa2184026ec8e388d7c3b092f07">bigtable::DeleteFromColumn</a>(<span class="stringliteral">&quot;fam&quot;</span>, <span class="stringliteral">&quot;col&quot;</span>, 10us)</div></div><!-- fragment --><dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Rep2</td><td>a placeholder to match the Rep tparam for <code>timestamp_end</code> type. The semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the underlying arithmetic type used to store the number of ticks), for our purposes it is simply a formal parameter.</td></tr>
-    <tr><td class="paramname">Period2</td><td>a placeholder to match the Period tparam for <code>timestamp_end</code> type. The semantics of this template parameter are documented in <code>std::chrono::duration&lt;&gt;</code> (in brief, the length of the tick in seconds, expressed as a <code>std::ratio&lt;&gt;</code>), for our purposes it is simply a formal parameter. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div></td></tr>
-<tr class="memitem:a295876d73956887335ac50b51fcbf326"><td class="memItemLeft" align="right" valign="top">Mutation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a295876d73956887335ac50b51fcbf326">google::cloud::bigtable::v0::DeleteFromColumn</a> (std::string family, std::string column)</td></tr>
-<tr class="memdesc:a295876d73956887335ac50b51fcbf326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete all the values for the column.  <a href="namespacegoogle_1_1cloud_1_1bigtable_1_1v0.html#a295876d73956887335ac50b51fcbf326">More...</a><br /></td></tr>
-<tr class="separator:a295876d73956887335ac50b51fcbf326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->

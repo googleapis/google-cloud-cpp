@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['shared_5fstate_5ftype',['shared_state_type',['../../common/classgoogle_1_1cloud_1_1v0_1_1future.html#aeefec768087538e0caa46d1311400765',1,'google::cloud::v0::future::shared_state_type()'],['../../common/classgoogle_1_1cloud_1_1v0_1_1future_3_01void_01_4.html#a991ff47d781b2f3be663c4207c49816c',1,'google::cloud::v0::future&lt; void &gt;::shared_state_type()']]],
-  ['statetype',['StateType',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1InstanceUpdateConfig.html#a1f4c9669c372ae76a8469c8fa506a5e3',1,'google::cloud::bigtable::v0::InstanceUpdateConfig']]],
-  ['storagetype',['StorageType',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1ClusterConfig.html#a89f53a2aeb295e53357740a7df0195bf',1,'google::cloud::bigtable::v0::ClusterConfig']]]
+  ['tableview',['TableView',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableAdmin.html#aa6e7c45c7b42bece58a3d5ce307564c7',1,'google::cloud::bigtable::v0::TableAdmin']]],
+  ['terminatehandler',['TerminateHandler',['../../common/namespacegoogle_1_1cloud_1_1v0.html#ac7ee67e4d6e7f6b8409fc4bcc537f1ea',1,'google::cloud::v0']]],
+  ['timestampgranularity',['TimestampGranularity',['../classgoogle_1_1cloud_1_1bigtable_1_1v0_1_1TableConfig.html#ac67a8a294b4725993cb17ae7eb6b9dd4',1,'google::cloud::bigtable::v0::TableConfig']]]
 ];
