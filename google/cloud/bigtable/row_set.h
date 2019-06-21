@@ -53,8 +53,8 @@ class RowSet {
    * Add @p row_key to the set, minimize copies when possible.
    */
   template <typename T>
-  void Append(T row_key) {
-    *row_set_.add_row_keys() = std::move(row_key);
+  void Append(T&& row_key) {
+    *row_set_.add_row_keys() = std::forward<T>(row_key);
   }
 
   /**
@@ -88,7 +88,7 @@ class RowSet {
     // We cannot use the initializer list expression here because the types
     // may be all different.
     Append(std::forward<H>(head));
-    AppendAll(std::forward<Tail&&>(a)...);
+    AppendAll(std::forward<Tail>(a)...);
   }
 
   /// Terminate the recursion.

@@ -35,8 +35,8 @@ class Row {
  public:
   /// Create a row from a list of cells.
   template <typename T>
-  Row(T row_key, std::vector<Cell> cells)
-      : row_key_(std::move(row_key)), cells_(std::move(cells)) {}
+  Row(T&& row_key, std::vector<Cell> cells)
+      : row_key_(std::forward<T>(row_key)), cells_(std::move(cells)) {}
 
   /// Return the row key. The returned value is not valid
   /// after this object is deleted.

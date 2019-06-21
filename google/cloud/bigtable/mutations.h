@@ -253,13 +253,13 @@ class SingleRowMutation {
  public:
   /// Create an empty mutation.
   template <typename RowKey>
-  explicit SingleRowMutation(RowKey row_key) : request_() {
+  explicit SingleRowMutation(RowKey&& row_key) : request_() {
     request_.set_row_key(std::forward<RowKey>(row_key));
   }
 
   /// Create a row mutation from a initializer list.
   template <typename RowKey>
-  SingleRowMutation(RowKey row_key, std::initializer_list<Mutation> list)
+  SingleRowMutation(RowKey&& row_key, std::initializer_list<Mutation> list)
       : request_() {
     request_.set_row_key(std::forward<RowKey>(row_key));
     for (auto&& i : list) {
@@ -269,7 +269,7 @@ class SingleRowMutation {
 
   /// Create a single-row multiple-cell mutation from a variadic list.
   template <typename RowKey, typename... M>
-  explicit SingleRowMutation(RowKey row_key, M&&... m) : request_() {
+  explicit SingleRowMutation(RowKey&& row_key, M&&... m) : request_() {
     static_assert(
         internal::conjunction<std::is_convertible<M, Mutation>...>::value,
         "The arguments passed to SingleRowMutation(std::string, ...) must be "

@@ -50,7 +50,7 @@ class RowRange {
 
   /// Return the range starting at @p begin (included), with no upper limit.
   template <typename T>
-  static RowRange StartingAt(T begin) {
+  static RowRange StartingAt(T&& begin) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::forward<T>(begin));
     return result;
@@ -58,7 +58,7 @@ class RowRange {
 
   /// Return the range ending at @p end (included), with no lower limit.
   template <typename T>
-  static RowRange EndingAt(T end) {
+  static RowRange EndingAt(T&& end) {
     RowRange result;
     result.row_range_.set_end_key_closed(std::forward<T>(end));
     return result;
@@ -76,22 +76,22 @@ class RowRange {
 
   /// Return the range representing the interval [@p begin, @p end).
   template <typename T, typename U>
-  static RowRange Range(T begin, U end) {
+  static RowRange Range(T&& begin, U&& end) {
     return RightOpen(std::forward<T>(begin), std::forward<U>(end));
   }
 
   /// Return a range that contains all the keys starting with @p prefix.
   template <typename T>
-  static RowRange Prefix(T prefix) {
+  static RowRange Prefix(T&& prefix) {
     auto end = internal::PrefixRangeEnd(prefix);
-    return RightOpen(std::move(prefix), std::move(end));
+    return RightOpen(std::forward<T>(prefix), std::move(end));
   }
 
   //@{
   /// @name Less common, yet sometimes useful, ranges.
   /// Return a range representing the interval [@p begin, @p end).
   template <typename T, typename U>
-  static RowRange RightOpen(T begin, U end) {
+  static RowRange RightOpen(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::forward<T>(begin));
     if (!internal::IsEmptyRowKey(end)) {
@@ -102,7 +102,7 @@ class RowRange {
 
   /// Return a range representing the interval (@p begin, @p end].
   template <typename T, typename U>
-  static RowRange LeftOpen(T begin, U end) {
+  static RowRange LeftOpen(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_open(std::forward<T>(begin));
     if (!internal::IsEmptyRowKey(end)) {
@@ -113,7 +113,7 @@ class RowRange {
 
   /// Return a range representing the interval (@p begin, @p end).
   template <typename T, typename U>
-  static RowRange Open(T begin, U end) {
+  static RowRange Open(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_open(std::forward<T>(begin));
     if (!internal::IsEmptyRowKey(end)) {
@@ -124,7 +124,7 @@ class RowRange {
 
   /// Return a range representing the interval [@p begin, @p end].
   template <typename T, typename U>
-  static RowRange Closed(T begin, U end) {
+  static RowRange Closed(T&& begin, U&& end) {
     RowRange result;
     result.row_range_.set_start_key_closed(std::forward<T>(begin));
     if (!internal::IsEmptyRowKey(end)) {
