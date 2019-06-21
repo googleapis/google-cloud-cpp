@@ -631,13 +631,15 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   return result;
 }
 
-bool operator==(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs) {
+bool operator==(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs) {
   return lhs.upload_session_url == rhs.upload_session_url &&
          lhs.last_committed_byte == rhs.last_committed_byte &&
          lhs.payload == rhs.payload && lhs.done == rhs.done;
 }
 
-bool operator!=(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs) {
+bool operator!=(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs) {
   return !(lhs == rhs);
 }
 

@@ -479,8 +479,10 @@ struct ResumableUploadResponse {
   bool done;
 };
 
-bool operator==(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs);
-bool operator!=(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs);
+bool operator==(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs);
+bool operator!=(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs);
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 
