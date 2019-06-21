@@ -39,7 +39,7 @@ CurlResumableStreambuf::CurlResumableStreambuf(
         upload_session_->last_response();
     if (last_upload_response.ok()) {
       last_response_ = HttpResponse{
-        200, std::move(last_upload_response).value().payload, {}};
+          200, std::move(last_upload_response).value().payload, {}};
     } else {
       last_response_ = StatusOr<HttpResponse>(last_upload_response.status());
     }

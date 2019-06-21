@@ -113,11 +113,10 @@ std::string const& RetryResumableUploadSession::session_id() const {
   return session_->session_id();
 }
 
-bool RetryResumableUploadSession::done() const {
-  return session_->done();
-}
+bool RetryResumableUploadSession::done() const { return session_->done(); }
 
-StatusOr<ResumableUploadResponse> const& RetryResumableUploadSession::last_response() const {
+StatusOr<ResumableUploadResponse> const&
+RetryResumableUploadSession::last_response() const {
   return session_->last_response();
 }
 

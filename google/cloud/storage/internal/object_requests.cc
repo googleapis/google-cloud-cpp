@@ -631,20 +631,19 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   return result;
 }
 
-
-bool ResumableUploadResponse::operator==(const ResumableUploadResponse& other) const {
+bool ResumableUploadResponse::operator==(
+    const ResumableUploadResponse& other) const {
   return upload_session_url == other.upload_session_url &&
-      last_committed_byte == other.last_committed_byte &&
-      payload == other.payload &&
-      done == other.done;
+         last_committed_byte == other.last_committed_byte &&
+         payload == other.payload && done == other.done;
 }
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
   return os << "ResumableUploadResponse={upload_session_url="
             << r.upload_session_url
             << ", last_committed_byte=" << r.last_committed_byte << ", payload="
-            << BinaryDataAsDebugString(r.payload.data(), r.payload.size(), 128) << ", done=" << 
-            r.done << "}";
+            << BinaryDataAsDebugString(r.payload.data(), r.payload.size(), 128)
+            << ", done=" << r.done << "}";
 }
 
 }  // namespace internal

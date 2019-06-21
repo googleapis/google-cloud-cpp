@@ -644,7 +644,8 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);;
+  EXPECT_EQ(0, actual.last_committed_byte);
+  ;
   EXPECT_EQ(false, actual.done);
 }
 
@@ -655,7 +656,8 @@ TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);;
+  EXPECT_EQ(0, actual.last_committed_byte);
+  ;
   EXPECT_EQ(false, actual.done);
 }
 

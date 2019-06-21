@@ -175,7 +175,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   auto os = client->WriteObject(bucket_name, object_name,
                                 RestoreResumableUploadSession(session_id));
   EXPECT_FALSE(os.IsOpen());
-  //EXPECT_TRUE(os.eof());
+  // EXPECT_TRUE(os.eof());
   EXPECT_EQ(session_id, os.resumable_session_id());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());

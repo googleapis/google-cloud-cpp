@@ -75,7 +75,8 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
         ++count;
         EXPECT_EQ(4, count);
         EXPECT_EQ(payload, p);
-        return make_status_or(ResumableUploadResponse{"", quantum - 1, {}, false});
+        return make_status_or(
+            ResumableUploadResponse{"", quantum - 1, {}, false});
       }))
       .WillOnce(Invoke([&](std::string const& p) {
         ++count;
@@ -87,13 +88,15 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
         ++count;
         EXPECT_EQ(7, count);
         EXPECT_EQ(payload, p);
-        return make_status_or(ResumableUploadResponse{"", 2 * quantum - 1, {}, false});
+        return make_status_or(
+            ResumableUploadResponse{"", 2 * quantum - 1, {}, false});
       }))
       .WillOnce(Invoke([&](std::string const& p) {
         ++count;
         EXPECT_EQ(8, count);
         EXPECT_EQ(payload, p);
-        return make_status_or(ResumableUploadResponse{"", 3 * quantum - 1, {}, false});
+        return make_status_or(
+            ResumableUploadResponse{"", 3 * quantum - 1, {}, false});
       }));
 
   EXPECT_CALL(*mock, ResetSession())
@@ -110,7 +113,8 @@ TEST_F(RetryResumableUploadSessionTest, HandleTransient) {
       .WillOnce(Invoke([&]() {
         ++count;
         EXPECT_EQ(6, count);
-        return make_status_or(ResumableUploadResponse{"", quantum - 1, {}, false});
+        return make_status_or(
+            ResumableUploadResponse{"", quantum - 1, {}, false});
       }));
 
   RetryResumableUploadSession session(
@@ -295,7 +299,8 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnReset) {
         ++count;
         EXPECT_EQ(4, count);
         EXPECT_EQ(payload, p);
-        return make_status_or(ResumableUploadResponse{"", quantum - 1, {}, false});
+        return make_status_or(
+            ResumableUploadResponse{"", quantum - 1, {}, false});
       }))
       .WillOnce(Invoke([&](std::string const& p) {
         ++count;
@@ -434,7 +439,8 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
 }
 
 TEST(RetryResumableUploadSession, Done) {
-  auto mock = google::cloud::internal::make_unique<testing::MockResumableUploadSession>();
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done()).WillOnce(Return(true));
 
   RetryResumableUploadSession session(std::move(mock), {}, {});
@@ -442,7 +448,8 @@ TEST(RetryResumableUploadSession, Done) {
 }
 
 TEST(RetryResumableUploadSession, LastResponse) {
-  auto mock = google::cloud::internal::make_unique<testing::MockResumableUploadSession>();
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
   const StatusOr<ResumableUploadResponse> last_response(
       ResumableUploadResponse{"url", 1, "payload", true});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));

@@ -66,7 +66,8 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(payload, request.payload());
         EXPECT_EQ(2 * size, request.source_size());
         EXPECT_EQ(size, request.range_begin());
-        return make_status_or(ResumableUploadResponse{"", 2 * size - 1, "", true});
+        return make_status_or(
+            ResumableUploadResponse{"", 2 * size - 1, "", true});
       }));
 
   auto upload = session.UploadChunk(payload);
@@ -117,7 +118,8 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   session.ResetSession();
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_EQ(url2, session.session_id());
-  StatusOr<ResumableUploadResponse> const& last_response = session.last_response();
+  StatusOr<ResumableUploadResponse> const& last_response =
+      session.last_response();
   ASSERT_STATUS_OK(last_response);
   EXPECT_EQ(last_response.value(), resume_response);
 }
@@ -137,7 +139,8 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
         return make_status_or(ResumableUploadResponse{"", size - 1, "", false});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
-        return make_status_or(ResumableUploadResponse{url2, 2 * size - 1, "", false});
+        return make_status_or(
+            ResumableUploadResponse{url2, 2 * size - 1, "", false});
       }));
 
   auto upload = session.UploadChunk(payload);
@@ -147,8 +150,6 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   EXPECT_EQ(2 * size, session.next_expected_byte());
   EXPECT_EQ(url2, session.session_id());
 }
-
-
 
 }  // namespace
 }  // namespace internal

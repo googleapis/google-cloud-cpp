@@ -104,7 +104,8 @@ TEST(CurlResumableStreambufTest, EmptyTrailer) {
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload, p);
     auto last_committed_byte = payload.size() - 1;
-    return make_status_or(ResumableUploadResponse{"", last_committed_byte, {}, false});
+    return make_status_or(
+        ResumableUploadResponse{"", last_committed_byte, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -142,7 +143,8 @@ TEST(CurlResumableStreambufTest, FlushAfterLargePayload) {
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload_1, p);
     auto last_commited_byte = p.size() - 1;
-    return make_status_or(ResumableUploadResponse{"", last_commited_byte, {}, false});
+    return make_status_or(
+        ResumableUploadResponse{"", last_commited_byte, {}, false});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -288,13 +290,15 @@ TEST(CurlResumableStreambufTest, MixPutcPutn) {
   EXPECT_STATUS_OK(response);
 }
 
-/// @test Verify that a stream created for a finished upload starts out as closed.
+/// @test Verify that a stream created for a finished upload starts out as
+/// closed.
 TEST(CurlResumableStreambufTest, CreatedForFinalizedUpload) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(true));
   std::string const payload = "payload";
-  auto last_upload_response = make_status_or(ResumableUploadResponse{"{}", 0, payload, true});
+  auto last_upload_response =
+      make_status_or(ResumableUploadResponse{"{}", 0, payload, true});
   EXPECT_CALL(*mock, last_response).WillOnce(ReturnRef(last_upload_response));
 
   CurlResumableStreambuf streambuf(
