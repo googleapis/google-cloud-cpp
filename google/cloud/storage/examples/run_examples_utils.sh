@@ -98,13 +98,6 @@ run_all_bucket_examples() {
 run_all_service_account_examples() {
   local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
 
-  # TODO(#2540) - Restore HMAC key tests.
-  if [[ -z "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " HMAC key examples disabled when running in production (#2540)."
-    return
-  fi
-
   run_example ./storage_service_account_samples \
       get-service-account-for-project "${PROJECT_ID}"
 

@@ -84,10 +84,9 @@ echo
 echo "Running GCS Projects.serviceAccount integration tests."
 ./thread_integration_test "${PROJECT_ID}" "${STORAGE_REGION_ID}"
 
-# TODO(#2540) - Restore HMAC key tests.
-# echo
-# echo "Running GCS Projects.serviceAccount integration tests."
-# ./service_account_integration_test "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}"
+ echo
+ echo "Running GCS Projects.serviceAccount integration tests."
+ ./service_account_integration_test "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}"
 
 echo
 echo "Running V4 Signed URL conformance tests."
