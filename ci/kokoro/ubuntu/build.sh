@@ -143,11 +143,38 @@ echo
 echo "================================================================"
 echo "Running Google Cloud Storage Integration Tests $(date)"
 echo "================================================================"
+TEST_SERVICE_ACCOUNT_NAME="hmac-sa-${RANDOM}-${RANDOM}-${RANDOM}"
+TEST_SERVICE_ACCOUNT="${TEST_SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+export TEST_SERVICE_ACCOUNT
+
+gcloud iam service-accounts create "--project=${PROJECT_ID}" \
+    "${TEST_SERVICE_ACCOUNT_NAME}"
+gcloud projects add-iam-policy-binding ${PROJECT_ID} \
+    --member "serviceAccount:${TEST_SERVICE_ACCOUNT}" \
+    --role roles/iam.serviceAccountTokenCreator
+
+echo "Create service account to run the tests."
+set +e
 (cd "$(bazel info bazel-bin)/google/cloud/storage/tests" && \
     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
+storage_integration_test_status=$?
 echo "Running Google Cloud Storage Examples"
 (cd "$(bazel info bazel-bin)/google/cloud/storage/examples" && \
     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
+storage_examples_status=$?
+set -e
+
+gcloud iam service-accounts delete "${TEST_SERVICE_ACCOUNT}"
+
+if [[ "${storage_integration_test_status}" != 0 ]]; then
+  echo "Error in integration tests."
+  exit 1
+fi
+
+if [[ "${storage_examples_status}" != 0 ]]; then
+  echo "Error in storage examples."
+  exit 1
+fi
 
 echo "================================================================"
 echo "Build completed $(date)"
