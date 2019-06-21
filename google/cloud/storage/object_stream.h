@@ -217,7 +217,23 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /// Closes the stream (if necessary).
   ~ObjectWriteStream() override;
 
-  /// Return true while the stream is open.
+  /**
+   * Return true if the stream is open to write more data.
+   *
+   * @note
+   * write streams can be "born closed" when created using a previously
+   * finalized upload session. Applications that restore a previous session
+   * should check the state, for example:
+   *
+   * @code
+   * auto stream = client.WriteObject(...,
+   *     gcs::RestoreResumableUploadSession(session_id));
+   * if (!stream.IsOpen() && stream.metadata().ok()) {
+   *   std::cout << "Yay! The upload was finalized previously.\n";
+   *   return;
+   * }
+   * @endcode
+   */
   bool IsOpen() const { return buf_ != nullptr && buf_->IsOpen(); }
 
   /**

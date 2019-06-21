@@ -157,7 +157,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
       testing::MockResumableUploadSession>();
 
   const StatusOr<ResumableUploadResponse> last_response(
-      Status(StatusCode::kUnavailable, "something bad"));
+      Status(StatusCode::kFailedPrecondition, "something bad"));
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
   LoggingResumableUploadSession session(std::move(mock));

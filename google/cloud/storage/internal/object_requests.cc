@@ -631,11 +631,14 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   return result;
 }
 
-bool ResumableUploadResponse::operator==(
-    const ResumableUploadResponse& other) const {
-  return upload_session_url == other.upload_session_url &&
-         last_committed_byte == other.last_committed_byte &&
-         payload == other.payload && done == other.done;
+bool operator==(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs) {
+  return lhs.upload_session_url == rhs.upload_session_url &&
+         lhs.last_committed_byte == rhs.last_committed_byte &&
+         lhs.payload == rhs.payload && lhs.done == rhs.done;
+}
+
+bool operator!=(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs) {
+  return !(lhs == rhs);
 }
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {

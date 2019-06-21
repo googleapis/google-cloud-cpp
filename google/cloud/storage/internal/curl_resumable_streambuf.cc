@@ -32,7 +32,7 @@ CurlResumableStreambuf::CurlResumableStreambuf(
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
-  // Sessions start in a closed state for uploads that have laready been
+  // Sessions start in a closed state for uploads that have already been
   // finalized.
   if (upload_session_->done()) {
     StatusOr<ResumableUploadResponse> const& last_upload_response =

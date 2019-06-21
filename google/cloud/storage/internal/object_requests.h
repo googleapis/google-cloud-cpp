@@ -473,13 +473,14 @@ struct ResumableUploadResponse {
   static StatusOr<ResumableUploadResponse> FromHttpResponse(
       HttpResponse&& response);
 
-  bool operator==(const ResumableUploadResponse& other) const;
-
   std::string upload_session_url;
   std::uint64_t last_committed_byte;
   std::string payload;
   bool done;
 };
+
+bool operator==(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs);
+bool operator!=(ResumableUploadResponse const& lhs, ResumableUploadResponse const& rhs);
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 

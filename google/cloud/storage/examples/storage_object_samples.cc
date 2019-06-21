@@ -640,6 +640,10 @@ void ResumeResumableUpload(google::cloud::storage::Client client, int& argc,
     gcs::ObjectWriteStream stream =
         client.WriteObject(bucket_name, object_name,
                            gcs::RestoreResumableUploadSession(session_id));
+    if (!stream.IsOpen() && stream.metadata().ok()) {
+      std::cout << "The upload has already been finalized.  The object "
+                << "metadata is: " << *stream.metadata() << "\n";
+    }
     if (stream.next_expected_byte() == 0) {
       // In this example we create a small object, smaller than the resumable
       // upload quantum (256 KiB), so either all the data is there or not.

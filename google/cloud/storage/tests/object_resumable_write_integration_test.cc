@@ -51,6 +51,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -100,6 +101,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -139,6 +141,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -173,6 +176,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
                                 RestoreResumableUploadSession(session_id));
   EXPECT_FALSE(os.IsOpen());
   EXPECT_EQ(session_id, os.resumable_session_id());
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
