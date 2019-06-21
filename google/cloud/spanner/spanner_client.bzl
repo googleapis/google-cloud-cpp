@@ -17,6 +17,7 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
+    "row.h",
     "sql_statement.h",
     "value.h",
     "version.h",
