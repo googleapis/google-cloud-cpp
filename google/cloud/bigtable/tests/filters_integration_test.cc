@@ -306,13 +306,12 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
     auto inserted = actual.emplace(cell.row_key(), 0);
     inserted.first->second++;
   }
-  using bigtable::RowKeyType;
   std::map<bigtable::RowKeyType, int> expected{
-      {RowKeyType(prefix + "/one-cell"), 1},
-      {RowKeyType(prefix + "/two-cells"), 2},
-      {RowKeyType(prefix + "/many"), 3},
-      {RowKeyType(prefix + "/many-columns"), 3},
-      {RowKeyType(prefix + "/complex"), 3}};
+      {bigtable::RowKeyType(prefix + "/one-cell"), 1},
+      {bigtable::RowKeyType(prefix + "/two-cells"), 2},
+      {bigtable::RowKeyType(prefix + "/many"), 3},
+      {bigtable::RowKeyType(prefix + "/many-columns"), 3},
+      {bigtable::RowKeyType(prefix + "/complex"), 3}};
 
   EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
@@ -331,11 +330,10 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
     auto inserted = actual.emplace(cell.row_key(), 0);
     inserted.first->second++;
   }
-  using bigtable::RowKeyType;
   std::map<bigtable::RowKeyType, int> expected{
-      {RowKeyType(prefix + "/many"), 2},
-      {RowKeyType(prefix + "/many-columns"), 2},
-      {RowKeyType(prefix + "/complex"), 78}};
+      {bigtable::RowKeyType(prefix + "/many"), 2},
+      {bigtable::RowKeyType(prefix + "/many-columns"), 2},
+      {bigtable::RowKeyType(prefix + "/complex"), 78}};
 
   EXPECT_THAT(expected, ::testing::ContainerEq(actual));
 }
