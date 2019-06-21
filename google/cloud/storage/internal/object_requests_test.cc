@@ -572,6 +572,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponse) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
+  EXPECT_EQ(true, actual.done);
 
   std::ostringstream os;
   os << actual;
@@ -583,26 +584,28 @@ TEST(ObjectRequestsTest, ResumableUploadResponse) {
 TEST(ObjectRequestsTest, ResumableUploadResponseNoLocation) {
   auto actual =
       ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{200, "test-payload", {{"range", "bytes=0-2000"}}})
+          HttpResponse{308, "test-payload", {{"range", "bytes=0-2000"}}})
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
+  EXPECT_EQ(false, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
   auto actual =
       ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{200, "test-payload", {{"location", "location-value"}}})
+          HttpResponse{201, "test-payload", {{"location", "location-value"}}})
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(true, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{200,
+                    HttpResponse{308,
                                  "test-payload",
                                  {{"location", "location-value"},
                                   {"range", "units=0-2000"}}})
@@ -610,55 +613,61 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(false, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{200, "test-payload", {{"range", "bytes=0-"}}})
+                    HttpResponse{308, "test-payload", {{"range", "bytes=0-"}}})
                     .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(false, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
   auto actual =
       ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{200, "test-payload", {{"range", "bytes=0-abcd"}}})
+          HttpResponse{308, "test-payload", {{"range", "bytes=0-abcd"}}})
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(false, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
   auto actual =
       ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{200, "test-payload", {{"range", "bytes=abcd-2000"}}})
+          HttpResponse{308, "test-payload", {{"range", "bytes=abcd-2000"}}})
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);;
+  EXPECT_EQ(false, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
   auto actual =
       ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{200, "test-payload", {{"range", "bytes=3000-2000"}}})
+          HttpResponse{308, "test-payload", {{"range", "bytes=3000-2000"}}})
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
-  EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(0, actual.last_committed_byte);;
+  EXPECT_EQ(false, actual.done);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
   auto actual =
       ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{200, "test-payload", {{"range", "bytes=0--7"}}})
+          HttpResponse{308, "test-payload", {{"range", "bytes=0--7"}}})
           .value();
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_EQ(false, actual.done);
 }
 
 ObjectMetadata CreateObjectMetadataForTest() {

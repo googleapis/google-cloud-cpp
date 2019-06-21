@@ -59,7 +59,7 @@ ObjectWriteStream::ObjectWriteStream(
     std::unique_ptr<internal::ObjectWriteStreambuf> buf)
     : std::basic_ostream<char>(nullptr), buf_(std::move(buf)) {
   init(buf_.get());
-  // If buf is already closed, update internal state to represent
+  // If buf_ is already closed, update internal state to represent
   // the fact that no more bytes can be uploaded to this object.
   if (!buf_->IsOpen()) {
     CloseBuf();

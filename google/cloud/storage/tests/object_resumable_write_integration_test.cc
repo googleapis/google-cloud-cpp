@@ -151,6 +151,44 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   EXPECT_STATUS_OK(status);
 }
 
+TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  // Create the object, but only if it does not exist already.
+  std::string session_id;
+  {
+    auto old_os =
+        client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                            NewResumableUploadSession());
+    ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
+    session_id = old_os.resumable_session_id();
+    old_os << LoremIpsum();
+  }
+
+  auto os = client->WriteObject(bucket_name, object_name,
+                                RestoreResumableUploadSession(session_id));
+  EXPECT_FALSE(os.IsOpen());
+  //EXPECT_TRUE(os.eof());
+  EXPECT_EQ(session_id, os.resumable_session_id());
+  ObjectMetadata meta = os.metadata().value();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  if (UsingTestbench()) {
+    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   StatusOr<Client> client = Client::CreateDefaultClient();
   ASSERT_STATUS_OK(client);

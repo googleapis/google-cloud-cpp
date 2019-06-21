@@ -32,6 +32,7 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::ReturnRef;
 
 /// @test Verify that uploading an empty stream creates a single chunk.
 TEST(CurlResumableStreambufTest, EmptyStream) {
@@ -285,6 +286,25 @@ TEST(CurlResumableStreambufTest, MixPutcPutn) {
   streambuf.sputn(payload_2.data(), payload_2.size());
   auto response = streambuf.Close();
   EXPECT_STATUS_OK(response);
+}
+
+/// @test Verify that a stream created for a finished upload starts out as closed.
+TEST(CurlResumableStreambufTest, CreatedForFinalizedUpload) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(true));
+  std::string const payload = "payload";
+  auto last_upload_response = make_status_or(ResumableUploadResponse{"{}", 0, payload, true});
+  EXPECT_CALL(*mock, last_response).WillOnce(ReturnRef(last_upload_response));
+
+  CurlResumableStreambuf streambuf(
+      std::move(mock), UploadChunkRequest::kChunkSizeQuantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+  EXPECT_EQ(streambuf.IsOpen(), false);
+  StatusOr<HttpResponse> close_result = streambuf.Close();
+  ASSERT_STATUS_OK(close_result);
+  EXPECT_EQ(close_result.value().status_code, 200);
+  EXPECT_EQ(close_result.value().payload, payload);
 }
 
 }  // namespace

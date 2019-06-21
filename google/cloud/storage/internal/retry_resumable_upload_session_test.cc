@@ -34,6 +34,7 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::ReturnRef;
 
 class RetryResumableUploadSessionTest : public ::testing::Test {
  protected:
@@ -430,6 +431,26 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   StatusOr<ResumableUploadResponse> response =
       session.UploadFinalChunk(payload, quantum);
   EXPECT_FALSE(response.ok());
+}
+
+TEST(RetryResumableUploadSession, Done) {
+  auto mock = google::cloud::internal::make_unique<testing::MockResumableUploadSession>();
+  EXPECT_CALL(*mock, done()).WillOnce(Return(true));
+
+  RetryResumableUploadSession session(std::move(mock), {}, {});
+  EXPECT_TRUE(session.done());
+}
+
+TEST(RetryResumableUploadSession, LastResponse) {
+  auto mock = google::cloud::internal::make_unique<testing::MockResumableUploadSession>();
+  const StatusOr<ResumableUploadResponse> last_response(
+      ResumableUploadResponse{"url", 1, "payload", true});
+  EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
+
+  RetryResumableUploadSession session(std::move(mock), {}, {});
+  const StatusOr<ResumableUploadResponse> result = session.last_response();
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result.value(), last_response.value());
 }
 
 }  // namespace
