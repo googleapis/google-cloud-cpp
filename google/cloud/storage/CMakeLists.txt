@@ -71,6 +71,7 @@ google_cloud_cpp_add_common_options(storage_common_options)
 include(CTest)
 
 include(IncludeCurl)
+find_package(OpenSSL REQUIRED)
 find_package(ZLIB REQUIRED)
 
 # the client library
@@ -229,6 +230,8 @@ target_link_libraries(storage_client
                              Crc32c::crc32c
                              CURL::libcurl
                              Threads::Threads
+                             OpenSSL::SSL
+                             OpenSSL::Crypto
                              ZLIB::ZLIB
                       PRIVATE storage_common_options)
 target_include_directories(storage_client
@@ -472,7 +475,7 @@ if ("${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_INSTALL}")
     set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides C++ APIs to access Google Cloud Storage.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common openssl libcurl")
     set(GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client -lcrc32c")
 
     # Create and install the pkg-config files.
