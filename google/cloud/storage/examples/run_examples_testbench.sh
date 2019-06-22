@@ -34,6 +34,7 @@ readonly DESTINATION_BUCKET_NAME="destination-bucket-${RANDOM}-${RANDOM}"
 readonly TOPIC_NAME="fake-topic-${RANDOM}-${RANDOM}"
 readonly STORAGE_CMEK_KEY="projects/${PROJECT_ID}/locations/global/keyRings/fake-key-ring/cryptoKeys/fake-key"
 readonly SERVICE_ACCOUNT="fake-service-account@example.com"
+readonly HMAC_SERVICE_ACCOUNT="fake-sa-hmac@example.com"
 
 # Most of the examples assume a bucket already exists, create one for them.
 run_example ./storage_bucket_samples create-bucket-for-project \

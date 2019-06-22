@@ -109,12 +109,12 @@ run_all_service_account_examples() {
   # a normal example.
   local access_id
   access_id=$(./storage_service_account_samples \
-      create-hmac-key-for-project "${PROJECT_ID}" "${SERVICE_ACCOUNT}" | \
+      create-hmac-key-for-project "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}" | \
       sed -n 's;.*, access_id=\([^,]*\),.*;\1;p')
   run_example ./storage_service_account_samples \
       list-hmac-keys
   run_example ./storage_service_account_samples \
-      list-hmac-keys-with-service-account "${SERVICE_ACCOUNT}"
+      list-hmac-keys-with-service-account "${HMAC_SERVICE_ACCOUNT}"
   run_example ./storage_service_account_samples \
       deactivate-hmac-key "${access_id}"
   run_example ./storage_service_account_samples \
@@ -122,7 +122,7 @@ run_all_service_account_examples() {
 
   # Create another key to test `update-hmac-key`.
   access_id=$(./storage_service_account_samples \
-      create-hmac-key "${SERVICE_ACCOUNT}" | \
+      create-hmac-key "${HMAC_SERVICE_ACCOUNT}" | \
       sed -n 's;.*, access_id=\([^,]*\),.*;\1;p')
   run_example ./storage_service_account_samples \
       get-hmac-key "${access_id}"

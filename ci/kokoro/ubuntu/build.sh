@@ -20,9 +20,6 @@ echo "================================================================"
 echo "Running Bazel build with integration tests against production $(date)."
 echo "================================================================"
 
-echo "Reading CI secret configuration parameters."
-source "${KOKORO_GFILE_DIR}/test-configuration.sh"
-
 echo "Running build and tests"
 cd "$(dirname "$0")/../../.."
 readonly PROJECT_ROOT="${PWD}"
@@ -95,10 +92,6 @@ echo "================================================================"
 echo "Download dependencies for integration tests $(date)."
 echo "================================================================"
 
-export TEST_KEY_FILE_JSON="${KOKORO_GFILE_DIR}/service-account.json"
-export TEST_KEY_FILE_P12="${KOKORO_GFILE_DIR}/service-account.p12"
-export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
-
 # Download the gRPC `roots.pem` file. Somewhere inside the bowels of Bazel, this
 # file might exist, but my attempts at using it have failed.
 echo "    Getting roots.pem for gRPC."
@@ -118,6 +111,15 @@ sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
 tar x -C "${HOME}" -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
 "${HOME}/google-cloud-sdk/bin/gcloud" --quiet components install cbt
 export CBT="${HOME}/google-cloud-sdk/bin/cbt"
+
+echo "================================================================"
+echo "Setup environment for integration tests $(date)"
+export TEST_KEY_FILE_JSON="${KOKORO_GFILE_DIR}/service-account.json"
+export TEST_KEY_FILE_P12="${KOKORO_GFILE_DIR}/service-account.p12"
+export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
+
+echo "Reading CI secret configuration parameters."
+source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
 if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
   echo
@@ -143,11 +145,41 @@ echo
 echo "================================================================"
 echo "Running Google Cloud Storage Integration Tests $(date)"
 echo "================================================================"
+# Recall that each evaluation of ${RANDOM} produces a different value.
+HMAC_SERVICE_ACCOUNT_NAME="hmac-sa-$(date +%s)-${RANDOM}"
+HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
+export HMAC_SERVICE_ACCOUNT
+
+gcloud auth activate-service-account --key-file \
+    "${KOKORO_GFILE_DIR}/service-account.json"
+gcloud iam service-accounts create "--project=${PROJECT_ID}" \
+    "${HMAC_SERVICE_ACCOUNT_NAME}"
+gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
+    --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
+    --role roles/iam.serviceAccountTokenCreator
+
+echo "Create service account to run the tests."
+set +e
 (cd "$(bazel info bazel-bin)/google/cloud/storage/tests" && \
     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
+storage_integration_test_status=$?
 echo "Running Google Cloud Storage Examples"
 (cd "$(bazel info bazel-bin)/google/cloud/storage/examples" && \
     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
+storage_examples_status=$?
+set -e
+
+gcloud iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}"
+
+if [[ "${storage_integration_test_status}" != 0 ]]; then
+  echo "Error in integration tests."
+  exit 1
+fi
+
+if [[ "${storage_examples_status}" != 0 ]]; then
+  echo "Error in storage examples."
+  exit 1
+fi
 
 echo "================================================================"
 echo "Build completed $(date)"
