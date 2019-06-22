@@ -255,9 +255,7 @@ void UpdateHmacKey(google::cloud::storage::Client client, int& argc,
     }
 
     StatusOr<gcs::HmacKeyMetadata> updated_metadata = client.UpdateHmacKey(
-        access_id, gcs::HmacKeyMetadata()
-                       .set_state(std::move(state))
-                       .set_etag(current_metadata->etag()));
+        access_id, gcs::HmacKeyMetadata().set_state(std::move(state)));
 
     if (!updated_metadata) {
       throw std::runtime_error(updated_metadata.status().message());
@@ -278,16 +276,9 @@ void ActivateHmacKey(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string access_id) {
-    StatusOr<gcs::HmacKeyMetadata> current_metadata =
-        client.GetHmacKey(access_id);
-    if (!current_metadata) {
-      throw std::runtime_error(current_metadata.status().message());
-    }
-
     StatusOr<gcs::HmacKeyMetadata> updated_metadata = client.UpdateHmacKey(
-        access_id, gcs::HmacKeyMetadata()
-                       .set_state(gcs::HmacKeyMetadata::state_active())
-                       .set_etag(current_metadata->etag()));
+        access_id,
+        gcs::HmacKeyMetadata().set_state(gcs::HmacKeyMetadata::state_active()));
 
     if (!updated_metadata) {
       throw std::runtime_error(updated_metadata.status().message());
@@ -312,16 +303,9 @@ void DeactivateHmacKey(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string access_id) {
-    StatusOr<gcs::HmacKeyMetadata> current_metadata =
-        client.GetHmacKey(access_id);
-    if (!current_metadata) {
-      throw std::runtime_error(current_metadata.status().message());
-    }
-
     StatusOr<gcs::HmacKeyMetadata> updated_metadata = client.UpdateHmacKey(
-        access_id, gcs::HmacKeyMetadata()
-                       .set_state(gcs::HmacKeyMetadata::state_inactive())
-                       .set_etag(current_metadata->etag()));
+        access_id, gcs::HmacKeyMetadata().set_state(
+                       gcs::HmacKeyMetadata::state_inactive()));
 
     if (!updated_metadata) {
       throw std::runtime_error(updated_metadata.status().message());
