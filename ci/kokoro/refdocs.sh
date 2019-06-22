@@ -69,12 +69,13 @@ if [[ -z "${KOKORO_GITHUB_COMMIT:-}" ]]; then
   echo "KOKORO_GITHUB_COMMIT not found, aborting..."
   exit 1
 else
-  branch=$(git branch --no-color --contains "${KOKORO_GITHUB_COMMIT}" \
+  branch=$(git branch --all --no-color --contains "${KOKORO_GITHUB_COMMIT}" \
     | grep -v HEAD | head -1)
   # trim branch
   shopt -s extglob
   branch="${branch##*( )}"
   branch="${branch%%*( )}"
+  branch="${branch##remotes/origin/}"
   shopt -u extglob
   echo "branch detected: ${branch}"
 fi

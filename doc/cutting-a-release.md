@@ -91,27 +91,15 @@ git push --set-upstream origin "${RELEASE}.x"
 
 **NOTE:** No code review or Pull Request is needed as part of this step.
 
-## Update the documentation links
+## Generate and upload the documentation to googleapis.dev
 
-Pushing the branch should start the CI builds. You can find and watch the
-triggered builds at https://travis-ci.com/googleapis/google-cloud-cpp. One of
-the CI builds automatically pushes a new version of the documentation to the
-`gh-pages` branch. Wait for this build to complete, then you should checkout
-`gh-pages` and change the `index.html` page to link to this new version and
-commit it:
-
-```bash
-git checkout gh-pages
-git pull
-```
-
-Change the value of the meta tag's `URL=` parameter to refer to the
-`index.html` file in the directory matching the new release version number.
-
-```
-git commit -am "Update documentation to ${RELEASE}"
-git push
-```
+Manually run a Kokoro job
+`cloud-devrel/client-libraries/cpp/google-cloud-cpp/refdocs` in the Cloud C++
+internal testing dashboard and specify the branch name (e.g. `v0.11.x`) in the
+`Committish` field. This job will generate and upload the doxygen documentation
+to the staging bucket for googleapis.dev hosting. The uploaded documentation
+will generally be live in an hour at URLs like
+`https://googleapis.dev/cpp/google-cloud-bigtable/latest/`.
 
 You are now finished with this "releases" clone of the repo that we created in
 the instructions above. You may now remove this directory.
