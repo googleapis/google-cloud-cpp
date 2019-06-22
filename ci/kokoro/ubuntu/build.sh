@@ -169,7 +169,7 @@ echo "Running Google Cloud Storage Examples"
 storage_examples_status=$?
 set -e
 
-gcloud iam service-accounts delete "${HMAC_SERVICE_ACCOUNT}"
+gcloud iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}"
 
 if [[ "${storage_integration_test_status}" != 0 ]]; then
   echo "Error in integration tests."
