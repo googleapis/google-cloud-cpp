@@ -42,7 +42,7 @@ int ListDatabases(std::vector<std::string> args) {
   std::shared_ptr<grpc::ChannelCredentials> cred =
       grpc::GoogleDefaultCredentials();
   std::shared_ptr<grpc::Channel> channel =
-      grpc::CreateChannel("spanner.googleapis.com", std::move(cred));
+      grpc::CreateChannel("spanner.googleapis.com", cred);
   std::unique_ptr<spanner::DatabaseAdmin::Stub> stub(
       spanner::DatabaseAdmin::NewStub(std::move(channel)));
 
