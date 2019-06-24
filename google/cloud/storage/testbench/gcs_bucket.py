@@ -604,11 +604,11 @@ class GcsBucket(object):
         if content_range is not None:
             if content_range.startswith('bytes */*'):
                 # This is just a query to resume an upload, if it is done, return
-                # an empty
-                response = flask.make_response('')
-                if next_byte > 1:
+                # the completed upload payload and an empty range header.
+                response = flask.make_response(upload.get('payload', ''))
+                if next_byte > 1 and not upload.done:
                     response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
-                response.status_code = 308
+                response.status_code = 200 if upload.done else 308
                 return response
             match = re.match('bytes \*/(\\*|[0-9]+)', content_range)
             if match:
@@ -665,7 +665,8 @@ class GcsBucket(object):
                 gcs_url, request, media,
                 original_metadata)
             response_payload = testbench_utils.filter_fields_from_response(
-                upload.get('fields'), revision.metadata)
+                upload.get('fields'), revision.metadata)\
+            upload['payload'] = response_payload
             testbench_utils.insert_object(object_path, blob)
 
         response = flask.make_response(response_payload)
