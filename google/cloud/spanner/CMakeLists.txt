@@ -24,17 +24,16 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${SPANNER_VERSION}")
 include(EnableDoxygen)
 
-# TODO(#43) - generate version_info.h in the source directory and commit it.
-configure_file(version_info.h.in version_info.h)
+configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
-            ${CMAKE_BINARY_DIR}/google/cloud/spanner/version_info.h
             row.h
             sql_statement.cc
             sql_statement.h
             value.cc
             value.h
             version.cc
-            version.h)
+            version.h
+            version_info.h)
 target_include_directories(spanner_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -56,13 +55,6 @@ add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 # file.
 include(CreateBazelConfig)
 create_bazel_config(spanner_client)
-# Also export the version numbers.
-#
-# TODO(#43) - This might be unnecessary if we commit version_info.h instead.
-export_variables_to_bazel("spanner_client_version.bzl"
-                          SPANNER_CLIENT_VERSION_MAJOR
-                          SPANNER_CLIENT_VERSION_MINOR
-                          SPANNER_CLIENT_VERSION_PATCH)
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 

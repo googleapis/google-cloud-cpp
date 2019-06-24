@@ -16,34 +16,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(
-    ":spanner_client_version.bzl",
-    "SPANNER_CLIENT_VERSION_MAJOR",
-    "SPANNER_CLIENT_VERSION_MINOR",
-    "SPANNER_CLIENT_VERSION_PATCH",
-)
-
-genrule(
-    name = "generate_version_info",
-    srcs = ["version_info.h.in"],
-    outs = ["version_info.h"],
-    cmd = """
-sed -e 's/@SPANNER_CLIENT_VERSION_MAJOR@/%s/' \
-    -e 's/@SPANNER_CLIENT_VERSION_MINOR@/%s/' \
-    -e 's/@SPANNER_CLIENT_VERSION_PATCH@/%s/' < $< > $@
-""" % (
-        SPANNER_CLIENT_VERSION_MAJOR,
-        SPANNER_CLIENT_VERSION_MINOR,
-        SPANNER_CLIENT_VERSION_PATCH,
-    ),
-)
-
 load(":spanner_client.bzl", "spanner_client_hdrs", "spanner_client_srcs")
 
 cc_library(
     name = "spanner_client",
     srcs = spanner_client_srcs,
-    hdrs = spanner_client_hdrs + ["version_info.h"],
+    hdrs = spanner_client_hdrs,
     deps = [
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
         "@com_google_googleapis//:spanner_protos",

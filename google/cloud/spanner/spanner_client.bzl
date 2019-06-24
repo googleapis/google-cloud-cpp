@@ -21,6 +21,7 @@ spanner_client_hdrs = [
     "sql_statement.h",
     "value.h",
     "version.h",
+    "version_info.h",
 ]
 
 spanner_client_srcs = [
