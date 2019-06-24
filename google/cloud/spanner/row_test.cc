@@ -91,6 +91,15 @@ TEST(Row, Equality) {
   EXPECT_NE(MakeRow(true, 42), MakeRow(true, 99));
 }
 
+TEST(Row, Relational) {
+  EXPECT_LE(MakeRow(), MakeRow());
+  EXPECT_GE(MakeRow(), MakeRow());
+  EXPECT_LT(MakeRow(10), MakeRow(20));
+  EXPECT_GT(MakeRow(20), MakeRow(10));
+  EXPECT_LT(MakeRow(false, 10), MakeRow(true, 20));
+  EXPECT_GT(MakeRow("abc"), MakeRow("ab"));
+}
+
 TEST(Row, MoveFromNonConstGet) {
   // This test relies on common, but unspecified behavior of std::string.
   // Specifically this test creates a string that is bigger than the SSO so it
