@@ -37,6 +37,8 @@ configure_file(internal/version_info.h.in
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
+export_variables_to_bazel("google_cloud_cpp_common_version.bzl"
+                          GOOGLE_CLOUD_CPP_IS_RELEASE)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")

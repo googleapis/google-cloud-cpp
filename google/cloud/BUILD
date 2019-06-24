@@ -16,6 +16,11 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load(
+    ":google_cloud_cpp_common_version.bzl",
+    "GOOGLE_CLOUD_CPP_IS_RELEASE",
+)
+
 genrule(
     name = "generate_build_info",
     srcs = ["internal/build_info.cc.in"],
