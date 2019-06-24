@@ -665,7 +665,7 @@ class GcsBucket(object):
                 gcs_url, request, media,
                 original_metadata)
             response_payload = testbench_utils.filter_fields_from_response(
-                upload.get('fields'), revision.metadata)\
+                upload.get('fields'), revision.metadata)
             upload['payload'] = response_payload
             testbench_utils.insert_object(object_path, blob)
 
