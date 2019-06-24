@@ -608,7 +608,7 @@ class GcsBucket(object):
                 response = flask.make_response(upload.get('payload', ''))
                 if next_byte > 1 and not upload['done']:
                     response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
-                response.status_code = 200 if upload.done else 308
+                response.status_code = 200 if upload['done'] else 308
                 return response
             match = re.match('bytes \*/(\\*|[0-9]+)', content_range)
             if match:
@@ -666,6 +666,10 @@ class GcsBucket(object):
                 original_metadata)
             response_payload = testbench_utils.filter_fields_from_response(
                 upload.get('fields'), revision.metadata)
+            # Some comments
+            # to change
+            # the line
+            # number ~0.0~
             upload['payload'] = response_payload
             testbench_utils.insert_object(object_path, blob)
 
