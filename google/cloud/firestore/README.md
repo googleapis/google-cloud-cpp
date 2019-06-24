@@ -3,8 +3,7 @@
 [![Documentation][doxygen-shield]][doxygen-link]
 
 [doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: http://googleapis.github.io/google-cloud-cpp/
-[quickstart-link]: http://googleapis.github.io/google-cloud-cpp/
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-firestore/latest/
 
 This directory contains the implementation of the Google Cloud Firestore C++
 client.
@@ -16,8 +15,7 @@ This library support Google Cloud Firestore at the
 
 ## Documentation
 
-Full documentation, including a [quick start guide][quickstart-link]
-is available [online][doxygen-link].
+Full documentation is available [online][doxygen-link].
 
 ## Release Notes
 
