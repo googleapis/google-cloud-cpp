@@ -9,8 +9,8 @@ This directory contains the implementation of the Cloud Bigtable C++ client.
 [![Documentation][doxygen-shield]][doxygen-link]
 
 [doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: http://googleapis.github.io/google-cloud-cpp/latest/bigtable
-[quickstart-link]: https://googleapis.github.io/google-cloud-cpp/latest/bigtable/bigtable-quickstart.html
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/
+[quickstart-link]: https://googleapis.dev/cpp/google-cloud-bigtable/latest/bigtable-quickstart.html
 [cbt-docs-link]: https://cloud.google.com/bigtable/docs
 
 ## Status

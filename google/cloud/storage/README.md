@@ -11,8 +11,8 @@ client.
 [![Documentation][doxygen-shield]][doxygen-link]
 
 [doxygen-shield]: https://img.shields.io/badge/documentation-master-brightgreen.svg
-[doxygen-link]: https://googleapis.github.io/google-cloud-cpp/latest/storage
-[quickstart-link]: https://googleapis.github.io/google-cloud-cpp/latest/storage/index.html
+[doxygen-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/
+[quickstart-link]: https://googleapis.dev/cpp/google-cloud-storage/latest/index.html
 [gcs-docs-link]: https://cloud.google.com/storage/docs
 
 ## Status
