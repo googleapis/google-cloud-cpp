@@ -17,6 +17,8 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
+    "client_options.h",
+    "internal/database_admin_stub.h",
     "row.h",
     "sql_statement.h",
     "value.h",
@@ -25,6 +27,8 @@ spanner_client_hdrs = [
 ]
 
 spanner_client_srcs = [
+    "client_options.cc",
+    "internal/database_admin_stub.cc",
     "sql_statement.cc",
     "value.cc",
     "version.cc",

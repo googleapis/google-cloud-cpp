@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/status.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -25,6 +26,8 @@
 #include <thread>
 
 namespace {
+
+namespace cs = google::cloud::spanner;
 
 int ListDatabases(std::vector<std::string> args) {
   if (args.size() != 2U) {
@@ -88,6 +91,32 @@ int WaitForOperation(std::shared_ptr<grpc::Channel> channel,
   return 0;
 }
 
+int WaitForOperation(
+    std::shared_ptr<cs::internal::DatabaseAdminStub> const& stub,
+    google::longrunning::Operation operation) {
+  std::cout << "Waiting for operation " << operation.name() << " "
+            << std::flush;
+  while (!operation.done()) {
+    // Spanner operations can take minutes, but in small experiments like these
+    // they typically take a few seconds.
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+    std::cout << '.' << std::flush;
+    grpc::ClientContext context;
+    google::longrunning::GetOperationRequest request;
+    request.set_name(operation.name());
+    auto update = stub->GetOperation(context, request);
+    if (!update) {
+      std::cerr << __func__ << " Error in GetOperation: " << update.status()
+                << "\n";
+      return 1;
+    }
+    using std::swap;
+    swap(*update, operation);
+  }
+  std::cout << " DONE\n" << operation.DebugString() << "\n";
+  return 0;
+}
+
 int CreateDatabase(std::vector<std::string> args) {
   if (args.size() != 3U) {
     std::cerr << "create-database <project> <instance> <database>\n";
@@ -99,30 +128,24 @@ int CreateDatabase(std::vector<std::string> args) {
 
   namespace spanner = google::spanner::admin::database::v1;
 
-  std::shared_ptr<grpc::ChannelCredentials> cred =
-      grpc::GoogleDefaultCredentials();
-  std::shared_ptr<grpc::Channel> channel =
-      grpc::CreateChannel("spanner.googleapis.com", cred);
-  auto stub = spanner::DatabaseAdmin::NewStub(channel);
+  std::shared_ptr<cs::internal::DatabaseAdminStub> stub =
+      cs::internal::CreateDefaultDatabaseAdminStub(cs::ClientOptions());
 
   spanner::CreateDatabaseRequest request;
-  google::longrunning::Operation operation;
   request.set_parent("projects/" + project + "/instances/" + instance);
   request.set_create_statement("CREATE DATABASE `" + database + "`");
 
   grpc::ClientContext context;
-  grpc::Status status = stub->CreateDatabase(&context, request, &operation);
-
-  if (!status.ok()) {
-    std::cerr << "FAILED: " << status.error_code() << ": "
-              << status.error_message() << "\n";
+  auto operation = stub->CreateDatabase(context, request);
+  if (!operation) {
+    std::cerr << "Error in CreateDatabase: " << operation.status() << "\n";
     return 1;
   }
 
   std::cout << "Response:\n";
-  std::cout << operation.DebugString() << "\n";
+  std::cout << operation->DebugString() << "\n";
 
-  return WaitForOperation(std::move(channel), std::move(operation));
+  return WaitForOperation(stub, *std::move(operation));
 }
 
 int DropDatabase(std::vector<std::string> args) {
@@ -136,23 +159,17 @@ int DropDatabase(std::vector<std::string> args) {
 
   namespace spanner = google::spanner::admin::database::v1;
 
-  std::shared_ptr<grpc::ChannelCredentials> cred =
-      grpc::GoogleDefaultCredentials();
-  std::shared_ptr<grpc::Channel> channel =
-      grpc::CreateChannel("spanner.googleapis.com", cred);
-  auto stub = spanner::DatabaseAdmin::NewStub(channel);
+  auto stub = cs::internal::CreateDefaultDatabaseAdminStub(cs::ClientOptions());
 
   spanner::DropDatabaseRequest request;
-  google::protobuf::Empty response;
   request.set_database("projects/" + project + "/instances/" + instance +
                        "/databases/" + database);
 
   grpc::ClientContext context;
-  grpc::Status status = stub->DropDatabase(&context, request, &response);
+  google::cloud::Status status = stub->DropDatabase(context, request);
 
   if (!status.ok()) {
-    std::cerr << "FAILED: " << status.error_code() << ": "
-              << status.error_message() << "\n";
+    std::cerr << "Error in DropDatabase: " << status << "\n";
     return 1;
   }
 

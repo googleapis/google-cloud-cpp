@@ -15,7 +15,7 @@
 # ~~~
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(googleapis CONFIG REQUIRED)
+find_package(bigtable_client CONFIG REQUIRED)
 
 include(EnableClangTidy)
 include(EnableWerror)
@@ -26,6 +26,10 @@ include(EnableDoxygen)
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
+            client_options.cc
+            client_options.h
+            internal/database_admin_stub.cc
+            internal/database_admin_stub.h
             row.h
             sql_statement.cc
             sql_statement.h
@@ -39,7 +43,7 @@ target_include_directories(spanner_client
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                                   $<INSTALL_INTERFACE:include>)
 target_link_libraries(spanner_client
-                      PUBLIC google_cloud_cpp_common
+                      PUBLIC bigtable_client google_cloud_cpp_common
                              googleapis-c++::spanner_protos)
 set_target_properties(spanner_client
                       PROPERTIES VERSION
@@ -72,6 +76,7 @@ function (spanner_client_define_tests)
     find_package(GTest CONFIG REQUIRED)
 
     set(spanner_client_unit_tests
+        client_options_test.cc
         row_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
