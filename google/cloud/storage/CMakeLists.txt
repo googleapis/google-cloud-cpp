@@ -52,10 +52,6 @@ configure_file(version_info.h.in version_info.h)
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
-export_variables_to_bazel("storage_client_version.bzl"
-                          STORAGE_CLIENT_VERSION_MAJOR
-                          STORAGE_CLIENT_VERSION_MINOR
-                          STORAGE_CLIENT_VERSION_PATCH)
 
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
@@ -76,7 +72,6 @@ find_package(ZLIB REQUIRED)
 
 # the client library
 add_library(storage_client
-            ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
             bucket_access_control.h
             bucket_access_control.cc
             bucket_metadata.h
@@ -223,6 +218,7 @@ add_library(storage_client
             upload_options.h
             version.h
             version.cc
+            version_info.h
             well_known_headers.h
             well_known_headers.cc
             well_known_parameters.h)

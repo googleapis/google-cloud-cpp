@@ -16,34 +16,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(
-    ":bigtable_client_version.bzl",
-    "BIGTABLE_CLIENT_VERSION_MAJOR",
-    "BIGTABLE_CLIENT_VERSION_MINOR",
-    "BIGTABLE_CLIENT_VERSION_PATCH",
-)
-
-genrule(
-    name = "generate_version_info",
-    srcs = ["version_info.h.in"],
-    outs = ["version_info.h"],
-    cmd = """
-sed -e 's/@BIGTABLE_CLIENT_VERSION_MAJOR@/%s/' \
-    -e 's/@BIGTABLE_CLIENT_VERSION_MINOR@/%s/' \
-    -e 's/@BIGTABLE_CLIENT_VERSION_PATCH@/%s/' < $< > $@
-""" % (
-        BIGTABLE_CLIENT_VERSION_MAJOR,
-        BIGTABLE_CLIENT_VERSION_MINOR,
-        BIGTABLE_CLIENT_VERSION_PATCH,
-    ),
-)
-
 load(":bigtable_client.bzl", "bigtable_client_hdrs", "bigtable_client_srcs")
 
 cc_library(
     name = "bigtable_client",
     srcs = bigtable_client_srcs,
-    hdrs = bigtable_client_hdrs + ["version_info.h"],
+    hdrs = bigtable_client_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_google_googleapis//:bigtable_protos",

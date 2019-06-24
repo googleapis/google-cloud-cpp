@@ -16,28 +16,6 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(
-    ":storage_client_version.bzl",
-    "STORAGE_CLIENT_VERSION_MAJOR",
-    "STORAGE_CLIENT_VERSION_MINOR",
-    "STORAGE_CLIENT_VERSION_PATCH",
-)
-
-genrule(
-    name = "generate_version_info",
-    srcs = ["version_info.h.in"],
-    outs = ["version_info.h"],
-    cmd = """
-sed -e 's/@STORAGE_CLIENT_VERSION_MAJOR@/%s/' \
-    -e 's/@STORAGE_CLIENT_VERSION_MINOR@/%s/' \
-    -e 's/@STORAGE_CLIENT_VERSION_PATCH@/%s/' < $< > $@
-""" % (
-        STORAGE_CLIENT_VERSION_MAJOR,
-        STORAGE_CLIENT_VERSION_MINOR,
-        STORAGE_CLIENT_VERSION_PATCH,
-    ),
-)
-
 genrule(
     name = "nlohmann_json_include_hierarchy",
     srcs = ["@com_github_nlohmann_json_single_header//file"],
@@ -57,7 +35,7 @@ load(":storage_client.bzl", "storage_client_hdrs", "storage_client_srcs")
 cc_library(
     name = "storage_client",
     srcs = storage_client_srcs,
-    hdrs = storage_client_hdrs + ["version_info.h"],
+    hdrs = storage_client_hdrs,
     deps = [
         ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",

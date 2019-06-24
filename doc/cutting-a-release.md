@@ -81,7 +81,7 @@ cmake -H. -Bcmake-out
 ```
 
 You should expect that only `google/cloud/CMakeLists.txt` and
-`google/cloud/google_cloud_cpp_common_version.bzl` are modified. Verify this,
+`google/cloud/*/internal/version_info.h` are modified. Verify this,
 and then commit the changes and push the new branch:
 
 ```bash
