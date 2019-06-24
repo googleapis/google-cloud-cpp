@@ -606,7 +606,7 @@ class GcsBucket(object):
                 # This is just a query to resume an upload, if it is done, return
                 # the completed upload payload and an empty range header.
                 response = flask.make_response(upload.get('payload', ''))
-                if next_byte > 1 and not upload.done:
+                if next_byte > 1 and not upload['done']:
                     response.headers['Range'] = 'bytes=0-%d' % (next_byte - 1)
                 response.status_code = 200 if upload.done else 308
                 return response
