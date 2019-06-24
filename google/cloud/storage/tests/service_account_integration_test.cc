@@ -113,8 +113,8 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
 
   EXPECT_EQ(access_id, get_details->access_id());
   HmacKeyMetadata original = key->first;
-  // TODO(#3806) - remove this workaround: the etag may have changed since we
-  // the key was created.
+  // TODO(#3806) - remove this workaround: the etag may have changed since the
+  // key was created.
   original.set_etag(get_details->etag());
   EXPECT_EQ(original, *get_details);
 
