@@ -34,9 +34,7 @@ namespace oauth2 {
 
 /// Parses the JSON file at `path` and creates the appropriate Credentials type.
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
-    std::string const& path,
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
+    std::string const& path) {
   namespace nl = google::cloud::storage::internal::nl;
 
   std::ifstream ifs(path);
@@ -57,8 +55,6 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
       return Status(StatusCode::kInvalidArgument,
                     "Invalid credentials file " + path);
     }
-    info->subject = std::move(subject);
-    info->scopes = std::move(scopes);
     auto credentials =
         google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
             *info);
@@ -80,8 +76,6 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     if (!info) {
       return info.status();
     }
-    info->subject = std::move(subject);
-    info->scopes = std::move(scopes);
     std::unique_ptr<Credentials> ptr =
         google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
             *info);
@@ -94,22 +88,18 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
                  path + "."));
 }
 
-StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcEnvVar(
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
+StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcEnvVar() {
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
   if (!path.empty()) {
     // If the path was specified, try to load that file; explicitly fail if it
     // doesn't exist or can't be read and parsed.
-    return LoadCredsFromPath(path, std::move(scopes), std::move(subject));
+    return LoadCredsFromPath(path);
   }
   // No ptr indicates that there was no path to attempt loading creds from.
   return StatusOr<std::unique_ptr<Credentials>>(nullptr);
 }
 
-StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile(
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
+StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile() {
   auto path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
   if (!path.empty()) {
     // Just because we had the necessary information to build the path doesn't
@@ -117,7 +107,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile(
     std::error_code ec;
     auto adc_file_status = google::cloud::internal::status(path, ec);
     if (google::cloud::internal::exists(adc_file_status)) {
-      return LoadCredsFromPath(path, std::move(scopes), std::move(subject));
+      return LoadCredsFromPath(path);
     }
   }
   // Either we were unable to construct the well known path or no file existed
@@ -126,14 +116,8 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile(
 }
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
-  return GoogleDefaultCredentials({}, {});
-}
-
-StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
-  auto creds = MaybeLoadCredsFromAdcEnvVar(scopes, subject);
+  auto creds = MaybeLoadCredsFromAdcEnvVar();
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
@@ -143,8 +127,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
 
   // 2) If no path was specified via environment variable, check if the gcloud
   // ADC file exists.
-  creds =
-      MaybeLoadCredsFromGcloudAdcFile(std::move(scopes), std::move(subject));
+  creds = MaybeLoadCredsFromGcloudAdcFile();
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
