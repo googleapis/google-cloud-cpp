@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/database_admin_stub.h"
+#include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/status.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -91,32 +91,6 @@ int WaitForOperation(std::shared_ptr<grpc::Channel> channel,
   return 0;
 }
 
-int WaitForOperation(
-    std::shared_ptr<cs::internal::DatabaseAdminStub> const& stub,
-    google::longrunning::Operation operation) {
-  std::cout << "Waiting for operation " << operation.name() << " "
-            << std::flush;
-  while (!operation.done()) {
-    // Spanner operations can take minutes, but in small experiments like these
-    // they typically take a few seconds.
-    std::this_thread::sleep_for(std::chrono::seconds(2));
-    std::cout << '.' << std::flush;
-    grpc::ClientContext context;
-    google::longrunning::GetOperationRequest request;
-    request.set_name(operation.name());
-    auto update = stub->GetOperation(context, request);
-    if (!update) {
-      std::cerr << __func__ << " Error in GetOperation: " << update.status()
-                << "\n";
-      return 1;
-    }
-    using std::swap;
-    swap(*update, operation);
-  }
-  std::cout << " DONE\n" << operation.DebugString() << "\n";
-  return 0;
-}
-
 int CreateDatabase(std::vector<std::string> args) {
   if (args.size() != 3U) {
     std::cerr << "create-database <project> <instance> <database>\n";
@@ -126,26 +100,24 @@ int CreateDatabase(std::vector<std::string> args) {
   auto const& instance = args[1];
   auto const& database = args[2];
 
-  namespace spanner = google::spanner::admin::database::v1;
+  cs::DatabaseAdminClient client;
+  auto future_database = client.CreateDatabase(project, instance, database);
 
-  std::shared_ptr<cs::internal::DatabaseAdminStub> stub =
-      cs::internal::CreateDefaultDatabaseAdminStub(cs::ClientOptions());
+  namespace gcsa = google::spanner::admin::database::v1;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
 
-  spanner::CreateDatabaseRequest request;
-  request.set_parent("projects/" + project + "/instances/" + instance);
-  request.set_create_statement("CREATE DATABASE `" + database + "`");
-
-  grpc::ClientContext context;
-  auto operation = stub->CreateDatabase(context, request);
-  if (!operation) {
-    std::cerr << "Error in CreateDatabase: " << operation.status() << "\n";
-    return 1;
-  }
-
-  std::cout << "Response:\n";
-  std::cout << operation->DebugString() << "\n";
-
-  return WaitForOperation(stub, *std::move(operation));
+  return future_database
+      .then([](future<StatusOr<gcsa::Database>> f) {
+        auto db = f.get();
+        if (!db) {
+          std::cerr << "Error in CreateDatabase: " << db.status() << "\n";
+          return 1;
+        }
+        std::cout << "Created database: " << db->DebugString() << "\n";
+        return 0;
+      })
+      .get();  // Block to simplify the example code.
 }
 
 int DropDatabase(std::vector<std::string> args) {
@@ -157,16 +129,9 @@ int DropDatabase(std::vector<std::string> args) {
   auto const& instance = args[1];
   auto const& database = args[2];
 
-  namespace spanner = google::spanner::admin::database::v1;
-
-  auto stub = cs::internal::CreateDefaultDatabaseAdminStub(cs::ClientOptions());
-
-  spanner::DropDatabaseRequest request;
-  request.set_database("projects/" + project + "/instances/" + instance +
-                       "/databases/" + database);
-
-  grpc::ClientContext context;
-  google::cloud::Status status = stub->DropDatabase(context, request);
+  cs::DatabaseAdminClient client;
+  google::cloud::Status status =
+      client.DropDatabase(project, instance, database);
 
   if (!status.ok()) {
     std::cerr << "Error in DropDatabase: " << status << "\n";

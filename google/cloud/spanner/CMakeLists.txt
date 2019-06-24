@@ -28,6 +28,8 @@ configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
             client_options.cc
             client_options.h
+            database_admin_client.cc
+            database_admin_client.h
             internal/database_admin_stub.cc
             internal/database_admin_stub.h
             row.h
