@@ -76,6 +76,7 @@ bigtable_client_hdrs = [
     "table_admin.h",
     "table_config.h",
     "version.h",
+    "version_info.h",
 ]
 
 bigtable_client_srcs = [

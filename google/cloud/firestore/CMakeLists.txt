@@ -46,15 +46,8 @@ google_cloud_cpp_add_common_options(firestore_common_options)
 # Enable unit tests
 include(CTest)
 
-# Generate the version information from the CMake values.
-configure_file(version_info.h.in version_info.h)
-
 # Export the version information for Bazel.
 include(CreateBazelConfig)
-export_variables_to_bazel("firestore_client_version.bzl"
-                          FIRESTORE_CLIENT_VERSION_MAJOR
-                          FIRESTORE_CLIENT_VERSION_MINOR
-                          FIRESTORE_CLIENT_VERSION_PATCH)
 
 # the client library
 add_library(firestore_client field_path.h field_path.cc)

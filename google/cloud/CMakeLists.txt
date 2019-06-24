@@ -32,15 +32,11 @@ string(CONCAT GOOGLE_CLOUD_CPP_VERSION
               "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 
 # Generate the version information from the CMake values.
-configure_file(internal/version_info.h.in internal/version_info.h)
+configure_file(internal/version_info.h.in
+               ${CMAKE_CURRENT_SOURCE_DIR}/internal/version_info.h)
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
-export_variables_to_bazel("google_cloud_cpp_common_version.bzl"
-                          GOOGLE_CLOUD_CPP_IS_RELEASE
-                          GOOGLE_CLOUD_CPP_VERSION_MAJOR
-                          GOOGLE_CLOUD_CPP_VERSION_MINOR
-                          GOOGLE_CLOUD_CPP_VERSION_PATCH)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
@@ -169,7 +165,7 @@ add_library(google_cloud_cpp_common
             internal/setenv.cc
             internal/throw_delegate.h
             internal/throw_delegate.cc
-            ${CMAKE_CURRENT_BINARY_DIR}/internal/version_info.h
+            internal/version_info.h
             log.h
             log.cc
             optional.h

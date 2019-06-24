@@ -16,14 +16,6 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(
-    ":google_cloud_cpp_common_version.bzl",
-    "GOOGLE_CLOUD_CPP_IS_RELEASE",
-    "GOOGLE_CLOUD_CPP_VERSION_MAJOR",
-    "GOOGLE_CLOUD_CPP_VERSION_MINOR",
-    "GOOGLE_CLOUD_CPP_VERSION_PATCH",
-)
-
 genrule(
     name = "generate_build_info",
     srcs = ["internal/build_info.cc.in"],
@@ -44,27 +36,12 @@ sed -e "s;@CMAKE_CXX_COMPILER_ID@;$(C_COMPILER);" \
     ],
 )
 
-genrule(
-    name = "generate_version_info",
-    srcs = ["internal/version_info.h.in"],
-    outs = ["internal/version_info.h"],
-    cmd = """
-sed -e 's/@GOOGLE_CLOUD_CPP_VERSION_MAJOR@/%s/' \
-    -e 's/@GOOGLE_CLOUD_CPP_VERSION_MINOR@/%s/' \
-    -e 's/@GOOGLE_CLOUD_CPP_VERSION_PATCH@/%s/' < $< > $@
-""" % (
-        GOOGLE_CLOUD_CPP_VERSION_MAJOR,
-        GOOGLE_CLOUD_CPP_VERSION_MINOR,
-        GOOGLE_CLOUD_CPP_VERSION_PATCH,
-    ),
-)
-
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
     name = "google_cloud_cpp_common",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
-    hdrs = google_cloud_cpp_common_hdrs + ["internal/version_info.h"],
+    hdrs = google_cloud_cpp_common_hdrs,
     deps = [],
 )
 

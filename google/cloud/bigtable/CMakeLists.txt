@@ -86,14 +86,10 @@ include(CTest)
 add_dependencies(google-cloud-cpp-dependencies bigtable_protos)
 
 # Generate the version information from the CMake values.
-configure_file(version_info.h.in version_info.h)
+configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
-export_variables_to_bazel("bigtable_client_version.bzl"
-                          BIGTABLE_CLIENT_VERSION_MAJOR
-                          BIGTABLE_CLIENT_VERSION_MINOR
-                          BIGTABLE_CLIENT_VERSION_PATCH)
 
 # the client library
 add_library(bigtable_client
@@ -103,7 +99,6 @@ add_library(bigtable_client
             app_profile_config.cc
             async_operation.h
             async_row_reader.h
-            ${CMAKE_CURRENT_BINARY_DIR}/version_info.h
             cell.h
             client_options.h
             client_options.cc
@@ -189,7 +184,8 @@ add_library(bigtable_client
             table_config.h
             table_config.cc
             version.h
-            version.cc)
+            version.cc
+            version_info.h)
 target_link_libraries(bigtable_client
                       PUBLIC bigtable_protos
                              google_cloud_cpp_common

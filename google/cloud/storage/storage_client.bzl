@@ -101,6 +101,7 @@ storage_client_hdrs = [
     "storage_class.h",
     "upload_options.h",
     "version.h",
+    "version_info.h",
     "well_known_headers.h",
     "well_known_parameters.h",
 ]
