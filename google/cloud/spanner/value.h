@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
-#include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/util/message_differencer.h>
