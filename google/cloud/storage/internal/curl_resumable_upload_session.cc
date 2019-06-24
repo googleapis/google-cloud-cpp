@@ -53,7 +53,7 @@ void CurlResumableUploadSession::Update(
   if (!result.ok()) {
     return;
   }
-  done_ = result->done;
+  done_ = result->upload_state == ResumableUploadResponse::kDone;
   if (result->last_committed_byte == 0) {
     next_expected_ = 0;
   } else {

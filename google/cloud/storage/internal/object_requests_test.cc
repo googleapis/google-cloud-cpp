@@ -450,7 +450,7 @@ TEST(ObjectRequestsTest, RewriteObjectResponse) {
   auto actual = RewriteObjectResponse::FromHttpResponse(text).value();
   EXPECT_EQ(7, actual.total_bytes_rewritten);
   EXPECT_EQ(42, actual.object_size);
-  EXPECT_FALSE(actual.done);
+  EXPECT_EQ(false, actual.done);
   EXPECT_EQ("abcd-test-token", actual.rewrite_token);
   EXPECT_EQ(expected_resource, actual.resource);
 
@@ -572,7 +572,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponse) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
-  EXPECT_EQ(true, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
 
   std::ostringstream os;
   os << actual;
@@ -589,7 +589,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNoLocation) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
@@ -600,7 +600,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNoRange) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(true, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
@@ -613,7 +613,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingBytesInRange) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
@@ -623,7 +623,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseMissingRangeEnd) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
@@ -634,7 +634,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeEnd) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
@@ -645,8 +645,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseInvalidRangeBegin) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  ;
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
@@ -657,8 +656,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseUnexpectedRangeBegin) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  ;
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
@@ -669,7 +667,7 @@ TEST(ObjectRequestsTest, ResumableUploadResponseNegativeEnd) {
   EXPECT_EQ("test-payload", actual.payload);
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
-  EXPECT_EQ(false, actual.done);
+  EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 ObjectMetadata CreateObjectMetadataForTest() {

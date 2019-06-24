@@ -604,7 +604,11 @@ std::ostream& operator<<(std::ostream& os,
 StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     HttpResponse&& response) {
   ResumableUploadResponse result;
-  result.done = response.status_code == 200 || response.status_code == 201;
+  if (response.status_code == 200 || response.status_code == 201) {
+    result.upload_state = kDone;
+  } else {
+    result.upload_state = kInProgress;
+  }
   result.last_committed_byte = 0;
   result.payload = std::move(response.payload);
   if (response.headers.find("location") != response.headers.end()) {
@@ -635,7 +639,7 @@ bool operator==(ResumableUploadResponse const& lhs,
                 ResumableUploadResponse const& rhs) {
   return lhs.upload_session_url == rhs.upload_session_url &&
          lhs.last_committed_byte == rhs.last_committed_byte &&
-         lhs.payload == rhs.payload && lhs.done == rhs.done;
+         lhs.payload == rhs.payload && lhs.upload_state == rhs.upload_state;
 }
 
 bool operator!=(ResumableUploadResponse const& lhs,
@@ -648,7 +652,7 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
             << r.upload_session_url
             << ", last_committed_byte=" << r.last_committed_byte << ", payload="
             << BinaryDataAsDebugString(r.payload.data(), r.payload.size(), 128)
-            << ", done=" << r.done << "}";
+            << ", upload_state=" << r.upload_state << "}";
 }
 
 }  // namespace internal

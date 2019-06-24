@@ -139,8 +139,8 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
 
-  const StatusOr<ResumableUploadResponse> last_response(
-      ResumableUploadResponse{"upload url", 1, "payload bytes", false});
+  const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
+      "upload url", 1, "payload bytes", ResumableUploadResponse::kInProgress});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
   LoggingResumableUploadSession session(std::move(mock));
