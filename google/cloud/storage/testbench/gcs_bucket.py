@@ -666,10 +666,6 @@ class GcsBucket(object):
                 original_metadata)
             response_payload = testbench_utils.filter_fields_from_response(
                 upload.get('fields'), revision.metadata)
-            # Some comments
-            # to change
-            # the line
-            # number ~0.0~
             upload['payload'] = response_payload
             testbench_utils.insert_object(object_path, blob)
 
