@@ -27,15 +27,27 @@ CurlResumableStreambuf::CurlResumableStreambuf(
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
-      last_response_{400, {}, {}} {
+      last_response_{HttpResponse{400, {}, {}}} {
   current_ios_buffer_.reserve(max_buffer_size_);
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
+  // Sessions start in a closed state for uploads that have already been
+  // finalized.
+  if (upload_session_->done()) {
+    StatusOr<ResumableUploadResponse> const& last_upload_response =
+        upload_session_->last_response();
+    if (last_upload_response.ok()) {
+      last_response_ =
+          HttpResponse{200, last_upload_response.value().payload, {}};
+    } else {
+      last_response_ = StatusOr<HttpResponse>(last_upload_response.status());
+    }
+  }
 }
 
 bool CurlResumableStreambuf::IsOpen() const {
-  return static_cast<bool>(upload_session_);
+  return static_cast<bool>(upload_session_) && !upload_session_->done();
 }
 
 bool CurlResumableStreambuf::ValidateHash(ObjectMetadata const& meta) {
@@ -96,6 +108,9 @@ StatusOr<HttpResponse> CurlResumableStreambuf::DoClose() {
 }
 
 StatusOr<HttpResponse> CurlResumableStreambuf::FlushFinal() {
+  if (!IsOpen()) {
+    return last_response_;
+  }
   // Shorten the buffer to the actual used size.
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
   std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;

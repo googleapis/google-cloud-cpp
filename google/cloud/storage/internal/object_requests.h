@@ -470,13 +470,20 @@ std::ostream& operator<<(std::ostream& os,
                          QueryResumableUploadRequest const& r);
 
 struct ResumableUploadResponse {
+  enum UploadState { kInProgress, kDone };
   static StatusOr<ResumableUploadResponse> FromHttpResponse(
       HttpResponse&& response);
 
   std::string upload_session_url;
   std::uint64_t last_committed_byte;
   std::string payload;
+  UploadState upload_state;
 };
+
+bool operator==(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs);
+bool operator!=(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs);
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 

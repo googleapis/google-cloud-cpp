@@ -112,6 +112,14 @@ std::uint64_t RetryResumableUploadSession::next_expected_byte() const {
 std::string const& RetryResumableUploadSession::session_id() const {
   return session_->session_id();
 }
+
+bool RetryResumableUploadSession::done() const { return session_->done(); }
+
+StatusOr<ResumableUploadResponse> const&
+RetryResumableUploadSession::last_response() const {
+  return session_->last_response();
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -16,6 +16,7 @@
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
 
@@ -31,6 +32,7 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::ReturnRef;
 
 class LoggingResumableUploadSessionTest : public ::testing::Test {
  protected:
@@ -131,6 +133,53 @@ TEST_F(LoggingResumableUploadSessionTest, NextExpectedByte) {
   EXPECT_EQ(512 * 1024, result);
 
   EXPECT_EQ(1, CountLines(std::to_string(512 * 1024)));
+}
+
+TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
+      "upload url", 1, "payload bytes", ResumableUploadResponse::kInProgress});
+  EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
+
+  LoggingResumableUploadSession session(std::move(mock));
+
+  auto result = session.last_response();
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result.value(), last_response.value());
+  EXPECT_EQ(1, CountLines("upload url"));
+  EXPECT_EQ(1, CountLines("payload bytes"));
+}
+
+TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  const StatusOr<ResumableUploadResponse> last_response(
+      Status(StatusCode::kFailedPrecondition, "something bad"));
+  EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
+
+  LoggingResumableUploadSession session(std::move(mock));
+
+  auto result = session.last_response();
+  EXPECT_EQ(StatusCode::kFailedPrecondition, result.status().code());
+  EXPECT_EQ("something bad", result.status().message());
+
+  EXPECT_EQ(1, CountLines("[FAILED_PRECONDITION]"));
+}
+
+TEST_F(LoggingResumableUploadSessionTest, Done) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  EXPECT_CALL(*mock, done()).WillOnce(Return(false));
+
+  LoggingResumableUploadSession session(std::move(mock));
+
+  EXPECT_FALSE(session.done());
+
+  EXPECT_EQ(1, CountLines("false"));
 }
 
 }  // namespace

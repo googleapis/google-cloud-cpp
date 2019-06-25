@@ -39,6 +39,8 @@ class LoggingResumableUploadSession : public ResumableUploadSession {
   StatusOr<ResumableUploadResponse> ResetSession() override;
   std::uint64_t next_expected_byte() const override;
   std::string const& session_id() const override;
+  StatusOr<ResumableUploadResponse> const& last_response() const override;
+  bool done() const override;
 
  private:
   std::unique_ptr<ResumableUploadSession> session_;

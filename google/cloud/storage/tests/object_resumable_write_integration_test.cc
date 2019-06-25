@@ -51,6 +51,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -100,6 +101,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
   os << LoremIpsum();
   EXPECT_FALSE(os.resumable_session_id().empty());
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());
@@ -139,6 +141,42 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   EXPECT_EQ(session_id, os.resumable_session_id());
   os << LoremIpsum();
   os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  ObjectMetadata meta = os.metadata().value();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name, meta.bucket());
+  if (UsingTestbench()) {
+    EXPECT_TRUE(meta.has_metadata("x_testbench_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_testbench_upload"));
+  }
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // Start a resumable upload and finalize the upload.
+  std::string session_id;
+  {
+    auto old_os =
+        client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                            NewResumableUploadSession());
+    ASSERT_TRUE(old_os.good()) << "status=" << old_os.metadata().status();
+    session_id = old_os.resumable_session_id();
+    old_os << LoremIpsum();
+  }
+
+  auto os = client->WriteObject(bucket_name, object_name,
+                                RestoreResumableUploadSession(session_id));
+  EXPECT_FALSE(os.IsOpen());
+  EXPECT_EQ(session_id, os.resumable_session_id());
+  ASSERT_STATUS_OK(os.metadata());
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(object_name, meta.name());
   EXPECT_EQ(bucket_name, meta.bucket());

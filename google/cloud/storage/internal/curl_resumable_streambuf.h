@@ -75,7 +75,7 @@ class CurlResumableStreambuf : public ObjectWriteStreambuf {
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
 
-  HttpResponse last_response_;
+  StatusOr<HttpResponse> last_response_;
 };
 
 }  // namespace internal

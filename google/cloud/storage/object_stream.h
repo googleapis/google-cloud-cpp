@@ -179,11 +179,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * @param buf an initialized ObjectWriteStreambuf to upload the data.
    */
   explicit ObjectWriteStream(
-      std::unique_ptr<internal::ObjectWriteStreambuf> buf)
-      : std::basic_ostream<char>(nullptr), buf_(std::move(buf)) {
-    // Initialize the basic_ios<> class
-    init(buf_.get());
-  }
+      std::unique_ptr<internal::ObjectWriteStreambuf> buf);
 
   ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
       : ObjectWriteStream(std::move(rhs.buf_)) {
@@ -221,7 +217,23 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   /// Closes the stream (if necessary).
   ~ObjectWriteStream() override;
 
-  /// Return true while the stream is open.
+  /**
+   * Return true if the stream is open to write more data.
+   *
+   * @note
+   * write streams can be "born closed" when created using a previously
+   * finalized upload session. Applications that restore a previous session
+   * should check the state, for example:
+   *
+   * @code
+   * auto stream = client.WriteObject(...,
+   *     gcs::RestoreResumableUploadSession(session_id));
+   * if (!stream.IsOpen() && stream.metadata().ok()) {
+   *   std::cout << "Yay! The upload was finalized previously.\n";
+   *   return;
+   * }
+   * @endcode
+   */
   bool IsOpen() const { return buf_ != nullptr && buf_->IsOpen(); }
 
   /**
@@ -332,6 +344,11 @@ class ObjectWriteStream : public std::basic_ostream<char> {
   void Suspend() &&;
 
  private:
+  /**
+   * Closes the underlying object write stream.
+   */
+  void CloseBuf();
+
   std::unique_ptr<internal::ObjectWriteStreambuf> buf_;
   StatusOr<ObjectMetadata> metadata_;
   std::multimap<std::string, std::string> headers_;

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/logging_resumable_upload_session.h"
 #include "google/cloud/log.h"
+#include <ios>
 
 namespace google {
 namespace cloud {
@@ -70,6 +71,25 @@ std::string const& LoggingResumableUploadSession::session_id() const {
   GCP_LOG(INFO) << __func__ << " << ()";
   auto const& response = session_->session_id();
   GCP_LOG(INFO) << __func__ << " >> " << response;
+  return response;
+}
+
+StatusOr<ResumableUploadResponse> const&
+LoggingResumableUploadSession::last_response() const {
+  GCP_LOG(INFO) << __func__ << " << ()";
+  auto const& response = session_->last_response();
+  if (response.ok()) {
+    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+  } else {
+    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+  }
+  return response;
+}
+
+bool LoggingResumableUploadSession::done() const {
+  GCP_LOG(INFO) << __func__ << " << ()";
+  auto const& response = session_->done();
+  GCP_LOG(INFO) << __func__ << " >> " << std::boolalpha << response;
   return response;
 }
 
