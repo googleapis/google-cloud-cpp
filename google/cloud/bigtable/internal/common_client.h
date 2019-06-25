@@ -112,6 +112,15 @@ class CommonClient {
       channels.swap(channels_);
       tmp.swap(stubs_);
       current_index_ = 0;
+    } else {
+      // Some other thread created the pool and saved it in `stubs_`. The work
+      // in this thread was superfluous. We release the lock while clearing the
+      // channels to minimize contention, this seems to workaround other bugs
+      // inside the Google implementation of std::mutex.
+      lk.unlock();
+      tmp.clear();
+      channels.clear();
+      lk.lock();
     }
   }
 
