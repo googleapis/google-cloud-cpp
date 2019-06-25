@@ -38,8 +38,8 @@ CurlResumableStreambuf::CurlResumableStreambuf(
     StatusOr<ResumableUploadResponse> const& last_upload_response =
         upload_session_->last_response();
     if (last_upload_response.ok()) {
-      last_response_ = HttpResponse{
-          200, last_upload_response.value().payload, {}};
+      last_response_ =
+          HttpResponse{200, last_upload_response.value().payload, {}};
     } else {
       last_response_ = StatusOr<HttpResponse>(last_upload_response.status());
     }
