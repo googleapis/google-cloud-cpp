@@ -32,6 +32,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 class Value;  // Defined later in this file.
 // Internal implementation details that callers should not use.
 namespace internal {
@@ -447,6 +448,7 @@ class Value {
   static optional<T> GetValue(optional<T> const&,
                               google::protobuf::Value const& pv,
                               google::spanner::v1::Type const& pt) {
+    if (pv.kind_case() == google::protobuf::Value::kNullValue) return {};
     return GetValue(T{}, pv, pt);
   }
   template <typename T>
@@ -519,8 +521,7 @@ class Value {
   struct PrivateConstructor {};
   template <typename T>
   explicit Value(PrivateConstructor, T&& t)
-      : type_(MakeTypeProto(std::forward<T>(t))),
-        value_(MakeValueProto(std::forward<T>(t))) {}
+      : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
 
   explicit Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}

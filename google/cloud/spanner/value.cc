@@ -16,7 +16,10 @@
 #include "google/cloud/log.h"
 #include <google/protobuf/util/field_comparator.h>
 #include <google/protobuf/util/message_differencer.h>
+#include <cerrno>
 #include <cmath>
+#include <cstdlib>
+#include <cstring>
 #include <ios>
 #include <string>
 
@@ -24,6 +27,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace {
 
 // Compares two sets of Type and Value protos for equality. This method calls
@@ -196,10 +200,17 @@ bool Value::GetValue(bool, google::protobuf::Value const& pv,
 std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv,
                              google::spanner::v1::Type const&) {
   auto const& s = pv.string_value();
-  std::size_t processed = 0;
-  long long x = std::stoll(s, &processed, 10);
-  if (processed != s.size()) {
-    GCP_LOG(FATAL) << "Failed to parse number from string: \"" << s << "\"";
+  char* end = nullptr;
+  errno = 0;
+  long long x = std::strtoll(s.c_str(), &end, 10);
+  if (errno != 0) {
+    GCP_LOG(FATAL) << std::strerror(errno) << ": \"" << s << "\"";
+  }
+  if (end == s.c_str()) {
+    GCP_LOG(FATAL) << "No numeric conversion: \"" << s << "\"";
+  }
+  if (*end != '\0') {
+    GCP_LOG(FATAL) << "Trailing non-numeric data: \"" << s << "\"";
   }
   return x;
 }

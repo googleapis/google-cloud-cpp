@@ -26,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 template <typename T>
 void TestBasicSemantics(T init) {
   Value const v{init};
@@ -68,7 +69,7 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<bool>(5, x));
     std::vector<optional<bool>> v(5, x);
-    v.resize(10, x);
+    v.resize(10);
     TestBasicSemantics(v);
   }
 
@@ -79,7 +80,7 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::int64_t>(5, x));
     std::vector<optional<std::int64_t>> v(5, x);
-    v.resize(10, x);
+    v.resize(10);
     TestBasicSemantics(v);
   }
 
@@ -91,7 +92,7 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<double>(5, x));
     std::vector<optional<double>> v(5, x);
-    v.resize(10, x);
+    v.resize(10);
     TestBasicSemantics(v);
   }
 
@@ -101,7 +102,7 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(x);
     TestBasicSemantics(std::vector<std::string>(5, x));
     std::vector<optional<std::string>> v(5, x);
-    v.resize(10, x);
+    v.resize(10);
     TestBasicSemantics(v);
   }
 }
