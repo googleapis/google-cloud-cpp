@@ -32,6 +32,13 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+class Value;  // Defined later in this file.
+// Internal implementation details that callers should not use.
+namespace internal {
+Value FromProto(google::spanner::v1::Type t, google::protobuf::Value v);
+std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
+}  // namespace internal
+
 /**
  * The Value class represents a type-safe, nullable Spanner value.
  *
@@ -514,6 +521,14 @@ class Value {
   explicit Value(PrivateConstructor, T&& t)
       : type_(MakeTypeProto(std::forward<T>(t))),
         value_(MakeValueProto(std::forward<T>(t))) {}
+
+  explicit Value(google::spanner::v1::Type t, google::protobuf::Value v)
+      : type_(std::move(t)), value_(std::move(v)) {}
+
+  friend Value internal::FromProto(google::spanner::v1::Type,
+                                   google::protobuf::Value);
+  friend std::pair<google::spanner::v1::Type, google::protobuf::Value>
+      internal::ToProto(Value);
 
   google::spanner::v1::Type type_;
   google::protobuf::Value value_;

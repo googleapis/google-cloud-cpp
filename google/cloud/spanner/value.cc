@@ -86,6 +86,18 @@ bool Equal(google::spanner::v1::Type const& pt1,
 
 }  // namespace
 
+namespace internal {
+
+Value FromProto(google::spanner::v1::Type t, google::protobuf::Value v) {
+  return Value(std::move(t), std::move(v));
+}
+
+std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v) {
+  return std::make_pair(std::move(v.type_), std::move(v.value_));
+}
+
+}  // namespace internal
+
 bool operator==(Value const& a, Value const& b) {
   return Equal(a.type_, a.value_, b.type_, b.value_);
 }

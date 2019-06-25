@@ -56,6 +56,10 @@ void TestBasicSemantics(T init) {
   EXPECT_EQ(copy_null, null);
   Value const moved_null = std::move(copy_null);
   EXPECT_EQ(moved_null, null);
+
+  // Round-trip from Value -> Proto(s) -> Value
+  auto const protos = internal::ToProto(v);
+  EXPECT_EQ(v, internal::FromProto(protos.first, protos.second));
 }
 
 TEST(Value, BasicSemantics) {
@@ -344,6 +348,103 @@ TEST(Value, SpannerStruct) {
   EXPECT_FALSE(v6.is_null<T6>());
   EXPECT_TRUE(v6.get<T6>().ok());
   EXPECT_EQ(crazy, *v6.get<T6>());
+}
+
+TEST(Value, ProtoConversionBool) {
+  for (auto b : {true, false}) {
+    Value const v(b);
+    auto const p = internal::ToProto(Value(b));
+    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::BOOL, p.first.code());
+    EXPECT_EQ(b, p.second.bool_value());
+  }
+}
+
+TEST(Value, ProtoConversionInt64) {
+  auto const min64 = std::numeric_limits<std::int64_t>::min();
+  auto const max64 = std::numeric_limits<std::int64_t>::max();
+  for (auto x : std::vector<std::int64_t>{min64, -1, 0, 1, 42, max64}) {
+    Value const v(x);
+    auto const p = internal::ToProto(v);
+    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::INT64, p.first.code());
+    EXPECT_EQ(std::to_string(x), p.second.string_value());
+  }
+}
+
+TEST(Value, ProtoConversionFloat64) {
+  for (auto x : {-1.0, -0.5, 0.0, 0.5, 1.0}) {
+    Value const v(x);
+    auto const p = internal::ToProto(v);
+    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
+    EXPECT_EQ(x, p.second.number_value());
+  }
+
+  // Tests special cases
+  auto const inf = std::numeric_limits<double>::infinity();
+  Value v(inf);
+  auto p = internal::ToProto(v);
+  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
+  EXPECT_EQ("Infinity", p.second.string_value());
+
+  v = Value(-inf);
+  p = internal::ToProto(v);
+  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
+  EXPECT_EQ("-Infinity", p.second.string_value());
+
+  auto const nan = std::nan("NaN");
+  v = Value(nan);
+  p = internal::ToProto(v);
+  // Note: NaN is defined to be not equal to everything, including itself, so
+  // we instead ensure that it is not equal with EXPECT_NE.
+  EXPECT_NE(v, internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
+  EXPECT_EQ("NaN", p.second.string_value());
+}
+
+TEST(Value, ProtoConversionString) {
+  for (auto const& x :
+       std::vector<std::string>{"", "f", "foo", "12345678901234567890"}) {
+    Value const v(x);
+    auto const p = internal::ToProto(v);
+    EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::STRING, p.first.code());
+    EXPECT_EQ(x, p.second.string_value());
+  }
+}
+
+TEST(Value, ProtoConversionArray) {
+  std::vector<std::int64_t> data{1, 2, 3};
+  Value const v(data);
+  auto const p = internal::ToProto(v);
+  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::ARRAY, p.first.code());
+  EXPECT_EQ(google::spanner::v1::TypeCode::INT64,
+            p.first.array_element_type().code());
+  EXPECT_EQ("1", p.second.list_value().values(0).string_value());
+  EXPECT_EQ("2", p.second.list_value().values(1).string_value());
+  EXPECT_EQ("3", p.second.list_value().values(2).string_value());
+}
+
+TEST(Value, ProtoConversionStruct) {
+  auto data = std::make_tuple(3.14, std::make_pair("foo", 42));
+  Value const v(data);
+  auto const p = internal::ToProto(v);
+  EXPECT_EQ(v, internal::FromProto(p.first, p.second));
+  EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT, p.first.code());
+
+  auto const& field0 = p.first.struct_type().fields(0);
+  EXPECT_EQ("", field0.name());
+  EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, field0.type().code());
+  EXPECT_EQ(3.14, p.second.list_value().values(0).number_value());
+
+  auto const& field1 = p.first.struct_type().fields(1);
+  EXPECT_EQ("foo", field1.name());
+  EXPECT_EQ(google::spanner::v1::TypeCode::INT64, field1.type().code());
+  EXPECT_EQ("42", p.second.list_value().values(1).string_value());
 }
 
 }  // namespace SPANNER_CLIENT_NS
