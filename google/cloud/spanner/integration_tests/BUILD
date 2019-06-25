@@ -16,29 +16,16 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":spanner_client.bzl", "spanner_client_hdrs", "spanner_client_srcs")
-
-cc_library(
-    name = "spanner_client",
-    srcs = spanner_client_srcs,
-    hdrs = spanner_client_hdrs,
-    deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
-        "@com_google_googleapis//:bigtable_protos",
-        "@com_google_googleapis//:spanner_protos",
-    ],
-)
-
-load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
+load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests")
 
 [cc_test(
     name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    tags = ["integration-tests"],
     deps = [
-        ":spanner_client",
+        "//google/cloud/spanner:spanner_client",
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
-) for test in spanner_client_unit_tests]
+) for test in spanner_client_integration_tests]

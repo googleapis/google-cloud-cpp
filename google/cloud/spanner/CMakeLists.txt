@@ -64,13 +64,6 @@ create_bazel_config(spanner_client)
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 
-add_executable(spanner_tool spanner_tool.cc)
-target_link_libraries(spanner_tool
-                      PRIVATE googleapis-c++::spanner_client
-                              google_cloud_cpp_common)
-google_cloud_cpp_add_clang_tidy(spanner_tool)
-google_cloud_cpp_add_common_options(spanner_tool)
-
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -129,3 +122,5 @@ endfunction ()
 if (BUILD_TESTING)
     spanner_client_define_tests()
 endif (BUILD_TESTING)
+
+add_subdirectory(integration_tests)
