@@ -41,14 +41,14 @@ class BulkApplyImpl final : public google::bigtable::v2::Bigtable::Service {
  public:
   BulkApplyImpl() = default;
 
-  grpc::Status MutateRows(
-      grpc::ServerContext* context,
+  ::grpc::Status MutateRows(
+      ::grpc::ServerContext* context,
       google::bigtable::v2::MutateRowsRequest const* request,
-      grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer)
+      ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer)
       override {
     std::unique_lock<std::mutex> lk(mu_);
     if (!callback_) {
-      return grpc::Status::OK;
+      return ::grpc::Status::OK;
     }
     Callback cb;
     cb.swap(callback_);
@@ -56,9 +56,9 @@ class BulkApplyImpl final : public google::bigtable::v2::Bigtable::Service {
     return cb(context, request, writer);
   }
 
-  using Callback = std::function<grpc::Status(
-      grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-      grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*)>;
+  using Callback = std::function<::grpc::Status(
+      ::grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+      ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*)>;
 
   void SetCallback(Callback callback) {
     std::unique_lock<std::mutex> lk(mu_);
@@ -80,15 +80,15 @@ class AsyncReadStreamTest : public ::testing::Test {
   void SetUp() override {
     int port;
     std::string server_address("[::]:0");
-    builder_.AddListeningPort(server_address, grpc::InsecureServerCredentials(),
-                              &port);
+    builder_.AddListeningPort(server_address,
+                              ::grpc::InsecureServerCredentials(), &port);
     builder_.RegisterService(&impl_);
     server_ = builder_.BuildAndStart();
     server_thread_ = std::thread([this]() { server_->Wait(); });
 
-    std::shared_ptr<grpc::Channel> channel =
-        grpc::CreateChannel("localhost:" + std::to_string(port),
-                            grpc::InsecureChannelCredentials());
+    std::shared_ptr<::grpc::Channel> channel =
+        ::grpc::CreateChannel("localhost:" + std::to_string(port),
+                              ::grpc::InsecureChannelCredentials());
     stub_ = google::bigtable::v2::Bigtable::NewStub(channel);
 
     cq_thread_ = std::thread([this] { cq_.Run(); });
@@ -110,25 +110,26 @@ class AsyncReadStreamTest : public ::testing::Test {
   }
 
   void WriteOne(
-      grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer,
+      ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer,
       int index) {
     google::bigtable::v2::MutateRowsResponse response;
     response.add_entries()->set_index(index);
-    writer->Write(response, grpc::WriteOptions().set_write_through());
+    writer->Write(response, ::grpc::WriteOptions().set_write_through());
   }
 
   void WriteLast(
-      grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer,
+      ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>* writer,
       int index) {
     google::bigtable::v2::MutateRowsResponse response;
     response.add_entries()->set_index(index);
-    writer->Write(response,
-                  grpc::WriteOptions().set_write_through().set_last_message());
+    writer->Write(
+        response,
+        ::grpc::WriteOptions().set_write_through().set_last_message());
   }
 
   BulkApplyImpl impl_;
-  grpc::ServerBuilder builder_;
-  std::unique_ptr<grpc::Server> server_;
+  ::grpc::ServerBuilder builder_;
+  std::unique_ptr<::grpc::Server> server_;
   std::thread server_thread_;
   std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> stub_;
 
@@ -158,9 +159,9 @@ struct HandlerResult {
 /// @test Verify that completion queues correctly validate asynchronous
 /// streaming read RPC callables.
 TEST_F(AsyncReadStreamTest, MetaFunctions) {
-  auto async_call = [this](grpc::ClientContext* context,
+  auto async_call = [this](::grpc::ClientContext* context,
                            btproto::MutateRowsRequest const& request,
-                           grpc::CompletionQueue* cq) {
+                           ::grpc::CompletionQueue* cq) {
     return stub_->PrepareAsyncMutateRows(context, request, cq);
   };
   static_assert(
@@ -173,18 +174,18 @@ TEST_F(AsyncReadStreamTest, MetaFunctions) {
 
 /// @test Verify that AsyncReadStream works even if the server does not exist.
 TEST_F(AsyncReadStreamTest, CannotConnect) {
-  std::shared_ptr<grpc::Channel> channel =
-      grpc::CreateChannel("localhost:1", grpc::InsecureChannelCredentials());
+  std::shared_ptr<::grpc::Channel> channel = ::grpc::CreateChannel(
+      "localhost:1", ::grpc::InsecureChannelCredentials());
   std::unique_ptr<google::bigtable::v2::Bigtable::StubInterface> stub =
       google::bigtable::v2::Bigtable::NewStub(channel);
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
-      [&stub](grpc::ClientContext* context,
+      [&stub](::grpc::ClientContext* context,
               btproto::MutateRowsRequest const& request,
-              grpc::CompletionQueue* cq) {
+              ::grpc::CompletionQueue* cq) {
         return stub->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -205,12 +206,12 @@ TEST_F(AsyncReadStreamTest, CannotConnect) {
 /// @test Verify that the AsyncReadStream handles an empty stream.
 TEST_F(AsyncReadStreamTest, Empty) {
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -231,18 +232,18 @@ TEST_F(AsyncReadStreamTest, Empty) {
 /// @test Verify that the AsyncReadStream handles an error in a empty stream.
 TEST_F(AsyncReadStreamTest, FailImmediately) {
   impl_.SetCallback(
-      [](grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-         grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*) {
-        return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
+      [](::grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
+         ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*) {
+        return ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh");
       });
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -263,23 +264,23 @@ TEST_F(AsyncReadStreamTest, FailImmediately) {
 /// @test Verify that the AsyncReadStream handles a stream with 3 elements.
 TEST_F(AsyncReadStreamTest, Return3) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
+      [this](::grpc::ServerContext*,
              google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+             ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
                  writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteLast(writer, 2);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -311,8 +312,9 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
   SimpleBarrier server_barrier;
   impl_.SetCallback(
       [this, &server_barrier](
-          grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-          grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+          ::grpc::ServerContext*,
+          google::bigtable::v2::MutateRowsRequest const*,
+          ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
@@ -322,16 +324,16 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
         WriteOne(writer, 2);
         // Block until the client has received the responses.
         server_barrier.Wait();
-        return grpc::Status(grpc::StatusCode::INTERNAL, "bad luck");
+        return ::grpc::Status(::grpc::StatusCode::INTERNAL, "bad luck");
       });
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -361,23 +363,23 @@ TEST_F(AsyncReadStreamTest, Return3ThenFail) {
 /// not explicitly signal end-of-stream.
 TEST_F(AsyncReadStreamTest, Return3NoLast) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
+      [this](::grpc::ServerContext*,
              google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+             ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
                  writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteOne(writer, 2);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -407,15 +409,16 @@ TEST_F(AsyncReadStreamTest, Return3LastIsBlocked) {
   SimpleBarrier server_barrier;
   impl_.SetCallback(
       [this, &client_barrier, &server_barrier](
-          grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-          grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+          ::grpc::ServerContext*,
+          google::bigtable::v2::MutateRowsRequest const*,
+          ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteOne(writer, 2);
         client_barrier.Lift();
         server_barrier.Wait();
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   HandlerResult result;
@@ -430,11 +433,11 @@ TEST_F(AsyncReadStreamTest, Return3LastIsBlocked) {
   };
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context), on_read,
@@ -459,15 +462,16 @@ TEST_F(AsyncReadStreamTest, CancelWhileBlocked) {
   SimpleBarrier server_barrier;
   impl_.SetCallback(
       [this, &client_barrier, &server_barrier](
-          grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-          grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+          ::grpc::ServerContext*,
+          google::bigtable::v2::MutateRowsRequest const*,
+          ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         client_barrier.Lift();
         server_barrier.Wait();
         WriteOne(writer, 2);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   HandlerResult result;
@@ -481,11 +485,11 @@ TEST_F(AsyncReadStreamTest, CancelWhileBlocked) {
   };
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context), on_read,
@@ -519,15 +523,16 @@ TEST_F(AsyncReadStreamTest, DoubleCancel) {
   SimpleBarrier cancel_done_server_barrier;
   impl_.SetCallback(
       [this, &server_sent_responses_barrier, &cancel_done_server_barrier](
-          grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-          grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+          ::grpc::ServerContext*,
+          google::bigtable::v2::MutateRowsRequest const*,
+          ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         server_sent_responses_barrier.Lift();
         cancel_done_server_barrier.Wait();
         WriteOne(writer, 2);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   HandlerResult result;
@@ -544,11 +549,11 @@ TEST_F(AsyncReadStreamTest, DoubleCancel) {
   };
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   auto op = cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context), on_read,
@@ -587,24 +592,25 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
   SimpleBarrier cancel_done_server_barrier;
   impl_.SetCallback(
       [this, &server_started_barrier, &cancel_done_server_barrier](
-          grpc::ServerContext*, google::bigtable::v2::MutateRowsRequest const*,
-          grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+          ::grpc::ServerContext*,
+          google::bigtable::v2::MutateRowsRequest const*,
+          ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
               writer) {
         server_started_barrier.Lift();
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteOne(writer, 2);
         cancel_done_server_barrier.Wait();
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   HandlerResult result;
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   auto op = cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -638,18 +644,18 @@ TEST_F(AsyncReadStreamTest, CancelBeforeRead) {
 /// @test Verify that AsyncReadStream works even if Cancel() is misused.
 TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
+      [this](::grpc::ServerContext*,
              google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+             ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
                  writer) {
         WriteOne(writer, 0);
         WriteOne(writer, 1);
         WriteLast(writer, 2);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   SimpleBarrier on_finish_stop_before_cancel;
   SimpleBarrier on_finish_continue_after_cancel;
@@ -661,9 +667,9 @@ TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
     result.done.Lift();
   };
   auto op = cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),
@@ -691,24 +697,24 @@ TEST_F(AsyncReadStreamTest, CancelAfterFinish) {
 /// @test Verify that AsyncReadStream works when returning false from OnRead().
 TEST_F(AsyncReadStreamTest, DiscardAfterReturningFalse) {
   impl_.SetCallback(
-      [this](grpc::ServerContext*,
+      [this](::grpc::ServerContext*,
              google::bigtable::v2::MutateRowsRequest const*,
-             grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
+             ::grpc::ServerWriter<google::bigtable::v2::MutateRowsResponse>*
                  writer) {
         for (int i = 0; i != 10; ++i) {
           WriteOne(writer, i);
         }
         WriteLast(writer, 10);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       });
 
   btproto::MutateRowsRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   HandlerResult result;
   auto op = cq_.MakeStreamingReadRpc(
-      [this](grpc::ClientContext* context,
+      [this](::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request,
-             grpc::CompletionQueue* cq) {
+             ::grpc::CompletionQueue* cq) {
         return stub_->PrepareAsyncMutateRows(context, request, cq);
       },
       request, std::move(context),

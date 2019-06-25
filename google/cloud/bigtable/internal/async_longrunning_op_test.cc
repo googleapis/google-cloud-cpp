@@ -41,8 +41,8 @@ using MockAsyncLongrunningOpReader =
         google::longrunning::Operation>;
 
 void OperationFinishedSuccessfully(google::longrunning::Operation& response,
-                                   grpc::Status& status) {
-  status = grpc::Status();
+                                   ::grpc::Status& status) {
+  status = ::grpc::Status();
   response.set_name("test_operation_id");
   response.set_done(true);
   google::bigtable::v2::SampleRowKeysResponse response_content;
@@ -65,23 +65,24 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
       google::cloud::internal::make_unique<MockAsyncLongrunningOpReader>();
   EXPECT_CALL(*longrunning_reader, Finish(_, _, _))
       .WillOnce(Invoke([success](google::longrunning::Operation* response,
-                                 grpc::Status* status, void*) {
+                                 ::grpc::Status* status, void*) {
         if (success) {
           OperationFinishedSuccessfully(*response, *status);
         } else {
-          *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "oh no");
+          *status =
+              ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "oh no");
         }
       }));
 
   EXPECT_CALL(*client, AsyncGetOperation(_, _, _))
       .WillOnce(
           Invoke([&longrunning_reader](
-                     grpc::ClientContext*,
+                     ::grpc::ClientContext*,
                      google::longrunning::GetOperationRequest const& request,
-                     grpc::CompletionQueue*) {
+                     ::grpc::CompletionQueue*) {
             EXPECT_EQ("test_operation_id", request.name());
             // This is safe, see comments in MockAsyncResponseReader.
-            return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+            return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
                 google::longrunning::Operation>>(longrunning_reader.get());
           }));
 
@@ -145,7 +146,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
         cq_(cq_impl_),
         longrunning_reader_(google::cloud::internal::make_unique<
                             MockAsyncLongrunningOpReader>()),
-        context_(new grpc::ClientContext) {}
+        context_(new ::grpc::ClientContext) {}
 
   /**
    * Expect a call to the operation.
@@ -157,24 +158,24 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
    * - `SampleRowKeysResponse` with row_key equal to **returned otherwise
    */
   StatusOr<optional<StatusOr<SampleRowKeysResponse>>> SimulateCall(
-      std::function<void(google::longrunning::Operation&, grpc::Status&)>
+      std::function<void(google::longrunning::Operation&, ::grpc::Status&)>
           response_filler,
       google::longrunning::Operation op) {
     EXPECT_CALL(*longrunning_reader_, Finish(_, _, _))
         .WillOnce(
             Invoke([response_filler](google::longrunning::Operation* response,
-                                     grpc::Status* status, void*) {
+                                     ::grpc::Status* status, void*) {
               response_filler(*response, *status);
             }));
 
     EXPECT_CALL(*client_, AsyncGetOperation(_, _, _))
         .WillOnce(Invoke(
-            [this](grpc::ClientContext*,
+            [this](::grpc::ClientContext*,
                    google::longrunning::GetOperationRequest const& request,
-                   grpc::CompletionQueue*) {
+                   ::grpc::CompletionQueue*) {
               EXPECT_EQ("test_operation_id", request.name());
               // This is safe, see comments in MockAsyncResponseReader.
-              return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+              return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
                   google::longrunning::Operation>>(longrunning_reader_.get());
             }));
     internal::AsyncLongrunningOperation<testing::MockAdminClient,
@@ -195,7 +196,7 @@ class AsyncLongrunningOperationTest : public ::testing::Test {
   std::shared_ptr<testing::MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::unique_ptr<MockAsyncLongrunningOpReader> longrunning_reader_;
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<::grpc::ClientContext> context_;
 };
 
 TEST_F(AsyncLongrunningOperationTest, Success) {
@@ -216,8 +217,8 @@ TEST_F(AsyncLongrunningOperationTest, Unfinished) {
   op.set_name("test_operation_id");
 
   StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
-      [](google::longrunning::Operation& response, grpc::Status& status) {
-        status = grpc::Status();
+      [](google::longrunning::Operation& response, ::grpc::Status& status) {
+        status = ::grpc::Status();
         response.set_name("test_operation_id");
         response.set_done(false);
       },
@@ -232,13 +233,13 @@ TEST_F(AsyncLongrunningOperationTest, FinishedFailure) {
   op.set_name("test_operation_id");
 
   StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
-      [](google::longrunning::Operation& response, grpc::Status& status) {
-        status = grpc::Status();
+      [](google::longrunning::Operation& response, ::grpc::Status& status) {
+        status = ::grpc::Status();
         response.set_name("test_operation_id");
         response.set_done(true);
         auto error =
             google::cloud::internal::make_unique<google::rpc::Status>();
-        error->set_code(grpc::StatusCode::PERMISSION_DENIED);
+        error->set_code(::grpc::StatusCode::PERMISSION_DENIED);
         error->set_message("something is broken");
         response.set_allocated_error(error.release());
       },
@@ -255,8 +256,8 @@ TEST_F(AsyncLongrunningOperationTest, PollExhausted) {
   op.set_name("test_operation_id");
 
   StatusOr<optional<StatusOr<SampleRowKeysResponse>>> res = SimulateCall(
-      [](google::longrunning::Operation&, grpc::Status& status) {
-        status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "oh no");
+      [](google::longrunning::Operation&, ::grpc::Status& status) {
+        status = ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "oh no");
       },
       op);
 
@@ -266,7 +267,7 @@ TEST_F(AsyncLongrunningOperationTest, PollExhausted) {
 
 TEST_F(AsyncLongrunningOperationTest, ImmediateSuccess) {
   google::longrunning::Operation op;
-  grpc::Status dummy_status;
+  ::grpc::Status dummy_status;
   OperationFinishedSuccessfully(op, dummy_status);
 
   internal::AsyncLongrunningOperation<testing::MockAdminClient,

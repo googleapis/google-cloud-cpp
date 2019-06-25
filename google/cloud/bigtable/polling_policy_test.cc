@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/polling_policy.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -26,9 +26,9 @@ namespace cloud {
 namespace bigtable {
 namespace {
 
-/// Create a grpc::Status with a status code for permanent errors.
-grpc::Status CreatePermanentError() {
-  return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
+/// Create a ::grpc::Status with a status code for permanent errors.
+::grpc::Status CreatePermanentError() {
+  return ::grpc::Status(::grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
 using namespace testing_util::chrono_literals;
@@ -44,8 +44,8 @@ auto const kLimitedTimeTolerance = 10_ms;
 void CheckLimitedTime(PollingPolicy& tested) {
   testing_util::CheckPredicateBecomesFalse(
       [&tested] {
-        return tested.OnFailure(
-            grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
+        return tested.OnFailure(::grpc::Status(::grpc::StatusCode::UNAVAILABLE,
+                                               "please try again"));
       },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
@@ -76,7 +76,7 @@ TEST(GenericPollingPolicy, OnNonRetryable) {
   EXPECT_FALSE(
       static_cast<PollingPolicy&>(tested).OnFailure(CreatePermanentError()));
   EXPECT_FALSE(tested.OnFailure(
-      internal::MakeStatusFromRpcError(CreatePermanentError())));
+      ::google::cloud::grpc::MakeStatusFromRpcError(CreatePermanentError())));
 }
 
 /// @test Verify that IsPermanentError works.
@@ -88,9 +88,9 @@ TEST(GenericPollingPolicy, IsPermanentError) {
       tested.IsPermanentError(Status(StatusCode::kPermissionDenied, "")));
   EXPECT_FALSE(tested.IsPermanentError(Status(StatusCode::kUnavailable, "")));
   EXPECT_TRUE(static_cast<PollingPolicy&>(tested).IsPermanentError(
-      grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
+      ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "")));
   EXPECT_FALSE(static_cast<PollingPolicy&>(tested).IsPermanentError(
-      grpc::Status(grpc::StatusCode::UNAVAILABLE, "")));
+      ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "")));
 }
 
 }  // anonymous namespace

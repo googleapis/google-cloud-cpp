@@ -30,7 +30,7 @@ namespace testing {
 
 using ReceivedMetadata = std::multimap<std::string, std::string>;
 
-inline void GetClientMetadata(grpc::ServerContext* context,
+inline void GetClientMetadata(::grpc::ServerContext* context,
                               ReceivedMetadata& client_metadata) {
   for (auto const& kv : context->client_metadata()) {
     auto ele = std::make_pair(std::string(kv.first.begin(), kv.first.end()),
@@ -51,12 +51,12 @@ inline void GetClientMetadata(grpc::ServerContext* context,
 class BigtableImpl final : public google::bigtable::v2::Bigtable::Service {
  public:
   BigtableImpl() {}
-  grpc::Status ReadRows(
-      grpc::ServerContext* context,
+  ::grpc::Status ReadRows(
+      ::grpc::ServerContext* context,
       google::bigtable::v2::ReadRowsRequest const*,
-      grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>*) {
+      ::grpc::ServerWriter<google::bigtable::v2::ReadRowsResponse>*) {
     GetClientMetadata(context, client_metadata_);
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
   const ReceivedMetadata& client_metadata() const { return client_metadata_; }
 
@@ -69,18 +69,18 @@ class TableAdminImpl final
  public:
   TableAdminImpl() {}
 
-  grpc::Status CreateTable(
-      grpc::ServerContext* context,
+  ::grpc::Status CreateTable(
+      ::grpc::ServerContext* context,
       google::bigtable::admin::v2::CreateTableRequest const*,
       google::bigtable::admin::v2::Table*) override {
     GetClientMetadata(context, client_metadata_);
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
-  grpc::Status GetTable(grpc::ServerContext* context,
-                        google::bigtable::admin::v2::GetTableRequest const*,
-                        google::bigtable::admin::v2::Table*) override {
+  ::grpc::Status GetTable(::grpc::ServerContext* context,
+                          google::bigtable::admin::v2::GetTableRequest const*,
+                          google::bigtable::admin::v2::Table*) override {
     GetClientMetadata(context, client_metadata_);
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
   const ReceivedMetadata& client_metadata() const { return client_metadata_; }
 
@@ -117,8 +117,8 @@ class EmbeddedServerTestFixture : public ::testing::Test {
   std::thread wait_thread_;
   BigtableImpl bigtable_service_;
   TableAdminImpl admin_service_;
-  grpc::ServerBuilder builder_;
-  std::unique_ptr<grpc::Server> server_;
+  ::grpc::ServerBuilder builder_;
+  std::unique_ptr<::grpc::Server> server_;
 };
 
 }  // namespace testing

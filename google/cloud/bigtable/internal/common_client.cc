@@ -19,9 +19,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
+std::vector<std::shared_ptr<::grpc::Channel>> CreateChannelPool(
     std::string const& endpoint, bigtable::ClientOptions const& options) {
-  std::vector<std::shared_ptr<grpc::Channel>> result;
+  std::vector<std::shared_ptr<::grpc::Channel>> result;
   for (std::size_t i = 0; i != options.connection_pool_size(); ++i) {
     auto args = options.channel_arguments();
     if (!options.connection_pool_name().empty()) {
@@ -30,7 +30,7 @@ std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
     }
     args.SetInt("cbt-c++/connection-pool-id", static_cast<int>(i));
     result.push_back(
-        grpc::CreateCustomChannel(endpoint, options.credentials(), args));
+        ::grpc::CreateCustomChannel(endpoint, options.credentials(), args));
   }
   return result;
 }

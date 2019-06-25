@@ -53,7 +53,7 @@ struct AsyncStreamingReadRpcUnwrap {};
  */
 template <typename ResponseType>
 struct AsyncStreamingReadRpcUnwrap<
-    std::unique_ptr<grpc::ClientAsyncReaderInterface<ResponseType>>> {
+    std::unique_ptr<::grpc::ClientAsyncReaderInterface<ResponseType>>> {
   using type = ResponseType;
 };
 
@@ -77,8 +77,8 @@ struct AsyncStreamingReadRpcUnwrap<
 template <typename AsyncCallType, typename RequestType>
 using AsyncStreamingReadResponseType = AsyncStreamingReadRpcUnwrap<
     typename google::cloud::internal::invoke_result_t<
-        AsyncCallType, grpc::ClientContext*, RequestType const&,
-        grpc::CompletionQueue*>>;
+        AsyncCallType, ::grpc::ClientContext*, RequestType const&,
+        ::grpc::CompletionQueue*>>;
 
 /**
  * Read responses from a asynchronous streaming read RPC and invoke callbacks.
@@ -136,7 +136,7 @@ class AsyncReadStreamImpl
    */
   template <typename AsyncFunctionType, typename Request>
   void Start(AsyncFunctionType&& async_call, Request const& request,
-             std::unique_ptr<grpc::ClientContext> context,
+             std::unique_ptr<::grpc::ClientContext> context,
              std::shared_ptr<CompletionQueueImpl> cq) {
     // An adapter to call OnStart() via the completion queue.
     class NotifyStart final : public AsyncGrpcOperation {
@@ -230,12 +230,13 @@ class AsyncReadStreamImpl
       explicit NotifyFinish(std::shared_ptr<AsyncReadStreamImpl> c)
           : control_(std::move(c)) {}
 
-      grpc::Status status;
+      ::grpc::Status status;
 
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
       bool Notify(CompletionQueue&, bool ok) override {
-        control_->OnFinish(ok, MakeStatusFromRpcError(status));
+        control_->OnFinish(
+            ok, ::google::cloud::grpc::MakeStatusFromRpcError(status));
         return true;
       }
       std::shared_ptr<AsyncReadStreamImpl> control_;
@@ -297,9 +298,9 @@ class AsyncReadStreamImpl
 
   typename std::decay<OnReadHandler>::type on_read_;
   typename std::decay<OnFinishHandler>::type on_finish_;
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<::grpc::ClientContext> context_;
   std::shared_ptr<CompletionQueueImpl> cq_;
-  std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>> reader_;
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<Response>> reader_;
 };
 
 /**

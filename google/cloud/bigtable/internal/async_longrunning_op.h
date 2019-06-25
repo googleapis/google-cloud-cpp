@@ -62,7 +62,7 @@ class AsyncLongrunningOperation {
   // retriable error, `StartAsyncPollOp` would keep querying that operation.
   // That would be incorrect, hence the extra `StatusOr<>`.
   future<StatusOr<optional<StatusOr<Response>>>> operator()(
-      CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context) {
+      CompletionQueue& cq, std::unique_ptr<::grpc::ClientContext> context) {
     if (operation_.done()) {
       // The operation supplied in the ctor can be already completed. In such a
       // case, we shouldn't send the RPC - we already have the response.
@@ -73,9 +73,9 @@ class AsyncLongrunningOperation {
     request.set_name(operation_.name());
     return cq
         .MakeUnaryRpc(
-            [this](grpc::ClientContext* context,
+            [this](::grpc::ClientContext* context,
                    google::longrunning::GetOperationRequest const& request,
-                   grpc::CompletionQueue* cq) {
+                   ::grpc::CompletionQueue* cq) {
               return client_->AsyncGetOperation(context, request, cq);
             },
             std::move(request), std::move(context))

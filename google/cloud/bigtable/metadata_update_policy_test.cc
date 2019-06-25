@@ -32,7 +32,7 @@ using ::testing::HasSubstr;
 
 /// @test A test for setting metadata for admin operations.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
-  grpc::string expected = "parent=" + kInstanceName;
+  ::grpc::string expected = "parent=" + kInstanceName;
   auto gc = bigtable::GcRule::MaxNumVersions(42);
   admin_->CreateTable(kTableName, bigtable::TableConfig({{"fam", gc}}, {}));
   // Get metadata from embedded server
@@ -44,7 +44,7 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServer) {
 
 /// @test A test for setting metadata when table is not known.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerLazyMetadata) {
-  grpc::string expected = "name=" + kTableName;
+  ::grpc::string expected = "name=" + kTableName;
   admin_->GetTable(kTableId);
   // Get metadata from embedded server
   auto client_metadata = admin_service_.client_metadata();
@@ -55,7 +55,7 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerLazyMetadata) {
 
 /// @test A test for setting metadata when table is known.
 TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
-  grpc::string expected = "table_name=" + kTableName;
+  ::grpc::string expected = "table_name=" + kTableName;
   auto reader = table_->ReadRows(bigtable::RowSet("row1"), 1,
                                  bigtable::Filter::PassAllFilter());
   // lets make the RPC call to send metadata

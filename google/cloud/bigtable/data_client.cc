@@ -54,65 +54,67 @@ class DefaultDataClient : public DataClient {
   std::string const& project_id() const override;
   std::string const& instance_id() const override;
 
-  std::shared_ptr<grpc::Channel> Channel() override { return impl_.Channel(); }
+  std::shared_ptr<::grpc::Channel> Channel() override {
+    return impl_.Channel();
+  }
   void reset() override { impl_.reset(); }
 
-  grpc::Status MutateRow(grpc::ClientContext* context,
-                         btproto::MutateRowRequest const& request,
-                         btproto::MutateRowResponse* response) override {
+  ::grpc::Status MutateRow(::grpc::ClientContext* context,
+                           btproto::MutateRowRequest const& request,
+                           btproto::MutateRowResponse* response) override {
     return impl_.Stub()->MutateRow(context, request, response);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<btproto::MutateRowResponse>>
-  AsyncMutateRow(grpc::ClientContext* context,
+      ::grpc::ClientAsyncResponseReaderInterface<btproto::MutateRowResponse>>
+  AsyncMutateRow(::grpc::ClientContext* context,
                  btproto::MutateRowRequest const& request,
-                 grpc::CompletionQueue* cq) override {
+                 ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncMutateRow(context, request, cq);
   }
 
-  grpc::Status CheckAndMutateRow(
-      grpc::ClientContext* context,
+  ::grpc::Status CheckAndMutateRow(
+      ::grpc::ClientContext* context,
       btproto::CheckAndMutateRowRequest const& request,
       btproto::CheckAndMutateRowResponse* response) override {
     return impl_.Stub()->CheckAndMutateRow(context, request, response);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::CheckAndMutateRowResponse>>
   AsyncCheckAndMutateRow(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::v2::CheckAndMutateRowRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCheckAndMutateRow(context, request, cq);
   }
 
-  grpc::Status ReadModifyWriteRow(
-      grpc::ClientContext* context,
+  ::grpc::Status ReadModifyWriteRow(
+      ::grpc::ClientContext* context,
       btproto::ReadModifyWriteRowRequest const& request,
       btproto::ReadModifyWriteRowResponse* response) override {
     return impl_.Stub()->ReadModifyWriteRow(context, request, response);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::ReadModifyWriteRowResponse>>
   AsyncReadModifyWriteRow(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncReadModifyWriteRow(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
-  ReadRows(grpc::ClientContext* context,
+  std::unique_ptr<::grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
+  ReadRows(::grpc::ClientContext* context,
            btproto::ReadRowsRequest const& request) override {
     return impl_.Stub()->ReadRows(context, request);
   }
 
-  std::unique_ptr<grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
-  AsyncReadRows(grpc::ClientContext* context,
+  std::unique_ptr<::grpc::ClientAsyncReaderInterface<btproto::ReadRowsResponse>>
+  AsyncReadRows(::grpc::ClientContext* context,
                 const google::bigtable::v2::ReadRowsRequest& request,
-                grpc::CompletionQueue* cq, void* tag) override {
+                ::grpc::CompletionQueue* cq, void* tag) override {
     return impl_.Stub()->AsyncReadRows(context, request, cq, tag);
   }
 
@@ -124,8 +126,8 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->PrepareAsyncReadRows(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
-  SampleRowKeys(grpc::ClientContext* context,
+  std::unique_ptr<::grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
+  SampleRowKeys(::grpc::ClientContext* context,
                 btproto::SampleRowKeysRequest const& request) override {
     return impl_.Stub()->SampleRowKeys(context, request);
   }
@@ -138,8 +140,8 @@ class DefaultDataClient : public DataClient {
     return impl_.Stub()->AsyncSampleRowKeys(context, request, cq, tag);
   }
 
-  std::unique_ptr<grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
-  MutateRows(grpc::ClientContext* context,
+  std::unique_ptr<::grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
+  MutateRows(::grpc::ClientContext* context,
              btproto::MutateRowsRequest const& request) override {
     return impl_.Stub()->MutateRows(context, request);
   }

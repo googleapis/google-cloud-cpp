@@ -60,19 +60,19 @@ class MockClient {
  public:
   // Use an operation with simple request / response parameters, so it is easy
   // to test them.
-  MOCK_METHOD3(
-      AsyncGetTable,
-      std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
-          grpc::ClientContext*, btadmin::GetTableRequest const&,
-          grpc::CompletionQueue* cq));
+  MOCK_METHOD3(AsyncGetTable,
+               std::unique_ptr<
+                   ::grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>(
+                   ::grpc::ClientContext*, btadmin::GetTableRequest const&,
+                   ::grpc::CompletionQueue* cq));
 
   MOCK_METHOD4(
       AsyncMutateRows,
       std::unique_ptr<
-          grpc::ClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
-          grpc::ClientContext* context,
+          ::grpc::ClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
+          ::grpc::ClientContext* context,
           const ::google::bigtable::v2::MutateRowsRequest& request,
-          grpc::CompletionQueue* cq, void* tag));
+          ::grpc::CompletionQueue* cq, void* tag));
 };
 
 /// @test Verify that completion queues can create async operations returning
@@ -85,19 +85,20 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFuture) {
           btadmin::Table>;
   auto reader = google::cloud::internal::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::Table* table, grpc::Status* status, void*) {
-        // Initialize a value to make sure it is carried all the way back to
-        // the caller.
-        table->set_name("fake/table/name/response");
-        *status = grpc::Status::OK;
-      }));
+      .WillOnce(
+          Invoke([](btadmin::Table* table, ::grpc::Status* status, void*) {
+            // Initialize a value to make sure it is carried all the way back to
+            // the caller.
+            table->set_name("fake/table/name/response");
+            *status = ::grpc::Status::OK;
+          }));
 
   EXPECT_CALL(client, AsyncGetTable(_, _, _))
-      .WillOnce(Invoke([&reader](grpc::ClientContext*,
+      .WillOnce(Invoke([&reader](::grpc::ClientContext*,
                                  btadmin::GetTableRequest const& request,
-                                 grpc::CompletionQueue*) {
+                                 ::grpc::CompletionQueue*) {
         EXPECT_EQ("fake/table/name/request", request.name());
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             // This is safe, see comments in MockAsyncResponseReader.
             btadmin::Table>>(reader.get());
       }));
@@ -109,12 +110,12 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFuture) {
   // carried to the mock.
   btadmin::GetTableRequest request;
   request.set_name("fake/table/name/request");
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
 
   auto future = cq.MakeUnaryRpc(
-      [&client](grpc::ClientContext* context,
+      [&client](::grpc::ClientContext* context,
                 btadmin::GetTableRequest const& request,
-                grpc::CompletionQueue* cq) {
+                ::grpc::CompletionQueue* cq) {
         return client.AsyncGetTable(context, request, cq);
       },
       request, std::move(context));
@@ -139,15 +140,15 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFutureFailure) {
           btadmin::Table>;
   auto reader = google::cloud::internal::make_unique<ReaderType>();
   EXPECT_CALL(*reader, Finish(_, _, _))
-      .WillOnce(Invoke([](btadmin::Table*, grpc::Status* status, void*) {
-        *status = grpc::Status(grpc::StatusCode::NOT_FOUND, "not found");
+      .WillOnce(Invoke([](btadmin::Table*, ::grpc::Status* status, void*) {
+        *status = ::grpc::Status(::grpc::StatusCode::NOT_FOUND, "not found");
       }));
 
   EXPECT_CALL(client, AsyncGetTable(_, _, _))
-      .WillOnce(Invoke([&reader](grpc::ClientContext*,
+      .WillOnce(Invoke([&reader](::grpc::ClientContext*,
                                  btadmin::GetTableRequest const&,
-                                 grpc::CompletionQueue*) {
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                                 ::grpc::CompletionQueue*) {
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             // This is safe, see comments in MockAsyncResponseReader.
             btadmin::Table>>(reader.get());
       }));
@@ -157,12 +158,12 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFutureFailure) {
 
   // In this unit test we do not need to initialize the request parameter.
   btadmin::GetTableRequest request;
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
 
   auto future = cq.MakeUnaryRpc(
-      [&client](grpc::ClientContext* context,
+      [&client](::grpc::ClientContext* context,
                 btadmin::GetTableRequest const& request,
-                grpc::CompletionQueue* cq) {
+                ::grpc::CompletionQueue* cq) {
         return client.AsyncGetTable(context, request, cq);
       },
       request, std::move(context));

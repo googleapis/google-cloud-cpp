@@ -44,7 +44,7 @@ TEST_F(TableSampleRowKeysTest, DefaultParameterTest) {
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(::grpc::Status::OK));
   auto result = table_.SampleRows();
   ASSERT_STATUS_OK(result);
   auto it = result->begin();
@@ -71,7 +71,7 @@ TEST_F(TableSampleRowKeysTest, SimpleVectorTest) {
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(::grpc::Status::OK));
   auto result = table_.SampleRows();
   ASSERT_STATUS_OK(result);
   auto it = result->begin();
@@ -103,7 +103,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
 
   EXPECT_CALL(*reader, Finish())
       .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_CALL(*reader_retry, Read(_))
       .WillOnce(Invoke([](btproto::SampleRowKeysResponse* r) {
@@ -122,7 +122,7 @@ TEST_F(TableSampleRowKeysTest, SampleRowKeysRetryTest) {
       }))
       .WillOnce(Return(false));
 
-  EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*reader_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   auto results = table_.SampleRows();
   ASSERT_STATUS_OK(results);
@@ -166,14 +166,14 @@ TEST_F(TableSampleRowKeysTest, TooManyFailures) {
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish())
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+      .WillOnce(Return(::grpc::Status(::grpc::StatusCode::ABORTED, "")));
 
-  auto create_cancelled_stream = [&](grpc::ClientContext*,
+  auto create_cancelled_stream = [&](::grpc::ClientContext*,
                                      btproto::SampleRowKeysRequest const&) {
     auto stream = new MockSampleRowKeysReader;
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+        .WillOnce(Return(::grpc::Status(::grpc::StatusCode::ABORTED, "")));
     return stream->AsUniqueMocked();
   };
 

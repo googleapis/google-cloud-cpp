@@ -109,7 +109,7 @@ class RowReader {
   StatusOr<internal::OptionalRow> Advance();
 
   /// Called by Advance(), does not handle retries.
-  grpc::Status AdvanceOrFail(internal::OptionalRow& row);
+  ::grpc::Status AdvanceOrFail(internal::OptionalRow& row);
 
   /**
    * Move the `processed_chunks_count_` index to the next chunk,
@@ -137,12 +137,12 @@ class RowReader {
   std::unique_ptr<RPCBackoffPolicy> backoff_policy_;
   MetadataUpdatePolicy metadata_update_policy_;
 
-  std::unique_ptr<grpc::ClientContext> context_;
+  std::unique_ptr<::grpc::ClientContext> context_;
 
   std::unique_ptr<internal::ReadRowsParserFactory> parser_factory_;
   std::unique_ptr<internal::ReadRowsParser> parser_;
   std::unique_ptr<
-      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
+      ::grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
       stream_;
   bool stream_is_open_;
   bool operation_cancelled_;

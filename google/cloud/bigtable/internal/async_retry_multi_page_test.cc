@@ -44,9 +44,9 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 
   MOCK_METHOD1(OnCompletionHook, std::chrono::milliseconds(Status const& s));
 
-  std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
+  std::chrono::milliseconds OnCompletion(::grpc::Status const& s) override {
     num_calls_from_last_clone_++;
-    return OnCompletionHook(MakeStatusFromRpcError(s));
+    return OnCompletionHook(::google::cloud::grpc::MakeStatusFromRpcError(s));
   }
 
   std::chrono::milliseconds OnCompletion(
@@ -59,7 +59,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
     return std::unique_ptr<RPCBackoffPolicy>();
   }
 
-  void Setup(grpc::ClientContext&) const override {}
+  void Setup(::grpc::ClientContext&) const override {}
 
   int num_calls_from_last_clone_;
 };
@@ -69,7 +69,7 @@ class SharedBackoffPolicyMock : public bigtable::RPCBackoffPolicy {
  public:
   SharedBackoffPolicyMock() : state_(new BackoffPolicyMock) {}
 
-  std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
+  std::chrono::milliseconds OnCompletion(::grpc::Status const& s) override {
     return state_->OnCompletion(s);
   }
 
@@ -84,7 +84,7 @@ class SharedBackoffPolicyMock : public bigtable::RPCBackoffPolicy {
         new SharedBackoffPolicyMock(*this));
   }
 
-  void Setup(grpc::ClientContext&) const override {}
+  void Setup(::grpc::ClientContext&) const override {}
 
   int NumCallsFromLastClone() { return state_->num_calls_from_last_clone_; }
 
@@ -110,7 +110,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
   // Description of a single expected RPC exchange.
   struct Exchange {
     // The mock will return this status
-    grpc::StatusCode status_code;
+    ::grpc::StatusCode status_code;
     // The mock will return these clusters.
     std::vector<std::string> clusters;
     // The mock will return this next_page_token.
@@ -132,7 +132,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
       // returning success.
       auto last_success = std::find_if(
           exchange_it + 1, interaction.rend(), [](Exchange const& e) {
-            return e.status_code == grpc::StatusCode::OK;
+            return e.status_code == ::grpc::StatusCode::OK;
           });
       std::string expected_token = (last_success == interaction.rend())
                                        ? std::string()
@@ -140,26 +140,25 @@ class AsyncMultipageFutureTest : public ::testing::Test {
 
       EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
           .WillOnce(Invoke([cluster_reader, expected_token](
-                               grpc::ClientContext*,
+                               ::grpc::ClientContext*,
                                ListClustersRequest const& request,
-                               grpc::CompletionQueue*) {
+                               ::grpc::CompletionQueue*) {
             EXPECT_EQ(expected_token, request.page_token());
             // This is safe, see comments in MockAsyncResponseReader.
-            return std::unique_ptr<
-                grpc::ClientAsyncResponseReaderInterface<ListClustersResponse>>(
-                cluster_reader);
+            return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+                ListClustersResponse>>(cluster_reader);
           }))
           .RetiresOnSaturation();
       EXPECT_CALL(*cluster_reader, Finish(_, _, _))
           .WillOnce(Invoke([exchange](ListClustersResponse* response,
-                                      grpc::Status* status, void*) {
+                                      ::grpc::Status* status, void*) {
             for (auto const& cluster_name : exchange.clusters) {
               auto& cluster = *response->add_clusters();
               cluster.set_name(cluster_name);
             }
             // Return the right token.
             response->set_next_page_token(exchange.next_page_token);
-            *status = grpc::Status(exchange.status_code, "");
+            *status = ::grpc::Status(exchange.status_code, "");
           }));
     }
   }
@@ -169,8 +168,9 @@ class AsyncMultipageFutureTest : public ::testing::Test {
         __func__, std::move(rpc_retry_policy_),
         shared_backoff_policy_mock_->clone(),
         std::move(metadata_update_policy_),
-        [this](grpc::ClientContext* context, ListClustersRequest const& request,
-               grpc::CompletionQueue* cq) {
+        [this](::grpc::ClientContext* context,
+               ListClustersRequest const& request,
+               ::grpc::CompletionQueue* cq) {
           return client_->AsyncListClusters(context, request, cq);
         },
         ListClustersRequest(), std::vector<std::string>(),
@@ -195,7 +195,7 @@ class AsyncMultipageFutureTest : public ::testing::Test {
 };
 
 TEST_F(AsyncMultipageFutureTest, ImmediateSuccess) {
-  ExpectInteraction({{grpc::StatusCode::OK, {"cluster_1"}, ""}});
+  ExpectInteraction({{::grpc::StatusCode::OK, {"cluster_1"}, ""}});
 
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
@@ -208,8 +208,8 @@ TEST_F(AsyncMultipageFutureTest, ImmediateSuccess) {
 }
 
 TEST_F(AsyncMultipageFutureTest, NoDelayBetweenSuccesses) {
-  ExpectInteraction({{grpc::StatusCode::OK, {"cluster_1"}, "token_1"},
-                     {grpc::StatusCode::OK, {"cluster_2"}, ""}});
+  ExpectInteraction({{::grpc::StatusCode::OK, {"cluster_1"}, "token_1"},
+                     {::grpc::StatusCode::OK, {"cluster_2"}, ""}});
 
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
@@ -231,9 +231,9 @@ TEST_F(AsyncMultipageFutureTest, NoDelayBetweenSuccesses) {
 }
 
 TEST_F(AsyncMultipageFutureTest, DelayGrowsOnFailures) {
-  ExpectInteraction({{grpc::StatusCode::UNAVAILABLE, {}, ""},
-                     {grpc::StatusCode::UNAVAILABLE, {}, ""},
-                     {grpc::StatusCode::OK, {"cluster_1"}, ""}});
+  ExpectInteraction({{::grpc::StatusCode::UNAVAILABLE, {}, ""},
+                     {::grpc::StatusCode::UNAVAILABLE, {}, ""},
+                     {::grpc::StatusCode::OK, {"cluster_1"}, ""}});
   EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook(_))
       .WillOnce(Return(std::chrono::milliseconds(1)))
       .WillOnce(Return(std::chrono::milliseconds(1)));
@@ -271,10 +271,10 @@ TEST_F(AsyncMultipageFutureTest, DelayGrowsOnFailures) {
 }
 
 TEST_F(AsyncMultipageFutureTest, SucessResetsBackoffPolicy) {
-  ExpectInteraction({{grpc::StatusCode::UNAVAILABLE, {}, ""},
-                     {grpc::StatusCode::OK, {"cluster_1"}, "token1"},
-                     {grpc::StatusCode::UNAVAILABLE, {}, ""},
-                     {grpc::StatusCode::OK, {"cluster_2"}, ""}});
+  ExpectInteraction({{::grpc::StatusCode::UNAVAILABLE, {}, ""},
+                     {::grpc::StatusCode::OK, {"cluster_1"}, "token1"},
+                     {::grpc::StatusCode::UNAVAILABLE, {}, ""},
+                     {::grpc::StatusCode::OK, {"cluster_2"}, ""}});
   EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook(_))
       .WillOnce(Return(std::chrono::milliseconds(1)))
       .WillOnce(Return(std::chrono::milliseconds(1)));
@@ -318,8 +318,8 @@ TEST_F(AsyncMultipageFutureTest, SucessResetsBackoffPolicy) {
 }
 
 TEST_F(AsyncMultipageFutureTest, TransientErrorsAreRetried) {
-  ExpectInteraction({{grpc::StatusCode::UNAVAILABLE, {}, ""},
-                     {grpc::StatusCode::OK, {"cluster_1"}, ""}});
+  ExpectInteraction({{::grpc::StatusCode::UNAVAILABLE, {}, ""},
+                     {::grpc::StatusCode::OK, {"cluster_1"}, ""}});
   EXPECT_CALL(*shared_backoff_policy_mock_->state_, OnCompletionHook(_))
       .WillOnce(Return(std::chrono::milliseconds(1)));
 
@@ -344,7 +344,7 @@ TEST_F(AsyncMultipageFutureTest, TransientErrorsAreRetried) {
 }
 
 TEST_F(AsyncMultipageFutureTest, PermanentErrorsAreNotRetried) {
-  ExpectInteraction({{grpc::StatusCode::PERMISSION_DENIED, {}, ""}});
+  ExpectInteraction({{::grpc::StatusCode::PERMISSION_DENIED, {}, ""}});
 
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);

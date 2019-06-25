@@ -32,13 +32,13 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
     bool ok;
     auto deadline = std::chrono::system_clock::now() + kLoopTimeout;
     auto status = cq_.AsyncNext(&tag, &ok, deadline);
-    if (status == grpc::CompletionQueue::SHUTDOWN) {
+    if (status == ::grpc::CompletionQueue::SHUTDOWN) {
       break;
     }
-    if (status == grpc::CompletionQueue::TIMEOUT) {
+    if (status == ::grpc::CompletionQueue::TIMEOUT) {
       continue;
     }
-    if (status != grpc::CompletionQueue::GOT_EVENT) {
+    if (status != ::grpc::CompletionQueue::GOT_EVENT) {
       google::cloud::internal::ThrowRuntimeError(
           "unexpected status from AsyncNext()");
     }
@@ -54,8 +54,8 @@ void CompletionQueueImpl::Shutdown() {
   cq_.Shutdown();
 }
 
-std::unique_ptr<grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
-  return google::cloud::internal::make_unique<grpc::Alarm>();
+std::unique_ptr<::grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
+  return google::cloud::internal::make_unique<::grpc::Alarm>();
 }
 
 void* CompletionQueueImpl::RegisterOperation(
@@ -128,14 +128,14 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, bool ok) {
   }
 
   // Discard any pending events.
-  grpc::CompletionQueue::NextStatus status;
+  ::grpc::CompletionQueue::NextStatus status;
   do {
     void* tag;
     bool ok;
     auto deadline =
         std::chrono::system_clock::now() + std::chrono::milliseconds(1);
     status = cq_.AsyncNext(&tag, &ok, deadline);
-  } while (status == grpc::CompletionQueue::GOT_EVENT);
+  } while (status == ::grpc::CompletionQueue::GOT_EVENT);
 }
 
 }  // namespace internal

@@ -38,7 +38,7 @@ using MockAsyncListClustersReader =
         btproto::ListClustersResponse>;
 
 using Functor =
-    std::function<void(CompletionQueue&, ClusterList&, grpc::Status&)>;
+    std::function<void(CompletionQueue&, ClusterList&, ::grpc::Status&)>;
 
 std::string const kProjectId = "the-project";
 
@@ -78,8 +78,8 @@ auto create_list_clusters_lambda =
     [](std::string returned_token, std::vector<std::string> cluster_names,
        std::vector<std::string> failed_locations) {
       return [returned_token, cluster_names, failed_locations](
-                 btproto::ListClustersResponse* response, grpc::Status* status,
-                 void*) {
+                 btproto::ListClustersResponse* response,
+                 ::grpc::Status* status, void*) {
         for (auto const& cluster_name : cluster_names) {
           auto& cluster = *response->add_clusters();
           cluster.set_name(cluster_name);
@@ -89,7 +89,7 @@ auto create_list_clusters_lambda =
         for (auto const& failed_location : failed_locations) {
           response->add_failed_locations(failed_location);
         }
-        *status = grpc::Status::OK;
+        *status = ::grpc::Status::OK;
       };
     };
 
@@ -106,12 +106,12 @@ std::vector<std::string> ClusterNames(ClusterList const& response) {
 /// @test One successful page with 1 one cluster.
 TEST_F(AsyncListClustersTest, Simple) {
   EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_1_.get());
       }));
@@ -135,30 +135,30 @@ TEST_F(AsyncListClustersTest, Simple) {
 /// @test Test 3 pages, no failures, multiple clusters and failed locations.
 TEST_F(AsyncListClustersTest, MultipleClustersAndLocations) {
   EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_1_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_2_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_2", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_3_.get());
       }));
@@ -206,30 +206,30 @@ TEST_F(AsyncListClustersTest, MultipleClustersAndLocations) {
 /// @test Test 2 pages, with a filure between them.
 TEST_F(AsyncListClustersTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListClusters(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_1_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_2_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btproto::ListClustersRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListClustersResponse>>(
             clusters_reader_3_.get());
       }));
@@ -238,8 +238,8 @@ TEST_F(AsyncListClustersTest, FailuresAreRetried) {
                                                    {"failed_loc_1"})));
   EXPECT_CALL(*clusters_reader_2_, Finish(_, _, _))
       .WillOnce(Invoke(
-          [](btproto::ListClustersResponse*, grpc::Status* status, void*) {
-            *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
+          [](btproto::ListClustersResponse*, ::grpc::Status* status, void*) {
+            *status = ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "");
           }));
   EXPECT_CALL(*clusters_reader_3_, Finish(_, _, _))
       .WillOnce(Invoke(

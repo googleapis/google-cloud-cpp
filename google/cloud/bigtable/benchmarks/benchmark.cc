@@ -30,7 +30,7 @@ namespace benchmarks {
 Benchmark::Benchmark(BenchmarkSetup const& setup)
     : setup_(setup),
       key_width_(KeyWidth()),
-      client_options_(grpc::InsecureChannelCredentials()) {
+      client_options_(::grpc::InsecureChannelCredentials()) {
   if (setup_.use_embedded_server()) {
     server_ = CreateEmbeddedServer();
     std::string address = server_->address();

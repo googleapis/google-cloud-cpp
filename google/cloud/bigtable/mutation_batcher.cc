@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include <sstream>
 
 namespace google {
@@ -41,14 +41,14 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
                                    std::move(admission_promise));
   std::unique_lock<std::mutex> lk(mu_);
 
-  grpc::Status mutation_status = IsValid(pending);
+  ::grpc::Status mutation_status = IsValid(pending);
   if (!mutation_status.ok()) {
     lk.unlock();
     // Destroy the mutation before satisfying the admission promise so that we
     // can limit the memory usage.
     pending.mut.Clear();
     pending.completion_promise.set_value(
-        internal::MakeStatusFromRpcError(mutation_status));
+        ::google::cloud::grpc::MakeStatusFromRpcError(mutation_status));
     // No need to consider no_more_pending_promises because this operation
     // didn't lower the number of pending operations.
     pending.admission_promise.set_value();
@@ -92,7 +92,7 @@ MutationBatcher::PendingSingleRowMutation::PendingSingleRowMutation(
   mut = SingleRowMutation(std::move(tmp));
 }
 
-grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
+::grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
   // Objects of this class need to be aware of the maximum allowed number of
   // mutations in a batch because it should not pack more. If we have this
   // knowledge, we might as well simplify everything and not admit larger
@@ -102,20 +102,20 @@ grpc::Status MutationBatcher::IsValid(PendingSingleRowMutation& mut) const {
     stream << "Too many (" << mut.num_mutations
            << ") mutations in a SingleRowMutations request. "
            << options_.max_mutations_per_batch << " is the limit.";
-    return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, stream.str());
+    return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, stream.str());
   }
   if (mut.num_mutations == 0) {
-    return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                        "Supplied SingleRowMutations has no entries");
+    return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT,
+                          "Supplied SingleRowMutations has no entries");
   }
   if (mut.request_size > options_.max_size_per_batch) {
     std::stringstream stream;
     stream << "Too large (" << mut.request_size
            << " bytes) mutation in a SingleRowMutations request. "
            << options_.max_size_per_batch << " bytes is the limit.";
-    return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT, stream.str());
+    return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, stream.str());
   }
-  return grpc::Status();
+  return ::grpc::Status();
 }
 
 bool MutationBatcher::HasSpaceFor(PendingSingleRowMutation const& mut) const {

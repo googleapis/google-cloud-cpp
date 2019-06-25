@@ -48,10 +48,10 @@ TEST_F(TableReadRowTest, ReadRowSimple) {
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+      .WillOnce(Invoke([&stream, this](::grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
@@ -73,10 +73,10 @@ TEST_F(TableReadRowTest, ReadRowMissing) {
 
   auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
-      .WillOnce(Invoke([&stream, this](grpc::ClientContext*,
+      .WillOnce(Invoke([&stream, this](::grpc::ClientContext*,
                                        btproto::ReadRowsRequest const& req) {
         EXPECT_EQ(1, req.rows().row_keys_size());
         EXPECT_EQ("r1", req.rows().row_keys(0));
@@ -97,12 +97,12 @@ TEST_F(TableReadRowTest, UnrecoverableFailure) {
   auto stream = google::cloud::internal::make_unique<MockReadRowsReader>();
   EXPECT_CALL(*stream, Read(_)).WillRepeatedly(Return(false));
   EXPECT_CALL(*stream, Finish())
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_CALL(*client_, ReadRows(_, _))
       .WillRepeatedly(Invoke(
-          [&stream](grpc::ClientContext*, btproto::ReadRowsRequest const&) {
+          [&stream](::grpc::ClientContext*, btproto::ReadRowsRequest const&) {
             return stream.release()->AsUniqueMocked();
           }));
 

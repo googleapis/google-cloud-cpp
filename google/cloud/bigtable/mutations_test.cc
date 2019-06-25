@@ -138,7 +138,7 @@ TEST(MutationsTest, FailedMutation) {
   // sure it works in this case.
   google::rpc::Status status;
   status.set_message("something failed");
-  status.set_code(grpc::StatusCode::FAILED_PRECONDITION);
+  status.set_code(::grpc::StatusCode::FAILED_PRECONDITION);
   google::rpc::RetryInfo retry;
   retry.mutable_retry_delay()->set_seconds(900);
   retry.mutable_retry_delay()->set_nanos(0);

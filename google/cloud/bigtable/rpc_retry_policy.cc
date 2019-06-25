@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/rpc_retry_policy.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include <sstream>
 
 namespace google {
@@ -31,15 +31,15 @@ std::unique_ptr<RPCRetryPolicy> LimitedErrorCountRetryPolicy::clone() const {
       new LimitedErrorCountRetryPolicy(*this));
 }
 
-void LimitedErrorCountRetryPolicy::Setup(grpc::ClientContext&) const {}
+void LimitedErrorCountRetryPolicy::Setup(::grpc::ClientContext&) const {}
 
 bool LimitedErrorCountRetryPolicy::OnFailure(
     google::cloud::Status const& status) {
   return impl_.OnFailure(status);
 }
 
-bool LimitedErrorCountRetryPolicy::OnFailure(grpc::Status const& status) {
-  return impl_.OnFailure(internal::MakeStatusFromRpcError(status));
+bool LimitedErrorCountRetryPolicy::OnFailure(::grpc::Status const& status) {
+  return impl_.OnFailure(::google::cloud::grpc::MakeStatusFromRpcError(status));
 }
 
 LimitedTimeRetryPolicy::LimitedTimeRetryPolicy(
@@ -50,7 +50,7 @@ std::unique_ptr<RPCRetryPolicy> LimitedTimeRetryPolicy::clone() const {
   return std::unique_ptr<RPCRetryPolicy>(new LimitedTimeRetryPolicy(*this));
 }
 
-void LimitedTimeRetryPolicy::Setup(grpc::ClientContext& context) const {
+void LimitedTimeRetryPolicy::Setup(::grpc::ClientContext& context) const {
   if (context.deadline() >= impl_.deadline()) {
     context.set_deadline(impl_.deadline());
   }
@@ -60,8 +60,8 @@ bool LimitedTimeRetryPolicy::OnFailure(google::cloud::Status const& status) {
   return impl_.OnFailure(status);
 }
 
-bool LimitedTimeRetryPolicy::OnFailure(grpc::Status const& status) {
-  return impl_.OnFailure(internal::MakeStatusFromRpcError(status));
+bool LimitedTimeRetryPolicy::OnFailure(::grpc::Status const& status) {
+  return impl_.OnFailure(::google::cloud::grpc::MakeStatusFromRpcError(status));
 }
 
 }  // namespace BIGTABLE_CLIENT_NS

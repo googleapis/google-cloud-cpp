@@ -121,7 +121,8 @@ class AsyncRowReader : public std::enable_shared_from_this<
     }
     parser_ = parser_factory_->Create();
 
-    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    auto context =
+        google::cloud::internal::make_unique<::grpc::ClientContext>();
     rpc_retry_policy_->Setup(*context);
     rpc_backoff_policy_->Setup(*context);
     metadata_update_policy_.Setup(*context);
@@ -129,9 +130,9 @@ class AsyncRowReader : public std::enable_shared_from_this<
     auto client = client_;
     auto self = this->shared_from_this();
     cq_.MakeStreamingReadRpc(
-        [client](grpc::ClientContext* context,
+        [client](::grpc::ClientContext* context,
                  google::bigtable::v2::ReadRowsRequest const& request,
-                 grpc::CompletionQueue* cq) {
+                 ::grpc::CompletionQueue* cq) {
           return client->PrepareAsyncReadRows(context, request, cq);
         },
         request, std::move(context),
@@ -267,11 +268,11 @@ class AsyncRowReader : public std::enable_shared_from_this<
     if (status_.ok()) {
       status_ = std::move(status);
     }
-    grpc::Status parser_status;
+    ::grpc::Status parser_status;
     parser_->HandleEndOfStream(parser_status);
     if (!parser_status.ok() && status_.ok()) {
       // If there stream finished with an error ignore what the parser says.
-      status_ = internal::MakeStatusFromRpcError(parser_status);
+      status_ = ::google::cloud::grpc::MakeStatusFromRpcError(parser_status);
     }
 
     // In the unlikely case when we have already reached the requested
@@ -335,11 +336,11 @@ class AsyncRowReader : public std::enable_shared_from_this<
 
   /// Process everything that is accumulated in the parser.
   Status DrainParser() {
-    grpc::Status status;
+    ::grpc::Status status;
     while (parser_->HasNext()) {
       Row parsed_row = parser_->Next(status);
       if (!status.ok()) {
-        return internal::MakeStatusFromRpcError(status);
+        return ::google::cloud::grpc::MakeStatusFromRpcError(status);
       }
       ++rows_count_;
       last_read_row_key_ = std::string(parsed_row.row_key());
@@ -351,10 +352,10 @@ class AsyncRowReader : public std::enable_shared_from_this<
   /// Parse the data from the response.
   Status ConsumeResponse(google::bigtable::v2::ReadRowsResponse response) {
     for (auto& chunk : *response.mutable_chunks()) {
-      grpc::Status status;
+      ::grpc::Status status;
       parser_->HandleChunk(std::move(chunk), status);
       if (!status.ok()) {
-        return internal::MakeStatusFromRpcError(status);
+        return ::google::cloud::grpc::MakeStatusFromRpcError(status);
       }
       Status parser_status = DrainParser();
       if (!parser_status.ok()) {

@@ -40,17 +40,17 @@ TEST_F(TableBulkApplyTest, Simple) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));
@@ -70,14 +70,14 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
         // Simulate a partial (recoverable) failure.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+        e0.mutable_status()->set_code(::grpc::StatusCode::UNAVAILABLE);
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::StatusCode::OK);
+        e1.mutable_status()->set_code(::grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   auto r2 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
@@ -85,12 +85,12 @@ TEST_F(TableBulkApplyTest, RetryPartialFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(r1.release()->MakeMockReturner()))
@@ -113,17 +113,17 @@ TEST_F(TableBulkApplyTest, PermanentFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::StatusCode::OUT_OF_RANGE);
+          e.mutable_status()->set_code(::grpc::StatusCode::OUT_OF_RANGE);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(r1.release()->MakeMockReturner()));
@@ -146,12 +146,12 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // Create a second stream returned by the mocks when the client retries.
   auto r2 = google::cloud::internal::make_unique<MockMutateRowsReader>();
@@ -160,12 +160,12 @@ TEST_F(TableBulkApplyTest, CanceledStream) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(r1.release()->MakeMockReturner()))
@@ -197,20 +197,20 @@ TEST_F(TableBulkApplyTest, TooManyFailures) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish())
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+      .WillOnce(Return(::grpc::Status(::grpc::StatusCode::ABORTED, "")));
 
-  auto create_cancelled_stream = [&](grpc::ClientContext*,
+  auto create_cancelled_stream = [&](::grpc::ClientContext*,
                                      btproto::MutateRowsRequest const&) {
     auto stream = google::cloud::internal::make_unique<MockMutateRowsReader>();
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::ABORTED, "")));
+        .WillOnce(Return(::grpc::Status(::grpc::StatusCode::ABORTED, "")));
     return stream.release()->AsUniqueMocked();
   };
 
@@ -234,7 +234,7 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
   // the client to only retry the idempotent mutations.
   auto r1 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r1, Read(_)).WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   auto r2 = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*r2, Read(_))
@@ -242,12 +242,12 @@ TEST_F(TableBulkApplyTest, RetryOnlyIdempotent) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(r1.release()->MakeMockReturner()))
@@ -269,8 +269,8 @@ TEST_F(TableBulkApplyTest, FailedRPC) {
   auto reader = google::cloud::internal::make_unique<MockMutateRowsReader>();
   EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
   EXPECT_CALL(*reader, Finish())
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::FAILED_PRECONDITION,
-                                    "no such table")));
+      .WillOnce(Return(::grpc::Status(::grpc::StatusCode::FAILED_PRECONDITION,
+                                      "no such table")));
 
   EXPECT_CALL(*client_, MutateRows(_, _))
       .WillOnce(Invoke(reader.release()->MakeMockReturner()));

@@ -89,11 +89,11 @@ std::vector<int> BulkMutatorState::OnRead(
     auto& annotation = annotations_[index];
     annotation.has_mutation_result = true;
     auto& status = entry.status();
-    auto const code = static_cast<grpc::StatusCode>(status.code());
+    auto const code = static_cast<::grpc::StatusCode>(status.code());
     // Successful responses are not even recorded, this class only reports
     // the failures.  The data for successful responses is discarded, because
     // this class takes ownership in the constructor.
-    if (grpc::StatusCode::OK == code) {
+    if (::grpc::StatusCode::OK == code) {
       res.push_back(annotation.original_index);
       continue;
     }
@@ -185,8 +185,8 @@ BulkMutator::BulkMutator(std::string const& app_profile_id,
                          BulkMutation mut)
     : state_(app_profile_id, table_name, idempotent_policy, std::move(mut)) {}
 
-grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
-                                         grpc::ClientContext& client_context) {
+::grpc::Status BulkMutator::MakeOneRequest(
+    bigtable::DataClient& client, ::grpc::ClientContext& client_context) {
   // Send the request to the server.
   auto const& mutations = state_.BeforeStart();
   auto stream = client.MutateRows(&client_context, mutations);
@@ -197,7 +197,7 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   }
   // Handle any errors in the stream.
   auto grpc_status = stream->Finish();
-  state_.OnFinish(bigtable::internal::MakeStatusFromRpcError(grpc_status));
+  state_.OnFinish(::google::cloud::grpc::MakeStatusFromRpcError(grpc_status));
   return grpc_status;
 }
 

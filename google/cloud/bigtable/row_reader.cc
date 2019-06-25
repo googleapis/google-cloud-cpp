@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/row_reader.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
@@ -122,7 +122,7 @@ void RowReader::MakeRequest() {
     request.set_rows_limit(rows_limit_ - rows_count_);
   }
 
-  context_ = google::cloud::internal::make_unique<grpc::ClientContext>();
+  context_ = google::cloud::internal::make_unique<::grpc::ClientContext>();
   retry_policy_->Setup(*context_);
   backoff_policy_->Setup(*context_);
   metadata_update_policy_.Setup(*context_);
@@ -151,7 +151,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
   }
   while (true) {
     internal::OptionalRow row;
-    grpc::Status status = AdvanceOrFail(row);
+    ::grpc::Status status = AdvanceOrFail(row);
     if (status.ok()) {
       return row;
     }
@@ -177,7 +177,7 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
     }
 
     if (!retry_policy_->OnFailure(status)) {
-      return internal::MakeStatusFromRpcError(status);
+      return ::google::cloud::grpc::MakeStatusFromRpcError(status);
     }
 
     auto delay = backoff_policy_->OnCompletion(status);
@@ -188,9 +188,9 @@ StatusOr<internal::OptionalRow> RowReader::Advance() {
   }
 }
 
-grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
+::grpc::Status RowReader::AdvanceOrFail(internal::OptionalRow& row) {
   row.reset();
-  grpc::Status status;
+  ::grpc::Status status;
   if (!stream_) {
     MakeRequest();
   }

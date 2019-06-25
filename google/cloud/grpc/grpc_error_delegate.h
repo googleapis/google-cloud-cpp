@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,33 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_GRPC_ERROR_DELEGATE_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_GRPC_ERROR_DELEGATE_H_
 
-#include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc/version.h"
 #include "google/cloud/status.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
-namespace internal {
+namespace grpc {
+inline namespace GOOGLE_CLOUD_CPP_COMMON_GRPC_NS {
 /**
  * Creates a google::cloud::Status from a grpc::Status.
  */
-google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status);
+google::cloud::Status MakeStatusFromRpcError(::grpc::Status const& status);
 
 /**
  * Creates a google::cloud::Status from a grpc::StatusCode and description.
  */
-google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
+google::cloud::Status MakeStatusFromRpcError(::grpc::StatusCode code,
                                              std::string what);
 
-}  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_COMMON_GRPC_NS
+}  // namespace grpc
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_GRPC_ERROR_DELEGATE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_GRPC_ERROR_DELEGATE_H_

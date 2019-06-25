@@ -218,7 +218,7 @@ class MutationBatcher {
   };
 
   /// Check if a mutation doesn't exceed allowed limits.
-  grpc::Status IsValid(PendingSingleRowMutation& mut) const;
+  ::grpc::Status IsValid(PendingSingleRowMutation& mut) const;
 
   /**
    * Check whether there is space for the passed mutation in the currently

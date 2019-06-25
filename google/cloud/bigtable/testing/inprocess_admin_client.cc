@@ -21,140 +21,140 @@ namespace testing {
 
 namespace btadmin = google::bigtable::admin::v2;
 
-grpc::Status InProcessAdminClient::CreateTable(
-    grpc::ClientContext* context, btadmin::CreateTableRequest const& request,
+::grpc::Status InProcessAdminClient::CreateTable(
+    ::grpc::ClientContext* context, btadmin::CreateTableRequest const& request,
     btadmin::Table* response) {
   return Stub()->CreateTable(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
 InProcessAdminClient::AsyncCreateTable(
-    grpc::ClientContext* context, btadmin::CreateTableRequest const& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::ClientContext* context, btadmin::CreateTableRequest const& request,
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncCreateTable(context, request, cq);
 }
 
-grpc::Status InProcessAdminClient::ListTables(
-    grpc::ClientContext* context, btadmin::ListTablesRequest const& request,
+::grpc::Status InProcessAdminClient::ListTables(
+    ::grpc::ClientContext* context, btadmin::ListTablesRequest const& request,
     btadmin::ListTablesResponse* response) {
   return Stub()->ListTables(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::admin::v2::ListTablesResponse>>
 InProcessAdminClient::AsyncListTables(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     google::bigtable::admin::v2::ListTablesRequest const& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncListTables(context, request, cq);
 }
 
-grpc::Status InProcessAdminClient::GetTable(
-    grpc::ClientContext* context, btadmin::GetTableRequest const& request,
+::grpc::Status InProcessAdminClient::GetTable(
+    ::grpc::ClientContext* context, btadmin::GetTableRequest const& request,
     btadmin::Table* response) {
   return Stub()->GetTable(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
-InProcessAdminClient::AsyncGetTable(grpc::ClientContext* context,
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+InProcessAdminClient::AsyncGetTable(::grpc::ClientContext* context,
                                     btadmin::GetTableRequest const& request,
-                                    grpc::CompletionQueue* cq) {
+                                    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncGetTable(context, request, cq);
 }
 
-grpc::Status InProcessAdminClient::DeleteTable(
-    grpc::ClientContext* context, btadmin::DeleteTableRequest const& request,
+::grpc::Status InProcessAdminClient::DeleteTable(
+    ::grpc::ClientContext* context, btadmin::DeleteTableRequest const& request,
     google::protobuf::Empty* response) {
   return Stub()->DeleteTable(context, request, response);
 }
 
 std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+    ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
 InProcessAdminClient::AsyncDeleteTable(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     google::bigtable::admin::v2::DeleteTableRequest const& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncDeleteTable(context, request, cq);
 }
 
-grpc::Status InProcessAdminClient::ModifyColumnFamilies(
-    grpc::ClientContext* context,
+::grpc::Status InProcessAdminClient::ModifyColumnFamilies(
+    ::grpc::ClientContext* context,
     btadmin::ModifyColumnFamiliesRequest const& request,
     btadmin::Table* response) {
   return Stub()->ModifyColumnFamilies(context, request, response);
 }
 
-grpc::Status InProcessAdminClient::DropRowRange(
-    grpc::ClientContext* context, btadmin::DropRowRangeRequest const& request,
+::grpc::Status InProcessAdminClient::DropRowRange(
+    ::grpc::ClientContext* context, btadmin::DropRowRangeRequest const& request,
     google::protobuf::Empty* response) {
   return Stub()->DropRowRange(context, request, response);
 }
 
-grpc::Status InProcessAdminClient::GenerateConsistencyToken(
-    grpc::ClientContext* context,
+::grpc::Status InProcessAdminClient::GenerateConsistencyToken(
+    ::grpc::ClientContext* context,
     btadmin::GenerateConsistencyTokenRequest const& request,
     btadmin::GenerateConsistencyTokenResponse* response) {
   return Stub()->GenerateConsistencyToken(context, request, response);
 }
 
-grpc::Status InProcessAdminClient::CheckConsistency(
-    grpc::ClientContext* context,
+::grpc::Status InProcessAdminClient::CheckConsistency(
+    ::grpc::ClientContext* context,
     btadmin::CheckConsistencyRequest const& request,
     btadmin::CheckConsistencyResponse* response) {
   return Stub()->CheckConsistency(context, request, response);
 }
 
-grpc::Status InProcessAdminClient::GetOperation(
-    grpc::ClientContext* context,
+::grpc::Status InProcessAdminClient::GetOperation(
+    ::grpc::ClientContext* context,
     google::longrunning::GetOperationRequest const& request,
     google::longrunning::Operation* response) {
   auto stub = google::longrunning::Operations::NewStub(Channel());
   return stub->GetOperation(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<btadmin::Table>>
 InProcessAdminClient::AsyncModifyColumnFamilies(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     btadmin::ModifyColumnFamiliesRequest const& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncModifyColumnFamilies(context, request, cq);
 }
 
 std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+    ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
 InProcessAdminClient::AsyncDropRowRange(
-    grpc::ClientContext* context, btadmin::DropRowRangeRequest const& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::ClientContext* context, btadmin::DropRowRangeRequest const& request,
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncDropRowRange(context, request, cq);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
 InProcessAdminClient::AsyncGenerateConsistencyToken(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     const google::bigtable::admin::v2::GenerateConsistencyTokenRequest& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncGenerateConsistencyToken(context, request, cq);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::admin::v2::CheckConsistencyResponse>>
 InProcessAdminClient::AsyncCheckConsistency(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     const google::bigtable::admin::v2::CheckConsistencyRequest& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   return Stub()->AsyncCheckConsistency(context, request, cq);
 }
 
 std::unique_ptr<
-    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+    ::grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
 InProcessAdminClient::AsyncGetOperation(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     const google::longrunning::GetOperationRequest& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   auto stub = google::longrunning::Operations::NewStub(Channel());
-  return std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>(
+  return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>(
       stub->AsyncGetOperation(context, request, cq).release());
 }
 

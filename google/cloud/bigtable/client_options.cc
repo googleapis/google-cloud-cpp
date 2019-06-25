@@ -18,12 +18,12 @@
 #include <thread>
 
 namespace {
-std::shared_ptr<grpc::ChannelCredentials> BigtableDefaultCredentials() {
+std::shared_ptr<::grpc::ChannelCredentials> BigtableDefaultCredentials() {
   auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator.has_value()) {
-    return grpc::InsecureChannelCredentials();
+    return ::grpc::InsecureChannelCredentials();
   }
-  return grpc::GoogleDefaultCredentials();
+  return ::grpc::GoogleDefaultCredentials();
 }
 }  // anonymous namespace
 
@@ -43,7 +43,7 @@ inline std::size_t CalculateDefaultConnectionPoolSize() {
                          : BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
 }
 
-ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
+ClientOptions::ClientOptions(std::shared_ptr<::grpc::ChannelCredentials> creds)
     : credentials_(std::move(creds)),
       connection_pool_size_(CalculateDefaultConnectionPoolSize()),
       data_endpoint_("bigtable.googleapis.com"),

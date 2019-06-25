@@ -54,7 +54,7 @@ auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
   return [expected_token, returned_token, table_names](
-             grpc::ClientContext*, btadmin::ListTablesRequest const& request,
+             ::grpc::ClientContext*, btadmin::ListTablesRequest const& request,
              btadmin::ListTablesResponse* response) {
     auto const instance_name =
         "projects/" + kProjectId + "/instances/" + kInstanceId;
@@ -70,7 +70,7 @@ auto create_list_tables_lambda = [](std::string expected_token,
     }
     // Return the right token.
     response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   };
 };
 
@@ -85,18 +85,18 @@ auto create_list_tables_lambda = [](std::string expected_token,
  */
 template <typename RequestType, typename ResponseType>
 struct MockRpcFactory {
-  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
-                                     RequestType const& request,
-                                     ResponseType* response);
+  using SignatureType = ::grpc::Status(::grpc::ClientContext* ctx,
+                                       RequestType const& request,
+                                       ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
   static std::function<SignatureType> Create(std::string expected_request) {
     return std::function<SignatureType>(
-        [expected_request](grpc::ClientContext*, RequestType const& request,
+        [expected_request](::grpc::ClientContext*, RequestType const& request,
                            ResponseType* response) {
           if (response == nullptr) {
-            return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
-                                "invalid call to MockRpcFactory::Create()");
+            return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT,
+                                  "invalid call to MockRpcFactory::Create()");
           }
           RequestType expected;
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
@@ -107,7 +107,7 @@ struct MockRpcFactory {
           differencer.ReportDifferencesToString(&delta);
           EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
-          return grpc::Status::OK;
+          return ::grpc::Status::OK;
         });
   }
 };
@@ -124,20 +124,20 @@ struct MockRpcFactory {
  */
 template <typename RequestType, typename ResponseType>
 struct MockRpcMultiCallFactory {
-  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
-                                     RequestType const& request,
-                                     ResponseType* response);
+  using SignatureType = ::grpc::Status(::grpc::ClientContext* ctx,
+                                       RequestType const& request,
+                                       ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
   static std::function<SignatureType> Create(std::string expected_request,
                                              bool expected_result) {
     return std::function<SignatureType>(
-        [expected_request, expected_result](grpc::ClientContext*,
+        [expected_request, expected_result](::grpc::ClientContext*,
                                             RequestType const& request,
                                             ResponseType* response) {
           if (response == nullptr) {
-            return grpc::Status(
-                grpc::StatusCode::INVALID_ARGUMENT,
+            return ::grpc::Status(
+                ::grpc::StatusCode::INVALID_ARGUMENT,
                 "invalid call to MockRpcMultiCallFactory::Create()");
           }
           RequestType expected;
@@ -152,7 +152,7 @@ struct MockRpcMultiCallFactory {
 
           response->set_consistent(expected_result);
 
-          return grpc::Status::OK;
+          return ::grpc::Status::OK;
         });
   }
 };
@@ -192,10 +192,10 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      btadmin::ListTablesRequest const&,
                                      btadmin::ListTablesResponse*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_tables_lambda("token-001", "", {"t2", "t3"});
@@ -227,8 +227,8 @@ TEST_F(TableAdminTest, ListTablesUnrecoverableFailures) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, ListTables(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_FALSE(tested.ListTables(btadmin::Table::FULL));
 }
@@ -244,10 +244,10 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      btadmin::ListTablesRequest const&,
                                      btadmin::ListTablesResponse*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables(_, _, _))
       .WillRepeatedly(Invoke(mock_recoverable_failure));
@@ -304,8 +304,8 @@ TEST_F(TableAdminTest, CreateTableFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, CreateTable(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_FALSE(tested.CreateTable("other-table", bigtable::TableConfig()));
 }
@@ -355,7 +355,7 @@ TEST_F(TableAdminTest, CopyConstructibleAssignablePolicyTest) {
 
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_FALSE(table_admin.GetTable("other-table"));
   EXPECT_FALSE(table_admin_assign.GetTable("other-table"));
@@ -375,7 +375,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
       expected_text);
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")))
       .WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -393,7 +393,7 @@ TEST_F(TableAdminTest, GetTableUnrecoverableFailures) {
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::NOT_FOUND, "uh oh")));
+          Return(::grpc::Status(::grpc::StatusCode::NOT_FOUND, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.GetTable("other-table"));
@@ -412,7 +412,7 @@ TEST_F(TableAdminTest, GetTableTooManyFailures) {
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.GetTable("other-table"));
@@ -444,8 +444,8 @@ TEST_F(TableAdminTest, DeleteTableFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DeleteTable(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.DeleteTable("other-table").ok());
@@ -494,8 +494,8 @@ TEST_F(TableAdminTest, ModifyColumnFamiliesFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   using M = bigtable::ColumnFamilyModification;
   using GC = bigtable::GcRule;
@@ -532,8 +532,8 @@ TEST_F(TableAdminTest, DropRowsByPrefixFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DropRowRange(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_FALSE(tested.DropRowsByPrefix("other-table", "prefix").ok());
 }
@@ -565,8 +565,8 @@ TEST_F(TableAdminTest, DropAllRowsFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, DropRowRange(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.DropAllRows("other-table").ok());
@@ -602,8 +602,8 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.GenerateConsistencyToken("other-table"));
@@ -640,8 +640,8 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 
   bigtable::TableAdmin tested(client_, "the-instance");
   EXPECT_CALL(*client_, CheckConsistency(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.CheckConsistency("other-table", "test-token"));
@@ -665,36 +665,36 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
   auto r1 = make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r1, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+                          ::grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
-        *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "try again");
+        *status = ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try again");
       }));
   auto r2 = make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r2, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+                          ::grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         response->set_consistent(false);
-        *status = grpc::Status::OK;
+        *status = ::grpc::Status::OK;
       }));
   auto r3 = make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*r3, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+                          ::grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
         response->set_consistent(true);
-        *status = grpc::Status::OK;
+        *status = ::grpc::Status::OK;
       }));
 
   auto make_invoke = [](std::unique_ptr<MockAsyncCheckConsistencyResponse>& r) {
-    return [&r](grpc::ClientContext*,
+    return [&r](::grpc::ClientContext*,
                 btadmin::CheckConsistencyRequest const& request,
-                grpc::CompletionQueue*) {
+                ::grpc::CompletionQueue*) {
       EXPECT_EQ(
           "projects/the-project/instances/test-instance/tables/test-table",
           request.name());
       // This is safe, see comments in MockAsyncResponseReader.
-      return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
           ::btadmin::CheckConsistencyResponse>>(r.get());
     };
   };
@@ -764,20 +764,21 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
   auto reader = make_unique<MockAsyncCheckConsistencyResponse>();
   EXPECT_CALL(*reader, Finish(_, _, _))
       .WillOnce(Invoke([](btadmin::CheckConsistencyResponse* response,
-                          grpc::Status* status, void*) {
+                          ::grpc::Status* status, void*) {
         ASSERT_NE(nullptr, response);
-        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "oh no");
+        *status =
+            ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "oh no");
       }));
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
+      .WillOnce(Invoke([&](::grpc::ClientContext*,
                            btadmin::CheckConsistencyRequest const& request,
-                           grpc::CompletionQueue*) {
+                           ::grpc::CompletionQueue*) {
         EXPECT_EQ(
             "projects/the-project/instances/test-instance/tables/test-table",
             request.name());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             ::btadmin::CheckConsistencyResponse>>(reader.get());
       }));
 

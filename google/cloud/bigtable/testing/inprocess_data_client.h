@@ -35,7 +35,7 @@ namespace testing {
 class InProcessDataClient : public bigtable::DataClient {
  public:
   InProcessDataClient(std::string project, std::string instance,
-                      std::shared_ptr<grpc::Channel> channel)
+                      std::shared_ptr<::grpc::Channel> channel)
       : project_(std::move(project)),
         instance_(std::move(instance)),
         channel_(std::move(channel)) {}
@@ -45,7 +45,7 @@ class InProcessDataClient : public bigtable::DataClient {
 
   std::string const& project_id() const override { return project_; }
   std::string const& instance_id() const override { return instance_; }
-  std::shared_ptr<grpc::Channel> Channel() override { return channel_; }
+  std::shared_ptr<::grpc::Channel> Channel() override { return channel_; }
   void reset() override {}
 
   std::unique_ptr<google::bigtable::v2::Bigtable::Stub> Stub() {
@@ -54,38 +54,38 @@ class InProcessDataClient : public bigtable::DataClient {
 
   //@{
   /// @name the google.bigtable.v2.Bigtable operations.
-  grpc::Status MutateRow(
-      grpc::ClientContext* context,
+  ::grpc::Status MutateRow(
+      ::grpc::ClientContext* context,
       google::bigtable::v2::MutateRowRequest const& request,
       google::bigtable::v2::MutateRowResponse* response) override;
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::MutateRowResponse>>
-  AsyncMutateRow(grpc::ClientContext* context,
+  AsyncMutateRow(::grpc::ClientContext* context,
                  google::bigtable::v2::MutateRowRequest const& request,
-                 grpc::CompletionQueue* cq) override;
-  grpc::Status CheckAndMutateRow(
-      grpc::ClientContext* context,
+                 ::grpc::CompletionQueue* cq) override;
+  ::grpc::Status CheckAndMutateRow(
+      ::grpc::ClientContext* context,
       google::bigtable::v2::CheckAndMutateRowRequest const& request,
       google::bigtable::v2::CheckAndMutateRowResponse* response) override;
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::CheckAndMutateRowResponse>>
   AsyncCheckAndMutateRow(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::v2::CheckAndMutateRowRequest& request,
-      grpc::CompletionQueue* cq) override;
-  grpc::Status ReadModifyWriteRow(
-      grpc::ClientContext* context,
+      ::grpc::CompletionQueue* cq) override;
+  ::grpc::Status ReadModifyWriteRow(
+      ::grpc::ClientContext* context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request,
       google::bigtable::v2::ReadModifyWriteRowResponse* response) override;
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::ReadModifyWriteRowResponse>>
   AsyncReadModifyWriteRow(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::v2::ReadModifyWriteRowRequest& request,
-      grpc::CompletionQueue* cq) override;
+      ::grpc::CompletionQueue* cq) override;
   std::unique_ptr<
-      grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
-  ReadRows(grpc::ClientContext* context,
+      ::grpc::ClientReaderInterface<google::bigtable::v2::ReadRowsResponse>>
+  ReadRows(::grpc::ClientContext* context,
            google::bigtable::v2::ReadRowsRequest const& request) override;
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::ReadRowsResponse>>
@@ -97,10 +97,10 @@ class InProcessDataClient : public bigtable::DataClient {
   PrepareAsyncReadRows(::grpc::ClientContext* context,
                        const ::google::bigtable::v2::ReadRowsRequest& request,
                        ::grpc::CompletionQueue* cq) override;
-  std::unique_ptr<
-      grpc::ClientReaderInterface<google::bigtable::v2::SampleRowKeysResponse>>
+  std::unique_ptr<::grpc::ClientReaderInterface<
+      google::bigtable::v2::SampleRowKeysResponse>>
   SampleRowKeys(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::v2::SampleRowKeysRequest const& request) override;
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
       ::google::bigtable::v2::SampleRowKeysResponse>>
@@ -109,8 +109,8 @@ class InProcessDataClient : public bigtable::DataClient {
       const ::google::bigtable::v2::SampleRowKeysRequest& request,
       ::grpc::CompletionQueue* cq, void* tag) override;
   std::unique_ptr<
-      grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
-  MutateRows(grpc::ClientContext* context,
+      ::grpc::ClientReaderInterface<google::bigtable::v2::MutateRowsResponse>>
+  MutateRows(::grpc::ClientContext* context,
              google::bigtable::v2::MutateRowsRequest const& request) override;
 
   std::unique_ptr<::grpc::ClientAsyncReaderInterface<
@@ -130,7 +130,7 @@ class InProcessDataClient : public bigtable::DataClient {
  private:
   std::string project_;
   std::string instance_;
-  std::shared_ptr<grpc::Channel> channel_;
+  std::shared_ptr<::grpc::Channel> channel_;
 };
 
 }  // namespace testing

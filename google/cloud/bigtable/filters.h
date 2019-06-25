@@ -104,8 +104,8 @@ class Filter {
    * @param pattern the regular expression.  It must be a valid
    *     [RE2](https://github.com/google/re2/wiki/Syntax) pattern. The server
    *     rejects filters with an invalid pattern with a
-   *     `grpc::StatusCode::INVALID_ARGUMENT` status code.  This function makes
-   *     no attempt to validate the pattern before sending it to the server.
+   *     `grpc::StatusCode::INVALID_ARGUMENT` status code.  This function
+   * makes no attempt to validate the pattern before sending it to the server.
    *
    * @note Special care need be used with the expression used. A column name
    *     is a byte sequence, and can contain arbitrary bytes, the `\C` escape

@@ -21,9 +21,9 @@
 namespace bigtable = google::cloud::bigtable;
 
 namespace {
-/// Create a grpc::Status with a status code for transient errors.
-grpc::Status CreateTransientError() {
-  return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
+/// Create a ::grpc::Status with a status code for transient errors.
+::grpc::Status CreateTransientError() {
+  return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "please try again");
 }
 
 }  // anonymous namespace

@@ -20,7 +20,6 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/mutations.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/bigtable/row_key_sample.h"
@@ -30,6 +29,7 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include "google/cloud/internal/disjunction.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -590,7 +590,7 @@ class Table {
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
                                    bigtable::ReadModifyWriteRule rule,
                                    Args&&... rules) {
-    grpc::Status status;
+    ::grpc::Status status;
 
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));

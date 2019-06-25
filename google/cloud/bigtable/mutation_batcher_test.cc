@@ -108,17 +108,17 @@ auto generate_response_generator = [](ResultPiece const& result_piece) {
     for (int idx : result_piece.succeeded) {
       auto& e = *r->add_entries();
       e.set_index(idx);
-      e.mutable_status()->set_code(grpc::StatusCode::OK);
+      e.mutable_status()->set_code(::grpc::StatusCode::OK);
     }
     for (int idx : result_piece.transiently_failed) {
       auto& e = *r->add_entries();
       e.set_index(idx);
-      e.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+      e.mutable_status()->set_code(::grpc::StatusCode::UNAVAILABLE);
     }
     for (int idx : result_piece.permanently_failed) {
       auto& e = *r->add_entries();
       e.set_index(idx);
-      e.mutable_status()->set_code(grpc::StatusCode::PERMISSION_DENIED);
+      e.mutable_status()->set_code(::grpc::StatusCode::PERMISSION_DENIED);
     }
   };
 };
@@ -152,15 +152,16 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
       }
 
       EXPECT_CALL(*reader, Finish(_, _))
-          .WillOnce(Invoke(
-              [](grpc::Status* status, void*) { *status = grpc::Status::OK; }));
+          .WillOnce(Invoke([](::grpc::Status* status, void*) {
+            *status = ::grpc::Status::OK;
+          }));
       EXPECT_CALL(*reader, StartCall(_)).Times(1);
 
       EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
           .WillOnce(Invoke([reader, exchange](
-                               grpc::ClientContext*,
+                               ::grpc::ClientContext*,
                                btproto::MutateRowsRequest const& r,
-                               grpc::CompletionQueue*) {
+                               ::grpc::CompletionQueue*) {
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               google::bigtable::v2::MutateRowsRequest::Entry expected;

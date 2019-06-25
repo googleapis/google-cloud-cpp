@@ -66,7 +66,7 @@ class AdminClient {
    * Intended to access rarely used services in the same endpoints as the
    * Bigtable admin interfaces, for example, the google.longrunning.Operations.
    */
-  virtual std::shared_ptr<grpc::Channel> Channel() = 0;
+  virtual std::shared_ptr<::grpc::Channel> Channel() = 0;
 
   /**
    * Reset and create new Channels.
@@ -89,109 +89,109 @@ class AdminClient {
   friend class internal::AsyncLongrunningOperation;
   //@{
   /// @name The `google.bigtable.admin.v2.TableAdmin` operations.
-  virtual grpc::Status CreateTable(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status CreateTable(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,
       google::bigtable::admin::v2::Table* response) = 0;
-  virtual grpc::Status ListTables(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status ListTables(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ListTablesRequest const& request,
       google::bigtable::admin::v2::ListTablesResponse* response) = 0;
-  virtual grpc::Status GetTable(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status GetTable(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GetTableRequest const& request,
       google::bigtable::admin::v2::Table* response) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>
-  AsyncGetTable(grpc::ClientContext* context,
+  AsyncGetTable(::grpc::ClientContext* context,
                 google::bigtable::admin::v2::GetTableRequest const& request,
-                grpc::CompletionQueue* cq) = 0;
+                ::grpc::CompletionQueue* cq) = 0;
 
-  virtual grpc::Status DeleteTable(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status DeleteTable(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
       google::protobuf::Empty* response) = 0;
-  virtual grpc::Status ModifyColumnFamilies(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status ModifyColumnFamilies(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
       google::bigtable::admin::v2::Table* response) = 0;
-  virtual grpc::Status DropRowRange(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status DropRowRange(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DropRowRangeRequest const& request,
       google::protobuf::Empty* response) = 0;
-  virtual grpc::Status GenerateConsistencyToken(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status GenerateConsistencyToken(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GenerateConsistencyTokenRequest const&
           request,
       google::bigtable::admin::v2::GenerateConsistencyTokenResponse*
           response) = 0;
-  virtual grpc::Status CheckConsistency(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status CheckConsistency(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       google::bigtable::admin::v2::CheckConsistencyResponse* response) = 0;
   //@}
 
   //@{
   /// @name The `google.longrunning.Operations` wrappers.
-  virtual grpc::Status GetOperation(
-      grpc::ClientContext* context,
+  virtual ::grpc::Status GetOperation(
+      ::grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,
       google::longrunning::Operation* response) = 0;
   //@}
 
   //@{
   /// @name The `google.bigtable.admin.v2.TableAdmin` Async operations.
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>
   AsyncCreateTable(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateTableRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      ::grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+      ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteTable(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      ::grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>
   AsyncModifyColumnFamilies(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
+      ::grpc::CompletionQueue* cq) = 0;
   virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+      ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDropRowRange(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DropRowRangeRequest const& request,
-      grpc::CompletionQueue* cq) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      ::grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::GenerateConsistencyTokenResponse>>
   AsyncGenerateConsistencyToken(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::GenerateConsistencyTokenRequest&
           request,
-      grpc::CompletionQueue* cq) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      ::grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::CheckConsistencyResponse>>
   AsyncCheckConsistency(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::CheckConsistencyRequest& request,
-      grpc::CompletionQueue* cq) = 0;
-  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      ::grpc::CompletionQueue* cq) = 0;
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListTablesResponse>>
-  AsyncListTables(grpc::ClientContext* context,
+  AsyncListTables(::grpc::ClientContext* context,
                   google::bigtable::admin::v2::ListTablesRequest const& request,
-                  grpc::CompletionQueue* cq) = 0;
+                  ::grpc::CompletionQueue* cq) = 0;
   //@}
 
   //@{
   /// @name The `google.longrunning.Operations` async wrappers.
-  virtual std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncGetOperation(grpc::ClientContext* context,
+  virtual std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
+  AsyncGetOperation(::grpc::ClientContext* context,
                     const google::longrunning::GetOperationRequest& request,
-                    grpc::CompletionQueue* cq) = 0;
+                    ::grpc::CompletionQueue* cq) = 0;
   //@}
 };
 

@@ -58,7 +58,7 @@ class RPCBackoffPolicy {
   /**
    * Update the ClientContext for the next call.
    */
-  virtual void Setup(grpc::ClientContext& context) const = 0;
+  virtual void Setup(::grpc::ClientContext& context) const = 0;
 
   /**
    * Return the delay after an RPC operation has completed.
@@ -69,7 +69,7 @@ class RPCBackoffPolicy {
   virtual std::chrono::milliseconds OnCompletion(
       google::cloud::Status const& status) = 0;
   // TODO(#2344) - remove ::grpc::Status version.
-  virtual std::chrono::milliseconds OnCompletion(grpc::Status const& s) = 0;
+  virtual std::chrono::milliseconds OnCompletion(::grpc::Status const& s) = 0;
 };
 
 /// Return an instance of the default RPCBackoffPolicy.
@@ -87,11 +87,11 @@ class ExponentialBackoffPolicy : public RPCBackoffPolicy {
       : impl_(initial_delay / 2, maximum_delay, 2.0) {}
 
   std::unique_ptr<RPCBackoffPolicy> clone() const override;
-  void Setup(grpc::ClientContext& context) const override;
+  void Setup(::grpc::ClientContext& context) const override;
   std::chrono::milliseconds OnCompletion(
       google::cloud::Status const& status) override;
   // TODO(#2344) - remove ::grpc::Status version.
-  std::chrono::milliseconds OnCompletion(grpc::Status const& status) override;
+  std::chrono::milliseconds OnCompletion(::grpc::Status const& status) override;
 
  private:
   using Impl = google::cloud::internal::ExponentialBackoffPolicy;

@@ -34,14 +34,14 @@ namespace testing {
  * @tparam Response the response type.
  */
 template <typename Response, typename Request>
-class MockResponseReader : public grpc::ClientReaderInterface<Response> {
+class MockResponseReader : public ::grpc::ClientReaderInterface<Response> {
  public:
   MOCK_METHOD0(WaitForInitialMetadata, void());
-  MOCK_METHOD0(Finish, grpc::Status());
+  MOCK_METHOD0(Finish, ::grpc::Status());
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
   MOCK_METHOD1_T(Read, bool(Response*));
 
-  using UniquePtr = std::unique_ptr<grpc::ClientReaderInterface<Response>>;
+  using UniquePtr = std::unique_ptr<::grpc::ClientReaderInterface<Response>>;
 
   /// Return a `std::unique_ptr< mocked-class >`
   UniquePtr AsUniqueMocked() { return UniquePtr(this); }
@@ -58,9 +58,9 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
    * and pass it because `::testing::Return()` assumes copy constructions and
    * `std::unique_ptr<>` only supports move constructors.
    */
-  std::function<UniquePtr(grpc::ClientContext*, Request const&)>
+  std::function<UniquePtr(::grpc::ClientContext*, Request const&)>
   MakeMockReturner() {
-    return [this](grpc::ClientContext*, Request const&) {
+    return [this](::grpc::ClientContext*, Request const&) {
       return UniquePtr(this);
     };
   }
@@ -98,20 +98,20 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
  */
 template <typename Response>
 class MockAsyncResponseReader
-    : public grpc::ClientAsyncResponseReaderInterface<Response> {
+    : public ::grpc::ClientAsyncResponseReaderInterface<Response> {
  public:
   MOCK_METHOD0(StartCall, void());
   MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD3_T(Finish, void(Response*, grpc::Status*, void*));
+  MOCK_METHOD3_T(Finish, void(Response*, ::grpc::Status*, void*));
 };
 
 template <typename Response>
 class MockClientAsyncReaderInterface
-    : public grpc::ClientAsyncReaderInterface<Response> {
+    : public ::grpc::ClientAsyncReaderInterface<Response> {
  public:
   MOCK_METHOD1(StartCall, void(void*));
   MOCK_METHOD1(ReadInitialMetadata, void(void*));
-  MOCK_METHOD2(Finish, void(grpc::Status*, void*));
+  MOCK_METHOD2(Finish, void(::grpc::Status*, void*));
   MOCK_METHOD2_T(Read, void(Response*, void*));
 };
 

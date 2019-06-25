@@ -31,7 +31,7 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
-      .WillOnce(Return(grpc::Status::OK));
+      .WillOnce(Return(::grpc::Status::OK));
 
   auto mut = table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -48,7 +48,7 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
 
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_FALSE(table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),

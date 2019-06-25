@@ -45,20 +45,20 @@ namespace {
 class ReadRowsParserMock : public bigtable::internal::ReadRowsParser {
  public:
   MOCK_METHOD2(HandleChunkHook,
-               void(ReadRowsResponse_CellChunk chunk, grpc::Status& status));
+               void(ReadRowsResponse_CellChunk chunk, ::grpc::Status& status));
   void HandleChunk(ReadRowsResponse_CellChunk chunk,
-                   grpc::Status& status) override {
+                   ::grpc::Status& status) override {
     HandleChunkHook(chunk, status);
   }
 
-  MOCK_METHOD1(HandleEndOfStreamHook, void(grpc::Status& status));
-  void HandleEndOfStream(grpc::Status& status) override {
+  MOCK_METHOD1(HandleEndOfStreamHook, void(::grpc::Status& status));
+  void HandleEndOfStream(::grpc::Status& status) override {
     HandleEndOfStreamHook(status);
   }
 
   bool HasNext() const override { return !rows_.empty(); }
 
-  Row Next(grpc::Status&) override {
+  Row Next(::grpc::Status&) override {
     Row row = rows_.front();
     rows_.pop_front();
     return row;
@@ -107,13 +107,13 @@ class RetryPolicyMock : public bigtable::RPCRetryPolicy {
     google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
 
-  MOCK_CONST_METHOD1(SetupHook, void(grpc::ClientContext&));
-  void Setup(grpc::ClientContext& context) const override {
+  MOCK_CONST_METHOD1(SetupHook, void(::grpc::ClientContext&));
+  void Setup(::grpc::ClientContext& context) const override {
     SetupHook(context);
   }
 
-  MOCK_METHOD1(OnFailureHook, bool(grpc::Status const& status));
-  bool OnFailure(grpc::Status const& status) override {
+  MOCK_METHOD1(OnFailureHook, bool(::grpc::Status const& status));
+  bool OnFailure(::grpc::Status const& status) override {
     return OnFailureHook(status);
   }
   bool OnFailure(google::cloud::Status const&) override { return true; }
@@ -125,10 +125,10 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
   std::unique_ptr<RPCBackoffPolicy> clone() const override {
     google::cloud::internal::ThrowRuntimeError("Mocks cannot be copied.");
   }
-  void Setup(grpc::ClientContext&) const override {}
+  void Setup(::grpc::ClientContext&) const override {}
   MOCK_METHOD1(OnCompletionHook,
-               std::chrono::milliseconds(grpc::Status const& s));
-  std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
+               std::chrono::milliseconds(::grpc::Status const& s));
+  std::chrono::milliseconds OnCompletion(::grpc::Status const& s) override {
     return OnCompletionHook(s);
   }
   std::chrono::milliseconds OnCompletion(
@@ -171,7 +171,7 @@ TEST_F(RowReaderTest, EmptyReaderHasNoRows) {
   EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke(stream->MakeMockReturner()));
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), bigtable::RowReader::NO_ROWS_LIMIT,
@@ -193,7 +193,7 @@ TEST_F(RowReaderTest, ReadOneRow) {
         .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -220,14 +220,14 @@ TEST_F(RowReaderTest, ReadOneRow_AppProfileId) {
     testing::InSequence s;
     std::string expected_id = "test-id";
     EXPECT_CALL(*client_, ReadRows(_, _))
-        .WillOnce(Invoke(
-            [expected_id, &stream](grpc::ClientContext*, ReadRowsRequest req) {
-              EXPECT_EQ(expected_id, req.app_profile_id());
-              return stream->AsUniqueMocked();
-            }));
+        .WillOnce(Invoke([expected_id, &stream](::grpc::ClientContext*,
+                                                ReadRowsRequest req) {
+          EXPECT_EQ(expected_id, req.app_profile_id());
+          return stream->AsUniqueMocked();
+        }));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -255,7 +255,7 @@ TEST_F(RowReaderTest, ReadOneRowIteratorPostincrement) {
         .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -286,7 +286,7 @@ TEST_F(RowReaderTest, ReadOneOfTwoRowsClosesStream) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -315,7 +315,8 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
         .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
+        .WillOnce(
+            Return(::grpc::Status(::grpc::StatusCode::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
@@ -326,7 +327,7 @@ TEST_F(RowReaderTest, FailedStreamIsRetried) {
         .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -352,7 +353,8 @@ TEST_F(RowReaderTest, FailedStreamWithNoRetryThrowsNoExcept) {
         .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
+        .WillOnce(
+            Return(::grpc::Status(::grpc::StatusCode::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
@@ -383,7 +385,8 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
+        .WillOnce(
+            Return(::grpc::Status(::grpc::StatusCode::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
@@ -394,7 +397,7 @@ TEST_F(RowReaderTest, FailedStreamRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(1)))
         .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -424,7 +427,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
         .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
     EXPECT_CALL(*parser, HandleChunkHook(_, _))
         .WillOnce(testing::SetArgReferee<1>(
-            grpc::Status(grpc::StatusCode::INTERNAL, "parser exception")));
+            ::grpc::Status(::grpc::StatusCode::INTERNAL, "parser exception")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
@@ -435,7 +438,7 @@ TEST_F(RowReaderTest, FailedParseIsRetried) {
         .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -464,11 +467,11 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
 
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
-    grpc::Status status;
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
+    ::grpc::Status status;
     EXPECT_CALL(*parser, HandleEndOfStreamHook(_))
         .WillOnce(testing::SetArgReferee<0>(
-            grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
+            ::grpc::Status(::grpc::StatusCode::INTERNAL, "InternalError")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
@@ -479,7 +482,7 @@ TEST_F(RowReaderTest, FailedParseRetriesSkipAlreadyReadRows) {
     EXPECT_CALL(*client_, ReadRows(_, RequestWithRowKeysCount(1)))
         .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -505,11 +508,11 @@ TEST_F(RowReaderTest, FailedParseWithNoRetryThrowsNoExcept) {
     EXPECT_CALL(*client_, ReadRows(_, _))
         .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
-    grpc::Status status;
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
+    ::grpc::Status status;
     EXPECT_CALL(*parser, HandleEndOfStreamHook(_))
         .WillOnce(testing::SetArgReferee<0>(
-            grpc::Status(grpc::StatusCode::INTERNAL, "InternalError")));
+            ::grpc::Status(::grpc::StatusCode::INTERNAL, "InternalError")));
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(false));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_)).Times(0);
   }
@@ -538,8 +541,8 @@ TEST_F(RowReaderTest, FailedStreamWithAllRequiedRowsSeenShouldNotRetry) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL,
-                                      "this exception must be ignored")));
+        .WillOnce(Return(::grpc::Status(::grpc::StatusCode::INTERNAL,
+                                        "this exception must be ignored")));
 
     // Note there is no expectation of a new connection, because the
     // set of rows to read should become empty after reading "r2" and
@@ -566,7 +569,7 @@ TEST_F(RowReaderTest, RowLimitIsSent) {
   EXPECT_CALL(*client_, ReadRows(_, RequestWithRowsLimit(442)))
       .WillOnce(Invoke(stream->MakeMockReturner()));
   EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   bigtable::RowReader reader(
       client_, "", bigtable::RowSet(), 442, bigtable::Filter::PassAllFilter(),
@@ -589,7 +592,8 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
+        .WillOnce(
+            Return(::grpc::Status(::grpc::StatusCode::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
@@ -600,7 +604,7 @@ TEST_F(RowReaderTest, RowLimitIsDecreasedOnRetry) {
     EXPECT_CALL(*client_, ReadRows(_, RequestWithRowsLimit(41)))
         .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -628,8 +632,8 @@ TEST_F(RowReaderTest, RowLimitIsNotDecreasedToZero) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL,
-                                      "this exception must be ignored")));
+        .WillOnce(Return(::grpc::Status(::grpc::StatusCode::INTERNAL,
+                                        "this exception must be ignored")));
 
     // Note there is no expectation of a new connection, because the
     // row limit reaches zero.
@@ -660,7 +664,7 @@ TEST_F(RowReaderTest, BeginThrowsAfterCancelClosesStreamNoExcept) {
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));
@@ -741,12 +745,13 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
   void* previous_context = nullptr;
   EXPECT_CALL(*retry_policy_, SetupHook(_))
       .Times(2)
-      .WillRepeatedly(Invoke([&previous_context](grpc::ClientContext& context) {
-        // This is a big hack, we want to make sure the context is new,
-        // but there is no easy way to check that, so we compare addresses.
-        EXPECT_NE(previous_context, &context);
-        previous_context = &context;
-      }));
+      .WillRepeatedly(
+          Invoke([&previous_context](::grpc::ClientContext& context) {
+            // This is a big hack, we want to make sure the context is new,
+            // but there is no easy way to check that, so we compare addresses.
+            EXPECT_NE(previous_context, &context);
+            previous_context = &context;
+          }));
 
   {
     testing::InSequence s;
@@ -754,7 +759,8 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
         .WillOnce(Invoke(stream->MakeMockReturner()));
     EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
     EXPECT_CALL(*stream, Finish())
-        .WillOnce(Return(grpc::Status(grpc::StatusCode::INTERNAL, "retry")));
+        .WillOnce(
+            Return(::grpc::Status(::grpc::StatusCode::INTERNAL, "retry")));
 
     EXPECT_CALL(*retry_policy_, OnFailureHook(_)).WillOnce(Return(true));
     EXPECT_CALL(*backoff_policy_, OnCompletionHook(_))
@@ -765,7 +771,7 @@ TEST_F(RowReaderTest, FailedStreamRetryNewContext) {
         .WillOnce(Invoke(stream_retry->MakeMockReturner()));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(true));
     EXPECT_CALL(*stream_retry, Read(_)).WillOnce(Return(false));
-    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+    EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
   }
 
   parser_factory_->AddParser(std::move(parser));

@@ -61,16 +61,16 @@ void AsyncRetryBulkApply::StartIterationIfNeeded(CompletionQueue cq) {
     return;
   }
 
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
   rpc_retry_policy_->Setup(*context);
   rpc_backoff_policy_->Setup(*context);
   metadata_update_policy_.Setup(*context);
   auto client = client_;
   auto self = shared_from_this();
   cq.MakeStreamingReadRpc(
-      [client](grpc::ClientContext* context,
+      [client](::grpc::ClientContext* context,
                google::bigtable::v2::MutateRowsRequest const& request,
-               grpc::CompletionQueue* cq) {
+               ::grpc::CompletionQueue* cq) {
         return client->PrepareAsyncMutateRows(context, request, cq);
       },
       state_.BeforeStart(), std::move(context),

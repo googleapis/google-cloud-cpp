@@ -49,17 +49,17 @@ TEST(MultipleRowsMutatorTest, Simple) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // Now prepare the client for the one request.
   bigtable::testing::MockDataClient client;
@@ -71,7 +71,7 @@ TEST(MultipleRowsMutatorTest, Simple) {
                                     std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
-  grpc::ClientContext context;
+  ::grpc::ClientContext context;
   auto status = mutator.MakeOneRequest(client, context);
   EXPECT_TRUE(status.ok());
   auto failures = std::move(mutator).OnRetryDone();
@@ -100,24 +100,24 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         {
           auto& e = *r->add_entries();
           e.set_index(1);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*reader, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*reader, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // Now prepare the client for the one request.
   std::string expected_id = "test-id";
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(
-          Invoke([expected_id, &reader](grpc::ClientContext*,
+          Invoke([expected_id, &reader](::grpc::ClientContext*,
                                         btproto::MutateRowsRequest const& req) {
             EXPECT_EQ(expected_id, req.app_profile_id());
             return reader.release()->AsUniqueMocked();
@@ -128,7 +128,7 @@ TEST(MultipleRowsMutatorTest, BulkApply_AppProfileId) {
                                     std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
-  grpc::ClientContext context;
+  ::grpc::ClientContext context;
   auto status = mutator.MakeOneRequest(client, context);
   EXPECT_TRUE(status.ok());
   auto failures = std::move(mutator).OnRetryDone();
@@ -151,14 +151,14 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
         // Simulate a partial (and recoverable) failure.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+        e0.mutable_status()->set_code(::grpc::StatusCode::UNAVAILABLE);
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::StatusCode::OK);
+        e1.mutable_status()->set_code(::grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // Prepare a second stream response, because the client should retry after
   // the partial failure.
@@ -168,23 +168,23 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // Setup the client to response with r1 first, and r2 next.
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
+          [&r1](::grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
             EXPECT_EQ("foo/bar/baz/table", req.table_name());
             return r1.release()->AsUniqueMocked();
           }))
       .WillOnce(Invoke(
-          [&r2](grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
+          [&r2](::grpc::ClientContext*, btproto::MutateRowsRequest const& req) {
             EXPECT_EQ("foo/bar/baz/table", req.table_name());
             return r2.release()->AsUniqueMocked();
           }));
@@ -197,7 +197,7 @@ TEST(MultipleRowsMutatorTest, RetryPartialFailure) {
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
-    grpc::ClientContext context;
+    ::grpc::ClientContext context;
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
@@ -221,15 +221,15 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
         // element.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+        e0.mutable_status()->set_code(::grpc::StatusCode::UNAVAILABLE);
         // Simulate an unrecoverable failure for the second element.
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::StatusCode::OUT_OF_RANGE);
+        e1.mutable_status()->set_code(::grpc::StatusCode::OUT_OF_RANGE);
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // The BulkMutator should issue a second request, which will return success
   // for the remaining mutation.
@@ -239,12 +239,12 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
@@ -259,7 +259,7 @@ TEST(MultipleRowsMutatorTest, PermanentFailure) {
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
-    grpc::ClientContext context;
+    ::grpc::ClientContext context;
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
@@ -286,11 +286,11 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::StatusCode::OK);
+        e0.mutable_status()->set_code(::grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // The BulkMutation should issue a second request, this is the stream returned
   // by the second request, which indicates success for the missed mutation
@@ -301,12 +301,12 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
@@ -321,7 +321,7 @@ TEST(MultipleRowsMutatorTest, PartialStream) {
   // isolation, so call MakeOneRequest() twice: for the r1 and r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
-    grpc::ClientContext context;
+    ::grpc::ClientContext context;
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
@@ -346,14 +346,14 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
         // Simulate recoverable failures for both elements.
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+        e0.mutable_status()->set_code(::grpc::StatusCode::UNAVAILABLE);
         auto& e1 = *r->add_entries();
         e1.set_index(1);
-        e1.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
+        e1.mutable_status()->set_code(::grpc::StatusCode::UNAVAILABLE);
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r1, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r1, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // The BulkMutator should issue a second request, with only the idempotent
   // mutations, make the mocks return success for them.
@@ -363,12 +363,12 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
         {
           auto& e = *r->add_entries();
           e.set_index(0);
-          e.mutable_status()->set_code(grpc::StatusCode::OK);
+          e.mutable_status()->set_code(::grpc::StatusCode::OK);
         }
         return true;
       }))
       .WillOnce(Return(false));
-  EXPECT_CALL(*r2, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*r2, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   // Verify that the second response has the right contents.  It is easier (and
   // more readable) to write these in a separate small lambda expression because
@@ -381,11 +381,11 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
+          [&r1](::grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
             EXPECT_EQ(4, r.entries_size());
             return r1.release()->AsUniqueMocked();
           }))
-      .WillOnce(Invoke([&r2, expect_r2](grpc::ClientContext*,
+      .WillOnce(Invoke([&r2, expect_r2](::grpc::ClientContext*,
                                         btproto::MutateRowsRequest const& r) {
         expect_r2(r);
         return r2.release()->AsUniqueMocked();
@@ -399,7 +399,7 @@ TEST(MultipleRowsMutatorTest, RetryOnlyIdempotent) {
   // isolation, so call MakeOneRequest() twice, for the r1, and the r2 cases.
   for (int i = 0; i != 2; ++i) {
     EXPECT_TRUE(mutator.HasPendingMutations());
-    grpc::ClientContext context;
+    ::grpc::ClientContext context;
     auto status = mutator.MakeOneRequest(client, context);
     EXPECT_TRUE(status.ok());
   }
@@ -432,15 +432,16 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
       .WillOnce(Invoke([](btproto::MutateRowsResponse* r) {
         auto& e0 = *r->add_entries();
         e0.set_index(0);
-        e0.mutable_status()->set_code(grpc::StatusCode::OK);
+        e0.mutable_status()->set_code(::grpc::StatusCode::OK);
         auto& e1 = *r->add_entries();
         e1.set_index(2);
-        e1.mutable_status()->set_code(grpc::StatusCode::OK);
+        e1.mutable_status()->set_code(::grpc::StatusCode::OK);
         return true;
       }))
       .WillOnce(Return(false));
   EXPECT_CALL(*r1, Finish())
-      .WillOnce(Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "")));
+      .WillOnce(
+          Return(::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "")));
 
   // The BulkMutator should not issue a second request because the error is
   // PERMISSION_DENIED (not retriable).
@@ -448,7 +449,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
   bigtable::testing::MockDataClient client;
   EXPECT_CALL(client, MutateRows(_, _))
       .WillOnce(Invoke(
-          [&r1](grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
+          [&r1](::grpc::ClientContext*, btproto::MutateRowsRequest const& r) {
             EXPECT_EQ(3, r.entries_size());
             return r1.release()->AsUniqueMocked();
           }));
@@ -458,7 +459,7 @@ TEST(MultipleRowsMutatorTest, UnconfirmedAreFailed) {
                                     std::move(mut));
 
   EXPECT_TRUE(mutator.HasPendingMutations());
-  grpc::ClientContext context;
+  ::grpc::ClientContext context;
   auto status = mutator.MakeOneRequest(client, context);
   EXPECT_FALSE(status.ok());
 

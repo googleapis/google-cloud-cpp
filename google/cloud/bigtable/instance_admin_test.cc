@@ -50,79 +50,81 @@ class InstanceAdminTest : public ::testing::Test {
 auto create_list_instances_lambda = [](std::string expected_token,
                                        std::string returned_token,
                                        std::vector<std::string> instance_ids) {
-  return [expected_token, returned_token, instance_ids](
-             grpc::ClientContext*, btadmin::ListInstancesRequest const& request,
-             btadmin::ListInstancesResponse* response) {
-    auto const project_name = "projects/" + kProjectId;
-    EXPECT_EQ(project_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+  return
+      [expected_token, returned_token, instance_ids](
+          ::grpc::ClientContext*, btadmin::ListInstancesRequest const& request,
+          btadmin::ListInstancesResponse* response) {
+        auto const project_name = "projects/" + kProjectId;
+        EXPECT_EQ(project_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& instance_id : instance_ids) {
-      auto& instance = *response->add_instances();
-      instance.set_name(project_name + "/instances/" + instance_id);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
+        EXPECT_NE(nullptr, response);
+        for (auto const& instance_id : instance_ids) {
+          auto& instance = *response->add_instances();
+          instance.set_name(project_name + "/instances/" + instance_id);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return ::grpc::Status::OK;
+      };
 };
 
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
 auto create_cluster = []() {
-  return [](grpc::ClientContext*, btadmin::GetClusterRequest const& request,
+  return [](::grpc::ClientContext*, btadmin::GetClusterRequest const& request,
             btadmin::Cluster* response) {
     EXPECT_NE(nullptr, response);
     response->set_name(request.name());
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   };
 };
 
 auto create_policy = []() {
-  return [](grpc::ClientContext*, ::google::iam::v1::GetIamPolicyRequest const&,
-            ::google::iam::v1::Policy* response) {
-    EXPECT_NE(nullptr, response);
-    response->set_version(3);
-    response->set_etag("random-tag");
-    return grpc::Status::OK;
-  };
+  return
+      [](::grpc::ClientContext*, ::google::iam::v1::GetIamPolicyRequest const&,
+         ::google::iam::v1::Policy* response) {
+        EXPECT_NE(nullptr, response);
+        response->set_version(3);
+        response->set_etag("random-tag");
+        return ::grpc::Status::OK;
+      };
 };
 
 auto create_policy_with_params = []() {
-  return [](grpc::ClientContext*,
+  return [](::grpc::ClientContext*,
             ::google::iam::v1::SetIamPolicyRequest const& request,
             ::google::iam::v1::Policy* response) {
     EXPECT_NE(nullptr, response);
     *response = request.policy();
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   };
 };
 
 // A lambda to create lambdas.  Basically we would be rewriting the same
 // lambda twice without this thing.
-auto create_list_clusters_lambda = [](std::string expected_token,
-                                      std::string returned_token,
-                                      std::string instance_id,
-                                      std::vector<std::string> cluster_ids) {
-  return [expected_token, returned_token, instance_id, cluster_ids](
-             grpc::ClientContext*, btadmin::ListClustersRequest const& request,
-             btadmin::ListClustersResponse* response) {
-    auto const instance_name =
-        "projects/" + kProjectId + "/instances/" + instance_id;
-    EXPECT_EQ(instance_name, request.parent());
-    EXPECT_EQ(expected_token, request.page_token());
+auto create_list_clusters_lambda =
+    [](std::string expected_token, std::string returned_token,
+       std::string instance_id, std::vector<std::string> cluster_ids) {
+      return [expected_token, returned_token, instance_id, cluster_ids](
+                 ::grpc::ClientContext*,
+                 btadmin::ListClustersRequest const& request,
+                 btadmin::ListClustersResponse* response) {
+        auto const instance_name =
+            "projects/" + kProjectId + "/instances/" + instance_id;
+        EXPECT_EQ(instance_name, request.parent());
+        EXPECT_EQ(expected_token, request.page_token());
 
-    EXPECT_NE(nullptr, response);
-    for (auto const& cluster_id : cluster_ids) {
-      auto& cluster = *response->add_clusters();
-      cluster.set_name(instance_name + "/clusters/" + cluster_id);
-    }
-    // Return the right token.
-    response->set_next_page_token(returned_token);
-    return grpc::Status::OK;
-  };
-};
+        EXPECT_NE(nullptr, response);
+        for (auto const& cluster_id : cluster_ids) {
+          auto& cluster = *response->add_clusters();
+          cluster.set_name(instance_name + "/clusters/" + cluster_id);
+        }
+        // Return the right token.
+        response->set_next_page_token(returned_token);
+        return ::grpc::Status::OK;
+      };
+    };
 
 /**
  * Helper class to create the expectations for a simple RPC call.
@@ -135,14 +137,14 @@ auto create_list_clusters_lambda = [](std::string expected_token,
  */
 template <typename RequestType, typename ResponseType>
 struct MockRpcFactory {
-  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
-                                     RequestType const& request,
-                                     ResponseType* response);
+  using SignatureType = ::grpc::Status(::grpc::ClientContext* ctx,
+                                       RequestType const& request,
+                                       ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
   static std::function<SignatureType> Create(std::string expected_request) {
     return std::function<SignatureType>(
-        [expected_request](grpc::ClientContext*, RequestType const& request,
+        [expected_request](::grpc::ClientContext*, RequestType const& request,
                            ResponseType* response) {
           RequestType expected;
           // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
@@ -154,7 +156,7 @@ struct MockRpcFactory {
           EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
 
           EXPECT_NE(nullptr, response);
-          return grpc::Status::OK;
+          return ::grpc::Status::OK;
         });
   }
 };
@@ -238,10 +240,10 @@ TEST_F(InstanceAdminTest, ListInstancesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      btadmin::ListInstancesRequest const&,
                                      btadmin::ListInstancesResponse*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_instances_lambda("", "token-001", {"t0", "t1"});
   auto batch1 = create_list_instances_lambda("token-001", "", {"t2", "t3"});
@@ -273,8 +275,8 @@ TEST_F(InstanceAdminTest, ListInstancesUnrecoverableFailures) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListInstances(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.ListInstances());
@@ -300,8 +302,8 @@ TEST_F(InstanceAdminTest, DeleteInstanceUnrecoverableError) {
   using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.DeleteInstance("other-instance").ok());
 }
@@ -312,7 +314,7 @@ TEST_F(InstanceAdminTest, DeleteInstanceRecoverableError) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteInstance(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.DeleteInstance("other-instance").ok());
@@ -344,10 +346,10 @@ TEST_F(InstanceAdminTest, ListClustersRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      btadmin::ListClustersRequest const&,
                                      btadmin::ListClustersResponse*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   std::string const& instance_id = "the-instance";
   auto batch0 =
@@ -382,8 +384,8 @@ TEST_F(InstanceAdminTest, ListClustersUnrecoverableFailures) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, ListClusters(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   std::string const& instance_id = "the-instance";
   // After all the setup, make the actual call we want to test.
@@ -410,8 +412,8 @@ TEST_F(InstanceAdminTest, GetClusterUnrecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetCluster(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   ASSERT_FALSE(tested.GetCluster("other-instance", "the-cluster"));
 }
 
@@ -420,10 +422,10 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      btadmin::GetClusterRequest const&,
                                      btadmin::Cluster*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
   auto mock_cluster = create_cluster();
@@ -459,8 +461,8 @@ TEST_F(InstanceAdminTest, DeleteClusterUnrecoverableError) {
   using namespace ::testing;
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
 }
@@ -471,7 +473,7 @@ TEST_F(InstanceAdminTest, DeleteClusterRecoverableError) {
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, DeleteCluster(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.DeleteCluster("other-instance", "other-cluster").ok());
@@ -497,7 +499,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
 
   bigtable::InstanceAdmin tested(client_);
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillOnce(Invoke([](grpc::ClientContext*,
+      .WillOnce(Invoke([](::grpc::ClientContext*,
                           ::google::iam::v1::GetIamPolicyRequest const&,
                           ::google::iam::v1::Policy* response) {
         EXPECT_NE(nullptr, response);
@@ -509,7 +511,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyWithConditionsFails) {
         new_binding->add_members("xyz@gmail.com");
         new_binding->set_allocated_condition(new google::type::Expr);
 
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       }));
 
   std::string resource = "test-resource";
@@ -526,8 +528,8 @@ TEST_F(InstanceAdminTest, GetIamPolicyUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "other-resource";
 
@@ -542,10 +544,10 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
 
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      iamproto::GetIamPolicyRequest const&,
                                      iamproto::Policy*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_policy();
 
@@ -572,13 +574,13 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncGetIamPolicy(_, _, _))
         .WillOnce(
-            Invoke([this](grpc::ClientContext*,
+            Invoke([this](::grpc::ClientContext*,
                           ::google::iam::v1::GetIamPolicyRequest const& request,
-                          grpc::CompletionQueue*) {
+                          ::grpc::CompletionQueue*) {
               EXPECT_EQ("projects/the-project/instances/test-instance",
                         request.resource());
               // This is safe, see comments in MockAsyncResponseReader.
-              return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+              return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
                   ::google::iam::v1::Policy>>(reader_.get());
             }));
   }
@@ -606,11 +608,11 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
       .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+          Invoke([](iamproto::Policy* response, ::grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
             response->set_version(3);
             response->set_etag("random-tag");
-            *status = grpc::Status::OK;
+            *status = ::grpc::Status::OK;
           }));
 
   Start();
@@ -631,11 +633,11 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce(Invoke([](iamproto::Policy* response, ::grpc::Status* status,
+                          void*) {
+        EXPECT_NE(nullptr, response);
+        *status = ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      }));
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -675,8 +677,8 @@ TEST_F(InstanceAdminTest, SetIamPolicyUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "test-resource";
   google::cloud::IamBindings iam_bindings =
@@ -692,10 +694,10 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
 
   bigtable::InstanceAdmin tested(client_);
 
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      iamproto::SetIamPolicyRequest const&,
                                      iamproto::Policy*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto mock_policy = create_policy_with_params();
 
@@ -721,13 +723,13 @@ TEST_F(InstanceAdminTest, TestIamPermissions) {
   bigtable::InstanceAdmin tested(client_);
 
   auto mock_permission_set =
-      [](grpc::ClientContext*, iamproto::TestIamPermissionsRequest const&,
+      [](::grpc::ClientContext*, iamproto::TestIamPermissionsRequest const&,
          iamproto::TestIamPermissionsResponse* response) {
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
         response->add_permissions(permissions[1]);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       };
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
@@ -749,8 +751,8 @@ TEST_F(InstanceAdminTest, TestIamPermissionsUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "other-resource";
 
@@ -765,20 +767,20 @@ TEST_F(InstanceAdminTest, TestIamPermissionsRecoverableError) {
   namespace iamproto = ::google::iam::v1;
   bigtable::InstanceAdmin tested(client_);
 
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](::grpc::ClientContext*,
                                      iamproto::TestIamPermissionsRequest const&,
                                      iamproto::TestIamPermissionsResponse*) {
-    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+    return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
   auto mock_permission_set =
-      [](grpc::ClientContext*, iamproto::TestIamPermissionsRequest const&,
+      [](::grpc::ClientContext*, iamproto::TestIamPermissionsRequest const&,
          iamproto::TestIamPermissionsResponse* response) {
         EXPECT_NE(nullptr, response);
         std::vector<std::string> permissions = {"writer", "reader"};
         response->add_permissions(permissions[0]);
         response->add_permissions(permissions[1]);
-        return grpc::Status::OK;
+        return ::grpc::Status::OK;
       };
   EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
@@ -806,15 +808,15 @@ class AsyncDeleteClusterTest : public ::testing::Test {
     using namespace ::testing;
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncDeleteCluster(_, _, _))
-        .WillOnce(Invoke([this](grpc::ClientContext*,
+        .WillOnce(Invoke([this](::grpc::ClientContext*,
                                 btadmin::DeleteClusterRequest const& request,
-                                grpc::CompletionQueue*) {
+                                ::grpc::CompletionQueue*) {
           EXPECT_EQ(
               "projects/the-project/instances/test-instance/clusters/"
               "the-cluster",
               request.name());
           // This is safe, see comments in MockAsyncResponseReader.
-          return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+          return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
               ::google::protobuf::Empty>>(reader_.get());
         }));
   }
@@ -840,11 +842,11 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteCluster) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          [](::google::protobuf::Empty* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status::OK;
-          }));
+      .WillOnce(Invoke([](::google::protobuf::Empty* response,
+                          ::grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = ::grpc::Status::OK;
+      }));
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -861,11 +863,11 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(Invoke(
-          [](::google::protobuf::Empty* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce(Invoke([](::google::protobuf::Empty* response,
+                          ::grpc::Status* status, void*) {
+        EXPECT_NE(nullptr, response);
+        *status = ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      }));
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -891,13 +893,13 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncSetIamPolicy(_, _, _))
         .WillOnce(
-            Invoke([this](grpc::ClientContext*,
+            Invoke([this](::grpc::ClientContext*,
                           ::google::iam::v1::SetIamPolicyRequest const& request,
-                          grpc::CompletionQueue*) {
+                          ::grpc::CompletionQueue*) {
               EXPECT_EQ("projects/the-project/instances/test-instance",
                         request.resource());
               // This is safe, see comments in MockAsyncResponseReader.
-              return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+              return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
                   ::google::iam::v1::Policy>>(reader_.get());
             }));
   }
@@ -929,7 +931,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
       .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+          Invoke([](iamproto::Policy* response, ::grpc::Status* status, void*) {
             EXPECT_NE(nullptr, response);
 
             auto new_binding = response->add_bindings();
@@ -937,7 +939,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
             new_binding->add_members("abc@gmail.com");
             new_binding->add_members("xyz@gmail.com");
             response->set_etag("test-tag");
-            *status = grpc::Status::OK;
+            *status = ::grpc::Status::OK;
           }));
 
   Start();
@@ -959,11 +961,11 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   bigtable::InstanceAdmin tested(client_);
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
-      .WillOnce(
-          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
-            EXPECT_NE(nullptr, response);
-            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
-          }));
+      .WillOnce(Invoke([](iamproto::Policy* response, ::grpc::Status* status,
+                          void*) {
+        EXPECT_NE(nullptr, response);
+        *status = ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "nooo");
+      }));
 
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
@@ -991,13 +993,13 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
     EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
     EXPECT_CALL(*client_, AsyncTestIamPermissions(_, _, _))
         .WillOnce(Invoke(
-            [this](grpc::ClientContext*,
+            [this](::grpc::ClientContext*,
                    ::google::iam::v1::TestIamPermissionsRequest const& request,
-                   grpc::CompletionQueue*) {
+                   ::grpc::CompletionQueue*) {
               EXPECT_EQ("projects/the-project/instances/the-resource",
                         request.resource());
               // This is safe, see comments in MockAsyncResponseReader.
-              return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+              return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
                   ::google::iam::v1::TestIamPermissionsResponse>>(
                   reader_.get());
             }));
@@ -1027,11 +1029,11 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
       .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
-                          grpc::Status* status, void*) {
+                          ::grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
         response->add_permissions("writer");
         response->add_permissions("reader");
-        *status = grpc::Status::OK;
+        *status = ::grpc::Status::OK;
       }));
 
   Start({"reader", "writer", "owner"});
@@ -1052,9 +1054,9 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
 
   EXPECT_CALL(*reader_, Finish(_, _, _))
       .WillOnce(Invoke([](iamproto::TestIamPermissionsResponse* response,
-                          grpc::Status* status, void*) {
+                          ::grpc::Status* status, void*) {
         EXPECT_NE(nullptr, response);
-        *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+        *status = ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "nooo");
       }));
 
   Start({"reader", "writer", "owner"});

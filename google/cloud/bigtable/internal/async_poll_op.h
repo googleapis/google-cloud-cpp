@@ -61,12 +61,12 @@ template <typename Operation>
 struct PollableOperationRequestTraits {
   static_assert(::google::cloud::internal::is_invocable<
                     Operation, CompletionQueue&,
-                    std::unique_ptr<grpc::ClientContext>>::value,
+                    std::unique_ptr<::grpc::ClientContext>>::value,
                 "A pollable operation needs to be invocable with "
-                "(CompletionQueue&, std::unique_ptr<grpc::ClientContext>)");
+                "(CompletionQueue&, std::unique_ptr<::grpc::ClientContext>)");
   /// The type of what `Operation` returns.
   using ReturnType = typename google::cloud::internal::invoke_result_t<
-      Operation, CompletionQueue&, std::unique_ptr<grpc::ClientContext>>;
+      Operation, CompletionQueue&, std::unique_ptr<::grpc::ClientContext>>;
   static_assert(
       MatchesFutureStatusOrOptionalResponse<ReturnType>::value,
       "A pollable operation should return future<StatusOr<optional<T>>>");
@@ -144,7 +144,7 @@ class PollAsyncOpFuture {
   /// The callback to start another iteration of the retry loop.
   static void StartIteration(std::shared_ptr<PollAsyncOpFuture> self) {
     auto context =
-        ::google::cloud::internal::make_unique<grpc::ClientContext>();
+        ::google::cloud::internal::make_unique<::grpc::ClientContext>();
     self->polling_policy_->Setup(*context);
     self->metadata_update_policy_.Setup(*context);
 

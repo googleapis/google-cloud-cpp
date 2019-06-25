@@ -25,8 +25,8 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 
-/// Create a pool of grpc::Channel objects based on the client options.
-std::vector<std::shared_ptr<grpc::Channel>> CreateChannelPool(
+/// Create a pool of ::grpc::Channel objects based on the client options.
+std::vector<std::shared_ptr<::grpc::Channel>> CreateChannelPool(
     std::string const& endpoint, bigtable::ClientOptions const& options);
 
 /**
@@ -50,7 +50,7 @@ class CommonClient {
   //@{
   /// @name Type traits.
   using StubPtr = std::shared_ptr<typename Interface::StubInterface>;
-  using ChannelPtr = std::shared_ptr<grpc::Channel>;
+  using ChannelPtr = std::shared_ptr<::grpc::Channel>;
   //@}
 
   CommonClient(bigtable::ClientOptions options)
@@ -104,7 +104,7 @@ class CommonClient {
     auto channels = CreateChannelPool(Traits::Endpoint(options_), options_);
     std::vector<StubPtr> tmp;
     std::transform(channels.begin(), channels.end(), std::back_inserter(tmp),
-                   [](std::shared_ptr<grpc::Channel> ch) {
+                   [](std::shared_ptr<::grpc::Channel> ch) {
                      return Interface::NewStub(ch);
                    });
     lk.lock();

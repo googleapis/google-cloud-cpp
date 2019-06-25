@@ -20,14 +20,14 @@
 #include <thread>
 
 namespace {
-/// Create a grpc::Status with a status code for transient errors.
-grpc::Status CreateTransientError() {
-  return grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again");
+/// Create a ::grpc::Status with a status code for transient errors.
+::grpc::Status CreateTransientError() {
+  return ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "please try again");
 }
 
-/// Create a grpc::Status with a status code for permanent errors.
-grpc::Status CreatePermanentError() {
-  return grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "failed");
+/// Create a ::grpc::Status with a status code for permanent errors.
+::grpc::Status CreatePermanentError() {
+  return ::grpc::Status(::grpc::StatusCode::FAILED_PRECONDITION, "failed");
 }
 
 namespace bigtable = google::cloud::bigtable;
@@ -43,8 +43,8 @@ auto const kLimitedTimeTolerance = 10_ms;
 void CheckLimitedTime(bigtable::RPCRetryPolicy& tested) {
   google::cloud::testing_util::CheckPredicateBecomesFalse(
       [&tested] {
-        return tested.OnFailure(
-            grpc::Status(grpc::StatusCode::UNAVAILABLE, "please try again"));
+        return tested.OnFailure(::grpc::Status(::grpc::StatusCode::UNAVAILABLE,
+                                               "please try again"));
       },
       std::chrono::system_clock::now() + kLimitedTimeTestPeriod,
       kLimitedTimeTolerance);
@@ -59,10 +59,10 @@ TEST(LimitedTimeRetryPolicy, Simple) {
   CheckLimitedTime(tested);
 }
 
-/// @test A simple test for grpc::StatusCode::OK is not Permanent Error.
+/// @test A simple test for ::grpc::StatusCode::OK is not Permanent Error.
 TEST(LimitedTimeRetryPolicy, PermanentFailureCheck) {
   bigtable::LimitedTimeRetryPolicy tested(kLimitedTimeTestPeriod);
-  EXPECT_FALSE(tested.IsPermanentFailure(grpc::Status::OK));
+  EXPECT_FALSE(tested.IsPermanentFailure(::grpc::Status::OK));
   EXPECT_FALSE(tested.IsPermanentFailure(CreateTransientError()));
   EXPECT_TRUE(tested.IsPermanentFailure(CreatePermanentError()));
 }

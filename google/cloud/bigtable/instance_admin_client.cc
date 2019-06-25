@@ -61,303 +61,305 @@ class DefaultInstanceAdminClient : public InstanceAdminClient {
   Impl::ChannelPtr Channel() override { return impl_.Channel(); }
   void reset() override { return impl_.reset(); }
 
-  grpc::Status ListInstances(
-      grpc::ClientContext* context,
+  ::grpc::Status ListInstances(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ListInstancesRequest const& request,
       google::bigtable::admin::v2::ListInstancesResponse* response) override {
     return impl_.Stub()->ListInstances(context, request, response);
   }
 
-  grpc::Status CreateInstance(
-      grpc::ClientContext* context,
+  ::grpc::Status CreateInstance(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateInstanceRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->CreateInstance(context, request, response);
   }
 
-  grpc::Status UpdateInstance(
-      grpc::ClientContext* context,
+  ::grpc::Status UpdateInstance(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->PartialUpdateInstance(context, request, response);
   }
 
-  grpc::Status GetOperation(
-      grpc::ClientContext* context,
+  ::grpc::Status GetOperation(
+      ::grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,
       google::longrunning::Operation* response) override {
     auto stub = google::longrunning::Operations::NewStub(Channel());
     return stub->GetOperation(context, request, response);
   }
 
-  grpc::Status GetInstance(
-      grpc::ClientContext* context,
+  ::grpc::Status GetInstance(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GetInstanceRequest const& request,
       google::bigtable::admin::v2::Instance* response) override {
     return impl_.Stub()->GetInstance(context, request, response);
   }
 
-  grpc::Status DeleteInstance(
-      grpc::ClientContext* context,
+  ::grpc::Status DeleteInstance(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteInstanceRequest const& request,
       google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteInstance(context, request, response);
   }
 
-  grpc::Status ListClusters(
-      grpc::ClientContext* context,
+  ::grpc::Status ListClusters(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ListClustersRequest const& request,
       google::bigtable::admin::v2::ListClustersResponse* response) override {
     return impl_.Stub()->ListClusters(context, request, response);
   }
 
-  grpc::Status GetCluster(
-      grpc::ClientContext* context,
+  ::grpc::Status GetCluster(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GetClusterRequest const& request,
       google::bigtable::admin::v2::Cluster* response) override {
     return impl_.Stub()->GetCluster(context, request, response);
   }
 
-  grpc::Status DeleteCluster(
-      grpc::ClientContext* context,
+  ::grpc::Status DeleteCluster(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
       google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteCluster(context, request, response);
   }
 
-  grpc::Status CreateCluster(
-      grpc::ClientContext* context,
+  ::grpc::Status CreateCluster(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateClusterRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->CreateCluster(context, request, response);
   }
 
-  grpc::Status UpdateCluster(
-      grpc::ClientContext* context,
+  ::grpc::Status UpdateCluster(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::Cluster const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->UpdateCluster(context, request, response);
   }
 
-  grpc::Status CreateAppProfile(
-      grpc::ClientContext* context,
+  ::grpc::Status CreateAppProfile(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateAppProfileRequest const& request,
       google::bigtable::admin::v2::AppProfile* response) override {
     return impl_.Stub()->CreateAppProfile(context, request, response);
   }
 
-  grpc::Status GetAppProfile(
-      grpc::ClientContext* context,
+  ::grpc::Status GetAppProfile(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GetAppProfileRequest const& request,
       google::bigtable::admin::v2::AppProfile* response) override {
     return impl_.Stub()->GetAppProfile(context, request, response);
   }
 
-  grpc::Status ListAppProfiles(
-      grpc::ClientContext* context,
+  ::grpc::Status ListAppProfiles(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ListAppProfilesRequest const& request,
       google::bigtable::admin::v2::ListAppProfilesResponse* response) override {
     return impl_.Stub()->ListAppProfiles(context, request, response);
   }
 
-  grpc::Status UpdateAppProfile(
-      grpc::ClientContext* context,
+  ::grpc::Status UpdateAppProfile(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::UpdateAppProfileRequest const& request,
       google::longrunning::Operation* response) override {
     return impl_.Stub()->UpdateAppProfile(context, request, response);
   }
 
-  grpc::Status DeleteAppProfile(
-      grpc::ClientContext* context,
+  ::grpc::Status DeleteAppProfile(
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
       google::protobuf::Empty* response) override {
     return impl_.Stub()->DeleteAppProfile(context, request, response);
   }
 
-  grpc::Status GetIamPolicy(grpc::ClientContext* context,
-                            google::iam::v1::GetIamPolicyRequest const& request,
-                            google::iam::v1::Policy* response) override {
+  ::grpc::Status GetIamPolicy(
+      ::grpc::ClientContext* context,
+      google::iam::v1::GetIamPolicyRequest const& request,
+      google::iam::v1::Policy* response) override {
     return impl_.Stub()->GetIamPolicy(context, request, response);
   }
 
-  grpc::Status SetIamPolicy(grpc::ClientContext* context,
-                            google::iam::v1::SetIamPolicyRequest const& request,
-                            google::iam::v1::Policy* response) override {
+  ::grpc::Status SetIamPolicy(
+      ::grpc::ClientContext* context,
+      google::iam::v1::SetIamPolicyRequest const& request,
+      google::iam::v1::Policy* response) override {
     return impl_.Stub()->SetIamPolicy(context, request, response);
   }
 
-  grpc::Status TestIamPermissions(
-      grpc::ClientContext* context,
+  ::grpc::Status TestIamPermissions(
+      ::grpc::ClientContext* context,
       google::iam::v1::TestIamPermissionsRequest const& request,
       google::iam::v1::TestIamPermissionsResponse* response) override {
     return impl_.Stub()->TestIamPermissions(context, request, response);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListInstancesResponse>>
   AsyncListInstances(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::ListInstancesRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListInstances(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Instance>>
   AsyncGetInstance(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GetInstanceRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetInstance(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Cluster>>
-  AsyncGetCluster(grpc::ClientContext* context,
+  AsyncGetCluster(::grpc::ClientContext* context,
                   google::bigtable::admin::v2::GetClusterRequest const& request,
-                  grpc::CompletionQueue* cq) override {
+                  ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetCluster(context, request, cq);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+      ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteCluster(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteClusterRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteCluster(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
   AsyncCreateCluster(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::CreateClusterRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateCluster(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
   AsyncCreateInstance(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::CreateInstanceRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateInstance(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
   AsyncUpdateInstance(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::PartialUpdateInstanceRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncPartialUpdateInstance(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncUpdateCluster(grpc::ClientContext* context,
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
+  AsyncUpdateCluster(::grpc::ClientContext* context,
                      const google::bigtable::admin::v2::Cluster& request,
-                     grpc::CompletionQueue* cq) override {
+                     ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateCluster(context, request, cq);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+      ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteInstance(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteInstanceRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteInstance(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListClustersResponse>>
   AsyncListClusters(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::ListClustersRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListClusters(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::AppProfile>>
   AsyncGetAppProfile(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::GetAppProfileRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetAppProfile(context, request, cq);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+      ::grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
   AsyncDeleteAppProfile(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteAppProfileRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncDeleteAppProfile(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::AppProfile>>
   AsyncCreateAppProfile(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::bigtable::admin::v2::CreateAppProfileRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncCreateAppProfile(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
   AsyncUpdateAppProfile(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::UpdateAppProfileRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncUpdateAppProfile(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::ListAppProfilesResponse>>
   AsyncListAppProfiles(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       const google::bigtable::admin::v2::ListAppProfilesRequest& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncListAppProfiles(context, request, cq);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
-  AsyncGetIamPolicy(grpc::ClientContext* context,
+      ::grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+  AsyncGetIamPolicy(::grpc::ClientContext* context,
                     google::iam::v1::GetIamPolicyRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+                    ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncGetIamPolicy(context, request, cq);
   }
 
   std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
-  AsyncSetIamPolicy(grpc::ClientContext* context,
+      ::grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>
+  AsyncSetIamPolicy(::grpc::ClientContext* context,
                     google::iam::v1::SetIamPolicyRequest const& request,
-                    grpc::CompletionQueue* cq) override {
+                    ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncSetIamPolicy(context, request, cq);
   }
 
-  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::iam::v1::TestIamPermissionsResponse>>
   AsyncTestIamPermissions(
-      grpc::ClientContext* context,
+      ::grpc::ClientContext* context,
       google::iam::v1::TestIamPermissionsRequest const& request,
-      grpc::CompletionQueue* cq) override {
+      ::grpc::CompletionQueue* cq) override {
     return impl_.Stub()->AsyncTestIamPermissions(context, request, cq);
   }
 
-  std::unique_ptr<
-      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
-  AsyncGetOperation(grpc::ClientContext* context,
+  std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
+      google::longrunning::Operation>>
+  AsyncGetOperation(::grpc::ClientContext* context,
                     const google::longrunning::GetOperationRequest& request,
-                    grpc::CompletionQueue* cq) override {
+                    ::grpc::CompletionQueue* cq) override {
     auto stub = google::longrunning::Operations::NewStub(Channel());
-    return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
         google::longrunning::Operation>>(
         stub->AsyncGetOperation(context, request, cq).release());
   }

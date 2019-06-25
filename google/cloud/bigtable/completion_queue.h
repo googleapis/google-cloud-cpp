@@ -87,8 +87,8 @@ class CompletionQueue {
    * @param context an initialized request context to make the call.
    *
    * @tparam AsyncCallType the type of @a async_call. It must be invocable with
-   *     `(grpc::ClientContext*, RequestType const&, grpc::CompletionQueue*)`.
-   *     Furthermore, it should return a
+   *     `(grpc::ClientContext*, RequestType const&,
+   * grpc::CompletionQueue*)`. Furthermore, it should return a
    *     `std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<Response>>>`.
    *     These requirements are verified by
    *     `internal::CheckAsyncUnaryRpcSignature<>`, and this function is
@@ -105,7 +105,7 @@ class CompletionQueue {
       typename std::enable_if<Sig::value, int>::type = 0>
   future<StatusOr<Response>> MakeUnaryRpc(
       AsyncCallType async_call, Request const& request,
-      std::unique_ptr<grpc::ClientContext> context) {
+      std::unique_ptr<::grpc::ClientContext> context) {
     auto op =
         std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
     void* tag = impl_->RegisterOperation(op);
@@ -129,8 +129,9 @@ class CompletionQueue {
    *
    * @tparam AsyncCallType the type of @a async_call. It must be invocable with
    *     parameters
-   *     `(grpc::ClientContext*, RequestType const&, grpc::CompletionQueue*)`.
-   *     Furthermore, it should return a type convertible to
+   *     `(grpc::ClientContext*, RequestType const&,
+   * grpc::CompletionQueue*)`. Furthermore, it should return a type
+   * convertible to
    *     `std::unique_ptr<grpc::ClientAsyncReaderInterface<Response>>>`.
    *     These requirements are verified by
    *     `internal::AsyncStreamingReadRpcUnwrap<>`, and this function is
@@ -147,7 +148,7 @@ class CompletionQueue {
             typename OnReadHandler, typename OnFinishHandler>
   std::shared_ptr<AsyncOperation> MakeStreamingReadRpc(
       AsyncCallType&& async_call, Request const& request,
-      std::unique_ptr<grpc::ClientContext> context, OnReadHandler&& on_read,
+      std::unique_ptr<::grpc::ClientContext> context, OnReadHandler&& on_read,
       OnFinishHandler&& on_finish) {
     auto stream = internal::MakeAsyncReadStreamImpl<Response>(
         std::forward<OnReadHandler>(on_read),

@@ -72,7 +72,7 @@ class ReadRowsParser {
    */
   virtual void HandleChunk(
       google::bigtable::v2::ReadRowsResponse_CellChunk chunk,
-      grpc::Status& status);
+      ::grpc::Status& status);
 
   /**
    * Signal that the input stream reached the end.
@@ -80,7 +80,7 @@ class ReadRowsParser {
    * @throws std::runtime_error if more data was expected to finish
    * the current row.
    */
-  virtual void HandleEndOfStream(grpc::Status& status);
+  virtual void HandleEndOfStream(::grpc::Status& status);
 
   /**
    * True if the data parsed so far yielded a Row.
@@ -96,7 +96,7 @@ class ReadRowsParser {
    *
    * @throws std::runtime_error if HasNext() is false.
    */
-  virtual Row Next(grpc::Status& status);
+  virtual Row Next(::grpc::Status& status);
 
  private:
   /// Holds partially formed data until a full Row is ready.

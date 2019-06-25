@@ -28,7 +28,7 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-/// An adapter to use `grpc::Status` with the `google::cloud::*Policies`.
+/// An adapter to use `::grpc::Status` with the `google::cloud::*Policies`.
 struct SafeGrpcRetry {
   static inline bool IsTransientFailure(google::cloud::StatusCode code) {
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
@@ -48,16 +48,16 @@ struct SafeGrpcRetry {
   // TODO(#2344) - remove ::grpc::Status version.
   // Sometimes we need to use google::protobuf::rpc::Status, in which case this
   // is a easier function
-  static inline bool IsTransientFailure(grpc::StatusCode code) {
-    return code == grpc::StatusCode::ABORTED ||
-           code == grpc::StatusCode::UNAVAILABLE ||
-           code == grpc::StatusCode::DEADLINE_EXCEEDED;
+  static inline bool IsTransientFailure(::grpc::StatusCode code) {
+    return code == ::grpc::StatusCode::ABORTED ||
+           code == ::grpc::StatusCode::UNAVAILABLE ||
+           code == ::grpc::StatusCode::DEADLINE_EXCEEDED;
   }
-  static inline bool IsOk(grpc::Status const& status) { return status.ok(); }
-  static inline bool IsTransientFailure(grpc::Status const& status) {
+  static inline bool IsOk(::grpc::Status const& status) { return status.ok(); }
+  static inline bool IsTransientFailure(::grpc::Status const& status) {
     return IsTransientFailure(status.error_code());
   }
-  static inline bool IsPermanentFailure(grpc::Status const& status) {
+  static inline bool IsPermanentFailure(::grpc::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
   }
 };
@@ -96,7 +96,7 @@ class RPCRetryPolicy {
   /**
    * Update the ClientContext for the next call.
    */
-  virtual void Setup(grpc::ClientContext& context) const = 0;
+  virtual void Setup(::grpc::ClientContext& context) const = 0;
 
   /**
    * Handle an RPC failure.
@@ -105,13 +105,13 @@ class RPCRetryPolicy {
    */
   virtual bool OnFailure(google::cloud::Status const& status) = 0;
   // TODO(#2344) - remove ::grpc::Status version.
-  virtual bool OnFailure(grpc::Status const& status) = 0;
+  virtual bool OnFailure(::grpc::Status const& status) = 0;
 
   static bool IsPermanentFailure(google::cloud::Status const& status) {
     return internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
   // TODO(#2344) - remove ::grpc::Status version.
-  static bool IsPermanentFailure(grpc::Status const& status) {
+  static bool IsPermanentFailure(::grpc::Status const& status) {
     return internal::SafeGrpcRetry::IsPermanentFailure(status);
   }
 };
@@ -129,10 +129,10 @@ class LimitedErrorCountRetryPolicy : public RPCRetryPolicy {
       : impl_(maximum_failures) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
-  void Setup(grpc::ClientContext& context) const override;
+  void Setup(::grpc::ClientContext& context) const override;
   bool OnFailure(google::cloud::Status const& status) override;
   // TODO(#2344) - remove ::grpc::Status version.
-  bool OnFailure(grpc::Status const& status) override;
+  bool OnFailure(::grpc::Status const& status) override;
 
  private:
   using Impl = google::cloud::internal::LimitedErrorCountRetryPolicy<
@@ -151,10 +151,10 @@ class LimitedTimeRetryPolicy : public RPCRetryPolicy {
       : impl_(maximum_duration) {}
 
   std::unique_ptr<RPCRetryPolicy> clone() const override;
-  void Setup(grpc::ClientContext& context) const override;
+  void Setup(::grpc::ClientContext& context) const override;
   bool OnFailure(google::cloud::Status const& status) override;
   // TODO(#2344) - remove ::grpc::Status version.
-  bool OnFailure(grpc::Status const& status) override;
+  bool OnFailure(::grpc::Status const& status) override;
 
  private:
   using Impl =

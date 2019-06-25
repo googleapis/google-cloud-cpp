@@ -51,29 +51,30 @@ class BigtableImpl final : public btproto::Bigtable::Service {
                   [&generator]() { return MakeRandomValue(generator); });
   }
 
-  grpc::Status MutateRow(grpc::ServerContext*, btproto::MutateRowRequest const*,
-                         btproto::MutateRowResponse*) override {
+  ::grpc::Status MutateRow(::grpc::ServerContext*,
+                           btproto::MutateRowRequest const*,
+                           btproto::MutateRowResponse*) override {
     ++mutate_row_count_;
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
 
-  grpc::Status MutateRows(
-      grpc::ServerContext*, btproto::MutateRowsRequest const* request,
-      grpc::ServerWriter<btproto::MutateRowsResponse>* writer) override {
+  ::grpc::Status MutateRows(
+      ::grpc::ServerContext*, btproto::MutateRowsRequest const* request,
+      ::grpc::ServerWriter<btproto::MutateRowsResponse>* writer) override {
     ++mutate_rows_count_;
     btproto::MutateRowsResponse msg;
     for (int index = 0; index != request->entries_size(); ++index) {
       auto& entry = *msg.add_entries();
       entry.set_index(index);
-      entry.mutable_status()->set_code(grpc::StatusCode::OK);
+      entry.mutable_status()->set_code(::grpc::StatusCode::OK);
     }
-    writer->WriteLast(msg, grpc::WriteOptions());
-    return grpc::Status::OK;
+    writer->WriteLast(msg, ::grpc::WriteOptions());
+    return ::grpc::Status::OK;
   }
 
-  grpc::Status ReadRows(
-      grpc::ServerContext*, btproto::ReadRowsRequest const* request,
-      grpc::ServerWriter<btproto::ReadRowsResponse>* writer) override {
+  ::grpc::Status ReadRows(
+      ::grpc::ServerContext*, btproto::ReadRowsRequest const* request,
+      ::grpc::ServerWriter<btproto::ReadRowsResponse>* writer) override {
     ++read_rows_count_;
     std::int64_t rows_limit = 10000;
     if (request->rows_limit() != 0) {
@@ -111,8 +112,8 @@ class BigtableImpl final : public btproto::Bigtable::Service {
         msg = {};
       }
     }
-    writer->WriteLast(msg, grpc::WriteOptions());
-    return grpc::Status::OK;
+    writer->WriteLast(msg, ::grpc::WriteOptions());
+    return ::grpc::Status::OK;
   }
 
   int mutate_row_count() const { return mutate_row_count_.load(); }
@@ -134,19 +135,19 @@ class TableAdminImpl final : public btadmin::BigtableTableAdmin::Service {
  public:
   TableAdminImpl() : create_table_count_(0), delete_table_count_(0) {}
 
-  grpc::Status CreateTable(grpc::ServerContext*,
-                           btadmin::CreateTableRequest const* request,
-                           btadmin::Table* response) override {
+  ::grpc::Status CreateTable(::grpc::ServerContext*,
+                             btadmin::CreateTableRequest const* request,
+                             btadmin::Table* response) override {
     ++create_table_count_;
     response->set_name(request->parent() + "/tables/" + request->table_id());
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
 
-  grpc::Status DeleteTable(grpc::ServerContext*,
-                           btadmin::DeleteTableRequest const*,
-                           ::google::protobuf::Empty*) override {
+  ::grpc::Status DeleteTable(::grpc::ServerContext*,
+                             btadmin::DeleteTableRequest const*,
+                             ::google::protobuf::Empty*) override {
     ++delete_table_count_;
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   }
 
   int create_table_count() const { return create_table_count_.load(); }
@@ -163,8 +164,8 @@ class DefaultEmbeddedServer : public EmbeddedServer {
   explicit DefaultEmbeddedServer() {
     int port;
     std::string server_address("[::]:0");
-    builder_.AddListeningPort(server_address, grpc::InsecureServerCredentials(),
-                              &port);
+    builder_.AddListeningPort(server_address,
+                              ::grpc::InsecureServerCredentials(), &port);
     builder_.RegisterService(&bigtable_service_);
     builder_.RegisterService(&admin_service_);
     server_ = builder_.BuildAndStart();
@@ -194,8 +195,8 @@ class DefaultEmbeddedServer : public EmbeddedServer {
  private:
   BigtableImpl bigtable_service_;
   TableAdminImpl admin_service_;
-  grpc::ServerBuilder builder_;
-  std::unique_ptr<grpc::Server> server_;
+  ::grpc::ServerBuilder builder_;
+  std::unique_ptr<::grpc::Server> server_;
   std::string address_;
 };
 

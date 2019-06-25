@@ -62,7 +62,7 @@ MetadataUpdatePolicy MetadataUpdatePolicy::FromClusterId(
   return policy;
 }
 
-void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
+void MetadataUpdatePolicy::Setup(::grpc::ClientContext& context) const {
   context.AddMetadata(std::string("x-goog-request-params"), value());
   context.AddMetadata(std::string("x-goog-api-client"), api_client_header());
 }

@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
 
 #include "google/cloud/bigtable/internal/conjunction.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
@@ -371,7 +371,7 @@ class FailedMutation {
   friend class BulkMutation;
 
  private:
-  static grpc::Status ToGrpcStatus(google::rpc::Status const& status);
+  static ::grpc::Status ToGrpcStatus(google::rpc::Status const& status);
   static google::cloud::Status ToGCStatus(google::rpc::Status const& status);
 
  private:
@@ -388,7 +388,7 @@ class PermanentMutationFailure : public std::runtime_error {
                            std::vector<FailedMutation> failures)
       : std::runtime_error(msg), failures_(std::move(failures)) {}
 
-  PermanentMutationFailure(char const* msg, grpc::Status status,
+  PermanentMutationFailure(char const* msg, ::grpc::Status status,
                            std::vector<FailedMutation> failures)
       : std::runtime_error(msg),
         failures_(std::move(failures)),
@@ -410,14 +410,14 @@ class PermanentMutationFailure : public std::runtime_error {
   /**
    * The grpc::Status of the request.
    *
-   * Notice that it can return grpc::Status::OK when there are partial failures
-   * in a BulkApply() operation.
+   * Notice that it can return grpc::Status::OK when there are partial
+   * failures in a BulkApply() operation.
    */
-  grpc::Status const& status() const { return status_; }
+  ::grpc::Status const& status() const { return status_; }
 
  private:
   std::vector<FailedMutation> failures_;
-  grpc::Status status_;
+  ::grpc::Status status_;
 };
 
 /**

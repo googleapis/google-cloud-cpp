@@ -149,7 +149,7 @@ class RetryAsyncUnaryRpcFuture {
   static void StartIteration(std::shared_ptr<RetryAsyncUnaryRpcFuture> self,
                              CompletionQueue cq) {
     auto context =
-        ::google::cloud::internal::make_unique<grpc::ClientContext>();
+        ::google::cloud::internal::make_unique<::grpc::ClientContext>();
     self->rpc_retry_policy_->Setup(*context);
     self->rpc_backoff_policy_->Setup(*context);
     self->metadata_update_policy_.Setup(*context);

@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/row.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -28,7 +28,7 @@ using google::bigtable::v2::ReadRowsResponse_CellChunk;
 using google::cloud::bigtable::internal::ReadRowsParser;
 
 TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
-  grpc::Status status;
+  ::grpc::Status status;
   ReadRowsParser parser;
 
   EXPECT_FALSE(parser.HasNext());
@@ -39,7 +39,7 @@ TEST(ReadRowsParserTest, NoChunksNoRowsSucceeds) {
 
 TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
   ReadRowsParser parser;
-  grpc::Status status;
+  ::grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
   parser.HandleEndOfStream(status);
@@ -50,7 +50,7 @@ TEST(ReadRowsParserTest, HandleEndOfStreamCalledTwiceThrows) {
 TEST(ReadRowsParserTest, HandleChunkAfterEndOfStreamThrows) {
   ReadRowsParser parser;
   ReadRowsResponse_CellChunk chunk;
-  grpc::Status status;
+  ::grpc::Status status;
   chunk.set_value_size(1);
 
   EXPECT_FALSE(parser.HasNext());
@@ -74,7 +74,7 @@ TEST(ReadRowsParserTest, SingleChunkSucceeds) {
     commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
-  grpc::Status status;
+  ::grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleChunk(chunk, status);
   EXPECT_TRUE(status.ok());
@@ -109,7 +109,7 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
     commit_row: true
     )";
   ASSERT_TRUE(TextFormat::ParseFromString(chunk1, &chunk));
-  grpc::Status status;
+  ::grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleChunk(chunk, status);
   EXPECT_TRUE(status.ok());
@@ -124,7 +124,7 @@ TEST(ReadRowsParserTest, NextAfterEndOfStreamSucceeds) {
 
 TEST(ReadRowsParserTest, NextWithNoDataThrows) {
   ReadRowsParser parser;
-  grpc::Status status;
+  ::grpc::Status status;
   EXPECT_FALSE(parser.HasNext());
   parser.HandleEndOfStream(status);
   EXPECT_TRUE(status.ok());
@@ -196,24 +196,22 @@ class AcceptanceTest : public ::testing::Test {
 
   google::cloud::Status FeedChunks(
       std::vector<ReadRowsResponse_CellChunk> chunks) {
-    grpc::Status status;
+    ::grpc::Status status;
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);
       if (!status.ok()) {
-        return google::cloud::bigtable::internal::MakeStatusFromRpcError(
-            status);
+        return ::google::cloud::grpc::MakeStatusFromRpcError(status);
       }
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next(status));
         if (!status.ok()) {
-          return google::cloud::bigtable::internal::MakeStatusFromRpcError(
-              status);
+          return ::google::cloud::grpc::MakeStatusFromRpcError(status);
         }
       }
     }
     parser_.HandleEndOfStream(status);
     if (!status.ok()) {
-      return google::cloud::bigtable::internal::MakeStatusFromRpcError(status);
+      return ::google::cloud::grpc::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status{};
   }

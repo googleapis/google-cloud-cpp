@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include "google/cloud/internal/build_info.h"
 #include <thread>
 
@@ -25,7 +25,7 @@ namespace testing {
 void EmbeddedServerTestFixture::StartServer() {
   int port;
   std::string server_address("[::]:0");
-  builder_.AddListeningPort(server_address, grpc::InsecureServerCredentials(),
+  builder_.AddListeningPort(server_address, ::grpc::InsecureServerCredentials(),
                             &port);
   builder_.RegisterService(&bigtable_service_);
   builder_.RegisterService(&admin_service_);
@@ -36,17 +36,17 @@ void EmbeddedServerTestFixture::StartServer() {
 void EmbeddedServerTestFixture::SetUp() {
   StartServer();
 
-  grpc::ChannelArguments channel_arguments;
+  ::grpc::ChannelArguments channel_arguments;
   static std::string const user_agent_prefix = ClientOptions::UserAgentPrefix();
   channel_arguments.SetUserAgentPrefix(user_agent_prefix);
 
-  std::shared_ptr<grpc::Channel> data_channel =
+  std::shared_ptr<::grpc::Channel> data_channel =
       server_->InProcessChannel(channel_arguments);
   data_client_ = std::make_shared<InProcessDataClient>(
       std::move(kProjectId), std::move(kInstanceId), std::move(data_channel));
   table_ = std::make_shared<bigtable::Table>(data_client_, kTableId);
 
-  std::shared_ptr<grpc::Channel> admin_channel =
+  std::shared_ptr<::grpc::Channel> admin_channel =
       server_->InProcessChannel(channel_arguments);
   admin_client_ = std::make_shared<InProcessAdminClient>(
       std::move(kProjectId), std::move(admin_channel));

@@ -31,7 +31,7 @@ using namespace testing;
 auto create_rules_lambda = [](std::string expected_request_string,
                               std::string generated_response_string) {
   return [expected_request_string, generated_response_string](
-             grpc::ClientContext*,
+             ::grpc::ClientContext*,
              btproto::ReadModifyWriteRowRequest const& request,
              btproto::ReadModifyWriteRowResponse* response) {
     btproto::ReadModifyWriteRowRequest expected_request;
@@ -46,7 +46,7 @@ auto create_rules_lambda = [](std::string expected_request_string,
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         generated_response_string, response));
 
-    return grpc::Status::OK;
+    return ::grpc::Status::OK;
   };
 };
 
@@ -259,8 +259,8 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
   std::string const column_id1 = "colid1";
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+      .WillRepeatedly(Return(
+          ::grpc::Status(::grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
 
   EXPECT_FALSE(table_.ReadModifyWriteRow(
       row_key,

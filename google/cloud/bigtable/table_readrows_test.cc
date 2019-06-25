@@ -47,7 +47,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
-  EXPECT_CALL(*stream, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*stream, Finish()).WillOnce(Return(::grpc::Status::OK));
   EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke(stream->MakeMockReturner()));
 
@@ -98,13 +98,13 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 
   EXPECT_CALL(*stream, Finish())
       .WillOnce(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+          Return(::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "try-again")));
 
   EXPECT_CALL(*stream_retry, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response_retry), Return(true)))
       .WillOnce(Return(false));
 
-  EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(grpc::Status::OK));
+  EXPECT_CALL(*stream_retry, Finish()).WillOnce(Return(::grpc::Status::OK));
 
   auto reader =
       table_.ReadRows(bigtable::RowSet(), bigtable::Filter::PassAllFilter());
@@ -126,8 +126,8 @@ TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
         auto stream = new MockReadRowsReader;
         EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish())
-            .WillOnce(
-                Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "broken")));
+            .WillOnce(Return(
+                ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "broken")));
         return stream->AsUniqueMocked();
       })));
 

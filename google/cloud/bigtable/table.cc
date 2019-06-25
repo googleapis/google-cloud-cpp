@@ -16,8 +16,8 @@
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
+#include "google/cloud/grpc/grpc_error_delegate.h"
 #include <thread>
 #include <type_traits>
 
@@ -86,9 +86,9 @@ Status Table::Apply(SingleRowMutation mut) {
                   });
 
   btproto::MutateRowResponse response;
-  grpc::Status status;
+  ::grpc::Status status;
   while (true) {
-    grpc::ClientContext client_context;
+    ::grpc::ClientContext client_context;
     rpc_policy->Setup(client_context);
     backoff_policy->Setup(client_context);
     metadata_update_policy_.Setup(client_context);
@@ -100,7 +100,7 @@ Status Table::Apply(SingleRowMutation mut) {
     // It is up to the policy to terminate this loop, it could run
     // forever, but that would be a bad policy (pun intended).
     if (!rpc_policy->OnFailure(status) || !is_idempotent) {
-      return bigtable::internal::MakeStatusFromRpcError(
+      return ::google::cloud::grpc::MakeStatusFromRpcError(
           status.error_code(),
           "Permanent (or too many transient) errors in Table::Apply()");
     }
@@ -114,7 +114,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
   SetCommonTableOperationRequest<google::bigtable::v2::MutateRowRequest>(
       request, app_profile_id_, table_name_);
   mut.MoveTo(request);
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto context = google::cloud::internal::make_unique<::grpc::ClientContext>();
 
   // Determine if all the mutations are idempotent. The idempotency of the
   // mutations won't change as the retry loop executes, so we can just compute
@@ -131,9 +131,9 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(is_idempotent),
              clone_metadata_update_policy(),
-             [client](grpc::ClientContext* context,
+             [client](::grpc::ClientContext* context,
                       google::bigtable::v2::MutateRowRequest const& request,
-                      grpc::CompletionQueue* cq) {
+                      ::grpc::CompletionQueue* cq) {
                return client->AsyncMutateRow(context, request, cq);
              },
              std::move(request), cq)
@@ -143,7 +143,7 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
 }
 
 std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
-  grpc::Status status;
+  ::grpc::Status status;
 
   // Copy the policies in effect for this operation.  Many policy classes change
   // their state as the operation makes progress (or fails to make progress), so
@@ -155,7 +155,7 @@ std::vector<FailedMutation> Table::BulkApply(BulkMutation mut) {
   bigtable::internal::BulkMutator mutator(app_profile_id_, table_name_,
                                           *idemponent_policy, std::move(mut));
   while (mutator.HasPendingMutations()) {
-    grpc::ClientContext client_context;
+    ::grpc::ClientContext client_context;
     backoff_policy->Setup(client_context);
     retry_policy->Setup(client_context);
     metadata_update_policy_.Setup(client_context);
@@ -221,7 +221,7 @@ StatusOr<std::pair<bool, Row>> Table::ReadRow(std::string row_key,
 StatusOr<MutationBranch> Table::CheckAndMutateRow(
     std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
     std::vector<Mutation> false_mutations) {
-  grpc::Status status;
+  ::grpc::Status status;
   btproto::CheckAndMutateRowRequest request;
   request.set_row_key(std::move(row_key));
   SetCommonTableOperationRequest<btproto::CheckAndMutateRowRequest>(
@@ -241,7 +241,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
       "Table::CheckAndMutateRow", status, is_idempotent);
 
   if (!status.ok()) {
-    return bigtable::internal::MakeStatusFromRpcError(status);
+    return ::google::cloud::grpc::MakeStatusFromRpcError(status);
   }
   return response.predicate_matched() ? MutationBranch::kPredicateMatched
                                       : MutationBranch::kPredicateNotMatched;
@@ -269,9 +269,9 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(is_idempotent),
              clone_metadata_update_policy(),
-             [client](grpc::ClientContext* context,
+             [client](::grpc::ClientContext* context,
                       btproto::CheckAndMutateRowRequest const& request,
-                      grpc::CompletionQueue* cq) {
+                      ::grpc::CompletionQueue* cq) {
                return client->AsyncCheckAndMutateRow(context, request, cq);
              },
              std::move(request), cq)
@@ -305,7 +305,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
       request, app_profile_id_, table_name_);
 
   while (true) {
-    grpc::ClientContext client_context;
+    ::grpc::ClientContext client_context;
     backoff_policy->Setup(client_context);
     retry_policy->Setup(client_context);
     clone_metadata_update_policy().Setup(client_context);
@@ -322,7 +322,7 @@ StatusOr<std::vector<bigtable::RowKeySample>> Table::SampleRows() {
       break;
     }
     if (!retry_policy->OnFailure(status)) {
-      return internal::MakeStatusFromRpcError(
+      return ::google::cloud::grpc::MakeStatusFromRpcError(
           status.error_code(),
           "Retry policy exhausted: " + status.error_message());
     }
@@ -339,13 +339,13 @@ StatusOr<Row> Table::ReadModifyWriteRowImpl(
       ::google::bigtable::v2::ReadModifyWriteRowRequest>(
       request, app_profile_id_, table_name_);
 
-  grpc::Status status;
+  ::grpc::Status status;
   auto response = ClientUtils::MakeNonIdemponentCall(
       *(client_), clone_rpc_retry_policy(), clone_metadata_update_policy(),
       &DataClient::ReadModifyWriteRow, request, "ReadModifyWriteRowRequest",
       status);
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return ::google::cloud::grpc::MakeStatusFromRpcError(status);
   }
   return TransformReadModifyWriteRowResponse<
       btproto::ReadModifyWriteRowResponse>(response);
@@ -363,9 +363,9 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              internal::ConstantIdempotencyPolicy(false),
              clone_metadata_update_policy(),
-             [client](grpc::ClientContext* context,
+             [client](::grpc::ClientContext* context,
                       btproto::ReadModifyWriteRowRequest const& request,
-                      grpc::CompletionQueue* cq) {
+                      ::grpc::CompletionQueue* cq) {
                return client->AsyncReadModifyWriteRow(context, request, cq);
              },
              std::move(request), cq)

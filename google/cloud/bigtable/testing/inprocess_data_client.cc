@@ -21,61 +21,61 @@ namespace testing {
 
 namespace btproto = google::bigtable::v2;
 
-grpc::Status InProcessDataClient::MutateRow(
-    grpc::ClientContext* context, btproto::MutateRowRequest const& request,
+::grpc::Status InProcessDataClient::MutateRow(
+    ::grpc::ClientContext* context, btproto::MutateRowRequest const& request,
     btproto::MutateRowResponse* response) {
   return Stub()->MutateRow(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::v2::MutateRowResponse>>
 InProcessDataClient::AsyncMutateRow(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     google::bigtable::v2::MutateRowRequest const& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   auto result = Stub()->AsyncMutateRow(context, request, cq);
-  return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::MutateRowResponse>>(result.release());
 }
 
-grpc::Status InProcessDataClient::CheckAndMutateRow(
-    grpc::ClientContext* context,
+::grpc::Status InProcessDataClient::CheckAndMutateRow(
+    ::grpc::ClientContext* context,
     btproto::CheckAndMutateRowRequest const& request,
     btproto::CheckAndMutateRowResponse* response) {
   return Stub()->CheckAndMutateRow(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::v2::CheckAndMutateRowResponse>>
 InProcessDataClient::AsyncCheckAndMutateRow(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     const google::bigtable::v2::CheckAndMutateRowRequest& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   auto result = Stub()->AsyncCheckAndMutateRow(context, request, cq);
-  return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::CheckAndMutateRowResponse>>(result.release());
 }
 
-grpc::Status InProcessDataClient::ReadModifyWriteRow(
-    grpc::ClientContext* context,
+::grpc::Status InProcessDataClient::ReadModifyWriteRow(
+    ::grpc::ClientContext* context,
     btproto::ReadModifyWriteRowRequest const& request,
     btproto::ReadModifyWriteRowResponse* response) {
   return Stub()->ReadModifyWriteRow(context, request, response);
 }
 
-std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
     google::bigtable::v2::ReadModifyWriteRowResponse>>
 InProcessDataClient::AsyncReadModifyWriteRow(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     const google::bigtable::v2::ReadModifyWriteRowRequest& request,
-    grpc::CompletionQueue* cq) {
+    ::grpc::CompletionQueue* cq) {
   auto result = Stub()->AsyncReadModifyWriteRow(context, request, cq);
-  return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+  return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::v2::ReadModifyWriteRowResponse>>(result.release());
 }
 
-std::unique_ptr<grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
-InProcessDataClient::ReadRows(grpc::ClientContext* context,
+std::unique_ptr<::grpc::ClientReaderInterface<btproto::ReadRowsResponse>>
+InProcessDataClient::ReadRows(::grpc::ClientContext* context,
                               btproto::ReadRowsRequest const& request) {
   return Stub()->ReadRows(context, request);
 }
@@ -96,15 +96,15 @@ InProcessDataClient::PrepareAsyncReadRows(
   return Stub()->PrepareAsyncReadRows(context, request, cq);
 }
 
-std::unique_ptr<grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
+std::unique_ptr<::grpc::ClientReaderInterface<btproto::SampleRowKeysResponse>>
 InProcessDataClient::SampleRowKeys(
-    grpc::ClientContext* context,
+    ::grpc::ClientContext* context,
     btproto::SampleRowKeysRequest const& request) {
   return Stub()->SampleRowKeys(context, request);
 }
 
-std::unique_ptr<grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
-InProcessDataClient::MutateRows(grpc::ClientContext* context,
+std::unique_ptr<::grpc::ClientReaderInterface<btproto::MutateRowsResponse>>
+InProcessDataClient::MutateRows(::grpc::ClientContext* context,
                                 btproto::MutateRowsRequest const& request) {
   return Stub()->MutateRows(context, request);
 }

@@ -38,14 +38,14 @@ namespace {
  */
 class AsyncTimerFuture : public internal::AsyncGrpcOperation {
  public:
-  AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
+  AsyncTimerFuture(std::unique_ptr<::grpc::Alarm> alarm)
       : alarm_(std::move(alarm)) {}
 
   future<std::chrono::system_clock::time_point> GetFuture() {
     return promise_.get_future();
   }
 
-  void Set(grpc::CompletionQueue& cq,
+  void Set(::grpc::CompletionQueue& cq,
            std::chrono::system_clock::time_point deadline, void* tag) {
     deadline_ = deadline;
 
@@ -69,7 +69,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   promise<std::chrono::system_clock::time_point> promise_;
   std::chrono::system_clock::time_point deadline_;
   /// Holds the underlying handle. It might be a nullptr in tests.
-  std::unique_ptr<grpc::Alarm> alarm_;
+  std::unique_ptr<::grpc::Alarm> alarm_;
 };
 
 }  // namespace

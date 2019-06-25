@@ -46,6 +46,7 @@ foreach (fname ${bigtable_client_integration_tests})
                                   bigtable_protos
                                   google_cloud_cpp_testing
                                   google_cloud_cpp_common
+                                  google_cloud_cpp_common_grpc
                                   GTest::gmock_main
                                   GTest::gmock
                                   GTest::gtest
@@ -59,6 +60,7 @@ add_executable(instance_admin_emulator instance_admin_emulator.cc)
 target_link_libraries(instance_admin_emulator
                       PRIVATE bigtable_client
                               bigtable_protos
+                              google_cloud_cpp_common_grpc
                               gRPC::grpc++
                               gRPC::grpc
                               protobuf::libprotobuf

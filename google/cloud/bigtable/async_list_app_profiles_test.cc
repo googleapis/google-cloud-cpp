@@ -38,7 +38,7 @@ using MockAsyncListAppProfilesReader =
         btadmin::ListAppProfilesResponse>;
 
 using Functor = std::function<void(
-    CompletionQueue&, std::vector<btadmin::AppProfile>&, grpc::Status&)>;
+    CompletionQueue&, std::vector<btadmin::AppProfile>&, ::grpc::Status&)>;
 
 std::string const kProjectId = "the-project";
 
@@ -75,7 +75,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
 auto create_list_profiles_lambda = [](std::string returned_token,
                                       std::vector<std::string> profile_names) {
   return [returned_token, profile_names](
-             btadmin::ListAppProfilesResponse* response, grpc::Status* status,
+             btadmin::ListAppProfilesResponse* response, ::grpc::Status* status,
              void*) {
     for (auto const& app_profile_name : profile_names) {
       auto& app_profile = *response->add_app_profiles();
@@ -83,7 +83,7 @@ auto create_list_profiles_lambda = [](std::string returned_token,
     }
     // Return the right token.
     response->set_next_page_token(returned_token);
-    *status = grpc::Status::OK;
+    *status = ::grpc::Status::OK;
   };
 };
 
@@ -100,12 +100,12 @@ std::vector<std::string> AppProfileNames(
 /// @test One successful page with 1 one profile.
 TEST_F(AsyncListAppProfilesTest, Simple) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
       }));
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
@@ -126,28 +126,28 @@ TEST_F(AsyncListAppProfilesTest, Simple) {
 /// @test Test 3 pages, no failures, multiple profiles.
 TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_2_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_2", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_3_.get());
       }));
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
@@ -187,36 +187,36 @@ TEST_F(AsyncListAppProfilesTest, MultipleProfiles) {
 /// @test Test 2 pages, with a filure between them.
 TEST_F(AsyncListAppProfilesTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListAppProfiles(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_1_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_2_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](::grpc::ClientContext*,
                               btadmin::ListAppProfilesRequest const& request,
-                              grpc::CompletionQueue*) {
+                              ::grpc::CompletionQueue*) {
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
-        return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+        return std::unique_ptr<::grpc::ClientAsyncResponseReaderInterface<
             btadmin::ListAppProfilesResponse>>(profiles_reader_3_.get());
       }));
   EXPECT_CALL(*profiles_reader_1_, Finish(_, _, _))
       .WillOnce(Invoke(create_list_profiles_lambda("token_1", {"profile_1"})));
   EXPECT_CALL(*profiles_reader_2_, Finish(_, _, _))
       .WillOnce(Invoke(
-          [](btadmin::ListAppProfilesResponse*, grpc::Status* status, void*) {
-            *status = grpc::Status(grpc::StatusCode::UNAVAILABLE, "");
+          [](btadmin::ListAppProfilesResponse*, ::grpc::Status* status, void*) {
+            *status = ::grpc::Status(::grpc::StatusCode::UNAVAILABLE, "");
           }));
   EXPECT_CALL(*profiles_reader_3_, Finish(_, _, _))
       .WillOnce(Invoke(create_list_profiles_lambda("", {"profile_2"})));

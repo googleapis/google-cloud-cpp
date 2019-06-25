@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) try {
   std::string const table_id = argv[3];
 
   // Register the OpenCensus gRPC plugin to enable stats and tracing in gRPC.
-  grpc::RegisterOpenCensusPlugin();
+  ::grpc::RegisterOpenCensusPlugin();
 
   // The `ProbabilitySampler` used in this example samples out request and
   // does not trace all the requests. So, if production system requires tracing

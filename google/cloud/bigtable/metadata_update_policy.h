@@ -109,7 +109,7 @@ class MetadataUpdatePolicy {
   MetadataUpdatePolicy& operator=(MetadataUpdatePolicy const&) = default;
 
   // Update the ClientContext for the next call.
-  void Setup(grpc::ClientContext& context) const;
+  void Setup(::grpc::ClientContext& context) const;
 
   std::string const& value() const { return value_; }
   std::string const& api_client_header() const { return api_client_header_; }
