@@ -150,6 +150,12 @@ add_custom_target(google-cloud-cpp-dependencies)
 # interested in compiling and running the gRPC tests.
 include(IncludeGrpc)
 
+# Optionally allow installing testing_util files.
+option(
+    GOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL
+    "Install header files that include testing utility helper functions." OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL)
+
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)

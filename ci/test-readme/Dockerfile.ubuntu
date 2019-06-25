@@ -110,7 +110,8 @@ WORKDIR /home/build/google-cloud-cpp
 COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external \
+    -DGOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL=ON
 RUN cmake --build cmake-out -- -j $(nproc)
 WORKDIR /home/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure
@@ -139,4 +140,9 @@ WORKDIR /home/build/test-submodule
 COPY ci/test-install /home/build/test-submodule
 COPY . /home/build/test-submodule/submodule/google-cloud-cpp
 RUN cmake -Hsubmodule -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)
+
+WORKDIR /home/build/test-install-cmake-testing-util
+COPY ci/test-install/testing-util /home/build/test-install-cmake-testing-util
+RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j $(nproc)

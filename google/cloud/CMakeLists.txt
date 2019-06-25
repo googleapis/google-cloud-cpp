@@ -252,6 +252,16 @@ if (BUILD_TESTING)
         terminate_handler_test.cc
         testing_util/assert_ok_test.cc)
 
+    if (GOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL)
+        install(TARGETS google_cloud_cpp_testing
+                EXPORT google_cloud_cpp_common-targets
+                RUNTIME DESTINATION bin
+                LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+        google_cloud_cpp_install_headers(google_cloud_cpp_testing
+                                         include/google/cloud/testing_util)
+    endif ()
+
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
                          "google_cloud_cpp_common_unit_tests")
