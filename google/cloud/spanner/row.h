@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ROW_H_
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/disjunction.h"
 #include <cstdint>
 #include <string>
 #include <tuple>
@@ -68,7 +69,7 @@ class Row {
   Row() {}
   Row(Row const&) = default;
   Row& operator=(Row const&) = default;
-  Row(Row&) = default;
+  Row(Row&&) = default;
   Row& operator=(Row&&) = default;
 
   /**
@@ -76,8 +77,15 @@ class Row {
    *
    * See also the `MakeRow()` helper function template for a convenient way to
    * make rows without having to also specify the value's types.
+   *
+   * This constructor is disabled if any of the specified types is `Row`, which
+   * prevents this constructor from taking over copy construction.
    */
-  template <typename... Ts>
+  template <typename... Ts,
+            typename std::enable_if<
+                !google::cloud::internal::disjunction<
+                    std::is_same<typename std::decay<Ts>::type, Row>...>::value,
+                int>::type = 0>
   explicit Row(Ts&&... ts) : values_(std::forward<Ts>(ts)...) {}
 
   /// Returns the number of columns in this row.
