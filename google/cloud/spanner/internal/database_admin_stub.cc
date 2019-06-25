@@ -26,24 +26,6 @@ namespace gcsa = google::spanner::admin::database;
 
 DatabaseAdminStub::~DatabaseAdminStub() = default;
 
-StatusOr<google::longrunning::Operation> DatabaseAdminStub::CreateDatabase(
-    grpc::ClientContext&, gcsa::v1::CreateDatabaseRequest const&) {
-  return Status(StatusCode::kUnimplemented,
-                std::string("Unimplemented stub for ") + __func__);
-}
-
-Status DatabaseAdminStub::DropDatabase(grpc::ClientContext&,
-                                       gcsa::v1::DropDatabaseRequest const&) {
-  return Status(StatusCode::kUnimplemented,
-                std::string("Unimplemented stub for ") + __func__);
-}
-
-StatusOr<google::longrunning::Operation> DatabaseAdminStub::GetOperation(
-    grpc::ClientContext&, google::longrunning::GetOperationRequest const&) {
-  return Status(StatusCode::kUnimplemented,
-                std::string("Unimplemented stub for ") + __func__);
-}
-
 class DefaultDatabaseAdminStub : public DatabaseAdminStub {
  public:
   DefaultDatabaseAdminStub(

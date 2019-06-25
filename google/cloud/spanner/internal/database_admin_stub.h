@@ -35,17 +35,18 @@ class DatabaseAdminStub {
   virtual StatusOr<google::longrunning::Operation> CreateDatabase(
       grpc::ClientContext& client_context,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
-          request);
+          request) = 0;
 
   /// Drop an existing Cloud Spanner database.
   virtual Status DropDatabase(
       grpc::ClientContext& client_context,
-      google::spanner::admin::database::v1::DropDatabaseRequest const& request);
+      google::spanner::admin::database::v1::DropDatabaseRequest const&
+          request) = 0;
 
   /// Poll a long-running operation.
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
-      google::longrunning::GetOperationRequest const& request);
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 /**
