@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
 
 #include "google/cloud/bigtable/async_operation.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
@@ -114,7 +114,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
     }
     if (!status_.ok()) {
       // Convert the error to a `google::cloud::Status` and satisfy the future.
-      promise_.set_value(MakeStatusFromRpcError(status_));
+      promise_.set_value(grpc_utils::MakeStatusFromRpcError(status_));
       return true;
     }
     // Success, use `response_` to satisfy the future.

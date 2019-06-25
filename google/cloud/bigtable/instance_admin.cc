@@ -15,8 +15,8 @@
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <google/protobuf/descriptor.h>
@@ -70,7 +70,7 @@ StatusOr<InstanceList> InstanceAdmin::ListInstances() {
   } while (!page_token.empty());
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   std::move(unique_failed_locations.begin(), unique_failed_locations.end(),
@@ -250,7 +250,7 @@ StatusOr<btadmin::Instance> InstanceAdmin::GetInstance(
       &InstanceAdminClient::GetInstance, request, "InstanceAdmin::GetInstance",
       status, true);
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -283,7 +283,7 @@ Status InstanceAdmin::DeleteInstance(std::string const& instance_id) {
       *(client_), clone_rpc_retry_policy(), metadata_update_policy_,
       &InstanceAdminClient::DeleteInstance, request,
       "InstanceAdmin::DeleteInstance", status);
-  return internal::MakeStatusFromRpcError(status);
+  return grpc_utils::MakeStatusFromRpcError(status);
 }
 
 future<Status> InstanceAdmin::AsyncDeleteCluster(
@@ -349,7 +349,7 @@ StatusOr<btadmin::Cluster> InstanceAdmin::GetCluster(
       &InstanceAdminClient::GetCluster, request, "InstanceAdmin::GetCluster",
       status, true);
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -414,7 +414,7 @@ StatusOr<ClusterList> InstanceAdmin::ListClusters(
   } while (!page_token.empty());
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   std::move(unique_failed_locations.begin(), unique_failed_locations.end(),
@@ -516,7 +516,7 @@ Status InstanceAdmin::DeleteCluster(std::string const& instance_id,
       *(client_), clone_rpc_retry_policy(), metadata_update_policy,
       &InstanceAdminClient::DeleteCluster, request,
       "InstanceAdmin::DeleteCluster", status);
-  return internal::MakeStatusFromRpcError(status);
+  return grpc_utils::MakeStatusFromRpcError(status);
 }
 
 StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
@@ -533,7 +533,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::CreateAppProfile(
       "InstanceAdmin::CreateAppProfile", status);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -570,7 +570,7 @@ StatusOr<btadmin::AppProfile> InstanceAdmin::GetAppProfile(
       "InstanceAdmin::GetAppProfile", status, true);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -661,7 +661,7 @@ StatusOr<std::vector<btadmin::AppProfile>> InstanceAdmin::ListAppProfiles(
   } while (!page_token.empty());
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -704,7 +704,7 @@ Status InstanceAdmin::DeleteAppProfile(std::string const& instance_id,
       &InstanceAdminClient::DeleteAppProfile, request,
       "InstanceAdmin::DeleteAppProfile", status);
 
-  return internal::MakeStatusFromRpcError(status);
+  return grpc_utils::MakeStatusFromRpcError(status);
 }
 
 future<Status> InstanceAdmin::AsyncDeleteAppProfile(
@@ -752,7 +752,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
       "InstanceAdmin::GetIamPolicy", status, true);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return ProtoToWrapper(std::move(proto));
@@ -815,7 +815,7 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
       "InstanceAdmin::SetIamPolicy", status, true);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return ProtoToWrapper(std::move(proto));
@@ -890,7 +890,7 @@ StatusOr<std::vector<std::string>> InstanceAdmin::TestIamPermissions(
   }
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return resource_permissions;

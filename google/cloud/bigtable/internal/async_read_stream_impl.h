@@ -235,7 +235,7 @@ class AsyncReadStreamImpl
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
       bool Notify(CompletionQueue&, bool ok) override {
-        control_->OnFinish(ok, MakeStatusFromRpcError(status));
+        control_->OnFinish(ok, grpc_utils::MakeStatusFromRpcError(status));
         return true;
       }
       std::shared_ptr<AsyncReadStreamImpl> control_;

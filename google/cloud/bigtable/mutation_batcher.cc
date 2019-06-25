@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <sstream>
 
 namespace google {
@@ -48,7 +48,7 @@ std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     // can limit the memory usage.
     pending.mut.Clear();
     pending.completion_promise.set_value(
-        internal::MakeStatusFromRpcError(mutation_status));
+        grpc_utils::MakeStatusFromRpcError(mutation_status));
     // No need to consider no_more_pending_promises because this operation
     // didn't lower the number of pending operations.
     pending.admission_promise.set_value();

@@ -197,7 +197,7 @@ grpc::Status BulkMutator::MakeOneRequest(bigtable::DataClient& client,
   }
   // Handle any errors in the stream.
   auto grpc_status = stream->Finish();
-  state_.OnFinish(bigtable::internal::MakeStatusFromRpcError(grpc_status));
+  state_.OnFinish(grpc_utils::MakeStatusFromRpcError(grpc_status));
   return grpc_status;
 }
 

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 
 namespace google {
 namespace cloud {

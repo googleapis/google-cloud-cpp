@@ -16,9 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_MUTATIONS_H_
 
 #include "google/cloud/bigtable/internal/conjunction.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
