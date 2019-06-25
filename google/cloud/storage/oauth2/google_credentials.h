@@ -181,6 +181,48 @@ CreateServiceAccountCredentialsFromP12FilePath(
 //@}
 
 /**
+ * Produces a ServiceAccountCredentials type by trying to load the standard
+ * Application Default %Credentials paths.
+ *
+ * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
+ * or P12 file it points to will be loaded. Otherwise, if the gcloud utility
+ * has configured an Application Default %Credentials file, that file is
+ * loaded. The loaded file is used to create a ServiceAccountCredentials.
+ *
+ * @see https://cloud.google.com/docs/authentication/production for details
+ *     about Application Default %Credentials.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromDefaultPaths();
+
+/**
+ * Produces a ServiceAccountCredentials type by trying to load the standard
+ * Application Default %Credentials paths.
+ *
+ * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
+ * or P12 file it points to will be loaded. Otherwise, if the gcloud utility
+ * has configured an Application Default %Credentials file, that file is
+ * loaded. The loaded file is used to create a ServiceAccountCredentials.
+ *
+ * @param scopes the scopes to request during the authorization grant. If
+ *     omitted, the cloud-platform scope, defined by
+ *     `GoogleOAuthScopeCloudPlatform()`, is used as a default.
+ * @param subject for domain-wide delegation; the email address of the user for
+ *     which to request delegated access. If omitted, no "subject" attribute is
+ *     included in the authorization grant.
+ *
+ * @see https://developers.google.com/identity/protocols/googlescopes for a list
+ *     of OAuth 2.0 scopes used with Google APIs.
+ *
+ * @see https://cloud.google.com/docs/authentication/production for details
+ *     about Application Default %Credentials.
+ */
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromDefaultPaths(
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject);
+
+/**
  * Creates a ServiceAccountCredentials from a JSON string.
  *
  * These credentials use the cloud-platform OAuth 2.0 scope, defined by

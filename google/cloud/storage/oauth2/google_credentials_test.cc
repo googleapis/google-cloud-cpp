@@ -224,6 +224,68 @@ TEST_F(GoogleCredentialsTest,
   EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
 }
 
+TEST_F(GoogleCredentialsTest,
+       LoadValidServiceAccountCredentialsFromDefaultPathsViaEnvVar) {
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
+
+  // Test that the service account credentials are loaded as the default when
+  // specified via the well known environment variable.
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
+  ASSERT_STATUS_OK(creds);
+  // Need to create a temporary for the pointer because clang-tidy warns about
+  // using expressions with (potential) side-effects inside typeid().
+  auto* ptr = creds->get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadValidServiceAccountCredentialsFromDefaultPathsViaGcloudFile) {
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
+
+  // Test that the service account credentials are loaded as the default when
+  // stored in the the well known gcloud ADC file path.
+  UnsetEnv(GoogleAdcEnvVar());
+  SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
+  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
+  ASSERT_STATUS_OK(creds);
+  auto* ptr = creds->get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+}
+
+TEST_F(GoogleCredentialsTest,
+       LoadValidServiceAccountCredentialsFromDefaultPathsWithOptionalArgs) {
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupServiceAccountCredentialsFileForTest(filename);
+
+  // Test that the service account credentials are loaded as the default when
+  // specified via the well known environment variable.
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  auto creds = CreateServiceAccountCredentialsFromDefaultPaths(
+      {{"https://www.googleapis.com/auth/devstorage.full_control"}},
+      "user@foo.bar");
+  ASSERT_STATUS_OK(creds);
+  auto* ptr = creds->get();
+  EXPECT_EQ(typeid(*ptr), typeid(ServiceAccountCredentials<>));
+}
+
+TEST_F(
+    GoogleCredentialsTest,
+    DoNotLoadAuthorizedUserCredentialsFromCreateServiceAccountCredentialsFromDefaultPaths) {
+  std::string filename = ::testing::TempDir() + AUTHORIZED_USER_CRED_FILENAME;
+  SetupAuthorizedUserCredentialsFileForTest(filename);
+
+  // Test that the authorized user credentials are loaded as the default when
+  // specified via the well known environment variable.
+  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
+  ASSERT_FALSE(creds) << "status=" << creds.status();
+  EXPECT_THAT(creds.status().message(),
+              HasSubstr("Unsupported credential type"));
+}
+
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsFromContents) {
   // Test that the service account credentials are loaded from a string
   // representing JSON contents.

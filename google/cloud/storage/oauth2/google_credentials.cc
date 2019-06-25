@@ -32,9 +32,21 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-/// Parses the JSON file at `path` and creates the appropriate Credentials type.
+constexpr char kAdcLink[] =
+    "https://developers.google.com/identity/protocols/"
+    "application-default-credentials";
+
+/// Parses the JSON or P12 file at `path` and creates the appropriate
+/// Credentials type.
+///
+/// If `service_account_scopes` or `service_account_subject` are specified, the
+/// file at `path` must be a P12 service account or a JSON service account. If
+/// a different type of credential file is found, this function returns
+/// nullptr to indicate a service account file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
-    std::string const& path) {
+    std::string const& path, bool non_service_account_ok,
+    google::cloud::optional<std::set<std::string>> service_account_scopes,
+    google::cloud::optional<std::string> service_account_subject) {
   namespace nl = google::cloud::storage::internal::nl;
 
   std::ifstream ifs(path);
@@ -55,13 +67,21 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
       return Status(StatusCode::kInvalidArgument,
                     "Invalid credentials file " + path);
     }
+    info->subject = std::move(service_account_subject);
+    info->scopes = std::move(service_account_scopes);
     auto credentials =
         google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
             *info);
     return std::unique_ptr<Credentials>(std::move(credentials));
   }
   std::string cred_type = cred_json.value("type", "no type given");
-  if (cred_type == "authorized_user") {
+  // If non_service_account_ok==false and the cred_type is authorized_user,
+  // we'll return "Unsupported credential type (authorized_user)".
+  if (cred_type == "authorized_user" && non_service_account_ok) {
+    if (service_account_scopes || service_account_subject) {
+      // No ptr indicates that the file we found was not a service account file.
+      return StatusOr<std::unique_ptr<Credentials>>(nullptr);
+    }
     auto info = ParseAuthorizedUserCredentials(contents, path);
     if (!info) {
       return info.status();
@@ -76,6 +96,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     if (!info) {
       return info.status();
     }
+    info->subject = std::move(service_account_subject);
+    info->scopes = std::move(service_account_scopes);
     std::unique_ptr<Credentials> ptr =
         google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
             *info);
@@ -88,46 +110,49 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
                  path + "."));
 }
 
-StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcEnvVar() {
+/// Tries to load the file at the path specified by the value of the Application
+/// Default %Credentials environment variable and to create the appropriate
+/// Credentials type.
+///
+/// Returns nullptr if the environment variable is not set or the path does not
+/// exist.
+///
+/// If `service_account_scopes` or `service_account_subject` are specified, the
+/// found file must be a P12 service account or a JSON service account. If a
+/// different type of credential file is found, this function returns nullptr
+/// to indicate a service account file wasn't found.
+StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
+    bool non_service_account_ok,
+    google::cloud::optional<std::set<std::string>> service_account_scopes,
+    google::cloud::optional<std::string> service_account_subject) {
+  // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
-  if (!path.empty()) {
-    // If the path was specified, try to load that file; explicitly fail if it
-    // doesn't exist or can't be read and parsed.
-    return LoadCredsFromPath(path);
-  }
-  // No ptr indicates that there was no path to attempt loading creds from.
-  return StatusOr<std::unique_ptr<Credentials>>(nullptr);
-}
-
-StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromGcloudAdcFile() {
-  auto path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
-  if (!path.empty()) {
+  if (path.empty()) {
+    // 2) If no path was specified via environment variable, check if the
+    // gcloud ADC file exists.
+    path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
+    if (path.empty()) {
+      return StatusOr<std::unique_ptr<Credentials>>(nullptr);
+    }
     // Just because we had the necessary information to build the path doesn't
     // mean that a file exists there.
     std::error_code ec;
     auto adc_file_status = google::cloud::internal::status(path, ec);
-    if (google::cloud::internal::exists(adc_file_status)) {
-      return LoadCredsFromPath(path);
+    if (!google::cloud::internal::exists(adc_file_status)) {
+      return StatusOr<std::unique_ptr<Credentials>>(nullptr);
     }
   }
-  // Either we were unable to construct the well known path or no file existed
-  // at that path.
-  return StatusOr<std::unique_ptr<Credentials>>(nullptr);
+
+  // If the path was specified, try to load that file; explicitly fail if it
+  // doesn't exist or can't be read and parsed.
+  return LoadCredsFromPath(path, non_service_account_ok, service_account_scopes,
+                           service_account_subject);
 }
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
-  // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
-  auto creds = MaybeLoadCredsFromAdcEnvVar();
-  if (!creds) {
-    return StatusOr<std::shared_ptr<Credentials>>(creds.status());
-  }
-  if (*creds) {
-    return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
-  }
-
-  // 2) If no path was specified via environment variable, check if the gcloud
-  // ADC file exists.
-  creds = MaybeLoadCredsFromGcloudAdcFile();
+  // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
+  // is set or if the gcloud ADC file exists.
+  auto creds = MaybeLoadCredsFromAdcPaths(true, {}, {});
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
@@ -146,14 +171,11 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
   }
 
   // We've exhausted all search points, thus credentials cannot be constructed.
-  std::string adc_link =
-      "https://developers.google.com/identity/protocols"
-      "/application-default-credentials";
   return StatusOr<std::shared_ptr<Credentials>>(
       Status(StatusCode::kUnknown,
              "Could not automatically determine credentials. For more "
              "information, please see " +
-                 adc_link));
+                 std::string(kAdcLink)));
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {
@@ -226,11 +248,6 @@ CreateServiceAccountCredentialsFromJsonFilePath(
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromP12FilePath(std::string const& path) {
-  return CreateServiceAccountCredentialsFromP12FilePath(path, {}, {});
-}
-
-StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path,
     google::cloud::optional<std::set<std::string>> scopes,
@@ -245,6 +262,36 @@ CreateServiceAccountCredentialsFromP12FilePath(
   info->scopes = std::move(scopes);
   return StatusOr<std::shared_ptr<Credentials>>(
       std::make_shared<ServiceAccountCredentials<>>(*info));
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromP12FilePath(std::string const& path) {
+  return CreateServiceAccountCredentialsFromP12FilePath(path, {}, {});
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromDefaultPaths() {
+  return CreateServiceAccountCredentialsFromDefaultPaths({}, {});
+}
+
+StatusOr<std::shared_ptr<Credentials>>
+CreateServiceAccountCredentialsFromDefaultPaths(
+    google::cloud::optional<std::set<std::string>> scopes,
+    google::cloud::optional<std::string> subject) {
+  auto creds = MaybeLoadCredsFromAdcPaths(false, scopes, subject);
+  if (!creds) {
+    return StatusOr<std::shared_ptr<Credentials>>(creds.status());
+  }
+  if (*creds) {
+    return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
+  }
+
+  // We've exhausted all search points, thus credentials cannot be constructed.
+  return StatusOr<std::shared_ptr<Credentials>>(
+      Status(StatusCode::kUnknown,
+             "Could not create service account credentials using Application"
+             "Default Credentials paths. For more information, please see " +
+                 std::string(kAdcLink)));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
