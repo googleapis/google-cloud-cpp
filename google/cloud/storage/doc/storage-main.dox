@@ -283,6 +283,25 @@ to follow a more conservative approach:
    and [StrictIdempotencyPolicy](@ref google::cloud::storage::v1::StrictIdempotencyPolicy)
    for alternative idempotency policies.
 
+### Mocking GCS bucket read and write
+
+It is possible to mock GCS bucket read and write using gmock framework, this is specially ueeful
+for developer using GCS C++ client library.
+
+#### Mocking Successful call of `ReadObject`
+
+Mocking of ReadObject can be achieve by mocking `ObjectReadSource`, this is explained in following 
+code snippet
+ 
+@snippet storage_client_mock_samples.cc mock successful readobject
+
+#### Mocking Successful call of `WriteObject`
+
+Mocking of ReadObject can be achieve by mocking `ObjectWriteStreambuf`, this is explained in following 
+code snippet
+
+@snippet storage_client_mock_samples.cc mock successful writeobject
+
 ### Next Steps
 
 The documentation for each member function in the [Client] class includes short

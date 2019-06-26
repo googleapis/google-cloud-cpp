@@ -62,21 +62,20 @@ void MockReadObject(int& argc, char* argv[]) {
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
 
-  std::shared_ptr<gcs::testing::MockClient> mock;
-  std::unique_ptr<gcs::Client> client;
-
+  //! [mock successful readobject]
   gcs::ClientOptions client_options =
       gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
-  mock = std::make_shared<gcs::testing::MockClient>();
+  std::shared_ptr<gcs::testing::MockClient> mock =
+      std::make_shared<gcs::testing::MockClient>();
+  gcs::Client client(mock);
+
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
-  client.reset(
-      new gcs::Client{std::shared_ptr<gcs::internal::RawClient>(mock)});
 
   std::string text = "this is a mock http response";
-
-  EXPECT_CALL(*mock, ReadObject(testing::_))
+  using ::testing::_;
+  EXPECT_CALL(*mock, ReadObject(_))
       .WillOnce(testing::Invoke(
           [&text](gcs::internal::ReadObjectRangeRequest const& request) {
             std::cout << "\nReading from bucket : " << request.bucket_name()
@@ -85,7 +84,7 @@ void MockReadObject(int& argc, char* argv[]) {
             EXPECT_CALL(*mock_source, IsOpen())
                 .WillOnce(testing::Return(true))
                 .WillRepeatedly(testing::Return(false));
-            EXPECT_CALL(*mock_source, Read(testing::_, testing::_))
+            EXPECT_CALL(*mock_source, Read(_, _))
                 .WillOnce(testing::Return(gcs::internal::ReadSourceResult{
                     text.length(),
                     gcs::internal::HttpResponse{200, text, {}}}));
@@ -96,19 +95,19 @@ void MockReadObject(int& argc, char* argv[]) {
             return google::cloud::make_status_or(std::move(result));
           }));
 
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+  gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
 
-    // Reading the payload of http response stored in stream
-    int count = 0;
-    std::string line;
-    while (std::getline(stream, line, '\n')) {
-      std::cout << "Reading line : " << line << std::endl;
-      ++count;
-    }
+  // Reading the payload of http response stored in stream
+  int count = 0;
+  std::string line;
+  while (std::getline(stream, line, '\n')) {
+    std::cout << "Reading line : " << line << std::endl;
+    ++count;
+  }
 
-    std::cout << "The object has " << count << " line(s)\n";
-  }(*client, bucket_name, object_name);
+  std::cout << "The object has " << count << " line(s)\n";
+  stream.Close();
+  //! [mock successful readobject]
 }
 
 void MockWriteObject(int& argc, char* argv[]) {
@@ -118,23 +117,23 @@ void MockWriteObject(int& argc, char* argv[]) {
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
 
-  std::shared_ptr<gcs::testing::MockClient> mock;
-  std::unique_ptr<gcs::Client> client;
+  //! [mock successful writeobject]
   gcs::ClientOptions client_options =
       gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
-  mock = std::make_shared<gcs::testing::MockClient>();
+  std::shared_ptr<gcs::testing::MockClient> mock =
+      std::make_shared<gcs::testing::MockClient>();
+  gcs::Client client(mock);
+
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
-  client.reset(
-      new gcs::Client{std::shared_ptr<gcs::internal::RawClient>(mock)});
 
   std::string text = R"""({
         "name": "test-bucket-name/test-object-name/1"
   })""";
-  auto expected = gcs::internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, WriteObject(testing::_))
+  using ::testing::_;
+  EXPECT_CALL(*mock, WriteObject(_))
       .WillOnce(testing::Invoke(
           [&text](gcs::internal::InsertObjectStreamingRequest const& request) {
             std::cout << "Writing to bucket : " << request.bucket_name()
@@ -152,12 +151,10 @@ void MockWriteObject(int& argc, char* argv[]) {
             return google::cloud::make_status_or(std::move(result));
           }));
 
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    auto stream = client.WriteObject(bucket_name, object_name);
-    stream << "Hello World!";
-    stream.Close();
-  }(*client, bucket_name, object_name);
+  auto stream = client.WriteObject(bucket_name, object_name);
+  stream << "Hello World!";
+  stream.Close();
+  //! [mock successful writeobject]
 }
 
 }  // anonymous namespace
