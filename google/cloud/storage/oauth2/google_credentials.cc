@@ -36,13 +36,13 @@ constexpr char kAdcLink[] =
     "https://developers.google.com/identity/protocols/"
     "application-default-credentials";
 
-/// Parses the JSON or P12 file at `path` and creates the appropriate
-/// Credentials type.
-///
-/// If `service_account_scopes` or `service_account_subject` are specified, the
-/// file at `path` must be a P12 service account or a JSON service account. If
-/// a different type of credential file is found, this function returns
-/// nullptr to indicate a service account file wasn't found.
+// Parses the JSON or P12 file at `path` and creates the appropriate
+// Credentials type.
+//
+// If `service_account_scopes` or `service_account_subject` are specified, the
+// file at `path` must be a P12 service account or a JSON service account. If
+// a different type of credential file is found, this function returns
+// nullptr to indicate a service account file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     std::string const& path, bool non_service_account_ok,
     google::cloud::optional<std::set<std::string>> service_account_scopes,
@@ -110,17 +110,17 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
                  path + "."));
 }
 
-/// Tries to load the file at the path specified by the value of the Application
-/// Default %Credentials environment variable and to create the appropriate
-/// Credentials type.
-///
-/// Returns nullptr if the environment variable is not set or the path does not
-/// exist.
-///
-/// If `service_account_scopes` or `service_account_subject` are specified, the
-/// found file must be a P12 service account or a JSON service account. If a
-/// different type of credential file is found, this function returns nullptr
-/// to indicate a service account file wasn't found.
+// Tries to load the file at the path specified by the value of the Application
+// Default %Credentials environment variable and to create the appropriate
+// Credentials type.
+//
+// Returns nullptr if the environment variable is not set or the path does not
+// exist.
+//
+// If `service_account_scopes` or `service_account_subject` are specified, the
+// found file must be a P12 service account or a JSON service account. If a
+// different type of credential file is found, this function returns nullptr
+// to indicate a service account file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
     bool non_service_account_ok,
     google::cloud::optional<std::set<std::string>> service_account_scopes,
