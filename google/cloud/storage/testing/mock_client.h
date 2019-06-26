@@ -177,6 +177,25 @@ class MockResumableUploadSession
   MOCK_CONST_METHOD0(last_response,
                      StatusOr<internal::ResumableUploadResponse> const&());
 };
+
+class MockObjectReadSource : public internal::ObjectReadSource {
+ public:
+  MOCK_CONST_METHOD0(IsOpen, bool());
+  MOCK_METHOD0(Close, StatusOr<internal::HttpResponse>());
+  MOCK_METHOD2(Read,
+               StatusOr<internal::ReadSourceResult>(char* buf, std::size_t n));
+};
+
+class MockStreambuf : public internal::ObjectWriteStreambuf {
+ public:
+  MOCK_CONST_METHOD0(IsOpen, bool());
+  MOCK_METHOD0(DoClose, StatusOr<internal::HttpResponse>());
+  MOCK_METHOD1(ValidateHash, bool(ObjectMetadata const&));
+  MOCK_CONST_METHOD0(received_hash, std::string const&());
+  MOCK_CONST_METHOD0(computed_hash, std::string const&());
+  MOCK_CONST_METHOD0(resumable_session_id, std::string const&());
+  MOCK_CONST_METHOD0(next_expected_byte, std::uint64_t());
+};
 }  // namespace testing
 }  // namespace storage
 }  // namespace cloud
