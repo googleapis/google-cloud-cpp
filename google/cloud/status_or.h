@@ -116,7 +116,7 @@ class StatusOr final {
    *     the program terminates via `google::cloud::Terminate()`
    */
   StatusOr& operator=(Status status) {
-    return *this = StatusOr(std::move(tmp));
+    return *this = StatusOr(std::move(status));
   }
 
   StatusOr(StatusOr&& rhs) : status_(std::move(rhs.status_)) {
