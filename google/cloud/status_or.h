@@ -109,6 +109,16 @@ class StatusOr final {
     }
   }
 
+  /**
+   * Assigns the given non-OK Status to this `StatusOr<T>`.
+   *
+   * @throws std::invalid_argument if `status.ok()`. If exceptions are disabled
+   *     the program terminates via `google::cloud::Terminate()`
+   */
+  StatusOr& operator=(Status status) {
+    return *this = StatusOr(std::move(status));
+  }
+
   StatusOr(StatusOr&& rhs) : status_(std::move(rhs.status_)) {
     if (status_.ok()) {
       new (&value_) T(std::move(*rhs));
