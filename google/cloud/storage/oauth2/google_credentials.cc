@@ -145,8 +145,9 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
 
   // If the path was specified, try to load that file; explicitly fail if it
   // doesn't exist or can't be read and parsed.
-  return LoadCredsFromPath(path, non_service_account_ok, service_account_scopes,
-                           service_account_subject);
+  return LoadCredsFromPath(path, non_service_account_ok,
+                           std::move(service_account_scopes),
+                           std::move(service_account_subject));
 }
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
@@ -278,7 +279,8 @@ StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
     google::cloud::optional<std::set<std::string>> scopes,
     google::cloud::optional<std::string> subject) {
-  auto creds = MaybeLoadCredsFromAdcPaths(false, scopes, subject);
+  auto creds =
+      MaybeLoadCredsFromAdcPaths(false, std::move(scopes), std::move(subject));
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
