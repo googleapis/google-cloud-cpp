@@ -123,8 +123,6 @@ add_library(bigtable_client
             internal/async_bulk_apply.h
             internal/async_bulk_apply.cc
             internal/async_longrunning_op.h
-            internal/async_loop_op.h
-            internal/async_op_traits.h
             internal/async_poll_op.h
             internal/async_read_stream_impl.h
             internal/async_retry_multi_page.h
