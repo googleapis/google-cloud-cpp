@@ -46,8 +46,8 @@ std::ostream& operator<<(std::ostream& os, NativeIamBinding const& binding) {
 
 google::iam::v1::Binding NativeIamBinding::ToProto() && {
   google::iam::v1::Binding res(std::move(impl_));
-  for (auto& member : members_) {
-    res.add_members(std::move(member));
+  for (auto const& member : members_) {
+    res.add_members(member);
   }
   return res;
 }

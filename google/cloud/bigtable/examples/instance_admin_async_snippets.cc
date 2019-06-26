@@ -743,7 +743,7 @@ void AsyncSetNativeIamPolicy(
         " roles/bigtable.user user:my-user@example.com"};
   }
 
-  //! [async set iam policy]
+  //! [async set native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
@@ -792,7 +792,7 @@ void AsyncSetNativeIamPolicy(
     std::cout << "DONE, the IAM Policy for " << instance_id << " is\n"
               << *result << "\n";
   }
-  //! [async set iam policy]
+  //! [async set native iam policy]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
 }
 

@@ -30,7 +30,7 @@ NativeIamPolicy::NativeIamPolicy(std::list<NativeIamBinding> bindings,
 NativeIamPolicy::NativeIamPolicy(google::iam::v1::Policy impl)
     : impl_(std::move(impl)) {
   for (auto& binding : impl_.bindings()) {
-    bindings_.emplace_back(NativeIamBinding(std::move(binding)));
+    bindings_.emplace_back(NativeIamBinding(binding));
   }
   impl_.clear_bindings();
 }
