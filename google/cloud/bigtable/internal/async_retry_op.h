@@ -16,8 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_OP_H_
 
 #include "google/cloud/bigtable/completion_queue.h"
-#include "google/cloud/bigtable/internal/async_loop_op.h"
-#include "google/cloud/bigtable/internal/async_op_traits.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
@@ -30,54 +28,6 @@ namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
-
-/**
- * A dummy function object only to ease specification of retriable operations.
- *
- * It is an example type which could be passed to `Start()` member function of
- * the operation to be retried.
- */
-struct PrototypeStartCallback {
-  void operator()(CompletionQueue&, grpc::Status&) const {}
-};
-
-/**
- * A check if the template parameter meets criteria for `AsyncRetryOp`.
- */
-template <typename Operation>
-struct MeetsAsyncOperationRequirements {
-  static_assert(HasStart<Operation, PrototypeStartCallback>::value,
-                "Operation has to have a templated Start() member function "
-                "instantiatable with functors like PrototypeStartCallback");
-  static_assert(
-      HasAccumulatedResult<Operation>::value,
-      "Operation has to have an AccumulatedResult() member function.");
-  static_assert(
-      google::cloud::internal::is_invocable<
-          decltype(&Operation::template Start<PrototypeStartCallback>),
-          Operation&, CompletionQueue&, std::unique_ptr<grpc::ClientContext>&&,
-          PrototypeStartCallback&&>::value,
-      "Operation::Start<PrototypeStartCallback> has to be "
-      "non-static and invocable with "
-      "CompletionQueue&, std::unique_ptr<grpc::ClientContext>&&, "
-      "PrototypeStartCallback&&.");
-  static_assert(google::cloud::internal::is_invocable<
-                    decltype(&Operation::AccumulatedResult), Operation&>::value,
-                "Operation::AccumulatedResult has to be non-static and "
-                "invokable with no arguments");
-  static_assert(
-      std::is_same<
-          google::cloud::internal::invoke_result_t<
-              decltype(&Operation::template Start<PrototypeStartCallback>),
-              Operation&, CompletionQueue&,
-              std::unique_ptr<grpc::ClientContext>&&, PrototypeStartCallback&&>,
-          std::shared_ptr<AsyncOperation>>::value,
-      "Operation::Start<>(...) has to return a "
-      "std::shared_ptr<AsyncOperation>");
-
-  using Response = google::cloud::internal::invoke_result_t<
-      decltype(&Operation::AccumulatedResult), Operation&>;
-};
 
 /**
  * An idempotent policy for `AsyncRetryOp` based on a pre-computed value.
