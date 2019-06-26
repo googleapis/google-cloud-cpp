@@ -48,6 +48,14 @@ TEST(StatusOrTest, StatusConstructorInvalid) {
       "exceptions are disabled: ");
 }
 
+TEST(StatusOrTest, StatusAssignment) {
+  auto const error = Status(StatusCode::kUnknown, "blah");
+  StatusOr<int> sor;
+  sor = error;
+  EXPECT_FALSE(sor.ok());
+  EXPECT_EQ(error, sor.status());
+}
+
 TEST(StatusOrTest, ValueConstructor) {
   StatusOr<int> actual(42);
   EXPECT_STATUS_OK(actual);
