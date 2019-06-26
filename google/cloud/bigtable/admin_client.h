@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_ADMIN_CLIENT_H_
 
 #include "google/cloud/bigtable/client_options.h"
-#include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
@@ -86,13 +85,6 @@ class AdminClient {
   friend class TableAdmin;
   friend class internal::AsyncAwaitConsistency;
   friend class internal::AsyncCheckConsistency;
-  template <typename ResultType, typename ClientType>
-  friend ResultType internal::PollLongRunningOperation(
-      std::shared_ptr<ClientType> client,
-      std::unique_ptr<PollingPolicy> polling_policy,
-      MetadataUpdatePolicy metadata_update_policy,
-      google::longrunning::Operation& operation, char const* error_message,
-      grpc::Status& status);
   template <typename Client, typename Response>
   friend class internal::AsyncLongrunningOperation;
   //@{

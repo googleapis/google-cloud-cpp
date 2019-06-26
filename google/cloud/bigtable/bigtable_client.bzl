@@ -51,7 +51,6 @@ bigtable_client_hdrs = [
     "internal/conjunction.h",
     "internal/google_bytes_traits.h",
     "internal/grpc_error_delegate.h",
-    "internal/poll_longrunning_operation.h",
     "internal/prefix_range_end.h",
     "internal/readrowsparser.h",
     "internal/rpc_policy_parameters.inc",

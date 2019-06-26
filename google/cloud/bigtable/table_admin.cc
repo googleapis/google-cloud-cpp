@@ -16,7 +16,6 @@
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/grpc_error_delegate.h"
-#include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include <google/protobuf/duration.pb.h>
 #include <sstream>

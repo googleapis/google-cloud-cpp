@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INSTANCE_ADMIN_CLIENT_H_
 
 #include "google/cloud/bigtable/client_options.h"
-#include "google/cloud/bigtable/internal/poll_longrunning_operation.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <memory>
@@ -97,13 +96,6 @@ class InstanceAdminClient {
   friend class internal::AsyncListClusters;
   friend class internal::AsyncListInstances;
   friend class internal::AsyncListAppProfiles;
-  template <typename ResultType, typename ClientType>
-  friend ResultType internal::PollLongRunningOperation(
-      std::shared_ptr<ClientType> client,
-      std::unique_ptr<PollingPolicy> polling_policy,
-      MetadataUpdatePolicy metadata_update_policy,
-      google::longrunning::Operation& operation, char const* error_message,
-      grpc::Status& status);
   //@{
   /// @name The `google.bigtable.v2.InstanceAdmin` wrappers.
   virtual grpc::Status ListInstances(
