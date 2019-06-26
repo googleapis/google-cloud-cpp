@@ -23,6 +23,8 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_list_responses.h"
 #include "google/cloud/bigtable/instance_update_config.h"
+#include "google/cloud/bigtable/metadata_update_policy.h"
+#include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/iam_policy.h"

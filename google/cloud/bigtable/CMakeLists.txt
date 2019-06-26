@@ -143,7 +143,6 @@ add_library(bigtable_client
             internal/google_bytes_traits.cc
             internal/grpc_error_delegate.h
             internal/grpc_error_delegate.cc
-            internal/poll_longrunning_operation.h
             internal/prefix_range_end.h
             internal/prefix_range_end.cc
             internal/readrowsparser.h
