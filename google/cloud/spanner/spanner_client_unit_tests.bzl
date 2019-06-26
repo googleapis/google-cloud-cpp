@@ -18,6 +18,7 @@
 
 spanner_client_unit_tests = [
     "client_options_test.cc",
+    "database_admin_client_test.cc",
     "row_test.cc",
     "spanner_version_test.cc",
     "sql_statement_test.cc",

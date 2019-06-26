@@ -147,6 +147,10 @@ class DatabaseAdminClient {
                       std::string const& instance_id,
                       std::string const& database_id);
 
+  /// Create a new client with the given stub. For testing only.
+  explicit DatabaseAdminClient(std::shared_ptr<internal::DatabaseAdminStub> s)
+      : stub_(std::move(s)) {}
+
  private:
   std::shared_ptr<internal::DatabaseAdminStub> stub_;
 };
