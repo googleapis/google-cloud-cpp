@@ -319,6 +319,39 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
   (std::move(instance_admin), std::move(cq), argv[1]);
 }
 
+void AsyncGetNativeIamPolicy(
+    google::cloud::bigtable::InstanceAdmin instance_admin,
+    google::cloud::bigtable::CompletionQueue cq,
+    std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw Usage{"async-get-native-iam-policy <project-id> <instance-id>"};
+  }
+
+  //! [async get native iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  using google::cloud::bigtable::NativeIamPolicy;
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id) {
+    future<StatusOr<NativeIamPolicy>> policy_future =
+        instance_admin.AsyncGetNativeIamPolicy(cq, instance_id);
+
+    future<void> final =
+        policy_future.then([](future<StatusOr<NativeIamPolicy>> f) {
+          StatusOr<NativeIamPolicy> iam_policy = f.get();
+          if (!iam_policy) {
+            throw std::runtime_error(iam_policy.status().message());
+          }
+          std::cout << "IamPolicy details : " << *iam_policy << "\n";
+        });
+
+    final.get();  // block to keep the example simple
+  }
+  //! [async get native iam policy]
+  (std::move(instance_admin), std::move(cq), argv[1]);
+}
+
 void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
@@ -691,16 +724,73 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     if (!result) {
       throw std::runtime_error(result.status().message());
     }
-    std::cout << "DONE, the IAM Policy for " << instance_id << " is\n";
-    for (auto const& kv : result->bindings) {
-      std::cout << "role " << kv.first << " includes [";
-      char const* sep = "";
-      for (auto const& m : kv.second) {
-        std::cout << sep << m;
-        sep = ", ";
-      }
-      std::cout << "]\n";
+    std::cout << "DONE, the IAM Policy for " << instance_id << " is\n"
+              << *result << "\n";
+  }
+  //! [async set iam policy]
+  (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
+}
+
+void AsyncSetNativeIamPolicy(
+    google::cloud::bigtable::InstanceAdmin instance_admin,
+    google::cloud::bigtable::CompletionQueue cq,
+    std::vector<std::string> argv) {
+  if (argv.size() < 2) {
+    throw Usage{
+        "async-set-native-iam-policy: <project-id> <instance-id>"
+        " <permission> <new-member>\n"
+        "        Example: set-native-iam-policy my-project my-instance"
+        " roles/bigtable.user user:my-user@example.com"};
+  }
+
+  //! [async set iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  using google::cloud::bigtable::NativeIamPolicy;
+  [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
+     std::string instance_id, std::string role, std::string member) {
+    future<StatusOr<NativeIamPolicy>> updated_future =
+        instance_admin.AsyncGetNativeIamPolicy(cq, instance_id)
+            .then(
+                [cq, instance_admin, role, member, instance_id](
+                    future<StatusOr<NativeIamPolicy>> current_future) mutable {
+                  auto current = current_future.get();
+                  if (!current) {
+                    return google::cloud::make_ready_future<
+                        StatusOr<NativeIamPolicy>>(current.status());
+                  }
+                  // This example adds the member to all existing bindings for
+                  // that role. If there are no such bindgs, it adds a new one.
+                  // This might not be what the user wants, e.g. in case of
+                  // conditional bindings.
+                  auto& bindings = current->bindings();
+                  size_t num_added = 0;
+                  for (auto& binding : bindings) {
+                    if (binding.role() == role) {
+                      binding.members().insert(member);
+                      ++num_added;
+                    }
+                  }
+                  if (num_added == 0) {
+                    bindings.emplace_back(
+                        google::cloud::bigtable::NativeIamBinding(role,
+                                                                  {member}));
+                  }
+                  return instance_admin.AsyncSetIamPolicy(cq, instance_id,
+                                                          *current);
+                });
+    // Show how to perform additional work while the long running operation
+    // completes. The application could use future.then() instead.
+    std::cout << "Waiting for IAM policy update to complete " << std::flush;
+    updated_future.wait_for(std::chrono::seconds(2));
+    auto result = updated_future.get();
+    std::cout << '.' << std::flush;
+    if (!result) {
+      throw std::runtime_error(result.status().message());
     }
+    std::cout << "DONE, the IAM Policy for " << instance_id << " is\n"
+              << *result << "\n";
   }
   //! [async set iam policy]
   (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
@@ -761,6 +851,7 @@ int main(int argc, char* argv[]) try {
       {"async-get-cluster", &AsyncGetCluster},
       {"async-get-app-profile", &AsyncGetAppProfile},
       {"async-get-iam-policy", &AsyncGetIamPolicy},
+      {"async-get-native-iam-policy", &AsyncGetNativeIamPolicy},
       {"async-list-instances", &AsyncListInstances},
       {"async-list-clusters", &AsyncListClusters},
       {"async-list-all-clusters", &AsyncListAllClusters},
@@ -772,6 +863,7 @@ int main(int argc, char* argv[]) try {
       {"async-delete-cluster", &AsyncDeleteCluster},
       {"async-delete-app-profile", &AsyncDeleteAppProfile},
       {"async-set-iam-policy", &AsyncSetIamPolicy},
+      {"async-set-native-iam-policy", &AsyncSetNativeIamPolicy},
       {"async-test-iam-permissions", &AsyncTestIamPermissions}};
 
   google::cloud::bigtable::CompletionQueue cq;

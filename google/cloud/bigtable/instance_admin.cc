@@ -758,6 +758,30 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::GetIamPolicy(
   return ProtoToWrapper(std::move(proto));
 }
 
+StatusOr<google::cloud::bigtable::NativeIamPolicy>
+InstanceAdmin::GetNativeIamPolicy(std::string const& instance_id) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id));
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::GetIamPolicy, request,
+      "InstanceAdmin::GetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return internal::MakeStatusFromRpcError(status);
+  }
+
+  return NativeIamPolicy(std::move(proto));
+}
+
 future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncGetIamPolicy(
     CompletionQueue& cq, std::string const& instance_id) {
   ::google::iam::v1::GetIamPolicyRequest request;
@@ -781,6 +805,33 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncGetIamPolicy(
           return res.status();
         }
         return ProtoToWrapper(std::move(*res));
+      });
+}
+
+future<StatusOr<google::cloud::bigtable::NativeIamPolicy>>
+InstanceAdmin::AsyncGetNativeIamPolicy(CompletionQueue& cq,
+                                       std::string const& instance_id) {
+  ::google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id));
+
+  std::shared_ptr<InstanceAdminClient> client(client_);
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(true),
+             MetadataUpdatePolicy(project_name(), MetadataParamTypes::RESOURCE),
+             [client](grpc::ClientContext* context,
+                      ::google::iam::v1::GetIamPolicyRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncGetIamPolicy(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<::google::iam::v1::Policy>> fut)
+                -> StatusOr<google::cloud::bigtable::NativeIamPolicy> {
+        auto res = fut.get();
+        if (!res) {
+          return res.status();
+        }
+        return NativeIamPolicy(std::move(*res));
       });
 }
 
@@ -821,6 +872,32 @@ StatusOr<google::cloud::IamPolicy> InstanceAdmin::SetIamPolicy(
   return ProtoToWrapper(std::move(proto));
 }
 
+StatusOr<google::cloud::bigtable::NativeIamPolicy> InstanceAdmin::SetIamPolicy(
+    std::string const& instance_id,
+    google::cloud::bigtable::NativeIamPolicy const& iam_policy) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id));
+  *request.mutable_policy() = iam_policy.ToProto();
+
+  MetadataUpdatePolicy metadata_update_policy(project_name(),
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &InstanceAdminClient::SetIamPolicy, request,
+      "InstanceAdmin::SetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return internal::MakeStatusFromRpcError(status);
+  }
+
+  return NativeIamPolicy(std::move(proto));
+}
+
 future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
     CompletionQueue& cq, std::string const& instance_id,
     google::cloud::IamBindings const& iam_bindings, std::string const& etag) {
@@ -857,6 +934,35 @@ future<StatusOr<google::cloud::IamPolicy>> InstanceAdmin::AsyncSetIamPolicy(
           return response.status();
         }
         return ProtoToWrapper(std::move(*response));
+      });
+}
+
+future<StatusOr<google::cloud::bigtable::NativeIamPolicy>>
+InstanceAdmin::AsyncSetIamPolicy(
+    CompletionQueue& cq, std::string const& instance_id,
+    google::cloud::bigtable::NativeIamPolicy const& iam_policy) {
+  ::google::iam::v1::SetIamPolicyRequest request;
+  request.set_resource(InstanceName(instance_id));
+  *request.mutable_policy() = iam_policy.ToProto();
+
+  std::shared_ptr<InstanceAdminClient> client(client_);
+  return internal::StartRetryAsyncUnaryRpc(
+             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             internal::ConstantIdempotencyPolicy(false),
+             clone_metadata_update_policy(),
+             [client](grpc::ClientContext* context,
+                      ::google::iam::v1::SetIamPolicyRequest const& request,
+                      grpc::CompletionQueue* cq) {
+               return client->AsyncSetIamPolicy(context, request, cq);
+             },
+             std::move(request), cq)
+      .then([](future<StatusOr<::google::iam::v1::Policy>> response_fut)
+                -> StatusOr<google::cloud::bigtable::NativeIamPolicy> {
+        auto response = response_fut.get();
+        if (!response) {
+          return response.status();
+        }
+        return NativeIamPolicy(std::move(*response));
       });
 }
 

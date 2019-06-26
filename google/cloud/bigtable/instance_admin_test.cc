@@ -557,6 +557,64 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
   tested.GetIamPolicy(resource);
 }
 
+/// @test Verify positive scenario for InstanceAdmin::GetNativeIamPolicy.
+TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  auto mock_policy = create_policy();
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  auto policy = tested.GetNativeIamPolicy(resource);
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
+/// @test Verify unrecoverable errors for InstanceAdmin::GetNativeIamPolicy.
+TEST_F(InstanceAdminTest, GetNativeIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "other-resource";
+
+  EXPECT_FALSE(tested.GetNativeIamPolicy(resource));
+}
+
+/// @test Verify recoverable errors for InstanceAdmin::GetNativeIamPolicy.
+TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+
+  bigtable::InstanceAdmin tested(client_);
+
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     iamproto::GetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto mock_policy = create_policy();
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  auto policy = tested.GetNativeIamPolicy(resource);
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
 using MockAsyncIamPolicyReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         ::google::iam::v1::Policy>;
@@ -588,12 +646,20 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
     bigtable::InstanceAdmin instance_admin(client_);
     user_future_ = instance_admin.AsyncGetIamPolicy(cq_, "test-instance");
   }
+  void StartNative() {
+    bigtable::InstanceAdmin instance_admin(client_);
+    user_native_future_ =
+        instance_admin.AsyncGetNativeIamPolicy(cq_, "test-instance");
+  }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
       user_future_;
+  google::cloud::future<
+      google::cloud::StatusOr<google::cloud::bigtable::NativeIamPolicy>>
+      user_native_future_;
   std::unique_ptr<MockAsyncIamPolicyReader> reader_;
 };
 
@@ -643,6 +709,57 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto policy = user_future_.get();
+  ASSERT_FALSE(policy);
+  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            policy.status().code());
+}
+
+/// @test Verify that AsyncGetNativeIamPolicy works in simple case.
+TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+            response->set_version(3);
+            response->set_etag("random-tag");
+            *status = grpc::Status::OK;
+          }));
+
+  StartNative();
+  EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
+  EXPECT_EQ(1, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+  auto policy = user_native_future_.get();
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
+/// @test Test unrecoverable errors for InstanceAdmin::AsyncGetNativeIamPolicy.
+TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+          }));
+
+  StartNative();
+  EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
+  EXPECT_EQ(1, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  auto policy = user_native_future_.get();
   ASSERT_FALSE(policy);
   ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
             policy.status().code());
@@ -713,6 +830,76 @@ TEST_F(InstanceAdminTest, SetIamPolicyRecoverableError) {
   EXPECT_EQ("test-tag", policy->etag);
 }
 
+/// @test Verify positive scenario for InstanceAdmin::SetIamPolicy (native).
+TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::InstanceAdmin tested(client_);
+  auto mock_policy = create_policy_with_params();
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  google::cloud::bigtable::NativeIamPolicy iam_policy(
+      {google::cloud::bigtable::NativeIamBinding(
+          "writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      0, "test-tag");
+  auto policy = tested.SetIamPolicy(resource, iam_policy);
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
+
+/// @test Verify unrecoverable errors for InstanceAdmin::SetIamPolicy (native).
+TEST_F(InstanceAdminTest, SetNativeIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "test-resource";
+  google::cloud::bigtable::NativeIamPolicy iam_policy(
+      {google::cloud::bigtable::NativeIamBinding(
+          "writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      0, "test-tag");
+  EXPECT_FALSE(tested.SetIamPolicy(resource, iam_policy));
+}
+
+/// @test Verify recoverable errors for InstanceAdmin::SetIamPolicy (native).
+TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+
+  bigtable::InstanceAdmin tested(client_);
+
+  auto mock_recoverable_failure = [](grpc::ClientContext*,
+                                     iamproto::SetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto mock_policy = create_policy_with_params();
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  google::cloud::bigtable::NativeIamPolicy iam_policy(
+      {google::cloud::bigtable::NativeIamBinding(
+          "writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      0, "test-tag");
+  auto policy = tested.SetIamPolicy(resource, iam_policy);
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
 /// @test Verify that InstanceAdmin::TestIamPermissions works in simple case.
 TEST_F(InstanceAdminTest, TestIamPermissions) {
   using ::testing::_;
@@ -912,11 +1099,24 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
         "test-tag");
   }
 
+  void StartNative() {
+    bigtable::InstanceAdmin instance_admin(client_);
+    user_native_future_ = instance_admin.AsyncSetIamPolicy(
+        cq_, "test-instance",
+        google::cloud::bigtable::NativeIamPolicy(
+            {google::cloud::bigtable::NativeIamBinding(
+                "writer", {"abc@gmail.com", "xyz@gmail.com"})},
+            0, "test-tag"));
+  }
+
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
       user_future_;
+  google::cloud::future<
+      google::cloud::StatusOr<google::cloud::bigtable::NativeIamPolicy>>
+      user_native_future_;
   std::unique_ptr<MockAsyncSetIamPolicyReader> reader_;
 };
 
@@ -971,6 +1171,62 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   cq_impl_->SimulateCompletion(cq_, true);
 
   auto policy = user_future_.get();
+  ASSERT_FALSE(policy);
+  ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
+            policy.status().code());
+}
+
+/// @test Verify that AsyncSetIamPolicy works in simple case (native).
+TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+
+            auto new_binding = response->add_bindings();
+            new_binding->set_role("writer");
+            new_binding->add_members("abc@gmail.com");
+            new_binding->add_members("xyz@gmail.com");
+            response->set_etag("test-tag");
+            *status = grpc::Status::OK;
+          }));
+
+  StartNative();
+  EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
+  EXPECT_EQ(1, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+  auto policy = user_native_future_.get();
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
+
+/// @test Test unrecoverable errors for InstanceAdmin::AsyncSetIamPolicy native.
+TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::InstanceAdmin tested(client_);
+
+  EXPECT_CALL(*reader_, Finish(_, _, _))
+      .WillOnce(
+          Invoke([](iamproto::Policy* response, grpc::Status* status, void*) {
+            EXPECT_NE(nullptr, response);
+            *status = grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "nooo");
+          }));
+
+  StartNative();
+  EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
+  EXPECT_EQ(1, cq_impl_->size());
+  cq_impl_->SimulateCompletion(cq_, true);
+
+  auto policy = user_native_future_.get();
   ASSERT_FALSE(policy);
   ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied,
             policy.status().code());

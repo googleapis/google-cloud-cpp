@@ -365,6 +365,41 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
 }
 
+/// @test Verify that IAM Policy Native APIs work as expected.
+TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
+  std::string instance_id =
+      "it-" + google::cloud::internal::Sample(
+                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+
+  // create instance prerequisites for cluster operations
+  auto instance_config = IntegrationTestConfig(
+      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+  auto instance_details =
+      instance_admin_->CreateInstance(instance_config).get();
+  ASSERT_STATUS_OK(instance_details);
+
+  auto iam_policy = google::cloud::bigtable::NativeIamPolicy(
+      {google::cloud::bigtable::NativeIamBinding(
+          "roles/bigtable.reader",
+          {"serviceAccount:" + std::string(flag_service_account)})});
+
+  auto initial_policy = instance_admin_->SetIamPolicy(instance_id, iam_policy);
+  ASSERT_STATUS_OK(initial_policy);
+
+  auto fetched_policy = instance_admin_->GetNativeIamPolicy(instance_id);
+  ASSERT_STATUS_OK(fetched_policy);
+
+  EXPECT_EQ(initial_policy->version(), fetched_policy->version());
+  EXPECT_EQ(initial_policy->etag(), fetched_policy->etag());
+
+  auto permission_set = instance_admin_->TestIamPermissions(
+      instance_id, {"bigtable.tables.list", "bigtable.tables.delete"});
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2, permission_set->size());
+  EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
+}
+
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 

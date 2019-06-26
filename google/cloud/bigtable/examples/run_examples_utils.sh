@@ -118,6 +118,11 @@ function run_all_instance_admin_examples {
   run_example ./bigtable_instance_admin_snippets set-iam-policy \
       "${project_id}" "${INSTANCE}" "roles/bigtable.user" \
       "serviceAccount:${SERVICE_ACCOUNT}"
+  run_example ./bigtable_instance_admin_snippets get-native-iam-policy \
+      "${project_id}" "${INSTANCE}"
+  run_example ./bigtable_instance_admin_snippets set-native-iam-policy \
+      "${project_id}" "${INSTANCE}" "roles/bigtable.user" \
+      "serviceAccount:${SERVICE_ACCOUNT}"
   run_example ./bigtable_instance_admin_snippets test-iam-permissions \
       "${project_id}" "${INSTANCE}" "bigtable.instances.delete"
   run_example ./bigtable_instance_admin_snippets delete-instance \
@@ -187,6 +192,11 @@ function run_all_instance_admin_async_examples {
   run_example ./instance_admin_async_snippets async-get-iam-policy \
       "${project_id}" "${INSTANCE}"
   run_example ./instance_admin_async_snippets async-set-iam-policy \
+      "${project_id}" "${INSTANCE}" "roles/bigtable.user" \
+      "serviceAccount:${SERVICE_ACCOUNT}"
+  run_example ./instance_admin_async_snippets async-get-native-iam-policy \
+      "${project_id}" "${INSTANCE}"
+  run_example ./instance_admin_async_snippets async-set-native-iam-policy \
       "${project_id}" "${INSTANCE}" "roles/bigtable.user" \
       "serviceAccount:${SERVICE_ACCOUNT}"
   run_example ./instance_admin_async_snippets async-test-iam-permissions \
