@@ -20,6 +20,10 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
+using ::testing::AnyOf;
+using ::testing::Eq;
+using ::testing::UnorderedPointwise;
+
 TEST(SqlStatementTest, SqlAccessor) {
   const char* statement = "select * from foo";
   SqlStatement stmt(statement);
@@ -33,11 +37,58 @@ TEST(SqlStatementTest, ParamsAccessor) {
   EXPECT_TRUE(params == stmt.params());
 }
 
+TEST(SqlStatementTest, ParameterNames) {
+  std::vector<std::string> expected = {"first", "last"};
+  SqlStatement::ParamType params = {{"last", Value("Blues")},
+                                    {"first", Value("Elwood")}};
+  SqlStatement stmt("select * from foo", params);
+  auto results = stmt.ParameterNames();
+  EXPECT_THAT(expected, UnorderedPointwise(Eq(), results));
+}
+
+TEST(SqlStatementTest, GetParameterExists) {
+  auto expected = Value("Elwood");
+  SqlStatement::ParamType params = {{"last", Value("Blues")},
+                                    {"first", Value("Elwood")}};
+  SqlStatement stmt("select * from foo", params);
+  auto results = stmt.GetParameter("first");
+  ASSERT_TRUE(results.ok());
+  EXPECT_EQ(expected, *results);
+  EXPECT_EQ(std::string("Elwood"), *(results->get<std::string>()));
+}
+
+TEST(SqlStatementTest, GetParameterNotExist) {
+  SqlStatement::ParamType params = {{"last", Value("Blues")},
+                                    {"first", Value("Elwood")}};
+  SqlStatement stmt("select * from foo", params);
+  auto results = stmt.GetParameter("middle");
+  ASSERT_FALSE(results.ok());
+  EXPECT_EQ(StatusCode::kNotFound, results.status().code());
+  EXPECT_EQ("No such parameter: middle", results.status().message());
+}
+
 TEST(SqlStatementTest, OStreamOperatorNoParams) {
   SqlStatement s1("SELECT * FROM TABLE FOO;");
   std::stringstream ss;
   ss << s1;
   EXPECT_EQ(s1.sql(), ss.str());
+}
+
+TEST(SqlStatementTest, OStreamOperatorWithParams) {
+  SqlStatement::ParamType params = {{"last", Value("Blues")},
+                                    {"first", Value("Elwood")}};
+  SqlStatement stmt("select * from foo", params);
+  std::string expected1(
+      "select * from foo\n"
+      "[param]: {value}\t[first]: {code: STRING; string_value: \"Elwood\"}\n"
+      "[param]: {value}\t[last]: {code: STRING; string_value: \"Blues\"}");
+  std::string expected2(
+      "select * from foo\n"
+      "[param]: {value}\t[last]: {code: STRING; string_value: \"Blues\"}\n"
+      "[param]: {value}\t[first]: {code: STRING; string_value: \"Elwood\"}");
+  std::stringstream ss;
+  ss << stmt;
+  EXPECT_THAT(ss.str(), AnyOf(Eq(expected1), Eq(expected2)));
 }
 
 }  // namespace SPANNER_CLIENT_NS

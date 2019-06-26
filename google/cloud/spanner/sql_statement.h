@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_SQL_STATEMENT_H_
 
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/status_or.h"
 #include <string>
 #include <unordered_map>
 
@@ -62,10 +63,13 @@ class SqlStatement {
 
   std::string const& sql() const { return statement_; }
   ParamType const& params() const { return params_; }
-
-  friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
+  std::vector<std::string> ParameterNames() const;
+  google::cloud::StatusOr<Value> GetParameter(
+      std::string const& parameter_name) const;
 
  private:
+  friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
+
   std::string statement_;
   ParamType params_;
 };
