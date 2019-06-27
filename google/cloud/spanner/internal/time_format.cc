@@ -53,8 +53,7 @@ std::string FormatTime(char const* fmt, std::tm const& tm) {
 #endif
 }
 
-std::string::size_type ParseTime(char const* fmt, std::string const& s,
-                                 std::tm* tm) {
+std::size_t ParseTime(char const* fmt, std::string const& s, std::tm* tm) {
 #if !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 5
   char const* const bp = s.c_str();
   if (char* const ep = strptime(bp, fmt, tm)) {

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_TIME_FORMAT_H_
 
 #include "google/cloud/spanner/version.h"
+#include <cstddef>
 #include <ctime>
 #include <string>
 
@@ -33,10 +34,11 @@ std::string FormatTime(char const* fmt, std::tm const& tm);
 
 /**
  * Parse the date/time string `s` according to format string `fmt`, storing
- * the result in the std::tm addressed by `tm`.
+ * the result in the std::tm addressed by `tm`. Returns std::string::npos if
+ * the format string could not be matched. Otherwise returns the position of
+ * the first character not consumed (s.size() if the entire string matched).
  */
-std::string::size_type ParseTime(char const* fmt, std::string const& s,
-                                 std::tm* tm);
+std::size_t ParseTime(char const* fmt, std::string const& s, std::tm* tm);
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
