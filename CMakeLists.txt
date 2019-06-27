@@ -140,15 +140,8 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
 include(CMakeDependentOption)
 
-# Only show the option to install the testing_util files if BUILD_TESTING is on.
-# Note that since this is an optional install, we explicitly make it OFF by
-# default since BUILD_TESTING is ON by default. One disadvantage to using this
-# is that BUILD_TESTING must explicitly be passed.
-cmake_dependent_option(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL
-                       "Install the testing utilities."
-                       OFF
-                       "BUILD_TESTING"
-                       OFF)
+option(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL
+       "Install the testing utilities." OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
 # There are a number of targets that are pure dependencies, i.e., do not contain

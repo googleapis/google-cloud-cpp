@@ -72,13 +72,7 @@ if [ "${BUILD_TESTING:-}" = "no" ]; then
 fi
 
 if [ "${TEST_INSTALL:-}" = "yes" ]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" )
-fi
-
-if [ "${BUILD_TESTING:-}" = "yes" ]; then
-    if [ "${TEST_INSTALL:-}" = "yes" ]; then
-      cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
-    fi
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
 fi
 
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
