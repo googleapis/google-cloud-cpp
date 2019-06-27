@@ -205,29 +205,9 @@ set_target_properties(google_cloud_cpp_common
 create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
+add_subdirectory(testing_util)
+
 if (BUILD_TESTING)
-    add_library(google_cloud_cpp_testing
-                testing_util/assert_ok.cc
-                testing_util/assert_ok.h
-                testing_util/capture_log_lines_backend.h
-                testing_util/capture_log_lines_backend.cc
-                testing_util/check_predicate_becomes_false.h
-                testing_util/chrono_literals.h
-                testing_util/environment_variable_restore.h
-                testing_util/environment_variable_restore.cc
-                testing_util/expect_exception.h
-                testing_util/expect_future_error.h
-                testing_util/custom_google_mock_main.cc
-                testing_util/init_google_mock.h
-                testing_util/init_google_mock.cc
-                testing_util/testing_types.h
-                testing_util/testing_types.cc)
-    target_link_libraries(google_cloud_cpp_testing
-                          PUBLIC google_cloud_cpp_common GTest::gmock
-                          PRIVATE google_cloud_cpp_common_options)
-
-    create_bazel_config(google_cloud_cpp_testing)
-
     set(google_cloud_cpp_common_unit_tests
         future_generic_test.cc
         future_generic_then_test.cc
@@ -251,31 +231,6 @@ if (BUILD_TESTING)
         status_test.cc
         terminate_handler_test.cc
         testing_util/assert_ok_test.cc)
-
-    if (GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
-        if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
-            message(
-                WARNING
-                    "You are attempting to install the testing util library"
-                    " with googletest configured to be obtained as an external"
-                    " project. Since the testing util library depends upon both"
-                    " googletest and an internal google-cloud-cpp library, you"
-                    " may receive linking errors unless you are using"
-                    " google-cloud-cpp as a dependency in a super project."
-                    " Please consult the google-cloud-cpp-spanner project for an"
-                    " example of how to create a superbuild containing"
-                    " google-cloud-cpp as a dependency.
-GMOCK     PROVIDER = ${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}")
-        endif ()
-
-        install(TARGETS google_cloud_cpp_testing
-                EXPORT google_cloud_cpp_common-targets
-                RUNTIME DESTINATION bin
-                LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-        google_cloud_cpp_install_headers(google_cloud_cpp_testing
-                                         include/google/cloud)
-    endif ()
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"

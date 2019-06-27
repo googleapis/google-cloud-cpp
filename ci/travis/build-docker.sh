@@ -75,6 +75,12 @@ if [ "${TEST_INSTALL:-}" = "yes" ]; then
   cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" )
 fi
 
+if [ "${BUILD_TESTING:-}" = "yes" ]; then
+    if [ "${TEST_INSTALL:-}" = "yes" ]; then
+      cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
+    fi
+fi
+
 if [ "${SCAN_BUILD:-}" = "yes" ]; then
   cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
 fi
@@ -225,6 +231,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/internal ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/oauth2 ; \
         echo /var/tmp/staging/usr/local/include/google/cloud/storage/testing ; \
+        echo /var/tmp/staging/usr/local/include/google/cloud/testing_util ; \
         /bin/true) | grep -q /var/tmp; then
       echo "${COLOR_YELLOW}Installed directories do not match expectation.${COLOR_RESET}"
       echo "${COLOR_RED}Found:"
