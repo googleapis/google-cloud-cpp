@@ -71,7 +71,7 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
 
   // TODO(#128) - introduce a polling policy to control the polling loop.
   std::thread t(
-      [](std::shared_ptr<internal::DatabaseAdminStub> const& stub,
+      [](std::shared_ptr<internal::DatabaseAdminStub> stub,
          Polling ps) mutable {
         auto deadline =
             std::chrono::system_clock::now() + std::chrono::minutes(30);
@@ -87,6 +87,7 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
           poll_request.set_name(ps.operation.name());
           auto update = stub->GetOperation(poll_context, poll_request);
           if (!update) {
+            stub.reset();
             ps.promise.set_value(update.status());
             return;
           }
@@ -99,10 +100,12 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
           if (ps.operation.has_error()) {
             // The long running operation failed, return the error to the
             // caller.
+            stub.reset();
             ps.promise.set_value(ToGoogleCloudStatus(ps.operation.error()));
             return;
           }
           if (!ps.operation.has_response()) {
+            stub.reset();
             ps.promise.set_value(Status(StatusCode::kUnknown,
                                         "CreateDatabase operation completed "
                                         "without error or response, name=" +
@@ -111,6 +114,7 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
           }
           google::protobuf::Any const& any = ps.operation.response();
           if (!any.Is<gcsa::Database>()) {
+            stub.reset();
             ps.promise.set_value(Status(StatusCode::kInternal,
                                         "CreateDatabase operation completed "
                                         "with an invalid response type, name=" +
@@ -119,9 +123,11 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
           }
           gcsa::Database result;
           any.UnpackTo(&result);
+          stub.reset();
           ps.promise.set_value(std::move(result));
           return;
         }
+        stub.reset();
         ps.promise.set_value(Status(StatusCode::kDeadlineExceeded,
                                     "Deadline exceeded in longrunning "
                                     "operation for CreateDatabase, name=" +
