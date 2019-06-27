@@ -138,6 +138,18 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS)
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+include(CMakeDependentOption)
+
+# Only show the option to install the testing_util files if BUILD_TESTING is on.
+# Note that since this is an optional install, we explicitly make it OFF by
+# default since BUILD_TESTING is ON by default.
+cmake_dependent_option(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL
+                       "Install the testing utilities."
+                       OFF
+                       "BUILD_TESTING"
+                       OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
+
 # There are a number of targets that are pure dependencies, i.e., do not contain
 # our own code. These targets can be skipped when using static analysis tools.
 # Can be built earlier in the CI environment (for example to warm up the cache).
@@ -149,12 +161,6 @@ add_custom_target(google-cloud-cpp-dependencies)
 # configuration.  This should happen before enable_testing(), because we are not
 # interested in compiling and running the gRPC tests.
 include(IncludeGrpc)
-
-# Optionally allow installing testing_util files.
-option(
-    GOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL
-    "Install header files that include testing utility helper functions." OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL)
 
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.

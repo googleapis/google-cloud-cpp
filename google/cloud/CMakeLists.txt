@@ -252,7 +252,7 @@ if (BUILD_TESTING)
         terminate_handler_test.cc
         testing_util/assert_ok_test.cc)
 
-    if (GOOGLE_CLOUD_CPP_INSTALL_TESTING_UTIL)
+    if (GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         install(TARGETS google_cloud_cpp_testing
                 EXPORT google_cloud_cpp_common-targets
                 RUNTIME DESTINATION bin
