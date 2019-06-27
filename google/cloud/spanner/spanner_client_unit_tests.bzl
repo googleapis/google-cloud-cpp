@@ -23,6 +23,7 @@ spanner_client_unit_tests = [
     "internal/date_test.cc",
     "internal/spanner_stub_test.cc",
     "internal/time_format_test.cc",
+    "internal/time_test.cc",
     "row_test.cc",
     "spanner_version_test.cc",
     "sql_statement_test.cc",

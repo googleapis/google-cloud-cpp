@@ -37,6 +37,8 @@ add_library(spanner_client
             internal/date.h
             internal/spanner_stub.cc
             internal/spanner_stub.h
+            internal/time.cc
+            internal/time.h
             internal/time_format.cc
             internal/time_format.h
             row.h
@@ -86,6 +88,7 @@ function (spanner_client_define_tests)
         internal/date_test.cc
         internal/spanner_stub_test.cc
         internal/time_format_test.cc
+        internal/time_test.cc
         row_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
