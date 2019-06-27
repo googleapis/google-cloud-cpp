@@ -22,7 +22,7 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string version_string() {
-  static std::string const version = [] {
+  static std::string const kVersion = [] {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
@@ -31,7 +31,7 @@ std::string version_string() {
     }
     return os.str();
   }();
-  return version;
+  return kVersion;
 }
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable

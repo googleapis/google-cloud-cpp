@@ -22,7 +22,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string version_string() {
-  static std::string const version = [] {
+  static std::string const kVersion = [] {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
@@ -31,18 +31,18 @@ std::string version_string() {
     }
     return os.str();
   }();
-  return version;
+  return kVersion;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string x_goog_api_client() {
-  static std::string const x_goog_api_client = [] {
+  static std::string const kXGoogApiClient = [] {
     std::ostringstream os;
     os << "gl-cpp/" << google::cloud::internal::language_version() << " gccl/"
        << version_string();
     return os.str();
   }();
-  return x_goog_api_client;
+  return kXGoogApiClient;
 }
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

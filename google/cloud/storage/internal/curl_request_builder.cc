@@ -118,13 +118,13 @@ CurlRequestBuilder& CurlRequestBuilder::SetInitialBufferSize(std::size_t size) {
 std::string CurlRequestBuilder::UserAgentSuffix() const {
   ValidateBuilderState(__func__);
   // Pre-compute and cache the user agent string:
-  static std::string const user_agent_suffix = [] {
+  static std::string const kUserAgentSuffix = [] {
     std::string agent = "gcloud-cpp/" + storage::version_string() + " ";
     agent += curl_version();
     agent += " " + google::cloud::internal::compiler();
     return agent;
   }();
-  return user_agent_suffix;
+  return kUserAgentSuffix;
 }
 
 void CurlRequestBuilder::ValidateBuilderState(char const* where) const {

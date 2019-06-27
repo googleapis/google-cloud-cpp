@@ -49,8 +49,8 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
       data_endpoint_("bigtable.googleapis.com"),
       admin_endpoint_("bigtableadmin.googleapis.com"),
       instance_admin_endpoint_("bigtableadmin.googleapis.com") {
-  static std::string const user_agent_prefix = UserAgentPrefix();
-  channel_arguments_.SetUserAgentPrefix(user_agent_prefix);
+  static std::string const kUserAgentPrefix = UserAgentPrefix();
+  channel_arguments_.SetUserAgentPrefix(kUserAgentPrefix);
   channel_arguments_.SetMaxSendMessageSize(
       BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH);
   channel_arguments_.SetMaxReceiveMessageSize(
