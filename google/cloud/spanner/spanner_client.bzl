@@ -25,6 +25,7 @@ spanner_client_hdrs = [
     "internal/spanner_stub.h",
     "internal/time.h",
     "internal/time_format.h",
+    "internal/tuple_utils.h",
     "row.h",
     "sql_statement.h",
     "value.h",

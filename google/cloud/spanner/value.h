@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 
 #include "google/cloud/spanner/date.h"
+#include "google/cloud/spanner/internal/tuple_utils.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
@@ -374,12 +375,12 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::tuple<Ts...> const& tup) {
     google::spanner::v1::Type t;
     t.set_code(google::spanner::v1::TypeCode::STRUCT);
-    IterateTuple(tup, AddStructTypes{}, *t.mutable_struct_type());
+    internal::ForEach(tup, AddStructTypes{}, *t.mutable_struct_type());
     return t;
   }
 
-  // A functor to be used with IterateTuple (see below) to add type protos for
-  // all the elements of a tuple.
+  // A functor to be used with internal::ForEach (see below) to add type protos
+  // for all the elements of a tuple.
   struct AddStructTypes {
     template <typename T>
     void operator()(T const& t,
@@ -426,12 +427,12 @@ class Value {
   template <typename... Ts>
   static google::protobuf::Value MakeValueProto(std::tuple<Ts...> tup) {
     google::protobuf::Value v;
-    IterateTuple(tup, AddStructValues{}, *v.mutable_list_value());
+    internal::ForEach(tup, AddStructValues{}, *v.mutable_list_value());
     return v;
   }
 
-  // A functor to be used with IterateTuple (see below) to add Value protos for
-  // all the elements of a tuple.
+  // A functor to be used with internal::ForEach (see below) to add Value
+  // protos for all the elements of a tuple.
   struct AddStructValues {
     template <typename T>
     void operator()(T& t, google::protobuf::ListValue& list_value) const {
@@ -484,12 +485,12 @@ class Value {
                                     google::spanner::v1::Type const& pt) {
     std::tuple<Ts...> tup;
     ExtractTupleValues f{0, pv.list_value(), pt};
-    IterateTuple(tup, f);
+    internal::ForEach(tup, f);
     return tup;
   }
 
-  // A functor to be used with IterateTuple (see below) to extract C++ types
-  // from a ListValue proto and store then in a tuple.
+  // A functor to be used with internal::ForEach (see below) to extract C++
+  // types from a ListValue proto and store then in a tuple.
   struct ExtractTupleValues {
     std::size_t i;
     google::protobuf::ListValue const& list_value;
@@ -506,25 +507,6 @@ class Value {
       ++i;
     }
   };
-
-  // A helper to iterate the elements of the tuple, calling the given functor
-  // `f` with each tuple element and any optional `args`. Typically `F` should
-  // be a functor type with a templated operator() so that it can handle the
-  // various types in the tuple.
-  template <std::size_t I = 0, typename Tup, typename F, typename... Args>
-  static typename std::enable_if<
-      (I < std::tuple_size<typename std::decay<Tup>::type>::value), void>::type
-  IterateTuple(Tup&& tup, F&& f, Args&&... args) {
-    auto&& e = std::get<I>(std::forward<Tup>(tup));
-    std::forward<F>(f)(std::forward<decltype(e)>(e),
-                       std::forward<Args>(args)...);
-    IterateTuple<I + 1>(std::forward<Tup>(tup), std::forward<F>(f),
-                        std::forward<Args>(args)...);
-  }
-  template <std::size_t I = 0, typename Tup, typename F, typename... Args>
-  static typename std::enable_if<
-      I == std::tuple_size<typename std::decay<Tup>::type>::value, void>::type
-  IterateTuple(Tup&&, F&&, Args&&...) {}
 
   static bool EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,
                                           google::spanner::v1::Type const& b);
