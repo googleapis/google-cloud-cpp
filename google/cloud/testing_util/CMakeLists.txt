@@ -14,10 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# Set this variable to a true value for branches that are releases. That will
-# remove the "+dev" suffix (technically "build metadata" according to
-# semver.org). We only want that suffix on development branches.
-
 # We check this separately. A library may wish to use the testing util lib but
 # not build all of the tests.
 if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
