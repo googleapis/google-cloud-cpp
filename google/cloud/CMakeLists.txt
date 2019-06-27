@@ -253,13 +253,28 @@ if (BUILD_TESTING)
         testing_util/assert_ok_test.cc)
 
     if (GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
+        if ("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
+            message(
+                WARNING
+                    "You are attempting to install the testing util library"
+                    " with googletest configured to be obtained as an external"
+                    " project. Since the testing util library depends upon both"
+                    " googletest and an internal google-cloud-cpp library, you"
+                    " may receive linking errors unless you are using"
+                    " google-cloud-cpp as a dependency in a super project."
+                    " Please consult the google-cloud-cpp-spanner project for an"
+                    " example of how to create a superbuild containing"
+                    " google-cloud-cpp as a dependency.
+GMOCK     PROVIDER = ${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}")
+        endif ()
+
         install(TARGETS google_cloud_cpp_testing
                 EXPORT google_cloud_cpp_common-targets
                 RUNTIME DESTINATION bin
                 LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
         google_cloud_cpp_install_headers(google_cloud_cpp_testing
-                                         include/google/cloud/testing_util)
+                                         include/google/cloud)
     endif ()
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
