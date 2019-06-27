@@ -19,6 +19,7 @@
 spanner_client_unit_tests = [
     "client_options_test.cc",
     "database_admin_client_test.cc",
+    "date_test.cc",
     "internal/spanner_stub_test.cc",
     "internal/time_format_test.cc",
     "row_test.cc",

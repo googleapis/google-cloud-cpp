@@ -19,6 +19,7 @@
 spanner_client_hdrs = [
     "client_options.h",
     "database_admin_client.h",
+    "date.h",
     "internal/database_admin_stub.h",
     "internal/spanner_stub.h",
     "internal/time_format.h",
