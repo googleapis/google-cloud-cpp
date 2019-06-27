@@ -20,13 +20,13 @@ namespace {
 
 std::string const& GoogleWellKnownAdcFilePathSuffix() {
 #ifdef _WIN32
-  static std::string const suffix =
+  static std::string const kSuffix =
       "/gcloud/application_default_credentials.json";
 #else
-  static std::string const suffix =
+  static std::string const kSuffix =
       "/.config/gcloud/application_default_credentials.json";
 #endif
-  return suffix;
+  return kSuffix;
 }
 
 }  // anonymous namespace

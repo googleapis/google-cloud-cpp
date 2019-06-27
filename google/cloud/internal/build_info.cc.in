@@ -23,18 +23,16 @@ namespace internal {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler() {
-  // NOLINTNEXTLINE(readability-redundant-string-init)
-  static std::string const compiler_name =
+  static char const kCompilerName[] =
       R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
-  return compiler_name;
+  return kCompilerName;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string language_version() {
-  static std::string const language_version = [] {
-    // NOLINTNEXTLINE(readability-redundant-string-init)
-    std::string v =
-        R"""(@CMAKE_CXX_COMPILER_ID@-@CMAKE_CXX_COMPILER_VERSION@)""";
+  static std::string const kLanguageVersion = [] {
+    std::string v(
+      R"""(@CMAKE_CXX_COMPILER_ID@-@CMAKE_CXX_COMPILER_VERSION@)""");
     auto pos = v.find(' ');
     if (pos != std::string::npos) {
       v = v.substr(0, pos);
@@ -62,36 +60,39 @@ std::string language_version() {
     }
     return v;
   }();
-  return language_version;
+  return kLanguageVersion;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler_flags() {
-  // NOLINTNEXTLINE(readability-redundant-string-init)
-  static std::string const compiler_flags =
+  static char const kCompilerFlags[] =
       R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""";
-  return compiler_flags;
+  return kCompilerFlags;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 bool is_release() {
-  static bool const is_release = []() -> bool {
+  static bool const kIsRelease = []() -> bool {
+    // Sometimes GOOGLE_CLOUD_CPP_IS_RELEASE string expands to nothing, and then
+    // clang-tidy complains.
     // NOLINTNEXTLINE(readability-redundant-string-init)
-    std::string value = R"""(@GOOGLE_CLOUD_CPP_IS_RELEASE@)""";
+    std::string value(R"""(@GOOGLE_CLOUD_CPP_IS_RELEASE@)""");
     std::transform(
         value.begin(), value.end(), value.begin(),
         [](char c) -> char { return static_cast<char>(std::tolower(c)); });
     return value == "yes" || value == "1" || value == "true";
   }();
 
-  return is_release;
+  return kIsRelease;
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string build_metadata() {
+  // Sometimes GOOGLE_CLOUD_CPP_BUILD_METADATA string expands to nothing, and
+  // then clang-tidy complains.
   // NOLINTNEXTLINE(readability-redundant-string-init)
-  static char const build_metadata[] = R"""(@GOOGLE_CLOUD_CPP_BUILD_METADATA@)""";
-  return build_metadata;
+  static char const kBuildMetadata[] = R"""(@GOOGLE_CLOUD_CPP_BUILD_METADATA@)""";
+  return kBuildMetadata;
 }
 
 }  // namespace internal

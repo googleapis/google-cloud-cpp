@@ -21,9 +21,14 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+// These we cannot change because they are part of the public API.
+// NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::PARENT("parent");
+// NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::NAME("name");
+// NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::RESOURCE("resource");
+// NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(

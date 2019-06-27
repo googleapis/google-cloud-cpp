@@ -1411,15 +1411,15 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
   // larger than `text_to_avoid`.  And we only make (approximately) one pass
   // over `text_to_avoid`.
   auto generate_candidate = [this](int n) {
-    static std::string const chars =
+    static std::string const kChars =
         "abcdefghijklmnopqrstuvwxyz012456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     std::unique_lock<std::mutex> lk(mu_);
-    return google::cloud::internal::Sample(generator_, n, chars);
+    return google::cloud::internal::Sample(generator_, n, kChars);
   };
-  constexpr int INITIAL_CANDIDATE_SIZE = 16;
-  constexpr int CANDIDATE_GROWTH_SIZE = 4;
+  constexpr int kCandidateInitialSize = 16;
+  constexpr int kCandidateGrowthSize = 4;
   return GenerateMessageBoundary(text_to_avoid, std::move(generate_candidate),
-                                 INITIAL_CANDIDATE_SIZE, CANDIDATE_GROWTH_SIZE);
+                                 kCandidateInitialSize, kCandidateGrowthSize);
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(

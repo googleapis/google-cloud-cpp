@@ -31,10 +31,15 @@ static_assert(std::is_copy_constructible<bigtable::TableAdmin>::value,
 static_assert(std::is_copy_assignable<bigtable::TableAdmin>::value,
               "bigtable::TableAdmin must be assignable");
 
+// NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
+// NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::NAME_ONLY;
+// NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::SCHEMA_VIEW;
+// NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::REPLICATION_VIEW;
+// NOLINTNEXTLINE(readability-identifier-naming)
 constexpr TableAdmin::TableView TableAdmin::FULL;
 
 /// Shortcuts to avoid typing long names over and over.
