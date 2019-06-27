@@ -19,7 +19,7 @@
 // There is no wait to unblock the gRPC event loop, not even calling Shutdown(),
 // so we periodically wake up from the loop to check if the application has
 // shutdown the run.
-constexpr std::chrono::milliseconds LOOP_TIMEOUT(50);
+constexpr std::chrono::milliseconds kLoopTimeout(50);
 
 namespace google {
 namespace cloud {
@@ -30,7 +30,7 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
   while (!shutdown_.load()) {
     void* tag;
     bool ok;
-    auto deadline = std::chrono::system_clock::now() + LOOP_TIMEOUT;
+    auto deadline = std::chrono::system_clock::now() + kLoopTimeout;
     auto status = cq_.AsyncNext(&tag, &ok, deadline);
     if (status == grpc::CompletionQueue::SHUTDOWN) {
       break;

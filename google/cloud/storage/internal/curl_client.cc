@@ -1416,10 +1416,10 @@ std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
     std::unique_lock<std::mutex> lk(mu_);
     return google::cloud::internal::Sample(generator_, n, chars);
   };
-  constexpr int INITIAL_CANDIDATE_SIZE = 16;
-  constexpr int CANDIDATE_GROWTH_SIZE = 4;
+  constexpr int kCandidateInitialSize = 16;
+  constexpr int kCandidateGrowthSize = 4;
   return GenerateMessageBoundary(text_to_avoid, std::move(generate_candidate),
-                                 INITIAL_CANDIDATE_SIZE, CANDIDATE_GROWTH_SIZE);
+                                 kCandidateInitialSize, kCandidateGrowthSize);
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(

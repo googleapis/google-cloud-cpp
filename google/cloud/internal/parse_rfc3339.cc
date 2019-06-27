@@ -47,9 +47,9 @@ std::chrono::system_clock::time_point ParseDateTime(
       std::sscanf(buffer, "%4d-%2d-%2d%c%2d:%2d:%2d%n", &year, &month, &day,
                   &date_time_separator, &hours, &minutes, &seconds, &pos);
   // All the fields up to this point have fixed width, so total width must be:
-  constexpr int EXPECTED_WIDTH = 19;
-  constexpr int EXPECTED_FIELDS = 7;
-  if (count != EXPECTED_FIELDS || pos != EXPECTED_WIDTH) {
+  constexpr int kExpectedWidth = 19;
+  constexpr int kExpectedFields = 7;
+  if (count != kExpectedFields || pos != kExpectedWidth) {
     ReportError(timestamp,
                 "Invalid format for RFC 3339 timestamp detected while parsing"
                 " the base date and time portion.");
@@ -60,7 +60,7 @@ std::chrono::system_clock::time_point ParseDateTime(
   if (month < 1 || month > 12) {
     ReportError(timestamp, "Out of range month.");
   }
-  constexpr int MAX_DAYS_IN_MONTH[] = {
+  constexpr int kMaxDaysInMonth[] = {
       31,  // January
       29,  // February (non-leap years checked below)
       31,  // March
@@ -74,7 +74,7 @@ std::chrono::system_clock::time_point ParseDateTime(
       30,  // November
       31,  // December
   };
-  if (day < 1 || day > MAX_DAYS_IN_MONTH[month - 1]) {
+  if (day < 1 || day > kMaxDaysInMonth[month - 1]) {
     ReportError(timestamp, "Out of range day for given month.");
   }
   if (2 == month && day > 28 && !IsLeapYear(year)) {
@@ -142,9 +142,9 @@ std::chrono::seconds ParseOffset(char const*& buffer,
     // Parse the HH:MM offset.
     int hours, minutes, pos;
     auto count = std::sscanf(buffer, "%2d:%2d%n", &hours, &minutes, &pos);
-    constexpr int EXPECTED_OFFSET_WIDTH = 5;
-    constexpr int EXPECTED_OFFSET_FIELDS = 2;
-    if (count != EXPECTED_OFFSET_FIELDS || pos != EXPECTED_OFFSET_WIDTH) {
+    constexpr int kExpectedOffsetWidth = 5;
+    constexpr int kExpectedOffsetFields = 2;
+    if (count != kExpectedOffsetFields || pos != kExpectedOffsetWidth) {
       ReportError(timestamp, "Invalid timezone offset, expected [+-]HH:MM.");
     }
     if (hours < 0 || hours > 23) {

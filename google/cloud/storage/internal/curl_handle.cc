@@ -25,7 +25,7 @@ namespace {
 
 using ::google::cloud::storage::internal::BinaryDataAsDebugString;
 
-std::size_t const MAX_DATA_DEBUG_SIZE = 48;
+std::size_t const kMaxDataDebugSize = 48;
 
 extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
                                        std::size_t size, void* userptr) {
@@ -43,12 +43,12 @@ extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
     case CURLINFO_DATA_IN:
       *debug_buffer += ">> curl(Recv Data): size=";
       *debug_buffer += std::to_string(size) + "\n";
-      *debug_buffer += BinaryDataAsDebugString(data, size, MAX_DATA_DEBUG_SIZE);
+      *debug_buffer += BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
       break;
     case CURLINFO_DATA_OUT:
       *debug_buffer += ">> curl(Send Data): size=";
       *debug_buffer += std::to_string(size) + "\n";
-      *debug_buffer += BinaryDataAsDebugString(data, size, MAX_DATA_DEBUG_SIZE);
+      *debug_buffer += BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
       break;
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
