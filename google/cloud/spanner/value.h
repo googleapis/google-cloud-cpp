@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_VALUE_H_
 
+#include "google/cloud/spanner/date.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/optional.h"
@@ -22,6 +23,7 @@
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <google/spanner/v1/type.pb.h>
+#include <chrono>
 #include <ostream>
 #include <string>
 #include <tuple>
@@ -56,6 +58,8 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * INT64        | `std::int64_t`
  * FLOAT64      | `double`
  * STRING       | `std::string`
+ * TIMESTAMP    | `std::chrono::system_clock::time_point`
+ * DATE         | `google::cloud::spanner::Date`
  * ARRAY        | `std::vector<T>`  // [1]
  * STRUCT       | `std::tuple<Ts...>`
  *
@@ -144,6 +148,9 @@ class Value {
   explicit Value(std::int64_t v) : Value(PrivateConstructor{}, v) {}
   explicit Value(double v) : Value(PrivateConstructor{}, v) {}
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(std::chrono::system_clock::time_point v)
+      : Value(PrivateConstructor{}, std::move(v)) {}
+  explicit Value(Date v) : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
    * Constructs a non-null instance from common C++ literal types that closely,
@@ -320,6 +327,8 @@ class Value {
   friend void PrintTo(Value const& v, std::ostream* os);
 
  private:
+  using time_point = std::chrono::system_clock::time_point;
+
   // Metafunction that returns true if `T` is an optional<U>
   template <typename T>
   struct is_optional : std::false_type {};
@@ -338,6 +347,8 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::int64_t);
   static google::spanner::v1::Type MakeTypeProto(double);
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
+  static google::spanner::v1::Type MakeTypeProto(time_point);
+  static google::spanner::v1::Type MakeTypeProto(Date);
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
   template <typename T>
@@ -393,6 +404,8 @@ class Value {
   static google::protobuf::Value MakeValueProto(std::int64_t i);
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
+  static google::protobuf::Value MakeValueProto(time_point ts);
+  static google::protobuf::Value MakeValueProto(Date d);
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
   template <typename T>
@@ -444,6 +457,10 @@ class Value {
   static std::string GetValue(std::string const&,
                               google::protobuf::Value const&,
                               google::spanner::v1::Type const&);
+  static time_point GetValue(time_point, google::protobuf::Value const&,
+                             google::spanner::v1::Type const&);
+  static Date GetValue(Date, google::protobuf::Value const&,
+                       google::spanner::v1::Type const&);
   template <typename T>
   static optional<T> GetValue(optional<T> const&,
                               google::protobuf::Value const& pv,

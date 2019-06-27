@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/log.h"
 #include <google/protobuf/util/field_comparator.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -138,6 +140,18 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
   return t;
 }
 
+google::spanner::v1::Type Value::MakeTypeProto(time_point) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::TIMESTAMP);
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(Date) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::DATE);
+  return t;
+}
+
 google::spanner::v1::Type Value::MakeTypeProto(int) {
   return MakeTypeProto(std::int64_t{});
 }
@@ -177,6 +191,18 @@ google::protobuf::Value Value::MakeValueProto(double d) {
 google::protobuf::Value Value::MakeValueProto(std::string s) {
   google::protobuf::Value v;
   v.set_string_value(std::move(s));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(time_point ts) {
+  google::protobuf::Value v;
+  v.set_string_value(internal::TimestampToString(ts));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(Date d) {
+  google::protobuf::Value v;
+  v.set_string_value(internal::DateToString(d));
   return v;
 }
 
@@ -231,6 +257,17 @@ std::string Value::GetValue(std::string const&,
                             google::protobuf::Value const& pv,
                             google::spanner::v1::Type const&) {
   return pv.string_value();
+}
+
+std::chrono::system_clock::time_point Value::GetValue(
+    time_point, google::protobuf::Value const& pv,
+    google::spanner::v1::Type const&) {
+  return internal::TimestampFromString(pv.string_value()).value();
+}
+
+Date Value::GetValue(Date, google::protobuf::Value const& pv,
+                     google::spanner::v1::Type const&) {
+  return internal::DateFromString(pv.string_value()).value();
 }
 
 bool Value::EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,
