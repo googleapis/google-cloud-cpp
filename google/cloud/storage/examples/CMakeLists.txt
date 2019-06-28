@@ -30,6 +30,16 @@ add_executable(storage_bucket_iam_samples storage_bucket_iam_samples.cc)
 target_link_libraries(storage_bucket_iam_samples storage_client
                       storage_common_options)
 
+if (BUILD_TESTING)
+    add_executable(storage_client_mock_samples storage_client_mock_samples.cc)
+    target_link_libraries(storage_client_mock_samples
+                          storage_client
+                          storage_common_options
+                          GTest::gmock_main
+                          GTest::gmock
+                          GTest::gtest)
+endif ()
+
 add_executable(storage_default_object_acl_samples
                storage_default_object_acl_samples.cc)
 target_link_libraries(storage_default_object_acl_samples storage_client

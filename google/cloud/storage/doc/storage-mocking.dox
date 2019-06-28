@@ -1,0 +1,37 @@
+/*!
+
+@page storage-mocking Example: Mocking GCS C++ Client
+
+## Mocking GCS bucket read and write
+
+It is possible to mock GCS bucket read and write using gmock framework, this is specially ueeful
+for developer using GCS C++ client library.
+
+### Mocking Successful call of `ReadObject`
+
+Mocking of ReadObject can be achieved by mocking `ObjectReadSource`, following code snippet
+explains this
+
+@snippet storage_client_mock_samples.cc mock successful readobject
+
+### Mocking Successful call of `WriteObject`
+
+Mocking of ReadObject can be achieved by mocking `ObjectWriteStreambuf`, following code snippet
+explains this
+
+@snippet storage_client_mock_samples.cc mock successful writeobject
+
+
+The documentation for each member function in the [Client] class includes short
+snippets on how to call the function. The snippets for
+[ReadObject()][ReadObject], [WriteObject()][WriteObject],
+[ListObjects()][ListObjects], and [DeleteObject()][DeleteObject] are
+good places to continue learning about the library.
+
+[Client]: @ref google::cloud::storage::v1::Client
+[ReadObject]: @ref google::cloud::storage::v1::Client::ReadObject()
+[WriteObject]: @ref google::cloud::storage::v1::Client::WriteObject()
+[ListObjects]: @ref google::cloud::storage::v1::Client::ListObjects()
+[DeleteObject]: @ref google::cloud::storage::v1::Client::DeleteObject()
+
+*/
