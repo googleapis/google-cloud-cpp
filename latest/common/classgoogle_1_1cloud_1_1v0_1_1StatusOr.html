@@ -148,7 +148,8 @@ class google::cloud::v0::StatusOr&lt; T &gt;</h3>
 <p><code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a>&lt;T&gt;</code> represents either a usable <code>T</code> value or a <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1Status.html" title="Reports error code and details from a remote request. ">Status</a></code> object explaining why a <code>T</code> value is not present. Typical usage of <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a>&lt;T&gt;</code> looks like usage of a smart pointer, or even a std::optional&lt;T&gt;, in that you first check its validity using a conversion to bool (or by calling <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html#a522a22f5caf6fb46ad752fbd2f12aff7">StatusOr::ok()</a></code>), then you may dereference the object to access the contained value. It is undefined behavior (UB) to dereference a <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a>&lt;T&gt;</code> that is not "ok". For example:</p>
 <div class="fragment"><div class="line">StatusOr&lt;Foo&gt; foo = FetchFoo();</div><div class="line"><span class="keywordflow">if</span> (!foo) {  <span class="comment">// Same as !foo.ok()</span></div><div class="line">  <span class="comment">// handle error and probably look at foo.status()</span></div><div class="line">} <span class="keywordflow">else</span> {</div><div class="line">  foo-&gt;DoSomethingFooey();  <span class="comment">// UB if !foo</span></div><div class="line">}</div></div><!-- fragment --><p>Alternatively, you may call the <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html#a947fa74a2945fa4ffc404a1bbd86d316">StatusOr::value()</a></code> member function, which is defined to throw an exception if there is no <code>T</code> value, or crash the program if exceptions are disabled. It is never UB to call <code>.<a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html#a947fa74a2945fa4ffc404a1bbd86d316">value()</a></code>.</p>
 <div class="fragment"><div class="line">StatusOr&lt;Foo&gt; foo = FetchFoo();</div><div class="line">foo.value().DoSomethingFooey();  <span class="comment">// May throw/crash if there is no value</span></div></div><!-- fragment --><p>Functions that can fail will often return a <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a>&lt;T&gt;</code> instead of returning an error code and taking a <code>T</code> out-param, or rather than directly returning the <code>T</code> and throwing an exception on error. <a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a> is used so that callers can choose whether they want to explicitly check for errors, crash the program, or throw exceptions. Since constructors do not have a return value, they should be designed in such a way that they cannot fail by moving the object's complex initialization logic into a separate factory function that itself can return a <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a>&lt;T&gt;</code>. For example:</p>
-<div class="fragment"><div class="line"><span class="keyword">class </span>Bar {</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  Bar(Arg arg);</div><div class="line">  ...</div><div class="line">};</div><div class="line">StatusOr&lt;Bar&gt; MakeBar() {</div><div class="line">  ... complicated logic that might fail</div><div class="line">  <span class="keywordflow">return</span> Bar(std::move(arg));</div><div class="line">}</div></div><!-- fragment --><p>TODO(...) - the current implementation is fairly naive with respect to <code>T</code>, it is unlikely to work correctly for reference types, types without default constructors, arrays.</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>Bar {</div><div class="line"> <span class="keyword">public</span>:</div><div class="line">  Bar(Arg arg);</div><div class="line">  ...</div><div class="line">};</div><div class="line">StatusOr&lt;Bar&gt; MakeBar() {</div><div class="line">  ... complicated logic that might fail</div><div class="line">  <span class="keywordflow">return</span> Bar(std::move(arg));</div><div class="line">}</div></div><!-- fragment --><p><code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a>&lt;T&gt;</code> supports equality comparisons if the underlying type <code>T</code> does.</p>
+<p>TODO(...) - the current implementation is fairly naive with respect to <code>T</code>, it is unlikely to work correctly for reference types, types without default constructors, arrays.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">T</td><td>the type of the value. </td></tr>
@@ -156,7 +157,7 @@ class google::cloud::v0::StatusOr&lt; T &gt;</h3>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00084">84</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00086">86</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3ab20d2d7f1b32d9082cd84d0ad80403"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3ab20d2d7f1b32d9082cd84d0ad80403">&#9670;&nbsp;</a></span>StatusOr() <span class="overload">[1/6]</span></h2>
@@ -186,7 +187,7 @@ template&lt;typename T &gt; </div>
 <p>Initializes with an error status (UNKNOWN). </p>
 <p>TODO(#548) - currently storage::Status does not define the status codes, they are simply integers, usually HTTP status codes. We need to map to the well-defined set of status codes. </p>
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00093">93</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00095">95</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -231,7 +232,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00106">106</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00108">108</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -261,7 +262,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00122">122</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00124">124</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -291,7 +292,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00151">151</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00153">153</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -320,7 +321,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00180">180</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00182">182</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -365,7 +366,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00221">221</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00223">223</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -395,7 +396,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00224">224</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00226">226</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -425,7 +426,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00226">226</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00228">228</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -454,7 +455,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00227">227</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00229">229</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -483,7 +484,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00239">239</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00241">241</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -512,7 +513,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00241">241</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00243">243</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -541,7 +542,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00243">243</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00245">245</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -570,7 +571,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00260">260</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00262">262</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -599,7 +600,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00262">262</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00264">264</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -637,7 +638,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00118">118</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00120">120</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -667,7 +668,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00128">128</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00130">130</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -697,7 +698,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00157">157</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00159">159</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -731,7 +732,7 @@ template&lt;typename U  = T&gt; </div>
 
 <p>Assign a <code>T</code> (or anything convertible to <code>T</code>) into the <code><a class="el" href="classgoogle_1_1cloud_1_1v0_1_1StatusOr.html" title="Holds a value or a Status indicating why there is no value. ">StatusOr</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00196">196</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00198">198</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -760,7 +761,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00306">306</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00308">308</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -789,7 +790,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00307">307</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00309">309</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -818,7 +819,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00308">308</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00310">310</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -847,7 +848,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00275">275</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00277">277</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -876,7 +877,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00280">280</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00282">282</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -905,7 +906,7 @@ template&lt;typename T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00285">285</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00287">287</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
@@ -924,7 +925,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00330">330</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="status__or_8h_source.html#l00332">332</a> of file <a class="el" href="status__or_8h_source.html">status_or.h</a>.</p>
 
 </div>
 </div>
