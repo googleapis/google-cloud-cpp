@@ -32,7 +32,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 
-constexpr char ADC_LINK[] =
+constexpr char kAdcLink[] =
     "https://developers.google.com/identity/protocols/"
     "application-default-credentials";
 
@@ -176,7 +176,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
       Status(StatusCode::kUnknown,
              "Could not automatically determine credentials. For more "
              "information, please see " +
-                 std::string(ADC_LINK)));
+                 std::string(kAdcLink)));
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {
@@ -293,7 +293,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
       Status(StatusCode::kUnknown,
              "Could not create service account credentials using Application"
              "Default Credentials paths. For more information, please see " +
-                 std::string(ADC_LINK)));
+                 std::string(kAdcLink
+                            )));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
