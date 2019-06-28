@@ -1,6 +1,6 @@
 /*!
 
-@page storage-mocking Example: Mocking GCS C++ Client 
+@page storage-mocking Example: Mocking GCS C++ Client
 
 ## Mocking GCS bucket read and write
 
@@ -9,9 +9,9 @@ for developer using GCS C++ client library.
 
 ### Mocking Successful call of `ReadObject`
 
-Mocking of ReadObject can be achieved by mocking `ObjectReadSource`, following code snippet 
+Mocking of ReadObject can be achieved by mocking `ObjectReadSource`, following code snippet
 explains this
- 
+
 @snippet storage_client_mock_samples.cc mock successful readobject
 
 ### Mocking Successful call of `WriteObject`
