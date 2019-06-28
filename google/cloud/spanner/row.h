@@ -15,8 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ROW_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_ROW_H_
 
+#include "google/cloud/spanner/internal/tuple_utils.h"
+#include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/disjunction.h"
+#include "google/cloud/status_or.h"
+#include <array>
 #include <cstdint>
 #include <string>
 #include <tuple>
@@ -195,6 +199,14 @@ class Row {
   std::tuple<Types...> values_;
 };
 
+// Returns the row-element at column `I`. This function will be found via ADL
+// to make `Row<Ts...>` work with `internal::ForEach`. Users should not call
+// this function directly; instead, simply call `row.get<I>()`.
+template <std::size_t I, typename... Ts>
+auto GetElement(Row<Ts...>& row) -> decltype(row.template get<I>()) {
+  return row.template get<I>();
+}
+
 namespace internal {
 // A helper metafunction that promots some C++ literal types to the types
 // required by Cloud Spanner. For example, a literal 42 is of type int, but
@@ -206,6 +218,21 @@ constexpr std::string PromoteLiteralImpl(char const*);
 constexpr std::int64_t PromoteLiteralImpl(int);
 template <typename T>
 using PromoteLiteral = decltype(PromoteLiteralImpl(std::declval<T>()));
+
+// A helper functor to be used with `internal::ForEach` to iterate the columns
+// of a `Row<Ts...>` in the ParseRow() function.
+struct ExtractValue {
+  Status& status;
+  template <typename T, typename It>
+  void operator()(T& t, It& it) const {
+    auto x = it++->template get<T>();
+    if (!x) {
+      status = std::move(x).status();
+    } else {
+      t = *std::move(x);
+    }
+  }
+};
 }  // namespace internal
 
 /**
@@ -226,6 +253,30 @@ using PromoteLiteral = decltype(PromoteLiteralImpl(std::declval<T>()));
 template <typename... Ts>
 Row<internal::PromoteLiteral<Ts>...> MakeRow(Ts&&... ts) {
   return Row<internal::PromoteLiteral<Ts>...>{std::forward<Ts>(ts)...};
+}
+
+/**
+ * Parses a `std::array` of `Value` objects into the specified C++ types and
+ * returns a `Row<Ts...>` with all the parsed values. If the specified C++ type
+ * is unable to be extracted from a `Value`, an error `Status` is returned. The
+ * given array size must exactly match the number of specified C++ types.
+ *
+ * Example:
+ *
+ *     std::array<Value, 3> array = {Value(true), Value(42), Value("hello")};
+ *     auto row = ParseRow<bool, std::int64_t, std::string>(array);
+ *     assert(row.ok());
+ *     assert(MakeRow(true, 42, "hello"), *row);
+ */
+template <typename... Ts>
+StatusOr<Row<internal::PromoteLiteral<Ts>...>> ParseRow(
+    std::array<Value, sizeof...(Ts)> const& array) {
+  Row<internal::PromoteLiteral<Ts>...> row;
+  auto it = array.begin();
+  Status status;
+  internal::ForEach(row, internal::ExtractValue{status}, it);
+  if (!status.ok()) return status;
+  return row;
 }
 
 }  // namespace SPANNER_CLIENT_NS

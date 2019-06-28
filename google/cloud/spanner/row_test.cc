@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/row.h"
 #include <gmock/gmock.h>
+#include <array>
 #include <cstdint>
 #include <string>
 #include <tuple>
@@ -171,6 +172,33 @@ TEST(Row, MakeRowCVQualifications) {
   auto row = MakeRow(s);
   static_assert(std::is_same<Row<std::string>, decltype(row)>::value,
                 "row holds a non-const string value");
+}
+
+TEST(Row, ParseRowEmpty) {
+  std::array<Value, 0> const array = {};
+  auto const row = ParseRow(array);
+  EXPECT_TRUE(row.ok());
+  EXPECT_EQ(MakeRow(), *row);
+}
+
+TEST(Row, ParseRowOneValue) {
+  std::array<Value, 1> const array = {Value(42)};
+  auto const row = ParseRow<std::int64_t>(array);
+  EXPECT_TRUE(row.ok());
+  EXPECT_EQ(MakeRow(42), *row);
+  // Tests parsing the Value with the wrong type.
+  auto const error_row = ParseRow<double>(array);
+  EXPECT_FALSE(error_row.ok());
+}
+
+TEST(Row, ParseRowThree) {
+  std::array<Value, 3> array = {Value(true), Value(42), Value("hello")};
+  auto row = ParseRow<bool, std::int64_t, std::string>(array);
+  EXPECT_TRUE(row.ok());
+  EXPECT_EQ(MakeRow(true, 42, "hello"), *row);
+  // Tests parsing the Value with the wrong type.
+  auto const error_row = ParseRow<bool, double, std::string>(array);
+  EXPECT_FALSE(error_row.ok());
 }
 
 }  // namespace
