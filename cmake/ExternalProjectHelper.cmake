@@ -134,3 +134,30 @@ function (set_external_project_build_parallel_level var_name)
         set(${var_name} "" PARENT_SCOPE)
     endif ()
 endfunction ()
+
+function (set_external_project_install_rpath)
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64"
+        PARENT_SCOPE)
+
+    # On Linux, using an RPATH that is neither an absolute or relative path is
+    # considered a security risk and will cause package building to fail. We use
+    # the Linux-specific variable $ORIGIN to resolve this.
+    if (UNIX AND NOT APPLE)
+        set(GOOGLE_CLOUD_CPP_INSTALL_RPATH
+            "\\\$ORIGIN/../lib;\\\$ORIGIN/../lib64" PARENT_SCOPE)
+    endif ()
+
+    # When passing a semi-colon delimited list to ExternalProject_Add, we need
+    # to escape the semi-colon. Quoting does not work and escaping the semi-
+    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
+    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
+    # then be replaced by an escaped semi-colon by CMake. This allows us to use
+    # multiple directories for our RPATH. Normally, it'd make sense to use : as
+    # a delimiter since it is a typical path-list separator, but it is a special
+    # character in CMake.
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
+                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}"
+                   PARENT_SCOPE)
+endfunction ()
