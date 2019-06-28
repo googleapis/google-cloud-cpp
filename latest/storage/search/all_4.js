@@ -33,5 +33,6 @@ var searchData=
   ['expiration',['expiration',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocument.html#af854c6deac597ab8065119b6727c8ed2',1,'google::cloud::storage::v1::PolicyDocument::expiration()'],['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1PolicyDocumentResult.html#a35fa3dbb4edc0eddfda26a8419ca36c9',1,'google::cloud::storage::v1::PolicyDocumentResult::expiration()']]],
   ['expiration_5ftime',['expiration_time',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1RefreshingCredentialsWrapper_1_1TemporaryToken.html#a9e372c89a0dc13492d6500343bc7d762',1,'google::cloud::storage::v1::oauth2::RefreshingCredentialsWrapper::TemporaryToken']]],
   ['expirationtime',['ExpirationTime',['../structgoogle_1_1cloud_1_1storage_1_1v1_1_1ExpirationTime.html',1,'google::cloud::storage::v1']]],
-  ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#ae32f5e2f6c51bfb3d219f48f29d7b961',1,'google::cloud::storage::v1']]]
+  ['exponentialbackoffpolicy',['ExponentialBackoffPolicy',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#ae32f5e2f6c51bfb3d219f48f29d7b961',1,'google::cloud::storage::v1']]],
+  ['example_3a_20mocking_20gcs_20c_2b_2b_20client',['Example: Mocking GCS C++ Client',['../storage-mocking.html',1,'']]]
 ];

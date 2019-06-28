@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['google_20cloud_20storage_20c_2b_2b_20client_20library',['Google Cloud Storage C++ Client Library',['../index.html',1,'']]]
+  ['example_3a_20mocking_20gcs_20c_2b_2b_20client',['Example: Mocking GCS C++ Client',['../storage-mocking.html',1,'']]]
 ];
