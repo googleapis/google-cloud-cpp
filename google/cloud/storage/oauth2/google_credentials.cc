@@ -293,8 +293,7 @@ CreateServiceAccountCredentialsFromDefaultPaths(
       Status(StatusCode::kUnknown,
              "Could not create service account credentials using Application"
              "Default Credentials paths. For more information, please see " +
-                 std::string(kAdcLink
-                            )));
+                 std::string(kAdcLink)));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
