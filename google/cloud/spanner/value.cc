@@ -218,56 +218,77 @@ google::protobuf::Value Value::MakeValueProto(char const* s) {
 // Value::GetValue
 //
 
-bool Value::GetValue(bool, google::protobuf::Value const& pv,
-                     google::spanner::v1::Type const&) {
+StatusOr<bool> Value::GetValue(bool, google::protobuf::Value const& pv,
+                               google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kBoolValue) {
+    return Status(StatusCode::kUnknown, "missing BOOL");
+  }
   return pv.bool_value();
 }
 
-std::int64_t Value::GetValue(std::int64_t, google::protobuf::Value const& pv,
-                             google::spanner::v1::Type const&) {
+StatusOr<std::int64_t> Value::GetValue(std::int64_t,
+                                       google::protobuf::Value const& pv,
+                                       google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing INT64");
+  }
   auto const& s = pv.string_value();
   char* end = nullptr;
   errno = 0;
   long long x = std::strtoll(s.c_str(), &end, 10);
   if (errno != 0) {
-    GCP_LOG(FATAL) << std::strerror(errno) << ": \"" << s << "\"";
+    auto const err = std::string(std::strerror(errno));
+    return Status(StatusCode::kUnknown, err + ": \"" + s + "\"");
   }
   if (end == s.c_str()) {
-    GCP_LOG(FATAL) << "No numeric conversion: \"" << s << "\"";
+    return Status(StatusCode::kUnknown, "No numeric conversion: \"" + s + "\"");
   }
   if (*end != '\0') {
-    GCP_LOG(FATAL) << "Trailing non-numeric data: \"" << s << "\"";
+    return Status(StatusCode::kUnknown, "Trailing data: \"" + s + "\"");
   }
   return x;
 }
 
-double Value::GetValue(double, google::protobuf::Value const& pv,
-                       google::spanner::v1::Type const&) {
-  if (pv.kind_case() == google::protobuf::Value::kStringValue) {
-    std::string const& s = pv.string_value();
-    auto const inf = std::numeric_limits<double>::infinity();
-    if (s == "-Infinity") return -inf;
-    if (s == "Infinity") return inf;
-    return std::nan(s.c_str());
+StatusOr<double> Value::GetValue(double, google::protobuf::Value const& pv,
+                                 google::spanner::v1::Type const&) {
+  if (pv.kind_case() == google::protobuf::Value::kNumberValue) {
+    return pv.number_value();
   }
-  return pv.number_value();
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing FLOAT64");
+  }
+  std::string const& s = pv.string_value();
+  auto const inf = std::numeric_limits<double>::infinity();
+  if (s == "-Infinity") return -inf;
+  if (s == "Infinity") return inf;
+  if (s == "NaN") return std::nan("");
+  return Status(StatusCode::kUnknown, "bad FLOAT64 data: \"" + s + "\"");
 }
 
-std::string Value::GetValue(std::string const&,
-                            google::protobuf::Value const& pv,
-                            google::spanner::v1::Type const&) {
+StatusOr<std::string> Value::GetValue(std::string const&,
+                                      google::protobuf::Value const& pv,
+                                      google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing STRING");
+  }
   return pv.string_value();
 }
 
-std::chrono::system_clock::time_point Value::GetValue(
+StatusOr<std::chrono::system_clock::time_point> Value::GetValue(
     time_point, google::protobuf::Value const& pv,
     google::spanner::v1::Type const&) {
-  return internal::TimestampFromString(pv.string_value()).value();
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing TIMESTAMP");
+  }
+  return internal::TimestampFromString(pv.string_value());
 }
 
-Date Value::GetValue(Date, google::protobuf::Value const& pv,
-                     google::spanner::v1::Type const&) {
-  return internal::DateFromString(pv.string_value()).value();
+StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
+                               google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing DATE");
+  }
+  return internal::DateFromString(pv.string_value());
 }
 
 bool Value::EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,

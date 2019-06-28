@@ -533,6 +533,232 @@ TEST(Value, ProtoConversionStruct) {
   EXPECT_EQ("42", p.second.list_value().values(1).string_value());
 }
 
+void SetProtoKind(Value& v, google::protobuf::NullValue x) {
+  auto p = internal::ToProto(v);
+  p.second.set_null_value(x);
+  v = internal::FromProto(p.first, p.second);
+}
+
+void SetProtoKind(Value& v, double x) {
+  auto p = internal::ToProto(v);
+  p.second.set_number_value(x);
+  v = internal::FromProto(p.first, p.second);
+}
+
+void SetProtoKind(Value& v, char const* x) {
+  auto p = internal::ToProto(v);
+  p.second.set_string_value(x);
+  v = internal::FromProto(p.first, p.second);
+}
+
+void SetProtoKind(Value& v, bool x) {
+  auto p = internal::ToProto(v);
+  p.second.set_bool_value(x);
+  v = internal::FromProto(p.first, p.second);
+}
+
+void ClearProtoKind(Value& v) {
+  auto p = internal::ToProto(v);
+  p.second.clear_kind();
+  v = internal::FromProto(p.first, p.second);
+}
+
+TEST(Value, GetBadBool) {
+  Value v(true);
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<bool>());
+  EXPECT_FALSE(v.get<bool>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<bool>());
+  EXPECT_FALSE(v.get<bool>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<bool>());
+  EXPECT_FALSE(v.get<bool>().ok());
+
+  SetProtoKind(v, "hello");
+  EXPECT_TRUE(v.is<bool>());
+  EXPECT_FALSE(v.get<bool>().ok());
+}
+
+TEST(Value, GetBadDouble) {
+  Value v(0.0);
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<double>());
+  EXPECT_FALSE(v.get<double>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<double>());
+  EXPECT_FALSE(v.get<double>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<double>());
+  EXPECT_FALSE(v.get<double>().ok());
+
+  SetProtoKind(v, "bad string");
+  EXPECT_TRUE(v.is<double>());
+  EXPECT_FALSE(v.get<double>().ok());
+}
+
+TEST(Value, GetBadString) {
+  Value v("hello");
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<std::string>());
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<std::string>());
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<std::string>());
+  EXPECT_FALSE(v.get<std::string>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<std::string>());
+  EXPECT_FALSE(v.get<std::string>().ok());
+}
+
+TEST(Value, GetBadInt) {
+  Value v(42);
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, "");
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+
+  SetProtoKind(v, "123blah");
+  EXPECT_TRUE(v.is<std::int64_t>());
+  EXPECT_FALSE(v.get<std::int64_t>().ok());
+}
+
+TEST(Value, GetBadTimestamp) {
+  using time_point = std::chrono::system_clock::time_point;
+  Value v(time_point{});
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<time_point>());
+  EXPECT_FALSE(v.get<time_point>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<time_point>());
+  EXPECT_FALSE(v.get<time_point>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<time_point>());
+  EXPECT_FALSE(v.get<time_point>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<time_point>());
+  EXPECT_FALSE(v.get<time_point>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_TRUE(v.is<time_point>());
+  EXPECT_FALSE(v.get<time_point>().ok());
+}
+
+TEST(Value, GetBadDate) {
+  Value v(Date{});
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<Date>());
+  EXPECT_FALSE(v.get<Date>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<Date>());
+  EXPECT_FALSE(v.get<Date>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<Date>());
+  EXPECT_FALSE(v.get<Date>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<Date>());
+  EXPECT_FALSE(v.get<Date>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_TRUE(v.is<Date>());
+  EXPECT_FALSE(v.get<Date>().ok());
+}
+
+TEST(Value, GetBadOptional) {
+  Value v(optional<double>{});
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<optional<double>>());
+  EXPECT_FALSE(v.get<optional<double>>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<optional<double>>());
+  EXPECT_FALSE(v.get<optional<double>>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_TRUE(v.is<optional<double>>());
+  EXPECT_FALSE(v.get<optional<double>>().ok());
+}
+
+TEST(Value, GetBadArray) {
+  Value v(std::vector<double>{});
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<std::vector<double>>());
+  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<std::vector<double>>());
+  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<std::vector<double>>());
+  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<std::vector<double>>());
+  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_TRUE(v.is<std::vector<double>>());
+  EXPECT_FALSE(v.get<std::vector<double>>().ok());
+}
+
+TEST(Value, GetBadStruct) {
+  Value v(std::tuple<bool>{});
+  ClearProtoKind(v);
+  EXPECT_TRUE(v.is<std::tuple<bool>>());
+  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_TRUE(v.is<std::tuple<bool>>());
+  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_TRUE(v.is<std::tuple<bool>>());
+  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_TRUE(v.is<std::tuple<bool>>());
+  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_TRUE(v.is<std::tuple<bool>>());
+  EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
