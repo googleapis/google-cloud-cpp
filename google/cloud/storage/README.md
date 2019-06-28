@@ -44,7 +44,29 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.2.x - TBD
+### v1.2.x - 2019-07
+
+** Breaking Changes **: we accidentally left two functions in the public API,
+  they are now removed. These functions were used to convert 
+  `google::cloud::storage::ServiceAccount` classes to and from JSON objects.
+* bug: resuming an already finalized upload was not working correctly. Now the
+  library restores the stream, but the stream is immediately closed (it is
+  incorrect to write more data), and has the object metadata immediately
+  available. Thanks to @Jseph for contributing this fix.
+* bug: on Windows, `storage::Client::UploadFile()` and
+  `storage::Client::DownloadFile()` were always treating the files as text,
+  which meant their contents were transformed in unexpected ways. They are now
+  always treated as binary.
+* bug: we were still leaking a few macros from the nlohmann json library to the
+  user's namespace. This is now fixed and in fact none of the public headers
+  should be exposing the nlohmann headers either.  
+* feature: reduce data copies during download.
+* bug: return an error if the IAM bindings contain unknown fields, previously
+  the library was discarding these fields.
+* Several internal cleanups, such as fixing constant names to match the Google
+  Style Guide, simplify the generation of version metadata, make the integration
+  tests more reliable by using several service accounts for each run, use
+  `-Wextra` in our builds.
 
 ### v1.1.x - 2019-06
 

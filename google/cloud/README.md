@@ -21,7 +21,12 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.8.x - TBD
+### v0.8.x - 2019-07
+
+* feature: support `operator==` and `operator!=` for `StatusOr`.
+* feature: support assignment from `Status` in `StatusOr`.
+* feature: disable `optional<T>`'s converting constructor when
+  `U == optional<T>`.
 
 ### v0.7.x - 2019-05
 

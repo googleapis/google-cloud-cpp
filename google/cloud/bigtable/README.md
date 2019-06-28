@@ -42,7 +42,18 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v0.11.x - TBD
+### v0.11.x - 2019-07
+
+* bug: the library will return an error instead of simply discarding unknown IAM
+  fields.
+* feature: update googleapis protos to a more recent version.
+* cleanup: marked rarely used CMake options as advanced. They will no longer
+  show up by default in your CMake UI.
+* Several internal cleanups, such as removing unused code in
+  `google::cloud::bigtable::internal`, fixing constant names to follow the
+   Google Style Guide, simplify the generation of version metadata, make it
+   easier to import the code into Google, turned on `-Wextra` for our builds,
+   moved the sanitizer builds to Bazel, 
 
 ### v0.10.x - 2019-06
 
