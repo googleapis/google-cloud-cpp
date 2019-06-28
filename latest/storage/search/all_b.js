@@ -32,7 +32,7 @@ var searchData=
   ['listobjects',['ListObjects',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#adb93b7bafce26b0c39b8c232dffba98b',1,'google::cloud::storage::v1::Client']]],
   ['listobjectsiterator',['ListObjectsIterator',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a24e2c03da21e3bd520dca926aea2af57',1,'google::cloud::storage::v1']]],
   ['listobjectsreader',['ListObjectsReader',['../namespacegoogle_1_1cloud_1_1storage_1_1v1.html#a2bdfb31b677518fbbe2952008086c236',1,'google::cloud::storage::v1']]],
-  ['loadcredsfrompath',['LoadCredsFromPath',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#ab5659b42793b27fcc7f3e2a82c3f73cf',1,'google::cloud::storage::v1::oauth2']]],
+  ['loadcredsfrompath',['LoadCredsFromPath',['../namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a74a96c9282cf47e16a1e35459e816389',1,'google::cloud::storage::v1::oauth2']]],
   ['location',['location',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#ad38349a77eb4cfdd40bc42fbd6f20f42',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['location_5ftype',['location_type',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1BucketMetadata.html#aa739ac205890c0aa8ae355f4fb2abdd5',1,'google::cloud::storage::v1::BucketMetadata']]],
   ['lockbucketretentionpolicy',['LockBucketRetentionPolicy',['../classgoogle_1_1cloud_1_1storage_1_1v1_1_1Client.html#a9a03bd2204141b3ac8780c077720d734',1,'google::cloud::storage::v1::Client']]],

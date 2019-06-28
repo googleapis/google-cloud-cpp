@@ -67,7 +67,8 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">google::cloud::storage::v1::oauth2 Namespace Reference</div>  </div>
 </div><!--header-->
@@ -112,6 +113,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a01dd0d9efe56ae6f366d71c0d165b0ed"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a01dd0d9efe56ae6f366d71c0d165b0ed">GoogleDefaultCredentials</a> ()</td></tr>
 <tr class="memdesc:a01dd0d9efe56ae6f366d71c0d165b0ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produces a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html" title="Interface for OAuth 2.0 credentials used to access Google Cloud services. ">Credentials</a> type based on the runtime environment.  <a href="#a01dd0d9efe56ae6f366d71c0d165b0ed">More...</a><br /></td></tr>
 <tr class="separator:a01dd0d9efe56ae6f366d71c0d165b0ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaea29b31adcacb43da24465373ad8297"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#aaea29b31adcacb43da24465373ad8297">CreateServiceAccountCredentialsFromDefaultPaths</a> ()</td></tr>
+<tr class="memdesc:aaea29b31adcacb43da24465373ad8297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produces a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> type by trying to load the standard Application Default Credentials paths.  <a href="#aaea29b31adcacb43da24465373ad8297">More...</a><br /></td></tr>
+<tr class="separator:aaea29b31adcacb43da24465373ad8297"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a175f611f7ad7df7de6fae3aede1d79eb"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a175f611f7ad7df7de6fae3aede1d79eb">CreateServiceAccountCredentialsFromDefaultPaths</a> (google::cloud::optional&lt; std::set&lt; std::string &gt;&gt; scopes, google::cloud::optional&lt; std::string &gt; subject)</td></tr>
+<tr class="memdesc:a175f611f7ad7df7de6fae3aede1d79eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produces a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> type by trying to load the standard Application Default Credentials paths.  <a href="#a175f611f7ad7df7de6fae3aede1d79eb">More...</a><br /></td></tr>
+<tr class="separator:a175f611f7ad7df7de6fae3aede1d79eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae65bfadf31c5c5a62e6fa56fef970616"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#ae65bfadf31c5c5a62e6fa56fef970616">CreateServiceAccountCredentialsFromJsonContents</a> (std::string const &amp;contents)</td></tr>
 <tr class="memdesc:ae65bfadf31c5c5a62e6fa56fef970616"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> from a JSON string.  <a href="#ae65bfadf31c5c5a62e6fa56fef970616">More...</a><br /></td></tr>
 <tr class="separator:ae65bfadf31c5c5a62e6fa56fef970616"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,13 +155,10 @@ Functions</h2></td></tr>
 <tr class="memitem:a5b8c85914849abd938979051f2b2d0f8"><td class="memItemLeft" align="right" valign="top">char const  *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a5b8c85914849abd938979051f2b2d0f8">GoogleAdcHomeEnvVar</a> ()</td></tr>
 <tr class="memdesc:a5b8c85914849abd938979051f2b2d0f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the environment variable used to construct the well known ADC path.  <a href="#a5b8c85914849abd938979051f2b2d0f8">More...</a><br /></td></tr>
 <tr class="separator:a5b8c85914849abd938979051f2b2d0f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5659b42793b27fcc7f3e2a82c3f73cf"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#ab5659b42793b27fcc7f3e2a82c3f73cf">LoadCredsFromPath</a> (std::string const &amp;path)</td></tr>
-<tr class="memdesc:ab5659b42793b27fcc7f3e2a82c3f73cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses the JSON file at <code>path</code> and creates the appropriate <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html" title="Interface for OAuth 2.0 credentials used to access Google Cloud services. ">Credentials</a> type.  <a href="#ab5659b42793b27fcc7f3e2a82c3f73cf">More...</a><br /></td></tr>
-<tr class="separator:ab5659b42793b27fcc7f3e2a82c3f73cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61983ab806d832377f3276c383689041"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a61983ab806d832377f3276c383689041">MaybeLoadCredsFromAdcEnvVar</a> ()</td></tr>
-<tr class="separator:a61983ab806d832377f3276c383689041"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e624fba315168383a92d8434e8c14f9"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a0e624fba315168383a92d8434e8c14f9">MaybeLoadCredsFromGcloudAdcFile</a> ()</td></tr>
-<tr class="separator:a0e624fba315168383a92d8434e8c14f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74a96c9282cf47e16a1e35459e816389"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a74a96c9282cf47e16a1e35459e816389">LoadCredsFromPath</a> (std::string const &amp;path, bool non_service_account_ok, google::cloud::optional&lt; std::set&lt; std::string &gt;&gt; service_account_scopes, google::cloud::optional&lt; std::string &gt; service_account_subject)</td></tr>
+<tr class="separator:a74a96c9282cf47e16a1e35459e816389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a3a78bc1eb4a1059ee53a4485558855"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::unique_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a2a3a78bc1eb4a1059ee53a4485558855">MaybeLoadCredsFromAdcPaths</a> (bool non_service_account_ok, google::cloud::optional&lt; std::set&lt; std::string &gt;&gt; service_account_scopes, google::cloud::optional&lt; std::string &gt; service_account_subject)</td></tr>
+<tr class="separator:a2a3a78bc1eb4a1059ee53a4485558855"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2a06730084dea8a4384b1c9e1f477ff"><td class="memItemLeft" align="right" valign="top">constexpr std::chrono::seconds&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#ad2a06730084dea8a4384b1c9e1f477ff">GoogleOAuthAccessTokenLifetime</a> ()</td></tr>
 <tr class="memdesc:ad2a06730084dea8a4384b1c9e1f477ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The max lifetime in seconds of an access token.  <a href="#ad2a06730084dea8a4384b1c9e1f477ff">More...</a><br /></td></tr>
 <tr class="separator:ad2a06730084dea8a4384b1c9e1f477ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,6 +200,11 @@ Functions</h2></td></tr>
 <tr class="memitem:aae4f020db9951658f589176e80591a63"><td class="memItemLeft" align="right" valign="top">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#aae4f020db9951658f589176e80591a63">CreateServiceAccountCredentialsFromP12FilePath</a> (std::string const &amp;path, google::cloud::optional&lt; std::set&lt; std::string &gt;&gt; scopes, google::cloud::optional&lt; std::string &gt; subject)</td></tr>
 <tr class="memdesc:aae4f020db9951658f589176e80591a63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> from a P12 file at the specified path.  <a href="#aae4f020db9951658f589176e80591a63">More...</a><br /></td></tr>
 <tr class="separator:aae4f020db9951658f589176e80591a63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:aca18c5d1ab5f75d2900f4d8a55f5dd5c"><td class="memItemLeft" align="right" valign="top">constexpr char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#aca18c5d1ab5f75d2900f4d8a55f5dd5c">kAdcLink</a> []</td></tr>
+<tr class="separator:aca18c5d1ab5f75d2900f4d8a55f5dd5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumeration Type Documentation</h2>
 <a id="a312f7fee542fdae235b970db888b7e21"></a>
@@ -246,7 +255,7 @@ Functions</h2></td></tr>
 
 <p>Creates an <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1AnonymousCredentials.html" title="A Credentials type representing &quot;anonymous&quot; Google OAuth2.0 credentials. ">AnonymousCredentials</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00159">159</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00182">182</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -269,7 +278,7 @@ Functions</h2></td></tr>
 <p>Creates an <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1AuthorizedUserCredentials.html" title="Wrapper class for Google OAuth 2.0 user account credentials. ">AuthorizedUserCredentials</a> from a JSON string. </p>
 <dl class="section note"><dt>Note</dt><dd>It is strongly preferred to instead use service account credentials with Cloud Storage client libraries. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00176">176</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00199">199</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -292,7 +301,7 @@ Functions</h2></td></tr>
 <p>Creates an <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1AuthorizedUserCredentials.html" title="Wrapper class for Google OAuth 2.0 user account credentials. ">AuthorizedUserCredentials</a> from a JSON file at the specified path. </p>
 <dl class="section note"><dt>Note</dt><dd>It is strongly preferred to instead use service account credentials with Cloud Storage client libraries. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00164">164</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00187">187</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -313,7 +322,7 @@ Functions</h2></td></tr>
 
 <p>Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ComputeEngineCredentials.html" title="Wrapper class for Google OAuth 2.0 GCE instance service account credentials. ">ComputeEngineCredentials</a> for the VM's default service account. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00272">272</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00321">321</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -335,7 +344,73 @@ Functions</h2></td></tr>
 
 <p>Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ComputeEngineCredentials.html" title="Wrapper class for Google OAuth 2.0 GCE instance service account credentials. ">ComputeEngineCredentials</a> for the VM's specified service account. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00276">276</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00325">325</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+
+</div>
+</div>
+<a id="aaea29b31adcacb43da24465373ad8297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaea29b31adcacb43da24465373ad8297">&#9670;&nbsp;</a></span>CreateServiceAccountCredentialsFromDefaultPaths() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt; google::cloud::storage::v1::oauth2::CreateServiceAccountCredentialsFromDefaultPaths </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Produces a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> type by trying to load the standard Application Default Credentials paths. </p>
+<p>If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON or P12 file it points to will be loaded. Otherwise, if the gcloud utility has configured an Application Default Credentials file, that file is loaded. The loaded file is used to create a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a>.</p>
+<dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/docs/authentication/production">https://cloud.google.com/docs/authentication/production</a> for details about Application Default Credentials. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00274">274</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+
+</div>
+</div>
+<a id="a175f611f7ad7df7de6fae3aede1d79eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a175f611f7ad7df7de6fae3aede1d79eb">&#9670;&nbsp;</a></span>CreateServiceAccountCredentialsFromDefaultPaths() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">StatusOr&lt; std::shared_ptr&lt; <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a> &gt; &gt; google::cloud::storage::v1::oauth2::CreateServiceAccountCredentialsFromDefaultPaths </td>
+          <td>(</td>
+          <td class="paramtype">google::cloud::optional&lt; std::set&lt; std::string &gt;&gt;&#160;</td>
+          <td class="paramname"><em>scopes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::cloud::optional&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>subject</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Produces a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> type by trying to load the standard Application Default Credentials paths. </p>
+<p>If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON or P12 file it points to will be loaded. Otherwise, if the gcloud utility has configured an Application Default Credentials file, that file is loaded. The loaded file is used to create a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scopes</td><td>the scopes to request during the authorization grant. If omitted, the cloud-platform scope, defined by <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a57342caf567a8e79d66b53663da0a189" title="String representing the &quot;cloud-platform&quot; OAuth 2.0 scope. ">GoogleOAuthScopeCloudPlatform()</a></code>, is used as a default. </td></tr>
+    <tr><td class="paramname">subject</td><td>for domain-wide delegation; the email address of the user for which to request delegated access. If omitted, no "subject" attribute is included in the authorization grant.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd><a href="https://developers.google.com/identity/protocols/googlescopes">https://developers.google.com/identity/protocols/googlescopes</a> for a list of OAuth 2.0 scopes used with Google APIs.</dd>
+<dd>
+<a href="https://cloud.google.com/docs/authentication/production">https://cloud.google.com/docs/authentication/production</a> for details about Application Default Credentials. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00279">279</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -359,7 +434,7 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>This function automatically detects if the file is a JSON or P12 (aka PFX aka PKCS#12) file and tries to load the file as a service account credential. We strongly recommend that applications use JSON files for service account key files.</dd></dl>
 <p>These credentials use the cloud-platform OAuth 2.0 scope, defined by <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a57342caf567a8e79d66b53663da0a189" title="String representing the &quot;cloud-platform&quot; OAuth 2.0 scope. ">GoogleOAuthScopeCloudPlatform()</a></code>. To specify alternate scopes, use the overloaded version of this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00186">186</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00209">209</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -409,7 +484,7 @@ Functions</h2></td></tr>
 <dd>
 <a href="https://developers.google.com/identity/protocols/OAuth2ServiceAccount">https://developers.google.com/identity/protocols/OAuth2ServiceAccount</a> for more information about domain-wide delegation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00191">191</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00214">214</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -432,7 +507,7 @@ Functions</h2></td></tr>
 <p>Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> from a JSON string. </p>
 <p>These credentials use the cloud-platform OAuth 2.0 scope, defined by <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a57342caf567a8e79d66b53663da0a189" title="String representing the &quot;cloud-platform&quot; OAuth 2.0 scope. ">GoogleOAuthScopeCloudPlatform()</a></code>. To specify an alternate set of scopes, use the overloaded version of this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00251">251</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00300">300</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -481,7 +556,7 @@ Functions</h2></td></tr>
 <dd>
 <a href="https://developers.google.com/identity/protocols/OAuth2ServiceAccount">https://developers.google.com/identity/protocols/OAuth2ServiceAccount</a> for more information about domain-wide delegation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00256">256</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00305">305</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -504,7 +579,7 @@ Functions</h2></td></tr>
 <p>Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> from a JSON file at the specified path. </p>
 <p>These credentials use the cloud-platform OAuth 2.0 scope, defined by <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a57342caf567a8e79d66b53663da0a189" title="String representing the &quot;cloud-platform&quot; OAuth 2.0 scope. ">GoogleOAuthScopeCloudPlatform()</a></code>. To specify alternate scopes, use the overloaded version of this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00205">205</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00228">228</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -553,7 +628,7 @@ Functions</h2></td></tr>
 <dd>
 <a href="https://developers.google.com/identity/protocols/OAuth2ServiceAccount">https://developers.google.com/identity/protocols/OAuth2ServiceAccount</a> for more information about domain-wide delegation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00210">210</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00233">233</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -576,7 +651,7 @@ Functions</h2></td></tr>
 <p>Creates a <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1ServiceAccountCredentials.html" title="Wrapper class for Google OAuth 2.0 service account credentials. ">ServiceAccountCredentials</a> from a P12 file at the specified path. </p>
 <p>These credentials use the cloud-platform OAuth 2.0 scope, defined by <code><a class="el" href="namespacegoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2.html#a57342caf567a8e79d66b53663da0a189" title="String representing the &quot;cloud-platform&quot; OAuth 2.0 scope. ">GoogleOAuthScopeCloudPlatform()</a></code>. To specify alternate scopes, use the overloaded version of this function. </p>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00229">229</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00269">269</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -625,7 +700,7 @@ Functions</h2></td></tr>
 <dd>
 <a href="https://developers.google.com/identity/protocols/OAuth2ServiceAccount">https://developers.google.com/identity/protocols/OAuth2ServiceAccount</a> for more information about domain-wide delegation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00234">234</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00252">252</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -752,7 +827,7 @@ Functions</h2></td></tr>
 <p>If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON file it points to will be loaded and used to create a credential of the specified type. Otherwise, if running on a Google-hosted environment (e.g. Compute Engine), credentials for the the environment's default service account will be used.</p>
 <dl class="section see"><dt>See also</dt><dd><a href="https://cloud.google.com/docs/authentication/production">https://cloud.google.com/docs/authentication/production</a> for details about Application Default Credentials. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00118">118</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00153">153</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -887,8 +962,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab5659b42793b27fcc7f3e2a82c3f73cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5659b42793b27fcc7f3e2a82c3f73cf">&#9670;&nbsp;</a></span>LoadCredsFromPath()</h2>
+<a id="a74a96c9282cf47e16a1e35459e816389"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74a96c9282cf47e16a1e35459e816389">&#9670;&nbsp;</a></span>LoadCredsFromPath()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -897,53 +972,71 @@ Functions</h2></td></tr>
           <td class="memname">StatusOr&lt;std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; &gt; google::cloud::storage::v1::oauth2::LoadCredsFromPath </td>
           <td>(</td>
           <td class="paramtype">std::string const &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>non_service_account_ok</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::cloud::optional&lt; std::set&lt; std::string &gt;&gt;&#160;</td>
+          <td class="paramname"><em>service_account_scopes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::cloud::optional&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>service_account_subject</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Parses the JSON file at <code>path</code> and creates the appropriate <a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html" title="Interface for OAuth 2.0 credentials used to access Google Cloud services. ">Credentials</a> type. </p>
-
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00036">36</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00046">46</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
-<a id="a61983ab806d832377f3276c383689041"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61983ab806d832377f3276c383689041">&#9670;&nbsp;</a></span>MaybeLoadCredsFromAdcEnvVar()</h2>
+<a id="a2a3a78bc1eb4a1059ee53a4485558855"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a3a78bc1eb4a1059ee53a4485558855">&#9670;&nbsp;</a></span>MaybeLoadCredsFromAdcPaths()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">StatusOr&lt;std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; &gt; google::cloud::storage::v1::oauth2::MaybeLoadCredsFromAdcEnvVar </td>
+          <td class="memname">StatusOr&lt;std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; &gt; google::cloud::storage::v1::oauth2::MaybeLoadCredsFromAdcPaths </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>non_service_account_ok</em>, </td>
         </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00091">91</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
-
-</div>
-</div>
-<a id="a0e624fba315168383a92d8434e8c14f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e624fba315168383a92d8434e8c14f9">&#9670;&nbsp;</a></span>MaybeLoadCredsFromGcloudAdcFile()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname">StatusOr&lt;std::unique_ptr&lt;<a class="el" href="classgoogle_1_1cloud_1_1storage_1_1v1_1_1oauth2_1_1Credentials.html">Credentials</a>&gt; &gt; google::cloud::storage::v1::oauth2::MaybeLoadCredsFromGcloudAdcFile </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">google::cloud::optional&lt; std::set&lt; std::string &gt;&gt;&#160;</td>
+          <td class="paramname"><em>service_account_scopes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">google::cloud::optional&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>service_account_subject</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00102">102</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00124">124</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
@@ -1054,6 +1147,23 @@ Functions</h2></td></tr>
 <dl class="section note"><dt>Note</dt><dd>Note that P12 keyfiles do not contain the <code>client_email</code> for the service account, the application must obtain this through some other means and provide them to the function. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="service__account__credentials_8cc_source.html#l00078">78</a> of file <a class="el" href="service__account__credentials_8cc_source.html">service_account_credentials.cc</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="aca18c5d1ab5f75d2900f4d8a55f5dd5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca18c5d1ab5f75d2900f4d8a55f5dd5c">&#9670;&nbsp;</a></span>kAdcLink</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr char google::cloud::storage::v1::oauth2::kAdcLink[]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=</div><div class="line">    <span class="stringliteral">&quot;https://developers.google.com/identity/protocols/&quot;</span></div><div class="line">    <span class="stringliteral">&quot;application-default-credentials&quot;</span></div></div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="google__credentials_8cc_source.html#l00035">35</a> of file <a class="el" href="google__credentials_8cc_source.html">google_credentials.cc</a>.</p>
 
 </div>
 </div>
