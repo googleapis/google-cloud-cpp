@@ -1,4 +1,4 @@
-// Copyright 2018 Google LLC
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -129,7 +129,8 @@ void MockWriteObject(int& argc, char* argv[]) {
       .WillRepeatedly(testing::ReturnRef(client_options));
 
   std::string text = R"""({
-        "name": "test-bucket-name/test-object-name/1"
+          "bucket": "test-bucket-name"
+          "name": "test-object-name"
   })""";
 
   using ::testing::_;
