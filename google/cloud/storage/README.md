@@ -49,9 +49,10 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 * **Breaking Change**: we accidentally left two functions in the public API,
   they are now removed. These functions were used to convert
   `google::cloud::storage::ServiceAccount` classes to and from JSON objects.
+* feature: add examples showing how to mock a `google::cloud::storage::Client`.
 * feature: allow applications to load service account credentials from the
   standard locations, but also change the scopes and subject as the credentials
-  are loaded.
+  are loaded. Thanks to @timford for contributing this fix.
 * bug: resuming an already finalized upload was not working correctly. Now the
   library restores the stream, but the stream is immediately closed (it is
   incorrect to write more data), and has the object metadata immediately
@@ -61,15 +62,15 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
   which meant their contents were transformed in unexpected ways. They are now
   always treated as binary.
 * bug: we were still leaking a few macros from the nlohmann json library to the
-  user's namespace. This is now fixed and in fact none of the public headers
-  should be exposing the nlohmann headers either.
+  user's namespace. This is now fixed. Thanks to @remyabel for helping us with
+  this.
 * feature: reduce data copies during download.
 * bug: return an error if the IAM bindings contain unknown fields, previously
   the library was discarding these fields.
 * Several internal cleanups, such as fixing constant names to match the Google
   Style Guide, simplify the generation of version metadata, make the integration
   tests more reliable by using several service accounts for each run, use
-  `-Wextra` in our builds.
+  `-Wextra` in our builds, and a few more.
 
 ### v1.1.x - 2019-06
 
