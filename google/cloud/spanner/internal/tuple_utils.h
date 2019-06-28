@@ -44,6 +44,16 @@ std::size_t const NumElementsImpl<T<Ts...>>::value;  // Declares storage
 template <typename T>
 using NumElements = NumElementsImpl<typename std::decay<T>::type>;
 
+// Similar to `std::get<I>(std::tuple)`, except that this function is an
+// extension point for `ForEach` (below) that callers can define in their own
+// namespace for their own types to add support for `ForEach`. This overload
+// simply forwards to `std::get`.
+template <std::size_t I, typename Tup>
+auto GetElement(Tup&& tup) -> decltype(std::get<I>(std::forward<Tup>(tup))) {
+  using std::get;
+  return get<I>(std::forward<Tup>(tup));
+}
+
 // Base case of `ForEach` that is called at the end of iterating a tuple.
 // See the docs for the next overload to see how to use `ForEach`.
 template <std::size_t I = 0, typename T, typename F, typename... Args>
@@ -52,13 +62,13 @@ typename std::enable_if<I == NumElements<T>::value, void>::type ForEach(
 
 // This function template iterates the elements of a tuple-like type, calling
 // the given functor with each element of the container as well as any
-// additional arguments that were provided. A tuple-like container is any
-// heterogeneous type that contains a variadic number of types, and has a
-// `get<I>(T)` function that can be found via ADL. The given functor should be
-// able to accept each type in the container. All arguments are
-// perfect-forwarded to the functor, so the functor may choose to accept the
-// tuple arguments by value, const-ref, or even non-const reference, in which
-// case the elements inside the tuple may be modified.
+// additional arguments that were provided. A tuple-like type is any fixed-size
+// heterogeneous container that has a `GetElement<I>(T)` function that can be
+// found via ADL. The given functor should be able to accept each type in the
+// container. All arguments are perfect-forwarded to the functor, so the
+// functor may choose to accept the tuple arguments by value, const-ref, or
+// even non-const reference, in which case the elements inside the tuple may be
+// modified.
 //
 // Example:
 //
@@ -76,8 +86,7 @@ typename std::enable_if<I == NumElements<T>::value, void>::type ForEach(
 template <std::size_t I = 0, typename T, typename F, typename... Args>
 typename std::enable_if<(I < NumElements<T>::value), void>::type ForEach(
     T&& t, F&& f, Args&&... args) {
-  using std::get;
-  auto&& e = get<I>(std::forward<T>(t));
+  auto&& e = GetElement<I>(std::forward<T>(t));
   std::forward<F>(f)(std::forward<decltype(e)>(e), std::forward<Args>(args)...);
   ForEach<I + 1>(std::forward<T>(t), std::forward<F>(f),
                  std::forward<Args>(args)...);

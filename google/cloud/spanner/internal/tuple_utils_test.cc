@@ -61,10 +61,10 @@ template <typename... Ts>
 struct NotATuple {
   std::tuple<Ts...> data;
 };
-// Overload of a `get<I>(T)` function, which can be found via ADL.
+
+// Required ADL extension point to make `NotATuple` iterable like a tuple.
 template <std::size_t I, typename... Ts>
-typename std::tuple_element<I, std::tuple<Ts...>>::type& get(  // NOLINT
-    NotATuple<Ts...>& nat) {
+auto GetElement(NotATuple<Ts...>& nat) -> decltype(std::get<I>(nat.data)) {
   return std::get<I>(nat.data);
 }
 }  // namespace ns
