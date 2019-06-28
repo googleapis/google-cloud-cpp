@@ -74,6 +74,8 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
  * }
  * @endcode
  *
+ * `StatusOr<T>` supports equality comparisons if the underlying type `T` does.
+ *
  * TODO(...) - the current implementation is fairly naive with respect to `T`,
  *   it is unlikely to work correctly for reference types, types without default
  *   constructors, arrays.
@@ -330,6 +332,21 @@ class StatusOr final {
     T value_;
   };
 };
+
+// Returns true IFF both `StatusOr<T>` objects hold an equal `Status` or an
+// equal instance  of `T`. This function requires that `T` supports equality.
+template <typename T>
+bool operator==(StatusOr<T> const& a, StatusOr<T> const& b) {
+  if (!a || !b) return a.status() == b.status();
+  return *a == *b;
+}
+
+// Returns true of `a` and `b` are not equal. See `operator==` docs above for
+// the definition of equal.
+template <typename T>
+bool operator!=(StatusOr<T> const& a, StatusOr<T> const& b) {
+  return !(a == b);
+}
 
 template <typename T>
 StatusOr<T> make_status_or(T rhs) {

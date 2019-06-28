@@ -56,6 +56,29 @@ TEST(StatusOrTest, StatusAssignment) {
   EXPECT_EQ(error, sor.status());
 }
 
+struct NoEquality {};
+
+TEST(StatusOrTest, Equality) {
+  auto const err1 = Status(StatusCode::kUnknown, "foo");
+  auto const err2 = Status(StatusCode::kUnknown, "bar");
+
+  EXPECT_EQ(StatusOr<int>(err1), StatusOr<int>(err1));
+  EXPECT_NE(StatusOr<int>(err1), StatusOr<int>(err2));
+
+  EXPECT_NE(StatusOr<int>(err1), StatusOr<int>(1));
+  EXPECT_NE(StatusOr<int>(1), StatusOr<int>(err1));
+
+  EXPECT_EQ(StatusOr<int>(1), StatusOr<int>(1));
+  EXPECT_NE(StatusOr<int>(1), StatusOr<int>(2));
+
+  // Verify that we can still construct a StatusOr with a type that does not
+  // support equality, we just can't compare the StatusOr for equality with
+  // anything else (obviously).
+  StatusOr<NoEquality> no_equality;
+  no_equality = err1;
+  no_equality = NoEquality{};
+}
+
 TEST(StatusOrTest, ValueConstructor) {
   StatusOr<int> actual(42);
   EXPECT_STATUS_OK(actual);
