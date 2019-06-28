@@ -69,6 +69,9 @@ class Row {
   using ColumnType = typename std::tuple_element<I, std::tuple<Types...>>::type;
 
  public:
+  /// Returns the number of columns in this row.
+  static constexpr std::size_t size() { return sizeof...(Types); }
+
   /// Regular value type, supporting copy, assign, move, etc.
   Row() {}
   Row(Row const&) = default;
@@ -91,9 +94,6 @@ class Row {
                     std::is_same<typename std::decay<Ts>::type, Row>...>::value,
                 int>::type = 0>
   explicit Row(Ts&&... ts) : values_(std::forward<Ts>(ts)...) {}
-
-  /// Returns the number of columns in this row.
-  constexpr std::size_t size() const { return sizeof...(Types); }
 
   /**
    *  Returns a reference to the value at position `I`.
