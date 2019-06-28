@@ -46,7 +46,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ### v1.2.x - 2019-07
 
-** Breaking Changes **: we accidentally left two functions in the public API,
+* **Breaking Change**: we accidentally left two functions in the public API,
   they are now removed. These functions were used to convert 
   `google::cloud::storage::ServiceAccount` classes to and from JSON objects.
 * bug: resuming an already finalized upload was not working correctly. Now the
