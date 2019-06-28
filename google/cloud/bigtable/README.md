@@ -53,7 +53,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
   `google::cloud::bigtable::internal`, fixing constant names to follow the
    Google Style Guide, simplify the generation of version metadata, make it
    easier to import the code into Google, turned on `-Wextra` for our builds,
-   moved the sanitizer builds to Bazel, 
+   moved the sanitizer builds to Bazel,
 
 ### v0.10.x - 2019-06
 

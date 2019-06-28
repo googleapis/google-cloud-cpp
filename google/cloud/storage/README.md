@@ -47,7 +47,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 ### v1.2.x - 2019-07
 
 * **Breaking Change**: we accidentally left two functions in the public API,
-  they are now removed. These functions were used to convert 
+  they are now removed. These functions were used to convert
   `google::cloud::storage::ServiceAccount` classes to and from JSON objects.
 * bug: resuming an already finalized upload was not working correctly. Now the
   library restores the stream, but the stream is immediately closed (it is
@@ -59,7 +59,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
   always treated as binary.
 * bug: we were still leaking a few macros from the nlohmann json library to the
   user's namespace. This is now fixed and in fact none of the public headers
-  should be exposing the nlohmann headers either.  
+  should be exposing the nlohmann headers either.
 * feature: reduce data copies during download.
 * bug: return an error if the IAM bindings contain unknown fields, previously
   the library was discarding these fields.
