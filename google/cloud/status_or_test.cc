@@ -65,6 +65,9 @@ TEST(StatusOrTest, Equality) {
   EXPECT_EQ(StatusOr<int>(err1), StatusOr<int>(err1));
   EXPECT_NE(StatusOr<int>(err1), StatusOr<int>(err2));
 
+  EXPECT_NE(StatusOr<int>(err1), StatusOr<int>(1));
+  EXPECT_NE(StatusOr<int>(1), StatusOr<int>(err1));
+
   EXPECT_EQ(StatusOr<int>(1), StatusOr<int>(1));
   EXPECT_NE(StatusOr<int>(1), StatusOr<int>(2));
 

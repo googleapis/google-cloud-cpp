@@ -337,7 +337,7 @@ class StatusOr final {
 // equal instance  of `T`. This function requires that `T` supports equality.
 template <typename T>
 bool operator==(StatusOr<T> const& a, StatusOr<T> const& b) {
-  if (!a) return a.status() == b.status();
+  if (!a || !b) return a.status() == b.status();
   return *a == *b;
 }
 
