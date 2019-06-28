@@ -31,28 +31,9 @@ if (NOT TARGET googleapis_project)
     set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
         "6b8a9b2bcb4476e9a5a9872869996f0d639c8d5df76dd8a893e79201f211b1cf")
 
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
-        include(ProcessorCount)
-        processorcount(NCPU)
-        set(PARALLEL "--" "-j" "${NCPU}")
-    else()
-        set(PARALLEL "")
-    endif ()
+    set_external_project_build_parallel_level(PARALLEL)
 
-    # When passing a semi-colon delimited list to ExternalProject_Add, we need
-    # to escape the semi-colon. Quoting does not work and escaping the semi-
-    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
-    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
-    # then be replaced by an escaped semi-colon by CMake. This allows us to use
-    # multiple directories for our RPATH. Normally, it'd make sense to use : as
-    # a delimiter since it is a typical path-list separator, but it is a special
-    # character in CMake.
-    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
-    string(REPLACE ";"
-                   "|"
-                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
-                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
+    set_external_project_install_rpath()
 
     create_external_project_library_byproduct_list(
         googleapis_byproducts
