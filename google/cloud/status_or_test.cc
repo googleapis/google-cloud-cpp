@@ -74,8 +74,6 @@ TEST(StatusOrTest, Equality) {
   StatusOr<NoEquality> no_equality;
   no_equality = err1;
   no_equality = NoEquality{};
-
-  EXPECT_EQ(no_equality, no_equality);
 }
 
 TEST(StatusOrTest, ValueConstructor) {
