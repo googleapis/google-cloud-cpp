@@ -49,6 +49,9 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 * **Breaking Change**: we accidentally left two functions in the public API,
   they are now removed. These functions were used to convert
   `google::cloud::storage::ServiceAccount` classes to and from JSON objects.
+* feature: allow applications to load service account credentials from the
+  standard locations, but also change the scopes and subject as the credentials
+  are loaded.
 * bug: resuming an already finalized upload was not working correctly. Now the
   library restores the stream, but the stream is immediately closed (it is
   incorrect to write more data), and has the object metadata immediately
