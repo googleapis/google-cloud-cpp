@@ -68,7 +68,8 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  *     ARRAY/`std::vector`.
  *
  * Value is a regular C++ value type with support for copy, move, equality,
- * etc, but there is no default constructor because there is no default type.
+ * etc. A default-constructed Value represents an empty value with no type.
+ *
  * Callers may create instances by passing any of the supported values (shown
  * in the table above) to the constructor. "Null" values are created using the
  * `MakeNullValue<T>()` factory function or by passing an empty `optional<T>`
@@ -136,7 +137,13 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  */
 class Value {
  public:
-  Value() = delete;
+  /**
+   * Constructs a non-null `Value` that holds nothing.
+   *
+   * All calls to `is<T>()`, `is_null<T>()`, and `get<T>()` will return false
+   * or an error as appropriate.
+   */
+  Value() = default;
 
   /// Copy and move.
   Value(Value const&) = default;

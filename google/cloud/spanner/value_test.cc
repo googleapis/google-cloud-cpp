@@ -31,6 +31,11 @@ inline namespace SPANNER_CLIENT_NS {
 
 template <typename T>
 void TestBasicSemantics(T init) {
+  Value const default_ctor{};
+  EXPECT_FALSE(default_ctor.is<T>());
+  EXPECT_FALSE(default_ctor.is_null<T>());
+  EXPECT_FALSE(default_ctor.get<T>().ok());
+
   Value const v{init};
 
   EXPECT_TRUE(v.is<T>());
