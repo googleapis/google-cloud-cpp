@@ -336,7 +336,7 @@ class StatusOr final {
 // Returns true IFF both `StatusOr<T>` objects hold an equal `Status` or an
 // equal instance  of `T`. This function requires that `T` supports equality.
 template <typename T>
-inline bool operator==(StatusOr<T> const& a, StatusOr<T> const& b) {
+bool operator==(StatusOr<T> const& a, StatusOr<T> const& b) {
   if (!a) return a.status() == b.status();
   return *a == *b;
 }
@@ -344,7 +344,7 @@ inline bool operator==(StatusOr<T> const& a, StatusOr<T> const& b) {
 // Returns true of `a` and `b` are not equal. See `operator==` docs above for
 // the definition of equal.
 template <typename T>
-inline bool operator!=(StatusOr<T> const& a, StatusOr<T> const& b) {
+bool operator!=(StatusOr<T> const& a, StatusOr<T> const& b) {
   return !(a == b);
 }
 
