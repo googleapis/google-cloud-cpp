@@ -46,7 +46,7 @@ class BackoffPolicyMock : public bigtable::RPCBackoffPolicy {
 
   std::chrono::milliseconds OnCompletion(grpc::Status const& s) override {
     num_calls_from_last_clone_++;
-    return OnCompletionHook(MakeStatusFromRpcError(s));
+    return OnCompletionHook(grpc_utils::MakeStatusFromRpcError(s));
   }
 
   std::chrono::milliseconds OnCompletion(

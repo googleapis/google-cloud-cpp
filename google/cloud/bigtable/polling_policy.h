@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_POLLING_POLICY_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_POLLING_POLICY_H_
 
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -51,7 +51,7 @@ class PollingPolicy {
    * TODO(#2344): remove grpc::Status version.
    */
   virtual bool IsPermanentError(grpc::Status const& status) {
-    return IsPermanentError(internal::MakeStatusFromRpcError(status));
+    return IsPermanentError(grpc_utils::MakeStatusFromRpcError(status));
   }
 
   /**
@@ -67,7 +67,7 @@ class PollingPolicy {
    * @return true if the RPC operation should be retried.
    */
   virtual bool OnFailure(grpc::Status const& status) {
-    return OnFailure(internal::MakeStatusFromRpcError(status));
+    return OnFailure(grpc_utils::MakeStatusFromRpcError(status));
   }
 
   /**

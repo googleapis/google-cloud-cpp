@@ -271,7 +271,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
     parser_->HandleEndOfStream(parser_status);
     if (!parser_status.ok() && status_.ok()) {
       // If there stream finished with an error ignore what the parser says.
-      status_ = internal::MakeStatusFromRpcError(parser_status);
+      status_ = grpc_utils::MakeStatusFromRpcError(parser_status);
     }
 
     // In the unlikely case when we have already reached the requested
@@ -339,7 +339,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
     while (parser_->HasNext()) {
       Row parsed_row = parser_->Next(status);
       if (!status.ok()) {
-        return internal::MakeStatusFromRpcError(status);
+        return grpc_utils::MakeStatusFromRpcError(status);
       }
       ++rows_count_;
       last_read_row_key_ = std::string(parsed_row.row_key());
@@ -354,7 +354,7 @@ class AsyncRowReader : public std::enable_shared_from_this<
       grpc::Status status;
       parser_->HandleChunk(std::move(chunk), status);
       if (!status.ok()) {
-        return internal::MakeStatusFromRpcError(status);
+        return grpc_utils::MakeStatusFromRpcError(status);
       }
       Status parser_status = DrainParser();
       if (!parser_status.ok()) {

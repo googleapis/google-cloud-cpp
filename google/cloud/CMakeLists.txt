@@ -55,6 +55,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/firestore/*"
     "*/google/cloud/spanner/*"
     "*/google/cloud/storage/*"
+    "*/google/cloud/grpc_utils/*"
     "*/google/cloud/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOL "internal")
 
@@ -303,6 +304,7 @@ install(
 add_subdirectory(bigtable)
 add_subdirectory(firestore)
 add_subdirectory(storage)
+add_subdirectory(grpc_utils)
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
 endif ()

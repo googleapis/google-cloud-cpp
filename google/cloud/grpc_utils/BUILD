@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,28 +16,28 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(
-    ":bigtable_client_integration_tests.bzl",
-    "bigtable_client_integration_tests",
-)
+load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 
-[cc_binary(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
+cc_library(
+    name = "google_cloud_cpp_grpc_utils",
+    srcs = google_cloud_cpp_grpc_utils_srcs,
+    hdrs = google_cloud_cpp_grpc_utils_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/bigtable:bigtable_client",
-        "//google/cloud/bigtable:bigtable_client_testing",
-        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
-    ],
-) for test in bigtable_client_integration_tests]
-
-cc_binary(
-    name = "instance_admin_emulator",
-    srcs = ["instance_admin_emulator.cc"],
-    deps = [
-        "//google/cloud/bigtable:bigtable_client",
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )
+
+load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
+
+[cc_test(
+    name = "google_cloud_cpp_grpc_utils_" + test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googletest//:gtest",
+    ],
+) for test in google_cloud_cpp_grpc_utils_unit_tests]

@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc.
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <gtest/gtest.h>
 
-using namespace google::cloud::bigtable::internal;
+using namespace google::cloud::grpc_utils;
 
 TEST(MakeStatusFromRpcError, AllCodes) {
   using google::cloud::StatusCode;

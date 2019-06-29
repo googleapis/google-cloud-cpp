@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/readrowsparser.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
 #include "google/cloud/bigtable/row.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -200,20 +200,18 @@ class AcceptanceTest : public ::testing::Test {
     for (auto const& chunk : chunks) {
       parser_.HandleChunk(chunk, status);
       if (!status.ok()) {
-        return google::cloud::bigtable::internal::MakeStatusFromRpcError(
-            status);
+        return ::google::cloud::grpc_utils::MakeStatusFromRpcError(status);
       }
       if (parser_.HasNext()) {
         rows_.emplace_back(parser_.Next(status));
         if (!status.ok()) {
-          return google::cloud::bigtable::internal::MakeStatusFromRpcError(
-              status);
+          return ::google::cloud::grpc_utils::MakeStatusFromRpcError(status);
         }
       }
     }
     parser_.HandleEndOfStream(status);
     if (!status.ok()) {
-      return google::cloud::bigtable::internal::MakeStatusFromRpcError(status);
+      return ::google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status{};
   }
