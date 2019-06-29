@@ -24,6 +24,7 @@ cc_library(
     hdrs = bigtable_client_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//:bigtable_protos",
     ],
 )
@@ -38,6 +39,7 @@ cc_library(
         ":bigtable_client",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
         "@com_google_googletest//:gtest",
     ],
 )
@@ -52,6 +54,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
         ":bigtable_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_client_unit_tests]
@@ -67,6 +70,7 @@ cc_test(
         ":bigtable_client_testing",
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
         "@com_google_googletest//:gtest",
     ],
 )
