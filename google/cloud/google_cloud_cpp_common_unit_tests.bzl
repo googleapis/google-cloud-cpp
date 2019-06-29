@@ -38,5 +38,4 @@ google_cloud_cpp_common_unit_tests = [
     "status_or_test.cc",
     "status_test.cc",
     "terminate_handler_test.cc",
-    "testing_util/assert_ok_test.cc",
 ]

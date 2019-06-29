@@ -37,7 +37,36 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
                           PUBLIC google_cloud_cpp_common GTest::gmock
                           PRIVATE google_cloud_cpp_common_options)
 
-    create_bazel_config(google_cloud_cpp_testing)
+    create_bazel_config(google_cloud_cpp_testing YEAR 2019)
+
+    set(google_cloud_cpp_testing_unit_tests assert_ok_test.cc)
+
+    # Export the list of unit tests so the Bazel BUILD file can pick it up.
+    export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
+                         "google_cloud_cpp_testing_unit_tests")
+
+    foreach (fname ${google_cloud_cpp_testing_unit_tests})
+        string(REPLACE "/"
+                       "_"
+                       target
+                       ${fname})
+        string(REPLACE ".cc"
+                       ""
+                       target
+                       ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(${target}
+                              PRIVATE google_cloud_cpp_testing
+                                      google_cloud_cpp_common
+                                      GTest::gmock_main
+                                      GTest::gmock
+                                      GTest::gtest
+                                      google_cloud_cpp_common_options)
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
 endif ()
 
 if (GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)

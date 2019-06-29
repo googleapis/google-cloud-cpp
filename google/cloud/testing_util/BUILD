@@ -23,7 +23,7 @@ cc_library(
     srcs = google_cloud_cpp_testing_srcs,
     hdrs = google_cloud_cpp_testing_hdrs,
     deps = [
-        ":google_cloud_cpp_common",
+        "//google/cloud:google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
     ],
 )
