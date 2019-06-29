@@ -18,6 +18,7 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
+#include "google/cloud/storage/internal/curl_resumable_streambuf.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <openssl/md5.h>
@@ -71,17 +72,21 @@ ObjectReadStream Client::ReadObjectImpl(
 }
 
 ObjectWriteStream Client::WriteObjectImpl(
-    internal::InsertObjectStreamingRequest const& request) {
-  auto streambuf = raw_client_->WriteObject(request);
-  if (!streambuf) {
-    ObjectWriteStream error_stream(google::cloud::internal::make_unique<
-                                   internal::ObjectWriteErrorStreambuf>(
-        std::move(streambuf).status()));
+    internal::ResumableUploadRequest const& request) {
+  using google::cloud::internal::make_unique;
+  auto session = raw_client_->CreateResumableSession(request);
+  if (!session) {
+    auto error = make_unique<internal::ObjectWriteErrorStreambuf>(
+        std::move(session).status());
+
+    ObjectWriteStream error_stream(std::move(error));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
     return error_stream;
   }
-  return ObjectWriteStream(*std::move(streambuf));
+  return ObjectWriteStream(make_unique<internal::CurlResumableStreambuf>(
+      *std::move(session), raw_client_->client_options().upload_buffer_size(),
+      internal::CreateHashValidator(request)));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {

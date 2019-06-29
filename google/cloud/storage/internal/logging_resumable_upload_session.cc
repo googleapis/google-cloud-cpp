@@ -86,12 +86,7 @@ LoggingResumableUploadSession::last_response() const {
   return response;
 }
 
-bool LoggingResumableUploadSession::done() const {
-  GCP_LOG(INFO) << __func__ << " << ()";
-  auto const& response = session_->done();
-  GCP_LOG(INFO) << __func__ << " >> " << std::boolalpha << response;
-  return response;
-}
+bool LoggingResumableUploadSession::done() const { return session_->done(); }
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

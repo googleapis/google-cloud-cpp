@@ -85,6 +85,12 @@ std::unique_ptr<HashValidator> CreateHashValidator(
                              request.HasOption<DisableCrc32cChecksum>());
 }
 
+std::unique_ptr<HashValidator> CreateHashValidator(
+    ResumableUploadRequest const& request) {
+  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
+                             request.HasOption<DisableCrc32cChecksum>());
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

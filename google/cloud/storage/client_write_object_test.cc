@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
@@ -25,6 +26,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::google::cloud::internal::make_unique;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
@@ -57,36 +59,71 @@ class WriteObjectTest : public ::testing::Test {
       ClientOptions(oauth2::CreateAnonymousCredentials());
 };
 
-class MockStreambuf : public internal::ObjectWriteStreambuf {
- public:
-  MOCK_CONST_METHOD0(IsOpen, bool());
-  MOCK_METHOD0(DoClose, StatusOr<internal::HttpResponse>());
-  MOCK_METHOD1(ValidateHash, bool(ObjectMetadata const&));
-  MOCK_CONST_METHOD0(received_hash, std::string const&());
-  MOCK_CONST_METHOD0(computed_hash, std::string const&());
-  MOCK_CONST_METHOD0(resumable_session_id, std::string const&());
-  MOCK_CONST_METHOD0(next_expected_byte, std::uint64_t());
-};
-
 TEST_F(WriteObjectTest, WriteObject) {
   std::string text = R"""({
       "name": "test-bucket-name/test-object-name/1"
 })""";
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
-  EXPECT_CALL(*mock, WriteObject(_))
-      .WillOnce(Invoke(
-          [&text](internal::InsertObjectStreamingRequest const& request) {
+  EXPECT_CALL(*mock, CreateResumableSession(_))
+      .WillOnce(Invoke([&text](
+                           internal::ResumableUploadRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
+
+        auto mock = make_unique<testing::MockResumableUploadSession>();
+        using internal::ResumableUploadResponse;
+        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
+        EXPECT_CALL(*mock, UploadChunk(_))
+            .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
+                "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
+        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+            .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
+                "fake-url", 0, text, ResumableUploadResponse::kDone})));
+
+        return make_status_or(
+            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
+      }));
+
+  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
+  stream << "Hello World!";
+  stream.Close();
+  ObjectMetadata actual = stream.metadata().value();
+  EXPECT_EQ(expected, actual);
+}
+
+TEST_F(WriteObjectTest, WriteObjectSessionRetries) {
+  std::string text = R"""({
+      "name": "test-bucket-name/test-object-name/1"
+})""";
+  auto expected = internal::ObjectMetadataParser::FromString(text).value();
+
+  EXPECT_CALL(*mock, CreateResumableSession(_))
+      .WillOnce(
+          Invoke([&text](internal::ResumableUploadRequest const& request) {
             EXPECT_EQ("test-bucket-name", request.bucket_name());
             EXPECT_EQ("test-object-name", request.object_name());
-            auto* mock_result = new MockStreambuf;
-            EXPECT_CALL(*mock_result, DoClose())
-                .WillRepeatedly(Return(internal::HttpResponse{200, text, {}}));
-            EXPECT_CALL(*mock_result, IsOpen()).WillRepeatedly(Return(true));
-            EXPECT_CALL(*mock_result, ValidateHash(_))
-                .WillRepeatedly(Return(true));
-            std::unique_ptr<internal::ObjectWriteStreambuf> result(mock_result);
-            return make_status_or(std::move(result));
+
+            auto mock = make_unique<testing::MockResumableUploadSession>();
+            using internal::ResumableUploadResponse;
+            EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+            EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
+            EXPECT_CALL(*mock, UploadChunk(_))
+                .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
+                    "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
+            EXPECT_CALL(*mock, ResetSession())
+                .WillOnce(Return(make_status_or(ResumableUploadResponse{
+                    "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
+            EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+                .WillOnce(
+                    Return(StatusOr<ResumableUploadResponse>(TransientError())))
+                .WillOnce(Return(make_status_or(ResumableUploadResponse{
+                    "fake-url", 0, text, ResumableUploadResponse::kDone})));
+
+            return make_status_or(
+                std::unique_ptr<internal ::ResumableUploadSession>(
+                    std::move(mock)));
           }));
 
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
@@ -100,11 +137,11 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 LimitedErrorCountRetryPolicy(2)};
 
-  auto returner = [](internal::InsertObjectStreamingRequest const&) {
-    return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+  auto returner = [](internal::ResumableUploadRequest const&) {
+    return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         TransientError());
   };
-  EXPECT_CALL(*mock, WriteObject(_))
+  EXPECT_CALL(*mock, CreateResumableSession(_))
       .WillOnce(Invoke(returner))
       .WillOnce(Invoke(returner))
       .WillOnce(Invoke(returner));
@@ -117,11 +154,11 @@ TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
 }
 
 TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
-  auto returner = [](internal::InsertObjectStreamingRequest const&) {
-    return StatusOr<std::unique_ptr<internal::ObjectWriteStreambuf>>(
+  auto returner = [](internal::ResumableUploadRequest const&) {
+    return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         PermanentError());
   };
-  EXPECT_CALL(*mock, WriteObject(_)).WillOnce(Invoke(returner));
+  EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
   EXPECT_FALSE(stream.metadata().status().ok());

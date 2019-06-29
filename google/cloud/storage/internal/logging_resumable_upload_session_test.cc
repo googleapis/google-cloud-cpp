@@ -169,19 +169,6 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {
   EXPECT_EQ(1, CountLines("[FAILED_PRECONDITION]"));
 }
 
-TEST_F(LoggingResumableUploadSessionTest, Done) {
-  auto mock = google::cloud::internal::make_unique<
-      testing::MockResumableUploadSession>();
-
-  EXPECT_CALL(*mock, done()).WillOnce(Return(false));
-
-  LoggingResumableUploadSession session(std::move(mock));
-
-  EXPECT_FALSE(session.done());
-
-  EXPECT_EQ(1, CountLines("false"));
-}
-
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
