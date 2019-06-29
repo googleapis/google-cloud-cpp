@@ -197,7 +197,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL}")
     set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH
         ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH})
     set(GOOGLE_CLOUD_CPP_PC_NAME
-        "gRPC Utilities the Google Cloud C++ Client Library")
+        "gRPC Utilities for the Google Cloud C++ Client Library")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
     set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")

@@ -33,10 +33,10 @@ namespace grpc_utils {
  * The inlined, versioned namespace for the Cloud C++ gRPC Utilities APIs.
  *
  * Applications may need to link multiple versions of the Cloud C++ gRPC
- * Utilities API Extensions for example, if they link a library that uses an
- * older version of the client than they do.  This namespace is inlined, so
- * applications can use `grpc_utils::Foo` in their source, but the symbols are
- * versioned, i.e., the symbol becomes `grpc_utils::v1::Foo`.
+ * Utilities for example, if they link a library that uses an older version of
+ * the client than they do.  This namespace is inlined, so applications can use
+ * `grpc_utils::Foo` in their source, but the symbols are versioned, i.e., the
+ * symbol becomes `grpc_utils::v1::Foo`.
  *
  * Note that, consistent with the semver.org guidelines, the v0 version makes
  * no guarantees with respect to backwards compatibility.
