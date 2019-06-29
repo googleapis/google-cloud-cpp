@@ -50,18 +50,6 @@ cc_library(
     deps = [],
 )
 
-load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
-
-cc_library(
-    name = "google_cloud_cpp_testing",
-    srcs = google_cloud_cpp_testing_srcs,
-    hdrs = google_cloud_cpp_testing_hdrs,
-    deps = [
-        ":google_cloud_cpp_common",
-        "@com_google_googletest//:gtest",
-    ],
-)
-
 load(
     ":google_cloud_cpp_common_unit_tests.bzl",
     "google_cloud_cpp_common_unit_tests",
@@ -74,7 +62,7 @@ load(
     linkopts = ["-lpthread"],
     deps = [
         ":google_cloud_cpp_common",
-        ":google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],

@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,28 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":firestore_client.bzl", "firestore_client_hdrs", "firestore_client_srcs")
+load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
 cc_library(
-    name = "firestore_client",
-    srcs = firestore_client_srcs,
-    hdrs = firestore_client_hdrs,
+    name = "google_cloud_cpp_testing",
+    srcs = google_cloud_cpp_testing_srcs,
+    hdrs = google_cloud_cpp_testing_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-    ],
-)
-
-load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
-
-[cc_test(
-    name = "firestore_client_" + test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
-    # TODO(#664 / #666) - use the right condition when porting Bazel builds
-    linkopts = ["-lpthread"],
-    deps = [
-        ":firestore_client",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
-) for test in firestore_client_unit_tests]
+)

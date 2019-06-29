@@ -138,6 +138,10 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS)
 set(PROJECT_THIRD_PARTY_DIR "${PROJECT_SOURCE_DIR}/third_party")
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
+option(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL
+       "Install the testing utilities." OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
+
 # There are a number of targets that are pure dependencies, i.e., do not contain
 # our own code. These targets can be skipped when using static analysis tools.
 # Can be built earlier in the CI environment (for example to warm up the cache).

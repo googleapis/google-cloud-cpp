@@ -26,9 +26,9 @@ load(
     srcs = [test],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/bigtable:bigtable_client_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_client_integration_tests]

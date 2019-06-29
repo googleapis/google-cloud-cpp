@@ -37,7 +37,7 @@ cc_library(
     deps = [
         ":bigtable_client",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 )
@@ -51,7 +51,7 @@ load(":bigtable_client_unit_tests.bzl", "bigtable_client_unit_tests")
         ":bigtable_client",
         ":bigtable_client_testing",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_client_unit_tests]
@@ -66,7 +66,7 @@ cc_test(
         ":bigtable_client",
         ":bigtable_client_testing",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 )
