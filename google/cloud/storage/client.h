@@ -995,7 +995,6 @@ class Client {
   ObjectWriteStream WriteObject(std::string const& bucket_name,
                                 std::string const& object_name,
                                 Options&&... options) {
-    // internal::InsertObjectStreamingRequest request(bucket_name, object_name);
     internal::ResumableUploadRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return WriteObjectImpl(request);
