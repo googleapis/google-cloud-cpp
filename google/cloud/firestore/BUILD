@@ -37,7 +37,7 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
     deps = [
         ":firestore_client",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in firestore_client_unit_tests]

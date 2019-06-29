@@ -60,7 +60,7 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
     deps = [
         ":storage_benchmarks",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
         "@boringssl//:crypto",

@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,21 +16,14 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(
-    ":storage_client_integration_tests.bzl",
-    "storage_client_integration_tests",
-)
+load(":google_cloud_cpp_testing.bzl", "google_cloud_cpp_testing_hdrs", "google_cloud_cpp_testing_srcs")
 
-[cc_binary(
-    name = test.replace("/", "_").replace(".cc", ""),
-    srcs = [test],
-    # TODO(#664 / #666) - use the right condition when porting Bazel builds
-    linkopts = ["-lpthread"],
+cc_library(
+    name = "google_cloud_cpp_testing",
+    srcs = google_cloud_cpp_testing_srcs,
+    hdrs = google_cloud_cpp_testing_hdrs,
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/storage:storage_client",
-        "//google/cloud/storage:storage_client_testing",
+        ":google_cloud_cpp_common",
         "@com_google_googletest//:gtest",
     ],
-) for test in storage_client_integration_tests]
+)
