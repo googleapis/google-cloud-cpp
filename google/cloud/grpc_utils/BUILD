@@ -36,7 +36,7 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
     deps = [
         ":google_cloud_cpp_grpc_utils",
         "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_github_grpc_grpc//:grpc++",
         "@com_google_googletest//:gtest",
     ],
