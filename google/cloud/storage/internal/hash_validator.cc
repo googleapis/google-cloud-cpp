@@ -68,19 +68,11 @@ std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
       google::cloud::internal::make_unique<MD5HashValidator>());
 }
 
-/// Create a HashValidator for a download request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
   if (request.RequiresRangeHeader()) {
     return google::cloud::internal::make_unique<NullHashValidator>();
   }
-  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
-                             request.HasOption<DisableCrc32cChecksum>());
-}
-
-/// Create a HashValidator for an upload request.
-std::unique_ptr<HashValidator> CreateHashValidator(
-    InsertObjectStreamingRequest const& request) {
   return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
                              request.HasOption<DisableCrc32cChecksum>());
 }

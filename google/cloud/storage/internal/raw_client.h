@@ -83,8 +83,6 @@ class RawClient {
       GetObjectMetadataRequest const& request) = 0;
   virtual StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) = 0;
-  virtual StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
-      InsertObjectStreamingRequest const&) = 0;
   virtual StatusOr<ListObjectsResponse> ListObjects(
       ListObjectsRequest const&) = 0;
   virtual StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) = 0;

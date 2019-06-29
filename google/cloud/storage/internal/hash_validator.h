@@ -100,16 +100,11 @@ class CompositeValidator : public HashValidator {
 };
 
 class ReadObjectRangeRequest;
-class InsertObjectStreamingRequest;
 class ResumableUploadRequest;
 
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request);
-
-/// Create a hash validator configured by @p request.
-std::unique_ptr<HashValidator> CreateHashValidator(
-    InsertObjectStreamingRequest const& request);
 
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(

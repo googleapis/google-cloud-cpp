@@ -158,12 +158,6 @@ StatusOr<std::unique_ptr<ObjectReadSource>> LoggingClient::ReadObject(
                                    __func__);
 }
 
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> LoggingClient::WriteObject(
-    InsertObjectStreamingRequest const& request) {
-  return MakeCallNoResponseLogging(*client_, &RawClient::WriteObject, request,
-                                   __func__);
-}
-
 StatusOr<ListObjectsResponse> LoggingClient::ListObjects(
     ListObjectsRequest const& request) {
   return MakeCall(*client_, &RawClient::ListObjects, request, __func__);

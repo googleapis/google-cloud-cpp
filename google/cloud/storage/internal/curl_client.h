@@ -95,8 +95,6 @@ class CurlClient : public RawClient,
       GetObjectMetadataRequest const& request) override;
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
-  StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
-      InsertObjectStreamingRequest const&) override;
   StatusOr<ListObjectsResponse> ListObjects(
       ListObjectsRequest const& request) override;
   StatusOr<EmptyResponse> DeleteObject(
@@ -208,10 +206,6 @@ class CurlClient : public RawClient,
   /// Insert an object using uploadType=media.
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
-
-  /// Upload an object using uploadType=resumable.
-  StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObjectResumable(
-      InsertObjectStreamingRequest const& request);
 
   template <typename RequestType>
   StatusOr<std::unique_ptr<ResumableUploadSession>>

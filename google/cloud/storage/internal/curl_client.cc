@@ -577,11 +577,6 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
       new CurlDownloadRequest(builder.BuildDownloadRequest(std::string{})));
 }
 
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> CurlClient::WriteObject(
-    InsertObjectStreamingRequest const& request) {
-  return WriteObjectResumable(request);
-}
-
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
     ListObjectsRequest const& request) {
   // Assume the bucket name is validated by the caller.
@@ -1441,20 +1436,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
                     std::to_string(request.contents().size()));
   return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.contents()));
-}
-
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>>
-CurlClient::WriteObjectResumable(InsertObjectStreamingRequest const& request) {
-  auto session = CreateResumableSessionGeneric(request);
-  if (!session.ok()) {
-    return std::move(session).status();
-  }
-
-  auto buf =
-      google::cloud::internal::make_unique<internal::CurlResumableStreambuf>(
-          std::move(session).value(), client_options().upload_buffer_size(),
-          CreateHashValidator(request));
-  return std::unique_ptr<internal::ObjectWriteStreambuf>(std::move(buf));
 }
 
 StatusOr<std::string> CurlClient::AuthorizationHeader(

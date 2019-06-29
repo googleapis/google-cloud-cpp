@@ -61,8 +61,6 @@ class LoggingClient : public RawClient {
       GetObjectMetadataRequest const& request) override;
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
-  StatusOr<std::unique_ptr<ObjectWriteStreambuf>> WriteObject(
-      InsertObjectStreamingRequest const&) override;
   StatusOr<ListObjectsResponse> ListObjects(ListObjectsRequest const&) override;
   StatusOr<EmptyResponse> DeleteObject(DeleteObjectRequest const&) override;
   StatusOr<ObjectMetadata> UpdateObject(

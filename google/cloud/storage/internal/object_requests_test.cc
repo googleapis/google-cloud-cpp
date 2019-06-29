@@ -192,24 +192,6 @@ TEST(ObjectRequestsTest, Copy) {
   EXPECT_THAT(actual, HasSubstr("userProject=my-project"));
 }
 
-TEST(ObjectRequestsTest, InsertObjectStreaming) {
-  InsertObjectStreamingRequest request("my-bucket", "my-object");
-  request.set_multiple_options(
-      IfGenerationMatch(0), Projection("full"), ContentEncoding("media"),
-      KmsKeyName("random-key"), PredefinedAcl("authenticatedRead"));
-  std::ostringstream os;
-  os << request;
-  auto str = os.str();
-  EXPECT_THAT(str, HasSubstr("InsertObjectStreamingRequest"));
-  EXPECT_THAT(str, HasSubstr("my-bucket"));
-  EXPECT_THAT(str, HasSubstr("my-object"));
-  EXPECT_THAT(str, HasSubstr("ifGenerationMatch=0"));
-  EXPECT_THAT(str, HasSubstr("projection=full"));
-  EXPECT_THAT(str, HasSubstr("kmsKeyName=random-key"));
-  EXPECT_THAT(str, HasSubstr("contentEncoding=media"));
-  EXPECT_THAT(str, HasSubstr("predefinedAcl=authenticatedRead"));
-}
-
 HttpResponse CreateRangeRequestResponse(
     char const* content_range_header_value) {
   HttpResponse response;
