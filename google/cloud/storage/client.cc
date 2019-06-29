@@ -73,20 +73,21 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
-  using google::cloud::internal::make_unique;
   auto session = raw_client_->CreateResumableSession(request);
   if (!session) {
-    auto error = make_unique<internal::ObjectWriteErrorStreambuf>(
-        std::move(session).status());
+    auto error = google::cloud::internal::make_unique<
+        internal ::ObjectWriteErrorStreambuf>(std::move(session).status());
 
     ObjectWriteStream error_stream(std::move(error));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
     return error_stream;
   }
-  return ObjectWriteStream(make_unique<internal::CurlResumableStreambuf>(
-      *std::move(session), raw_client_->client_options().upload_buffer_size(),
-      internal::CreateHashValidator(request)));
+  return ObjectWriteStream(
+      google::cloud::internal::make_unique<internal::CurlResumableStreambuf>(
+          *std::move(session),
+          raw_client_->client_options().upload_buffer_size(),
+          internal::CreateHashValidator(request)));
 }
 
 bool Client::UseSimpleUpload(std::string const& file_name) const {
