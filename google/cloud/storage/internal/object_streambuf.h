@@ -19,8 +19,10 @@
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
+#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/version.h"
 #include <iostream>
+#include <map>
 #include <vector>
 
 namespace google {
@@ -89,7 +91,13 @@ class ObjectReadStreambuf : public std::basic_streambuf<char> {
  */
 class ObjectWriteStreambuf : public std::basic_streambuf<char> {
  public:
-  ObjectWriteStreambuf() : std::basic_streambuf<char>() {}
+  ObjectWriteStreambuf() = default;
+
+  explicit ObjectWriteStreambuf(
+      std::unique_ptr<ResumableUploadSession> upload_session,
+      std::size_t max_buffer_size,
+      std::unique_ptr<HashValidator> hash_validator);
+
   ~ObjectWriteStreambuf() override = default;
 
   ObjectWriteStreambuf(ObjectWriteStreambuf&& rhs) noexcept = delete;
@@ -98,46 +106,47 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 
   StatusOr<HttpResponse> Close();
-  virtual bool IsOpen() const = 0;
-  virtual bool ValidateHash(ObjectMetadata const& meta) = 0;
-  virtual std::string const& received_hash() const = 0;
-  virtual std::string const& computed_hash() const = 0;
+  virtual bool IsOpen() const;
+  virtual bool ValidateHash(ObjectMetadata const& meta);
 
-  /// The session id, if applicable, it is empty for non-resumable uploads.
-  virtual std::string const& resumable_session_id() const = 0;
-
-  /// The next expected byte, if applicable, always 0 for non-resumable uploads.
-  virtual std::uint64_t next_expected_byte() const = 0;
-
- protected:
-  virtual StatusOr<HttpResponse> DoClose() = 0;
-};
-
-/**
- * A write stream in a permanent error state.
- */
-class ObjectWriteErrorStreambuf : public ObjectWriteStreambuf {
- public:
-  explicit ObjectWriteErrorStreambuf(Status status)
-      : status_(std::move(status)) {}
-
-  bool IsOpen() const override { return is_open_; }
-  bool ValidateHash(ObjectMetadata const&) override { return false; }
-  std::string const& received_hash() const override { return string_; }
-  std::string const& computed_hash() const override { return string_; }
-  std::string const& resumable_session_id() const override { return string_; }
-  std::uint64_t next_expected_byte() const override { return 0; }
-
- protected:
-  StatusOr<HttpResponse> DoClose() override {
-    is_open_ = false;
-    return status_;
+  virtual std::string const& received_hash() const {
+    return hash_validator_result_.received;
+  }
+  virtual std::string const& computed_hash() const {
+    return hash_validator_result_.computed;
   }
 
+  /// The session id, if applicable, it is empty for non-resumable uploads.
+  virtual std::string const& resumable_session_id() const {
+    return upload_session_->session_id();
+  }
+
+  /// The next expected byte, if applicable, always 0 for non-resumable uploads.
+  virtual std::uint64_t next_expected_byte() const {
+    return upload_session_->next_expected_byte();
+  }
+
+ protected:
+  int sync() override;
+  std::streamsize xsputn(char const* s, std::streamsize count) override;
+  int_type overflow(int_type ch) override;
+
  private:
-  bool is_open_ = true;
-  Status status_;
-  std::string string_;
+  /// Flush any data if possible.
+  StatusOr<HttpResponse> Flush();
+
+  /// Flush any remaining data and commit the upload.
+  StatusOr<HttpResponse> FlushFinal();
+
+  std::unique_ptr<ResumableUploadSession> upload_session_;
+
+  std::string current_ios_buffer_;
+  std::size_t max_buffer_size_;
+
+  std::unique_ptr<HashValidator> hash_validator_;
+  HashValidator::Result hash_validator_result_;
+
+  StatusOr<HttpResponse> last_response_;
 };
 
 }  // namespace internal

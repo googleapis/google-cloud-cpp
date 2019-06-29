@@ -100,6 +100,48 @@ bool operator!=(ResumableUploadResponse const& lhs,
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 
+/**
+ * A resumable upload session that always returns an error.
+ *
+ * When an unrecoverable error is detected (or the policies to recover from an
+ * error are exhausted), we create an object of this type to represent a session
+ * that will never succeed. This is cleaner than returning a nullptr and then
+ * checking for null in each call.
+ */
+class ResumableUploadSessionError : public ResumableUploadSession {
+ public:
+  explicit ResumableUploadSessionError(Status status)
+      : status_(std::move(status)), last_response_(status_) {}
+
+  ~ResumableUploadSessionError() override = default;
+
+  StatusOr<ResumableUploadResponse> UploadChunk(std::string const&) override {
+    return status_;
+  }
+
+  StatusOr<ResumableUploadResponse> UploadFinalChunk(std::string const&,
+                                                     std::uint64_t) override {
+    return status_;
+  }
+
+  StatusOr<ResumableUploadResponse> ResetSession() override { return status_; }
+
+  std::uint64_t next_expected_byte() const override { return 0; }
+
+  std::string const& session_id() const override { return id_; }
+
+  bool done() const override { return true; }
+
+  StatusOr<ResumableUploadResponse> const& last_response() const override {
+    return last_response_;
+  }
+
+ private:
+  Status status_;
+  StatusOr<ResumableUploadResponse> last_response_;
+  std::string id_;
+};
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

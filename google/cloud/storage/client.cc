@@ -18,7 +18,6 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/storage/internal/curl_resumable_streambuf.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include <openssl/md5.h>
@@ -76,15 +75,18 @@ ObjectWriteStream Client::WriteObjectImpl(
   auto session = raw_client_->CreateResumableSession(request);
   if (!session) {
     auto error = google::cloud::internal::make_unique<
-        internal ::ObjectWriteErrorStreambuf>(std::move(session).status());
+        internal ::ResumableUploadSessionError>(std::move(session).status());
 
-    ObjectWriteStream error_stream(std::move(error));
+    ObjectWriteStream error_stream(google::cloud::internal::make_unique<
+                                   internal::ObjectWriteStreambuf>(
+        std::move(error), 0,
+        google::cloud::internal::make_unique<internal::NullHashValidator>()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
     return error_stream;
   }
   return ObjectWriteStream(
-      google::cloud::internal::make_unique<internal::CurlResumableStreambuf>(
+      google::cloud::internal::make_unique<internal::ObjectWriteStreambuf>(
           *std::move(session),
           raw_client_->client_options().upload_buffer_size(),
           internal::CreateHashValidator(request)));

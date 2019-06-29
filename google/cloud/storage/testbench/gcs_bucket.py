@@ -601,6 +601,7 @@ class GcsBucket(object):
         total = end
         final_chunk = False
         content_range = request.headers.get('content-range')
+        print("\n\n%s" % content_range)
         if content_range is not None:
             if content_range.startswith('bytes */*'):
                 # This is just a query to resume an upload, if it is done, return

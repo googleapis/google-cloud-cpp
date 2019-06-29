@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/curl_resumable_streambuf.h"
+#include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -33,7 +33,7 @@ using ::testing::HasSubstr;
 // Initialized in main() below.
 char const* flag_bucket_name;
 
-class CurlResumableStreambufIntegrationTest
+class ObjectWriteStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void CheckUpload(int line_count, int line_size) {
@@ -50,7 +50,7 @@ class CurlResumableStreambufIntegrationTest
     ASSERT_STATUS_OK(session);
 
     ObjectWriteStream writer(
-        google::cloud::internal::make_unique<CurlResumableStreambuf>(
+        google::cloud::internal::make_unique<ObjectWriteStreambuf>(
             std::move(session).value(),
             client->raw_client()->client_options().upload_buffer_size(),
             google::cloud::internal::make_unique<NullHashValidator>()));
@@ -76,13 +76,13 @@ class CurlResumableStreambufIntegrationTest
   }
 };
 
-TEST_F(CurlResumableStreambufIntegrationTest, Simple) { CheckUpload(20, 128); }
+TEST_F(ObjectWriteStreambufIntegrationTest, Simple) { CheckUpload(20, 128); }
 
-TEST_F(CurlResumableStreambufIntegrationTest, MultipleOfUploadQuantum) {
+TEST_F(ObjectWriteStreambufIntegrationTest, MultipleOfUploadQuantum) {
   CheckUpload(3 * 2 * 1024, 128);
 }
 
-TEST_F(CurlResumableStreambufIntegrationTest, QuantumAndNonQuantum) {
+TEST_F(ObjectWriteStreambufIntegrationTest, QuantumAndNonQuantum) {
   CheckUpload(3 * 1024, 128);
 }
 
