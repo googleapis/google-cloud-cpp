@@ -18,14 +18,17 @@
 set(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR 0)
 set(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR 1)
 set(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH 0)
+string(CONCAT GRPC_UTILS_VERSION
+              "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR}"
+              "."
+              "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR}"
+              "."
+              "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH}")
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ gRPC Utilities")
 set(DOXYGEN_PROJECT_BRIEF
     "gRPC Utilities for the Google Cloud C++ Client Library")
-set(
-    DOXYGEN_PROJECT_NUMBER
-    "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH}"
-    )
+set(DOXYGEN_PROJECT_NUMBER "${GRPC_UTILS_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 set(
     DOXYGEN_PREDEFINED
@@ -82,13 +85,11 @@ target_include_directories(google_cloud_cpp_grpc_utils
                                   $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_grpc_utils
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-set_target_properties(
-    google_cloud_cpp_grpc_utils
-    PROPERTIES
-        VERSION
-        ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH}
-        SOVERSION
-        ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
+set_target_properties(google_cloud_cpp_grpc_utils
+                      PROPERTIES VERSION
+                                 ${GRPC_UTILS_VERSION}
+                                 SOVERSION
+                                 ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
