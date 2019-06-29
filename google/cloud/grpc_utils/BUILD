@@ -24,7 +24,7 @@ cc_library(
     hdrs = google_cloud_cpp_grpc_utils_hdrs,
     deps = [
         "//google/cloud:google_cloud_cpp_common",
-        "@com_github_grpc_grpc//:grpc++"
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )
 
