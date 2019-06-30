@@ -101,6 +101,7 @@ class CompositeValidator : public HashValidator {
 
 class ReadObjectRangeRequest;
 class InsertObjectStreamingRequest;
+class ResumableUploadRequest;
 
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
@@ -109,6 +110,10 @@ std::unique_ptr<HashValidator> CreateHashValidator(
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     InsertObjectStreamingRequest const& request);
+
+/// Create a hash validator configured by @p request.
+std::unique_ptr<HashValidator> CreateHashValidator(
+    ResumableUploadRequest const& request);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
