@@ -64,6 +64,7 @@ storage_client_unit_tests = [
     "internal/openssl_util_test.cc",
     "internal/patch_builder_test.cc",
     "internal/policy_document_request_test.cc",
+    "internal/resumable_upload_session_test.cc",
     "internal/retry_client_test.cc",
     "internal/retry_resumable_upload_session_test.cc",
     "internal/service_account_requests_test.cc",

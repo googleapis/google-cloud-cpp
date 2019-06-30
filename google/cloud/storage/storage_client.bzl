@@ -143,6 +143,7 @@ storage_client_srcs = [
     "internal/object_requests.cc",
     "internal/object_streambuf.cc",
     "internal/policy_document_request.cc",
+    "internal/resumable_upload_session.cc",
     "internal/retry_client.cc",
     "internal/retry_object_read_source.cc",
     "internal/retry_resumable_upload_session.cc",

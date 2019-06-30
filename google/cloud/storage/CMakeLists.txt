@@ -157,6 +157,7 @@ add_library(storage_client
             internal/raw_client.h
             internal/raw_client_wrapper_utils.h
             internal/resumable_upload_session.h
+            internal/resumable_upload_session.cc
             internal/retry_client.h
             internal/retry_client.cc
             internal/retry_object_read_source.h
@@ -346,6 +347,7 @@ if (BUILD_TESTING)
         internal/openssl_util_test.cc
         internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
+        internal/resumable_upload_session_test.cc
         internal/retry_client_test.cc
         internal/retry_resumable_upload_session_test.cc
         internal/service_account_requests_test.cc

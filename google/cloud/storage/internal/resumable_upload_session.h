@@ -16,14 +16,19 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 
 #include "google/cloud/status_or.h"
-#include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
+#include <cstdint>
+#include <iosfwd>
+#include <string>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+struct ResumableUploadResponse;
+
 /**
  * Defines the interface for a resumable upload session.
  */
@@ -76,6 +81,24 @@ class ResumableUploadSession {
   /// Returns the last upload response encountered during the upload.
   virtual StatusOr<ResumableUploadResponse> const& last_response() const = 0;
 };
+
+struct ResumableUploadResponse {
+  enum UploadState { kInProgress, kDone };
+  static StatusOr<ResumableUploadResponse> FromHttpResponse(
+      HttpResponse&& response);
+
+  std::string upload_session_url;
+  std::uint64_t last_committed_byte;
+  std::string payload;
+  UploadState upload_state;
+};
+
+bool operator==(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs);
+bool operator!=(ResumableUploadResponse const& lhs,
+                ResumableUploadResponse const& rhs);
+
+std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
