@@ -60,6 +60,8 @@ endif ()
 add_library(grpc_utils_common_options INTERFACE)
 google_cloud_cpp_add_common_options(grpc_utils_common_options)
 
+include(external/googleapis)
+
 # Enable unit tests
 include(CTest)
 
@@ -77,7 +79,10 @@ add_library(google_cloud_cpp_grpc_utils
             version.cc
             version_info.h)
 target_link_libraries(google_cloud_cpp_grpc_utils
-                      PUBLIC google_cloud_cpp_common gRPC::grpc++ gRPC::grpc
+                      PUBLIC googleapis-c++::rpc_status_protos
+                             google_cloud_cpp_common
+                             gRPC::grpc++
+                             gRPC::grpc
                       PRIVATE grpc_utils_common_options)
 target_include_directories(google_cloud_cpp_grpc_utils
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>

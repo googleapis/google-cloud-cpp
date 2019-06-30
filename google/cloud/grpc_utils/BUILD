@@ -25,6 +25,7 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googleapis//:grpc_utils_protos",
     ],
 )
 
@@ -38,6 +39,7 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googleapis//:grpc_utils_protos",
         "@com_google_googletest//:gtest",
     ],
 ) for test in google_cloud_cpp_grpc_utils_unit_tests]

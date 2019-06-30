@@ -32,21 +32,6 @@ Mutation DeleteFromRow() {
   return m;
 }
 
-grpc::Status FailedMutation::ToGrpcStatus(google::rpc::Status const& status) {
-  std::string details;
-  if (!google::protobuf::TextFormat::PrintToString(status, &details)) {
-    details = "error [could not print details as string]";
-  }
-  return grpc::Status(static_cast<grpc::StatusCode>(status.code()),
-                      status.message(), details);
-}
-
-google::cloud::Status FailedMutation::ToGCStatus(
-    google::rpc::Status const& status) {
-  grpc::Status grpc_status = FailedMutation::ToGrpcStatus(status);
-  return grpc_utils::MakeStatusFromRpcError(grpc_status);
-}
-
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud

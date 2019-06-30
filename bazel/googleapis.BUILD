@@ -17,6 +17,17 @@ licenses(["notice"])  # Apache 2.0
 
 load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 
+cc_library(
+    name = "grpc_utils_protos",
+    includes = [
+        ".",
+    ],
+    deps = [
+        "@com_github_grpc_grpc//:grpc++",
+        "//google/rpc:status_cc_proto"
+    ],
+)
+
 cc_proto_library(
     name = "bigtableadmin_cc_proto",
     deps = ["//google/bigtable/admin/v2:bigtableadmin_proto"],

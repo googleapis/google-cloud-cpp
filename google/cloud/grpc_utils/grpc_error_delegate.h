@@ -17,6 +17,7 @@
 
 #include "google/cloud/grpc_utils/version.h"
 #include "google/cloud/status.h"
+#include <google/rpc/status.pb.h>
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -33,6 +34,15 @@ google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status);
  */
 google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
                                              std::string what);
+
+/**
+ * Creates a `google::cloud::Status` from a `google:rpc::Status` proto.
+ *
+ * Some gRPC services return the `google::rpc::Status` proto for errors. The
+ * libraries in `google-cloud-cpp` represent these errors using a
+ * `google::cloud::Status`.
+ */
+google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& status);
 
 }  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
 }  // namespace grpc_utils

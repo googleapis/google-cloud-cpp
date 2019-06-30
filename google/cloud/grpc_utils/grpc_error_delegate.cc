@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {
@@ -70,6 +71,17 @@ google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
   // TODO(#1912): Pass along status.error_details() once we have absl::Status
   // or some version that supports binary blobs of data.
   return google::cloud::Status(MapStatusCode(code), std::move(what));
+}
+
+google::cloud::Status MakeStatusFromRpcError(
+    google::rpc::Status const& status) {
+  StatusCode code = StatusCode::kUnknown;
+  if (status.code() >= 0 &&
+      status.code() <=
+          static_cast<std::int32_t>(StatusCode::kUnauthenticated)) {
+    code = static_cast<StatusCode>(status.code());
+  }
+  return Status(code, status.message());
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
