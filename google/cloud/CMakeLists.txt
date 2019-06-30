@@ -168,6 +168,8 @@ add_library(google_cloud_cpp_common
             internal/setenv.cc
             internal/throw_delegate.h
             internal/throw_delegate.cc
+            internal/time_format.h
+            internal/time_format.cc
             internal/version_info.h
             log.h
             log.cc
@@ -226,6 +228,7 @@ if (BUILD_TESTING)
         internal/random_test.cc
         internal/retry_policy_test.cc
         internal/throw_delegate_test.cc
+        internal/time_format_test.cc
         log_test.cc
         optional_test.cc
         status_or_test.cc

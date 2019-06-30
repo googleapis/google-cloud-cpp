@@ -217,33 +217,6 @@ TEST(ParseRfc3339Test, DetectOutOfRangeMDay) {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 
-TEST(ParseRfc3339Test, DetectOutOfRangeMDay30) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2018-06-31T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2018-06-31T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(ParseRfc3339Test, DetectOutOfRangeMDayFebLeap) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2016-02-30T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2016-02-30T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-TEST(ParseRfc3339Test, DetectOutOfRangeMDayFebNonLeap) {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(ParseRfc3339("2017-02-29T14:42:03Z"), std::invalid_argument);
-#else
-  EXPECT_DEATH_IF_SUPPORTED(ParseRfc3339("2017-02-29T14:42:03Z"),
-                            "exceptions are disabled");
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
 TEST(ParseRfc3339Test, DetectLongHour) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(ParseRfc3339("2018-05-18T144:42:03Z"), std::invalid_argument);

@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/format_time_point.h"
-#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/internal/time_format.h"
 #include <cctype>
 #include <cstdio>
 #include <iomanip>
@@ -21,30 +21,6 @@
 #include <sstream>
 
 namespace {
-std::string FormatFractional(std::chrono::nanoseconds ns) {
-  if (ns.count() == 0) {
-    return "";
-  }
-
-  char buffer[16];
-  // If the fractional seconds can be just expressed as milliseconds, do that,
-  // we do not want to print 1.123000000
-  auto d = std::lldiv(ns.count(), 1000000LL);
-  if (d.rem == 0) {
-    std::snprintf(buffer, sizeof(buffer), ".%03lld", d.quot);
-    return buffer;
-  }
-  d = std::lldiv(ns.count(), 1000LL);
-  if (d.rem == 0) {
-    std::snprintf(buffer, sizeof(buffer), ".%06lld", d.quot);
-    return buffer;
-  }
-
-  std::snprintf(buffer, sizeof(buffer), ".%09lld",
-                static_cast<long long>(ns.count()));
-  return buffer;
-}
-
 std::tm AsUtcTm(std::chrono::system_clock::time_point tp) {
   std::time_t time = std::chrono::system_clock::to_time_t(tp);
   std::tm tm{};
@@ -65,19 +41,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 
 std::string FormatRfc3339(std::chrono::system_clock::time_point tp) {
-  std::tm tm = AsUtcTm(tp);
-  char buffer[256];
-  std::strftime(buffer, sizeof(buffer), "%Y-%m-%dT%H:%M:%S", &tm);
-
-  std::string result(buffer);
-  // Add the fractional seconds...
-  auto duration = tp.time_since_epoch();
-  using std::chrono::duration_cast;
-  auto fractional = duration_cast<std::chrono::nanoseconds>(
-      duration - duration_cast<std::chrono::seconds>(duration));
-  result += FormatFractional(fractional);
-  result += "Z";
-  return result;
+  return TimestampToString(tp);
 }
 
 std::string FormatV4SignedUrlTimestamp(
