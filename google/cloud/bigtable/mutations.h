@@ -352,10 +352,11 @@ class SingleRowMutation {
 class FailedMutation {
  public:
   FailedMutation(google::cloud::Status status, int index)
-      : status_(status), original_index_(index) {}
+      : status_(std::move(status)), original_index_(index) {}
 
-  FailedMutation(google::rpc::Status status, int index)
-      : status_(ToGCStatus(status)), original_index_(index) {}
+  FailedMutation(google::rpc::Status const& status, int index)
+      : status_(grpc_utils::MakeStatusFromRpcError(status)),
+        original_index_(index) {}
 
   FailedMutation(FailedMutation&&) = default;
   FailedMutation& operator=(FailedMutation&&) = default;
@@ -369,10 +370,6 @@ class FailedMutation {
   //@}
 
   friend class BulkMutation;
-
- private:
-  static grpc::Status ToGrpcStatus(google::rpc::Status const& status);
-  static google::cloud::Status ToGCStatus(google::rpc::Status const& status);
 
  private:
   google::cloud::Status status_;
