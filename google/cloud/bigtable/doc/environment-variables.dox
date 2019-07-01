@@ -10,7 +10,7 @@ library to connect to the emulator by default.
 In addition, the library inherits all the [gRPC environment
 variables](https://grpc.io/grpc/cpp/md_doc_environment_variables.html).
 
-@see @link #google::cloud::bigtable::v0::ClientOptions `ClientOptions` @endlink
+@see @link #google::cloud::bigtable::v1::ClientOptions `ClientOptions` @endlink
     for more details of how `BIGTABLE_EMULATOR_HOST` is used.
 
 @see the [gRPC
