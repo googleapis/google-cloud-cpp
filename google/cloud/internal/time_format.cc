@@ -139,11 +139,81 @@ std::pair<std::tm, femtoseconds> SplitTime(time_point tp) {
   return {ZTime(t), ss};
 }
 
-// Combine a Zulu std::tm and a femto subsecond into a time_point.
-time_point CombineTime(std::tm const& tm, femtoseconds ss) {
-  using namespace std::chrono;
-  auto sub = duration_cast<system_clock::duration>(ss);
-  return system_clock::from_time_t(TimeZ(tm)) + sub;
+bool IsLeapYear(int year) {
+  return (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+}
+
+StatusOr<std::pair<std::tm, std::size_t>> ParseDateTime(std::string const& s,
+                                                        std::size_t pos) {
+  int year, month, day;
+  char date_time_separator;
+  int hours, minutes, seconds;
+
+  char const* buffer = s.data() + pos;
+  int width;
+  auto count =
+      std::sscanf(buffer, "%4d-%2d-%2d%c%2d:%2d:%2d%n", &year, &month, &day,
+                  &date_time_separator, &hours, &minutes, &seconds, &width);
+  pos += width;
+  // All the fields up to this point have fixed width, so total width must be:
+  constexpr int EXPECTED_WIDTH = 19;
+  constexpr int EXPECTED_FIELDS = 7;
+  if (count != EXPECTED_FIELDS || pos != EXPECTED_WIDTH) {
+    return Status(StatusCode::kInvalidArgument,
+                  s + ": Invalid format for RFC 3339 timestamp");
+  }
+  if (date_time_separator != 'T' && date_time_separator != 't') {
+    return Status(StatusCode::kInvalidArgument,
+                  s + ": Invalid date-time separator, expected 'T' or 't'.");
+  }
+  if (month < 1 || month > 12) {
+    return Status(StatusCode::kInvalidArgument, s + ": Out of range month.");
+  }
+  constexpr int MAX_DAYS_IN_MONTH[] = {
+      31,  // January
+      29,  // February (non-leap years checked below)
+      31,  // March
+      30,  // April
+      31,  // May
+      30,  // June
+      31,  // July
+      31,  // August
+      30,  // September
+      31,  // October
+      30,  // November
+      31,  // December
+  };
+  if (day < 1 || day > MAX_DAYS_IN_MONTH[month - 1]) {
+    return Status(StatusCode::kInvalidArgument,
+                  s + ": Out of range day for given month.");
+  }
+  if (2 == month && day > 28 && !IsLeapYear(year)) {
+    return Status(StatusCode::kInvalidArgument,
+                  s + ": Out of range day for given month.");
+  }
+  if (hours < 0 || hours > 23) {
+    return Status(StatusCode::kInvalidArgument, s + ": Out of range hour.");
+  }
+  if (minutes < 0 || minutes > 59) {
+    return Status(StatusCode::kInvalidArgument, s + ": Out of range minute.");
+  }
+  // RFC-3339 points out that the seconds field can only assume value '60' for
+  // leap seconds, so theoretically, we should validate that (furthermore, we
+  // should valid that `seconds` is smaller than 59 for negative leap seconds).
+  // This would require loading a table, and adds too much complexity for little
+  // value.
+  if (seconds < 0 || seconds > 60) {
+    return Status(StatusCode::kInvalidArgument, s + ": Out of range second.");
+  }
+
+  std::tm tm{};
+  tm.tm_year = year - 1900;
+  tm.tm_mon = month - 1;
+  tm.tm_mday = day;
+  tm.tm_hour = hours;
+  tm.tm_min = minutes;
+  tm.tm_sec = seconds;
+  return std::make_pair(tm, pos);
 }
 
 // Parse the fractional, sub-second portion of a timestamp, starting at pos.
@@ -220,6 +290,13 @@ StatusOr<std::pair<std::chrono::seconds, std::size_t>> ParseOffset(
   return std::make_pair(std::chrono::seconds(0), pos);
 }
 
+// Combine a Zulu std::tm and a femto subsecond into a time_point.
+time_point CombineTime(std::tm const& tm, femtoseconds ss) {
+  using namespace std::chrono;
+  auto sub = duration_cast<system_clock::duration>(ss);
+  return system_clock::from_time_t(TimeZ(tm)) + sub;
+}
+
 // RFC3339 "date-time" prefix (no "time-secfrac" or "time-offset").
 constexpr auto kTimeFormat = "%Y-%m-%dT%H:%M:%S";
 
@@ -269,9 +346,12 @@ StatusOr<time_point> TimestampFromStringZ(std::string const& s) {
 }
 
 StatusOr<time_point> TimestampFromString(std::string const& s) {
-  std::tm tm{};
   auto const len = s.size();
-  auto pos = ParseTime(kTimeFormat, s, &tm);
+  auto tm = ParseDateTime(s, 0);
+  if (!tm) {
+    return tm.status();
+  }
+  auto pos = tm->second;
   if (pos == std::string::npos || pos == len) {
     return Status(StatusCode::kInvalidArgument,
                   s + ": Failed to match RFC3339 date-time");
@@ -293,7 +373,7 @@ StatusOr<time_point> TimestampFromString(std::string const& s) {
                   s + ": Extra data after RFC3339 date-time");
   }
 
-  auto tp = CombineTime(tm, ss->first);
+  auto tp = CombineTime(tm->first, ss->first);
   tp -= offset->first;
   return tp;
 }
