@@ -44,6 +44,8 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
+### v1.3.x - TBD
+
 ### v1.2.x - 2019-07
 
 * **Breaking Change**: we accidentally left two functions in the public API,

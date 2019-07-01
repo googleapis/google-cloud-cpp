@@ -42,6 +42,8 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
+### v1.1.x - TBD
+
 ### v1.0.x - 2019-07
 
 * bug: the library will return an error instead of simply discarding unknown IAM

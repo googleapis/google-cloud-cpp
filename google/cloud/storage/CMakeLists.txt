@@ -16,7 +16,7 @@
 
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 1)
-set(STORAGE_CLIENT_VERSION_MINOR 2)
+set(STORAGE_CLIENT_VERSION_MINOR 3)
 set(STORAGE_CLIENT_VERSION_PATCH 0)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
@@ -48,7 +48,7 @@ include(IncludeNlohmannJson)
 include(IncludeCrc32c)
 
 # Generate the version information from the CMake values.
-configure_file(version_info.h.in version_info.h)
+configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 
 # Export the version information for Bazel.
 include(CreateBazelConfig)
