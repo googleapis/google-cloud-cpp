@@ -171,34 +171,36 @@ these dependencies.
 - [CentOS 7](#centos-7)
 END_OF_PREAMBLE
 
+readonly DOCKERFILES_DIR="${BINDIR}/../kokoro/install"
+
 echo
 echo "### Fedora (30)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.fedora"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.fedora"
 
 echo
 echo "### OpenSUSE (Tumbleweed)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.opensuse"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse"
 
 echo
 echo "### OpenSUSE (Leap)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.opensuse-leap"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
 
 echo
 echo "### Ubuntu (18.04 - Bionic Beaver)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu"
 
 echo
 echo "### Ubuntu (16.04 - Xenial Xerus)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu-xenial"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-xenial"
 
 echo
 echo "### Ubuntu (14.04 - Trusty Tahr)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.ubuntu-trusty"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-trusty"
 
 echo
 echo "### Debian (Stretch)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.debian"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian"
 
 echo
 echo "### CentOS (7)"
-"${BINDIR}/extract-install.sh" "${BINDIR}/Dockerfile.centos"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos"

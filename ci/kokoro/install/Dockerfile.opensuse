@@ -19,36 +19,19 @@ FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
 
 # Install the minimal development tools:
 
-## [START README.md]
-
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 # ```
 
-## [END README.md]
-
-FROM devtools
-COPY ci/install-retry.sh /retry3
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN (cd cmake-out && ctest --output-on-failure)
-## [END IGNORED]
-
 # OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
 # versions of these packages are recent enough to support the Google Cloud
 # Platform proto files.
 
 # ```bash
-RUN /retry3 zypper refresh && \
-    /retry3 zypper install -y grpc-devel gzip libcurl-devel pkg-config tar wget
+RUN zypper refresh && \
+    zypper install -y grpc-devel gzip libcurl-devel pkg-config tar wget
 # ```
 
 # #### crc32c
@@ -57,7 +40,7 @@ RUN /retry3 zypper refresh && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -70,6 +53,8 @@ RUN cmake \
 RUN cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 RUN ldconfig
 # ```
+
+FROM devtools AS install
 
 # #### google-cloud-cpp
 

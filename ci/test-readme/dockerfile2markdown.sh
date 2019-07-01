@@ -19,6 +19,7 @@ set -eu
 # shellcheck disable=SC2016
 sed \
     -e '/^## \[START IGNORED\]/,/^## \[END IGNORED\]/d' \
+    -e '/^FROM /d' \
     -e '/^## /d' \
     -e 's/^# //' \
     -e 's/^WORKDIR /cd /' \

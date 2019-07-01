@@ -56,7 +56,7 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
 fi
 gcloud auth configure-docker
 
-readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-install-${DISTRO}"
+readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-readme-${DISTRO}"
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
 has_cache="false"
@@ -100,9 +100,9 @@ if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
 fi
 
 echo "================================================================"
-echo "Run validation script for INSTALL instructions on ${DISTRO}."
+echo "Run validation script for README instructions on ${DISTRO}."
 docker build \
   "--cache-from=${DEV_IMAGE}:latest" \
-  "--target=install" \
+  "--target=readme" \
   -f "ci/test-readme/Dockerfile.${DISTRO}" .
 echo "================================================================"

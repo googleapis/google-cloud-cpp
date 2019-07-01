@@ -15,8 +15,6 @@
 ARG DISTRO_VERSION=trusty
 FROM ubuntu:${DISTRO_VERSION} AS devtools
 
-COPY ci/install-retry.sh /retry3
-
 # Please keep the formatting below, it is used by `extract-readme.sh` and
 # `extract-install.md` to generate the contents of the top-level README.md and
 # INSTALL.md files.
@@ -24,9 +22,6 @@ COPY ci/install-retry.sh /retry3
 ## [START INSTALL.md]
 
 # Install the minimal development tools.
-
-## [START README.md]
-
 # We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 # ```bash
@@ -65,21 +60,6 @@ ENV OPENSSL_ROOT_DIR=/usr/local/ssl
 ENV PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
 # ```
 
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN (cd cmake-out && ctest --output-on-failure)
-## [END IGNORED]
-
-## [END README.md]
-
-FROM devtools
-COPY ci/install-retry.sh /retry3
-
 # #### libcurl.
 
 # Because google-cloud-cpp uses both gRPC and curl, we need to compile libcurl
@@ -87,7 +67,7 @@ COPY ci/install-retry.sh /retry3
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
+RUN wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
 RUN tar xf curl-7.61.0.tar.gz
 WORKDIR /var/tmp/build/curl-7.61.0
 RUN ./configure --prefix=/usr/local/curl
@@ -102,7 +82,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -124,7 +104,7 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -143,8 +123,8 @@ RUN ldconfig
 # this library:
 
 # ```bash
-RUN /retry3 apt update && \
-    /retry3 apt install -y automake libtool
+RUN apt update && \
+    apt install -y automake libtool
 # ```
 
 # After installing these tools we can manually install a newer version
@@ -152,7 +132,7 @@ RUN /retry3 apt update && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 RUN tar -xf cares-1_14_0.tar.gz
 WORKDIR /var/tmp/build/c-ares-cares-1_14_0
 RUN ./buildconf && ./configure && make -j $(nproc)
@@ -167,12 +147,14 @@ RUN make install
 # ```bash
 ENV PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig:/usr/local/curl/lib/pkgconfig
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 RUN make -j $(nproc)
 RUN make install
 # ```
+
+FROM devtools AS install
 
 # #### google-cloud-cpp
 
