@@ -82,10 +82,6 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
-    internal::InsertObjectStreamingRequest const&) const {
-  return true;
-}
-bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::ListObjectsRequest const&) const {
   return true;
 }
@@ -323,11 +319,6 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::ReadObjectRangeRequest const&) const {
   return true;
-}
-
-bool StrictIdempotencyPolicy::IsIdempotent(
-    internal::InsertObjectStreamingRequest const& request) const {
-  return request.HasOption<IfGenerationMatch>();
 }
 
 bool StrictIdempotencyPolicy::IsIdempotent(

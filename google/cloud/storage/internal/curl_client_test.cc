@@ -239,12 +239,6 @@ TEST_P(CurlClientTest, ReadObjectJson) {
   CheckStatus(actual);
 }
 
-TEST_P(CurlClientTest, WriteObject) {
-  auto actual =
-      client_->WriteObject(InsertObjectStreamingRequest("bkt", "obj")).status();
-  CheckStatus(actual);
-}
-
 TEST_P(CurlClientTest, ListObjects) {
   auto actual = client_->ListObjects(ListObjectsRequest("bkt")).status();
   CheckStatus(actual);

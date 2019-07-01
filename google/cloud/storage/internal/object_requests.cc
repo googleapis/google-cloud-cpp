@@ -243,14 +243,6 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   return os << "}";
 }
 
-std::ostream& operator<<(std::ostream& os,
-                         InsertObjectStreamingRequest const& r) {
-  os << "InsertObjectStreamingRequest={bucket_name=" << r.bucket_name()
-     << ", object_name=" << r.object_name();
-  r.DumpOptions(os, ", ");
-  return os << "}";
-}
-
 std::ostream& operator<<(std::ostream& os, CopyObjectRequest const& r) {
   os << "CopyObjectRequest={destination_bucket=" << r.destination_bucket()
      << ", destination_object=" << r.destination_object()

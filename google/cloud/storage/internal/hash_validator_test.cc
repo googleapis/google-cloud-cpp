@@ -261,19 +261,19 @@ TEST(CreateHashValidator, Read_Both) {
 }
 
 TEST(CreateHashValidator, Write_Null) {
-  auto validator = CreateHashValidator(
-      InsertObjectStreamingRequest("test-bucket", "test-object")
-          .set_multiple_options(DisableCrc32cChecksum(true),
-                                DisableMD5Hash(true)));
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableCrc32cChecksum(true),
+                                                    DisableMD5Hash(true)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
   EXPECT_TRUE(result.computed.empty());
 }
 
 TEST(CreateHashValidator, Write_OnlyCrc32c) {
-  auto validator = CreateHashValidator(
-      InsertObjectStreamingRequest("test-bucket", "test-object")
-          .set_multiple_options(DisableMD5Hash(true)));
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object")
+                              .set_multiple_options(DisableMD5Hash(true)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
   EXPECT_EQ(QUICK_FOX_CRC32C_CHECKSUM, result.computed);
@@ -281,7 +281,7 @@ TEST(CreateHashValidator, Write_OnlyCrc32c) {
 
 TEST(CreateHashValidator, Write_OnlyMD5) {
   auto validator = CreateHashValidator(
-      InsertObjectStreamingRequest("test-bucket", "test-object")
+      ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(DisableCrc32cChecksum(true)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
@@ -289,8 +289,8 @@ TEST(CreateHashValidator, Write_OnlyMD5) {
 }
 
 TEST(CreateHashValidator, Write_Both) {
-  auto validator = CreateHashValidator(
-      InsertObjectStreamingRequest("test-bucket", "test-object"));
+  auto validator =
+      CreateHashValidator(ResumableUploadRequest("test-bucket", "test-object"));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
   auto result = std::move(*validator).Finish();
   EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_MD5_HASH));

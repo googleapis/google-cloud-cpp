@@ -263,15 +263,6 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
       new RetryObjectReadSource(self, request, *std::move(child)));
 }
 
-StatusOr<std::unique_ptr<ObjectWriteStreambuf>> RetryClient::WriteObject(
-    internal::InsertObjectStreamingRequest const& request) {
-  auto retry_policy = retry_policy_->clone();
-  auto backoff_policy = backoff_policy_->clone();
-  auto is_idempotent = idempotency_policy_->IsIdempotent(request);
-  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
-                  &RawClient::WriteObject, request, __func__);
-}
-
 StatusOr<ListObjectsResponse> RetryClient::ListObjects(
     ListObjectsRequest const& request) {
   auto retry_policy = retry_policy_->clone();

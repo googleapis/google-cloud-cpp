@@ -88,8 +88,6 @@ class IdempotencyPolicy {
   virtual bool IsIdempotent(
       internal::ReadObjectRangeRequest const& request) const = 0;
   virtual bool IsIdempotent(
-      internal::InsertObjectStreamingRequest const& request) const = 0;
-  virtual bool IsIdempotent(
       internal::ListObjectsRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::DeleteObjectRequest const& request) const = 0;
@@ -223,8 +221,6 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::GetObjectMetadataRequest const& request) const override;
   bool IsIdempotent(
       internal::ReadObjectRangeRequest const& request) const override;
-  bool IsIdempotent(
-      internal::InsertObjectStreamingRequest const& request) const override;
   bool IsIdempotent(internal::ListObjectsRequest const& request) const override;
   bool IsIdempotent(
       internal::DeleteObjectRequest const& request) const override;
@@ -355,8 +351,6 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::GetObjectMetadataRequest const& request) const override;
   bool IsIdempotent(
       internal::ReadObjectRangeRequest const& request) const override;
-  bool IsIdempotent(
-      internal::InsertObjectStreamingRequest const& request) const override;
   bool IsIdempotent(internal::ListObjectsRequest const& request) const override;
   bool IsIdempotent(
       internal::DeleteObjectRequest const& request) const override;

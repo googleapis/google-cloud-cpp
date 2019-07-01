@@ -177,21 +177,6 @@ TEST(StrictIdempotencyPolicyTest, ReadObject) {
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
-TEST(StrictIdempotencyPolicyTest, WriteObject) {
-  StrictIdempotencyPolicy policy;
-  internal::InsertObjectStreamingRequest request("test-bucket-name",
-                                                 "test-object-name");
-  EXPECT_FALSE(policy.IsIdempotent(request));
-}
-
-TEST(StrictIdempotencyPolicyTest, WriteObjectIfGenerationMatch) {
-  StrictIdempotencyPolicy policy;
-  internal::InsertObjectStreamingRequest request("test-bucket-name",
-                                                 "test-object-name");
-  request.set_option(IfGenerationMatch(0));
-  EXPECT_TRUE(policy.IsIdempotent(request));
-}
-
 TEST(StrictIdempotencyPolicyTest, ListObjects) {
   StrictIdempotencyPolicy policy;
   internal::ListObjectsRequest request("test-bucket-name");
