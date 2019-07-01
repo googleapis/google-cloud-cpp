@@ -17,7 +17,7 @@
 # Set this variable to a true value for branches that are releases. That will
 # remove the "+dev" suffix (technically "build metadata" according to
 # semver.org). We only want that suffix on development branches.
-set(GOOGLE_CLOUD_CPP_IS_RELEASE "")
+set(GOOGLE_CLOUD_CPP_IS_RELEASE "yes")
 
 # This should be included from the top level CMakeLists file
 set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
