@@ -15,7 +15,7 @@
 # ~~~
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(bigtable_client CONFIG REQUIRED)
+find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 
 include(EnableClangTidy)
 include(EnableWerror)
@@ -55,7 +55,7 @@ target_include_directories(spanner_client
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                                   $<INSTALL_INTERFACE:include>)
 target_link_libraries(spanner_client
-                      PUBLIC bigtable_client google_cloud_cpp_common
+                      PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                              googleapis-c++::spanner_protos)
 set_target_properties(spanner_client
                       PROPERTIES VERSION

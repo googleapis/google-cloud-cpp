@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/database_admin_stub.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
 namespace google {
@@ -45,7 +45,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         database_admin_->CreateDatabase(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::bigtable::internal::MakeStatusFromRpcError(status);
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -57,7 +57,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         database_admin_->DropDatabase(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::bigtable::internal::MakeStatusFromRpcError(status);
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status();
   }
@@ -70,7 +70,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         operations_->GetOperation(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::bigtable::internal::MakeStatusFromRpcError(status);
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
     return response;
   }

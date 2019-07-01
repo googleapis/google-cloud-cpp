@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/bigtable/internal/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <algorithm>
 
 namespace google {
