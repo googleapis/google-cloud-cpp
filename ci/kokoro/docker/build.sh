@@ -23,10 +23,30 @@ export DISTRO_VERSION=18.04
 
 in_docker_script="ci/travis/build-docker.sh"
 
-if [[ "${BUILD_NAME+x}" != "x" ]]; then
- echo "The BUILD_NAME is not defined or is empty. Fix the Kokoro .cfg file."
+if [[ $# -eq 1 ]]; then
+  export BUILD_NAME="${1}"
+elif [[ -n "${BUILD_NAME:-}" ]]; then
+  echo "Using BUILD_NAME=${BUILD_NAME} from environment."
+elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
+  # Kokoro injects the KOKORO_JOB_NAME environment variable, the value of this
+  # variable is cloud-cpp/spanner/<config-file-name-without-cfg> (or more
+  # generally <path/to/config-file-without-cfg>). By convention we name these
+  # files `$foo.cfg` for continuous builds and `$foo-presubmit.cfg` for
+  # presubmit builds. Here we extract the value of "foo" and use it as the build
+  # name.
+  BUILD_NAME="$(basename "${KOKORO_JOB_NAME}" "-presubmit")"
+  export BUILD_NAME
+else
+ echo "Aborting build as the build name is not defined."
+ echo "If you are invoking this script via the command line use:"
+ echo "    $0 <build-name>"
+ echo
+ echo "If this script is invoked by Kokoro, the CI system is expected to set"
+ echo "the KOKORO_JOB_NAME environment variable."
  exit 1
-elif [[ "${BUILD_NAME}" = "asan" ]]; then
+fi
+
+if [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
   export CC=clang
   export CXX=clang++
@@ -103,6 +123,10 @@ elif [[ "${BUILD_NAME}" = "scan-build" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=30
   export SCAN_BUILD=yes
+elif [[ "${BUILD_NAME}" = "coverage" ]]; then
+  export BUILD_TYPE=Coverage
+  export DISTRO=fedora
+  export DISTRO_VERSION=30
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
@@ -262,6 +286,8 @@ sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" "/v/${in_docker_script}"
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
+
+"${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${docker_flags[@]}"
 
 echo "================================================================"
 "${PROJECT_ROOT}/ci/travis/dump-logs.sh"
