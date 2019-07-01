@@ -49,6 +49,13 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 * **Breaking Change**: we accidentally left two functions in the public API,
   they are now removed. These functions were used to convert
   `google::cloud::storage::ServiceAccount` classes to and from JSON objects.
+* **Breaking Change**: we removed the functions in
+  `google::cloud::storage::IdempotencyPolicy` for
+  `internal::InsertObjectStreamingRequest`. This class is no longer used and the
+  functions are unnecessary. This breakage only affects applications that define
+  a custom `IdempotencyPolicy`.
+* bug: Fixed `WriteObject()` to actually retry the upload for each chunk, not
+  just retry the creation of the upload session.
 * feature: add examples showing how to mock a `google::cloud::storage::Client`.
 * feature: allow applications to load service account credentials from the
   standard locations, but also change the scopes and subject as the credentials
