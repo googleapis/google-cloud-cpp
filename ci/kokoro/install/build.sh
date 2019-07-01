@@ -76,7 +76,7 @@ devtools_flags=(
   # Create the image with the same tag as the cache we are using, so we can
   # upload it.
   "-t" "${DEV_IMAGE}:latest"
-  "-f" "ci/test-readme/Dockerfile.${DISTRO}"
+  "-f" "ci/kokoro/install/Dockerfile.${DISTRO}"
 )
 
 if "${has_cache}"; then
@@ -104,5 +104,5 @@ echo "Run validation script for INSTALL instructions on ${DISTRO}."
 docker build \
   "--cache-from=${DEV_IMAGE}:latest" \
   "--target=install" \
-  -f "ci/test-readme/Dockerfile.${DISTRO}" .
+  -f "ci/kokoro/install/Dockerfile.${DISTRO}" .
 echo "================================================================"
