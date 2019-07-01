@@ -319,9 +319,12 @@ std::string TimestampToString(time_point tp) {
 }
 
 StatusOr<time_point> TimestampFromStringZ(std::string const& s) {
-  std::tm tm{};
   auto const len = s.size();
-  auto pos = ParseTime(kTimeFormat, s, &tm);
+  auto tm = ParseDateTime(s, 0);
+  if (!tm) {
+    return tm.status();
+  }
+  auto pos = tm->second;
   if (pos == std::string::npos || pos == len) {
     return Status(StatusCode::kInvalidArgument,
                   s + ": Failed to match RFC3339 date-time");
@@ -342,7 +345,7 @@ StatusOr<time_point> TimestampFromStringZ(std::string const& s) {
                   s + ": Extra data after RFC3339 date-time");
   }
 
-  return CombineTime(tm, ss->first);
+  return CombineTime(tm->first, ss->first);
 }
 
 StatusOr<time_point> TimestampFromString(std::string const& s) {
