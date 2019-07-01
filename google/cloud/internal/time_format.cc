@@ -156,9 +156,9 @@ StatusOr<std::pair<std::tm, std::size_t>> ParseDateTime(std::string const& s,
                   &date_time_separator, &hours, &minutes, &seconds, &width);
   pos += width;
   // All the fields up to this point have fixed width, so total width must be:
-  constexpr int EXPECTED_WIDTH = 19;
-  constexpr int EXPECTED_FIELDS = 7;
-  if (count != EXPECTED_FIELDS || pos != EXPECTED_WIDTH) {
+  constexpr int kExpectedWidth = 19;
+  constexpr int kExpectedFields = 7;
+  if (count != kExpectedFields || pos != kExpectedWidth) {
     return Status(StatusCode::kInvalidArgument,
                   s + ": Invalid format for RFC 3339 timestamp");
   }
@@ -169,7 +169,7 @@ StatusOr<std::pair<std::tm, std::size_t>> ParseDateTime(std::string const& s,
   if (month < 1 || month > 12) {
     return Status(StatusCode::kInvalidArgument, s + ": Out of range month.");
   }
-  constexpr int MAX_DAYS_IN_MONTH[] = {
+  constexpr int kMaxDaysInMonth[] = {
       31,  // January
       29,  // February (non-leap years checked below)
       31,  // March
@@ -183,7 +183,7 @@ StatusOr<std::pair<std::tm, std::size_t>> ParseDateTime(std::string const& s,
       30,  // November
       31,  // December
   };
-  if (day < 1 || day > MAX_DAYS_IN_MONTH[month - 1]) {
+  if (day < 1 || day > kMaxDaysInMonth[month - 1]) {
     return Status(StatusCode::kInvalidArgument,
                   s + ": Out of range day for given month.");
   }
