@@ -16,7 +16,7 @@ This directory contains the implementation of the Cloud Bigtable C++ client.
 ## Status
 
 This library support Cloud Bigtable at the
-[Beta](../../../README.md#versioning) quality level. Please note that, as is
+[GA](../../../README.md#versioning) quality level. Please note that, as is
 often the case with C++ libraries, we do **not** follow semantic versioning in
 the Cloud C++ client libraries. We make every effort to document
 backwards-incompatible API changes in the [release notes](#release-notes) below.
@@ -42,7 +42,19 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v0.11.x - TBD
+### v1.0.x - 2019-07
+
+* bug: the library will return an error instead of simply discarding unknown IAM
+  fields.
+* feature: update googleapis protos to a more recent version.
+* cleanup: marked rarely used CMake options as advanced. They will no longer
+  show up by default in your CMake UI.
+* Several internal cleanups, such as removing unused code in
+  `google::cloud::bigtable::internal`, fixing constant names to follow the
+   Google Style Guide, simplify the generation of version metadata, make it
+   easier to import the code into Google, turned on `-Wextra` for our builds,
+   moved the sanitizer builds to Bazel, and refactoring generic gRPC utilities
+   to a new common library.
 
 ### v0.10.x - 2019-06
 
