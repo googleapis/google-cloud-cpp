@@ -21,7 +21,9 @@ is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.8.x - 2019-07
+### v0.10.x - TBD
+
+### v0.9.x - 2019-07
 
 * feature: support `operator==` and `operator!=` for `StatusOr`.
 * feature: support assignment from `Status` in `StatusOr`.
