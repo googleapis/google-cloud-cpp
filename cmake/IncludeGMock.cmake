@@ -47,7 +47,7 @@ endfunction ()
 include(CTest)
 if (TARGET GTest::gmock)
     # GTest::gmock is already defined, do not define it again.
-elseif(NOT BUILD_TESTING)
+elseif(NOT BUILD_TESTING AND NOT GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # Tests are turned off via -DBUILD_TESTING, do not load the googletest or
     # googlemock dependency.
 elseif("${GOOGLE_CLOUD_CPP_GMOCK_PROVIDER}" STREQUAL "external")
