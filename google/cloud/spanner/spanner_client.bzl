@@ -17,15 +17,19 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
+    "backoff_policy.h",
     "client_options.h",
     "database_admin_client.h",
     "date.h",
+    "internal/database_admin_retry.h",
     "internal/database_admin_stub.h",
     "internal/date.h",
+    "internal/retry_loop.h",
     "internal/spanner_stub.h",
     "internal/time.h",
     "internal/time_format.h",
     "internal/tuple_utils.h",
+    "retry_policy.h",
     "row.h",
     "sql_statement.h",
     "value.h",
@@ -36,8 +40,10 @@ spanner_client_hdrs = [
 spanner_client_srcs = [
     "client_options.cc",
     "database_admin_client.cc",
+    "internal/database_admin_retry.cc",
     "internal/database_admin_stub.cc",
     "internal/date.cc",
+    "internal/retry_loop.cc",
     "internal/spanner_stub.cc",
     "internal/time.cc",
     "internal/time_format.cc",

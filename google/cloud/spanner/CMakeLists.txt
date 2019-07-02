@@ -26,15 +26,20 @@ include(EnableDoxygen)
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
+            backoff_policy.h
             client_options.cc
             client_options.h
             database_admin_client.cc
             database_admin_client.h
             date.h
+            internal/database_admin_retry.cc
+            internal/database_admin_retry.h
             internal/database_admin_stub.cc
             internal/database_admin_stub.h
             internal/date.cc
             internal/date.h
+            internal/retry_loop.cc
+            internal/retry_loop.h
             internal/spanner_stub.cc
             internal/spanner_stub.h
             internal/time.cc
@@ -42,6 +47,7 @@ add_library(spanner_client
             internal/time_format.cc
             internal/time_format.h
             internal/tuple_utils.h
+            retry_policy.h
             row.h
             sql_statement.cc
             sql_statement.h
@@ -87,10 +93,12 @@ function (spanner_client_define_tests)
         database_admin_client_test.cc
         date_test.cc
         internal/date_test.cc
+        internal/retry_loop_test.cc
         internal/spanner_stub_test.cc
         internal/time_format_test.cc
         internal/time_test.cc
         internal/tuple_utils_test.cc
+        retry_policy_test.cc
         row_test.cc
         spanner_version_test.cc
         sql_statement_test.cc

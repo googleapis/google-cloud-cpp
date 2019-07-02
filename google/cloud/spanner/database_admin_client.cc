@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/database_admin_retry.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <algorithm>
 
@@ -20,7 +21,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 // TODO(#126) - refactor to some common place. Note that this different from
 // the MakeStatusFromGrpcError function,
 namespace {
@@ -39,7 +39,8 @@ google::cloud::Status ToGoogleCloudStatus(google::rpc::Status const& status) {
 namespace gcsa = google::spanner::admin::database::v1;
 
 DatabaseAdminClient::DatabaseAdminClient(ClientOptions const& client_options)
-    : stub_(internal::CreateDefaultDatabaseAdminStub(client_options)) {}
+    : stub_(new internal::DatabaseAdminRetry(
+          internal::CreateDefaultDatabaseAdminStub(client_options))) {}
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
     std::string const& project_id, std::string const& instance_id,
