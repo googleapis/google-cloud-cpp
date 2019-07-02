@@ -16,8 +16,7 @@ not intended for direct use by consumers of the C++ client libraries.
 
 ## Documentation
 
-Documentation for the common utilities is
-is available [online][doxygen-link].
+Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
