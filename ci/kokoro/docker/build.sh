@@ -83,6 +83,8 @@ elif [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   export CC=clang
   export CXX=clang++
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes"
+  export CHECK_STYLE=yes
+  export GENERATE_DOCS=yes
 elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
   export CC=clang
@@ -97,8 +99,6 @@ elif [[ "${BUILD_NAME}" = "shared" ]]; then
   export TEST_INSTALL=yes
   export BUILD_TYPE=Debug
   export DISTRO=ubuntu-install
-  export CHECK_STYLE=yes
-  export GENERATE_DOCS=yes
 elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
   # Verify that the code can be compiled without unit tests. This is helpful for
   # package maintainers, where the cost of running the tests for a fixed version
@@ -287,14 +287,16 @@ exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
 
+"${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh"
+
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${docker_flags[@]}"
 
 echo "================================================================"
-"${PROJECT_ROOT}/ci/travis/dump-logs.sh"
+#"${PROJECT_ROOT}/ci/travis/dump-logs.sh"
 echo "================================================================"
 
 echo "================================================================"
-"${PROJECT_ROOT}/ci/travis/dump-reports.sh"
+#"${PROJECT_ROOT}/ci/travis/dump-reports.sh"
 echo "================================================================"
 
 echo
