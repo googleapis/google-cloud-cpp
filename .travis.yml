@@ -16,16 +16,8 @@ group: travis_latest
 sudo: required
 language: cpp
 
-# TODO(#19) - this is a skeleton matrix, needs to be designed and completed.
 matrix:
   include:
-    - # Generate code coverage information and upload to codecov.io.
-      os: linux
-      compiler: gcc
-      env:
-        BUILD_TYPE=Coverage
-        DISTRO=ubuntu
-        DISTRO_VERSION=18.04
     - # Compile with tests disabled, run style checks and docs.
       os: linux
       compiler: gcc
@@ -46,12 +38,9 @@ git:
   submodules: false
 
 install:
-  # The git default is to recurse, override it because we do not need to and
-  # that saves time.
   - travis_wait 20 /bin/sh -c "ci/install-retry.sh ci/travis/install-linux.sh >cmake-out/install-linux.log 2>&1"
 
 after_success:
-  - ci/travis/upload-codecov.sh
   - ci/travis/upload-docs.sh
   - ci/travis/dump-reports.sh
 
@@ -63,14 +52,8 @@ cache:
   directories:
     # Cache the Bazel directories, in builds that do not use Bazel this is
     # empty and trivial to cache.
-    - $HOME/.cache/bazel
     - cmake-out/ccache
   timeout: 900
-
-before_cache:
-  # Do not save the Bazel installation, reinstall each time, it fails to install
-  # if the installation is in the cache.
-  - rm -fr ${HOME}/.cache/bazel/_bazel_${USER}/install
 
 notifications:
   email: false
