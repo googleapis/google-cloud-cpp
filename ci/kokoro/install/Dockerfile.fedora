@@ -23,36 +23,19 @@ FROM fedora:${DISTRO_VERSION} AS devtools
 
 # Install the minimal development tools:
 
-## [START README.md]
-
 # ```bash
 RUN dnf makecache && \
     dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel
 # ```
 
-## [END README.md]
-
-FROM devtools
-COPY ci/install-retry.sh /retry3
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN (cd cmake-out && ctest --output-on-failure)
-## [END IGNORED]
-
 # Fedora includes packages for gRPC, libcurl, and OpenSSL that are recent enough
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 
 # ```bash
-RUN /retry3 dnf makecache && \
-    /retry3 dnf install -y grpc-devel grpc-plugins \
+RUN dnf makecache && \
+    dnf install -y grpc-devel grpc-plugins \
         libcurl-devel protobuf-compiler tar wget zlib-devel
 # ```
 
@@ -62,7 +45,7 @@ RUN /retry3 dnf makecache && \
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -75,6 +58,8 @@ RUN cmake \
 RUN cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 RUN ldconfig
 # ```
+
+FROM devtools AS install
 
 # #### google-cloud-cpp
 

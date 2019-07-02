@@ -12,54 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=7
-FROM centos:${DISTRO_VERSION} AS devtools
+ARG DISTRO_VERSION=xenial
+FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
 ## [START INSTALL.md]
 
-# First install the development tools and OpenSSL.
-
-## [START README.md]
-
-# The development tools distributed with CentOS (notably CMake) are too old to
-# build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
-# [Software Collections](https://www.softwarecollections.org/).
+# Install the minimal development tools:
 
 # ```bash
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install -y centos-release-scl
-RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
-RUN yum makecache && \
-    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
-RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+RUN apt update && \
+    apt install -y build-essential cmake git gcc g++ cmake \
+        libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
 # ```
-
-## [END README.md]
-
-FROM devtools
-COPY ci/install-retry.sh /retry3
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN (cd cmake-out && ctest --output-on-failure)
-## [END IGNORED]
 
 # #### crc32c
 
-# There is no CentOS package for this library. To install it use:
+# There is no Ubuntu-16.04 package for this library. To install it use:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -75,11 +51,13 @@ RUN ldconfig
 
 # #### Protobuf
 
-# Likewise, manually install protobuf:
+# While protobuf-2.6 is distributed with Ubuntu-16.04, the Google Cloud Plaform
+# proto files require more recent versions (circa 3.4.x). To manually install a
+# more recent version use:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -93,12 +71,21 @@ RUN ldconfig
 
 # #### c-ares
 
-# Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
-# distributes c-ares-1.10. Manually install a newer version:
+# Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
+# distributes c-ares-1.10. We need some additional development tools to compile
+# this library:
+
+# ```bash
+RUN apt update && \
+    apt install -y automake libtool
+# ```
+
+# After installing these tools we can manually install a newer version
+# of c-ares:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
+RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 RUN tar -xf cares-1_14_0.tar.gz
 WORKDIR /var/tmp/build/c-ares-cares-1_14_0
 RUN ./buildconf && ./configure && make -j $(nproc)
@@ -108,33 +95,33 @@ RUN ldconfig
 
 # #### gRPC
 
-# Can be manually installed using:
+# Ubuntu-16.04 does not provide packages for the C++ gRPC bindings, install the
+# library manually:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
-ENV PATH=/usr/local/bin:${PATH}
 RUN make -j $(nproc)
 RUN make install
 RUN ldconfig
 # ```
+
+FROM devtools AS install
 
 # #### google-cloud-cpp
 
 # Finally we can install `google-cloud-cpp`.
 
 # ```bash
-WORKDIR /var/tmp/build/google-cloud-cpp
-COPY . /var/tmp/build/google-cloud-cpp
+WORKDIR /home/build/google-cloud-cpp
+COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 RUN cmake --build cmake-out -- -j $(nproc)
-WORKDIR /var/tmp/build/google-cloud-cpp/cmake-out
+WORKDIR /home/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure
 RUN cmake --build . --target install
 # ```

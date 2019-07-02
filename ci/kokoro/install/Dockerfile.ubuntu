@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=xenial
+ARG DISTRO_VERSION=bionic
 FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
@@ -22,37 +22,20 @@ FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 # Install the minimal development tools:
 
-## [START README.md]
-
 # ```bash
 RUN apt update && \
     apt install -y build-essential cmake git gcc g++ cmake \
-        libcurl4-openssl-dev libssl-dev make \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 # ```
 
-## [END README.md]
-
-FROM devtools
-COPY ci/install-retry.sh /retry3
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN (cd cmake-out && ctest --output-on-failure)
-## [END IGNORED]
-
 # #### crc32c
 
-# There is no Ubuntu-16.04 package for this library. To install it use:
+# There is no Ubuntu package for this library. To install it use:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
 RUN tar -xf 1.0.6.tar.gz
 WORKDIR /var/tmp/build/crc32c-1.0.6
 RUN cmake \
@@ -68,13 +51,13 @@ RUN ldconfig
 
 # #### Protobuf
 
-# While protobuf-2.6 is distributed with Ubuntu-16.04, the Google Cloud Plaform
-# proto files require more recent versions (circa 3.4.x). To manually install a
-# more recent version use:
+# While protobuf-3.0 is distributed with Ubuntu, the Google Cloud Plaform proto
+# files require more recent versions (circa 3.4.x). To manually install a more
+# recent version use:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
+RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
 RUN tar -xf v3.6.1.tar.gz
 WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
 RUN cmake \
@@ -86,44 +69,22 @@ RUN cmake --build cmake-out --target install -- -j $(nproc)
 RUN ldconfig
 # ```
 
-# #### c-ares
-
-# Recent versions of gRPC require c-ares >= 1.11, while Ubuntu-16.04
-# distributes c-ares-1.10. We need some additional development tools to compile
-# this library:
-
-# ```bash
-RUN /retry3 apt update && \
-    /retry3 apt install -y automake libtool
-# ```
-
-# After installing these tools we can manually install a newer version
-# of c-ares:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
-RUN tar -xf cares-1_14_0.tar.gz
-WORKDIR /var/tmp/build/c-ares-cares-1_14_0
-RUN ./buildconf && ./configure && make -j $(nproc)
-RUN make install
-RUN ldconfig
-# ```
-
 # #### gRPC
 
-# Ubuntu-16.04 does not provide packages for the C++ gRPC bindings, install the
-# library manually:
+# Likewise, Ubuntu has packages for grpc-1.3.x, but this version is too old for
+# the Google Cloud Platform APIs:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN /retry3 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
+RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 RUN make -j $(nproc)
 RUN make install
 RUN ldconfig
 # ```
+
+FROM devtools AS install
 
 # #### google-cloud-cpp
 
@@ -145,6 +106,7 @@ RUN cmake --build . --target install
 
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
 
