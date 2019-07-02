@@ -53,9 +53,10 @@ readonly GH_TOKEN
 # - Find out what branches contain that commit.
 # - Exclude "HEAD detached" branches (they are not really branches).
 # - Typically this is the single branch that was checked out by Kokoro.
-BRANCH="$(git branch --remote --no-color --contains "$(git rev-parse HEAD)" | \
+BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
     grep -v 'HEAD detached' || exit 0)"
 BRANCH="${BRANCH/  /}"
+BRANCH="${BRANCH/* /}"
 BRANCH="${BRANCH/origin\//}"
 readonly BRANCH
 
@@ -66,16 +67,21 @@ case "${BRANCH:-}" in
   v[0-9]\.*)
     subdir="${BRANCH/v/}"
     subdir="${subdir%.x%}"
-    subdir="${subdir}.0}"
+    subdir="${subdir}.0"
     ;;
   *)
     echo "Will not upload documents as the branch (${BRANCH}) is not a release branch nor 'master'."
-    exit 0
+    #exit 0
     ;;
 esac
 
+# Allow the user to override the destination directory.
+if [[ -n "${DOCS_SUBDIR:-}" ]]; then
+  subdir="${DOCS_SUBDIR}"
+fi
+
 echo "================================================================"
-echo "Uploading generated Doxygen docs to github.io $(date)."
+echo "Uploading generated Doxygen docs to github.io [${subdir}] $(date)."
 
 # The usual way to host documentation in ${GIT_NAME}.github.io/${PROJECT_NAME}
 # is to create a branch (gh-pages) and post the documentation in that branch.
@@ -98,14 +104,15 @@ fi
 # recover any unmodified files in a second.
 (cd cmake-out/github-io-staging ; \
  git rm -qfr --ignore-unmatch \
-   "latest/google/cloud/{bigtable,common,firestore,storage}")
+   "${subdir}/{bigtable,common,firestore,storage}")
 
 # Copy the build results into the gh-pages clone.
+mkdir -p cmake-out/github-io-staging/${subdir}
 cp -r "${BUILD_OUTPUT}/google/cloud/html/." \
-    "cmake-out/github-io-staging/common/${subdir}"
+    "cmake-out/github-io-staging/${subdir}/common/"
 for lib in bigtable firestore storage; do
-  cp -r "${BUILD_OUTPUT}/google/cloud/${lib}html/." \
-      "cmake-out/github-io-staging/${lib}/${subdir}"
+  cp -r "${BUILD_OUTPUT}/google/cloud/${lib}/html/." \
+      "cmake-out/github-io-staging/${subdir}/${lib}"
 done
 
 cd cmake-out/github-io-staging
