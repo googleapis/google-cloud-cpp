@@ -142,7 +142,7 @@ advised that `clang-format` has been known to generate slightly different
 formatting in different versions. We use version 7; use the same version if you
 run into problems.
 
-You canv verify and fix the format of your code using:
+You can verify and fix the format of your code using:
 
 ```console
 # Run from google-cloud-cpp:

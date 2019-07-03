@@ -293,11 +293,11 @@ echo "================================================================"
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${docker_flags[@]}"
 
 echo "================================================================"
-#"${PROJECT_ROOT}/ci/travis/dump-logs.sh"
+"${PROJECT_ROOT}/ci/travis/dump-logs.sh"
 echo "================================================================"
 
 echo "================================================================"
-#"${PROJECT_ROOT}/ci/travis/dump-reports.sh"
+"${PROJECT_ROOT}/ci/travis/dump-reports.sh"
 echo "================================================================"
 
 echo
