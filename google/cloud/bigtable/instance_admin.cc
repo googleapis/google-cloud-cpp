@@ -776,7 +776,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::GetNativeIamPolicy(
       "InstanceAdmin::GetIamPolicy", status, true);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return proto;
@@ -883,7 +883,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdmin::SetIamPolicy(
       "InstanceAdmin::SetIamPolicy", status, true);
 
   if (!status.ok()) {
-    return internal::MakeStatusFromRpcError(status);
+    return grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return proto;
