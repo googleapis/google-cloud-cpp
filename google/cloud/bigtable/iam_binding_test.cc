@@ -47,34 +47,6 @@ TEST(IamBinding, VectorCtor) {
                                                binding.members().end()));
 }
 
-TEST(IamBinding, RemoveMembersIf) {
-  auto binding =
-      IamBinding("role", {"member1_with_A", "member2_with_A", "member3"});
-  EXPECT_EQ(2U,
-            RemoveMembersFromBindingIf(binding, [](std::string const& member) {
-              return member.find("A") != std::string::npos;
-            }));
-  std::vector<std::string> members(binding.members().begin(),
-                                   binding.members().end());
-  EXPECT_EQ(std::vector<std::string>({"member3"}), members);
-}
-
-TEST(IamBinding, RemoveMembersByName) {
-  auto binding = IamBinding("role", {"member1", "member2", "member1"});
-  EXPECT_EQ(2U, RemoveMemberFromBinding(binding, "member1"));
-  std::vector<std::string> members(binding.members().begin(),
-                                   binding.members().end());
-  EXPECT_EQ(std::vector<std::string>({"member2"}), members);
-}
-
-TEST(IamBinding, RemoveMemberByIter) {
-  auto binding = IamBinding("role", {"member1", "member2", "member1"});
-  RemoveMemberFromBinding(binding, binding.mutable_members()->begin());
-  std::vector<std::string> members(binding.members().begin(),
-                                   binding.members().end());
-  EXPECT_EQ(std::vector<std::string>({"member2", "member1"}), members);
-}
-
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable

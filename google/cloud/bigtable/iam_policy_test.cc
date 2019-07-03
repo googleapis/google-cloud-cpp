@@ -70,26 +70,6 @@ TEST(IamPolicy, VectorCtor) {
   EXPECT_EQ(BindingRoles(expected), BindingRoles(policy));
 }
 
-TEST(IamPolicy, RemoveBindingsIf) {
-  auto policy = IamPolicy(
-      {IamBinding("role_with_A_1", {"mem1"}), IamBinding("role1", {"mem1"}),
-       IamBinding("role_with_A_2", {"mem1"})},
-      "etag1", 13);
-  EXPECT_EQ(2U, RemoveBindingsFromPolicyIf(
-                    policy, [](google::iam::v1::Binding const& binding) {
-                      return binding.role().find("A") != std::string::npos;
-                    }));
-  EXPECT_EQ(std::vector<std::string>({"role1"}), BindingRoles(policy));
-}
-
-TEST(IamPolicy, RemoveBinding) {
-  auto policy =
-      IamPolicy({IamBinding("role1", {"mem1"}), IamBinding("role2", {"mem1"})},
-                "etag1", 13);
-  RemoveBindingFromPolicy(policy, policy.mutable_bindings()->begin());
-  EXPECT_EQ(std::vector<std::string>({"role2"}), BindingRoles(policy));
-}
-
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable

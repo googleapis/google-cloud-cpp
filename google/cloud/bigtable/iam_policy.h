@@ -33,10 +33,12 @@ template <class InputIt>
  * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
  *     about ETags.
  *
+ * @warning ETags are currently not used by Cloud Bigtable.
+ *
  * @param first_binding iterator pointing to the first google::iam::v1::Binding
  * @param last_binding iterator pointing to past last google::iam::v1::Binding
  * @param etag used for optimistic concurrency control
- * @param version deprecated
+ * @param version currently unused
  *
  *
  * @return The policy
@@ -54,7 +56,7 @@ google::iam::v1::Policy IamPolicy(InputIt first_binding, InputIt last_binding,
 }
 
 /**
- * Create A google::iam::v1::Policy.
+ * Create a google::iam::v1::Policy.
  *
  * @see
  * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
@@ -63,9 +65,11 @@ google::iam::v1::Policy IamPolicy(InputIt first_binding, InputIt last_binding,
  * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
  *     about ETags.
  *
+ * @warning ETags are currently not used by Cloud Bigtable.
+ *
  * @param bindings initializer_list of google::iam::v1::Binding
  * @param etag used for optimistic concurrency control
- * @param version deprecated
+ * @param version currently unused
  *
  * @return The policy
  */
@@ -83,9 +87,11 @@ google::iam::v1::Policy IamPolicy(
  * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
  *     about ETags.
  *
+ * @warning ETags are currently not used by Cloud Bigtable.
+ *
  * @param bindings vector of google::iam::v1::Binding
  * @param etag used for optimistic concurrency control
- * @param version deprecated
+ * @param version currently unused
  *
  * @return The policy
  */

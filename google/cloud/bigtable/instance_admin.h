@@ -986,6 +986,8 @@ class InstanceAdmin {
    * @param etag the expected ETag value for the current policy.
    * @return Policy the current IAM bindings for the instance.
    *
+   * @warning ETags are currently not used by Cloud Bigtable.
+   *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
@@ -1000,10 +1002,6 @@ class InstanceAdmin {
   /**
    * Sets the IAM policy for an instance.
    *
-   * Applications can set the `etag` field to implement optimistic concurrency
-   * control. If `etag` is not empty, the server will reject calls where the
-   * provided ETag does not match the ETag value stored in the server.
-   *
    * This is the preferred way to the overload for `IamBindings`. This is more
    * closely coupled to the underlying protocol, enable more actions and is more
    * likely to tolerate future protocol changes.
@@ -1012,6 +1010,8 @@ class InstanceAdmin {
    * @param iam_policy google::iam::v1::Policy object containing role and
    * members.
    * @return google::iam::v1::Policy the current IAM policy for the instance.
+   *
+   * @warning ETags are currently not used by Cloud Bigtable.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -1040,6 +1040,8 @@ class InstanceAdmin {
    *     an unretriable error occurs or (c) retry policy has been
    *     exhausted.
    *
+   * @warning ETags are currently not used by Cloud Bigtable.
+   *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
@@ -1054,10 +1056,6 @@ class InstanceAdmin {
   /**
    * Asynchronously sets the IAM policy for an instance.
    *
-   * Applications can set the `etag` field to implement optimistic concurrency
-   * control. If `etag` is not empty, the server will reject calls where the
-   * provided ETag does not match the ETag value stored in the server.
-   *
    * @param cq the completion queue that will execute the asynchronous calls,
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
@@ -1067,6 +1065,8 @@ class InstanceAdmin {
    * @return a future satisfied when either (a) the policy is created or (b)
    *     an unretriable error occurs or (c) retry policy has been
    *     exhausted.
+   *
+   * @warning ETags are currently not used by Cloud Bigtable.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.

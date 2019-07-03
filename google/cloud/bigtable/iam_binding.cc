@@ -48,20 +48,6 @@ std::ostream& operator<<(std::ostream& os,
   return os << "]";
 }
 
-size_t RemoveMemberFromBinding(google::iam::v1::Binding& binding,
-                               std::string const& name) {
-  return RemoveMembersFromBindingIf(
-      binding, [&name](std::string const& member) { return name == member; });
-}
-
-void RemoveMemberFromBinding(
-    google::iam::v1::Binding& binding,
-    ::google::protobuf::RepeatedPtrField<::std::string>::iterator to_remove) {
-  RemoveMembersFromBindingIf(binding, [&to_remove](std::string const& member) {
-    return &(*to_remove) == &member;
-  });
-}
-
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
 }  // namespace cloud
