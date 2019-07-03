@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/retry_loop.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -43,7 +44,7 @@ TEST(RetryLoopTest, Success) {
         return StatusOr<int>(2 * request);
       },
       context, 42, "error message");
-  EXPECT_TRUE(actual) << "status=" << actual.status();
+  EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
 
@@ -59,7 +60,7 @@ TEST(RetryLoopTest, TransientThenSuccess) {
         return StatusOr<int>(2 * request);
       },
       context, 42, "error message");
-  EXPECT_TRUE(actual) << "status=" << actual.status();
+  EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
 
@@ -75,7 +76,7 @@ TEST(RetryLoopTest, ReturnJustStatus) {
         return Status();
       },
       context, 42, "error message");
-  EXPECT_TRUE(actual.ok()) << "status=" << actual;
+  EXPECT_STATUS_OK(actual);
 }
 
 // gmock makes clang-tidy very angry, disable a few warnings that we have no
@@ -117,7 +118,7 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
       },
       context, 42, "error message",
       [&sleep_for](ms p) { sleep_for.push_back(p); });
-  EXPECT_TRUE(actual) << "status=" << actual.status();
+  EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
   EXPECT_THAT(sleep_for, ::testing::ElementsAre(
                              ms(10), std::chrono::milliseconds(20), ms(30)));

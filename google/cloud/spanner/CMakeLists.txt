@@ -88,6 +88,8 @@ function (spanner_client_define_tests)
     # the GTest::gmock target, and the target names are also weird.
     find_package(GTest CONFIG REQUIRED)
 
+    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
     set(spanner_client_unit_tests
         client_options_test.cc
         database_admin_client_test.cc
@@ -124,6 +126,7 @@ function (spanner_client_define_tests)
         add_executable(${target} ${fname})
         target_link_libraries(${target}
                               PRIVATE googleapis-c++::spanner_client
+                                      google_cloud_cpp_testing
                                       GTest::gmock_main
                                       GTest::gmock
                                       GTest::gtest)

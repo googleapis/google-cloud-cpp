@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -54,14 +55,12 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto database_future =
       client.CreateDatabase(project_id, instance_id, database_id);
   auto database = database_future.get();
-  // TODO(#googleapis/google-cloud-cpp#2810) - use EXPECT_STATUS_OK(...)
-  EXPECT_TRUE(database) << "status=" << database.status();
+  EXPECT_STATUS_OK(database);
 
   EXPECT_THAT(database->name(), ::testing::EndsWith(database_id));
 
   auto drop_status = client.DropDatabase(project_id, instance_id, database_id);
-  // TODO(googleapis/google-cloud-cpp#2810) - use EXPECT_STATUS_OK(...)
-  EXPECT_TRUE(drop_status.ok()) << "status=" << drop_status;
+  EXPECT_STATUS_OK(drop_status);
 }
 
 }  // namespace
