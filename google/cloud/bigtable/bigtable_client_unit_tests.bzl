@@ -33,6 +33,8 @@ bigtable_client_unit_tests = [
     "data_client_test.cc",
     "filters_test.cc",
     "force_sanitizer_failures_test.cc",
+    "iam_binding_test.cc",
+    "iam_policy_test.cc",
     "idempotent_mutation_policy_test.cc",
     "instance_admin_client_test.cc",
     "instance_admin_test.cc",

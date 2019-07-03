@@ -206,10 +206,10 @@ function (gooogleapis_project_create_all_libraries)
                  APPEND
                  PROPERTY INTERFACE_LINK_LIBRARIES
                           googleapis-c++::longrunning_operations_protos
+                          googleapis-c++::iam_v1_policy_protos
                           googleapis-c++::api_auth_protos
                           googleapis-c++::api_annotations_protos
                           googleapis-c++::api_http_protos
-                          googleapis-c++::iam_v1_policy_protos
                           googleapis-c++::iam_v1_iam_policy_protos
                           googleapis-c++::rpc_status_protos)
 
