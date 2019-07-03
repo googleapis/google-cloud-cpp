@@ -20,66 +20,43 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-NativeIamPolicy::NativeIamPolicy(std::list<NativeIamBinding> bindings,
-                                 std::int32_t version, std::string const& etag)
-    : bindings_(std::move(bindings)) {
-  impl_.set_version(version);
-  impl_.set_etag(etag);
+google::iam::v1::Policy IamPolicy(
+    std::initializer_list<google::iam::v1::Binding> bindings, std::string etag,
+    std::int32_t version) {
+  return IamPolicy(bindings.begin(), bindings.end(), std::move(etag), version);
 }
 
-NativeIamPolicy::NativeIamPolicy(google::iam::v1::Policy impl)
-    : impl_(std::move(impl)) {
-  for (auto& binding : impl_.bindings()) {
-    bindings_.emplace_back(NativeIamBinding(binding));
+google::iam::v1::Policy IamPolicy(
+    std::vector<google::iam::v1::Binding> bindings, std::string etag,
+    std::int32_t version) {
+  google::iam::v1::Policy res;
+  for (auto& binding : bindings) {
+    *res.add_bindings() = std::move(binding);
   }
-  impl_.clear_bindings();
-}
-
-void NativeIamPolicy::RemoveAllBindingsByRole(std::string const& role) {
-  for (auto binding_it = bindings_.begin(); binding_it != bindings_.end();) {
-    if (binding_it->role() == role) {
-      bindings_.erase(binding_it++);
-    } else {
-      ++binding_it;
-    }
-  }
-}
-
-void NativeIamPolicy::RemoveMemberFromAllBindings(std::string const& member) {
-  for (auto binding_it = bindings_.begin(); binding_it != bindings_.end();) {
-    if (binding_it->members().erase(member) > 0 &&
-        binding_it->members().empty()) {
-      // Remove the binding if it doesn't hold any members now.
-      bindings_.erase(binding_it++);
-    } else {
-      ++binding_it;
-    }
-  }
-}
-
-google::iam::v1::Policy NativeIamPolicy::ToProto() && {
-  google::iam::v1::Policy res(std::move(impl_));
-  for (auto& binding : bindings_) {
-    *res.add_bindings() = std::move(binding).ToProto();
-  }
+  res.set_version(version);
+  res.set_etag(std::move(etag));
   return res;
 }
 
-bool operator==(NativeIamPolicy const& lhs, NativeIamPolicy const& rhs) {
-  return google::protobuf::util::MessageDifferencer::Equals(lhs.impl_,
-                                                            rhs.impl_) &&
-         lhs.bindings_ == rhs.bindings_;
-}
-
-std::ostream& operator<<(std::ostream& os, NativeIamPolicy const& rhs) {
-  os << "NativeIamPolicy={version=" << rhs.version() << ", bindings="
-     << "NativeIamBindings={";
+std::ostream& operator<<(std::ostream& os, google::iam::v1::Policy const& rhs) {
+  os << "IamPolicy={version=" << rhs.version() << ", bindings="
+     << "IamBindings={";
   bool first = true;
   for (auto const& binding : rhs.bindings()) {
     os << (first ? "" : ", ") << binding;
     first = false;
   }
   return os << "}, etag=" << rhs.etag() << "}";
+}
+
+void RemoveBindingFromPolicy(
+    google::iam::v1::Policy& policy,
+    google::protobuf::RepeatedPtrField<google::iam::v1::Binding>::iterator
+        to_remove) {
+  RemoveBindingsFromPolicyIf(
+      policy, [&to_remove](google::iam::v1::Binding const& binding) {
+        return &(*to_remove) == &binding;
+      });
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

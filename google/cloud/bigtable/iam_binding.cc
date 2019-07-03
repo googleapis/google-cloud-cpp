@@ -22,19 +22,23 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-NativeIamBinding::NativeIamBinding(google::iam::v1::Binding impl)
-    : impl_(std::move(impl)),
-      members_(impl_.members().begin(), impl_.members().end()) {
-  impl_.clear_members();
+google::iam::v1::Binding IamBinding(
+    std::string role, std::initializer_list<std::string> members) {
+  return IamBinding(std::move(role), members.begin(), members.end());
 }
 
-NativeIamBinding::NativeIamBinding(std::string role,
-                                   std::set<std::string> members)
-    : members_(std::move(members)) {
-  impl_.set_role(std::move(role));
+google::iam::v1::Binding IamBinding(std::string role,
+                                    std::vector<std::string> members) {
+  google::iam::v1::Binding res;
+  for (auto& member : members) {
+    *res.add_members() = std::move(member);
+  }
+  res.set_role(std::move(role));
+  return res;
 }
 
-std::ostream& operator<<(std::ostream& os, NativeIamBinding const& binding) {
+std::ostream& operator<<(std::ostream& os,
+                         google::iam::v1::Binding const& binding) {
   os << binding.role() << ": [";
   bool first = true;
   for (auto const& member : binding.members()) {
@@ -44,18 +48,18 @@ std::ostream& operator<<(std::ostream& os, NativeIamBinding const& binding) {
   return os << "]";
 }
 
-google::iam::v1::Binding NativeIamBinding::ToProto() && {
-  google::iam::v1::Binding res(std::move(impl_));
-  for (auto const& member : members_) {
-    res.add_members(member);
-  }
-  return res;
+size_t RemoveMemberFromBinding(google::iam::v1::Binding& binding,
+                               std::string const& name) {
+  return RemoveMembersFromBindingIf(
+      binding, [&name](std::string const& member) { return name == member; });
 }
 
-bool operator==(NativeIamBinding const& lhs, NativeIamBinding const& rhs) {
-  return google::protobuf::util::MessageDifferencer::Equals(lhs.impl_,
-                                                            rhs.impl_) &&
-         lhs.members_ == rhs.members_;
+void RemoveMemberFromBinding(
+    google::iam::v1::Binding& binding,
+    ::google::protobuf::RepeatedPtrField<::std::string>::iterator to_remove) {
+  RemoveMembersFromBindingIf(binding, [&to_remove](std::string const& member) {
+    return &(*to_remove) == &member;
+  });
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

@@ -921,7 +921,7 @@ class InstanceAdmin {
    * tolerate future protocol changes.
    *
    * @param instance_id the instance to query.
-   * @return NativeIamPolicy the full IAM policy for the instance.
+   * @return google::iam::v1::Policy the full IAM policy for the instance.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -929,7 +929,7 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc get native iam policy
    */
-  StatusOr<google::cloud::bigtable::NativeIamPolicy> GetNativeIamPolicy(
+  StatusOr<google::iam::v1::Policy> GetNativeIamPolicy(
       std::string const& instance_id);
 
   /**
@@ -971,8 +971,8 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async get native iam policy
    */
-  future<StatusOr<google::cloud::bigtable::NativeIamPolicy>>
-  AsyncGetNativeIamPolicy(CompletionQueue& cq, std::string const& instance_id);
+  future<StatusOr<google::iam::v1::Policy>> AsyncGetNativeIamPolicy(
+      CompletionQueue& cq, std::string const& instance_id);
 
   /**
    * Sets the IAM policy for an instance.
@@ -1009,8 +1009,9 @@ class InstanceAdmin {
    * likely to tolerate future protocol changes.
    *
    * @param instance_id which instance to set the IAM policy for.
-   * @param iam_policy NativeIamPolicy object containing role and members.
-   * @return NativeIamPolicy the current IAM policy for the instance.
+   * @param iam_policy google::iam::v1::Policy object containing role and
+   * members.
+   * @return google::iam::v1::Policy the current IAM policy for the instance.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -1018,9 +1019,9 @@ class InstanceAdmin {
    * @par Example
    * @snippet bigtable_instance_admin_snippets.cc set native iam policy
    */
-  StatusOr<google::cloud::bigtable::NativeIamPolicy> SetIamPolicy(
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& instance_id,
-      google::cloud::bigtable::NativeIamPolicy const& iam_policy);
+      google::iam::v1::Policy const& iam_policy);
 
   /**
    * Asynchronously sets the IAM policy for an instance.
@@ -1061,7 +1062,8 @@ class InstanceAdmin {
    *     the application must ensure that one or more threads are blocked on
    *     `cq.Run()`.
    * @param instance_id which instance to set the IAM policy for.
-   * @param iam_policy NativeIamPolicy object containing role and members.
+   * @param iam_policy google::iam::v1::Policy object containing role and
+   * members.
    * @return a future satisfied when either (a) the policy is created or (b)
    *     an unretriable error occurs or (c) retry policy has been
    *     exhausted.
@@ -1072,9 +1074,9 @@ class InstanceAdmin {
    * @par Example
    * @snippet instance_admin_async_snippets.cc async set native iam policy
    */
-  future<StatusOr<google::cloud::bigtable::NativeIamPolicy>> AsyncSetIamPolicy(
+  future<StatusOr<google::iam::v1::Policy>> AsyncSetIamPolicy(
       CompletionQueue& cq, std::string const& instance_id,
-      google::cloud::bigtable::NativeIamPolicy const& iam_policy);
+      google::iam::v1::Policy const& iam_policy);
 
   /**
    * Returns a permission set that the caller has on the specified instance.

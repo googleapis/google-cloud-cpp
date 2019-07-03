@@ -657,8 +657,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
       user_future_;
-  google::cloud::future<
-      google::cloud::StatusOr<google::cloud::bigtable::NativeIamPolicy>>
+  google::cloud::future<google::cloud::StatusOr<google::iam::v1::Policy>>
       user_native_future_;
   std::unique_ptr<MockAsyncIamPolicyReader> reader_;
 };
@@ -840,10 +839,9 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicy) {
   EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
 
   std::string resource = "test-resource";
-  google::cloud::bigtable::NativeIamPolicy iam_policy(
-      {google::cloud::bigtable::NativeIamBinding(
-          "writer", {"abc@gmail.com", "xyz@gmail.com"})},
-      0, "test-tag");
+  auto iam_policy = bigtable::IamPolicy(
+      {bigtable::IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      "test-tag", 0);
   auto policy = tested.SetIamPolicy(resource, iam_policy);
   ASSERT_STATUS_OK(policy);
 
@@ -863,10 +861,9 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyUnrecoverableError) {
           Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
 
   std::string resource = "test-resource";
-  google::cloud::bigtable::NativeIamPolicy iam_policy(
-      {google::cloud::bigtable::NativeIamBinding(
-          "writer", {"abc@gmail.com", "xyz@gmail.com"})},
-      0, "test-tag");
+  auto iam_policy = bigtable::IamPolicy(
+      {bigtable::IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      "test-tag", 0);
   EXPECT_FALSE(tested.SetIamPolicy(resource, iam_policy));
 }
 
@@ -890,10 +887,9 @@ TEST_F(InstanceAdminTest, SetNativeIamPolicyRecoverableError) {
       .WillOnce(Invoke(mock_policy));
 
   std::string resource = "test-resource";
-  google::cloud::bigtable::NativeIamPolicy iam_policy(
-      {google::cloud::bigtable::NativeIamBinding(
-          "writer", {"abc@gmail.com", "xyz@gmail.com"})},
-      0, "test-tag");
+  auto iam_policy = bigtable::IamPolicy(
+      {bigtable::IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      "test-tag", 0);
   auto policy = tested.SetIamPolicy(resource, iam_policy);
   ASSERT_STATUS_OK(policy);
 
@@ -1103,10 +1099,9 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
     bigtable::InstanceAdmin instance_admin(client_);
     user_native_future_ = instance_admin.AsyncSetIamPolicy(
         cq_, "test-instance",
-        google::cloud::bigtable::NativeIamPolicy(
-            {google::cloud::bigtable::NativeIamBinding(
-                "writer", {"abc@gmail.com", "xyz@gmail.com"})},
-            0, "test-tag"));
+        bigtable::IamPolicy({bigtable::IamBinding(
+                                "writer", {"abc@gmail.com", "xyz@gmail.com"})},
+                            "test-tag", 0));
   }
 
   std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
@@ -1114,8 +1109,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
       user_future_;
-  google::cloud::future<
-      google::cloud::StatusOr<google::cloud::bigtable::NativeIamPolicy>>
+  google::cloud::future<google::cloud::StatusOr<google::iam::v1::Policy>>
       user_native_future_;
   std::unique_ptr<MockAsyncSetIamPolicyReader> reader_;
 };

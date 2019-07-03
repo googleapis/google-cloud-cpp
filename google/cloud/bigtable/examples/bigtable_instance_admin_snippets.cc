@@ -892,11 +892,12 @@ void GetNativeIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id) {
-    StatusOr<google::cloud::bigtable::NativeIamPolicy> policy =
+    StatusOr<google::iam::v1::Policy> policy =
         instance_admin.GetNativeIamPolicy(instance_id);
     if (!policy) {
       throw std::runtime_error(policy.status().message());
     }
+    using cbt::operator<<;
     std::cout << "The IAM Policy for " << instance_id << " is\n"
               << *policy << "\n";
   }
@@ -922,7 +923,7 @@ void SetNativeIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, std::string instance_id,
      std::string role, std::string member) {
-    StatusOr<google::cloud::bigtable::NativeIamPolicy> current =
+    StatusOr<google::iam::v1::Policy> current =
         instance_admin.GetNativeIamPolicy(instance_id);
     if (!current) {
       throw std::runtime_error(current.status().message());
@@ -930,23 +931,22 @@ void SetNativeIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     // This example adds the member to all existing bindings for that role. If
     // there are no such bindgs, it adds a new one. This might not be what the
     // user wants, e.g. in case of conditional bindings.
-    auto bindings = current->bindings();
     size_t num_added = 0;
-    for (auto& binding : bindings) {
+    for (auto& binding : *current->mutable_bindings()) {
       if (binding.role() == role) {
-        binding.members().insert(member);
+        binding.add_members(member);
         ++num_added;
       }
     }
     if (num_added == 0) {
-      bindings.emplace_back(
-          google::cloud::bigtable::NativeIamBinding(role, {member}));
+      *current->add_bindings() = cbt::IamBinding(role, {member});
     }
-    StatusOr<google::cloud::bigtable::NativeIamPolicy> policy =
+    StatusOr<google::iam::v1::Policy> policy =
         instance_admin.SetIamPolicy(instance_id, *current);
     if (!policy) {
       throw std::runtime_error(policy.status().message());
     }
+    using cbt::operator<<;
     std::cout << "The IAM Policy for " << instance_id << " is\n"
               << *policy << "\n";
   }
@@ -993,8 +993,8 @@ void TestIamPermissions(google::cloud::bigtable::InstanceAdmin instance_admin,
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType =
-      std::function<void(google::cloud::bigtable::InstanceAdmin, int, char*[])>;
+  using CommandType = std::function<void(google::cloud::bigtable::InstanceAdmin,
+                                         int, char* [])>;
 
   std::map<std::string, CommandType> commands = {
       {"create-instance", &CreateInstance},

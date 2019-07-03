@@ -331,18 +331,19 @@ void AsyncGetNativeIamPolicy(
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  using google::cloud::bigtable::NativeIamPolicy;
+  using google::iam::v1::Policy;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id) {
-    future<StatusOr<NativeIamPolicy>> policy_future =
+    future<StatusOr<google::iam::v1::Policy>> policy_future =
         instance_admin.AsyncGetNativeIamPolicy(cq, instance_id);
 
     future<void> final =
-        policy_future.then([](future<StatusOr<NativeIamPolicy>> f) {
-          StatusOr<NativeIamPolicy> iam_policy = f.get();
+        policy_future.then([](future<StatusOr<google::iam::v1::Policy>> f) {
+          StatusOr<google::iam::v1::Policy> iam_policy = f.get();
           if (!iam_policy) {
             throw std::runtime_error(iam_policy.status().message());
           }
+          using cbt::operator<<;
           std::cout << "IamPolicy details : " << *iam_policy << "\n";
         });
 
@@ -747,39 +748,36 @@ void AsyncSetNativeIamPolicy(
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
-  using google::cloud::bigtable::NativeIamPolicy;
+  using google::iam::v1::Policy;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
      std::string instance_id, std::string role, std::string member) {
-    future<StatusOr<NativeIamPolicy>> updated_future =
+    future<StatusOr<google::iam::v1::Policy>> updated_future =
         instance_admin.AsyncGetNativeIamPolicy(cq, instance_id)
-            .then(
-                [cq, instance_admin, role, member, instance_id](
-                    future<StatusOr<NativeIamPolicy>> current_future) mutable {
-                  auto current = current_future.get();
-                  if (!current) {
-                    return google::cloud::make_ready_future<
-                        StatusOr<NativeIamPolicy>>(current.status());
-                  }
-                  // This example adds the member to all existing bindings for
-                  // that role. If there are no such bindgs, it adds a new one.
-                  // This might not be what the user wants, e.g. in case of
-                  // conditional bindings.
-                  auto& bindings = current->bindings();
-                  size_t num_added = 0;
-                  for (auto& binding : bindings) {
-                    if (binding.role() == role) {
-                      binding.members().insert(member);
-                      ++num_added;
-                    }
-                  }
-                  if (num_added == 0) {
-                    bindings.emplace_back(
-                        google::cloud::bigtable::NativeIamBinding(role,
-                                                                  {member}));
-                  }
-                  return instance_admin.AsyncSetIamPolicy(cq, instance_id,
-                                                          *current);
-                });
+            .then([cq, instance_admin, role, member,
+                   instance_id](future<StatusOr<google::iam::v1::Policy>>
+                                    current_future) mutable {
+              auto current = current_future.get();
+              if (!current) {
+                return google::cloud::make_ready_future<
+                    StatusOr<google::iam::v1::Policy>>(current.status());
+              }
+              // This example adds the member to all existing bindings for
+              // that role. If there are no such bindgs, it adds a new one.
+              // This might not be what the user wants, e.g. in case of
+              // conditional bindings.
+              size_t num_added = 0;
+              for (auto& binding : *current->mutable_bindings()) {
+                if (binding.role() == role) {
+                  binding.add_members(member);
+                  ++num_added;
+                }
+              }
+              if (num_added == 0) {
+                *current->add_bindings() = cbt::IamBinding(role, {member});
+              }
+              return instance_admin.AsyncSetIamPolicy(cq, instance_id,
+                                                      *current);
+            });
     // Show how to perform additional work while the long running operation
     // completes. The application could use future.then() instead.
     std::cout << "Waiting for IAM policy update to complete " << std::flush;
@@ -789,6 +787,7 @@ void AsyncSetNativeIamPolicy(
     if (!result) {
       throw std::runtime_error(result.status().message());
     }
+    using cbt::operator<<;
     std::cout << "DONE, the IAM Policy for " << instance_id << " is\n"
               << *result << "\n";
   }

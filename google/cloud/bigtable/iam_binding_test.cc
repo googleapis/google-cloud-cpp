@@ -22,49 +22,57 @@ namespace cloud {
 namespace bigtable {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
-TEST(NativeIamBinding, CtorAndAccessors) {
-  NativeIamBinding binding("role", {"member1", "member2"});
-  NativeIamBinding const& const_binding = binding;
-  ASSERT_EQ("role", const_binding.role());
-  binding.set_role("role2");
-  ASSERT_EQ("role2", const_binding.role());
-  ASSERT_EQ(std::set<std::string>({"member1", "member2"}),
-            const_binding.members());
-  ASSERT_TRUE(binding.members().emplace("member3").second);
-  ASSERT_EQ(std::set<std::string>({"member1", "member2", "member3"}),
-            const_binding.members());
+
+TEST(IamBinding, IterCtor) {
+  std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
+  auto binding = IamBinding("role", expected.begin(), expected.end());
+  EXPECT_EQ("role", binding.role());
+  EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
+                                               binding.members().end()));
 }
 
-google::iam::v1::Binding CreateBindingWithUnknownFields() {
-  NativeIamBinding binding("role", {"member1", "member2"});
-  std::string serialized;
-  auto binding_proto = binding.ToProto();
-
-  auto reflection = binding_proto.GetReflection();
-  reflection->MutableUnknownFields(&binding_proto)
-      ->AddLengthDelimited(17, "unknown_field_content");
-  return binding_proto;
+TEST(IamBinding, IniListCtor) {
+  auto binding = IamBinding("role", {"mem1", "mem2", "mem3", "mem1"});
+  EXPECT_EQ("role", binding.role());
+  std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
+  EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
+                                               binding.members().end()));
 }
 
-TEST(NativeIamBinding, Protos) {
-  NativeIamBinding binding("my_role", {"my_member1", "my_member2"});
-  auto proto = std::move(binding).ToProto();
-  binding = NativeIamBinding(std::move(proto));
-
-  ASSERT_EQ("my_role", binding.role());
-  ASSERT_EQ(std::set<std::string>({"my_member1", "my_member2"}),
-            binding.members());
+TEST(IamBinding, VectorCtor) {
+  std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
+  auto binding = IamBinding("role", expected);
+  EXPECT_EQ("role", binding.role());
+  EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
+                                               binding.members().end()));
 }
 
-TEST(NativeIamBinding, ProtosUnknownFields) {
-  NativeIamBinding binding(CreateBindingWithUnknownFields());
+TEST(IamBinding, RemoveMembersIf) {
+  auto binding =
+      IamBinding("role", {"member1_with_A", "member2_with_A", "member3"});
+  EXPECT_EQ(2U,
+            RemoveMembersFromBindingIf(binding, [](std::string const& member) {
+              return member.find("A") != std::string::npos;
+            }));
+  std::vector<std::string> members(binding.members().begin(),
+                                   binding.members().end());
+  EXPECT_EQ(std::vector<std::string>({"member3"}), members);
+}
 
-  binding.members().emplace("my_unique_member");
-  auto binding_proto = binding.ToProto();
-  std::string serialized;
-  google::protobuf::TextFormat::PrintToString(binding_proto, &serialized);
-  ASSERT_THAT(serialized, testing::ContainsRegex("unknown_field_content"));
-  ASSERT_THAT(serialized, testing::ContainsRegex("my_unique_member"));
+TEST(IamBinding, RemoveMembersByName) {
+  auto binding = IamBinding("role", {"member1", "member2", "member1"});
+  EXPECT_EQ(2U, RemoveMemberFromBinding(binding, "member1"));
+  std::vector<std::string> members(binding.members().begin(),
+                                   binding.members().end());
+  EXPECT_EQ(std::vector<std::string>({"member2"}), members);
+}
+
+TEST(IamBinding, RemoveMemberByIter) {
+  auto binding = IamBinding("role", {"member1", "member2", "member1"});
+  RemoveMemberFromBinding(binding, binding.mutable_members()->begin());
+  std::vector<std::string> members(binding.members().begin(),
+                                   binding.members().end());
+  EXPECT_EQ(std::vector<std::string>({"member2", "member1"}), members);
 }
 
 }  // namespace

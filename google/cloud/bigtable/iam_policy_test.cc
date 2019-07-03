@@ -22,108 +22,72 @@ namespace bigtable {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-TEST(NativeIamPolicy, CtorAndAccessors) {
-  NativeIamPolicy policy({NativeIamBinding("role1", {"member1", "member2"})},
-                         14, "etag");
-  NativeIamPolicy const& const_policy = policy;
-  ASSERT_EQ(14, const_policy.version());
-  ASSERT_EQ("etag", const_policy.etag());
-  policy.set_version(13);
-  ASSERT_EQ(13, const_policy.version());
-  policy.set_etag("etag_1");
-  ASSERT_EQ("etag_1", const_policy.etag());
-
-  ASSERT_EQ(std::list<NativeIamBinding>({
-                NativeIamBinding("role1", {"member1", "member2"}),
-            }),
-            const_policy.bindings());
-  policy.bindings().emplace_back(
-      NativeIamBinding("role2", {"member1", "member3"}));
-  ASSERT_EQ(std::list<NativeIamBinding>(
-                {NativeIamBinding("role1", {"member1", "member2"}),
-                 NativeIamBinding("role2", {"member1", "member3"})}),
-            const_policy.bindings());
+template <typename Iter>
+std::vector<std::string> BindingRoles(Iter first_binding, Iter last_binding) {
+  std::vector<std::string> binding_roles;
+  std::transform(
+      first_binding, last_binding, std::back_inserter(binding_roles),
+      [](google::iam::v1::Binding const& binding) { return binding.role(); });
+  return binding_roles;
 }
 
-TEST(NativeIamPolicy, Protos) {
-  NativeIamPolicy policy;
-  policy.set_version(17);
-  policy.set_etag("etag1");
-  policy.bindings().emplace_back(
-      NativeIamBinding(NativeIamBinding("role1", {"member1", "member2"})));
-
-  policy = NativeIamPolicy(std::move(policy).ToProto());
-
-  ASSERT_EQ(17, policy.version());
-  ASSERT_EQ("etag1", policy.etag());
-  ASSERT_EQ(1U, policy.bindings().size());
-  ASSERT_EQ("role1", policy.bindings().front().role());
-  ASSERT_EQ(std::set<std::string>({"member1", "member2"}),
-            policy.bindings().front().members());
+std::vector<std::string> BindingRoles(google::iam::v1::Policy const& policy) {
+  return BindingRoles(policy.bindings().begin(), policy.bindings().end());
 }
 
-template <typename PROTO, typename WRAPPER>
-PROTO AddUnknownField(WRAPPER const& base, std::string const& content) {
-  std::string serialized;
-  auto binding_proto = base.ToProto();
-
-  auto reflection = binding_proto.GetReflection();
-  reflection->MutableUnknownFields(&binding_proto)
-      ->AddLengthDelimited(17, content);
-  return binding_proto;
+std::vector<std::string> BindingRoles(
+    std::vector<google::iam::v1::Binding> bindings) {
+  return BindingRoles(bindings.begin(), bindings.end());
 }
 
-google::iam::v1::Policy CreatePolicyWithUnknownFields() {
-  NativeIamPolicy policy;
-  policy.set_version(17);
-  policy.set_etag("etag1");
-  policy.bindings().emplace_back(NativeIamBinding(
-      AddUnknownField<google::iam::v1::Binding, NativeIamBinding>(
-          NativeIamBinding("role1", {"member1", "member2"}),
-          "unknown_binding_field")));
-  return AddUnknownField<google::iam::v1::Policy, NativeIamPolicy>(
-      policy, "unknown_policy_field");
+TEST(IamPolicy, IterCtor) {
+  auto binding1 = IamBinding("role1", {"mem1"});
+  auto binding2 = IamBinding("role2", {"mem2"});
+  std::vector<google::iam::v1::Binding> expected({binding1, binding2});
+  auto policy = IamPolicy(expected.begin(), expected.end(), "etag1", 13);
+  EXPECT_EQ("etag1", policy.etag());
+  EXPECT_EQ(13, policy.version());
+  EXPECT_EQ(BindingRoles(expected), BindingRoles(policy));
 }
 
-TEST(NativeIamPolicy, ProtosWithUnknownFields) {
-  NativeIamPolicy policy(CreatePolicyWithUnknownFields());
-  policy.bindings().emplace_back(NativeIamBinding("role2", {"member3"}));
-  auto policy_proto = policy.ToProto();
-
-  std::string serialized;
-  google::protobuf::TextFormat::PrintToString(policy_proto, &serialized);
-  ASSERT_THAT(serialized, testing::ContainsRegex("unknown_binding_field"));
-  ASSERT_THAT(serialized, testing::ContainsRegex("unknown_policy_field"));
+TEST(IamPolicy, IniListCtor) {
+  auto binding1 = IamBinding("role1", {"mem1"});
+  auto binding2 = IamBinding("role2", {"mem2"});
+  auto policy = IamPolicy({binding1, binding2}, "etag1", 13);
+  EXPECT_EQ("etag1", policy.etag());
+  EXPECT_EQ(13, policy.version());
+  std::vector<google::iam::v1::Binding> expected({binding1, binding2});
+  EXPECT_EQ(BindingRoles(expected), BindingRoles(policy));
 }
 
-TEST(NativeIamPolicy, RemoveAllBindings) {
-  NativeIamPolicy policy;
-
-  policy.bindings().emplace_back(
-      NativeIamBinding("role1", {"member1", "member2"}));
-  policy.bindings().emplace_back(
-      NativeIamBinding("role2", {"member1", "member3"}));
-  policy.bindings().emplace_back(
-      NativeIamBinding("role1", {"member3", "member4"}));
-  policy.RemoveAllBindingsByRole("role1");
-  ASSERT_EQ(std::list<NativeIamBinding>(
-                {NativeIamBinding("role2", {"member1", "member3"})}),
-            policy.bindings());
+TEST(IamPolicy, VectorCtor) {
+  auto binding1 = IamBinding("role1", {"mem1"});
+  auto binding2 = IamBinding("role2", {"mem2"});
+  std::vector<google::iam::v1::Binding> expected({binding1, binding2});
+  auto policy = IamPolicy(expected, "etag1", 13);
+  EXPECT_EQ("etag1", policy.etag());
+  EXPECT_EQ(13, policy.version());
+  EXPECT_EQ(BindingRoles(expected), BindingRoles(policy));
 }
 
-TEST(NativeIamPolicy, RemoveMemberFromAllBindings) {
-  NativeIamPolicy policy;
+TEST(IamPolicy, RemoveBindingsIf) {
+  auto policy = IamPolicy(
+      {IamBinding("role_with_A_1", {"mem1"}), IamBinding("role1", {"mem1"}),
+       IamBinding("role_with_A_2", {"mem1"})},
+      "etag1", 13);
+  EXPECT_EQ(2U, RemoveBindingsFromPolicyIf(
+                    policy, [](google::iam::v1::Binding const& binding) {
+                      return binding.role().find("A") != std::string::npos;
+                    }));
+  EXPECT_EQ(std::vector<std::string>({"role1"}), BindingRoles(policy));
+}
 
-  policy.bindings().emplace_back(
-      NativeIamBinding("role1", {"member1", "member2"}));
-  policy.bindings().emplace_back(NativeIamBinding("role2", {"member1"}));
-  policy.bindings().emplace_back(
-      NativeIamBinding("role3", {"member3", "member4"}));
-  policy.RemoveMemberFromAllBindings("member1");
-  ASSERT_EQ(std::list<NativeIamBinding>(
-                {NativeIamBinding("role1", {"member2"}),
-                 NativeIamBinding("role3", {"member3", "member4"})}),
-            policy.bindings());
+TEST(IamPolicy, RemoveBinding) {
+  auto policy =
+      IamPolicy({IamBinding("role1", {"mem1"}), IamBinding("role2", {"mem1"})},
+                "etag1", 13);
+  RemoveBindingFromPolicy(policy, policy.mutable_bindings()->begin());
+  EXPECT_EQ(std::vector<std::string>({"role2"}), BindingRoles(policy));
 }
 
 }  // namespace

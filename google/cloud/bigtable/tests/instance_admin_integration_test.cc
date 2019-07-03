@@ -378,10 +378,9 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
-  auto iam_policy = google::cloud::bigtable::NativeIamPolicy(
-      {google::cloud::bigtable::NativeIamBinding(
-          "roles/bigtable.reader",
-          {"serviceAccount:" + std::string(flag_service_account)})});
+  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
+      "roles/bigtable.reader",
+      {"serviceAccount:" + std::string(flag_service_account)})});
 
   auto initial_policy = instance_admin_->SetIamPolicy(instance_id, iam_policy);
   ASSERT_STATUS_OK(initial_policy);

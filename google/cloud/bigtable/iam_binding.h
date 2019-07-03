@@ -24,47 +24,107 @@ namespace cloud {
 namespace bigtable {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 /**
- * Represents a Binding which associates a `member` with a particular `role`
- * which can be used for Identity and Access management for Cloud Platform
- * Resources.
+ * Create a google::iam::v1::Binding.
  *
- * For more information about a Binding please refer to:
- * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Binding
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
  *
- * Compared to `IamBinding`, `NativeIamBinding` is a more future-proof
- * solution - it gracefully tolerates changes in the underlying protocol.
- * If IamBinding contains more fields than just a role and members, in the
- * future, `NativeIamBinding` will preserve them (contrary to IamBinding).
+ * @param role the role which is assigned to members
+ * @param first_binding iterator pointing to the first member
+ * @param last_binding iterator pointing to past last member
+ *
+ * @return The binding
  */
-class NativeIamBinding {
- public:
-  NativeIamBinding(std::string role, std::set<std::string> members);
-  explicit NativeIamBinding(google::iam::v1::Binding impl);
-
-  std::string const& role() const { return impl_.role(); };
-  void set_role(std::string const& role) { impl_.set_role(role); };
-  std::set<std::string> const& members() const { return members_; }
-  std::set<std::string>& members() { return members_; }
-  google::iam::v1::Binding ToProto() &&;
-  google::iam::v1::Binding ToProto() const& {
-    return NativeIamBinding(*this).ToProto();
+template <class InputIt>
+google::iam::v1::Binding IamBinding(std::string role, InputIt first_member,
+                                    InputIt last_member) {
+  google::iam::v1::Binding res;
+  for (auto member = first_member; member != last_member; ++member) {
+    *res.add_members() = *member;
   }
-
- private:
-  google::iam::v1::Binding impl_;
-  std::set<std::string> members_;
-  friend bool operator==(NativeIamBinding const& lhs,
-                         NativeIamBinding const& rhs);
-};
-
-bool operator==(NativeIamBinding const& lhs, NativeIamBinding const& rhs);
-
-inline bool operator!=(NativeIamBinding const& lhs,
-                       NativeIamBinding const& rhs) {
-  return !(lhs == rhs);
+  res.set_role(std::move(role));
+  return res;
 }
 
-std::ostream& operator<<(std::ostream& os, NativeIamBinding const& binding);
+/**
+ * Create a google::iam::v1::Binding.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @param role the role which is assigned to members
+ * @param members initializer_list of members
+ *
+ * @return The binding
+ */
+google::iam::v1::Binding IamBinding(std::string role,
+                                    std::initializer_list<std::string> members);
+
+/**
+ * Create a google::iam::v1::Binding.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @param role the role which is assigned to members
+ * @param members vector of members
+ *
+ * @return The binding
+ */
+google::iam::v1::Binding IamBinding(std::string role,
+                                    std::vector<std::string> members);
+
+std::ostream& operator<<(std::ostream& os,
+                         google::iam::v1::Binding const& binding);
+
+/**
+ * Remove all members matching a predicate from a binding.
+ *
+ * @param binding the binding to remove from
+ * @param pred the predicate indicating whether to remove a member
+ *
+ * @tparam Functor the type of the predicate; it should be invocable with
+ *     `string const&` and return a bool.
+ *
+ * @return number of members removed.
+ */
+template <typename Functor>
+size_t RemoveMembersFromBindingIf(google::iam::v1::Binding& binding,
+                                  Functor pred) {
+  auto& members = *binding.mutable_members();
+  auto new_end =
+      std::remove_if(members.begin(), members.end(), std::move(pred));
+  size_t res = std::distance(new_end, members.end());
+  for (size_t i = 0; i < res; ++i) {
+    members.RemoveLast();
+  }
+  return res;
+}
+
+/**
+ * Remove all members with a given name.
+ *
+ * @param binding the binding to remove from
+ * @param the member name to remove
+ *
+ * @return number of members removed.
+ */
+size_t RemoveMemberFromBinding(google::iam::v1::Binding& binding,
+                               std::string const& name);
+
+/**
+ * Remove a specific member from a binding.
+ *
+ * @param binding the binding to remove from
+ * @param to_remove the iterator indicating the member; it should be retrieved
+ *     from the `mutable_members()` member
+ */
+void RemoveMemberFromBinding(
+    google::iam::v1::Binding& binding,
+    ::google::protobuf::RepeatedPtrField<::std::string>::iterator to_remove);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable

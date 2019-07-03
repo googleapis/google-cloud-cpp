@@ -22,70 +22,114 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+template <class InputIt>
 /**
- * Represent the result of a GetIamPolicy or SetIamPolicy request.
+ * Create a google::iam::v1::Policy.
  *
  * @see
  * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
- *     for more information about a AIM policies.
+ *     for more information about a IAM policies.
  *
  * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
  *     about ETags.
  *
- * Compared to `IamPolicy`, `NativeIamPolicy` is a more future-proof
- * solution - it gracefully tolerates changes in the underlying protocol.
- * If IamPolicy is extended with additional fields in the future,
- * `NativeIamPolicy` will preserve them (contrary to IamPolicy).
+ * @param first_binding iterator pointing to the first google::iam::v1::Binding
+ * @param last_binding iterator pointing to past last google::iam::v1::Binding
+ * @param etag used for optimistic concurrency control
+ * @param version deprecated
+ *
+ *
+ * @return The policy
  */
-class NativeIamPolicy {
- public:
-  NativeIamPolicy() = default;
-  explicit NativeIamPolicy(std::list<NativeIamBinding> bindings,
-                           std::int32_t version = 0,
-                           std::string const& etag = "");
-  explicit NativeIamPolicy(google::iam::v1::Policy impl);
-
-  /**
-   * Remove all bindings for the given role.
-   *
-   * @param role role to be removed from bindings.
-   */
-  void RemoveAllBindingsByRole(std::string const& role);
-
-  /**
-   * Remove the given member from all bindings.
-   *
-   * @param member specifies the identity requesting access for a cloud
-   * platform resource.
-   */
-  void RemoveMemberFromAllBindings(std::string const& member);
-
-  std::int32_t version() const { return impl_.version(); }
-  void set_version(std::int32_t version) { impl_.set_version(version); }
-  std::string const& etag() const { return impl_.etag(); }
-  void set_etag(std::string etag) { impl_.set_etag(std::move(etag)); }
-  std::list<NativeIamBinding>& bindings() { return bindings_; }
-  std::list<NativeIamBinding> const& bindings() const { return bindings_; }
-
-  google::iam::v1::Policy ToProto() &&;
-  google::iam::v1::Policy ToProto() const& {
-    return NativeIamPolicy(*this).ToProto();
+google::iam::v1::Policy IamPolicy(InputIt first_binding, InputIt last_binding,
+                                  std::string etag = "",
+                                  std::int32_t version = 0) {
+  google::iam::v1::Policy res;
+  for (auto binding = first_binding; binding != last_binding; ++binding) {
+    *res.add_bindings() = *binding;
   }
-
- private:
-  google::iam::v1::Policy impl_;
-  std::list<NativeIamBinding> bindings_;
-  friend bool operator==(NativeIamPolicy const& lhs,
-                         NativeIamPolicy const& rhs);
-};
-
-bool operator==(NativeIamPolicy const& lhs, NativeIamPolicy const& rhs);
-
-inline bool operator!=(NativeIamPolicy const& lhs, NativeIamPolicy const& rhs) {
-  return !(lhs == rhs);
+  res.set_version(version);
+  res.set_etag(std::move(etag));
+  return res;
 }
 
-std::ostream& operator<<(std::ostream& os, NativeIamPolicy const& rhs);
+/**
+ * Create A google::iam::v1::Policy.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
+ *     about ETags.
+ *
+ * @param bindings initializer_list of google::iam::v1::Binding
+ * @param etag used for optimistic concurrency control
+ * @param version deprecated
+ *
+ * @return The policy
+ */
+google::iam::v1::Policy IamPolicy(
+    std::initializer_list<google::iam::v1::Binding> bindings,
+    std::string etag = "", std::int32_t version = 0);
+
+/**
+ * Create a google::iam::v1::Policy.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @see https://tools.ietf.org/html/rfc7232#section-2.3 for more information
+ *     about ETags.
+ *
+ * @param bindings vector of google::iam::v1::Binding
+ * @param etag used for optimistic concurrency control
+ * @param version deprecated
+ *
+ * @return The policy
+ */
+google::iam::v1::Policy IamPolicy(
+    std::vector<google::iam::v1::Binding> bindings, std::string etag = "",
+    std::int32_t version = 0);
+
+std::ostream& operator<<(std::ostream& os, google::iam::v1::Policy const& rhs);
+
+/**
+ * Remove all bindings matching a predicate from a policy.
+ *
+ * @param policy the policy to remove from
+ * @param pred predicate indicating whether to remove a binding
+ *
+ * @tparam Functor the type of the predicate; it should be invocable with
+ *     `google::iam::v1::Binding const&` and return a bool.
+ *
+ * @return number of bindings removed.
+ */
+template <typename Functor>
+size_t RemoveBindingsFromPolicyIf(google::iam::v1::Policy& policy,
+                                  Functor pred) {
+  auto& bindings = *policy.mutable_bindings();
+  auto new_end =
+      std::remove_if(bindings.begin(), bindings.end(), std::move(pred));
+  size_t res = std::distance(new_end, bindings.end());
+  for (size_t i = 0; i < res; ++i) {
+    bindings.RemoveLast();
+  }
+  return res;
+}
+
+/**
+ * Remove a specific binding from a policy.
+ *
+ * @param policy the policy to remove from
+ * @param to_remove the iterator indicating the binding; it should be retrieved
+ *     from the `mutable_bindings()` member
+ */
+void RemoveBindingFromPolicy(
+    google::iam::v1::Policy& policy,
+    google::protobuf::RepeatedPtrField<google::iam::v1::Binding>::iterator
+        to_remove);
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace bigtable
