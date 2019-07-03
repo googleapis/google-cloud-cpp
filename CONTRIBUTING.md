@@ -142,13 +142,11 @@ advised that `clang-format` has been known to generate slightly different
 formatting in different versions. We use version 7; use the same version if you
 run into problems.
 
-If you have prepared a Docker image for `ubuntu:18.04` (see below), you can
-verify and fix the format of your code using:
+You can verify and fix the format of your code using:
 
 ```console
 # Run from google-cloud-cpp:
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 \
-      CXX=clang++ CC=clang CHECK_STYLE=yes ./ci/travis/build-linux.sh
+$ ./ci/kokoro/docker/build.sh clang-tidy
 ```
 
 ### Updating CMakeLists.txt and/or BUILD files
@@ -201,78 +199,23 @@ distributions, using the native compiler and library versions included in those
 distributions.
 From time to time, you may need to run the same build on your workstation.
 To do so, [install Docker](https://docs.docker.com/engine/installation/)
-on your workstation, then create the build Docker image for the environment you
-intend to use, for example:
+on your workstation. Once that is done invoke the build script with the name
+of the build you need to reproduce, for example:
 
 ```console
 # Run from the google-cloud-cpp directory.
-$ TRAVIS_OS_NAME=linux DISTRO=ubuntu DISTRO_VERSION=18.04 ./ci/travis/install-linux.sh
+$ ./ci/kokoro/docker/build.sh shared
 ```
-
-Once you create the image for a given combination of `DISTRO` and
-`DISTRO_VERSION`, you can reuse it for many builds, with different options.
-For example, this (rather longish)
-command will verify that your code is formatted correctly, run the
-clang-tidy(1) checks, verify the Doxygen documentation can be generated, and run
-both the unit and integration tests:
-
-```console
-CHECK_STYLE=yes GENERATE_DOCS=yes \
-    CMAKE_FLAGS=-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes \
-    DISTRO=ubuntu DISTRO_VERSION=18.04 CXX=clang++ CC=clang NCPU=$(nproc) \
-    TRAVIS_OS_NAME=linux ./ci/travis/build-linux.sh
-```
-
-You may want to add `BUILD_TYPE=Debug` to the list of environment variables,
-as the default (`BUILD_TYPE=Release`) may be slightly slower.
-
-You can set any of the following environment variables to control the build.
-Please consult the build matrix in your [`.travis.yml`](.travis.yml) file to see
-which combinations are tested regularly.
-
- * `CXX`: the C++ compiler, you can use a full path if needed.
- * `CC`: the C compiler, you can use a full path if needed. Typically you
-   set both variables to select the compiler. For example:
-   * `CXX=clang++ CC=clang` to use Clang.
-   * `CXX=g++ CC=gcc` to use GCC.
- * `DISTRO`: the Linux distribution, use `ubuntu`, `fedora`, or `centos`.
- * `DISTRO_VERSION`: the version of the distribution, e.g. `16.04`.
- * `CHECK_STYLE`: if set to `yes`, the build fails if the code is different
-   than the output from `clang-format(1)`.  Note that this reformats your files,
-   that can be useful to keep the formatting clean.
- * `GENERATE_DOCS`: if set to `yes` the build will generate the documentation
-   using [Doxygen](https://www.doxygen.org).  In addition, if `GH_TOKEN` is set
-   it will try to update the `gh-pages` branch on your fork with the new
-   documentation.
- * `BUILD_TYPE`: if set, override the `CMAKE_BUILD_TYPE` flag when configuring
-   the build.
- * `BUILD_TESTING`: if set to `no`, disable the unit tests. This is sometimes
-   useful for package maintainers that may want to reduce their build times.
- * `SCAN_BUILD`: if set to `yes`, use Clang static analyzer (aka `scan-build`)
-   to compile the code.  Remember to also set the compiler to Clang as described
-   above.  Builds with this configuration can be substantially slower.
- * `CMAKE_FLAGS`: if set, these additional cmake flags are used to configure
-   the build.  The more interesting flags include:
-   * `-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes`: configure the build to run
-     `clang-tidy` for the Google Cloud C++ Libraries.  Check the
-     [configuration file](.clang-tidy) for details on what `clang-tidy` options
-     we use.
- * `CREATE_GRAPHVIZ`: if set to `yes`, use `CMake` to generate a dependency
-   graph of each target. This is useful when troubleshooting dependencies, or
-   simply when trying to document them.
 
 ### Upload generated documentation to personal github pages
 
 If you are using your personal fork as the git origin, there is an easy way to
 upload generated doxygen documentation to your personal github pages. The
-following command will upload the documentation under
-`cmake-out/gcpp-ci-ubuntu-18.04-gcc-Release` to `my-fancy-feature` subdirectory
-in the gh-pages branch of your personal fork. The documentation will be publicly
-available at: `http://<username>.github.io/google-cloud-cpp/my-fancy-feature`.
+following command will generate the documentation and upload it to the
+`my-fancy-feature` subdirectory in the gh-pages branch of your personal fork.
+That is, the documentation will be publicly available at:
+`http://<username>.github.io/google-cloud-cpp/my-fancy-feature`.
 
 ```console
-DOCS_SUBDIR=my-fancy-feature \
-  GENERATE_DOCS=yes \
-  BUILD_OUTPUT=cmake-out/gcpp-ci-ubuntu-18.04-gcc-Release \
-  ./ci/travis/upload-docs.sh
+$ DOCS_SUBDIR=my-fancy-feature ./ci/kokoro/docker/build.sh clang-tidy
 ```
