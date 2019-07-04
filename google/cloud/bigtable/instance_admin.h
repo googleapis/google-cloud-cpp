@@ -904,6 +904,10 @@ class InstanceAdmin {
    * @param instance_id the instance to query.
    * @return Policy the full IAM policy for the instance.
    *
+   * @deprecated this function is deprecated; it doesn't support conditional
+   *     bindings and will not support any other features to come; please use
+   *     `GetNativeIamPolicy` instead.
+   *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
    *
@@ -941,6 +945,10 @@ class InstanceAdmin {
    * @param instance_id the instance to query.
    * @return a future satisfied when either (a) the policy is fetched or (b)
    *     an unretriable error occurs or (c) retry policy has been exhausted.
+   *
+   * @deprecated this function is deprecated; it doesn't support conditional
+   *     bindings and will not support any other features to come; please use
+   *     `AsyncGetNativeIamPolicy` instead.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -985,6 +993,10 @@ class InstanceAdmin {
    * @param iam_bindings IamBindings object containing role and members.
    * @param etag the expected ETag value for the current policy.
    * @return Policy the current IAM bindings for the instance.
+   *
+   * @deprecated this function is deprecated; it doesn't support conditional
+   *     bindings and will not support any other features to come; please use
+   *     the overload for `google::iam::v1::Policy` instead.
    *
    * @warning ETags are currently not used by Cloud Bigtable.
    *
@@ -1039,6 +1051,10 @@ class InstanceAdmin {
    * @return a future satisfied when either (a) the policy is created or (b)
    *     an unretriable error occurs or (c) retry policy has been
    *     exhausted.
+   *
+   * @deprecated this function is deprecated; it doesn't support conditional
+   *     bindings and will not support any other features to come; please use
+   *     the overload for `google::iam::v1::Policy` instead.
    *
    * @warning ETags are currently not used by Cloud Bigtable.
    *
