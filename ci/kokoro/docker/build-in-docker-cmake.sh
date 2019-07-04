@@ -164,7 +164,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
-  (cd "${PROJECT_ROOT}" ; ./ci/kokoro/docker/check-abi.sh)
+  (cd "${PROJECT_ROOT}" ; ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}")
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
