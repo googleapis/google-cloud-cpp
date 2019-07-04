@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include <absl/strings/str_join.h>
 
 namespace google {
 namespace cloud {
@@ -22,20 +23,9 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
 std::ostream& operator<<(std::ostream& os, SignBlobRequest const& r) {
-  auto join = [](std::vector<std::string> const& v) -> std::string {
-    if (v.empty()) {
-      return std::string{};
-    }
-    return std::accumulate(++v.begin(), v.end(), v.front(),
-                           [](std::string a, std::string const& b) {
-                             a += "; ";
-                             a += b;
-                             return a;
-                           });
-  };
   return os << "SignBlobRequest={service_account=" << r.service_account()
             << ", base64_encoded_blob=" << r.base64_encoded_blob()
-            << ", delegates=" << join(r.delegates()) << "}";
+            << ", delegates=" << absl::StrJoin(r.delegates(), ", ") << "}";
 }
 
 StatusOr<SignBlobResponse> SignBlobResponse::FromHttpResponse(

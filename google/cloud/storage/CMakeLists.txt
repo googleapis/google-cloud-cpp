@@ -46,6 +46,7 @@ endif ()
 
 include(IncludeNlohmannJson)
 include(IncludeCrc32c)
+include(IncludeAbseil)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
@@ -225,6 +226,7 @@ add_library(storage_client
             well_known_parameters.h)
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
+                             absl::strings
                              nlohmann_json
                              Crc32c::crc32c
                              CURL::libcurl

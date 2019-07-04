@@ -21,32 +21,23 @@
 #include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
+#include <absl/strings/str_join.h>
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs) {
-  auto join = [](char const* sep, std::vector<std::string> const& list) {
-    if (list.empty()) {
-      return std::string{};
-    }
-    return std::accumulate(++list.begin(), list.end(), list.front(),
-                           [sep](std::string a, std::string const& b) {
-                             a += sep;
-                             a += b;
-                             return a;
-                           });
-  };
   os << "CorsEntry={";
   char const* sep = "";
   if (rhs.max_age_seconds.has_value()) {
     os << "max_age_seconds=" << *rhs.max_age_seconds;
     sep = ", ";
   }
-  return os << sep << "method=[" << join(", ", rhs.method) << "], origin=["
-            << join(", ", rhs.origin) << "], response_header=["
-            << join(", ", rhs.response_header) << "]}";
+  return os << sep << "method=[" << absl::StrJoin(rhs.method, ", ")
+            << "], origin=[" << absl::StrJoin(rhs.origin, ", ")
+            << "], response_header=["
+            << absl::StrJoin(rhs.response_header, ", ") << "]}";
 }
 
 std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs) {
