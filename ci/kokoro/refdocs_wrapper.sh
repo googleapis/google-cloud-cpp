@@ -27,7 +27,7 @@ if [[ "${BUILD_DOCKER_IMAGE:-false}" == "true" ]]; then
   # First build the docker image with dependency installed
   docker build -t gcr.io/cloud-devrel-kokoro-resources/cpp/refdoc-base \
     --build-arg NCPU="$(nproc)" \
-    -f ci/travis/Dockerfile.ubuntu-install ci
+    -f ci/kokoro/docker/Dockerfile.ubuntu-install ci
 
   docker build -t "${TRAMPOLINE_IMAGE}" -f ci/kokoro/Dockerfile.refdocs ci
 

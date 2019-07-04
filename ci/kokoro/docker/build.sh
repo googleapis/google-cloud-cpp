@@ -20,8 +20,9 @@ export CC=gcc
 export CXX=g++
 export DISTRO=ubuntu
 export DISTRO_VERSION=18.04
+export CMAKE_SOURCE_DIR="."
 
-in_docker_script="ci/travis/build-docker.sh"
+in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 
 if [[ $# -eq 1 ]]; then
   export BUILD_NAME="${1}"
@@ -136,7 +137,7 @@ fi
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
@@ -154,7 +155,7 @@ set +e
 mkdir -p "${BUILD_OUTPUT}"
 echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 "${PROJECT_ROOT}/ci/install-retry.sh" \
-    "${PROJECT_ROOT}/ci/travis/install-linux.sh" \
+    "${PROJECT_ROOT}/ci/kokoro/docker/create-docker-image.sh" \
     >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null
 if [[ "$?" != 0 ]]; then
   dump_log "${BUILD_OUTPUT}/create-build-docker-image.log"
@@ -181,8 +182,7 @@ if [[ "${docker_uid}" == "0" ]]; then
   docker_home_prefix="${PWD}/cmake-out/root"
 fi
 
-readonly DOCKER_HOME="${docker_home_prefix}/${IMAGE}${suffix}"
-mkdir -p "${DOCKER_HOME}"
+mkdir -p "${BUILD_HOME}"
 
 # We use an array for the flags so they are easier to document.
 docker_flags=(
@@ -266,13 +266,23 @@ docker_flags=(
     # it to store $HOME/.ccache
 
     # Make the fake directory available inside the docker image as `/h`.
-    "--volume" "${DOCKER_HOME}:/h"
+    "--volume" "${PWD}/${BUILD_HOME}:/h"
     "--env" "HOME=/h"
 
     # Mount the current directory (which is the top-level directory for the
     # project) as `/v` inside the docker image, and move to that directory.
     "--volume" "${PWD}:/v"
     "--workdir" "/v"
+
+    # Mask any other builds that may exist at the same time. That is, these
+    # directories appear as empty inside the Docker container, this prevents the
+    # container from writing into other builds, or to get confused by the output
+    # of other builds. In the CI system this does not matter, as each build runs
+    # on a completely separate VM. This is useful when running multiple builds
+    # in your workstation.
+    "--volume" "/v/cmake-out/home"
+    "--volume" "/v/cmake-out"
+    "--volume" "${PWD}/${BUILD_OUTPUT}:/v/${BUILD_OUTPUT}"
 )
 
 # When running on Travis the build gets a tty, and docker can produce nicer
@@ -283,7 +293,8 @@ if [[ -t 0 ]]; then
 fi
 
 # Run the docker image with that giant collection of flags.
-sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" "/v/${in_docker_script}"
+sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" "/v/${in_docker_script}" \
+    "${CMAKE_SOURCE_DIR}" "${BUILD_OUTPUT}"
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
@@ -292,12 +303,14 @@ echo "================================================================"
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${docker_flags[@]}"
 
-echo "================================================================"
-"${PROJECT_ROOT}/ci/travis/dump-logs.sh"
-echo "================================================================"
+if [[ "${exit_status}" != 0 ]]; then
+  echo "================================================================"
+  echo "Build failed printing logs at $(date)."
+  "${PROJECT_ROOT}/ci/kokoro/docker/dump-logs.sh"
+fi
 
 echo "================================================================"
-"${PROJECT_ROOT}/ci/travis/dump-reports.sh"
+"${PROJECT_ROOT}/ci/kokoro/docker/dump-reports.sh"
 echo "================================================================"
 
 echo

@@ -19,12 +19,12 @@ set -eu
 # Create a Docker image with all the dependencies necessary to build the
 # project.
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
 
 cd "${PROJECT_ROOT}"
 sudo docker build -t "${IMAGE}:tip" \
      --build-arg NCPU="${NCPU:-2}" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
-     -f "ci/travis/Dockerfile.${DISTRO}" ci
+     -f "ci/kokoro/docker/Dockerfile.${DISTRO}" ci

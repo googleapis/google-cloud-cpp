@@ -13,5 +13,5 @@ cmake-out/
 # the Docker images. Furthermore, when creating new Dockerfiles the files
 # here change a lot, but do not change the image, so they trigger image rebuids
 # without any benefit.
-ci/travis/
+ci/kokoro/
 ci/test-readme/

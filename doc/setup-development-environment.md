@@ -10,8 +10,8 @@ install additional tools to run the unit and integration tests.
 These instructions will describe how to install these tools for
 Ubuntu 18.04 (Bionic Beaver). For other distributions you may consult the
 Dockerfile used by the integration tests. For example,
-[Dockerfile.ubuntu](../ci/travis/Dockerfile.ubuntu), or
-[Dockerfile.fedora](../ci/travis/Dockerfile.fedora).
+[Dockerfile.ubuntu](../ci/kokoro/docker/Dockerfile.ubuntu), or
+[Dockerfile.fedora](../ci/kokoro/docker/Dockerfile.fedora).
 
 First, install the basic development tools:
 
