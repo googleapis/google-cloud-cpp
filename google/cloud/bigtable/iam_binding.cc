@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/iam_binding.h"
+#include "google/cloud/bigtable/expr.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <algorithm>
 #include <iostream>
@@ -28,6 +29,13 @@ google::iam::v1::Binding IamBinding(
 }
 
 google::iam::v1::Binding IamBinding(std::string role,
+                                    std::initializer_list<std::string> members,
+                                    google::type::Expr condition) {
+  return IamBindingSetCondition(IamBinding(std::move(role), members),
+                                std::move(condition));
+}
+
+google::iam::v1::Binding IamBinding(std::string role,
                                     std::vector<std::string> members) {
   google::iam::v1::Binding res;
   for (auto& member : members) {
@@ -35,6 +43,19 @@ google::iam::v1::Binding IamBinding(std::string role,
   }
   res.set_role(std::move(role));
   return res;
+}
+
+google::iam::v1::Binding IamBinding(std::string role,
+                                    std::vector<std::string> members,
+                                    google::type::Expr condition) {
+  return IamBindingSetCondition(IamBinding(std::move(role), std::move(members)),
+                                std::move(condition));
+}
+
+google::iam::v1::Binding IamBindingSetCondition(
+    google::iam::v1::Binding binding, google::type::Expr condition) {
+  *binding.mutable_condition() = std::move(condition);
+  return binding;
 }
 
 std::ostream& operator<<(std::ostream& os,
@@ -45,7 +66,11 @@ std::ostream& operator<<(std::ostream& os,
     os << (first ? "" : ", ") << member;
     first = false;
   }
-  return os << "]";
+  os << "]";
+  if (binding.has_condition()) {
+    os << " when " << binding.condition();
+  }
+  return os;
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS

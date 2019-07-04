@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/iam_policy.h"
+#include "google/cloud/bigtable/expr.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
@@ -68,6 +69,18 @@ TEST(IamPolicy, VectorCtor) {
   EXPECT_EQ("etag1", policy.etag());
   EXPECT_EQ(13, policy.version());
   EXPECT_EQ(BindingRoles(expected), BindingRoles(policy));
+}
+
+TEST(IamPolicy, Printing) {
+  auto binding = IamBinding("role", {"mem1", "mem2", "mem3", "mem1"},
+                            Expression("condition"));
+  auto policy = IamPolicy({binding});
+  std::stringstream stream;
+  stream << policy;
+  EXPECT_EQ(
+      "IamPolicy={version=0, bindings=IamBindings={role: [mem1, mem2, mem3, "
+      "mem1] when (condition)}, etag=}",
+      stream.str());
 }
 
 }  // namespace
