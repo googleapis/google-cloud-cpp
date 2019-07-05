@@ -34,14 +34,16 @@ ObjectReadStream CreateReader() {
 }
 
 ObjectWriteStream CreateWriter() {
-  using google::cloud::internal::make_unique;
-  auto session = make_unique<internal::ResumableUploadSessionError>(
+  auto session = google::cloud::internal::make_unique<
+      internal::ResumableUploadSessionError>(
       Status(StatusCode::kNotFound, "test-message"));
 
-  auto validator = make_unique<internal::NullHashValidator>();
+  auto validator =
+      google::cloud::internal::make_unique<internal::NullHashValidator>();
 
-  ObjectWriteStream writer(make_unique<internal ::ObjectWriteStreambuf>(
-      std::move(session), 0, std::move(validator)));
+  ObjectWriteStream writer(
+      google::cloud::internal::make_unique<internal::ObjectWriteStreambuf>(
+          std::move(session), 0, std::move(validator)));
   writer.setstate(std::ios::badbit | std::ios::eofbit);
   writer.Close();
   return writer;
