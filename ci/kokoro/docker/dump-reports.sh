@@ -17,15 +17,15 @@
 set -eu
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
+source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
 
 # If w3m is installed there is nothing to do.
 if ! type w3m >/dev/null 2>&1; then
-  # Try to install a HTML renderer, if this fails the script will exit.
-  # Note that this runs on the Travis VM, under Ubuntu, so the command
-  # to install things is well-known:
+  # Try to install a HTML renderer, if this fails the script will exit. Note
+  # that this runs on Kokoro, under Ubuntu, therefore the command to install
+  # this package is well-known:
   sudo apt install -y w3m
 fi
 
@@ -45,7 +45,7 @@ export -f dump_report
 
 find "${BUILD_OUTPUT}" -name 'compat_report.html' \
     -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \
-  echo "No ABI compability reports found."
+  echo "No ABI compatibility reports found."
 
 find scan-cmake-out/ -name '*.html' \
     -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \

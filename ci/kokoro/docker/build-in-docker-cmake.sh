@@ -16,13 +16,20 @@
 
 set -eu
 
+if [[ $# != 2 ]]; then
+  echo "Usage: $(basename "$0") <source-directory> <binary-directory>"
+  exit 1
+fi
+
+readonly SOURCE_DIR="$1"
+readonly BINARY_DIR="$2"
+
 # This script is supposed to run inside a Docker container, see
-# ci/travis/build-linux.sh for the expected setup.  The /v directory is a volume
-# pointing to a (clean-ish) checkout of google-cloud-cpp:
+# ci/kokoro/docker/build.sh for the expected setup.  The /v directory is a
+# volume pointing to a (clean-ish) checkout of google-cloud-cpp:
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="/v"
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 # Run the configure / compile / test cycle inside a docker image.
@@ -32,54 +39,32 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
 CMAKE_COMMAND="cmake"
-if [ "${SCAN_BUILD}" = "yes" ]; then
+if [[ "${SCAN_BUILD}" == "yes" ]]; then
   CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
-fi
-
-ccache_command="$(command -v ccache)"
-
-if [[ -z "${ccache_command}" ]]; then
-  echo "The Travis builds cannot complete without ccache(1), exiting."
-  exit 1
 fi
 
 echo
 echo "${COLOR_YELLOW}Starting docker build $(date) with ${NCPU} cores${COLOR_RESET}"
 echo
 
-bootstrap_ccache="no"
-if [[ "${NEEDS_CCACHE:-}" = "no" ]]; then
-  bootstrap_ccache="no"
-elif ${ccache_command} --show-stats | grep '^cache size' | grep -q '0.0 kB'; then
-  echo "${COLOR_RED}"
-  echo "The ccache is empty. The builds cannot finish in the time allocated by"
-  echo "Travis without a warm cache. As a workaround, until #1800 is fixed,"
-  echo "the cache is bootstrapped in two steps. First, only a subset of the"
-  echo "system will be built, and the build will terminate with a failure."
-  echo "The second build on the same branch will have at least the previously"
-  echo "mentioned subset of the system in the build cache, and should be able"
-  echo "to finish in the time allocated by Travis."
-  echo "${COLOR_RESET}"
-  bootstrap_ccache="yes"
-fi
-
 echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
-echo "travis_fold:start:configure-cmake"
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
-if [ "${BUILD_TESTING:-}" = "no" ]; then
+if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=( "-DBUILD_TESTING=OFF" )
 fi
 
-if [ "${TEST_INSTALL:-}" = "yes" ]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
+if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
+      "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
 fi
 
-if [ "${SCAN_BUILD:-}" = "yes" ]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package" "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
+if [[ "${SCAN_BUILD:-}" == "yes" ]]; then
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
+      "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
 fi
 
-if [ "${USE_LIBCXX:-}" = "yes" ]; then
+if [[ "${USE_LIBCXX:-}" == "yes" ]]; then
   cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON" )
 fi
 
@@ -93,18 +78,17 @@ ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
     "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
     ${CMAKE_FLAGS:-} \
-    -H. \
-    -B"${BUILD_OUTPUT}"
+    -H${SOURCE_DIR} \
+    -B"${BINARY_DIR}"
 echo
-echo "travis_fold:end:configure-cmake"
 echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
 
 # CMake can generate dependency graphs, which are useful to understand and
 # troubleshoot dependencies.
-if [[ "${CREATE_GRAPHVIZ:-}" = "yes" ]]; then
+if [[ "${CREATE_GRAPHVIZ:-}" == "yes" ]]; then
   ${CMAKE_COMMAND} \
-      --graphviz="${BUILD_OUTPUT}/graphviz/google-cloud-cpp" \
-      --build "${BUILD_OUTPUT}"
+      --graphviz="${BINARY_DIR}/graphviz/google-cloud-cpp" \
+      --build "${BINARY_DIR}"
 fi
 
 # If scan-build is enabled, we need to manually compile the dependencies;
@@ -112,44 +96,19 @@ fi
 # ignore them.  When scan-build is not enabled, this is still useful because
 # we can fold the output in Travis and make the log more interesting.
 echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
-echo "travis_fold:start:build-dependencies"
 echo
-cmake --build "${BUILD_OUTPUT}" \
+cmake --build "${BINARY_DIR}" \
     --target google-cloud-cpp-dependencies -- -j "${NCPU}"
 echo
-echo "travis_fold:end:build-dependencies"
 echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
-
-if [[ "${bootstrap_ccache}" == "yes" ]]; then
-  echo
-  echo
-  echo "${COLOR_RED}Aborting the build early to warm up the cache.${COLOR_RESET}"
-  echo
-  echo
-  exit 1
-fi
 
 # If scan-build is enabled we build the smallest subset of things that is
 # needed; otherwise, we pick errors from things we do not care about. With
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
 echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
-${CMAKE_COMMAND} --build "${BUILD_OUTPUT}" -- -j "${NCPU}"
+${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
 echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
-
-# If ccache is enabled we want to zero out the statistics because otherwise
-# Travis needs to rebuild the cache each time, and that slows down the build
-# unnecessarily.
-if [ -n "${ccache_command}" ]; then
-  echo
-  echo "${COLOR_YELLOW}Print and clearing ccache stats: $(date)${COLOR_RESET}"
-  "${ccache_command}" --show-stats
-  max_size="1Gi"
-  if [ "${BUILD_TYPE}" = "Coverage" ]; then
-    max_size="2.5Gi"
-  fi
-  "${ccache_command}" --zero-stats --cleanup --max-size="${max_size}"
-fi
 
 # Collect the output from the Clang static analyzer and provide instructions to
 # the developers on how to do that locally.
@@ -165,7 +124,7 @@ scan-build detected errors.  Please read the log for details. To
 run scan-build locally and examine the HTML output install and configure Docker,
 then run:
 
-BUILD_NAME=scan-build ./ci/kokoro/docker/build.sh
+./ci/kokoro/docker/build.sh scan-build
 
 The HTML output will be copied into the scan-cmake-out subdirectory.
 ${COLOR_RESET}
@@ -177,19 +136,19 @@ _EOF_
   fi
 fi
 
-if [ "${BUILD_TESTING:-}" = "yes" ]; then
+if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   # Run the tests and output any failures.
   echo
   echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
   echo
-  (cd "${BUILD_OUTPUT}" && ctest --output-on-failure)
+  (cd "${BINARY_DIR}" && ctest --output-on-failure)
 
   # Run the integration tests. Not all projects have them, so just iterate over
   # the ones that do.
   for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
     echo
     echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
-    (cd "${BUILD_OUTPUT}" && "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
+    (cd "${BINARY_DIR}" && "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
   done
   echo
   echo "${COLOR_YELLOW}Completed unit and integration tests $(date)${COLOR_RESET}"
@@ -200,19 +159,19 @@ fi
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
-  cmake --build "${BUILD_OUTPUT}" --target install || echo "FAILED"
+  cmake --build "${BINARY_DIR}" --target install || echo "FAILED"
   echo
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
-  (cd "${PROJECT_ROOT}" ; ./ci/check-abi.sh)
+  (cd "${PROJECT_ROOT}" ; ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}")
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
   echo "${COLOR_YELLOW}Verify installed headers created only" \
       " expected directories.${COLOR_RESET}"
-  cmake --build "${BUILD_OUTPUT}" --target install -- DESTDIR=/var/tmp/staging
+  cmake --build "${BINARY_DIR}" --target install -- DESTDIR=/var/tmp/staging
   if comm -23 \
       <(find /var/tmp/staging/usr/local/include/google/cloud -type d | sort) \
       <(echo /var/tmp/staging/usr/local/include/google/cloud ; \
@@ -237,8 +196,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
 fi
 
 # If document generation is enabled, run it now.
-if [ "${GENERATE_DOCS}" = "yes" ]; then
+if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Generating Doxygen documentation at: $(date).${COLOR_RESET}"
-  cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
+  cmake --build "${BINARY_DIR}" --target doxygen-docs
 fi

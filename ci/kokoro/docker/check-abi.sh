@@ -16,11 +16,16 @@
 
 set -eu
 
-if [[ -z "${PROJECT_ROOT+x}" ]]; then
-  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/.."; pwd)"
+if [[ $# != 1 ]]; then
+  echo "Usage: $(basename "$0") <binary-directory>"
+  exit 1
 fi
-source "${PROJECT_ROOT}/ci/travis/linux-config.sh"
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+
+readonly BINARY_DIR="$1"
+
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 if [[ "${CHECK_ABI:-}" != "yes" ]]; then
@@ -44,13 +49,13 @@ check_library() {
   abi-dumper "${libdir}/lib${library}.so" \
       -public-headers "${includedir}" \
       -lver "current" \
-      -o "${BUILD_OUTPUT}/${new_dump_file}"
+      -o "${BINARY_DIR}/${new_dump_file}"
 
   # We want to collect the data for as many libraries as possible, do not exit
   # on the first error.
   set +e
 
-  (cd "${BUILD_OUTPUT}" ; zcat "${reference_file}" >"${old_dump_file}" ; \
+  (cd "${BINARY_DIR}" ; zcat "${reference_file}" >"${old_dump_file}" ; \
    abi-compliance-checker \
        -l "${library}" -old "${old_dump_file}" -new "${new_dump_file}")
   if [[ $? != 0 ]]; then
@@ -61,8 +66,8 @@ check_library() {
   if [[ "${UPDATE_ABI}" = "yes" ]]; then
     abi-dumper "${libdir}/lib${library}.so" \
         -public-headers "${includedir}" \
-        -lver "reference" -o "${BUILD_OUTPUT}/${new_dump_file}"
-    gzip -c "${BUILD_OUTPUT}/${new_dump_file}" >"${reference_file}"
+        -lver "reference" -o "${BINARY_DIR}/${new_dump_file}"
+    gzip -c "${BINARY_DIR}/${new_dump_file}" >"${reference_file}"
   fi
   return ${return_status}
 }
