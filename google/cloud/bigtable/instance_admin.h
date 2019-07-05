@@ -907,6 +907,7 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     `GetNativeIamPolicy` instead.
+   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -949,6 +950,7 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     `AsyncGetNativeIamPolicy` instead.
+   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -997,6 +999,7 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     the overload for `google::iam::v1::Policy` instead.
+   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @warning ETags are currently not used by Cloud Bigtable.
    *
@@ -1055,6 +1058,7 @@ class InstanceAdmin {
    * @deprecated this function is deprecated; it doesn't support conditional
    *     bindings and will not support any other features to come; please use
    *     the overload for `google::iam::v1::Policy` instead.
+   *     TODO(#2857): Use proper deprecation attributes.
    *
    * @warning ETags are currently not used by Cloud Bigtable.
    *
