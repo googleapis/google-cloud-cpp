@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/iam_binding.h"
+#include "google/cloud/bigtable/expr.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <fstream>
@@ -31,6 +32,17 @@ TEST(IamBinding, IterCtor) {
                                                binding.members().end()));
 }
 
+TEST(IamBinding, IterCtorCondition) {
+  std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
+  auto binding = IamBinding("role", expected.begin(), expected.end(),
+                            Expression("condition"));
+  EXPECT_EQ("role", binding.role());
+  EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
+                                               binding.members().end()));
+  ASSERT_TRUE(binding.has_condition());
+  EXPECT_EQ("condition", binding.condition().expression());
+}
+
 TEST(IamBinding, IniListCtor) {
   auto binding = IamBinding("role", {"mem1", "mem2", "mem3", "mem1"});
   EXPECT_EQ("role", binding.role());
@@ -39,12 +51,48 @@ TEST(IamBinding, IniListCtor) {
                                                binding.members().end()));
 }
 
+TEST(IamBinding, IniListCtorCondition) {
+  auto binding = IamBinding("role", {"mem1", "mem2", "mem3", "mem1"},
+                            Expression("condition"));
+  EXPECT_EQ("role", binding.role());
+  std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
+  EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
+                                               binding.members().end()));
+  ASSERT_TRUE(binding.has_condition());
+  EXPECT_EQ("condition", binding.condition().expression());
+}
+
 TEST(IamBinding, VectorCtor) {
   std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
   auto binding = IamBinding("role", expected);
   EXPECT_EQ("role", binding.role());
   EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
                                                binding.members().end()));
+}
+
+TEST(IamBinding, VectorCtorCondition) {
+  std::vector<std::string> expected({"mem1", "mem2", "mem3", "mem1"});
+  auto binding = IamBinding("role", expected, Expression("condition"));
+  EXPECT_EQ("role", binding.role());
+  EXPECT_EQ(expected, std::vector<std::string>(binding.members().begin(),
+                                               binding.members().end()));
+  ASSERT_TRUE(binding.has_condition());
+  EXPECT_EQ("condition", binding.condition().expression());
+}
+
+TEST(IamBinding, PrintingWithoutCondition) {
+  auto binding = IamBinding("role", {"mem1", "mem2", "mem3", "mem1"});
+  std::stringstream stream;
+  stream << binding;
+  EXPECT_EQ("role: [mem1, mem2, mem3, mem1]", stream.str());
+}
+
+TEST(IamBinding, PrintingWithCondition) {
+  auto binding = IamBinding("role", {"mem1", "mem2", "mem3", "mem1"},
+                            Expression("condition"));
+  std::stringstream stream;
+  stream << binding;
+  EXPECT_EQ("role: [mem1, mem2, mem3, mem1] when (condition)", stream.str());
 }
 
 }  // namespace

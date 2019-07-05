@@ -31,6 +31,7 @@ bigtable_client_unit_tests = [
     "column_family_test.cc",
     "completion_queue_test.cc",
     "data_client_test.cc",
+    "expr_test.cc",
     "filters_test.cc",
     "force_sanitizer_failures_test.cc",
     "iam_binding_test.cc",

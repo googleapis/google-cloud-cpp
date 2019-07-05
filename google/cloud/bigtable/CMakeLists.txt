@@ -110,6 +110,8 @@ add_library(bigtable_client
             completion_queue.cc
             data_client.h
             data_client.cc
+            expr.h
+            expr.cc
             filters.h
             iam_binding.h
             iam_binding.cc
@@ -263,6 +265,7 @@ if (BUILD_TESTING)
         column_family_test.cc
         completion_queue_test.cc
         data_client_test.cc
+        expr_test.cc
         filters_test.cc
         force_sanitizer_failures_test.cc
         iam_binding_test.cc

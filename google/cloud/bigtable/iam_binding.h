@@ -48,6 +48,24 @@ google::iam::v1::Binding IamBinding(std::string role, InputIt begin,
  *     for more information about a IAM policies.
  *
  * @param role the role which is assigned to members
+ * @param begin iterator pointing to the first member
+ * @param end iterator pointing to past last member
+ * @param condition expression indicating when the binding is effective
+ *
+ * @return The binding
+ */
+template <class InputIt>
+google::iam::v1::Binding IamBinding(std::string role, InputIt begin,
+                                    InputIt end, google::type::Expr condition);
+
+/**
+ * Create a google::iam::v1::Binding.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @param role the role which is assigned to members
  * @param members initializer_list of members
  *
  * @return The binding
@@ -63,12 +81,46 @@ google::iam::v1::Binding IamBinding(std::string role,
  *     for more information about a IAM policies.
  *
  * @param role the role which is assigned to members
+ * @param members initializer_list of members
+ * @param condition expression indicating when the binding is effective
+ *
+ * @return The binding
+ */
+google::iam::v1::Binding IamBinding(std::string role,
+                                    std::initializer_list<std::string> members,
+                                    google::type::Expr condition);
+
+/**
+ * Create a google::iam::v1::Binding.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @param role the role which is assigned to members
  * @param members vector of members
  *
  * @return The binding
  */
 google::iam::v1::Binding IamBinding(std::string role,
                                     std::vector<std::string> members);
+
+/**
+ * Create a google::iam::v1::Binding.
+ *
+ * @see
+ * https://cloud.google.com/resource-manager/reference/rest/Shared.Types/Policy
+ *     for more information about a IAM policies.
+ *
+ * @param role the role which is assigned to members
+ * @param members vector of members
+ * @param condition expression indicating when the binding is effective
+ *
+ * @return The binding
+ */
+google::iam::v1::Binding IamBinding(std::string role,
+                                    std::vector<std::string> members,
+                                    google::type::Expr condition);
 
 std::ostream& operator<<(std::ostream& os,
                          google::iam::v1::Binding const& binding);
@@ -91,12 +143,30 @@ google::iam::v1::Binding IamBindingAppendMembers(
   return binding;
 }
 
+/**
+ * Set a condition to an google::iam::v1::Binding.
+ *
+ * @param binding the binding to which the condition is added
+ * @param condition the added condition
+ *
+ * @return the binding with the condition set
+ */
+google::iam::v1::Binding IamBindingSetCondition(
+    google::iam::v1::Binding binding, google::type::Expr condition);
+
 template <class InputIt>
 google::iam::v1::Binding IamBinding(std::string role, InputIt begin,
                                     InputIt end) {
   google::iam::v1::Binding res;
   res.set_role(std::move(role));
   return IamBindingAppendMembers(res, begin, end);
+}
+
+template <class InputIt>
+google::iam::v1::Binding IamBinding(std::string role, InputIt begin,
+                                    InputIt end, google::type::Expr condition) {
+  return IamBindingSetCondition(IamBinding(std::move(role), begin, end),
+                                std::move(condition));
 }
 
 }  // namespace GOOGLE_CLOUD_CPP_NS
