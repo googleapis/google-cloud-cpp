@@ -22,6 +22,11 @@ metadata:
     app: bigtable-latency-benchmark
 spec:
   schedule: '* */1 * * *' # hourly
+  # Only count the failures in the last 60 seconds towards the
+  # "FailedNeedsStart" limit, and allow the job to start even if it missed the
+  # start time in the last 60 seconds.
+  #    https://stackoverflow.com/questions/51065538
+  startingDeadlineSeconds: 60
   concurrencyPolicy: Forbid
   jobTemplate:
     spec:
