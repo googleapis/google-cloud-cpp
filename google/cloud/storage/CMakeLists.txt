@@ -109,8 +109,6 @@ add_library(storage_client
             internal/curl_request.cc
             internal/curl_request_builder.h
             internal/curl_request_builder.cc
-            internal/curl_resumable_streambuf.h
-            internal/curl_resumable_streambuf.cc
             internal/curl_wrappers.h
             internal/curl_wrappers.cc
             internal/curl_client.h
@@ -324,7 +322,6 @@ if (BUILD_TESTING)
         internal/curl_client_test.cc
         internal/curl_handle_test.cc
         internal/curl_resumable_upload_session_test.cc
-        internal/curl_resumable_streambuf_test.cc
         internal/curl_wrappers_locking_already_present_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_locking_disabled_test.cc

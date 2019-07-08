@@ -66,40 +66,6 @@ TEST_F(WriteObjectTest, WriteObject) {
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, CreateResumableSession(_))
-      .WillOnce(Invoke([&text](
-                           internal::ResumableUploadRequest const& request) {
-        EXPECT_EQ("test-bucket-name", request.bucket_name());
-        EXPECT_EQ("test-object-name", request.object_name());
-
-        auto mock = make_unique<testing::MockResumableUploadSession>();
-        using internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-        EXPECT_CALL(*mock, UploadChunk(_))
-            .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
-        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-            .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
-                "fake-url", 0, text, ResumableUploadResponse::kDone})));
-
-        return make_status_or(
-            std::unique_ptr<internal::ResumableUploadSession>(std::move(mock)));
-      }));
-
-  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
-  stream << "Hello World!";
-  stream.Close();
-  ObjectMetadata actual = stream.metadata().value();
-  EXPECT_EQ(expected, actual);
-}
-
-TEST_F(WriteObjectTest, WriteObjectSessionRetries) {
-  std::string text = R"""({
-      "name": "test-bucket-name/test-object-name/1"
-})""";
-  auto expected = internal::ObjectMetadataParser::FromString(text).value();
-
-  EXPECT_CALL(*mock, CreateResumableSession(_))
       .WillOnce(
           Invoke([&text](internal::ResumableUploadRequest const& request) {
             EXPECT_EQ("test-bucket-name", request.bucket_name());

@@ -33,6 +33,22 @@ ObjectReadStream CreateReader() {
   return ObjectReadStream(std::move(buf));
 }
 
+ObjectWriteStream CreateWriter() {
+  auto session = google::cloud::internal::make_unique<
+      internal::ResumableUploadSessionError>(
+      Status(StatusCode::kNotFound, "test-message"));
+
+  auto validator =
+      google::cloud::internal::make_unique<internal::NullHashValidator>();
+
+  ObjectWriteStream writer(
+      google::cloud::internal::make_unique<internal::ObjectWriteStreambuf>(
+          std::move(session), 0, std::move(validator)));
+  writer.setstate(std::ios::badbit | std::ios::eofbit);
+  writer.Close();
+  return writer;
+}
+
 TEST(ObjectStream, ReadMoveConstructor) {
   ObjectReadStream reader = CreateReader();
   reader.setstate(std::ios::badbit | std::ios::eofbit);
@@ -66,11 +82,7 @@ TEST(ObjectStream, ReadMoveAssignment) {
 }
 
 TEST(ObjectStream, WriteMoveConstructor) {
-  ObjectWriteStream writer(
-      google::cloud::internal::make_unique<internal::ObjectWriteErrorStreambuf>(
-          Status(StatusCode::kNotFound, "test-message")));
-  writer.setstate(std::ios::badbit | std::ios::eofbit);
-  writer.Close();
+  ObjectWriteStream writer = CreateWriter();
   EXPECT_EQ(StatusCode::kNotFound, writer.metadata().status().code());
   EXPECT_NE(nullptr, writer.rdbuf());
 
@@ -84,11 +96,7 @@ TEST(ObjectStream, WriteMoveConstructor) {
 }
 
 TEST(ObjectStream, WriteMoveAssignment) {
-  ObjectWriteStream writer(
-      google::cloud::internal::make_unique<internal::ObjectWriteErrorStreambuf>(
-          Status(StatusCode::kNotFound, "test-message")));
-  writer.setstate(std::ios::badbit | std::ios::eofbit);
-  writer.Close();
+  ObjectWriteStream writer = CreateWriter();
   EXPECT_EQ(StatusCode::kNotFound, writer.metadata().status().code());
   EXPECT_NE(nullptr, writer.rdbuf());
 
