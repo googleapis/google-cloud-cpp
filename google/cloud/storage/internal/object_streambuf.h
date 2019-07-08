@@ -93,7 +93,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
  public:
   ObjectWriteStreambuf() = default;
 
-  explicit ObjectWriteStreambuf(
+  ObjectWriteStreambuf(
       std::unique_ptr<ResumableUploadSession> upload_session,
       std::size_t max_buffer_size,
       std::unique_ptr<HashValidator> hash_validator);
