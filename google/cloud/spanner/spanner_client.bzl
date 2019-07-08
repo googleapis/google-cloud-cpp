@@ -31,6 +31,7 @@ spanner_client_hdrs = [
     "internal/tuple_utils.h",
     "retry_policy.h",
     "row.h",
+    "row_parser.h",
     "sql_statement.h",
     "timestamp.h",
     "value.h",
