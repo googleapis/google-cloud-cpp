@@ -134,14 +134,15 @@ TEST(Value, BasicSemantics) {
            9223372036L    // near the limit of 64-bit/ns system_clock
        }) {
     auto tp = std::chrono::system_clock::from_time_t(t);
-    for (auto micros : {-1, 0, 1}) {
-      auto ts = tp + std::chrono::microseconds(micros);
-      SCOPED_TRACE("Testing: std::chrono::system_clock::time_point " +
+    for (auto nanos : {-1, 0, 1}) {
+      auto ts = std::chrono::time_point_cast<Timestamp::duration>(tp) +
+                std::chrono::nanoseconds(nanos);
+      SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
                    internal::TimestampToString(ts));
       TestBasicSemantics(ts);
-      std::vector<std::chrono::system_clock::time_point> v(5, ts);
+      std::vector<Timestamp> v(5, ts);
       TestBasicSemantics(v);
-      std::vector<optional<std::chrono::system_clock::time_point>> ov(5, ts);
+      std::vector<optional<Timestamp>> ov(5, ts);
       ov.resize(10);
       TestBasicSemantics(ov);
     }
@@ -488,8 +489,9 @@ TEST(Value, ProtoConversionTimestamp) {
            9223372036L    // near the limit of 64-bit/ns system_clock
        }) {
     auto tp = std::chrono::system_clock::from_time_t(t);
-    for (auto micros : {-1, 0, 1}) {
-      auto ts = tp + std::chrono::microseconds(micros);
+    for (auto nanos : {-1, 0, 1}) {
+      auto ts = std::chrono::time_point_cast<Timestamp::duration>(tp) +
+                std::chrono::nanoseconds(nanos);
       Value const v(ts);
       auto const p = internal::ToProto(v);
       EXPECT_EQ(v, internal::FromProto(p.first, p.second));
@@ -667,27 +669,26 @@ TEST(Value, GetBadInt) {
 }
 
 TEST(Value, GetBadTimestamp) {
-  using time_point = std::chrono::system_clock::time_point;
-  Value v(time_point{});
+  Value v(Timestamp{});
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<time_point>());
-  EXPECT_FALSE(v.get<time_point>().ok());
+  EXPECT_TRUE(v.is<Timestamp>());
+  EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<time_point>());
-  EXPECT_FALSE(v.get<time_point>().ok());
+  EXPECT_TRUE(v.is<Timestamp>());
+  EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<time_point>());
-  EXPECT_FALSE(v.get<time_point>().ok());
+  EXPECT_TRUE(v.is<Timestamp>());
+  EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<time_point>());
-  EXPECT_FALSE(v.get<time_point>().ok());
+  EXPECT_TRUE(v.is<Timestamp>());
+  EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<time_point>());
-  EXPECT_FALSE(v.get<time_point>().ok());
+  EXPECT_TRUE(v.is<Timestamp>());
+  EXPECT_FALSE(v.get<Timestamp>().ok());
 }
 
 TEST(Value, GetBadDate) {

@@ -140,7 +140,7 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
   return t;
 }
 
-google::spanner::v1::Type Value::MakeTypeProto(time_point) {
+google::spanner::v1::Type Value::MakeTypeProto(Timestamp) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::TIMESTAMP);
   return t;
@@ -194,7 +194,7 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
   return v;
 }
 
-google::protobuf::Value Value::MakeValueProto(time_point ts) {
+google::protobuf::Value Value::MakeValueProto(Timestamp ts) {
   google::protobuf::Value v;
   v.set_string_value(internal::TimestampToString(ts));
   return v;
@@ -274,9 +274,9 @@ StatusOr<std::string> Value::GetValue(std::string const&,
   return pv.string_value();
 }
 
-StatusOr<std::chrono::system_clock::time_point> Value::GetValue(
-    time_point, google::protobuf::Value const& pv,
-    google::spanner::v1::Type const&) {
+StatusOr<Timestamp> Value::GetValue(Timestamp,
+                                    google::protobuf::Value const& pv,
+                                    google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing TIMESTAMP");
   }

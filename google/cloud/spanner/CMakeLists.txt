@@ -51,6 +51,7 @@ add_library(spanner_client
             row.h
             sql_statement.cc
             sql_statement.h
+            timestamp.h
             value.cc
             value.h
             version.cc

@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/time.h"
 #include <gmock/gmock.h>
 #include <chrono>
+#include <ctime>
 
 namespace google {
 namespace cloud {
@@ -23,270 +24,291 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
-using Duration = google::protobuf::Duration;
-using Timestamp = google::protobuf::Timestamp;
-using microseconds = std::chrono::microseconds;
-using nanoseconds = std::chrono::nanoseconds;
-using system_clock = std::chrono::system_clock;
-using time_point = system_clock::time_point;
+Timestamp FromTimeT(std::time_t t) {
+  return std::chrono::time_point_cast<Timestamp::duration>(
+      std::chrono::system_clock::from_time_t(t));
+}
 
 TEST(Duration, ToProto) {
-  Duration d;
+  google::protobuf::Duration d;
 
-  d = ToProto(nanoseconds(-1234567890));
+  d = ToProto(std::chrono::nanoseconds(-1234567890));
   EXPECT_EQ(-1, d.seconds());
   EXPECT_EQ(-234567890, d.nanos());
 
-  d = ToProto(nanoseconds(-1000000001));
+  d = ToProto(std::chrono::nanoseconds(-1000000001));
   EXPECT_EQ(-1, d.seconds());
   EXPECT_EQ(-1, d.nanos());
 
-  d = ToProto(nanoseconds(-1000000000));
+  d = ToProto(std::chrono::nanoseconds(-1000000000));
   EXPECT_EQ(-1, d.seconds());
   EXPECT_EQ(0, d.nanos());
 
-  d = ToProto(nanoseconds(-999999999));
+  d = ToProto(std::chrono::nanoseconds(-999999999));
   EXPECT_EQ(0, d.seconds());
   EXPECT_EQ(-999999999, d.nanos());
 
-  d = ToProto(nanoseconds(-1));
+  d = ToProto(std::chrono::nanoseconds(-1));
   EXPECT_EQ(0, d.seconds());
   EXPECT_EQ(-1, d.nanos());
 
-  d = ToProto(nanoseconds(0));
+  d = ToProto(std::chrono::nanoseconds(0));
   EXPECT_EQ(0, d.seconds());
   EXPECT_EQ(0, d.nanos());
 
-  d = ToProto(nanoseconds(1));
+  d = ToProto(std::chrono::nanoseconds(1));
   EXPECT_EQ(0, d.seconds());
   EXPECT_EQ(1, d.nanos());
 
-  d = ToProto(nanoseconds(999999999));
+  d = ToProto(std::chrono::nanoseconds(999999999));
   EXPECT_EQ(0, d.seconds());
   EXPECT_EQ(999999999, d.nanos());
 
-  d = ToProto(nanoseconds(1000000000));
+  d = ToProto(std::chrono::nanoseconds(1000000000));
   EXPECT_EQ(1, d.seconds());
   EXPECT_EQ(0, d.nanos());
 
-  d = ToProto(nanoseconds(1000000001));
+  d = ToProto(std::chrono::nanoseconds(1000000001));
   EXPECT_EQ(1, d.seconds());
   EXPECT_EQ(1, d.nanos());
 
-  d = ToProto(nanoseconds(1234567890));
+  d = ToProto(std::chrono::nanoseconds(1234567890));
   EXPECT_EQ(1, d.seconds());
   EXPECT_EQ(234567890, d.nanos());
 }
 
 TEST(Duration, FromProto) {
-  Duration d;
+  google::protobuf::Duration d;
 
   d.set_seconds(-1);
   d.set_nanos(-234567890);
-  EXPECT_EQ(nanoseconds(-1234567890), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(-1234567890), FromProto(d));
 
   d.set_seconds(-1);
   d.set_nanos(-1);
-  EXPECT_EQ(nanoseconds(-1000000001), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(-1000000001), FromProto(d));
 
   d.set_seconds(-1);
   d.set_nanos(0);
-  EXPECT_EQ(nanoseconds(-1000000000), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(-1000000000), FromProto(d));
 
   d.set_seconds(0);
   d.set_nanos(-999999999);
-  EXPECT_EQ(nanoseconds(-999999999), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(-999999999), FromProto(d));
 
   d.set_seconds(0);
   d.set_nanos(-1);
-  EXPECT_EQ(nanoseconds(-1), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(-1), FromProto(d));
 
   d.set_seconds(0);
   d.set_nanos(0);
-  EXPECT_EQ(nanoseconds(0), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(0), FromProto(d));
 
   d.set_seconds(0);
   d.set_nanos(1);
-  EXPECT_EQ(nanoseconds(1), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(1), FromProto(d));
 
   d.set_seconds(0);
   d.set_nanos(999999999);
-  EXPECT_EQ(nanoseconds(999999999), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(999999999), FromProto(d));
 
   d.set_seconds(1);
   d.set_nanos(0);
-  EXPECT_EQ(nanoseconds(1000000000), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(1000000000), FromProto(d));
 
   d.set_seconds(1);
   d.set_nanos(1);
-  EXPECT_EQ(nanoseconds(1000000001), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(1000000001), FromProto(d));
 
   d.set_seconds(1);
   d.set_nanos(234567890);
-  EXPECT_EQ(nanoseconds(1234567890), FromProto(d));
+  EXPECT_EQ(std::chrono::nanoseconds(1234567890), FromProto(d));
 }
 
 TEST(Time, ToProto) {
-  Timestamp ts;
+  google::protobuf::Timestamp ts;
 
-  ts = ToProto(system_clock::from_time_t(-1) - microseconds(999999));
+  ts = ToProto(FromTimeT(-1) - std::chrono::nanoseconds(999999999));
   EXPECT_EQ(-2, ts.seconds());
-  EXPECT_EQ(1000, ts.nanos());
+  EXPECT_EQ(1, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(-1) - microseconds(1));
+  ts = ToProto(FromTimeT(-1) - std::chrono::nanoseconds(1));
   EXPECT_EQ(-2, ts.seconds());
-  EXPECT_EQ(999999000, ts.nanos());
+  EXPECT_EQ(999999999, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(-1));
+  ts = ToProto(FromTimeT(-1));
   EXPECT_EQ(-1, ts.seconds());
   EXPECT_EQ(0, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(0) - microseconds(999999));
+  ts = ToProto(FromTimeT(0) - std::chrono::nanoseconds(999999999));
   EXPECT_EQ(-1, ts.seconds());
-  EXPECT_EQ(1000, ts.nanos());
+  EXPECT_EQ(1, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(0) - microseconds(1));
+  ts = ToProto(FromTimeT(0) - std::chrono::nanoseconds(1));
   EXPECT_EQ(-1, ts.seconds());
-  EXPECT_EQ(999999000, ts.nanos());
+  EXPECT_EQ(999999999, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(0));
+  ts = ToProto(FromTimeT(0));
   EXPECT_EQ(0, ts.seconds());
   EXPECT_EQ(0, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(0) + microseconds(1));
+  ts = ToProto(FromTimeT(0) + std::chrono::nanoseconds(1));
   EXPECT_EQ(0, ts.seconds());
-  EXPECT_EQ(1000, ts.nanos());
+  EXPECT_EQ(1, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(0) + microseconds(999999));
+  ts = ToProto(FromTimeT(0) + std::chrono::nanoseconds(999999999));
   EXPECT_EQ(0, ts.seconds());
-  EXPECT_EQ(999999000, ts.nanos());
+  EXPECT_EQ(999999999, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(1));
+  ts = ToProto(FromTimeT(1));
   EXPECT_EQ(1, ts.seconds());
   EXPECT_EQ(0, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(1) + microseconds(1));
+  ts = ToProto(FromTimeT(1) + std::chrono::nanoseconds(1));
   EXPECT_EQ(1, ts.seconds());
-  EXPECT_EQ(1000, ts.nanos());
+  EXPECT_EQ(1, ts.nanos());
 
-  ts = ToProto(system_clock::from_time_t(1) + microseconds(999999));
+  ts = ToProto(FromTimeT(1) + std::chrono::nanoseconds(999999999));
   EXPECT_EQ(1, ts.seconds());
-  EXPECT_EQ(999999000, ts.nanos());
+  EXPECT_EQ(999999999, ts.nanos());
 }
 
 TEST(Time, FromProto) {
-  Timestamp ts;
+  google::protobuf::Timestamp ts;
 
   ts.set_seconds(-2);
-  ts.set_nanos(1000);
-  EXPECT_EQ(system_clock::from_time_t(-1) - microseconds(999999),
-            FromProto(ts));
+  ts.set_nanos(1);
+  EXPECT_EQ(FromTimeT(-1) - std::chrono::nanoseconds(999999999), FromProto(ts));
 
   ts.set_seconds(-2);
-  ts.set_nanos(999999000);
-  EXPECT_EQ(system_clock::from_time_t(-1) - microseconds(1), FromProto(ts));
+  ts.set_nanos(999999999);
+  EXPECT_EQ(FromTimeT(-1) - std::chrono::nanoseconds(1), FromProto(ts));
 
   ts.set_seconds(-1);
   ts.set_nanos(0);
-  EXPECT_EQ(system_clock::from_time_t(-1), FromProto(ts));
+  EXPECT_EQ(FromTimeT(-1), FromProto(ts));
 
   ts.set_seconds(-1);
-  ts.set_nanos(1000);
-  EXPECT_EQ(system_clock::from_time_t(0) - microseconds(999999), FromProto(ts));
+  ts.set_nanos(1);
+  EXPECT_EQ(FromTimeT(0) - std::chrono::nanoseconds(999999999), FromProto(ts));
 
   ts.set_seconds(-1);
-  ts.set_nanos(999999000);
-  EXPECT_EQ(system_clock::from_time_t(0) - microseconds(1), FromProto(ts));
+  ts.set_nanos(999999999);
+  EXPECT_EQ(FromTimeT(0) - std::chrono::nanoseconds(1), FromProto(ts));
 
   ts.set_seconds(0);
   ts.set_nanos(0);
-  EXPECT_EQ(system_clock::from_time_t(0), FromProto(ts));
+  EXPECT_EQ(FromTimeT(0), FromProto(ts));
 
   ts.set_seconds(0);
-  ts.set_nanos(1000);
-  EXPECT_EQ(system_clock::from_time_t(0) + microseconds(1), FromProto(ts));
+  ts.set_nanos(1);
+  EXPECT_EQ(FromTimeT(0) + std::chrono::nanoseconds(1), FromProto(ts));
 
   ts.set_seconds(0);
-  ts.set_nanos(999999000);
-  EXPECT_EQ(system_clock::from_time_t(0) + microseconds(999999), FromProto(ts));
+  ts.set_nanos(999999999);
+  EXPECT_EQ(FromTimeT(0) + std::chrono::nanoseconds(999999999), FromProto(ts));
 
   ts.set_seconds(1);
   ts.set_nanos(0);
-  EXPECT_EQ(system_clock::from_time_t(1), FromProto(ts));
+  EXPECT_EQ(FromTimeT(1), FromProto(ts));
 
   ts.set_seconds(1);
-  ts.set_nanos(1000);
-  EXPECT_EQ(system_clock::from_time_t(1) + microseconds(1), FromProto(ts));
+  ts.set_nanos(1);
+  EXPECT_EQ(FromTimeT(1) + std::chrono::nanoseconds(1), FromProto(ts));
 
   ts.set_seconds(1);
-  ts.set_nanos(999999000);
-  EXPECT_EQ(system_clock::from_time_t(1) + microseconds(999999), FromProto(ts));
+  ts.set_nanos(999999999);
+  EXPECT_EQ(FromTimeT(1) + std::chrono::nanoseconds(999999999), FromProto(ts));
 }
 
 TEST(Time, TimestampToString) {
-  time_point tp = system_clock::from_time_t(1561135942);
-  EXPECT_EQ("2019-06-21T16:52:22Z", TimestampToString(tp));
-  tp += microseconds(6);
-  EXPECT_EQ("2019-06-21T16:52:22.000006Z", TimestampToString(tp));
-  tp += microseconds(50);
-  EXPECT_EQ("2019-06-21T16:52:22.000056Z", TimestampToString(tp));
-  tp += microseconds(400);
-  EXPECT_EQ("2019-06-21T16:52:22.000456Z", TimestampToString(tp));
-  tp += microseconds(3000);
-  EXPECT_EQ("2019-06-21T16:52:22.003456Z", TimestampToString(tp));
-  tp += microseconds(20000);
-  EXPECT_EQ("2019-06-21T16:52:22.023456Z", TimestampToString(tp));
-  tp += microseconds(100000);
-  EXPECT_EQ("2019-06-21T16:52:22.123456Z", TimestampToString(tp));
-  tp -= microseconds(6);
-  EXPECT_EQ("2019-06-21T16:52:22.12345Z", TimestampToString(tp));
-  tp -= microseconds(50);
-  EXPECT_EQ("2019-06-21T16:52:22.1234Z", TimestampToString(tp));
-  tp -= microseconds(400);
-  EXPECT_EQ("2019-06-21T16:52:22.123Z", TimestampToString(tp));
-  tp -= microseconds(3000);
-  EXPECT_EQ("2019-06-21T16:52:22.12Z", TimestampToString(tp));
-  tp -= microseconds(20000);
-  EXPECT_EQ("2019-06-21T16:52:22.1Z", TimestampToString(tp));
-  tp -= microseconds(100000);
-  EXPECT_EQ("2019-06-21T16:52:22Z", TimestampToString(tp));
+  Timestamp ts = FromTimeT(1561135942);
+  EXPECT_EQ("2019-06-21T16:52:22Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(9);
+  EXPECT_EQ("2019-06-21T16:52:22.000000009Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(80);
+  EXPECT_EQ("2019-06-21T16:52:22.000000089Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(700);
+  EXPECT_EQ("2019-06-21T16:52:22.000000789Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(6000);
+  EXPECT_EQ("2019-06-21T16:52:22.000006789Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(50000);
+  EXPECT_EQ("2019-06-21T16:52:22.000056789Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(400000);
+  EXPECT_EQ("2019-06-21T16:52:22.000456789Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(3000000);
+  EXPECT_EQ("2019-06-21T16:52:22.003456789Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(20000000);
+  EXPECT_EQ("2019-06-21T16:52:22.023456789Z", TimestampToString(ts));
+  ts += std::chrono::nanoseconds(100000000);
+  EXPECT_EQ("2019-06-21T16:52:22.123456789Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(9);
+  EXPECT_EQ("2019-06-21T16:52:22.12345678Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(80);
+  EXPECT_EQ("2019-06-21T16:52:22.1234567Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(700);
+  EXPECT_EQ("2019-06-21T16:52:22.123456Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(6000);
+  EXPECT_EQ("2019-06-21T16:52:22.12345Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(50000);
+  EXPECT_EQ("2019-06-21T16:52:22.1234Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(400000);
+  EXPECT_EQ("2019-06-21T16:52:22.123Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(3000000);
+  EXPECT_EQ("2019-06-21T16:52:22.12Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(20000000);
+  EXPECT_EQ("2019-06-21T16:52:22.1Z", TimestampToString(ts));
+  ts -= std::chrono::nanoseconds(100000000);
+  EXPECT_EQ("2019-06-21T16:52:22Z", TimestampToString(ts));
 }
 
 TEST(Time, TimestampToStringLimit) {
-  time_point tp = system_clock::from_time_t(-9223372036L);
-  EXPECT_EQ("1677-09-21T00:12:44Z", TimestampToString(tp));
+  Timestamp ts = FromTimeT(-9223372036L);
+  EXPECT_EQ("1677-09-21T00:12:44Z", TimestampToString(ts));
 
-  tp = system_clock::from_time_t(9223372036L) + microseconds(775807);
-  EXPECT_EQ("2262-04-11T23:47:16.775807Z", TimestampToString(tp));
+  ts = FromTimeT(9223372036L) + std::chrono::nanoseconds(854775807);
+  EXPECT_EQ("2262-04-11T23:47:16.854775807Z", TimestampToString(ts));
 }
 
 TEST(Time, TimestampFromString) {
-  time_point tp = system_clock::from_time_t(1561135942);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22Z").value());
-  tp += microseconds(6);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.000006Z").value());
-  tp += microseconds(50);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.000056Z").value());
-  tp += microseconds(400);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.000456Z").value());
-  tp += microseconds(3000);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.003456Z").value());
-  tp += microseconds(20000);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.023456Z").value());
-  tp += microseconds(100000);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.123456Z").value());
-  tp -= microseconds(6);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.12345Z").value());
-  tp -= microseconds(50);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.1234Z").value());
-  tp -= microseconds(400);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.123Z").value());
-  tp -= microseconds(3000);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.12Z").value());
-  tp -= microseconds(20000);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22.1Z").value());
-  tp -= microseconds(100000);
-  EXPECT_EQ(tp, TimestampFromString("2019-06-21T16:52:22Z").value());
+  Timestamp ts = FromTimeT(1561135942);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22Z").value());
+  ts += std::chrono::nanoseconds(9);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.000000009Z").value());
+  ts += std::chrono::nanoseconds(80);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.000000089Z").value());
+  ts += std::chrono::nanoseconds(700);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.000000789Z").value());
+  ts += std::chrono::nanoseconds(6000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.000006789Z").value());
+  ts += std::chrono::nanoseconds(50000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.000056789Z").value());
+  ts += std::chrono::nanoseconds(400000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.000456789Z").value());
+  ts += std::chrono::nanoseconds(3000000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.003456789Z").value());
+  ts += std::chrono::nanoseconds(20000000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.023456789Z").value());
+  ts += std::chrono::nanoseconds(100000000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.123456789Z").value());
+  ts -= std::chrono::nanoseconds(9);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.12345678Z").value());
+  ts -= std::chrono::nanoseconds(80);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.1234567Z").value());
+  ts -= std::chrono::nanoseconds(700);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.123456Z").value());
+  ts -= std::chrono::nanoseconds(6000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.12345Z").value());
+  ts -= std::chrono::nanoseconds(50000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.1234Z").value());
+  ts -= std::chrono::nanoseconds(400000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.123Z").value());
+  ts -= std::chrono::nanoseconds(3000000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.12Z").value());
+  ts -= std::chrono::nanoseconds(20000000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22.1Z").value());
+  ts -= std::chrono::nanoseconds(100000000);
+  EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22Z").value());
 }
 
 TEST(Time, TimestampFromStringFailure) {

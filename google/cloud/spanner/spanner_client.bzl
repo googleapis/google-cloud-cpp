@@ -32,6 +32,7 @@ spanner_client_hdrs = [
     "retry_policy.h",
     "row.h",
     "sql_statement.h",
+    "timestamp.h",
     "value.h",
     "version.h",
     "version_info.h",
