@@ -21,6 +21,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <array>
+#include <functional>
 #include <tuple>
 #include <utility>
 
@@ -30,42 +31,66 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * A RowParser takes a range of `Value` objects and a list of types, and it
- * parses the values into a range of `Row` objects with the specified types.
+ * A functor that consumes and yields a `Value` object from some source.
  *
- * Callers should create instances of this class with the `MakeRowParser()`
- * function (defined below), which takes an input range and a list of types
- * that correspond to each row. The returned `RowParser` can be iterated,
- * producing a range of `StatusOr<Row<Ts...>>`. The `StatusOr` is needed in
- * case the input `Value` objects cannot be parsed to the requested type.
+ * The returned `Value` is wrapped in an `optional` and a `StatusOr`. If there
+ * was an error getting the `Value` to return, a non-OK `Status` should be
+ * returned. If there was no error, but the source is empty, an OK `Status`
+ * with an empty `optional<Value>` should be returned.
  *
- * Example:
+ * @par Example
  *
- *     std::vector<Value> const values = {
- *         Value(true), Value(0),  // Row 0
- *         Value(true), Value(1),  // Row 1
- *         Value(true), Value(2),  // Row 2
- *         Value(true), Value(3),  // Row 3
- *     };
- *     for (auto row : MakeRowParser<bool, std::int64_t>(values)) {
- *       if (!row) {
- *         // handle error
- *       }
- *       bool b = row->get<0>();
- *       std::int64_t i = row->get<1>();
- *     }
+ * The following example shows how to create a `ValueSource` from a vector:
  *
- * @tparam ValueIterator the iterate for iterating `Value` objects.
- * @tparam Ts... the column types for each `Row`
+ * @code
+ * ValueSource MakeValueSource(std::vector<Value> const& v) {
+ *   std::size_t i = 0;
+ *   return [=]() mutable -> StatusOr<optional<Value>> {
+ *       if (i == v.size()) return optional<Value>{};
+ *       return {v[i++]};
+ *   };
+ * }
+ * @endcode
  */
-template <typename ValueIterator, typename... Ts>
+using ValueSource = std::function<StatusOr<optional<Value>>()>;
+
+/**
+ * A `RowParser` converts the given `ValueSource` into a single-pass iterable
+ * range of `Row<Ts...>` objects.
+ *
+ * Instances of this class are typically obtained from the
+ * `ResultSet::rows<Ts...>` member function. Callers should iterate `RowParser`
+ * using a range-for loop as follows.
+ *
+ * @par Example
+ *
+ * @code
+ * ValueSource vs = ...
+ * RowParser<bool, std::int64_t> rp(std::move(vs));
+ * for (auto row : rp) {
+ *   if (!row) {
+ *     // handle error
+ *     break;
+ *   }
+ *   bool b = row->get<0>();
+ *   std::int64_t i = row->get<1>();
+ *
+ *   // Using C++17 structured bindings
+ *   auto [b2, i2] = row->get();
+ * }
+ * @endcode
+ *
+ * @tparam T the C++ type of the first column in each `Row` (required)
+ * @tparam Ts... the types of the remaining columns in each `Row` (optional)
+ */
+template <typename T, typename... Ts>
 class RowParser {
  public:
   /// A single-pass input iterator that coalesces multiple `Value` results into
   /// a `Row<Ts...>`.
   class iterator {
    public:
-    using RowType = Row<Ts...>;
+    using RowType = Row<T, Ts...>;
     using iterator_category = std::input_iterator_tag;
     using value_type = StatusOr<RowType>;
     using difference_type = std::ptrdiff_t;
@@ -76,17 +101,28 @@ class RowParser {
     pointer operator->() { return &curr_; }
 
     iterator& operator++() {
-      curr_ = value_type{};
-      if (it_ == end_) return *this;
+      if (!curr_) {
+        value_source_ = nullptr;
+        return *this;
+      }
       std::array<Value, RowType::size()> values;
-      for (auto& e : values) {
-        if (it_ == end_) {
+      for (std::size_t i = 0; i < values.size(); ++i) {
+        StatusOr<optional<Value>> v = value_source_();
+        if (!v) {
+          curr_ = std::move(v).status();
+          return *this;
+        }
+        if (!*v) {
+          if (i == 0) {  // We've successfully reached the end.
+            value_source_ = nullptr;
+            return *this;
+          }
           curr_ = Status(StatusCode::kUnknown, "incomplete row");
           return *this;
         }
-        e = *it_++;
+        values[i] = **std::move(v);
       }
-      curr_ = ParseRow<Ts...>(values);
+      curr_ = ParseRow<T, Ts...>(values);
       return *this;
     }
 
@@ -97,8 +133,9 @@ class RowParser {
     }
 
     friend bool operator==(iterator const& a, iterator const& b) {
-      return std::tie(a.curr_, a.it_, a.end_) ==
-             std::tie(b.curr_, b.it_, b.end_);
+      // Input iterators may only be compared to (copies of) themselves and
+      // end. See https://en.cppreference.com/w/cpp/named_req/InputIterator
+      return !a.value_source_ == !b.value_source_;  // Both end, or both not end
     }
     friend bool operator!=(iterator const& a, iterator const& b) {
       return !(a == b);
@@ -106,53 +143,35 @@ class RowParser {
 
    private:
     friend RowParser;
-    explicit iterator(ValueIterator begin, ValueIterator end)
-        : it_(begin), end_(end) {
-      operator++();  // Parse the first row
+    explicit iterator(ValueSource f)
+        : value_source_(std::move(f)), curr_(RowType{}) {
+      if (value_source_) {
+        operator++();  // Parse the first row
+      }
     }
 
+    ValueSource value_source_;  // nullptr means end
     value_type curr_;
-    ValueIterator it_;
-    ValueIterator end_;
   };
 
-  /// Constructs a `RowParser` for the given range of `Value`s.
-  template <typename Range>
-  explicit RowParser(Range&& range)
-      : it_(std::begin(std::forward<Range>(range))),
-        end_(std::end(std::forward<Range>(range))) {}
+  /// Constructs a `RowParser` for the given `ValueSource`.
+  explicit RowParser(ValueSource vs) : value_source_(std::move(vs)) {}
 
-  /// Copy and assignable.
+  // Copy and assignable.
   RowParser(RowParser const&) = default;
   RowParser& operator=(RowParser const&) = default;
   RowParser(RowParser&&) = default;
   RowParser& operator=(RowParser&&) = default;
 
   /// Returns the begin iterator.
-  iterator begin() { return iterator(it_, end_); }
+  iterator begin() { return iterator(value_source_); }
 
   /// Returns the end iterator.
-  iterator end() { return iterator(end_, end_); }
+  iterator end() { return iterator(nullptr); }
 
  private:
-  ValueIterator it_;
-  ValueIterator end_;
+  ValueSource value_source_;
 };
-
-/**
- * Factory function to create a `RowParser` for the given range of `Value`s.
- *
- * See the `RowParser` documentation above for an example usage.
- *
- * @tparam Ts... the column types for each `Row`.
- * @tparam Range the input range
- */
-template <typename... Ts, typename Range>
-auto MakeRowParser(Range&& range)
-    -> RowParser<decltype(std::begin(std::forward<Range>(range))), Ts...> {
-  return RowParser<decltype(std::begin(std::forward<Range>(range))), Ts...>(
-      std::forward<Range>(range));
-}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

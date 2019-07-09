@@ -25,15 +25,20 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-TEST(RowParser, SuccessEmptyInput) {
-  std::vector<Value> const values = {};
-  auto rp = MakeRowParser(values);
-  auto it = rp.begin();
-  auto end = rp.end();
-  EXPECT_EQ(it, end);
+ValueSource MakeValueSource(std::vector<Value> const& v) {
+  std::size_t i = 0;
+  return [=]() mutable -> StatusOr<optional<Value>> {
+    if (i == v.size()) return optional<Value>{};
+    return {v[i++]};
+  };
 }
 
-TEST(RowParser, SuccessEmptyInputWithRowTypes) {
+template <typename... Ts>
+RowParser<Ts...> MakeRowParser(std::vector<Value> const& v) {
+  return RowParser<Ts...>(MakeValueSource(v));
+}
+
+TEST(RowParser, SuccessEmpty) {
   std::vector<Value> const values = {};
   auto rp = MakeRowParser<std::int64_t>(values);
   auto it = rp.begin();
@@ -119,12 +124,6 @@ TEST(RowParser, FailOneRow) {
   EXPECT_THAT(it->status().message(), testing::HasSubstr("wrong type"));
   ++it;
 
-  // Row 3 (the next row succeeds to parse)
-  EXPECT_NE(it, end);
-  EXPECT_TRUE(it->ok());
-  EXPECT_EQ(MakeRow(false, 3), **it);
-  ++it;
-
   EXPECT_EQ(it, end);  // Done
 }
 
@@ -136,13 +135,16 @@ TEST(RowParser, FailAllRows) {
       Value(true),  Value(2),  // Row 2
       Value(false), Value(3),  // Row 3
   };
-  int failed = 0;
-  for (auto row : MakeRowParser<std::string>(values)) {
-    EXPECT_FALSE(row.ok());
-    EXPECT_THAT(row.status().message(), testing::HasSubstr("wrong type"));
-    ++failed;
-  }
-  EXPECT_EQ(failed, values.size());
+  auto rp = MakeRowParser<std::string>(values);
+  auto it = rp.begin();
+  auto end = rp.end();
+
+  EXPECT_NE(it, end);
+  EXPECT_FALSE(it->ok());  // Error
+  EXPECT_THAT(it->status().message(), testing::HasSubstr("wrong type"));
+  ++it;
+
+  EXPECT_EQ(it, end);
 }
 
 TEST(RowParser, InputIteratorTraits) {
