@@ -54,12 +54,11 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.21.0",
+            strip_prefix = "grpc-5bf40ae30e385b3bd378c23aefe81a89e6e7d1ad",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.21.0.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.21.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/5bf40ae30e385b3bd378c23aefe81a89e6e7d1ad.tar.gz",
             ],
-            sha256 = "8da7f32cc8978010d2060d740362748441b81a34e5425e108596d3fcd63a97f2",
+            sha256 = "bfcf2733ee48abdc6d665c94a523a0092672754ff988490de585dd9899046a80",
         )
 
     # We need libcurl for the Google Cloud Storage client.
