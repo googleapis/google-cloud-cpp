@@ -50,7 +50,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     throw Usage{"get-bucket-iam-policy <bucket_name>"};
   }
   auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket iam policy] [START storage_view_bucket_iam_members]
+  //! [get bucket iam policy]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -64,7 +64,30 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     std::cout << "The IAM policy for bucket " << bucket_name << " is "
               << *policy << "\n";
   }
-  //! [get bucket iam policy] [END storage_view_bucket_iam_members]
+  //! [get bucket iam policy]
+  (std::move(client), bucket_name);
+}
+
+void NativeGetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"native-get-bucket-iam-policy <bucket_name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [native get bucket iam policy] [START storage_view_bucket_iam_members]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    auto policy = client.GetNativeBucketIamPolicy(bucket_name);
+
+    if (!policy) {
+      throw std::runtime_error(policy.status().message());
+    }
+
+    std::cout << "The IAM policy for bucket " << bucket_name << " is "
+              << *policy << "\n";
+  }
+  //! [native get bucket iam policy] [END storage_view_bucket_iam_members]
   (std::move(client), bucket_name);
 }
 
@@ -76,7 +99,7 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
   auto member = ConsumeArg(argc, argv);
-  //! [add bucket iam member] [START storage_add_bucket_iam_member]
+  //! [add bucket iam member]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
@@ -100,7 +123,49 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
     std::cout << "Updated IAM policy bucket " << bucket_name
               << ". The new policy is " << *updated_policy << "\n";
   }
-  //! [add bucket iam member] [END storage_add_bucket_iam_member]
+  //! [add bucket iam member]
+  (std::move(client), bucket_name, role, member);
+}
+
+void NativeAddBucketIamMember(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"native-add-bucket-iam-member <bucket_name> <role> <member>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  auto member = ConsumeArg(argc, argv);
+  //! [native add bucket iam member] [START storage_add_bucket_iam_member]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string role,
+     std::string member) {
+    auto policy = client.GetNativeBucketIamPolicy(bucket_name);
+
+    if (!policy) {
+      throw std::runtime_error(policy.status().message());
+    }
+
+    for (auto& binding : (*policy)["bindings"]) {
+      if (binding["role"] != role) {
+        continue;
+      }
+      auto& members = binding["members"];
+      if (members.find(member) == members.end()) {
+        binding["members"].emplace_back(member);
+      }
+    }
+
+    auto updated_policy = client.SetNativeBucketIamPolicy(bucket_name, *policy);
+
+    if (!updated_policy) {
+      throw std::runtime_error(updated_policy.status().message());
+    }
+
+    std::cout << "Updated IAM policy bucket " << bucket_name
+              << ". The new policy is " << *updated_policy << "\n";
+  }
+  //! [native add bucket iam member] [END storage_add_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
 }
 
@@ -112,7 +177,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto role = ConsumeArg(argc, argv);
   auto member = ConsumeArg(argc, argv);
-  //! [remove bucket iam member] [START storage_remove_bucket_iam_member]
+  //! [remove bucket iam member]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string role,
@@ -135,7 +200,51 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
     std::cout << "Updated IAM policy bucket " << bucket_name
               << ". The new policy is " << *updated_policy << "\n";
   }
-  //! [remove bucket iam member] [END storage_remove_bucket_iam_member]
+  //! [remove bucket iam member]
+  (std::move(client), bucket_name, role, member);
+}
+
+void NativeRemoveBucketIamMember(google::cloud::storage::Client client,
+                                 int& argc, char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "native-remove-bucket-iam-member <bucket_name> <role> <member>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto role = ConsumeArg(argc, argv);
+  auto member = ConsumeArg(argc, argv);
+  //! [native remove bucket iam member] [START storage_remove_bucket_iam_member]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string role,
+     std::string member) {
+    auto policy = client.GetNativeBucketIamPolicy(bucket_name);
+    if (!policy) {
+      throw std::runtime_error(policy.status().message());
+    }
+
+    google::cloud::storage::internal::nl::json updated_bindings;
+    for (auto& binding : (*policy)["bindings"]) {
+      auto& members = binding["members"];
+      if (binding["role"] == role) {
+        members.erase(member);
+      }
+      if (!members.empty()) {
+        updated_bindings.emplace_back(std::move(binding));
+      }
+    }
+    (*policy)["bindings"] = std::move(updated_bindings);
+
+    auto updated_policy = client.SetNativeBucketIamPolicy(bucket_name, *policy);
+
+    if (!updated_policy) {
+      throw std::runtime_error(updated_policy.status().message());
+    }
+
+    std::cout << "Updated IAM policy bucket " << bucket_name
+              << ". The new policy is " << *updated_policy << "\n";
+  }
+  //! [native remove bucket iam member] [END storage_remove_bucket_iam_member]
   (std::move(client), bucket_name, role, member);
 }
 
@@ -234,6 +343,43 @@ void SetBucketPublicIam(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void NativeSetBucketPublicIam(google::cloud::storage::Client client, int& argc,
+                              char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"set-bucket-public-iam <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  // [START native storage_set_bucket_public_iam]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    auto current_policy = client.GetNativeBucketIamPolicy(bucket_name);
+
+    if (!current_policy) {
+      throw std::runtime_error(current_policy.status().message());
+    }
+
+    for (auto& binding : (*current_policy)["bindings"]) {
+      if (binding["role"] != "roles/storage.objectViewer") {
+        continue;
+      }
+      auto& members = binding["members"];
+      if (members.find("allUsers") == members.end()) {
+        binding["members"].emplace_back("allUsers");
+      }
+    }
+
+    auto updated_policy =
+        client.SetNativeBucketIamPolicy(bucket_name, *current_policy);
+
+    if (!updated_policy) {
+      throw std::runtime_error(current_policy.status().message());
+    }
+  }
+  // [END native storage_set_bucket_public_iam]
+  (std::move(client), bucket_name);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -249,13 +395,17 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
+      std::function<void(google::cloud::storage::Client, int&, char* [])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-iam-policy", &GetBucketIamPolicy},
+      {"native-get-bucket-iam-policy", &NativeGetBucketIamPolicy},
       {"add-bucket-iam-member", &AddBucketIamMember},
+      {"native-add-bucket-iam-member", &NativeAddBucketIamMember},
       {"remove-bucket-iam-member", &RemoveBucketIamMember},
+      {"native-remove-bucket-iam-member", &NativeRemoveBucketIamMember},
       {"test-bucket-iam-permissions", &TestBucketIamPermissions},
       {"set-bucket-public-iam", &SetBucketPublicIam},
+      {"native-set-bucket-public-iam", &NativeSetBucketPublicIam},
   };
   for (auto&& kv : commands) {
     try {

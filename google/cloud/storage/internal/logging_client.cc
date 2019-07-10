@@ -119,9 +119,21 @@ StatusOr<IamPolicy> LoggingClient::GetBucketIamPolicy(
   return MakeCall(*client_, &RawClient::GetBucketIamPolicy, request, __func__);
 }
 
+StatusOr<internal::nl::json> LoggingClient::GetNativeBucketIamPolicy(
+    GetBucketIamPolicyRequest const& request) {
+  return MakeCall(*client_, &RawClient::GetNativeBucketIamPolicy, request,
+                  __func__);
+}
+
 StatusOr<IamPolicy> LoggingClient::SetBucketIamPolicy(
     SetBucketIamPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::SetBucketIamPolicy, request, __func__);
+}
+
+StatusOr<internal::nl::json> LoggingClient::SetNativeBucketIamPolicy(
+    SetNativeBucketIamPolicyRequest const& request) {
+  return MakeCall(*client_, &RawClient::SetNativeBucketIamPolicy, request,
+                  __func__);
 }
 
 StatusOr<TestBucketIamPermissionsResponse>

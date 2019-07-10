@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/bucket_requests.h"
+#include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include <gmock/gmock.h>
@@ -709,7 +710,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
   expected_bindings.AddMember("roles/storage.admin", "test-user-1");
   expected_bindings.AddMember("roles/storage.objectViewer", "test-user-2");
   expected_bindings.AddMember("roles/storage.objectViewer", "test-user-3");
-  IamPolicy expected{0, expected_bindings, "XYZ="};
+  google::cloud::IamPolicy expected{0, expected_bindings, "XYZ="};
 
   auto actual = ParseIamPolicyFromString(expected_payload.dump()).value();
   EXPECT_EQ(expected, actual);
@@ -717,7 +718,7 @@ TEST(BucketRequestsTest, ParseIamPolicyFromString) {
 
 TEST(ListBucketsResponseTest, ParseIamPolicyFromStringFailure) {
   std::string text("{123");
-  StatusOr<IamPolicy> actual = ParseIamPolicyFromString(text);
+  StatusOr<google::cloud::IamPolicy> actual = ParseIamPolicyFromString(text);
   EXPECT_FALSE(actual.ok());
 }
 
@@ -853,6 +854,53 @@ TEST(BucketRequestsTest, SetIamPolicy) {
   auto actual = os.str();
   EXPECT_THAT(actual, HasSubstr("my-bucket"));
   EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
+TEST(BucketRequestsTest, SetNativeIamPolicy) {
+  auto policy = IamPolicy({IamBinding("roles/storage.admin", {"test-user-1"}),
+                           IamBinding("roles/storage.objectViewer",
+                                      {"test-user-2", "test-user-3"})},
+                          "XYZ=", 1);
+
+  SetNativeBucketIamPolicyRequest request("my-bucket", policy);
+  request.set_multiple_options(UserProject("project-for-billing"));
+  EXPECT_EQ("my-bucket", request.bucket_name());
+
+  nl::json expected_payload{
+      {"kind", "storage#policy"},
+      {"version", 1},
+      {"etag", "XYZ="},
+      {"bindings",
+       {
+           // The order of these elements matters, SetBucketIamPolicyRequest
+           // generates them sorted by role. If we ever change that, we will
+           // need to change this test, and it will be a bit more difficult to
+           // write it.
+           nl::json{{"role", "roles/storage.admin"},
+                    {"members", std::vector<std::string>{"test-user-1"}}},
+           nl::json{{"role", "roles/storage.objectViewer"},
+                    {"members",
+                     std::vector<std::string>{"test-user-2", "test-user-3"}}},
+       }},
+  };
+  EXPECT_TRUE(request.HasOption<IfMatchEtag>());
+  auto actual_payload = nl::json::parse(request.json_payload());
+  EXPECT_EQ(expected_payload, actual_payload)
+      << nl::json::diff(expected_payload, actual_payload);
+  std::ostringstream os;
+  os << request;
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("my-bucket"));
+  EXPECT_THAT(actual, HasSubstr("project-for-billing"));
+}
+
+TEST(BucketRequestsTest, SetNativeIamPolicyNoEtag) {
+  auto policy = IamPolicy({IamBinding("roles/storage.admin", {"test-user-1"}),
+                           IamBinding("roles/storage.objectViewer",
+                                      {"test-user-2", "test-user-3"})});
+
+  SetNativeBucketIamPolicyRequest request("my-bucket", policy);
+  EXPECT_FALSE(request.HasOption<IfMatchEtag>());
 }
 
 TEST(BucketRequestsTest, TestIamPermissions) {

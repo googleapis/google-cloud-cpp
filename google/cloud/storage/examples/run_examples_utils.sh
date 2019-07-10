@@ -1089,6 +1089,14 @@ run_all_bucket_iam_examples() {
       "${bucket_name}" "storage.objects.list" "storage.objects.delete"
   run_example ./storage_bucket_iam_samples set-bucket-public-iam \
       "${bucket_name}"
+  run_example ./storage_bucket_iam_samples native-get-bucket-iam-policy \
+      "${bucket_name}"
+  run_example ./storage_bucket_iam_samples native-add-bucket-iam-member \
+      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
+  run_example ./storage_bucket_iam_samples native-remove-bucket-iam-member \
+      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
+  run_example ./storage_bucket_iam_samples native-set-bucket-public-iam \
+      "${bucket_name}"
 
   run_example ./storage_bucket_samples delete-bucket \
       "${bucket_name}"

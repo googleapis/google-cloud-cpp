@@ -85,6 +85,8 @@ add_library(storage_client
             hashing_options.cc
             hmac_key_metadata.h
             hmac_key_metadata.cc
+            iam_policy.h
+            iam_policy.cc
             idempotency_policy.h
             idempotency_policy.cc
             internal/access_control_common.h
@@ -315,6 +317,7 @@ if (BUILD_TESTING)
         client_write_object_test.cc
         hashing_options_test.cc
         hmac_key_metadata_test.cc
+        storage_iam_policy_test.cc
         idempotency_policy_test.cc
         internal/access_control_common_test.cc
         internal/binary_data_as_debug_string_test.cc

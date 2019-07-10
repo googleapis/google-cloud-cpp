@@ -573,6 +573,11 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include `UserProject`.
    *
+   * @deprecated this function is deprecated; it doesn't support conditional
+   *     bindings and will not support any other features to come; please use
+   *     `GetNativeBucketIamPolicy` instead.
+   *     TODO(#2857): Use proper deprecation attributes.
+   *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
    *
@@ -587,6 +592,46 @@ class Client {
     internal::GetBucketIamPolicyRequest request(bucket_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->GetBucketIamPolicy(request);
+  }
+
+  /**
+   * Fetches the native [IAM policy](@ref google::cloud::v0::IamPolicy) for a
+   * Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorize who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation allows you to query the IAM policies
+   * for a Bucket. IAM policies are a superset of the Bucket ACL, changes
+   * to the Bucket ACL are reflected in the IAM policy, and vice-versa. The
+   * documentation describes
+   * [the
+   * mapping](https://cloud.google.com/storage/docs/access-control/iam#acls)
+   * between legacy Bucket ACLs and IAM policies.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies and their use in
+   * Google Cloud Storage.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This is a read-only operation and is always idempotent.
+   *
+   * @par Example
+   * @snippet storage_bucket_iam_samples.cc get bucket iam policy
+   *
+   * @see #google::cloud::v0::IamPolicy for details about the `IamPolicy` class.
+   */
+  template <typename... Options>
+  StatusOr<internal::nl::json> GetNativeBucketIamPolicy(
+      std::string const& bucket_name, Options&&... options) {
+    internal::GetBucketIamPolicyRequest request(bucket_name);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->GetNativeBucketIamPolicy(request);
   }
 
   /**
@@ -625,6 +670,11 @@ class Client {
    * This operation is only idempotent if restricted by pre-conditions, in this
    * case, `IfMetagenerationMatch`.
    *
+   * @deprecated this function is deprecated; it doesn't support conditional
+   *     bindings and will not support any other features to come; please use
+   *     `SetNativeBucketIamPolicy` instead.
+   *     TODO(#2857): Use proper deprecation attributes.
+   *
    * @par Example: adding a new member
    * @snippet storage_bucket_iam_samples.cc add bucket iam member
    *
@@ -640,6 +690,60 @@ class Client {
     internal::SetBucketIamPolicyRequest request(bucket_name, iam_policy);
     request.set_multiple_options(std::forward<Options>(options)...);
     return raw_client_->SetBucketIamPolicy(request);
+  }
+
+  /**
+   * Sets the native [IAM Policy](@ref google::cloud::v0::IamPolicy) for a
+   * Bucket.
+   *
+   * Google Cloud Identity & Access Management (IAM) lets administrators
+   * authorize who can take action on specific resources, including Google
+   * Cloud Storage Buckets. This operation allows you to set the IAM policies
+   * for a Bucket. IAM policies are a superset of the Bucket ACL, changes
+   * to the Bucket ACL are reflected in the IAM policy, and vice-versa. The
+   * documentation describes
+   * [the
+   * mapping](https://cloud.google.com/storage/docs/access-control/iam#acls)
+   * between legacy Bucket ACLs and IAM policies.
+   *
+   * Consult
+   * [the
+   * documentation](https://cloud.google.com/storage/docs/access-control/iam)
+   * for a more detailed description of IAM policies their use in
+   * Google Cloud Storage.
+   *
+   * @note The server rejects requests where the ETag value of the policy does
+   *   not match the current ETag. Effectively this means that applications must
+   *   use `GetBucketIamPolicy()` to fetch the current value and ETag before
+   *   calling `SetBucketIamPolicy()`. Applications should use optimistic
+   *   concurrency control techniques to retry changes in case some other
+   *   application modified the IAM policy between the `GetBucketIamPolicy`
+   *   and `SetBucketIamPolicy` calls.
+   *
+   * @param bucket_name query metadata information about this bucket.
+   * @param iam_policy the new IAM policy.
+   * @param options a list of optional query parameters and/or request headers.
+   *     Valid types for this operation include `UserProject`.
+   *
+   * @par Idempotency
+   * This operation is only idempotent if restricted by pre-conditions, in this
+   * case, `IfMetagenerationMatch`.
+   *
+   * @par Example: adding a new member
+   * @snippet storage_bucket_iam_samples.cc native add bucket iam member
+   *
+   * @par Example: removing a IAM member
+   * @snippet storage_bucket_iam_samples.cc native remove bucket iam member
+   *
+   * @see #google::cloud::v0::IamPolicy for details about the `IamPolicy` class.
+   */
+  template <typename... Options>
+  StatusOr<internal::nl::json> SetNativeBucketIamPolicy(
+      std::string const& bucket_name, internal::nl::json iam_policy,
+      Options&&... options) {
+    internal::SetNativeBucketIamPolicyRequest request(bucket_name, iam_policy);
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return raw_client_->SetNativeBucketIamPolicy(request);
   }
 
   /**

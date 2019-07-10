@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/setenv.h"
+#include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
@@ -160,10 +161,25 @@ TEST_P(CurlClientTest, GetBucketIamPolicy) {
   CheckStatus(actual);
 }
 
+TEST_P(CurlClientTest, GetNativeBucketIamPolicy) {
+  auto actual =
+      client_->GetNativeBucketIamPolicy(GetBucketIamPolicyRequest("bkt"))
+          .status();
+  CheckStatus(actual);
+}
+
 TEST_P(CurlClientTest, SetBucketIamPolicy) {
   auto actual = client_
                     ->SetBucketIamPolicy(SetBucketIamPolicyRequest(
                         "bkt", google::cloud::IamPolicy{}))
+                    .status();
+  CheckStatus(actual);
+}
+
+TEST_P(CurlClientTest, SetNativeBucketIamPolicy) {
+  auto actual = client_
+                    ->SetNativeBucketIamPolicy(SetNativeBucketIamPolicyRequest(
+                        "bkt", IamPolicy(std::vector<internal::nl::json>())))
                     .status();
   CheckStatus(actual);
 }
