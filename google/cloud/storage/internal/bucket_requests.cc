@@ -667,6 +667,21 @@ std::ostream& operator<<(std::ostream& os, SetBucketIamPolicyRequest const& r) {
   return os << ", json_payload=" << r.json_payload() << "}";
 }
 
+SetNativeBucketIamPolicyRequest::SetNativeBucketIamPolicyRequest(
+    std::string bucket_name, NativeIamPolicy const& policy)
+    : bucket_name_(std::move(bucket_name)), json_payload_(policy.ToJson()) {
+  if (!policy.etag().empty()) {
+    set_option(IfMatchEtag(policy.etag()));
+  }
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         SetNativeBucketIamPolicyRequest const& r) {
+  os << "SetNativeBucketIamPolicyRequest={bucket_name=" << r.bucket_name();
+  r.DumpOptions(os, ", ");
+  return os << ", json_payload=" << r.json_payload() << "}";
+}
+
 std::ostream& operator<<(std::ostream& os,
                          TestBucketIamPermissionsRequest const& r) {
   os << "TestBucketIamPermissionsRequest={bucket_name=" << r.bucket_name()

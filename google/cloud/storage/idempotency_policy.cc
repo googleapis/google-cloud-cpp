@@ -57,6 +57,10 @@ bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
   return true;
 }
 bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
+    internal::SetNativeBucketIamPolicyRequest const&) const {
+  return true;
+}
+bool AlwaysRetryIdempotencyPolicy::IsIdempotent(
     internal::TestBucketIamPermissionsRequest const&) const {
   return true;
 }
@@ -283,6 +287,11 @@ bool StrictIdempotencyPolicy::IsIdempotent(
 
 bool StrictIdempotencyPolicy::IsIdempotent(
     internal::SetBucketIamPolicyRequest const& request) const {
+  return request.HasOption<IfMatchEtag>();
+}
+
+bool StrictIdempotencyPolicy::IsIdempotent(
+    internal::SetNativeBucketIamPolicyRequest const& request) const {
   return request.HasOption<IfMatchEtag>();
 }
 
