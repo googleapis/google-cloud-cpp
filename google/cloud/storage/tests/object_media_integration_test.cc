@@ -327,19 +327,21 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
 
   // This produces an object larger than 3MiB, but with a size that is not a
   // multiple of 128KiB.
-  auto const kKiB = 1024L;
-  auto const kMiB = 1024L * kKiB;
-  auto const object_size = 3 * kMiB + 129 * kKiB;
-  auto const lines = object_size / 128;
+  auto constexpr kKiB = 1024L;
+  auto constexpr kMiB = 1024L * kKiB;
+  auto constexpr object_size = 3 * kMiB + 129 * kKiB;
+  auto constexpr line_size = 128;
+  auto constexpr lines = object_size / line_size;
   std::string large_text;
   for (long i = 0; i != lines; ++i) {
-    auto line = google::cloud::internal::Sample(generator_, 127,
+    auto line = google::cloud::internal::Sample(generator_, line_size - 1,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                                 "012456789");
     large_text += line + "\n";
   }
-  static_assert(object_size % 128 == 0, "Object must be multiple of line size");
+  static_assert(object_size % line_size == 0,
+                "Object must be multiple of line size");
   EXPECT_EQ(object_size, large_text.size());
 
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
@@ -376,19 +378,21 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   auto object_name = MakeRandomObjectName();
 
   // This produces a 3.25 MiB text object.
-  auto const kKiB = 1024L;
-  auto const kMiB = 1024L * kKiB;
-  auto const object_size = 3 * kMiB + 129 * kKiB;
-  auto const lines = object_size / 128;
+  auto constexpr kKiB = 1024L;
+  auto constexpr kMiB = 1024L * kKiB;
+  auto constexpr object_size = 3 * kMiB + 129 * kKiB;
+  auto constexpr line_size = 128;
+  auto constexpr lines = object_size / line_size;
   std::string large_text;
   for (long i = 0; i != lines; ++i) {
-    auto line = google::cloud::internal::Sample(generator_, 127,
+    auto line = google::cloud::internal::Sample(generator_, line_size - 1,
                                                 "abcdefghijklmnopqrstuvwxyz"
                                                 "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                                 "012456789");
     large_text += line + "\n";
   }
-  static_assert(object_size % 128 == 0, "Object must be multiple of line size");
+  static_assert(object_size % line_size == 0,
+                "Object must be multiple of line size");
   EXPECT_EQ(object_size, large_text.size());
 
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
@@ -428,7 +432,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   std::string actual(buffer.data(), stream.gcount());
   auto expected = large_text.substr(3 * kMiB);
   EXPECT_EQ(expected.size(), actual.size());
-  // EXPECT_EQ(expected, actual);
+  EXPECT_EQ(expected, actual);
 
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
