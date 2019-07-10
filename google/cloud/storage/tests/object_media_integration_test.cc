@@ -317,6 +317,127 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
   EXPECT_STATUS_OK(status);
 }
 
+/// @test Read the last chunk of an object.
+TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // This produces an object larger than 3MiB, but with a size that is not a
+  // multiple of 128KiB.
+  auto constexpr kKiB = 1024L;
+  auto constexpr kMiB = 1024L * kKiB;
+  auto constexpr object_size = 3 * kMiB + 129 * kKiB;
+  auto constexpr line_size = 128;
+  auto constexpr lines = object_size / line_size;
+  std::string large_text;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, line_size - 1,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+  static_assert(object_size % line_size == 0,
+                "Object must be multiple of line size");
+  EXPECT_EQ(object_size, large_text.size());
+
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
+
+  // Create an iostream to read the last 256KiB of the object, but simulate an
+  // application that does not know how large that last chunk is.
+  auto stream = client->ReadObject(bucket_name, object_name,
+                                   ReadRange(3 * kMiB, 4 * kMiB));
+
+  std::vector<char> buffer(1 * kMiB);
+  stream.read(buffer.data(), buffer.size());
+  EXPECT_TRUE(stream.eof());
+  EXPECT_TRUE(stream.fail());
+  EXPECT_FALSE(stream.bad());
+  EXPECT_EQ(object_size - 3 * kMiB, stream.gcount());
+  std::string actual(buffer.data(), stream.gcount());
+  EXPECT_EQ(large_text.substr(3 * kMiB), actual);
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Read an object by chunks of equal size.
+TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // This produces a 3.25 MiB text object.
+  auto constexpr kKiB = 1024L;
+  auto constexpr kMiB = 1024L * kKiB;
+  auto constexpr object_size = 3 * kMiB + 129 * kKiB;
+  auto constexpr line_size = 128;
+  auto constexpr lines = object_size / line_size;
+  std::string large_text;
+  for (long i = 0; i != lines; ++i) {
+    auto line = google::cloud::internal::Sample(generator_, line_size - 1,
+                                                "abcdefghijklmnopqrstuvwxyz"
+                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                                "012456789");
+    large_text += line + "\n";
+  }
+  static_assert(object_size % line_size == 0,
+                "Object must be multiple of line size");
+  EXPECT_EQ(object_size, large_text.size());
+
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  EXPECT_EQ(object_name, source_meta->name());
+  EXPECT_EQ(bucket_name, source_meta->bucket());
+
+  std::vector<char> buffer(1 * kMiB);
+  for (int i = 0; i != 3; ++i) {
+    SCOPED_TRACE("Reading chunk from object, chunk=" + std::to_string(i));
+    // Create an iostream to read from (i * kMiB) to ((i + 1) * kMiB).
+    auto stream = client->ReadObject(bucket_name, object_name,
+                                     ReadRange(i * kMiB, (i + 1) * kMiB));
+
+    stream.read(buffer.data(), buffer.size());
+    EXPECT_FALSE(stream.eof());
+    EXPECT_FALSE(stream.fail());
+    EXPECT_FALSE(stream.bad());
+    EXPECT_EQ(1 * kMiB, stream.gcount());
+    std::string actual(buffer.data(), stream.gcount());
+
+    EXPECT_EQ(large_text.substr(i * kMiB, 1 * kMiB), actual);
+  }
+
+  // Create an iostream to read the last 256KiB of the object, but simulate an
+  // application that does not know how large that last chunk is.
+  auto stream = client->ReadObject(bucket_name, object_name,
+                                   ReadRange(3 * kMiB, 4 * kMiB));
+
+  stream.read(buffer.data(), buffer.size());
+  EXPECT_TRUE(stream.eof());
+  EXPECT_TRUE(stream.fail());
+  EXPECT_FALSE(stream.bad());
+  EXPECT_EQ(object_size - 3 * kMiB, stream.gcount());
+  std::string actual(buffer.data(), stream.gcount());
+  auto expected = large_text.substr(3 * kMiB);
+  EXPECT_EQ(expected.size(), actual.size());
+  EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),

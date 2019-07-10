@@ -121,18 +121,27 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     return Status(StatusCode::kInvalidArgument, "Empty buffer for Read()");
   }
 
+  // Before calling `Wait()` copy any data from the spill buffer into the
+  // application buffer. It is possible that `Wait()` will never call
+  // `WriteCallback()`, for example, because the Read() or Peek() closed the
+  // connection, but if there is any data left in the spill buffer we need
+  // to return it.
+  DrainSpillBuffer();
+
   handle_.FlushDebug(__func__);
   TRACE_STATE();
 
-  auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
-  if (!status.ok()) {
-    TRACE_STATE() << ", status=" << status;
-    return status;
+  if (!curl_closed_) {
+    auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+    if (!status.ok()) {
+      TRACE_STATE() << ", status=" << status;
+      return status;
+    }
+    paused_ = false;
+    TRACE_STATE();
   }
-  paused_ = false;
-  TRACE_STATE();
 
-  status = Wait([this] {
+  auto status = Wait([this] {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
   if (!status.ok()) {
@@ -205,6 +214,16 @@ void CurlDownloadRequest::ResetOptions() {
   handle_.EnableLogging(logging_enabled_);
 }
 
+void CurlDownloadRequest::DrainSpillBuffer() {
+  std::size_t free = buffer_size_ - buffer_offset_;
+  auto copy_count = (std::min)(free, spill_offset_);
+  std::memcpy(buffer_ + buffer_offset_, spill_.data(), copy_count);
+  buffer_offset_ += copy_count;
+  std::memmove(spill_.data(), spill_.data() + copy_count,
+               spill_.size() - copy_count);
+  spill_offset_ -= copy_count;
+}
+
 std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
                                                std::size_t nmemb) {
   handle_.FlushDebug(__func__);
@@ -223,36 +242,30 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
     return CURL_READFUNC_PAUSE;
   }
 
-  std::size_t free = buffer_size_ - buffer_offset_;
-
   // Use the spill buffer first, if there is any...
-  auto copy_count = (std::min)(free, spill_offset_);
-  std::memcpy(buffer_ + buffer_offset_, spill_.data(), copy_count);
-  buffer_offset_ += copy_count;
-  std::memmove(spill_.data(), spill_.data() + copy_count,
-               spill_.size() - copy_count);
-  spill_offset_ -= copy_count;
-  free -= copy_count;
+  DrainSpillBuffer();
+  std::size_t free = buffer_size_ - buffer_offset_;
   if (free == 0) {
     TRACE_STATE() << " *** PAUSING HANDLE ***";
     paused_ = true;
     return CURL_READFUNC_PAUSE;
   }
-  TRACE_STATE() << ", n=" << size * nmemb << ", copy_count=" << copy_count
-                << ", free=" << free;
+  TRACE_STATE() << ", n=" << size * nmemb << ", free=" << free;
 
+  // Copy the full contents of `ptr` into the application buffer.
   if (size * nmemb < free) {
     std::memcpy(buffer_ + buffer_offset_, ptr, size * nmemb);
     buffer_offset_ += size * nmemb;
     TRACE_STATE() << ", n=" << size * nmemb;
     return size * nmemb;
   }
+  // Copy as much as possible from `ptr` into the application buffer.
   std::memcpy(buffer_ + buffer_offset_, ptr, free);
   buffer_offset_ += free;
   spill_offset_ = size * nmemb - free;
+  // The rest goes into the spill buffer.
   std::memcpy(spill_.data(), static_cast<char*>(ptr) + free, spill_offset_);
-  TRACE_STATE() << ", n=" << size * nmemb << ", copy_count=" << copy_count
-                << ", free=" << free;
+  TRACE_STATE() << ", n=" << size * nmemb << ", free=" << free;
   return size * nmemb;
 }
 

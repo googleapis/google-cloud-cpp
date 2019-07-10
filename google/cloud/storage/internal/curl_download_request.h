@@ -113,6 +113,9 @@ class CurlDownloadRequest : public ObjectReadSource {
   /// Reset the underlying CurlHandle options after a move operation.
   void ResetOptions();
 
+  /// Copy any available data from the spill buffer to `buffer_`
+  void DrainSpillBuffer();
+
   /// Called by libcurl to show that more data is available in the download.
   std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);
 

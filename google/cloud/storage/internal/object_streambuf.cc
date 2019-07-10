@@ -140,15 +140,19 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
 
   StatusOr<ReadSourceResult> read_result =
       source_->Read(s + offset, static_cast<std::size_t>(count - offset));
-  GCP_LOG(INFO) << __func__ << "(): count=" << count
-                << ", in_avail=" << in_avail() << ", offset=" << offset
-                << ", status=" << read_result.status();
   // If there was an error set the internal state, but we still return the
   // number of bytes.
   if (!read_result) {
+    GCP_LOG(INFO) << __func__ << "(): count=" << count
+                  << ", in_avail=" << in_avail() << ", offset=" << offset
+                  << ", status=" << read_result.status();
     status_ = std::move(read_result).status();
     return offset;
   }
+  GCP_LOG(INFO) << __func__ << "(): count=" << count
+                << ", in_avail=" << in_avail() << ", offset=" << offset
+                << ", read_result->bytes_received="
+                << read_result->bytes_received;
 
   hash_validator_->Update(s + offset, read_result->bytes_received);
   offset += read_result->bytes_received;
