@@ -76,28 +76,32 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * `MakeNullValue<T>()` factory function or by passing an empty `optional<T>`
  * to the Value constructor..
  *
- * Example with a non-null value:
+ * @par Example with a non-null value
  *
- *     std::string msg = "hello";
- *     spanner::Value v(msg);
- *     assert(v.is<std::string>());
- *     assert(!v.is_null<std::string>());
- *     StatusOr<std::string> copy = v.get<std::string>();
- *     if (copy) {
- *       std::cout << *copy;  // prints "hello"
- *     }
+ * @code
+ * std::string msg = "hello";
+ * spanner::Value v(msg);
+ * assert(v.is<std::string>());
+ * assert(!v.is_null<std::string>());
+ * StatusOr<std::string> copy = v.get<std::string>();
+ * if (copy) {
+ *   std::cout << *copy;  // prints "hello"
+ * }
+ * @endcode
  *
- * Example with a null:
+ * @par Example with a null
  *
- *     spanner::Value v = spanner::MakeNullValue<std::int64_t>();
- *     assert(v.is<std::int64_t>());
- *     assert(v.is_null<std::int64_t>());
- *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
- *     assert(!i.ok());  // Can't get the value becuase v is null
- *     StatusOr<optional<std::int64_t> j = v.get<optional<std::int64_t>>();
- *     assert(j.ok());  // OK because an empty option can represent the null
+ * @code
+ * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
+ * assert(v.is<std::int64_t>());
+ * assert(v.is_null<std::int64_t>());
+ * StatusOr<std::int64_t> i = v.get<std::int64_t>();
+ * assert(!i.ok());  // Can't get the value becuase v is null
+ * StatusOr<optional<std::int64_t> j = v.get<optional<std::int64_t>>();
+ * assert(j.ok());  // OK because an empty option can represent the null
+ * @endcode
  *
- * # Spanner Arrays (i.e., `std::vector<T>`)
+ * @par Spanner Arrays (i.e., `std::vector<T>`)
  *
  * Spanner arrays are represented in C++ as a `std::vector<T>`, where the type
  * `T` may be any of the other allowed Spanner types, such as `bool`,
@@ -106,13 +110,15 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * of a 1-element struct holding an array. The following examples show usage of
  * arrays.
  *
- *     std::vector<std::int64_t> vec = {1, 2, 3, 4, 5};
- *     spanner::Value v(vec);
- *     assert(v.is<std::vector<std::int64_t>>());
- *     auto copy = *v.get<std::vector<std::int64_t>>();
- *     assert(vec == copy);
+ * @code
+ * std::vector<std::int64_t> vec = {1, 2, 3, 4, 5};
+ * spanner::Value v(vec);
+ * assert(v.is<std::vector<std::int64_t>>());
+ * auto copy = *v.get<std::vector<std::int64_t>>();
+ * assert(vec == copy);
+ * @endcode
  *
- * # Spanner Structs (i.e., `std::tuple<Ts...>`)
+ * @par Spanner Structs (i.e., `std::tuple<Ts...>`)
  *
  * Spanner structs are represented in C++ as instances of `std::tuple` holding
  * zero or more of the allowed Spanner types, such as `bool`, `std::int64_t`,
@@ -125,16 +131,18 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * pair's `.first` member indicate's the field's name, and the `.second` member
  * is any valid Spanner type `T`.
  *
- *     using Struct = std::tuple<bool, std::pair<std::string, std::int64_t>>;
- *     Struct s  = {true, {"Foo", 42}};
- *     spanner::Value v(s);
- *     assert(v.is<Struct>());
- *     assert(s == *v.get<Struct>());
+ * @code
+ * using Struct = std::tuple<bool, std::pair<std::string, std::int64_t>>;
+ * Struct s  = {true, {"Foo", 42}};
+ * spanner::Value v(s);
+ * assert(v.is<Struct>());
+ * assert(s == *v.get<Struct>());
+ * @endcode
  *
- * NOTE: While a STRUCT's (optional) field names are not part of its C++ type,
- * they are part of its Spanner STRUCT type. Array's (i.e., `std::vector`)
- * must contain a single element type, therefore it is an error to construct
- * a `std::vector` of `std::tuple` objects with differently named fields.
+ * @note While a STRUCT's (optional) field names are not part of its C++ type,
+ *   they are part of its Spanner STRUCT type. Array's (i.e., `std::vector`)
+ *   must contain a single element type, therefore it is an error to construct
+ *   a `std::vector` of `std::tuple` objects with differently named fields.
  */
 class Value {
  public:
@@ -146,7 +154,7 @@ class Value {
    */
   Value() = default;
 
-  /// Copy and move.
+  // Copy and move.
   Value(Value const&) = default;
   Value(Value&&) = default;
   Value& operator=(Value const&) = default;
@@ -154,10 +162,15 @@ class Value {
 
   /// Constructs a non-null instance with the specified type and value.
   explicit Value(bool v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
   explicit Value(std::int64_t v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
   explicit Value(double v) : Value(PrivateConstructor{}, v) {}
+  /// @copydoc Value(bool)
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
   explicit Value(Timestamp v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
   explicit Value(Date v) : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
@@ -169,11 +182,13 @@ class Value {
    * converted to a `std::int64_t`. Similarly, a C++ string literal will be
    * implicitly converted to a `std::string`. For example:
    *
-   *     spanner::Value v1(42);
-   *     assert(v1.is<std::int64_t>());
+   * @code
+   * spanner::Value v1(42);
+   * assert(v1.is<std::int64_t>());
    *
-   *     spanner::Value v2("hello");
-   *     assert(v2.is<std::string>());
+   * spanner::Value v2("hello");
+   * assert(v2.is<std::string>());
+   * @endcode
    */
   explicit Value(int v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(int)
@@ -194,10 +209,10 @@ class Value {
    * The type `T` may be any valid type shown above, except vectors of vectors
    * are not allowed.
    *
-   * NOTE: If `T` is a `std::tuple` with field names (i.e., at least one of its
-   * element types is a `std::pair<std::string, T>`) then, all of the vector's
-   * elements must have exactly the same field names. Any mismatch in in field
-   * names results in undefined behavior.
+   * @warning If `T` is a `std::tuple` with field names (i.e., at least one of
+   *   its element types is a `std::pair<std::string, T>`) then, all of the
+   *   vector's elements must have exactly the same field names. Any mismatch
+   *   in in field names results in undefined behavior.
    */
   template <typename T>
   explicit Value(std::vector<T> v) : Value(PrivateConstructor{}, std::move(v)) {
@@ -225,15 +240,17 @@ class Value {
    * All Value instances have some type, even null values. `T` may be an
    * `optional<U>`, in which case it will return the same value as `is<U>()`.
    *
-   * Example:
+   * @par Example
    *
-   *     spanner::Value v{true};
-   *     assert(v.is<bool>());  // Same as the following
-   *     assert(v.is<optional<bool>>());
+   * @code
+   * spanner::Value v{true};
+   * assert(v.is<bool>());  // Same as the following
+   * assert(v.is<optional<bool>>());
    *
-   *     spanner::Value null_v = spanner::MakeNullValue<bool>();
-   *     assert(v.is<bool>());  // Same as the following
-   *     assert(v.is<optional<bool>>());
+   * spanner::Value null_v = spanner::MakeNullValue<bool>();
+   * assert(v.is<bool>());  // Same as the following
+   * assert(v.is<optional<bool>>());
+   * @endcode
    */
   template <typename T>
   bool is() const {
@@ -247,17 +264,19 @@ class Value {
    * `T` may be an `optional<U>`, in which case it will return the same value
    * as `is_null<U>()`.
    *
-   * Example:
+   * @par Example
    *
-   *     spanner::Value v{true};
-   *     assert(!v.is_null<bool>());  // Same as the following
-   *     assert(!v.is_null<optional<bool>>());
+   * @code
+   * spanner::Value v{true};
+   * assert(!v.is_null<bool>());  // Same as the following
+   * assert(!v.is_null<optional<bool>>());
    *
-   *     spanner::Value null_v = spanner::MakeNullValue<bool>();
-   *     assert(v.is_null<bool>());  // Same as the following
-   *     assert(v.is_null<optional<bool>>());
-   *     assert(!v.is_null<std::int64_t>());  // Same as the following
-   *     assert(!v.is_null<optional<std::int64_t>>());
+   * spanner::Value null_v = spanner::MakeNullValue<bool>();
+   * assert(v.is_null<bool>());  // Same as the following
+   * assert(v.is_null<optional<bool>>());
+   * assert(!v.is_null<std::int64_t>());  // Same as the following
+   * assert(!v.is_null<optional<std::int64_t>>());
+   * @endcode
    */
   template <typename T>
   bool is_null() const {
@@ -272,25 +291,27 @@ class Value {
    * type `T` is an `optional<U>`, in which case a valueless optional is
    * returned to indicate the nullness.
    *
-   * Example:
+   * @par Example
    *
-   *     spanner::Value v{3.14};
-   *     StatusOr<double> d = v.get<double>();
-   *     if (d) {
-   *       std::cout << "d=" << *d;
-   *     }
+   * @code
+   * spanner::Value v{3.14};
+   * StatusOr<double> d = v.get<double>();
+   * if (d) {
+   *   std::cout << "d=" << *d;
+   * }
    *
-   *     // Now using a "null" std::int64_t
-   *     v = spanner::MakeNullValue<std::int64_t>();
-   *     assert(v.is_null<std::int64_t>());
-   *     StatusOr<std::int64_t> i = v.get<std::int64_t>();
-   *     if (!i) {
-   *       std::cerr << "Could not get integer: " << i.status();
-   *     }
+   * // Now using a "null" std::int64_t
+   * v = spanner::MakeNullValue<std::int64_t>();
+   * assert(v.is_null<std::int64_t>());
+   * StatusOr<std::int64_t> i = v.get<std::int64_t>();
+   * if (!i) {
+   *   std::cerr << "Could not get integer: " << i.status();
+   * }
    *
-   *     StatusOr<optional<std::int64_t>> j = v.get<optional<std::int64_t>();
-   *     assert(j.ok());  // Since we know the types match in this example
-   *     assert(!v->has_value());  // Since we know v was null in this example
+   * StatusOr<optional<std::int64_t>> j = v.get<optional<std::int64_t>();
+   * assert(j.ok());  // Since we know the types match in this example
+   * assert(!v->has_value());  // Since we know v was null in this example
+   * @endcode
    */
   template <typename T>
   StatusOr<T> get() const {
@@ -311,14 +332,16 @@ class Value {
    *
    * This is mostly useful if writing generic code where casting is needed.
    *
-   * Example:
+   * @par Example
    *
-   *     spanner::Value v{true};
-   *     bool b = static_cast<bool>(v);  // OK: b == true
+   * @code
+   * spanner::Value v{true};
+   * bool b = static_cast<bool>(v);  // OK: b == true
    *
-   *     spanner::Value null_v = spanner::MakeNullValue<std::int64_t>();
-   *     std::int64_t i = static_cast<std::int64_t>(null_v);  // UB! null
-   *     bool bad = static_cast<bool>(null_v);  // UB! wrong type
+   * spanner::Value null_v = spanner::MakeNullValue<std::int64_t>();
+   * std::int64_t i = static_cast<std::int64_t>(null_v);  // UB! null
+   * bool bad = static_cast<bool>(null_v);  // UB! wrong type
+   * @endcode
    */
   template <typename T>
   explicit operator T() const {
@@ -330,7 +353,7 @@ class Value {
    * assertions fail.
    *
    * @warning This is intended for debugging and human consumption only, not
-   * machine consumption as the output format may change without notice.
+   *   machine consumption as the output format may change without notice.
    */
   friend void PrintTo(Value const& v, std::ostream* os);
 

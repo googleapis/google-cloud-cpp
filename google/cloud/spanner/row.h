@@ -45,23 +45,26 @@ inline namespace SPANNER_CLIENT_NS {
  * function template (see below). Once an instance is created, you can access
  * the values in the row using the `Row::get()` overloaded functions.
  *
- * Example:
+ * @par Example
  *
- *     spanner::Row<bool, std::int64_t, std::string> row;
- *     row = spanner::MakeRow(true, 42, "hello");
- *     static_assert(row.size() == 3, "Created with three types");
+ * @code
+ * spanner::Row<bool, std::int64_t, std::string> row;
+ * row = spanner::MakeRow(true, 42, "hello");
+ * static_assert(row.size() == 3, "Created with three types");
  *
- *     // Gets all values as a std::tuple
- *     std::tuple<bool, std::int64_t, std::string> tup = row.get();
+ * // Gets all values as a std::tuple
+ * std::tuple<bool, std::int64_t, std::string> tup = row.get();
  *
- *     // Gets one value at the specified column index
- *     std::int64_t i = row.get<1>();
+ * // Gets one value at the specified column index
+ * std::int64_t i = row.get<1>();
  *
- *     // Gets the values from the specified columns (any order), and returns a
- *     // tuple. Since C++17, this tuple will work with structured bindings to
- *     // allow assigning to individually  named variables.
- *     auto [name, age] = row.get<2, 1>();
+ * // Gets the values from the specified columns (any order), and returns a
+ * // tuple. Since C++17, this tuple will work with structured bindings to
+ * // allow assigning to individually  named variables.
+ * auto [name, age] = row.get<2, 1>();
+ * @endcode
  *
+ * @tparam Types... The C++ types for each column in the row.
  */
 template <typename... Types>
 class Row {
@@ -72,7 +75,7 @@ class Row {
   /// Returns the number of columns in this row.
   static constexpr std::size_t size() { return sizeof...(Types); }
 
-  /// Regular value type, supporting copy, assign, move, etc.
+  // Regular value type, supporting copy, assign, move, etc.
   Row() {}
   Row(Row const&) = default;
   Row& operator=(Row const&) = default;
@@ -96,21 +99,22 @@ class Row {
   explicit Row(Ts&&... ts) : values_(std::forward<Ts>(ts)...) {}
 
   /**
-   *  Returns a reference to the value at position `I`.
+   * Returns a reference to the value at position `I`.
    *
-   *  If value category of the returned reference matches the value category of
-   *  `this`. That is, calling `get<I>()` on an non-const lvalue, returns a
-   *  non-const lvalue. Calling `get<I>()` on an rvalue, returns an rvalue,
-   *  etc.
+   * The value category of the returned reference matches the value category
+   * of `this`. That is, calling `get<I>()` on a non-const lvalue returns a
+   * non-const lvalue. Calling `get<I>()` on an rvalue returns an rvalue, etc.
    *
-   *  Example:
+   * @par Example
    *
-   *      auto row = MakeRow(true, "foo");
-   *      assert(row.get<0>() == true);
-   *      assert(row.get<1>() == "foo");
+   * @code
+   * auto row = MakeRow(true, "foo");
+   * assert(row.get<0>() == true);
+   * assert(row.get<1>() == "foo");
    *
-   *      Row<bool, std::string> F();
-   *      std::string x = F().get<1>();
+   * Row<bool, std::string> F();
+   * std::string x = F().get<1>();
+   * @endcode
    */
   template <std::size_t I>
   ColumnType<I>& get() & {
@@ -136,12 +140,16 @@ class Row {
    * This overload is only available if 2 or more index template arguments are
    * specified, thus the result is returned as a std::tuple.
    *
-   *  Example:
+   * @par Example
    *
-   *      auto row = MakeRow(true, "foo", 42);
-   *      std::tuple<std::int64_t, bool> tup = row.get<2, 0>();
-   *      assert(std::get<0>(tup) == 42);
-   *      assert(std::get<1>(tup) == true);
+   * @code
+   * auto row = MakeRow(true, "foo", 42);
+   * std::tuple<std::int64_t, bool> tup = row.get<2, 0>();
+   * assert(std::get<0>(tup) == 42);
+   * assert(std::get<1>(tup) == true);
+   * @endcode
+   *
+   * @tparam Is... a list of indexes to be returned in a `std::tuple`
    */
   template <std::size_t... Is,
             typename std::enable_if<(sizeof...(Is) > 1), int>::type = 0>
@@ -156,32 +164,37 @@ class Row {
    * This function is const/non-const x lvalue/rvalue overloaded. This enables
    * a caller to move the returned tuple out of the Row.
    *
-   *  Example:
+   * @par Example
    *
-   *      auto row = MakeRow(true, "foo", 42);
-   *      std::tuple<bool, std::string, std::int64_t> tup
-   *          = row.get();
-   *      assert(std::get<0>(tup) == true);
-   *      assert(std::get<1>(tup) == "foo");
-   *      assert(std::get<2>(tup) == 42);
+   * @code
+   * auto row = MakeRow(true, "foo", 42);
+   * std::tuple<bool, std::string, std::int64_t> tup
+   *     = row.get();
+   * assert(std::get<0>(tup) == true);
+   * assert(std::get<1>(tup) == "foo");
+   * assert(std::get<2>(tup) == 42);
    *
-   *      auto moved_tup = std::move(row).get();
-   *      assert(moved_tup == tup);
+   * auto moved_tup = std::move(row).get();
+   * assert(moved_tup == tup);
+   * @endcode
    */
   std::tuple<Types...>& get() & { return values_; }
   std::tuple<Types...> const& get() const& { return values_; }
   std::tuple<Types...>&& get() && { return std::move(values_); }
   std::tuple<Types...> const&& get() const&& { return std::move(values_); }
 
-  /// Equality operators.
+  /// @name Equality operators
+  ///@{
   friend bool operator==(Row const& a, Row const& b) {
     return a.values_ == b.values_;
   }
   friend bool operator!=(Row const& a, Row const& b) {
     return a.values_ != b.values_;
   }
+  ///@}
 
-  /// Relational operators.
+  /// @name Relational operators
+  ///@{
   friend bool operator<(Row const& a, Row const& b) {
     return a.values_ < b.values_;
   }
@@ -194,6 +207,7 @@ class Row {
   friend bool operator>=(Row const& a, Row const& b) {
     return a.values_ >= b.values_;
   }
+  ///@}
 
  private:
   std::tuple<Types...> values_;
@@ -243,12 +257,13 @@ struct ExtractValue {
  * promotes integer and string literals to the necessary Spanner types
  * `std::int64_t` and `std::string`, respectively.
  *
- * Example:
+ * @par Example
  *
- *     auto row = MakeRow(42, "hello");
- *     static_assert(
- *         std::is_same<Row<std::int64_t, std::string>, decltype(row)>::value,
- *         "");
+ * @code
+ * auto row = MakeRow(42, "hello");
+ * static_assert(
+ *     std::is_same<Row<std::int64_t, std::string>, decltype(row)>::value, "");
+ * @endcode
  */
 template <typename... Ts>
 Row<internal::PromoteLiteral<Ts>...> MakeRow(Ts&&... ts) {
@@ -261,12 +276,14 @@ Row<internal::PromoteLiteral<Ts>...> MakeRow(Ts&&... ts) {
  * is unable to be extracted from a `Value`, an error `Status` is returned. The
  * given array size must exactly match the number of specified C++ types.
  *
- * Example:
+ * @par Example
  *
- *     std::array<Value, 3> array = {Value(true), Value(42), Value("hello")};
- *     auto row = ParseRow<bool, std::int64_t, std::string>(array);
- *     assert(row.ok());
- *     assert(MakeRow(true, 42, "hello"), *row);
+ * @code
+ * std::array<Value, 3> array = {Value(true), Value(42), Value("hello")};
+ * auto row = ParseRow<bool, std::int64_t, std::string>(array);
+ * assert(row.ok());
+ * assert(MakeRow(true, 42, "hello"), *row);
+ * @endcode
  */
 template <typename... Ts>
 StatusOr<Row<internal::PromoteLiteral<Ts>...>> ParseRow(
