@@ -32,6 +32,7 @@ storage_client_unit_tests = [
     "client_write_object_test.cc",
     "hashing_options_test.cc",
     "hmac_key_metadata_test.cc",
+    "storage_iam_policy_test.cc",
     "idempotency_policy_test.cc",
     "internal/access_control_common_test.cc",
     "internal/binary_data_as_debug_string_test.cc",
