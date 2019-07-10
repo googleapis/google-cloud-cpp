@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/bigtable/v2/bigtable.pb.h>
@@ -63,6 +64,20 @@ Mutation SetCell(std::string family, ColumnType&& column,
   return m;
 }
 
+/// Create a mutation to store a 64-bit big endian integer value.
+template <typename ColumnType>
+Mutation SetCell(std::string family, ColumnType&& column,
+                 std::chrono::milliseconds timestamp, std::int64_t value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::forward<ColumnType>(column));
+  set_cell.set_timestamp_micros(
+      std::chrono::duration_cast<std::chrono::microseconds>(timestamp).count());
+  set_cell.set_value(google::cloud::internal::EncodeBigEndian(value));
+  return m;
+}
+
 /**
  * Create a mutation to set a cell value where the server sets the time.
  *
@@ -76,6 +91,23 @@ Mutation SetCell(std::string family, ColumnType&& column, ValueType&& value) {
   set_cell.set_column_qualifier(std::forward<ColumnType>(column));
   set_cell.set_timestamp_micros(ServerSetTimestamp());
   set_cell.set_value(std::forward<ValueType>(value));
+  return m;
+}
+
+/**
+ * Create a mutation to store a 64-bit big endian integer value.
+ *
+ * @note This mutation is not idempotent, the default policies do not retry
+ *   transient failures for this mutation.
+ */
+template <typename ColumnType>
+Mutation SetCell(std::string family, ColumnType&& column, std::int64_t value) {
+  Mutation m;
+  auto& set_cell = *m.op.mutable_set_cell();
+  set_cell.set_family_name(std::move(family));
+  set_cell.set_column_qualifier(std::forward<ColumnType>(column));
+  set_cell.set_timestamp_micros(ServerSetTimestamp());
+  set_cell.set_value(google::cloud::internal::EncodeBigEndian(value));
   return m;
 }
 
