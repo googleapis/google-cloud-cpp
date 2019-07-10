@@ -61,8 +61,12 @@ class RetryClient : public RawClient,
       PatchBucketRequest const& request) override;
   StatusOr<IamPolicy> GetBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) override;
+  StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
+      GetBucketIamPolicyRequest const& request) override;
   StatusOr<IamPolicy> SetBucketIamPolicy(
       SetBucketIamPolicyRequest const& request) override;
+  StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
+      SetNativeBucketIamPolicyRequest const& request) override;
   StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
       TestBucketIamPermissionsRequest const& request) override;
   StatusOr<BucketMetadata> LockBucketRetentionPolicy(
