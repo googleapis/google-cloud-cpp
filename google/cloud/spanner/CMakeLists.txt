@@ -22,6 +22,7 @@ include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${SPANNER_VERSION}")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
 include(EnableDoxygen)
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
@@ -158,3 +159,4 @@ if (BUILD_TESTING)
 endif (BUILD_TESTING)
 
 add_subdirectory(integration_tests)
+add_subdirectory(examples)
