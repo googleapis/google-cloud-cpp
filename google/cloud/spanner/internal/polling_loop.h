@@ -1,0 +1,132 @@
+// Copyright 2019 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H_
+
+#include "google/cloud/spanner/polling_policy.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/status_or.h"
+#include <google/longrunning/operations.pb.h>
+#include <grpcpp/grpcpp.h>
+#include <thread>
+
+namespace google {
+namespace cloud {
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
+namespace internal {
+
+/**
+ * A generic retry loop for gRPC operations.
+ *
+ * This function implements a retry loop suitable for *most* gRPC operations.
+ *
+ * @param retry_policy controls the duration of the retry loop.
+ * @param backoff_policy controls how the loop backsoff from a recoverable
+ *     failure.
+ * @param is_idempotent if false, the operation is not retried even on transient
+ *     errors.
+ * @param functor the operation to retry, typically a lambda that encasulates
+ *     both the Stub and the function to call.
+ * @param context the gRPC context used for the request, previous Stubs in the
+ *     stack can set timeouts and metadata through this context.
+ * @param request the parameters for the request.
+ * @param location a string to annotate any error returned by this function.
+ * @tparam Functor the type of @p functor.
+ * @tparam Request the type of @p request.
+ * @tparam Sleeper a dependency injection point to verify (in tests) that the
+ *     backoff policy is used.
+ * @return the result of the first successful call to @p functor, or a
+ *     `google::cloud::Status` that indicates the final error for this request.
+ */
+template <typename ResultType, typename Functor, typename Sleeper,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, grpc::ClientContext&,
+                  google::longrunning::GetOperationRequest const&>::value,
+              int>::type = 0>
+StatusOr<ResultType> PollingLoopImpl(
+    std::unique_ptr<PollingPolicy> polling_policy, Functor&& functor,
+    google::longrunning::Operation operation, char const* location,
+    Sleeper sleeper) {
+  Status last_status;
+
+  while (!operation.done()) {
+    sleeper(polling_policy->WaitPeriod());
+
+    grpc::ClientContext poll_context;
+    google::longrunning::GetOperationRequest poll_request;
+    poll_request.set_name(operation.name());
+    auto update = functor(poll_context, poll_request);
+    if (!update) {
+      if (!polling_policy->OnFailure(update.status())) {
+        return std::move(update).status();
+      }
+    } else {
+      using std::swap;
+      swap(*update, operation);
+    }
+  }
+
+  if (operation.has_error()) {
+    // The long running operation failed, return the error to the
+    // caller.
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(operation.error());
+  }
+  if (!operation.has_response()) {
+    return Status(StatusCode::kInternal,
+                  std::string(location) +
+                      "() operation completed "
+                      "without error or response, name=" +
+                      operation.name());
+  }
+  google::protobuf::Any const& any = operation.response();
+  if (!any.Is<ResultType>()) {
+    return Status(StatusCode::kInternal,
+                  std::string(location) +
+                      "() operation completed "
+                      "with an invalid response type, name=" +
+                      operation.name());
+  }
+  ResultType result;
+  any.UnpackTo(&result);
+  return result;
+}
+
+/// @copydoc RetryLoopImpl
+template <typename ResultType, typename Functor,
+          typename std::enable_if<
+              google::cloud::internal::is_invocable<
+                  Functor, grpc::ClientContext&,
+                  google::longrunning::GetOperationRequest const&>::value,
+              int>::type = 0>
+StatusOr<ResultType> PollingLoop(std::unique_ptr<PollingPolicy> polling_policy,
+                                 Functor&& functor,
+                                 google::longrunning::Operation operation,
+                                 char const* location) {
+  return PollingLoopImpl<ResultType>(
+      std::move(polling_policy), std::forward<Functor>(functor),
+      std::move(operation), location,
+      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); });
+}
+
+}  // namespace internal
+}  // namespace SPANNER_CLIENT_NS
+}  // namespace spanner
+}  // namespace cloud
+}  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H_

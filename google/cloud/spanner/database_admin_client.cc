@@ -21,20 +21,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-// TODO(#126) - refactor to some common place. Note that this different from
-// the MakeStatusFromGrpcError function,
-namespace {
-StatusCode MapStatusCode(std::int32_t code) {
-  if (code < 0 || code > static_cast<std::int32_t>(StatusCode::kDataLoss)) {
-    return StatusCode::kUnknown;
-  }
-  return static_cast<StatusCode>(code);
-}
-}  // namespace
-
-google::cloud::Status ToGoogleCloudStatus(google::rpc::Status const& status) {
-  return google::cloud::Status(MapStatusCode(status.code()), status.message());
-}
 
 namespace gcsa = google::spanner::admin::database::v1;
 
@@ -59,85 +45,7 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
         StatusOr<gcsa::Database>(operation.status()));
   }
 
-  // TODO(#127) - use the (implicit) completion queue to run this loop.
-  struct Polling {
-    google::cloud::promise<StatusOr<gcsa::Database>> promise;
-    google::longrunning::Operation operation;
-    std::chrono::seconds wait_time = std::chrono::seconds(2);
-  };
-  Polling polling_state;
-  polling_state.operation = *std::move(operation);
-
-  auto f = polling_state.promise.get_future();
-
-  // TODO(#128) - introduce a polling policy to control the polling loop.
-  std::thread t(
-      [](std::shared_ptr<internal::DatabaseAdminStub> stub,
-         Polling ps) mutable {
-        auto deadline =
-            std::chrono::system_clock::now() + std::chrono::minutes(30);
-        while (!ps.operation.done() &&
-               std::chrono::system_clock::now() < deadline) {
-          auto remaining = deadline - std::chrono::system_clock::now();
-          auto sleep = (std::min)(
-              remaining,
-              std::chrono::duration_cast<decltype(remaining)>(ps.wait_time));
-          std::this_thread::sleep_for(sleep);
-          grpc::ClientContext poll_context;
-          google::longrunning::GetOperationRequest poll_request;
-          poll_request.set_name(ps.operation.name());
-          auto update = stub->GetOperation(poll_context, poll_request);
-          if (!update) {
-            stub.reset();
-            ps.promise.set_value(update.status());
-            return;
-          }
-          using std::swap;
-          swap(*update, ps.operation);
-          // Increase the wait time.
-          ps.wait_time *= 2;
-        }
-        if (ps.operation.done()) {
-          if (ps.operation.has_error()) {
-            // The long running operation failed, return the error to the
-            // caller.
-            stub.reset();
-            ps.promise.set_value(ToGoogleCloudStatus(ps.operation.error()));
-            return;
-          }
-          if (!ps.operation.has_response()) {
-            stub.reset();
-            ps.promise.set_value(Status(StatusCode::kUnknown,
-                                        "CreateDatabase operation completed "
-                                        "without error or response, name=" +
-                                            ps.operation.name()));
-            return;
-          }
-          google::protobuf::Any const& any = ps.operation.response();
-          if (!any.Is<gcsa::Database>()) {
-            stub.reset();
-            ps.promise.set_value(Status(StatusCode::kInternal,
-                                        "CreateDatabase operation completed "
-                                        "with an invalid response type, name=" +
-                                            ps.operation.name()));
-            return;
-          }
-          gcsa::Database result;
-          any.UnpackTo(&result);
-          stub.reset();
-          ps.promise.set_value(std::move(result));
-          return;
-        }
-        stub.reset();
-        ps.promise.set_value(Status(StatusCode::kDeadlineExceeded,
-                                    "Deadline exceeded in longrunning "
-                                    "operation for CreateDatabase, name=" +
-                                        ps.operation.name()));
-      },
-      stub_, std::move(polling_state));
-  t.detach();
-
-  return f;
+  return stub_->AwaitCreateDatabase(*std::move(operation));
 }
 
 Status DatabaseAdminClient::DropDatabase(std::string const& project_id,

@@ -38,6 +38,7 @@ add_library(spanner_client
             internal/database_admin_stub.h
             internal/date.cc
             internal/date.h
+            internal/polling_loop.h
             internal/retry_loop.cc
             internal/retry_loop.h
             internal/spanner_stub.cc
@@ -47,6 +48,7 @@ add_library(spanner_client
             internal/time_format.cc
             internal/time_format.h
             internal/tuple_utils.h
+            polling_policy.h
             retry_policy.h
             row.h
             row_parser.h
@@ -97,6 +99,7 @@ function (spanner_client_define_tests)
         database_admin_client_test.cc
         date_test.cc
         internal/date_test.cc
+        internal/polling_loop_test.cc
         internal/retry_loop_test.cc
         internal/spanner_stub_test.cc
         internal/time_format_test.cc

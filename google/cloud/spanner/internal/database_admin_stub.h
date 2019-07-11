@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_DATABASE_ADMIN_STUB_H_
 
 #include "google/cloud/spanner/client_options.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 
@@ -36,6 +37,11 @@ class DatabaseAdminStub {
       grpc::ClientContext& client_context,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) = 0;
+
+  /// Wait for a long-running operation to create a new Cloud Spanner database
+  /// completes.
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+      AwaitCreateDatabase(google::longrunning::Operation) = 0;
 
   /// Drop an existing Cloud Spanner database.
   virtual Status DropDatabase(

@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
+#include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
 
 namespace google {
@@ -50,6 +51,9 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+      AwaitCreateDatabase(google::longrunning::Operation) override;
+
   Status DropDatabase(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
@@ -63,6 +67,7 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
  private:
   void OverridePolicy(RetryPolicy const& p) { retry_policy_ = p.clone(); }
   void OverridePolicy(BackoffPolicy const& p) { backoff_policy_ = p.clone(); }
+  void OverridePolicy(PollingPolicy const& p) { polling_policy_ = p.clone(); }
   void OverridePolicies() {}
   template <typename Policy, typename... Policies>
   void OverridePolicies(Policy&& p, Policies&&... policies) {
@@ -78,6 +83,7 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
   std::shared_ptr<DatabaseAdminStub> child_;
   std::unique_ptr<RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
 };
 
 }  // namespace internal

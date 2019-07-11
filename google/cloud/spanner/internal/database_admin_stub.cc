@@ -36,8 +36,6 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   ~DefaultDatabaseAdminStub() override = default;
 
-  /// Start the long-running operation to create a new Cloud Spanner
-  /// database.
   StatusOr<google::longrunning::Operation> CreateDatabase(
       grpc::ClientContext& client_context,
       gcsa::v1::CreateDatabaseRequest const& request) override {
@@ -50,7 +48,12 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  /// Drop an existing Cloud Spanner database.
+  future<StatusOr<gcsa::v1::Database>> AwaitCreateDatabase(
+      google::longrunning::Operation) override {
+    return make_ready_future(StatusOr<gcsa::v1::Database>(
+        Status(StatusCode::kUnimplemented, __func__)));
+  }
+
   Status DropDatabase(grpc::ClientContext& client_context,
                       gcsa::v1::DropDatabaseRequest const& request) override {
     google::protobuf::Empty response;
@@ -62,7 +65,6 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return google::cloud::Status();
   }
 
-  /// Poll a long-running operation.
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) override {

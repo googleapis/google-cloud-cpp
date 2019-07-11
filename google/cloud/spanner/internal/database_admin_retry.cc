@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/database_admin_retry.h"
+#include "google/cloud/spanner/internal/polling_loop.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -54,11 +56,42 @@ std::unique_ptr<BackoffPolicy> DefaultAdminBackoffPolicy() {
       .clone();
 }
 
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT \
+  std::chrono::minutes(30)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF \
+  std::chrono::seconds(10)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF \
+  std::chrono::minutes(5)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING 2.0
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
+
+std::unique_ptr<PollingPolicy> DefaultAdminPollingPolicy() {
+  return GenericPollingPolicy<>(
+             LimitedTimeRetryPolicy(
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT),
+             ExponentialBackoffPolicy(
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF,
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF,
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING))
+      .clone();
+}
+
 DatabaseAdminRetry::DatabaseAdminRetry(PrivateConstructorTag,
                                        std::shared_ptr<DatabaseAdminStub> child)
     : child_(std::move(child)),
       retry_policy_(DefaultAdminRetryPolicy()),
-      backoff_policy_(DefaultAdminBackoffPolicy()) {}
+      backoff_policy_(DefaultAdminBackoffPolicy()),
+      polling_policy_(DefaultAdminPollingPolicy()) {}
 
 namespace gcsa = google::spanner::admin::database::v1;
 
@@ -71,6 +104,42 @@ StatusOr<google::longrunning::Operation> DatabaseAdminRetry::CreateDatabase(
         return child_->CreateDatabase(context, request);
       },
       context, request, __func__);
+}
+
+future<StatusOr<gcsa::Database>> DatabaseAdminRetry::AwaitCreateDatabase(
+    google::longrunning::Operation operation) {
+  promise<StatusOr<gcsa::Database>> promise;
+  auto f = promise.get_future();
+
+  // TODO(#127) - use the (implicit) completion queue to run this loop.
+  std::thread t(
+      [](std::shared_ptr<internal::DatabaseAdminStub> stub,
+         google::longrunning::Operation operation,
+         std::unique_ptr<PollingPolicy> polling_policy,
+         google::cloud::promise<StatusOr<gcsa::Database>> promise,
+         char const* location) mutable {
+        auto result = internal::PollingLoop<gcsa::Database>(
+            std::move(polling_policy),
+            [stub](grpc::ClientContext& context,
+                   google::longrunning::GetOperationRequest const& request) {
+              return stub->GetOperation(context, request);
+            },
+            std::move(operation), location);
+
+        // Release the stub before signalling the promise, this works around a
+        // peculiar behavior of googlemock: if the stub is a mock, it should be
+        // deleted before the test function returns. Otherwise the mock is
+        // declared "leaked" even if it is released later. Holding on to the
+        // stub here could extend its lifetime beyond the test function, as the
+        // detached thread may take a bit to terminate.
+        stub.reset();
+        promise.set_value(std::move(result));
+      },
+      child_, std::move(operation), polling_policy_->clone(),
+      std::move(promise), __func__);
+  t.detach();
+
+  return f;
 }
 
 Status DatabaseAdminRetry::DropDatabase(

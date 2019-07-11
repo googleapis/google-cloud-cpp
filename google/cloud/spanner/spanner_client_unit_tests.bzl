@@ -21,6 +21,7 @@ spanner_client_unit_tests = [
     "database_admin_client_test.cc",
     "date_test.cc",
     "internal/date_test.cc",
+    "internal/polling_loop_test.cc",
     "internal/retry_loop_test.cc",
     "internal/spanner_stub_test.cc",
     "internal/time_format_test.cc",
