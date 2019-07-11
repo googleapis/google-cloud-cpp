@@ -62,8 +62,8 @@ future<StatusOr<Accumulator>> StartAsyncRetryMultiPage(
  */
 template <typename AsyncCallType, typename Request, typename Accumulator,
           typename CombiningFunction,
-          typename Response = typename internal::AsyncCallResponseType<
-              AsyncCallType, Request>::type>
+          typename Response = typename google::cloud::grpc_utils::internal::
+              AsyncCallResponseType<AsyncCallType, Request>::type>
 class AsyncRetryMultiPageFuture {
  private:
   static_assert(

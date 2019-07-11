@@ -73,6 +73,12 @@ include(CreateBazelConfig)
 
 # the library
 add_library(google_cloud_cpp_grpc_utils
+            async_operation.h
+            completion_queue.h
+            completion_queue.cc
+            internal/completion_queue_impl.h
+            internal/completion_queue_impl.cc
+            internal/async_read_stream_impl.h
             grpc_error_delegate.h
             grpc_error_delegate.cc
             version.h

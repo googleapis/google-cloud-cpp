@@ -97,7 +97,6 @@ add_library(bigtable_client
             admin_client.cc
             app_profile_config.h
             app_profile_config.cc
-            async_operation.h
             async_row_reader.h
             cell.h
             client_options.h
@@ -107,7 +106,6 @@ add_library(bigtable_client
             cluster_list_responses.h
             column_family.h
             completion_queue.h
-            completion_queue.cc
             data_client.h
             data_client.cc
             expr.h
@@ -130,7 +128,6 @@ add_library(bigtable_client
             internal/async_bulk_apply.cc
             internal/async_longrunning_op.h
             internal/async_poll_op.h
-            internal/async_read_stream_impl.h
             internal/async_retry_multi_page.h
             internal/async_retry_op.h
             internal/async_retry_unary_rpc.h
@@ -138,8 +135,6 @@ add_library(bigtable_client
             internal/bulk_mutator.h
             internal/bulk_mutator.cc
             internal/client_options_defaults.h
-            internal/completion_queue_impl.h
-            internal/completion_queue_impl.cc
             internal/common_client.h
             internal/common_client.cc
             internal/conjunction.h

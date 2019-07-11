@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/grpc_utils/completion_queue.h"
 #include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace grpc_utils {
+inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
 namespace {
 /**
  * Wrap a gRPC timer into an `AsyncOperation`.
@@ -38,7 +38,7 @@ namespace {
  */
 class AsyncTimerFuture : public internal::AsyncGrpcOperation {
  public:
-  AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
+  explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
       : alarm_(std::move(alarm)) {}
 
   future<std::chrono::system_clock::time_point> GetFuture() {
@@ -89,7 +89,7 @@ CompletionQueue::MakeDeadlineTimer(
   return op->GetFuture();
 }
 
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
+}  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

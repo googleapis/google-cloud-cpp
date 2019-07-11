@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_DATA_CLIENT_H_
 
 #include "google/cloud/bigtable/client_options.h"
-#include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/row.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>

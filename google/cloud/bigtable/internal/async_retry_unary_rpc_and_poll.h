@@ -15,14 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_UNARY_RPC_AND_POLL_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_RETRY_UNARY_RPC_AND_POLL_H_
 
-#include "google/cloud/bigtable/async_operation.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/async_longrunning_op.h"
 #include "google/cloud/bigtable/internal/async_poll_op.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
-#include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc_utils/internal/completion_queue_impl.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <sstream>
 
@@ -66,8 +65,8 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
     MetadataUpdatePolicy metadata_update_policy, std::shared_ptr<Client> client,
     AsyncCallType async_call, RequestType request, CompletionQueue cq) {
   static_assert(
-      std::is_same<typename internal::AsyncCallResponseType<AsyncCallType,
-                                                            RequestType>::type,
+      std::is_same<typename google::cloud::grpc_utils::internal::
+                       AsyncCallResponseType<AsyncCallType, RequestType>::type,
                    google::longrunning::Operation>::value,
       "async_call should return a google::longrunning::Operation");
   return StartAsyncLongrunningOp<Client, Response>(

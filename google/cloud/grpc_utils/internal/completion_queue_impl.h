@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_COMPLETION_QUEUE_IMPL_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_COMPLETION_QUEUE_IMPL_H_
 
-#include "google/cloud/bigtable/async_operation.h"
-#include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
+#include "google/cloud/grpc_utils/async_operation.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace grpc_utils {
+inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
 class CompletionQueue;
 namespace internal {
 
@@ -288,9 +288,9 @@ class CompletionQueueImpl {
 };
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
+}  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_COMPLETION_QUEUE_IMPL_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_COMPLETION_QUEUE_IMPL_H_
