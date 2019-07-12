@@ -161,3 +161,53 @@ endif (BUILD_TESTING)
 
 add_subdirectory(integration_tests)
 add_subdirectory(samples)
+
+# Get the destination directories based on the GNU recommendations.
+include(GNUInstallDirs)
+
+# Export the CMake targets to make it easy to create configuration files.
+install(EXPORT spanner-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
+
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(TARGETS spanner_client
+        EXPORT spanner-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
+        DESTINATION include/google/cloud/spanner
+        FILES_MATCHING
+        PATTERN "*.h")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
+        DESTINATION include/google/cloud/spanner
+        FILES_MATCHING
+        PATTERN "*.inc")
+
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_MINOR ${SPANNER_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_PATCH ${SPANNER_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_SPANNER_PC_NAME "The Google Cloud Spanner C++ Client Library")
+set(GOOGLE_CLOUD_SPANNER_PC_DESCRIPTION
+    "Provides C++ APIs to access Google Cloud Spanner.")
+set(GOOGLE_CLOUD_SPANNER_PC_REQUIRES
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
+set(GOOGLE_CLOUD_SPANNER_PC_LIBS "-lspanner_client")
+
+# Create and install the pkg-config files.
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
+               "spanner_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+# Create and install the CMake configuration files.
+configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
+configure_file(
+    "${PROJECT_SOURCE_DIR}/google/cloud/spanner/config-version.cmake.in"
+    "spanner_client-config-version.cmake" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
