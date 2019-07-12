@@ -53,6 +53,8 @@ add_library(spanner_client
             retry_policy.h
             row.h
             row_parser.h
+            sql_partition.cc
+            sql_partition.h
             sql_statement.cc
             sql_statement.h
             timestamp.h
@@ -83,8 +85,6 @@ add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 include(CreateBazelConfig)
 create_bazel_config(spanner_client)
 
-find_package(google_cloud_cpp_common CONFIG REQUIRED)
-
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -109,6 +109,7 @@ function (spanner_client_define_tests)
         retry_policy_test.cc
         row_test.cc
         row_parser_test.cc
+        sql_partition_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
         value_test.cc)

@@ -30,6 +30,7 @@ spanner_client_unit_tests = [
     "retry_policy_test.cc",
     "row_test.cc",
     "row_parser_test.cc",
+    "sql_partition_test.cc",
     "spanner_version_test.cc",
     "sql_statement_test.cc",
     "value_test.cc",
