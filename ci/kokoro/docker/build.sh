@@ -172,9 +172,14 @@ echo "================================================================"
 echo "Running the full build inside docker $(date)."
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
-# user ID, if known.
-docker_uid="${UID:-0}"
-docker_user="${USER:-root}"
+# user ID, if known. TEST_INSTALL=yes builds work better as root, but other
+# builds should avoid creating root-owned files in the build directory.
+docker_uid=0
+docker_user=root
+if [ "${TEST_INSTALL:-}" != "yes" ]; then
+  docker_uid="${UID:-0}"
+  docker_user="${USER:-root}"
+fi
 docker_home_prefix="${PWD}/cmake-out/home"
 if [[ "${docker_uid}" == "0" ]]; then
   # If the UID is 0, then the HOME directory will be set to /root, and we
