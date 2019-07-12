@@ -118,7 +118,8 @@ future<StatusOr<gcsa::Database>> DatabaseAdminRetry::AwaitCreateDatabase(
          std::unique_ptr<PollingPolicy> polling_policy,
          google::cloud::promise<StatusOr<gcsa::Database>> promise,
          char const* location) mutable {
-        auto result = internal::PollingLoop<gcsa::Database>(
+        auto result = internal::PollingLoop<
+            internal::PollingLoopResponseExtractor<gcsa::Database>>(
             std::move(polling_policy),
             [stub](grpc::ClientContext& context,
                    google::longrunning::GetOperationRequest const& request) {

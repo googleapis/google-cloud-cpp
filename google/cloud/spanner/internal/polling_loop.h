@@ -28,6 +28,65 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+/**
+ * Extract the result of a long-running operation from the `response` field.
+ */
+template <typename ResultType>
+struct PollingLoopResponseExtractor {
+  using ReturnType = StatusOr<ResultType>;
+
+  static ReturnType Extract(google::longrunning::Operation const& operation,
+                            char const* location) {
+    if (!operation.has_response()) {
+      return Status(StatusCode::kInternal,
+                    std::string(location) +
+                        "() operation completed "
+                        "without error or response, name=" +
+                        operation.name());
+    }
+    google::protobuf::Any const& any = operation.response();
+    if (!any.Is<ResultType>()) {
+      return Status(StatusCode::kInternal,
+                    std::string(location) +
+                        "() operation completed "
+                        "with an invalid response type, name=" +
+                        operation.name());
+    }
+    ResultType result;
+    any.UnpackTo(&result);
+    return result;
+  }
+};
+
+/**
+ * Extract the result of a long-running operation from the `metadata` field.
+ */
+template <typename ResultType>
+struct PollingLoopMetadataExtractor {
+  using ReturnType = StatusOr<ResultType>;
+
+  static ReturnType Extract(google::longrunning::Operation const& operation,
+                            char const* location) {
+    if (!operation.has_metadata()) {
+      return Status(StatusCode::kInternal,
+                    std::string(location) +
+                        "() operation completed "
+                        "without error or metadata, name=" +
+                        operation.name());
+    }
+    google::protobuf::Any const& any = operation.metadata();
+    if (!any.Is<ResultType>()) {
+      return Status(StatusCode::kInternal,
+                    std::string(location) +
+                        "() operation completed "
+                        "with an invalid metadata type, name=" +
+                        operation.name());
+    }
+    ResultType result;
+    any.UnpackTo(&result);
+    return result;
+  }
+};
 
 /**
  * A generic retry loop for gRPC operations.
@@ -52,13 +111,13 @@ namespace internal {
  * @return the result of the first successful call to @p functor, or a
  *     `google::cloud::Status` that indicates the final error for this request.
  */
-template <typename ResultType, typename Functor, typename Sleeper,
+template <typename ValueExtractor, typename Functor, typename Sleeper,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
                   Functor, grpc::ClientContext&,
                   google::longrunning::GetOperationRequest const&>::value,
               int>::type = 0>
-StatusOr<ResultType> PollingLoopImpl(
+typename ValueExtractor::ReturnType PollingLoopImpl(
     std::unique_ptr<PollingPolicy> polling_policy, Functor&& functor,
     google::longrunning::Operation operation, char const* location,
     Sleeper sleeper) {
@@ -86,38 +145,20 @@ StatusOr<ResultType> PollingLoopImpl(
     // caller.
     return google::cloud::grpc_utils::MakeStatusFromRpcError(operation.error());
   }
-  if (!operation.has_response()) {
-    return Status(StatusCode::kInternal,
-                  std::string(location) +
-                      "() operation completed "
-                      "without error or response, name=" +
-                      operation.name());
-  }
-  google::protobuf::Any const& any = operation.response();
-  if (!any.Is<ResultType>()) {
-    return Status(StatusCode::kInternal,
-                  std::string(location) +
-                      "() operation completed "
-                      "with an invalid response type, name=" +
-                      operation.name());
-  }
-  ResultType result;
-  any.UnpackTo(&result);
-  return result;
+  return ValueExtractor::Extract(operation, location);
 }
 
 /// @copydoc RetryLoopImpl
-template <typename ResultType, typename Functor,
+template <typename ValueExtractor, typename Functor,
           typename std::enable_if<
               google::cloud::internal::is_invocable<
                   Functor, grpc::ClientContext&,
                   google::longrunning::GetOperationRequest const&>::value,
               int>::type = 0>
-StatusOr<ResultType> PollingLoop(std::unique_ptr<PollingPolicy> polling_policy,
-                                 Functor&& functor,
-                                 google::longrunning::Operation operation,
-                                 char const* location) {
-  return PollingLoopImpl<ResultType>(
+typename ValueExtractor::ReturnType PollingLoop(
+    std::unique_ptr<PollingPolicy> polling_policy, Functor&& functor,
+    google::longrunning::Operation operation, char const* location) {
+  return PollingLoopImpl<ValueExtractor>(
       std::move(polling_policy), std::forward<Functor>(functor),
       std::move(operation), location,
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); });

@@ -35,6 +35,80 @@ std::unique_ptr<PollingPolicy> TestPollingPolicy() {
       .clone();
 }
 
+TEST(PollingLoopTest, ExtractResponseSuccess) {
+  google::protobuf::Value expected;
+  expected.set_string_value("42");
+
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  operation.mutable_response()->PackFrom(expected);
+  auto actual = PollingLoopResponseExtractor<google::protobuf::Value>::Extract(
+      operation, "test-location");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("42", actual->string_value());
+}
+
+TEST(PollingLoopTest, ExtractResponseUnsetFailure) {
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  auto actual = PollingLoopResponseExtractor<google::protobuf::Value>::Extract(
+      operation, "test-location");
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
+}
+
+TEST(PollingLoopTest, ExtractResponseInvalidContentsFailure) {
+  google::protobuf::Empty error;
+
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  operation.mutable_response()->PackFrom(error);
+  auto actual = PollingLoopResponseExtractor<google::protobuf::Value>::Extract(
+      operation, "test-location");
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
+}
+
+TEST(PollingLoopTest, ExtractMetadataSuccess) {
+  google::protobuf::Value expected;
+  expected.set_string_value("42");
+
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  operation.mutable_metadata()->PackFrom(expected);
+  auto actual = PollingLoopMetadataExtractor<google::protobuf::Value>::Extract(
+      operation, "test-location");
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("42", actual->string_value());
+}
+
+TEST(PollingLoopTest, ExtractMetadataUnsetFailure) {
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  auto actual = PollingLoopMetadataExtractor<google::protobuf::Value>::Extract(
+      operation, "test-location");
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
+}
+
+TEST(PollingLoopTest, ExtractMetadataInvalidContentsFailure) {
+  google::protobuf::Empty error;
+
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  operation.mutable_metadata()->PackFrom(error);
+  auto actual = PollingLoopMetadataExtractor<google::protobuf::Value>::Extract(
+      operation, "test-location");
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
+}
+
 TEST(PollingLoopTest, ImmediateSuccess) {
   google::protobuf::Value expected;
   expected.set_string_value("42");
@@ -45,7 +119,7 @@ TEST(PollingLoopTest, ImmediateSuccess) {
   operation.mutable_response()->PackFrom(expected);
 
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [](grpc::ClientContext&,
              google::longrunning::GetOperationRequest const&) {
@@ -69,7 +143,7 @@ TEST(PollingLoopTest, ImmediateFailure) {
   *operation.mutable_error() = error;
 
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [](grpc::ClientContext&,
              google::longrunning::GetOperationRequest const&) {
@@ -92,7 +166,7 @@ TEST(PollingLoopTest, SuccessWithSuccessfulPolling) {
 
   int counter = 3;
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [expected, &counter](
               grpc::ClientContext&,
@@ -123,7 +197,7 @@ TEST(PollingLoopTest, FailureWithSuccessfulPolling) {
 
   int counter = 3;
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [error, &counter](grpc::ClientContext&,
                             google::longrunning::GetOperationRequest const& r) {
@@ -152,7 +226,7 @@ TEST(PollingLoopTest, SuccessWithTransientFailures) {
 
   int counter = 4;
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [expected, &counter](
               grpc::ClientContext&,
@@ -183,7 +257,7 @@ TEST(PollingLoopTest, FailurePermanentError) {
   operation.set_done(false);
 
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [](grpc::ClientContext&,
              google::longrunning::GetOperationRequest const&) {
@@ -200,7 +274,7 @@ TEST(PollingLoopTest, FailureTooManyTransients) {
   operation.set_done(false);
 
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [](grpc::ClientContext&,
              google::longrunning::GetOperationRequest const&) {
@@ -217,7 +291,7 @@ TEST(PollingLoopTest, FailureMissingResponseAndError) {
   operation.set_done(true);
 
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [](grpc::ClientContext&,
              google::longrunning::GetOperationRequest const&) {
@@ -228,7 +302,24 @@ TEST(PollingLoopTest, FailureMissingResponseAndError) {
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
 
-TEST(PollingLoopTest, FailureInvalidContents) {
+TEST(PollingLoopTest, FailureMissingMetadataAndError) {
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+
+  StatusOr<google::protobuf::Value> actual =
+      PollingLoop<PollingLoopMetadataExtractor<google::protobuf::Value>>(
+          TestPollingPolicy(),
+          [](grpc::ClientContext&,
+             google::longrunning::GetOperationRequest const&) {
+            return make_status_or(google::longrunning::Operation{});
+          },
+          operation, "test-location");
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
+}
+
+TEST(PollingLoopTest, FailureInvalidContents_Response) {
   google::protobuf::Empty contents;
   google::longrunning::Operation operation;
   operation.set_name("test-operation");
@@ -236,7 +327,26 @@ TEST(PollingLoopTest, FailureInvalidContents) {
   operation.mutable_response()->PackFrom(contents);
 
   StatusOr<google::protobuf::Value> actual =
-      PollingLoop<google::protobuf::Value>(
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
+          TestPollingPolicy(),
+          [](grpc::ClientContext&,
+             google::longrunning::GetOperationRequest const&) {
+            return make_status_or(google::longrunning::Operation{});
+          },
+          operation, "test-location");
+  EXPECT_EQ(StatusCode::kInternal, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
+}
+
+TEST(PollingLoopTest, FailureInvalidContents_Metadata) {
+  google::protobuf::Empty contents;
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(true);
+  operation.mutable_metadata()->PackFrom(contents);
+
+  StatusOr<google::protobuf::Value> actual =
+      PollingLoop<PollingLoopMetadataExtractor<google::protobuf::Value>>(
           TestPollingPolicy(),
           [](grpc::ClientContext&,
              google::longrunning::GetOperationRequest const&) {
