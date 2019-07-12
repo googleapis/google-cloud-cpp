@@ -70,6 +70,34 @@ void CreateDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void AddColumn(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "add-column <project-id> <instance-id> <database-id>");
+  }
+
+  //! [update-database] [START spanner_add_column]
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& database_id) {
+    google::cloud::spanner::DatabaseAdminClient client;
+    future<StatusOr<
+        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+        future = client.UpdateDatabase(
+            project_id, instance_id, database_id,
+            {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+        metadata = future.get();
+    if (!metadata) {
+      throw std::runtime_error(metadata.status().message());
+    }
+    std::cout << "Added MarketingBudget column\n";
+  }
+  //! [update-database] [END spanner_add_column]
+  (argv[0], argv[1], argv[2]);
+}
+
 void DropDatabase(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -96,6 +124,7 @@ int RunOneCommand(std::vector<std::string> argv) {
 
   std::map<std::string, CommandType> commands = {
       {"create-database", &CreateDatabase},
+      {"add-column", &AddColumn},
       {"drop-database", &DropDatabase},
   };
 
@@ -157,6 +186,7 @@ void RunAll() {
   std::string database_id = RandomDatabaseName(generator);
 
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
+  RunOneCommand({"", "add-column", project_id, instance_id, database_id});
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
 

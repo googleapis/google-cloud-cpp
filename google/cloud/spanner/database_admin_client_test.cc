@@ -41,6 +41,16 @@ class MockDatabaseAdminClientStub : public internal::DatabaseAdminStub {
                                         google::longrunning::Operation));
 
   // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+  MOCK_METHOD2(UpdateDatabase, StatusOr<google::longrunning::Operation>(
+                                   grpc::ClientContext&,
+                                   gcsa::UpdateDatabaseDdlRequest const&));
+
+  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
+  MOCK_METHOD1(AwaitUpdateDatabase,
+               future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>(
+                   google::longrunning::Operation));
+
+  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(DropDatabase,
                Status(grpc::ClientContext&, gcsa::DropDatabaseRequest const&));
 
@@ -104,6 +114,63 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
   EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
 }
 
+/// @test Verify that successful case works.
+TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
+  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+
+  EXPECT_CALL(*mock, UpdateDatabase(_, _))
+      .WillOnce(Invoke(
+          [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
+            gcsa::UpdateDatabaseDdlMetadata metadata;
+            metadata.set_database("test-db");
+            google::longrunning::Operation op;
+            op.set_name("test-operation-name");
+            op.set_done(true);
+            op.mutable_response()->PackFrom(metadata);
+            return make_status_or(op);
+          }));
+  EXPECT_CALL(*mock, AwaitUpdateDatabase(_))
+      .WillOnce(Invoke([](google::longrunning::Operation const& op) {
+        EXPECT_EQ("test-operation-name", op.name());
+        EXPECT_TRUE(op.done());
+        EXPECT_TRUE(op.has_response());
+        gcsa::UpdateDatabaseDdlMetadata metadata;
+        op.response().UnpackTo(&metadata);
+        return make_ready_future(make_status_or(metadata));
+      }));
+
+  DatabaseAdminClient client(mock);
+  auto fut = client.UpdateDatabase(
+      "test-project", "test-instance", "test-db",
+      {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto metadata = fut.get();
+  EXPECT_STATUS_OK(metadata);
+
+  EXPECT_EQ("test-db", metadata->database());
+}
+
+/// @test Verify that a permanent error in UpdateDatabase is immediately
+/// reported.
+TEST(DatabaseAdminClientTest, HandleUpdateDatabaseError) {
+  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+
+  EXPECT_CALL(*mock, UpdateDatabase(_, _))
+      .WillOnce(Invoke(
+          [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
+            return StatusOr<google::longrunning::Operation>(
+                Status(StatusCode::kPermissionDenied, "uh-oh"));
+          }));
+
+  DatabaseAdminClient client(mock);
+  auto fut = client.UpdateDatabase(
+      "test-project", "test-instance", "test-db",
+      {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto db = fut.get();
+  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+}
+
 /// @test Verify that errors in the polling loop are reported.
 TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
   auto mock = std::make_shared<MockDatabaseAdminClientStub>();
@@ -126,6 +193,34 @@ TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
   DatabaseAdminClient client(mock);
   auto db =
       client.CreateDatabase("test-project", "test-instance", "test-db").get();
+  EXPECT_EQ(StatusCode::kAborted, db.status().code());
+}
+
+/// @test Verify that errors in the polling loop are reported.
+TEST(DatabaseAdminClientTest, HandleAwaitUpdateDatabaseError) {
+  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+
+  EXPECT_CALL(*mock, UpdateDatabase(_, _))
+      .WillOnce(Invoke(
+          [](grpc::ClientContext&, gcsa::UpdateDatabaseDdlRequest const&) {
+            google::longrunning::Operation op;
+            op.set_name("test-operation-name");
+            op.set_done(false);
+            return make_status_or(std::move(op));
+          }));
+  EXPECT_CALL(*mock, AwaitUpdateDatabase(_))
+      .WillOnce(Invoke([](google::longrunning::Operation const& op) {
+        EXPECT_EQ("test-operation-name", op.name());
+        return make_ready_future(StatusOr<gcsa::UpdateDatabaseDdlMetadata>(
+            Status(StatusCode::kAborted, "oh noes")));
+      }));
+
+  DatabaseAdminClient client(mock);
+  auto db = client
+                .UpdateDatabase(
+                    "test-project", "test-instance", "test-db",
+                    {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"})
+                .get();
   EXPECT_EQ(StatusCode::kAborted, db.status().code());
 }
 

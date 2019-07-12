@@ -48,6 +48,27 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
   return stub_->AwaitCreateDatabase(*std::move(operation));
 }
 
+future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
+DatabaseAdminClient::UpdateDatabase(
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id,
+    std::vector<std::string> const& statements) {
+  grpc::ClientContext context;
+  gcsa::UpdateDatabaseDdlRequest request;
+  request.set_database("projects/" + project_id + "/instances/" + instance_id +
+                       "/databases/" + database_id);
+  for (auto const& s : statements) {
+    *request.add_statements() = s;
+  }
+  auto operation = stub_->UpdateDatabase(context, request);
+  if (!operation) {
+    return google::cloud::make_ready_future(
+        StatusOr<gcsa::UpdateDatabaseDdlMetadata>(operation.status()));
+  }
+
+  return stub_->AwaitUpdateDatabase(*std::move(operation));
+}
+
 Status DatabaseAdminClient::DropDatabase(std::string const& project_id,
                                          std::string const& instance_id,
                                          std::string const& database_id) {

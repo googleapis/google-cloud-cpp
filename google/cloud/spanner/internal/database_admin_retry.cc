@@ -143,6 +143,59 @@ future<StatusOr<gcsa::Database>> DatabaseAdminRetry::AwaitCreateDatabase(
   return f;
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminRetry::UpdateDatabase(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+        request) {
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), false,
+      [this](grpc::ClientContext& context,
+             gcsa::UpdateDatabaseDdlRequest const& request) {
+        return child_->UpdateDatabase(context, request);
+      },
+      context, request, __func__);
+}
+
+future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
+DatabaseAdminRetry::AwaitUpdateDatabase(
+    google::longrunning::Operation operation) {
+  promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> pr;
+  auto f = pr.get_future();
+
+  // TODO(#127) - use the (implicit) completion queue to run this loop.
+  std::thread t(
+      [](std::shared_ptr<internal::DatabaseAdminStub> stub,
+         google::longrunning::Operation operation,
+         std::unique_ptr<PollingPolicy> polling_policy,
+         promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> promise,
+         char const* location) mutable {
+        auto result =
+            internal::PollingLoop<internal::PollingLoopMetadataExtractor<
+                gcsa::UpdateDatabaseDdlMetadata>>(
+                std::move(polling_policy),
+                [stub](
+                    grpc::ClientContext& context,
+                    google::longrunning::GetOperationRequest const& request) {
+                  return stub->GetOperation(context, request);
+                },
+                std::move(operation), location);
+
+        // Release the stub before signalling the promise, this works around a
+        // peculiar behavior of googlemock: if the stub is a mock, it should be
+        // deleted before the test function returns. Otherwise the mock is
+        // declared "leaked" even if it is released later. Holding on to the
+        // stub here could extend its lifetime beyond the test function, as the
+        // detached thread may take a bit to terminate.
+        stub.reset();
+        promise.set_value(std::move(result));
+      },
+      child_, std::move(operation), polling_policy_->clone(), std::move(pr),
+      __func__);
+  t.detach();
+
+  return f;
+}
+
 Status DatabaseAdminRetry::DropDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {

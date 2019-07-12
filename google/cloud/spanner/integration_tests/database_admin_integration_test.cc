@@ -24,6 +24,8 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::testing::EndsWith;
+
 std::string RandomDatabaseName(
     google::cloud::internal::DefaultPRNG& generator) {
   // A database ID must be between 2 and 30 characters, fitting the regular
@@ -55,9 +57,29 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto database_future =
       client.CreateDatabase(project_id, instance_id, database_id);
   auto database = database_future.get();
-  EXPECT_STATUS_OK(database);
+  ASSERT_STATUS_OK(database);
 
-  EXPECT_THAT(database->name(), ::testing::EndsWith(database_id));
+  EXPECT_THAT(database->name(), EndsWith(database_id));
+
+  auto const create_table_statement = R"""(
+                             CREATE TABLE Singers (
+                                SingerId   INT64 NOT NULL,
+                                FirstName  STRING(1024),
+                                LastName   STRING(1024),
+                                SingerInfo BYTES(MAX)
+                             ) PRIMARY KEY (SingerId)
+                            )""";
+
+  auto update_future = client.UpdateDatabase(
+      project_id, instance_id, database_id, {create_table_statement});
+  auto metadata = update_future.get();
+  EXPECT_STATUS_OK(metadata);
+  EXPECT_THAT(metadata->database(), EndsWith(database_id));
+  EXPECT_EQ(1, metadata->statements_size());
+  EXPECT_EQ(1, metadata->commit_timestamps_size());
+  if (metadata->statements_size() > 1) {
+    EXPECT_EQ(create_table_statement, metadata->statements(0));
+  }
 
   auto drop_status = client.DropDatabase(project_id, instance_id, database_id);
   EXPECT_STATUS_OK(drop_status);

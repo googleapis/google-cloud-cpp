@@ -141,6 +141,28 @@ class DatabaseAdminClient {
                  std::vector<std::string> const& extra_statements = {});
 
   /**
+   * Updates the database using a series of DDL statements.
+   *
+   * This function schedules a series of updates to the database using a
+   * sequence of DDL statements.
+   *
+   * @return A `google::cloud::future` that becomes satisfied when all the
+   *   statements complete. Note that Cloud Spanner may fail to execute some of
+   *   the statements.
+   *
+   * @par Example
+   * @snippet database_admin_samples.cc update-database
+   *
+   * @see https://cloud.google.com/spanner/docs/data-definition-language for a
+   *     full list of the DDL operations
+   */
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  UpdateDatabase(std::string const& project_id, std::string const& instance_id,
+                 std::string const& database_id,
+                 std::vector<std::string> const& statements);
+
+  /**
    * Drops (deletes) an existing Cloud Spanner database.
    *
    * @warning Dropping a database deletes all the tables and other data in the

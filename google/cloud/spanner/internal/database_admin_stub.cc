@@ -22,14 +22,14 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace gcsa = google::spanner::admin::database;
+namespace gcsa = google::spanner::admin::database::v1;
 
 DatabaseAdminStub::~DatabaseAdminStub() = default;
 
 class DefaultDatabaseAdminStub : public DatabaseAdminStub {
  public:
   DefaultDatabaseAdminStub(
-      std::unique_ptr<gcsa::v1::DatabaseAdmin::Stub> database_admin,
+      std::unique_ptr<gcsa::DatabaseAdmin::Stub> database_admin,
       std::unique_ptr<google::longrunning::Operations::Stub> operations)
       : database_admin_(std::move(database_admin)),
         operations_(std::move(operations)) {}
@@ -38,7 +38,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
   StatusOr<google::longrunning::Operation> CreateDatabase(
       grpc::ClientContext& client_context,
-      gcsa::v1::CreateDatabaseRequest const& request) override {
+      gcsa::CreateDatabaseRequest const& request) override {
     google::longrunning::Operation response;
     grpc::Status status =
         database_admin_->CreateDatabase(&client_context, request, &response);
@@ -48,14 +48,33 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
-  future<StatusOr<gcsa::v1::Database>> AwaitCreateDatabase(
+  future<StatusOr<gcsa::Database>> AwaitCreateDatabase(
       google::longrunning::Operation) override {
-    return make_ready_future(StatusOr<gcsa::v1::Database>(
+    return make_ready_future(
+        StatusOr<gcsa::Database>(Status(StatusCode::kUnimplemented, __func__)));
+  }
+
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override {
+    google::longrunning::Operation response;
+    grpc::Status status =
+        database_admin_->UpdateDatabaseDdl(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> AwaitUpdateDatabase(
+      google::longrunning::Operation) override {
+    return make_ready_future(StatusOr<gcsa::UpdateDatabaseDdlMetadata>(
         Status(StatusCode::kUnimplemented, __func__)));
   }
 
   Status DropDatabase(grpc::ClientContext& client_context,
-                      gcsa::v1::DropDatabaseRequest const& request) override {
+                      gcsa::DropDatabaseRequest const& request) override {
     google::protobuf::Empty response;
     grpc::Status status =
         database_admin_->DropDatabase(&client_context, request, &response);
@@ -78,7 +97,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
   }
 
  private:
-  std::unique_ptr<gcsa::v1::DatabaseAdmin::Stub> database_admin_;
+  std::unique_ptr<gcsa::DatabaseAdmin::Stub> database_admin_;
   std::unique_ptr<google::longrunning::Operations::Stub> operations_;
 };
 
@@ -86,7 +105,7 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
     ClientOptions const& options) {
   auto channel =
       grpc::CreateChannel(options.admin_endpoint(), options.credentials());
-  auto spanner_grpc_stub = gcsa::v1::DatabaseAdmin::NewStub(channel);
+  auto spanner_grpc_stub = gcsa::DatabaseAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
 

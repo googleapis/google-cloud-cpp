@@ -54,6 +54,15 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
   future<StatusOr<google::spanner::admin::database::v1::Database>>
       AwaitCreateDatabase(google::longrunning::Operation) override;
 
+  StatusOr<google::longrunning::Operation> UpdateDatabase(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
+          request) override;
+
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+  AwaitUpdateDatabase(google::longrunning::Operation operation) override;
+
   Status DropDatabase(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
