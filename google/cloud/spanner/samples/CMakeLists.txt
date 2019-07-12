@@ -17,16 +17,15 @@
 include(EnableClangTidy)
 include(EnableWerror)
 
-function (spanner_client_define_examples)
-    set(spanner_client_examples database_admin_snippets.cc)
+function (spanner_client_define_samples)
+    set(spanner_client_samples database_admin_samples.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
-    export_list_to_bazel("spanner_client_examples.bzl"
-                         "spanner_client_examples")
+    export_list_to_bazel("spanner_client_samples.bzl" "spanner_client_samples")
 
     # Generate a target for each unit test.
-    foreach (fname ${spanner_client_examples})
+    foreach (fname ${spanner_client_samples})
         string(REPLACE "/"
                        "_"
                        target
@@ -45,5 +44,5 @@ function (spanner_client_define_examples)
 endfunction ()
 
 if (BUILD_TESTING)
-    spanner_client_define_examples()
+    spanner_client_define_samples()
 endif (BUILD_TESTING)
