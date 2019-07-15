@@ -326,18 +326,16 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
+  auto expected_md5hash = ComputeMD5Hash(expected);
 
   // Create the object, but only if it does not exist already.
   auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                                MD5HashValue("96HF9K981B+JfoQuTVnyCg=="),
-                                Crc32cChecksumValue("6Y46Mg=="));
+                                MD5HashValue(expected_md5hash));
+
   os.exceptions(std::ios_base::failbit);
-
   os << expected;
-
-  auto expected_md5hash = ComputeMD5Hash(expected);
-
   os.Close();
+
   ObjectMetadata meta = os.metadata().value();
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
@@ -356,16 +354,13 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
 
   std::string expected = LoremIpsum();
 
-  // Create the object, but only if it does not exist already.
+  // Create the object, but only if it does not exist already. Dummy MD5HasValue
+  // is passed during WriteObject.
   auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
-                                MD5HashValue("85HF9K981B+JfoQuTVnyDh=="),
-                                Crc32cChecksumValue("6Y46Mg=="));
+                                MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
+
   os.exceptions(std::ios_base::failbit);
-
   os << expected;
-
-  auto expected_md5hash = ComputeMD5Hash(expected);
-
   os.Close();
 
   EXPECT_TRUE(os.bad());
@@ -382,17 +377,13 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
 
   std::string expected = LoremIpsum();
 
-  // Create the object, but only if it does not exist already.
+  // Create the object, but only if it does not exist already. Dummy MD5HasValue
+  // is passed during WriteObject.
   auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                 Projection::Full(),
-                                MD5HashValue("85HF9K981B+JfoQuTVnyDh=="),
-                                Crc32cChecksumValue("6Y46Mg=="));
+                                MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
   os.exceptions(std::ios_base::failbit);
-
   os << expected;
-
-  auto expected_md5hash = ComputeMD5Hash(expected);
-
   os.Close();
 
   EXPECT_TRUE(os.bad());
