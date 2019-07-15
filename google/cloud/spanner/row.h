@@ -183,6 +183,37 @@ class Row {
   std::tuple<Types...>&& get() && { return std::move(values_); }
   std::tuple<Types...> const&& get() const&& { return std::move(values_); }
 
+  /**
+   * Returns a std::array of `Value` objects holding all the items in this row.
+   *
+   * @note: If the Row's values are large, it may be move efficient to "move"
+   *     them into the returned array.
+   *
+   * @par Example
+   *
+   * @code
+   * auto row = MakeRow(true, "foo", 42);
+   * std::array<Value, 3> a = row.values();
+   * assert(a[0].get<bool>() == true);
+   * assert(a[1].get<std::string>() == "foo");
+   * assert(a[2].get<std::int64_t>() == 42);
+   *
+   * // Potentially more efficient if `row` is no longer needed.
+   * std::array<Value, 3> b = std::move(row).values();
+   * @endcode
+   */
+  std::array<Value, size()> values() const& {
+    std::array<Value, size()> array;
+    internal::ForEach(values_, InsertValue{array, 0});
+    return array;
+  }
+  /// @copydoc values()
+  std::array<Value, size()> values() && {
+    std::array<Value, size()> array;
+    internal::ForEach(std::move(values_), InsertValue{array, 0});
+    return array;
+  }
+
   /// @name Equality operators
   ///@{
   friend bool operator==(Row const& a, Row const& b) {
@@ -210,6 +241,17 @@ class Row {
   ///@}
 
  private:
+  // A helper functor to be used with `internal::ForEach` that adds each
+  // element of the values_ tuple to an array of `Value` objects.
+  struct InsertValue {
+    std::array<Value, size()>& array;
+    std::size_t i;
+    template <typename T>
+    void operator()(T&& t) {
+      array[i++] = Value(std::forward<T>(t));
+    }
+  };
+
   std::tuple<Types...> values_;
 };
 
