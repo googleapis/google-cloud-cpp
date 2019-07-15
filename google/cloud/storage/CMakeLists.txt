@@ -414,7 +414,10 @@ if (BUILD_TESTING)
 endif ()
 
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    # TODO(#2878) - change benchmarks to compile when exceptions are disabled.
     add_subdirectory(benchmarks)
+    # The examples are more readable if we use exceptions for error handling.
+    # We had to tradeoff readability vs. "making them compile everywhere".
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
