@@ -218,7 +218,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
         request.template GetOption<Crc32cChecksumValue>().value();
   }
   if (request.template HasOption<MD5HashValue>()) {
-    resource["md5"] = request.template GetOption<MD5HashValue>().value();
+    resource["md5Hash"] = request.template GetOption<MD5HashValue>().value();
   }
 
   if (resource.empty()) {

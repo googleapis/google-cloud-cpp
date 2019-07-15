@@ -14,6 +14,7 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
@@ -314,6 +315,79 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
 
   auto status = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);
+}
+
+/// @test Verify MD5 hash value before upload.
+TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+  auto expected_md5hash = ComputeMD5Hash(expected);
+
+  // Create the object, but only if it does not exist already.
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                                MD5HashValue(expected_md5hash));
+
+  os.exceptions(std::ios_base::failbit);
+  os << expected;
+  os.Close();
+
+  ObjectMetadata meta = os.metadata().value();
+  EXPECT_EQ(os.received_hash(), os.computed_hash());
+  EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
+/// @test Verify invalid MD5 hash value before upload.
+TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already. Dummy MD5HasValue
+  // is passed during WriteObject.
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                                MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
+
+  os.exceptions(std::ios_base::failbit);
+  os << expected;
+  os.Close();
+
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().status().ok());
+}
+
+/// @test Verify MD5 hashe before upload.
+TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already. Dummy MD5HasValue
+  // is passed during WriteObject.
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                                Projection::Full(),
+                                MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
+  os.exceptions(std::ios_base::failbit);
+  os << expected;
+  os.Close();
+
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().status().ok());
 }
 
 /// @test Verify that hashes and checksums can be disabled in uploads.
