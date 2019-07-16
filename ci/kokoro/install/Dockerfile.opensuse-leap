@@ -22,7 +22,8 @@ FROM opensuse/leap:${DISTRO_VERSION} AS devtools
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget
+        libcurl-devel libopenssl-devel make nlohmann_json \
+        tar wget
 # ```
 
 # #### crc32c

@@ -17,7 +17,7 @@ FROM ubuntu:bionic AS google-cloud-cpp-dependencies
 RUN apt update && \
     apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
-        pkg-config tar wget zlib1g-dev
+        nlohmann-json-dev pkg-config tar wget zlib1g-dev
 
 # #### crc32c
 

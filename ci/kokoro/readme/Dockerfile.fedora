@@ -28,7 +28,7 @@ FROM fedora:${DISTRO_VERSION} AS devtools
 # ```bash
 RUN dnf makecache && \
     dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
-        zlib-devel
+        json-devel zlib-devel
 # ```
 
 FROM devtools AS readme

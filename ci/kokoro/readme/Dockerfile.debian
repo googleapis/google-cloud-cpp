@@ -36,7 +36,7 @@ FROM debian:${DISTRO_VERSION} AS devtools
 RUN apt update && \
     apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
-        pkg-config tar wget zlib1g-dev
+        nlohmann-json3 pkg-config tar wget zlib1g-dev
 # ```
 
 FROM devtools AS readme

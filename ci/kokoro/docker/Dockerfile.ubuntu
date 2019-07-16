@@ -36,6 +36,7 @@ RUN apt update && \
         libtool \
         lsb-release \
         make \
+        nlohmann-json-dev \
         pkg-config \
         python-pip \
         shellcheck \

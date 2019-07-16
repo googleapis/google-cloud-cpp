@@ -34,7 +34,7 @@ RUN yum install -y centos-release-scl
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
     yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
+        make json-devel openssl-devel pkgconfig tar wget which zlib-devel
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 

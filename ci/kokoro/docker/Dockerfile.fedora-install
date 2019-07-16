@@ -30,6 +30,7 @@ RUN dnf makecache && dnf install -y \
     git \
     grpc-devel \
     grpc-plugins \
+    json-devel \
     libcurl-devel \
     libcxx-devel \
     libcxxabi-devel \

@@ -65,6 +65,19 @@ ENV OPENSSL_ROOT_DIR=/usr/local/ssl
 ENV PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
 # ```
 
+# Ubuntu:trusty does not provide a package for nlohmann_json. Manually install
+# this library:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/nlohmann/json/archive/v3.6.1.tar.gz
+RUN tar -xf json-3.6.1.tar.gz
+WORKDIR /var/tmp/build/json-3.6.1
+RUN cmake H. -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out --target install
+# ```
+
 FROM devtools AS readme
 
 ## [START IGNORED]

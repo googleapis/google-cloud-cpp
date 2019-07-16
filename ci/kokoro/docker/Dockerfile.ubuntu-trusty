@@ -51,6 +51,16 @@ RUN apt update && apt install -y python-dev python-pip
 RUN pip install --upgrade pip
 RUN pip install flask httpbin gevent gunicorn crc32c
 
+# Ubuntu:trusty does not provide a package for nlohmann_json. Manually install
+# this library:
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/nlohmann/json/archive/v3.6.1.tar.gz
+RUN tar -xf json-3.6.1.tar.gz
+WORKDIR /var/tmp/build/json-3.6.1
+RUN cmake H. -Bcmake-out
+RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out --target install
+
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
 COPY . /var/tmp/ci

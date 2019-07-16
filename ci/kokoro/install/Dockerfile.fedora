@@ -35,7 +35,7 @@ RUN dnf makecache && \
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y grpc-devel grpc-plugins \
+    dnf install -y grpc-devel grpc-plugins json-devel \
         libcurl-devel protobuf-compiler tar wget zlib-devel
 # ```
 

@@ -29,6 +29,7 @@ RUN yum makecache && yum install -y \
     gcc \
     gcc-c++ \
     git \
+    json-devel \
     make \
     openssl-devel \
     python \
