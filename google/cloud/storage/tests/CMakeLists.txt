@@ -57,7 +57,7 @@ foreach (fname ${storage_client_integration_tests})
                                   GTest::gtest
                                   CURL::libcurl
                                   Threads::Threads
-                                  nlohmann_json
+                                  nlohmann_json::nlohmann_json
                                   storage_common_options)
 endforeach ()
 

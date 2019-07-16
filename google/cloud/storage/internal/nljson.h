@@ -16,44 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_NLJSON_H_
 
 #include "google/cloud/storage/version.h"
-
-/**
- * @file
- *
- * Include the nlohmann/json headers but renaming the namespace.
- *
- * We use the excellent nlohmann/json library to parse JSON in this client.
- * However, we do not want to create dependency conflicts where our version of
- * the code clashes with a different version that the user may have included.
- * We always include the library through this header, and rename its top-level
- * namespace to avoid conflicts. Because nlohmann/json is a header-only library
- * no further action is needed.
- *
- * @see https://github.com/nlohmann/json.git
- */
-
-// Remove the include guards because third-parties may have included their own
-// version of nlohmann::json. This is safe because google/cloud/storage always
-// includes the nlohmann::json through this header, so after the first time our
-// own include guards are enough.
-#undef NLOHMANN_JSON_HPP
-#undef NLOHMANN_JSON_FWD_HPP
-
-#define nlohmann google_cloud_storage_internal_nlohmann_3_4_0
-#include "google/cloud/storage/internal/nlohmann_json.hpp"
-
-// Remove the include guards so third-parties can include their own version of
-// nlohmann::json. This is safe because google/cloud/storage always includes
-// the nlohmann::json through this header, so after the first time our own
-// include guards are enough.
-#undef NLOHMANN_BASIC_JSON_TPL
-#undef NLOHMANN_BASIC_JSON_TPL_DECLARATION
-#undef NLOHMANN_JSON_HPP
-#undef NLOHMANN_JSON_FWD_HPP
-#undef NLOHMANN_JSON_SERIALIZE_ENUM
-#undef NLOHMANN_JSON_VERSION_MAJOR
-#undef NLOHMANN_JSON_VERSION_MINOR
-#undef NLOHMANN_JSON_VERSION_PATCH
+#include <nlohmann/json.hpp>
 
 namespace nlohmann {
 //
@@ -69,14 +32,13 @@ namespace nlohmann {
 /// Prints json objects to output streams from within Google Test.
 inline void PrintTo(json const& j, std::ostream* os) { *os << j.dump(); }
 }  // namespace nlohmann
-#undef nlohmann
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace nl = ::google_cloud_storage_internal_nlohmann_3_4_0;
+namespace nl = ::nlohmann;
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

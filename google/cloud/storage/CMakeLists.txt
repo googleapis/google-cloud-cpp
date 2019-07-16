@@ -44,7 +44,8 @@ if (TARGET storage-docs AND TARGET cloud-docs)
     add_dependencies(storage-docs cloud-docs)
 endif ()
 
-include(IncludeNlohmannJson)
+find_package(nlohmann_json CONFIG REQUIRED)
+
 include(IncludeCrc32c)
 
 # Generate the version information from the CMake values.
@@ -223,7 +224,7 @@ add_library(storage_client
             well_known_parameters.h)
 target_link_libraries(storage_client
                       PUBLIC google_cloud_cpp_common
-                             nlohmann_json
+                             nlohmann_json::nlohmann_json
                              Crc32c::crc32c
                              CURL::libcurl
                              Threads::Threads
@@ -282,7 +283,7 @@ if (BUILD_TESTING)
                 testing/storage_integration_test.cc)
     target_link_libraries(storage_client_testing
                           PUBLIC storage_client
-                                 nlohmann_json
+                                 nlohmann_json::nlohmann_json
                                  GTest::gmock_main
                                  GTest::gmock
                                  GTest::gtest
@@ -335,8 +336,6 @@ if (BUILD_TESTING)
         internal/logging_client_test.cc
         internal/logging_resumable_upload_session_test.cc
         internal/metadata_parser_test.cc
-        internal/nljson_use_after_third_party_test.cc
-        internal/nljson_use_third_party_test.cc
         internal/notification_requests_test.cc
         internal/object_acl_requests_test.cc
         internal/object_requests_test.cc
@@ -398,7 +397,7 @@ if (BUILD_TESTING)
                                           GTest::gtest
                                           CURL::libcurl
                                           storage_common_options
-                                          nlohmann_json)
+                                          nlohmann_json::nlohmann_json)
             if (MSVC)
                 target_compile_options(${target} PRIVATE "/bigobj")
             endif ()
@@ -444,7 +443,7 @@ endif ()
 if ("${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_INSTALL}")
     # Install the libraries and headers in the locations determined by
     # GNUInstallDirs
-    install(TARGETS storage_common_options nlohmann_json
+    install(TARGETS storage_common_options nlohmann_json::nlohmann_json
             EXPORT storage-targets
             RUNTIME DESTINATION bin
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -461,10 +460,6 @@ if ("${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_INSTALL}")
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     google_cloud_cpp_install_headers(
         storage_client include/google/cloud/storage)
-    install(
-        FILES
-            ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
-            DESTINATION include/google/cloud/storage/internal)
 
     # Setup global variables used in the following *.in files.
     set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${STORAGE_CLIENT_VERSION_MAJOR})

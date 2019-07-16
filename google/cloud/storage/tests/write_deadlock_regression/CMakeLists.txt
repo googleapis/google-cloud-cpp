@@ -30,7 +30,7 @@ if ("${Backtrace_FOUND}")
                                   GTest::gtest
                                   CURL::libcurl
                                   Threads::Threads
-                                  nlohmann_json
+                                  nlohmann_json::nlohmann_json
                                   storage_common_options)
     target_include_directories(object_write_deadlock_regression_test
                                PRIVATE "${Backtrace_INCLUDE_DIRS}")
