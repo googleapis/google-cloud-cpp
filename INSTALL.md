@@ -550,6 +550,8 @@ sudo make install
 sudo ldconfig
 ```
 
+#### nlohmann_json
+
 Ubuntu-16.04 does not provide a package for nlohmann_json. Manually install
 this library:
 
@@ -582,7 +584,6 @@ sudo cmake --build . --target install
 ### Ubuntu (14.04 - Trusty Tahr)
 
 Install the minimal development tools.
-
 We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 ```bash
@@ -715,7 +716,7 @@ make -j $(nproc)
 sudo make install
 ```
 
-###
+#### nlohmann_json
 
 Ubuntu:trusty does not provide a package for nlohmann_json. Manually install
 this library:
