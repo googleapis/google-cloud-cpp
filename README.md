@@ -122,7 +122,7 @@ of these tools we test with are:
 
 #### Libraries
 
-The libraries also depend on gRPC, libcurl, and the dependencies of those
+The libraries also depend on gRPC, libcurl, nlohmann-json and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
 versions of these dependencies:
 
@@ -130,6 +130,7 @@ versions of these dependencies:
 | ------- | --------------- |
 | gRPC    | v1.16.x |
 | libcurl | 7.47.0  |
+| nljson  | 3.6.1   |
 
 #### Tests
 
@@ -156,7 +157,7 @@ sudo yum install -y centos-release-scl
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
 sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
+        make json-devel openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
@@ -179,7 +180,7 @@ prevent you from compiling against openssl-1.1.0.
 sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
-        pkg-config tar wget zlib1g-dev
+        nlohmann-json3 pkg-config tar wget zlib1g-dev
 ```
 
 ### Fedora (30)
@@ -192,7 +193,7 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
-        zlib-devel
+        json-devel zlib-devel
 ```
 
 ### OpenSUSE (Tumbleweed)
@@ -205,7 +206,8 @@ sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget zlib-devel
+        libcurl-devel libopenssl-devel make nlohmann_json \
+        tar wget zlib-devel
 ```
 
 ### OpenSUSE (Leap)
@@ -218,7 +220,7 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget
+        libcurl-devel libopenssl-devel make nlohmann_json tar wget
 ```
 
 ### Ubuntu (18.04 - Bionic Beaver)
@@ -232,7 +234,7 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
 sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
-        pkg-config tar wget zlib1g-dev
+        nlohmann-json-dev pkg-config tar wget zlib1g-dev
 ```
 
 ### Ubuntu (16.04 - Xenial Xerus)
@@ -247,6 +249,19 @@ sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
+```
+
+Ubuntu-16.04 does not provide a package for nlohmann_json. Manually install
+this library:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/nlohmann/json/archive/v3.6.1.tar.gz
+tar -xf json-3.6.1.tar.gz
+cd $HOME/Downloads/json-3.6.1
+cmake H. -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 ```
 
 ### Ubuntu (14.04 - Trusty Tahr)
@@ -292,6 +307,19 @@ OpenSSL:
 ```bash
 export OPENSSL_ROOT_DIR=/usr/local/ssl
 export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
+```
+
+Ubuntu:trusty does not provide a package for nlohmann_json. Manually install
+this library:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/nlohmann/json/archive/v3.6.1.tar.gz
+tar -xf json-3.6.1.tar.gz
+cd $HOME/Downloads/json-3.6.1
+cmake H. -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 ```
 
 #### macOS (using brew)
