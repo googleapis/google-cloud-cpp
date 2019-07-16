@@ -91,6 +91,20 @@ TEST(SqlStatementTest, OStreamOperatorWithParams) {
   EXPECT_THAT(ss.str(), AnyOf(Eq(expected1), Eq(expected2)));
 }
 
+TEST(SqlStatementTest, Equality) {
+  SqlStatement::ParamType params1 = {{"last", Value("Blues")},
+                                     {"first", Value("Elwood")}};
+  SqlStatement::ParamType params2 = {{"last", Value("blues")},
+                                     {"first", Value("elwood")}};
+  SqlStatement stmt1("select * from foo", params1);
+  SqlStatement stmt2("select * from foo", params1);
+  SqlStatement stmt3("SELECT * from foo", params1);
+  SqlStatement stmt4("select * from foo", params2);
+  EXPECT_EQ(stmt1, stmt2);
+  EXPECT_NE(stmt1, stmt3);
+  EXPECT_NE(stmt1, stmt4);
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
