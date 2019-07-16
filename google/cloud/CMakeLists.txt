@@ -306,5 +306,7 @@ add_subdirectory(firestore)
 add_subdirectory(storage)
 add_subdirectory(grpc_utils)
 if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    # The examples are more readable if we use exceptions for error handling. We
+    # had to tradeoff readability vs. "making them compile everywhere".
     add_subdirectory(examples)
 endif ()
