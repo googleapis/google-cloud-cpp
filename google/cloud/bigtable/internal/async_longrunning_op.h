@@ -15,11 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_LONGRUNNING_OP_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_INTERNAL_ASYNC_LONGRUNNING_OP_H_
 
-#include "google/cloud/bigtable/async_operation.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/async_poll_op.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
-#include "google/cloud/bigtable/internal/completion_queue_impl.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include <google/longrunning/operations.grpc.pb.h>

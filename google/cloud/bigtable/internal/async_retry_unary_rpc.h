@@ -21,6 +21,7 @@
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/grpc_utils/internal/completion_queue_impl.h"
 #include "google/cloud/internal/make_unique.h"
 #include <google/protobuf/empty.pb.h>
 
@@ -54,7 +55,8 @@ namespace internal {
  */
 template <
     typename AsyncCallType, typename RequestType, typename IdempotencyPolicy,
-    typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
+    typename Sig = google::cloud::grpc_utils::internal::AsyncCallResponseType<
+        AsyncCallType, RequestType>,
     typename ResponseType = typename Sig::type,
     typename std::enable_if<Sig::value, int>::type validate_parameters = 0>
 class RetryAsyncUnaryRpcFuture {
@@ -207,7 +209,8 @@ class RetryAsyncUnaryRpcFuture {
  */
 template <
     typename AsyncCallType, typename RequestType, typename IdempotencyPolicy,
-    typename Sig = internal::AsyncCallResponseType<AsyncCallType, RequestType>,
+    typename Sig = google::cloud::grpc_utils::internal::AsyncCallResponseType<
+        AsyncCallType, RequestType>,
     typename ResponseType = typename Sig::type,
     typename std::enable_if<Sig::value, int>::type validate_parameters = 0>
 future<StatusOr<ResponseType>> StartRetryAsyncUnaryRpc(

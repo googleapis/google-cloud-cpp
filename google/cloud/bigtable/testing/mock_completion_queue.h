@@ -25,7 +25,7 @@ namespace testing {
 // `google::cloud::bigtable::CompletionQueue` to wrap it, keeping a reference to
 // the instance to manipulate its state directly.
 class MockCompletionQueue
-    : public google::cloud::bigtable::internal::CompletionQueueImpl {
+    : public google::cloud::grpc_utils::internal::CompletionQueueImpl {
  public:
   std::unique_ptr<grpc::Alarm> CreateAlarm() const override {
     // grpc::Alarm objects are really hard to cleanup when mocking their

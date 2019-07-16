@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/internal/completion_queue_impl.h"
+#include "google/cloud/grpc_utils/internal/completion_queue_impl.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 
@@ -23,8 +23,8 @@ constexpr std::chrono::milliseconds kLoopTimeout(50);
 
 namespace google {
 namespace cloud {
-namespace bigtable {
-inline namespace BIGTABLE_CLIENT_NS {
+namespace grpc_utils {
+inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
 namespace internal {
 void CompletionQueueImpl::Run(CompletionQueue& cq) {
   while (!shutdown_.load()) {
@@ -139,7 +139,7 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, bool ok) {
 }
 
 }  // namespace internal
-}  // namespace BIGTABLE_CLIENT_NS
-}  // namespace bigtable
+}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
+}  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

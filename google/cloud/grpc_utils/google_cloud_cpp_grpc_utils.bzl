@@ -17,12 +17,18 @@
 """Automatically generated source lists for google_cloud_cpp_grpc_utils - DO NOT EDIT."""
 
 google_cloud_cpp_grpc_utils_hdrs = [
+    "async_operation.h",
+    "completion_queue.h",
+    "internal/completion_queue_impl.h",
+    "internal/async_read_stream_impl.h",
     "grpc_error_delegate.h",
     "version.h",
     "version_info.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [
+    "completion_queue.cc",
+    "internal/completion_queue_impl.cc",
     "grpc_error_delegate.cc",
     "version.cc",
 ]
