@@ -165,7 +165,7 @@ tools to compile the dependencies:
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y grpc-devel grpc-plugins \
+sudo dnf install -y grpc-devel grpc-plugins json-devel \
         libcurl-devel protobuf-compiler tar wget zlib-devel
 ```
 
@@ -221,7 +221,8 @@ Platform proto files.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y grpc-devel gzip libcurl-devel pkg-config tar wget
+sudo zypper install -y grpc-devel gzip libcurl-devel nlohmann_json \
+        pkg-config tar wget
 ```
 
 #### crc32c
@@ -267,7 +268,8 @@ Install the minimal development tools:
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget
+        libcurl-devel libopenssl-devel make nlohmann_json \
+        tar wget
 ```
 
 #### crc32c
@@ -383,7 +385,7 @@ Install the minimal development tools:
 sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
-        pkg-config tar wget zlib1g-dev
+        nlohmann-json-dev pkg-config tar wget zlib1g-dev
 ```
 
 #### crc32c
@@ -547,6 +549,19 @@ sudo make install
 sudo ldconfig
 ```
 
+Ubuntu-16.04 does not provide a package for nlohmann_json. Manually install
+this library:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/nlohmann/json/archive/v3.6.1.tar.gz
+tar -xf json-3.6.1.tar.gz
+cd $HOME/Downloads/json-3.6.1
+cmake H. -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
@@ -566,7 +581,6 @@ sudo cmake --build . --target install
 ### Ubuntu (14.04 - Trusty Tahr)
 
 Install the minimal development tools.
-
 We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 ```bash
@@ -699,6 +713,21 @@ make -j $(nproc)
 sudo make install
 ```
 
+###
+
+Ubuntu:trusty does not provide a package for nlohmann_json. Manually install
+this library:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/nlohmann/json/archive/v3.6.1.tar.gz
+tar -xf json-3.6.1.tar.gz
+cd $HOME/Downloads/json-3.6.1
+cmake H. -Bcmake-out
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
@@ -719,7 +748,6 @@ sudo cmake --build . --target install
 ### Debian (Stretch)
 
 First install the development tools and libcurl.
-
 On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
 against the same version or risk an inconsistent configuration of the library.
 This is especially important for multi-threaded applications, as openssl-1.0.2
@@ -730,7 +758,7 @@ prevent you from compiling against openssl-1.1.0.
 
 ```bash
 sudo apt update && \
-sudo apt install -y build-essential cmake git gcc g++ cmake \
+sudo apt install -y build-essential cmake git gcc g++ json-devel cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
         pkg-config tar wget zlib1g-dev
 ```
@@ -808,10 +836,9 @@ sudo cmake --build . --target install
 
 ### CentOS (7)
 
-First install the development tools and OpenSSL.
-
-The development tools distributed with CentOS (notably CMake) are too old to
-build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+First install the development tools and OpenSSL. The development tools
+distributed with CentOS (notably CMake) are too old to build
+`google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
@@ -820,7 +847,7 @@ sudo yum install -y centos-release-scl
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
 sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
+        make json-devel openssl-devel pkgconfig tar wget which zlib-devel
 ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
