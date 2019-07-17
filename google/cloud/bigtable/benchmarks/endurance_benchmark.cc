@@ -59,9 +59,9 @@ namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::benchmarks;
 
 /// Run an iteration of the test, returns the number of operations.
-long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                  std::string app_profile_id, std::string const& table_id,
-                  std::chrono::seconds test_duration);
+google::cloud::StatusOr<long> RunBenchmark(
+    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
+    std::string const& table_id, std::chrono::seconds test_duration);
 
 }  // anonymous namespace
 
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
   // Start the threads running the latency test.
   std::cout << "# Running Endurance Benchmark:\n";
   auto latency_test_start = std::chrono::steady_clock::now();
-  std::vector<std::future<long>> tasks;
+  std::vector<std::future<google::cloud::StatusOr<long>>> tasks;
   for (int i = 0; i != setup.thread_count(); ++i) {
     auto launch_policy = std::launch::async;
     if (setup.thread_count() == 1) {
@@ -93,10 +93,10 @@ int main(int argc, char* argv[]) {
   for (auto& future : tasks) {
     auto result = future.get();
     if (!result) {
-      std::cerr << result;
+      std::cerr << result.status() << "\n";
       return 1;
     }
-    combined += result;
+    combined += *result;
     ++count;
   }
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -137,9 +137,9 @@ OperationResult RunOneReadRow(bigtable::Table& table,
   return Benchmark::TimeOperation(std::move(op));
 }
 
-long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                  std::string app_profile_id, std::string const& table_id,
-                  std::chrono::seconds test_duration) {
+google::cloud::StatusOr<long> RunBenchmark(
+    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
+    std::string const& table_id, std::chrono::seconds test_duration) {
   BenchmarkResult partial = {};
 
   auto data_client = benchmark.MakeDataClient();
@@ -151,11 +151,23 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   auto end = start + test_duration;
 
   for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
-    partial.operations.emplace_back(RunOneReadRow(table, benchmark, generator));
+    auto op_result = RunOneReadRow(table, benchmark, generator);
+    if (!op_result.status.ok()) {
+      return op_result.status;
+    }
+    partial.operations.emplace_back(op_result);
     ++partial.row_count;
-    partial.operations.emplace_back(RunOneReadRow(table, benchmark, generator));
+    op_result = RunOneReadRow(table, benchmark, generator);
+    if (!op_result.status.ok()) {
+      return op_result.status;
+    }
+    partial.operations.emplace_back(op_result);
     ++partial.row_count;
-    partial.operations.emplace_back(RunOneApply(table, benchmark, generator));
+    op_result = RunOneApply(table, benchmark, generator);
+    if (!op_result.status.ok()) {
+      return op_result.status;
+    }
+    partial.operations.emplace_back(op_result);
     ++partial.row_count;
   }
   partial.elapsed =

@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
   benchmark.CreateTable();
   auto populate_results = benchmark.PopulateTable();
   if (!populate_results) {
-    std::cerr << populate_results.status();
+    std::cerr << populate_results.status() << "\n";
     return 1;
   }
 
@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
   for (auto& future : tasks) {
     auto result = future.get();
     if (!result) {
-      std::cerr << result.status();
+      std::cerr << result.status() << "\n";
       return 1;
     }
     append(combined, *result);
