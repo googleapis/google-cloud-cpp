@@ -151,6 +151,17 @@ RUN cmake --build cmake-out/grpc --target install -- -j ${NCPU}
 RUN make install-pkg-config_c install-pkg-config_cxx install-certs
 RUN ldconfig
 
+# Install googleapis.
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
+RUN tar -xf v0.1.0.tar.gz
+WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.0
+RUN cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+RUN cmake --build cmake-out --target install -- -j $(nproc)
+RUN ldconfig
+
 # Install googletest.
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
