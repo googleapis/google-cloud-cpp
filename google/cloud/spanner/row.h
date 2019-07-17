@@ -288,6 +288,10 @@ struct ExtractValue {
       t = *std::move(x);
     }
   }
+  template <typename It>
+  void operator()(Value& v, It& it) const {
+    v = *it++;
+  }
 };
 }  // namespace internal
 

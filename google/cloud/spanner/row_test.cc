@@ -80,6 +80,20 @@ TEST(Row, TwoTypes) {
   EXPECT_EQ(std::make_tuple(std::int64_t{42}, true), (row.get<1, 0>()));
 }
 
+TEST(Row, WithValues) {
+  Row<Value, Value> row(Value(42), Value("hello"));
+  EXPECT_EQ(2, row.size());
+  EXPECT_EQ(Value(42), row.get<0>());
+  EXPECT_EQ(Value("hello"), row.get<1>());
+}
+
+TEST(Row, WithMixedValues) {
+  Row<std::int64_t, Value> row(42, Value("hello"));
+  EXPECT_EQ(2, row.size());
+  EXPECT_EQ(42, row.get<0>());
+  EXPECT_EQ(Value("hello"), row.get<1>());
+}
+
 TEST(Row, ThreeTypes) {
   Row<bool, std::int64_t, std::string> const row(true, 42, "hello");
   EXPECT_EQ(3, row.size());
@@ -241,6 +255,11 @@ TEST(Row, UnparseRow) {
   RoundTripRow(MakeRow(42, 42));
   RoundTripRow(MakeRow(42, "hello"));
   RoundTripRow(MakeRow(42, "hello", 3.14));
+
+  RoundTripRow(MakeRow(Value(42)));
+  RoundTripRow(MakeRow(Value(42), "hello"));
+  RoundTripRow(MakeRow(Value(42), Value("hello"), 3.14));
+  RoundTripRow(MakeRow(Value(42), Value("hello"), Value(3.14)));
 }
 
 TEST(Row, ValuesAccessorRvalue) {
