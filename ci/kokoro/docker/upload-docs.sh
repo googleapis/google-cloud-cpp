@@ -107,7 +107,7 @@ fi
    "${subdir}/{bigtable,common,firestore,storage}")
 
 # Copy the build results into the gh-pages clone.
-mkdir -p cmake-out/github-io-staging/${subdir}
+mkdir -p "cmake-out/github-io-staging/${subdir}"
 cp -r "${BUILD_OUTPUT}/google/cloud/html/." \
     "cmake-out/github-io-staging/${subdir}/common/"
 for lib in bigtable firestore storage; do
