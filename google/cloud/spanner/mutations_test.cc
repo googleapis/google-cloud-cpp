@@ -197,6 +197,131 @@ TEST(MutationsTest, UpdateComplex) {
   EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
 }
 
+TEST(MutationsTest, InsertOrUpdateSimple) {
+  Mutation empty;
+  Mutation update =
+      MakeInsertOrUpdateMutation(std::string("foo"), std::string("bar"), true);
+  EXPECT_EQ(update, update);
+  EXPECT_NE(update, empty);
+
+  auto actual = std::move(update).as_proto();
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+              insert_or_update: {
+                values {
+                  values {
+                    string_value: "foo"
+                  }
+                  values {
+                    string_value: "bar"
+                  }
+                  values {
+                    bool_value: true
+                  }
+                }
+              }
+              )""",
+                                                            &expected));
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+}
+
+TEST(MutationsTest, InsertOrUpdateComplex) {
+  Mutation empty;
+  auto builder = InsertOrUpdateMutationBuilder({"col_a", "col_b"})
+                     .AddRow(std::make_tuple("a", 7.0));
+  Mutation update = builder.Build();
+  Mutation moved = std::move(builder).Build();
+  EXPECT_EQ(update, moved);
+
+  auto actual = std::move(update).as_proto();
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+              insert_or_update: {
+                columns: "col_a"
+                columns: "col_b"
+                values {
+                  values {
+                    list_value: {
+                      values {
+                        string_value: "a"
+                      }
+                      values {
+                        number_value: 7.0
+                      }
+                    }
+                  }
+                }
+              })""",
+                                                            &expected));
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+}
+
+TEST(MutationsTest, ReplaceSimple) {
+  Mutation empty;
+  Mutation replace =
+      MakeReplaceMutation(std::string("foo"), std::string("bar"), true);
+  EXPECT_EQ(replace, replace);
+  EXPECT_NE(replace, empty);
+
+  auto actual = std::move(replace).as_proto();
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+              replace: {
+                values {
+                  values {
+                    string_value: "foo"
+                  }
+                  values {
+                    string_value: "bar"
+                  }
+                  values {
+                    bool_value: true
+                  }
+                }
+              }
+              )""",
+                                                            &expected));
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+}
+
+TEST(MutationsTest, ReplaceComplex) {
+  Mutation empty;
+  auto builder = ReplaceMutationBuilder({"col_a", "col_b"}).AddRow("a", 7.0);
+  Mutation update = builder.Build();
+  Mutation moved = std::move(builder).Build();
+  EXPECT_EQ(update, moved);
+
+  auto actual = std::move(update).as_proto();
+  google::spanner::v1::Mutation expected;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
+              replace: {
+                columns: "col_a"
+                columns: "col_b"
+                values {
+                  values {
+                    string_value: "a"
+                  }
+                  values {
+                    number_value: 7.0
+                  }
+                }
+              })""",
+                                                            &expected));
+  std::string delta;
+  google::protobuf::util::MessageDifferencer differencer;
+  differencer.ReportDifferencesToString(&delta);
+  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

@@ -145,7 +145,6 @@ struct UpdateOp {
   }
 };
 
-// TODO(#198) - use them in the (future) InsertOrUpdateMutationBuilder.
 struct InsertOrUpdateOp {
   static google::spanner::v1::Mutation::Write& mutable_field(
       google::spanner::v1::Mutation& m) {
@@ -153,7 +152,6 @@ struct InsertOrUpdateOp {
   }
 };
 
-// TODO(#198) - use them in the (future) ReplaceMutationBuilder.
 struct ReplaceOp {
   static google::spanner::v1::Mutation::Write& mutable_field(
       google::spanner::v1::Mutation& m) {
@@ -175,7 +173,7 @@ struct ReplaceOp {
 using InsertMutationBuilder =
     internal::WriteMutationBuilder<internal::InsertOp>;
 
-/// Creates a simple insert mutation for the values in @p row.
+/// Creates a simple insert mutation for the values in @p values.
 template <typename... Ts>
 Mutation MakeInsertMutation(Ts&&... values) {
   return InsertMutationBuilder().AddRow(std::forward<Ts>(values)...).Build();
@@ -193,10 +191,48 @@ Mutation MakeInsertMutation(Ts&&... values) {
 using UpdateMutationBuilder =
     internal::WriteMutationBuilder<internal::UpdateOp>;
 
-/// Creates a simple insert mutation for the values in @p row.
+/// Creates a simple update mutation for the values in @p values.
 template <typename... Ts>
 Mutation MakeUpdateMutation(Ts&&... values) {
   return UpdateMutationBuilder().AddRow(std::forward<Ts>(values)...).Build();
+}
+
+/**
+ * A helper class to construct "insert_or_update" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+using InsertOrUpdateMutationBuilder =
+    internal::WriteMutationBuilder<internal::InsertOrUpdateOp>;
+
+/// Creates a simple "insert or update" mutation for the values in @p values.
+template <typename... Ts>
+Mutation MakeInsertOrUpdateMutation(Ts&&... values) {
+  return InsertOrUpdateMutationBuilder()
+      .AddRow(std::forward<Ts>(values)...)
+      .Build();
+}
+
+/**
+ * A helper class to construct "insert_or_update" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+using ReplaceMutationBuilder =
+    internal::WriteMutationBuilder<internal::ReplaceOp>;
+
+/// Creates a simple "replace" mutation for the values in @p values.
+template <typename... Ts>
+Mutation MakeReplaceMutation(Ts&&... values) {
+  return ReplaceMutationBuilder().AddRow(std::forward<Ts>(values)...).Build();
 }
 
 // TODO(#198 & #202) - Implement DeleteMutationBuilder.
