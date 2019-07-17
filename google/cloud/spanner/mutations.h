@@ -84,22 +84,6 @@ class Mutation {
 // This namespace contains implementation details. It is not part of the public
 // API, and subject to change without notice.
 namespace internal {
-inline void PopulateListValue(google::protobuf::ListValue&) {}
-
-/**
- * Initialize a `google::protobuf::ListValue` from a variadic list of C++ types.
- *
- * This function applies the conversions defined by #Value
- */
-template <typename T, typename... Ts>
-void PopulateListValue(google::protobuf::ListValue& lv, T&& head,
-                       Ts&&... tail) {
-  google::spanner::v1::Type type;
-  google::protobuf::Value value;
-  std::tie(type, value) = internal::ToProto(Value(std::forward<T>(head)));
-  *lv.add_values() = std::move(value);
-  PopulateListValue(lv, std::forward<Ts>(tail)...);
-}
 
 template <typename Op>
 class WriteMutationBuilder {
@@ -118,22 +102,17 @@ class WriteMutationBuilder {
   Mutation Build() && { return Mutation(std::move(m_)); }
 
   template <typename... Ts>
-  WriteMutationBuilder& EmplaceRow(Ts&&... values) {
-    google::protobuf::ListValue lv;
-    internal::PopulateListValue(lv, std::forward<Ts>(values)...);
-    *Op::mutable_field(m_).add_values() = std::move(lv);
+  WriteMutationBuilder& AddRow(Row<Ts...> row) {
+    auto& lv = *Op::mutable_field(m_).add_values();
+    for (auto& v : std::move(row).values()) {
+      std::tie(std::ignore, *lv.add_values()) = internal::ToProto(std::move(v));
+    }
     return *this;
   }
 
   template <typename... Ts>
-  WriteMutationBuilder& AddRow(Row<Ts...> row) {
-    auto values = std::move(row).values();
-    google::protobuf::ListValue lv;
-    for (auto& v : values) {
-      internal::PopulateListValue(lv, std::move(v));
-    }
-    *Op::mutable_field(m_).add_values() = std::move(lv);
-    return *this;
+  WriteMutationBuilder& EmplaceRow(Ts&&... values) {
+    return AddRow(MakeRow(std::forward<Ts>(values)...));
   }
 
  private:
