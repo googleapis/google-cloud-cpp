@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/optional.h"
 #include <gmock/gmock.h>
 #include <array>
 #include <cstdint>
@@ -90,6 +91,24 @@ TEST(Row, ThreeTypes) {
             (row.get<0, 1, 2>()));
   EXPECT_EQ(std::make_tuple(true, std::int64_t{42}), (row.get<0, 1>()));
   EXPECT_EQ(std::int64_t{42}, (row.get<1>()));
+}
+
+TEST(Row, WorksWithOptional) {
+  auto row_null = MakeRow(optional<std::string>{});
+  EXPECT_EQ(1, row_null.size());
+  EXPECT_FALSE(row_null.get<0>().has_value());
+  auto values = row_null.values();
+  EXPECT_EQ(1, values.size());
+  EXPECT_TRUE(values[0].is_null<std::string>());
+
+  auto row_not_null = MakeRow(optional<std::string>{"hello"});
+  EXPECT_EQ(1, row_not_null.size());
+  EXPECT_TRUE(row_not_null.get<0>().has_value());
+  EXPECT_EQ("hello", *row_not_null.get<0>());
+  values = row_not_null.values();
+  EXPECT_EQ(1, values.size());
+  EXPECT_FALSE(values[0].is_null<std::string>());
+  EXPECT_EQ("hello", *values[0].get<std::string>());
 }
 
 TEST(Row, Equality) {
