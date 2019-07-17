@@ -93,7 +93,8 @@ int main(int argc, char* argv[]) {
   for (auto& future : tasks) {
     auto result = future.get();
     if (!result) {
-      std::cerr << "Error returned by task[" << count << "]: " << result.status() << "\n";
+      std::cerr << "Error returned by task[" << count
+                << "]: " << result.status() << "\n";
     }
     combined += *result;
     ++count;
