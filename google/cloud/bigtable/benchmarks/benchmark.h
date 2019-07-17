@@ -19,6 +19,7 @@
 #include "google/cloud/bigtable/benchmarks/setup.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 #include <deque>
 #include <thread>
@@ -29,7 +30,7 @@ namespace bigtable {
 namespace benchmarks {
 /// The result of a single operation.
 struct OperationResult {
-  bool successful;
+  google::cloud::Status status;
   std::chrono::microseconds latency;
 };
 
@@ -57,7 +58,7 @@ class Benchmark {
   void DeleteTable();
 
   /// Populate the table with initial data.
-  BenchmarkResult PopulateTable();
+  google::cloud::StatusOr<BenchmarkResult> PopulateTable();
 
   /// Return a `bigtable::DataClient` configured for this benchmark.
   std::shared_ptr<bigtable::DataClient> MakeDataClient();
@@ -72,16 +73,11 @@ class Benchmark {
   template <typename Operation>
   static OperationResult TimeOperation(Operation&& op) {
     auto start = std::chrono::steady_clock::now();
-    bool successful = false;
-    try {
-      op();
-      successful = true;
-    } catch (...) {
-    }
+    auto status = op();
     using std::chrono::duration_cast;
     auto elapsed = duration_cast<std::chrono::microseconds>(
         std::chrono::steady_clock::now() - start);
-    return OperationResult{successful, elapsed};
+    return OperationResult{status, elapsed};
   }
 
   /// Print the result of a throughput test in human readable form.
@@ -122,8 +118,8 @@ class Benchmark {
 
  private:
   /// Populate the table rows in the range [@p begin, @p end)
-  BenchmarkResult PopulateTableShard(bigtable::Table& table, long begin,
-                                     long end);
+  google::cloud::StatusOr<BenchmarkResult> PopulateTableShard(
+      bigtable::Table& table, long begin, long end);
 
   /**
    * Return how much space to reserve for digits if the table has @p table_size

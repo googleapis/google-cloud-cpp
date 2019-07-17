@@ -89,11 +89,11 @@ std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
       setup_.project_id(), setup_.instance_id(), client_options_);
 }
 
-BenchmarkResult Benchmark::PopulateTable() {
+google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   bigtable::Table table(MakeDataClient(), setup_.app_profile_id(),
                         setup_.table_id());
   std::cout << "Populating table " << setup_.table_id() << " " << std::flush;
-  std::vector<std::future<BenchmarkResult>> tasks;
+  std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();
   auto table_size = setup_.table_size();
   long shard_start = 0;
@@ -110,16 +110,14 @@ BenchmarkResult Benchmark::PopulateTable() {
   result.row_count = 0;
   int count = 0;
   for (auto& t : tasks) {
-    try {
-      auto shard_result = t.get();
-      result.row_count += shard_result.row_count;
-      result.operations.insert(result.operations.end(),
-                               shard_result.operations.begin(),
-                               shard_result.operations.end());
-    } catch (std::exception const& ex) {
-      std::cerr << "Exception raised by PopulateTask/" << count << ": "
-                << ex.what() << "\n";
+    auto shard_result = t.get();
+    if (!shard_result) {
+      return shard_result;
     }
+    result.row_count += shard_result->row_count;
+    result.operations.insert(result.operations.end(),
+                             shard_result->operations.begin(),
+                             shard_result->operations.end());
     ++count;
   }
   using std::chrono::duration_cast;
@@ -244,8 +242,8 @@ int Benchmark::read_rows_count() const {
   return server_->read_rows_count();
 }
 
-BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
-                                              long begin, long end) {
+google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTableShard(
+    bigtable::Table& table, long begin, long end) {
   auto start = std::chrono::steady_clock::now();
   BenchmarkResult result{};
   result.row_count = 0;
@@ -270,8 +268,9 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
         auto failures = table.BulkApply(std::move(bulk));
         if (!failures.empty()) {
           auto status = failures.front().status();
-          throw std::runtime_error(status.message());
+          return status;
         }
+        return google::cloud::Status{};
       });
       result.row_count += bulk_size;
       result.operations.emplace_back(t);
@@ -288,8 +287,9 @@ BenchmarkResult Benchmark::PopulateTableShard(bigtable::Table& table,
       auto failures = table.BulkApply(std::move(bulk));
       if (!failures.empty()) {
         auto status = failures.front().status();
-        throw std::runtime_error(status.message());
+        return status;
       }
+      return google::cloud::Status{};
     });
     result.row_count += bulk_size;
     result.operations.emplace_back(t);
