@@ -144,7 +144,6 @@ int main(int argc, char* argv[]) {
     auto result = future.get();
     if (!result) {
       std::cerr << result.status() << "\n";
-      return 1;
     }
     append(combined, *result);
     ++count;

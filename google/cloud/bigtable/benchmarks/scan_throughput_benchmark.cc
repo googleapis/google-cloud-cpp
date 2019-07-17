@@ -142,7 +142,6 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
       for (auto& row : reader) {
         if (!row) {
           return row.status();
-          break;
         }
         ++count;
       }
