@@ -60,7 +60,7 @@ endif ()
 add_library(grpc_utils_common_options INTERFACE)
 google_cloud_cpp_add_common_options(grpc_utils_common_options)
 
-include(external/googleapis)
+include(IncludeGoogleapis)
 
 # Enable unit tests
 include(CTest)
