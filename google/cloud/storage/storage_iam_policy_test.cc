@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <type_traits>
 
