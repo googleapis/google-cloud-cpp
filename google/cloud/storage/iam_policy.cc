@@ -15,8 +15,6 @@
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/optional.h"
-#include <google/protobuf/util/message_differencer.h>
-#include <iostream>
 #include <sstream>
 
 namespace google {
