@@ -31,7 +31,8 @@ TEST(MutationsTest, Default) {
 }
 
 TEST(MutationsTest, PrintTo) {
-  Mutation insert = MakeInsertMutation(std::string("test-string"));
+  Mutation insert =
+      MakeInsertMutation("table-name", std::string("test-string"));
   std::ostringstream os;
   PrintTo(insert, &os);
   auto actual = std::move(os).str();
@@ -41,8 +42,8 @@ TEST(MutationsTest, PrintTo) {
 
 TEST(MutationsTest, InsertSimple) {
   Mutation empty;
-  Mutation insert =
-      MakeInsertMutation(std::string("foo"), std::string("bar"), true);
+  Mutation insert = MakeInsertMutation("table-name", std::string("foo"),
+                                       std::string("bar"), true);
   EXPECT_EQ(insert, insert);
   EXPECT_NE(insert, empty);
 
@@ -50,6 +51,7 @@ TEST(MutationsTest, InsertSimple) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               insert: {
+                table: "table-name"
                 values {
                   values {
                     string_value: "foo"
@@ -72,8 +74,8 @@ TEST(MutationsTest, InsertSimple) {
 
 TEST(MutationsTest, InsertComplex) {
   Mutation empty;
-  auto builder = InsertMutationBuilder({"col1", "col2", "col3"})
-                     .AddRow(std::int64_t(42), std::string("foo"), false)
+  auto builder = InsertMutationBuilder("table-name", {"col1", "col2", "col3"})
+                     .AddRow(42, std::string("foo"), false)
                      .AddRow(optional<std::int64_t>(), "bar", optional<bool>{});
   Mutation insert = builder.Build();
   Mutation moved = std::move(builder).Build();
@@ -83,6 +85,7 @@ TEST(MutationsTest, InsertComplex) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               insert: {
+                table: "table-name"
                 columns: "col1"
                 columns: "col2"
                 columns: "col3"
@@ -119,8 +122,8 @@ TEST(MutationsTest, InsertComplex) {
 
 TEST(MutationsTest, UpdateSimple) {
   Mutation empty;
-  Mutation update =
-      MakeUpdateMutation(std::string("foo"), std::string("bar"), true);
+  Mutation update = MakeUpdateMutation("table-name", std::string("foo"),
+                                       std::string("bar"), true);
   EXPECT_EQ(update, update);
   EXPECT_NE(update, empty);
 
@@ -128,6 +131,7 @@ TEST(MutationsTest, UpdateSimple) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               update: {
+                table: "table-name"
                 values {
                   values {
                     string_value: "foo"
@@ -151,7 +155,7 @@ TEST(MutationsTest, UpdateSimple) {
 TEST(MutationsTest, UpdateComplex) {
   Mutation empty;
   auto builder =
-      UpdateMutationBuilder({"col_a", "col_b"})
+      UpdateMutationBuilder("table-name", {"col_a", "col_b"})
           .AddRow(std::vector<std::string>{}, 7.0)
           .AddRow(std::vector<std::string>{"a", "b"}, optional<double>{});
   Mutation update = builder.Build();
@@ -162,6 +166,7 @@ TEST(MutationsTest, UpdateComplex) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               update: {
+                table: "table-name"
                 columns: "col_a"
                 columns: "col_b"
                 values {
@@ -199,8 +204,8 @@ TEST(MutationsTest, UpdateComplex) {
 
 TEST(MutationsTest, InsertOrUpdateSimple) {
   Mutation empty;
-  Mutation update =
-      MakeInsertOrUpdateMutation(std::string("foo"), std::string("bar"), true);
+  Mutation update = MakeInsertOrUpdateMutation("table-name", std::string("foo"),
+                                               std::string("bar"), true);
   EXPECT_EQ(update, update);
   EXPECT_NE(update, empty);
 
@@ -208,6 +213,7 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               insert_or_update: {
+                table: "table-name"
                 values {
                   values {
                     string_value: "foo"
@@ -230,7 +236,7 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
 
 TEST(MutationsTest, InsertOrUpdateComplex) {
   Mutation empty;
-  auto builder = InsertOrUpdateMutationBuilder({"col_a", "col_b"})
+  auto builder = InsertOrUpdateMutationBuilder("table-name", {"col_a", "col_b"})
                      .AddRow(std::make_tuple("a", 7.0));
   Mutation update = builder.Build();
   Mutation moved = std::move(builder).Build();
@@ -240,6 +246,7 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               insert_or_update: {
+                table: "table-name"
                 columns: "col_a"
                 columns: "col_b"
                 values {
@@ -264,8 +271,8 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
 
 TEST(MutationsTest, ReplaceSimple) {
   Mutation empty;
-  Mutation replace =
-      MakeReplaceMutation(std::string("foo"), std::string("bar"), true);
+  Mutation replace = MakeReplaceMutation("table-name", std::string("foo"),
+                                         std::string("bar"), true);
   EXPECT_EQ(replace, replace);
   EXPECT_NE(replace, empty);
 
@@ -273,6 +280,7 @@ TEST(MutationsTest, ReplaceSimple) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               replace: {
+                table: "table-name"
                 values {
                   values {
                     string_value: "foo"
@@ -295,7 +303,8 @@ TEST(MutationsTest, ReplaceSimple) {
 
 TEST(MutationsTest, ReplaceComplex) {
   Mutation empty;
-  auto builder = ReplaceMutationBuilder({"col_a", "col_b"}).AddRow("a", 7.0);
+  auto builder =
+      ReplaceMutationBuilder("table-name", {"col_a", "col_b"}).AddRow("a", 7.0);
   Mutation update = builder.Build();
   Mutation moved = std::move(builder).Build();
   EXPECT_EQ(update, moved);
@@ -304,6 +313,7 @@ TEST(MutationsTest, ReplaceComplex) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               replace: {
+                table: "table-name"
                 columns: "col_a"
                 columns: "col_b"
                 values {
