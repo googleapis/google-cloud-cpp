@@ -16,6 +16,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
+#include <tuple>
+#include <utility>
 
 namespace {
 
@@ -98,6 +100,19 @@ void AddColumn(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void QueryWithStruct(std::vector<std::string> const&) {
+  // TODO(#188): Add querying part once data client is ready.
+  // [START spanner_create_struct_with_data]
+  auto singer_info = std::make_tuple(std::make_pair("FirstName", "Elena"),
+                                     std::make_pair("LastName", "Campbell"));
+  // [END spanner_create_struct_with_data]
+  std::cout << "Struct created with the following data:\n"
+            << std::get<0>(singer_info).first << ":"
+            << std::get<0>(singer_info).second << "\n"
+            << std::get<1>(singer_info).first << ":"
+            << std::get<1>(singer_info).second << "\n";
+}
+
 void DropDatabase(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -125,6 +140,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   std::map<std::string, CommandType> commands = {
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
+      {"query-with-struct", &QueryWithStruct},
       {"drop-database", &DropDatabase},
   };
 
@@ -187,6 +203,8 @@ void RunAll() {
 
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
+  RunOneCommand(
+      {"", "query-with-struct", project_id, instance_id, database_id});
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
 
