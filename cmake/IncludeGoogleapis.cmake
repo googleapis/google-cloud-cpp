@@ -14,8 +14,8 @@
 # limitations under the License.
 # ~~~
 
-# Configure the googleapis dependency, this can be found as a
-# submodule, package, or installed with pkg-config support.
+# Configure the googleapis dependency, this can be found as a submodule,
+# package, or installed with pkg-config support.
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER ${GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER}
     CACHE STRING "How to find the googleapis library")
 set_property(CACHE GOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER
