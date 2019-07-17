@@ -631,6 +631,84 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(BucketIntegrationTest, NativeIamCRUD) {
+  std::string project_id = flag_project_id;
+  std::string bucket_name = MakeRandomBucketName();
+  StatusOr<Client> client = Client::CreateDefaultClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  auto meta =
+      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  ASSERT_STATUS_OK(meta);
+
+  StatusOr<NativeIamPolicy> policy =
+      client->GetNativeBucketIamPolicy(bucket_name);
+  ASSERT_STATUS_OK(policy);
+  auto const& bindings = policy->bindings();
+  // There must always be at least an OWNER for the Bucket.
+  auto owner_it = std::find_if(
+      bindings.begin(), bindings.end(), [](NativeIamBinding const& binding) {
+        return binding.role() == "roles/storage.legacyBucketOwner";
+      });
+  ASSERT_NE(bindings.end(), owner_it);
+
+  StatusOr<std::vector<BucketAccessControl>> acl =
+      client->ListBucketAcl(bucket_name);
+  ASSERT_STATUS_OK(acl);
+  // Unfortunately we cannot compare the values in the ACL to the values in the
+  // IamPolicy directly. The ids for entities have different formats, for
+  // example: in ACL 'project-editors-123456789' and in IAM
+  // 'projectEditors:my-project'. We can compare the counts though:
+  std::set<std::string> expected_owners;
+  for (auto const& entry : *acl) {
+    if (entry.role() == "OWNER") {
+      expected_owners.insert(entry.entity());
+    }
+  }
+  std::set<std::string> actual_owners = std::accumulate(
+      bindings.begin(), bindings.end(), std::set<std::string>(),
+      [](std::set<std::string> acc, NativeIamBinding const& binding) {
+        if (binding.role() == "roles/storage.legacyBucketOwner") {
+          acc.insert(binding.members().begin(), binding.members().end());
+        }
+        return acc;
+      });
+  EXPECT_EQ(expected_owners.size(), actual_owners.size());
+
+  NativeIamPolicy update = *policy;
+  bool role_updated = false;
+  for (auto& binding : update.bindings()) {
+    if (binding.role() != "roles/storage.objectViewer") {
+      continue;
+    }
+    role_updated = true;
+    auto& members = binding.members();
+    if (std::find(members.begin(), members.end(), "allAuthenticatedUsers") ==
+        members.end()) {
+      members.emplace_back("allAuthenticatedUsers");
+    }
+  }
+  if (!role_updated) {
+    update.bindings().emplace_back(NativeIamBinding(
+        "roles/storage.objectViewer", {"allAuthenticatedUsers"}));
+  }
+
+  StatusOr<NativeIamPolicy> updated_policy =
+      client->SetNativeBucketIamPolicy(bucket_name, update);
+  ASSERT_STATUS_OK(updated_policy);
+
+  std::vector<std::string> expected_permissions{
+      "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
+  StatusOr<std::vector<std::string>> actual_permissions =
+      client->TestBucketIamPermissions(bucket_name, expected_permissions);
+  ASSERT_STATUS_OK(actual_permissions);
+  EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_F(BucketIntegrationTest, BucketLock) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();

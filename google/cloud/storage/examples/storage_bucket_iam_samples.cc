@@ -397,7 +397,7 @@ int main(int argc, char* argv[]) try {
   //! [create client]
 
   using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char* [])>;
+      std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
       {"get-bucket-iam-policy", &GetBucketIamPolicy},
       {"native-get-bucket-iam-policy", &NativeGetBucketIamPolicy},

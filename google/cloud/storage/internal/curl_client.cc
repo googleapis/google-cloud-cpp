@@ -445,11 +445,7 @@ StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  auto json = nl::json::parse(response->payload, nullptr, false);
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  return NativeIamPolicy::CreateFromJson(json);
+  return NativeIamPolicy::CreateFromJson(response->payload);
 }
 
 StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
@@ -489,11 +485,7 @@ StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  auto json = nl::json::parse(response->payload, nullptr, false);
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  return NativeIamPolicy::CreateFromJson(json);
+  return NativeIamPolicy::CreateFromJson(response->payload);
 }
 
 StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(

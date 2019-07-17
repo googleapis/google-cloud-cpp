@@ -51,6 +51,61 @@ static_assert(std::is_copy_assignable<NativeIamPolicy>::value,
 static_assert(std::is_move_assignable<NativeIamPolicy>::value,
               "NativeIamPolicy shoud be move assignable");
 
+TEST(NativeIamExpression, CtorAndAccessors) {
+  NativeExpression expr("expr", "title", "descr", "loc");
+  NativeExpression const& const_expr = expr;
+  EXPECT_EQ("expr", const_expr.expression());
+  EXPECT_EQ("title", const_expr.title());
+  EXPECT_EQ("descr", const_expr.description());
+  EXPECT_EQ("loc", const_expr.location());
+
+  expr = NativeExpression("expr2");
+  EXPECT_EQ("expr2", const_expr.expression());
+  EXPECT_EQ("", const_expr.title());
+  EXPECT_EQ("", const_expr.description());
+  EXPECT_EQ("", const_expr.location());
+
+  expr.set_expression("expr3");
+  expr.set_title("title3");
+  expr.set_description("descr3");
+  expr.set_location("loc3");
+  EXPECT_EQ("expr3", const_expr.expression());
+  EXPECT_EQ("title3", const_expr.title());
+  EXPECT_EQ("descr3", const_expr.description());
+  EXPECT_EQ("loc3", const_expr.location());
+}
+
+TEST(NativeIamExpression, Printing) {
+  NativeExpression expr("expr");
+  NativeExpression const& const_expr = expr;
+
+  {
+    std::stringstream sstream;
+    sstream << const_expr;
+    EXPECT_EQ("(expr)", sstream.str());
+  }
+  expr.set_title("title");
+  {
+    std::stringstream sstream;
+    sstream << const_expr;
+    EXPECT_EQ("(expr, title=\"title\")", sstream.str());
+  }
+  expr.set_description("descr");
+  {
+    std::stringstream sstream;
+    sstream << const_expr;
+    EXPECT_EQ("(expr, title=\"title\", description=\"descr\")", sstream.str());
+  }
+  expr.set_location("loc");
+  {
+    std::stringstream sstream;
+    sstream << const_expr;
+    EXPECT_EQ(
+        "(expr, title=\"title\", description=\"descr\", location=\"loc\")",
+        sstream.str());
+  }
+}
+
 TEST(NativeIamBinding, CtorAndAccessors) {
   NativeIamBinding binding("role", {"member1", "member2"});
   NativeIamBinding const& const_binding = binding;
@@ -62,6 +117,36 @@ TEST(NativeIamBinding, CtorAndAccessors) {
   binding.members().emplace_back("member3");
   ASSERT_EQ(std::vector<std::string>({"member1", "member2", "member3"}),
             const_binding.members());
+  ASSERT_FALSE(binding.has_condition());
+
+  binding = NativeIamBinding("role", {"member1"}, NativeExpression("expr"));
+  ASSERT_EQ("role", const_binding.role());
+  ASSERT_EQ(std::vector<std::string>({"member1"}), const_binding.members());
+  ASSERT_TRUE(binding.has_condition());
+  ASSERT_EQ("expr", binding.condition().expression());
+
+  binding.set_condition(NativeExpression("expr2"));
+  ASSERT_TRUE(binding.has_condition());
+  ASSERT_EQ("expr2", binding.condition().expression());
+
+  binding.clear_condition();
+  ASSERT_FALSE(binding.has_condition());
+}
+
+TEST(NativeIamBinding, Printing) {
+  NativeIamBinding binding("role", {"member1", "member2"});
+  NativeIamBinding const& const_binding = binding;
+  {
+    std::stringstream sstream;
+    sstream << const_binding;
+    EXPECT_EQ("role: [member1, member2]", sstream.str());
+  }
+  binding.set_condition(NativeExpression("expr"));
+  {
+    std::stringstream sstream;
+    sstream << const_binding;
+    EXPECT_EQ("role: [member1, member2] when (expr)", sstream.str());
+  }
 }
 
 TEST(NativeIamPolicy, CtorAndAccessors) {
@@ -75,16 +160,13 @@ TEST(NativeIamPolicy, CtorAndAccessors) {
   policy.set_etag("etag_1");
   ASSERT_EQ("etag_1", const_policy.etag());
 
-  //  ASSERT_EQ(std::vector<NativeIamBinding>({
-  //                NativeIamBinding("role1", {"member1", "member2"}),
-  //            }),
-  //            const_policy.bindings());
+  ASSERT_EQ(1U, const_policy.bindings().size());
+  ASSERT_EQ("role1", const_policy.bindings()[0].role());
   policy.bindings().emplace_back(
       NativeIamBinding("role2", {"member1", "member3"}));
-  //  ASSERT_EQ(std::vector<NativeIamBinding>(
-  //                {NativeIamBinding("role1", {"member1", "member2"}),
-  //                 NativeIamBinding("role2", {"member1", "member3"})}),
-  //            const_policy.bindings());
+  ASSERT_EQ(2U, const_policy.bindings().size());
+  ASSERT_EQ("role1", const_policy.bindings()[0].role());
+  ASSERT_EQ("role2", const_policy.bindings()[1].role());
 }
 
 TEST(NativeIamPolicy, Json) {
@@ -161,7 +243,7 @@ TEST(NativeIamPolicy, ParseConditionFailures) {
     {
       "bindings": [
         {
-          "condition": 
+          "condition":
   )""";
   std::string const json_footer = R"""(
           ,
@@ -251,7 +333,7 @@ TEST(NativeIamPolicy, ParseBindingSuccessDefaults) {
 TEST(NativeIamPolicy, ParseBindingsFailures) {
   std::string const json_header = R"""(
     {
-      "bindings": 
+      "bindings":
   )""";
   std::string const json_footer = R"""(
     }
@@ -365,6 +447,20 @@ TEST(NativeIamPolicy, UnknownFields) {
   EXPECT_EQ("opaque3", json["unknown_policy_field"]);
   EXPECT_EQ("opaque2", json["bindings"][0]["unknown_binding_field"]);
   EXPECT_EQ("opaque1", json["bindings"][0]["condition"]["unknown_expr_field"]);
+}
+
+TEST(NativeIamPolicy, Printing) {
+  NativeIamPolicy policy({NativeIamBinding("role", {"member1", "member2"})},
+                         "etag1", 18);
+  NativeIamPolicy const& const_policy = policy;
+  {
+    std::stringstream sstream;
+    sstream << const_policy;
+    EXPECT_EQ(
+        "NativeIamPolicy={version=18, bindings=NativeIamBindings={role: "
+        "[member1, member2]}, etag=etag1}",
+        sstream.str());
+  }
 }
 
 }  // namespace

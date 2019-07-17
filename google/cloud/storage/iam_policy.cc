@@ -145,8 +145,18 @@ std::string NativeExpression::expression() const {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+void NativeExpression::set_expression(std::string expression) {
+  pimpl_->native_json["expression"] = std::move(expression);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeExpression::title() const {
   return pimpl_->native_json.value("title", "");
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+void NativeExpression::set_title(std::string title) {
+  pimpl_->native_json["title"] = std::move(title);
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
@@ -155,8 +165,18 @@ std::string NativeExpression::description() const {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
+void NativeExpression::set_description(std::string description) {
+  pimpl_->native_json["description"] = std::move(description);
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeExpression::location() const {
   return pimpl_->native_json.value("location", "");
+}
+
+// NOLINTNEXTLINE(readability-identifier-naming)
+void NativeExpression::set_location(std::string location) {
+  pimpl_->native_json["location"] = std::move(location);
 }
 
 std::ostream& operator<<(std::ostream& stream, NativeExpression const& e) {
@@ -332,6 +352,7 @@ struct NativeIamPolicy::Impl {
                        return binding.pimpl_->ToJson();
                      });
     }
+    ret["kind"] = "storage#policy";
     return ret;
   }
 

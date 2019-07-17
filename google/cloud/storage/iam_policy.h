@@ -39,9 +39,13 @@ class NativeExpression {
   NativeExpression& operator=(NativeExpression const& other);
 
   std::string expression() const;
+  void set_expression(std::string expression);
   std::string title() const;
+  void set_title(std::string title);
   std::string description() const;
+  void set_description(std::string description);
   std::string location() const;
+  void set_location(std::string location);
 
  private:
   struct Impl;
