@@ -119,8 +119,9 @@ class DatabaseAdminClient {
    * Note that the database id must be between 2 and 30 characters long, it must
    * start with a lowercase letter (`[a-z]`), it must end with a lowercase
    * letter or a number (`[a-z0-9]`) and any characters between the beginning
-   * and ending characters must be lower case letters, numbers, underscore ('_`)
-   * or dashes (`-`), that is, they must belong to the `[a-z0-9_-]`.
+   * and ending characters must be lower case letters, numbers, underscore (`_`)
+   * or dashes (`-`), that is, they must belong to the `[a-z0-9_-]` character
+   * set.
    *
    * @return A `google::cloud::future` that becomes satisfied when the operation
    *   completes on the service. Note that this can take minutes in some cases.
