@@ -32,7 +32,7 @@ TEST(MutationsTest, Default) {
 
 TEST(MutationsTest, PrintTo) {
   Mutation insert =
-      MakeInsertMutation("table-name", std::string("test-string"));
+      MakeInsertMutation("table-name", {}, std::string("test-string"));
   std::ostringstream os;
   PrintTo(insert, &os);
   auto actual = std::move(os).str();
@@ -42,8 +42,9 @@ TEST(MutationsTest, PrintTo) {
 
 TEST(MutationsTest, InsertSimple) {
   Mutation empty;
-  Mutation insert = MakeInsertMutation("table-name", std::string("foo"),
-                                       std::string("bar"), true);
+  Mutation insert =
+      MakeInsertMutation("table-name", {"col_a", "col_b", "col_c"},
+                         std::string("foo"), std::string("bar"), true);
   EXPECT_EQ(insert, insert);
   EXPECT_NE(insert, empty);
 
@@ -51,6 +52,9 @@ TEST(MutationsTest, InsertSimple) {
   google::spanner::v1::Mutation expected;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               insert: {
+                columns: "col_a"
+                columns: "col_b"
+                columns: "col_c"
                 table: "table-name"
                 values {
                   values {
@@ -123,8 +127,9 @@ TEST(MutationsTest, InsertComplex) {
 
 TEST(MutationsTest, UpdateSimple) {
   Mutation empty;
-  Mutation update = MakeUpdateMutation("table-name", std::string("foo"),
-                                       std::string("bar"), true);
+  Mutation update =
+      MakeUpdateMutation("table-name", {"col_a", "col_b", "col_c"},
+                         std::string("foo"), std::string("bar"), true);
   EXPECT_EQ(update, update);
   EXPECT_NE(update, empty);
 
@@ -133,6 +138,9 @@ TEST(MutationsTest, UpdateSimple) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               update: {
                 table: "table-name"
+                columns: "col_a"
+                columns: "col_b"
+                columns: "col_c"
                 values {
                   values {
                     string_value: "foo"
@@ -205,8 +213,9 @@ TEST(MutationsTest, UpdateComplex) {
 
 TEST(MutationsTest, InsertOrUpdateSimple) {
   Mutation empty;
-  Mutation update = MakeInsertOrUpdateMutation("table-name", std::string("foo"),
-                                               std::string("bar"), true);
+  Mutation update =
+      MakeInsertOrUpdateMutation("table-name", {"col_a", "col_b", "col_c"},
+                                 std::string("foo"), std::string("bar"), true);
   EXPECT_EQ(update, update);
   EXPECT_NE(update, empty);
 
@@ -215,6 +224,9 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               insert_or_update: {
                 table: "table-name"
+                columns: "col_a"
+                columns: "col_b"
+                columns: "col_c"
                 values {
                   values {
                     string_value: "foo"
@@ -285,8 +297,9 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
 
 TEST(MutationsTest, ReplaceSimple) {
   Mutation empty;
-  Mutation replace = MakeReplaceMutation("table-name", std::string("foo"),
-                                         std::string("bar"), true);
+  Mutation replace =
+      MakeReplaceMutation("table-name", {"col_a", "col_b", "col_c"},
+                          std::string("foo"), std::string("bar"), true);
   EXPECT_EQ(replace, replace);
   EXPECT_NE(replace, empty);
 
@@ -295,6 +308,9 @@ TEST(MutationsTest, ReplaceSimple) {
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
               replace: {
                 table: "table-name"
+                columns: "col_a"
+                columns: "col_b"
+                columns: "col_c"
                 values {
                   values {
                     string_value: "foo"

@@ -104,10 +104,6 @@ void PopulateListValue(google::protobuf::ListValue& lv, T&& head,
 template <typename Op>
 class WriteMutationBuilder {
  public:
-  explicit WriteMutationBuilder(std::string table_name) {
-    Op::mutable_field(m_).set_table(std::move(table_name));
-  }
-
   WriteMutationBuilder(std::string table_name,
                        std::vector<std::string> column_names) {
     auto& field = Op::mutable_field(m_);
@@ -188,8 +184,9 @@ using InsertMutationBuilder =
 
 /// Creates a simple insert mutation for the values in @p values.
 template <typename... Ts>
-Mutation MakeInsertMutation(std::string table_name, Ts&&... values) {
-  return InsertMutationBuilder(std::move(table_name))
+Mutation MakeInsertMutation(std::string table_name,
+                            std::vector<std::string> columns, Ts&&... values) {
+  return InsertMutationBuilder(std::move(table_name), std::move(columns))
       .EmplaceRow(std::forward<Ts>(values)...)
       .Build();
 }
@@ -208,8 +205,9 @@ using UpdateMutationBuilder =
 
 /// Creates a simple update mutation for the values in @p values.
 template <typename... Ts>
-Mutation MakeUpdateMutation(std::string table_name, Ts&&... values) {
-  return UpdateMutationBuilder(std::move(table_name))
+Mutation MakeUpdateMutation(std::string table_name,
+                            std::vector<std::string> columns, Ts&&... values) {
+  return UpdateMutationBuilder(std::move(table_name), std::move(columns))
       .EmplaceRow(std::forward<Ts>(values)...)
       .Build();
 }
@@ -228,8 +226,11 @@ using InsertOrUpdateMutationBuilder =
 
 /// Creates a simple "insert or update" mutation for the values in @p values.
 template <typename... Ts>
-Mutation MakeInsertOrUpdateMutation(std::string table_name, Ts&&... values) {
-  return InsertOrUpdateMutationBuilder(std::move(table_name))
+Mutation MakeInsertOrUpdateMutation(std::string table_name,
+                                    std::vector<std::string> columns,
+                                    Ts&&... values) {
+  return InsertOrUpdateMutationBuilder(std::move(table_name),
+                                       std::move(columns))
       .EmplaceRow(std::forward<Ts>(values)...)
       .Build();
 }
@@ -248,8 +249,9 @@ using ReplaceMutationBuilder =
 
 /// Creates a simple "replace" mutation for the values in @p values.
 template <typename... Ts>
-Mutation MakeReplaceMutation(std::string table_name, Ts&&... values) {
-  return ReplaceMutationBuilder(std::move(table_name))
+Mutation MakeReplaceMutation(std::string table_name,
+                             std::vector<std::string> columns, Ts&&... values) {
+  return ReplaceMutationBuilder(std::move(table_name), std::move(columns))
       .EmplaceRow(std::forward<Ts>(values)...)
       .Build();
 }
