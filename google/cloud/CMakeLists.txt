@@ -142,6 +142,7 @@ add_library(google_cloud_cpp_common
             internal/big_endian.h
             internal/build_info.h
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+            internal/conjunction.h
             internal/disjunction.h
             internal/filesystem.h
             internal/filesystem.cc

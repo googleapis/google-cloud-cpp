@@ -26,6 +26,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/backoff_policy.h",
     "internal/big_endian.h",
     "internal/build_info.h",
+    "internal/conjunction.h",
     "internal/disjunction.h",
     "internal/filesystem.h",
     "internal/format_time_point.h",
