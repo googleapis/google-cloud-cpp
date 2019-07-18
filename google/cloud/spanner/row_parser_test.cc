@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/row_parser.h"
 #include "google/cloud/spanner/value.h"
 #include <gmock/gmock.h>
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -36,7 +35,27 @@ ValueSource MakeValueSource(std::vector<Value> const& v) {
 
 template <typename... Ts>
 RowParser<Ts...> MakeRowParser(std::vector<Value> const& v) {
-  return RowParser<Ts...>(std::make_shared<ValueSource>(MakeValueSource(v)));
+  return RowParser<Ts...>(MakeValueSource(v));
+}
+
+TEST(RowParser, IteratorEquality) {
+  // Empty range of values.
+  std::vector<Value> values = {};
+  auto rp = MakeRowParser<std::int64_t>(values);
+  auto it = rp.begin();
+  EXPECT_EQ(it, it);
+  auto end = rp.end();
+  EXPECT_EQ(end, end);
+  EXPECT_EQ(it, end);
+
+  // Non-empty range of values.
+  values = {Value(0), Value(1), Value(2)};
+  rp = MakeRowParser<std::int64_t>(values);
+  it = rp.begin();
+  EXPECT_EQ(it, it);
+  end = rp.end();
+  EXPECT_EQ(end, end);
+  EXPECT_NE(it, end);
 }
 
 TEST(RowParser, SuccessEmpty) {
@@ -100,7 +119,7 @@ TEST(RowParser, SuccessMovedRowParser) {
   EXPECT_NE(it1, end1);
   row = *it1;
   EXPECT_TRUE(row.ok());
-  EXPECT_EQ(1, row->get<0>());
+  EXPECT_EQ(1, row->get<0>());  // <-- Line (A)
 
   // Now we move the RowParser to a new object, and continue the iteration.
   // We should resume consuming where the first RowParser left off.
@@ -108,6 +127,12 @@ TEST(RowParser, SuccessMovedRowParser) {
   auto it2 = rp2.begin();
   auto end2 = rp2.end();
 
+  EXPECT_NE(it2, end2);
+  row = *it2;
+  EXPECT_TRUE(row.ok());
+  EXPECT_EQ(1, row->get<0>());  // Same value as line (A) since op++ not called
+
+  ++it2;
   EXPECT_NE(it2, end2);
   row = *it2;
   EXPECT_TRUE(row.ok());

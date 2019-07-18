@@ -22,7 +22,6 @@
 #include "google/cloud/status_or.h"
 #include <array>
 #include <functional>
-#include <memory>
 #include <tuple>
 #include <utility>
 
@@ -63,10 +62,13 @@ using ValueSource = std::function<StatusOr<optional<Value>>()>;
  * `ResultSet::rows<Ts...>` member function. Callers should iterate `RowParser`
  * using a range-for loop as follows.
  *
+ * @warning Moving a `RowParser` invalidates all iterators referring to the
+ *     moved-from instance.
+ *
  * @par Example
  *
  * @code
- * std::shared_ptr<ValueSource> vs = ...
+ * ValueSource vs = ...
  * RowParser<bool, std::int64_t> rp(std::move(vs));
  * for (auto row : rp) {
  *   if (!row) {
@@ -87,43 +89,24 @@ using ValueSource = std::function<StatusOr<optional<Value>>()>;
 template <typename T, typename... Ts>
 class RowParser {
  public:
+  using RowType = Row<T, Ts...>;
+  using value_type = StatusOr<RowType>;
+
   /// A single-pass input iterator that coalesces multiple `Value` results into
   /// a `Row<Ts...>`.
   class iterator {
    public:
-    using RowType = Row<T, Ts...>;
     using iterator_category = std::input_iterator_tag;
-    using value_type = StatusOr<RowType>;
+    using value_type = RowParser::value_type;
     using difference_type = std::ptrdiff_t;
     using pointer = value_type*;
     using reference = value_type&;
 
-    reference operator*() { return curr_; }
-    pointer operator->() { return &curr_; }
+    reference operator*() { return parser_->curr_; }
+    pointer operator->() { return &parser_->curr_; }
 
     iterator& operator++() {
-      if (!curr_) {
-        value_source_ = nullptr;
-        return *this;
-      }
-      std::array<Value, RowType::size()> values;
-      for (std::size_t i = 0; i < values.size(); ++i) {
-        StatusOr<optional<Value>> v = (*value_source_)();
-        if (!v) {
-          curr_ = std::move(v).status();
-          return *this;
-        }
-        if (!*v) {
-          if (i == 0) {  // We've successfully reached the end.
-            value_source_ = nullptr;
-            return *this;
-          }
-          curr_ = Status(StatusCode::kUnknown, "incomplete row");
-          return *this;
-        }
-        values[i] = **std::move(v);
-      }
-      curr_ = ParseRow<T, Ts...>(values);
+      parser_->Advance();
       return *this;
     }
 
@@ -134,9 +117,7 @@ class RowParser {
     }
 
     friend bool operator==(iterator const& a, iterator const& b) {
-      // Input iterators may only be compared to (copies of) themselves and
-      // end. See https://en.cppreference.com/w/cpp/named_req/InputIterator
-      return !a.value_source_ == !b.value_source_;  // Both end, or both not end
+      return a.Equals(b);
     }
     friend bool operator!=(iterator const& a, iterator const& b) {
       return !(a == b);
@@ -144,20 +125,29 @@ class RowParser {
 
    private:
     friend RowParser;
-    explicit iterator(std::shared_ptr<ValueSource> f)
-        : value_source_(std::move(f)), curr_(RowType{}) {
-      if (value_source_) {
-        operator++();  // Parse the first row
-      }
+    explicit iterator(RowParser* p) : parser_(p) {}
+
+    bool Equals(iterator const& b) const {
+      // Input iterators may only be compared to (copies of) themselves and
+      // end. See https://en.cppreference.com/w/cpp/named_req/InputIterator
+      //
+      // Note: An "end" iterator has two representations that must compare
+      // equal:
+      //   1. When iterator::parser_ is nullptr_
+      //   2. When iterator::parser_::value_source_ is nullptr_
+      iterator const& a = *this;
+      bool const a_is_end = !a.parser_ || !a.parser_->value_source_;
+      bool const b_is_end = !b.parser_ || !b.parser_->value_source_;
+      return a_is_end == b_is_end;
     }
 
-    std::shared_ptr<ValueSource> value_source_;  // nullptr means end
-    value_type curr_;
+    RowParser* parser_;  // nullptr means end
   };
 
   /// Constructs a `RowParser` for the given `ValueSource`.
-  explicit RowParser(std::shared_ptr<ValueSource> vs)
-      : value_source_(std::move(vs)) {}
+  explicit RowParser(ValueSource vs) : value_source_(std::move(vs)) {
+    Advance();
+  }
 
   // Copy and assignable.
   RowParser(RowParser const&) = default;
@@ -166,13 +156,41 @@ class RowParser {
   RowParser& operator=(RowParser&&) = default;
 
   /// Returns the begin iterator.
-  iterator begin() { return iterator(value_source_); }
+  iterator begin() { return iterator(this); }
 
   /// Returns the end iterator.
   iterator end() { return iterator(nullptr); }
 
  private:
-  std::shared_ptr<ValueSource> value_source_;
+  // Consumes Values from value_source_ and stores the consumed Row in curr_.
+  // Called by iterator::operator++().
+  void Advance() {
+    if (!curr_) {  // Last row was an error; jump to end
+      value_source_ = nullptr;
+      return;
+    }
+    std::array<Value, RowType::size()> values;
+    for (std::size_t i = 0; i < values.size(); ++i) {
+      StatusOr<optional<Value>> v = value_source_();
+      if (!v) {
+        curr_ = std::move(v).status();
+        return;
+      }
+      if (!*v) {
+        if (i == 0) {  // We've successfully reached the end.
+          value_source_ = nullptr;
+        } else {
+          curr_ = Status(StatusCode::kUnknown, "incomplete row");
+        }
+        return;
+      }
+      values[i] = **std::move(v);
+    }
+    curr_ = ParseRow<T, Ts...>(values);
+  }
+
+  ValueSource value_source_;  // nullpr is end
+  value_type curr_ = RowType{};
 };
 
 }  // namespace SPANNER_CLIENT_NS
