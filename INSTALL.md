@@ -189,6 +189,22 @@ sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
+#### googleapis
+
+There is no Fedora package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
@@ -241,6 +257,22 @@ cmake \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
 sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo ldconfig
+```
+
+#### googleapis
+
+There is no OpenSUSE package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -359,6 +391,22 @@ sudo make install
 sudo ldconfig
 ```
 
+#### googleapis
+
+There is no OpenSUSE package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
@@ -438,6 +486,22 @@ tar -xf v1.19.1.tar.gz
 cd $HOME/Downloads/grpc-1.19.1
 make -j $(nproc)
 sudo make install
+sudo ldconfig
+```
+
+#### googleapis
+
+There is no Ubuntu package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 
@@ -547,6 +611,22 @@ sudo make install
 sudo ldconfig
 ```
 
+#### googleapis
+
+There is no Ubuntu package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
@@ -566,7 +646,6 @@ sudo cmake --build . --target install
 ### Ubuntu (14.04 - Trusty Tahr)
 
 Install the minimal development tools.
-
 We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 
 ```bash
@@ -699,6 +778,22 @@ make -j $(nproc)
 sudo make install
 ```
 
+#### googleapis
+
+There is no Ubuntu package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
@@ -719,7 +814,6 @@ sudo cmake --build . --target install
 ### Debian (Stretch)
 
 First install the development tools and libcurl.
-
 On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
 against the same version or risk an inconsistent configuration of the library.
 This is especially important for multi-threaded applications, as openssl-1.0.2
@@ -790,6 +884,22 @@ sudo make install
 sudo ldconfig
 ```
 
+#### googleapis
+
+There is no Debian package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
@@ -808,10 +918,9 @@ sudo cmake --build . --target install
 
 ### CentOS (7)
 
-First install the development tools and OpenSSL.
-
-The development tools distributed with CentOS (notably CMake) are too old to
-build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+First install the development tools and OpenSSL. The development tools
+distributed with CentOS (notably CMake) are too old to build
+`google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
@@ -891,6 +1000,22 @@ export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
 make -j $(nproc)
 sudo make install
+sudo ldconfig
+```
+
+#### googleapis
+
+There is no CentOS package for this library. To install it, use:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
+cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j $(nproc)
 sudo ldconfig
 ```
 

@@ -42,6 +42,8 @@ $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.
 $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
 $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
 $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
+# Temporary Testing the external/googleapis.cmake
+$cmake_flags += "-DGOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER=external"
 
 # Configure CMake and create the build directory.
 Write-Host

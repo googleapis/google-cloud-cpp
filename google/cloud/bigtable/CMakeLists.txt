@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-include(external/googleapis)
+include(IncludeGoogleapis)
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 1)
@@ -72,8 +72,6 @@ endif ()
 # Configure the location of proto files, particulary the googleapis protos.
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
             "${PROJECT_SOURCE_DIR}")
-
-include(external/googleapis)
 
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos INTERFACE)

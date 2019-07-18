@@ -24,12 +24,10 @@ endif ()
 if (NOT TARGET googleapis_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
-    set(
-        GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-        "https://github.com/googleapis/googleapis/archive/a8ee1416f4c588f2ab92da72e7c1f588c784d3e6.tar.gz"
-        )
+    set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
+        "https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz")
     set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256
-        "6b8a9b2bcb4476e9a5a9872869996f0d639c8d5df76dd8a893e79201f211b1cf")
+        "e8143e9132a57bd868f3014c0bc382205885c53a2a425b3c2dbb8f9feaa8366c")
 
     set_external_project_build_parallel_level(PARALLEL)
 
@@ -84,35 +82,22 @@ if (NOT TARGET googleapis_project)
         INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
         URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
-        LIST_SEPARATOR
-        |
-        PATCH_COMMAND
-        ${CMAKE_COMMAND}
-        -E
-        copy
-        ${PROJECT_SOURCE_DIR}/cmake/external/googleapis/CMakeLists.txt
-        <SOURCE_DIR>/CMakeLists.txt
-        COMMAND
-            ${CMAKE_COMMAND} -E copy
-            ${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake
-            ${PROJECT_SOURCE_DIR}/cmake/PkgConfigHelper.cmake
-            ${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake
-            ${PROJECT_SOURCE_DIR}/cmake/FindProtobufTargets.cmake
-            ${PROJECT_SOURCE_DIR}/cmake/SelectMSVCRuntime.cmake
-            ${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in
-            ${PROJECT_SOURCE_DIR}/cmake/external/googleapis/config.cmake.in
-            ${PROJECT_SOURCE_DIR}/cmake/external/googleapis/config-version.cmake.in
-            <SOURCE_DIR>
-        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
-                   -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
-                   -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
-                   -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
-                   -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
-                   -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
-                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-                   -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
-                   ${_googleapis_toolchain_flag}
-                   ${_googleapis_triplet_flag}
+        LIST_SEPARATOR |
+        CONFIGURE_COMMAND
+            ${CMAKE_COMMAND}
+            -G${CMAKE_GENERATOR}
+            ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
+            -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
+            -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
+            -DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}
+            -DBUILD_SHARED_LIBS=${BUILD_SHARED_LIBS}
+            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+            -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
+            -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+            ${_googleapis_toolchain_flag}
+            ${_googleapis_triplet_flag}
+            -H<SOURCE_DIR>
+            -B<BINARY_DIR>
         BUILD_COMMAND ${CMAKE_COMMAND}
                       --build
                       <BINARY_DIR>
