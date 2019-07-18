@@ -26,12 +26,12 @@ namespace internal {
 /// A metafunction that folds && across a list of types, the specialization for
 /// an empty list.
 template <typename...>
-struct conjunction : std::true_type { };
+struct conjunction : std::true_type {};
 
 /// A metafunction that folds && across a list of types, the specialization for
 /// a single element.
 template <typename B1>
-struct conjunction<B1> : B1 { };
+struct conjunction<B1> : B1 {};
 
 /// A metafunction that folds && across a list of types.
 template <typename B1, typename... Bn>
