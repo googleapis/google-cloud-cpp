@@ -70,9 +70,15 @@ int main(int argc, char* argv[]) try {
   // For more details, see the documentation
   //   https://github.com/census-instrumentation/opencensus-cpp/tree/master/opencensus/exporters/stats/stackdriver#opencensus-stackdriver-stats-exporter
 
-  opencensus::exporters::stats::StackdriverExporter::Register(
-      project_id, "bigtable-opencensus-0@unspecified-host");
-  opencensus::exporters::trace::StackdriverExporter::Register(project_id);
+  opencensus::exporters::stats::StackdriverOptions stats_opts;
+  stats_opts.project_id = project_id;
+  stats_opts.opencensus_task = "bigtable-opencensus-0@unspecified-host";
+
+  opencensus::exporters::trace::StackdriverOptions trace_opts;
+  trace_opts.project_id = project_id;
+
+  opencensus::exporters::stats::StackdriverExporter::Register(stats_opts);
+  opencensus::exporters::trace::StackdriverExporter::Register(trace_opts);
 
   // Connect to the Cloud Bigtable Admin API.
   //! [connect admin]
