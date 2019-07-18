@@ -195,9 +195,9 @@ There is no Fedora package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -266,9 +266,9 @@ There is no OpenSUSE package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -397,9 +397,9 @@ There is no OpenSUSE package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -495,9 +495,9 @@ There is no Ubuntu package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -617,9 +617,9 @@ There is no Ubuntu package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -784,9 +784,9 @@ There is no Ubuntu package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -890,9 +890,9 @@ There is no Debian package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
@@ -1009,9 +1009,9 @@ There is no CentOS package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.0.tar.gz
-tar -xf v0.1.0.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.0
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
+tar -xf v0.1.1.tar.gz
+cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
