@@ -112,12 +112,14 @@ google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   for (auto& t : tasks) {
     auto shard_result = t.get();
     if (!shard_result) {
-      return shard_result;
+      std::cerr << "Exception raised by PopulateTask/" << count
+                << "]: " << shard_result.status() << "\n";
+    } else {
+      result.row_count += shard_result->row_count;
+      result.operations.insert(result.operations.end(),
+                               shard_result->operations.begin(),
+                               shard_result->operations.end());
     }
-    result.row_count += shard_result->row_count;
-    result.operations.insert(result.operations.end(),
-                             shard_result->operations.begin(),
-                             shard_result->operations.end());
     ++count;
   }
   using std::chrono::duration_cast;

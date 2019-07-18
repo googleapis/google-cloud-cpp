@@ -95,8 +95,9 @@ int main(int argc, char* argv[]) {
     if (!result) {
       std::cerr << "Error returned by task[" << count
                 << "]: " << result.status() << "\n";
+    } else {
+      combined += *result;
     }
-    combined += *result;
     ++count;
   }
   auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(
