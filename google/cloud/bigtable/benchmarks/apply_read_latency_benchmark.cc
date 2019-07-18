@@ -143,9 +143,11 @@ int main(int argc, char* argv[]) {
   for (auto& future : tasks) {
     auto result = future.get();
     if (!result) {
-      std::cerr << result.status() << "\n";
+      std::cerr << "Standard exception raised by task[" << count
+                << "]: " << result.status() << "\n";
+    } else {
+      append(combined, *result);
     }
-    append(combined, *result);
     ++count;
   }
   auto latency_test_elapsed =
