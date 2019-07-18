@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) try {
   benchmark.CreateTable();
   auto populate_results = benchmark.PopulateTable();
   benchmark.PrintThroughputResult(std::cout, "scant", "Upload",
-                                  populate_results);
+                                  *populate_results);
 
   auto data_client = benchmark.MakeDataClient();
   std::map<std::string, BenchmarkResult> results_by_size;
@@ -101,7 +101,7 @@ int main(int argc, char* argv[]) try {
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "scant", "BulkApply()", "Latency",
-                           populate_results);
+                           *populate_results);
   for (auto& kv : results_by_size) {
     benchmark.PrintResultCsv(std::cout, "scant", kv.first, "IterationTime",
                              kv.second);
@@ -134,12 +134,18 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
         bigtable::RowRange::StartingAt(benchmark.MakeKey(prng(generator)));
 
     long count = 0;
-    auto op = [&count, &table, &scan_size, &range]() {
+    auto op = [&count, &table, &scan_size, &range]() -> google::cloud::Status {
       auto reader =
           table.ReadRows(bigtable::RowSet(std::move(range)), scan_size,
                          bigtable::Filter::ColumnRangeClosed(
                              kColumnFamily, "field0", "field9"));
-      count = std::distance(reader.begin(), reader.end());
+      for (auto& row : reader) {
+        if (!row) {
+          return row.status();
+        }
+        ++count;
+      }
+      return google::cloud::Status{};
     };
     result.operations.push_back(Benchmark::TimeOperation(op));
     result.row_count += count;

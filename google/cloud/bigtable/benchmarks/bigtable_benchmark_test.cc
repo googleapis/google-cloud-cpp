@@ -129,7 +129,8 @@ TEST(BenchmarkTest, PrintLatencyResult) {
   result.operations.resize(100);
   int count = 0;
   std::generate(result.operations.begin(), result.operations.end(), [&count]() {
-    return OperationResult{true, std::chrono::microseconds(++count * 100)};
+    return OperationResult{google::cloud::Status{},
+                           std::chrono::microseconds(++count * 100)};
   });
 
   std::ostringstream os;
@@ -162,7 +163,8 @@ TEST(BenchmarkTest, PrintCsv) {
   result.operations.resize(100);
   int count = 0;
   std::generate(result.operations.begin(), result.operations.end(), [&count]() {
-    return OperationResult{true, std::chrono::microseconds(++count * 100)};
+    return OperationResult{google::cloud::Status{},
+                           std::chrono::microseconds(++count * 100)};
   });
 
   std::string header = bm.ResultsCsvHeader();

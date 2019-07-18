@@ -82,10 +82,9 @@ struct LatencyBenchmarkResult {
 };
 
 /// Run an iteration of the test.
-LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                                    std::string app_profile_id,
-                                    std::string const& table_id,
-                                    std::chrono::seconds test_duration);
+google::cloud::StatusOr<LatencyBenchmarkResult> RunBenchmark(
+    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
+    std::string const& table_id, std::chrono::seconds test_duration);
 
 //@{
 /// @name Test constants.  Defined as requirements in the original bug (#189).
@@ -95,7 +94,7 @@ constexpr int kBenchmarkProgressMarks = 4;
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   bigtable::benchmarks::BenchmarkSetup setup("perf", argc, argv);
 
   Benchmark benchmark(setup);
@@ -103,15 +102,20 @@ int main(int argc, char* argv[]) try {
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
   auto populate_results = benchmark.PopulateTable();
+  if (!populate_results) {
+    std::cerr << populate_results.status() << "\n";
+    return 1;
+  }
 
   benchmark.PrintThroughputResult(std::cout, "perf", "Upload",
-                                  populate_results);
+                                  *populate_results);
 
   auto data_client = benchmark.MakeDataClient();
   // Start the threads running the latency test.
   std::cout << "Running Latency Benchmark " << std::flush;
   auto latency_test_start = std::chrono::steady_clock::now();
-  std::vector<std::future<LatencyBenchmarkResult>> tasks;
+  std::vector<std::future<google::cloud::StatusOr<LatencyBenchmarkResult>>>
+      tasks;
   for (int i = 0; i != setup.thread_count(); ++i) {
     auto launch_policy = std::launch::async;
     if (setup.thread_count() == 1) {
@@ -137,12 +141,12 @@ int main(int argc, char* argv[]) try {
     append_ops(destination.read_results, source.read_results);
   };
   for (auto& future : tasks) {
-    try {
-      auto result = future.get();
-      append(combined, result);
-    } catch (std::exception const& ex) {
+    auto result = future.get();
+    if (!result) {
       std::cerr << "Standard exception raised by task[" << count
-                << "]: " << ex.what() << "\n";
+                << "]: " << result.status() << "\n";
+    } else {
+      append(combined, *result);
     }
     ++count;
   }
@@ -162,7 +166,7 @@ int main(int argc, char* argv[]) try {
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
-                           populate_results);
+                           *populate_results);
   benchmark.PrintResultCsv(std::cout, "perf", "Apply()", "Latency",
                            combined.apply_results);
   benchmark.PrintResultCsv(std::cout, "perf", "ReadRow()", "Latency",
@@ -171,9 +175,6 @@ int main(int argc, char* argv[]) try {
   benchmark.DeleteTable();
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 
 namespace {
@@ -183,32 +184,26 @@ OperationResult RunOneApply(bigtable::Table& table, std::string row_key,
   for (int field = 0; field != kNumFields; ++field) {
     mutation.emplace_back(MakeRandomMutation(generator, field));
   }
-  auto op = [&table, &mutation]() {
-    auto status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+  auto op = [&table, &mutation]() -> google::cloud::Status {
+    return table.Apply(std::move(mutation));
   };
 
   return Benchmark::TimeOperation(std::move(op));
 }
 
 OperationResult RunOneReadRow(bigtable::Table& table, std::string row_key) {
-  auto op = [&table, &row_key]() {
-    auto row = table.ReadRow(
-        std::move(row_key),
-        bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0", "field9"));
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+  auto op = [&table, &row_key]() -> google::cloud::Status {
+    return table
+        .ReadRow(std::move(row_key), bigtable::Filter::ColumnRangeClosed(
+                                         kColumnFamily, "field0", "field9"))
+        .status();
   };
   return Benchmark::TimeOperation(std::move(op));
 }
 
-LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                                    std::string app_profile_id,
-                                    std::string const& table_id,
-                                    std::chrono::seconds test_duration) {
+google::cloud::StatusOr<LatencyBenchmarkResult> RunBenchmark(
+    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
+    std::string const& table_id, std::chrono::seconds test_duration) {
   LatencyBenchmarkResult result = {};
 
   auto data_client = benchmark.MakeDataClient();
@@ -224,12 +219,18 @@ LatencyBenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
     auto row_key = benchmark.MakeRandomKey(generator);
 
     if (prng_operation(generator) == 0) {
-      result.apply_results.operations.emplace_back(
-          RunOneApply(table, row_key, generator));
+      auto op_result = RunOneApply(table, row_key, generator);
+      if (!op_result.status.ok()) {
+        return op_result.status;
+      }
+      result.apply_results.operations.emplace_back(op_result);
       ++result.apply_results.row_count;
     } else {
-      result.read_results.operations.emplace_back(
-          RunOneReadRow(table, row_key));
+      auto op_result = RunOneReadRow(table, row_key);
+      if (!op_result.status.ok()) {
+        return op_result.status;
+      }
+      result.read_results.operations.emplace_back(op_result);
       ++result.read_results.row_count;
     }
     if (now >= mark) {

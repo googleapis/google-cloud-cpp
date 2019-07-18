@@ -59,14 +59,15 @@ namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::benchmarks;
 
 /// Run an iteration of the test, returns the number of operations.
-long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                  std::string app_profile_id, std::string const& table_id,
-                  std::chrono::seconds test_duration);
+google::cloud::StatusOr<long> RunBenchmark(
+    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
+    std::string const& table_id, std::chrono::seconds test_duration);
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   bigtable::benchmarks::BenchmarkSetup setup("long", argc, argv);
+
   Benchmark benchmark(setup);
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -74,7 +75,7 @@ int main(int argc, char* argv[]) try {
   // Start the threads running the latency test.
   std::cout << "# Running Endurance Benchmark:\n";
   auto latency_test_start = std::chrono::steady_clock::now();
-  std::vector<std::future<long>> tasks;
+  std::vector<std::future<google::cloud::StatusOr<long>>> tasks;
   for (int i = 0; i != setup.thread_count(); ++i) {
     auto launch_policy = std::launch::async;
     if (setup.thread_count() == 1) {
@@ -90,12 +91,12 @@ int main(int argc, char* argv[]) try {
   long combined = 0;
   int count = 0;
   for (auto& future : tasks) {
-    try {
-      auto result = future.get();
-      combined += result;
-    } catch (std::exception const& ex) {
-      std::cerr << "Standard exception raised by task[" << count
-                << "]: " << ex.what() << "\n";
+    auto result = future.get();
+    if (!result) {
+      std::cerr << "Error returned by task[" << count
+                << "]: " << result.status() << "\n";
+    } else {
+      combined += *result;
     }
     ++count;
   }
@@ -108,9 +109,6 @@ int main(int argc, char* argv[]) try {
 
   benchmark.DeleteTable();
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 
 namespace {
@@ -121,11 +119,8 @@ OperationResult RunOneApply(bigtable::Table& table, Benchmark const& benchmark,
   for (int field = 0; field != kNumFields; ++field) {
     mutation.emplace_back(MakeRandomMutation(generator, field));
   }
-  auto op = [&table, &mutation]() {
-    auto status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+  auto op = [&table, &mutation]() -> google::cloud::Status {
+    return table.Apply(std::move(mutation));
   };
   return Benchmark::TimeOperation(std::move(op));
 }
@@ -134,20 +129,18 @@ OperationResult RunOneReadRow(bigtable::Table& table,
                               Benchmark const& benchmark,
                               google::cloud::internal::DefaultPRNG& generator) {
   auto row_key = benchmark.MakeRandomKey(generator);
-  auto op = [&table, &row_key]() {
-    auto row = table.ReadRow(
-        std::move(row_key),
-        bigtable::Filter::ColumnRangeClosed(kColumnFamily, "field0", "field9"));
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+  auto op = [&table, &row_key]() -> google::cloud::Status {
+    return table
+        .ReadRow(std::move(row_key), bigtable::Filter::ColumnRangeClosed(
+                                         kColumnFamily, "field0", "field9"))
+        .status();
   };
   return Benchmark::TimeOperation(std::move(op));
 }
 
-long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                  std::string app_profile_id, std::string const& table_id,
-                  std::chrono::seconds test_duration) {
+google::cloud::StatusOr<long> RunBenchmark(
+    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
+    std::string const& table_id, std::chrono::seconds test_duration) {
   BenchmarkResult partial = {};
 
   auto data_client = benchmark.MakeDataClient();
@@ -159,11 +152,23 @@ long RunBenchmark(bigtable::benchmarks::Benchmark& benchmark,
   auto end = start + test_duration;
 
   for (auto now = start; now < end; now = std::chrono::steady_clock::now()) {
-    partial.operations.emplace_back(RunOneReadRow(table, benchmark, generator));
+    auto op_result = RunOneReadRow(table, benchmark, generator);
+    if (!op_result.status.ok()) {
+      return op_result.status;
+    }
+    partial.operations.emplace_back(op_result);
     ++partial.row_count;
-    partial.operations.emplace_back(RunOneReadRow(table, benchmark, generator));
+    op_result = RunOneReadRow(table, benchmark, generator);
+    if (!op_result.status.ok()) {
+      return op_result.status;
+    }
+    partial.operations.emplace_back(op_result);
     ++partial.row_count;
-    partial.operations.emplace_back(RunOneApply(table, benchmark, generator));
+    op_result = RunOneApply(table, benchmark, generator);
+    if (!op_result.status.ok()) {
+      return op_result.status;
+    }
+    partial.operations.emplace_back(op_result);
     ++partial.row_count;
   }
   partial.elapsed =
