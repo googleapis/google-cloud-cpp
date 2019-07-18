@@ -99,7 +99,8 @@ struct NativeExpression::Impl {
     if (!status.ok()) {
       return status;
     }
-    // NOLINTNEXTLINE
+    // Cannot use make_unique because we are using brace-initialization.
+    // NOLINTNEXTLINE(modernize-make-unique)
     return NativeExpression(std::unique_ptr<Impl>(new Impl{json}));
   }
 
@@ -239,7 +240,8 @@ struct NativeIamBinding::Impl {
       condition = *std::move(parsed_condition);
       json.erase(condition_it);
     }
-    // NOLINTNEXTLINE
+    // Cannot use make_unique because we are using brace-initialization.
+    // NOLINTNEXTLINE(modernize-make-unique)
     return NativeIamBinding(std::unique_ptr<Impl>(
         new Impl{json, std::move(members), std::move(condition)}));
   }
@@ -416,7 +418,8 @@ StatusOr<NativeIamPolicy> NativeIamPolicy::CreateFromJson(
     }
     json.erase(binding_it);
   }
-  // NOLINTNEXTLINE
+  // Cannot use make_unique because we are using brace-initialization.
+  // NOLINTNEXTLINE(modernize-make-unique)
   return NativeIamPolicy(std::unique_ptr<NativeIamPolicy::Impl>(
       new NativeIamPolicy::Impl{std::move(json), std::move(bindings)}));
 }
