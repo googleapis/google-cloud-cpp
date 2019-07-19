@@ -330,6 +330,9 @@ struct PredefinedAcl
     return PredefinedAcl("projectPrivate");
   }
   static PredefinedAcl PublicRead() { return PredefinedAcl("publicRead"); }
+  static PredefinedAcl PublicReadWrite() {
+    return PredefinedAcl("publicReadWrite");
+  }
 };
 
 /**
@@ -394,6 +397,25 @@ struct PredefinedDefaultObjectAcl
                            std::string>::WellKnownParameter;
   static char const* well_known_parameter_name() {
     return "predefinedDefaultObjectAcl";
+  }
+
+  static PredefinedDefaultObjectAcl AuthenticatedRead() {
+    return PredefinedDefaultObjectAcl("authenticatedRead");
+  }
+  static PredefinedDefaultObjectAcl BucketOwnerFullControl() {
+    return PredefinedDefaultObjectAcl("bucketOwnerFullControl");
+  }
+  static PredefinedDefaultObjectAcl BucketOwnerRead() {
+    return PredefinedDefaultObjectAcl("bucketOwnerRead");
+  }
+  static PredefinedDefaultObjectAcl Private() {
+    return PredefinedDefaultObjectAcl("private");
+  }
+  static PredefinedDefaultObjectAcl ProjectPrivate() {
+    return PredefinedDefaultObjectAcl("projectPrivate");
+  }
+  static PredefinedDefaultObjectAcl PublicRead() {
+    return PredefinedDefaultObjectAcl("publicRead");
   }
 };
 

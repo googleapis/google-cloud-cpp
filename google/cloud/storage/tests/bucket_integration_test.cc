@@ -128,6 +128,60 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   EXPECT_EQ(0, name_counter(bucket_name, current_buckets));
 }
 
+TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
+  std::vector<PredefinedAcl> test_values{
+      PredefinedAcl::AuthenticatedRead(), PredefinedAcl::Private(),
+      PredefinedAcl::ProjectPrivate(),    PredefinedAcl::PublicRead(),
+      PredefinedAcl::PublicReadWrite(),
+  };
+
+  std::string project_id = flag_project_id;
+  for (auto const& acl : test_values) {
+    SCOPED_TRACE(std::string("Testing with ") +
+                 acl.well_known_parameter_name() + "=" + acl.value());
+    std::string bucket_name = MakeRandomBucketName();
+    StatusOr<Client> client = Client::CreateDefaultClient();
+    ASSERT_STATUS_OK(client);
+
+    auto metadata = client->CreateBucketForProject(
+        bucket_name, project_id, BucketMetadata(), PredefinedAcl(acl));
+    ASSERT_STATUS_OK(metadata);
+    EXPECT_EQ(bucket_name, metadata->name());
+
+    auto status = client->DeleteBucket(bucket_name);
+    ASSERT_STATUS_OK(status);
+  }
+}
+
+TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
+  std::vector<PredefinedDefaultObjectAcl> test_values{
+      PredefinedDefaultObjectAcl::AuthenticatedRead(),
+      PredefinedDefaultObjectAcl::BucketOwnerFullControl(),
+      PredefinedDefaultObjectAcl::BucketOwnerRead(),
+      PredefinedDefaultObjectAcl::Private(),
+      PredefinedDefaultObjectAcl::ProjectPrivate(),
+      PredefinedDefaultObjectAcl::PublicRead(),
+  };
+
+  std::string project_id = flag_project_id;
+  for (auto const& acl : test_values) {
+    SCOPED_TRACE(std::string("Testing with ") +
+                 acl.well_known_parameter_name() + "=" + acl.value());
+    std::string bucket_name = MakeRandomBucketName();
+    StatusOr<Client> client = Client::CreateDefaultClient();
+    ASSERT_STATUS_OK(client);
+
+    auto metadata = client->CreateBucketForProject(
+        bucket_name, project_id, BucketMetadata(),
+        PredefinedDefaultObjectAcl(acl));
+    ASSERT_STATUS_OK(metadata);
+    EXPECT_EQ(bucket_name, metadata->name());
+
+    auto status = client->DeleteBucket(bucket_name);
+    ASSERT_STATUS_OK(status);
+  }
+}
+
 TEST_F(BucketIntegrationTest, FullPatch) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
