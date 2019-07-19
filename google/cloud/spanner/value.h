@@ -149,8 +149,10 @@ class Value {
   /**
    * Constructs a non-null `Value` that holds nothing.
    *
-   * All calls to `is<T>()`, `is_null<T>()`, and `get<T>()` will return false
-   * or an error as appropriate.
+   * The constructed object is logically empty. It will compare equal only to
+   * another default constructed `Value`. All calls to `is<T>()`,
+   * `is_null<T>()`, and `get<T>()` will return false or an error as
+   * appropriate.
    */
   Value() = default;
 
