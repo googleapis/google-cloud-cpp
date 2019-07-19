@@ -25,17 +25,25 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-ValueSource MakeValueSource(std::vector<Value> const& v) {
-  std::size_t i = 0;
+ValueSource MakeUnsharedValueSource(std::vector<Value> const& v) {
+  std::size_t index = 0;
   return [=]() mutable -> StatusOr<optional<Value>> {
-    if (i == v.size()) return optional<Value>{};
-    return {v[i++]};
+    if (index == v.size()) return optional<Value>{};
+    return {v[(index)++]};
+  };
+}
+
+ValueSource MakeSharedValueSource(std::vector<Value> const& v) {
+  auto index = std::make_shared<std::size_t>(0);
+  return [=]() mutable -> StatusOr<optional<Value>> {
+    if (*index == v.size()) return optional<Value>{};
+    return {v[(*index)++]};
   };
 }
 
 template <typename... Ts>
 RowParser<Ts...> MakeRowParser(std::vector<Value> const& v) {
-  return RowParser<Ts...>(MakeValueSource(v));
+  return RowParser<Ts...>(MakeSharedValueSource(v));
 }
 
 TEST(RowParser, IteratorEquality) {
@@ -79,6 +87,7 @@ TEST(RowParser, SuccessOneColumn) {
     EXPECT_EQ(expected_value, row->get<0>());
     ++expected_value;
   }
+  EXPECT_EQ(values.size(), expected_value);
 }
 
 TEST(RowParser, SuccessTwoColumns) {
@@ -95,6 +104,7 @@ TEST(RowParser, SuccessTwoColumns) {
     EXPECT_EQ(expected_value, row->get<1>());
     ++expected_value;
   }
+  EXPECT_EQ(values.size() / 2, expected_value);
 }
 
 TEST(RowParser, SuccessMovedRowParser) {
@@ -146,6 +156,65 @@ TEST(RowParser, SuccessMovedRowParser) {
 
   ++it2;
   EXPECT_EQ(it2, end2);
+}
+
+TEST(RowParser, ConstructingRowParserDoesNotConsume) {
+  std::vector<Value> const values = {
+      Value(0),  // Row 0
+      Value(1),  // Row 1
+      Value(2),  // Row 2
+      Value(3),  // Row 3
+  };
+  ValueSource vs = MakeSharedValueSource(values);
+  auto rp1_ignored = RowParser<std::int64_t>(vs);
+  static_cast<void>(rp1_ignored);
+  auto rp2_ignored = RowParser<std::int64_t>(vs);
+  static_cast<void>(rp2_ignored);
+
+  std::int64_t expected = 0;
+  for (auto row : RowParser<std::int64_t>(vs)) {
+    EXPECT_TRUE(row.ok());
+    EXPECT_EQ(expected++, row->get<0>());
+  }
+  EXPECT_EQ(values.size(), expected);
+}
+
+TEST(RowParser, RowParserCopiesValueSource) {
+  std::vector<Value> const values = {
+      Value(0),  // Row 0
+      Value(1),  // Row 1
+      Value(2),  // Row 2
+      Value(3),  // Row 3
+  };
+
+  RowParser<std::int64_t> rp1(MakeUnsharedValueSource(values));
+  RowParser<std::int64_t> rp2 = rp1;
+
+  std::int64_t expected = 0;
+  for (auto row : rp1) {
+    EXPECT_TRUE(row.ok());
+    EXPECT_EQ(expected++, row->get<0>());
+  }
+  EXPECT_EQ(values.size(), expected);
+
+  expected = 0;
+  for (auto row : rp2) {
+    EXPECT_TRUE(row.ok());
+    EXPECT_EQ(expected++, row->get<0>());
+  }
+  EXPECT_EQ(values.size(), expected);
+
+  RowParser<std::int64_t> rp3(MakeSharedValueSource(values));
+  RowParser<std::int64_t> rp4 = rp3;
+
+  expected = 0;
+  for (auto row : rp3) {
+    EXPECT_TRUE(row.ok());
+    EXPECT_EQ(expected++, row->get<0>());
+  }
+  EXPECT_EQ(values.size(), expected);
+
+  EXPECT_EQ(rp4.begin(), rp4.end());
 }
 
 TEST(RowParser, FailOneIncompleteRow) {

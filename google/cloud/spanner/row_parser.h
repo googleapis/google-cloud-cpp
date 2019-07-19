@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/optional.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <array>
@@ -102,8 +103,8 @@ class RowParser {
     using pointer = value_type*;
     using reference = value_type&;
 
-    reference operator*() { return parser_->curr_; }
-    pointer operator->() { return &parser_->curr_; }
+    reference operator*() { return *parser_->curr_; }
+    pointer operator->() { return &*parser_->curr_; }
 
     iterator& operator++() {
       parser_->Advance();
@@ -125,7 +126,9 @@ class RowParser {
 
    private:
     friend RowParser;
-    explicit iterator(RowParser* p) : parser_(p) {}
+    explicit iterator(RowParser* p) : parser_(p) {
+      if (parser_ && !parser_->curr_) parser_->Advance();
+    }
 
     bool Equals(iterator const& b) const {
       // Input iterators may only be compared to (copies of) themselves and
@@ -145,9 +148,7 @@ class RowParser {
   };
 
   /// Constructs a `RowParser` for the given `ValueSource`.
-  explicit RowParser(ValueSource vs) : value_source_(std::move(vs)) {
-    Advance();
-  }
+  explicit RowParser(ValueSource vs) : value_source_(std::move(vs)) {}
 
   // Copy and assignable.
   RowParser(RowParser const&) = default;
@@ -165,7 +166,7 @@ class RowParser {
   // Consumes Values from value_source_ and stores the consumed Row in curr_.
   // Called by iterator::operator++().
   void Advance() {
-    if (!curr_) {  // Last row was an error; jump to end
+    if (curr_ && !*curr_) {  // Last row was an error; jump to end
       value_source_ = nullptr;
       return;
     }
@@ -190,7 +191,7 @@ class RowParser {
   }
 
   ValueSource value_source_;  // nullpr is end
-  value_type curr_ = RowType{};
+  optional<value_type> curr_;
 };
 
 }  // namespace SPANNER_CLIENT_NS
