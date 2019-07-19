@@ -31,7 +31,7 @@ RUN zypper refresh && \
 
 # ```bash
 RUN zypper refresh && \
-    zypper install -y grpc-devel gzip libcurl-devel pkg-config tar wget
+    zypper install -y grpc-devel gzip libcurl-devel tar wget
 # ```
 
 # #### crc32c
