@@ -1,0 +1,223 @@
+/*!
+
+@mainpage Cloud Spanner C++ Client Library
+
+The Cloud Spanner C++ Client library offers types and functions to use Cloud
+Spanner from C++11 applications.
+
+This library requires a C++11 compiler, it is supported (and tested) on multiple
+Linux distributions.
+
+## Quickstart
+
+The following instructions show you how to perform basic tasks in Cloud Spanner
+using the C++ client library.
+
+### Before you begin
+
+1. Select or create a Google Cloud Platform (GCP) project using the
+   [manage resource page][resource-link]. Make a note of the project id, you
+   will need to use it later.
+2. Make sure that [billing is enabled][billing-link] for your project.
+3. Learn about [key terms and concepts][concepts-link] for Cloud Spanner.
+4. Setup the authentication for the examples:
+   - [Configure a service account][authentication-quickstart],
+   - or [login with your personal account][gcloud-quickstart]
+
+### Downloading and Compiling the C++ Client Library
+
+The source code for the Cloud Spanner C++ Client Library can be found on
+[GitHub][github-link]. Download or clone this repository as usual:
+
+```
+git clone https://github.com/googleapis/google-cloud-cpp-spanner.git
+```
+
+The top-level [README][github-readme] file in this repository includes detailed
+instructions on how to compile the library. The examples used in this guide
+should be automatically compiled when you follow said instructions.
+
+### Configuring authentication for the C++ Client Library
+
+Like all Google Cloud Platform (GCP) services, Cloud Spanner requires that your
+application authenticates with the service before accessing any data.
+If you are not familiar with GCP authentication please take this opportunity to
+review the [Authentication Overview][authentication-quickstart]. This library
+uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
+find the credentials file. For example:
+
+| Shell              | Command                                        |
+| :----------------- | ---------------------------------------------- |
+| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
+| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];` `export GOOGLE_APPLICATION_CREDENTIALS` |
+| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
+| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
+| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
+
+Setting this environment variable is the recommended way to configure the
+authentication preferences, though if the environment variable is not set, the
+library searches for a credentials file in the same location as the [Cloud
+SDK](https://cloud.google.com/sdk/).
+
+### Create a database
+
+This is a short example that creates a Cloud Spanner database and two tables.
+This example assumes you have configured the authentication using
+`GOOGLE_APPLICATION_CREDENTIALS` and has created a Cloud Spanner instance:
+
+@snippet samples.cc create-database
+
+This quickstart creates a database with two tables: `Singers` and `Albums`. You
+must provide the project id and instance in the command-line when you run the
+quickstart program. Assuming you followed the build instructions referenced
+above this would be:
+
+@code
+./cmake-out/google/cloud/spanner/samples/samples [PROJECT_ID] [INSTANCE_ID]
+@endcode
+
+### Using the library in your own projects
+
+Our continuous integration builds compile and test the code using both
+[Bazel](https://bazel.build/), and [CMake](https://cmake.org/). Integrating the
+Cloud Spanner C++ client library should work with either.
+
+#### Integrating with CMake
+
+Compile and install the library using the usual `CMake` commands. Once the
+library is installed, you can use it in your `CMakeLists.txt` file like any
+other package:
+
+```
+cmake_minimum_required(VERSION 3.5)
+find_package(spanner_client REQUIRED)
+
+add_executable(my_program my_program.cc)
+target_link_libraries(my_program spanner_client)
+```
+
+#### Integrating with Bazel
+
+As we do not currently have releases of `google-cloud-cpp-spanner` you need to
+select the SHA-1 of the
+[commit](https://github.com/googleapis/google-cloud-cpp-spanner/commits/master)
+you want to use.
+
+In your [WORKSPACE][workspace-definition-link] file add a dependency to download
+and install the library, for example:
+
+@code {.py}
+# Change the version and SHA256 hash as needed.
+http_archive(
+    name = "com_github_googleapis_google_cloud_cpp_spanner",
+    url = "https://github.com/googleapis/google-cloud-cpp-spanner/archive/e2e73b6b044233a51d00090f1f09cd1b7b3af76b.tar.gz",
+    strip_prefix = "google-cloud-cpp-spanner-e2e73b6b044233a51d00090f1f09cd1b7b3af76b",
+    sha256 = "f1b4f3a35b89545d904a9484f38b984cd21f1d8c2e50f9ab21f3ba988cfe11e2",
+)
+@endcode
+
+Then load the dependencies of the library:
+
+```{.py}
+load("@com_github_googleapis_google_cloud_cpp_spanner//bazel:google_cloud_cpp_spanner_deps.bzl", "google_cloud_cpp_spanner_deps")
+
+google_cloud_cpp_spanner_deps()
+
+# Configure @com_google_googleapis to only compile C++ and gRPC:
+load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
+
+switched_rules_by_language(
+    name = "com_google_googleapis_imports",
+    cc = True,
+    grpc = True,
+)
+
+# You have to manually call the corresponding function for google-cloud-cpp and
+# gRPC:  https://github.com/bazelbuild/bazel/issues/1550
+load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+
+google_cloud_cpp_deps()
+
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+
+grpc_deps()
+```
+
+You can now use the library as a dependency in your BUILD files, for example:
+
+```{.py}
+cc_binary(
+    name = "my_program",
+    srcs = [
+        "my_program.cc",
+    ],
+    deps = [
+        "@com_github_googleapis_google_cloud_cpp_spanner//google/cloud/spanner:spanner_client",
+    ],
+)
+```
+
+#### Integrating with Make
+
+Installing the client library with CMake also creates `pkg-config` support files
+for application developers that prefer to use `Make` as their build system. Once
+the library is installed, you can use it in your `Makefile` like any other
+`pkg-config` module:
+
+```
+# Configuration variables to compile and link against the Cloud Spanner C++
+# client library.
+SPANNER_CXXFLAGS   := $(shell pkg-config spanner_client --cflags)
+SPANNER_CXXLDFLAGS := $(shell pkg-config spanner_client --libs-only-L)
+SPANNER_LIBS       := $(shell pkg-config spanner_client --libs-only-l)
+
+# A target using the Cloud Spanner C++ client library.
+my_program: my_program.cc
+    $(CXX) $(CXXFLAGS) $(SPANNER_CXXFLAGS) $(SPANNER_CXXLDFLAGS) -o $@ $^ $(SPANNER_LIBS)
+```
+
+### Error Handling
+
+This library never throws exceptions to signal error. In general, the library
+returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
+functions return objects that are not wrapped in a `StatusOr<>` but will
+themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
+long running operations return `future<StatusOr<T>>`.
+
+### Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+follows the recommended practices with respect to backoff between retries.
+Application developers can override the default
+[retry](@ref google::cloud::spanner::v0::RetryPolicy) and
+[backoff](@ref google::cloud::spanner::v0::BackoffPolicy) policies.
+
+The default policies are to continue retrying for up to 15 minutes, and to
+use truncated (at 5 minutes) exponential backoff, doubling the maximum backoff
+period between retries.
+
+@see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::v0::LimitedTimeRetryPolicy)
+   and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::v0::LimitedErrorCountRetryPolicy)
+   for alternative retry policies.
+
+@see [ExponentialBackoffPolicy](@ref google::cloud::spanner::v0::ExponentialBackoffPolicy)
+   to configure different parameters for the exponential backoff policy.
+
+[sql-overview-link]: https://cloud.google.com/spanner/docs/query-syntax
+
+[spanner-quickstart]: https://cloud.google.com/spanner/docs/tutorials 'Spanner Tutorials'
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[concepts-link]: https://cloud.google.com/storage/docs/concepts 'GCS Concepts'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+
+[github-link]: https://github.com/googleapis/google-cloud-cpp-spanner 'GitHub Repository'
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp-spanner/blob/master/README%2Emd
+
+[workspace-definition-link]: https://docs.bazel.build/versions/master/build-ref.html#packages_targets
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/master/google/cloud/status_or.h
+
+
+
+*/
