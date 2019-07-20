@@ -137,11 +137,21 @@ _EOF_
 fi
 
 if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
-  # Run the tests and output any failures.
-  echo
-  echo "${COLOR_YELLOW}Running unit tests $(date)${COLOR_RESET}"
-  echo
-  (cd "${BINARY_DIR}" && ctest --output-on-failure)
+  # When the user does a super-build the tests are hidden in a subdirectory.
+  # We can tell that ${BINARY_DIR} does not have the tests by checking for this
+  # file:
+  if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
+    # It is Okay to skip the tests in this case because the super build
+    # automatically runs them.
+    echo
+    echo "${COLOR_YELLOW}Running unit tests $(date)${COLOR_RESET}"
+    echo
+    (cd "${BINARY_DIR}" && ctest --output-on-failure)
+
+    echo
+    echo "${COLOR_YELLOW}Completed unit tests $(date)${COLOR_RESET}"
+    echo
+  fi
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     echo
@@ -160,9 +170,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo "${COLOR_YELLOW}Completed integration tests $(date)${COLOR_RESET}"
     echo
   fi
-  echo
-  echo "${COLOR_YELLOW}Completed unit tests $(date)${COLOR_RESET}"
-  echo
 fi
 
 # Test the install rule and that the installation works.
