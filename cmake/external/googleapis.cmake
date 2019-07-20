@@ -31,7 +31,7 @@ if (NOT TARGET googleapis_project)
 
     set_external_project_build_parallel_level(PARALLEL)
 
-    set_external_project_install_rpath()
+    set_external_project_prefix_vars()
 
     create_external_project_library_byproduct_list(
         googleapis_byproducts
@@ -79,7 +79,7 @@ if (NOT TARGET googleapis_project)
         DEPENDS grpc_project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/googleapis"
-        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
+        INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
         URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
         LIST_SEPARATOR |

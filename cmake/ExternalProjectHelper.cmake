@@ -16,6 +16,10 @@
 
 include(GNUInstallDirs)
 
+set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX "${CMAKE_BINARY_DIR}/external"
+    CACHE STRING "Configure where the external projects are installed.")
+mark_as_advanced(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX)
+
 function (set_library_properties_for_external_project _target _lib)
     cmake_parse_arguments(F_OPT "ALWAYS_SHARED;ALWAYS_LIB" "" "" ${ARGN})
     # This is the main disadvantage of external projects. The typicaly flow with
@@ -135,7 +139,7 @@ function (set_external_project_build_parallel_level var_name)
     endif ()
 endfunction ()
 
-function (set_external_project_install_rpath)
+function (set_external_project_prefix_vars)
     set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64"
         PARENT_SCOPE)
 
@@ -160,4 +164,10 @@ function (set_external_project_install_rpath)
                    GOOGLE_CLOUD_CPP_INSTALL_RPATH
                    "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}"
                    PARENT_SCOPE)
+
+    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${CMAKE_PREFIX_PATH};<INSTALL_DIR>")
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_PREFIX_PATH
+                   "${GOOGLE_CLOUD_CPP_PREFIX_PATH}")
 endfunction ()
