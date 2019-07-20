@@ -33,8 +33,7 @@ char arg8[] = "Unused";
 TEST(BenchmarksSetup, Basic) {
   char* argv[] = {arg0, arg1, arg2, arg3};
   int argc = 4;
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("pre", argc, argv);
+  auto setup = MakeBenchmarkSetup("pre", argc, argv);
   ASSERT_STATUS_OK(setup);
   EXPECT_EQ("foo", setup->project_id());
   EXPECT_EQ("bar", setup->instance_id());
@@ -57,11 +56,9 @@ TEST(BenchmarksSetup, Different) {
   int argc_0 = sizeof(argv_0) / sizeof(argv_0[0]);
   char* argv_1[] = {arg0, arg1, arg2, arg3};
   int argc_1 = sizeof(argv_1) / sizeof(argv_1[0]);
-  google::cloud::StatusOr<BenchmarkSetup> s0 =
-      MakeBenchmarkSetup("pre", argc_0, argv_0);
+  auto s0 = MakeBenchmarkSetup("pre", argc_0, argv_0);
   ASSERT_STATUS_OK(s0);
-  google::cloud::StatusOr<BenchmarkSetup> s1 =
-      MakeBenchmarkSetup("pre", argc_1, argv_1);
+  auto s1 = MakeBenchmarkSetup("pre", argc_1, argv_1);
   ASSERT_STATUS_OK(s1);
   // The probability of this test failing is tiny, but if it does, run it again.
   // Sorry for the flakiness, but randomness is hard.
@@ -71,8 +68,7 @@ TEST(BenchmarksSetup, Different) {
 TEST(BenchmarkSetup, Parse) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("pre", argc, argv);
+  auto setup = MakeBenchmarkSetup("pre", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   EXPECT_EQ(2, argc);
@@ -91,8 +87,7 @@ TEST(BenchmarkSetup, Parse) {
 TEST(BenchmarkSetup, Test7) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("t6", argc, argv);
+  auto setup = MakeBenchmarkSetup("t6", argc, argv);
   ASSERT_STATUS_OK(setup);
   EXPECT_TRUE(setup->use_embedded_server());
 }
@@ -100,8 +95,7 @@ TEST(BenchmarkSetup, Test7) {
 TEST(BenchmarkSetup, Test6) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("t5", argc, argv);
+  auto setup = MakeBenchmarkSetup("t5", argc, argv);
   ASSERT_STATUS_OK(setup);
   EXPECT_EQ(10000, setup->table_size());
   EXPECT_FALSE(setup->use_embedded_server());
@@ -110,8 +104,7 @@ TEST(BenchmarkSetup, Test6) {
 TEST(BenchmarkSetup, Test5) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("t4", argc, argv);
+  auto setup = MakeBenchmarkSetup("t4", argc, argv);
   ASSERT_STATUS_OK(setup);
   EXPECT_EQ(300, setup->test_duration().count());
 }
@@ -119,8 +112,7 @@ TEST(BenchmarkSetup, Test5) {
 TEST(BenchmarkSetup, Test4) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("t3", argc, argv);
+  auto setup = MakeBenchmarkSetup("t3", argc, argv);
   ASSERT_STATUS_OK(setup);
   EXPECT_EQ(4, setup->thread_count());
 }
@@ -128,8 +120,7 @@ TEST(BenchmarkSetup, Test4) {
 TEST(BenchmarkSetup, Test3) {
   char* argv[] = {arg0, arg1, arg2, arg3};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("t2", argc, argv);
+  auto setup = MakeBenchmarkSetup("t2", argc, argv);
   ASSERT_STATUS_OK(setup);
   EXPECT_EQ("foo", setup->project_id());
   EXPECT_EQ("bar", setup->instance_id());

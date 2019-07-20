@@ -66,8 +66,7 @@ google::cloud::StatusOr<long> RunBenchmark(
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::StatusOr<bigtable::benchmarks::BenchmarkSetup> setup =
-      bigtable::benchmarks::MakeBenchmarkSetup("long", argc, argv);
+  auto setup = bigtable::benchmarks::MakeBenchmarkSetup("long", argc, argv);
   if (!setup) {
     std::cerr << setup.status() << "\n";
     return -1;

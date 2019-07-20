@@ -95,8 +95,7 @@ constexpr int kBenchmarkProgressMarks = 4;
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::StatusOr<bigtable::benchmarks::BenchmarkSetup> setup =
-      MakeBenchmarkSetup("perf", argc, argv);
+  auto setup = MakeBenchmarkSetup("perf", argc, argv);
   if (!setup) {
     std::cerr << setup.status() << "\n";
     return -1;

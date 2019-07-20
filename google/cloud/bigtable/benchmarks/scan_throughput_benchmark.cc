@@ -70,8 +70,7 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  google::cloud::StatusOr<bigtable::benchmarks::BenchmarkSetup> setup =
-      bigtable::benchmarks::MakeBenchmarkSetup("scant", argc, argv);
+  auto setup = bigtable::benchmarks::MakeBenchmarkSetup("scant", argc, argv);
   if (!setup) {
     std::cerr << setup.status() << "\n";
     return -1;

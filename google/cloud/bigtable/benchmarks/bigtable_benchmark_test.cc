@@ -34,8 +34,7 @@ char arg7[] = "True";
 TEST(BenchmarkTest, Create) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("create", argc, argv);
+  auto setup = MakeBenchmarkSetup("create", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   {
@@ -55,8 +54,7 @@ TEST(BenchmarkTest, Create) {
 TEST(BenchmarkTest, Populate) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("populate", argc, argv);
+  auto setup = MakeBenchmarkSetup("populate", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   Benchmark bm(*setup);
@@ -72,8 +70,7 @@ TEST(BenchmarkTest, Populate) {
 TEST(BenchmarkTest, MakeRandomKey) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("key", argc, argv);
+  auto setup = MakeBenchmarkSetup("key", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   Benchmark bm(*setup);
@@ -102,8 +99,7 @@ TEST(BenchmarkTest, MakeRandomKey) {
 TEST(BenchmarkTest, PrintThroughputResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("throughput", argc, argv);
+  auto setup = MakeBenchmarkSetup("throughput", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   Benchmark bm(*setup);
@@ -129,8 +125,7 @@ TEST(BenchmarkTest, PrintThroughputResult) {
 TEST(BenchmarkTest, PrintLatencyResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("latency", argc, argv);
+  auto setup = MakeBenchmarkSetup("latency", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   Benchmark bm(*setup);
@@ -165,8 +160,7 @@ TEST(BenchmarkTest, PrintLatencyResult) {
 TEST(BenchmarkTest, PrintCsv) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  google::cloud::StatusOr<BenchmarkSetup> setup =
-      MakeBenchmarkSetup("latency", argc, argv);
+  auto setup = MakeBenchmarkSetup("latency", argc, argv);
   ASSERT_STATUS_OK(setup);
 
   Benchmark bm(*setup);
