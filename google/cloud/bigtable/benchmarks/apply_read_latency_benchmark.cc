@@ -95,9 +95,14 @@ constexpr int kBenchmarkProgressMarks = 4;
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
-  bigtable::benchmarks::BenchmarkSetup setup("perf", argc, argv);
+  google::cloud::StatusOr<bigtable::benchmarks::BenchmarkSetup> setup =
+      MakeBenchmarkSetup("perf", argc, argv);
+  if (!setup) {
+    std::cerr << setup.status() << "\n";
+    return -1;
+  }
 
-  Benchmark benchmark(setup);
+  Benchmark benchmark(*setup);
 
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -116,15 +121,15 @@ int main(int argc, char* argv[]) {
   auto latency_test_start = std::chrono::steady_clock::now();
   std::vector<std::future<google::cloud::StatusOr<LatencyBenchmarkResult>>>
       tasks;
-  for (int i = 0; i != setup.thread_count(); ++i) {
+  for (int i = 0; i != setup->thread_count(); ++i) {
     auto launch_policy = std::launch::async;
-    if (setup.thread_count() == 1) {
+    if (setup->thread_count() == 1) {
       // If the user requests only one thread, use the current thread.
       launch_policy = std::launch::deferred;
     }
     tasks.emplace_back(std::async(launch_policy, RunBenchmark,
-                                  std::ref(benchmark), setup.app_profile_id(),
-                                  setup.table_id(), setup.test_duration()));
+                                  std::ref(benchmark), setup->app_profile_id(),
+                                  setup->table_id(), setup->test_duration()));
   }
 
   // Wait for the threads and combine all the results.

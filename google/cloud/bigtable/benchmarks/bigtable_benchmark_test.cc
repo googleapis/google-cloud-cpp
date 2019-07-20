@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/benchmarks/benchmark.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 using namespace google::cloud::bigtable::benchmarks;
@@ -33,10 +34,12 @@ char arg7[] = "True";
 TEST(BenchmarkTest, Create) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("create", argc, argv);
+  google::cloud::StatusOr<BenchmarkSetup> setup =
+      MakeBenchmarkSetup("create", argc, argv);
+  ASSERT_STATUS_OK(setup);
 
   {
-    Benchmark bm(setup);
+    Benchmark bm(*setup);
     EXPECT_EQ(0, bm.create_table_count());
     std::string table_id = bm.CreateTable();
     EXPECT_EQ(1, bm.create_table_count());
@@ -52,9 +55,11 @@ TEST(BenchmarkTest, Create) {
 TEST(BenchmarkTest, Populate) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("populate", argc, argv);
+  google::cloud::StatusOr<BenchmarkSetup> setup =
+      MakeBenchmarkSetup("populate", argc, argv);
+  ASSERT_STATUS_OK(setup);
 
-  Benchmark bm(setup);
+  Benchmark bm(*setup);
   bm.CreateTable();
   EXPECT_EQ(0, bm.mutate_rows_count());
   bm.PopulateTable();
@@ -67,9 +72,11 @@ TEST(BenchmarkTest, Populate) {
 TEST(BenchmarkTest, MakeRandomKey) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("key", argc, argv);
+  google::cloud::StatusOr<BenchmarkSetup> setup =
+      MakeBenchmarkSetup("key", argc, argv);
+  ASSERT_STATUS_OK(setup);
 
-  Benchmark bm(setup);
+  Benchmark bm(*setup);
   auto gen = google::cloud::internal::MakeDefaultPRNG();
 
   // First make sure that the keys are not always the same.
@@ -95,9 +102,11 @@ TEST(BenchmarkTest, MakeRandomKey) {
 TEST(BenchmarkTest, PrintThroughputResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("throughput", argc, argv);
+  google::cloud::StatusOr<BenchmarkSetup> setup =
+      MakeBenchmarkSetup("throughput", argc, argv);
+  ASSERT_STATUS_OK(setup);
 
-  Benchmark bm(setup);
+  Benchmark bm(*setup);
   BenchmarkResult result{};
   result.elapsed = std::chrono::milliseconds(10000);
   result.row_count = 1230;
@@ -120,9 +129,11 @@ TEST(BenchmarkTest, PrintThroughputResult) {
 TEST(BenchmarkTest, PrintLatencyResult) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("latency", argc, argv);
+  google::cloud::StatusOr<BenchmarkSetup> setup =
+      MakeBenchmarkSetup("latency", argc, argv);
+  ASSERT_STATUS_OK(setup);
 
-  Benchmark bm(setup);
+  Benchmark bm(*setup);
   BenchmarkResult result{};
   result.elapsed = std::chrono::milliseconds(1000);
   result.row_count = 100;
@@ -154,9 +165,11 @@ TEST(BenchmarkTest, PrintLatencyResult) {
 TEST(BenchmarkTest, PrintCsv) {
   char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7};
   int argc = sizeof(argv) / sizeof(argv[0]);
-  BenchmarkSetup setup("latency", argc, argv);
+  google::cloud::StatusOr<BenchmarkSetup> setup =
+      MakeBenchmarkSetup("latency", argc, argv);
+  ASSERT_STATUS_OK(setup);
 
-  Benchmark bm(setup);
+  Benchmark bm(*setup);
   BenchmarkResult result{};
   result.elapsed = std::chrono::milliseconds(1000);
   result.row_count = 123;

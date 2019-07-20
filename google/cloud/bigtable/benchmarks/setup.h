@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_BENCHMARKS_SETUP_H_
 
 #include "google/cloud/bigtable/benchmarks/constants.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 #include <string>
 #include <vector>
@@ -25,41 +26,59 @@ namespace cloud {
 namespace bigtable {
 namespace benchmarks {
 /**
+ * The configuration data for a benchmark.
+ */
+struct BenchmarkSetupData {
+  std::string start_time;
+  std::string notes;
+  std::string project_id;
+  std::string instance_id;
+  std::string app_profile_id;
+  std::string table_id;
+  int thread_count;
+  long table_size;
+  std::chrono::seconds test_duration;
+  bool use_embedded_server;
+};
+
+/**
  * The configuration for a benchmark.
  */
 class BenchmarkSetup {
  public:
-  BenchmarkSetup(std::string const& prefix, int& argc, char* argv[]);
+  explicit BenchmarkSetup(BenchmarkSetupData setup_data);
 
   /// When did the benchmark start, this is used in reporting the results.
-  std::string const& start_time() const { return start_time_; }
+  std::string const& start_time() const { return setup_data_.start_time; }
   /// Benchmark annotations, e.g., compiler version and flags.
-  std::string const& notes() const { return notes_; }
-  std::string const& project_id() const { return project_id_; }
-  std::string const& instance_id() const { return instance_id_; }
-  std::string const& app_profile_id() const { return app_profile_id_; }
+  std::string const& notes() const { return setup_data_.notes; }
+  std::string const& project_id() const { return setup_data_.project_id; }
+  std::string const& instance_id() const { return setup_data_.instance_id; }
+  std::string const& app_profile_id() const {
+    return setup_data_.app_profile_id;
+  }
 
   /// The randomly generated table id for the benchmark.
-  std::string const& table_id() const { return table_id_; }
+  std::string const& table_id() const { return setup_data_.table_id; }
 
-  long table_size() const { return table_size_; }
-  int thread_count() const { return thread_count_; }
-  std::chrono::seconds test_duration() const { return test_duration_; }
-  bool use_embedded_server() const { return use_embedded_server_; }
+  long table_size() const { return setup_data_.table_size; }
+  int thread_count() const { return setup_data_.thread_count; }
+  std::chrono::seconds test_duration() const {
+    return setup_data_.test_duration;
+  }
+  bool use_embedded_server() const { return setup_data_.use_embedded_server; }
 
  private:
-  std::string start_time_;
-  std::string notes_;
-  std::string project_id_;
-  std::string instance_id_;
-  std::string app_profile_id_;
-  std::string table_id_;
-  int thread_count_ = kDefaultThreads;
-  long table_size_ = kDefaultTableSize;
-  std::chrono::seconds test_duration_ =
-      std::chrono::seconds(kDefaultTestDuration * 60);
-  bool use_embedded_server_ = false;
+  BenchmarkSetupData setup_data_;
 };
+
+/**
+ * Does the actual work in constructing a BenchmarkSetup. Since we do not want
+ * to use exceptions here, we factor out the logic in which an error can occur
+ * into a separate function.
+ */
+google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
+    std::string const& prefix, int& argc, char* argv[]);
 
 }  // namespace benchmarks
 }  // namespace bigtable

@@ -58,15 +58,24 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 namespace benchmarks {
-BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
-                               char* argv[])
-    : start_time_(FormattedStartTime()),
-      notes_(FormattedAnnotations()),
-      project_id_(),
-      instance_id_(),
-      app_profile_id_(),
-      table_id_(MakeRandomTableId(prefix)) {
-  auto usage = [argv](char const* msg) {
+BenchmarkSetup::BenchmarkSetup(BenchmarkSetupData setup_data)
+    : setup_data_(setup_data) {}
+
+google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
+    std::string const& prefix, int& argc, char* argv[]) {
+  BenchmarkSetupData setup_data;
+  setup_data.start_time = FormattedStartTime();
+  setup_data.notes = FormattedAnnotations();
+  setup_data.table_id = MakeRandomTableId(prefix);
+
+  // An aggregate cannot have brace initializers for non static data members.
+  // So we set the "default" values here.
+  setup_data.thread_count = kDefaultThreads;
+  setup_data.table_size = kDefaultTableSize;
+  setup_data.test_duration = std::chrono::seconds(kDefaultTestDuration * 60);
+  setup_data.use_embedded_server = false;
+
+  auto usage = [argv](char const* msg) -> google::cloud::Status {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
@@ -75,11 +84,12 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
               << " [test-duration-seconds (" << kDefaultTestDuration << "min)]"
               << " [table-size (" << kDefaultTableSize << ")]"
               << " [use-embedded-server (false)]\n";
-    google::cloud::internal::ThrowRuntimeError(msg);
+    return google::cloud::Status{google::cloud::StatusCode::kFailedPrecondition,
+                                 msg};
   };
 
   if (argc < 4) {
-    usage("too few arguments for program.");
+    return usage("too few arguments for program.");
   }
 
   auto shift = [&argc, &argv]() {
@@ -89,41 +99,42 @@ BenchmarkSetup::BenchmarkSetup(std::string const& prefix, int& argc,
     return r;
   };
 
-  project_id_ = shift();
-  instance_id_ = shift();
-  app_profile_id_ = shift();
+  setup_data.project_id = shift();
+  setup_data.instance_id = shift();
+  setup_data.app_profile_id = shift();
 
   if (argc == 1) {
-    return;
+    return BenchmarkSetup{setup_data};
   }
-  thread_count_ = std::stoi(shift());
+  setup_data.thread_count = std::stoi(shift());
 
   if (argc == 1) {
-    return;
+    return BenchmarkSetup{setup_data};
   }
   long seconds = std::stol(shift());
   if (seconds <= 0) {
-    usage("test-duration-seconds should be > 0");
+    return usage("test-duration-seconds should be > 0");
   }
-  test_duration_ = std::chrono::seconds(seconds);
+  setup_data.test_duration = std::chrono::seconds(seconds);
 
   if (argc == 1) {
-    return;
+    return BenchmarkSetup{setup_data};
   }
-  table_size_ = std::stol(shift());
-  if (table_size_ <= kPopulateShardCount) {
+  setup_data.table_size = std::stol(shift());
+  if (setup_data.table_size <= kPopulateShardCount) {
     std::ostringstream os;
     os << "table-size parameter should be > " << kPopulateShardCount;
-    usage(os.str().c_str());
+    return usage(os.str().c_str());
   }
 
   if (argc == 1) {
-    return;
+    return BenchmarkSetup{setup_data};
   }
   std::string value = shift();
   std::transform(value.begin(), value.end(), value.begin(),
                  [](char x) { return std::tolower(x); });
-  use_embedded_server_ = value == "true";
+  setup_data.use_embedded_server = value == "true";
+  return BenchmarkSetup{setup_data};
 }
 
 }  // namespace benchmarks
