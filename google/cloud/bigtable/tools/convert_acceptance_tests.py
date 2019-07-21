@@ -29,6 +29,7 @@ Usage:
       | python ../tools/convert_acceptance_tests.py \
       | clang-format >readrowsparser_acceptance_tests.inc
 """
+from __future__ import print_function
 
 import json
 import sys
@@ -114,9 +115,9 @@ def print_test(t):
 def main():
     t = json.loads(sys.stdin.read())
 
-    print FILE_HEADER.lstrip()
+    print(FILE_HEADER.lstrip())
     for tt in t['tests']:
-        print print_test(tt)
+        print(print_test(tt))
 
 
 if __name__ == '__main__':

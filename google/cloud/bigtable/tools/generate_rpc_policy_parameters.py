@@ -30,6 +30,7 @@ Usage:
     python ../tools/generate_rpc_policy_parameters.py \
     | clang-format > rpc_policy_parameters.inc
 """
+from __future__ import print_function
 
 import collections
 import yaml
@@ -65,10 +66,10 @@ def print_defines(interface):
     constants['_DEFAULT_MAXIMUM_DELAY'] = 'max_retry_delay_millis'
     constants['_DEFAULT_MAXIMUM_RETRY_PERIOD'] = 'total_timeout_millis'
 
-    print "// Define the defaults using a pre-processor macro, this allows"
-    print "// the application developers to change the defaults for their"
-    print "// application by compiling with different values."
-    print ""
+    print("// Define the defaults using a pre-processor macro, this allows")
+    print("// the application developers to change the defaults for their")
+    print("// application by compiling with different values.")
+    print("")
     for constant in constants:
         name = prefix + constant
         val = interface['retry_params_def'][0]
@@ -76,17 +77,17 @@ def print_defines(interface):
         o += " std::chrono::milliseconds(" + str(val[constants[constant]])
         o += ")"
 
-        print "#ifndef " + name
-        print o
-        print "#endif //" + name
-        print ""
+        print("#ifndef " + name)
+        print(o)
+        print("#endif //" + name)
+        print("")
 
         defines.append(name)
-    print ""
-    print "RPCPolicyParameters const k" + struct + "Limits = {"
+    print("")
+    print("RPCPolicyParameters const k" + struct + "Limits = {")
     for constant in constants:
-        print prefix + constant + ","
-    print "};"
+        print(prefix + constant + ",")
+    print("};")
     return defines
 
 
@@ -97,23 +98,23 @@ def main():
         "https://raw.githubusercontent.com/googleapis/googleapis/master/google/bigtable/v2/bigtable_gapic.yaml"
     ]
 
-    print FILE_HEADER.lstrip()
+    print(FILE_HEADER.lstrip())
 
     for link in links:
         f = urllib.urlopen(link)
         myfile = f.read()
         t = yaml.load(myfile)
         for intf in t['interfaces']:
-            print ""
-            print '// Interface name: "' + intf['name'] + '"'
+            print("")
+            print('// Interface name: "' + intf['name'] + '"')
             intf_defines = print_defines(intf)
             all_defines.append(intf_defines)
-            print ""
+            print("")
 
     flat_list = [item for sublist in all_defines for item in sublist]
 
     for define in flat_list:
-        print "#undef " + define
+        print("#undef " + define)
 
 
 if __name__ == '__main__':
