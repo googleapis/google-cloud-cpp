@@ -69,12 +69,13 @@ FROM devtools AS readme
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using
-# external projects.
-WORKDIR /home/build/external
-COPY . /home/build/external
-RUN cmake -H. -Bcmake-out -DCMAKE_BUILD_TYPE=Debug
+# the super build.
+WORKDIR /home/build/super
+COPY . /home/build/super
+RUN cmake -Hci/super -Bcmake-out \
+        -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
 RUN cmake --build cmake-out -- -j $(nproc)
-RUN (cd cmake-out && ctest --output-on-failure)
+# The tests will already be run as part of the build, no need to run it again.
 ## [END IGNORED]
 
 ## [END README.md]

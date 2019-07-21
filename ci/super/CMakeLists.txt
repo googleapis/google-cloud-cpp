@@ -23,8 +23,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(GOOGLE_CLOUD_CPP_ROOT "${PROJECT_SOURCE_DIR}/../..")
 list(APPEND CMAKE_MODULE_PATH "${GOOGLE_CLOUD_CPP_ROOT}/cmake")
 
-set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX "${CMAKE_BINARY_DIR}/local")
-
 include(external/curl)
 include(external/crc32c)
 include(external/grpc)
