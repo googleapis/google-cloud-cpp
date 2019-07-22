@@ -69,10 +69,14 @@ BenchmarkResult RunBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
                              std::chrono::seconds test_duration);
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  bigtable::benchmarks::BenchmarkSetup setup("scant", argc, argv);
+int main(int argc, char* argv[]) {
+  auto setup = bigtable::benchmarks::MakeBenchmarkSetup("scant", argc, argv);
+  if (!setup) {
+    std::cerr << setup.status() << "\n";
+    return -1;
+  }
 
-  Benchmark benchmark(setup);
+  Benchmark benchmark(*setup);
 
   // Create and populate the table for the benchmark.
   benchmark.CreateTable();
@@ -85,9 +89,9 @@ int main(int argc, char* argv[]) try {
   for (auto scan_size : kScanSizes) {
     std::cout << "# Running benchmark [" << scan_size << "] " << std::flush;
     auto start = std::chrono::steady_clock::now();
-    auto combined = RunBenchmark(benchmark, data_client, setup.table_size(),
-                                 setup.app_profile_id(), setup.table_id(),
-                                 scan_size, setup.test_duration());
+    auto combined = RunBenchmark(benchmark, data_client, setup->table_size(),
+                                 setup->app_profile_id(), setup->table_id(),
+                                 scan_size, setup->test_duration());
     using std::chrono::duration_cast;
     combined.elapsed = duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now() - start);
@@ -110,9 +114,6 @@ int main(int argc, char* argv[]) try {
   benchmark.DeleteTable();
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 
 namespace {
