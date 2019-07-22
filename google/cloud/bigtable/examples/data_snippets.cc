@@ -76,125 +76,6 @@ void Apply(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-simple <project-id> <instance-id> <table-id>"};
-  }
-
-  // [START bigtable_writes_simple]
-  namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
-    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::system_clock::now().time_since_epoch());
-
-    std::string row_key = "phone#4c410523#20190501";
-    cbt::SingleRowMutation mutation(row_key);
-    std::string column_family = "stats_summary";
-
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_wifi", timestamp, std::int64_t{1}));
-    mutation.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "PQ2A.190405.003"));
-    google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-    std::cout << "Successfully wrote row" << row_key << "\n";
-  }
-  // [END bigtable_writes_simple]
-  (std::move(table));
-}
-void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-batch <project-id> <instance-id> <table-id>"};
-  }
-
-  // [START bigtable_writes_batch]
-  namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
-    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::system_clock::now().time_since_epoch());
-    std::string column_family = "stats_summary";
-
-    cbt::BulkMutation bulk;
-    cbt::SingleRowMutation mutation("tablet#a0b81f74#20190501"); 
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
-    mutation.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "12155.0.0-rc1"));
-    bulk.emplace_back(std::move(mutation));
-    cbt::SingleRowMutation mutation2("tablet#a0b81f74#20190502"); 
-    mutation2.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
-    mutation2.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "12145.0.0-rc6"));
-    bulk.emplace_back(std::move(mutation2));
-
-    std::vector<cbt::FailedMutation> failures =  table.BulkApply(std::move(bulk));
-    if (failures.empty()) {
-      std::cout << "Successfully wrote 2 rows.\n";
-      return;
-    }
-    std::cerr << "The following mutations failed:\n";
-    for (auto const& f : failures) {
-      std::cerr << "rowkey[" << f.original_index() << "]=" << f.status() << "\n";
-    }
-  }
-  // [END bigtable_writes_batch]
-  (std::move(table));
-}
-void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-increment <project-id> <instance-id> <table-id>"};
-  }
-
-  // [START bigtable_writes_increment]
-  namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
-    std::string row_key = "phone#4c410523#20190501";
-    std::string column_family = "stats_summary";  
-
-    google::cloud::StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
-        row_key, cbt::ReadModifyWriteRule::IncrementAmount(column_family, "connected_wifi", -1));
-
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
-    std::cout << "Successfully updated row" << row->row_key() << "\n";
-  }
-  // [END bigtable_writes_increment]
-  (std::move(table));
-}
-
-void WriteConditionally(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-conditional <project-id> <instance-id> <table-id>"};
-  }
-
-  // [START bigtable_writes_conditional]
-  namespace cbt = google::cloud::bigtable;
-  [](cbt::Table table) {
-    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::system_clock::now().time_since_epoch());
-
-    std::string row_key = "phone#4c410523#20190501";
-    cbt::SingleRowMutation mutation(row_key);
-    std::string column_family = "stats_summary";
-    cbt::Filter predicate = cbt::Filter::Chain(
-        cbt::Filter::ColumnName(column_family, "os_build"),
-        cbt::Filter::Latest(1), 
-        cbt::Filter::ValueRegex("PQ2A\\..*"));
-
-    google::cloud::StatusOr<cbt::MutationBranch> branch =
-        table.CheckAndMutateRow(row_key, std::move(predicate),{cbt::SetCell(column_family, "os_name", timestamp, "android")}, {});
-
-    if (!branch) {
-      throw std::runtime_error(branch.status().message());
-    }
-    if (*branch == cbt::MutationBranch::kPredicateMatched) {
-      std::cout << "Successfully updated row\n";
-    } else {
-      std::cout << "The predicate was not matched\n";
-    }
-  }
-  // [END bigtable_writes_conditional]
-  (std::move(table));
-}
 
 void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table, int argc,
                              char* argv[]) {
@@ -1062,6 +943,126 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
       }
     }
   }
+}
+
+void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
+  if (argc != 1) {
+    throw Usage{"write-simple <project-id> <instance-id> <table-id>"};
+  }
+
+  // [START bigtable_writes_simple]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
+    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
+
+    std::string row_key = "phone#4c410523#20190501";
+    cbt::SingleRowMutation mutation(row_key);
+    std::string column_family = "stats_summary";
+
+    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
+    mutation.emplace_back(cbt::SetCell(column_family, "connected_wifi", timestamp, std::int64_t{1}));
+    mutation.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "PQ2A.190405.003"));
+    google::cloud::Status status = table.Apply(std::move(mutation));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+    std::cout << "Successfully wrote row" << row_key << "\n";
+  }
+  // [END bigtable_writes_simple]
+  (std::move(table));
+}
+void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
+  if (argc != 1) {
+    throw Usage{"write-batch <project-id> <instance-id> <table-id>"};
+  }
+
+  // [START bigtable_writes_batch]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
+    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
+    std::string column_family = "stats_summary";
+
+    cbt::BulkMutation bulk;
+    cbt::SingleRowMutation mutation("tablet#a0b81f74#20190501"); 
+    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
+    mutation.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "12155.0.0-rc1"));
+    bulk.emplace_back(std::move(mutation));
+    cbt::SingleRowMutation mutation2("tablet#a0b81f74#20190502"); 
+    mutation2.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
+    mutation2.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "12145.0.0-rc6"));
+    bulk.emplace_back(std::move(mutation2));
+
+    std::vector<cbt::FailedMutation> failures =  table.BulkApply(std::move(bulk));
+    if (failures.empty()) {
+      std::cout << "Successfully wrote 2 rows.\n";
+      return;
+    }
+    std::cerr << "The following mutations failed:\n";
+    for (auto const& f : failures) {
+      std::cerr << "rowkey[" << f.original_index() << "]=" << f.status() << "\n";
+    }
+  }
+  // [END bigtable_writes_batch]
+  (std::move(table));
+}
+void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
+  if (argc != 1) {
+    throw Usage{"write-increment <project-id> <instance-id> <table-id>"};
+  }
+
+  // [START bigtable_writes_increment]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
+    std::string row_key = "phone#4c410523#20190501";
+    std::string column_family = "stats_summary";  
+
+    google::cloud::StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
+        row_key, cbt::ReadModifyWriteRule::IncrementAmount(column_family, "connected_wifi", -1));
+
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << "Successfully updated row" << row->row_key() << "\n";
+  }
+  // [END bigtable_writes_increment]
+  (std::move(table));
+}
+
+void WriteConditionally(google::cloud::bigtable::Table table, int argc, char*[]) {
+  if (argc != 1) {
+    throw Usage{"write-conditional <project-id> <instance-id> <table-id>"};
+  }
+
+  // [START bigtable_writes_conditional]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::Table table) {
+    auto timestamp = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::system_clock::now().time_since_epoch());
+
+    std::string row_key = "phone#4c410523#20190501";
+    cbt::SingleRowMutation mutation(row_key);
+    std::string column_family = "stats_summary";
+    cbt::Filter predicate = cbt::Filter::Chain(
+        cbt::Filter::ColumnName(column_family, "os_build"),
+        cbt::Filter::Latest(1), 
+        cbt::Filter::ValueRegex("PQ2A\\..*"));
+
+    google::cloud::StatusOr<cbt::MutationBranch> branch =
+        table.CheckAndMutateRow(row_key, std::move(predicate),{cbt::SetCell(column_family, "os_name", timestamp, "android")}, {});
+
+    if (!branch) {
+      throw std::runtime_error(branch.status().message());
+    }
+    if (*branch == cbt::MutationBranch::kPredicateMatched) {
+      std::cout << "Successfully updated row\n";
+    } else {
+      std::cout << "The predicate was not matched\n";
+    }
+  }
+  // [END bigtable_writes_conditional]
+  (std::move(table));
 }
 
 }  // anonymous namespace
