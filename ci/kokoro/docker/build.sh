@@ -57,6 +57,12 @@ elif [[ "${BUILD_NAME}" = "centos-7" ]] || [[ "${BUILD_NAME}" = "gcc-4.8" ]]; th
   # Compile under centos:7. This distro uses gcc-4.8.
   export DISTRO=centos
   export DISTRO_VERSION=7
+elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
+  export CMAKE_SOURCE_DIR="ci/super"
+  # Note that the integration tests are run by default. This is the opposite of
+  # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
+  export RUN_INTEGRATION_TESTS="no"
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
   # Compile under fedora:30. This distro uses gcc-9.
   export DISTRO=fedora
@@ -235,6 +241,9 @@ docker_flags=(
     # If set, run the scripts to check (and fix) the code formatting (i.e.
     # clang-format, cmake-format, and buildifier).
     "--env" "CHECK_STYLE=${CHECK_STYLE:-}"
+
+    # If set to 'no', skip the integration tests.
+    "--env" "RUN_INTEGRATION_TESTS=${RUN_INTEGRATION_TESTS:-}"
 
     # If set, run the scripts to generate Doxygen docs. Note that the scripts
     # to upload said docs are not part of the build, they run afterwards on

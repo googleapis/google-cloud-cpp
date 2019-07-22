@@ -16,6 +16,10 @@
 
 include(GNUInstallDirs)
 
+set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX "${CMAKE_BINARY_DIR}/external"
+    CACHE STRING "Configure where the external projects are installed.")
+mark_as_advanced(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX)
+
 function (set_library_properties_for_external_project _target _lib)
     cmake_parse_arguments(F_OPT "ALWAYS_SHARED;ALWAYS_LIB" "" "" ${ARGN})
     # This is the main disadvantage of external projects. The typicaly flow with
@@ -135,16 +139,15 @@ function (set_external_project_build_parallel_level var_name)
     endif ()
 endfunction ()
 
-function (set_external_project_install_rpath)
-    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64"
-        PARENT_SCOPE)
+function (set_external_project_prefix_vars)
+    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib;<INSTALL_DIR>/lib64")
 
     # On Linux, using an RPATH that is neither an absolute or relative path is
     # considered a security risk and will cause package building to fail. We use
     # the Linux-specific variable $ORIGIN to resolve this.
     if (UNIX AND NOT APPLE)
         set(GOOGLE_CLOUD_CPP_INSTALL_RPATH
-            "\\\$ORIGIN/../lib;\\\$ORIGIN/../lib64" PARENT_SCOPE)
+            "\\\$ORIGIN/../lib;\\\$ORIGIN/../lib64")
     endif ()
 
     # When passing a semi-colon delimited list to ExternalProject_Add, we need
@@ -158,6 +161,16 @@ function (set_external_project_install_rpath)
     string(REPLACE ";"
                    "|"
                    GOOGLE_CLOUD_CPP_INSTALL_RPATH
-                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}"
-                   PARENT_SCOPE)
+                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
+
+    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${CMAKE_PREFIX_PATH};<INSTALL_DIR>")
+    string(REPLACE ";"
+                   "|"
+                   GOOGLE_CLOUD_CPP_PREFIX_PATH
+                   "${GOOGLE_CLOUD_CPP_PREFIX_PATH}")
+
+    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${GOOGLE_CLOUD_CPP_PREFIX_PATH}"
+        PARENT_SCOPE)
+    set(GOOGLE_CLOUD_CPP_PREFIX_RPATH "${GOOGLE_CLOUD_CPP_PREFIX_RPATH}"
+        PARENT_SCOPE)
 endfunction ()

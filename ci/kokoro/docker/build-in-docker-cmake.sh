@@ -137,22 +137,39 @@ _EOF_
 fi
 
 if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
-  # Run the tests and output any failures.
-  echo
-  echo "${COLOR_YELLOW}Running unit and integration tests $(date)${COLOR_RESET}"
-  echo
-  (cd "${BINARY_DIR}" && ctest --output-on-failure)
-
-  # Run the integration tests. Not all projects have them, so just iterate over
-  # the ones that do.
-  for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
+  # When the user does a super-build the tests are hidden in a subdirectory.
+  # We can tell that ${BINARY_DIR} does not have the tests by checking for this
+  # file:
+  if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
+    # It is Okay to skip the tests in this case because the super build
+    # automatically runs them.
     echo
-    echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
-    (cd "${BINARY_DIR}" && "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
-  done
-  echo
-  echo "${COLOR_YELLOW}Completed unit and integration tests $(date)${COLOR_RESET}"
-  echo
+    echo "${COLOR_YELLOW}Running unit tests $(date)${COLOR_RESET}"
+    echo
+    (cd "${BINARY_DIR}" && ctest --output-on-failure)
+
+    echo
+    echo "${COLOR_YELLOW}Completed unit tests $(date)${COLOR_RESET}"
+    echo
+  fi
+
+  if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
+    echo
+    echo "${COLOR_YELLOW}Running integration tests $(date)${COLOR_RESET}"
+    echo
+
+    # Run the integration tests. Not all projects have them, so just iterate over
+    # the ones that do.
+    for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
+      echo
+      echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
+      (cd "${BINARY_DIR}" && "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
+    done
+
+    echo
+    echo "${COLOR_YELLOW}Completed integration tests $(date)${COLOR_RESET}"
+    echo
+  fi
 fi
 
 # Test the install rule and that the installation works.

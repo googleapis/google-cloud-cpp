@@ -28,19 +28,7 @@ if (NOT TARGET protobuf_project)
 
     set_external_project_build_parallel_level(PARALLEL)
 
-    # When passing a semi-colon delimited list to ExternalProject_Add, we need
-    # to escape the semi-colon. Quoting does not work and escaping the semi-
-    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
-    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
-    # then be replaced by an escaped semi-colon by CMake. This allows us to use
-    # multiple directories for our RPATH. Normally, it'd make sense to use : as
-    # a delimiter since it is a typical path-list separator, but it is a special
-    # character in CMake.
-    set(GOOGLE_CLOUD_CPP_INSTALL_RPATH "<INSTALL_DIR>/lib")
-    string(REPLACE ";"
-                   "|"
-                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
-                   "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
+    set_external_project_prefix_vars()
 
     create_external_project_library_byproduct_list(protobuf_byproducts
                                                    "protobuf")
@@ -64,7 +52,7 @@ if (NOT TARGET protobuf_project)
         DEPENDS zlib_project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/protobuf"
-        INSTALL_DIR "${CMAKE_BINARY_DIR}/external"
+        INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
         URL ${GOOGLE_CLOUD_CPP_PROTOBUF_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_PROTOBUF_SHA256}
         LIST_SEPARATOR |
