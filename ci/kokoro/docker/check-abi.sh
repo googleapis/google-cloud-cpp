@@ -57,7 +57,7 @@ check_library() {
 
   (cd "${BINARY_DIR}" ; zcat "${reference_file}" >"${old_dump_file}" ; \
    abi-compliance-checker \
-       -l "${library}" -old "${old_dump_file}" -new "${new_dump_file}")
+       -src -l "${library}" -old "${old_dump_file}" -new "${new_dump_file}")
   if [[ $? != 0 ]]; then
     return_status=1
   fi
