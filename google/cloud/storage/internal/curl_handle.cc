@@ -97,7 +97,8 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
       if (options->recv_buffer_size_ != 0) {
         auto size = static_cast<long>(options->recv_buffer_size_);
 #if _WIN32
-        int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF, reinterpret_cast<char const*>(&size), sizeof(size));
+        int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF,
+                           reinterpret_cast<char const*>(&size), sizeof(size));
 #else
         int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
 #endif  // WIN32
@@ -112,7 +113,8 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
       if (options->send_buffer_size_ != 0) {
         auto size = static_cast<long>(options->send_buffer_size_);
 #if _WIN32
-        int r = setsockopt(curlfd, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char const*>(&size), sizeof(size));
+        int r = setsockopt(curlfd, SOL_SOCKET, SO_SNDBUF,
+                           reinterpret_cast<char const*>(&size), sizeof(size));
 #else
         auto r = setsockopt(curlfd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
 #endif  // WIN32
