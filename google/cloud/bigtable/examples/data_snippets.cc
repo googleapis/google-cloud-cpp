@@ -76,7 +76,6 @@ void Apply(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-
 void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table, int argc,
                              char* argv[]) {
   if (argc != 2) {
@@ -960,9 +959,12 @@ void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
     cbt::SingleRowMutation mutation(row_key);
     std::string column_family = "stats_summary";
 
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_wifi", timestamp, std::int64_t{1}));
-    mutation.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "PQ2A.190405.003"));
+    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell",
+                                       timestamp, std::int64_t{1}));
+    mutation.emplace_back(cbt::SetCell(column_family, "connected_wifi",
+                                       timestamp, std::int64_t{1}));
+    mutation.emplace_back(
+        cbt::SetCell(column_family, "os_build", timestamp, "PQ2A.190405.003"));
     google::cloud::Status status = table.Apply(std::move(mutation));
     if (!status.ok()) {
       throw std::runtime_error(status.message());
@@ -985,23 +987,29 @@ void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
     std::string column_family = "stats_summary";
 
     cbt::BulkMutation bulk;
-    cbt::SingleRowMutation mutation("tablet#a0b81f74#20190501"); 
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
-    mutation.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "12155.0.0-rc1"));
+    cbt::SingleRowMutation mutation("tablet#a0b81f74#20190501");
+    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell",
+                                       timestamp, std::int64_t{1}));
+    mutation.emplace_back(
+        cbt::SetCell(column_family, "os_build", timestamp, "12155.0.0-rc1"));
     bulk.emplace_back(std::move(mutation));
-    cbt::SingleRowMutation mutation2("tablet#a0b81f74#20190502"); 
-    mutation2.emplace_back(cbt::SetCell(column_family, "connected_cell", timestamp, std::int64_t{1}));
-    mutation2.emplace_back(cbt::SetCell(column_family, "os_build", timestamp, "12145.0.0-rc6"));
+    cbt::SingleRowMutation mutation2("tablet#a0b81f74#20190502");
+    mutation2.emplace_back(cbt::SetCell(column_family, "connected_cell",
+                                        timestamp, std::int64_t{1}));
+    mutation2.emplace_back(
+        cbt::SetCell(column_family, "os_build", timestamp, "12145.0.0-rc6"));
     bulk.emplace_back(std::move(mutation2));
 
-    std::vector<cbt::FailedMutation> failures =  table.BulkApply(std::move(bulk));
+    std::vector<cbt::FailedMutation> failures =
+        table.BulkApply(std::move(bulk));
     if (failures.empty()) {
       std::cout << "Successfully wrote 2 rows.\n";
       return;
     }
     std::cerr << "The following mutations failed:\n";
     for (auto const& f : failures) {
-      std::cerr << "rowkey[" << f.original_index() << "]=" << f.status() << "\n";
+      std::cerr << "rowkey[" << f.original_index() << "]=" << f.status()
+                << "\n";
     }
   }
   // [END bigtable_writes_batch]
@@ -1016,10 +1024,11 @@ void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
     std::string row_key = "phone#4c410523#20190501";
-    std::string column_family = "stats_summary";  
+    std::string column_family = "stats_summary";
 
     google::cloud::StatusOr<cbt::Row> row = table.ReadModifyWriteRow(
-        row_key, cbt::ReadModifyWriteRule::IncrementAmount(column_family, "connected_wifi", -1));
+        row_key, cbt::ReadModifyWriteRule::IncrementAmount(
+                     column_family, "connected_wifi", -1));
 
     if (!row) {
       throw std::runtime_error(row.status().message());
@@ -1030,7 +1039,8 @@ void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void WriteConditionally(google::cloud::bigtable::Table table, int argc, char*[]) {
+void WriteConditionally(google::cloud::bigtable::Table table, int argc,
+                        char*[]) {
   if (argc != 1) {
     throw Usage{"write-conditional <project-id> <instance-id> <table-id>"};
   }
@@ -1046,11 +1056,12 @@ void WriteConditionally(google::cloud::bigtable::Table table, int argc, char*[])
     std::string column_family = "stats_summary";
     cbt::Filter predicate = cbt::Filter::Chain(
         cbt::Filter::ColumnName(column_family, "os_build"),
-        cbt::Filter::Latest(1), 
-        cbt::Filter::ValueRegex("PQ2A\\..*"));
+        cbt::Filter::Latest(1), cbt::Filter::ValueRegex("PQ2A\\..*"));
 
     google::cloud::StatusOr<cbt::MutationBranch> branch =
-        table.CheckAndMutateRow(row_key, std::move(predicate),{cbt::SetCell(column_family, "os_name", timestamp, "android")}, {});
+        table.CheckAndMutateRow(
+            row_key, std::move(predicate),
+            {cbt::SetCell(column_family, "os_name", timestamp, "android")}, {});
 
     if (!branch) {
       throw std::runtime_error(branch.status().message());
