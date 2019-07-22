@@ -217,6 +217,7 @@ And compile the code using:
    -DCMAKE_TOOLCHAIN_FILE=C:\Users\%USERNAME%\vcpkg\scripts\buildsystems\vcpkg.cmake
    -DVCPKG_TARGET_TRIPLET=x64-windows-static
    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
+   -DGOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER=external
 > cmake --build cmake-out
 ```
 
