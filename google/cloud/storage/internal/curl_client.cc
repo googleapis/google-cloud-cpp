@@ -429,6 +429,25 @@ StatusOr<IamPolicy> CurlClient::GetBucketIamPolicy(
   return ParseIamPolicyFromString(response->payload);
 }
 
+StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
+    GetBucketIamPolicyRequest const& request) {
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
+      storage_factory_);
+  auto status = SetupBuilder(builder, request, "GET");
+  if (!status.ok()) {
+    return status;
+  }
+  auto response = builder.BuildRequest().MakeRequest(std::string{});
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->status_code >= 300) {
+    return AsStatus(*response);
+  }
+  return NativeIamPolicy::CreateFromJson(response->payload);
+}
+
 StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
     SetBucketIamPolicyRequest const& request) {
   CurlRequestBuilder builder(
@@ -447,6 +466,26 @@ StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
     return AsStatus(*response);
   }
   return ParseIamPolicyFromString(response->payload);
+}
+
+StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
+    SetNativeBucketIamPolicyRequest const& request) {
+  CurlRequestBuilder builder(
+      storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
+      storage_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (!status.ok()) {
+    return status;
+  }
+  builder.AddHeader("Content-Type: application/json");
+  auto response = builder.BuildRequest().MakeRequest(request.json_payload());
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+  if (response->status_code >= 300) {
+    return AsStatus(*response);
+  }
+  return NativeIamPolicy::CreateFromJson(response->payload);
 }
 
 StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(

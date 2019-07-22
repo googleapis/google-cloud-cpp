@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/idempotency_policy.h"
+#include "google/cloud/storage/iam_policy.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -114,14 +115,31 @@ TEST(StrictIdempotencyPolicyTest, GetIamPolicy) {
 
 TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicy) {
   StrictIdempotencyPolicy policy;
-  internal::SetBucketIamPolicyRequest request("test-bucket-name", IamPolicy{});
+  internal::SetBucketIamPolicyRequest request("test-bucket-name",
+                                              google::cloud::IamPolicy{});
   EXPECT_FALSE(policy.IsIdempotent(request));
 }
 
 TEST(StrictIdempotencyPolicyTest, SetBucketIamPolicyIfEtag) {
   StrictIdempotencyPolicy policy;
-  internal::SetBucketIamPolicyRequest request("test-bucket-name", IamPolicy{});
+  internal::SetBucketIamPolicyRequest request("test-bucket-name",
+                                              google::cloud::IamPolicy{});
   request.set_option(IfMatchEtag("ABC123="));
+  EXPECT_TRUE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, SetNativeBucketIamPolicy) {
+  StrictIdempotencyPolicy policy;
+  internal::SetNativeBucketIamPolicyRequest request(
+      "test-bucket-name", NativeIamPolicy(std::vector<NativeIamBinding>()));
+  EXPECT_FALSE(policy.IsIdempotent(request));
+}
+
+TEST(StrictIdempotencyPolicyTest, SetNativeBucketIamPolicyIfEtag) {
+  StrictIdempotencyPolicy policy;
+  internal::SetNativeBucketIamPolicyRequest request(
+      "test-bucket-name",
+      NativeIamPolicy(std::vector<NativeIamBinding>(), "ABC123="));
   EXPECT_TRUE(policy.IsIdempotent(request));
 }
 
