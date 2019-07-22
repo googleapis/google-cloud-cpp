@@ -424,7 +424,8 @@ cmake -H. -Bcmake-out -GNinja ^
     -DCMAKE_C_COMPILER=cl.exe ^
     -DCMAKE_CXX_COMPILER=cl.exe ^
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ^
-    -DCMAKE_MAKE_PROGRAM=ninja
+    -DCMAKE_MAKE_PROGRAM=ninja ^
+    -DGOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER=external
 ```
 
 And compile the code:
