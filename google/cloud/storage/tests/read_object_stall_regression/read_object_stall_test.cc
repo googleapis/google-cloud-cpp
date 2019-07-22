@@ -98,18 +98,23 @@ class ReadObjectStallTest
 TEST_F(ReadObjectStallTest, Streaming) {
   // Give the other programs in the test (such as tcpdump) time to start up.
   std::this_thread::sleep_for(std::chrono::seconds(30));
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client) << "ERROR: Aborting test, cannot create client";
 
-  PreparePhase(*client, 1000);
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options)
+      << "ERROR: Aborting test, cannot create client options";
+
+  Client client(options->set_maximum_socket_recv_size(128 * 1024)
+                    .set_maximum_socket_send_size(128 * 1024));
+
+  PreparePhase(client, 1000);
 
   auto summary_name = MakeRandomObjectName();
 
-  auto object_names = PickObjects(*client, 32);
+  auto object_names = PickObjects(client, 32);
   std::vector<ObjectReadStream> readers;
   readers.reserve(object_names.size());
   for (auto const& name : object_names) {
-    readers.emplace_back(client->ReadObject(flag_src_bucket_name, name));
+    readers.emplace_back(client.ReadObject(flag_src_bucket_name, name));
   }
 
   std::geometric_distribution<int> sleep_period(1.0 / flag_average_delay);
@@ -154,7 +159,7 @@ TEST_F(ReadObjectStallTest, Streaming) {
       ++index;
     }
     auto metadata =
-        client->InsertObject(flag_dst_bucket_name, summary_name, summary.str());
+        client.InsertObject(flag_dst_bucket_name, summary_name, summary.str());
     EXPECT_STATUS_OK(metadata);
   } while (has_open);
   std::cout << "DONE: All files closed" << std::endl;

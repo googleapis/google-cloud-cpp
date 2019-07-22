@@ -50,6 +50,7 @@ class CurlRequest {
         response_payload_(std::move(rhs.response_payload_)),
         received_headers_(std::move(rhs.received_headers_)),
         logging_enabled_(rhs.logging_enabled_),
+        socket_options_(rhs.socket_options_),
         handle_(std::move(rhs.handle_)),
         factory_(std::move(rhs.factory_)) {
     ResetOptions();
@@ -62,6 +63,7 @@ class CurlRequest {
     response_payload_ = std::move(rhs.response_payload_);
     received_headers_ = std::move(rhs.received_headers_);
     logging_enabled_ = rhs.logging_enabled_;
+    socket_options_ = rhs.socket_options_;
     handle_ = std::move(rhs.handle_);
     factory_ = std::move(rhs.factory_);
 
@@ -90,6 +92,7 @@ class CurlRequest {
   std::string response_payload_;
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_;
+  CurlHandle::SocketOptions socket_options_;
   CurlHandle handle_;
   std::shared_ptr<CurlHandleFactory> factory_;
 };

@@ -26,8 +26,8 @@ metadata:
   labels:
     app: read-object-stall-regression
 spec:
-  parallelism: 50
-  completions: 50
+  parallelism: 500
+  completions: 500
   template:
     spec:
       restartPolicy: OnFailure

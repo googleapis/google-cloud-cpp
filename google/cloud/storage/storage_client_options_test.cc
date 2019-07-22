@@ -177,6 +177,26 @@ TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
   EXPECT_TRUE(client_options.enable_ssl_locking_callbacks());
 }
 
+TEST_F(ClientOptionsTest, SetMaximumSocketRecvSize) {
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(opts);
+  ClientOptions client_options = *opts;
+  auto default_value = client_options.maximum_socket_recv_size();
+  EXPECT_EQ(0, default_value);
+  client_options.set_maximum_socket_recv_size(16 * 1024);
+  EXPECT_EQ(16 * 1024, client_options.maximum_socket_recv_size());
+}
+
+TEST_F(ClientOptionsTest, SetMaximumSocketSendSize) {
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(opts);
+  ClientOptions client_options = *opts;
+  auto default_value = client_options.maximum_socket_send_size();
+  EXPECT_EQ(0, default_value);
+  client_options.set_maximum_socket_send_size(16 * 1024);
+  EXPECT_EQ(16 * 1024, client_options.maximum_socket_send_size());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

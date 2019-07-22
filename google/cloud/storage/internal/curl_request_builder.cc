@@ -33,8 +33,7 @@ CurlRequestBuilder::CurlRequestBuilder(
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_("?"),
-      logging_enabled_(false),
-      initial_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE) {}
+      logging_enabled_(false) {}
 
 CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);
@@ -45,6 +44,7 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
   request.handle_ = std::move(handle_);
   request.factory_ = std::move(factory_);
   request.logging_enabled_ = logging_enabled_;
+  request.socket_options_ = socket_options_;
   request.ResetOptions();
   return request;
 }
@@ -61,6 +61,7 @@ CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
   request.multi_ = factory_->CreateMultiHandle();
   request.factory_ = factory_;
   request.logging_enabled_ = logging_enabled_;
+  request.socket_options_ = socket_options_;
   request.SetOptions();
   return request;
 }
@@ -106,12 +107,6 @@ CurlRequestBuilder& CurlRequestBuilder::SetCurlShare(CURLSH* share) {
 CurlRequestBuilder& CurlRequestBuilder::SetDebugLogging(bool enabled) {
   ValidateBuilderState(__func__);
   logging_enabled_ = enabled;
-  return *this;
-}
-
-CurlRequestBuilder& CurlRequestBuilder::SetInitialBufferSize(std::size_t size) {
-  ValidateBuilderState(__func__);
-  initial_buffer_size_ = size;
   return *this;
 }
 
