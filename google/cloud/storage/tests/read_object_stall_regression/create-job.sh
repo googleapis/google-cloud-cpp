@@ -31,7 +31,7 @@ spec:
   template:
     spec:
       restartPolicy: OnFailure
-      activeDeadlineSeconds: 900
+      activeDeadlineSeconds: 1800
       volumes:
         - name: google-cloud-key
           secret:
@@ -45,7 +45,8 @@ spec:
             '@SRC_BUCKET_NAME@',
             '@DST_BUCKET_NAME@',
             '4.0',
-            '--gtest_filter=ReadObjectStallTest.Streaming'
+            '--gtest_filter=ReadObjectStallTest.Streaming',
+            '--gtest_repeats=3'
           ]
           resources:
             requests:
