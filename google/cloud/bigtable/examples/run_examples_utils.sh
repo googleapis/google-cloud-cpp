@@ -630,16 +630,16 @@ run_all_write_examples() {
   run_example ./table_admin_snippets get-or-create-family \
       "${project_id}" "${instance_id}" "${TABLE}" "${FAM}"
 
-  run_example ./data_snippets write-simple \ 
+  run_example ./data_snippets write-simple \
       "${project_id}" "${instance_id}" "${TABLE}"
 
-  run_example ./data_snippets write-batch \ 
+  run_example ./data_snippets write-batch \
       "${project_id}" "${instance_id}" "${TABLE}"
 
-  run_example ./data_snippets write-increment \ 
+  run_example ./data_snippets write-increment \
       "${project_id}" "${instance_id}" "${TABLE}"
 
-  run_example ./data_snippets write-conditional \ 
+  run_example ./data_snippets write-conditional \
       "${project_id}" "${instance_id}" "${TABLE}"
 
   run_example ./table_admin_snippets delete-table \
