@@ -147,8 +147,10 @@ source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
-NCPU=$(nproc)
-export NCPU
+if [[ -z "${NCPU+x}" ]]; then
+    NCPU=$(nproc)
+    export NCPU
+fi
 cd "${PROJECT_ROOT}"
 echo "Building with ${NCPU} cores $(date) on ${PWD}."
 
@@ -204,9 +206,7 @@ docker_flags=(
     "--env" "CXX=${CXX}"
     "--env" "CC=${CC}"
 
-    # The number of CPUs, probably should be removed, the scripts can detect
-    # this themselves in Kokoro (it was a problem on Travis).
-    "--env" "NCPU=${NCPU:-4}"
+    "--env" "${NCPU}"
 
     # Disable ccache(1) for Kokoro build builds we do not cache data between
     # builds.
