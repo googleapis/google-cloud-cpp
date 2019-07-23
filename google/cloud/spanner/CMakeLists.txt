@@ -48,6 +48,8 @@ add_library(spanner_client
             internal/time.h
             internal/time_format.cc
             internal/time_format.h
+            internal/transaction_impl.cc
+            internal/transaction_impl.h
             internal/tuple_utils.h
             mutations.cc
             mutations.h
@@ -61,6 +63,8 @@ add_library(spanner_client
             sql_statement.cc
             sql_statement.h
             timestamp.h
+            transaction.cc
+            transaction.h
             value.cc
             value.h
             version.cc
@@ -108,6 +112,7 @@ function (spanner_client_define_tests)
         internal/spanner_stub_test.cc
         internal/time_format_test.cc
         internal/time_test.cc
+        internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
         mutations_test.cc
         result_set_test.cc
@@ -117,7 +122,9 @@ function (spanner_client_define_tests)
         sql_partition_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
+        transaction_test.cc
         value_test.cc)
+
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_unit_tests.bzl"
