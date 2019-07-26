@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -44,14 +45,20 @@ TEST(StorageBenchmarksUtilsTest, ParseDuration) {
 }
 
 TEST(StorageBenchmarksUtilsTest, ParseBoolean) {
-  EXPECT_EQ(true, ParseBoolean("", true));
-  EXPECT_EQ(false, ParseBoolean("", false));
+  ASSERT_STATUS_OK(ParseBoolean("", true));
+  EXPECT_EQ(true, *ParseBoolean("", true));
+  ASSERT_STATUS_OK(ParseBoolean("", false));
+  EXPECT_EQ(false, *ParseBoolean("", false));
 
-  EXPECT_EQ(true, ParseBoolean("true", false));
-  EXPECT_EQ(true, ParseBoolean("True", false));
+  ASSERT_STATUS_OK(ParseBoolean("true", false));
+  EXPECT_EQ(true, *ParseBoolean("true", false));
+  ASSERT_STATUS_OK(ParseBoolean("True", false));
+  EXPECT_EQ(true, *ParseBoolean("True", false));
 
-  EXPECT_EQ(false, ParseBoolean("false", true));
-  EXPECT_EQ(false, ParseBoolean("False", true));
+  ASSERT_STATUS_OK(ParseBoolean("false", true));
+  EXPECT_EQ(false, *ParseBoolean("false", true));
+  ASSERT_STATUS_OK(ParseBoolean("False", true));
+  EXPECT_EQ(false, *ParseBoolean("False", true));
 }
 
 }  // namespace

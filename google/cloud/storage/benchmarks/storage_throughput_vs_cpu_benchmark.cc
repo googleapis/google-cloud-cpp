@@ -15,7 +15,6 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include <future>
@@ -111,12 +110,16 @@ using TestResults = std::vector<IterationResult>;
 TestResults RunThread(Options const& options, std::string const& bucket_name);
 void PrintResults(TestResults const& results);
 
-Options ParseArgs(int argc, char* argv[]);
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
 
-int main(int argc, char* argv[]) try {
-  Options options = ParseArgs(argc, argv);
+int main(int argc, char* argv[]) {
+  google::cloud::StatusOr<Options> options = ParseArgs(argc, argv);
+  if (!options) {
+    std::cerr << options.status() << "\n";
+    return 1;
+  }
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
@@ -125,8 +128,8 @@ int main(int argc, char* argv[]) try {
               << client_options.status() << "\n";
     return 1;
   }
-  if (!options.project_id.empty()) {
-    client_options->set_project_id(options.project_id);
+  if (!options->project_id.empty()) {
+    client_options->set_project_id(options->project_id);
   }
   gcs::Client client(*std::move(client_options));
 
@@ -140,7 +143,7 @@ int main(int argc, char* argv[]) try {
           .CreateBucket(bucket_name,
                         gcs::BucketMetadata()
                             .set_storage_class(gcs::storage_class::Regional())
-                            .set_location(options.region),
+                            .set_location(options->region),
                         gcs::PredefinedAcl("private"),
                         gcs::PredefinedDefaultObjectAcl("projectPrivate"),
                         gcs::Projection("full"))
@@ -155,31 +158,31 @@ int main(int argc, char* argv[]) try {
   std::cout << "# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
-            << "\n# Region: " << options.region
-            << "\n# Duration: " << options.duration.count() << "s"
-            << "\n# Thread Count: " << options.thread_count
-            << "\n# Min Object Size: " << options.minimum_object_size
-            << "\n# Max Object Size: " << options.maximum_object_size
-            << "\n# Min Chunk Size: " << options.minimum_chunk_size
-            << "\n# Max Chunk Size: " << options.maximum_chunk_size
+            << "\n# Region: " << options->region
+            << "\n# Duration: " << options->duration.count() << "s"
+            << "\n# Thread Count: " << options->thread_count
+            << "\n# Min Object Size: " << options->minimum_object_size
+            << "\n# Max Object Size: " << options->maximum_object_size
+            << "\n# Min Chunk Size: " << options->minimum_chunk_size
+            << "\n# Max Chunk Size: " << options->maximum_chunk_size
             << "\n# Min Object Size (MiB): "
-            << options.minimum_object_size / gcs_bm::kMiB
+            << options->minimum_object_size / gcs_bm::kMiB
             << "\n# Max Object Size (MiB): "
-            << options.maximum_object_size / gcs_bm::kMiB
+            << options->maximum_object_size / gcs_bm::kMiB
             << "\n# Min Chunk Size (KiB): "
-            << options.minimum_chunk_size / gcs_bm::kKiB
+            << options->minimum_chunk_size / gcs_bm::kKiB
             << "\n# Max Chunk Size (KiB): "
-            << options.maximum_chunk_size / gcs_bm::kKiB << std::boolalpha
-            << "\n# Disable CRC32C: " << options.disable_crc32c
-            << "\n# Disable MD5: " << options.disable_md5
+            << options->maximum_chunk_size / gcs_bm::kKiB << std::boolalpha
+            << "\n# Disable CRC32C: " << options->disable_crc32c
+            << "\n# Disable MD5: " << options->disable_md5
             << "\n# Build info: " << notes << "\n";
   // Make this immediately visible in the console, helps with debugging.
   std::cout << std::flush;
 
   std::vector<std::future<TestResults>> tasks;
-  for (int i = 0; i != options.thread_count; ++i) {
+  for (int i = 0; i != options->thread_count; ++i) {
     tasks.emplace_back(
-        std::async(std::launch::async, RunThread, options, bucket_name));
+        std::async(std::launch::async, RunThread, *options, bucket_name));
   }
   for (auto& f : tasks) {
     PrintResults(f.get());
@@ -203,14 +206,12 @@ int main(int argc, char* argv[]) try {
   }
   auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
-    std::cout << "# Error deleting bucket, status=" << status << "\n";
+    std::cerr << "# Error deleting bucket, status=" << status << "\n";
+    return 1;
   }
   std::cout << "# DONE\n" << std::flush;
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 
 namespace {
@@ -332,7 +333,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   return results;
 }
 
-Options ParseArgs(int argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
@@ -381,11 +382,11 @@ Options ParseArgs(int argc, char* argv[]) {
        }},
       {"--disable-crc32", "disable CRC32C checksums",
        [&options](std::string const& val) {
-         options.disable_crc32c = gcs_bm::ParseBoolean(val, true);
+         options.disable_crc32c = *gcs_bm::ParseBoolean(val, true);
        }},
       {"--disable-md5", "disable MD5 hashes",
        [&options](std::string const& val) {
-         options.disable_md5 = gcs_bm::ParseBoolean(val, true);
+         options.disable_md5 = *gcs_bm::ParseBoolean(val, true);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
@@ -402,7 +403,8 @@ Options ParseArgs(int argc, char* argv[]) {
   if (unparsed.size() > 2) {
     std::ostringstream os;
     os << "Unknown arguments or options\n" << usage << "\n";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
   if (unparsed.size() == 2) {
     options.region = unparsed[1];
@@ -410,26 +412,30 @@ Options ParseArgs(int argc, char* argv[]) {
   if (options.region.empty()) {
     std::ostringstream os;
     os << "Missing value for --region option" << usage << "\n";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
 
   if (options.minimum_object_size > options.maximum_object_size) {
     std::ostringstream os;
     os << "Invalid range for object size [" << options.minimum_object_size
        << ',' << options.maximum_object_size << "]";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
   if (options.minimum_chunk_size > options.maximum_chunk_size) {
     std::ostringstream os;
     os << "Invalid range for chunk size [" << options.minimum_chunk_size << ','
        << options.maximum_chunk_size << "]";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
   if (options.minimum_sample_count > options.maximum_sample_count) {
     std::ostringstream os;
     os << "Invalid range for sample range [" << options.minimum_sample_count
        << ',' << options.maximum_sample_count << "]";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
 
   if (!gcs_bm::SimpleTimer::SupportPerThreadUsage() &&
@@ -437,7 +443,8 @@ Options ParseArgs(int argc, char* argv[]) {
     std::ostringstream os;
     os << "Your platform does not support per-thread usage metrics"
           " (see getrusage(2)). Running more than one thread is not supported.";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
 
   return options;

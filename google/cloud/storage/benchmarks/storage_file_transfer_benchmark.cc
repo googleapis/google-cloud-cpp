@@ -16,7 +16,6 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include <fstream>
@@ -58,12 +57,16 @@ struct Options {
   std::int64_t upload_buffer_size = 16 * gcs_bm::kMiB;
 };
 
-Options ParseArgs(int& argc, char* argv[]);
+google::cloud::StatusOr<Options> ParseArgs(int& argc, char* argv[]);
 
 }  // namespace
 
-int main(int argc, char* argv[]) try {
-  Options options = ParseArgs(argc, argv);
+int main(int argc, char* argv[]) {
+  google::cloud::StatusOr<Options> options = ParseArgs(argc, argv);
+  if (!options) {
+    std::cerr << options.status() << "\n";
+    return 1;
+  }
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
@@ -72,9 +75,9 @@ int main(int argc, char* argv[]) try {
               << client_options.status() << "\n";
     return 1;
   }
-  client_options->SetUploadBufferSize(options.upload_buffer_size);
-  client_options->SetDownloadBufferSize(options.download_buffer_size);
-  client_options->set_project_id(options.project_id);
+  client_options->SetUploadBufferSize(options->upload_buffer_size);
+  client_options->SetDownloadBufferSize(options->download_buffer_size);
+  client_options->set_project_id(options->project_id);
 
   gcs::Client client(*std::move(client_options));
 
@@ -88,7 +91,7 @@ int main(int argc, char* argv[]) try {
           .CreateBucket(bucket_name,
                         gcs::BucketMetadata()
                             .set_storage_class(gcs::storage_class::Regional())
-                            .set_location(options.region),
+                            .set_location(options->region),
                         gcs::PredefinedAcl("private"),
                         gcs::PredefinedDefaultObjectAcl("projectPrivate"),
                         gcs::Projection("full"))
@@ -102,24 +105,24 @@ int main(int argc, char* argv[]) try {
   std::cout << "# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
-            << "\n# Region: " << options.region
-            << "\n# Duration: " << options.duration.count() << "s"
-            << "\n# File Size: " << options.file_size
-            << "\n# File Size (MiB): " << options.file_size / gcs_bm::kMiB
+            << "\n# Region: " << options->region
+            << "\n# Duration: " << options->duration.count() << "s"
+            << "\n# File Size: " << options->file_size
+            << "\n# File Size (MiB): " << options->file_size / gcs_bm::kMiB
             << "\n# Download buffer size (KiB): "
-            << options.download_buffer_size / gcs_bm::kKiB
+            << options->download_buffer_size / gcs_bm::kKiB
             << "\n# Upload buffer size (KiB): "
-            << options.upload_buffer_size / gcs_bm::kKiB
+            << options->upload_buffer_size / gcs_bm::kKiB
             << "\n# Build info: " << notes << "\n";
 
   std::cout << "# Creating file to upload ..." << std::flush;
   auto filename = gcs_bm::MakeRandomFileName(generator);
   std::ofstream(filename, std::ios::binary)
-      << gcs_bm::MakeRandomData(generator, options.file_size);
+      << gcs_bm::MakeRandomData(generator, options->file_size);
   std::cout << " DONE\n"
             << "# File: " << filename << "\n";
 
-  auto deadline = std::chrono::system_clock::now() + options.duration;
+  auto deadline = std::chrono::system_clock::now() + options->duration;
   for (auto now = std::chrono::system_clock::now(); now < deadline;
        now = std::chrono::system_clock::now()) {
     auto object_name = gcs_bm::MakeRandomObjectName(generator);
@@ -129,12 +132,12 @@ int main(int argc, char* argv[]) try {
         client.UploadFile(filename, bucket_name, object_name);
     auto upload_elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
         std::chrono::steady_clock::now() - upload_start);
-    double gbps = options.file_size * 8.0 / upload_elapsed.count();
+    double gbps = options->file_size * 8.0 / upload_elapsed.count();
     auto ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(upload_elapsed);
     auto MiBs =
-        (double(options.file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
-    std::cout << "FileUpload," << options.file_size << ','
+        (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
+    std::cout << "FileUpload," << options->file_size << ','
               << upload_elapsed.count() << ',' << gbps << ',' << ms.count()
               << ',' << MiBs << ',' << object_metadata.status().code() << "\n";
     if (!object_metadata) {
@@ -150,11 +153,11 @@ int main(int argc, char* argv[]) try {
     auto download_elapsed =
         std::chrono::duration_cast<std::chrono::nanoseconds>(
             std::chrono::steady_clock::now() - download_start);
-    gbps = options.file_size * 8.0 / download_elapsed.count();
+    gbps = options->file_size * 8.0 / download_elapsed.count();
     ms =
         std::chrono::duration_cast<std::chrono::milliseconds>(download_elapsed);
-    MiBs = (double(options.file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
-    std::cout << "FileDownload," << options.file_size << ','
+    MiBs = (double(options->file_size) / gcs_bm::kMiB) / (ms.count() / 1000.0);
+    std::cout << "FileDownload," << options->file_size << ','
               << download_elapsed.count() << ',' << gbps << ',' << ms.count()
               << ',' << MiBs << ',' << object_metadata.status().code() << "\n";
 
@@ -169,18 +172,16 @@ int main(int argc, char* argv[]) try {
   std::cout << "# Deleting " << bucket_name << "\n";
   auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
-    google::cloud::internal::ThrowStatus(status);
+    std::cerr << "# Error deleting bucket, status=" << status << "\n";
+    return 1;
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 
 namespace {
 
-Options ParseArgs(int& argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgs(int& argc, char* argv[]) {
   Options options;
 
   bool wants_help = false;
@@ -225,7 +226,8 @@ Options ParseArgs(int& argc, char* argv[]) {
   if (unparsed.size() > 2) {
     std::ostringstream os;
     os << "Unknown arguments or options\n" << usage << "\n";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
   if (unparsed.size() == 2) {
     options.region = unparsed[1];
@@ -233,7 +235,8 @@ Options ParseArgs(int& argc, char* argv[]) {
   if (options.region.empty()) {
     std::ostringstream os;
     os << "Missing value for --region option" << usage << "\n";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
+                                 std::move(os).str()};
   }
 
   return options;

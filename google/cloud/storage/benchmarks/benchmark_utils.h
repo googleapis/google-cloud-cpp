@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_BENCHMARK_UTILS_H_
 
 #include "google/cloud/internal/random.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 #include <functional>
 #include <string>
@@ -64,7 +65,8 @@ std::int64_t ParseSize(std::string const& val);
 std::chrono::seconds ParseDuration(std::string const& val);
 
 /// Parse a string as a boolean, with a default value if the string is empty.
-bool ParseBoolean(std::string const& val, bool default_value);
+google::cloud::StatusOr<bool> ParseBoolean(std::string const& val,
+                                           bool default_value);
 
 /// Defines a command-line option.
 struct OptionDescriptor {
