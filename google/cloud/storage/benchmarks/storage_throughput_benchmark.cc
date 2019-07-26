@@ -168,7 +168,7 @@ int main(int argc, char* argv[]) {
   auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
     std::cerr << "# Error deleting bucket, status=" << status << "\n";
-    return -1;
+    return 1;
   }
 
   return 0;
