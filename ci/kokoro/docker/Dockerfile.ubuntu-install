@@ -176,9 +176,12 @@ RUN ldconfig
 
 RUN find /usr/local -type d | xargs chmod 777
 
+# Copy over scripts explicitly to avoid cache busting.
+COPY install-cloud-sdk.sh /var/tmp/ci/
+COPY install-bazel.sh /var/tmp/ci/
+
 # Install the Cloud Bigtable emulator and the Cloud Bigtable command-line
 # client.  They are used in the integration tests.
-COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
 
