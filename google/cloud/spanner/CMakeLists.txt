@@ -33,6 +33,8 @@ add_library(spanner_client
             database_admin_client.cc
             database_admin_client.h
             date.h
+            internal/base64.cc
+            internal/base64.h
             internal/database_admin_retry.cc
             internal/database_admin_retry.h
             internal/database_admin_stub.cc
@@ -106,6 +108,7 @@ function (spanner_client_define_tests)
         client_options_test.cc
         database_admin_client_test.cc
         date_test.cc
+        internal/base64_test.cc
         internal/date_test.cc
         internal/polling_loop_test.cc
         internal/retry_loop_test.cc

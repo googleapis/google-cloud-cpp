@@ -21,6 +21,7 @@ spanner_client_hdrs = [
     "client_options.h",
     "database_admin_client.h",
     "date.h",
+    "internal/base64.h",
     "internal/database_admin_retry.h",
     "internal/database_admin_stub.h",
     "internal/date.h",
@@ -49,6 +50,7 @@ spanner_client_hdrs = [
 spanner_client_srcs = [
     "client_options.cc",
     "database_admin_client.cc",
+    "internal/base64.cc",
     "internal/database_admin_retry.cc",
     "internal/database_admin_stub.cc",
     "internal/date.cc",

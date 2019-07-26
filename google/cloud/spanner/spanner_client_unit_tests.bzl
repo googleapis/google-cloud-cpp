@@ -20,6 +20,7 @@ spanner_client_unit_tests = [
     "client_options_test.cc",
     "database_admin_client_test.cc",
     "date_test.cc",
+    "internal/base64_test.cc",
     "internal/date_test.cc",
     "internal/polling_loop_test.cc",
     "internal/retry_loop_test.cc",
