@@ -428,11 +428,12 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        }},
       {"--enable-connection-pool", "enable the client library connection pool",
        [&options](std::string const& val) {
-         options.enable_connection_pool = *gcs_bm::ParseBoolean(val, true);
+         options.enable_connection_pool =
+             gcs_bm::ParseBoolean(val).value_or(true);
        }},
       {"--enable-xml-api", "enable the XML API for the benchmark",
        [&options](std::string const& val) {
-         options.enable_xml_api = *gcs_bm::ParseBoolean(val, true);
+         options.enable_xml_api = gcs_bm::ParseBoolean(val).value_or(true);
        }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},

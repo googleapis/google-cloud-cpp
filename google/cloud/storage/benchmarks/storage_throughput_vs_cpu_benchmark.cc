@@ -382,11 +382,11 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        }},
       {"--disable-crc32", "disable CRC32C checksums",
        [&options](std::string const& val) {
-         options.disable_crc32c = *gcs_bm::ParseBoolean(val, true);
+         options.disable_crc32c = gcs_bm::ParseBoolean(val).value_or(true);
        }},
       {"--disable-md5", "disable MD5 hashes",
        [&options](std::string const& val) {
-         options.disable_md5 = *gcs_bm::ParseBoolean(val, true);
+         options.disable_md5 = gcs_bm::ParseBoolean(val).value_or(true);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);

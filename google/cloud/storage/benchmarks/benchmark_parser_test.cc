@@ -45,20 +45,14 @@ TEST(StorageBenchmarksUtilsTest, ParseDuration) {
 }
 
 TEST(StorageBenchmarksUtilsTest, ParseBoolean) {
-  ASSERT_STATUS_OK(ParseBoolean("", true));
-  EXPECT_EQ(true, *ParseBoolean("", true));
-  ASSERT_STATUS_OK(ParseBoolean("", false));
-  EXPECT_EQ(false, *ParseBoolean("", false));
+  EXPECT_EQ(true, ParseBoolean("").value_or(true));
+  EXPECT_EQ(false, ParseBoolean("").value_or(false));
 
-  ASSERT_STATUS_OK(ParseBoolean("true", false));
-  EXPECT_EQ(true, *ParseBoolean("true", false));
-  ASSERT_STATUS_OK(ParseBoolean("True", false));
-  EXPECT_EQ(true, *ParseBoolean("True", false));
+  EXPECT_EQ(true, ParseBoolean("true").value_or(false));
+  EXPECT_EQ(true, ParseBoolean("True").value_or(false));
 
-  ASSERT_STATUS_OK(ParseBoolean("false", true));
-  EXPECT_EQ(false, *ParseBoolean("false", true));
-  ASSERT_STATUS_OK(ParseBoolean("False", true));
-  EXPECT_EQ(false, *ParseBoolean("False", true));
+  EXPECT_EQ(false, ParseBoolean("false").value_or(true));
+  EXPECT_EQ(false, ParseBoolean("False").value_or(true));
 }
 
 }  // namespace

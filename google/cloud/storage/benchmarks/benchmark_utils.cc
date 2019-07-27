@@ -127,10 +127,9 @@ std::chrono::seconds ParseDuration(std::string const& val) {
   return std::chrono::seconds(s);
 }
 
-google::cloud::StatusOr<bool> ParseBoolean(std::string const& val,
-                                           bool default_value) {
+google::cloud::optional<bool> ParseBoolean(std::string const& val) {
   if (val.empty()) {
-    return default_value;
+    return google::cloud::optional<bool>{};
   }
   auto lower = val;
   std::transform(lower.begin(), lower.end(), lower.begin(),
@@ -140,8 +139,7 @@ google::cloud::StatusOr<bool> ParseBoolean(std::string const& val,
   } else if (lower == "false") {
     return false;
   }
-  return google::cloud::Status{google::cloud::StatusCode::kInvalidArgument,
-                               "Cannot parse " + val + " as a boolean"};
+  return google::cloud::optional<bool>{};
 }
 
 std::string Basename(std::string const& path) {
