@@ -84,6 +84,9 @@ set_target_properties(spanner_client
                                  "${SPANNER_CLIENT_VERSION}"
                                  SOVERSION
                                  "${SPANNER_CLIENT_VERSION_MAJOR}")
+target_compile_options(spanner_client
+                       PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+
 google_cloud_cpp_add_clang_tidy(spanner_client)
 google_cloud_cpp_add_common_options(spanner_client)
 
@@ -175,7 +178,12 @@ if (BUILD_TESTING)
 endif (BUILD_TESTING)
 
 add_subdirectory(integration_tests)
-add_subdirectory(samples)
+
+# Only compile the samples if we're building with exceptions enabled. They
+# require exceptions to keep them simple and idiomatic.
+if (GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
+    add_subdirectory(samples)
+endif (GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
 
 # Get the destination directories based on the GNU recommendations.
 include(GNUInstallDirs)

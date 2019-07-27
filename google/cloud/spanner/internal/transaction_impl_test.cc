@@ -121,9 +121,11 @@ ResultSet Client::Read(TransactionSelector& selector, std::string const&,
         selector.set_id(txn_id_);
         break;
       case Mode::kReadFails:  // leave as `begin`, calls stay serialized
+        if (fail_with_throw) {
 #if __EXCEPTIONS
-        if (fail_with_throw) throw "1202 Program Alarm";
+          throw "1202 Program Alarm";
 #endif
+        }
         break;
     }
   } else {
