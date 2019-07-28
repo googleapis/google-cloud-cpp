@@ -343,6 +343,15 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    */
   void Suspend() &&;
 
+  /**
+   * Returns the status of partial errors.
+   *
+   * Application may write multiple times before closing the stream, this
+   * function gives the capability to find out status even before stream
+   * closure.
+   */
+  Status const& last_status() const { return buf_->last_status(); }
+
  private:
   /**
    * Closes the underlying object write stream.

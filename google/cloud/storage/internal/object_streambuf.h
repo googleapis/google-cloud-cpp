@@ -125,6 +125,8 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
     return upload_session_->next_expected_byte();
   }
 
+  virtual Status const& last_status() const { return last_status_; }
+
  protected:
   int sync() override;
   std::streamsize xsputn(char const* s, std::streamsize count) override;
@@ -146,6 +148,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   HashValidator::Result hash_validator_result_;
 
   StatusOr<HttpResponse> last_response_;
+  Status last_status_;
 };
 
 }  // namespace internal

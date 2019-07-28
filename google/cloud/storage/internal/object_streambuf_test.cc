@@ -341,6 +341,95 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
   EXPECT_EQ(close_result.value().payload, payload);
 }
 
+/// @test Verify that last error status is accessible for small payload.
+TEST(ObjectWriteStreambufTest, erroneousStream) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = "small test payload";
+
+  int count = 0;
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+        ++count;
+        EXPECT_EQ(1, count);
+        EXPECT_EQ(payload, p);
+        EXPECT_EQ(payload.size(), s);
+        return Status(StatusCode::kInvalidArgument, "Invalid Argument");
+      }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
+
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+
+  streambuf.sputn(payload.data(), payload.size());
+  auto response = streambuf.Close();
+
+  EXPECT_EQ(StatusCode::kInvalidArgument, response.status().code())
+      << ", status=" << response.status();
+  EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
+      << ", status=" << streambuf.last_status();
+}
+
+/// @test Verify that last error status is accessible for large payloads.
+TEST(ObjectWriteStreambufTest, errorInLargePayload) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload_1(3 * quantum, '*');
+  std::string const payload_2("trailer");
+
+  int count = 0;
+  EXPECT_CALL(*mock, UploadChunk(_))
+      .WillOnce(Invoke([&](std::string const& p) {
+        ++count;
+        EXPECT_EQ(1, count);
+        EXPECT_EQ(payload_1, p);
+        return Status(StatusCode::kInvalidArgument, "Invalid Argument");
+      }))
+      .WillOnce(Invoke([&](std::string const& p) {
+        ++count;
+        EXPECT_EQ(2, count);
+        EXPECT_EQ(payload_1, p);
+        auto last_commited_byte = p.size() - 1;
+        return make_status_or(ResumableUploadResponse{
+            "", last_commited_byte, {}, ResumableUploadResponse::kInProgress});
+      }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+        ++count;
+        EXPECT_EQ(3, count);
+        EXPECT_EQ(payload_2, p);
+        EXPECT_EQ(payload_1.size() + payload_2.size(), s);
+        auto last_committed_byte = payload_1.size() + payload_2.size() - 1;
+        return make_status_or(
+            ResumableUploadResponse{"{}",
+                                    last_committed_byte,
+                                    {},
+                                    ResumableUploadResponse::kInProgress});
+      }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(3 * quantum));
+
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+
+  streambuf.sputn(payload_1.data(), payload_1.size());
+  EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
+      << ", status=" << streambuf.last_status();
+
+  streambuf.sputn(payload_2.data(), payload_2.size());
+  EXPECT_STATUS_OK(streambuf.last_status());
+
+  auto response = streambuf.Close();
+  EXPECT_STATUS_OK(response);
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
