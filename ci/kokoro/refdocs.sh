@@ -20,6 +20,15 @@ set -euo pipefail
 export LC_ALL=C.UTF-8
 export LANG=C.UTF-8
 
+if [[ -z "${NCPU+x}" ]]; then
+  NCPU=$(nproc)
+  # Mac doesn't have nproc. Run the equivalent.
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    NCPU=$(sysctl -n hw.physicalcpu)
+  fi
+  export NCPU
+fi
+
 readonly BUILD_OUTPUT="cmake-out/refdocs"
 
 upload_docs() {
