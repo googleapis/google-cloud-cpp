@@ -129,7 +129,7 @@ std::chrono::seconds ParseDuration(std::string const& val) {
 
 google::cloud::optional<bool> ParseBoolean(std::string const& val) {
   if (val.empty()) {
-    return google::cloud::optional<bool>{};
+    return {};
   }
   auto lower = val;
   std::transform(lower.begin(), lower.end(), lower.begin(),
@@ -139,7 +139,7 @@ google::cloud::optional<bool> ParseBoolean(std::string const& val) {
   } else if (lower == "false") {
     return false;
   }
-  return google::cloud::optional<bool>{};
+  return {};
 }
 
 std::string Basename(std::string const& path) {
