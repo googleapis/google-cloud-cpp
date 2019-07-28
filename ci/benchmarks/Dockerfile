@@ -32,7 +32,7 @@ RUN cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-RUN cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+RUN cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 RUN ldconfig
 
 # #### Protobuf
@@ -46,7 +46,7 @@ RUN cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j $(nproc)
+RUN cmake --build cmake-out --target install -- -j ${NCPU}
 RUN ldconfig
 
 # #### gRPC
@@ -55,7 +55,7 @@ WORKDIR /var/tmp/build
 RUN wget -q https://github.com/grpc/grpc/archive/v1.21.0.tar.gz
 RUN tar -xf v1.21.0.tar.gz
 WORKDIR /var/tmp/build/grpc-1.21.0
-RUN make -j $(nproc)
+RUN make -j ${NCPU}
 RUN make install
 RUN ldconfig
 
@@ -75,7 +75,7 @@ RUN cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package -DBUILD_TESTING=OFF \
     -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
     -DGOOGLE_CLOUD_CPP_BUILD_METADATA=${SHORT_SHA}
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU}
 WORKDIR /w/cmake-out
 RUN cmake --build . --target install
 

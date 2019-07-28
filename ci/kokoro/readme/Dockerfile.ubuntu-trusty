@@ -13,6 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=trusty
+ARG NCPU=4
 FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 COPY ci/install-retry.sh /retry3
@@ -46,7 +47,7 @@ RUN wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 RUN tar xf openssl-1.0.2n.tar.gz
 WORKDIR /var/tmp/build/openssl-1.0.2n
 RUN ./config --shared
-RUN make -j $(nproc)
+RUN make -j ${NCPU}
 RUN make install
 # ```
 
@@ -74,7 +75,7 @@ WORKDIR /home/build/super
 COPY . /home/build/super
 RUN cmake -Hci/super -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU}
 # The tests will already be run as part of the build, no need to run it again.
 ## [END IGNORED]
 

@@ -98,7 +98,7 @@ fi
 
 # Build doxygen docs
 cmake -H. "-B${BUILD_OUTPUT}" "${cmake_flags[@]}"
-cmake --build "${BUILD_OUTPUT}" -- -j "$(nproc)"
+cmake --build "${BUILD_OUTPUT}" -- -j "${NCPU}"
 cmake --build "${BUILD_OUTPUT}" --target install
 cmake --build "${BUILD_OUTPUT}" --target doxygen-docs
 

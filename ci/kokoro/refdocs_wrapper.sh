@@ -20,13 +20,16 @@ if [[ -z "${TRAMPOLINE_IMAGE:-}" ]]; then
   TRAMPOLINE_IMAGE="gcr.io/cloud-devrel-kokoro-resources/cpp/refdocs"
 fi
 
-# work from the git root directory
-cd "$(dirname "$0")/../../"
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
+cd "${PROJECT_ROOT}"
 
 if [[ "${BUILD_DOCKER_IMAGE:-false}" == "true" ]]; then
   # First build the docker image with dependency installed
   docker build -t gcr.io/cloud-devrel-kokoro-resources/cpp/refdoc-base \
-    --build-arg NCPU="$(nproc)" \
+    --build-arg "NCPU=${NCPU}"
     -f ci/kokoro/docker/Dockerfile.ubuntu-install ci
 
   docker build -t "${TRAMPOLINE_IMAGE}" -f ci/kokoro/Dockerfile.refdocs ci

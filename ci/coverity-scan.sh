@@ -36,10 +36,10 @@ cmake -H. -B.coverity \
 
 # The project dependencies, including the generated protos, should be built
 # without coverity-scan, any errors in them are not actionable.
-cmake --build .coverity --target google-cloud-cpp-dependencies -- -j "$(nproc)"
+cmake --build .coverity --target google-cloud-cpp-dependencies -- -j "${NCPU}"
 
 # Run coverity scan over our code.
-cov-build --dir cov-int cmake --build .coverity -- -j "$(nproc)"
+cov-build --dir cov-int cmake --build .coverity -- -j "${NCPU}"
 
 if [[ -z "${COVERITY_SCAN_TOKEN}" ]]; then
   echo "COVERITY_SCAN_TOKEN is not defined, skipping upload of results."

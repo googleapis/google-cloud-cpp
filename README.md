@@ -275,7 +275,7 @@ wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 tar xf openssl-1.0.2n.tar.gz
 cd $HOME/Downloads/openssl-1.0.2n
 ./config --shared
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 ```
 
@@ -293,7 +293,6 @@ OpenSSL:
 export OPENSSL_ROOT_DIR=/usr/local/ssl
 export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
 ```
-
 #### macOS (using brew)
 
 ```bash

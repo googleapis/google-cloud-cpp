@@ -42,8 +42,9 @@ If you need to change the instructions then change the relevant Dockerfile and
 execute (for example):
 
 ```bash
+export NCPU=$(nproc)
 cd google-cloud-cpp
-sudo docker build -f ci/test-readme/Dockerfile.ubuntu .
+sudo docker build --build-arg "NCPU=${NCPU}" -f ci/test-readme/Dockerfile.ubuntu .
 ```
 
 Recall that Docker caches intermediate results. If you are testing with very

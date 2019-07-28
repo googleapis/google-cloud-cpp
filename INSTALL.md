@@ -20,6 +20,11 @@ cmake -H. -Bcmake-out \
 cmake --build cmake-out --target install
 ```
 
+You may choose to parallelize the build by appending `-- -j ${NCPU}` to the
+build command, where `NCPU` is an environment variable set to the number of
+processors on your system. On Linux, you can obtain this information using the
+`nproc` command or `sysctl -n hw.physicalcpu` on Mac.
+
 Unfortunately getting your system to this state may require multiple steps,
 the following sections describe how to install `google-cloud-cpp` on several
 platforms.
@@ -185,7 +190,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -201,7 +206,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -214,7 +219,7 @@ cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -237,7 +242,7 @@ Platform proto files.
 
 ```bash
 sudo zypper refresh && \
-sudo zypper install -y grpc-devel gzip libcurl-devel pkg-config tar wget
+sudo zypper install -y grpc-devel gzip libcurl-devel tar wget
 ```
 
 #### crc32c
@@ -256,7 +261,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -272,7 +277,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -285,7 +290,7 @@ cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -318,7 +323,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -338,7 +343,7 @@ cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -360,7 +365,7 @@ cd $HOME/Downloads
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
 cd $HOME/Downloads/c-ares-cares-1_14_0
-./buildconf && ./configure && make -j $(nproc)
+./buildconf && ./configure && make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -386,7 +391,7 @@ cd $HOME/Downloads/grpc-1.19.1
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -403,7 +408,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -416,7 +421,7 @@ cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -450,7 +455,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -470,7 +475,7 @@ cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -484,7 +489,7 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 tar -xf v1.19.1.tar.gz
 cd $HOME/Downloads/grpc-1.19.1
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -501,7 +506,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -514,7 +519,7 @@ cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -548,7 +553,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -568,7 +573,7 @@ cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -591,7 +596,7 @@ cd $HOME/Downloads
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
 cd $HOME/Downloads/c-ares-cares-1_14_0
-./buildconf && ./configure && make -j $(nproc)
+./buildconf && ./configure && make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -606,7 +611,7 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 tar -xf v1.19.1.tar.gz
 cd $HOME/Downloads/grpc-1.19.1
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -623,7 +628,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -636,7 +641,7 @@ cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -665,7 +670,7 @@ wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 tar xf openssl-1.0.2n.tar.gz
 cd $HOME/Downloads/openssl-1.0.2n
 ./config --shared
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 ```
 
@@ -695,7 +700,7 @@ wget -q https://curl.haxx.se/download/curl-7.61.0.tar.gz
 tar xf curl-7.61.0.tar.gz
 cd $HOME/Downloads/curl-7.61.0
 ./configure --prefix=/usr/local/curl
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -716,7 +721,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -736,7 +741,7 @@ cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -759,7 +764,7 @@ cd $HOME/Downloads
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
 cd $HOME/Downloads/c-ares-cares-1_14_0
-./buildconf && ./configure && make -j $(nproc)
+./buildconf && ./configure && make -j ${NCPU}
 sudo make install
 ```
 
@@ -774,7 +779,7 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 tar -xf v1.19.1.tar.gz
 cd $HOME/Downloads/grpc-1.19.1
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 ```
 
@@ -790,7 +795,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -804,7 +809,7 @@ cmake -H. -Bcmake-out \
     -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -845,7 +850,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -865,7 +870,7 @@ cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -879,7 +884,7 @@ cd $HOME/Downloads
 wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 tar -xf v1.19.1.tar.gz
 cd $HOME/Downloads/grpc-1.19.1
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -896,7 +901,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -909,7 +914,7 @@ cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install
@@ -949,7 +954,7 @@ cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -967,7 +972,7 @@ cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -981,7 +986,7 @@ cd $HOME/Downloads
 wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
 tar -xf cares-1_14_0.tar.gz
 cd $HOME/Downloads/c-ares-cares-1_14_0
-./buildconf && ./configure && make -j $(nproc)
+./buildconf && ./configure && make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -998,7 +1003,7 @@ cd $HOME/Downloads/grpc-1.19.1
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
-make -j $(nproc)
+make -j ${NCPU}
 sudo make install
 sudo ldconfig
 ```
@@ -1015,7 +1020,7 @@ cd $HOME/Downloads/cpp-cmakefiles-0.1.1
 cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j $(nproc)
+sudo cmake --build cmake-out --target install -- -j ${NCPU}
 sudo ldconfig
 ```
 
@@ -1028,7 +1033,7 @@ cd $HOME/Downloads/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU}
 cd $HOME/Downloads/google-cloud-cpp/cmake-out
 ctest --output-on-failure
 sudo cmake --build . --target install

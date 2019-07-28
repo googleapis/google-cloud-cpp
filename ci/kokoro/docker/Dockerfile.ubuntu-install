@@ -13,6 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=18.04
+ARG NCPU=4
 FROM ubuntu:${DISTRO_VERSION}
 
 RUN apt update && \
@@ -69,11 +70,6 @@ RUN pip install numpy cmake_format==0.4.0
 
 # Install Python packages used in the integration tests.
 RUN pip install flask httpbin gevent gunicorn crc32c
-
-# Parallelize the builds if possible. The default is chosen to work well on
-# Travis, but developers may want to override this value when building on their
-# workstations.
-ARG NCPU=2
 
 # Install Crc32c library.
 WORKDIR /var/tmp/build
@@ -159,7 +155,7 @@ WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.0
 RUN cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j $(nproc)
+RUN cmake --build cmake-out --target install -- -j ${NCPU}
 RUN ldconfig
 
 # Install googletest.

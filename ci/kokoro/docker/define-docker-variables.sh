@@ -16,6 +16,15 @@
 
 set -eu
 
+if [[ -z "${NCPU+x}" ]]; then
+  NCPU=$(nproc)
+  # Mac doesn't have nproc. Run the equivalent.
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    NCPU=$(sysctl -n hw.physicalcpu)
+  fi
+  export NCPU
+fi
+
 if [[ -n "${IMAGE+x}" ]]; then
   echo "IMAGE is already defined."
 else
