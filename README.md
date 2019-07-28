@@ -293,6 +293,7 @@ OpenSSL:
 export OPENSSL_ROOT_DIR=/usr/local/ssl
 export PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
 ```
+
 #### macOS (using brew)
 
 ```bash

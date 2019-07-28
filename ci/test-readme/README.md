@@ -44,7 +44,7 @@ execute (for example):
 ```bash
 export NCPU=$(nproc)
 cd google-cloud-cpp
-sudo docker build --build-arg "NCPU=${NCPU}" -f ci/test-readme/Dockerfile.ubuntu .
+sudo docker build --build-arg "NCPU=${NCPU}" -f ci/kokoro/readme/Dockerfile.ubuntu .
 ```
 
 Recall that Docker caches intermediate results. If you are testing with very
