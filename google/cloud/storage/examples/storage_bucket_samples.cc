@@ -189,6 +189,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
   }
   auto bucket_name = ConsumeArg(argc, argv);
   //! [get bucket metadata]
+  // [START storage_get_bucket_metadata]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -202,6 +203,7 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
     std::cout << "The metadata for bucket " << bucket_metadata->name() << " is "
               << *bucket_metadata << "\n";
   }
+  // [END storage_get_bucket_metadata]
   //! [get bucket metadata]
   (std::move(client), bucket_name);
 }
