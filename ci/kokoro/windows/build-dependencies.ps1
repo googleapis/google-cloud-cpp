@@ -25,8 +25,8 @@ $CONFIG = $env:CONFIG
 
 # Set BUILD_CACHE, defauting to the original value
 if (-not (Test-Path env:BUILD_CACHE)) {
-    $BUILD_CACHE = "gs://cloud-cpp-kokoro-results/"
-        + "build-artifacts/vcpkg-installed.zip"
+    $BUILD_CACHE = "gs://cloud-cpp-kokoro-results/" +
+        "build-artifacts/vcpkg-installed.zip"
 } else {
     $BUILD_CACHE = $env:BUILD_CACHE
 }
