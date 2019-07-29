@@ -73,6 +73,29 @@ TEST(SqlPartitionTest, Constructor) {
   EXPECT_EQ(session_id, actual_partition.SessionId());
 }
 
+TEST(SqlPartitionTester, RegularSemantics) {
+  std::string stmt("select * from foo where name = @name");
+  SqlStatement::ParamType params = {{"name", Value("Bob")}};
+  std::string partition_token("token");
+  std::string session_id("session");
+  std::string transaction_id("foo");
+
+  SqlPartition sql_partition = internal::MakeSqlPartition(
+      transaction_id, session_id, partition_token, SqlStatement(stmt, params));
+
+  EXPECT_NE(sql_partition, SqlPartition());
+
+  SqlPartition copy = sql_partition;
+  EXPECT_EQ(copy, sql_partition);
+
+  SqlPartition assign;
+  assign = copy;
+  EXPECT_EQ(assign, copy);
+
+  SqlPartition moved = std::move(copy);
+  EXPECT_EQ(moved, assign);
+}
+
 TEST(SqlPartitionTest, SerializeDeserialize) {
   SqlPartitionTester expected_partition(internal::MakeSqlPartition(
       "foo", "session", "token",

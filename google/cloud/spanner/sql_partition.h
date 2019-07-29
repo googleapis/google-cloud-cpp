@@ -26,6 +26,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 class SqlPartition;
+
 /**
  * Serializes an instance of `SqlPartition` for transmission to another process.
  *
@@ -77,8 +78,8 @@ SqlPartition MakeSqlPartition(std::string const& transaction_id,
 }  // namespace internal
 
 /**
- * The `SqlPartition` class is a semi-regular type that represents a single
- * slice of a parallel SQL read.
+ * The `SqlPartition` class is a regular type that represents a single slice of
+ * a parallel SQL read.
  *
  * Instances of `SqlPartition` are created by `Client::PartitionSql`. Once
  * created, `SqlPartition` objects can be serialized, transmitted to separate
@@ -92,16 +93,26 @@ class SqlPartition {
    */
   SqlPartition() = default;
 
-  // Copy and move.
+  /// @name Copy and move
+  ///@{
   SqlPartition(SqlPartition const&) = default;
   SqlPartition(SqlPartition&&) = default;
   SqlPartition& operator=(SqlPartition const&) = default;
   SqlPartition& operator=(SqlPartition&&) = default;
+  ///@}
 
   /**
    * Accessor for the `SqlStatement` associated with this `SqlPartition`.
    */
   SqlStatement const& sql_statement() const { return sql_statement_; }
+
+  /// @name Equality
+  ///@{
+  friend bool operator==(SqlPartition const& a, SqlPartition const& b);
+  friend bool operator!=(SqlPartition const& a, SqlPartition const& b) {
+    return !(a == b);
+  }
+  ///@}
 
  private:
   friend class SqlPartitionTester;

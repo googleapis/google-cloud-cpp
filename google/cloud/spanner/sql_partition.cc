@@ -29,6 +29,13 @@ SqlPartition::SqlPartition(std::string transaction_id, std::string session_id,
       partition_token_(std::move(partition_token)),
       sql_statement_(std::move(sql_statement)) {}
 
+bool operator==(SqlPartition const& a, SqlPartition const& b) {
+  return a.transaction_id_ == b.transaction_id_ &&
+         a.session_id_ == b.session_id_ &&
+         a.partition_token_ == b.partition_token_ &&
+         a.sql_statement_ == b.sql_statement_;
+}
+
 StatusOr<std::string> SerializeSqlPartition(SqlPartition const& sql_partition) {
   google::spanner::v1::ExecuteSqlRequest proto;
   proto.set_partition_token(sql_partition.partition_token());
