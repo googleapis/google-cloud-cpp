@@ -202,7 +202,7 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
       last_response_{HttpResponse{400, {}, {}}},
-      last_status_(Status()) {
+      last_status_() {
   current_ios_buffer_.reserve(max_buffer_size_);
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();

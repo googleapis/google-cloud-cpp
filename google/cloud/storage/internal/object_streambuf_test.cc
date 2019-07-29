@@ -342,7 +342,7 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
 }
 
 /// @test Verify that last error status is accessible for small payload.
-TEST(ObjectWriteStreambufTest, erroneousStream) {
+TEST(ObjectWriteStreambufTest, ErroneousStream) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
@@ -352,11 +352,11 @@ TEST(ObjectWriteStreambufTest, erroneousStream) {
 
   int count = 0;
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t n) {
         ++count;
         EXPECT_EQ(1, count);
         EXPECT_EQ(payload, p);
-        EXPECT_EQ(payload.size(), s);
+        EXPECT_EQ(payload.size(), n);
         return Status(StatusCode::kInvalidArgument, "Invalid Argument");
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
@@ -375,7 +375,7 @@ TEST(ObjectWriteStreambufTest, erroneousStream) {
 }
 
 /// @test Verify that last error status is accessible for large payloads.
-TEST(ObjectWriteStreambufTest, errorInLargePayload) {
+TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
@@ -401,11 +401,11 @@ TEST(ObjectWriteStreambufTest, errorInLargePayload) {
             "", last_commited_byte, {}, ResumableUploadResponse::kInProgress});
       }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t n) {
         ++count;
         EXPECT_EQ(3, count);
         EXPECT_EQ(payload_2, p);
-        EXPECT_EQ(payload_1.size() + payload_2.size(), s);
+        EXPECT_EQ(payload_1.size() + payload_2.size(), n);
         auto last_committed_byte = payload_1.size() + payload_2.size() - 1;
         return make_status_or(
             ResumableUploadResponse{"{}",
