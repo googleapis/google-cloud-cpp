@@ -26,15 +26,19 @@ namespace {
 
 constexpr char kPadding = '=';
 
-constexpr std::array<char, 64> kIndexToChar = {
+// The extra braces are working around an old clang bug that was fixed in 6.0
+// https://bugs.llvm.org/show_bug.cgi?id=21629
+constexpr std::array<char, 64> kIndexToChar = {{
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/',
-};
+}};
 
-constexpr std::array<unsigned char, UCHAR_MAX + 1> kCharToIndexExcessOne = {
+// The extra braces are working around an old clang bug that was fixed in 6.0
+// https://bugs.llvm.org/show_bug.cgi?id=21629
+constexpr std::array<unsigned char, UCHAR_MAX + 1> kCharToIndexExcessOne = {{
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
     0,  0,  0,  0,  0,  0,  0,  63, 0,  0,  0,  64, 53, 54, 55, 56, 57, 58,
@@ -42,7 +46,7 @@ constexpr std::array<unsigned char, UCHAR_MAX + 1> kCharToIndexExcessOne = {
     8,  9,  10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,
     26, 0,  0,  0,  0,  0,  0,  27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37,
     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
-};
+}};
 
 // UCHAR_MAX is required to be at least 255, meaning std::string::value_type
 // can always hold an octet. If UCHAR_MAX > 255, however, we have no way to
