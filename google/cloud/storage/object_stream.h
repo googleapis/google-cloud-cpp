@@ -349,6 +349,9 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * Application may write multiple times before closing the stream, this
    * function gives the capability to find out status even before stream
    * closure.
+   *
+   * This function is different then `metadata()` as calling `metadata()`
+   * before Close() is undefined.
    */
   Status const& last_status() const { return buf_->last_status(); }
 
