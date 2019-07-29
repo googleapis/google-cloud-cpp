@@ -60,6 +60,7 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * INT64        | `std::int64_t`
  * FLOAT64      | `double`
  * STRING       | `std::string`
+ * BYTES        | `Value::Bytes`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `google::cloud::spanner::Date`
  * ARRAY        | `std::vector<T>`  // [1]
@@ -174,6 +175,40 @@ class Value {
   explicit Value(Timestamp v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Date v) : Value(PrivateConstructor{}, std::move(v)) {}
+
+  /**
+   * A struct that represents a collection of bytes.
+   *
+   * This struct is a thin wrapper around a `std::string` to distinguish BYTES
+   * from STRINGs. The `.data` member can be set/get directly. Consructors and
+   * equality operators are provided for convenience and to make `Bytes` a
+   * regular type that is easy to work with.
+   */
+  struct Bytes {
+    std::string data;
+
+    /// Constructs a Bytes struct from the given string.
+    explicit Bytes(std::string s) : data(std::move(s)) {}
+
+    /// @name Copy and move
+    ///@{
+    Bytes() = default;
+    Bytes(Bytes const&) = default;
+    Bytes(Bytes&&) = default;
+    Bytes& operator=(Bytes const&) = default;
+    Bytes& operator=(Bytes&&) = default;
+    ///@}
+
+    /// @name Equality
+    ///@{
+    friend bool operator==(Bytes const& a, Bytes const& b) {
+      return a.data == b.data;
+    }
+    friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
+    ///@}
+  };
+  /// Constructs a non-null instance with the specicified bytes.
+  explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
    * Constructs a non-null instance from common C++ literal types that closely,
@@ -378,6 +413,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::int64_t);
   static google::spanner::v1::Type MakeTypeProto(double);
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
+  static google::spanner::v1::Type MakeTypeProto(Bytes const&);
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
   static google::spanner::v1::Type MakeTypeProto(Date);
   static google::spanner::v1::Type MakeTypeProto(int);
@@ -435,6 +471,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(std::int64_t i);
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
+  static google::protobuf::Value MakeValueProto(Bytes const& b);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(Date d);
   static google::protobuf::Value MakeValueProto(int i);
@@ -490,6 +527,8 @@ class Value {
   static StatusOr<std::string> GetValue(std::string const&,
                                         google::protobuf::Value const&,
                                         google::spanner::v1::Type const&);
+  static StatusOr<Bytes> GetValue(Bytes const&, google::protobuf::Value const&,
+                                  google::spanner::v1::Type const&);
   static StatusOr<Timestamp> GetValue(Timestamp, google::protobuf::Value const&,
                                       google::spanner::v1::Type const&);
   static StatusOr<Date> GetValue(Date, google::protobuf::Value const&,

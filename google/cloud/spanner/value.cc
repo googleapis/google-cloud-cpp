@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
+#include "google/cloud/spanner/internal/base64.h"
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/log.h"
@@ -53,6 +54,7 @@ bool Equal(google::spanner::v1::Type const& pt1,
       return pv1.string_value() == pv2.string_value() &&
              pv1.number_value() == pv2.number_value();
     case google::spanner::v1::TypeCode::STRING:
+    case google::spanner::v1::TypeCode::BYTES:
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::ARRAY: {
       auto const& etype1 = pt1.array_element_type();
@@ -140,6 +142,12 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
   return t;
 }
 
+google::spanner::v1::Type Value::MakeTypeProto(Value::Bytes const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::BYTES);
+  return t;
+}
+
 google::spanner::v1::Type Value::MakeTypeProto(Timestamp) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::TIMESTAMP);
@@ -191,6 +199,12 @@ google::protobuf::Value Value::MakeValueProto(double d) {
 google::protobuf::Value Value::MakeValueProto(std::string s) {
   google::protobuf::Value v;
   v.set_string_value(std::move(s));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(Value::Bytes const& bytes) {
+  google::protobuf::Value v;
+  v.set_string_value(internal::Base64Encode(bytes.data));
   return v;
 }
 
@@ -272,6 +286,17 @@ StatusOr<std::string> Value::GetValue(std::string const&,
     return Status(StatusCode::kUnknown, "missing STRING");
   }
   return pv.string_value();
+}
+
+StatusOr<Value::Bytes> Value::GetValue(Value::Bytes const&,
+                                       google::protobuf::Value const& pv,
+                                       google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing BYTES data");
+  }
+  auto decoded = internal::Base64Decode(pv.string_value());
+  if (!decoded) return decoded.status();
+  return Bytes{*std::move(decoded)};
 }
 
 StatusOr<Timestamp> Value::GetValue(Timestamp,
