@@ -220,7 +220,9 @@ TEST(Row, ParseRowEmpty) {
 }
 
 TEST(Row, ParseRowOneValue) {
-  std::array<Value, 1> const array = {Value(42)};
+  // The extra braces are working around an old clang bug that was fixed in 6.0
+  // https://bugs.llvm.org/show_bug.cgi?id=21629
+  std::array<Value, 1> const array = {{Value(42)}};
   auto const row = ParseRow<std::int64_t>(array);
   EXPECT_TRUE(row.ok());
   EXPECT_EQ(MakeRow(42), *row);
@@ -231,7 +233,9 @@ TEST(Row, ParseRowOneValue) {
 }
 
 TEST(Row, ParseRowThree) {
-  std::array<Value, 3> array = {Value(true), Value(42), Value("hello")};
+  // The extra braces are working around an old clang bug that was fixed in 6.0
+  // https://bugs.llvm.org/show_bug.cgi?id=21629
+  std::array<Value, 3> array = {{Value(true), Value(42), Value("hello")}};
   auto row = ParseRow<bool, std::int64_t, std::string>(array);
   EXPECT_TRUE(row.ok());
   EXPECT_EQ(MakeRow(true, 42, "hello"), *row);

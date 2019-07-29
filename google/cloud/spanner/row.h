@@ -269,9 +269,9 @@ namespace internal {
 // this will promote it to type std::int64_t. Similarly, a C++ string literal
 // will be "promoted" to type std::string.
 template <typename T>
-constexpr T PromoteLiteralImpl(T);
-constexpr std::string PromoteLiteralImpl(char const*);
-constexpr std::int64_t PromoteLiteralImpl(int);
+T PromoteLiteralImpl(T);
+std::string PromoteLiteralImpl(char const*);
+std::int64_t PromoteLiteralImpl(int);
 template <typename T>
 using PromoteLiteral = decltype(PromoteLiteralImpl(std::declval<T>()));
 
