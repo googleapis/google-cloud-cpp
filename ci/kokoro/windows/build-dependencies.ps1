@@ -23,6 +23,14 @@ if (-not (Test-Path env:CONFIG)) {
 }
 $CONFIG = $env:CONFIG
 
+# Set BUILD_CACHE, defauting to the original value
+if (-not (Test-Path env:BUILD_CACHE)) {
+    $BUILD_CACHE = "gs://cloud-cpp-kokoro-results/"
+        + "build-artifacts/vcpkg-installed.zip"
+else {
+    $BUILD_CACHE = $env:BUILD_CACHE
+}
+
 # Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
 # but it works well on your workstation where you may want to run this script
 # multiple times while debugging vcpkg installs.  It also works on AppVeyor
@@ -49,7 +57,7 @@ if ($LastExitCode) {
 
 Write-Host "Downloading build cache."
 Get-Date -Format o
-gsutil cp gs://cloud-cpp-kokoro-results/build-artifacts/vcpkg-installed.zip .
+gsutil cp $BUILD_CACHE .
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
     Write-Host "extracting build cache failed with exit code $LastExitCode"
@@ -121,7 +129,7 @@ Write-Host "================================================================"
 Write-Host "================================================================"
 Write-Host "Upload cache zip file."
 Get-Date -Format o
-gsutil cp vcpkg-installed.zip gs://cloud-cpp-kokoro-results/build-artifacts/vcpkg-installed.zip
+gsutil cp vcpkg-installed.zip $BUILD_CACHE
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
     Write-Host "gsutil upload failed with exit code $LastExitCode"
