@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_TRANSACTION_IMPL_H_
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/port_platform.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <condition_variable>
 #include <functional>
@@ -56,7 +57,7 @@ class TransactionImpl {
       state_ = State::kPending;
     }
     // selector_.has_begin(), but only one visitor active at a time.
-#if __EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
       auto r = f(selector_);
@@ -72,7 +73,7 @@ class TransactionImpl {
         cond_.notify_one();
       }
       return r;
-#if __EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     } catch (...) {
       {
         std::lock_guard<std::mutex> lock(mu_);

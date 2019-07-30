@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/transaction.h"
+#include "google/cloud/internal/port_platform.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <ctime>
@@ -70,11 +71,11 @@ class Client {
         [this, &table, &keys, &columns](TransactionSelector& selector) {
           return this->Read(selector, table, keys, columns);
         };
-#if __EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
       return internal::Visit(std::move(txn), std::move(read));
-#if __EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     } catch (char const* e) {
       return {};
     }
@@ -122,7 +123,7 @@ ResultSet Client::Read(TransactionSelector& selector, std::string const&,
         break;
       case Mode::kReadFails:  // leave as `begin`, calls stay serialized
         if (fail_with_throw) {
-#if __EXCEPTIONS
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
           throw "1202 Program Alarm";
 #endif
         }
