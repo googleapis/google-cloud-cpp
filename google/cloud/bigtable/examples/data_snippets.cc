@@ -974,6 +974,7 @@ void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
   // [END bigtable_writes_simple]
   (std::move(table));
 }
+
 void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"write-batch <project-id> <instance-id> <table-id>"};
@@ -987,18 +988,16 @@ void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
     std::string column_family = "stats_summary";
 
     cbt::BulkMutation bulk;
-    cbt::SingleRowMutation mutation("tablet#a0b81f74#20190501");
-    mutation.emplace_back(cbt::SetCell(column_family, "connected_cell",
-                                       timestamp, std::int64_t{1}));
-    mutation.emplace_back(
-        cbt::SetCell(column_family, "os_build", timestamp, "12155.0.0-rc1"));
-    bulk.emplace_back(std::move(mutation));
-    cbt::SingleRowMutation mutation2("tablet#a0b81f74#20190502");
-    mutation2.emplace_back(cbt::SetCell(column_family, "connected_cell",
-                                        timestamp, std::int64_t{1}));
-    mutation2.emplace_back(
-        cbt::SetCell(column_family, "os_build", timestamp, "12145.0.0-rc6"));
-    bulk.emplace_back(std::move(mutation2));
+    bulk.emplace_back(cbt::SingleRowMutation(
+        "tablet#a0b81f74#20190501",
+        cbt::SetCell(column_family, "connected_cell", timestamp,
+                     std::int64_t{1}),
+        cbt::SetCell(column_family, "os_build", timestamp, "12155.0.0-rc1")));
+    bulk.emplace_back(cbt::SingleRowMutation(
+        "tablet#a0b81f74#20190502",
+        cbt::SetCell(column_family, "connected_cell", timestamp,
+                     std::int64_t{1}),
+        cbt::SetCell(column_family, "os_build", timestamp, "12145.0.0-rc6")));
 
     std::vector<cbt::FailedMutation> failures =
         table.BulkApply(std::move(bulk));
@@ -1015,6 +1014,7 @@ void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
   // [END bigtable_writes_batch]
   (std::move(table));
 }
+
 void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
   if (argc != 1) {
     throw Usage{"write-increment <project-id> <instance-id> <table-id>"};
