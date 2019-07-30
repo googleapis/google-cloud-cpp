@@ -363,9 +363,15 @@ CMake Error in google/cloud/storage/CMakeLists.txt:
     "/usr/include"
 ```
 
-you need to update your xcode version
-install the package located at /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg
-and run xcode-select -s /Library/Developer/CommandLineTools
+you need to update your Xcode version
+
+install the package located at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`
+
+and run:
+
+```bash
+xcode-select -s /Library/Developer/CommandLineTools
+```
 
 #### Windows
 
