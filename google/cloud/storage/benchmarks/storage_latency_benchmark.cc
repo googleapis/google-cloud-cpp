@@ -16,7 +16,6 @@
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include <future>
@@ -99,12 +98,16 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
                       Options const& options,
                       std::vector<std::string> const& object_names);
 
-Options ParseArgs(int argc, char* argv[]);
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
 
-int main(int argc, char* argv[]) try {
-  Options options = ParseArgs(argc, argv);
+int main(int argc, char* argv[]) {
+  google::cloud::StatusOr<Options> options = ParseArgs(argc, argv);
+  if (!options) {
+    std::cerr << options.status() << "\n";
+    return 1;
+  }
 
   google::cloud::StatusOr<gcs::ClientOptions> client_options =
       gcs::ClientOptions::CreateDefaultClientOptions();
@@ -113,11 +116,11 @@ int main(int argc, char* argv[]) try {
               << client_options.status() << "\n";
     return 1;
   }
-  if (!options.enable_connection_pool) {
+  if (!options->enable_connection_pool) {
     client_options->set_connection_pool_size(0);
   }
-  if (!options.project_id.empty()) {
-    client_options->set_project_id(options.project_id);
+  if (!options->project_id.empty()) {
+    client_options->set_project_id(options->project_id);
   }
   gcs::Client client(*std::move(client_options));
 
@@ -131,7 +134,7 @@ int main(int argc, char* argv[]) try {
           .CreateBucket(bucket_name,
                         gcs::BucketMetadata()
                             .set_storage_class(gcs::storage_class::Regional())
-                            .set_location(options.region),
+                            .set_location(options->region),
                         gcs::PredefinedAcl("private"),
                         gcs::PredefinedDefaultObjectAcl("projectPrivate"),
                         gcs::Projection("full"))
@@ -145,27 +148,25 @@ int main(int argc, char* argv[]) try {
   std::cout << "# Start time: "
             << google::cloud::internal::FormatRfc3339(
                    std::chrono::system_clock::now())
-            << "\n# Region: " << options.region
-            << "\n# Object Count: " << options.object_count
-            << "\n# Thread Count: " << options.thread_count
-            << "\n# Enable connection pool: " << options.enable_connection_pool
-            << "\n# Enable XML API: " << options.enable_xml_api
+            << "\n# Region: " << options->region
+            << "\n# Object Count: " << options->object_count
+            << "\n# Thread Count: " << options->thread_count
+            << "\n# Enable connection pool: " << options->enable_connection_pool
+            << "\n# Enable XML API: " << options->enable_xml_api
             << "\n# Build info: " << notes << "\n";
 
   std::vector<std::string> object_names =
-      CreateAllObjects(client, generator, bucket_name, options);
-  RunTest(client, bucket_name, options, object_names);
-  DeleteAllObjects(client, bucket_name, options, object_names);
+      CreateAllObjects(client, generator, bucket_name, *options);
+  RunTest(client, bucket_name, *options, object_names);
+  DeleteAllObjects(client, bucket_name, *options, object_names);
   std::cout << "# Deleting " << bucket_name << "\n";
   auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
-    google::cloud::internal::ThrowStatus(status);
+    std::cerr << "# Error deleting bucket, status=" << status << "\n";
+    return 1;
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
 }
 
 namespace {
@@ -345,15 +346,15 @@ void RunTest(gcs::Client client, std::string const& bucket_name,
   }
 }
 
-TestResult DeleteGroup(gcs::Client client,
-                       std::vector<gcs::ObjectMetadata> const& group) {
+google::cloud::StatusOr<TestResult> DeleteGroup(
+    gcs::Client client, std::vector<gcs::ObjectMetadata> const& group) {
   TestResult result;
   for (auto const& o : group) {
     auto start = std::chrono::steady_clock::now();
     auto status = client.DeleteObject(o.bucket(), o.name(),
                                       gcs::Generation(o.generation()));
     if (!status.ok()) {
-      google::cloud::internal::ThrowStatus(status);
+      return status;
     }
     auto elapsed = std::chrono::steady_clock::now() - start;
     using std::chrono::milliseconds;
@@ -374,7 +375,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
 
   std::cout << "# Deleting test objects [" << max_group_size << "]\n";
   auto start = std::chrono::steady_clock::now();
-  std::vector<std::future<TestResult>> tasks;
+  std::vector<std::future<google::cloud::StatusOr<TestResult>>> tasks;
   std::vector<gcs::ObjectMetadata> group;
   for (auto&& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
     group.emplace_back(std::move(o).value());
@@ -388,15 +389,23 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
     tasks.emplace_back(
         std::async(std::launch::async, &DeleteGroup, client, std::move(group)));
   }
+  int count = 0;
   for (auto& t : tasks) {
-    PrintResult(t.get());
+    auto future = t.get();
+    if (!future) {
+      std::cerr << "Standard exception raised by task[" << count
+                << "]: " << future.status() << "\n";
+    } else {
+      PrintResult(*future);
+    }
+    ++count;
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
   std::cout << "# Deleted in " << duration_cast<milliseconds>(elapsed).count()
             << "ms\n";
 }
 
-Options ParseArgs(int argc, char* argv[]) {
+google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
   Options options;
   bool wants_help = false;
   bool wants_description = false;
@@ -419,11 +428,12 @@ Options ParseArgs(int argc, char* argv[]) {
        }},
       {"--enable-connection-pool", "enable the client library connection pool",
        [&options](std::string const& val) {
-         options.enable_connection_pool = gcs_bm::ParseBoolean(val, true);
+         options.enable_connection_pool =
+             gcs_bm::ParseBoolean(val).value_or(true);
        }},
       {"--enable-xml-api", "enable the XML API for the benchmark",
        [&options](std::string const& val) {
-         options.enable_xml_api = gcs_bm::ParseBoolean(val, true);
+         options.enable_xml_api = gcs_bm::ParseBoolean(val).value_or(true);
        }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
@@ -443,8 +453,9 @@ Options ParseArgs(int argc, char* argv[]) {
 
   if (unparsed.size() > 2) {
     std::ostringstream os;
-    os << "Unknown arguments or options\n" << usage << "\n";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{
+        google::cloud::StatusCode::kInvalidArgument,
+        "Unknown arguments or options\n" + usage + "\n"};
   }
   if (unparsed.size() == 2) {
     options.region = unparsed[1];
@@ -452,7 +463,9 @@ Options ParseArgs(int argc, char* argv[]) {
   if (options.region.empty()) {
     std::ostringstream os;
     os << "Missing value for --region option" << usage << "\n";
-    throw std::runtime_error(std::move(os).str());
+    return google::cloud::Status{
+        google::cloud::StatusCode::kInvalidArgument,
+        "Unknown arguments or options\n" + usage + "\n"};
   }
 
   return options;

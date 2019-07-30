@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include <cctype>
 #include <sstream>
 #include <stdexcept>
@@ -128,9 +127,9 @@ std::chrono::seconds ParseDuration(std::string const& val) {
   return std::chrono::seconds(s);
 }
 
-bool ParseBoolean(std::string const& val, bool default_value) {
+google::cloud::optional<bool> ParseBoolean(std::string const& val) {
   if (val.empty()) {
-    return default_value;
+    return {};
   }
   auto lower = val;
   std::transform(lower.begin(), lower.end(), lower.begin(),
@@ -140,8 +139,7 @@ bool ParseBoolean(std::string const& val, bool default_value) {
   } else if (lower == "false") {
     return false;
   }
-  google::cloud::internal::ThrowRuntimeError("Cannot parse " + val +
-                                             " as a boolean");
+  return {};
 }
 
 std::string Basename(std::string const& path) {
