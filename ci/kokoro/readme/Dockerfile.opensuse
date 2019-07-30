@@ -13,6 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=latest
+ARG NCPU=4
 FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
 
 ## [START INSTALL.md]
@@ -36,7 +37,7 @@ WORKDIR /home/build/super
 COPY . /home/build/super
 RUN cmake -Hci/super -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU}
 # The tests will already be run as part of the build, no need to run it again.
 ## [END IGNORED]
 

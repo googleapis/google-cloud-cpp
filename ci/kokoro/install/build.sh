@@ -37,9 +37,17 @@ else
  exit 1
 fi
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
+source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
+
 echo "================================================================"
 echo "Change working directory to project root $(date)."
-cd "$(dirname "$0")/../../.."
+cd "${PROJECT_ROOT}"
+
+echo "================================================================"
+echo "Building with ${NCPU} cores $(date) on ${PWD}."
 
 echo "================================================================"
 echo "Load Google Container Registry configuration parameters $(date)."
@@ -76,6 +84,7 @@ devtools_flags=(
   # Create the image with the same tag as the cache we are using, so we can
   # upload it.
   "-t" "${DEV_IMAGE}:latest"
+  "--build-arg" "NCPU=${NCPU:-4}"
   "-f" "ci/kokoro/install/Dockerfile.${DISTRO}"
 )
 
@@ -104,5 +113,6 @@ echo "Run validation script for INSTALL instructions on ${DISTRO}."
 docker build \
   "--cache-from=${DEV_IMAGE}:latest" \
   "--target=install" \
+  "--build-arg" "NCPU=${NCPU:-4}" \
   -f "ci/kokoro/install/Dockerfile.${DISTRO}" .
 echo "================================================================"

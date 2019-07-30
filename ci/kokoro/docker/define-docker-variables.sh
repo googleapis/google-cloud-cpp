@@ -16,10 +16,22 @@
 
 set -eu
 
+if [[ -z "${NCPU+x}" ]]; then
+  # Mac doesn't have nproc. Run the equivalent.
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    NCPU=$(sysctl -n hw.physicalcpu)
+  else
+    NCPU=$(nproc)
+  fi
+  export NCPU
+fi
+
 if [[ -n "${IMAGE+x}" ]]; then
   echo "IMAGE is already defined."
 else
-  readonly IMAGE="gcpp-ci-${DISTRO}-${DISTRO_VERSION}"
-  readonly BUILD_OUTPUT="cmake-out/${IMAGE}-${BUILD_NAME}"
-  readonly BUILD_HOME="cmake-out/home/${IMAGE}-${BUILD_NAME}"
+  if [[ -n "${DISTRO_VERSION+x}" ]]; then
+    readonly IMAGE="gcpp-ci-${DISTRO}-${DISTRO_VERSION}"
+    readonly BUILD_OUTPUT="cmake-out/${IMAGE}-${BUILD_NAME}"
+    readonly BUILD_HOME="cmake-out/home/${IMAGE}-${BUILD_NAME}"
+  fi
 fi

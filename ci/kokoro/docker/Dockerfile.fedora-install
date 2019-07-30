@@ -13,6 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=30
+ARG NCPU=4
 FROM fedora:${DISTRO_VERSION}
 
 RUN dnf makecache && dnf install -y \
@@ -74,7 +75,7 @@ RUN cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-RUN cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+RUN cmake --build cmake-out/crc32c --target install -- -j ${NCPU}
 RUN ldconfig
 
 # Install googleapis.
@@ -85,7 +86,7 @@ WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.0
 RUN cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j $(nproc)
+RUN cmake --build cmake-out --target install -- -j ${NCPU}
 RUN ldconfig
 
 # Install googletest.

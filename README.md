@@ -275,7 +275,7 @@ wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 tar xf openssl-1.0.2n.tar.gz
 cd $HOME/Downloads/openssl-1.0.2n
 ./config --shared
-make -j $(nproc)
+make -j ${NCPU:-4}
 sudo make install
 ```
 

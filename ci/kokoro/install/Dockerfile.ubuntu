@@ -13,6 +13,7 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=bionic
+ARG NCPU=4
 FROM ubuntu:${DISTRO_VERSION} AS devtools
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
@@ -45,7 +46,7 @@ RUN cmake \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
       -H. -Bcmake-out/crc32c
-RUN cmake --build cmake-out/crc32c --target install -- -j $(nproc)
+RUN cmake --build cmake-out/crc32c --target install -- -j ${NCPU:-4}
 RUN ldconfig
 # ```
 
@@ -65,7 +66,7 @@ RUN cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j $(nproc)
+RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 # ```
 
@@ -79,7 +80,7 @@ WORKDIR /var/tmp/build
 RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
-RUN make -j $(nproc)
+RUN make -j ${NCPU:-4}
 RUN make install
 RUN ldconfig
 # ```
@@ -96,7 +97,7 @@ WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.1
 RUN cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j $(nproc)
+RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 # ```
 
@@ -112,7 +113,7 @@ COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bcmake-out \
     -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 WORKDIR /home/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure
 RUN cmake --build . --target install
@@ -129,15 +130,15 @@ RUN make
 WORKDIR /home/build/test-install-cmake-bigtable
 COPY ci/test-install/bigtable /home/build/test-install-cmake-bigtable
 RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 
 WORKDIR /home/build/test-install-cmake-storage
 COPY ci/test-install/storage /home/build/test-install-cmake-storage
 RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 
 WORKDIR /home/build/test-submodule
 COPY ci/test-install /home/build/test-submodule
 COPY . /home/build/test-submodule/submodule/google-cloud-cpp
 RUN cmake -Hsubmodule -Bcmake-out
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU:-4}

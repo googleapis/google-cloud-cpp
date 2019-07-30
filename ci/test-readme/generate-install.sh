@@ -41,6 +41,11 @@ cmake -H. -Bcmake-out \
 cmake --build cmake-out --target install
 ```
 
+You may choose to parallelize the build by appending `-- -j ${NCPU}` to the
+build command, where `NCPU` is an environment variable set to the number of
+processors on your system. On Linux, you can obtain this information using the
+`nproc` command or `sysctl -n hw.physicalcpu` on Mac.
+
 Unfortunately getting your system to this state may require multiple steps,
 the following sections describe how to install `google-cloud-cpp` on several
 platforms.
