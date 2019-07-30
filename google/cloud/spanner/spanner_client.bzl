@@ -19,6 +19,7 @@
 spanner_client_hdrs = [
     "backoff_policy.h",
     "client_options.h",
+    "commit_result.h",
     "database_admin_client.h",
     "date.h",
     "internal/base64.h",

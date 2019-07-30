@@ -30,6 +30,7 @@ add_library(spanner_client
             backoff_policy.h
             client_options.cc
             client_options.h
+            commit_result.h
             database_admin_client.cc
             database_admin_client.h
             date.h
