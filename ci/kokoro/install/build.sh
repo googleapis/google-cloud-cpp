@@ -84,7 +84,7 @@ devtools_flags=(
   # Create the image with the same tag as the cache we are using, so we can
   # upload it.
   "-t" "${DEV_IMAGE}:latest"
-  "--build-arg" "NCPU=${NCPU}"
+  "--build-arg" "NCPU=${NCPU:-4}"
   "-f" "ci/kokoro/install/Dockerfile.${DISTRO}"
 )
 
@@ -113,6 +113,6 @@ echo "Run validation script for INSTALL instructions on ${DISTRO}."
 docker build \
   "--cache-from=${DEV_IMAGE}:latest" \
   "--target=install" \
-  "--build-arg" "NCPU=${NCPU}" \
+  "--build-arg" "NCPU=${NCPU:-4}" \
   -f "ci/kokoro/install/Dockerfile.${DISTRO}" .
 echo "================================================================"

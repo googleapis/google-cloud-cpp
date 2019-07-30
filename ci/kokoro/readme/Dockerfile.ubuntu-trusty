@@ -47,7 +47,7 @@ RUN wget -q https://www.openssl.org/source/openssl-1.0.2n.tar.gz
 RUN tar xf openssl-1.0.2n.tar.gz
 WORKDIR /var/tmp/build/openssl-1.0.2n
 RUN ./config --shared
-RUN make -j ${NCPU}
+RUN make -j ${NCPU:-4}
 RUN make install
 # ```
 
