@@ -46,7 +46,7 @@ spec:
             '@DST_BUCKET_NAME@',
             '4.0',
             '--gtest_filter=ReadObjectStallTest.Streaming',
-            '--gtest_repeats=3'
+            '--gtest_repeat=3'
           ]
           resources:
             requests:
