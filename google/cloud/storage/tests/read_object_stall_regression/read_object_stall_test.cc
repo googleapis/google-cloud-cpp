@@ -59,7 +59,7 @@ class ReadObjectStallTest
                                                     max_object_size);
 
     int const object_count = 16;
-    std::vector<std::string> object_names(16);
+    std::vector<std::string> object_names(object_count);
     std::generate_n(object_names.begin(), object_count,
                     [this] { return MakeRandomObjectName(); });
     std::cout << "Creating objects to read " << std::flush;
@@ -160,7 +160,7 @@ TEST_F(ReadObjectStallTest, Streaming) {
         client.InsertObject(flag_dst_bucket_name, summary_name, summary.str());
     EXPECT_STATUS_OK(metadata);
   } while (has_open);
-  std::cout << "DONE: All files closed" << std::endl;
+  std::cout << "DONE: All files closed\n";
 }
 
 TEST_F(ReadObjectStallTest, ByRange) {
@@ -232,7 +232,7 @@ TEST_F(ReadObjectStallTest, ByRange) {
         client->InsertObject(flag_dst_bucket_name, summary_name, summary.str());
     EXPECT_STATUS_OK(metadata);
   } while (has_open);
-  std::cout << "DONE: All files closed" << std::endl;
+  std::cout << "DONE: All files closed\n";
 }
 
 TEST_F(ReadObjectStallTest, ByFile) {
@@ -276,7 +276,7 @@ TEST_F(ReadObjectStallTest, ByFile) {
     EXPECT_STATUS_OK(meta);
   }
 
-  std::cout << "DONE" << std::endl;
+  std::cout << "DONE\n";
 }
 
 }  // anonymous namespace
