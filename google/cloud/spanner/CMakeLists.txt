@@ -110,6 +110,21 @@ function (spanner_client_define_tests)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
+    add_library(spanner_client_testing testing/matchers.h)
+    target_link_libraries(spanner_client_testing
+                          PUBLIC googleapis-c++::spanner_client
+                                 GTest::gmock_main
+                                 GTest::gmock
+                                 GTest::gtest)
+    create_bazel_config(spanner_client_testing)
+
+    target_include_directories(spanner_client_testing
+                               PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                                      $<INSTALL_INTERFACE:include>)
+    target_compile_options(spanner_client_testing
+                           PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+
     set(spanner_client_unit_tests
         client_options_test.cc
         database_admin_client_test.cc
@@ -155,7 +170,8 @@ function (spanner_client_define_tests)
                        ${target})
         add_executable(${target} ${fname})
         target_link_libraries(${target}
-                              PRIVATE googleapis-c++::spanner_client
+                              PRIVATE spanner_client_testing
+                                      googleapis-c++::spanner_client
                                       google_cloud_cpp_testing
                                       GTest::gmock_main
                                       GTest::gmock

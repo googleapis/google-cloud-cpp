@@ -13,11 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/merge_chunk.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -28,17 +28,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
-
-// TODO(#264) Factor this matcher out into a reusable location.
-// NOLINTNEXTLINE
-MATCHER_P(IsProtoEqual, value, "") {
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  auto const result = differencer.Compare(arg, value);
-  *result_listener << "\n" << delta;
-  return result;
-}
+using google::cloud::spanner_testing::IsProtoEqual;
 
 //
 // MakeProtoValue() is an overloaded helper function for creating

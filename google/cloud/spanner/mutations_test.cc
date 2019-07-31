@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -24,6 +25,8 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::testing::HasSubstr;
+
+using google::cloud::spanner_testing::IsProtoEqual;
 
 TEST(MutationsTest, Default) {
   Mutation actual;
@@ -70,10 +73,7 @@ TEST(MutationsTest, InsertSimple) {
               }
               )""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, InsertComplex) {
@@ -119,10 +119,7 @@ TEST(MutationsTest, InsertComplex) {
               }
               )""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, UpdateSimple) {
@@ -155,10 +152,7 @@ TEST(MutationsTest, UpdateSimple) {
               }
               )""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, UpdateComplex) {
@@ -205,10 +199,7 @@ TEST(MutationsTest, UpdateComplex) {
               }
               )""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, InsertOrUpdateSimple) {
@@ -241,10 +232,7 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
               }
               )""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, InsertOrUpdateComplex) {
@@ -289,10 +277,7 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
                 }
               })""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, ReplaceSimple) {
@@ -325,10 +310,7 @@ TEST(MutationsTest, ReplaceSimple) {
               }
               )""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(MutationsTest, ReplaceComplex) {
@@ -365,10 +347,7 @@ TEST(MutationsTest, ReplaceComplex) {
                 }
               })""",
                                                             &expected));
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  EXPECT_TRUE(differencer.Compare(actual, expected)) << delta;
+  EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 }  // namespace

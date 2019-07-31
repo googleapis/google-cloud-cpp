@@ -30,6 +30,20 @@ cc_library(
     ],
 )
 
+load(":spanner_client_testing.bzl", "spanner_client_testing_hdrs", "spanner_client_testing_srcs")
+
+cc_library(
+    name = "spanner_client_testing",
+    srcs = spanner_client_testing_srcs,
+    hdrs = spanner_client_testing_hdrs,
+    deps = [
+        ":spanner_client",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest",
+    ],
+)
+
 load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
 
 [cc_test(
@@ -37,6 +51,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
     srcs = [test],
     deps = [
         ":spanner_client",
+        ":spanner_client_testing",
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
