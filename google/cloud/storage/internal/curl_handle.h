@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H_
 
 #include "google/cloud/status_or.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/version.h"
 #include <curl/curl.h>
@@ -42,16 +43,18 @@ class CurlHandle {
   CurlHandle& operator=(CurlHandle const&) = delete;
 
   // Allow moves, they immediately disable callbacks.
-  CurlHandle(CurlHandle&& rhs) : handle_(std::move(rhs.handle_)) {
+  CurlHandle(CurlHandle&& rhs) noexcept : handle_(std::move(rhs.handle_)) {
     ResetHeaderCallback();
     ResetReaderCallback();
     ResetWriterCallback();
+    ResetSocketCallback();
   }
-  CurlHandle& operator=(CurlHandle&& rhs) {
+  CurlHandle& operator=(CurlHandle&& rhs) noexcept {
     handle_ = std::move(rhs.handle_);
     ResetHeaderCallback();
     ResetReaderCallback();
     ResetWriterCallback();
+    ResetSocketCallback();
     return *this;
   }
 
@@ -127,6 +130,17 @@ class CurlHandle {
   /// Resets the reader callback.
   void ResetHeaderCallback();
 
+  /// Set the callback to initialize each socket.
+  struct SocketOptions {
+    std::size_t recv_buffer_size_ = 0;
+    std::size_t send_buffer_size_ = 0;
+  };
+
+  void SetSocketCallback(SocketOptions const& options);
+
+  /// Reset the socket callback.
+  void ResetSocketCallback();
+
   /// URL-escapes a string.
   CurlString MakeEscapedString(std::string const& s) {
     return CurlString(
@@ -196,6 +210,8 @@ class CurlHandle {
   ReaderCallback reader_callback_;
   WriterCallback writer_callback_;
   HeaderCallback header_callback_;
+
+  SocketOptions socket_options_;
 };
 
 }  // namespace internal

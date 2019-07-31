@@ -56,6 +56,7 @@ void CurlRequest::ResetOptions() {
         received_headers_, static_cast<char const*>(contents), size * nitems);
   });
   handle_.EnableLogging(logging_enabled_);
+  handle_.SetSocketCallback(socket_options_);
 }
 
 }  // namespace internal

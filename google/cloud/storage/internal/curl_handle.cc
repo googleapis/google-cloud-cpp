@@ -15,6 +15,12 @@
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include <string.h>  // NOLINT
+#ifdef _WIN32
+#include <winsock.h>
+#else
+#include <sys/socket.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
@@ -80,6 +86,54 @@ extern "C" std::size_t CurlHandleHeaderCallback(char* contents,
   auto* callback = reinterpret_cast<CurlHandle::HeaderCallback*>(userdata);
   return callback->operator()(contents, size, nitems);
 }
+
+extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
+                                    curlsocktype purpose) {
+  auto* options = reinterpret_cast<CurlHandle::SocketOptions*>(userdata);
+  switch (purpose) {
+    case CURLSOCKTYPE_IPCXN:
+      // An option value of zero (the default) means "do not change the buffer
+      // size", this is reasonable because 0 is an invalid value anyway.
+      if (options->recv_buffer_size_ != 0) {
+        auto size = static_cast<long>(options->recv_buffer_size_);
+#if _WIN32
+        int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF,
+                           reinterpret_cast<char const*>(&size), sizeof(size));
+#else
+        int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF, &size, sizeof(size));
+#endif  // WIN32
+        if (r != 0) {
+          GCP_LOG(ERROR) << __func__
+                         << "(): setting socket recv buffer size to " << size
+                         << " error=" << ::strerror(errno) << " [" << errno
+                         << "]";
+          return CURL_SOCKOPT_ERROR;
+        }
+      }
+      if (options->send_buffer_size_ != 0) {
+        auto size = static_cast<long>(options->send_buffer_size_);
+#if _WIN32
+        int r = setsockopt(curlfd, SOL_SOCKET, SO_SNDBUF,
+                           reinterpret_cast<char const*>(&size), sizeof(size));
+#else
+        auto r = setsockopt(curlfd, SOL_SOCKET, SO_SNDBUF, &size, sizeof(size));
+#endif  // WIN32
+        if (r != 0) {
+          GCP_LOG(ERROR) << __func__
+                         << "(): setting socket send buffer size to " << size
+                         << " error=" << ::strerror(errno) << " [" << errno
+                         << "]";
+          return CURL_SOCKOPT_ERROR;
+        }
+      }
+      break;
+    case CURLSOCKTYPE_ACCEPT:
+    case CURLSOCKTYPE_LAST:
+      break;
+  }
+  return CURL_SOCKOPT_OK;
+}
+
 }  // namespace
 
 CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
@@ -124,6 +178,17 @@ void CurlHandle::ResetHeaderCallback() {
   SetOption(CURLOPT_HEADERDATA, nullptr);
   SetOption(CURLOPT_HEADERFUNCTION, nullptr);
   header_callback_ = HeaderCallback();
+}
+
+void CurlHandle::SetSocketCallback(SocketOptions const& options) {
+  socket_options_ = options;
+  SetOption(CURLOPT_SOCKOPTDATA, &socket_options_);
+  SetOption(CURLOPT_SOCKOPTFUNCTION, &CurlSetSocketOptions);
+}
+
+void CurlHandle::ResetSocketCallback() {
+  SetOption(CURLOPT_SOCKOPTDATA, nullptr);
+  SetOption(CURLOPT_SOCKOPTFUNCTION, nullptr);
 }
 
 void CurlHandle::EnableLogging(bool enabled) {

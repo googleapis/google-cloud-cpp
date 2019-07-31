@@ -1,0 +1,59 @@
+# Copyright 2019 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+steps:
+  # Try to pull the image from the container registry, if it exists that can
+  # speed up the build because previous layers are reused.
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args:
+      - '-c'
+      - 'docker pull gcr.io/${PROJECT_ID}/read-object-stall-regression-devtools || exit 0'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+           '--target', 'devtools',
+           '-t', 'gcr.io/${PROJECT_ID}/read-object-stall-regression-devtools',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/read-object-stall-regression-devtools',
+           '-f', 'google/cloud/storage/tests/read_object_stall_regression/Dockerfile',
+           '--build-arg', 'CMAKE_BUILD_TYPE=${_CMAKE_BUILD_TYPE}',
+           '.']
+    timeout: 3600s
+  - name: 'gcr.io/cloud-builders/docker'
+    entrypoint: bash
+    args:
+      - '-c'
+      - 'docker pull gcr.io/${PROJECT_ID}/read-object-stall-regression || exit 0'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build',
+           '-t', 'gcr.io/${PROJECT_ID}/read-object-stall-regression',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/read-object-stall-regression-devtools',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/read-object-stall-regression',
+           '-f', 'google/cloud/storage/tests/read_object_stall_regression/Dockerfile',
+           '--build-arg', 'CMAKE_BUILD_TYPE=${_CMAKE_BUILD_TYPE}',
+           '.']
+    timeout: 3600s
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['tag',
+           'gcr.io/${PROJECT_ID}/read-object-stall-regression:latest',
+           'gcr.io/${PROJECT_ID}/read-object-stall-regression:${SHORT_SHA}']
+    timeout: 3600s
+options:
+  machineType: 'N1_HIGHCPU_8'
+substitutions:
+  _CMAKE_BUILD_TYPE: 'Release'
+timeout: 7200s
+images:
+  - 'gcr.io/${PROJECT_ID}/read-object-stall-regression'
+  - 'gcr.io/${PROJECT_ID}/read-object-stall-regression-devtools'
+  - 'gcr.io/${PROJECT_ID}/read-object-stall-regression:${SHORT_SHA}'

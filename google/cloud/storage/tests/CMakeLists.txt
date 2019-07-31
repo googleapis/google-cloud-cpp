@@ -65,4 +65,5 @@ include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
                      "storage_client_integration_tests")
 
+add_subdirectory(read_object_stall_regression)
 add_subdirectory(write_deadlock_regression)

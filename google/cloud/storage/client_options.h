@@ -147,6 +147,22 @@ class ClientOptions {
     return *this;
   }
 
+  std::size_t maximum_socket_recv_size() const {
+    return maximum_socket_recv_size_;
+  }
+  ClientOptions& set_maximum_socket_recv_size(std::size_t v) {
+    maximum_socket_recv_size_ = v;
+    return *this;
+  }
+
+  std::size_t maximum_socket_send_size() const {
+    return maximum_socket_send_size_;
+  }
+  ClientOptions& set_maximum_socket_send_size(std::size_t v) {
+    maximum_socket_send_size_ = v;
+    return *this;
+  }
+
  private:
   void SetupFromEnvironment();
 
@@ -165,6 +181,8 @@ class ClientOptions {
   std::size_t maximum_simple_upload_size_;
   bool enable_ssl_locking_callbacks_ = true;
   bool enable_sigpipe_handler_ = true;
+  std::size_t maximum_socket_recv_size_ = 0;
+  std::size_t maximum_socket_send_size_ = 0;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

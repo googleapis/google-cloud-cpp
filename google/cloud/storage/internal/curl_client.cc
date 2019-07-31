@@ -127,6 +127,8 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
   }
   builder.SetMethod(method)
       .SetDebugLogging(options_.enable_http_tracing())
+      .SetSocketBuffers(options_.maximum_socket_recv_size(),
+                        options_.maximum_socket_send_size())
       .SetCurlShare(share_.get())
       .AddUserAgentPrefix(options_.user_agent_prefix())
       .AddHeader(auth_header.value())

@@ -150,7 +150,12 @@ class CurlRequestBuilder {
   /// Sets the CURLSH* handle to share resources.
   CurlRequestBuilder& SetCurlShare(CURLSH* share);
 
-  CurlRequestBuilder& SetInitialBufferSize(std::size_t size);
+  CurlRequestBuilder& SetSocketBuffers(std::size_t recv_size,
+                                       std::size_t send_size) {
+    socket_options_.recv_buffer_size_ = recv_size;
+    socket_options_.send_buffer_size_ = send_size;
+    return *this;
+  }
 
   /// Gets the user-agent suffix.
   std::string UserAgentSuffix() const;
@@ -180,7 +185,7 @@ class CurlRequestBuilder {
 
   bool logging_enabled_;
 
-  std::size_t initial_buffer_size_;
+  CurlHandle::SocketOptions socket_options_;
 };
 
 }  // namespace internal
