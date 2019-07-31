@@ -115,8 +115,8 @@ class CommonClient {
     } else {
       // Some other thread created the pool and saved it in `stubs_`. The work
       // in this thread was superfluous. We release the lock while clearing the
-      // channels to minimize contention, this seems to workaround other bugs
-      // inside the Google implementation of std::mutex.
+      // channels to minimize contention. This seems to workaround other bugs
+      // inside Google.
       lk.unlock();
       tmp.clear();
       channels.clear();
