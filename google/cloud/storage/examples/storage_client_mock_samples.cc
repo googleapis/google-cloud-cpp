@@ -166,6 +166,128 @@ void MockWriteObject(int& argc, char* argv[]) {
   //! [mock successful writeobject]
 }
 
+void MockReadObjectFailure(int& argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"mock-read-object-failure <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [mock failed readobject]
+  gcs::ClientOptions client_options =
+      gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
+
+  std::shared_ptr<gcs::testing::MockClient> mock =
+      std::make_shared<gcs::testing::MockClient>();
+  gcs::Client client(mock);
+
+  EXPECT_CALL(*mock, client_options())
+      .WillRepeatedly(testing::ReturnRef(client_options));
+
+  std::string text = "this is a mock http response";
+  using ::testing::_;
+  EXPECT_CALL(*mock, ReadObject(_))
+      .WillOnce(testing::Invoke(
+          [](gcs::internal::ReadObjectRangeRequest const& request) {
+            std::cout << "\nReading from bucket : " << request.bucket_name()
+                      << std::endl;
+            auto* mock_source = new gcs::testing::MockObjectReadSource;
+            EXPECT_CALL(*mock_source, IsOpen())
+                .WillOnce(testing::Return(true))
+                .WillRepeatedly(testing::Return(false));
+            EXPECT_CALL(*mock_source, Read(_, _))
+                .WillOnce(testing::Return(google::cloud::Status(
+                    google::cloud::StatusCode::kInvalidArgument,
+                    "Invalid Argument")));
+
+            std::unique_ptr<gcs::internal::ObjectReadSource> result(
+                mock_source);
+
+            return google::cloud::make_status_or(std::move(result));
+          }))
+      .WillOnce(testing::Invoke(
+          [](gcs::internal::ReadObjectRangeRequest const& request) {
+            std::cout << "\nRetry reading from bucket : "
+                      << request.bucket_name() << std::endl;
+            auto* mock_source = new gcs::testing::MockObjectReadSource;
+            EXPECT_CALL(*mock_source, Read(_, _))
+                .WillOnce(testing::Return(google::cloud::Status(
+                    google::cloud::StatusCode::kInvalidArgument,
+                    "Invalid Argument")));
+
+            std::unique_ptr<gcs::internal::ObjectReadSource> result(
+                mock_source);
+
+            return google::cloud::make_status_or(std::move(result));
+          }));
+
+  gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
+
+  if (stream.bad()) {
+    std::cerr << "\nError reading from stream... status=" << stream.status()
+              << std::endl;
+  }
+  stream.Close();
+
+  //! [mock failed readobject]
+}
+
+void MockWriteObjectFailure(int& argc, char* argv[]) {
+  if (argc != 3) {
+    throw Usage{"mock-write-object-failure <bucket-name> <object-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [mock failed writeobject]
+  gcs::ClientOptions client_options =
+      gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
+
+  std::shared_ptr<gcs::testing::MockClient> mock =
+      std::make_shared<gcs::testing::MockClient>();
+  gcs::Client client(mock);
+
+  EXPECT_CALL(*mock, client_options())
+      .WillRepeatedly(testing::ReturnRef(client_options));
+
+  using ::testing::_;
+  using ::testing::Return;
+  EXPECT_CALL(*mock, CreateResumableSession(_))
+      .WillOnce(testing::Invoke(
+          [](gcs::internal::ResumableUploadRequest const& request) {
+            std::cout << "Writing to bucket : " << request.bucket_name()
+                      << std::endl;
+            auto* mock_result = new gcs::testing::MockResumableUploadSession;
+            using gcs::internal::ResumableUploadResponse;
+            EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
+            EXPECT_CALL(*mock_result, next_expected_byte())
+                .WillRepeatedly(Return(0));
+            EXPECT_CALL(*mock_result, UploadChunk(_))
+                .WillRepeatedly(Return(google::cloud::Status(
+                    google::cloud::StatusCode::kInvalidArgument,
+                    "Invalid Argument")));
+            EXPECT_CALL(*mock_result, UploadFinalChunk(_, _))
+                .WillRepeatedly(Return(google::cloud::Status(
+                    google::cloud::StatusCode::kInvalidArgument,
+                    "Invalid Argument")));
+
+            std::unique_ptr<gcs::internal::ResumableUploadSession> result(
+                mock_result);
+            return google::cloud::make_status_or(std::move(result));
+          }));
+
+  auto stream = client.WriteObject(bucket_name, object_name);
+  stream << "Hello World!";
+  stream.Close();
+
+  if (stream.bad()) {
+    std::cerr << "Error writing to stream... status="
+              << stream.metadata().status() << std::endl;
+  }
+
+  //! [mock failed writeobject]
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -173,6 +295,8 @@ int main(int argc, char* argv[]) try {
   std::map<std::string, CommandType> commands = {
       {"mock-read-object", &MockReadObject},
       {"mock-write-object", &MockWriteObject},
+      {"mock-read-object-failure", &MockReadObjectFailure},
+      {"mock-write-object-failure", &MockWriteObjectFailure},
   };
   for (auto&& kv : commands) {
     try {

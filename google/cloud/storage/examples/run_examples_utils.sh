@@ -1178,6 +1178,10 @@ run_mocking_client_examples() {
       "${bucket_name}" "${object_name}"
   run_example ./storage_client_mock_samples mock-write-object \
       "${bucket_name}" "${object_name}"
+  run_example ./storage_client_mock_samples mock-read-object-failure \
+      "${bucket_name}" "${object_name}"
+  run_example ./storage_client_mock_samples mock-write-object-failure \
+      "${bucket_name}" "${object_name}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
