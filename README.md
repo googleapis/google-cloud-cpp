@@ -354,6 +354,25 @@ cmake --build cmake-out -- -j 4
 
 You will find compiled binaries in `cmake-out/` respective to their source paths.
 
+[If you see the following error](https://apple.stackexchange.com/questions/337940/why-is-usr-include-missing-i-have-xcode-and-command-line-tools-installed-moja):
+
+```bash
+CMake Error in google/cloud/storage/CMakeLists.txt:
+  Imported target "CURL::libcurl" includes non-existent path
+
+    "/usr/include"
+```
+
+you need to update your Xcode version
+
+install the package located at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`
+
+and run:
+
+```bash
+xcode-select -s /Library/Developer/CommandLineTools
+```
+
 #### Windows
 
 <!-- Last updated 2018-01-09 -->
