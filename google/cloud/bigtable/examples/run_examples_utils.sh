@@ -438,6 +438,8 @@ run_all_data_examples() {
   EMULATOR_LOG="emulator.log"
 
   run_mutate_examples "${project_id}" "${instance_id}"
+  run_all_write_examples "${project_id}" "${instance_id}"
+
 
   # Use the same table in all the tests.
   local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
@@ -586,6 +588,59 @@ run_all_data_examples() {
   run_example ./data_snippets delete-selective-family-cells \
       "${project_id}" "${instance_id}" "${TABLE}" \
       "${ROW_KEY_2}" "${FAMILY_NAME}" "${COLUMN_NAME}"
+
+  run_example ./table_admin_snippets delete-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+}
+
+################################################
+# Run the Bigtable write examples.
+# Globals:
+#   None
+# Arguments:
+#   project_id: the Google Cloud Storage project used in the test. Can be a
+#       fake project when testing against the emulator, as the emulator creates
+#       projects on demand. It must be a valid, existing instance when testing
+#       against production.
+#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
+#       fake instance when testing against the emulator, as the emulator creates
+#       instances on demand. It must be a valid, existing instance when testing
+#       against production.
+# Returns:
+#   None
+################################################
+#
+# This function allows us to keep a single place where all the examples are
+# listed. We want to run these examples in the continuous integration builds
+# because they rot otherwise.
+run_all_write_examples() {
+  local project_id=$1
+  local instance_id=$2
+  shift 2
+
+  EMULATOR_LOG="emulator.log"
+
+  # Use the same table in all the tests.
+  local -r TABLE="mobile-time-series-${RANDOM}-${RANDOM}"
+  local -r FAM="stats_summary"
+
+  run_example ./table_admin_snippets create-table \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./table_admin_snippets get-or-create-family \
+      "${project_id}" "${instance_id}" "${TABLE}" "${FAM}"
+
+  run_example ./data_snippets write-simple \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_snippets write-batch \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_snippets write-increment \
+      "${project_id}" "${instance_id}" "${TABLE}"
+
+  run_example ./data_snippets write-conditional \
+      "${project_id}" "${instance_id}" "${TABLE}"
 
   run_example ./table_admin_snippets delete-table \
       "${project_id}" "${instance_id}" "${TABLE}"
