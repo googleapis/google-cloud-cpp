@@ -47,16 +47,27 @@ else
  exit 1
 fi
 
-if [[ "${BUILD_NAME}" = "asan" ]]; then
+if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
+  # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
+  # as errors.
+  export BUILD_TYPE=Debug
+  export CC=clang
+  export CXX=clang++
+  export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes"
+  export CHECK_STYLE=yes
+  export GENERATE_DOCS=yes
+elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
   export CC=clang
   export CXX=clang++
   export BAZEL_CONFIG="asan"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
-elif [[ "${BUILD_NAME}" = "centos-7" ]] || [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
-  # Compile under centos:7. This distro uses gcc-4.8.
-  export DISTRO=centos
-  export DISTRO_VERSION=7
+elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
+  # Compile with the UndefinedBehaviorSanitizer enabled.
+  export CC=clang
+  export CXX=clang++
+  export BAZEL_CONFIG="ubsan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
   # Note that the integration tests are run by default. This is the opposite of
@@ -75,23 +86,13 @@ elif [[ "${BUILD_NAME}" = "clang-8" ]]; then
   export DISTRO_VERSION=30
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
   # Compile with -fno-exceptions
-  export DISTRO_VERSION=16.04
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
-elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
-  # Compile with the UndefinedBehaviorSanitizer enabled.
-  export CC=clang
-  export CXX=clang++
-  export BAZEL_CONFIG="ubsan"
-  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
-elif [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
-  # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
-  # as errors.
-  export BUILD_TYPE=Debug
-  export CC=clang
-  export CXX=clang++
-  export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes"
+elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
+  # Verify that the code can be compiled without unit tests. This is helpful for
+  # package maintainers, where the cost of running the tests for a fixed version
+  # is too high.
+  export BUILD_TESTING=no
   export CHECK_STYLE=yes
-  export GENERATE_DOCS=yes
 elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
   export CC=clang
@@ -106,12 +107,6 @@ elif [[ "${BUILD_NAME}" = "shared" ]]; then
   export TEST_INSTALL=yes
   export BUILD_TYPE=Debug
   export DISTRO=ubuntu-install
-elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
-  # Verify that the code can be compiled without unit tests. This is helpful for
-  # package maintainers, where the cost of running the tests for a fixed version
-  # is too high.
-  export BUILD_TESTING=no
-  export CHECK_STYLE=yes
 elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]; then
   export CHECK_ABI=yes
   export TEST_INSTALL=yes
