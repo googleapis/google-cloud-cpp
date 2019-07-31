@@ -201,8 +201,7 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
-      last_response_{HttpResponse{400, {}, {}}},
-      last_status_(Status()) {
+      last_response_{HttpResponse{400, {}, {}}} {
   current_ios_buffer_.reserve(max_buffer_size_);
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();
@@ -299,7 +298,7 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::FlushFinal() {
   if (!result) {
     // This was an unrecoverable error, time to store status and signal an
     // error.
-    last_status_ = result.status();
+    last_response_ = result.status();
     return std::move(result).status();
   }
   // Reset the iostream put area with valid pointers, but empty.
@@ -312,7 +311,6 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::FlushFinal() {
   // If `result.ok() == false` we never get to this point, so the last response
   // was actually successful. Represent that by a HTTP 200 status code.
   last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
-  last_status_ = Status();
   return last_response_;
 }
 
@@ -338,7 +336,7 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::Flush() {
   if (!result) {
     // This was an unrecoverable error, time to store status and signal an
     // error.
-    last_status_ = result.status();
+    last_response_ = result.status();
     return std::move(result).status();
   }
   // Reset the put area, preserve any data not setn.
@@ -353,7 +351,6 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::Flush() {
   // If `result.ok() == false` we never get to this point, so the last response
   // was actually successful. Represent that by a HTTP 200 status code.
   last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
-  last_status_ = Status();
   return last_response_;
 }
 

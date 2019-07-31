@@ -353,7 +353,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    * This function is different than `metadata()` as calling `metadata()`
    * before Close() is undefined.
    */
-  Status const& last_status() const { return buf_->last_status(); }
+  Status last_status() const { return buf_->last_status(); }
 
  private:
   /**
