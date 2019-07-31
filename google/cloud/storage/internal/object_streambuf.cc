@@ -296,7 +296,9 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::FlushFinal() {
   StatusOr<ResumableUploadResponse> result =
       upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
   if (!result) {
-    // This was an unrecoverable error, time to signal an error.
+    // This was an unrecoverable error, time to store status and signal an
+    // error.
+    last_response_ = result.status();
     return std::move(result).status();
   }
   // Reset the iostream put area with valid pointers, but empty.
@@ -332,7 +334,9 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::Flush() {
   StatusOr<ResumableUploadResponse> result =
       upload_session_->UploadChunk(current_ios_buffer_);
   if (!result) {
-    // This was an unrecoverable error, time to signal an error.
+    // This was an unrecoverable error, time to store status and signal an
+    // error.
+    last_response_ = result.status();
     return std::move(result).status();
   }
   // Reset the put area, preserve any data not setn.

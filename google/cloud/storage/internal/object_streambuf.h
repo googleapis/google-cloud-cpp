@@ -125,6 +125,13 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
     return upload_session_->next_expected_byte();
   }
 
+  virtual Status last_status() const {
+    if (last_response_) {
+      return Status();
+    }
+    return last_response_.status();
+  }
+
  protected:
   int sync() override;
   std::streamsize xsputn(char const* s, std::streamsize count) override;
