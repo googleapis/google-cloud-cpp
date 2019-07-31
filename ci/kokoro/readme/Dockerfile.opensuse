@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=latest
-ARG NCPU=4
 FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 ## [START INSTALL.md]
 
@@ -25,17 +25,18 @@ FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
 # ```bash
 RUN zypper refresh && \
     zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
-        libcurl-devel libopenssl-devel make tar wget zlib-devel
+        libcurl-devel libopenssl-devel make ninja tar wget zlib-devel
 # ```
 
 FROM devtools AS README
+ARG NCPU=4
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using
 # the super build.
 WORKDIR /home/build/super
 COPY . /home/build/super
-RUN cmake -Hsuper -Bcmake-out \
+RUN cmake -GNinja -Hsuper -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
 RUN cmake --build cmake-out -- -j ${NCPU}
 # The tests will already be run as part of the build, no need to run it again.

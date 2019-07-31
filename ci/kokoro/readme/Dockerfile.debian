@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=9
-ARG NCPU=4
 FROM debian:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
@@ -37,17 +37,18 @@ FROM debian:${DISTRO_VERSION} AS devtools
 RUN apt update && \
     apt install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
-        pkg-config tar wget zlib1g-dev
+        ninja-build pkg-config tar wget zlib1g-dev
 # ```
 
 FROM devtools AS readme
+ARG NCPU=4
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using
 # the super build.
 WORKDIR /home/build/super
 COPY . /home/build/super
-RUN cmake -Hsuper -Bcmake-out \
+RUN cmake -GNinja -Hsuper -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
 RUN cmake --build cmake-out -- -j ${NCPU}
 # The tests will already be run as part of the build, no need to run it again.
