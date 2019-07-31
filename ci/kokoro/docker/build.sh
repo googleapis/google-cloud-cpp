@@ -58,7 +58,7 @@ elif [[ "${BUILD_NAME}" = "centos-7" ]] || [[ "${BUILD_NAME}" = "gcc-4.8" ]]; th
   export DISTRO=centos
   export DISTRO_VERSION=7
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
-  export CMAKE_SOURCE_DIR="ci/super"
+  export CMAKE_SOURCE_DIR="super"
   # Note that the integration tests are run by default. This is the opposite of
   # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
   export RUN_INTEGRATION_TESTS="no"
