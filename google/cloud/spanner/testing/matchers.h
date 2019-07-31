@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
 
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -37,4 +37,4 @@ MATCHER_P(IsProtoEqual, value, "") {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_

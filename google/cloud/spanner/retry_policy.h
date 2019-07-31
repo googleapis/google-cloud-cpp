@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -63,4 +63,4 @@ using LimitedErrorCountRetryPolicy =
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
