@@ -18,6 +18,7 @@
 
 spanner_client_hdrs = [
     "backoff_policy.h",
+    "client.h",
     "client_options.h",
     "commit_result.h",
     "database_admin_client.h",
@@ -50,6 +51,7 @@ spanner_client_hdrs = [
 ]
 
 spanner_client_srcs = [
+    "client.cc",
     "client_options.cc",
     "database_admin_client.cc",
     "internal/base64.cc",

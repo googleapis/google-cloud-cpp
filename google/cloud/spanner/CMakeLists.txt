@@ -28,6 +28,8 @@ include(EnableDoxygen)
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
             backoff_policy.h
+            client.cc
+            client.h
             client_options.cc
             client_options.h
             commit_result.h
@@ -127,6 +129,7 @@ function (spanner_client_define_tests)
 
     set(spanner_client_unit_tests
         client_options_test.cc
+        client_test.cc
         database_admin_client_test.cc
         date_test.cc
         internal/base64_test.cc
