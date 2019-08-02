@@ -88,8 +88,8 @@ StatusOr<std::vector<SqlPartition>> Client::PartitionQuery(
 std::vector<StatusOr<spanner_proto::ResultSetStats>> Client::ExecuteBatchDml(
     Transaction const& /*transaction*/,
     std::vector<SqlStatement> const& /*statements*/) {
-   // This method is NOT part of the Alpha release. Please do not work on this
-   // until all the higher-priority alpha work is finished.
+  // This method is NOT part of the Alpha release. Please do not work on this
+  // until all the higher-priority alpha work is finished.
   return {Status(StatusCode::kUnimplemented, "not implemented")};
 }
 
