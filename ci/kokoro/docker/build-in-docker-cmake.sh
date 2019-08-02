@@ -68,6 +68,10 @@ if [[ "${USE_LIBCXX:-}" == "yes" ]]; then
   cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_LIBCXX=ON" )
 fi
 
+if [[ "${USE_NINJA:-}" == "yes" ]]; then
+  cmake_extra_flags+=( "-GNinja" )
+fi
+
 # We use parameter expansion for ${cmake_extra_flags} because set -u doesn't
 # like empty arrays on older versions of Bash (which some of our builds use).
 # The expression ${parameter+word} will expand word only if parameter is not
