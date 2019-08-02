@@ -93,6 +93,7 @@ add_library(spanner_client
             commit_result.h
             database_admin_client.cc
             database_admin_client.h
+            date.cc
             date.h
             internal/base64.cc
             internal/base64.h

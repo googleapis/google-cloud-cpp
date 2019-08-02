@@ -28,14 +28,12 @@ inline namespace SPANNER_CLIENT_NS {
  * year, month (1-12), and day (1-31).
  *
  * Standard C++11 lacks a good "date" abstraction, so we supply a simple
- * implementation of a YMD triple. There is no range checking or field
- * normalization, and no operations. You get what you give.
+ * implementation of a YMD triple.
  */
 class Date {
  public:
-  Date() : Date(0, 0, 0) {}  // Note: bad month/day
-  Date(std::int64_t year, int month, int day)
-      : year_(year), month_(month), day_(day) {}
+  Date(std::int64_t year, int month, int day);  // Fields will be normalized.
+  Date() : Date(1970, 1, 1) {}
 
   std::int64_t year() const { return year_; }
   int month() const { return month_; }
