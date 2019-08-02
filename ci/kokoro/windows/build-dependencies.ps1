@@ -23,6 +23,9 @@ if (-not (Test-Path env:CONFIG)) {
 }
 $CONFIG = $env:CONFIG
 
+# Add 7-zip to Path
+$env:Path += ";C:\Program Files\7-Zip"
+
 # Set BUILD_CACHE, defauting to the original value
 if (-not (Test-Path env:BUILD_CACHE)) {
     $BUILD_CACHE = "gs://cloud-cpp-kokoro-results/" +
