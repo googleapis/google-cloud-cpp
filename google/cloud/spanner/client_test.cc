@@ -106,11 +106,20 @@ class MockSpannerStub : public internal::SpannerStub {
                                   spanner_proto::PartitionReadRequest const&));
 };
 
+TEST(SpannerClientTest, MakeDatabaseName) {
+  EXPECT_EQ(
+      "projects/dummy_project/instances/dummy_instance/databases/"
+      "dummy_database_id",
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id"));
+}
+
 // Dummy placeholder test.
 TEST(SpannerClientTest, ReadTest) {
   auto mock = std::make_shared<MockSpannerStub>();
 
-  Client client(mock);
+  Client client(
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id"),
+      mock);
   EXPECT_EQ(StatusCode::kUnimplemented,
             client.Read("table", KeySet(), {"column"}).status().code());
 }

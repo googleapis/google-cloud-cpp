@@ -90,7 +90,8 @@ struct KeySet {};
  * @code
  * namespace cs = ::google::cloud::spanner;
  * using ::google::cloud::StatusOr;
- * auto client = cs::MakeClient();
+ * auto client = cs::MakeClient(
+ *     cs::MakeDatabaseName("my_project", "my_instance", "my_database_id"));
  * if (!client) {
  *   return client.status();
  * }
@@ -351,16 +352,39 @@ class Client {
    * Create a new client with the given stub.
    * @warning Do not call this directly (it's exposed for testing only); call
    *     `MakeClient()` instead.
+   *
+   * @param database_name The name of the Spanner database to use.
+   *     See `MakeClient` for restrictions on the format of the name.
+   * @param stub The stub used to connect to the spanner service.
    */
-  explicit Client(std::shared_ptr<internal::SpannerStub> s)
-      : stub_(std::move(s)) {}
+  explicit Client(std::string database_name,
+                  std::shared_ptr<internal::SpannerStub> stub)
+      : database_name_(std::move(database_name)), stub_(std::move(stub)) {}
 
  private:
+  std::string database_name_;
   std::shared_ptr<internal::SpannerStub> stub_;
 };
 
-/// Factory method to create a `Client` with the given `client_options`.
-StatusOr<Client> MakeClient(ClientOptions const& client_options = {});
+/**
+ * Factory method to create a `Client` with the given `client_options`.
+ *
+ * @param database_name The name of the Spanner database to use.
+ *     The database name must conform to the format:
+ *     `projects/<project>/instances/<instance>/databases/<database_id>`.
+ *     You can use the `MakeDatabaseName` helper to properly format the name.
+ * @param client_options `ClientOptions` used when creating the client.
+ *
+ * @return A `Client` that can be used to perform operations on `database_name`,
+ *     or error status on failure.
+ */
+StatusOr<Client> MakeClient(std::string database_name,
+                            ClientOptions const& client_options = {});
+
+/// Format a database name given the `project`, `instance`, and `database_id`.
+std::string MakeDatabaseName(std::string const& project,
+                             std::string const& instance,
+                             std::string const& database_id);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
