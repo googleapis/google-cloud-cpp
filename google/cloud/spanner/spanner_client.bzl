@@ -24,6 +24,7 @@ spanner_client_hdrs = [
     "database_admin_client.h",
     "date.h",
     "internal/base64.h",
+    "internal/build_info.h",
     "internal/database_admin_retry.h",
     "internal/database_admin_stub.h",
     "internal/date.h",

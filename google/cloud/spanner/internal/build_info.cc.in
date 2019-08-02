@@ -1,0 +1,94 @@
+// Copyright 2017 Google Inc.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/spanner/internal/build_info.h"
+#include "google/cloud/internal/port_platform.h"
+#include <algorithm>
+#include <cctype>
+#include <iterator>
+
+namespace google {
+namespace cloud {
+namespace spanner {
+inline namespace SPANNER_CLIENT_NS {
+namespace internal {
+
+std::string CompilerId() { return R"""(@CMAKE_CXX_COMPILER_ID@)"""; }
+
+std::string CompilerVersion() { return R"""(@CMAKE_CXX_COMPILER_VERSION@)"""; }
+
+std::string BuildFlags() {
+  static auto const* const kFlags = [] {
+    auto* flags = new std::string(R"""(@CMAKE_CXX_FLAGS@)""");
+    if (!flags->empty()) *flags += ' ';
+    *flags +=
+        R"""(${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_SPANNER_BUILD_TYPE_UPPER}})""";
+    return flags;
+  }();
+  return *kFlags;
+}
+
+std::string CompilerFeatures() {
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    return "ex";
+#else
+    return "noex";
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+}
+
+std::string LanguageVersion() {
+  static auto const* const kLanguageVersion = [] {
+    auto* s = new std::string;
+    switch (__cplusplus) {
+      case 199711L:
+        *s += "98";
+        break;
+      case 201103L:
+        *s += "2011";
+        break;
+      case 201402L:
+        *s += "2014";
+        break;
+      case 201703L:
+        *s += "2017";
+        break;
+      default:
+        *s += "unknown";
+    }
+    return s;
+  }();
+  return *kLanguageVersion;
+}
+
+bool IsRelease() {
+  static bool const kIsRelease = []() -> bool {
+    // NOLINTNEXTLINE(readability-redundant-string-init)
+    std::string value = R"""(@GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE@)""";
+    for (char& c : value) {
+      c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+    }
+    return value == "yes" || value == "1" || value == "true";
+  }();
+  return kIsRelease;
+}
+
+std::string BuildMetadata() {
+  return R"""(@GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA@)""";
+}
+
+}  // namespace internal
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace spanner
+}  // namespace cloud
+}  // namespace google

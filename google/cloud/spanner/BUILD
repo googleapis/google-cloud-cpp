@@ -16,12 +16,42 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+load(":spanner_client_version.bzl", "GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE")
+
+genrule(
+    name = "generate_build_info",
+    srcs = ["internal/build_info.cc.in"],
+    outs = ["internal/build_info.cc"],
+    cmd = """
+V="unknown";
+CC_VERSION=$$($(location //bazel:compiler_version.sh) $(CC));
+CC_ID=$$($(location //bazel:compiler_id.sh) $(CC));
+sed -e "s;@CMAKE_CXX_COMPILER_ID@;$${CC_ID};" \
+    -e "s;@CMAKE_CXX_COMPILER_VERSION@;$${CC_VERSION};" \
+    -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
+    -e "s;\\$${CMAKE_CXX_FLAGS_.*};-c $(COMPILATION_MODE);" \
+    -e "s;@GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE@;%s;" \
+    -e "s;@GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA@;$${V};" < $< > $@
+  """ % (GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE),
+    toolchains = [
+        "@bazel_tools//tools/cpp:current_cc_toolchain",
+        "@bazel_tools//tools/cpp:cc_flags",
+    ],
+    tools = [
+        "//bazel:compiler_id.sh",
+        "//bazel:compiler_version.sh",
+    ],
+)
+
 load(":spanner_client.bzl", "spanner_client_hdrs", "spanner_client_srcs")
 
 cc_library(
     name = "spanner_client",
-    srcs = spanner_client_srcs,
+    srcs = spanner_client_srcs + ["internal/build_info.cc"],
     hdrs = spanner_client_hdrs,
+    data = [
+        ":generate_build_info",
+    ],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",

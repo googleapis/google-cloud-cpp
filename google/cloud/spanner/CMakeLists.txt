@@ -25,8 +25,66 @@ set(DOXYGEN_PROJECT_NUMBER "${SPANNER_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 include(EnableDoxygen)
 
+# Define a function to fetch the current git revision. Using a function creates
+# a new scope, so the CMake variables do not leak to the global namespace.
+function (google_cloud_cpp_spanner_initialize_git_head var)
+    set(result "unknown")
+    # If we cannot find a `.git` directory do not even try to guess the git
+    # revision.
+    if (IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
+        # We need `git` to find the revision.
+        find_program(GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM NAMES git)
+        mark_as_advanced(GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM)
+        if (GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM)
+            # Run `git rev-parse --short HEAD` and capture the output in a
+            # variable.
+            execute_process(COMMAND "${GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM}"
+                                    rev-parse --short HEAD
+                            OUTPUT_VARIABLE GIT_HEAD_LOG
+                            ERROR_VARIABLE GIT_HEAD_LOG)
+            string(REPLACE "\n"
+                           ""
+                           result
+                           "${GIT_HEAD_LOG}")
+        endif ()
+    endif ()
+    set(${var} "${result}" PARENT_SCOPE)
+endfunction ()
+
+# Capture the compiler version and the git revision into variables, then
+# generate a config file with the values.
+if (NOT "${GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA}" STREQUAL "")
+    # The build metadata flag is already defined, do not re-compute the
+    # initialization value. This works both when the user supplies
+    # -DGOOGLE_CLOUD_CPP_SPANNER_METADATA=value in the command line, and when
+    # GOOGLE_CLOUD_CPP_SPANNER_METADATA has a cached value
+    set(GOOGLE_CLOUD_CPP_SPANNER_GIT_HEAD "unused")
+else ()
+    google_cloud_cpp_spanner_initialize_git_head(
+        GOOGLE_CLOUD_CPP_SPANNER_GIT_HEAD)
+endif ()
+
+# Define a CMake configuration option to set the build metadata. By default this
+# is initialized from `git rev-parse --short HEAD`, but the developer (or the
+# script building via CMake) can override the value.
+set(GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA
+    "${GOOGLE_CLOUD_CPP_SPANNER_GIT_HEAD}"
+    CACHE STRING "Append build metadata to the library version number")
+# This option is rarely needed. Mark it as "advanced" to remove it from the
+# default CMake UIs.
+mark_as_advanced(GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA)
+
+message(STATUS "google-cloud-cpp-spanner build metadata set to"
+               " ${GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA}")
+
+# Create the file that captures build information. Having access to the compiler
+# and build flags at runtime allows us to print better benchmark results.
+string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_SPANNER_BUILD_TYPE_UPPER)
+configure_file(internal/build_info.cc.in internal/build_info.cc)
+
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
+            ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
             backoff_policy.h
             client.cc
             client.h
@@ -38,6 +96,7 @@ add_library(spanner_client
             date.h
             internal/base64.cc
             internal/base64.h
+            internal/build_info.h
             internal/database_admin_retry.cc
             internal/database_admin_retry.h
             internal/database_admin_stub.cc
@@ -102,6 +161,9 @@ add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 include(CreateBazelConfig)
 create_bazel_config(spanner_client)
 
+export_variables_to_bazel("spanner_client_version.bzl"
+                          GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE)
+
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -133,6 +195,7 @@ function (spanner_client_define_tests)
         database_admin_client_test.cc
         date_test.cc
         internal/base64_test.cc
+        internal/build_info_test.cc
         internal/date_test.cc
         internal/merge_chunk_test.cc
         internal/polling_loop_test.cc
