@@ -125,10 +125,6 @@ class Client {
    *     this request.
    * @param read_options `ReadOptions` used for this request.
    *
-   * - *transaction_options Execute this read in a single-use transaction with
-   *     these options.*
-   * - *transaction Execute this read as part of an existing transaction.*
-   *
    * @return A `StatusOr` containing a `ResultSet` or error status on failure.
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
@@ -136,11 +132,22 @@ class Client {
   StatusOr<ResultSet> Read(std::string const& table, KeySet const& keys,
                            std::vector<std::string> const& columns,
                            ReadOptions const& read_options = {});
+  /**
+   * @copydoc Read
+   *
+   * @param transaction_options Execute this read in a single-use transaction
+   * with these options.
+   */
   StatusOr<ResultSet> Read(
       Transaction::SingleUseOptions const& transaction_options,
       std::string const& table, KeySet const& keys,
       std::vector<std::string> const& columns,
       ReadOptions const& read_options = {});
+  /**
+   * @copydoc Read
+   *
+   * @param transaction Execute this read as part of an existing transaction.
+   */
   StatusOr<ResultSet> Read(Transaction const& transaction,
                            std::string const& table, KeySet const& keys,
                            std::vector<std::string> const& columns,
@@ -209,18 +216,27 @@ class Client {
    *
    * @param statement The SQL statement to execute.
    *
-   * - *transaction_options Execute this query in a single-use transaction with
-   *     these options.*
-   * - *transaction Execute this query as part of an existing transaction.*
-   *
    * @return A `StatusOr` containing a `ResultSet` or error status on failure.
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
    */
   StatusOr<ResultSet> ExecuteSql(SqlStatement const& statement);
+
+  /**
+   * @copydoc ExecuteSql(SqlStatement const&)
+   *
+   * @param transaction_options Execute this query in a single-use transaction
+   *     with these options.
+   */
   StatusOr<ResultSet> ExecuteSql(
       Transaction::SingleUseOptions const& transaction_options,
       SqlStatement const& statement);
+
+  /**
+   * @copydoc ExecuteSql(SqlStatement const&)
+   *
+   * @param transaction Execute this query as part of an existing transaction.
+   */
   StatusOr<ResultSet> ExecuteSql(Transaction const& transaction,
                                  SqlStatement const& statement);
   //@}
@@ -319,6 +335,7 @@ class Client {
    */
   StatusOr<CommitResult> Commit(Transaction const& transaction,
                                 std::vector<Mutation> const& mutations);
+
   /**
    * Rolls back a transaction, releasing any locks it holds. It is a good idea
    * to call this for any transaction that includes one or more `Read` or
