@@ -35,7 +35,9 @@ cmd /c gcloud auth revoke --all
 
 echo %date% %time%
 powershell -exec bypass ci\kokoro\windows\build-project.ps1
-if %errorlevel% neq 0 exit /b %errorlevel%
+@rem Preserve the exit code of the test for later use because we want to
+@rem delete the files in the %KOKORO_ARTIFACTS_DIR% on test failure too.
+set test_errorlevel=%errorlevel%
 
 @rem Kokoro rsyncs all the files in the %KOKORO_ARTIFACTS_DIR%, which takes a
 @rem long time. The recommended workaround is to remove all the files that are
@@ -44,6 +46,8 @@ echo %date% %time%
 cd "%KOKORO_ARTIFACTS_DIR%"
 powershell -Command "& {Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | Remove-Item}"
 if %errorlevel% neq 0 exit /b %errorlevel%
+
+if %test_errorlevel% neq 0 exit /b %test_errorlevel%
 
 @echo %date% %time%
 @echo DONE DONE DONE "============================================="
