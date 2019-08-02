@@ -74,6 +74,9 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
   export RUN_INTEGRATION_TESTS="no"
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
+elif [[ "${BUILD_NAME}" = "ninja" ]]; then
+  # Compiling with Ninja can catch bugs that may not be caught using Make.
+  export USE_NINJA=yes
 elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
   # Compile under fedora:30. This distro uses gcc-9.
   export DISTRO=fedora
@@ -220,6 +223,9 @@ docker_flags=(
 
     # If set, enable using libc++ with CMake.
     "--env" "USE_LIBCXX=${USE_LIBCXX:-}"
+
+    # If set, enable the Ninja generator with CMake.
+    "--env" "USE_NINJA=${USE_NINJA:-}"
 
     # If set, use Clang's static analyzer. Currently there is no build that
     # uses this feature, it may have rotten.
