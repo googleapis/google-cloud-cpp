@@ -34,6 +34,8 @@ if (-not (Test-Path env:BUILD_CACHE)) {
     $BUILD_CACHE = $env:BUILD_CACHE
 }
 
+$BUILD_CACHE_FILENAME = Split-Path $BUILD_CACHE -leaf
+
 # Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
 # but it works well on your workstation where you may want to run this script
 # multiple times while debugging vcpkg installs.  It also works on AppVeyor
@@ -68,7 +70,7 @@ if ($LastExitCode) {
 
 Write-Host "Extracting build cache."
 Get-Date -Format o
-7z x vcpkg-installed.zip -aoa
+7z x $BUILD_CACHE_FILENAME -aoa
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
     Write-Host "extracting build cache failed with exit code $LastExitCode"
