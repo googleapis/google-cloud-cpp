@@ -41,7 +41,7 @@ TEST(TransactionOptions, Construction) {
 TEST(Transaction, RegularSemantics) {
   Transaction::ReadOnlyOptions strong;
   Transaction a(strong);
-  Transaction b(strong);
+  Transaction b = MakeReadOnlyTransaction();
   EXPECT_NE(a, b);
 
   Transaction c = b;
@@ -58,7 +58,7 @@ TEST(Transaction, RegularSemantics) {
 
   Transaction::ReadWriteOptions none;
   Transaction e(none);
-  Transaction f(none);
+  Transaction f = MakeReadWriteTransaction();
   EXPECT_NE(e, f);
 
   Transaction g = f;

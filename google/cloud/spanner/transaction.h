@@ -163,8 +163,15 @@ class Transaction {
   std::shared_ptr<internal::TransactionImpl> impl_;
 };
 
-Transaction MakeReadOnlyTransaction(Transaction::ReadOnlyOptions opts = {});
-Transaction MakeReadWriteTransaction(Transaction::ReadWriteOptions opts = {});
+inline Transaction MakeReadOnlyTransaction(
+    Transaction::ReadOnlyOptions opts = {}) {
+  return Transaction(std::move(opts));
+}
+
+inline Transaction MakeReadWriteTransaction(
+    Transaction::ReadWriteOptions opts = {}) {
+  return Transaction(std::move(opts));
+}
 
 namespace internal {
 
