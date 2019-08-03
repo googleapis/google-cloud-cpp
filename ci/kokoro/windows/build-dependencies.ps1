@@ -23,9 +23,6 @@ if (-not (Test-Path env:CONFIG)) {
 }
 $CONFIG = $env:CONFIG
 
-# Add 7-zip to Path
-$env:Path += ";C:\Program Files\7-Zip"
-
 # Set BUILD_CACHE, defauting to the original value
 if (-not (Test-Path env:BUILD_CACHE)) {
     $BUILD_CACHE = "gs://cloud-cpp-kokoro-results/" +
@@ -33,8 +30,6 @@ if (-not (Test-Path env:BUILD_CACHE)) {
 } else {
     $BUILD_CACHE = $env:BUILD_CACHE
 }
-
-$BUILD_CACHE_FILENAME = Split-Path $BUILD_CACHE -leaf
 
 # Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
 # but it works well on your workstation where you may want to run this script
@@ -62,7 +57,7 @@ if ($LastExitCode) {
 
 Write-Host "Downloading build cache."
 Get-Date -Format o
-gsutil cp $BUILD_CACHE .
+gsutil cp $BUILD_CACHE vcpkg-installed.zip
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
     Write-Host "gsutil download failed with exit code $LastExitCode"
@@ -70,7 +65,7 @@ if ($LastExitCode) {
 
 Write-Host "Extracting build cache."
 Get-Date -Format o
-7z x $BUILD_CACHE_FILENAME -aoa
+C:\Windows\system32\cmd /c 7z x vcpkg-installed.zip -aoa
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
     Write-Host "extracting build cache failed with exit code $LastExitCode"
@@ -124,7 +119,7 @@ Write-Host "================================================================"
 Write-Host "================================================================"
 Write-Host "Create cache zip file."
 Get-Date -Format o
-7z a vcpkg-installed.zip installed\
+C:\Windows\system32\cmd /c 7z a vcpkg-installed.zip installed\
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
     Write-Host "zip build cache failed with exit code $LastExitCode"
