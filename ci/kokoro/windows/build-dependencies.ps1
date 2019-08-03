@@ -63,7 +63,7 @@ Get-Date -Format o
 gsutil cp $BUILD_CACHE .
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
-    Write-Host "extracting build cache failed with exit code $LastExitCode"
+    Write-Host "gsutil download failed with exit code $LastExitCode"
 }
 
 Write-Host "Extracting build cache."
@@ -71,7 +71,7 @@ Get-Date -Format o
 7z x vcpkg-installed.zip -aoa
 if ($LastExitCode) {
     # Ignore errors, caching failures should not break the build.
-    Write-Host "gsutil download failed with exit code $LastExitCode"
+    Write-Host "extracting build cache failed with exit code $LastExitCode"
 }
 
 Write-Host "Bootstrap vcpkg."
