@@ -13,8 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/date.h"
-#include "google/cloud/spanner/internal/time_format.h"
-#include <ctime>
+#include <array>
+#include <cinttypes>
+#include <cstdio>
 
 namespace google {
 namespace cloud {
@@ -22,33 +23,34 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace {
-
-// RFC3339 "full-date".
-constexpr auto kDateFormat = "%Y-%m-%d";
-
-}  // namespace
-
 std::string DateToString(Date d) {
-  std::tm tm;
-  tm.tm_year = static_cast<int>(d.year() - 1900);
-  tm.tm_mon = d.month() - 1;
-  tm.tm_mday = d.day();
-  return FormatTime(kDateFormat, tm);
+  std::array<char, sizeof "-9223372036854775808-01-01"> buf;
+  std::snprintf(buf.data(), buf.size(), "%" PRId64 "-%02d-%02d", d.year(),
+                d.month(), d.day());
+  return std::string(buf.data());
 }
 
 StatusOr<Date> DateFromString(std::string const& s) {
-  std::tm tm;
-  auto pos = ParseTime(kDateFormat, s, &tm);
-  if (pos == std::string::npos) {
-    return Status(StatusCode::kInvalidArgument,
-                  s + ": Failed to match RFC3339 full-date");
+  std::int64_t year;
+  int month;
+  int day;
+  char c;
+  switch (sscanf(s.c_str(), "%" SCNd64 "-%d-%d%c", &year, &month, &day, &c)) {
+    case 3:
+      break;
+    case 4:
+      return Status(StatusCode::kInvalidArgument,
+                    s + ": Extra data after RFC3339 full-date");
+    default:
+      return Status(StatusCode::kInvalidArgument,
+                    s + ": Failed to match RFC3339 full-date");
   }
-  if (pos != s.size()) {
+  Date date(year, month, day);
+  if (date.month() != month || date.day() != day) {
     return Status(StatusCode::kInvalidArgument,
-                  s + ": Extra data after RFC3339 full-date");
+                  s + ": RFC3339 full-date field out of range");
   }
-  return Date(tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday);
+  return date;
 }
 
 }  // namespace internal
