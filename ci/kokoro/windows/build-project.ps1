@@ -29,6 +29,9 @@ $CONFIG = $env:CONFIG
 $PROVIDER = $env:PROVIDER
 $GENERATOR = "Ninja"
 
+# Set TEMP explicitly for windows 2019 image
+$Env:TEMP = "T:\tmp\"
+
 # By default assume "module", use the configuration parameters and build in the `cmake-out` directory.
 $cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bcmake-out")
 
