@@ -177,9 +177,12 @@ function (spanner_client_define_tests)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
-    add_library(spanner_client_testing testing/matchers.h)
+    add_library(spanner_client_testing testing/matchers.h
+                                       testing/random_database_name.cc
+                                       testing/random_database_name.h)
     target_link_libraries(spanner_client_testing
                           PUBLIC googleapis-c++::spanner_client
+                                 google_cloud_cpp_testing
                                  GTest::gmock_main
                                  GTest::gmock
                                  GTest::gtest)

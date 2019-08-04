@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -26,20 +27,6 @@ namespace {
 
 using ::testing::EndsWith;
 
-std::string RandomDatabaseName(
-    google::cloud::internal::DefaultPRNG& generator) {
-  // A database ID must be between 2 and 30 characters, fitting the regular
-  // expression `[a-z][a-z0-9_\-]*[a-z0-9]`
-  int max_size = 30;
-  std::string const prefix = "db-";
-  auto size = static_cast<int>(max_size - 1 - prefix.size());
-  return prefix +
-         google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz012345689_-") +
-         google::cloud::internal::Sample(generator, 1,
-                                         "abcdefghijlkmnopqrstuvwxyz");
-}
-
 /// @test Verify the basic CRUD operations for databases work.
 TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto project_id =
@@ -51,7 +38,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_FALSE(instance_id.empty());
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  std::string database_id = RandomDatabaseName(generator);
+  std::string database_id = spanner_testing::RandomDatabaseName(generator);
 
   DatabaseAdminClient client;
   auto database_future =

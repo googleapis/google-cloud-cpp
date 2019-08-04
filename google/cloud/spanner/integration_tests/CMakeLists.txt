@@ -49,6 +49,7 @@ function (spanner_client_define_integration_tests)
         add_executable(${target} ${fname})
         target_link_libraries(${target}
                               PRIVATE googleapis-c++::spanner_client
+                                      spanner_client_testing
                                       google_cloud_cpp_testing
                                       GTest::gmock_main
                                       GTest::gmock
