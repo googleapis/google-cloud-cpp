@@ -44,7 +44,7 @@ set test_errorlevel=%errorlevel%
 @rem not interesting artifacts.
 echo %date% %time%
 cd "%KOKORO_ARTIFACTS_DIR%"
-powershell -Command "& {Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | Remove-Item}"
+powershell -Command "& {Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | Remove-Item -Recurse -Force}"
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 if %test_errorlevel% neq 0 exit /b %test_errorlevel%
