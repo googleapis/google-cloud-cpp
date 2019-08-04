@@ -24,10 +24,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-std::string CompilerId() { return R"""(@CMAKE_CXX_COMPILER_ID@)"""; }
-
-std::string CompilerVersion() { return R"""(@CMAKE_CXX_COMPILER_VERSION@)"""; }
-
 std::string BuildFlags() {
   static auto const* const kFlags = [] {
     auto* flags = new std::string(R"""(@CMAKE_CXX_FLAGS@)""");
@@ -37,38 +33,6 @@ std::string BuildFlags() {
     return flags;
   }();
   return *kFlags;
-}
-
-std::string CompilerFeatures() {
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    return "ex";
-#else
-    return "noex";
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-}
-
-std::string LanguageVersion() {
-  static auto const* const kLanguageVersion = [] {
-    auto* s = new std::string;
-    switch (__cplusplus) {
-      case 199711L:
-        *s += "98";
-        break;
-      case 201103L:
-        *s += "2011";
-        break;
-      case 201402L:
-        *s += "2014";
-        break;
-      case 201703L:
-        *s += "2017";
-        break;
-      default:
-        *s += "unknown";
-    }
-    return s;
-  }();
-  return *kLanguageVersion;
 }
 
 bool IsRelease() {

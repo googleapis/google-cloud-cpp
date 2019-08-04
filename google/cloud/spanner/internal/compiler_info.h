@@ -1,4 +1,4 @@
-// Copyright 2017 Google Inc.
+// Copyright 2019 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BUILD_INFO_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BUILD_INFO_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_COMPILER_INFO_H_
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_COMPILER_INFO_H_
 
 #include "google/cloud/spanner/version.h"
 
@@ -24,25 +24,32 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 /**
- * Returns the build flags.
+ * Returns the compiler ID.
  *
- * Examples include "-c fastbuild" or "-O2 -DNDEBUG".
+ * The Compiler ID is a string like "GNU" or "Clang", as described by
+ * https://cmake.org/cmake/help/v3.5/variable/CMAKE_LANG_COMPILER_ID.html
  */
-std::string BuildFlags();
+std::string CompilerId();
 
 /**
- * Returns true if this is a release branch.
+ * Returns the compiler version.
+ *
+ * This string will be something like "9.1.1".
  */
-bool IsRelease();
+std::string CompilerVersion();
 
 /**
- * Returns the metadata injected by the build system.
+ * Returns certain interesting compiler features.
  *
- * See https://semver.org/#spec-item-10 for more details about the use and
- * format of build metadata. Typically, the the value returned here is a hash
- * indicating a git commit.
+ * Currently this returns one of "ex" or "noex" to indicate whether or not
+ * C++ exceptions are enabled.
  */
-std::string BuildMetadata();
+std::string CompilerFeatures();
+
+/**
+ * Returns the 4-digit year of the C++ language standard.
+ */
+std::string LanguageVersion();
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
@@ -50,4 +57,4 @@ std::string BuildMetadata();
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BUILD_INFO_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_COMPILER_INFO_H_

@@ -24,11 +24,7 @@ genrule(
     outs = ["internal/build_info.cc"],
     cmd = """
 V="unknown";
-CC_VERSION=$$($(location //bazel:compiler_version.sh) $(CC));
-CC_ID=$$($(location //bazel:compiler_id.sh) $(CC));
-sed -e "s;@CMAKE_CXX_COMPILER_ID@;$${CC_ID};" \
-    -e "s;@CMAKE_CXX_COMPILER_VERSION@;$${CC_VERSION};" \
-    -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
+sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
     -e "s;\\$${CMAKE_CXX_FLAGS_.*};-c $(COMPILATION_MODE);" \
     -e "s;@GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE@;%s;" \
     -e "s;@GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA@;$${V};" < $< > $@
@@ -36,10 +32,6 @@ sed -e "s;@CMAKE_CXX_COMPILER_ID@;$${CC_ID};" \
     toolchains = [
         "@bazel_tools//tools/cpp:current_cc_toolchain",
         "@bazel_tools//tools/cpp:cc_flags",
-    ],
-    tools = [
-        "//bazel:compiler_id.sh",
-        "//bazel:compiler_version.sh",
     ],
 )
 

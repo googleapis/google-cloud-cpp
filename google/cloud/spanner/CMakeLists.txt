@@ -98,6 +98,8 @@ add_library(spanner_client
             internal/base64.cc
             internal/base64.h
             internal/build_info.h
+            internal/compiler_info.cc
+            internal/compiler_info.h
             internal/database_admin_retry.cc
             internal/database_admin_retry.h
             internal/database_admin_stub.cc
@@ -197,6 +199,7 @@ function (spanner_client_define_tests)
         date_test.cc
         internal/base64_test.cc
         internal/build_info_test.cc
+        internal/compiler_info_test.cc
         internal/date_test.cc
         internal/merge_chunk_test.cc
         internal/polling_loop_test.cc

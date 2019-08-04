@@ -23,6 +23,7 @@ spanner_client_unit_tests = [
     "date_test.cc",
     "internal/base64_test.cc",
     "internal/build_info_test.cc",
+    "internal/compiler_info_test.cc",
     "internal/date_test.cc",
     "internal/merge_chunk_test.cc",
     "internal/polling_loop_test.cc",
