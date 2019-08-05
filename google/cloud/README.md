@@ -20,7 +20,13 @@ Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.10.x - TBD
+### v0.11.x - TBD
+
+### v0.10.x - 2019-08
+
+* feat: add `conjunction` metafunction (#2892)
+* bug: Fix typo in testing_util/config.cmake.in (#2851)
+* bug: Include 'IncludeGMock.cmake' in testing_util/config.cmake.in (#2848)
 
 ### v0.9.x - 2019-07
 
