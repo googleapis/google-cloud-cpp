@@ -47,9 +47,10 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 ### v1.1.x - 2019-08
 
 * feat: Minimize contention in Bigtable Client initialization. (#2923)
-* cleanup: Fix OpenCensus warnings in bigtable example. (#2889)
 * feat: Support setting 64-bit integers mutations. (#2866)
 * feat: Implement support for IAM conditions. (#2854)
+* cleanup: use cmake files from github.com/googleapis/cpp-cmakefiles for
+  googleapis protos (#2888)
 
 ### v1.0.x - 2019-07
 

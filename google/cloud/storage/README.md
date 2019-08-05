@@ -54,6 +54,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 * feat: Implement native IAM operations for GCS. (#2900)
 * feat: Helpers for PredefinedDefaultObjectAcl. (#2885)
 * bug: Fix ReadObject() when reading the last chunk. (#2864)
+* bug: Use correct field name for MD5 hash. (#2876)
 
 ### v1.2.x - 2019-07
 
