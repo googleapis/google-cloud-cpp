@@ -14,7 +14,7 @@
 
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include <sstream>
 
 namespace google {
@@ -38,9 +38,11 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
   value += "=";
   value += resource_name;
   value_ = std::move(value);
-  std::string api_client_header = "gl-cpp/" +
-                                  google::cloud::internal::language_version() +
-                                  " gccl/" + version_string();
+  std::string api_client_header =
+      "gl-cpp/" + google::cloud::internal::CompilerId() + "-" +
+      google::cloud::internal::CompilerVersion() + "-" +
+      google::cloud::internal::CompilerFeatures() + "-" +
+      google::cloud::internal::LanguageVersion() + " gccl/" + version_string();
   api_client_header_ = std::move(api_client_header);
 }
 

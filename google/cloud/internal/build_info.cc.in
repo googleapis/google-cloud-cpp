@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include <algorithm>
 #include <cctype>
 
@@ -23,44 +24,7 @@ namespace internal {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler() {
-  static char const kCompilerName[] =
-      R"""(@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@)""";
-  return kCompilerName;
-}
-
-// NOLINTNEXTLINE(readability-identifier-naming)
-std::string language_version() {
-  static std::string const kLanguageVersion = [] {
-    std::string v(
-      R"""(@CMAKE_CXX_COMPILER_ID@-@CMAKE_CXX_COMPILER_VERSION@)""");
-    auto pos = v.find(' ');
-    if (pos != std::string::npos) {
-      v = v.substr(0, pos);
-    }
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    v += "-ex";
-#else
-    v += "-noex";
-#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-    switch (__cplusplus) {
-      case 199711L:
-        v += "-98";
-        break;
-      case 201103L:
-        v += "-2011";
-        break;
-      case 201402L:
-        v += "-2014";
-        break;
-      case 201703L:
-        v += "-2017";
-        break;
-      default:
-        v += "-unknown";
-    }
-    return v;
-  }();
-  return kLanguageVersion;
+  return CompilerId() + " " + CompilerVersion();
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
