@@ -16,4 +16,4 @@
 
 """Automatically generated version numbers - DO NOT EDIT."""
 
-GOOGLE_CLOUD_CPP_IS_RELEASE = ""
+GOOGLE_CLOUD_CPP_IS_RELEASE = "yes"
