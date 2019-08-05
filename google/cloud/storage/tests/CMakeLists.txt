@@ -82,6 +82,30 @@ endforeach ()
 target_link_libraries(storage_error_injection_integration_test
                       PRIVATE ${CMAKE_DL_LIBS})
 
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    find_package(gRPC REQUIRED)
+    find_package(googleapis CONFIG REQUIRED)
+    add_executable(grpc_integration_test grpc_integration_test.cc)
+    target_link_libraries(
+        grpc_integration_test
+        PRIVATE storage_client
+                storage_client_grpc
+                storage_client_testing
+                google_cloud_cpp_testing
+                google_cloud_cpp_common
+                googleapis-c++::storage_protos
+                gRPC::grpc++
+                gRPC::grpc
+                protobuf::libprotobuf
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                CURL::libcurl
+                Threads::Threads
+                nlohmann_json
+                storage_common_options)
+endif ()
+
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
                      "storage_client_integration_tests")

@@ -299,8 +299,14 @@ if "${has_cache}"; then
   docker_build_flags+=("--cache-from=${IMAGE}:latest")
 fi
 
+<<<<<<< HEAD
 if [[ "${RUNNING_CI:-}" == "yes" ]] &&
   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+=======
+if [[ "${RUNNING_CI:-}" == "yes" ]] && \
+   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]] && \
+   [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]]; then
+>>>>>>> e0bb1ae29... ci: use docker cache in Gerrit presubmits
   docker_build_flags+=("--no-cache")
 fi
 
@@ -323,7 +329,8 @@ else
 fi
 
 if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
-  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]] && \
+  [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]]; then
   echo "================================================================"
   io::log_yellow "Uploading updated base image for ${DISTRO}."
   # Do not stop the build on a failure to update the cache.

@@ -30,6 +30,8 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+using ::testing::AnyOf;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 
 class ObjectFileIntegrationTest
@@ -170,7 +172,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_FALSE(status.ok());
-  EXPECT_THAT(status.message(), HasSubstr(object_name));
+  EXPECT_THAT(status.message(), HasSubstr(object_name)) << "status=" << status;
 
   status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -317,8 +319,10 @@ TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
   // condition should fail because the object already exists.
   StatusOr<ObjectMetadata> upload = client->UploadFile(
       file_name, bucket_name_, object_name, IfGenerationMatch(0));
-  EXPECT_FALSE(upload.ok());
-  EXPECT_EQ(StatusCode::kFailedPrecondition, upload.status().code());
+  // TODO(b/146800819) - accept both errors for now.
+  EXPECT_THAT(upload.status().code(), AnyOf(Eq(StatusCode::kFailedPrecondition),
+                                            Eq(StatusCode::kAborted)))
+      << " upload.status=" << upload.status();
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);

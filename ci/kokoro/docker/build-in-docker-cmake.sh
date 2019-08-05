@@ -64,6 +64,10 @@ CMAKE_COMMAND="cmake"
 
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
+
+# Explicitly enable the gRPC plugin for GCS.
+cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON" )
+
 if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=("-DBUILD_TESTING=OFF")
 fi
@@ -298,6 +302,32 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo "================================================================"
     io::log_yellow "Completed the integration tests against production"
   fi
+fi
+
+#
+# Run the GCS + gRPC integration tests against production.
+#
+# RUN_INTEGRATION_TESTS=auto (the default set by the calling script) only tries
+# to run the integration tests if the configuration files are available.
+readonly INTEGRATION_TESTS_CONFIG="/c/test-configuration.sh"
+if [[ "${RUN_INTEGRATION_TESTS:-no}" == "yes" || \
+      ( "${RUN_INTEGRATION_TESTS:-no}" == "auto" && \
+        -r "${INTEGRATION_TESTS_CONFIG}" ) ]]; then
+  echo "================================================================"
+  echo "Running the GCS + gRPC integration tests $(date)"
+  echo "================================================================"
+  # shellcheck disable=SC1091
+  source "${INTEGRATION_TESTS_CONFIG}"
+  export GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"
+  export TEST_KEY_FILE_JSON="/c/service-account.json"
+  export TEST_KEY_FILE_P12="/c/service-account.p12"
+
+  export GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
+  env -C "${BINARY_DIR}/google/cloud/storage/tests" \
+    "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh"
+  env -C "${BINARY_DIR}/google/cloud/storage/examples" \
+    "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh"
+  echo "================================================================"
 fi
 
 # Test the install rule and that the installation works.

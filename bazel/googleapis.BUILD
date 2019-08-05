@@ -27,3 +27,32 @@ cc_library(
         ".",
     ],
 )
+
+cc_proto_library(
+    name = "storage_cc_proto",
+    deps = ["//google/storage/v1:storage_proto"],
+)
+
+cc_grpc_library(
+    name = "storage_cc_grpc",
+    srcs = ["//google/storage/v1:storage_proto"],
+    grpc_only = True,
+    use_external = True,
+    well_known_protos = True,
+    deps = [
+        ":storage_cc_proto",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
+)
+
+cc_library(
+    name = "storage_protos",
+    includes = [
+        ".",
+    ],
+    deps = [
+        "@com_github_grpc_grpc//:grpc++",
+        ":storage_cc_grpc",
+        ":storage_cc_proto",
+    ],
+)

@@ -15,11 +15,27 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/storage/internal/grpc_client.h"
+#include "google/cloud/storage/internal/hybrid_client.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 namespace testing {
+
+static bool UseGrpcForMetadata() {
+  auto v =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
+          .value_or("");
+  return v.find("metadata") != std::string::npos;
+}
+
+static bool UseGrpcForMedia() {
+  auto v =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG")
+          .value_or("");
+  return v.find("media") != std::string::npos;
+}
 
 google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient() {
@@ -35,6 +51,18 @@ StorageIntegrationTest::MakeIntegrationTestClient(
   }
 
   auto backoff = TestBackoffPolicy();
+  std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
+  if (UsingTestbench()) {
+    initial_delay = std::chrono::milliseconds(10);
+  }
+
+  if (UseGrpcForMetadata()) {
+    return Client(std::make_shared<internal::GrpcClient>(*options), *backoff);
+  }
+  if (UseGrpcForMedia()) {
+    return Client(std::make_shared<internal::HybridClient>(*options), *backoff);
+  }
+
   auto idempotency =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
   if (!idempotency || *idempotency == "always-retry") {
@@ -66,6 +94,21 @@ std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
 std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
   return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(2))
       .clone();
+}
+
+std::string StorageIntegrationTest::MakeRandomBucketName(std::string prefix) {
+  // The total length of this bucket name must be <= 63 characters,
+  char constexpr kPrefix[] = "gcs-cpp-test-bucket-";  // NOLINT
+  auto constexpr kMaxBucketNameLength = 63;
+  static_assert(kMaxBucketNameLength > sizeof(kPrefix),
+                "The bucket prefix is too long");
+  if (prefix.empty()) prefix = kPrefix;
+  prefix = prefix.substr(0, (std::min)(kMaxPrefixLength, prefix.size()));
+  std::size_t const max_random_characters =
+      kMaxBucketNameLength - prefix.size();
+  return prefix + google::cloud::internal::Sample(
+                      generator_, static_cast<int>(max_random_characters),
+                      "abcdefghijklmnopqrstuvwxyz012456789");
 }
 
 std::string StorageIntegrationTest::MakeRandomBucketName() {
@@ -110,6 +153,10 @@ EncryptionKeyData StorageIntegrationTest::MakeEncryptionKeyData() {
 bool StorageIntegrationTest::UsingTestbench() {
   return google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
       .has_value();
+}
+
+bool StorageIntegrationTest::UsingGrpc() const {
+  return UseGrpcForMedia() || UseGrpcForMetadata();
 }
 
 void StorageIntegrationTest::WriteRandomLines(std::ostream& upload,

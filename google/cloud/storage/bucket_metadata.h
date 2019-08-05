@@ -32,6 +32,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct BucketMetadataParser;
+class GrpcClient;
 }  // namespace internal
 
 /**
@@ -862,6 +863,7 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
  private:
   friend struct internal::BucketMetadataParser;
+  friend class internal::GrpcClient;
 
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.

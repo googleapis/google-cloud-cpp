@@ -29,6 +29,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 struct ObjectMetadataParser;
+class GrpcClient;
 }  // namespace internal
 
 /// A simple representation for the customerEncryption field.
@@ -235,6 +236,7 @@ class ObjectMetadata : private internal::CommonMetadata<ObjectMetadata> {
 
  private:
   friend struct internal::ObjectMetadataParser;
+  friend class internal::GrpcClient;
 
   friend std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs);
   // Keep the fields in alphabetical order.

@@ -16,7 +16,11 @@
 
 find_package(absl CONFIG REQUIRED)
 
-set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
+option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
+       "Enable compilation for the gRPC plugin" OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+
+set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ ªClient")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Storage")
 set(DOXYGEN_PROJECT_NUMBER
     "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
@@ -257,7 +261,63 @@ set_target_properties(
 
 create_bazel_config(storage_client)
 
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    find_package(gRPC REQUIRED)
+    find_package(googleapis REQUIRED)
+    # The gRPC "plug-in" for the client library.
+    add_library(
+        storage_client_grpc
+        grpc_plugin.cc
+        grpc_plugin.h
+        internal/grpc_client.cc
+        internal/grpc_client.h
+        internal/grpc_object_read_source.cc
+        internal/grpc_object_read_source.h
+        internal/grpc_resumable_upload_session.cc
+        internal/grpc_resumable_upload_session.h
+        internal/hybrid_client.cc
+        internal/hybrid_client.h)
+    target_link_libraries(
+        storage_client_grpc
+        PUBLIC storage_client
+               google_cloud_cpp_grpc_utils
+               google_cloud_cpp_common
+               nlohmann_json
+               googleapis-c++::storage_protos
+               gRPC::grpc++
+               protobuf::libprotobuf
+               Crc32c::crc32c
+               CURL::libcurl
+               Threads::Threads
+               OpenSSL::SSL
+               OpenSSL::Crypto
+               ZLIB::ZLIB
+        PRIVATE storage_common_options)
+    target_include_directories(
+        storage_client
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(storage_client_grpc
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    set_target_properties(
+        storage_client_grpc
+            PROPERTIES
+            VERSION
+            ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+            SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+
+    create_bazel_config(storage_client_grpc)
+    google_cloud_cpp_add_clang_tidy(storage_client_grpc)
+endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+
 if (BUILD_TESTING)
+    set(storage_client_testing_dependencies
+        storage_client nlohmann_json GTest::gmock_main GTest::gmock
+        GTest::gtest)
+    if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+        list(APPEND storage_client_testing_dependencies storage_client_grpc)
+    endif ()
     add_library(
         storage_client_testing # cmake-format: sort
         testing/canonical_errors.h
@@ -411,6 +471,45 @@ if (BUILD_TESTING)
 
     add_subdirectory(tests)
 endif ()
+
+if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    if (BUILD_TESTING)
+        set(storage_client_grpc_unit_tests
+            internal/grpc_client_test.cc
+            internal/grpc_object_read_source_test.cc
+            internal/grpc_resumable_upload_session_test.cc)
+
+        foreach (fname ${storage_client_grpc_unit_tests})
+            string(REPLACE "/" "_" target ${fname})
+            string(REPLACE ".cc" "" target ${target})
+            add_executable(${target} ${fname})
+            if (MSVC)
+                target_compile_options(${target} PRIVATE "/bigobj")
+            endif ()
+            target_link_libraries(
+                ${target}
+                PRIVATE storage_client_grpc
+                        storage_client_testing
+                        google_cloud_cpp_testing
+                        google_cloud_cpp_testing_grpc
+                        storage_client
+                        GTest::gmock_main
+                        GTest::gmock
+                        GTest::gtest
+                        CURL::libcurl
+                        storage_common_options
+                        nlohmann_json)
+            if (MSVC)
+                target_compile_options(${target} PRIVATE "/bigobj")
+            endif ()
+            add_test(NAME ${target} COMMAND ${target})
+        endforeach ()
+
+        # Export the list of unit tests so the Bazel BUILD file can pick it up.
+        export_list_to_bazel("storage_client_grpc_unit_tests.bzl"
+                             "storage_client_grpc_unit_tests")
+    endif ()
+endif (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
 add_subdirectory(benchmarks)
 

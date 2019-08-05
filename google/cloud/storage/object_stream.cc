@@ -91,8 +91,10 @@ void ObjectWriteStream::CloseBuf() {
     return;
   }
   headers_ = {};
-  metadata_ = *std::move(response->payload);
-  if (!buf_->ValidateHash(*metadata_)) {
+  if (response->payload.has_value()) {
+    metadata_ = *std::move(response->payload);
+  }
+  if (metadata_ && !buf_->ValidateHash(*metadata_)) {
     setstate(std::ios_base::badbit);
   }
 }

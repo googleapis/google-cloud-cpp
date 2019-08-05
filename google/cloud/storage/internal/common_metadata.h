@@ -62,6 +62,8 @@ inline bool operator>=(Owner const& lhs, Owner const& rhs) {
 }
 
 namespace internal {
+class GrpcClient;
+
 /**
  * Defines common attributes to both `BucketMetadata` and `ObjectMetadata`.
  *
@@ -126,6 +128,8 @@ class CommonMetadata {
   std::chrono::system_clock::time_point updated() const { return updated_; }
 
  private:
+  friend class GrpcClient;
+
   // Keep the fields in alphabetical order.
   std::string etag_;
   std::string id_;

@@ -100,15 +100,21 @@ ObjectReadStreambuf::int_type ObjectReadStreambuf::underflow() {
       std::string msg;
       msg += __func__;
       msg += "(): mismatched hashes in download";
+      msg += " computed=";
+      msg += hash_validator_result_.computed;
+      msg += " received=";
+      msg += hash_validator_result_.received;
+      if (status_.ok()) {
+        // If there is an existing error, we should report that instead because
+        // it is more specific, for example, every permanent network error will
+        // produce invalid checksums, but that is not the interesting
+        // information.
+        status_ = Status(StatusCode::kDataLoss, msg);
+      }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
       throw HashMismatchError(msg, hash_validator_result_.received,
                               hash_validator_result_.computed);
 #else
-      msg += ", expected=";
-      msg += hash_validator_result_.computed;
-      msg += ", received=";
-      msg += hash_validator_result_.received;
-      status_ = Status(StatusCode::kDataLoss, std::move(msg));
       return traits_type::eof();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     }
@@ -141,7 +147,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     std::string msg;
     msg += function_name;
     msg += "(): mismatched hashes in download";
-    msg += ", expected=";
+    msg += ", computed=";
     msg += hash_validator_result_.computed;
     msg += ", received=";
     msg += hash_validator_result_.received;

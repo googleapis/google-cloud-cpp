@@ -59,6 +59,22 @@ std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
   return result;
 }
 
+std::vector<std::uint8_t> HexDecode(std::string const& str) {
+  if (str.size() % 2 != 0) return {};
+
+  std::vector<std::uint8_t> result;
+  result.reserve(str.size() / 2);
+  for (char const* p = str.data(); p != str.data() + str.size(); p += 2) {
+    std::string s{p, p + 2};
+    std::size_t idx = 0;
+    auto constexpr kBaseForHex = 16;
+    auto v = std::stol(s, &idx, kBaseForHex);
+    if (idx != 2) return {};
+    result.push_back(static_cast<std::uint8_t>(v));
+  }
+  return result;
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
