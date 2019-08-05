@@ -42,7 +42,14 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.1.x - TBD
+### v1.2.x - TBD
+
+### v1.1.x - 2019-08
+
+* feat: Minimize contention in Bigtable Client initialization. (#2923)
+* cleanup: Fix OpenCensus warnings in bigtable example. (#2889)
+* feat: Support setting 64-bit integers mutations. (#2866)
+* feat: Implement support for IAM conditions. (#2854)
 
 ### v1.0.x - 2019-07
 

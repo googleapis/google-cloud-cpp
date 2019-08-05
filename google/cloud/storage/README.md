@@ -44,7 +44,16 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.3.x - TBD
+### v1.4.x - TBD
+
+### v1.3.x - 2019-08
+
+* feat: Control TCP memory usage in GCS library. (#2902)
+* feat: Make partial errors/last_status available to `ObjectWriteStream` (#2919)
+* feat: Change storage/benchmarks to compile with exceptions disabled. (#2916)
+* feat: Implement native IAM operations for GCS. (#2900)
+* feat: Helpers for PredefinedDefaultObjectAcl. (#2885)
+* bug: Fix ReadObject() when reading the last chunk. (#2864)
 
 ### v1.2.x - 2019-07
 
