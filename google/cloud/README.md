@@ -27,8 +27,6 @@ Documentation for the common utilities is available [online][doxygen-link].
 * feat: add `conjunction` metafunction (#2892)
 * bug: Fix typo in testing_util/config.cmake.in (#2851)
 * bug: Include 'IncludeGMock.cmake' in testing_util/config.cmake.in (#2848)
-* cleanup: use cmake files from github.com/googleapis/cpp-cmakefiles for
-  googleapis protos (#2888)
 
 ### v0.9.x - 2019-07
 
