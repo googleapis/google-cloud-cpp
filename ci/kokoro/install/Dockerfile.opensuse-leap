@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=latest
-ARG NCPU=4
 FROM opensuse/leap:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 ## [START INSTALL.md]
 

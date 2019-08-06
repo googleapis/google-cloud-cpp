@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=30
-ARG NCPU=4
 FROM fedora:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 # Please keep the formatting below, it is used by `extract-readme.sh` and
 # `extract-install.md` to generate the contents of the top-level README.md and
@@ -33,6 +33,7 @@ RUN dnf makecache && \
 # ```
 
 FROM devtools AS readme
+ARG NCPU=4
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using

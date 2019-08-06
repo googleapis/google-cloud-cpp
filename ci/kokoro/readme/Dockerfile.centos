@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=7
-ARG NCPU=4
 FROM centos:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
@@ -40,6 +40,7 @@ RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/cte
 # ```
 
 FROM devtools AS readme
+ARG NCPU=4
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using

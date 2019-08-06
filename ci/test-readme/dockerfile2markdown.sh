@@ -20,6 +20,7 @@ set -eu
 sed \
     -e '/^## \[START IGNORED\]/,/^## \[END IGNORED\]/d' \
     -e '/^FROM /d' \
+    -e '/^ARG /d' \
     -e '/^## /d' \
     -e 's/^# //' \
     -e 's/^WORKDIR /cd /' \
