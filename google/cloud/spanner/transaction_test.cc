@@ -74,6 +74,20 @@ TEST(Transaction, RegularSemantics) {
   EXPECT_NE(j, h);
 }
 
+TEST(Transaction, Visit) {
+  Transaction a = MakeReadOnlyTransaction();
+  internal::Visit(a, [](google::spanner::v1::TransactionSelector& s) {
+    EXPECT_TRUE(s.has_begin());
+    EXPECT_TRUE(s.begin().has_read_only());
+    s.set_id("test-txn-id");
+    return 0;
+  });
+  internal::Visit(a, [](google::spanner::v1::TransactionSelector& s) {
+    EXPECT_EQ("test-txn-id", s.id());
+    return 0;
+  });
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

@@ -101,13 +101,11 @@ StatusOr<std::int64_t> Client::ExecutePartitionedDml(
 
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
                                       std::vector<Mutation> const& mutations) {
-  using F = std::function<StatusOr<CommitResult>(
-      spanner_proto::TransactionSelector&)>;
   return internal::Visit(
       std::move(transaction),
-      F([this, &mutations](spanner_proto::TransactionSelector& s) {
+      [this, &mutations](spanner_proto::TransactionSelector& s) {
         return this->Commit(s, mutations);
-      }));
+      });
 }
 
 Status Client::Rollback(Transaction const& /*transaction*/) {

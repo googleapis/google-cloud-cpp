@@ -20,7 +20,6 @@
 #include "google/cloud/spanner/version.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <chrono>
-#include <functional>
 #include <memory>
 
 namespace google {
@@ -34,9 +33,8 @@ class Transaction;  // defined below
 namespace internal {
 template <typename T>
 Transaction MakeSingleUseTransaction(T&&);
-template <typename T>
-T Visit(Transaction,
-        std::function<T(google::spanner::v1::TransactionSelector&)>);
+template <typename Functor>
+VisitInvokeResult<Functor> Visit(Transaction, Functor&&);
 }  // namespace internal
 
 /**
@@ -153,9 +151,9 @@ class Transaction {
   // Friendship for access by internal helpers.
   template <typename T>
   friend Transaction internal::MakeSingleUseTransaction(T&&);
-  template <typename T>
-  friend T internal::Visit(
-      Transaction, std::function<T(google::spanner::v1::TransactionSelector&)>);
+  template <typename Functor>
+  friend internal::VisitInvokeResult<Functor> internal::Visit(Transaction,
+                                                              Functor&&);
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
@@ -182,10 +180,9 @@ Transaction MakeSingleUseTransaction(T&& opts) {
   return Transaction(std::move(su_opts));
 }
 
-template <typename T>
-T Visit(Transaction txn,
-        std::function<T(google::spanner::v1::TransactionSelector&)> f) {
-  return txn.impl_->Visit(f);
+template <typename Functor>
+VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
+  return txn.impl_->Visit(std::forward<Functor>(f));
 }
 
 }  // namespace internal

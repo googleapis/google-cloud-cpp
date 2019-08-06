@@ -16,10 +16,10 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_TRANSACTION_IMPL_H_
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/port_platform.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <condition_variable>
-#include <functional>
 #include <mutex>
 
 namespace google {
@@ -27,6 +27,10 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+
+template <typename Functor>
+using VisitInvokeResult = google::cloud::internal::invoke_result_t<
+    Functor, google::spanner::v1::TransactionSelector&>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -45,8 +49,8 @@ class TransactionImpl {
   // call. If initially selector.has_begin(), and the operation successfully
   // allocates a transaction ID, then the functor should selector.set_id(id).
   // Otherwise the functor should not modify the selector.
-  template <typename T>
-  T Visit(std::function<T(google::spanner::v1::TransactionSelector&)> f) {
+  template <typename Functor>
+  VisitInvokeResult<Functor> Visit(Functor&& f) {
     {
       std::unique_lock<std::mutex> lock(mu_);
       cond_.wait(lock, [this] { return state_ != State::kPending; });
