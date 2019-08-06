@@ -63,6 +63,7 @@ class Mutation {
 
   /// Convert the mutation to the underlying proto.
   google::spanner::v1::Mutation as_proto() && { return std::move(m_); }
+  google::spanner::v1::Mutation as_proto() const& { return m_; }
 
   /**
    * Allows Google Test to print internal debugging information when test

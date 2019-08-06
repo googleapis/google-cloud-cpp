@@ -18,4 +18,5 @@
 
 spanner_client_integration_tests = [
     "database_admin_integration_test.cc",
+    "mutate_and_read_integration_test.cc",
 ]

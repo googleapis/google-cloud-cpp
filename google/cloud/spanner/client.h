@@ -334,7 +334,7 @@ class Client {
    * @return A `StatusOr` containing the result of the commit or error status
    *     on failure.
    */
-  StatusOr<CommitResult> Commit(Transaction const& transaction,
+  StatusOr<CommitResult> Commit(Transaction transaction,
                                 std::vector<Mutation> const& mutations);
 
   /**
@@ -362,8 +362,30 @@ class Client {
       : database_name_(std::move(database_name)), stub_(std::move(stub)) {}
 
  private:
+  class SessionHolder {
+   public:
+    SessionHolder(std::string session, Client* client) noexcept;
+    ~SessionHolder();
+
+    std::string const& session_name() const { return session_; }
+
+   private:
+    std::string session_;
+    Client* client_;
+  };
+  friend class SessionHolder;
+  StatusOr<SessionHolder> GetSession();
+
+  /// Implementation details for Commit.
+  StatusOr<CommitResult> Commit(google::spanner::v1::TransactionSelector& s,
+                                std::vector<Mutation> const& mutations);
+
   std::string database_name_;
   std::shared_ptr<internal::SpannerStub> stub_;
+
+  // The current session pool.
+  // TODO(#307) - improve session refresh and expiration.
+  std::vector<std::string> sessions_;
 };
 
 /**
