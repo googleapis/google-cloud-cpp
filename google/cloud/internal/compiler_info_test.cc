@@ -37,8 +37,8 @@ TEST(CompilerInfo, CompilerVersion) {
   EXPECT_THAT(cv, ::testing::ContainsRegex(R"([0-9]+.[0-9]+)"));
 #else
   // Do our best on windows
-  EXPECT_EQ(std::string::npos, cv.find_first_not_of("01234567890."));
-  EXPECT_EQ(0, cv.find_first_of("01234567890"));
+  EXPECT_EQ(std::string::npos, cv.find_first_not_of("0123456789."));
+  EXPECT_EQ(0, cv.find_first_of("0123456789"));
   EXPECT_NE(0, cv.find("."));
 #endif
 }

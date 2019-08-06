@@ -13,9 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/internal/compiler_info.h"
-//#include <algorithm>
-//#include <cctype>
-//#include <iterator>
 #include <sstream>
 
 namespace google {
