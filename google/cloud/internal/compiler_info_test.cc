@@ -24,18 +24,15 @@ namespace {
 TEST(CompilerInfo, CompilerId) {
   auto cn = CompilerId();
   EXPECT_FALSE(cn.empty());
-#ifndef _WIN32  // gMock's regex brackets don't work on Windows.
-  EXPECT_THAT(cn, ::testing::ContainsRegex(R"([A-Za-z]+)"));
-#endif
+  EXPECT_EQ(std::string::npos,
+            cn.find_first_not_of(
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
 }
 
 TEST(CompilerInfo, CompilerVersion) {
   auto cv = CompilerVersion();
   EXPECT_FALSE(cv.empty());
-#ifndef _WIN32  // gMock's regex brackets don't work on Windows.
-  // Look for something that looks vaguely like an X.Y version number.
-  EXPECT_THAT(cv, ::testing::ContainsRegex(R"([0-9]+.[0-9]+)"));
-#endif
+  EXPECT_EQ(std::string::npos, cv.find_first_not_of("01234567890."));
 }
 
 TEST(CompilerInfo, CompilerFeatures) {
@@ -49,9 +46,7 @@ TEST(CompilerInfo, LanguageVersion) {
   using ::testing::HasSubstr;
   auto lv = LanguageVersion();
   EXPECT_FALSE(lv.empty());
-#ifndef _WIN32  // gMock's regex brackets don't work on Windows.
-  EXPECT_THAT(lv, ::testing::MatchesRegex(R"([0-9]+)"));
-#endif
+  EXPECT_EQ(std::string::npos, lv.find_first_not_of("0123456789"));
 }
 
 }  // namespace
