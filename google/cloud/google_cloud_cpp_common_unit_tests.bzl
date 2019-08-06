@@ -24,7 +24,7 @@ google_cloud_cpp_common_unit_tests = [
     "iam_bindings_test.cc",
     "internal/backoff_policy_test.cc",
     "internal/big_endian_test.cc",
-    "internal/build_info_test.cc",
+    "internal/compiler_info_test.cc",
     "internal/filesystem_test.cc",
     "internal/format_time_point_test.cc",
     "internal/future_impl_test.cc",

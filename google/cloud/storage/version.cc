@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/build_info.h"
+#include "google/cloud/internal/compiler_info.h"
 #include <sstream>
 
 namespace google {
@@ -38,7 +39,10 @@ std::string version_string() {
 std::string x_goog_api_client() {
   static std::string const kXGoogApiClient = [] {
     std::ostringstream os;
-    os << "gl-cpp/" << google::cloud::internal::language_version() << " gccl/"
+    os << "gl-cpp/" << google::cloud::internal::CompilerId() << "-"
+       << google::cloud::internal::CompilerVersion() << "-"
+       << google::cloud::internal::CompilerFeatures() << "-"
+       << google::cloud::internal::LanguageVersion() << " gccl/"
        << version_string();
     return os.str();
   }();
