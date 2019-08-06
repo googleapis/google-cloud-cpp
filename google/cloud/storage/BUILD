@@ -22,6 +22,10 @@ config_setting(
     visibility = ["//visibility:public"],
 )
 
+GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
+    "/DWIN32_LEAN_AND_MEAN",
+]
+
 genrule(
     name = "nlohmann_json_include_hierarchy",
     srcs = ["@com_github_nlohmann_json_single_header//file"],
@@ -44,6 +48,7 @@ cc_library(
     hdrs = storage_client_hdrs,
     copts = select({
         ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "//conditions:default": [],
     }),
     deps = [
         ":nlohmann_json",
@@ -63,6 +68,7 @@ cc_library(
     hdrs = storage_client_testing_hdrs,
     copts = select({
         ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "//conditions:default": [],
     }),
     deps = [
         ":nlohmann_json",
@@ -83,6 +89,7 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     srcs = [test],
     copts = select({
         ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "//conditions:default": [],
     }),
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = ["-lpthread"],
