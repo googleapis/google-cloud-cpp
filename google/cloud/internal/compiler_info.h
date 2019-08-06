@@ -45,7 +45,7 @@ std::string CompilerVersion();
 std::string CompilerFeatures();
 
 /**
- * Returns the year of the C++ language standard.
+ * Returns the 4-digit year of the C++ language standard.
  */
 std::string LanguageVersion();
 
