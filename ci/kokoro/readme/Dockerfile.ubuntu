@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=bionic
-ARG NCPU=4
 FROM ubuntu:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
@@ -33,6 +33,7 @@ RUN apt update && \
 # ```
 
 FROM devtools AS readme
+ARG NCPU=4
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using

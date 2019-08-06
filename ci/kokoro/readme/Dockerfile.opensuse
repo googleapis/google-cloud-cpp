@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=latest
-ARG NCPU=4
 FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
 
 ## [START INSTALL.md]
 
@@ -29,6 +29,7 @@ RUN zypper refresh && \
 # ```
 
 FROM devtools AS README
+ARG NCPU=4
 
 ## [START IGNORED]
 # Verify that the tools above are enough to compile google-cloud-cpp when using

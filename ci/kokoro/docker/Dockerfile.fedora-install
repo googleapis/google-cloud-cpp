@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=30
-ARG NCPU=4
 FROM fedora:${DISTRO_VERSION}
+ARG NCPU=4
 
 RUN dnf makecache && dnf install -y \
     autoconf \

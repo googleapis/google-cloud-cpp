@@ -25,6 +25,6 @@ source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
 
 cd "${PROJECT_ROOT}"
 sudo docker build -t "${IMAGE}:tip" \
-     --build-arg NCPU="${NCPU:-4}" \
+     --build-arg NCPU="${NCPU}" \
      --build-arg DISTRO_VERSION="${DISTRO_VERSION}" \
      -f "ci/kokoro/docker/Dockerfile.${DISTRO}" ci
