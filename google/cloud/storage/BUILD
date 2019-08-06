@@ -16,6 +16,12 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
+config_setting(
+    name = "windows",
+    values = {"cpu": "x64_windows"},
+    visibility = ["//visibility:public"],
+)
+
 genrule(
     name = "nlohmann_json_include_hierarchy",
     srcs = ["@com_github_nlohmann_json_single_header//file"],
@@ -36,6 +42,9 @@ cc_library(
     name = "storage_client",
     srcs = storage_client_srcs,
     hdrs = storage_client_hdrs,
+    copts = select({
+        ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    }),
     deps = [
         ":nlohmann_json",
         "//google/cloud:google_cloud_cpp_common",
@@ -52,6 +61,9 @@ cc_library(
     name = "storage_client_testing",
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
+    copts = select({
+        ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    }),
     deps = [
         ":nlohmann_json",
         ":storage_client",
@@ -69,6 +81,9 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 [cc_test(
     name = "storage_client_" + test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    copts = select({
+        ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    }),
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
     linkopts = ["-lpthread"],
     deps = [
