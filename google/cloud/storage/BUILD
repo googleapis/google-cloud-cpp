@@ -16,12 +16,6 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-config_setting(
-    name = "windows",
-    values = {"cpu": "x64_windows"},
-    visibility = ["//visibility:public"],
-)
-
 GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
     "/DWIN32_LEAN_AND_MEAN",
 ]
@@ -47,7 +41,7 @@ cc_library(
     srcs = storage_client_srcs,
     hdrs = storage_client_hdrs,
     copts = select({
-        ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     deps = [
@@ -67,7 +61,7 @@ cc_library(
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
     copts = select({
-        ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     deps = [
@@ -88,11 +82,14 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     name = "storage_client_" + test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     copts = select({
-        ":windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+        "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
     # TODO(#664 / #666) - use the right condition when porting Bazel builds
-    linkopts = ["-lpthread"],
+    linkopts = select({
+        "@bazel_tools//src/conditions:linux_x86_64": ["-lpthread"],
+        "//conditions:default": [],
+    }),
     deps = [
         ":nlohmann_json",
         ":storage_client",
