@@ -49,9 +49,8 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  *
  * It is conceptually similar to a `std::any` except the only allowed types are
  * those supported by Spanner, and a "null" value (similar to a `std::any`
- * without a value) still has an associated type that can be queried with
- * `Value::is<T>()`. The supported types are shown in the following table along
- * with how they map to the Spanner types
+ * without a value) still has an associated type. The supported types are shown
+ * in the following table along with how they map to the Spanner types
  * (https://cloud.google.com/spanner/docs/data-types):
  *
  * Spanner Type | C++ Type `T`
@@ -82,8 +81,6 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * @code
  * std::string msg = "hello";
  * spanner::Value v(msg);
- * assert(v.is<std::string>());
- * assert(!v.is_null<std::string>());
  * StatusOr<std::string> copy = v.get<std::string>();
  * if (copy) {
  *   std::cout << *copy;  // prints "hello"
@@ -94,13 +91,25 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  *
  * @code
  * spanner::Value v = spanner::MakeNullValue<std::int64_t>();
- * assert(v.is<std::int64_t>());
- * assert(v.is_null<std::int64_t>());
  * StatusOr<std::int64_t> i = v.get<std::int64_t>();
  * assert(!i.ok());  // Can't get the value becuase v is null
  * StatusOr<optional<std::int64_t> j = v.get<optional<std::int64_t>>();
  * assert(j.ok());  // OK because an empty option can represent the null
+ * assert(!j->has_value());  // v held no value.
  * @endcode
+ *
+ * @par Nullness
+ *
+ * All of the supported types (above) are "nullable". A null is created in one
+ * of two ways:
+ *
+ * 1. Passing an `optional<T>()` with no value to `Value`'s constructor.
+ * 2. Using the `MakeNullValue<T>()` helper function (defined below).
+ *
+ * Nulls can be retrieved from a `Value::get<T>` by specifying the type `T` as
+ * a `optional<U>`. The returned optional will either be empty (indicating
+ * null) or it will contain the actual value. See the documentation for
+ * `Value::get<T>` below for more details.
  *
  * @par Spanner Arrays (i.e., `std::vector<T>`)
  *
@@ -114,7 +123,6 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * @code
  * std::vector<std::int64_t> vec = {1, 2, 3, 4, 5};
  * spanner::Value v(vec);
- * assert(v.is<std::vector<std::int64_t>>());
  * auto copy = *v.get<std::vector<std::int64_t>>();
  * assert(vec == copy);
  * @endcode
@@ -136,7 +144,6 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * using Struct = std::tuple<bool, std::pair<std::string, std::int64_t>>;
  * Struct s  = {true, {"Foo", 42}};
  * spanner::Value v(s);
- * assert(v.is<Struct>());
  * assert(s == *v.get<Struct>());
  * @endcode
  *
@@ -148,12 +155,9 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
 class Value {
  public:
   /**
-   * Constructs a non-null `Value` that holds nothing.
+   * Constructs a `Value` that holds nothing.
    *
-   * The constructed object is logically empty. It will compare equal only to
-   * another default constructed `Value`. All calls to `is<T>()`,
-   * `is_null<T>()`, and `get<T>()` will return false or an error as
-   * appropriate.
+   * All calls to `get<T>()` will return an error.
    */
   Value() = default;
 
@@ -163,7 +167,7 @@ class Value {
   Value& operator=(Value const&) = default;
   Value& operator=(Value&&) = default;
 
-  /// Constructs a non-null instance with the specified type and value.
+  /// Constructs an instance with the specified type and value.
   explicit Value(bool v) : Value(PrivateConstructor{}, v) {}
   /// @copydoc Value(bool)
   explicit Value(std::int64_t v) : Value(PrivateConstructor{}, v) {}
@@ -207,12 +211,12 @@ class Value {
     friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
     ///@}
   };
-  /// Constructs a non-null instance with the specicified bytes.
+  /// Constructs an instance with the specicified bytes.
   explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
-   * Constructs a non-null instance from common C++ literal types that closely,
-   * though not exactly, match supported Spanner types.
+   * Constructs an instance from common C++ literal types that closely, though
+   * not exactly, match supported Spanner types.
    *
    * An integer literal in C++ is of type `int`, which is not exactly an
    * allowed Spanner type. This will be allowed but it will be implicitly up
@@ -221,10 +225,10 @@ class Value {
    *
    * @code
    * spanner::Value v1(42);
-   * assert(v1.is<std::int64_t>());
+   * assert(42 == *v1.get<std::int64_t>());
    *
    * spanner::Value v2("hello");
-   * assert(v2.is<std::string>());
+   * assert("hello" == *v2.get<std::string>());
    * @endcode
    */
   explicit Value(int v) : Value(PrivateConstructor{}, v) {}
@@ -233,7 +237,7 @@ class Value {
 
   /**
    * Constructs a non-null instance if `opt` has a value, otherwise constructs
-   * a null instance.
+   * a null instance with the specified type `T`.
    */
   template <typename T>
   explicit Value(optional<T> opt)
@@ -272,61 +276,12 @@ class Value {
   friend bool operator!=(Value const& a, Value const& b) { return !(a == b); }
 
   /**
-   * Returns true if the contained value is of the specified type `T`.
-   *
-   * All Value instances have some type, even null values. `T` may be an
-   * `optional<U>`, in which case it will return the same value as `is<U>()`.
-   *
-   * @par Example
-   *
-   * @code
-   * spanner::Value v{true};
-   * assert(v.is<bool>());  // Same as the following
-   * assert(v.is<optional<bool>>());
-   *
-   * spanner::Value null_v = spanner::MakeNullValue<bool>();
-   * assert(v.is<bool>());  // Same as the following
-   * assert(v.is<optional<bool>>());
-   * @endcode
-   */
-  template <typename T>
-  bool is() const {
-    // Ignores the name field because it is never set on the incoming `T`.
-    return EqualTypeProtoIgnoringNames(type_, MakeTypeProto(T{}));
-  }
-
-  /**
-   * Returns true if is<T>() and the contained value is "null".
-   *
-   * `T` may be an `optional<U>`, in which case it will return the same value
-   * as `is_null<U>()`.
-   *
-   * @par Example
-   *
-   * @code
-   * spanner::Value v{true};
-   * assert(!v.is_null<bool>());  // Same as the following
-   * assert(!v.is_null<optional<bool>>());
-   *
-   * spanner::Value null_v = spanner::MakeNullValue<bool>();
-   * assert(v.is_null<bool>());  // Same as the following
-   * assert(v.is_null<optional<bool>>());
-   * assert(!v.is_null<std::int64_t>());  // Same as the following
-   * assert(!v.is_null<optional<std::int64_t>>());
-   * @endcode
-   */
-  template <typename T>
-  bool is_null() const {
-    return is<T>() && value_.kind_case() == google::protobuf::Value::kNullValue;
-  }
-
-  /**
    * Returns the contained value wrapped in a `google::cloud::StatusOr<T>`.
    *
-   * Requires `is<T>()` is true, otherwise a non-OK Status will be returned. If
-   * `is_null<T>()` is true, a non-OK Status is returned, unless the specified
-   * type `T` is an `optional<U>`, in which case a valueless optional is
-   * returned to indicate the nullness.
+   * Returns a non-OK status IFF:
+   *
+   * * The contained value is "null", and `T` is not an `optional`.
+   * * There is an error converting the contained value to `T`.
    *
    * @par Example
    *
@@ -339,7 +294,6 @@ class Value {
    *
    * // Now using a "null" std::int64_t
    * v = spanner::MakeNullValue<std::int64_t>();
-   * assert(v.is_null<std::int64_t>());
    * StatusOr<std::int64_t> i = v.get<std::int64_t>();
    * if (!i) {
    *   std::cerr << "Could not get integer: " << i.status();
@@ -352,37 +306,14 @@ class Value {
    */
   template <typename T>
   StatusOr<T> get() const {
-    if (!is<T>()) return Status(StatusCode::kUnknown, "wrong type");
+    // Ignores the name field because it is never set on the incoming `T`.
+    if (!EqualTypeProtoIgnoringNames(type_, MakeTypeProto(T{})))
+      return Status(StatusCode::kUnknown, "wrong type");
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
       if (is_optional<T>::value) return T{};
       return Status(StatusCode::kUnknown, "null value");
     }
     return GetValue(T{}, value_, type_);
-  }
-
-  /**
-   * Returns the contained value iff `is<T>()` and `!is_null<T>()`.
-   *
-   * It is the caller's responsibility to ensure that the specified type
-   * `T` is correct (e.g., with `is<T>()`) and that the value is not "null"
-   * (e.g., with `!v.is_null<T>()`). Otherwise, the behavior is undefined.
-   *
-   * This is mostly useful if writing generic code where casting is needed.
-   *
-   * @par Example
-   *
-   * @code
-   * spanner::Value v{true};
-   * bool b = static_cast<bool>(v);  // OK: b == true
-   *
-   * spanner::Value null_v = spanner::MakeNullValue<std::int64_t>();
-   * std::int64_t i = static_cast<std::int64_t>(null_v);  // UB! null
-   * bool bad = static_cast<bool>(null_v);  // UB! wrong type
-   * @endcode
-   */
-  template <typename T>
-  explicit operator T() const {
-    return *get<T>();
   }
 
   /**

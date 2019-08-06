@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <array>
 #include <cstdint>
@@ -113,7 +114,9 @@ TEST(Row, WorksWithOptional) {
   EXPECT_FALSE(row_null.get<0>().has_value());
   auto values = row_null.values();
   EXPECT_EQ(1, values.size());
-  EXPECT_TRUE(values[0].is_null<std::string>());
+  auto opt_string = values[0].get<optional<std::string>>();
+  EXPECT_STATUS_OK(opt_string);
+  EXPECT_FALSE(opt_string->has_value());
 
   auto row_not_null = MakeRow(optional<std::string>{"hello"});
   EXPECT_EQ(1, row_not_null.size());
@@ -121,8 +124,9 @@ TEST(Row, WorksWithOptional) {
   EXPECT_EQ("hello", *row_not_null.get<0>());
   values = row_not_null.values();
   EXPECT_EQ(1, values.size());
-  EXPECT_FALSE(values[0].is_null<std::string>());
-  EXPECT_EQ("hello", *values[0].get<std::string>());
+  auto val = values[0].get<std::string>();
+  EXPECT_STATUS_OK(val);
+  EXPECT_EQ("hello", *val);
 }
 
 TEST(Row, Equality) {

@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <cmath>
 #include <limits>
@@ -33,17 +34,12 @@ inline namespace SPANNER_CLIENT_NS {
 template <typename T>
 void TestBasicSemantics(T init) {
   Value const default_ctor{};
-  EXPECT_FALSE(default_ctor.is<T>());
-  EXPECT_FALSE(default_ctor.is_null<T>());
   EXPECT_FALSE(default_ctor.get<T>().ok());
 
   Value const v{init};
 
-  EXPECT_TRUE(v.is<T>());
-  EXPECT_FALSE(v.is_null<T>());
-  EXPECT_TRUE(v.get<T>().ok());
+  EXPECT_STATUS_OK(v.get<T>());
   EXPECT_EQ(init, *v.get<T>());
-  EXPECT_EQ(init, static_cast<T>(v));
 
   Value copy = v;
   EXPECT_EQ(copy, v);
@@ -53,12 +49,8 @@ void TestBasicSemantics(T init) {
   // Tests a null Value of type `T`.
   Value const null = MakeNullValue<T>();
 
-  EXPECT_TRUE(null.is<T>());
-  EXPECT_TRUE(null.is_null<T>());
   EXPECT_FALSE(null.get<T>().ok());
-  EXPECT_TRUE(null.is<optional<T>>());
-  EXPECT_TRUE(null.is_null<optional<T>>());
-  EXPECT_TRUE(null.get<optional<T>>().ok());
+  EXPECT_STATUS_OK(null.get<optional<T>>());
   EXPECT_EQ(optional<T>{}, *null.get<optional<T>>());
 
   Value copy_null = null;
@@ -71,13 +63,9 @@ void TestBasicSemantics(T init) {
   EXPECT_EQ(v, internal::FromProto(protos.first, protos.second));
 
   Value const not_null{optional<T>(init)};
-  EXPECT_TRUE(not_null.is<T>());
-  EXPECT_FALSE(not_null.is_null<T>());
-  EXPECT_TRUE(not_null.get<T>().ok());
+  EXPECT_STATUS_OK(not_null.get<T>());
   EXPECT_EQ(init, *not_null.get<T>());
-  EXPECT_TRUE(not_null.is<optional<T>>());
-  EXPECT_FALSE(not_null.is_null<optional<T>>());
-  EXPECT_TRUE(not_null.get<optional<T>>().ok());
+  EXPECT_STATUS_OK(not_null.get<optional<T>>());
   EXPECT_EQ(init, **not_null.get<optional<T>>());
 }
 
@@ -182,8 +170,6 @@ TEST(Value, BasicSemantics) {
 TEST(Value, DoubleNaN) {
   double const nan = std::nan("NaN");
   Value v{nan};
-  EXPECT_TRUE(v.is<double>());
-  EXPECT_FALSE(v.is_null<double>());
   EXPECT_TRUE(std::isnan(*v.get<double>()));
 
   // Since IEEE 754 defines that nan is not equal to itself, then a Value with
@@ -204,7 +190,6 @@ TEST(Value, BytesDecodingError) {
 
   // We know the type is Bytes, but we cannot get a value out of it because the
   // base64 decoding will fail.
-  EXPECT_TRUE(bad.is<Value::Bytes>());
   StatusOr<Value::Bytes> bytes = bad.get<Value::Bytes>();
   EXPECT_FALSE(bytes.ok());
   EXPECT_THAT(bytes.status().message(), testing::HasSubstr("Invalid base64"));
@@ -212,26 +197,24 @@ TEST(Value, BytesDecodingError) {
 
 TEST(Value, ConstructionFromLiterals) {
   Value v_int64(42);
-  EXPECT_TRUE(v_int64.is<std::int64_t>());
   EXPECT_EQ(42, *v_int64.get<std::int64_t>());
 
   Value v_string("hello");
-  EXPECT_TRUE(v_string.is<std::string>());
   EXPECT_EQ("hello", *v_string.get<std::string>());
 
   std::vector<char const*> vec = {"foo", "bar"};
   Value v_vec(vec);
-  EXPECT_TRUE(v_vec.is<std::vector<std::string>>());
+  EXPECT_STATUS_OK(v_vec.get<std::vector<std::string>>());
 
   std::tuple<char const*, char const*> tup = std::make_tuple("foo", "bar");
   Value v_tup(tup);
-  EXPECT_TRUE((v_tup.is<std::tuple<std::string, std::string>>()));
+  EXPECT_STATUS_OK((v_tup.get<std::tuple<std::string, std::string>>()));
 
   auto named_field = std::make_tuple(false, std::make_pair("f1", 42));
   Value v_named_field(named_field);
-  EXPECT_TRUE(
+  EXPECT_STATUS_OK(
       (v_named_field
-           .is<std::tuple<bool, std::pair<std::string, std::int64_t>>>()));
+           .get<std::tuple<bool, std::pair<std::string, std::int64_t>>>()));
 }
 
 TEST(Value, MixingTypes) {
@@ -239,40 +222,26 @@ TEST(Value, MixingTypes) {
   using B = std::int64_t;
 
   Value a(A{});
-  EXPECT_TRUE(a.is<A>());
-  EXPECT_FALSE(a.is_null<A>());
   EXPECT_TRUE(a.get<A>().ok());
-  EXPECT_FALSE(a.is<B>());
-  EXPECT_FALSE(a.is_null<B>());
+  EXPECT_FALSE(a.get<B>().ok());
   EXPECT_FALSE(a.get<B>().ok());
 
   Value null_a = MakeNullValue<A>();
-  EXPECT_TRUE(null_a.is<A>());
-  EXPECT_TRUE(null_a.is_null<A>());
   EXPECT_FALSE(null_a.get<A>().ok());
-  EXPECT_FALSE(null_a.is<B>());
-  EXPECT_FALSE(null_a.is_null<B>());
   EXPECT_FALSE(null_a.get<B>().ok());
 
   EXPECT_NE(null_a, a);
 
   Value b(B{});
-  EXPECT_TRUE(b.is<B>());
-  EXPECT_FALSE(b.is_null<B>());
   EXPECT_TRUE(b.get<B>().ok());
-  EXPECT_FALSE(b.is<A>());
-  EXPECT_FALSE(b.is_null<A>());
+  EXPECT_FALSE(b.get<A>().ok());
   EXPECT_FALSE(b.get<A>().ok());
 
   EXPECT_NE(b, a);
   EXPECT_NE(b, null_a);
 
   Value null_b = MakeNullValue<B>();
-  EXPECT_TRUE(null_b.is<B>());
-  EXPECT_TRUE(null_b.is_null<B>());
   EXPECT_FALSE(null_b.get<B>().ok());
-  EXPECT_FALSE(null_b.is<A>());
-  EXPECT_FALSE(null_b.is_null<A>());
   EXPECT_FALSE(null_b.get<A>().ok());
 
   EXPECT_NE(null_b, b);
@@ -287,35 +256,24 @@ TEST(Value, SpannerArray) {
   ArrayInt64 const empty = {};
   Value const ve(empty);
   EXPECT_EQ(ve, ve);
-  EXPECT_TRUE(ve.is<ArrayInt64>());
-  EXPECT_FALSE(ve.is_null<ArrayInt64>());
-  EXPECT_FALSE(ve.is<ArrayDouble>());
   EXPECT_TRUE(ve.get<ArrayInt64>().ok());
   EXPECT_FALSE(ve.get<ArrayDouble>().ok());
   EXPECT_EQ(empty, *ve.get<ArrayInt64>());
-  EXPECT_EQ(empty, static_cast<ArrayInt64>(ve));
 
   ArrayInt64 const ai = {1, 2, 3};
   Value const vi(ai);
   EXPECT_EQ(vi, vi);
-  EXPECT_TRUE(vi.is<ArrayInt64>());
-  EXPECT_FALSE(vi.is_null<ArrayInt64>());
-  EXPECT_FALSE(vi.is<ArrayDouble>());
   EXPECT_TRUE(vi.get<ArrayInt64>().ok());
   EXPECT_FALSE(vi.get<ArrayDouble>().ok());
   EXPECT_EQ(ai, *vi.get<ArrayInt64>());
-  EXPECT_EQ(ai, static_cast<ArrayInt64>(vi));
 
   ArrayDouble const ad = {1.0, 2.0, 3.0};
   Value const vd(ad);
   EXPECT_EQ(vd, vd);
   EXPECT_NE(vi, vd);
-  EXPECT_TRUE(vd.is<ArrayDouble>());
-  EXPECT_FALSE(vd.is_null<ArrayDouble>());
-  EXPECT_FALSE(vd.is<ArrayInt64>());
+  EXPECT_FALSE(vd.get<ArrayInt64>().ok());
   EXPECT_TRUE(vd.get<ArrayDouble>().ok());
   EXPECT_EQ(ad, *vd.get<ArrayDouble>());
-  EXPECT_EQ(ad, static_cast<ArrayDouble>(vd));
 
   Value const null_vi = MakeNullValue<ArrayInt64>();
   EXPECT_EQ(null_vi, null_vi);
@@ -345,24 +303,29 @@ TEST(Value, SpannerStruct) {
   auto tup1 = make_tuple(false, int64_t{123});
   using T1 = decltype(tup1);
   Value v1(tup1);
-  EXPECT_TRUE(v1.is<T1>());
-  EXPECT_FALSE(v1.is_null<T1>());
-  EXPECT_TRUE(v1.get<T1>().ok());
+  EXPECT_STATUS_OK(v1.get<T1>());
   EXPECT_EQ(tup1, *v1.get<T1>());
   EXPECT_EQ(v1, v1);
 
-  // Verify that wrapping an element in a pair doesn't affect its C++ type.
-  EXPECT_TRUE((v1.is<tuple<bool, int64_t>>()));
-  EXPECT_TRUE((v1.is<tuple<pair<string, bool>, int64_t>>()));
-  EXPECT_TRUE((v1.is<tuple<bool, pair<string, int64_t>>>()));
-  EXPECT_TRUE((v1.is<tuple<pair<string, bool>, pair<string, int64_t>>>()));
+  // Verify we can extract tuple elements even if they're wrapped in a pair.
+  auto const pair0 = v1.get<tuple<pair<string, bool>, int64_t>>();
+  EXPECT_STATUS_OK(pair0);
+  EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair0).second);
+  EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair0));
+  auto const pair1 = v1.get<tuple<bool, pair<string, int64_t>>>();
+  EXPECT_STATUS_OK(pair1);
+  EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair1));
+  EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair1).second);
+  auto const pair01 =
+      v1.get<tuple<pair<string, bool>, pair<string, int64_t>>>();
+  EXPECT_STATUS_OK(pair01);
+  EXPECT_EQ(std::get<0>(tup1), std::get<0>(*pair01).second);
+  EXPECT_EQ(std::get<1>(tup1), std::get<1>(*pair01).second);
 
   auto tup2 = make_tuple(false, make_pair(string("f2"), int64_t{123}));
   using T2 = decltype(tup2);
   Value v2(tup2);
-  EXPECT_TRUE(v2.is<T2>());
-  EXPECT_FALSE(v2.is_null<T2>());
-  EXPECT_TRUE(v2.get<T2>().ok());
+  EXPECT_STATUS_OK(v2.get<T2>());
   EXPECT_EQ(tup2, *v2.get<T2>());
   EXPECT_EQ(v2, v2);
   EXPECT_NE(v2, v1);
@@ -374,9 +337,7 @@ TEST(Value, SpannerStruct) {
   auto tup3 = make_tuple(false, make_pair(string("Other"), int64_t{123}));
   using T3 = decltype(tup3);
   Value v3(tup3);
-  EXPECT_TRUE(v3.is<T3>());
-  EXPECT_FALSE(v3.is_null<T3>());
-  EXPECT_TRUE(v3.get<T3>().ok());
+  EXPECT_STATUS_OK(v3.get<T3>());
   EXPECT_EQ(tup3, *v3.get<T3>());
   EXPECT_EQ(v3, v3);
   EXPECT_NE(v3, v2);
@@ -386,16 +347,12 @@ TEST(Value, SpannerStruct) {
 
   // v1 != v2, yet T2 works with v1 and vice versa
   EXPECT_NE(v1, v2);
-  EXPECT_TRUE(v1.is<T2>());
-  EXPECT_FALSE(v1.is_null<T2>());
-  EXPECT_TRUE(v2.is<T1>());
-  EXPECT_FALSE(v2.is_null<T1>());
+  EXPECT_STATUS_OK(v1.get<T2>());
+  EXPECT_STATUS_OK(v2.get<T1>());
 
   Value v_null(optional<T1>{});
-  EXPECT_TRUE(v_null.is<T1>());
-  EXPECT_TRUE(v_null.is<T2>());
-  EXPECT_TRUE(v_null.is_null<T1>());
-  EXPECT_TRUE(v_null.is_null<T2>());
+  EXPECT_FALSE(v_null.get<optional<T1>>()->has_value());
+  EXPECT_FALSE(v_null.get<optional<T2>>()->has_value());
 
   EXPECT_NE(v1, v_null);
   EXPECT_NE(v2, v_null);
@@ -407,37 +364,34 @@ TEST(Value, SpannerStruct) {
   };
   using T4 = decltype(array_struct);
   Value v4(array_struct);
-  EXPECT_TRUE(v4.is<T4>());
-  EXPECT_FALSE(v4.is<T3>());
-  EXPECT_FALSE(v4.is<T2>());
-  EXPECT_FALSE(v4.is<T1>());
-
-  EXPECT_FALSE(v4.is_null<T4>());
   EXPECT_TRUE(v4.get<T4>().ok());
+  EXPECT_FALSE(v4.get<T3>().ok());
+  EXPECT_FALSE(v4.get<T2>().ok());
+  EXPECT_FALSE(v4.get<T1>().ok());
+
+  EXPECT_STATUS_OK(v4.get<T4>());
   EXPECT_EQ(array_struct, *v4.get<T4>());
 
   auto empty = tuple<>{};
   using T5 = decltype(empty);
   Value v5(empty);
-  EXPECT_TRUE(v5.is<T5>());
-  EXPECT_FALSE(v5.is<T4>());
+  EXPECT_TRUE(v5.get<T5>().ok());
+  EXPECT_FALSE(v5.get<T4>().ok());
   EXPECT_EQ(v5, v5);
   EXPECT_NE(v5, v4);
 
-  EXPECT_FALSE(v5.is_null<T5>());
-  EXPECT_TRUE(v5.get<T5>().ok());
+  EXPECT_STATUS_OK(v5.get<T5>());
   EXPECT_EQ(empty, *v5.get<T5>());
 
   auto crazy = tuple<tuple<std::vector<optional<bool>>>>{};
   using T6 = decltype(crazy);
   Value v6(crazy);
-  EXPECT_TRUE(v6.is<T6>());
-  EXPECT_FALSE(v6.is<T5>());
+  EXPECT_TRUE(v6.get<T6>().ok());
+  EXPECT_FALSE(v6.get<T5>().ok());
   EXPECT_EQ(v6, v6);
   EXPECT_NE(v6, v5);
 
-  EXPECT_FALSE(v6.is_null<T6>());
-  EXPECT_TRUE(v6.get<T6>().ok());
+  EXPECT_STATUS_OK(v6.get<T6>());
   EXPECT_EQ(crazy, *v6.get<T6>());
 }
 
@@ -625,214 +579,168 @@ void ClearProtoKind(Value& v) {
 TEST(Value, GetBadBool) {
   Value v(true);
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<bool>());
   EXPECT_FALSE(v.get<bool>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<bool>());
   EXPECT_FALSE(v.get<bool>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<bool>());
   EXPECT_FALSE(v.get<bool>().ok());
 
   SetProtoKind(v, "hello");
-  EXPECT_TRUE(v.is<bool>());
   EXPECT_FALSE(v.get<bool>().ok());
 }
 
 TEST(Value, GetBadDouble) {
   Value v(0.0);
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<double>());
   EXPECT_FALSE(v.get<double>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<double>());
   EXPECT_FALSE(v.get<double>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<double>());
   EXPECT_FALSE(v.get<double>().ok());
 
   SetProtoKind(v, "bad string");
-  EXPECT_TRUE(v.is<double>());
   EXPECT_FALSE(v.get<double>().ok());
 }
 
 TEST(Value, GetBadString) {
   Value v("hello");
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<std::string>());
   EXPECT_FALSE(v.get<std::string>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<std::string>());
   EXPECT_FALSE(v.get<std::string>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<std::string>());
   EXPECT_FALSE(v.get<std::string>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<std::string>());
   EXPECT_FALSE(v.get<std::string>().ok());
 }
 
 TEST(Value, GetBadBytes) {
   Value v(Value::Bytes("hello"));
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<Value::Bytes>());
   EXPECT_FALSE(v.get<Value::Bytes>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<Value::Bytes>());
   EXPECT_FALSE(v.get<Value::Bytes>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<Value::Bytes>());
   EXPECT_FALSE(v.get<Value::Bytes>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<Value::Bytes>());
   EXPECT_FALSE(v.get<Value::Bytes>().ok());
 }
 
 TEST(Value, GetBadInt) {
   Value v(42);
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 
   SetProtoKind(v, "");
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 
   SetProtoKind(v, "123blah");
-  EXPECT_TRUE(v.is<std::int64_t>());
   EXPECT_FALSE(v.get<std::int64_t>().ok());
 }
 
 TEST(Value, GetBadTimestamp) {
   Value v(Timestamp{});
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<Timestamp>());
   EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<Timestamp>());
   EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<Timestamp>());
   EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<Timestamp>());
   EXPECT_FALSE(v.get<Timestamp>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<Timestamp>());
   EXPECT_FALSE(v.get<Timestamp>().ok());
 }
 
 TEST(Value, GetBadDate) {
   Value v(Date{});
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<Date>());
   EXPECT_FALSE(v.get<Date>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<Date>());
   EXPECT_FALSE(v.get<Date>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<Date>());
   EXPECT_FALSE(v.get<Date>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<Date>());
   EXPECT_FALSE(v.get<Date>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<Date>());
   EXPECT_FALSE(v.get<Date>().ok());
 }
 
 TEST(Value, GetBadOptional) {
   Value v(optional<double>{});
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<optional<double>>());
   EXPECT_FALSE(v.get<optional<double>>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<optional<double>>());
   EXPECT_FALSE(v.get<optional<double>>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<optional<double>>());
   EXPECT_FALSE(v.get<optional<double>>().ok());
 }
 
 TEST(Value, GetBadArray) {
   Value v(std::vector<double>{});
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<std::vector<double>>());
   EXPECT_FALSE(v.get<std::vector<double>>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<std::vector<double>>());
   EXPECT_FALSE(v.get<std::vector<double>>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<std::vector<double>>());
   EXPECT_FALSE(v.get<std::vector<double>>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<std::vector<double>>());
   EXPECT_FALSE(v.get<std::vector<double>>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<std::vector<double>>());
   EXPECT_FALSE(v.get<std::vector<double>>().ok());
 }
 
 TEST(Value, GetBadStruct) {
   Value v(std::tuple<bool>{});
   ClearProtoKind(v);
-  EXPECT_TRUE(v.is<std::tuple<bool>>());
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_TRUE(v.is<std::tuple<bool>>());
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_TRUE(v.is<std::tuple<bool>>());
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_TRUE(v.is<std::tuple<bool>>());
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
 
   SetProtoKind(v, "blah");
-  EXPECT_TRUE(v.is<std::tuple<bool>>());
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
 }
 
