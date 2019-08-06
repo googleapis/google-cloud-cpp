@@ -93,6 +93,7 @@ struct Options {
   long maximum_sample_count = std::numeric_limits<long>::max();
   bool disable_crc32c = false;
   bool disable_md5 = false;
+  bool use_biased_generator = false;
 };
 
 enum OpType { OP_UPLOAD, OP_DOWNLOAD };
@@ -103,6 +104,8 @@ struct IterationResult {
   std::uint64_t buffer_size;
   std::chrono::microseconds elapsed_time;
   std::chrono::microseconds cpu_time;
+  // The relative probability of occurring in the benchmark.
+  double prob;
   google::cloud::StatusCode status;
 };
 using TestResults = std::vector<IterationResult>;
@@ -229,7 +232,8 @@ std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
   return os << ToString(rhs.op) << ',' << rhs.object_size << ','
             << rhs.chunk_size << ',' << rhs.buffer_size << ','
             << rhs.elapsed_time.count() << ',' << rhs.cpu_time.count() << ','
-            << rhs.status << ',' << google::cloud::storage::version_string();
+            << rhs.prob << ',' << rhs.status << ','
+            << google::cloud::storage::version_string();
 }
 
 void PrintResults(TestResults const& results) {
@@ -255,9 +259,13 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   std::uint64_t download_buffer_size = client_options->download_buffer_size();
   gcs::Client client(*std::move(client_options));
 
-  std::uniform_int_distribution<std::uint64_t> size_generator(
+  std::uniform_int_distribution<std::uint64_t> uniform_size_generator(
       options.minimum_object_size, options.maximum_object_size);
-  std::uniform_int_distribution<std::uint64_t> chunk_generator(
+  std::uniform_int_distribution<std::uint64_t> uniform_chunk_generator(
+      options.minimum_chunk_size, options.maximum_chunk_size);
+  gcs_bm::SmallValuesBiasedDistribution biased_size_generator(
+      options.minimum_object_size, options.maximum_object_size);
+  gcs_bm::SmallValuesBiasedDistribution biased_chunk_generator(
       options.minimum_chunk_size, options.maximum_chunk_size);
 
   auto deadline = std::chrono::steady_clock::now() + options.duration;
@@ -278,8 +286,16 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
        (iteration_count < options.minimum_sample_count || start < deadline);
        start = std::chrono::steady_clock::now(), ++iteration_count) {
     auto object_name = gcs_bm::MakeRandomObjectName(generator);
-    auto object_size = size_generator(generator);
-    auto chunk_size = chunk_generator(generator);
+    auto object_size = options.use_biased_generator
+                           ? biased_chunk_generator(generator)
+                           : uniform_size_generator(generator);
+    auto chunk_size = options.use_biased_generator
+                          ? biased_chunk_generator(generator)
+                          : uniform_chunk_generator(generator);
+    double prob = options.use_biased_generator
+                      ? (biased_size_generator.PDF(object_size) *
+                         biased_chunk_generator.PDF(chunk_size))
+                      : 1;
 
     timer.Start();
     auto writer =
@@ -297,10 +313,10 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     timer.Stop();
 
     auto object_metadata = writer.metadata();
-    results.emplace_back(IterationResult{OP_UPLOAD, object_size, chunk_size,
-                                         download_buffer_size,
-                                         timer.elapsed_time(), timer.cpu_time(),
-                                         object_metadata.status().code()});
+    results.emplace_back(IterationResult{
+        OP_UPLOAD, object_size, chunk_size, download_buffer_size,
+        timer.elapsed_time(), timer.cpu_time(), prob,
+        object_metadata.status().code()});
 
     if (!object_metadata) {
       continue;
@@ -318,7 +334,7 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     timer.Stop();
     results.emplace_back(IterationResult{
         OP_DOWNLOAD, object_size, chunk_size, upload_buffer_size,
-        timer.elapsed_time(), timer.cpu_time(), reader.status().code()});
+        timer.elapsed_time(), timer.cpu_time(), prob, reader.status().code()});
 
     auto status =
         client.DeleteObject(object_metadata->bucket(), object_metadata->name(),
@@ -387,6 +403,11 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
       {"--disable-md5", "disable MD5 hashes",
        [&options](std::string const& val) {
          options.disable_md5 = gcs_bm::ParseBoolean(val).value_or(true);
+       }},
+      {"--use_biased_generator",
+       "use a size/chunk size random generator biased towards small values",
+       [&options](std::string const& val) {
+         options.use_biased_generator = gcs_bm::ParseBoolean(val, true);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);

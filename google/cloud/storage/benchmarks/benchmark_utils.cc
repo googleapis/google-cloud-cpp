@@ -279,6 +279,28 @@ bool SimpleTimer::SupportPerThreadUsage() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
+static_assert(std::is_copy_constructible<SmallValuesBiasedDistribution>::value,
+              "SmallValuesBiasedDistribution shoud be copy constructible");
+static_assert(std::is_move_constructible<SmallValuesBiasedDistribution>::value,
+              "SmallValuesBiasedDistribution shoud be move constructible");
+static_assert(std::is_copy_assignable<SmallValuesBiasedDistribution>::value,
+              "SmallValuesBiasedDistribution shoud be copy assignable");
+static_assert(std::is_move_assignable<SmallValuesBiasedDistribution>::value,
+              "SmallValuesBiasedDistribution shoud be move assignable");
+
+double SmallValuesBiasedDistribution::PDF(result_type x) const {
+  return 1. / (x + 1) / (l_max_ - l_min_);
+}
+
+double SmallValuesBiasedDistribution::CDF(result_type x) const {
+  return (std::log(x + 1) - l_min_) / (l_max_ - l_min_);
+}
+
+SmallValuesBiasedDistribution::result_type
+SmallValuesBiasedDistribution::InvCDF(double x) const {
+  return std::round(std::exp(x * (l_max_ - l_min_) + l_min_) - 1);
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google

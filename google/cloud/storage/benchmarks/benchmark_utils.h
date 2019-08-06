@@ -18,6 +18,7 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
 #include <chrono>
+#include <cmath>
 #include <functional>
 #include <string>
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
@@ -117,6 +118,51 @@ class SimpleTimer {
   struct rusage start_usage_;
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
   std::string annotations_;
+};
+
+/**
+ * A distribution biased towards small values.
+ *
+ * The PDF for this distribution is 1/(x+1) normalized to be a proper
+ * distribution.
+ *
+ * @par Rationale
+ * Imagine you want to discover an optimal buffer size for an activity. You'll
+ * likely run a large number of tests with different buffer sizes. If your
+ * tested range is between 128K and 64M a uniform distribution will be wasteful.
+ * It's unlikely that you'll need to decide whether 48M or 48.2M is better, but
+ * quite likely that you'll need to decide between 128K and 256K. This
+ * distribution will produce twice as many samples between 0 and 1 than between
+ * 1 and 2 and so on.
+ *
+ * @par The formulas
+ * PDF:
+ * 1 / (x+1) / (ln(max+1) - ln(min+1))
+ * CDF:
+ * (ln(x+1) - ln(m+1)) / (ln(max+1) - ln(min+1))
+ * Inverse CDF:
+ * exp(x(ln(max+1) - ln(min+1)) + ln(min+1)) - 1
+ */
+class SmallValuesBiasedDistribution {
+ public:
+  SmallValuesBiasedDistribution(size_t min, size_t max)
+      : l_min_(std::log(min + 1)), l_max_(std::log(max + 1)) {}
+
+  using result_type = size_t;
+
+  template <class Generator>
+  result_type operator()(Generator& g) {
+    return InvCDF((static_cast<double>(g()) - g.min()) / (g.max() - g.min()));
+  }
+
+  double PDF(result_type x) const;
+  double CDF(result_type x) const;
+  result_type InvCDF(double x) const;
+
+ private:
+  // Natural logarithms of (min_ + 1) and (max_ + 1).
+  double l_min_;
+  double l_max_;
 };
 
 }  // namespace storage_benchmarks
