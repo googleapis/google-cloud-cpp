@@ -26,7 +26,7 @@ config_setting(
 )
 
 CURL_WIN_COPTS = [
-    "/Iexternal/curl/lib",
+    "/Iexternal/com_github_curl_curl/lib",
     "/DBUILDING_LIBCURL",
     "/DHAVE_CONFIG_H",
     "/DCURL_DISABLE_FTP",
