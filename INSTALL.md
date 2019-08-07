@@ -85,13 +85,13 @@ commands to your `WORKSPACE` file:
 ```Python
 # Update the version and SHA256 digest as needed.
 http_archive(
-    name = "com_github_googleapis_google_cloud_cpp",
+    name = "gcloud_cpp",
     url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.10.0.tar.gz",
     strip_prefix = "google-cloud-cpp-0.10.0",
     sha256 = "fd0c3e3b50f32af332b53857f8cd1bfa009e33d1eeecabc5c79a4825d906a90c",
 )
 
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@gcloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 google_cloud_cpp_deps()
 # Have to manually call the corresponding function for gRPC:
 #   https://github.com/bazelbuild/bazel/issues/1550
@@ -108,7 +108,7 @@ cc_binary(
         "bigtable_install_test.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
+        "@gcloud_cpp//google/cloud/bigtable:bigtable_client",
     ],
 )
 
@@ -118,7 +118,7 @@ cc_binary(
         "storage_install_test.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
+        "@gcloud_cpp//google/cloud/storage:storage_client",
     ],
 )
 ```
