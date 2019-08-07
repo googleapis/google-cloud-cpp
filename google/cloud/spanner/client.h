@@ -15,19 +15,18 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 
-#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_result.h"
-#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/sql_partition.h"
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
-#include "google/cloud/spanner/value.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
+#include <grpcpp/grpcpp.h>
 #include <memory>
 #include <string>
 #include <vector>
@@ -67,10 +66,11 @@ struct KeySet {};
  *
  * @par Performance
  *
- * Creating a new `Client` is a relatively expensive operation, new objects
- * establish new connections to the service. In contrast, copying or moving
- * an existing `Client` object is a relatively cheap operation. Copied clients
- * share the underlying resources.
+ * `Client` objects are cheap to create, copy, and move. However, each `Client`
+ * object must be created with a `std::shared_ptr<Connection>`, which itself is
+ * relatively expensive to create. Therefore, connection instances should be
+ * shared when possible. See the `MakeConnection()` method and the `Connection`
+ * interface for more details.
  *
  * @par Thread Safety
  *
@@ -90,16 +90,18 @@ struct KeySet {};
  * @code
  * namespace cs = ::google::cloud::spanner;
  * using ::google::cloud::StatusOr;
- * auto client = cs::MakeClient(
- *     cs::MakeDatabaseName("my_project", "my_instance", "my_database_id"));
- * if (!client) {
- *   return client.status();
- * }
- * StatusOr<cs::ResultSet> result = client->Read(...);
+ *
+ * auto db = cs::MakeDatabaseName("my_project", "my_instance", "my_db_id"));
+ * auto conn = cs::MakeConnection(std::move(db));
+ * auto client = cs::Client(conn);(
+ *
+ * StatusOr<cs::ResultSet> result = client.Read(...);
  * if (!result) {
  *   return result.status();
  * }
- * for (auto row : result.Rows<std::int64_t, std::string>()) { ... }
+ * for (auto const& row : result.Rows<std::int64_t, std::string>()) {
+ *   // ...
+ * }
  * @endcode
  *
  * [spanner-doc-link]:
@@ -107,6 +109,34 @@ struct KeySet {};
  */
 class Client {
  public:
+  /**
+   * Constructs a `Client` object that will use the specified `Connection`.
+   *
+   * See `MakeConnection()` for how to create a connection to Spanner. To help
+   * with unit testing, callers may create fake/mock `Connection` objects that
+   * are injected into the `Client`.
+   */
+  explicit Client(std::shared_ptr<Connection> conn) : conn_(std::move(conn)) {}
+
+  /// No default construction. Use `Client(std::shared_ptr<Connection>)`
+  Client() = delete;
+
+  //@{
+  // @name Copy and move support
+  Client(Client const&) = default;
+  Client& operator=(Client const&) = default;
+  Client(Client&&) = default;
+  Client& operator=(Client&&) = default;
+  //@}
+
+  //@{
+  // @name Equality
+  friend bool operator==(Client const& a, Client const& b) {
+    return a.conn_ == b.conn_;
+  }
+  friend bool operator!=(Client const& a, Client const& b) { return !(a == b); }
+  //@}
+
   //@{
   /**
    * Reads rows from the database using key lookups and scans, as a simple
@@ -335,7 +365,7 @@ class Client {
    *     on failure.
    */
   StatusOr<CommitResult> Commit(Transaction transaction,
-                                std::vector<Mutation> const& mutations);
+                                std::vector<Mutation> mutations);
 
   /**
    * Rolls back a transaction, releasing any locks it holds. It is a good idea
@@ -348,65 +378,34 @@ class Client {
    */
   Status Rollback(Transaction const& transaction);
 
-  /**
-   * Create a new client with the given stub.
-   * @warning Do not call this directly (it's exposed for testing only); call
-   *     `MakeClient()` instead.
-   *
-   * @param database_name The name of the Spanner database to use.
-   *     See `MakeClient` for restrictions on the format of the name.
-   * @param stub The stub used to connect to the spanner service.
-   */
-  explicit Client(std::string database_name,
-                  std::shared_ptr<internal::SpannerStub> stub)
-      : database_name_(std::move(database_name)), stub_(std::move(stub)) {}
-
  private:
-  class SessionHolder {
-   public:
-    SessionHolder(std::string session, Client* client) noexcept;
-    ~SessionHolder();
-
-    std::string const& session_name() const { return session_; }
-
-   private:
-    std::string session_;
-    Client* client_;
-  };
-  friend class SessionHolder;
-  StatusOr<SessionHolder> GetSession();
-
-  /// Implementation details for Commit.
-  StatusOr<CommitResult> Commit(google::spanner::v1::TransactionSelector& s,
-                                std::vector<Mutation> const& mutations);
-
-  std::string database_name_;
-  std::shared_ptr<internal::SpannerStub> stub_;
-
-  // The current session pool.
-  // TODO(#307) - improve session refresh and expiration.
-  std::vector<std::string> sessions_;
+  std::shared_ptr<Connection> conn_;
 };
-
-/**
- * Factory method to create a `Client` with the given `client_options`.
- *
- * @param database_name The name of the Spanner database to use.
- *     The database name must conform to the format:
- *     `projects/<project>/instances/<instance>/databases/<database_id>`.
- *     You can use the `MakeDatabaseName` helper to properly format the name.
- * @param client_options `ClientOptions` used when creating the client.
- *
- * @return A `Client` that can be used to perform operations on `database_name`,
- *     or error status on failure.
- */
-StatusOr<Client> MakeClient(std::string database_name,
-                            ClientOptions const& client_options = {});
 
 /// Format a database name given the `project`, `instance`, and `database_id`.
 std::string MakeDatabaseName(std::string const& project,
                              std::string const& instance,
                              std::string const& database_id);
+
+/**
+ * Retuns a Connection object that can be used for interacting with Spanner.
+ *
+ * The returned connection object should not be used directly, rather it should
+ * be given to a `Client` instance, and methods should be invoked on `Client`.
+ *
+ * TODO(#321): Move optional args into options struct.
+ *
+ * @see `Connection`
+ *
+ * @param database the name of the database. See `MakeDatabaesName`.
+ * @param creds (optional) the gRPC credentials to use.
+ * @param endpoint (optional) the Spanner service to connect to.
+ */
+std::shared_ptr<Connection> MakeConnection(
+    std::string database,
+    std::shared_ptr<grpc::ChannelCredentials> const& creds =
+        grpc::GoogleDefaultCredentials(),
+    std::string const& endpoint = "spanner.googleapis.com");
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

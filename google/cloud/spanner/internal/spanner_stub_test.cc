@@ -23,7 +23,8 @@ namespace internal {
 namespace {
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub = CreateDefaultSpannerStub(ClientOptions());
+  auto stub =
+      CreateDefaultSpannerStub(grpc::GoogleDefaultCredentials(), "localhost");
   EXPECT_NE(stub, nullptr);
 }
 
