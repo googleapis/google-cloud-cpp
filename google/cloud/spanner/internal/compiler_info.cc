@@ -88,7 +88,7 @@ std::string CompilerFeatures() {
 std::string LanguageVersion() {
   switch (__cplusplus) {
     case 199711L:
-      return "98";
+      return "1998";
     case 201103L:
       return "2011";
     case 201402L:
