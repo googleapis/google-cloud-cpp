@@ -22,7 +22,7 @@ cc_binary(
         "bigtable/bigtable_install_test.cc",
     ],
     deps = [
-        "@gcloud_cpp//google/cloud/bigtable:bigtable_client",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
     ],
 )
 
@@ -32,6 +32,6 @@ cc_binary(
         "storage/storage_install_test.cc",
     ],
     deps = [
-        "@gcloud_cpp//google/cloud/storage:storage_client",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
     ],
 )
