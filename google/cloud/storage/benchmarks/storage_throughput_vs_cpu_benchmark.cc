@@ -407,7 +407,8 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
       {"--use_biased_generator",
        "use a size/chunk size random generator biased towards small values",
        [&options](std::string const& val) {
-         options.use_biased_generator = gcs_bm::ParseBoolean(val, true);
+         options.use_biased_generator =
+             gcs_bm::ParseBoolean(val).value_or(true);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
