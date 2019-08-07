@@ -104,6 +104,7 @@ struct IterationResult {
   std::chrono::microseconds elapsed_time;
   std::chrono::microseconds cpu_time;
   google::cloud::StatusCode status;
+  std::vector<gcs_bm::ProgressReporter::TimePoint> progress;
 };
 using TestResults = std::vector<IterationResult>;
 
@@ -225,11 +226,28 @@ char const* ToString(OpType type) {
   return nullptr;  // silence g++ error.
 }
 
+std::ostream& operator<<(std::ostream& os,
+                         gcs_bm::ProgressReporter::TimePoint const& point) {
+  return os << point.bytes << '|' << point.elapsed.count();
+}
+
+std::ostream& operator<<(
+    std::ostream& os,
+    std::vector<gcs_bm::ProgressReporter::TimePoint> const& points) {
+  char const* sep = "";
+  for (auto const& point : points) {
+    os << sep << point;
+    sep = ";";
+  }
+  return os;
+}
+
 std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
   return os << ToString(rhs.op) << ',' << rhs.object_size << ','
             << rhs.chunk_size << ',' << rhs.buffer_size << ','
             << rhs.elapsed_time.count() << ',' << rhs.cpu_time.count() << ','
-            << rhs.status << ',' << google::cloud::storage::version_string();
+            << rhs.status << ',' << rhs.progress << ','
+            << google::cloud::storage::version_string();
 }
 
 void PrintResults(TestResults const& results) {
@@ -281,7 +299,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto object_size = size_generator(generator);
     auto chunk_size = chunk_generator(generator);
 
+    gcs_bm::ProgressReporter progress;
     timer.Start();
+    progress.Start();
     auto writer =
         client.WriteObject(bucket_name, object_name,
                            gcs::DisableCrc32cChecksum(options.disable_crc32c),
@@ -292,33 +312,39 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
         len = object_size - offset;
       }
       writer.write(contents.data() + offset, len);
+      progress.Advance(offset);
     }
     writer.Close();
+    progress.Advance(object_size);
     timer.Stop();
 
     auto object_metadata = writer.metadata();
-    results.emplace_back(IterationResult{OP_UPLOAD, object_size, chunk_size,
-                                         download_buffer_size,
-                                         timer.elapsed_time(), timer.cpu_time(),
-                                         object_metadata.status().code()});
+    results.emplace_back(IterationResult{
+        OP_UPLOAD, object_size, chunk_size, download_buffer_size,
+        timer.elapsed_time(), timer.cpu_time(), object_metadata.status().code(),
+        progress.GetAccumulatedProgress()});
 
     if (!object_metadata) {
       continue;
     }
 
     timer.Start();
+    progress.Start();
     auto reader =
         client.ReadObject(object_metadata->bucket(), object_metadata->name(),
                           gcs::Generation(object_metadata->generation()),
                           gcs::DisableCrc32cChecksum(options.disable_crc32c),
                           gcs::DisableMD5Hash(options.disable_md5));
+    progress.Advance(0);
     std::vector<char> buffer(chunk_size);
-    while (reader.read(buffer.data(), buffer.size())) {
+    for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
+         progress.Advance(num_read += reader.gcount())) {
     }
     timer.Stop();
     results.emplace_back(IterationResult{
         OP_DOWNLOAD, object_size, chunk_size, upload_buffer_size,
-        timer.elapsed_time(), timer.cpu_time(), reader.status().code()});
+        timer.elapsed_time(), timer.cpu_time(), reader.status().code(),
+        progress.GetAccumulatedProgress()});
 
     auto status =
         client.DeleteObject(object_metadata->bucket(), object_metadata->name(),

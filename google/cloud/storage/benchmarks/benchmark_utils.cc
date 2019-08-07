@@ -279,6 +279,23 @@ bool SimpleTimer::SupportPerThreadUsage() {
 #endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
+void ProgressReporter::Start() {
+  progress_.clear();
+  start_ = std::chrono::steady_clock::now();
+  progress_.emplace_back(TimePoint{0, std::chrono::microseconds(0)});
+}
+
+void ProgressReporter::Advance(size_t progress) {
+  progress_.emplace_back(
+      TimePoint{progress, std::chrono::duration_cast<std::chrono::microseconds>(
+                              std::chrono::steady_clock::now() - start_)});
+}
+
+std::vector<ProgressReporter::TimePoint> const&
+ProgressReporter::GetAccumulatedProgress() const {
+  return progress_;
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google
