@@ -132,19 +132,20 @@ function (googleapis_project_create_lib lib)
 endfunction ()
 
 function (gooogleapis_project_create_all_libraries)
-    foreach (lib
-             api_http
-             api_annotations
-             api_auth
-             api_resource
-             type_expr
-             rpc_status
-             rpc_error_details
-             longrunning_operations
-             iam_v1_policy
-             iam_v1_iam_policy
-             bigtable
-             spanner)
+    set(all_libs
+        api_http
+        api_annotations
+        api_auth
+        api_resource
+        type_expr
+        rpc_status
+        rpc_error_details
+        longrunning_operations
+        iam_v1_policy
+        iam_v1_iam_policy
+        bigtable
+        spanner)
+    foreach (lib ${all_libs})
         googleapis_project_create_lib(${lib})
     endforeach ()
 
@@ -198,21 +199,14 @@ function (gooogleapis_project_create_all_libraries)
                           googleapis-c++::iam_v1_iam_policy_protos
                           googleapis-c++::rpc_status_protos)
 
-    foreach (lib
-             api_http
-             api_annotations
-             api_auth
-             rpc_status
-             rpc_error_details
-             longrunning_operations
-             iam_v1_policy
-             iam_v1_iam_policy
-             bigtable
-             spanner)
+    foreach (lib ${all_libs})
         set(scoped_name "googleapis-c++::${lib}_protos")
         set_property(TARGET ${scoped_name}
                      APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc++
+                     PROPERTY INTERFACE_LINK_LIBRARIES
+                              gRPC::grpc++
+                              gRPC::grpc
+                              gRPC::gpr
                               protobuf::libprotobuf)
     endforeach ()
 endfunction ()
