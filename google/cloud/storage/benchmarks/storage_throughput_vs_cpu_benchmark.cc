@@ -91,8 +91,6 @@ struct Options {
   std::int64_t maximum_chunk_size = 4096 * gcs_bm::kKiB;
   long minimum_sample_count = 0;
   long maximum_sample_count = std::numeric_limits<long>::max();
-  bool disable_crc32c = false;
-  bool disable_md5 = false;
 };
 
 enum OpType { OP_UPLOAD, OP_DOWNLOAD };
@@ -101,6 +99,8 @@ struct IterationResult {
   std::uint64_t object_size;
   std::uint64_t chunk_size;
   std::uint64_t buffer_size;
+  bool crc_enabled;
+  bool md5_enabled;
   std::chrono::microseconds elapsed_time;
   std::chrono::microseconds cpu_time;
   google::cloud::StatusCode status;
@@ -174,8 +174,6 @@ int main(int argc, char* argv[]) {
             << options->minimum_chunk_size / gcs_bm::kKiB
             << "\n# Max Chunk Size (KiB): "
             << options->maximum_chunk_size / gcs_bm::kKiB << std::boolalpha
-            << "\n# Disable CRC32C: " << options->disable_crc32c
-            << "\n# Disable MD5: " << options->disable_md5
             << "\n# Build info: " << notes << "\n";
   // Make this immediately visible in the console, helps with debugging.
   std::cout << std::flush;
@@ -245,6 +243,7 @@ std::ostream& operator<<(
 std::ostream& operator<<(std::ostream& os, IterationResult const& rhs) {
   return os << ToString(rhs.op) << ',' << rhs.object_size << ','
             << rhs.chunk_size << ',' << rhs.buffer_size << ','
+            << rhs.crc_enabled << ',' << rhs.md5_enabled << ','
             << rhs.elapsed_time.count() << ',' << rhs.cpu_time.count() << ','
             << rhs.status << ',' << rhs.progress << ','
             << google::cloud::storage::version_string();
@@ -278,6 +277,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
   std::uniform_int_distribution<std::uint64_t> chunk_generator(
       options.minimum_chunk_size, options.maximum_chunk_size);
 
+  std::bernoulli_distribution crc_generator;
+  std::bernoulli_distribution md5_generator;
+
   auto deadline = std::chrono::steady_clock::now() + options.duration;
 
   gcs_bm::SimpleTimer timer;
@@ -298,14 +300,15 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto object_name = gcs_bm::MakeRandomObjectName(generator);
     auto object_size = size_generator(generator);
     auto chunk_size = chunk_generator(generator);
+    bool enable_crc = crc_generator(generator);
+    bool enable_md5 = md5_generator(generator);
 
     gcs_bm::ProgressReporter progress;
     timer.Start();
     progress.Start();
-    auto writer =
-        client.WriteObject(bucket_name, object_name,
-                           gcs::DisableCrc32cChecksum(options.disable_crc32c),
-                           gcs::DisableMD5Hash(options.disable_md5));
+    auto writer = client.WriteObject(bucket_name, object_name,
+                                     gcs::DisableCrc32cChecksum(!enable_crc),
+                                     gcs::DisableMD5Hash(!enable_md5));
     for (std::size_t offset = 0; offset < object_size; offset += chunk_size) {
       auto len = chunk_size;
       if (offset + len > object_size) {
@@ -320,9 +323,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
 
     auto object_metadata = writer.metadata();
     results.emplace_back(IterationResult{
-        OP_UPLOAD, object_size, chunk_size, download_buffer_size,
-        timer.elapsed_time(), timer.cpu_time(), object_metadata.status().code(),
-        progress.GetAccumulatedProgress()});
+        OP_UPLOAD, object_size, chunk_size, download_buffer_size, enable_crc,
+        enable_md5, timer.elapsed_time(), timer.cpu_time(),
+        object_metadata.status().code(), progress.GetAccumulatedProgress()});
 
     if (!object_metadata) {
       continue;
@@ -333,8 +336,8 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     auto reader =
         client.ReadObject(object_metadata->bucket(), object_metadata->name(),
                           gcs::Generation(object_metadata->generation()),
-                          gcs::DisableCrc32cChecksum(options.disable_crc32c),
-                          gcs::DisableMD5Hash(options.disable_md5));
+                          gcs::DisableCrc32cChecksum(!enable_crc),
+                          gcs::DisableMD5Hash(!enable_md5));
     progress.Advance(0);
     std::vector<char> buffer(chunk_size);
     for (size_t num_read = 0; reader.read(buffer.data(), buffer.size());
@@ -342,9 +345,9 @@ TestResults RunThread(Options const& options, std::string const& bucket_name) {
     }
     timer.Stop();
     results.emplace_back(IterationResult{
-        OP_DOWNLOAD, object_size, chunk_size, upload_buffer_size,
-        timer.elapsed_time(), timer.cpu_time(), reader.status().code(),
-        progress.GetAccumulatedProgress()});
+        OP_DOWNLOAD, object_size, chunk_size, upload_buffer_size, enable_crc,
+        enable_md5, timer.elapsed_time(), timer.cpu_time(),
+        reader.status().code(), progress.GetAccumulatedProgress()});
 
     auto status =
         client.DeleteObject(object_metadata->bucket(), object_metadata->name(),
@@ -405,14 +408,6 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        "stop the test when this number of samples are obtained",
        [&options](std::string const& val) {
          options.maximum_sample_count = std::stol(val);
-       }},
-      {"--disable-crc32", "disable CRC32C checksums",
-       [&options](std::string const& val) {
-         options.disable_crc32c = gcs_bm::ParseBoolean(val).value_or(true);
-       }},
-      {"--disable-md5", "disable MD5 hashes",
-       [&options](std::string const& val) {
-         options.disable_md5 = gcs_bm::ParseBoolean(val).value_or(true);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);
