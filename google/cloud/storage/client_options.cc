@@ -52,11 +52,10 @@ std::size_t DefaultConnectionPoolSize() {
 #define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE (128 * 1024)
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_BUFFER_SIZE
 
-// The documentation recommends uploads below "5MiB" to use simple uploads:
-//   https://cloud.google.com/storage/docs/json_api/v1/how-tos/upload
+// This is a result of experiments performed in #2657.
 #ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
 #define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE \
-  (5 * 1024 * 1024L)
+  (20 * 1024 * 1024L)
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
 
 }  // namespace
