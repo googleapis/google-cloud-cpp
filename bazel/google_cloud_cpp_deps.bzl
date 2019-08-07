@@ -46,7 +46,7 @@ def google_cloud_cpp_deps():
             ],
             strip_prefix = "googleapis-a8ee1416f4c588f2ab92da72e7c1f588c784d3e6",
             sha256 = "6b8a9b2bcb4476e9a5a9872869996f0d639c8d5df76dd8a893e79201f211b1cf",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
+            build_file = "@gcloud_cpp//bazel:googleapis.BUILD",
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
@@ -72,7 +72,7 @@ def google_cloud_cpp_deps():
             ],
             strip_prefix = "curl-7.60.0",
             sha256 = "e9c37986337743f37fd14fe8737f246e97aec94b39d1b71e8a5973f72a9fc4f5",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:curl.BUILD",
+            build_file = "@gcloud_cpp//bazel:curl.BUILD",
         )
 
     # We need the nlohmann_json library
@@ -94,7 +94,7 @@ def google_cloud_cpp_deps():
                 "https://github.com/google/crc32c/archive/1.0.6.tar.gz",
             ],
             sha256 = "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9",
-            build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
+            build_file = "@gcloud_cpp//bazel:crc32c.BUILD",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
