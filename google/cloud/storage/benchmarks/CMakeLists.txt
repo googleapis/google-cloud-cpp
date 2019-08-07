@@ -73,8 +73,7 @@ if (BUILD_TESTING)
         benchmark_parser_test.cc
         benchmark_make_random_test.cc
         benchmark_parse_args_test.cc
-        benchmark_utils_test.cc
-        )
+        benchmark_utils_test.cc)
 
     foreach (fname ${storage_benchmarks_unit_tests})
         string(REPLACE "/"
