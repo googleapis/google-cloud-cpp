@@ -34,8 +34,8 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
     srcs = [test],
     # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
-        "@bazel_tools//src/conditions:linux_x86_64": ["-lpthread"],
-        "//conditions:default": [],
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": ["-lpthread"],
     }),
     deps = [
         ":firestore_client",

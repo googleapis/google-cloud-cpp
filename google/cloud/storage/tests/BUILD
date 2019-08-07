@@ -26,8 +26,8 @@ load(
     srcs = [test],
     # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
-        "@bazel_tools//src/conditions:linux_x86_64": ["-lpthread"],
-        "//conditions:default": [],
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": ["-lpthread"],
     }),
     deps = [
         "//google/cloud:google_cloud_cpp_common",

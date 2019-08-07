@@ -39,8 +39,8 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     srcs = [test],
     # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
-        "@bazel_tools//src/conditions:linux_x86_64": ["-lpthread"],
-        "//conditions:default": [],
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": ["-lpthread"],
     }),
     deps = [
         ":storage_benchmarks",
@@ -60,8 +60,8 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
     srcs = [test],
     # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
-        "@bazel_tools//src/conditions:linux_x86_64": ["-lpthread"],
-        "//conditions:default": [],
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": ["-lpthread"],
     }),
     deps = [
         ":storage_benchmarks",
