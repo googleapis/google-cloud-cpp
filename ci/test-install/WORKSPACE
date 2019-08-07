@@ -14,12 +14,12 @@
 
 # This WORKSPACE verifies that the google-cloud-cpp libraries can be loaded
 # into a different Bazel project.
-workspace(name = "com_github_googleapis_google_cloud_cpp_test_install")
+workspace(name = "gcloud_cpp_test_install")
 
 # Applications should use (maybe with a different version):
 #
 # http_archive(
-#     name = "com_github_googleapis_google_cloud_cpp",
+#     name = "gcloud_cpp",
 #     url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.9.0.tar.gz",
 #     strip_prefix = "google-cloud-cpp-0.9.0",
 #     sha256 = "a072103546cfa041ad8bfc599fe5a20c58e005a1a0ee18e94b2554dc3d485604",
@@ -27,11 +27,11 @@ workspace(name = "com_github_googleapis_google_cloud_cpp_test_install")
 #
 # But we want to test that the *current* version is correct.
 local_repository(
-    name = "com_github_googleapis_google_cloud_cpp",
+    name = "gcloud_cpp",
     path = "../..",
 )
 
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@gcloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 
