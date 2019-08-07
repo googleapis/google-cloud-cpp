@@ -15,6 +15,10 @@ REM limitations under the License.
 echo %date% %time%
 cd github\google-cloud-cpp
 
+echo "Create the bazel output directory."
+echo %date% %time%
+if not exist "C:\b\" mkdir C:\b
+
 call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 echo %date% %time%
@@ -22,8 +26,8 @@ bazel version
 
 echo "Compiling and running unit tests."
 echo %date% %time%
-bazel test --test_output=errors --verbose_failures=true --keep_going -- ^
-    //google/cloud/...:all
+bazel test --output_user_root=C:\b --test_output=errors --verbose_failures=true ^
+    --keep_going -- //google/cloud/...:all
 
 @rem Preserve the exit code of the test for later use because we want to
 @rem delete the files in the %KOKORO_ARTIFACTS_DIR% on test failure too.
