@@ -26,6 +26,7 @@ spanner_client_unit_tests = [
     "internal/compiler_info_test.cc",
     "internal/date_test.cc",
     "internal/merge_chunk_test.cc",
+    "internal/partial_result_set_reader_test.cc",
     "internal/polling_loop_test.cc",
     "internal/retry_loop_test.cc",
     "internal/spanner_stub_test.cc",
