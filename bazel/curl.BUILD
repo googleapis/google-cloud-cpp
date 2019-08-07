@@ -46,7 +46,9 @@ CURL_WIN_SRCS = [
     "lib/inet_ntop.c",
     "lib/system_win32.c",
     "lib/vtls/schannel.c",
+    "lib/vtls/schannel_verify.c",
     "lib/idn_win32.c",
+    "lib/x509asn1.c",
 ]
 
 cc_library(

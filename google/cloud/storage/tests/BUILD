@@ -24,8 +24,10 @@ load(
 [cc_binary(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    # TODO(#664 / #666) - use the right condition when porting Bazel builds
-    linkopts = ["-lpthread"],
+    linkopts = select({
+        "@bazel_tools//src/conditions:windows": [],
+        "//conditions:default": ["-lpthread"],
+    }),
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
