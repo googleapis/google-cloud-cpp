@@ -55,7 +55,6 @@ load(
 [cc_test(
     name = "google_cloud_cpp_common_" + test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],

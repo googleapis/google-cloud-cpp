@@ -37,7 +37,6 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
 [cc_binary(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -58,7 +57,6 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
 [cc_test(
     name = "storage_benchmark_" + test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],

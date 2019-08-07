@@ -85,7 +85,6 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
         "@bazel_tools//src/conditions:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
         "//conditions:default": [],
     }),
-    # TODO(#664) - use the right condition when porting Bazel builds
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": ["-lpthread"],
