@@ -259,8 +259,8 @@ function (google_cloud_cpp_proto_library libname)
                  PROPERTY PROTO_SOURCES ${_opt_UNPARSED_ARGUMENTS})
     target_link_libraries(${libname}
                           PUBLIC gRPC::grpc++ gRPC::grpc protobuf::libprotobuf)
-    # We want to treat the generate code as "system" headers so they get ignored
-    # by the more aggressive warnings.
+    # We want to treat the generated code as "system" headers so they get
+    # ignored by the more aggressive warnings.
     target_include_directories(
         ${libname} SYSTEM
         PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
