@@ -26,7 +26,7 @@ bazel version
 
 echo "Compiling and running unit tests."
 echo %date% %time%
-bazel test --output_user_root=C:\b --test_output=errors --verbose_failures=true ^
+bazel --output_user_root=C:\b test --test_output=errors --verbose_failures=true ^
     --keep_going -- //google/cloud/...:all
 
 @rem Preserve the exit code of the test for later use because we want to
