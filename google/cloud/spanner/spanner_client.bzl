@@ -40,6 +40,7 @@ spanner_client_hdrs = [
     "internal/time_format.h",
     "internal/transaction_impl.h",
     "internal/tuple_utils.h",
+    "keys.h",
     "mutations.h",
     "polling_policy.h",
     "result_set.h",

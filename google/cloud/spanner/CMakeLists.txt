@@ -125,6 +125,7 @@ add_library(spanner_client
             internal/transaction_impl.cc
             internal/transaction_impl.h
             internal/tuple_utils.h
+            keys.h
             mutations.cc
             mutations.h
             polling_policy.h
@@ -219,6 +220,7 @@ function (spanner_client_define_tests)
         internal/time_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
+        keys_test.cc
         mutations_test.cc
         result_set_test.cc
         retry_policy_test.cc
