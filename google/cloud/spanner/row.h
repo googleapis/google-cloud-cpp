@@ -153,7 +153,7 @@ class Row {
    */
   template <std::size_t... Is,
             typename std::enable_if<(sizeof...(Is) > 1), int>::type = 0>
-  std::tuple<ColumnType<Is>...> get() const {
+  std::tuple<ColumnType<Is>...> get() const& {
     return std::make_tuple(get<Is>()...);
   }
 
