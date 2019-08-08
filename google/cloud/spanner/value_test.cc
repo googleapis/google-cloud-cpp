@@ -124,14 +124,14 @@ TEST(Value, BasicSemantics) {
   }
 
   for (time_t t : {
-           -9223372035L,  // near the limit of 64-bit/ns system_clock
-           -2147483649L,  // below min 32-bit int
-           -2147483648L,  // min 32-bit int
-           -1L, 0L, 1L,   // around the unix epoch
-           1561147549L,   // contemporary
-           2147483647L,   // max 32-bit int
-           2147483648L,   // above max 32-bit int
-           9223372036L    // near the limit of 64-bit/ns system_clock
+           -9223372035LL,   // near the limit of 64-bit/ns system_clock
+           -2147483649LL,   // below min 32-bit int
+           -2147483648LL,   // min 32-bit int
+           -1LL, 0LL, 1LL,  // around the unix epoch
+           1561147549LL,    // contemporary
+           2147483647LL,    // max 32-bit int
+           2147483648LL,    // above max 32-bit int
+           9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
     auto tp = std::chrono::system_clock::from_time_t(t);
     for (auto nanos : {-1, 0, 1}) {
@@ -475,14 +475,14 @@ TEST(Value, ProtoConversionBytes) {
 
 TEST(Value, ProtoConversionTimestamp) {
   for (time_t t : {
-           -9223372035L,  // near the limit of 64-bit/ns system_clock
-           -2147483649L,  // below min 32-bit int
-           -2147483648L,  // min 32-bit int
-           -1L, 0L, 1L,   // around the unix epoch
-           1561147549L,   // contemporary
-           2147483647L,   // max 32-bit int
-           2147483648L,   // above max 32-bit int
-           9223372036L    // near the limit of 64-bit/ns system_clock
+           -9223372035LL,   // near the limit of 64-bit/ns system_clock
+           -2147483649LL,   // below min 32-bit int
+           -2147483648LL,   // min 32-bit int
+           -1LL, 0LL, 1LL,  // around the unix epoch
+           1561147549LL,    // contemporary
+           2147483647LL,    // max 32-bit int
+           2147483648LL,    // above max 32-bit int
+           9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
     auto tp = std::chrono::system_clock::from_time_t(t);
     for (auto nanos : {-1, 0, 1}) {
