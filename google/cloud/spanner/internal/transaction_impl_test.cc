@@ -46,7 +46,7 @@ class Client {
     kReadFails,
   };
 
-  explicit Client(Mode mode) : mode_(mode) {}
+  explicit Client(Mode mode) : mode_(mode), begin_seqno_(0) {}
 
   // Set the `read_timestamp` we expect to see, and the `txn_id` we want to
   // use during the upcoming `Read()` calls.
@@ -67,10 +67,10 @@ class Client {
   // User-visible read operation.
   ResultSet Read(Transaction txn, std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns) {
-    std::function<ResultSet(TransactionSelector&)> read =
-        [this, &table, &keys, &columns](TransactionSelector& selector) {
-          return this->Read(selector, table, keys, columns);
-        };
+    auto read = [this, &table, &keys, &columns](TransactionSelector& selector,
+                                                std::int64_t seqno) {
+      return this->Read(selector, seqno, table, keys, columns);
+    };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
@@ -83,28 +83,31 @@ class Client {
   }
 
  private:
-  ResultSet Read(TransactionSelector& selector, std::string const& table,
-                 KeySet const& keys, std::vector<std::string> const& columns);
+  ResultSet Read(TransactionSelector& selector, std::int64_t seqno,
+                 std::string const& table, KeySet const& keys,
+                 std::vector<std::string> const& columns);
 
   Mode mode_;
   Timestamp read_timestamp_;
   std::string txn_id_;
   std::mutex mu_;
-  int valid_visits_;  // GUARDED_BY(mu_);
+  std::int64_t begin_seqno_;  // GUARDED_BY(mu_)
+  int valid_visits_;          // GUARDED_BY(mu_)
 };
 
 // Transaction callback.  Normally we would use the TransactionSelector
 // to make a StreamingRead() RPC, and then, if the selector was a `begin`,
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
-ResultSet Client::Read(TransactionSelector& selector, std::string const&,
-                       KeySet const&, std::vector<std::string> const&) {
+ResultSet Client::Read(TransactionSelector& selector, std::int64_t seqno,
+                       std::string const&, KeySet const&,
+                       std::vector<std::string> const&) {
   if (selector.has_begin()) {
     bool fail_with_throw = false;
     if (selector.begin().has_read_only() &&
         selector.begin().read_only().has_read_timestamp()) {
       auto const& proto = selector.begin().read_only().read_timestamp();
-      if (internal::FromProto(proto) == read_timestamp_) {
+      if (internal::FromProto(proto) == read_timestamp_ && seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {
           case Mode::kReadSucceeds:
@@ -115,6 +118,7 @@ ResultSet Client::Read(TransactionSelector& selector, std::string const&,
             fail_with_throw = (valid_visits_ % 2 == 0);
             break;
         }
+        if (valid_visits_ != 0) begin_seqno_ = seqno;
       }
     }
     switch (mode_) {
@@ -134,7 +138,7 @@ ResultSet Client::Read(TransactionSelector& selector, std::string const&,
       std::unique_lock<std::mutex> lock(mu_);
       switch (mode_) {
         case Mode::kReadSucceeds:  // non-initial visits valid
-          if (valid_visits_ != 0) ++valid_visits_;
+          if (valid_visits_ != 0 && seqno > begin_seqno_) ++valid_visits_;
           break;
         case Mode::kReadFails:  // visits never valid
           break;

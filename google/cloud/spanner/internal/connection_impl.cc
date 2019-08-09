@@ -25,10 +25,11 @@ namespace internal {
 namespace spanner_proto = ::google::spanner::v1;
 
 StatusOr<CommitResult> ConnectionImpl::Commit(Connection::CommitParams cp) {
-  return internal::Visit(std::move(cp.transaction),
-                         [this, &cp](spanner_proto::TransactionSelector& s) {
-                           return this->Commit(s, std::move(cp.mutations));
-                         });
+  return internal::Visit(
+      std::move(cp.transaction),
+      [this, &cp](spanner_proto::TransactionSelector& s, std::int64_t) {
+        return this->Commit(s, std::move(cp.mutations));
+      });
 }
 
 StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {

@@ -169,11 +169,10 @@ TEST(ConnectionImplTest, Commit_TransactionId) {
           }));
 
   auto txn = MakeReadWriteTransaction();
-  using F = std::function<int(spanner_proto::TransactionSelector&)>;
-  internal::Visit(txn, F([](spanner_proto::TransactionSelector& s) -> int {
-                    s.set_id("test-txn-id");
-                    return 0;
-                  }));
+  internal::Visit(txn, [](spanner_proto::TransactionSelector& s, std::int64_t) {
+    s.set_id("test-txn-id");
+    return 0;
+  });
 
   auto commit = conn.Commit({txn, {}});
   EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());

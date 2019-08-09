@@ -20,7 +20,9 @@
 #include "google/cloud/internal/port_platform.h"
 #include <google/spanner/v1/transaction.pb.h>
 #include <condition_variable>
+#include <cstdint>
 #include <mutex>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -30,7 +32,7 @@ namespace internal {
 
 template <typename Functor>
 using VisitInvokeResult = google::cloud::internal::invoke_result_t<
-    Functor, google::spanner::v1::TransactionSelector&>;
+    Functor, google::spanner::v1::TransactionSelector&, std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -38,7 +40,7 @@ using VisitInvokeResult = google::cloud::internal::invoke_result_t<
 class TransactionImpl {
  public:
   TransactionImpl(google::spanner::v1::TransactionSelector selector)
-      : selector_(std::move(selector)) {
+      : selector_(std::move(selector)), seqno_(0) {
     state_ = selector_.has_begin() ? State::kBegin : State::kDone;
   }
 
@@ -48,15 +50,23 @@ class TransactionImpl {
   // passed TransactionSelector in its Client::Read()/Client::ExecuteSql()
   // call. If initially selector.has_begin(), and the operation successfully
   // allocates a transaction ID, then the functor should selector.set_id(id).
-  // Otherwise the functor should not modify the selector.
-  template <typename Functor>
+  // Otherwise the functor should not modify the selector. A monotonically-
+  // increasing sequence number is also passed to the functor.
+  template <typename Functor,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<
+                    Functor, google::spanner::v1::TransactionSelector&,
+                    std::int64_t>::value,
+                int>::type = 0>
   VisitInvokeResult<Functor> Visit(Functor&& f) {
+    std::int64_t seqno;
     {
       std::unique_lock<std::mutex> lock(mu_);
+      seqno = ++seqno_;  // what about overflow?
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(selector_);
+        return f(selector_, seqno);
       }
       state_ = State::kPending;
     }
@@ -64,7 +74,7 @@ class TransactionImpl {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      auto r = f(selector_);
+      auto r = f(selector_, seqno);
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);
@@ -100,6 +110,7 @@ class TransactionImpl {
   std::mutex mu_;
   std::condition_variable cond_;
   google::spanner::v1::TransactionSelector selector_;
+  std::int64_t seqno_;
 };
 
 }  // namespace internal
