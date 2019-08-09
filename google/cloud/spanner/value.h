@@ -185,8 +185,11 @@ class Value {
    *
    * This struct is a thin wrapper around a `std::string` to distinguish BYTES
    * from STRINGs. The `.data` member can be set/get directly. Consructors and
-   * equality operators are provided for convenience and to make `Bytes` a
+   * relational operators are provided for convenience and to make `Bytes` a
    * regular type that is easy to work with.
+   *
+   * Note that the relational operators behave as if the `std::string` chars
+   * are unsigned, which is exactly how Spanner BYTES values compare.
    */
   struct Bytes {
     std::string data;
@@ -203,12 +206,18 @@ class Value {
     Bytes& operator=(Bytes&&) = default;
     ///@}
 
-    /// @name Equality
+    /// @name Relational operators
     ///@{
     friend bool operator==(Bytes const& a, Bytes const& b) {
       return a.data == b.data;
     }
     friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
+    friend bool operator<(Bytes const& a, Bytes const& b) {
+      return a.data < b.data;
+    }
+    friend bool operator<=(Bytes const& a, Bytes const& b) { return !(b < a); }
+    friend bool operator>=(Bytes const& a, Bytes const& b) { return !(a < b); }
+    friend bool operator>(Bytes const& a, Bytes const& b) { return b < a; }
     ///@}
   };
   /// Constructs an instance with the specicified bytes.

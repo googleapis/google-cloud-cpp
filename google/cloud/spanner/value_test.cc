@@ -195,6 +195,23 @@ TEST(Value, BytesDecodingError) {
   EXPECT_THAT(bytes.status().message(), testing::HasSubstr("Invalid base64"));
 }
 
+TEST(Value, BytesRelationalOperators) {
+  // Note that Value::Bytes inequalities treat the bytes as unsigned, so
+  // b1 is always less than b2, without respect to the signedness of char.
+  Value::Bytes b1(std::string(1, '\x00'));
+  Value::Bytes b2(std::string(1, '\xff'));
+
+  EXPECT_EQ(b1, b1);
+  EXPECT_LE(b1, b1);
+  EXPECT_GE(b1, b1);
+
+  EXPECT_NE(b1, b2);
+  EXPECT_LT(b1, b2);
+  EXPECT_LE(b1, b2);
+  EXPECT_GE(b2, b1);
+  EXPECT_GT(b2, b1);
+}
+
 TEST(Value, ConstructionFromLiterals) {
   Value v_int64(42);
   EXPECT_EQ(42, *v_int64.get<std::int64_t>());

@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include <cstdint>
+#include <tuple>
 
 namespace google {
 namespace cloud {
@@ -46,10 +47,22 @@ class Date {
 };
 
 inline bool operator==(Date const& a, Date const& b) {
-  return a.year() == b.year() && a.month() == b.month() && a.day() == b.day();
+  return std::make_tuple(a.year(), a.month(), a.day()) ==
+         std::make_tuple(b.year(), b.month(), b.day());
 }
 
 inline bool operator!=(Date const& a, Date const& b) { return !(a == b); }
+
+inline bool operator<(Date const& a, Date const& b) {
+  return std::make_tuple(a.year(), a.month(), a.day()) <
+         std::make_tuple(b.year(), b.month(), b.day());
+}
+
+inline bool operator<=(Date const& a, Date const& b) { return !(b < a); }
+
+inline bool operator>=(Date const& a, Date const& b) { return !(a < b); }
+
+inline bool operator>(Date const& a, Date const& b) { return b < a; }
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

@@ -34,6 +34,21 @@ TEST(Date, Basics) {
   EXPECT_NE(d2, d);
 }
 
+TEST(Date, RelationalOperators) {
+  Date d1(2019, 6, 21);
+  Date d2(2019, 6, 22);
+
+  EXPECT_EQ(d1, d1);
+  EXPECT_LE(d1, d1);
+  EXPECT_GE(d1, d1);
+
+  EXPECT_NE(d1, d2);
+  EXPECT_LT(d1, d2);
+  EXPECT_LE(d1, d2);
+  EXPECT_GE(d2, d1);
+  EXPECT_GT(d2, d1);
+}
+
 TEST(Date, Normalization) {
   // Non-leap-year day overflow.
   EXPECT_EQ(Date(2019, 3, 1), Date(2019, 2, 29));
