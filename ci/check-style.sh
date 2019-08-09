@@ -121,5 +121,11 @@ find . \( "${ignore[@]}" \) -prune -o \
     replace_original_if_changed "${file}" "${file}.tmp"
   done
 
-# Report any differences created by running the formatting tools.
-git diff --ignore-submodules=all --color --exit-code .
+# Report any differences created by running the formatting tools. Report any
+# differences created by running the formatting tools. IFF we are running as
+# part of a CI build. Otherwise, a human probably invoked this script in which
+# case we'll just leave the formatted files in their local git repo so they can
+# diff them and commit the correctly formatted files.
+if [[ "${RUNNING_CI}" != "no" ]]; then
+  git diff --ignore-submodules=all --color --exit-code .
+fi
