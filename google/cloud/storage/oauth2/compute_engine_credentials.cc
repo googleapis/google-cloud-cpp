@@ -30,11 +30,11 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
   // metadata server.
   if (response_body.is_discarded() || response_body.count("email") == 0 ||
       response_body.count("scopes") == 0) {
-    auto status_payload =
+    auto payload =
         response.payload +
         "Could not find all required fields in response (email, scopes).";
     return AsStatus(storage::internal::HttpResponse{
-        response.status_code, response.payload, response.headers});
+        response.status_code, payload, response.headers});
   }
   ServiceAccountMetadata metadata;
   // Do not update any state until all potential errors are handled.
