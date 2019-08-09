@@ -13,13 +13,18 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/sql_statement.h"
+#include "google/cloud/spanner/testing/matchers.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+namespace {
 
+using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::protobuf::TextFormat;
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::UnorderedPointwise;
@@ -105,6 +110,43 @@ TEST(SqlStatementTest, Equality) {
   EXPECT_NE(stmt1, stmt4);
 }
 
+TEST(SqlStatementTest, ToProtoStatementOnly) {
+  SqlStatement stmt("select * from foo");
+  internal::SqlStatementProto expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(R"""(sql: "select * from foo")""",
+                                          &expected));
+  EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
+}
+
+TEST(SqlStatementTest, ToProtoWithParams) {
+  SqlStatement::ParamType params = {{"last", Value("Blues")},
+                                    {"first", Value("Elwood")},
+                                    {"destroyed_cars", Value(103)}};
+
+  auto sql =
+      "SELECT * FROM foo WHERE last = @last AND first = @first AND "
+      "destroyed_cars >= @destroyed_cars";
+  SqlStatement stmt(sql, params);
+  internal::SqlStatementProto expected;
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(std::string(R"""(sql: ")""") + sql + R"""("
+        params: {
+          fields: [
+            { key: "destroyed_cars", value: { string_value: "103" } },
+            { key: "first", value: { string_value: "Elwood" } },
+            { key: "last", value: { string_value: "Blues" } }
+          ]
+        }
+        param_types: [
+          { key: "destroyed_cars", value: { code: INT64 } },
+          { key: "last", value: { code: STRING } },
+          { key: "first", value: { code: STRING } }
+        ])""",
+                                  &expected));
+  EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
+}
+
+}  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

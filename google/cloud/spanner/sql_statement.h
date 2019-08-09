@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/status_or.h"
+#include <google/spanner/v1/spanner.pb.h>
 #include <string>
 #include <unordered_map>
 
@@ -24,6 +25,17 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
+class SqlStatement;  // Defined later in this file.
+// Internal implementation details that callers should not use.
+namespace internal {
+// Use this proto type because it conveniently wraps all three attributes
+// required to represent a SQL statement.
+using SqlStatementProto =
+    google::spanner::v1::ExecuteBatchDmlRequest::Statement;
+SqlStatementProto ToProto(SqlStatement s);
+}  // namespace internal
+
 /**
  * @brief Represents a potentially parameterized SQL statement.
  *
@@ -80,6 +92,7 @@ class SqlStatement {
 
  private:
   friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
+  friend internal::SqlStatementProto internal::ToProto(SqlStatement s);
 
   std::string statement_;
   ParamType params_;

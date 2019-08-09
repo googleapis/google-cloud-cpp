@@ -20,6 +20,23 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
+namespace internal {
+SqlStatementProto ToProto(SqlStatement s) {
+  SqlStatementProto statement_proto;
+  statement_proto.set_sql(std::move(s.statement_));
+  if (!s.params_.empty()) {
+    auto& values = *statement_proto.mutable_params()->mutable_fields();
+    auto& types = *statement_proto.mutable_param_types();
+    for (auto& param : s.params_) {
+      auto type_and_value = internal::ToProto(std::move(param.second));
+      values[param.first] = std::move(type_and_value.second);
+      types[param.first] = std::move(type_and_value.first);
+    }
+  }
+  return statement_proto;
+}
+}  // namespace internal
+
 std::vector<std::string> SqlStatement::ParameterNames() const {
   std::vector<std::string> keys;
   keys.reserve(params_.size());
