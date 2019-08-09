@@ -17,7 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
@@ -42,6 +42,11 @@ struct AuthorizedUserCredentialsInfo {
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
+
+/// Parses a refresh response JSON string into a TemporaryToken.
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseAuthorizedUserRefreshResponse(
+    storage::internal::HttpResponse const& response);
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
@@ -97,29 +102,7 @@ class AuthorizedUserCredentials : public Credentials {
     if (response->status_code >= 300) {
       return AsStatus(*response);
     }
-    auto access_token =
-        storage::internal::nl::json::parse(response->payload, nullptr, false);
-    if (access_token.is_discarded() ||
-        access_token.count("access_token") == 0 ||
-        access_token.count("expires_in") == 0 ||
-        access_token.count("id_token") == 0 ||
-        access_token.count("token_type") == 0) {
-      response->payload +=
-          "Could not find all required fields in response (access_token,"
-          " id_token, expires_in, token_type).";
-      return AsStatus(*response);
-    }
-    std::string header = "Authorization: ";
-    header += access_token.value("token_type", "");
-    header += ' ';
-    header += access_token.value("access_token", "");
-    std::string new_id = access_token.value("id_token", "");
-    auto expires_in =
-        std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = std::chrono::system_clock::now() + expires_in;
-
-    return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
-                                                        new_expiration};
+    return ParseAuthorizedUserRefreshResponse(*response);
   }
 
   typename HttpRequestBuilderType::RequestType request_;

@@ -17,7 +17,6 @@
 
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
@@ -64,6 +63,35 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
+
+/**
+ * Splits a ServiceAccountCredentialsInfo into header and payload components
+ * and uses the current time to make a JWT assertion.
+ *
+ * @see
+ * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
+ *
+ * @see https://tools.ietf.org/html/rfc7523
+ */
+std::pair<std::string, std::string> AssertionComponentsFromInfo(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point now);
+
+/**
+ * Given a key and a JSON header and payload, creates a JWT assertion string.
+ *
+ * @see https://tools.ietf.org/html/rfc7519
+ */
+std::string MakeJWTAssertion(std::string const& header,
+                             std::string const& payload,
+                             std::string const& pem_contents);
+
+/// Parses a refresh response JSON string and uses the current time to create a
+/// TemporaryToken.
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseServiceAccountRefreshResponse(
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.
@@ -146,73 +174,9 @@ class ServiceAccountCredentials : public Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
  private:
-  /**
-   * Returns the header and payload components needed to make a JWT assertion.
-   *
-   * @see
-   * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
-   *
-   * @see https://tools.ietf.org/html/rfc7523
-   */
-  std::pair<storage::internal::nl::json, storage::internal::nl::json>
-  AssertionComponentsFromInfo(ServiceAccountCredentialsInfo const& info) const {
-    storage::internal::nl::json assertion_header = {
-        {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
-
-    // Scopes must be specified in a comma-delimited string.
-    std::string scope_str;
-    if (!info.scopes) {
-      scope_str = GoogleOAuthScopeCloudPlatform();
-    } else {
-      char const* sep = "";
-      for (const auto& scope : *(info.scopes)) {
-        scope_str += sep + scope;
-        sep = ",";
-      }
-    }
-
-    auto now = clock_.now();
-    auto expiration = now + GoogleOAuthAccessTokenLifetime();
-    // As much as possible, do the time arithmetic using the std::chrono types.
-    // Convert to longs only when we are dealing with timestamps since the
-    // epoch.
-    auto now_from_epoch =
-        static_cast<long>(std::chrono::system_clock::to_time_t(now));
-    auto expiration_from_epoch =
-        static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
-    storage::internal::nl::json assertion_payload = {
-        {"iss", info.client_email},
-        {"scope", scope_str},
-        {"aud", info.token_uri},
-        {"iat", now_from_epoch},
-        // Resulting access token should be expire after one hour.
-        {"exp", expiration_from_epoch}};
-    if (info.subject) {
-      assertion_payload["sub"] = *(info.subject);
-    }
-
-    return std::make_pair(std::move(assertion_header),
-                          std::move(assertion_payload));
-  }
-
-  /**
-   * Given a key and a JSON header and payload, creates a JWT assertion string.
-   *
-   * @see https://tools.ietf.org/html/rfc7519
-   */
-  std::string MakeJWTAssertion(storage::internal::nl::json const& header,
-                               storage::internal::nl::json const& payload,
-                               std::string const& pem_contents) const {
-    std::string encoded_header = internal::UrlsafeBase64Encode(header.dump());
-    std::string encoded_payload = internal::UrlsafeBase64Encode(payload.dump());
-    std::string encoded_signature = internal::UrlsafeBase64Encode(
-        internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
-                                    pem_contents, JwtSigningAlgorithms::RS256));
-    return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
-  }
-
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    auto assertion_components = std::move(AssertionComponentsFromInfo(info_));
+    auto assertion_components =
+        std::move(AssertionComponentsFromInfo(info_, clock_.now()));
     std::string payload = grant_type_;
     payload += "&assertion=";
     payload += MakeJWTAssertion(assertion_components.first,
@@ -226,28 +190,7 @@ class ServiceAccountCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    auto access_token =
-        storage::internal::nl::json::parse(response->payload, nullptr, false);
-    if (access_token.is_discarded() ||
-        access_token.count("access_token") == 0 or
-        access_token.count("expires_in") == 0 or
-        access_token.count("token_type") == 0) {
-      response->payload +=
-          "Could not find all required fields in response (access_token,"
-          " expires_in, token_type).";
-      return AsStatus(*response);
-    }
-    // Response should have the attributes "access_token", "expires_in", and
-    // "token_type".
-    std::string header =
-        "Authorization: " + access_token.value("token_type", "") + " " +
-        access_token.value("access_token", "");
-    auto expires_in =
-        std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = clock_.now() + expires_in;
-
-    return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
-                                                        new_expiration};
+    return ParseServiceAccountRefreshResponse(*response, clock_.now());
   }
 
   typename HttpRequestBuilderType::RequestType request_;

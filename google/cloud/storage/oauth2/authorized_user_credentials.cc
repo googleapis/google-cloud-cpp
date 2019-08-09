@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
+#include "google/cloud/storage/internal/nljson.h"
 
 namespace google {
 namespace cloud {
@@ -58,6 +59,34 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
       credentials.value(token_uri_key, default_token_uri)};
+}
+
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseAuthorizedUserRefreshResponse(
+    storage::internal::HttpResponse const& response) {
+  auto access_token =
+      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
+      access_token.count("expires_in") == 0 ||
+      access_token.count("id_token") == 0 ||
+      access_token.count("token_type") == 0) {
+    auto payload =
+        response.payload +
+        "Could not find all required fields in response (access_token,"
+        " id_token, expires_in, token_type).";
+    return AsStatus(storage::internal::HttpResponse{response.status_code,
+                                                    payload, response.headers});
+  }
+  std::string header = "Authorization: ";
+  header += access_token.value("token_type", "");
+  header += ' ';
+  header += access_token.value("access_token", "");
+  std::string new_id = access_token.value("id_token", "");
+  auto expires_in =
+      std::chrono::seconds(access_token.value("expires_in", int(0)));
+  auto new_expiration = std::chrono::system_clock::now() + expires_in;
+  return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
+                                                      new_expiration};
 }
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS

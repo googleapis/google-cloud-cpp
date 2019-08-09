@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include <openssl/err.h>
 #include <openssl/pem.h>
@@ -179,6 +180,87 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
                                        default_token_uri,
                                        /*scopes*/ {},
                                        /*subject*/ {}};
+}
+
+std::pair<std::string, std::string> AssertionComponentsFromInfo(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point now) {
+  storage::internal::nl::json assertion_header = {
+      {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
+
+  // Scopes must be specified in a comma-delimited string.
+  std::string scope_str;
+  if (!info.scopes) {
+    scope_str = GoogleOAuthScopeCloudPlatform();
+  } else {
+    char const* sep = "";
+    for (const auto& scope : *(info.scopes)) {
+      scope_str += sep + scope;
+      sep = ",";
+    }
+  }
+
+  auto expiration = now + GoogleOAuthAccessTokenLifetime();
+  // As much as possible, do the time arithmetic using the std::chrono types.
+  // Convert to longs only when we are dealing with timestamps since the
+  // epoch.
+  auto now_from_epoch =
+      static_cast<long>(std::chrono::system_clock::to_time_t(now));
+  auto expiration_from_epoch =
+      static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
+  storage::internal::nl::json assertion_payload = {
+      {"iss", info.client_email},
+      {"scope", scope_str},
+      {"aud", info.token_uri},
+      {"iat", now_from_epoch},
+      // Resulting access token should be expire after one hour.
+      {"exp", expiration_from_epoch}};
+  if (info.subject) {
+    assertion_payload["sub"] = *(info.subject);
+  }
+
+  // Note: we don't move here as it would prevent copy elision.
+  return std::make_pair(assertion_header.dump(), assertion_payload.dump());
+}
+
+std::string MakeJWTAssertion(std::string const& header,
+                             std::string const& payload,
+                             std::string const& pem_contents) {
+  std::string encoded_header = internal::UrlsafeBase64Encode(header);
+  std::string encoded_payload = internal::UrlsafeBase64Encode(payload);
+  std::string encoded_signature = internal::UrlsafeBase64Encode(
+      internal::SignStringWithPem(encoded_header + '.' + encoded_payload,
+                                  pem_contents, JwtSigningAlgorithms::RS256));
+  return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
+}
+
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseServiceAccountRefreshResponse(
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now) {
+  auto access_token =
+      storage::internal::nl::json::parse(response.payload, nullptr, false);
+  if (access_token.is_discarded() || access_token.count("access_token") == 0 or
+      access_token.count("expires_in") == 0 or
+      access_token.count("token_type") == 0) {
+    auto payload =
+        response.payload +
+        "Could not find all required fields in response (access_token,"
+        " expires_in, token_type).";
+    return AsStatus(storage::internal::HttpResponse{response.status_code,
+                                                    payload, response.headers});
+  }
+  // Response should have the attributes "access_token", "expires_in", and
+  // "token_type".
+  std::string header =
+      "Authorization: " + access_token.value("token_type", "") + " " +
+      access_token.value("access_token", "");
+  auto expires_in =
+      std::chrono::seconds(access_token.value("expires_in", int(0)));
+  auto new_expiration = now + expires_in;
+
+  return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
+                                                      new_expiration};
 }
 
 }  // namespace oauth2
