@@ -19,7 +19,6 @@
 #include "google/cloud/status.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
@@ -34,6 +33,19 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
+/// A helper struct that contains service account metadata.
+struct ServiceAccountMetadata {
+  std::set<std::string> scopes;
+  std::string email;
+};
+
+/// Parses a metadata server response JSON string into a ServiceAccountMetadata.
+StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
+    storage::internal::HttpResponse const& response);
+
+/// Parses a refresh response JSON string into a TemporaryToken.
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken> ParseRefeshResponse(
+    storage::internal::HttpResponse const& response);
 
 /**
  * Wrapper class for Google OAuth 2.0 GCE instance service account credentials.
@@ -146,30 +158,16 @@ class ComputeEngineCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    auto response_body =
-        storage::internal::nl::json::parse(response->payload, nullptr, false);
-    // Note that the "scopes" attribute will always be present and contain a
-    // JSON array. At minimum, for the request to succeed, the instance must
-    // have been granted the scope that allows it to retrieve info from the
-    // metadata server.
-    if (response_body.is_discarded() || response_body.count("email") == 0 ||
-        response_body.count("scopes") == 0) {
-      response->payload +=
-          "Could not find all required fields in response (email, scopes).";
-      return AsStatus(*response);
+    auto metadata = ParseMetadataServerResponse(*response);
+    if (!metadata) {
+      return metadata.status();
     }
-
-    // Do not update any state until all potential errors are handled.
-    service_account_email_ = response_body.value("email", "");
-    // We need to call the .get<>() helper because the conversion is ambiguous
-    // otherwise.
-    scopes_ = response_body["scopes"].template get<std::set<std::string>>();
+    service_account_email_ = std::move(metadata->email);
+    scopes_ = std::move(metadata->scopes);
     return Status();
   }
 
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() const {
-    namespace nl = storage::internal::nl;
-
     auto status = RetrieveServiceAccountInfo();
     if (!status.ok()) {
       return status;
@@ -186,28 +184,7 @@ class ComputeEngineCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    // Response should have the attributes "access_token", "expires_in", and
-    // "token_type".
-    nl::json access_token = nl::json::parse(response->payload, nullptr, false);
-    if (access_token.is_discarded() ||
-        access_token.count("access_token") == 0 or
-        access_token.count("expires_in") == 0 or
-        access_token.count("token_type") == 0) {
-      response->payload +=
-          "Could not find all required fields in response (access_token,"
-          " expires_in, token_type).";
-      return AsStatus(*response);
-    }
-    std::string header = "Authorization: ";
-    header += access_token.value("token_type", "");
-    header += ' ';
-    header += access_token.value("access_token", "");
-    auto expires_in =
-        std::chrono::seconds(access_token.value("expires_in", int(0)));
-    auto new_expiration = std::chrono::system_clock::now() + expires_in;
-
-    return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
-                                                        new_expiration};
+    return ParseRefeshResponse(*response);
   }
 
   mutable std::mutex mu_;

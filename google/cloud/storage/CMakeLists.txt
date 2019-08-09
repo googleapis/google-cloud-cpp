@@ -189,6 +189,7 @@ add_library(storage_client
             oauth2/authorized_user_credentials.h
             oauth2/authorized_user_credentials.cc
             oauth2/compute_engine_credentials.h
+            oauth2/compute_engine_credentials.cc
             oauth2/credential_constants.h
             oauth2/credentials.h
             oauth2/credentials.cc
