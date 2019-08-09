@@ -37,6 +37,13 @@ elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
   # name.
   BUILD_NAME="$(basename "${KOKORO_JOB_NAME}" "-presubmit")"
   export BUILD_NAME
+
+  # This is passed into the environment of the docker build and its scripts to
+  # tell them if they are running as part of a CI build rather than just a
+  # human invocation of "build.sh <build-name>". This allows scripts to be
+  # strict when run in a CI, but a little more friendly when run by a human.
+  RUNNING_CI="yes"
+  export RUNNING_CI
 else
  echo "Aborting build as the build name is not defined."
  echo "If you are invoking this script via the command line use:"
@@ -262,6 +269,9 @@ docker_flags=(
     # Let the Docker image script know what kind of terminal we are using, that
     # produces properly colorized error messages.
     "--env" "TERM=${TERM:-dumb}"
+
+    # Tells scripts whether they are running as part of a CI or not.
+    "--env" "RUNNING_CI=${RUNNING_CI:-no}"
 
     # Run the docker script and this user id. Because the docker image gets to
     # write in ${PWD} you typically want this to be your user id.
