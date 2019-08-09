@@ -43,7 +43,7 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
   // otherwise.
   metadata.scopes =
       response_body["scopes"].template get<std::set<std::string>>();
-  return std::move(metadata);
+  return metadata;
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
