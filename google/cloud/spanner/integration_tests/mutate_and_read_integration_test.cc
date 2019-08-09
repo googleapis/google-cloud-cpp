@@ -93,12 +93,14 @@ TEST(CommitIntegrationTest, Insert) {
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
     auto parsed_row = ParseRow<std::int64_t, std::string,
                                std::string>(std::array<Value, 3>{
-        internal::FromProto(result_set->metadata().row_type().fields(0).type(),
-                            row.values(0)),
-        internal::FromProto(result_set->metadata().row_type().fields(1).type(),
-                            row.values(1)),
-        internal::FromProto(result_set->metadata().row_type().fields(2).type(),
-                            row.values(2))});
+        // The extra braces are working around an old clang bug that was fixed
+        // in 6.0 (https://bugs.llvm.org/show_bug.cgi?id=21629).
+        {internal::FromProto(result_set->metadata().row_type().fields(0).type(),
+                             row.values(0)),
+         internal::FromProto(result_set->metadata().row_type().fields(1).type(),
+                             row.values(1)),
+         internal::FromProto(result_set->metadata().row_type().fields(2).type(),
+                             row.values(2))}});
     EXPECT_STATUS_OK(parsed_row);
     returned_rows.emplace_back(*parsed_row);
   }
