@@ -75,7 +75,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
  */
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
-    std::chrono::system_clock::time_point const& now);
+    std::chrono::system_clock::time_point now);
 
 /**
  * Given a key and a JSON header and payload, creates a JWT assertion string.
@@ -91,7 +91,7 @@ std::string MakeJWTAssertion(std::string const& header,
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
     storage::internal::HttpResponse const& response,
-    std::chrono::system_clock::time_point const& now);
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.

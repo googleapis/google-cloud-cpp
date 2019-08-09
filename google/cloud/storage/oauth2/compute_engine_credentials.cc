@@ -33,8 +33,8 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     auto payload =
         response.payload +
         "Could not find all required fields in response (email, scopes).";
-    return AsStatus(storage::internal::HttpResponse{
-        response.status_code, payload, response.headers});
+    return AsStatus(storage::internal::HttpResponse{response.status_code,
+                                                    payload, response.headers});
   }
   ServiceAccountMetadata metadata;
   // Do not update any state until all potential errors are handled.
@@ -46,7 +46,8 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
   return std::move(metadata);
 }
 
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken> ParseRefeshResponse(
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseComputeEngineRefeshResponse(
     storage::internal::HttpResponse const& response) {
   namespace nl = storage::internal::nl;
   // Response should have the attributes "access_token", "expires_in", and

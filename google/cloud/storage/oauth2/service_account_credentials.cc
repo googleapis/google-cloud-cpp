@@ -184,7 +184,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
 
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
-    std::chrono::system_clock::time_point const& now) {
+    std::chrono::system_clock::time_point now) {
   storage::internal::nl::json assertion_header = {
       {"alg", "RS256"}, {"kid", info.private_key_id}, {"typ", "JWT"}};
 
@@ -237,7 +237,7 @@ std::string MakeJWTAssertion(std::string const& header,
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
     storage::internal::HttpResponse const& response,
-    std::chrono::system_clock::time_point const& now) {
+    std::chrono::system_clock::time_point now) {
   auto access_token =
       storage::internal::nl::json::parse(response.payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 or

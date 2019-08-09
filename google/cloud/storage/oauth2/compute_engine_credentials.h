@@ -44,7 +44,8 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     storage::internal::HttpResponse const& response);
 
 /// Parses a refresh response JSON string into a TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken> ParseRefeshResponse(
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseComputeEngineRefeshResponse(
     storage::internal::HttpResponse const& response);
 
 /**
@@ -184,7 +185,7 @@ class ComputeEngineCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    return ParseRefeshResponse(*response);
+    return ParseComputeEngineRefeshResponse(*response);
   }
 
   mutable std::mutex mu_;
