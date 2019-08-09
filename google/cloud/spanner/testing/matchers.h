@@ -22,7 +22,7 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
-// NOLINTNEXTLINE
+
 MATCHER_P(IsProtoEqual, value, "") {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;

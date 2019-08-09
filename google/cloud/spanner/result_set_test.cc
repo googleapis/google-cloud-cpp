@@ -31,14 +31,10 @@ namespace spanner_proto = ::google::spanner::v1;
 using ::google::cloud::internal::make_unique;
 using ::testing::Return;
 
-// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
 class MockResultSetSource : public internal::ResultSetSource {
  public:
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD0(NextValue, StatusOr<optional<Value>>());
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD0(Metadata, optional<spanner_proto::ResultSetMetadata>());
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD0(Stats, optional<spanner_proto::ResultSetStats>());
 };
 

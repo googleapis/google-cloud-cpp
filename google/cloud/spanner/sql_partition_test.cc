@@ -23,7 +23,7 @@ inline namespace SPANNER_CLIENT_NS {
 class SqlPartitionTester {
  public:
   SqlPartitionTester() = default;
-  SqlPartitionTester(SqlPartition partition)
+  explicit SqlPartitionTester(SqlPartition partition)
       : partition_(std::move(partition)) {}
   SqlStatement const& Statement() const { return partition_.sql_statement(); }
   std::string const& PartitionToken() const {
@@ -48,8 +48,8 @@ TEST(SqlPartitionTest, MakeSqlPartition) {
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  SqlPartitionTester actual_partition = internal::MakeSqlPartition(
-      transaction_id, session_id, partition_token, SqlStatement(stmt, params));
+  SqlPartitionTester actual_partition(internal::MakeSqlPartition(
+      transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
@@ -64,8 +64,8 @@ TEST(SqlPartitionTest, Constructor) {
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  SqlPartitionTester actual_partition = internal::MakeSqlPartition(
-      transaction_id, session_id, partition_token, SqlStatement(stmt, params));
+  SqlPartitionTester actual_partition(internal::MakeSqlPartition(
+      transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
   EXPECT_EQ(partition_token, actual_partition.PartitionToken());
@@ -80,8 +80,8 @@ TEST(SqlPartitionTester, RegularSemantics) {
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  SqlPartition sql_partition = internal::MakeSqlPartition(
-      transaction_id, session_id, partition_token, SqlStatement(stmt, params));
+  SqlPartition sql_partition(internal::MakeSqlPartition(
+      transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
 
   EXPECT_NE(sql_partition, SqlPartition());
 

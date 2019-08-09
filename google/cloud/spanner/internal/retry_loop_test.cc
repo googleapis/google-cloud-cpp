@@ -81,12 +81,9 @@ TEST(RetryLoopTest, ReturnJustStatus) {
 
 // gmock makes clang-tidy very angry, disable a few warnings that we have no
 // control over.
-// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
 class MockBackoffPolicy : public BackoffPolicy {
  public:
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_CONST_METHOD0(clone, std::unique_ptr<BackoffPolicy>());
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD0(OnCompletion, std::chrono::milliseconds());
 };
 
@@ -108,8 +105,7 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
   int counter = 0;
   std::vector<ms> sleep_for;
   StatusOr<int> actual = RetryLoopImpl(
-      TestRetryPolicy(), std::move(mock),  // NOLINT
-      true,
+      TestRetryPolicy(), std::move(mock), true,
       [&counter](grpc::ClientContext&, int request) {
         if (++counter <= 3) {
           return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));

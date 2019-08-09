@@ -28,33 +28,26 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 
 // gmock makes clang-tidy very angry, disable a few warnings that we have no
 // control over.
-// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
 class MockDatabaseAdminClientStub : public internal::DatabaseAdminStub {
  public:
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(CreateDatabase,
                StatusOr<google::longrunning::Operation>(
                    grpc::ClientContext&, gcsa::CreateDatabaseRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD1(AwaitCreateDatabase, future<StatusOr<gcsa::Database>>(
                                         google::longrunning::Operation));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(UpdateDatabase, StatusOr<google::longrunning::Operation>(
                                    grpc::ClientContext&,
                                    gcsa::UpdateDatabaseDdlRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD1(AwaitUpdateDatabase,
                future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>(
                    google::longrunning::Operation));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(DropDatabase,
                Status(grpc::ClientContext&, gcsa::DropDatabaseRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(GetOperation,
                StatusOr<google::longrunning::Operation>(
                    grpc::ClientContext&,

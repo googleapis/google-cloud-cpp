@@ -42,25 +42,25 @@ inline namespace SPANNER_CLIENT_NS {
 /**
  * The Cloud spanner C++ Client major version.
  */
-int constexpr version_major() { return SPANNER_CLIENT_VERSION_MAJOR; }
+int constexpr VersionMajor() { return SPANNER_CLIENT_VERSION_MAJOR; }
 
 /**
  * The Cloud spanner C++ Client minor version.
  */
-int constexpr version_minor() { return SPANNER_CLIENT_VERSION_MINOR; }
+int constexpr VersionMinor() { return SPANNER_CLIENT_VERSION_MINOR; }
 
 /**
  * The Cloud spanner C++ Client patch version.
  */
-int constexpr version_patch() { return SPANNER_CLIENT_VERSION_PATCH; }
+int constexpr VersionPatch() { return SPANNER_CLIENT_VERSION_PATCH; }
 
 /// A single integer representing the Major/Minor/Patch version.
-int constexpr version() {
-  return 100 * (100 * version_major() + version_minor()) + version_patch();
+int constexpr Version() {
+  return 100 * (100 * VersionMajor() + VersionMinor()) + VersionPatch();
 }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
-std::string version_string();
+std::string VersionString();
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

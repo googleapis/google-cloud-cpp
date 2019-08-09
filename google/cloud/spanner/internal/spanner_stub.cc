@@ -30,7 +30,7 @@ namespace spanner_proto = ::google::spanner::v1;
  */
 class DefaultSpannerStub : public SpannerStub {
  public:
-  DefaultSpannerStub(
+  explicit DefaultSpannerStub(
       std::unique_ptr<spanner_proto::Spanner::StubInterface> grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
 

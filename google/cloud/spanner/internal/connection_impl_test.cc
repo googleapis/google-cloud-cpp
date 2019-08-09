@@ -30,81 +30,66 @@ namespace spanner_proto = ::google::spanner::v1;
 
 // gmock makes clang-tidy very angry, disable a few warnings that we have no
 // control over.
-// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
 class MockSpannerStub : public internal::SpannerStub {
  public:
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(CreateSession, StatusOr<spanner_proto::Session>(
                                   grpc::ClientContext&,
                                   spanner_proto::CreateSessionRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(GetSession, StatusOr<spanner_proto::Session>(
                                grpc::ClientContext&,
                                spanner_proto::GetSessionRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(ListSessions, StatusOr<spanner_proto::ListSessionsResponse>(
                                  grpc::ClientContext&,
                                  spanner_proto::ListSessionsRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(DeleteSession,
                Status(grpc::ClientContext&,
                       spanner_proto::DeleteSessionRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(ExecuteSql, StatusOr<spanner_proto::ResultSet>(
                                grpc::ClientContext&,
                                spanner_proto::ExecuteSqlRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(
       ExecuteStreamingSql,
       std::unique_ptr<
           grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>(
           grpc::ClientContext&, spanner_proto::ExecuteSqlRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(ExecuteBatchDml,
                StatusOr<spanner_proto::ExecuteBatchDmlResponse>(
                    grpc::ClientContext&,
                    spanner_proto::ExecuteBatchDmlRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(Read,
                StatusOr<spanner_proto::ResultSet>(
                    grpc::ClientContext&, spanner_proto::ReadRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(
       StreamingRead,
       std::unique_ptr<
           grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>(
           grpc::ClientContext&, spanner_proto::ReadRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(BeginTransaction,
                StatusOr<spanner_proto::Transaction>(
                    grpc::ClientContext&,
                    spanner_proto::BeginTransactionRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(Commit,
                StatusOr<spanner_proto::CommitResponse>(
                    grpc::ClientContext&, spanner_proto::CommitRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(Rollback, Status(grpc::ClientContext&,
                                 spanner_proto::RollbackRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(PartitionQuery,
                StatusOr<spanner_proto::PartitionResponse>(
                    grpc::ClientContext&,
                    spanner_proto::PartitionQueryRequest const&));
 
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD2(PartitionRead, StatusOr<spanner_proto::PartitionResponse>(
                                   grpc::ClientContext&,
                                   spanner_proto::PartitionReadRequest const&));

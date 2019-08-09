@@ -26,10 +26,10 @@ using ::testing::StartsWith;
 
 /// @test A trivial test for the Google Cloud Spanner C++ Client
 TEST(StorageVersionTest, Simple) {
-  EXPECT_FALSE(spanner::version_string().empty());
-  EXPECT_EQ(SPANNER_CLIENT_VERSION_MAJOR, spanner::version_major());
-  EXPECT_EQ(SPANNER_CLIENT_VERSION_MINOR, spanner::version_minor());
-  EXPECT_EQ(SPANNER_CLIENT_VERSION_PATCH, spanner::version_patch());
+  EXPECT_FALSE(spanner::VersionString().empty());
+  EXPECT_EQ(SPANNER_CLIENT_VERSION_MAJOR, spanner::VersionMajor());
+  EXPECT_EQ(SPANNER_CLIENT_VERSION_MINOR, spanner::VersionMinor());
+  EXPECT_EQ(SPANNER_CLIENT_VERSION_PATCH, spanner::VersionPatch());
 }
 
 /// @test Verify the version string starts with the version numbers.
@@ -37,7 +37,7 @@ TEST(StorageVersionTest, Format) {
   std::ostringstream os;
   os << "v" << SPANNER_CLIENT_VERSION_MAJOR << "."
      << SPANNER_CLIENT_VERSION_MINOR << "." << SPANNER_CLIENT_VERSION_PATCH;
-  EXPECT_THAT(version_string(), StartsWith(os.str()));
+  EXPECT_THAT(VersionString(), StartsWith(os.str()));
 }
 
 /// @test Verify the version does not contain build info for release builds.
@@ -45,7 +45,7 @@ TEST(StorageVersionTest, NoBuildInfoInRelease) {
   if (!google::cloud::internal::is_release()) {
     return;
   }
-  EXPECT_THAT(version_string(),
+  EXPECT_THAT(VersionString(),
               Not(HasSubstr("+" + google::cloud::internal::build_metadata())));
 }
 
@@ -54,7 +54,7 @@ TEST(StorageVersionTest, HasBuildInfoInDevelopment) {
   if (google::cloud::internal::is_release()) {
     return;
   }
-  EXPECT_THAT(version_string(),
+  EXPECT_THAT(VersionString(),
               HasSubstr("+" + google::cloud::internal::build_metadata()));
 }
 

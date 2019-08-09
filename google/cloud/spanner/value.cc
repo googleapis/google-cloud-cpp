@@ -249,7 +249,7 @@ StatusOr<std::int64_t> Value::GetValue(std::int64_t,
   auto const& s = pv.string_value();
   char* end = nullptr;
   errno = 0;
-  long long x = std::strtoll(s.c_str(), &end, 10);
+  std::int64_t x = {std::strtoll(s.c_str(), &end, 10)};
   if (errno != 0) {
     auto const err = std::string(std::strerror(errno));
     return Status(StatusCode::kUnknown, err + ": \"" + s + "\"");

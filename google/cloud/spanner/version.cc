@@ -20,12 +20,11 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-// NOLINTNEXTLINE(readability-identifier-naming)
-std::string version_string() {
+std::string VersionString() {
   static std::string const kVersion = [] {
     std::ostringstream os;
-    os << "v" << version_major() << "." << version_minor() << "."
-       << version_patch();
+    os << "v" << VersionMajor() << "." << VersionMinor() << "."
+       << VersionPatch();
     if (!google::cloud::internal::is_release()) {
       os << "+" << google::cloud::internal::build_metadata();
     }

@@ -47,7 +47,8 @@ using ::testing::SetArgPointee;
 class ReaderValueMatcher
     : public testing::MatcherInterface<StatusOr<optional<Value>> const&> {
  public:
-  ReaderValueMatcher(Value expected) : expected_(std::move(expected)) {}
+  explicit ReaderValueMatcher(Value expected)
+      : expected_(std::move(expected)) {}
 
   bool MatchAndExplain(StatusOr<optional<Value>> const& actual,
                        testing::MatchResultListener* listener) const override {
@@ -82,19 +83,11 @@ testing::Matcher<StatusOr<optional<Value>> const&> IsValidAndEquals(
 
 // gmock makes clang-tidy very angry, disable a few warnings that we have no
 // control over.
-// NOLINTNEXTLINE(clang-analyzer-optin.cplusplus.VirtualCall)
 class MockGrpcReader : public PartialResultSetReader::GrpcReader {
  public:
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD1(Read, bool(spanner_proto::PartialResultSet*));
-
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
-
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD0(Finish, grpc::Status());
-
-  // NOLINTNEXTLINE(misc-non-private-member-variables-in-classes)
   MOCK_METHOD0(WaitForInitialMetadata, void());
 };
 
