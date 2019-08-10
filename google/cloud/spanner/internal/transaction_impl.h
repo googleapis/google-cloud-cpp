@@ -22,7 +22,6 @@
 #include <condition_variable>
 #include <cstdint>
 #include <mutex>
-#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -52,13 +51,12 @@ class TransactionImpl {
   // allocates a transaction ID, then the functor should selector.set_id(id).
   // Otherwise the functor should not modify the selector. A monotonically-
   // increasing sequence number is also passed to the functor.
-  template <typename Functor,
-            typename std::enable_if<
-                google::cloud::internal::is_invocable<
-                    Functor, google::spanner::v1::TransactionSelector&,
-                    std::int64_t>::value,
-                int>::type = 0>
+  template <typename Functor>
   VisitInvokeResult<Functor> Visit(Functor&& f) {
+    static_assert(google::cloud::internal::is_invocable<
+                      Functor, google::spanner::v1::TransactionSelector&,
+                      std::int64_t>::value,
+                  "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
     {
       std::unique_lock<std::mutex> lock(mu_);
