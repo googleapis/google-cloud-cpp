@@ -23,7 +23,7 @@ namespace {
 
 class TerminateFunction {
  public:
-  TerminateFunction(TerminateHandler f) : f_(std::move(f)) {}
+  explicit TerminateFunction(TerminateHandler f) : f_(std::move(f)) {}
 
   TerminateHandler Get() {
     std::lock_guard<std::mutex> l(m_);
