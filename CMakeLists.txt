@@ -21,8 +21,7 @@ set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(google-cloud-cpp CXX C)
 
 # Configure the Compiler options, we use C++11 features by default.
-set(GOOGLE_CLOUD_CPP_CXX_STANDARD
-    11
+set(GOOGLE_CLOUD_CPP_CXX_STANDARD 11
     CACHE STRING "Configure CMAKE_CXX_STANDARD")
 mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
 
