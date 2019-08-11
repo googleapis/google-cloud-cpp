@@ -133,9 +133,16 @@ elif [[ "${BUILD_NAME}" = "scan-build" ]]; then
   export BUILD_TYPE=Debug
   export CC=clang
   export CXX=clang++
-  export DISTRO=fedora-install
   export DISTRO_VERSION=30
   export SCAN_BUILD=yes
+elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
+  export GOOGLE_CLOUD_CPP_CXX_STANDARD=17
+  export TEST_INSTALL=yes
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=30
+  export CC=gcc
+  export CXX=g++
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export BUILD_TYPE=Coverage
   export DISTRO=fedora
@@ -212,9 +219,11 @@ docker_flags=(
 
     "--env" "NCPU=${NCPU}"
 
-    # Disable ccache(1) for Kokoro build builds we do not cache data between
-    # builds.
+    # Disable ccache(1) for Kokoro builds.
     "--env" "NEEDS_CCACHE=no"
+
+    # If set, pass -DGOOGLE_CLOUD_CPP_CXX_STANDARD=<value> to CMake.
+    "--env" "GOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}"
 
     # The type of the build for CMake.
     "--env" "BUILD_TYPE=${BUILD_TYPE:-Release}"
