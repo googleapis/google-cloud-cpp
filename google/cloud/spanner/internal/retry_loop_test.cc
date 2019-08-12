@@ -79,8 +79,6 @@ TEST(RetryLoopTest, ReturnJustStatus) {
   EXPECT_STATUS_OK(actual);
 }
 
-// gmock makes clang-tidy very angry, disable a few warnings that we have no
-// control over.
 class MockBackoffPolicy : public BackoffPolicy {
  public:
   MOCK_CONST_METHOD0(clone, std::unique_ptr<BackoffPolicy>());

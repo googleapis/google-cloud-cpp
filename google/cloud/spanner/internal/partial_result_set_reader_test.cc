@@ -81,8 +81,6 @@ testing::Matcher<StatusOr<optional<Value>> const&> IsValidAndEquals(
   return testing::MakeMatcher(new ReaderValueMatcher(std::move(expected)));
 }
 
-// gmock makes clang-tidy very angry, disable a few warnings that we have no
-// control over.
 class MockGrpcReader : public PartialResultSetReader::GrpcReader {
  public:
   MOCK_METHOD1(Read, bool(spanner_proto::PartialResultSet*));

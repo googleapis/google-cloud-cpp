@@ -26,8 +26,6 @@ using ::testing::_;
 using ::testing::Invoke;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
-// gmock makes clang-tidy very angry, disable a few warnings that we have no
-// control over.
 class MockDatabaseAdminClientStub : public internal::DatabaseAdminStub {
  public:
   MOCK_METHOD2(CreateDatabase,

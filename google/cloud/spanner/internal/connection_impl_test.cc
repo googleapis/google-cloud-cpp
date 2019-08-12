@@ -29,8 +29,6 @@ using ::testing::_;
 using ::testing::HasSubstr;
 namespace spanner_proto = ::google::spanner::v1;
 
-// gmock makes clang-tidy very angry, disable a few warnings that we have no
-// control over.
 class MockSpannerStub : public internal::SpannerStub {
  public:
   MOCK_METHOD2(CreateSession, StatusOr<spanner_proto::Session>(
