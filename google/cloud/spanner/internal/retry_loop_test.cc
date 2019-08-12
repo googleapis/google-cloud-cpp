@@ -23,6 +23,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
@@ -114,8 +115,8 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
       [&sleep_for](ms p) { sleep_for.push_back(p); });
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
-  EXPECT_THAT(sleep_for, ::testing::ElementsAre(
-                             ms(10), std::chrono::milliseconds(20), ms(30)));
+  EXPECT_THAT(sleep_for,
+              ElementsAre(ms(10), std::chrono::milliseconds(20), ms(30)));
 }
 
 TEST(RetryLoopTest, TransientFailureNonIdempotent) {

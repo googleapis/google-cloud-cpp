@@ -28,6 +28,8 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::testing::UnorderedElementsAre;
+
 /// @test Verify the basic insert operations for transaction commits.
 TEST(CommitIntegrationTest, Insert) {
   auto project_id =
@@ -106,7 +108,7 @@ TEST(CommitIntegrationTest, Insert) {
   }
 
   EXPECT_THAT(returned_rows,
-              ::testing::UnorderedElementsAre(
+              UnorderedElementsAre(
                   RowType(1, "test-first-name-1", "test-last-name-1"),
                   RowType(2, "test-first-name-2", "test-last-name-2")));
 

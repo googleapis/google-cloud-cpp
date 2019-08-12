@@ -22,9 +22,12 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::HasSubstr;
+using ::testing::Not;
+
 TEST(BuildInfo, BuildFlags) {
   auto bf = BuildFlags();
-  EXPECT_THAT(bf, ::testing::Not(::testing::HasSubstr("@")));
+  EXPECT_THAT(bf, Not(HasSubstr("@")));
 }
 
 TEST(BuildInfo, IsRelease) {
@@ -36,7 +39,7 @@ TEST(BuildInfo, IsRelease) {
 TEST(BuildInfo, BuildMetadata) {
   auto const md = BuildMetadata();
   EXPECT_FALSE(md.empty());
-  EXPECT_THAT(md, ::testing::Not(::testing::HasSubstr("@")));
+  EXPECT_THAT(md, Not(HasSubstr("@")));
 }
 
 }  // namespace

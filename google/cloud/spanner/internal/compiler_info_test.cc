@@ -22,11 +22,16 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::AnyOf;
+using ::testing::ContainsRegex;
+using ::testing::Eq;
+using ::testing::MatchesRegex;
+
 TEST(CompilerInfo, CompilerId) {
   auto cn = CompilerId();
   EXPECT_FALSE(cn.empty());
 #ifndef _WIN32  // gMock's regex brackets don't work on Windows.
-  EXPECT_THAT(cn, ::testing::ContainsRegex(R"([A-Za-z]+)"));
+  EXPECT_THAT(cn, ContainsRegex(R"([A-Za-z]+)"));
 #endif
 }
 
@@ -35,23 +40,21 @@ TEST(CompilerInfo, CompilerVersion) {
   EXPECT_FALSE(cv.empty());
 #ifndef _WIN32  // gMock's regex brackets don't work on Windows.
   // Look for something that looks vaguely like an X.Y version number.
-  EXPECT_THAT(cv, ::testing::ContainsRegex(R"([0-9]+.[0-9]+)"));
+  EXPECT_THAT(cv, ContainsRegex(R"([0-9]+.[0-9]+)"));
 #endif
 }
 
 TEST(CompilerInfo, CompilerFeatures) {
-  using ::testing::Eq;
   auto cf = CompilerFeatures();
   EXPECT_FALSE(cf.empty());
-  EXPECT_THAT(cf, ::testing::AnyOf(Eq("noex"), Eq("ex")));
+  EXPECT_THAT(cf, AnyOf(Eq("noex"), Eq("ex")));
 }
 
 TEST(CompilerInfo, LanguageVersion) {
-  using ::testing::HasSubstr;
   auto lv = LanguageVersion();
   EXPECT_FALSE(lv.empty());
 #ifndef _WIN32  // gMock's regex brackets don't work on Windows.
-  EXPECT_THAT(lv, ::testing::MatchesRegex(R"([0-9]+)"));
+  EXPECT_THAT(lv, MatchesRegex(R"([0-9]+)"));
 #endif
 }
 

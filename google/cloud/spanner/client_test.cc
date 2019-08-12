@@ -27,6 +27,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::HasSubstr;
+using ::testing::Return;
 
 class MockConnection : public Connection {
  public:
@@ -69,7 +70,7 @@ TEST(ClientTest, CommitSuccess) {
   result.commit_timestamp = ts;
 
   Client client(conn);
-  EXPECT_CALL(*conn, Commit(_)).WillOnce(::testing::Return(result));
+  EXPECT_CALL(*conn, Commit(_)).WillOnce(Return(result));
 
   auto txn = MakeReadWriteTransaction();
   auto commit = client.Commit(txn, {});
@@ -82,8 +83,7 @@ TEST(ClientTest, CommitError) {
 
   Client client(conn);
   EXPECT_CALL(*conn, Commit(_))
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kPermissionDenied, "blah")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "blah")));
 
   auto txn = MakeReadWriteTransaction();
   auto commit = client.Commit(txn, {});
@@ -95,7 +95,7 @@ TEST(ClientTest, RollbackSuccess) {
   auto conn = std::make_shared<MockConnection>();
 
   Client client(conn);
-  EXPECT_CALL(*conn, Rollback(_)).WillOnce(::testing::Return(Status()));
+  EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   auto txn = MakeReadWriteTransaction();
   auto rollback = client.Rollback(txn);
@@ -107,8 +107,7 @@ TEST(ClientTest, RollbackError) {
 
   Client client(conn);
   EXPECT_CALL(*conn, Rollback(_))
-      .WillOnce(
-          ::testing::Return(Status(StatusCode::kInvalidArgument, "blah")));
+      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
 
   auto txn = MakeReadWriteTransaction();
   auto rollback = client.Rollback(txn);
