@@ -42,7 +42,7 @@ inline bool IsEmptyRowKey(char const* key) { return std::string{} == key; }
 
 #if __cplusplus >= 201703L
 /// Return true if the row key is empty.
-inline bool IsEmptyRowKey(absl::string_view key) { return key.empty(); }
+inline bool IsEmptyRowKey(std::string_view key) { return key.empty(); }
 #endif  // __cplusplus >= 201703L
 
 /// Return `< 0` if `lhs < rhs`, 0 if `lhs == rhs`, and `> 0' otherwise.

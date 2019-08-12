@@ -54,6 +54,11 @@ if [[ "${BUILD_TESTING:-}" == "no" ]]; then
   cmake_extra_flags+=( "-DBUILD_TESTING=OFF" )
 fi
 
+if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
+  cmake_extra_flags+=(
+    "-DGOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD}")
+fi
+
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
       "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
