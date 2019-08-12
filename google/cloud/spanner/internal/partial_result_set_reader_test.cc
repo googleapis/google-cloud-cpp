@@ -130,8 +130,7 @@ TEST(PartialResultSetReaderTest, ReadSuccessThenFailure) {
   // The first call to NextValue() yields a value but the second gives an error.
   auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::int64_t{80})));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(80)));
   auto value = (*reader)->NextValue();
   EXPECT_EQ(value.status().code(), StatusCode::kCancelled);
 }
@@ -222,10 +221,8 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
   EXPECT_THAT(*actual_metadata, IsProtoEqual(expected_metadata));
 
   // Verify the returned values are correct.
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::int64_t{10})));
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::string{"user10"})));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(10)));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value("user10")));
 
   // At end of stream, we get an 'ok' response with no value.
   auto eos = (*reader)->NextValue();
@@ -301,18 +298,12 @@ TEST(PartialResultSetReaderTest, MultipleResponses) {
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned values are correct.
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::int64_t{10})));
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::string{"user10"})));
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::int64_t{22})));
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::string{"user22"})));
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::int64_t{99})));
-  EXPECT_THAT((*reader)->NextValue(),
-              IsValidAndEquals(Value(std::string{"99user99"})));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(10)));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value("user10")));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(22)));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value("user22")));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(99)));
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value("99user99")));
 
   // At end of stream, we get an 'ok' response with no value.
   auto eos = (*reader)->NextValue();
