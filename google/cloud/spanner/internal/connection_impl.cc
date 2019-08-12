@@ -32,6 +32,12 @@ StatusOr<CommitResult> ConnectionImpl::Commit(Connection::CommitParams cp) {
       });
 }
 
+Status ConnectionImpl::Rollback(Connection::RollbackParams rp) {
+  return internal::Visit(std::move(rp.transaction),
+                         [this](spanner_proto::TransactionSelector& s,
+                                std::int64_t) { return this->Rollback(s); });
+}
+
 StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
   if (!sessions_.empty()) {
     std::string session = sessions_.back();
@@ -39,7 +45,7 @@ StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
     return SessionHolder(std::move(session), this);
   }
   grpc::ClientContext context;
-  google::spanner::v1::CreateSessionRequest request;
+  spanner_proto::CreateSessionRequest request;
   request.set_database(database_);
   auto response = stub_->CreateSession(context, request);
   if (!response) {
@@ -49,23 +55,22 @@ StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(
-    google::spanner::v1::TransactionSelector& s,
-    std::vector<Mutation> mutations) {
+    spanner_proto::TransactionSelector& s, std::vector<Mutation> mutations) {
   auto session = GetSession();
   if (!session) {
     return std::move(session).status();
   }
-  google::spanner::v1::CommitRequest request;
+  spanner_proto::CommitRequest request;
   request.set_session(session->session_name());
   for (auto&& m : mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
-  if (!s.id().empty()) {
-    request.set_transaction_id(s.id());
+  if (s.has_single_use()) {
+    *request.mutable_single_use_transaction() = s.single_use();
   } else if (s.has_begin()) {
     *request.mutable_single_use_transaction() = s.begin();
-  } else if (s.has_single_use()) {
-    *request.mutable_single_use_transaction() = s.single_use();
+  } else {
+    request.set_transaction_id(s.id());
   }
   grpc::ClientContext context;
   auto response = stub_->Commit(context, request);
@@ -75,6 +80,27 @@ StatusOr<CommitResult> ConnectionImpl::Commit(
   CommitResult r;
   r.commit_timestamp = internal::FromProto(response->commit_timestamp());
   return r;
+}
+
+Status ConnectionImpl::Rollback(spanner_proto::TransactionSelector& s) {
+  auto session = GetSession();
+  if (!session) {
+    return std::move(session).status();
+  }
+  if (s.has_single_use()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Cannot rollback a single-use transaction");
+  }
+  if (s.has_begin()) {
+    // There is nothing to rollback if a transaction id has not yet been
+    // assigned, so we just succeed without making an RPC.
+    return Status();
+  }
+  spanner_proto::RollbackRequest request;
+  request.set_session(session->session_name());
+  request.set_transaction_id(s.id());
+  grpc::ClientContext context;
+  return stub_->Rollback(context, request);
 }
 
 }  // namespace internal

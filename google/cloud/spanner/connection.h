@@ -57,6 +57,18 @@ class Connection {
     std::vector<Mutation> mutations;
   };
   virtual StatusOr<CommitResult> Commit(CommitParams) = 0;
+
+  /**
+   * Rollback a read-write transaction.
+   *
+   * At any time before `Commit`, the client can send a `Rollback` request
+   * to abort the transaction. (Read-only transactions do not need to call
+   * `Commit` or `Rollback`. In fact, they are not permitted to do so).
+   */
+  struct RollbackParams {
+    Transaction transaction;
+  };
+  virtual Status Rollback(RollbackParams) = 0;
 };
 
 }  // namespace SPANNER_CLIENT_NS

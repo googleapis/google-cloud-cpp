@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <memory>
 #include <string>
@@ -40,6 +41,7 @@ class ConnectionImpl : public Connection {
       : database_(std::move(database)), stub_(std::move(stub)) {}
 
   StatusOr<CommitResult> Commit(CommitParams) override;
+  Status Rollback(RollbackParams) override;
 
  private:
   class SessionHolder {
@@ -60,6 +62,10 @@ class ConnectionImpl : public Connection {
   /// Implementation details for Commit.
   StatusOr<CommitResult> Commit(google::spanner::v1::TransactionSelector& s,
                                 std::vector<Mutation> mutations);
+
+  /// Implementation details for Rollback.
+  Status Rollback(google::spanner::v1::TransactionSelector& s);
+
   std::string database_;
   std::shared_ptr<internal::SpannerStub> stub_;
 

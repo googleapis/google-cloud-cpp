@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include <gmock/gmock.h>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -95,7 +96,7 @@ class MockSpannerStub : public internal::SpannerStub {
                                   spanner_proto::PartitionReadRequest const&));
 };
 
-TEST(ConnectionImplTest, Commit_GetSessionFailure) {
+TEST(ConnectionImplTest, CommitGetSessionFailure) {
   auto mock = std::make_shared<MockSpannerStub>();
 
   auto database_name =
@@ -103,9 +104,8 @@ TEST(ConnectionImplTest, Commit_GetSessionFailure) {
   ConnectionImpl conn(database_name, mock);
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(::testing::Invoke(
-          [&database_name](
-              grpc::ClientContext&,
-              google::spanner::v1::CreateSessionRequest const& request) {
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
             EXPECT_EQ(database_name, request.database());
             return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
           }));
@@ -115,7 +115,7 @@ TEST(ConnectionImplTest, Commit_GetSessionFailure) {
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in GetSession"));
 }
 
-TEST(ConnectionImplTest, Commit_CommitFailure) {
+TEST(ConnectionImplTest, CommitCommitFailure) {
   auto mock = std::make_shared<MockSpannerStub>();
 
   auto database_name =
@@ -123,18 +123,17 @@ TEST(ConnectionImplTest, Commit_CommitFailure) {
   ConnectionImpl conn(database_name, mock);
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(::testing::Invoke(
-          [&database_name](
-              grpc::ClientContext&,
-              google::spanner::v1::CreateSessionRequest const& request) {
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
             EXPECT_EQ(database_name, request.database());
-            google::spanner::v1::Session session;
+            spanner_proto::Session session;
             session.set_name("test-session-name");
             return session;
           }));
   EXPECT_CALL(*mock, Commit(_, _))
-      .WillOnce(::testing::Invoke(
-          [](grpc::ClientContext&,
-             google::spanner::v1::CommitRequest const& request) {
+      .WillOnce(
+          ::testing::Invoke([](grpc::ClientContext&,
+                               spanner_proto::CommitRequest const& request) {
             EXPECT_EQ("test-session-name", request.session());
             return Status(StatusCode::kPermissionDenied, "uh-oh in Commit");
           }));
@@ -143,7 +142,7 @@ TEST(ConnectionImplTest, Commit_CommitFailure) {
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
 }
 
-TEST(ConnectionImplTest, Commit_TransactionId) {
+TEST(ConnectionImplTest, CommitTransactionId) {
   auto mock = std::make_shared<MockSpannerStub>();
 
   auto database_name =
@@ -151,18 +150,17 @@ TEST(ConnectionImplTest, Commit_TransactionId) {
   ConnectionImpl conn(database_name, mock);
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(::testing::Invoke(
-          [&database_name](
-              grpc::ClientContext&,
-              google::spanner::v1::CreateSessionRequest const& request) {
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
             EXPECT_EQ(database_name, request.database());
-            google::spanner::v1::Session session;
+            spanner_proto::Session session;
             session.set_name("test-session-name");
             return session;
           }));
   EXPECT_CALL(*mock, Commit(_, _))
-      .WillOnce(::testing::Invoke(
-          [](grpc::ClientContext&,
-             google::spanner::v1::CommitRequest const& request) {
+      .WillOnce(
+          ::testing::Invoke([](grpc::ClientContext&,
+                               spanner_proto::CommitRequest const& request) {
             EXPECT_EQ("test-session-name", request.session());
             EXPECT_EQ("test-txn-id", request.transaction_id());
             return Status(StatusCode::kPermissionDenied, "uh-oh in Commit");
@@ -177,6 +175,151 @@ TEST(ConnectionImplTest, Commit_TransactionId) {
   auto commit = conn.Commit({txn, {}});
   EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
+}
+
+TEST(ConnectionImplTest, RollbackGetSessionFailure) {
+  auto database_name = MakeDatabaseName("project", "instance", "database");
+
+  auto mock = std::make_shared<MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+  EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
+
+  ConnectionImpl conn(database_name, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto rollback = conn.Rollback({txn});
+  EXPECT_EQ(StatusCode::kPermissionDenied, rollback.code());
+  EXPECT_THAT(rollback.message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, RollbackBeginTransaction) {
+  auto database_name = MakeDatabaseName("project", "instance", "database");
+  std::string const session_name = "test-session-name";
+
+  auto mock = std::make_shared<MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name, &session_name](
+              grpc::ClientContext&,
+              spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name(session_name);
+            return session;
+          }));
+  EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
+
+  ConnectionImpl conn(database_name, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto rollback = conn.Rollback({txn});
+  EXPECT_TRUE(rollback.ok());
+}
+
+TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
+  auto database_name = MakeDatabaseName("project", "instance", "database");
+  std::string const session_name = "test-session-name";
+
+  auto mock = std::make_shared<MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name, &session_name](
+              grpc::ClientContext&,
+              spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name(session_name);
+            return session;
+          }));
+  EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
+
+  ConnectionImpl conn(database_name, mock);
+  auto txn = internal::MakeSingleUseTransaction(
+      Transaction::SingleUseOptions{Transaction::ReadOnlyOptions{}});
+  auto rollback = conn.Rollback({txn});
+  EXPECT_EQ(StatusCode::kInvalidArgument, rollback.code());
+  EXPECT_THAT(rollback.message(), HasSubstr("Cannot rollback"));
+}
+
+TEST(ConnectionImplTest, RollbackFailure) {
+  auto database_name = MakeDatabaseName("project", "instance", "database");
+  std::string const session_name = "test-session-name";
+  std::string const transaction_id = "test-txn-id";
+
+  auto mock = std::make_shared<MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name, &session_name](
+              grpc::ClientContext&,
+              spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name(session_name);
+            return session;
+          }));
+  EXPECT_CALL(*mock, Rollback(_, _))
+      .WillOnce(
+          ::testing::Invoke([&session_name, &transaction_id](
+                                grpc::ClientContext&,
+                                spanner_proto::RollbackRequest const& request) {
+            EXPECT_EQ(session_name, request.session());
+            EXPECT_EQ(transaction_id, request.transaction_id());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in Rollback");
+          }));
+
+  ConnectionImpl conn(database_name, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto begin_transaction =
+      [&transaction_id](spanner_proto::TransactionSelector& s, std::int64_t) {
+        s.set_id(transaction_id);
+        return 0;
+      };
+  internal::Visit(txn, begin_transaction);
+  auto rollback = conn.Rollback({txn});
+  EXPECT_EQ(StatusCode::kPermissionDenied, rollback.code());
+  EXPECT_THAT(rollback.message(), HasSubstr("uh-oh in Rollback"));
+}
+
+TEST(ConnectionImplTest, RollbackSuccess) {
+  auto database_name = MakeDatabaseName("project", "instance", "database");
+  std::string const session_name = "test-session-name";
+  std::string const transaction_id = "test-txn-id";
+
+  auto mock = std::make_shared<MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name, &session_name](
+              grpc::ClientContext&,
+              spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name(session_name);
+            return session;
+          }));
+  EXPECT_CALL(*mock, Rollback(_, _))
+      .WillOnce(
+          ::testing::Invoke([&session_name, &transaction_id](
+                                grpc::ClientContext&,
+                                spanner_proto::RollbackRequest const& request) {
+            EXPECT_EQ(session_name, request.session());
+            EXPECT_EQ(transaction_id, request.transaction_id());
+            return Status();
+          }));
+
+  ConnectionImpl conn(database_name, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto begin_transaction =
+      [&transaction_id](spanner_proto::TransactionSelector& s, std::int64_t) {
+        s.set_id(transaction_id);
+        return 0;
+      };
+  internal::Visit(txn, begin_transaction);
+  auto rollback = conn.Rollback({txn});
+  EXPECT_TRUE(rollback.ok());
 }
 
 }  // namespace

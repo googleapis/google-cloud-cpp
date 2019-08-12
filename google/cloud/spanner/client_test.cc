@@ -33,6 +33,7 @@ class MockConnection : public Connection {
   ~MockConnection() override = default;
 
   MOCK_METHOD1(Commit, StatusOr<CommitResult>(CommitParams));
+  MOCK_METHOD1(Rollback, Status(RollbackParams));
 };
 
 TEST(ClientTest, CopyAndMove) {
@@ -88,6 +89,30 @@ TEST(ClientTest, CommitError) {
   auto commit = client.Commit(txn, {});
   EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
   EXPECT_THAT(commit.status().message(), HasSubstr("blah"));
+}
+
+TEST(ClientTest, RollbackSuccess) {
+  auto conn = std::make_shared<MockConnection>();
+
+  Client client(conn);
+  EXPECT_CALL(*conn, Rollback(_)).WillOnce(::testing::Return(Status()));
+
+  auto txn = MakeReadWriteTransaction();
+  auto rollback = client.Rollback(txn);
+  EXPECT_TRUE(rollback.ok());
+}
+
+TEST(ClientTest, RollbackError) {
+  auto conn = std::make_shared<MockConnection>();
+
+  Client client(conn);
+  EXPECT_CALL(*conn, Rollback(_))
+      .WillOnce(
+          ::testing::Return(Status(StatusCode::kInvalidArgument, "blah")));
+
+  auto txn = MakeReadWriteTransaction();
+  auto rollback = client.Rollback(txn);
+  EXPECT_EQ(StatusCode::kInvalidArgument, rollback.code());
 }
 
 TEST(ClientTest, MakeDatabaseName) {

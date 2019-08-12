@@ -104,8 +104,8 @@ StatusOr<CommitResult> Client::Commit(Transaction transaction,
   return conn_->Commit({std::move(transaction), std::move(mutations)});
 }
 
-Status Client::Rollback(Transaction const& /*transaction*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+Status Client::Rollback(Transaction transaction) {
+  return conn_->Rollback({std::move(transaction)});
 }
 
 std::string MakeDatabaseName(std::string const& project,

@@ -376,7 +376,7 @@ class Client {
    *
    * @return The error status of the rollback.
    */
-  Status Rollback(Transaction const& transaction);
+  Status Rollback(Transaction transaction);
 
  private:
   std::shared_ptr<Connection> conn_;
