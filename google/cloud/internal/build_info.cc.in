@@ -35,22 +35,6 @@ std::string compiler_flags() {
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
-bool is_release() {
-  static bool const kIsRelease = []() -> bool {
-    // Sometimes GOOGLE_CLOUD_CPP_IS_RELEASE string expands to nothing, and then
-    // clang-tidy complains.
-    // NOLINTNEXTLINE(readability-redundant-string-init)
-    std::string value(R"""(@GOOGLE_CLOUD_CPP_IS_RELEASE@)""");
-    std::transform(
-        value.begin(), value.end(), value.begin(),
-        [](char c) -> char { return static_cast<char>(std::tolower(c)); });
-    return value == "yes" || value == "1" || value == "true";
-  }();
-
-  return kIsRelease;
-}
-
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string build_metadata() {
   // Sometimes GOOGLE_CLOUD_CPP_BUILD_METADATA string expands to nothing, and
   // then clang-tidy complains.

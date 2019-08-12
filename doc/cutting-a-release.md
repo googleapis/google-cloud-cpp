@@ -57,39 +57,64 @@ name:
 export RELEASE="v0.N"
 ```
 
+
 If you decide to cut&paste the commands below, make sure that variable has the
 actual release value, e.g. `v0.5` or `v0.7`, and not the generic `N`.
 
-Clone the main repository to create the branch:
+Clone the main repository to create the tags and branch:
 
 ```bash
 git clone git@github.com:googleapis/google-cloud-cpp.git releases
 cd releases
-git checkout -b "${RELEASE}.x"
 ```
 
-Modify the CMake script to indicate this is a release:
+Create a tag for the new release.
 
 ```bash
-sed -i 's/set(GOOGLE_CLOUD_CPP_IS_RELEASE "")/set(GOOGLE_CLOUD_CPP_IS_RELEASE "yes")/' google/cloud/CMakeLists.txt
+git tag "${RELEASE}.0"
+git push origin "${RELEASE}.0"
 ```
 
-Run the CMake configuration step to update the Bazel configuration files:
+Create a new branch based on that tag and push the branch to the upstream repository:
 
 ```bash
-cmake -H. -Bcmake-out
-```
-
-You should expect that only `google/cloud/CMakeLists.txt` and
-`google/cloud/*/internal/version_info.h` are modified. Verify this,
-and then commit the changes and push the new branch:
-
-```bash
-git commit -m"Create ${RELEASE}.x release branch" .
+git checkout -b "${RELEASE}.x" "${RELEASE.0}"
 git push --set-upstream origin "${RELEASE}.x"
 ```
 
+This will start a CI build cycle. The builds *should* pass, as we normally keep
+`master` in a releasable state.
+
 **NOTE:** No code review or Pull Request is needed as part of this step.
+
+## Create pre-release for review.
+
+Create a pre-release using
+[GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
+Use the tag that you just created ("${RELEASE}.0").
+Make sure to check the `pre-release` checkbox.
+
+Copy the relevant release notes into the description of the release.
+
+After you create the release, capture the SHA256 checksums of the
+tarball and zip files, and edit the notes to include them. These
+commands might be handy:
+
+```bash
+TAG="${RELEASE}.0" # change this to the actual tag
+wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
+wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
+```
+
+You can publish this release once the notes are updated.
+
+### Ask your colleagues to review the release notes.
+
+Edit the notes as needed.
+
+### Publish the release
+
+Uncheck the pre-release checkbox and publish.
 
 ## Generate and upload the documentation to googleapis.dev
 
@@ -110,47 +135,6 @@ Working in your fork of `gooogle-cloud-cpp`: bump the version numbers to the
 *next* version (i.e., one version past the release you just did above), and
 send the PR for review against `master`. For an example, look at
 [#1962](https://github.com/googleapis/google-cloud-cpp/pull/1962)
-
-## Create a pre-release tag
-
-Create a pre-release using
-[GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
-Make sure you reference the `v0.N.x` branch, set a tag name like `v0.N.0-pre1`,
-and check the `pre-release` checkbox.
-
-Copy the relevant release notes into the description of the release.
-
-After you create the release, capture the SHA256 checksums of the
-tarball and zip files, and edit the notes to include them. These
-commands might be handy:
-
-```bash
-TAG="v0.6.0-pre1" # change this to the actual pre-release tag
-wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
-wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
-```
-
-## Have the pre-release tag reviewed
-
-Talk to your colleagues, make sure the pre-release tag looks Okay. There are
-(at the moment), no tests beyond the CI build for the branch.
-
-If there are any changes to the code in the branch you need to create a new
-pre-release, and iterate until you are satisfied with the code.
-
-## Promote the pre-release tag to an actual release
-
-Edit the pre-release, change the name, change the tag, uncheck the pre-release
-checkbox and publish.
-
-After you publish, remember to update the SHA256 sums, they change, as
-the tarball and zip files include the tag as part of the file paths.
-
-```bash
-TAG="v0.6.0" # change this to the actual release tag
-wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
-wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
-```
 
 ## Review the branch protections
 
@@ -183,3 +167,5 @@ Please note that we use more strict settings for release branches than for
 
 Nudge coryan@ to send a PR to
 [vcpkg](https://github.com/Microsoft/vcpkg/tree/master/ports/google-cloud-cpp).
+The PRs are not difficult, but contributing to this repository requires SVP
+approval.

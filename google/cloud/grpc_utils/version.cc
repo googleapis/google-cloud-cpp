@@ -26,8 +26,9 @@ std::string version_string() {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
-    if (!google::cloud::internal::is_release()) {
-      os << "+" << google::cloud::internal::build_metadata();
+    auto metadata = google::cloud::internal::build_metadata();
+    if (!metadata.empty()) {
+      os << "+" << metadata;
     }
     return os.str();
   }();

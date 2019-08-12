@@ -27,9 +27,6 @@ std::string compiler();
 /// The compiler flags.
 std::string compiler_flags();
 
-/// True if this is a release, false for the development branches.
-bool is_release();
-
 /// Build metadata injected by the build system.
 std::string build_metadata();
 

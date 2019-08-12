@@ -14,11 +14,6 @@
 # limitations under the License.
 # ~~~
 
-# Set this variable to a true value for branches that are releases. That will
-# remove the "+dev" suffix (technically "build metadata" according to
-# semver.org). We only want that suffix on development branches.
-set(GOOGLE_CLOUD_CPP_IS_RELEASE "")
-
 # This should be included from the top level CMakeLists file
 set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
 set(GOOGLE_CLOUD_CPP_VERSION_MINOR 11)
@@ -34,11 +29,6 @@ string(CONCAT GOOGLE_CLOUD_CPP_VERSION
 # Generate the version information from the CMake values.
 configure_file(internal/version_info.h.in
                ${CMAKE_CURRENT_SOURCE_DIR}/internal/version_info.h)
-
-# Export the version information for Bazel.
-include(CreateBazelConfig)
-export_variables_to_bazel("google_cloud_cpp_common_version.bzl"
-                          GOOGLE_CLOUD_CPP_IS_RELEASE)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
@@ -206,6 +196,7 @@ set_target_properties(google_cloud_cpp_common
                                  SOVERSION
                                  ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
+include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_common)
 
