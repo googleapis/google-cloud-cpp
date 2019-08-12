@@ -44,20 +44,12 @@ TEST(StorageVersionTest, Format) {
 
 /// @test Verify the version does not contain build info for release builds.
 TEST(StorageVersionTest, NoBuildInfoInRelease) {
-  if (!google::cloud::internal::is_release()) {
+  if (!google::cloud::internal::build_metadata().empty()) {
+    EXPECT_THAT(version_string(),
+                HasSubstr("+" + google::cloud::internal::build_metadata()));
     return;
   }
-  EXPECT_THAT(version_string(),
-              Not(HasSubstr("+" + google::cloud::internal::build_metadata())));
-}
-
-/// @test Verify the version has the build info for development builds.
-TEST(StorageVersionTest, HasBuildInfoInDevelopment) {
-  if (google::cloud::internal::is_release()) {
-    return;
-  }
-  EXPECT_THAT(version_string(),
-              HasSubstr("+" + google::cloud::internal::build_metadata()));
+  EXPECT_THAT(version_string(), Not(HasSubstr("+")));
 }
 
 }  // namespace
