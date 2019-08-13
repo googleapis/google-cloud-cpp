@@ -27,8 +27,10 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
-using ::google::cloud::storage::testing::TestPermanentFailure;
-using ::testing::HasSubstr;
+// This test uess dlsym(), which is not present on Windows.
+// One could replace it with LoadLibrary() on Windows, but it's only a test, so
+// it's not worth it.
+#ifndef _WIN32
 
 // Initialized in main() below.
 char const* flag_bucket_name;
@@ -36,15 +38,22 @@ char const* flag_bucket_name;
 class ErrorInjectionIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
-class SymInterceptor {
+/**
+ * Object of this class is an interface to intercept symbols from libc.
+ *
+ * It's a singleton, and it's only instance should be where the control flow
+ * from the original symbols should be directed.
+ *
+ * The intercepted symbols can be configured to return failures.
+ */
+class SymbolInterceptor {
  public:
-  SymInterceptor();
-
-  static SymInterceptor& Instance() {
-    static SymInterceptor interceptor;
+  static SymbolInterceptor& Instance() {
+    static SymbolInterceptor interceptor;
     return interceptor;
   }
 
+  // FD most recently passed to send() in the calling thread.
   int LastSeenSendDescriptor() {
     if (!last_seen_send_fd_) {
       Terminate("send() has not been called yet.");
@@ -52,6 +61,7 @@ class SymInterceptor {
     return *last_seen_send_fd_;
   }
 
+  // FD most recently passed to recv() in the calling thread.
   int LastSeenRecvDescriptor() {
     if (!last_seen_recv_fd_) {
       Terminate("recv() has not been called yet.");
@@ -59,26 +69,51 @@ class SymInterceptor {
     return *last_seen_recv_fd_;
   }
 
+  /**
+   * Start failing send() calls in the calling thread.
+   *
+   * @param fd only the calls passing this FD will fail
+   * @param err the error code to fail with
+   * @param num_failures fail this many times and then get back to normal
+   */
   void StartFailingSend(int fd, int err, int num_failures = 0) {
     fail_send_ = FailDesc{fd, err, num_failures};
     num_failed_send_ = 0;
   }
 
+  /**
+   * Start failing recv() calls in the calling thread.
+   *
+   * @param fd only the calls passing this FD will fail
+   * @param err the error code to fail with
+   * @param num_failures fail this many times and then get back to normal
+   */
   void StartFailingRecv(int fd, int err, int num_failures = 0) {
     fail_recv_ = FailDesc{fd, err, num_failures};
     num_failed_recv_ = 0;
   }
 
+  /**
+   * Stop failing send() calls in the calling thread.
+   *
+   * @return how many times send() failed since last `StartFailingSend()` call.
+   */
   std::size_t StopFailingSend() {
     fail_send_.reset();
     return num_failed_send_;
   }
 
+  /**
+   * Stop failing recv() calls in the calling thread.
+   *
+   * @return how many times recv() failed since last `StartFailingRecv()` call.
+   */
   std::size_t StopFailingRecv() {
     fail_recv_.reset();
     return num_failed_recv_;
   }
 
+  // Entry point for the intercepted send()
   ssize_t Send(int sockfd, void const* buf, size_t len, int flags) {
     last_seen_send_fd_ = sockfd;
     if (fail_send_ && fail_send_->fd == sockfd) {
@@ -92,6 +127,7 @@ class SymInterceptor {
     return orig_send_(sockfd, buf, len, flags);
   }
 
+  // Entry point for the intercepted recv()
   ssize_t Recv(int sockfd, void* buf, size_t len, int flags) {
     last_seen_recv_fd_ = sockfd;
     if (fail_recv_ && fail_recv_->fd == sockfd) {
@@ -106,8 +142,11 @@ class SymInterceptor {
   }
 
  private:
+  SymbolInterceptor();
+
   using SendPtr = ssize_t (*)(int, void const*, size_t, int);
   using RecvPtr = ssize_t (*)(int, void*, size_t, int);
+
   struct FailDesc {
     int fd;
     int err;
@@ -136,23 +175,25 @@ class SymInterceptor {
   static thread_local std::size_t num_failed_recv_;
 };
 
-SymInterceptor::SymInterceptor()
+SymbolInterceptor::SymbolInterceptor()
     : orig_send_(GetOrigSymbol<SendPtr>("send")),
       orig_recv_(GetOrigSymbol<RecvPtr>("recv")) {}
 
-thread_local optional<int> SymInterceptor::last_seen_send_fd_;
-thread_local optional<SymInterceptor::FailDesc> SymInterceptor::fail_send_;
-thread_local std::size_t SymInterceptor::num_failed_send_ = 0;
-thread_local optional<int> SymInterceptor::last_seen_recv_fd_;
-thread_local optional<SymInterceptor::FailDesc> SymInterceptor::fail_recv_;
-thread_local std::size_t SymInterceptor::num_failed_recv_ = 0;
+thread_local optional<int> SymbolInterceptor::last_seen_send_fd_;
+thread_local optional<SymbolInterceptor::FailDesc>
+    SymbolInterceptor::fail_send_;
+thread_local std::size_t SymbolInterceptor::num_failed_send_ = 0;
+thread_local optional<int> SymbolInterceptor::last_seen_recv_fd_;
+thread_local optional<SymbolInterceptor::FailDesc>
+    SymbolInterceptor::fail_recv_;
+thread_local std::size_t SymbolInterceptor::num_failed_recv_ = 0;
 
 extern "C" ssize_t send(int sockfd, void const* buf, size_t len, int flags) {
-  return SymInterceptor::Instance().Send(sockfd, buf, len, flags);
+  return SymbolInterceptor::Instance().Send(sockfd, buf, len, flags);
 }
 
 extern "C" ssize_t recv(int sockfd, void* buf, size_t len, int flags) {
-  return SymInterceptor::Instance().Recv(sockfd, buf, len, flags);
+  return SymbolInterceptor::Instance().Recv(sockfd, buf, len, flags);
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
@@ -182,13 +223,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   is.exceptions(std::ios_base::badbit | std::ios_base::eofbit);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
-  SymInterceptor::Instance().StartFailingRecv(
-      SymInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET);
+  SymbolInterceptor::Instance().StartFailingRecv(
+      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET);
   EXPECT_THROW(is.read(read_buf.data(), read_buf.size()),
                std::ios_base::failure);
   is.Close();
   EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
-  EXPECT_GE(SymInterceptor::Instance().StopFailingRecv(), 2);
+  EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 2);
 
   auto status = client.DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
@@ -222,20 +263,22 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   // The failed recv will trigger a retry, which includes sending.
-  SymInterceptor::Instance().StartFailingRecv(
-      SymInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 1);
-  SymInterceptor::Instance().StartFailingSend(
-      SymInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
+  SymbolInterceptor::Instance().StartFailingRecv(
+      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 1);
+  SymbolInterceptor::Instance().StartFailingSend(
+      SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
   EXPECT_THROW(is.read(read_buf.data(), read_buf.size()),
                std::ios_base::failure);
   is.Close();
   EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
-  EXPECT_GE(SymInterceptor::Instance().StopFailingSend(), 1);
-  EXPECT_GE(SymInterceptor::Instance().StopFailingRecv(), 1);
+  EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);
+  EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 1);
 
   auto status = client.DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);
 }
+
+#endif  // _WIN32
 
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
