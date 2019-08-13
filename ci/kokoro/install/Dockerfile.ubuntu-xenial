@@ -127,6 +127,24 @@ RUN ldconfig
 
 FROM devtools AS install
 
+# #### googletest
+
+# We need a revent version of GoogleTest to compile the unit and integration
+# tests.
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+RUN tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+WORKDIR /var/tmp/build/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+RUN cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
+RUN ldconfig
+# ```
+
 # #### google-cloud-cpp
 
 # Finally we can install `google-cloud-cpp`.

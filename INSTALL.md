@@ -209,6 +209,24 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
@@ -278,14 +296,31 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -408,14 +443,31 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -505,14 +557,31 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -626,14 +695,31 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -792,6 +878,24 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 We can now compile and install `google-cloud-cpp`.
@@ -799,8 +903,7 @@ We can now compile and install `google-cloud-cpp`.
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+    -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -897,14 +1000,31 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -1015,14 +1135,31 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
+#### googletest
+
+We need a revent version of GoogleTest to compile the unit and integration
+tests.
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
 #### google-cloud-cpp
 
 Finally we can install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/Downloads/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/Downloads/google-cloud-cpp/cmake-out
 ctest --output-on-failure
