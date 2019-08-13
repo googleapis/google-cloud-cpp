@@ -43,26 +43,24 @@ function (google_cloud_cpp_gmock_library_import_location target lib)
     find_library(_library_debug ${lib}d)
 
     if ("${_library_debug}" MATCHES "-NOTFOUND"
-            AND "${_library_release}" MATCHES "-NOTFOUND")
+        AND "${_library_release}" MATCHES "-NOTFOUND")
         message(FATAL_ERROR "Cannot find library ${lib} for ${target}.")
     elseif("${_library_debug}" MATCHES "-NOTFOUND")
-        set_target_properties(${target}
-                PROPERTIES IMPORTED_LOCATION
-                "${_library_release}")
+        set_target_properties(
+            ${target}
+            PROPERTIES IMPORTED_LOCATION "${_library_release}")
     elseif("${_library_release}" MATCHES "-NOTFOUND")
         set_target_properties(${target}
-                PROPERTIES IMPORTED_LOCATION
-                "${_library_debug}")
+                              PROPERTIES IMPORTED_LOCATION "${_library_debug}")
     else()
         set_target_properties(${target}
-                PROPERTIES IMPORTED_LOCATION_DEBUG
-                "${_library_debug}")
+                              PROPERTIES IMPORTED_LOCATION_DEBUG
+                                         "${_library_debug}")
         set_target_properties(${target}
-                PROPERTIES IMPORTED_LOCATION_RELEASE
-                "${_library_release}")
+                              PROPERTIES IMPORTED_LOCATION_RELEASE
+                                         "${_library_release}")
     endif ()
 endfunction ()
-
 
 include(CTest)
 if (TARGET GTest::gmock)
@@ -71,34 +69,40 @@ elseif(NOT BUILD_TESTING AND NOT GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # Tests are turned off via -DBUILD_TESTING, do not load the googletest or
     # googlemock dependency.
 else()
-    find_package(GTest REQUIRED)
+    # Try to find the config package first. If that is not found
+    find_package(GTest CONFIG QUIET)
+    if (NOT GTest_FOUND)
+        find_package(GTest REQUIRED)
 
-    google_cloud_cpp_create_googletest_aliases()
+        google_cloud_cpp_create_googletest_aliases()
 
-    # The FindGTest module finds GTest by default, but does not search for
-    # GMock, though they are usually installed together. Define the
-    # GTest::gmock* targets manually.
-    find_path(GMOCK_INCLUDE_DIR gmock/gmock.h
-              HINTS $ENV{GTEST_ROOT}/include ${GTEST_ROOT}/include
-              DOC "The GoogleTest Mocking Library headers")
-    if ("${GMOCK_INCLUDE_DIR}" MATCHES "-NOTFOUND")
-        message(FATAL_ERROR "Cannot find gmock headers ${GMOCK_INCLUDE_DIR}.")
+        # The FindGTest module finds GTest by default, but does not search for
+        # GMock, though they are usually installed together. Define the
+        # GTest::gmock* targets manually.
+        find_path(GMOCK_INCLUDE_DIR gmock/gmock.h
+                  HINTS $ENV{GTEST_ROOT}/include ${GTEST_ROOT}/include
+                  DOC "The GoogleTest Mocking Library headers")
+        if ("${GMOCK_INCLUDE_DIR}" MATCHES "-NOTFOUND")
+            message(
+                FATAL_ERROR "Cannot find gmock headers ${GMOCK_INCLUDE_DIR}.")
+        endif ()
+        mark_as_advanced(GMOCK_INCLUDE_DIR)
+
+        add_library(GTest::gmock UNKNOWN IMPORTED)
+        google_cloud_cpp_gmock_library_import_location(GTest::gmock gmock)
+        set_target_properties(GTest::gmock
+                              PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
+                                         "GTest::GTest;Threads::Threads"
+                                         INTERFACE_INCLUDE_DIRECTORIES
+                                         "${GMOCK_INCLUDE_DIRS}")
+
+        add_library(GTest::gmock_main UNKNOWN IMPORTED)
+        google_cloud_cpp_gmock_library_import_location(GTest::gmock_main
+                                                       gmock_main)
+        set_target_properties(GTest::gmock_main
+                              PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
+                                         "GTest::gmock;Threads::Threads"
+                                         INTERFACE_INCLUDE_DIRECTORIES
+                                         "${GMOCK_INCLUDE_DIRS}")
     endif ()
-    mark_as_advanced(GMOCK_INCLUDE_DIR)
-
-    add_library(GTest::gmock UNKNOWN IMPORTED)
-    google_cloud_cpp_gmock_library_import_location(GTest::gmock gmock)
-    set_target_properties(GTest::gmock
-                          PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
-                                     "GTest::GTest;Threads::Threads"
-                                     INTERFACE_INCLUDE_DIRECTORIES
-                                     "${GMOCK_INCLUDE_DIRS}")
-
-    add_library(GTest::gmock_main UNKNOWN IMPORTED)
-    google_cloud_cpp_gmock_library_import_location(GTest::gmock_main gmock_main)
-    set_target_properties(GTest::gmock_main
-                          PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
-                                     "GTest::gmock;Threads::Threads"
-                                     INTERFACE_INCLUDE_DIRECTORIES
-                                     "${GMOCK_INCLUDE_DIRS}")
 endif ()
