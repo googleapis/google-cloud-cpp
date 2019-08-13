@@ -60,13 +60,11 @@ if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
 fi
 
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
-      "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
 fi
 
 if [[ "${SCAN_BUILD:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
-      "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
 fi
 
 if [[ "${USE_LIBCXX:-}" == "yes" ]]; then

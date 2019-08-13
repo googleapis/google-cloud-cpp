@@ -415,6 +415,7 @@ Use `vcpkg` to download and install `google-cloud-cpp`'s dependencies:
     grpc:x64-windows-static ^
     curl:x64-windows-static ^
     gtest:x64-windows-static ^
+    googleapis:x64-windows-static ^
     crc32c:x64-windows-static
 .\vcpkg.exe integrate install
 ```
@@ -442,9 +443,7 @@ cmake -H. -Bcmake-out -GNinja ^
     -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
     -DCMAKE_C_COMPILER=cl.exe ^
     -DCMAKE_CXX_COMPILER=cl.exe ^
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ^
-    -DCMAKE_MAKE_PROGRAM=ninja ^
-    -DGOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER=external
+    -DCMAKE_MAKE_PROGRAM=ninja
 ```
 
 And compile the code:

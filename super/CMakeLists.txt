@@ -21,7 +21,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(GOOGLE_CLOUD_CPP_ROOT "${PROJECT_SOURCE_DIR}/..")
-list(APPEND CMAKE_MODULE_PATH "${GOOGLE_CLOUD_CPP_ROOT}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${GOOGLE_CLOUD_CPP_ROOT}/super")
 
 include(external/curl)
 include(external/crc32c)
@@ -53,8 +53,6 @@ externalproject_add(
     LIST_SEPARATOR
     |
     CMAKE_ARGS -G${CMAKE_GENERATOR}
-               -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
-               -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
                -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
                -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
@@ -62,9 +60,8 @@ externalproject_add(
                   --build
                   <BINARY_DIR>
                   ${PARALLEL}
-                  TEST_COMMAND
-                  ${CMAKE_CTEST_COMMAND}
-                  --output-on-failure
+    TEST_COMMAND ${CMAKE_CTEST_COMMAND}
+                 --output-on-failure
     LOG_DOWNLOAD OFF
     LOG_CONFIGURE OFF
     LOG_BUILD OFF

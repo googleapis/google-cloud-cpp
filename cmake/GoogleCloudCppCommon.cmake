@@ -43,7 +43,7 @@ include(EnableCxxExceptions)
 include(GNUInstallDirs)
 
 # Discover and add targets for the GTest::gtest and GTest::gmock libraries.
-include(IncludeGMock)
+include(FindGMockWithTargets)
 
 # Pick the right MSVC runtime libraries.
 include(SelectMSVCRuntime)

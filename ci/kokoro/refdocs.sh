@@ -87,7 +87,6 @@ cmake_flags=(
   # To speed up the build
   "-DBUILD_TESTING=OFF"
   "-DCMAKE_BUILD_TYPE=Debug"
-  "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package"
   # Use directory layout for googleapis.dev
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on"
 )

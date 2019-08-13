@@ -15,8 +15,7 @@ CMake support files, then compiling and installing the libraries
 requires two commands:
 
 ```bash
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package
+cmake -H. -Bcmake-out
 cmake --build cmake-out --target install
 ```
 
@@ -216,9 +215,7 @@ We can now compile and install `google-cloud-cpp`.
 
 ```bash
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+cmake -H. -Bcmake-out
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
 ctest --output-on-failure
@@ -288,7 +285,6 @@ We can now compile and install `google-cloud-cpp`.
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
@@ -419,7 +415,6 @@ We can now compile and install `google-cloud-cpp`.
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
@@ -517,7 +512,6 @@ Finally we can install `google-cloud-cpp`.
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
@@ -639,7 +633,6 @@ Finally we can install `google-cloud-cpp`.
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
@@ -807,7 +800,6 @@ We can now compile and install `google-cloud-cpp`.
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
     -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
@@ -912,7 +904,6 @@ Finally we can install `google-cloud-cpp`.
 ```bash
 cd $HOME/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/google-cloud-cpp/cmake-out
@@ -1031,7 +1022,6 @@ Finally we can install `google-cloud-cpp`.
 ```bash
 cd $HOME/Downloads/google-cloud-cpp
 cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
     -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
 cmake --build cmake-out -- -j ${NCPU:-4}
 cd $HOME/Downloads/google-cloud-cpp/cmake-out

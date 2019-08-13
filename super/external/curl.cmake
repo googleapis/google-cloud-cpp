@@ -49,7 +49,8 @@ if (NOT TARGET curl_project)
                    # manage. Setting HTTP_ONLY=ON disables all optional
                    # protocols and meets our needs. If the application needs
                    # a version of libcurl with other protocols enabled they
-                   # can select it using GOOGLE_CLOUD_CPP_CURL_PROVIDER=package.
+                   # can compile against it by using find_package() and defining
+                   # the `curl_project` target.
                    -DHTTP_ONLY=ON
                    -DCMAKE_ENABLE_OPENSSL=ON
                    -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
@@ -71,33 +72,4 @@ if (NOT TARGET curl_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
-
-    if (TARGET google-cloud-cpp-dependencies)
-        add_dependencies(google-cloud-cpp-dependencies curl_project)
-    endif ()
-
-    include(ExternalProjectHelper)
-    add_library(CURL::libcurl INTERFACE IMPORTED)
-    add_dependencies(CURL::libcurl curl_project)
-    set_library_properties_for_external_project(CURL::libcurl curl ALWAYS_LIB)
-    set_property(TARGET CURL::libcurl
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          c-ares::cares
-                          OpenSSL::SSL
-                          OpenSSL::Crypto
-                          ZLIB::ZLIB)
-    if (WIN32)
-        set_property(TARGET CURL::libcurl
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES
-                              crypt32
-                              wsock32
-                              ws2_32)
-    endif ()
-    if (APPLE)
-        set_property(TARGET CURL::libcurl
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES ldap)
-    endif ()
 endif ()

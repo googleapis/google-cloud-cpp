@@ -18,15 +18,11 @@
 $ErrorActionPreference = "Stop"
 
 # First check the required environment variables.
-if (-not (Test-Path env:PROVIDER)) {
-    throw "Aborting build because the PROVIDER environment variable is not set."
-}
 if (-not (Test-Path env:CONFIG)) {
     throw "Aborting build because the CONFIG environment variable is not set."
 }
 
 $CONFIG = $env:CONFIG
-$PROVIDER = $env:PROVIDER
 $GENERATOR = "Ninja"
 
 # Set TEMP explicitly for windows 2019 image
@@ -40,7 +36,6 @@ $cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bcmake-out
 $dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
 
 # Setup the environment for vcpkg:
-$cmake_flags += "-DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=$PROVIDER"
 $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
 $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
 $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"

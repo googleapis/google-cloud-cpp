@@ -181,9 +181,7 @@ FROM devtools AS install
 WORKDIR /home/build/google-cloud-cpp
 COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bcmake-out \
-    -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl" \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+    -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
 RUN cmake --build cmake-out -- -j ${NCPU:-4}
 WORKDIR /home/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure

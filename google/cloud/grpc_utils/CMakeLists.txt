@@ -60,7 +60,7 @@ endif ()
 add_library(grpc_utils_common_options INTERFACE)
 google_cloud_cpp_add_common_options(grpc_utils_common_options)
 
-include(IncludeGoogleapis)
+find_package(googleapis)
 
 # Enable unit tests
 include(CTest)
@@ -157,26 +157,7 @@ endif ()
 
 # TODO: add_subdirectory(tests) if necessary.
 
-if ("${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}" STREQUAL "external")
-    set(GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL "OFF")
-    message(
-        WARNING
-            "The install target has been disabled for the google_cloud_cpp_grpc_utils"
-            " library because one of the dependencies is set to use external"
-            " projects. When building against external projects the resulting"
-            " libraries are not installable. The necessary dependencies may"
-            " not installed in your system, or the versions installed in your"
-            " system may not match the version used to compile the"
-            " google-cloud-cpp libraries. "
-            ""
-            "Please consult the README.md file for details on how to compile "
-            "against pre-installed versions of the google-cloud-cpp "
-            "dependencies.
-GPRC     PROVIDER = ${GOOGLE_CLOUD_CPP_GRPC_PROVIDER}
-PROTOBUF PROVIDER = ${GOOGLE_CLOUD_CPP_PROTOBUF_PROVIDER}")
-else()
-    set(GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL "ON")
-endif ()
+set(GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL "ON")
 
 if ("${GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL}")
     # Install the libraries and headers in the locations determined by
@@ -229,9 +210,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL}")
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config-version.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/FindProtobufTargets.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/PkgConfigHelper.cmake"
+            "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
             DESTINATION
             "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
 endif ()
