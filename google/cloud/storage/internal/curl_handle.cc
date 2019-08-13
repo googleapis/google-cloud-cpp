@@ -223,6 +223,8 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_COULDNT_RESOLVE_PROXY:
     case CURLE_COULDNT_RESOLVE_HOST:
     case CURLE_COULDNT_CONNECT:
+    case CURLE_RECV_ERROR:
+    case CURLE_SEND_ERROR:
       code = StatusCode::kUnavailable;
       break;
     case CURLE_REMOTE_ACCESS_DENIED:
