@@ -27,12 +27,13 @@ using ::testing::HasSubstr;
 TEST(ResumableUploadResponseTest, Base) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
                     HttpResponse{200,
-                                 "test-payload",
+                                 R"""({"name": "test-object-name"})""",
                                  {{"ignored-header", "value"},
                                   {"location", "location-value"},
                                   {"range", "bytes=0-2000"}}})
                     .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  ASSERT_TRUE(actual.payload.has_value());
+  EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
@@ -45,22 +46,23 @@ TEST(ResumableUploadResponseTest, Base) {
 }
 
 TEST(ResumableUploadResponseTest, NoLocation) {
-  auto actual =
-      ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{308, "test-payload", {{"range", "bytes=0-2000"}}})
-          .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{308, {}, {{"range", "bytes=0-2000"}}})
+                    .value();
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ResumableUploadResponseTest, NoRange) {
-  auto actual =
-      ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{201, "test-payload", {{"location", "location-value"}}})
-          .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{201,
+                                 R"""({"name": "test-object-name"})""",
+                                 {{"location", "location-value"}}})
+                    .value();
+  ASSERT_TRUE(actual.payload.has_value());
+  EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
@@ -69,11 +71,11 @@ TEST(ResumableUploadResponseTest, NoRange) {
 TEST(ResumableUploadResponseTest, MissingBytesInRange) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
                     HttpResponse{308,
-                                 "test-payload",
+                                 {},
                                  {{"location", "location-value"},
                                   {"range", "units=0-2000"}}})
                     .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
@@ -81,53 +83,49 @@ TEST(ResumableUploadResponseTest, MissingBytesInRange) {
 
 TEST(ResumableUploadResponseTest, MissingRangeEnd) {
   auto actual = ResumableUploadResponse::FromHttpResponse(
-                    HttpResponse{308, "test-payload", {{"range", "bytes=0-"}}})
+                    HttpResponse{308, {}, {{"range", "bytes=0-"}}})
                     .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ResumableUploadResponseTest, InvalidRangeEnd) {
-  auto actual =
-      ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{308, "test-payload", {{"range", "bytes=0-abcd"}}})
-          .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{308, {}, {{"range", "bytes=0-abcd"}}})
+                    .value();
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ResumableUploadResponseTest, InvalidRangeBegin) {
-  auto actual =
-      ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{308, "test-payload", {{"range", "bytes=abcd-2000"}}})
-          .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{308, {}, {{"range", "bytes=abcd-2000"}}})
+                    .value();
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ResumableUploadResponseTest, UnexpectedRangeBegin) {
-  auto actual =
-      ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{308, "test-payload", {{"range", "bytes=3000-2000"}}})
-          .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{308, {}, {{"range", "bytes=3000-2000"}}})
+                    .value();
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
 TEST(ResumableUploadResponseTest, NegativeEnd) {
-  auto actual =
-      ResumableUploadResponse::FromHttpResponse(
-          HttpResponse{308, "test-payload", {{"range", "bytes=0--7"}}})
-          .value();
-  EXPECT_EQ("test-payload", actual.payload);
+  auto actual = ResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{308, {}, {{"range", "bytes=0--7"}}})
+                    .value();
+  EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);

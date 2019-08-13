@@ -456,12 +456,12 @@ TEST(RetryResumableUploadSession, Done) {
 TEST(RetryResumableUploadSession, LastResponse) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
-  const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
-      "url", 1, "payload", ResumableUploadResponse::kDone});
+  StatusOr<ResumableUploadResponse> const last_response(
+      ResumableUploadResponse{"url", 1, {}, ResumableUploadResponse::kDone});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
   RetryResumableUploadSession session(std::move(mock), {}, {});
-  const StatusOr<ResumableUploadResponse> result = session.last_response();
+  StatusOr<ResumableUploadResponse> const result = session.last_response();
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result.value(), last_response.value());
 }

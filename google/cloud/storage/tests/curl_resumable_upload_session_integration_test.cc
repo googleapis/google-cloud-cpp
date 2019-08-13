@@ -53,9 +53,8 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
       (*session)->UploadFinalChunk(contents, contents.size());
 
   ASSERT_STATUS_OK(response);
-  EXPECT_FALSE(response->payload.empty());
-  auto metadata =
-      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_TRUE(response->payload.has_value());
+  auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(contents.size(), metadata.size());
@@ -91,9 +90,8 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   response = (*session)->UploadFinalChunk(contents, 2 * contents.size());
   ASSERT_STATUS_OK(response);
 
-  EXPECT_FALSE(response->payload.empty());
-  auto metadata =
-      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_TRUE(response->payload.has_value());
+  auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
@@ -135,9 +133,8 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   response = (*session)->UploadFinalChunk(contents, 3 * contents.size());
   ASSERT_STATUS_OK(response);
 
-  EXPECT_FALSE(response->payload.empty());
-  auto metadata =
-      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_TRUE(response->payload.has_value());
+  auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(3 * contents.size(), metadata.size());
@@ -179,9 +176,8 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   response = (*session)->UploadFinalChunk(std::string{}, 2 * contents.size());
   ASSERT_STATUS_OK(response.status());
 
-  EXPECT_FALSE(response->payload.empty());
-  auto metadata =
-      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_TRUE(response->payload.has_value());
+  auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
@@ -209,9 +205,8 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
   auto response = (*session)->UploadFinalChunk(std::string{}, 0);
   ASSERT_STATUS_OK(response.status());
 
-  EXPECT_FALSE(response->payload.empty());
-  auto metadata =
-      internal::ObjectMetadataParser::FromString(response->payload).value();
+  EXPECT_TRUE(response->payload.has_value());
+  auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
   EXPECT_EQ(bucket_name, metadata.bucket());
   EXPECT_EQ(0, metadata.size());

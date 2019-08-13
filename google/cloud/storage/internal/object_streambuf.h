@@ -104,7 +104,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf(ObjectWriteStreambuf const&) = delete;
   ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 
-  StatusOr<HttpResponse> Close();
+  StatusOr<ResumableUploadResponse> Close();
   virtual bool IsOpen() const;
   virtual bool ValidateHash(ObjectMetadata const& meta);
 
@@ -125,12 +125,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
     return upload_session_->next_expected_byte();
   }
 
-  virtual Status last_status() const {
-    if (last_response_) {
-      return Status();
-    }
-    return last_response_.status();
-  }
+  virtual Status last_status() const { return last_response_.status(); }
 
  protected:
   int sync() override;
@@ -139,10 +134,10 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
  private:
   /// Flush any data if possible.
-  StatusOr<HttpResponse> Flush();
+  StatusOr<ResumableUploadResponse> Flush();
 
   /// Flush any remaining data and commit the upload.
-  StatusOr<HttpResponse> FlushFinal();
+  StatusOr<ResumableUploadResponse> FlushFinal();
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 
@@ -152,7 +147,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   std::unique_ptr<HashValidator> hash_validator_;
   HashValidator::Result hash_validator_result_;
 
-  StatusOr<HttpResponse> last_response_;
+  StatusOr<ResumableUploadResponse> last_response_;
 };
 
 }  // namespace internal

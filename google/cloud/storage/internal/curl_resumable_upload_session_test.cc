@@ -60,7 +60,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(0, request.source_size());
         EXPECT_EQ(0, request.range_begin());
         return make_status_or(ResumableUploadResponse{
-            "", size - 1, "", ResumableUploadResponse::kInProgress});
+            "", size - 1, {}, ResumableUploadResponse::kInProgress});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const& request) {
         EXPECT_EQ(test_url, request.upload_session_url());
@@ -68,7 +68,7 @@ TEST(CurlResumableUploadSessionTest, Simple) {
         EXPECT_EQ(2 * size, request.source_size());
         EXPECT_EQ(size, request.range_begin());
         return make_status_or(ResumableUploadResponse{
-            "", 2 * size - 1, "", ResumableUploadResponse::kDone});
+            "", 2 * size - 1, {}, ResumableUploadResponse::kDone});
       }));
 
   auto upload = session.UploadChunk(payload);
@@ -97,14 +97,14 @@ TEST(CurlResumableUploadSessionTest, Reset) {
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
-            "", size - 1, "", ResumableUploadResponse::kInProgress});
+            "", size - 1, {}, ResumableUploadResponse::kInProgress});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return StatusOr<ResumableUploadResponse>(
             AsStatus(HttpResponse{308, "uh oh", {}}));
       }));
   const ResumableUploadResponse resume_response{
-      url2, 2 * size - 1, "", ResumableUploadResponse::kInProgress};
+      url2, 2 * size - 1, {}, ResumableUploadResponse::kInProgress};
   EXPECT_CALL(*mock, QueryResumableUpload(_))
       .WillOnce(Invoke([&](QueryResumableUploadRequest const& request) {
         EXPECT_EQ(url1, request.upload_session_url());
@@ -140,11 +140,11 @@ TEST(CurlResumableUploadSessionTest, SessionUpdatedInChunkUpload) {
   EXPECT_CALL(*mock, UploadChunk(_))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
-            "", size - 1, "", ResumableUploadResponse::kInProgress});
+            "", size - 1, {}, ResumableUploadResponse::kInProgress});
       }))
       .WillOnce(Invoke([&](UploadChunkRequest const&) {
         return make_status_or(ResumableUploadResponse{
-            url2, 2 * size - 1, "", ResumableUploadResponse::kInProgress});
+            url2, 2 * size - 1, {}, ResumableUploadResponse::kInProgress});
       }));
 
   auto upload = session.UploadChunk(payload);

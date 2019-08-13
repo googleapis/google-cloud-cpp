@@ -67,7 +67,7 @@ TEST_F(WriteObjectTest, WriteObject) {
 
   EXPECT_CALL(*mock, CreateResumableSession(_))
       .WillOnce(
-          Invoke([&text](internal::ResumableUploadRequest const& request) {
+          Invoke([&expected](internal::ResumableUploadRequest const& request) {
             EXPECT_EQ("test-bucket-name", request.bucket_name());
             EXPECT_EQ("test-object-name", request.object_name());
 
@@ -85,7 +85,7 @@ TEST_F(WriteObjectTest, WriteObject) {
                 .WillOnce(
                     Return(StatusOr<ResumableUploadResponse>(TransientError())))
                 .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                    "fake-url", 0, text, ResumableUploadResponse::kDone})));
+                    "fake-url", 0, expected, ResumableUploadResponse::kDone})));
 
             return make_status_or(
                 std::unique_ptr<internal ::ResumableUploadSession>(

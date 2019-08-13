@@ -326,19 +326,17 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(true));
-  std::string const payload = "payload";
   auto last_upload_response = make_status_or(ResumableUploadResponse{
-      "{}", 0, payload, ResumableUploadResponse::kDone});
+      "url-for-test", 0, {}, ResumableUploadResponse::kDone});
   EXPECT_CALL(*mock, last_response).WillOnce(ReturnRef(last_upload_response));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), UploadChunkRequest::kChunkSizeQuantum,
       google::cloud::internal::make_unique<NullHashValidator>());
   EXPECT_EQ(streambuf.IsOpen(), false);
-  StatusOr<HttpResponse> close_result = streambuf.Close();
+  StatusOr<ResumableUploadResponse> close_result = streambuf.Close();
   ASSERT_STATUS_OK(close_result);
-  EXPECT_EQ(close_result.value().status_code, 200);
-  EXPECT_EQ(close_result.value().payload, payload);
+  EXPECT_EQ("url-for-test", close_result.value().upload_session_url);
 }
 
 /// @test Verify that last error status is accessible for small payload.

@@ -140,7 +140,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
       testing::MockResumableUploadSession>();
 
   const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
-      "upload url", 1, "payload bytes", ResumableUploadResponse::kInProgress});
+      "upload url", 1, {}, ResumableUploadResponse::kInProgress});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
   LoggingResumableUploadSession session(std::move(mock));
@@ -149,7 +149,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result.value(), last_response.value());
   EXPECT_EQ(1, CountLines("upload url"));
-  EXPECT_EQ(1, CountLines("payload bytes"));
+  EXPECT_EQ(1, CountLines("payload={}"));
 }
 
 TEST_F(LoggingResumableUploadSessionTest, LastResponseBadStatus) {

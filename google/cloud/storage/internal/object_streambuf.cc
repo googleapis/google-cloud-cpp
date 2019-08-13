@@ -201,7 +201,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
     : upload_session_(std::move(upload_session)),
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
-      last_response_{HttpResponse{400, {}, {}}} {
+      last_response_(ResumableUploadResponse{
+          {}, 0, {}, ResumableUploadResponse::kInProgress}) {
   current_ios_buffer_.reserve(max_buffer_size_);
   auto pbeg = &current_ios_buffer_[0];
   auto pend = pbeg + current_ios_buffer_.size();
@@ -209,18 +210,11 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
   // Sessions start in a closed state for uploads that have already been
   // finalized.
   if (upload_session_->done()) {
-    StatusOr<ResumableUploadResponse> const& last_upload_response =
-        upload_session_->last_response();
-    if (last_upload_response.ok()) {
-      last_response_ =
-          HttpResponse{200, last_upload_response.value().payload, {}};
-    } else {
-      last_response_ = StatusOr<HttpResponse>(last_upload_response.status());
-    }
+    last_response_ = upload_session_->last_response();
   }
 }
 
-StatusOr<HttpResponse> ObjectWriteStreambuf::Close() {
+StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Close() {
   pubsync();
   GCP_LOG(INFO) << __func__ << "()";
   return FlushFinal();
@@ -282,7 +276,7 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
   return ch;
 }
 
-StatusOr<HttpResponse> ObjectWriteStreambuf::FlushFinal() {
+StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::FlushFinal() {
   if (!IsOpen()) {
     return last_response_;
   }
@@ -293,13 +287,12 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::FlushFinal() {
   hash_validator_->Update(current_ios_buffer_.data(),
                           current_ios_buffer_.size());
 
-  StatusOr<ResumableUploadResponse> result =
+  last_response_ =
       upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
-  if (!result) {
+  if (!last_response_) {
     // This was an unrecoverable error, time to store status and signal an
     // error.
-    last_response_ = result.status();
-    return std::move(result).status();
+    return last_response_;
   }
   // Reset the iostream put area with valid pointers, but empty.
   current_ios_buffer_.resize(1);
@@ -308,13 +301,10 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::FlushFinal() {
 
   upload_session_.reset();
 
-  // If `result.ok() == false` we never get to this point, so the last response
-  // was actually successful. Represent that by a HTTP 200 status code.
-  last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
   return last_response_;
 }
 
-StatusOr<HttpResponse> ObjectWriteStreambuf::Flush() {
+StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
   if (!IsOpen()) {
     return last_response_;
   }
@@ -331,13 +321,9 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::Flush() {
   hash_validator_->Update(current_ios_buffer_.data(),
                           current_ios_buffer_.size());
 
-  StatusOr<ResumableUploadResponse> result =
-      upload_session_->UploadChunk(current_ios_buffer_);
-  if (!result) {
-    // This was an unrecoverable error, time to store status and signal an
-    // error.
-    last_response_ = result.status();
-    return std::move(result).status();
+  last_response_ = upload_session_->UploadChunk(current_ios_buffer_);
+  if (!last_response_) {
+    return last_response_;
   }
   // Reset the put area, preserve any data not setn.
   current_ios_buffer_.clear();
@@ -348,9 +334,6 @@ StatusOr<HttpResponse> ObjectWriteStreambuf::Flush() {
   setp(pbeg, pend);
   pbump(static_cast<int>(not_sent.size()));
 
-  // If `result.ok() == false` we never get to this point, so the last response
-  // was actually successful. Represent that by a HTTP 200 status code.
-  last_response_ = HttpResponse{200, std::move(result).value().payload, {}};
   return last_response_;
 }
 
