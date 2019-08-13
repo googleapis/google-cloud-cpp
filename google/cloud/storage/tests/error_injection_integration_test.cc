@@ -53,7 +53,7 @@ class SymbolInterceptor {
     return interceptor;
   }
 
-  // FD most recently passed to send() in the calling thread.
+  // FD most recently passed to send().
   int LastSeenSendDescriptor() {
     if (!last_seen_send_fd_) {
       Terminate("send() has not been called yet.");
@@ -61,7 +61,7 @@ class SymbolInterceptor {
     return *last_seen_send_fd_;
   }
 
-  // FD most recently passed to recv() in the calling thread.
+  // FD most recently passed to recv().
   int LastSeenRecvDescriptor() {
     if (!last_seen_recv_fd_) {
       Terminate("recv() has not been called yet.");
@@ -70,7 +70,7 @@ class SymbolInterceptor {
   }
 
   /**
-   * Start failing send() calls in the calling thread.
+   * Start failing send().
    *
    * @param fd only the calls passing this FD will fail
    * @param err the error code to fail with
@@ -82,7 +82,7 @@ class SymbolInterceptor {
   }
 
   /**
-   * Start failing recv() calls in the calling thread.
+   * Start failing recv().
    *
    * @param fd only the calls passing this FD will fail
    * @param err the error code to fail with
@@ -94,7 +94,7 @@ class SymbolInterceptor {
   }
 
   /**
-   * Stop failing send() calls in the calling thread.
+   * Stop failing send().
    *
    * @return how many times send() failed since last `StartFailingSend()` call.
    */
@@ -104,7 +104,7 @@ class SymbolInterceptor {
   }
 
   /**
-   * Stop failing recv() calls in the calling thread.
+   * Stop failing recv().
    *
    * @return how many times recv() failed since last `StartFailingRecv()` call.
    */
@@ -167,26 +167,17 @@ class SymbolInterceptor {
 
   SendPtr orig_send_;
   RecvPtr orig_recv_;
-  static thread_local optional<int> last_seen_send_fd_;
-  static thread_local optional<FailDesc> fail_send_;
-  static thread_local std::size_t num_failed_send_;
-  static thread_local optional<int> last_seen_recv_fd_;
-  static thread_local optional<FailDesc> fail_recv_;
-  static thread_local std::size_t num_failed_recv_;
+  optional<int> last_seen_send_fd_;
+  optional<FailDesc> fail_send_;
+  std::size_t num_failed_send_;
+  optional<int> last_seen_recv_fd_;
+  optional<FailDesc> fail_recv_;
+  std::size_t num_failed_recv_;
 };
 
 SymbolInterceptor::SymbolInterceptor()
     : orig_send_(GetOrigSymbol<SendPtr>("send")),
       orig_recv_(GetOrigSymbol<RecvPtr>("recv")) {}
-
-thread_local optional<int> SymbolInterceptor::last_seen_send_fd_;
-thread_local optional<SymbolInterceptor::FailDesc>
-    SymbolInterceptor::fail_send_;
-thread_local std::size_t SymbolInterceptor::num_failed_send_ = 0;
-thread_local optional<int> SymbolInterceptor::last_seen_recv_fd_;
-thread_local optional<SymbolInterceptor::FailDesc>
-    SymbolInterceptor::fail_recv_;
-thread_local std::size_t SymbolInterceptor::num_failed_recv_ = 0;
 
 extern "C" ssize_t send(int sockfd, void const* buf, size_t len, int flags) {
   return SymbolInterceptor::Instance().Send(sockfd, buf, len, flags);
@@ -212,21 +203,18 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
-  os.exceptions(std::ios_base::badbit);
-
   WriteRandomLines(os, expected, 80, opts->download_buffer_size() * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
 
   auto is = client.ReadObject(bucket_name, object_name);
-  is.exceptions(std::ios_base::badbit | std::ios_base::eofbit);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
       SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET);
-  EXPECT_THROW(is.read(read_buf.data(), read_buf.size()),
-               std::ios_base::failure);
+  is.read(read_buf.data(), read_buf.size());
+  ASSERT_FALSE(is.status().ok());
   is.Close();
   EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 2);
@@ -259,7 +247,6 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   EXPECT_TRUE(os.metadata().ok());
 
   auto is = client.ReadObject(bucket_name, object_name);
-  is.exceptions(std::ios_base::badbit | std::ios_base::eofbit);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   // The failed recv will trigger a retry, which includes sending.
@@ -267,8 +254,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
       SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 1);
   SymbolInterceptor::Instance().StartFailingSend(
       SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
-  EXPECT_THROW(is.read(read_buf.data(), read_buf.size()),
-               std::ios_base::failure);
+  is.read(read_buf.data(), read_buf.size());
+  ASSERT_FALSE(is.status().ok());
   is.Close();
   EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);
