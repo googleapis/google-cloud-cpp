@@ -122,13 +122,11 @@ elif [[ "${BUILD_NAME}" = "shared" ]]; then
   export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
   export TEST_INSTALL=yes
   export BUILD_TYPE=Debug
-  export CMAKE_SOURCE_DIR="."
 elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]; then
   export CHECK_ABI=yes
   export TEST_INSTALL=yes
   export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
   export BUILD_TYPE=Debug
-  export CMAKE_SOURCE_DIR="."
   if [[ "${BUILD_NAME}" = "update-abi" ]]; then
     export UPDATE_ABI=yes
   fi
@@ -144,7 +142,6 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export TEST_INSTALL=yes
   export DISTRO=fedora-install
   export DISTRO_VERSION=30
-  export CMAKE_SOURCE_DIR="."
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export BUILD_TYPE=Coverage
