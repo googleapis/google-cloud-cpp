@@ -74,6 +74,7 @@ spanner_client_srcs = [
     "internal/time.cc",
     "internal/time_format.cc",
     "internal/transaction_impl.cc",
+    "keys.cc",
     "mutations.cc",
     "sql_partition.cc",
     "sql_statement.cc",

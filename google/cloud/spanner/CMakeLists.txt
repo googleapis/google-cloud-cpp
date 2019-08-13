@@ -125,6 +125,7 @@ add_library(spanner_client
             internal/transaction_impl.cc
             internal/transaction_impl.h
             internal/tuple_utils.h
+            keys.cc
             keys.h
             mutations.cc
             mutations.h

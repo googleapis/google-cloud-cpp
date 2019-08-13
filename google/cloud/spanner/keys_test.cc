@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/keys.h"
+#include "google/cloud/spanner/testing/matchers.h"
+#include <google/protobuf/text_format.h>
+#include <google/spanner/v1/keys.pb.h>
 #include <gmock/gmock.h>
 #include <cstdint>
 
@@ -105,17 +108,11 @@ TEST(KeyRangeTest, ConstructorOpenOpen) {
   EXPECT_TRUE(range.end().IsOpen());
 }
 
-TEST(KeySetBuilderTest, AllKeys) {
-  auto all_keys = KeySetBuilder<Row<std::string, std::string>>::All();
-  EXPECT_TRUE(all_keys.IsAll());
-}
-
 TEST(KeySetBuilderTest, ConstructorSingleKey) {
   std::string expected_value("key0");
   auto key = MakeRow("key0");
   auto ks = KeySetBuilder<Row<std::string>>(key);
   EXPECT_EQ(expected_value, ks.keys()[0].get<0>());
-  EXPECT_FALSE(ks.IsAll());
 }
 
 TEST(KeySetBuilderTest, ConstructorKeyRange) {
@@ -128,7 +125,6 @@ TEST(KeySetBuilderTest, ConstructorKeyRange) {
   EXPECT_TRUE(ks.key_ranges()[0].start().IsClosed());
   EXPECT_EQ(end_value, ks.key_ranges()[0].end().key().get<0>());
   EXPECT_TRUE(ks.key_ranges()[0].end().IsClosed());
-  EXPECT_FALSE(ks.IsAll());
 }
 
 TEST(KeySetBuilderTest, AddKeyToEmptyKeySetBuilder) {
@@ -136,7 +132,6 @@ TEST(KeySetBuilderTest, AddKeyToEmptyKeySetBuilder) {
   ks.Add(MakeRow(42, "key42"));
   EXPECT_EQ(42, ks.keys()[0].get<0>());
   EXPECT_EQ("key42", ks.keys()[0].get<1>());
-  EXPECT_FALSE(ks.IsAll());
 }
 
 TEST(KeySetBuilderTest, AddKeyToNonEmptyKeySetBuilder) {
@@ -182,6 +177,114 @@ TEST(KeySetBuilderTest, AddKeyRangeToNonEmptyKeySetBuilder) {
   EXPECT_EQ("end11", ks.key_ranges()[1].end().key().get<1>());
   EXPECT_TRUE(ks.key_ranges()[1].start().IsOpen());
   EXPECT_TRUE(ks.key_ranges()[1].end().IsOpen());
+}
+
+TEST(InternalKeySetTest, ToProtoAll) {
+  auto ks = KeySet::All();
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
+      R"(
+all: true
+)",
+      &expected));
+
+  ::google::spanner::v1::KeySet result = internal::ToProto(ks);
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+}
+
+TEST(InternalKeySetTest, BuildToProtoTwoKeys) {
+  auto ksb = KeySetBuilder<Row<std::string, std::string>>();
+  ksb.Add(MakeRow("foo0", "bar0"));
+  ksb.Add(MakeRow("foo1", "bar1"));
+
+  KeySet ks = ksb.Build();
+
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
+      R"(
+keys {
+  values {
+    string_value: "foo0"
+  }
+  values {
+    string_value: "bar0"
+  }
+}
+
+keys {
+  values {
+    string_value: "foo1"
+  }
+  values {
+    string_value: "bar1"
+  }
+}
+all: false
+)",
+      &expected));
+  ::google::spanner::v1::KeySet result = internal::ToProto(ks);
+
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+}
+
+TEST(InternalKeySetTest, BuildToProtoTwoRanges) {
+  auto ksb = KeySetBuilder<Row<std::string, std::string>>(
+      KeyRange<Row<std::string, std::string>>(MakeRow("start00", "start01"),
+                                              MakeRow("end00", "end01")));
+  auto range = KeyRange<Row<std::string, std::string>>(
+      MakeBoundOpen(MakeRow("start10", "start11")),
+      MakeBoundOpen(MakeRow("end10", "end11")));
+  ksb.Add(range);
+
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
+      R"(
+ranges {
+  start_closed {
+    values {
+      string_value: "start00"
+    }
+    values {
+      string_value: "start01"
+    }
+  }
+
+  end_closed {
+    values {
+      string_value: "end00"
+    }
+    values {
+      string_value: "end01"
+    }
+  }
+}
+
+ranges {
+  start_open {
+    values {
+      string_value: "start10"
+    }
+    values {
+      string_value: "start11"
+    }
+  }
+
+  end_open {
+    values {
+      string_value: "end10"
+    }
+    values {
+      string_value: "end11"
+    }
+  }
+}
+
+all: false
+)",
+      &expected));
+  ::google::spanner::v1::KeySet result = internal::ToProto(ksb.Build());
+
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
 }
 
 }  // namespace
