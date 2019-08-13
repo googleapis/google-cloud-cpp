@@ -17,7 +17,7 @@
 include(ExternalProjectHelper)
 find_package(Threads REQUIRED)
 
-include(external/grpc_project)
+include(external/grpc)
 
 if (NOT TARGET googleapis_project)
     # Give application developers a hook to configure the version and hash

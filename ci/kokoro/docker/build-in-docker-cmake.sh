@@ -85,8 +85,8 @@ ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
     "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
     ${CMAKE_FLAGS:-} \
-    -H${SOURCE_DIR} \
-    -B"${BINARY_DIR}"
+    "-H${SOURCE_DIR}" \
+    "-B${BINARY_DIR}"
 echo
 echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
 

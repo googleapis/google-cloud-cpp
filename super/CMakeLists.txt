@@ -60,8 +60,7 @@ externalproject_add(
                   --build
                   <BINARY_DIR>
                   ${PARALLEL}
-    TEST_COMMAND ${CMAKE_CTEST_COMMAND}
-                 --output-on-failure
+    TEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
     LOG_DOWNLOAD OFF
     LOG_CONFIGURE OFF
     LOG_BUILD OFF

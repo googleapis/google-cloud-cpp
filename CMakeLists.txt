@@ -101,11 +101,14 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
 endif ()
 
 # The default source for dependencies.
-set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER "unused" CACHE STRING
-    "This option is no longer used.")
+set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER "unused"
+    CACHE STRING "This option is no longer used.")
 
 set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-             PROPERTY STRINGS "external" "package" "unused")
+             PROPERTY STRINGS
+                      "external"
+                      "package"
+                      "unused")
 
 # Generate docs with relative URLs matching with the directory structure on
 # googleapis.dev hositng.
