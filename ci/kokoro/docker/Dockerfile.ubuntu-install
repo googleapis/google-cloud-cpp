@@ -38,6 +38,7 @@ RUN apt update && \
         libtool \
         lsb-release \
         make \
+        ninja-build \
         pkg-config \
         python-pip \
         shellcheck \
