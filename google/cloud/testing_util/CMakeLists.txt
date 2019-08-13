@@ -110,8 +110,7 @@ if (GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing-config.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing-config-version.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/IncludeGMock.cmake"
-            "${PROJECT_SOURCE_DIR}/cmake/PkgConfigHelper.cmake"
+            "${PROJECT_SOURCE_DIR}/cmake/FindGMockWithTargets.cmake"
             DESTINATION
             "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_testing")
 endif ()
