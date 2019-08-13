@@ -156,8 +156,8 @@ class RowReaderTest : public bigtable::testing::TableTestFixture {
   RowReaderTest()
       : retry_policy_(new RetryPolicyMock),
         backoff_policy_(new BackoffPolicyMock),
-        metadata_update_policy_(kTableName,
-                                bigtable::MetadataParamTypes::TABLE_NAME),
+        metadata_update_policy_(bigtable::MetadataUpdatePolicy::FromTableId(
+            kInstanceName, bigtable::MetadataParamTypes::TABLE_NAME, kTableId)),
         parser_factory_(new ReadRowsParserMockFactory) {}
 
   std::unique_ptr<RetryPolicyMock> retry_policy_;
