@@ -214,7 +214,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
-      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET);
+      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 2);
+  // It took only 2 failed recv() calls!
   is.read(read_buf.data(), read_buf.size());
   ASSERT_FALSE(is.status().ok());
   is.Close();

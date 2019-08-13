@@ -106,6 +106,10 @@ echo "Running V4 Signed URL conformance tests."
 echo "Running Signed URL integration test."
 ./signed_url_integration_test "${BUCKET_NAME}" "${SIGNING_SERVICE_ACCOUNT}"
 
+echo
+echo "Running error injection integration tests."
+./error_injection_integration_test "${BUCKET_NAME}"
+
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.
 TESTBENCH_DUMP_LOG=no
