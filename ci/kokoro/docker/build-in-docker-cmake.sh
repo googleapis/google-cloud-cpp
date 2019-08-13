@@ -183,8 +183,6 @@ fi
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
-  cmake --build "${BINARY_DIR}" --target install || echo "FAILED"
-  echo
 
   # Checking the ABI requires installation, so this is the first opportunity to
   # run the check.
