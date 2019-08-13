@@ -210,6 +210,7 @@ if ("${GOOGLE_CLOUD_CPP_GRPC_UTILS_ENABLE_INSTALL}")
         FILES
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config-version.cmake"
+            "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
             "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
             DESTINATION
             "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
