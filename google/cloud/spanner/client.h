@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/sql_partition.h"
@@ -54,9 +55,6 @@ struct ReadOptions {
 
 /// Options passed to `PartitionRead` or `PartitionQuery`
 using PartitionOptions = google::spanner::v1::PartitionOptions;
-
-// TODO(#202) placeholder until KeySet is implemented.
-struct KeySet {};
 
 /**
  * Performs database client operations on Spanner.
@@ -229,7 +227,7 @@ class Client {
    */
   StatusOr<std::vector<SqlPartition>> PartitionRead(
       Transaction const& transaction, std::string const& table,
-      spanner::KeySet const& keys, std::vector<std::string> const& columns,
+      KeySet const& keys, std::vector<std::string> const& columns,
       ReadOptions const& read_options = {},
       PartitionOptions const& partition_options = {});
 

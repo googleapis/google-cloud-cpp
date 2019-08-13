@@ -53,8 +53,7 @@ StatusOr<ResultSet> Client::Read(SqlPartition const& /*partition*/) {
 
 StatusOr<std::vector<SqlPartition>> Client::PartitionRead(
     Transaction const& /*transaction*/, std::string const& /*table*/,
-    spanner::KeySet const& /*keys*/,
-    std::vector<std::string> const& /*columns*/,
+    KeySet const& /*keys*/, std::vector<std::string> const& /*columns*/,
     ReadOptions const& /*read_options*/,
     PartitionOptions const& /*partition_options*/) {
   return Status(StatusCode::kUnimplemented, "not implemented");
