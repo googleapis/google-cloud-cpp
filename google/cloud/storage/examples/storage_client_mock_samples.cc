@@ -128,15 +128,12 @@ void MockWriteObject(int& argc, char* argv[]) {
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
 
-  std::string text = R"""({
-          "bucket": "test-bucket-name"
-          "name": "test-object-name"
-  })""";
+  gcs::ObjectMetadata expected_metadata;
 
   using ::testing::_;
   using ::testing::Return;
   EXPECT_CALL(*mock, CreateResumableSession(_))
-      .WillOnce(testing::Invoke([&text](
+      .WillOnce(testing::Invoke([&expected_metadata](
                                     gcs::internal::ResumableUploadRequest const&
                                         request) {
         std::cout << "Writing to bucket : " << request.bucket_name()
@@ -151,9 +148,9 @@ void MockWriteObject(int& argc, char* argv[]) {
                 Return(google::cloud::make_status_or(ResumableUploadResponse{
                     "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
         EXPECT_CALL(*mock_result, UploadFinalChunk(_, _))
-            .WillRepeatedly(
-                Return(google::cloud::make_status_or(ResumableUploadResponse{
-                    "fake-url", 0, text, ResumableUploadResponse::kDone})));
+            .WillRepeatedly(Return(google::cloud::make_status_or(
+                ResumableUploadResponse{"fake-url", 0, expected_metadata,
+                                        ResumableUploadResponse::kDone})));
 
         std::unique_ptr<gcs::internal::ResumableUploadSession> result(
             mock_result);

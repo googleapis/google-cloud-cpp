@@ -15,8 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H_
 
+#include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/http_response.h"
+#include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
 #include <cstdint>
 #include <iosfwd>
@@ -89,7 +91,7 @@ struct ResumableUploadResponse {
 
   std::string upload_session_url;
   std::uint64_t last_committed_byte;
-  std::string payload;
+  optional<google::cloud::storage::ObjectMetadata> payload;
   UploadState upload_state;
 };
 

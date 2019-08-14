@@ -164,7 +164,8 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
       internal::ResumableUploadResponse{});
   // We iterate while `source` is good and the retry policy has not been
   // exhausted.
-  while (!source.eof() && upload_response && upload_response->payload.empty()) {
+  while (!source.eof() && upload_response &&
+         !upload_response->payload.has_value()) {
     // Read a chunk of data from the source file.
     std::string buffer(chunk_size, '\0');
     source.read(&buffer[0], buffer.size());
@@ -194,7 +195,7 @@ StatusOr<ObjectMetadata> Client::UploadStreamResumable(
     return std::move(upload_response).status();
   }
 
-  return internal::ObjectMetadataParser::FromString(upload_response->payload);
+  return *std::move(upload_response->payload);
 }
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,

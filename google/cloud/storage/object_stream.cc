@@ -84,31 +84,14 @@ void ObjectWriteStream::Close() {
 }
 
 void ObjectWriteStream::CloseBuf() {
-  StatusOr<internal::HttpResponse> response = buf_->Close();
+  auto response = buf_->Close();
   if (!response.ok()) {
-    metadata_ = StatusOr<ObjectMetadata>(std::move(response).status());
+    metadata_ = std::move(response).status();
     setstate(std::ios_base::badbit);
     return;
   }
-  if (response->status_code >= 300) {
-    metadata_ = StatusOr<ObjectMetadata>(AsStatus(*response));
-    setstate(std::ios_base::badbit);
-    return;
-  }
-  headers_ = std::move(response->headers);
-  payload_ = std::move(response->payload);
-  if (payload_.empty()) {
-    // With the XML transport the response includes an empty payload, in that
-    // case it cannot be parsed.
-    metadata_ = ObjectMetadata{};
-  } else {
-    metadata_ = internal::ObjectMetadataParser::FromString(payload_);
-    if (!metadata_.ok()) {
-      setstate(std::ios_base::badbit);
-      return;
-    }
-  }
-
+  headers_ = {};
+  metadata_ = *std::move(response->payload);
   if (!buf_->ValidateHash(*metadata_)) {
     setstate(std::ios_base::badbit);
   }

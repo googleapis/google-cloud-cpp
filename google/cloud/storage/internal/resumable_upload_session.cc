@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include <iostream>
 
 namespace google {
@@ -30,7 +31,15 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
     result.upload_state = kInProgress;
   }
   result.last_committed_byte = 0;
-  result.payload = std::move(response.payload);
+  // For the JSON API, the payload contains the object resource when the upload
+  // is finished. In that case, we try to parse it.
+  if (result.upload_state == kDone && !response.payload.empty()) {
+    auto contents = ObjectMetadataParser::FromString(response.payload);
+    if (!contents) {
+      return std::move(contents).status();
+    }
+    result.payload = *std::move(contents);
+  }
   if (response.headers.find("location") != response.headers.end()) {
     result.upload_session_url = response.headers.find("location")->second;
   }
@@ -68,11 +77,14 @@ bool operator!=(ResumableUploadResponse const& lhs,
 }
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
-  return os << "ResumableUploadResponse={upload_session_url="
-            << r.upload_session_url
-            << ", last_committed_byte=" << r.last_committed_byte << ", payload="
-            << BinaryDataAsDebugString(r.payload.data(), r.payload.size(), 128)
-            << ", upload_state=" << r.upload_state << "}";
+  os << "ResumableUploadResponse={upload_session_url=" << r.upload_session_url
+     << ", last_committed_byte=" << r.last_committed_byte << ", payload=";
+  if (r.payload.has_value()) {
+    os << *r.payload;
+  } else {
+    os << "{}";
+  }
+  return os << ", upload_state=" << r.upload_state << "}";
 }
 
 }  // namespace internal
