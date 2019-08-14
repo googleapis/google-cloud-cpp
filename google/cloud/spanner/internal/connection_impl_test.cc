@@ -15,6 +15,9 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <string>
 
@@ -25,9 +28,15 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::internal::make_unique;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
+using ::testing::Return;
+using ::testing::SetArgPointee;
+
 namespace spanner_proto = ::google::spanner::v1;
 
 class MockSpannerStub : public internal::SpannerStub {
@@ -94,6 +103,254 @@ class MockSpannerStub : public internal::SpannerStub {
                                   grpc::ClientContext&,
                                   spanner_proto::PartitionReadRequest const&));
 };
+
+class MockGrpcReader
+    : public ::grpc::ClientReaderInterface<spanner_proto::PartialResultSet> {
+ public:
+  MOCK_METHOD1(Read, bool(spanner_proto::PartialResultSet*));
+  MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
+  MOCK_METHOD0(Finish, grpc::Status());
+  MOCK_METHOD0(WaitForInitialMetadata, void());
+};
+
+TEST(ConnectionImplTest, ReadGetSessionFailure) {
+  auto mock = std::make_shared<MockSpannerStub>();
+
+  auto database_name =
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(database_name, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+
+  auto result =
+      conn.Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                 "table",
+                 KeySet::All(),
+                 {"column1"},
+                 ReadOptions()});
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, ReadStreamingReadFailure) {
+  auto mock = std::make_shared<MockSpannerStub>();
+
+  auto database_name =
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(database_name, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
+  grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
+                             "uh-oh in GrpcReader::Finish");
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  auto result =
+      conn.Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                 "table",
+                 KeySet::All(),
+                 {"column1"},
+                 ReadOptions()});
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("uh-oh in GrpcReader::Finish"));
+}
+
+TEST(ConnectionImplTest, ReadSuccess) {
+  auto mock = std::make_shared<MockSpannerStub>();
+
+  auto database_name =
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(database_name, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+      &response));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  auto result =
+      conn.Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                 "table",
+                 KeySet::All(),
+                 {"UserId", "UserName"},
+                 ReadOptions()});
+  EXPECT_STATUS_OK(result);
+  std::array<std::pair<std::int64_t, std::string>, 2> expected = {
+      std::make_pair(12, "Steve"), std::make_pair(42, "Ann")};
+  int row_number = 0;
+  for (auto& row : result->Rows<std::int64_t, std::string>()) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(row->size(), 2);
+    EXPECT_EQ(row->get<0>(), expected[row_number].first);
+    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, 2);
+}
+
+TEST(ConnectionImplTest, ExecuteSqlGetSessionFailure) {
+  auto mock = std::make_shared<MockSpannerStub>();
+
+  auto database_name =
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(database_name, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+
+  auto result =
+      conn.ExecuteSql({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                       SqlStatement("select * from table")});
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, ExecuteSqlStreamingReadFailure) {
+  auto mock = std::make_shared<MockSpannerStub>();
+
+  auto database_name =
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(database_name, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
+  grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
+                             "uh-oh in GrpcReader::Finish");
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  auto result =
+      conn.ExecuteSql({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                       SqlStatement("select * from table")});
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("uh-oh in GrpcReader::Finish"));
+}
+
+TEST(ConnectionImplTest, ExecuteSqlReadSuccess) {
+  auto mock = std::make_shared<MockSpannerStub>();
+
+  auto database_name =
+      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(database_name, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&database_name](grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(database_name, request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+      )pb",
+      &response));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  auto result =
+      conn.ExecuteSql({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                       SqlStatement("select * from table")});
+  EXPECT_STATUS_OK(result);
+  std::array<std::pair<std::int64_t, std::string>, 2> expected = {
+      std::make_pair(12, "Steve"), std::make_pair(42, "Ann")};
+  int row_number = 0;
+  for (auto& row : result->Rows<std::int64_t, std::string>()) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(row->size(), 2);
+    EXPECT_EQ(row->get<0>(), expected[row_number].first);
+    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, 2);
+}
 
 TEST(ConnectionImplTest, CommitGetSessionFailure) {
   auto mock = std::make_shared<MockSpannerStub>();

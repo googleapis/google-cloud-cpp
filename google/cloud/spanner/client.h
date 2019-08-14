@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 
+#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/keys.h"
@@ -36,25 +37,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-/// Options passed to `Read` or `PartitionRead`.
-struct ReadOptions {
-  /**
-   * If non-empty, the name of an index on a database table. This index is used
-   * instead of the table primary key when interpreting the `KeySet`and sorting
-   * result rows.
-   */
-  std::string index_name;
-
-  /**
-   * Limit on the number of rows to yield, or 0 for no limit.
-   * A limit cannot be specified when calling`PartitionRead`.
-   */
-  std::int64_t limit = 0;
-};
-
-/// Options passed to `PartitionRead` or `PartitionQuery`
-using PartitionOptions = google::spanner::v1::PartitionOptions;
 
 /**
  * Performs database client operations on Spanner.
@@ -91,7 +73,7 @@ using PartitionOptions = google::spanner::v1::PartitionOptions;
  *
  * auto db = cs::MakeDatabaseName("my_project", "my_instance", "my_db_id"));
  * auto conn = cs::MakeConnection(std::move(db));
- * auto client = cs::Client(conn);(
+ * auto client = cs::Client(conn);
  *
  * StatusOr<cs::ResultSet> result = client.Read(...);
  * if (!result) {
@@ -158,29 +140,27 @@ class Client {
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
    */
-  StatusOr<ResultSet> Read(std::string const& table, KeySet const& keys,
-                           std::vector<std::string> const& columns,
-                           ReadOptions const& read_options = {});
+  StatusOr<ResultSet> Read(std::string table, KeySet keys,
+                           std::vector<std::string> columns,
+                           ReadOptions read_options = {});
   /**
    * @copydoc Read
    *
    * @param transaction_options Execute this read in a single-use transaction
    * with these options.
    */
-  StatusOr<ResultSet> Read(
-      Transaction::SingleUseOptions const& transaction_options,
-      std::string const& table, KeySet const& keys,
-      std::vector<std::string> const& columns,
-      ReadOptions const& read_options = {});
+  StatusOr<ResultSet> Read(Transaction::SingleUseOptions transaction_options,
+                           std::string table, KeySet keys,
+                           std::vector<std::string> columns,
+                           ReadOptions read_options = {});
   /**
    * @copydoc Read
    *
    * @param transaction Execute this read as part of an existing transaction.
    */
-  StatusOr<ResultSet> Read(Transaction const& transaction,
-                           std::string const& table, KeySet const& keys,
-                           std::vector<std::string> const& columns,
-                           ReadOptions const& read_options = {});
+  StatusOr<ResultSet> Read(Transaction transaction, std::string table,
+                           KeySet keys, std::vector<std::string> columns,
+                           ReadOptions read_options = {});
   //@}
 
   /**
@@ -249,25 +229,25 @@ class Client {
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
    */
-  StatusOr<ResultSet> ExecuteSql(SqlStatement const& statement);
+  StatusOr<ResultSet> ExecuteSql(SqlStatement statement);
 
   /**
-   * @copydoc ExecuteSql(SqlStatement const&)
+   * @copydoc ExecuteSql(SqlStatement)
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
   StatusOr<ResultSet> ExecuteSql(
-      Transaction::SingleUseOptions const& transaction_options,
-      SqlStatement const& statement);
+      Transaction::SingleUseOptions transaction_options,
+      SqlStatement statement);
 
   /**
-   * @copydoc ExecuteSql(SqlStatement const&)
+   * @copydoc ExecuteSql(SqlStatement)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
-  StatusOr<ResultSet> ExecuteSql(Transaction const& transaction,
-                                 SqlStatement const& statement);
+  StatusOr<ResultSet> ExecuteSql(Transaction transaction,
+                                 SqlStatement statement);
   //@}
 
   /**

@@ -14,10 +14,17 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/timestamp.h"
+#include "google/cloud/spanner/value.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <array>
 #include <chrono>
+#include <cstdint>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -25,16 +32,28 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+namespace spanner_proto = ::google::spanner::v1;
+
+using ::google::cloud::internal::make_unique;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
 class MockConnection : public Connection {
  public:
-  ~MockConnection() override = default;
-
+  MOCK_METHOD1(Read, StatusOr<ResultSet>(ReadParams));
+  MOCK_METHOD1(ExecuteSql, StatusOr<ResultSet>(ExecuteSqlParams));
   MOCK_METHOD1(Commit, StatusOr<CommitResult>(CommitParams));
   MOCK_METHOD1(Rollback, Status(RollbackParams));
+};
+
+class MockResultSetSource : public internal::ResultSetSource {
+ public:
+  MOCK_METHOD0(NextValue, StatusOr<optional<Value>>());
+  MOCK_METHOD0(Metadata, optional<spanner_proto::ResultSetMetadata>());
+  MOCK_METHOD0(Stats, optional<spanner_proto::ResultSetStats>());
 };
 
 TEST(ClientTest, CopyAndMove) {
@@ -60,6 +79,202 @@ TEST(ClientTest, CopyAndMove) {
   // Move assignment
   c1 = std::move(c4);
   EXPECT_EQ(c1, c2);
+}
+
+TEST(ClientTest, ReadSuccess) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+          fields: {
+            name: "Id",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, Stats())
+      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(optional<Value>("Steve")))
+      .WillOnce(Return(optional<Value>(12)))
+      .WillOnce(Return(optional<Value>("Ann")))
+      .WillOnce(Return(optional<Value>(42)))
+      .WillOnce(Return(optional<Value>()));
+
+  ResultSet result_set(std::move(source));
+  EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
+
+  KeySet keys = KeySet::All();
+  auto result = client.Read("table", std::move(keys), {"column1", "column2"});
+  EXPECT_STATUS_OK(result);
+
+  std::array<std::pair<std::string, std::int64_t>, 2> expected = {
+      std::make_pair("Steve", 12), std::make_pair("Ann", 42)};
+  int row_number = 0;
+  for (auto& row : result->Rows<std::string, std::int64_t>()) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(row->size(), 2);
+    EXPECT_EQ(row->get<0>(), expected[row_number].first);
+    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, 2);
+}
+
+TEST(ClientTest, ReadFailure) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, Stats())
+      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(optional<Value>("Steve")))
+      .WillOnce(Return(optional<Value>("Ann")))
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
+
+  ResultSet result_set(std::move(source));
+  EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
+
+  KeySet keys = KeySet::All();
+  auto result = client.Read("table", std::move(keys), {"column1"});
+  EXPECT_STATUS_OK(result);
+
+  auto rows = result->Rows<std::string>();
+  auto iter = rows.begin();
+  EXPECT_NE(iter, rows.end());
+  EXPECT_STATUS_OK(*iter);
+  EXPECT_EQ((*iter)->get<0>(), "Steve");
+
+  ++iter;
+  EXPECT_NE(iter, rows.end());
+  EXPECT_STATUS_OK(*iter);
+  EXPECT_EQ((*iter)->get<0>(), "Ann");
+
+  ++iter;
+  EXPECT_FALSE((*iter).ok());
+  EXPECT_EQ((*iter).status().code(), StatusCode::kDeadlineExceeded);
+}
+
+TEST(ClientTest, ExecuteSqlSuccess) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+          fields: {
+            name: "Id",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, Stats())
+      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(optional<Value>("Steve")))
+      .WillOnce(Return(optional<Value>(12)))
+      .WillOnce(Return(optional<Value>("Ann")))
+      .WillOnce(Return(optional<Value>(42)))
+      .WillOnce(Return(optional<Value>()));
+
+  ResultSet result_set(std::move(source));
+  EXPECT_CALL(*conn, ExecuteSql(_))
+      .WillOnce(Return(ByMove(std::move(result_set))));
+
+  KeySet keys = KeySet::All();
+  auto result = client.ExecuteSql(SqlStatement("select * from table;"));
+  EXPECT_STATUS_OK(result);
+
+  std::array<std::pair<std::string, std::int64_t>, 2> expected = {
+      std::make_pair("Steve", 12), std::make_pair("Ann", 42)};
+  int row_number = 0;
+  for (auto& row : result->Rows<std::string, std::int64_t>()) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(row->size(), 2);
+    EXPECT_EQ(row->get<0>(), expected[row_number].first);
+    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, 2);
+}
+
+TEST(ClientTest, ExecuteSqlFailure) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, Stats())
+      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(optional<Value>("Steve")))
+      .WillOnce(Return(optional<Value>("Ann")))
+      .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
+
+  ResultSet result_set(std::move(source));
+  EXPECT_CALL(*conn, ExecuteSql(_))
+      .WillOnce(Return(ByMove(std::move(result_set))));
+
+  KeySet keys = KeySet::All();
+  auto result = client.ExecuteSql(SqlStatement("select * from table;"));
+  EXPECT_STATUS_OK(result);
+
+  auto rows = result->Rows<std::string>();
+  auto iter = rows.begin();
+  EXPECT_NE(iter, rows.end());
+  EXPECT_STATUS_OK(*iter);
+  EXPECT_EQ((*iter)->get<0>(), "Steve");
+
+  ++iter;
+  EXPECT_NE(iter, rows.end());
+  EXPECT_STATUS_OK(*iter);
+  EXPECT_EQ((*iter)->get<0>(), "Ann");
+
+  ++iter;
+  EXPECT_FALSE((*iter).ok());
+  EXPECT_EQ((*iter).status().code(), StatusCode::kDeadlineExceeded);
 }
 
 TEST(ClientTest, CommitSuccess) {

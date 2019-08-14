@@ -18,7 +18,10 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
+#include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
+#include <cstdint>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -53,6 +56,25 @@ class ClientOptions {
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string admin_endpoint_;
 };
+
+/// Options passed to `Client::Read` or `Client::PartitionRead`.
+struct ReadOptions {
+  /**
+   * If non-empty, the name of an index on a database table. This index is used
+   * instead of the table primary key when interpreting the `KeySet`and sorting
+   * result rows.
+   */
+  std::string index_name;
+
+  /**
+   * Limit on the number of rows to yield, or 0 for no limit.
+   * A limit cannot be specified when calling`PartitionRead`.
+   */
+  std::int64_t limit = 0;
+};
+
+/// Options passed to `Client::PartitionRead` or `Client::PartitionQuery`
+using PartitionOptions = google::spanner::v1::PartitionOptions;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

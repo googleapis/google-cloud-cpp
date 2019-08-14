@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/connection_impl.h"
+#include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/internal/time.h"
 #include <google/spanner/v1/spanner.pb.h>
 
@@ -23,6 +24,22 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
+
+StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
+  return internal::Visit(
+      std::move(rp.transaction),
+      [this, &rp](spanner_proto::TransactionSelector& s, std::int64_t) {
+        return Read(s, std::move(rp));
+      });
+}
+
+StatusOr<ResultSet> ConnectionImpl::ExecuteSql(ExecuteSqlParams esp) {
+  return internal::Visit(
+      std::move(esp.transaction),
+      [this, &esp](spanner_proto::TransactionSelector& s, std::int64_t seqno) {
+        return ExecuteSql(s, seqno, std::move(esp));
+      });
+}
 
 StatusOr<CommitResult> ConnectionImpl::Commit(Connection::CommitParams cp) {
   return internal::Visit(
@@ -52,6 +69,76 @@ StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
     return response.status();
   }
   return SessionHolder(std::move(*response->mutable_name()), this);
+}
+
+StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,
+                                         ReadParams rp) {
+  auto session = GetSession();
+  if (!session) {
+    return std::move(session).status();
+  }
+  spanner_proto::ReadRequest request;
+  request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  request.set_table(std::move(rp.table));
+  request.set_index(std::move(rp.read_options.index_name));
+  for (auto&& column : rp.columns) {
+    request.add_columns(std::move(column));
+  }
+  *request.mutable_key_set() = internal::ToProto(std::move(rp.keys));
+  request.set_limit(rp.read_options.limit);
+
+  grpc::ClientContext context;
+  auto reader = internal::PartialResultSetReader::Create(
+      stub_->StreamingRead(context, request));
+  if (!reader.ok()) {
+    return std::move(reader).status();
+  }
+  if (s.has_begin()) {
+    auto metadata = (*reader)->Metadata();
+    if (!metadata || metadata->transaction().id().empty()) {
+      return Status(
+          StatusCode::kInternal,
+          "Begin transaction requested but no transaction returned (in Read).");
+    }
+    s.set_id(metadata->transaction().id());
+  }
+  return ResultSet(std::move(*reader));
+}
+
+StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
+    spanner_proto::TransactionSelector& s, std::int64_t seqno,
+    ExecuteSqlParams esp) {
+  auto session = GetSession();
+  if (!session) {
+    return std::move(session).status();
+  }
+  spanner_proto::ExecuteSqlRequest request;
+  request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  auto sql_statement = internal::ToProto(std::move(esp.statement));
+  request.set_sql(std::move(*sql_statement.mutable_sql()));
+  *request.mutable_params() = std::move(*sql_statement.mutable_params());
+  *request.mutable_param_types() =
+      std::move(*sql_statement.mutable_param_types());
+  request.set_seqno(seqno);
+
+  grpc::ClientContext context;
+  auto reader = internal::PartialResultSetReader::Create(
+      stub_->ExecuteStreamingSql(context, request));
+  if (!reader.ok()) {
+    return std::move(reader).status();
+  }
+  if (s.has_begin()) {
+    auto metadata = (*reader)->Metadata();
+    if (!metadata || metadata->transaction().id().empty()) {
+      return Status(StatusCode::kInternal,
+                    "Begin transaction requested but no transaction returned "
+                    "(in ExecuteSql).");
+    }
+    s.set_id(metadata->transaction().id());
+  }
+  return ResultSet(std::move(*reader));
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(

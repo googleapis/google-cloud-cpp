@@ -24,27 +24,29 @@ inline namespace SPANNER_CLIENT_NS {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-StatusOr<ResultSet> Client::Read(std::string const& /*table*/,
-                                 KeySet const& /*keys*/,
-                                 std::vector<std::string> const& /*columns*/,
-                                 ReadOptions const& /*read_options*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+StatusOr<ResultSet> Client::Read(std::string table, KeySet keys,
+                                 std::vector<std::string> columns,
+                                 ReadOptions read_options) {
+  return conn_->Read(
+      {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       std::move(table), std::move(keys), std::move(columns),
+       std::move(read_options)});
 }
 
 StatusOr<ResultSet> Client::Read(
-    Transaction::SingleUseOptions const& /*transaction_options*/,
-    std::string const& /*table*/, KeySet const& /*keys*/,
-    std::vector<std::string> const& /*columns*/,
-    ReadOptions const& /*read_options*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    Transaction::SingleUseOptions transaction_options, std::string table,
+    KeySet keys, std::vector<std::string> columns, ReadOptions read_options) {
+  return conn_->Read(
+      {internal::MakeSingleUseTransaction(std::move(transaction_options)),
+       std::move(table), std::move(keys), std::move(columns),
+       std::move(read_options)});
 }
 
-StatusOr<ResultSet> Client::Read(Transaction const& /*transaction*/,
-                                 std::string const& /*table*/,
-                                 KeySet const& /*keys*/,
-                                 std::vector<std::string> const& /*columns*/,
-                                 ReadOptions const& /*read_options*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+StatusOr<ResultSet> Client::Read(Transaction transaction, std::string table,
+                                 KeySet keys, std::vector<std::string> columns,
+                                 ReadOptions read_options) {
+  return conn_->Read({std::move(transaction), std::move(table), std::move(keys),
+                      std::move(columns), std::move(read_options)});
 }
 
 StatusOr<ResultSet> Client::Read(SqlPartition const& /*partition*/) {
@@ -59,19 +61,22 @@ StatusOr<std::vector<SqlPartition>> Client::PartitionRead(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StatusOr<ResultSet> Client::ExecuteSql(SqlStatement const& /*statement*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+StatusOr<ResultSet> Client::ExecuteSql(SqlStatement statement) {
+  return conn_->ExecuteSql(
+      {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       std::move(statement)});
 }
 
 StatusOr<ResultSet> Client::ExecuteSql(
-    Transaction::SingleUseOptions const& /*transaction_options*/,
-    SqlStatement const& /*statement*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    Transaction::SingleUseOptions transaction_options, SqlStatement statement) {
+  return conn_->ExecuteSql(
+      {internal::MakeSingleUseTransaction(std::move(transaction_options)),
+       std::move(statement)});
 }
 
-StatusOr<ResultSet> Client::ExecuteSql(Transaction const& /*transaction*/,
-                                       SqlStatement const& /*statement*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+StatusOr<ResultSet> Client::ExecuteSql(Transaction transaction,
+                                       SqlStatement statement) {
+  return conn_->ExecuteSql({std::move(transaction), std::move(statement)});
 }
 
 StatusOr<ResultSet> Client::ExecuteSql(SqlPartition const& /* partition */) {

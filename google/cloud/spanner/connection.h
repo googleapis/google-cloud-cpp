@@ -15,11 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_H_
 
+#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_result.h"
+#include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/result_set.h"
+#include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
+#include <string>
 #include <vector>
 
 namespace google {
@@ -42,6 +47,21 @@ inline namespace SPANNER_CLIENT_NS {
 class Connection {
  public:
   virtual ~Connection() = default;
+
+  struct ReadParams {
+    Transaction transaction;
+    std::string table;
+    KeySet keys;
+    std::vector<std::string> columns;
+    ReadOptions read_options;
+  };
+  virtual StatusOr<ResultSet> Read(ReadParams) = 0;
+
+  struct ExecuteSqlParams {
+    Transaction transaction;
+    SqlStatement statement;
+  };
+  virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
 
   /**
    * Commits a transaction.
