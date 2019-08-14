@@ -13,10 +13,16 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
+#include <cstdint>
+#include <sstream>
+#include <string>
+#include <tuple>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -24,9 +30,11 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::testing::HasSubstr;
+namespace spanner_proto = ::google::spanner::v1;
 
-using google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::protobuf::TextFormat;
+using ::testing::HasSubstr;
 
 TEST(MutationsTest, Default) {
   Mutation actual;
@@ -52,8 +60,8 @@ TEST(MutationsTest, InsertSimple) {
   EXPECT_NE(insert, empty);
 
   auto actual = std::move(insert).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         insert: {
           columns: "col_a"
@@ -82,8 +90,8 @@ TEST(MutationsTest, InsertComplex) {
   EXPECT_EQ(insert, moved);
 
   auto actual = std::move(insert).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         insert: {
           table: "table-name"
@@ -115,8 +123,8 @@ TEST(MutationsTest, UpdateSimple) {
   EXPECT_NE(update, empty);
 
   auto actual = std::move(update).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         update: {
           table: "table-name"
@@ -145,8 +153,8 @@ TEST(MutationsTest, UpdateComplex) {
   EXPECT_EQ(update, moved);
 
   auto actual = std::move(update).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         update: {
           table: "table-name"
@@ -180,8 +188,8 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
   EXPECT_NE(update, empty);
 
   auto actual = std::move(update).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         insert_or_update: {
           table: "table-name"
@@ -209,8 +217,8 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
   EXPECT_EQ(update, moved);
 
   auto actual = std::move(update).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         insert_or_update: {
           table: "table-name"
@@ -247,8 +255,8 @@ TEST(MutationsTest, ReplaceSimple) {
   EXPECT_NE(replace, empty);
 
   auto actual = std::move(replace).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         replace: {
           table: "table-name"
@@ -276,8 +284,8 @@ TEST(MutationsTest, ReplaceComplex) {
   EXPECT_EQ(update, moved);
 
   auto actual = std::move(update).as_proto();
-  google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
         replace: {
           table: "table-name"
@@ -291,6 +299,28 @@ TEST(MutationsTest, ReplaceComplex) {
             values: { string_value: "b" }
             values: { number_value: 8.0 }
           }
+        }
+      )pb",
+      &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, DeleteSimple) {
+  auto ksb = KeySetBuilder<Row<std::string>>();
+  ksb.Add(MakeRow("key-to-delete"));
+  Mutation dele = MakeDeleteMutation("table-name", ksb.Build());
+  EXPECT_EQ(dele, dele);
+
+  Mutation empty;
+  EXPECT_NE(dele, empty);
+
+  auto actual = std::move(dele).as_proto();
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        delete: {
+          table: "table-name"
+          key_set: { keys: { values { string_value: "key-to-delete" } } }
         }
       )pb",
       &expected));

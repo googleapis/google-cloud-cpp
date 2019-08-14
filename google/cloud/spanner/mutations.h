@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MUTATIONS_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MUTATIONS_H_
 
+#include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
 #include <google/spanner/v1/mutation.pb.h>
@@ -26,6 +27,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 template <typename Op>
 class WriteMutationBuilder;
+class DeleteMutationBuilder;
 }  // namespace internal
 
 /**
@@ -77,6 +79,7 @@ class Mutation {
  private:
   template <typename Op>
   friend class internal::WriteMutationBuilder;
+  friend class internal::DeleteMutationBuilder;
   explicit Mutation(google::spanner::v1::Mutation m) : m_(std::move(m)) {}
 
   google::spanner::v1::Mutation m_;
@@ -146,6 +149,21 @@ struct ReplaceOp {
       google::spanner::v1::Mutation& m) {
     return *m.mutable_replace();
   }
+};
+
+class DeleteMutationBuilder {
+ public:
+  DeleteMutationBuilder(std::string table_name, KeySet keys) {
+    auto& field = *m_.mutable_delete_();
+    field.set_table(std::move(table_name));
+    *field.mutable_key_set() = internal::ToProto(std::move(keys));
+  }
+
+  Mutation Build() const& { return Mutation(m_); }
+  Mutation Build() && { return Mutation(std::move(m_)); }
+
+ private:
+  google::spanner::v1::Mutation m_;
 };
 
 }  // namespace internal
@@ -236,7 +254,21 @@ Mutation MakeReplaceMutation(std::string table_name,
       .Build();
 }
 
-// TODO(#198 & #202) - Implement DeleteMutationBuilder.
+/**
+ * A helper class to construct "delete" mutations.
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
+using DeleteMutationBuilder = internal::DeleteMutationBuilder;
+
+/// Creates a simple "delete" mutation for the values in @p keys.
+inline Mutation MakeDeleteMutation(std::string table_name, KeySet keys) {
+  return DeleteMutationBuilder(std::move(table_name), std::move(keys)).Build();
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
