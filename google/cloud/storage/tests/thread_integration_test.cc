@@ -34,7 +34,29 @@ char const* flag_project_id;
 char const* flag_location;
 
 class ThreadIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ public:
+  void CreateObjects(std::string const& bucket_name, ObjectNameList group,
+                     std::string contents) {
+    // Create our own client so no state is shared with the other threads.
+    StatusOr<Client> client = MakeIntegrationTestClient();
+    ASSERT_STATUS_OK(client);
+    for (auto const& object_name : group) {
+      StatusOr<ObjectMetadata> meta = client->InsertObject(
+          bucket_name, object_name, contents, IfGenerationMatch(0));
+      ASSERT_STATUS_OK(meta);
+    }
+  }
+
+  void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
+    // Create our own client so no state is shared with the other threads.
+    StatusOr<Client> client = MakeIntegrationTestClient();
+    ASSERT_STATUS_OK(client);
+    for (auto const& object_name : group) {
+      (void)client->DeleteObject(bucket_name, object_name);
+    }
+  }
+};
 
 /**
  * Divides @p source in to @p count groups of approximately equal size.
@@ -66,32 +88,12 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
   return groups;
 }
 
-void CreateObjects(std::string const& bucket_name, ObjectNameList group,
-                   std::string contents) {
-  // Create our own client so no state is shared with the other threads.
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-  for (auto const& object_name : group) {
-    StatusOr<ObjectMetadata> meta = client->InsertObject(
-        bucket_name, object_name, contents, IfGenerationMatch(0));
-    ASSERT_STATUS_OK(meta);
-  }
-}
-
-void DeleteObjects(std::string const& bucket_name, ObjectNameList group) {
-  // Create our own client so no state is shared with the other threads.
-  StatusOr<Client> client = Client::CreateDefaultClient();
-  ASSERT_STATUS_OK(client);
-  for (auto const& object_name : group) {
-    (void)client->DeleteObject(bucket_name, object_name);
-  }
-}
 }  // anonymous namespace
 
 TEST_F(ThreadIntegrationTest, Unshared) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
@@ -119,7 +121,8 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   auto groups = DivideIntoEqualSizedGroups(objects, thread_count);
   std::vector<std::future<void>> tasks;
   for (auto const& g : groups) {
-    tasks.emplace_back(std::async(std::launch::async, &CreateObjects,
+    tasks.emplace_back(std::async(std::launch::async,
+                                  &ThreadIntegrationTest::CreateObjects, this,
                                   bucket_name, g, LoremIpsum()));
   }
   for (auto& t : tasks) {
@@ -128,8 +131,9 @@ TEST_F(ThreadIntegrationTest, Unshared) {
 
   tasks.clear();
   for (auto const& g : groups) {
-    tasks.emplace_back(
-        std::async(std::launch::async, &DeleteObjects, bucket_name, g));
+    tasks.emplace_back(std::async(std::launch::async,
+                                  &ThreadIntegrationTest::DeleteObjects, this,
+                                  bucket_name, g));
   }
   for (auto& t : tasks) {
     t.get();

@@ -164,7 +164,7 @@ TEST_F(ReadObjectStallTest, Streaming) {
 }
 
 TEST_F(ReadObjectStallTest, ByRange) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client) << "ERROR: Aborting test, cannot create client";
 
   PreparePhase(*client, 1000);
@@ -236,7 +236,7 @@ TEST_F(ReadObjectStallTest, ByRange) {
 }
 
 TEST_F(ReadObjectStallTest, ByFile) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client) << "ERROR: Aborting test, cannot create client";
 
   PreparePhase(*client, 1000);

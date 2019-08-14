@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
@@ -30,9 +31,12 @@ using ::testing::HasSubstr;
 char const* flag_project_id;
 char const* flag_service_account;
 
-TEST(ServiceAccountIntegrationTest, Get) {
+class ServiceAccountIntegrationTest
+    : public google::cloud::storage::testing::StorageIntegrationTest {};
+
+TEST_F(ServiceAccountIntegrationTest, Get) {
   std::string project_id = flag_project_id;
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   StatusOr<ServiceAccount> a1 = client->GetServiceAccountForProject(project_id);
@@ -49,7 +53,7 @@ TEST(ServiceAccountIntegrationTest, Get) {
   EXPECT_EQ(*a1, *a2);
 }
 
-TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
+TEST_F(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   std::string project_id = flag_project_id;
   std::string service_account = flag_service_account;
 
@@ -73,7 +77,7 @@ TEST(ServiceAccountIntegrationTest, CreateHmacKeyForProject) {
   ASSERT_STATUS_OK(deleted_key);
 }
 
-TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
+TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   std::string project_id = flag_project_id;
   std::string service_account = flag_service_account;
 
@@ -130,7 +134,7 @@ TEST(ServiceAccountIntegrationTest, HmacKeyCRUD) {
   EXPECT_THAT(post_delete_access_ids, Not(Contains(access_id)));
 }
 
-TEST(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
+TEST_F(ServiceAccountIntegrationTest, HmacKeyCRUDFailures) {
   std::string project_id = flag_project_id;
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   std::string service_account = flag_service_account;

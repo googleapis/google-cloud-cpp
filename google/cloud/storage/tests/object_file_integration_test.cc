@@ -40,7 +40,7 @@ class ObjectFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -75,7 +75,7 @@ TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -110,7 +110,7 @@ TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -123,7 +123,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileFailure) {
 }
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -146,7 +146,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
 
 TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
 #if GTEST_OS_LINUX
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -177,7 +177,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotWriteToFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFile) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -216,7 +216,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
     // The testbench does not support binary payloads.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -259,7 +259,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -289,7 +289,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileMissingFileFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = MakeRandomObjectName();
@@ -304,7 +304,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileMissingFileFailure) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -336,7 +336,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   // do on Linux, and hard to do on the other platforms we support, so just run
   // the test there.
 #if GTEST_OS_LINUX || GTEST_OS_MAC
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -376,7 +376,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
 }
 
 TEST_F(ObjectFileIntegrationTest, XmlUploadFile) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();
@@ -463,7 +463,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto file_name = ::testing::TempDir() + MakeRandomObjectName();

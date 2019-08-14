@@ -39,7 +39,7 @@ class ObjectInsertIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -65,7 +65,7 @@ TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -90,7 +90,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -115,7 +115,7 @@ TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -141,7 +141,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -167,7 +167,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -193,7 +193,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -224,7 +224,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -245,7 +245,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -271,7 +271,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -298,7 +298,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -321,7 +321,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -343,7 +343,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -364,7 +364,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -390,7 +390,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
 
 TEST_F(ObjectInsertIntegrationTest,
        XmlInsertPredefinedAclBucketOwnerFullControl) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -420,7 +420,7 @@ TEST_F(ObjectInsertIntegrationTest,
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -450,7 +450,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -476,7 +476,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -502,7 +502,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -670,7 +670,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -689,7 +689,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -714,7 +714,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
 }
 
 TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;

@@ -52,7 +52,7 @@ class SlowReaderIntegrationTest
 };
 
 TEST_F(SlowReaderIntegrationTest, StreamingRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string const bucket_name = flag_bucket_name;
@@ -113,7 +113,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
 }
 
 TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string const bucket_name = flag_bucket_name;

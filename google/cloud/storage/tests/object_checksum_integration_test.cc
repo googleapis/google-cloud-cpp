@@ -38,7 +38,7 @@ class ObjectChecksumIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -65,7 +65,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32c) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -92,7 +92,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32c) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -108,7 +108,7 @@ TEST_F(ObjectChecksumIntegrationTest, InsertWithCrc32cFailure) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -124,7 +124,7 @@ TEST_F(ObjectChecksumIntegrationTest, XmlInsertWithCrc32cFailure) {
 }
 
 TEST_F(ObjectChecksumIntegrationTest, InsertWithComputedCrc32c) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -223,7 +223,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cInsertJSON) {
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -249,7 +249,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadXML) {
 
 /// @test Verify that CRC32C checksums are computed by default on downloads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -276,7 +276,7 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
 
 /// @test Verify that CRC32C checksums are computed by default on uploads.
 TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -308,7 +308,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -355,7 +355,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -402,7 +402,7 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;

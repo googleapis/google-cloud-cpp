@@ -41,7 +41,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
     // The testbench does not implement signed URLs.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -79,7 +79,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
     // The testbench does not implement signed URLs.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -117,7 +117,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
     // The testbench does not implement signed URLs.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -155,7 +155,7 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
     // The testbench does not implement signed URLs.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;

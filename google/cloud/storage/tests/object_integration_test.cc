@@ -47,7 +47,7 @@ class ObjectIntegrationTest
 
 /// @test Verify the Object CRUD (Create, Get, Update, Delete, List) operations.
 TEST_F(ObjectIntegrationTest, BasicCRUD) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -158,7 +158,7 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
 }
 
 TEST_F(ObjectIntegrationTest, FullPatch) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -232,7 +232,7 @@ TEST_F(ObjectIntegrationTest, FullPatch) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -304,7 +304,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
 }
 
 TEST_F(ObjectIntegrationTest, BasicReadWrite) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -330,7 +330,7 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -362,7 +362,7 @@ TEST_F(ObjectIntegrationTest, EncryptedReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, ReadNotFound) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -378,7 +378,7 @@ TEST_F(ObjectIntegrationTest, ReadNotFound) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWrite) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -410,7 +410,7 @@ TEST_F(ObjectIntegrationTest, StreamingWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -436,7 +436,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteAutoClose) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -461,7 +461,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
 }
 
 TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -495,7 +495,7 @@ TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, XmlReadWrite) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -521,7 +521,7 @@ TEST_F(ObjectIntegrationTest, XmlReadWrite) {
 }
 
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -594,7 +594,7 @@ TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(ObjectIntegrationTest, WriteWithContentType) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -619,7 +619,7 @@ TEST_F(ObjectIntegrationTest, WriteWithContentType) {
 }
 
 TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -631,7 +631,7 @@ TEST_F(ObjectIntegrationTest, GetObjectMetadataFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -666,7 +666,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -696,7 +696,7 @@ TEST_F(ObjectIntegrationTest, StreamingWriteFailureNoex) {
 
 TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
   auto bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   ListObjectsReader reader = client->ListObjects(bucket_name, Versions(true));
@@ -711,7 +711,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -723,7 +723,7 @@ TEST_F(ObjectIntegrationTest, DeleteObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -736,7 +736,7 @@ TEST_F(ObjectIntegrationTest, UpdateObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -749,7 +749,7 @@ TEST_F(ObjectIntegrationTest, PatchObjectFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -761,7 +761,7 @@ TEST_F(ObjectIntegrationTest, ListAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -775,7 +775,7 @@ TEST_F(ObjectIntegrationTest, CreateAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -788,7 +788,7 @@ TEST_F(ObjectIntegrationTest, GetAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -803,7 +803,7 @@ TEST_F(ObjectIntegrationTest, UpdateAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -818,7 +818,7 @@ TEST_F(ObjectIntegrationTest, PatchAccessControlFailure) {
 }
 
 TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
