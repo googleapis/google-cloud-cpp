@@ -40,7 +40,7 @@ class ObjectRewriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectRewriteIntegrationTest, Copy) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -75,7 +75,7 @@ TEST_F(ObjectRewriteIntegrationTest, Copy) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -103,7 +103,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclAuthenticatedRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -136,7 +136,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerFullControl) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -169,7 +169,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclBucketOwnerRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -198,7 +198,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPrivate) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -227,7 +227,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclProjectPrivate) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -255,7 +255,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyPredefinedAclPublicRead) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -286,7 +286,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeSimple) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -323,7 +323,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposedUsingEncryptedObject) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -353,7 +353,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteSimple) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -390,7 +390,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteEncrypted) {
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   // The testbench always requires multiple iterations to copy this object.
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -437,7 +437,7 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -451,7 +451,7 @@ TEST_F(ObjectRewriteIntegrationTest, CopyFailure) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -467,7 +467,7 @@ TEST_F(ObjectRewriteIntegrationTest, ComposeFailure) {
 }
 
 TEST_F(ObjectRewriteIntegrationTest, RewriteFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;

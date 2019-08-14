@@ -35,7 +35,7 @@ class CurlSignBlobIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(CurlSignBlobIntegrationTest, Simple) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string service_account = flag_service_account;
 

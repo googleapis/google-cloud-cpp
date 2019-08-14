@@ -20,6 +20,25 @@ namespace cloud {
 namespace storage {
 namespace testing {
 
+google::cloud::StatusOr<google::cloud::storage::Client>
+StorageIntegrationTest::MakeIntegrationTestClient() {
+  auto idempotency =
+      google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
+  if (!idempotency || *idempotency == "always-retry") {
+    return google::cloud::storage::Client::CreateDefaultClient();
+  }
+  if (*idempotency == "strict") {
+    auto options = ClientOptions::CreateDefaultClientOptions();
+    if (!options) {
+      return std::move(options).status();
+    }
+    return Client(*std::move(options), StrictIdempotencyPolicy{});
+  }
+  return Status(
+      StatusCode::kInvalidArgument,
+      "Invalid value for CLOUD_STORAGE_IDEMPOTENCY environment variable");
+}
+
 std::string StorageIntegrationTest::MakeRandomObjectName() {
   return "ob-" +
          google::cloud::internal::Sample(generator_, 16,

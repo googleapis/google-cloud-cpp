@@ -37,7 +37,7 @@ class ObjectWriteStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void CheckUpload(int line_count, int line_size) {
-    StatusOr<Client> client = Client::CreateDefaultClient();
+    StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
     std::string bucket_name = flag_bucket_name;
     auto object_name = MakeRandomObjectName();

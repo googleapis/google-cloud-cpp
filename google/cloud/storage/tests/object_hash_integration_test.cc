@@ -184,7 +184,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
 
 /// @test Verify that MD5 hashes are computed by default on downloads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -210,7 +210,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
 
 /// @test Verify that MD5 hashes are computed by default on downloads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -237,7 +237,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
 
 /// @test Verify that hashes and checksums can be disabled on downloads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -265,7 +265,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
 
 /// @test Verify that hashes and checksums can be disabled on downloads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -293,7 +293,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
 
 /// @test Verify that MD5 hashes are computed by default on uploads.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -319,7 +319,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
 
 /// @test Verify MD5 hash value before upload.
 TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -346,7 +346,7 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
 
 /// @test Verify invalid MD5 hash value before upload.
 TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -369,7 +369,7 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
 
 /// @test Verify MD5 hashe before upload.
 TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -392,7 +392,7 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
 
 /// @test Verify that hashes and checksums can be disabled in uploads.
 TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -423,7 +423,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -468,7 +468,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -514,7 +514,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
     // testbench to inject faults.
     return;
   }
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;

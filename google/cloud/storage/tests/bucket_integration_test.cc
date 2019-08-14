@@ -46,7 +46,7 @@ class BucketIntegrationTest
 TEST_F(BucketIntegrationTest, BasicCRUD) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto buckets = client->ListBucketsForProject(project_id);
@@ -140,7 +140,7 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
     std::string bucket_name = MakeRandomBucketName();
-    StatusOr<Client> client = Client::CreateDefaultClient();
+    StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
 
     auto metadata = client->CreateBucketForProject(
@@ -168,7 +168,7 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
     std::string bucket_name = MakeRandomBucketName();
-    StatusOr<Client> client = Client::CreateDefaultClient();
+    StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
 
     auto metadata = client->CreateBucketForProject(
@@ -185,7 +185,7 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
 TEST_F(BucketIntegrationTest, FullPatch) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // We need to have an available bucket for logging ...
@@ -329,7 +329,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a Bucket, use the default settings for all fields. Fetch the full
@@ -360,7 +360,7 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
   std::string bucket_name = flag_bucket_name;
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto metadata = client->GetBucketMetadata(bucket_name);
@@ -372,7 +372,7 @@ TEST_F(BucketIntegrationTest, GetMetadata) {
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
   std::string bucket_name = flag_bucket_name;
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto metadata = client->GetBucketMetadata(bucket_name, Fields("name"));
@@ -384,7 +384,7 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
   std::string bucket_name = flag_bucket_name;
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto metadata = client->GetBucketMetadata(bucket_name);
@@ -402,7 +402,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
   std::string bucket_name = flag_bucket_name;
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto metadata = client->GetBucketMetadata(bucket_name);
@@ -420,7 +420,7 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private" PredefinedAcl so
@@ -500,7 +500,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private"
@@ -577,7 +577,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
@@ -632,7 +632,7 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 TEST_F(BucketIntegrationTest, IamCRUD) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
@@ -688,7 +688,7 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
@@ -766,7 +766,7 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
 TEST_F(BucketIntegrationTest, BucketLock) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
@@ -794,7 +794,7 @@ TEST_F(BucketIntegrationTest, BucketLock) {
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
   std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // This should fail because the bucket does not exist.
@@ -804,7 +804,7 @@ TEST_F(BucketIntegrationTest, BucketLockFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Project IDs must end with a letter or number, test with an invalid ID.
@@ -815,7 +815,7 @@ TEST_F(BucketIntegrationTest, ListFailure) {
 }
 
 TEST_F(BucketIntegrationTest, CreateFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Try to create an invalid bucket (the name should not start with an
@@ -828,7 +828,7 @@ TEST_F(BucketIntegrationTest, CreateFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -839,7 +839,7 @@ TEST_F(BucketIntegrationTest, GetFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -850,7 +850,7 @@ TEST_F(BucketIntegrationTest, DeleteFailure) {
 }
 
 TEST_F(BucketIntegrationTest, UpdateFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -861,7 +861,7 @@ TEST_F(BucketIntegrationTest, UpdateFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -872,7 +872,7 @@ TEST_F(BucketIntegrationTest, PatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -883,7 +883,7 @@ TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
 }
 
 TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -894,7 +894,7 @@ TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
 }
 
 TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -905,7 +905,7 @@ TEST_F(BucketIntegrationTest, TestBucketIamPermissionsFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -915,7 +915,7 @@ TEST_F(BucketIntegrationTest, ListAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -926,7 +926,7 @@ TEST_F(BucketIntegrationTest, CreateAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -937,7 +937,7 @@ TEST_F(BucketIntegrationTest, GetAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -950,7 +950,7 @@ TEST_F(BucketIntegrationTest, UpdateAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -963,7 +963,7 @@ TEST_F(BucketIntegrationTest, PatchAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -974,7 +974,7 @@ TEST_F(BucketIntegrationTest, DeleteAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
@@ -984,7 +984,7 @@ TEST_F(BucketIntegrationTest, ListDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -997,7 +997,7 @@ TEST_F(BucketIntegrationTest, CreateDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -1008,7 +1008,7 @@ TEST_F(BucketIntegrationTest, GetDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -1024,7 +1024,7 @@ TEST_F(BucketIntegrationTest, UpdateDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();
@@ -1040,7 +1040,7 @@ TEST_F(BucketIntegrationTest, PatchDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
   auto entity_name = MakeEntityName();

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_STORAGE_INTEGRATION_TEST_H_
 
 #include "google/cloud/internal/random.h"
+#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/well_known_headers.h"
 #include <gmock/gmock.h>
 #include <string>
@@ -30,6 +31,9 @@ namespace testing {
  */
 class StorageIntegrationTest : public ::testing::Test {
  protected:
+  google::cloud::StatusOr<google::cloud::storage::Client>
+  MakeIntegrationTestClient();
+
   std::string MakeRandomObjectName();
 
   std::string LoremIpsum() const;

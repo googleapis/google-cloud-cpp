@@ -50,7 +50,7 @@ class ObjectMediaIntegrationTest
 };
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -90,7 +90,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   // The testbench always requires multiple iterations to copy this object.
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -132,7 +132,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
   // The testbench always requires multiple iterations to copy this object.
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -173,7 +173,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   // The testbench always requires multiple iterations to copy this object.
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -215,7 +215,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
 /// @test Read a portion of a relatively large object using the XML API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
   // The testbench always requires multiple iterations to copy this object.
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -256,7 +256,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
 /// @test Read a relatively large object using chunks of different sizes.
 TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
   // The testbench always requires multiple iterations to copy this object.
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -319,7 +319,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadMixedChunks) {
 
 /// @test Read the last chunk of an object.
 TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -371,7 +371,7 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
 
 /// @test Read an object by chunks of equal size.
 TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;

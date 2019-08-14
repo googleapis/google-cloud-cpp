@@ -105,7 +105,7 @@ class ObjectWriteDeadlockRegressionTest
   }
 
   std::string WritePhase() {
-    StatusOr<Client> client = Client::CreateDefaultClient();
+    StatusOr<Client> client = MakeIntegrationTestClient();
     EXPECT_STATUS_OK(client) << "ERROR: Aborting test, cannot create client";
     if (!client) {
       std::exit(1);
@@ -133,7 +133,7 @@ class ObjectWriteDeadlockRegressionTest
 };
 
 TEST_F(ObjectWriteDeadlockRegressionTest, StreamingWrite) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client) << "ERROR: Aborting test, cannot create client";
 
   auto object_names = PreparePhase(*client, 32);

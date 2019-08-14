@@ -34,7 +34,7 @@ class ObjectResumableWriteIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -66,7 +66,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentType) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   auto bucket_name = MakeRandomBucketName();
@@ -85,7 +85,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithContentTypeFailure) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -115,7 +115,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteWithUseResumable) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -155,7 +155,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
@@ -190,7 +190,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
-  StatusOr<Client> client = Client::CreateDefaultClient();
+  StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   std::string bucket_name = flag_bucket_name;
