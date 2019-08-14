@@ -19,7 +19,9 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
+#ifndef _WIN32
 #include <dlfcn.h>
+#endif  // _WIN32
 
 namespace google {
 namespace cloud {
