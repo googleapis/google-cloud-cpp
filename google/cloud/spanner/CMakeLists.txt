@@ -171,9 +171,6 @@ add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 include(CreateBazelConfig)
 create_bazel_config(spanner_client)
 
-export_variables_to_bazel("spanner_client_version.bzl"
-                          GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE)
-
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the

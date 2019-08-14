@@ -16,8 +16,6 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":spanner_client_version.bzl", "GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE")
-
 genrule(
     name = "generate_build_info",
     srcs = ["internal/build_info.cc.in"],
@@ -26,9 +24,8 @@ genrule(
 V="unknown";
 sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
     -e "s;\\$${CMAKE_CXX_FLAGS_.*};-c $(COMPILATION_MODE);" \
-    -e "s;@GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE@;%s;" \
     -e "s;@GOOGLE_CLOUD_CPP_SPANNER_BUILD_METADATA@;$${V};" < $< > $@
-  """ % (GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE),
+  """,
     toolchains = [
         "@bazel_tools//tools/cpp:current_cc_toolchain",
         "@bazel_tools//tools/cpp:cc_flags",

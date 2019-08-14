@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/internal/build_info.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/build_info.h"
 #include <gmock/gmock.h>
@@ -25,7 +26,7 @@ using ::testing::Not;
 using ::testing::StartsWith;
 
 /// @test A trivial test for the Google Cloud Spanner C++ Client
-TEST(StorageVersionTest, Simple) {
+TEST(SpannerVersionTest, Simple) {
   EXPECT_FALSE(spanner::VersionString().empty());
   EXPECT_EQ(SPANNER_CLIENT_VERSION_MAJOR, spanner::VersionMajor());
   EXPECT_EQ(SPANNER_CLIENT_VERSION_MINOR, spanner::VersionMinor());
@@ -33,7 +34,7 @@ TEST(StorageVersionTest, Simple) {
 }
 
 /// @test Verify the version string starts with the version numbers.
-TEST(StorageVersionTest, Format) {
+TEST(SpannerVersionTest, Format) {
   std::ostringstream os;
   os << "v" << SPANNER_CLIENT_VERSION_MAJOR << "."
      << SPANNER_CLIENT_VERSION_MINOR << "." << SPANNER_CLIENT_VERSION_PATCH;
@@ -41,21 +42,12 @@ TEST(StorageVersionTest, Format) {
 }
 
 /// @test Verify the version does not contain build info for release builds.
-TEST(StorageVersionTest, NoBuildInfoInRelease) {
-  if (!google::cloud::internal::is_release()) {
+TEST(SpannerVersionTest, NoBuildInfoInRelease) {
+  if (!internal::BuildMetadata().empty()) {
+    EXPECT_THAT(VersionString(), HasSubstr("+" + internal::BuildMetadata()));
     return;
   }
-  EXPECT_THAT(VersionString(),
-              Not(HasSubstr("+" + google::cloud::internal::build_metadata())));
-}
-
-/// @test Verify the version has the build info for development builds.
-TEST(StorageVersionTest, HasBuildInfoInDevelopment) {
-  if (google::cloud::internal::is_release()) {
-    return;
-  }
-  EXPECT_THAT(VersionString(),
-              HasSubstr("+" + google::cloud::internal::build_metadata()));
+  EXPECT_THAT(VersionString(), Not(HasSubstr("+")));
 }
 
 }  // namespace SPANNER_CLIENT_NS

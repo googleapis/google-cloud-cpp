@@ -31,11 +31,6 @@ namespace internal {
 std::string BuildFlags();
 
 /**
- * Returns true if this is a release branch.
- */
-bool IsRelease();
-
-/**
  * Returns the metadata injected by the build system.
  *
  * See https://semver.org/#spec-item-10 for more details about the use and

@@ -30,12 +30,6 @@ TEST(BuildInfo, BuildFlags) {
   EXPECT_THAT(bf, Not(HasSubstr("@")));
 }
 
-TEST(BuildInfo, IsRelease) {
-  bool const b = IsRelease();
-  // We want to test this, but either value is fine.
-  EXPECT_TRUE(b || !b);
-}
-
 TEST(BuildInfo, BuildMetadata) {
   auto const md = BuildMetadata();
   EXPECT_FALSE(md.empty());

@@ -24,16 +24,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace {
-// Returns the given string as all lower case.
-std::string LowerString(std::string s) {
-  for (char& c : s) {
-    c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
-  }
-  return s;
-}
-}  // namespace
-
 std::string BuildFlags() {
   static auto const* const kFlags = [] {
     auto* flags = new std::string(R"""(@CMAKE_CXX_FLAGS@)""");
@@ -43,14 +33,6 @@ std::string BuildFlags() {
     return flags;
   }();
   return *kFlags;
-}
-
-bool IsRelease() {
-  static bool const kIsRelease = []() -> bool {
-    std::string s = LowerString(R"""(@GOOGLE_CLOUD_CPP_SPANNER_IS_RELEASE@)""");
-    return s == "yes" || s == "1" || s == "true";
-  }();
-  return kIsRelease;
 }
 
 std::string BuildMetadata() {

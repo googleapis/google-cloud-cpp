@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/spanner/internal/build_info.h"
 #include "google/cloud/internal/build_info.h"
 #include <sstream>
 
@@ -25,8 +26,9 @@ std::string VersionString() {
     std::ostringstream os;
     os << "v" << VersionMajor() << "." << VersionMinor() << "."
        << VersionPatch();
-    if (!google::cloud::internal::is_release()) {
-      os << "+" << google::cloud::internal::build_metadata();
+    auto metadata = internal::BuildMetadata();
+    if (!metadata.empty()) {
+      os << "+" << metadata;
     }
     return os.str();
   }();
