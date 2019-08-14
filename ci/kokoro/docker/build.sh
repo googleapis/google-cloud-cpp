@@ -45,13 +45,13 @@ elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
   RUNNING_CI="yes"
   export RUNNING_CI
 else
- echo "Aborting build as the build name is not defined."
- echo "If you are invoking this script via the command line use:"
- echo "    $0 <build-name>"
- echo
- echo "If this script is invoked by Kokoro, the CI system is expected to set"
- echo "the KOKORO_JOB_NAME environment variable."
- exit 1
+  echo "Aborting build as the build name is not defined."
+  echo "If you are invoking this script via the command line use:"
+  echo "    $0 <build-name>"
+  echo
+  echo "If this script is invoked by Kokoro, the CI system is expected to set"
+  echo "the KOKORO_JOB_NAME environment variable."
+  exit 1
 fi
 
 if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
@@ -155,37 +155,88 @@ fi
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
-source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
-source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
 echo "Change working directory to project root $(date)."
 cd "${PROJECT_ROOT}"
 
 echo "================================================================"
+echo "Capture Docker version to troubleshoot $(date)."
+sudo docker version
+echo "================================================================"
+
+echo "================================================================"
+echo "Load Google Container Registry configuration parameters $(date)."
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
+fi
+
+source "${PROJECT_ROOT}/ci/kokoro/docker/define-docker-variables.sh"
+source "${PROJECT_ROOT}/ci/define-dump-log.sh"
+
+echo "================================================================"
 echo "Building with ${NCPU} cores $(date) on ${PWD}."
 
 echo "================================================================"
+echo "Setup Google Container Registry access $(date)."
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
+  gcloud auth activate-service-account --key-file \
+    "${KOKORO_GFILE_DIR}/gcr-service-account.json"
+fi
+gcloud auth configure-docker
+
+echo "================================================================"
+echo "Download existing image (if available) for ${DISTRO} $(date)."
+has_cache="false"
+if docker pull "${IMAGE}:latest"; then
+  echo "Existing image successfully downloaded."
+  has_cache="true"
+fi
+
+echo "================================================================"
+echo "Build Docker image ${IMAGE} with development tools for ${DISTRO} $(date)."
+update_cache="false"
+
+docker_build_flags=(
+  # Create the image with the same tag as the cache we are using, so we can
+  # upload it.
+  "-t" "${IMAGE}:latest"
+  "--build-arg" "NCPU=${NCPU}"
+  "-f" "ci/kokoro/docker/Dockerfile.${DISTRO}"
+)
+
+if "${has_cache}"; then
+  docker_build_flags+=("--cache-from=${IMAGE}:latest")
+fi
+
+if [[ "${RUNNING_CI:-}" == "yes" ]] && \
+   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  docker_build_flags+=("--no-cache")
+fi
+
+echo "================================================================"
 echo "Creating Docker image with all the development tools $(date)."
+echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
 # is an error, so disabling from this point on is the right choice.
 set +e
 mkdir -p "${BUILD_OUTPUT}"
-echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
-"${PROJECT_ROOT}/ci/install-retry.sh" \
-    "${PROJECT_ROOT}/ci/kokoro/docker/create-docker-image.sh" \
-    >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null
+if docker build "${docker_build_flags[@]}" ci \
+    >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
+   update_cache="true"
+fi
 if [[ "$?" != 0 ]]; then
   dump_log "${BUILD_OUTPUT}/create-build-docker-image.log"
-  exit 1
 fi
-echo "================================================================"
 
-echo "================================================================"
-echo "Capture Docker version to troubleshoot $(date)."
-sudo docker version
-echo "================================================================"
+# TODO(coryan) - upload even on PRs to test if caching works (and helps).
+if "${update_cache}"; then # TODO(coryan) - DO NOT MERGE && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+  echo "================================================================"
+  echo "Uploading updated base image for ${DISTRO} $(date)."
+  # Do not stop the build on a failure to update the cache.
+  docker push "${IMAGE}:latest" || true
+fi
 
 echo "================================================================"
 echo "Running the full build inside docker $(date)."
@@ -321,8 +372,8 @@ if [[ -t 0 ]]; then
 fi
 
 # Run the docker image with that giant collection of flags.
-sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" "/v/${in_docker_script}" \
-    "${CMAKE_SOURCE_DIR}" "${BUILD_OUTPUT}"
+sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" \
+    "/v/${in_docker_script}" "${CMAKE_SOURCE_DIR}" "${BUILD_OUTPUT}"
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
