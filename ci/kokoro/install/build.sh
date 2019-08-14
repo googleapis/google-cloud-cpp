@@ -27,14 +27,21 @@ elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
   # name.
   DISTRO="$(basename "${KOKORO_JOB_NAME}" "-presubmit")"
   export DISTRO
+
+  # This is passed into the environment of the docker build and its scripts to
+  # tell them if they are running as part of a CI build rather than just a
+  # human invocation of "build.sh <build-name>". This allows scripts to be
+  # strict when run in a CI, but a little more friendly when run by a human.
+  RUNNING_CI="yes"
+  export RUNNING_CI
 else
- echo "Aborting build as the distribution name is not defined."
- echo "If you are invoking this script via the command line use:"
- echo "    $0 <distro-name>"
- echo
- echo "If this script is invoked by Kokoro, the CI system is expected to set"
- echo "the KOKORO_JOB_NAME environment variable."
- exit 1
+  echo "Aborting build as the distribution name is not defined."
+  echo "If you are invoking this script via the command line use:"
+  echo "    $0 <distro-name>"
+  echo
+  echo "If this script is invoked by Kokoro, the CI system is expected to set"
+  echo "the KOKORO_JOB_NAME environment variable."
+  exit 1
 fi
 
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
@@ -92,7 +99,8 @@ if "${has_cache}"; then
   devtools_flags+=("--cache-from=${DEV_IMAGE}:latest")
 fi
 
-if [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+if [[ "${RUNNING_CI:-}" == "yes" ]] && \
+   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   devtools_flags+=("--no-cache")
 fi
 
