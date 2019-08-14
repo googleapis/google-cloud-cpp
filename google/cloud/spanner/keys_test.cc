@@ -182,10 +182,10 @@ TEST(KeySetBuilderTest, AddKeyRangeToNonEmptyKeySetBuilder) {
 TEST(InternalKeySetTest, ToProtoAll) {
   auto ks = KeySet::All();
   ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
-      R"(
-all: true
-)",
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        all: true
+      )pb",
       &expected));
 
   ::google::spanner::v1::KeySet result = internal::ToProto(ks);
@@ -200,27 +200,18 @@ TEST(InternalKeySetTest, BuildToProtoTwoKeys) {
   KeySet ks = ksb.Build();
 
   ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
-      R"(
-keys {
-  values {
-    string_value: "foo0"
-  }
-  values {
-    string_value: "bar0"
-  }
-}
-
-keys {
-  values {
-    string_value: "foo1"
-  }
-  values {
-    string_value: "bar1"
-  }
-}
-all: false
-)",
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        keys: {
+          values: { string_value: "foo0" }
+          values: { string_value: "bar0" }
+        }
+        keys: {
+          values: { string_value: "foo1" }
+          values: { string_value: "bar1" }
+        }
+        all: false
+      )pb",
       &expected));
   ::google::spanner::v1::KeySet result = internal::ToProto(ks);
 
@@ -237,50 +228,34 @@ TEST(InternalKeySetTest, BuildToProtoTwoRanges) {
   ksb.Add(range);
 
   ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
-      R"(
-ranges {
-  start_closed {
-    values {
-      string_value: "start00"
-    }
-    values {
-      string_value: "start01"
-    }
-  }
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        ranges: {
+          start_closed: {
+            values: { string_value: "start00" }
+            values: { string_value: "start01" }
+          }
 
-  end_closed {
-    values {
-      string_value: "end00"
-    }
-    values {
-      string_value: "end01"
-    }
-  }
-}
+          end_closed: {
+            values: { string_value: "end00" }
+            values { string_value: "end01" }
+          }
+        }
 
-ranges {
-  start_open {
-    values {
-      string_value: "start10"
-    }
-    values {
-      string_value: "start11"
-    }
-  }
+        ranges: {
+          start_open: {
+            values: { string_value: "start10" }
+            values: { string_value: "start11" }
+          }
 
-  end_open {
-    values {
-      string_value: "end10"
-    }
-    values {
-      string_value: "end11"
-    }
-  }
-}
+          end_open: {
+            values: { string_value: "end10" }
+            values: { string_value: "end11" }
+          }
+        }
 
-all: false
-)",
+        all: false
+      )pb",
       &expected));
   ::google::spanner::v1::KeySet result = internal::ToProto(ksb.Build());
 

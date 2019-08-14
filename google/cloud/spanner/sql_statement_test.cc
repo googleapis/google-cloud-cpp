@@ -113,7 +113,7 @@ TEST(SqlStatementTest, Equality) {
 TEST(SqlStatementTest, ToProtoStatementOnly) {
   SqlStatement stmt("select * from foo");
   internal::SqlStatementProto expected;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(sql: "select * from foo")""",
+  ASSERT_TRUE(TextFormat::ParseFromString(R"pb(sql: "select * from foo")pb",
                                           &expected));
   EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
 }
@@ -128,21 +128,36 @@ TEST(SqlStatementTest, ToProtoWithParams) {
       "destroyed_cars >= @destroyed_cars";
   SqlStatement stmt(sql, params);
   internal::SqlStatementProto expected;
-  ASSERT_TRUE(
-      TextFormat::ParseFromString(std::string(R"""(sql: ")""") + sql + R"""("
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      std::string(R"(sql: ")") + sql + R"(")" + R"pb(
         params: {
-          fields: [
-            { key: "destroyed_cars", value: { string_value: "103" } },
-            { key: "first", value: { string_value: "Elwood" } },
-            { key: "last", value: { string_value: "Blues" } }
-          ]
+          fields: {
+            key: "destroyed_cars",
+            value: { string_value: "103" }
+          }
+          fields: {
+            key: "first",
+            value: { string_value: "Elwood" }
+          }
+          fields: {
+            key: "last",
+            value: { string_value: "Blues" }
+          }
         }
-        param_types: [
-          { key: "destroyed_cars", value: { code: INT64 } },
-          { key: "last", value: { code: STRING } },
-          { key: "first", value: { code: STRING } }
-        ])""",
-                                  &expected));
+        param_types: {
+          key: "destroyed_cars",
+          value: { code: INT64 }
+        }
+        param_types: {
+          key: "last",
+          value: { code: STRING }
+        }
+        param_types: {
+          key: "first",
+          value: { code: STRING }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(internal::ToProto(std::move(stmt)), IsProtoEqual(expected));
 }
 

@@ -53,26 +53,21 @@ TEST(MutationsTest, InsertSimple) {
 
   auto actual = std::move(insert).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              insert: {
-                columns: "col_a"
-                columns: "col_b"
-                columns: "col_c"
-                table: "table-name"
-                values {
-                  values {
-                    string_value: "foo"
-                  }
-                  values {
-                    string_value: "bar"
-                  }
-                  values {
-                    bool_value: true
-                  }
-                }
-              }
-              )""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        insert: {
+          columns: "col_a"
+          columns: "col_b"
+          columns: "col_c"
+          table: "table-name"
+          values: {
+            values: { string_value: "foo" }
+            values: { string_value: "bar" }
+            values: { bool_value: true }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -88,37 +83,26 @@ TEST(MutationsTest, InsertComplex) {
 
   auto actual = std::move(insert).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              insert: {
-                table: "table-name"
-                columns: "col1"
-                columns: "col2"
-                columns: "col3"
-                values {
-                  values {
-                    string_value: "42"
-                  }
-                  values {
-                    string_value: "foo"
-                  }
-                  values {
-                    bool_value: false
-                  }
-                }
-                values {
-                  values {
-                    null_value: NULL_VALUE
-                  }
-                  values {
-                    string_value: "bar"
-                  }
-                  values {
-                    null_value: NULL_VALUE
-                  }
-                }
-              }
-              )""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        insert: {
+          table: "table-name"
+          columns: "col1"
+          columns: "col2"
+          columns: "col3"
+          values: {
+            values: { string_value: "42" }
+            values: { string_value: "foo" }
+            values: { bool_value: false }
+          }
+          values: {
+            values: { null_value: NULL_VALUE }
+            values: { string_value: "bar" }
+            values: { null_value: NULL_VALUE }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -132,26 +116,21 @@ TEST(MutationsTest, UpdateSimple) {
 
   auto actual = std::move(update).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              update: {
-                table: "table-name"
-                columns: "col_a"
-                columns: "col_b"
-                columns: "col_c"
-                values {
-                  values {
-                    string_value: "foo"
-                  }
-                  values {
-                    string_value: "bar"
-                  }
-                  values {
-                    bool_value: true
-                  }
-                }
-              }
-              )""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        update: {
+          table: "table-name"
+          columns: "col_a"
+          columns: "col_b"
+          columns: "col_c"
+          values: {
+            values: { string_value: "foo" }
+            values: { string_value: "bar" }
+            values: { bool_value: true }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -167,38 +146,28 @@ TEST(MutationsTest, UpdateComplex) {
 
   auto actual = std::move(update).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              update: {
-                table: "table-name"
-                columns: "col_a"
-                columns: "col_b"
-                values {
-                  values {
-                    list_value: {
-                    }
-                  }
-                  values {
-                    number_value: 7.0
-                  }
-                }
-                values {
-                  values {
-                    list_value: {
-                      values {
-                        string_value: "a"
-                      }
-                      values {
-                        string_value: "b"
-                      }
-                    }
-                  }
-                  values {
-                    null_value: NULL_VALUE
-                  }
-                }
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        update: {
+          table: "table-name"
+          columns: "col_a"
+          columns: "col_b"
+          values: {
+            values: { list_value: {} }
+            values: { number_value: 7.0 }
+          }
+          values: {
+            values: {
+              list_value: {
+                values: { string_value: "a" }
+                values: { string_value: "b" }
               }
-              )""",
-                                                            &expected));
+            }
+            values: { null_value: NULL_VALUE }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -212,26 +181,21 @@ TEST(MutationsTest, InsertOrUpdateSimple) {
 
   auto actual = std::move(update).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              insert_or_update: {
-                table: "table-name"
-                columns: "col_a"
-                columns: "col_b"
-                columns: "col_c"
-                values {
-                  values {
-                    string_value: "foo"
-                  }
-                  values {
-                    string_value: "bar"
-                  }
-                  values {
-                    bool_value: true
-                  }
-                }
-              }
-              )""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        insert_or_update: {
+          table: "table-name"
+          columns: "col_a"
+          columns: "col_b"
+          columns: "col_c"
+          values: {
+            values: { string_value: "foo" }
+            values: { string_value: "bar" }
+            values: { bool_value: true }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -246,37 +210,31 @@ TEST(MutationsTest, InsertOrUpdateComplex) {
 
   auto actual = std::move(update).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              insert_or_update: {
-                table: "table-name"
-                columns: "col_a"
-                columns: "col_b"
-                values {
-                  values {
-                    list_value: {
-                      values {
-                        string_value: "a"
-                      }
-                      values {
-                        number_value: 7.0
-                      }
-                    }
-                  }
-                }
-                values {
-                  values {
-                    list_value: {
-                      values {
-                        string_value: "b"
-                      }
-                      values {
-                        number_value: 8.0
-                      }
-                    }
-                  }
-                }
-              })""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        insert_or_update: {
+          table: "table-name"
+          columns: "col_a"
+          columns: "col_b"
+          values: {
+            values: {
+              list_value: {
+                values: { string_value: "a" }
+                values: { number_value: 7.0 }
+              }
+            }
+          }
+          values: {
+            values: {
+              list_value: {
+                values: { string_value: "b" }
+                values: { number_value: 8.0 }
+              }
+            }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -290,26 +248,21 @@ TEST(MutationsTest, ReplaceSimple) {
 
   auto actual = std::move(replace).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              replace: {
-                table: "table-name"
-                columns: "col_a"
-                columns: "col_b"
-                columns: "col_c"
-                values {
-                  values {
-                    string_value: "foo"
-                  }
-                  values {
-                    string_value: "bar"
-                  }
-                  values {
-                    bool_value: true
-                  }
-                }
-              }
-              )""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        replace: {
+          table: "table-name"
+          columns: "col_a"
+          columns: "col_b"
+          columns: "col_c"
+          values: {
+            values: { string_value: "foo" }
+            values: { string_value: "bar" }
+            values: { bool_value: true }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
@@ -324,29 +277,23 @@ TEST(MutationsTest, ReplaceComplex) {
 
   auto actual = std::move(update).as_proto();
   google::spanner::v1::Mutation expected;
-  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
-              replace: {
-                table: "table-name"
-                columns: "col_a"
-                columns: "col_b"
-                values {
-                  values {
-                    string_value: "a"
-                  }
-                  values {
-                    number_value: 7.0
-                  }
-                }
-                values {
-                  values {
-                    string_value: "b"
-                  }
-                  values {
-                    number_value: 8.0
-                  }
-                }
-              })""",
-                                                            &expected));
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        replace: {
+          table: "table-name"
+          columns: "col_a"
+          columns: "col_b"
+          values: {
+            values: { string_value: "a" }
+            values: { number_value: 7.0 }
+          }
+          values: {
+            values: { string_value: "b" }
+            values: { number_value: 8.0 }
+          }
+        }
+      )pb",
+      &expected));
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 

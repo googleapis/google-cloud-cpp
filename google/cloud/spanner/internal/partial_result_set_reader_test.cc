@@ -108,23 +108,24 @@ TEST(PartialResultSetReaderTest, InitialReadFailure) {
 TEST(PartialResultSetReaderTest, ReadSuccessThenFailure) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(
-    metadata: {
-      row_type: {
-        fields: [
-          { name: "AnInt", type: { code: INT64 } }
-        ]
-      }
-    }
-    values: [ { string_value: "80" } ]
-  )""",
-                                          &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "AnInt",
+              type: { code: INT64 }
+            }
+          }
+        }
+        values: { string_value: "80" }
+      )pb",
+      &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::CANCELLED, "cancelled");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
-
   // The first call to NextValue() yields a value but the second gives an error.
   auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
@@ -154,7 +155,7 @@ TEST(PartialResultSetReaderTest, MissingMetadata) {
 TEST(PartialResultSetReaderTest, MissingRowType) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(metadata: {})""", &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(R"pb(metadata: {})pb", &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
@@ -174,27 +175,40 @@ TEST(PartialResultSetReaderTest, MissingRowType) {
 TEST(PartialResultSetReaderTest, SingleResponse) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(
-    metadata: {
-      row_type: {
-        fields: [
-          { name: "UserId", type: { code: INT64 } },
-          { name: "UserName", type: { code: STRING } }
-        ]
-      }
-    }
-    values: [ { string_value: "10" }, { string_value: "user10"} ]
-    stats: {
-      query_stats: {
-        fields: [
-          { key: "rows_returned", value: { string_value: "1" } },
-          { key: "elapsed_time", value: { string_value: "1.22 secs" } },
-          { key: "cpu_time", value: { string_value: "1.19 secs" } }
-        ]
-      }
-    }
-  )""",
-                                          &response));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "10" }
+        values: { string_value: "user10" }
+        stats: {
+          query_stats: {
+            fields: {
+              key: "rows_returned",
+              value: { string_value: "1" }
+            }
+            fields: {
+              key: "elapsed_time",
+              value: { string_value: "1.22 secs" }
+            }
+            fields: {
+              key: "cpu_time",
+              value: { string_value: "1.19 secs" }
+            }
+          }
+        }
+      )pb",
+      &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -205,15 +219,20 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
 
   // Verify the returned metadata is correct.
   spanner_proto::ResultSetMetadata expected_metadata;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(
-    row_type: {
-      fields: [
-        { name: "UserId", type: { code: INT64 } },
-        { name: "UserName", type: { code: STRING } }
-      ]
-    }
-  )""",
-                                          &expected_metadata));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "UserId",
+            type: { code: INT64 }
+          }
+          fields: {
+            name: "UserName",
+            type: { code: STRING }
+          }
+        }
+      )pb",
+      &expected_metadata));
   auto actual_metadata = (*reader)->Metadata();
   EXPECT_TRUE(actual_metadata.has_value());
   EXPECT_THAT(*actual_metadata, IsProtoEqual(expected_metadata));
@@ -229,16 +248,24 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
 
   // Verify the returned stats are correct.
   spanner_proto::ResultSetStats expected_stats;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(
-    query_stats: {
-      fields: [
-        { key: "rows_returned", value: { string_value: "1" } },
-        { key: "elapsed_time", value: { string_value: "1.22 secs" } },
-        { key: "cpu_time", value: { string_value: "1.19 secs" } }
-      ]
-    }
-  )""",
-                                          &expected_stats));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        query_stats: {
+          fields: {
+            key: "rows_returned",
+            value: { string_value: "1" }
+          }
+          fields: {
+            key: "elapsed_time",
+            value: { string_value: "1.22 secs" }
+          }
+          fields: {
+            key: "cpu_time",
+            value: { string_value: "1.19 secs" }
+          }
+        }
+      )pb",
+      &expected_stats));
   auto actual_stats = (*reader)->Stats();
   EXPECT_TRUE(actual_stats.has_value());
   EXPECT_THAT(*actual_stats, IsProtoEqual(expected_stats));
@@ -251,38 +278,60 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
 TEST(PartialResultSetReaderTest, MultipleResponses) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 5> response;
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(
-    metadata: {
-      row_type: {
-        fields: [
-          { name: "UserId", type: { code: INT64 } },
-          { name: "UserName", type: { code: STRING } }
-        ]
-      }
-    }
-    )""",
-                                          &response[0]));
   ASSERT_TRUE(TextFormat::ParseFromString(
-      R"""(values: [ { string_value: "10" }, { string_value: "user10"} ])""",
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+      )pb",
+      &response[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "10" }
+        values: { string_value: "user10" }
+      )pb",
       &response[1]));
   ASSERT_TRUE(TextFormat::ParseFromString(
-      R"""(values: [ { string_value: "22" }, { string_value: "user22"} ])""",
+      R"pb(
+        values: { string_value: "22" }
+        values: { string_value: "user22" }
+      )pb",
       &response[2]));
   ASSERT_TRUE(TextFormat::ParseFromString(
-      R"""(values: [ { string_value: "99" } ])""", &response[3]));
-  ASSERT_TRUE(TextFormat::ParseFromString(R"""(
-    values: [ { string_value: "99user99"} ]
-    stats: {
-      query_stats: {
-        fields: [
-          { key: "rows_returned", value : { string_value : "3" } },
-          { key: "elapsed_time", value : { string_value : "4.22 secs" } },
-          { key: "cpu_time", value : { string_value : "3.19 secs" } }
-        ]
-      }
-    }
-   )""",
-                                          &response[4]));
+      R"pb(
+        values: { string_value: "99" }
+      )pb",
+      &response[3]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "99user99" }
+        stats: {
+          query_stats: {
+            fields: {
+              key: "rows_returned",
+              value: { string_value: "3" }
+            }
+            fields: {
+              key: "elapsed_time",
+              value: { string_value: "4.22 secs" }
+            }
+            fields: {
+              key: "cpu_time",
+              value: { string_value: "3.19 secs" }
+            }
+          }
+        }
+      )pb",
+      &response[4]));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
       .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)))
