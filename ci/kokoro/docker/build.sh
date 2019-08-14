@@ -188,7 +188,7 @@ gcloud auth configure-docker
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
 has_cache="false"
-if docker pull "${IMAGE}:latest"; then
+if [[ -n "${PROJECT_ID:-}" ]] && docker pull "${IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
   has_cache="true"
 fi
