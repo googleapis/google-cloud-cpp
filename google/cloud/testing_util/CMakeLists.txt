@@ -67,9 +67,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         endif ()
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
-endif ()
 
-if (GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # Export the CMake targets to make it easy to create configuration files.
     install(
         EXPORT google_cloud_cpp_testing-targets

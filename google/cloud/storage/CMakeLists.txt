@@ -425,61 +425,55 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_INSTALL "ON")
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(TARGETS storage_common_options nlohmann_json
+        EXPORT storage-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-if ("${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_INSTALL}")
-    # Install the libraries and headers in the locations determined by
-    # GNUInstallDirs
-    install(TARGETS storage_common_options nlohmann_json
-            EXPORT storage-targets
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+# Export the CMake targets to make it easy to create configuration files.
+install(EXPORT storage-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
 
-    # Export the CMake targets to make it easy to create configuration files.
-    install(EXPORT storage-targets
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
+install(TARGETS storage_client
+        EXPORT storage-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+google_cloud_cpp_install_headers(
+    storage_client include/google/cloud/storage)
+install(
+    FILES
+        ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
+        DESTINATION include/google/cloud/storage/internal)
 
-    install(TARGETS storage_client
-            EXPORT storage-targets
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    google_cloud_cpp_install_headers(
-        storage_client include/google/cloud/storage)
-    install(
-        FILES
-            ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
-            DESTINATION include/google/cloud/storage/internal)
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${STORAGE_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${STORAGE_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${STORAGE_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+    "Provides C++ APIs to access Google Cloud Storage.")
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl openssl")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client -lcrc32c")
 
-    # Setup global variables used in the following *.in files.
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${STORAGE_CLIENT_VERSION_MAJOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${STORAGE_CLIENT_VERSION_MINOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${STORAGE_CLIENT_VERSION_PATCH})
-    set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Storage C++ Client Library")
-    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-        "Provides C++ APIs to access Google Cloud Storage.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common libcurl openssl")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lstorage_client -lcrc32c")
+# Create and install the pkg-config files.
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+               "storage_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc" DESTINATION
+              "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-    # Create and install the pkg-config files.
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-                   "storage_client.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc" DESTINATION
-                  "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+# Create and install the CMake configuration files.
+configure_file("config.cmake.in" "storage_client-config.cmake" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
+               "storage_client-config-version.cmake" @ONLY)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config-version.cmake"
+          DESTINATION
+          "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
 
-    # Create and install the CMake configuration files.
-    configure_file("config.cmake.in" "storage_client-config.cmake" @ONLY)
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-                   "storage_client-config-version.cmake" @ONLY)
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config-version.cmake"
-              DESTINATION
-              "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
-endif ()
-
-if (BUILD_TESTING)
-    install(FILES testing/mock_client.h DESTINATION
-                  include/google/cloud/storage/testing)
-endif ()
+install(FILES testing/mock_client.h DESTINATION
+              include/google/cloud/storage/testing)

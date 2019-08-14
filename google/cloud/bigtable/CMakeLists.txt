@@ -357,53 +357,49 @@ if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(examples)
 endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
-set(GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL "ON")
+# Install the libraries and headers in the locations determined by
+# GNUInstallDirs
+install(TARGETS bigtable_protos bigtable_common_options
+        EXPORT bigtable-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-if ("${GOOGLE_CLOUD_CPP_BIGTABLE_ENABLE_INSTALL}")
-    # Install the libraries and headers in the locations determined by
-    # GNUInstallDirs
-    install(TARGETS bigtable_protos bigtable_common_options
-            EXPORT bigtable-targets
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+# Export the CMake targets to make it easy to create configuration files.
+install(EXPORT bigtable-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
 
-    # Export the CMake targets to make it easy to create configuration files.
-    install(EXPORT bigtable-targets
-            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
+install(TARGETS bigtable_client
+        EXPORT bigtable-targets
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+google_cloud_cpp_install_headers(bigtable_client
+                                 include/google/cloud/bigtable)
 
-    install(TARGETS bigtable_client
-            EXPORT bigtable-targets
-            RUNTIME DESTINATION bin
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-    google_cloud_cpp_install_headers(bigtable_client
-                                     include/google/cloud/bigtable)
+# Setup global variables used in the following *.in files.
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${BIGTABLE_CLIENT_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${BIGTABLE_CLIENT_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${BIGTABLE_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
+set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+    "Provides C++ APIs to access Google Cloud Bigtable.")
+set(GOOGLE_CLOUD_CPP_PC_REQUIRES
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis")
+set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client")
 
-    # Setup global variables used in the following *.in files.
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${BIGTABLE_CLIENT_VERSION_MAJOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${BIGTABLE_CLIENT_VERSION_MINOR})
-    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${BIGTABLE_CLIENT_VERSION_PATCH})
-    set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
-    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-        "Provides C++ APIs to access Google Cloud Bigtable.")
-    set(GOOGLE_CLOUD_CPP_PC_REQUIRES
-        "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client")
+# Create and install the pkg-config files.
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+               "bigtable_client.pc" @ONLY)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc" DESTINATION
+              "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
-    # Create and install the pkg-config files.
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
-                   "bigtable_client.pc" @ONLY)
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client.pc" DESTINATION
-                  "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-
-    # Create and install the CMake configuration files.
-    configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
-    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
-                   "bigtable_client-config-version.cmake" @ONLY)
-    install(
-        FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
-              DESTINATION
-              "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
-endif ()
+# Create and install the CMake configuration files.
+configure_file("config.cmake.in" "bigtable_client-config.cmake" @ONLY)
+configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
+               "bigtable_client-config-version.cmake" @ONLY)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/bigtable_client-config-version.cmake"
+          DESTINATION
+          "${CMAKE_INSTALL_LIBDIR}/cmake/bigtable_client")
