@@ -67,44 +67,21 @@ TEST(CommitIntegrationTest, Insert) {
            .Build()});
   EXPECT_STATUS_OK(commit_result);
 
-  // TODO(#283) - Stop using SpannerStub once Client::Read() is implemented.
-  ClientOptions opts;
-  auto stub = internal::CreateDefaultSpannerStub(opts.credentials(),
-                                                 opts.admin_endpoint());
-  grpc::ClientContext session_context;
-  google::spanner::v1::CreateSessionRequest session_request;
-  session_request.set_database(database_name);
-  auto session = stub->CreateSession(session_context, session_request);
-  EXPECT_STATUS_OK(session);
-
-  grpc::ClientContext read_context;
-  google::spanner::v1::ReadRequest request;
-  request.set_table("Singers");
-  request.set_session(session->name());
-  *request.add_columns() = "SingerId";
-  *request.add_columns() = "FirstName";
-  *request.add_columns() = "LastName";
-  request.mutable_key_set()->set_all(true);
-  auto result_set = stub->Read(read_context, request);
-  EXPECT_STATUS_OK(result_set);
+  auto reader = client.Read("Singers", KeySet::All(),
+                            {"SingerId", "FirstName", "LastName"});
+  // Cannot assert, we need to call DeleteDatabase() later.
+  EXPECT_STATUS_OK(reader);
 
   using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
-  int row_number = 0;
-  for (auto const& row : result_set.value().rows()) {
-    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
-    auto parsed_row = ParseRow<std::int64_t, std::string,
-                               std::string>(std::array<Value, 3>{
-        // The extra braces are working around an old clang bug that was fixed
-        // in 6.0 (https://bugs.llvm.org/show_bug.cgi?id=21629).
-        {internal::FromProto(result_set->metadata().row_type().fields(0).type(),
-                             row.values(0)),
-         internal::FromProto(result_set->metadata().row_type().fields(1).type(),
-                             row.values(1)),
-         internal::FromProto(result_set->metadata().row_type().fields(2).type(),
-                             row.values(2))}});
-    EXPECT_STATUS_OK(parsed_row);
-    returned_rows.emplace_back(*parsed_row);
+  if (reader) {
+    int row_number = 0;
+    for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+      returned_rows.push_back(*std::move(row));
+    }
   }
 
   EXPECT_THAT(returned_rows,

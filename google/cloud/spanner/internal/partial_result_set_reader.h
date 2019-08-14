@@ -43,6 +43,7 @@ class PartialResultSetReader : public internal::ResultSetSource {
 
   /// Factory method to create a PartialResultSetReader.
   static StatusOr<std::unique_ptr<PartialResultSetReader>> Create(
+      std::unique_ptr<grpc::ClientContext> context,
       std::unique_ptr<GrpcReader> grpc_reader);
   ~PartialResultSetReader() override;
 
@@ -55,11 +56,13 @@ class PartialResultSetReader : public internal::ResultSetSource {
   }
 
  private:
-  PartialResultSetReader(std::unique_ptr<GrpcReader> grpc_reader)
-      : grpc_reader_(std::move(grpc_reader)) {}
+  PartialResultSetReader(std::unique_ptr<grpc::ClientContext> context,
+                         std::unique_ptr<GrpcReader> grpc_reader)
+      : context_(std::move(context)), grpc_reader_(std::move(grpc_reader)) {}
 
   Status ReadFromStream();
 
+  std::unique_ptr<grpc::ClientContext> context_;
   std::unique_ptr<GrpcReader> grpc_reader_;
 
   google::protobuf::RepeatedPtrField<google::protobuf::Value> values_;

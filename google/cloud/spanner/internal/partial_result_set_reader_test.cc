@@ -96,7 +96,9 @@ TEST(PartialResultSetReaderTest, InitialReadFailure) {
   grpc::Status finish_status(grpc::StatusCode::INVALID_ARGUMENT, "invalid");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
 
-  auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
   EXPECT_FALSE(reader.status().ok());
   EXPECT_EQ(reader.status().code(), StatusCode::kInvalidArgument);
 }
@@ -127,7 +129,9 @@ TEST(PartialResultSetReaderTest, ReadSuccessThenFailure) {
   grpc::Status finish_status(grpc::StatusCode::CANCELLED, "cancelled");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
   // The first call to NextValue() yields a value but the second gives an error.
-  auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
   EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(80)));
   auto value = (*reader)->NextValue();
@@ -142,7 +146,9 @@ TEST(PartialResultSetReaderTest, MissingMetadata) {
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
-  auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
   EXPECT_FALSE(reader.status().ok());
   EXPECT_EQ(reader.status().code(), StatusCode::kInternal);
   EXPECT_EQ(reader.status().message(), "response contained no metadata");
@@ -160,7 +166,9 @@ TEST(PartialResultSetReaderTest, MissingRowType) {
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
-  auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
   EXPECT_FALSE(reader.status().ok());
   EXPECT_EQ(reader.status().code(), StatusCode::kInternal);
   EXPECT_EQ(reader.status().message(),
@@ -214,7 +222,9 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
       .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
-  auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned metadata is correct.
@@ -341,7 +351,9 @@ TEST(PartialResultSetReaderTest, MultipleResponses) {
       .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
-  auto reader = PartialResultSetReader::Create(std::move(grpc_reader));
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
   // Verify the returned values are correct.

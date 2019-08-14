@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/internal/time.h"
+#include "google/cloud/internal/make_unique.h"
 #include <google/spanner/v1/spanner.pb.h>
 
 namespace google {
@@ -88,9 +89,10 @@ StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,
   *request.mutable_key_set() = internal::ToProto(std::move(rp.keys));
   request.set_limit(rp.read_options.limit);
 
-  grpc::ClientContext context;
-  auto reader = internal::PartialResultSetReader::Create(
-      stub_->StreamingRead(context, request));
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto rpc = stub_->StreamingRead(*context, request);
+  auto reader = internal::PartialResultSetReader::Create(std::move(context),
+                                                         std::move(rpc));
   if (!reader.ok()) {
     return std::move(reader).status();
   }
@@ -123,9 +125,10 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
 
-  grpc::ClientContext context;
-  auto reader = internal::PartialResultSetReader::Create(
-      stub_->ExecuteStreamingSql(context, request));
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto rpc = stub_->ExecuteStreamingSql(*context, request);
+  auto reader = internal::PartialResultSetReader::Create(std::move(context),
+                                                         std::move(rpc));
   if (!reader.ok()) {
     return std::move(reader).status();
   }

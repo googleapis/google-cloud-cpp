@@ -23,9 +23,10 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 StatusOr<std::unique_ptr<PartialResultSetReader>>
-PartialResultSetReader::Create(std::unique_ptr<GrpcReader> grpc_reader) {
+PartialResultSetReader::Create(std::unique_ptr<grpc::ClientContext> context,
+                               std::unique_ptr<GrpcReader> grpc_reader) {
   std::unique_ptr<PartialResultSetReader> reader(
-      new PartialResultSetReader(std::move(grpc_reader)));
+      new PartialResultSetReader(std::move(context), std::move(grpc_reader)));
 
   // Do the first read so the metadata is immediately available.
   auto status = reader->ReadFromStream();
