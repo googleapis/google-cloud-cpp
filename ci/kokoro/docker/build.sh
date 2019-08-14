@@ -230,8 +230,7 @@ if [[ "$?" != 0 ]]; then
   dump_log "${BUILD_OUTPUT}/create-build-docker-image.log"
 fi
 
-# TODO(coryan) - upload even on PRs to test if caching works (and helps).
-if "${update_cache}"; then # TODO(coryan) - DO NOT MERGE && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   echo "Uploading updated base image for ${DISTRO} $(date)."
   # Do not stop the build on a failure to update the cache.
