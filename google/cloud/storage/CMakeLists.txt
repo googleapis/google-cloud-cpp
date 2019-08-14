@@ -442,8 +442,7 @@ install(TARGETS storage_client
         RUNTIME DESTINATION bin
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-google_cloud_cpp_install_headers(
-    storage_client include/google/cloud/storage)
+google_cloud_cpp_install_headers(storage_client include/google/cloud/storage)
 install(
     FILES
         ${CMAKE_BINARY_DIR}/external/nlohmann_json/include/google/cloud/storage/internal/nlohmann_json.hpp
@@ -469,11 +468,10 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client.pc" DESTINATION
 configure_file("config.cmake.in" "storage_client-config.cmake" @ONLY)
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
                "storage_client-config-version.cmake" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
-          "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config-version.cmake"
-          DESTINATION
-          "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config.cmake"
+              "${CMAKE_CURRENT_BINARY_DIR}/storage_client-config-version.cmake"
+              DESTINATION
+              "${CMAKE_INSTALL_LIBDIR}/cmake/storage_client")
 
 install(FILES testing/mock_client.h DESTINATION
               include/google/cloud/storage/testing)

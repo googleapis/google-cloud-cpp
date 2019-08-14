@@ -167,8 +167,7 @@ install(TARGETS grpc_utils_common_options
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT grpc_utils-targets
-        DESTINATION
-        "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
 
 install(TARGETS google_cloud_cpp_grpc_utils
         EXPORT grpc_utils-targets
