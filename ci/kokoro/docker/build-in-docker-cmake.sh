@@ -60,7 +60,7 @@ if [[ "${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}" != "" ]]; then
 fi
 
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON" )
+  cmake_extra_flags+=( "-DCMAKE_INSTALL_PREFIX=/var/tmp/staging" )
 fi
 
 if [[ "${SCAN_BUILD:-}" == "yes" ]]; then
@@ -183,39 +183,41 @@ fi
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
-
-  # Checking the ABI requires installation, so this is the first opportunity to
-  # run the check.
-  (cd "${PROJECT_ROOT}" ; ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}")
+  cmake --build "${BINARY_DIR}" --target install
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
   echo "${COLOR_YELLOW}Verify installed headers created only" \
       " expected directories.${COLOR_RESET}"
-  cmake --build "${BINARY_DIR}" --target install -- DESTDIR=/var/tmp/staging
   if comm -23 \
-      <(find /var/tmp/staging/usr/local/include/google/cloud -type d | sort) \
-      <(echo /var/tmp/staging/usr/local/include/google/cloud ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/bigtable ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/bigtable/internal ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/firestore ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/grpc_utils ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/grpc_utils/internal ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/internal ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/spanner; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/storage ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/storage/internal ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/storage/oauth2 ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/storage/testing ; \
-        echo /var/tmp/staging/usr/local/include/google/cloud/testing_util ; \
+      <(find /var/tmp/staging/include/google/cloud -type d | sort) \
+      <(echo /var/tmp/staging/include/google/cloud ; \
+        echo /var/tmp/staging/include/google/cloud/bigtable ; \
+        echo /var/tmp/staging/include/google/cloud/bigtable/internal ; \
+        echo /var/tmp/staging/include/google/cloud/firestore ; \
+        echo /var/tmp/staging/include/google/cloud/grpc_utils ; \
+        echo /var/tmp/staging/include/google/cloud/grpc_utils/internal ; \
+        echo /var/tmp/staging/include/google/cloud/internal ; \
+        echo /var/tmp/staging/include/google/cloud/spanner; \
+        echo /var/tmp/staging/include/google/cloud/storage ; \
+        echo /var/tmp/staging/include/google/cloud/storage/internal ; \
+        echo /var/tmp/staging/include/google/cloud/storage/oauth2 ; \
+        echo /var/tmp/staging/include/google/cloud/storage/testing ; \
+        echo /var/tmp/staging/include/google/cloud/testing_util ; \
         /bin/true) | grep -q /var/tmp; then
       echo "${COLOR_YELLOW}Installed directories do not match expectation.${COLOR_RESET}"
       echo "${COLOR_RED}Found:"
-      find /var/tmp/staging/usr/local/include/google/cloud -type d | sort
+      find /var/tmp/staging/include/google/cloud -type d | sort
       echo "${COLOR_RESET}"
       /bin/false
    fi
+
+  # Checking the ABI requires installation, so this is the first opportunity to
+  # run the check.
+  env -C "${PROJECT_ROOT}" \
+    PKG_CONFIG_PATH=/var/tmp/staging/lib/pkgconfig \
+    ./ci/kokoro/docker/check-abi.sh "${BINARY_DIR}"
 fi
 
 # If document generation is enabled, run it now.
