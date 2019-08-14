@@ -30,9 +30,11 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-// A concrete `Connection` subclass that uses gRPC to actually talk to a real
-// Spanner instance. See `MakeConnection()` for a factory function that creates
-// and returns instances of this class.
+/**
+ * A concrete `Connection` subclass that uses gRPC to actually talk to a real
+ * Spanner instance. See `MakeConnection()` for a factory function that creates
+ * and returns instances of this class.
+ */
 class ConnectionImpl : public Connection {
  public:
   // Creates a ConnectionImpl that will talk to the specified `database` using
@@ -41,10 +43,10 @@ class ConnectionImpl : public Connection {
                           std::shared_ptr<internal::SpannerStub> stub)
       : database_(std::move(database)), stub_(std::move(stub)) {}
 
-  StatusOr<ResultSet> Read(ReadParams) override;
-  StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) override;
-  StatusOr<CommitResult> Commit(CommitParams) override;
-  Status Rollback(RollbackParams) override;
+  StatusOr<ResultSet> Read(ReadParams rp) override;
+  StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams esp) override;
+  StatusOr<CommitResult> Commit(CommitParams cp) override;
+  Status Rollback(RollbackParams rp) override;
 
  private:
   class SessionHolder {
@@ -72,7 +74,7 @@ class ConnectionImpl : public Connection {
 
   /// Implementation details for Commit.
   StatusOr<CommitResult> Commit(google::spanner::v1::TransactionSelector& s,
-                                std::vector<Mutation> mutations);
+                                CommitParams cp);
 
   /// Implementation details for Rollback.
   Status Rollback(google::spanner::v1::TransactionSelector& s);

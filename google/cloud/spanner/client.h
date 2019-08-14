@@ -326,13 +326,15 @@ class Client {
   StatusOr<std::int64_t> ExecutePartitionedDml(SqlStatement const& statement);
 
   /**
-   * Commits a transaction.
+   * Commits a read-write transaction.
    *
    * The commit might return an `ABORTED` error. This can occur at any time;
    * commonly, the cause is conflicts with concurrent transactions. However, it
    * can also happen for a variety of other reasons. If `Commit` returns
    * `ABORTED`, the caller should re-attempt the transaction from the beginning,
    * re-using the same session.
+   *
+   * @warning It is an error to call `Commit` with a read-only `transaction`.
    *
    * @param transaction The transaction to commit.
    * @param mutations The mutations to be executed when this transaction
@@ -346,9 +348,14 @@ class Client {
                                 std::vector<Mutation> mutations);
 
   /**
-   * Rolls back a transaction, releasing any locks it holds. It is a good idea
-   * to call this for any transaction that includes one or more `Read` or
-   * `ExecuteSql` requests and ultimately decides not to commit.
+   * Rolls back a read-write transaction, releasing any locks it holds.
+   *
+   * At any time before `Commit`, the client can call `Rollback` to abort the
+   * transaction. It is a good idea to call this for any read-write transaction
+   * that includes  one or more `Read` or `ExecuteSql` requests and ultimately
+   * decides not to commit.
+   *
+   * @warning It is an error to call `Rollback` with a read-only `transaction`.
    *
    * @param transaction The transaction to roll back.
    *

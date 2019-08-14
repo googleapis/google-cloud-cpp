@@ -63,28 +63,12 @@ class Connection {
   };
   virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
 
-  /**
-   * Commits a transaction.
-   *
-   * The commit might return an `ABORTED` error. This can occur at any time;
-   * commonly, the cause is conflicts with concurrent transactions. However, it
-   * can also happen for a variety of other reasons. If `Commit` returns
-   * `ABORTED`, the caller should re-attempt the transaction from the beginning,
-   * re-using the same session.
-   */
   struct CommitParams {
     Transaction transaction;
     std::vector<Mutation> mutations;
   };
   virtual StatusOr<CommitResult> Commit(CommitParams) = 0;
 
-  /**
-   * Rollback a read-write transaction.
-   *
-   * At any time before `Commit`, the client can send a `Rollback` request
-   * to abort the transaction. (Read-only transactions do not need to call
-   * `Commit` or `Rollback`. In fact, they are not permitted to do so).
-   */
   struct RollbackParams {
     Transaction transaction;
   };

@@ -41,15 +41,15 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(ExecuteSqlParams esp) {
       });
 }
 
-StatusOr<CommitResult> ConnectionImpl::Commit(Connection::CommitParams cp) {
+StatusOr<CommitResult> ConnectionImpl::Commit(CommitParams cp) {
   return internal::Visit(
       std::move(cp.transaction),
       [this, &cp](spanner_proto::TransactionSelector& s, std::int64_t) {
-        return this->Commit(s, std::move(cp.mutations));
+        return this->Commit(s, std::move(cp));
       });
 }
 
-Status ConnectionImpl::Rollback(Connection::RollbackParams rp) {
+Status ConnectionImpl::Rollback(RollbackParams rp) {
   return internal::Visit(std::move(rp.transaction),
                          [this](spanner_proto::TransactionSelector& s,
                                 std::int64_t) { return this->Rollback(s); });
@@ -142,14 +142,14 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(
-    spanner_proto::TransactionSelector& s, std::vector<Mutation> mutations) {
+    spanner_proto::TransactionSelector& s, CommitParams cp) {
   auto session = GetSession();
   if (!session) {
     return std::move(session).status();
   }
   spanner_proto::CommitRequest request;
   request.set_session(session->session_name());
-  for (auto&& m : mutations) {
+  for (auto&& m : cp.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
   if (s.has_single_use()) {
