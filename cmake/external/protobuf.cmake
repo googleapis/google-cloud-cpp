@@ -14,8 +14,9 @@
 # limitations under the License.
 # ~~~
 
-include(ExternalProjectHelper)
 find_package(Threads REQUIRED)
+
+include(ExternalProjectHelper)
 include(external/zlib)
 
 if (NOT TARGET protobuf_project)
@@ -87,26 +88,4 @@ if (NOT TARGET protobuf_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
-
-    if (TARGET google-cloud-cpp-dependencies)
-        add_dependencies(google-cloud-cpp-dependencies protobuf_project)
-    endif ()
-
-    add_library(protobuf::libprotobuf INTERFACE IMPORTED)
-    add_dependencies(protobuf::libprotobuf protobuf_project)
-    set_library_properties_for_external_project(protobuf::libprotobuf protobuf
-                                                ALWAYS_LIB)
-    set_property(TARGET protobuf::libprotobuf
-                 APPEND
-                 PROPERTY INTERFACE_LINK_LIBRARIES
-                          protobuf::libprotobuf
-                          ZLIB::ZLIB
-                          Threads::Threads)
-    add_executable(protobuf::protoc IMPORTED)
-    set_property(
-        TARGET protobuf::protoc
-        PROPERTY
-            IMPORTED_LOCATION
-            "${PROJECT_BINARY_DIR}/external/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}"
-        )
 endif ()

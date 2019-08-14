@@ -325,9 +325,14 @@ after cloning this repo:
 
 #### Linux
 
+To automatically download the dependencies and compile the libraries and
+examples you can use the CMake [super build][super-build-link]:
+
+[super-build-link]: https://blog.kitware.com/cmake-superbuilds-git-submodules/
+
 ```bash
 # Add -DBUILD_TESTING=OFF to disable tests
-cmake -H. -Bcmake-out
+cmake -Hsuper -Bcmake-out
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
 cmake --build cmake-out -- -j 4
@@ -336,14 +341,18 @@ cmake --build cmake-out -- -j 4
 (cd cmake-out && ctest --output-on-failure)
 ```
 
-You will find compiled binaries in `cmake-out/` respective to their source paths.
+You will find compiled binaries in `cmake-out/` respective to their source
+paths.
+
+If you prefer to compile against installed versions of the dependencies please
+check the [INSTALL.md file](INSTALL.md).
 
 #### macOS
 
 ```bash
 export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
 # Add -DBUILD_TESTING=OFF to disable tests
-cmake -H. -Bcmake-out
+cmake -Hsuper -Bcmake-out
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
 cmake --build cmake-out -- -j 4
@@ -353,8 +362,15 @@ cmake --build cmake-out -- -j 4
 ```
 
 You will find compiled binaries in `cmake-out/` respective to their source paths.
+You will find compiled binaries in `cmake-out/` respective to their source
+paths.
 
-[If you see the following error](https://apple.stackexchange.com/questions/337940/why-is-usr-include-missing-i-have-xcode-and-command-line-tools-installed-moja):
+If you prefer to compile against installed versions of the dependencies please
+check the [INSTALL.md file](INSTALL.md).
+
+##### Problems with `/usr/include` on macOS Mojave (and later).
+
+If you see the following error:
 
 ```bash
 CMake Error in google/cloud/storage/CMakeLists.txt:
@@ -363,9 +379,9 @@ CMake Error in google/cloud/storage/CMakeLists.txt:
     "/usr/include"
 ```
 
-you need to update your Xcode version
-
-install the package located at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`
+you [need to update your Xcode version](https://apple.stackexchange.com/questions/337940/why-is-usr-include-missing-i-have-xcode-and-command-line-tools-installed-moja).
+Install the package located at
+`/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`
 
 and run:
 
@@ -415,6 +431,7 @@ Use `vcpkg` to download and install `google-cloud-cpp`'s dependencies:
     grpc:x64-windows-static ^
     curl:x64-windows-static ^
     gtest:x64-windows-static ^
+    googleapis:x64-windows-static ^
     crc32c:x64-windows-static
 .\vcpkg.exe integrate install
 ```
@@ -442,9 +459,7 @@ cmake -H. -Bcmake-out -GNinja ^
     -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
     -DCMAKE_C_COMPILER=cl.exe ^
     -DCMAKE_CXX_COMPILER=cl.exe ^
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package ^
-    -DCMAKE_MAKE_PROGRAM=ninja ^
-    -DGOOGLE_CLOUD_CPP_GOOGLEAPIS_PROVIDER=external
+    -DCMAKE_MAKE_PROGRAM=ninja
 ```
 
 And compile the code:

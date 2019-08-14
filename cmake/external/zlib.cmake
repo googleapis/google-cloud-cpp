@@ -53,13 +53,4 @@ if (NOT TARGET zlib_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
-
-    if (TARGET google-cloud-cpp-dependencies)
-        add_dependencies(google-cloud-cpp-dependencies zlib_project)
-    endif ()
-
-    include(ExternalProjectHelper)
-    add_library(ZLIB::ZLIB INTERFACE IMPORTED)
-    add_dependencies(ZLIB::ZLIB zlib_project)
-    set_library_properties_for_external_project(ZLIB::ZLIB z ALWAYS_LIB)
 endif ()

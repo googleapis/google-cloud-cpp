@@ -68,7 +68,7 @@ find_package(Threads REQUIRED)
 # Load the module to find protobuf with proper targets. Do not use
 # `find_package()` because we (have to) install this module in non-standard
 # locations.
-include(${CMAKE_CURRENT_LIST_DIR}/FindProtobufTargets.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/FindProtobufWithTargets.cmake)
 
 # The gRPC::grpc_cpp_plugin target is sometimes defined, but without a
 # IMPORTED_LOCATION

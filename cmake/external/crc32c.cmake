@@ -14,6 +14,8 @@
 # limitations under the License.
 # ~~~
 
+include(ExternalProjectHelper)
+
 if (NOT TARGET crc32c_project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
@@ -56,13 +58,4 @@ if (NOT TARGET crc32c_project)
         LOG_CONFIGURE ON
         LOG_BUILD ON
         LOG_INSTALL ON)
-
-    if (TARGET google-cloud-cpp-dependencies)
-        add_dependencies(google-cloud-cpp-dependencies crc32c_project)
-    endif ()
-
-    include(ExternalProjectHelper)
-    add_library(Crc32c::crc32c INTERFACE IMPORTED)
-    add_dependencies(Crc32c::crc32c crc32c_project)
-    set_library_properties_for_external_project(Crc32c::crc32c crc32c)
 endif ()

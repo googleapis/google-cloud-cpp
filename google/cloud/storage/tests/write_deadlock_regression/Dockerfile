@@ -35,8 +35,7 @@ RUN cmake --build .build --target install -- -j $(nproc)
 WORKDIR /w
 COPY . /w
 
-RUN cmake -H. -B.build \
-    -DGOOGLE_CLOUD_CPP_CURL_PROVIDER=package
+RUN cmake -H. -B.build
 
 RUN cmake \
     --build .build \

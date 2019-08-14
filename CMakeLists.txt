@@ -101,32 +101,14 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
 endif ()
 
 # The default source for dependencies.
-set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER "external" CACHE STRING "[===[
-How to find the dependencies for google-cloud-cpp.
-
-The Google Cloud C++ client libraries have several external dependencies,
-notably gRPC, libcurl, OpenSSL, and a few others.
-
-This configuration option controls how are these dependencies are found. It can
-be set to:
-
-* external: use CMake's `ExternalProject` to download and compile the
-  dependencies. This is the recommended configuration for development, as it
-  isolates your build from the system configuration.
-
-* package: use CMake's `find_package()` to find the dependencies. This is the
-  recommended configuration for compiling and installing google-cloud-cpp.
-
-To experiment with different configurations developers can override the setting
-for one or more dependencies. For example, you could set
-`GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER` to `package` and
-`GOOGLE_CLOUD_CPP_GMOCK_PROVIDER` to `external`. These overrides are intended
-for development and testing of new dependencies and are not recommended for
-production use.
-]===]")
+set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER "unused"
+    CACHE STRING "This option is no longer used.")
 
 set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-             PROPERTY STRINGS "external" "package")
+             PROPERTY STRINGS
+                      "external"
+                      "package"
+                      "unused")
 
 # Generate docs with relative URLs matching with the directory structure on
 # googleapis.dev hositng.
@@ -156,7 +138,7 @@ add_custom_target(google-cloud-cpp-dependencies)
 # Add gRPC and protobuf targets as submodules or packages, depending on the
 # configuration.  This should happen before enable_testing(), because we are not
 # interested in compiling and running the gRPC tests.
-include(IncludeGrpc)
+find_package(gRPC)
 
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.

@@ -18,7 +18,7 @@ set -eu
 
 export CC=gcc
 export CXX=g++
-export DISTRO=ubuntu
+export DISTRO=ubuntu-install
 export DISTRO_VERSION=18.04
 export CMAKE_SOURCE_DIR="."
 
@@ -67,12 +67,16 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
   export CC=clang
   export CXX=clang++
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="asan"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
   export CC=clang
   export CXX=clang++
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="ubsan"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
@@ -80,19 +84,21 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   # Note that the integration tests are run by default. This is the opposite of
   # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
   export RUN_INTEGRATION_TESTS="no"
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "ninja" ]]; then
   # Compiling with Ninja can catch bugs that may not be caught using Make.
   export USE_NINJA=yes
 elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
   # Compile under fedora:30. This distro uses gcc-9.
-  export DISTRO=fedora
+  export DISTRO=fedora-install
   export DISTRO_VERSION=30
 elif [[ "${BUILD_NAME}" = "clang-8" ]]; then
   # Compile under fedora:30. This distro uses clang-8.
   export CC=clang
   export CXX=clang++
-  export DISTRO=fedora
+  export DISTRO=fedora-install
   export DISTRO_VERSION=30
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
   # Compile with -fno-exceptions
@@ -107,7 +113,7 @@ elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
   export CC=clang
   export CXX=clang++
-  export DISTRO=fedora
+  export DISTRO=fedora-install
   export DISTRO_VERSION=30
   export BAZEL_CONFIG="libcxx"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
@@ -116,14 +122,11 @@ elif [[ "${BUILD_NAME}" = "shared" ]]; then
   export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=ON
   export TEST_INSTALL=yes
   export BUILD_TYPE=Debug
-  export DISTRO=ubuntu-install
 elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]; then
   export CHECK_ABI=yes
   export TEST_INSTALL=yes
   export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
   export BUILD_TYPE=Debug
-  export DISTRO=ubuntu-install
-  export DISTRO_VERSION=18.04
   if [[ "${BUILD_NAME}" = "update-abi" ]]; then
     export UPDATE_ABI=yes
   fi
@@ -133,7 +136,6 @@ elif [[ "${BUILD_NAME}" = "scan-build" ]]; then
   export BUILD_TYPE=Debug
   export CC=clang
   export CXX=clang++
-  export DISTRO_VERSION=30
   export SCAN_BUILD=yes
 elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export GOOGLE_CLOUD_CPP_CXX_STANDARD=17
@@ -143,7 +145,7 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export BUILD_TYPE=Coverage
-  export DISTRO=fedora
+  export DISTRO=fedora-install
   export DISTRO_VERSION=30
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."

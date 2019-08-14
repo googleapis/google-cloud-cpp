@@ -122,6 +122,24 @@ RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 # ```
 
+# #### googletest
+
+# We need a recent version of GoogleTest to compile the unit and integration
+# tests.
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+RUN tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
+WORKDIR /var/tmp/build/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+RUN cmake \
+      -DCMAKE_BUILD_TYPE="Release" \
+      -DBUILD_SHARED_LIBS=yes \
+      -H. -Bcmake-out
+RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
+RUN ldconfig
+# ```
+
 FROM devtools AS install
 
 # #### google-cloud-cpp
@@ -131,9 +149,7 @@ FROM devtools AS install
 # ```bash
 WORKDIR /var/tmp/build/google-cloud-cpp
 COPY . /var/tmp/build/google-cloud-cpp
-RUN cmake -H. -Bcmake-out \
-    -DGOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER=package \
-    -DGOOGLE_CLOUD_CPP_GMOCK_PROVIDER=external
+RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j ${NCPU:-4}
 WORKDIR /var/tmp/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure

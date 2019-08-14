@@ -30,6 +30,7 @@ additional_commands = {
             "EXCLUDE_FROM_ALL": 1,
             "INSTALL_COMMAND": "+",
             "INSTALL_DIR": 1,
+            "TEST_COMMAND": "+",
             "LOG_BUILD": 1,
             "LOG_CONFIGURE": 1,
             "LOG_DOWNLOAD": 1,
