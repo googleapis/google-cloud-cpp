@@ -211,7 +211,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -298,7 +298,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -445,7 +445,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -559,7 +559,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -697,7 +697,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -880,7 +880,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -1002,7 +1002,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash
@@ -1137,7 +1137,7 @@ sudo ldconfig
 
 #### googletest
 
-We need a revent version of GoogleTest to compile the unit and integration
+We need a recent version of GoogleTest to compile the unit and integration
 tests.
 
 ```bash

@@ -175,7 +175,7 @@ FROM devtools AS install
 
 # #### googletest
 
-# We need a revent version of GoogleTest to compile the unit and integration
+# We need a recent version of GoogleTest to compile the unit and integration
 # tests.
 
 # ```bash
