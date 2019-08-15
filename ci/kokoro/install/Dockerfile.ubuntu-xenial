@@ -115,9 +115,9 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.1.tar.gz
-RUN tar -xf v0.1.1.tar.gz
-WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.1
+RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.3.tar.gz
+RUN tar -xf v0.1.3.tar.gz
+WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.3
 RUN cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
