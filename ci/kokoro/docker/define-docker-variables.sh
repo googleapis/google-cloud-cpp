@@ -30,8 +30,14 @@ if [[ -n "${IMAGE+x}" ]]; then
   echo "IMAGE is already defined."
 else
   if [[ -n "${DISTRO_VERSION+x}" ]]; then
-    readonly IMAGE="gcpp-ci-${DISTRO}-${DISTRO_VERSION}"
-    readonly BUILD_OUTPUT="cmake-out/${IMAGE}-${BUILD_NAME}"
-    readonly BUILD_HOME="cmake-out/home/${IMAGE}-${BUILD_NAME}"
+    readonly IMAGE_BASENAME="gcpp-ci-${DISTRO}-${DISTRO_VERSION}"
+    if [[ -n "${PROJECT_ID:-}" ]]; then
+      IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/${IMAGE_BASENAME}"
+    else
+      IMAGE="${IMAGE_BASENAME}"
+    fi
+    readonly IMAGE
+    readonly BUILD_OUTPUT="cmake-out/${IMAGE_BASENAME}-${BUILD_NAME}"
+    readonly BUILD_HOME="cmake-out/home/${IMAGE_BASENAME}-${BUILD_NAME}"
   fi
 fi
