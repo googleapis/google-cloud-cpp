@@ -29,13 +29,13 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
 
+// Initialized in main() below.
+char const* flag_bucket_name;
+
 // This test uess dlsym(), which is not present on Windows.
 // One could replace it with LoadLibrary() on Windows, but it's only a test, so
 // it's not worth it.
 #ifndef _WIN32
-
-// Initialized in main() below.
-char const* flag_bucket_name;
 
 class ErrorInjectionIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
