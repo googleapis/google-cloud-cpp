@@ -47,10 +47,10 @@ struct IsRow<Row<Ts...>> : std::true_type {};
  * The `Bound` class is a regular type that represents one endpoint of an
  * interval of keys.
  *
- * `Bound`s are `Closed` by default, meaning the row matching
- * the Bound will be included in the result. `Bound`s can also be
- * specified as `Open`, which will exclude the Bounds from
- * the results.
+ * `Bound`s can be "open", meaning the matching row will be excluded from the
+ * results, or "closed" meaning the matching row will be included. `Bound`
+ * instances should be created with the `MakeBoundOpen()` or
+ * `MakeBoundClosed()` factory functions.
  *
  * @tparam KeyType spanner::Row<Types...> that corresponds to the desired index
  * definition.
@@ -60,15 +60,9 @@ class Bound {
  public:
   static_assert(internal::IsRow<RowType>::value,
                 "KeyType must be of type spanner::Row<>.");
-  /**
-   * Constructs a closed `Bound` with a default constructed key of `KeyType`.
-   */
-  Bound() : Bound({}) {}
-  /**
-   * Constructs a closed `Bound` with the provided key.
-   * @param key spanner::Row<Types...>
-   */
-  explicit Bound(RowType key) : Bound(std::move(key), Mode::kClosed) {}
+
+  // Not default constructible
+  Bound() = delete;
 
   // Copy and move constructors and assignment operators.
   Bound(Bound const& key_range) = default;
@@ -142,24 +136,15 @@ class KeyRange {
  public:
   static_assert(internal::IsRow<RowType>::value,
                 "KeyType must be of type spanner::Row<>.");
-  /**
-   * Constructs an empty `KeyRange`.
-   */
-  KeyRange() = default;
-  ~KeyRange() = default;
+
+  // Not default constructible
+  KeyRange() = delete;
 
   /**
    * Constructs a `KeyRange` with the given `Bound`s.
    */
   explicit KeyRange(Bound<RowType> start, Bound<RowType> end)
       : start_(std::move(start)), end_(std::move(end)) {}
-
-  /**
-   * Constructs a `KeyRange` closed on both `Bound`s.
-   */
-  explicit KeyRange(RowType start, RowType end)
-      : KeyRange(MakeBoundClosed(std::move(start)),
-                 MakeBoundClosed(std::move(end))) {}
 
   // Copy and move constructors and assignment operators.
   KeyRange(KeyRange const& key_range) = default;
@@ -193,7 +178,7 @@ class KeyRange {
  * @return KeyRange<RowType>
  */
 template <typename RowType>
-KeyRange<RowType> MakeKeyRange(RowType start, RowType end) {
+KeyRange<RowType> MakeKeyRangeClosed(RowType start, RowType end) {
   return MakeKeyRange(MakeBoundClosed(std::move(start)),
                       MakeBoundClosed(std::move(end)));
 }

@@ -52,7 +52,7 @@ TEST(KeyRangeTest, ConstructorBoundModeUnspecified) {
   std::string start_value("key0");
   std::string end_value("key1");
   KeyRange<Row<std::string>> closed_range =
-      MakeKeyRange(MakeRow(start_value), MakeRow(end_value));
+      MakeKeyRangeClosed(MakeRow(start_value), MakeRow(end_value));
 
   EXPECT_EQ(start_value, closed_range.start().key().get<0>());
   EXPECT_TRUE(closed_range.start().IsClosed());
@@ -171,12 +171,10 @@ TEST(KeySetBuilderTest, AddKeyRangeToEmptyKeySetBuilder) {
 }
 
 TEST(KeySetBuilderTest, AddKeyRangeToNonEmptyKeySetBuilder) {
-  auto ks = KeySetBuilder<Row<std::string, std::string>>(
-      KeyRange<Row<std::string, std::string>>(MakeRow("start00", "start01"),
-                                              MakeRow("end00", "end01")));
-  auto range = KeyRange<Row<std::string, std::string>>(
-      MakeBoundOpen(MakeRow("start10", "start11")),
-      MakeBoundOpen(MakeRow("end10", "end11")));
+  auto ks = KeySetBuilder<Row<std::string, std::string>>(MakeKeyRangeClosed(
+      MakeRow("start00", "start01"), MakeRow("end00", "end01")));
+  auto range = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
+                            MakeBoundOpen(MakeRow("end10", "end11")));
   ks.Add(range);
   EXPECT_EQ("start00", ks.key_ranges()[0].start().key().get<0>());
   EXPECT_EQ("start01", ks.key_ranges()[0].start().key().get<1>());
@@ -232,12 +230,10 @@ TEST(InternalKeySetTest, BuildToProtoTwoKeys) {
 }
 
 TEST(InternalKeySetTest, BuildToProtoTwoRanges) {
-  auto ksb = KeySetBuilder<Row<std::string, std::string>>(
-      KeyRange<Row<std::string, std::string>>(MakeRow("start00", "start01"),
-                                              MakeRow("end00", "end01")));
-  auto range = KeyRange<Row<std::string, std::string>>(
-      MakeBoundOpen(MakeRow("start10", "start11")),
-      MakeBoundOpen(MakeRow("end10", "end11")));
+  auto ksb = KeySetBuilder<Row<std::string, std::string>>(MakeKeyRangeClosed(
+      MakeRow("start00", "start01"), MakeRow("end00", "end01")));
+  auto range = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
+                            MakeBoundOpen(MakeRow("end10", "end11")));
   ksb.Add(range);
 
   ::google::spanner::v1::KeySet expected;
