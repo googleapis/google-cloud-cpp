@@ -44,13 +44,13 @@ namespace internal {
     google::spanner::v1::KeyRange kr;
     auto& start = range.mutable_start();
     auto& end = range.mutable_end();
-    if (start.mode() == KeySet::ValueBound::Mode::MODE_CLOSED) {
+    if (start.mode() == KeySet::ValueBound::Mode::kClosed) {
       *kr.mutable_start_closed() = make_key(std::move(start.mutable_key()));
     } else {
       *kr.mutable_start_open() = make_key(std::move(start.mutable_key()));
     }
 
-    if (end.mode() == KeySet::ValueBound::Mode::MODE_CLOSED) {
+    if (end.mode() == KeySet::ValueBound::Mode::kClosed) {
       *kr.mutable_end_closed() = make_key(std::move(end.mutable_key()));
     } else {
       *kr.mutable_end_open() = make_key(std::move(end.mutable_key()));

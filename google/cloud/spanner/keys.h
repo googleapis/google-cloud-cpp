@@ -28,9 +28,8 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 class KeySet;
-template <typename RowType>
-class KeyRange;
 template <typename RowType>
 class KeySetBuilder;
 
@@ -64,12 +63,12 @@ class Bound {
   /**
    * Constructs a closed `Bound` with a default constructed key of `KeyType`.
    */
-  Bound() : Bound(RowType(), Mode::MODE_CLOSED) {}
+  Bound() : Bound({}) {}
   /**
    * Constructs a closed `Bound` with the provided key.
    * @param key spanner::Row<Types...>
    */
-  explicit Bound(RowType key) : Bound(std::move(key), Mode::MODE_CLOSED) {}
+  explicit Bound(RowType key) : Bound(std::move(key), Mode::kClosed) {}
 
   // Copy and move constructors and assignment operators.
   Bound(Bound const& key_range) = default;
@@ -78,8 +77,8 @@ class Bound {
   Bound& operator=(Bound&& rhs) = default;
 
   RowType const& key() const { return key_; }
-  bool IsClosed() const { return mode_ == Mode::MODE_CLOSED; }
-  bool IsOpen() const { return mode_ == Mode::MODE_OPEN; }
+  bool IsClosed() const { return mode_ == Mode::kClosed; }
+  bool IsOpen() const { return mode_ == Mode::kOpen; }
 
   friend bool operator==(Bound const& lhs, Bound const& rhs) {
     return lhs.key_ == rhs.key_ && lhs.mode_ == rhs.mode_;
@@ -89,7 +88,7 @@ class Bound {
   }
 
  private:
-  enum class Mode { MODE_CLOSED, MODE_OPEN };
+  enum class Mode { kClosed, kOpen };
 
   Bound(RowType key, Mode mode) : key_(std::move(key)), mode_(mode) {}
 
@@ -98,9 +97,6 @@ class Bound {
 
   template <typename T>
   friend Bound<T> MakeBoundOpen(T key);
-
-  template <typename T>
-  friend KeyRange<T> MakeKeyRange(T start, T end);
 
   RowType key_;
   Mode mode_;
@@ -117,7 +113,7 @@ class Bound {
  */
 template <typename RowType>
 Bound<RowType> MakeBoundClosed(RowType key) {
-  return Bound<RowType>(std::move(key), Bound<RowType>::Mode::MODE_CLOSED);
+  return Bound<RowType>(std::move(key), Bound<RowType>::Mode::kClosed);
 }
 
 /**
@@ -130,7 +126,7 @@ Bound<RowType> MakeBoundClosed(RowType key) {
  */
 template <typename RowType>
 Bound<RowType> MakeBoundOpen(RowType key) {
-  return Bound<RowType>(std::move(key), Bound<RowType>::Mode::MODE_OPEN);
+  return Bound<RowType>(std::move(key), Bound<RowType>::Mode::kOpen);
 }
 
 /**
@@ -149,11 +145,11 @@ class KeyRange {
   /**
    * Constructs an empty `KeyRange`.
    */
-  KeyRange() : start_(), end_() {}
+  KeyRange() = default;
   ~KeyRange() = default;
 
   /**
-   * Constructs a `KeyRange` with closed `Bound`s on the keys provided.
+   * Constructs a `KeyRange` with the given `Bound`s.
    */
   explicit KeyRange(Bound<RowType> start, Bound<RowType> end)
       : start_(std::move(start)), end_(std::move(end)) {}
@@ -162,8 +158,8 @@ class KeyRange {
    * Constructs a `KeyRange` closed on both `Bound`s.
    */
   explicit KeyRange(RowType start, RowType end)
-      : KeyRange(std::move(Bound<RowType>(start)),
-                 std::move(Bound<RowType>(end))) {}
+      : KeyRange(MakeBoundClosed(std::move(start)),
+                 MakeBoundClosed(std::move(end))) {}
 
   // Copy and move constructors and assignment operators.
   KeyRange(KeyRange const& key_range) = default;
@@ -174,7 +170,6 @@ class KeyRange {
   Bound<RowType> const& start() const { return start_; }
   Bound<RowType> const& end() const { return end_; }
 
- private:
   friend bool operator==(KeyRange const& lhs, KeyRange const& rhs) {
     return lhs.start_ == rhs.start_ && lhs.end_ == rhs.end_;
   }
@@ -182,6 +177,7 @@ class KeyRange {
     return !(lhs == rhs);
   }
 
+ private:
   Bound<RowType> start_;
   Bound<RowType> end_;
 };
@@ -198,9 +194,8 @@ class KeyRange {
  */
 template <typename RowType>
 KeyRange<RowType> MakeKeyRange(RowType start, RowType end) {
-  return KeyRange<RowType>(
-      Bound<RowType>(std::move(start), Bound<RowType>::Mode::MODE_CLOSED),
-      Bound<RowType>(std::move(end), Bound<RowType>::Mode::MODE_CLOSED));
+  return MakeKeyRange(MakeBoundClosed(std::move(start)),
+                      MakeBoundClosed(std::move(end)));
 }
 
 /**
@@ -252,11 +247,11 @@ class KeySet {
     for (auto const& range : builder.key_ranges()) {
       key_ranges_.push_back(ValueKeyRange(
           ValueBound(ValueRow(range.start().key().values()),
-                     range.start().IsClosed() ? ValueBound::Mode::MODE_CLOSED
-                                              : ValueBound::Mode::MODE_OPEN),
+                     range.start().IsClosed() ? ValueBound::Mode::kClosed
+                                              : ValueBound::Mode::kOpen),
           ValueBound(ValueRow(range.end().key().values()),
-                     range.end().IsClosed() ? ValueBound::Mode::MODE_CLOSED
-                                            : ValueBound::Mode::MODE_OPEN)));
+                     range.end().IsClosed() ? ValueBound::Mode::kClosed
+                                            : ValueBound::Mode::kOpen)));
     }
   }
 
@@ -285,8 +280,8 @@ class KeySet {
 
   class ValueBound {
    public:
-    enum class Mode { MODE_CLOSED, MODE_OPEN };
-    explicit ValueBound(ValueRow key, ValueBound::Mode mode)
+    enum class Mode { kClosed, kOpen };
+    explicit ValueBound(ValueRow key, Mode mode)
         : key_(std::move(key)), mode_(mode) {}
 
     ValueRow& mutable_key() { return key_; }
@@ -337,19 +332,20 @@ class KeySet {
  * // EmployeeTable has a primary key on EmployeeID.
  * using EmployeeTablePrimaryKey = Row<std::int64_t>;
  *
- * // A KeySet where EmployeeID >= 1 and EmployeeID < 10.
+ * // A KeySet where EmployeeID >= 1 and EmployeeID <= 10.
  * auto first_ten_employees =
- *   KeySetBuilder<EmployeeTablePrimaryKey>(
- *     MakeKeyRangeBoundClosed(MakeRow(1)),
- *     MakeKeyRangeBoundOpen(MakeRow(10)));
+ *   KeySetBuilder<EmployeeTablePrimaryKey>()
+ *       .Add(MakeKeyRange(MakeRow(1), MakeRow(10))
+ *       .Build();
  *
  * // EmployeeTable also has an index on LastName, FirstName.
  * using EmployeeNameKey = Row<std::string, std::string>;
  *
  * // A KeySet where LastName, FirstName is ("Smith", "John").
  * auto all_employees_named_john_smith =
- *   KeySetBuilder<EmployeeNameKey>(MakeRow("Smith", "John"));
- *
+ *   KeySetBuilder<EmployeeNameKey>()
+ *       .Add(MakeRow("Smith", "John")))
+ *       .Build();
  * @endcode
  */
 template <typename RowType>
@@ -365,14 +361,12 @@ class KeySetBuilder {
   /**
    * Constructs a `KeySetBuilder` with a single key `spanner::Row`.
    */
-  explicit KeySetBuilder(RowType key) : keys_(), key_ranges_() {
-    keys_.push_back(std::move(key));
-  }
+  explicit KeySetBuilder(RowType key) { keys_.push_back(std::move(key)); }
 
   /**
    * Constructs a `KeySetBuilder` with a single `KeyRange`.
    */
-  explicit KeySetBuilder(KeyRange<RowType> key_range) : keys_(), key_ranges_() {
+  explicit KeySetBuilder(KeyRange<RowType> key_range) {
     key_ranges_.push_back(std::move(key_range));
   }
 
@@ -410,7 +404,7 @@ class KeySetBuilder {
    * Builds a type-erased `KeySet` from the contents of the `KeySetBuilder`.
    *
    */
-  KeySet Build() const;
+  KeySet Build() const { return KeySet(*this); }
 
   // TODO(#322): Add methods to insert ranges of Keys and KeyRanges.
   // TODO(#323): Add methods to remove Keys or KeyRanges.
@@ -419,11 +413,6 @@ class KeySetBuilder {
   std::vector<RowType> keys_;
   std::vector<KeyRange<RowType>> key_ranges_;
 };
-
-template <typename RowType>
-KeySet KeySetBuilder<RowType>::Build() const {
-  return KeySet(*this);
-}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
