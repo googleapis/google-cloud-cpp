@@ -28,7 +28,7 @@ load(
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": [
             "-lpthread",
-            "-ldl"
+            "-ldl",
         ],
     }),
     deps = [
