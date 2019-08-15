@@ -39,11 +39,6 @@ PartialResultSetReader::Create(std::unique_ptr<grpc::ClientContext> context,
     return Status(StatusCode::kInternal, "response contained no metadata");
   }
 
-  // The metadata must contain row type information.
-  if (reader->metadata_->row_type().fields().empty()) {
-    return Status(StatusCode::kInternal,
-                  "response metadata was missing row type information");
-  }
   return {std::move(reader)};
 }
 
@@ -64,6 +59,11 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
     if (values_.empty()) {
       return Status(StatusCode::kInternal, "response has no values");
     }
+  }
+
+  if (metadata_->row_type().fields().empty()) {
+    return Status(StatusCode::kInternal,
+                  "response metadata is missing row type information");
   }
 
   // The metadata tells us the sequence of types for the field Values;

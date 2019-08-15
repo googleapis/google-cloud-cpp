@@ -37,6 +37,7 @@ using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::DoAll;
+using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::SetArgPointee;
 
@@ -155,13 +156,38 @@ TEST(PartialResultSetReaderTest, MissingMetadata) {
 }
 
 /**
- * @test Verify the behavior when the received metadata does not contain row
- * type information.
+ * @test Verify the behavior when the received metadata does not contain data
+ * nor row type information.
  */
-TEST(PartialResultSetReaderTest, MissingRowType) {
+TEST(PartialResultSetReaderTest, MissingRowTypeNoData) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(R"pb(metadata: {})pb", &response));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  ASSERT_STATUS_OK(reader);
+  StatusOr<optional<Value>> value = reader.value()->NextValue();
+  EXPECT_STATUS_OK(value);
+  EXPECT_FALSE(value->has_value());
+}
+
+/**
+ * @test Verify the behavior when the received metadata contains data but not
+ * row type information.
+ */
+TEST(PartialResultSetReaderTest, MissingRowTypeWithData) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(R"pb(
+                                            metadata: {}
+                                            values: { string_value: "10" })pb",
+                                          &response));
   EXPECT_CALL(*grpc_reader, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
@@ -169,10 +195,11 @@ TEST(PartialResultSetReaderTest, MissingRowType) {
   auto context = make_unique<grpc::ClientContext>();
   auto reader = PartialResultSetReader::Create(std::move(context),
                                                std::move(grpc_reader));
-  EXPECT_FALSE(reader.status().ok());
-  EXPECT_EQ(reader.status().code(), StatusCode::kInternal);
-  EXPECT_EQ(reader.status().message(),
-            "response metadata was missing row type information");
+  ASSERT_STATUS_OK(reader);
+  StatusOr<optional<Value>> value = reader.value()->NextValue();
+  EXPECT_EQ(value.status().code(), StatusCode::kInternal);
+  EXPECT_THAT(value.status().message(),
+              HasSubstr("missing row type information"));
 }
 
 /**
