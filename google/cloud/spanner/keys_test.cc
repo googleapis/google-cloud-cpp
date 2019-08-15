@@ -26,13 +26,26 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(KeySetTest, NoKeys) {
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+      )pb",
+      &expected));
   KeySet no_keys;
-  EXPECT_FALSE(no_keys.IsAll());
+  ::google::spanner::v1::KeySet result = internal::ToProto(no_keys);
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
 }
 
 TEST(KeySetTest, AllKeys) {
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        all: true
+      )pb",
+      &expected));
   auto all_keys = KeySet::All();
-  EXPECT_TRUE(all_keys.IsAll());
+  ::google::spanner::v1::KeySet result = internal::ToProto(all_keys);
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
 }
 
 TEST(KeyRangeTest, ConstructorBoundModeUnspecified) {

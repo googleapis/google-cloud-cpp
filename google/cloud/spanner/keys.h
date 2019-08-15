@@ -226,7 +226,11 @@ class KeySet {
   /**
    * Returns a `KeySet` that represents the set of "All" keys for the index.
    */
-  static KeySet All() { return KeySet(true); }
+  static KeySet All() {
+    KeySet ks;
+    ks.proto_.set_all(true);
+    return ks;
+  }
 
   /**
    * Constructs an empty `KeySet`.
@@ -240,74 +244,31 @@ class KeySet {
    */
   template <typename RowType>
   explicit KeySet(KeySetBuilder<RowType> const& builder) {
-    for (auto const& key : builder.keys()) {
-      key_values_.push_back(ValueRow(key.values()));
+    for (auto& key : builder.keys()) {
+      Append(proto_.add_keys(), std::move(key).values());
     }
-
-    for (auto const& range : builder.key_ranges()) {
-      key_ranges_.push_back(ValueKeyRange(
-          ValueBound(ValueRow(range.start().key().values()),
-                     range.start().IsClosed() ? ValueBound::Mode::kClosed
-                                              : ValueBound::Mode::kOpen),
-          ValueBound(ValueRow(range.end().key().values()),
-                     range.end().IsClosed() ? ValueBound::Mode::kClosed
-                                            : ValueBound::Mode::kOpen)));
+    for (auto& range : builder.key_ranges()) {
+      auto* kr = proto_.add_ranges();
+      auto* start = range.start().IsClosed() ? kr->mutable_start_closed()
+                                             : kr->mutable_start_open();
+      Append(start, std::move(range).start().key().values());
+      auto* end = range.end().IsClosed() ? kr->mutable_end_closed()
+                                         : kr->mutable_end_open();
+      Append(end, std::move(range).end().key().values());
     }
   }
-
-  /**
-   * Does the `KeySet` represent all keys for an index.
-   */
-  bool IsAll() const { return all_; }
 
  private:
   friend ::google::spanner::v1::KeySet internal::ToProto(KeySet keyset);
 
-  explicit KeySet(bool all) : all_(all) {}
+  template <std::size_t N>
+  static void Append(google::protobuf::ListValue* lv, std::array<Value, N> a) {
+    for (auto& v : a) {
+      *lv->add_values() = internal::ToProto(std::move(v)).second;
+    }
+  }
 
-  class ValueRow {
-   public:
-    template <std::size_t N>
-    explicit ValueRow(std::array<Value, N> column_values)
-        : column_values_(std::make_move_iterator(column_values.begin()),
-                         std::make_move_iterator(column_values.end())) {}
-
-    std::vector<Value>& mutable_column_values() { return column_values_; }
-
-   private:
-    std::vector<Value> column_values_;
-  };
-
-  class ValueBound {
-   public:
-    enum class Mode { kClosed, kOpen };
-    explicit ValueBound(ValueRow key, Mode mode)
-        : key_(std::move(key)), mode_(mode) {}
-
-    ValueRow& mutable_key() { return key_; }
-    Mode mode() { return mode_; }
-
-   private:
-    ValueRow key_;
-    Mode mode_;
-  };
-
-  class ValueKeyRange {
-   public:
-    explicit ValueKeyRange(ValueBound start, ValueBound end)
-        : start_(std::move(start)), end_(std::move(end)) {}
-
-    ValueBound& mutable_start() { return start_; }
-    ValueBound& mutable_end() { return end_; }
-
-   private:
-    ValueBound start_;
-    ValueBound end_;
-  };
-
-  std::vector<ValueRow> key_values_;
-  std::vector<ValueKeyRange> key_ranges_;
-  bool all_ = false;
+  google::spanner::v1::KeySet proto_;
 };
 
 /**
@@ -335,7 +296,7 @@ class KeySet {
  * // A KeySet where EmployeeID >= 1 and EmployeeID <= 10.
  * auto first_ten_employees =
  *   KeySetBuilder<EmployeeTablePrimaryKey>()
- *       .Add(MakeKeyRange(MakeRow(1), MakeRow(10))
+ *       .Add(MakeKeyRange(MakeRow(1), MakeRow(10)))
  *       .Build();
  *
  * // EmployeeTable also has an index on LastName, FirstName.
