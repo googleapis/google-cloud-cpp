@@ -29,6 +29,7 @@
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
+#include <functional>
 #include <memory>
 #include <string>
 #include <vector>
@@ -373,7 +374,7 @@ std::string MakeDatabaseName(std::string const& project,
                              std::string const& database_id);
 
 /**
- * Retuns a Connection object that can be used for interacting with Spanner.
+ * Returns a Connection object that can be used for interacting with Spanner.
  *
  * The returned connection object should not be used directly, rather it should
  * be given to a `Client` instance, and methods should be invoked on `Client`.
@@ -391,6 +392,27 @@ std::shared_ptr<Connection> MakeConnection(
     std::shared_ptr<grpc::ChannelCredentials> const& creds =
         grpc::GoogleDefaultCredentials(),
     std::string const& endpoint = "spanner.googleapis.com");
+
+/**
+ * Execute a function in the context of a read-write transaction, with
+ * automatic retries if the transaction commit results in an abort.
+ *
+ * The caller-provided function will be passed the `Client` argument and a
+ * newly created read-write `Transaction`. It should use these objects to
+ * issue any `Read()`s, `ExecuteSql()`s, etc., and return the `Mutation`s to
+ * commit or whether to rollback the transaction instead.
+ *
+ * The lock priority of the transaction increases after each prior aborted
+ * transaction, meaning that the next attempt has a slightly better chance
+ * of success than before.
+ */
+struct TransactionAction {
+  enum { kCommit, kRollback } action;
+  std::vector<Mutation> mutations;
+};
+StatusOr<CommitResult> RunTransaction(
+    Client client, Transaction::ReadWriteOptions const& opts,
+    std::function<TransactionAction(Client, Transaction)> const& f);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

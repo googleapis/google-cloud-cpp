@@ -128,6 +128,37 @@ std::shared_ptr<Connection> MakeConnection(
                                                     std::move(stub));
 }
 
+StatusOr<CommitResult> RunTransaction(
+    Client client, Transaction::ReadWriteOptions const& opts,
+    std::function<TransactionAction(Client, Transaction)> const& f) {
+  Transaction txn = MakeReadWriteTransaction(opts);
+  TransactionAction action;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  try {
+#endif
+    action = f(client, txn);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  } catch (...) {
+    client.Rollback(txn);  // ignore error
+    throw;
+  }
+#endif
+  switch (action.action) {
+    case TransactionAction::kCommit: {
+      // TODO(#357): Automatically retry if Commit() aborts. Note: it is
+      // not a good idea to simply cap the number of retries. Instead, it
+      // is better to limit the total amount of wall time spent retrying.
+      return client.Commit(txn, action.mutations);
+    }
+    case TransactionAction::kRollback: {
+      auto status = client.Rollback(txn);
+      if (!status.ok()) return status;
+      return CommitResult{};  // TODO(#357): What should this return?
+    }
+  }
+  return Status(StatusCode::kInvalidArgument, "bad TransactionAction");
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

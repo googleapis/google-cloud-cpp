@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/internal/time.h"
+#include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
@@ -38,8 +40,11 @@ using ::google::cloud::internal::make_unique;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
+using ::testing::DoAll;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
+using ::testing::SaveArg;
 
 class MockConnection : public Connection {
  public:
@@ -346,6 +351,121 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
   conn = MakeConnection("foo", grpc::GoogleDefaultCredentials(), "localhost");
   EXPECT_NE(conn, nullptr);
 }
+
+TEST(ClientTest, RunTransactionCommit) {
+  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  ASSERT_STATUS_OK(timestamp);
+
+  auto conn = std::make_shared<MockConnection>();
+  Transaction txn = MakeReadWriteTransaction();  // dummy
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+  Connection::CommitParams actual_commit_params{txn, {}};
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(
+          DoAll(SaveArg<0>(&actual_read_params), Return(ByMove(ResultSet{}))));
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce(DoAll(SaveArg<0>(&actual_commit_params),
+                      Return(CommitResult{*timestamp})));
+
+  auto mutation = MakeDeleteMutation("table", KeySet::All());
+  auto f = [&mutation](Client client, Transaction txn) {
+    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    if (!read) return TransactionAction{TransactionAction::kRollback, {}};
+    return TransactionAction{TransactionAction::kCommit, {mutation}};
+  };
+
+  Client client(conn);
+  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+
+  EXPECT_EQ("T", actual_read_params.table);
+  EXPECT_EQ(KeySet::All(), actual_read_params.keys);
+  EXPECT_THAT(actual_read_params.columns, ElementsAre("C"));
+  EXPECT_THAT(actual_commit_params.mutations, ElementsAre(mutation));
+}
+
+TEST(ClientTest, RunTransactionRollback) {
+  auto conn = std::make_shared<MockConnection>();
+  Transaction txn = MakeReadWriteTransaction();  // dummy
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(
+          DoAll(SaveArg<0>(&actual_read_params),
+                Return(ByMove(Status(StatusCode::kInvalidArgument, "blah")))));
+  EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
+
+  auto mutation = MakeDeleteMutation("table", KeySet::All());
+  auto f = [&mutation](Client client, Transaction txn) {
+    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    if (!read) return TransactionAction{TransactionAction::kRollback, {}};
+    return TransactionAction{TransactionAction::kCommit, {mutation}};
+  };
+
+  Client client(conn);
+  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(Timestamp{}, result->commit_timestamp);
+
+  EXPECT_EQ("T", actual_read_params.table);
+  EXPECT_EQ(KeySet::All(), actual_read_params.keys);
+  EXPECT_THAT(actual_read_params.columns, ElementsAre("C"));
+}
+
+TEST(ClientTest, RunTransactionRollbackError) {
+  auto conn = std::make_shared<MockConnection>();
+  Transaction txn = MakeReadWriteTransaction();  // dummy
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(
+          DoAll(SaveArg<0>(&actual_read_params),
+                Return(ByMove(Status(StatusCode::kInvalidArgument, "blah")))));
+  EXPECT_CALL(*conn, Rollback(_))
+      .WillOnce(Return(Status(StatusCode::kInternal, "blah blah")));
+
+  auto mutation = MakeDeleteMutation("table", KeySet::All());
+  auto f = [&mutation](Client client, Transaction txn) {
+    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    if (!read) return TransactionAction{TransactionAction::kRollback, {}};
+    return TransactionAction{TransactionAction::kCommit, {mutation}};
+  };
+
+  Client client(conn);
+  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  EXPECT_FALSE(result.ok());
+  EXPECT_EQ(StatusCode::kInternal, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("blah blah"));
+
+  EXPECT_EQ("T", actual_read_params.table);
+  EXPECT_EQ(KeySet::All(), actual_read_params.keys);
+  EXPECT_THAT(actual_read_params.columns, ElementsAre("C"));
+}
+
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+TEST(ClientTest, RunTransactionException) {
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(Return(ByMove(Status(StatusCode::kInvalidArgument, "blah"))));
+  EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
+
+  auto mutation = MakeDeleteMutation("table", KeySet::All());
+  auto f = [&mutation](Client client, Transaction txn) {
+    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    if (!read) throw "Read() error";
+    return TransactionAction{TransactionAction::kCommit, {mutation}};
+  };
+
+  try {
+    Client client(conn);
+    auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+    FAIL();
+  } catch (char const* e) {
+    EXPECT_STREQ(e, "Read() error");
+  } catch (...) {
+    FAIL();
+  }
+}
+#endif
 
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS

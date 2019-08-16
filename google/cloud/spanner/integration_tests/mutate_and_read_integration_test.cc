@@ -315,6 +315,48 @@ TEST_F(MutateAndReadIntegrationTest, TransactionRollback) {
                                    RowType(2, "test-fname-2", "test-lname-2")));
 }
 
+/// @test Verify the basics of RunTransaction().
+TEST_F(MutateAndReadIntegrationTest, RunTransaction) {
+  Transaction::ReadWriteOptions rw_opts{};
+
+  // Insert SingerIds 100, 102, and 199.
+  auto insert = [](Client const&, Transaction const&) {
+    auto isb =
+        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"});
+    isb.AddRow(MakeRow(100, "first-name-100", "last-name-100"));
+    isb.AddRow(MakeRow(102, "first-name-102", "last-name-102"));
+    isb.AddRow(MakeRow(199, "first-name-199", "last-name-199"));
+    return TransactionAction{TransactionAction::kCommit, {isb.Build()}};
+  };
+  auto insert_result = RunTransaction(*client_, rw_opts, insert);
+  EXPECT_STATUS_OK(insert_result);
+  EXPECT_NE(Timestamp{}, insert_result->commit_timestamp);
+
+  // Delete SingerId 102.
+  auto dele = [](Client const&, Transaction const&) {
+    auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(MakeRow(102));
+    auto mutation = MakeDeleteMutation("Singers", ksb.Build());
+    return TransactionAction{TransactionAction::kCommit, {mutation}};
+  };
+  auto delete_result = RunTransaction(*client_, rw_opts, dele);
+  EXPECT_STATUS_OK(delete_result);
+  EXPECT_LT(insert_result->commit_timestamp, delete_result->commit_timestamp);
+
+  // Read SingerIds [100 ... 200).
+  std::vector<std::int64_t> ids;
+  auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(
+      MakeKeyRange(MakeBoundClosed(MakeRow(100)), MakeBoundOpen(MakeRow(200))));
+  auto results = client_->Read("Singers", ksb.Build(), {"SingerId"});
+  EXPECT_STATUS_OK(results);
+  if (results) {
+    for (auto& row : results->Rows<std::int64_t>()) {
+      EXPECT_STATUS_OK(row);
+      if (row) ids.push_back(row->get<0>());
+    }
+  }
+  EXPECT_THAT(ids, UnorderedElementsAre(100, 199));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
