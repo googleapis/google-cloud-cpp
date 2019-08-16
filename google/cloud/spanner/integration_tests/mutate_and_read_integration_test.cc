@@ -196,6 +196,127 @@ TEST_F(MutateAndReadIntegrationTest, DeleteAndCommit) {
                                  2, "test-first-name-2", "test-last-name-2")));
 }
 
+/// @test Verify that read-write transactions with multiple statements work.
+TEST_F(MutateAndReadIntegrationTest, MultipleInserts) {
+  auto commit_result = client_->Commit(
+      MakeReadWriteTransaction(),
+      {InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+           .EmplaceRow(1, "test-fname-1", "test-lname-1")
+           .EmplaceRow(2, "test-fname-2", "test-lname-2")
+           .Build()});
+  EXPECT_STATUS_OK(commit_result);
+
+  auto txn = MakeReadWriteTransaction();
+  auto insert1 = client_->ExecuteSql(
+      txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
+                        "VALUES (@id, @fname, @lname)",
+                        {{"id", Value(3)},
+                         {"fname", Value("test-fname-3")},
+                         {"lname", Value("test-lname-3")}}));
+  EXPECT_STATUS_OK(insert1);
+  auto insert2 = client_->ExecuteSql(
+      txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
+                        "VALUES (@id, @fname, @lname)",
+                        {{"id", Value(4)},
+                         {"fname", Value("test-fname-4")},
+                         {"lname", Value("test-lname-4")}}));
+  EXPECT_STATUS_OK(insert2);
+  auto insert_commit_result = client_->Commit(txn, {});
+  EXPECT_STATUS_OK(insert_commit_result);
+
+  auto reader = client_->Read("Singers", KeySet::All(),
+                              {"SingerId", "FirstName", "LastName"});
+  EXPECT_STATUS_OK(reader);
+
+  using RowType = Row<std::int64_t, std::string, std::string>;
+  std::vector<RowType> returned_rows;
+  if (reader) {
+    int row_number = 0;
+    for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+      returned_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(returned_rows,
+              UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
+                                   RowType(2, "test-fname-2", "test-lname-2"),
+                                   RowType(3, "test-fname-3", "test-lname-3"),
+                                   RowType(4, "test-fname-4", "test-lname-4")));
+}
+
+/// @test Verify that Client::Rollback works as expected.
+TEST_F(MutateAndReadIntegrationTest, TransactionRollback) {
+  auto commit_result = client_->Commit(
+      MakeReadWriteTransaction(),
+      {InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+           .EmplaceRow(1, "test-fname-1", "test-lname-1")
+           .EmplaceRow(2, "test-fname-2", "test-lname-2")
+           .Build()});
+  EXPECT_STATUS_OK(commit_result);
+
+  auto txn = MakeReadWriteTransaction();
+  auto insert1 = client_->ExecuteSql(
+      txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
+                        "VALUES (@id, @fname, @lname)",
+                        {{"id", Value(3)},
+                         {"fname", Value("test-fname-3")},
+                         {"lname", Value("test-lname-3")}}));
+  EXPECT_STATUS_OK(insert1);
+  auto insert2 = client_->ExecuteSql(
+      txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
+                        "VALUES (@id, @fname, @lname)",
+                        {{"id", Value(4)},
+                         {"fname", Value("test-fname-4")},
+                         {"lname", Value("test-lname-4")}}));
+  EXPECT_STATUS_OK(insert2);
+
+  auto reader = client_->Read(txn, "Singers", KeySet::All(),
+                              {"SingerId", "FirstName", "LastName"});
+  EXPECT_STATUS_OK(reader);
+
+  using RowType = Row<std::int64_t, std::string, std::string>;
+  std::vector<RowType> returned_rows;
+  if (reader) {
+    int row_number = 0;
+    for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+      returned_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(returned_rows,
+              UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
+                                   RowType(2, "test-fname-2", "test-lname-2"),
+                                   RowType(3, "test-fname-3", "test-lname-3"),
+                                   RowType(4, "test-fname-4", "test-lname-4")));
+
+  auto insert_rollback_result = client_->Rollback(txn);
+  EXPECT_STATUS_OK(insert_rollback_result);
+
+  returned_rows.clear();
+  reader = client_->Read("Singers", KeySet::All(),
+                         {"SingerId", "FirstName", "LastName"});
+  EXPECT_STATUS_OK(reader);
+  if (reader) {
+    int row_number = 0;
+    for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+      returned_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(returned_rows,
+              UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
+                                   RowType(2, "test-fname-2", "test-lname-2")));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

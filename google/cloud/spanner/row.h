@@ -240,6 +240,23 @@ class Row {
   }
   ///@}
 
+  /**
+   * Allows Google Test to print internal debugging information when test
+   * assertions fail.
+   *
+   * @warning This is intended for debugging and human consumption only, not
+   *   machine consumption as the output format may change without notice.
+   */
+  friend void PrintTo(Row const& r, std::ostream* os) {
+    char const* sep = "{";
+    for (auto const& v : r.values()) {
+      *os << sep;
+      PrintTo(v, os);
+      sep = ", ";
+    }
+    *os << "}";
+  }
+
  private:
   // A helper functor to be used with `internal::ForEach` that adds each
   // element of the values_ tuple to an array of `Value` objects.
