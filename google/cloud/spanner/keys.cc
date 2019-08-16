@@ -14,16 +14,29 @@
 
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/value.h"
+#include <google/protobuf/util/message_differencer.h>
 #include <google/spanner/v1/keys.pb.h>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
+bool operator==(KeySet const& lhs, KeySet const& rhs) {
+  google::protobuf::util::MessageDifferencer differencer;
+  return differencer.Compare(lhs.proto_, rhs.proto_);
+}
+
+bool operator!=(KeySet const& lhs, KeySet const& rhs) { return !(lhs == rhs); }
+
 namespace internal {
 
 ::google::spanner::v1::KeySet ToProto(KeySet keyset) {
   return std::move(keyset.proto_);
+}
+
+KeySet FromProto(::google::spanner::v1::KeySet keyset) {
+  return KeySet(std::move(keyset));
 }
 
 }  // namespace internal
