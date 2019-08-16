@@ -26,7 +26,10 @@ load(
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
-        "//conditions:default": ["-lpthread"],
+        "//conditions:default": [
+            "-lpthread",
+            "-ldl",
+        ],
     }),
     deps = [
         "//google/cloud:google_cloud_cpp_common",

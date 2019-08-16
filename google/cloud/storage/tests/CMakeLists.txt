@@ -21,6 +21,7 @@ set(storage_client_integration_tests
     object_write_streambuf_integration_test.cc
     curl_resumable_upload_session_integration_test.cc
     curl_sign_blob_integration_test.cc
+    error_injection_integration_test.cc
     key_file_integration_test.cc
     object_checksum_integration_test.cc
     object_file_integration_test.cc
@@ -60,6 +61,8 @@ foreach (fname ${storage_client_integration_tests})
                                   nlohmann_json
                                   storage_common_options)
 endforeach ()
+
+target_link_libraries(error_injection_integration_test PRIVATE ${CMAKE_DL_LIBS})
 
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
