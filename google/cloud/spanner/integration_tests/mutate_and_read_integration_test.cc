@@ -33,12 +33,9 @@ using ::testing::UnorderedElementsAre;
 // Use a ::testing::Environment to create the database once.
 class IntegrationTestEnvironment : public ::testing::Environment {
  public:
-  // NOLINTNEXTLINE
-  static std::string const& project_id() { return *project_id_; }
-  // NOLINTNEXTLINE
-  static std::string const& instance_id() { return *instance_id_; }
-  // NOLINTNEXTLINE
-  static std::string const& database_id() { return *database_id_; }
+  static std::string DatabaseName() {
+    return MakeDatabaseName(*project_id_, *instance_id_, *database_id_);
+  }
 
   static std::string RandomTableName() {
     return google::cloud::internal::Sample(*generator_, 16,
@@ -49,24 +46,25 @@ class IntegrationTestEnvironment : public ::testing::Environment {
   void SetUp() override {
     project_id_ = new std::string(
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or(""));
+    ASSERT_FALSE(project_id_->empty());
     instance_id_ = new std::string(
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
             .value_or(""));
+    ASSERT_FALSE(instance_id_->empty());
 
     generator_ = new google::cloud::internal::DefaultPRNG(
         google::cloud::internal::MakeDefaultPRNG());
     database_id_ =
         new std::string(spanner_testing::RandomDatabaseName(*generator_));
 
-    std::cout << "Creating database and table" << std::flush;
+    std::cout << "Creating database and table " << std::flush;
     DatabaseAdminClient admin_client;
     auto database_future = admin_client.CreateDatabase(
-        project_id(), instance_id(), database_id(), {R"""(CREATE TABLE Singers (
+        *project_id_, *instance_id_, *database_id_, {R"""(CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,
                                 FirstName  STRING(1024),
                                 LastName   STRING(1024)
                              ) PRIMARY KEY (SingerId))"""});
-
     int i = 0;
     int const timeout = 120;
     while (++i < timeout) {
@@ -86,7 +84,7 @@ class IntegrationTestEnvironment : public ::testing::Environment {
   void TearDown() override {
     DatabaseAdminClient admin_client;
     auto drop_status =
-        admin_client.DropDatabase(project_id(), instance_id(), database_id());
+        admin_client.DropDatabase(*project_id_, *instance_id_, *database_id_);
     EXPECT_STATUS_OK(drop_status);
   }
 
@@ -104,16 +102,12 @@ google::cloud::internal::DefaultPRNG* IntegrationTestEnvironment::generator_;
 
 class MutateAndReadIntegrationTest : public ::testing::Test {
  public:
-  void SetUp() override {
-    auto project_id = IntegrationTestEnvironment::project_id();
-    auto instance_id = IntegrationTestEnvironment::instance_id();
-    ASSERT_FALSE(project_id.empty());
-    ASSERT_FALSE(instance_id.empty());
-
-    auto database_id = IntegrationTestEnvironment::database_id();
+  static void SetUpTestSuite() {
     client_ = google::cloud::internal::make_unique<Client>(
-        MakeConnection(MakeDatabaseName(project_id, instance_id, database_id)));
+        MakeConnection(IntegrationTestEnvironment::DatabaseName()));
+  }
 
+  void SetUp() override {
     auto txn = MakeReadWriteTransaction();
     auto reader = client_->ExecuteSql(
         txn, SqlStatement("DELETE FROM Singers WHERE true;"));
@@ -122,9 +116,13 @@ class MutateAndReadIntegrationTest : public ::testing::Test {
     EXPECT_STATUS_OK(commit);
   }
 
+  static void TearDownTestSuite() { client_ = nullptr; }
+
  protected:
-  std::unique_ptr<Client> client_;
+  static std::unique_ptr<Client> client_;
 };
+
+std::unique_ptr<Client> MutateAndReadIntegrationTest::client_;
 
 /// @test Verify the basic insert operations for transaction commits.
 TEST_F(MutateAndReadIntegrationTest, InsertAndCommit) {
