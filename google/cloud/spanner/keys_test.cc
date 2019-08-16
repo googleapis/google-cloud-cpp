@@ -25,67 +25,20 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-TEST(KeySetTest, NoKeys) {
-  ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-      )pb",
-      &expected));
-  KeySet no_keys;
-  ::google::spanner::v1::KeySet result = internal::ToProto(no_keys);
-  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+TEST(BoundTest, MakeBoundClosed) {
+  std::string key_value("key0");
+  auto bound = MakeBoundClosed(MakeRow(key_value));
+  EXPECT_EQ(key_value, bound.key().get<0>());
+  EXPECT_TRUE(bound.IsClosed());
 }
 
-TEST(KeySetTest, AllKeys) {
-  ::google::spanner::v1::KeySet expected;
-  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-      R"pb(
-        all: true
-      )pb",
-      &expected));
-  auto all_keys = KeySet::All();
-  ::google::spanner::v1::KeySet result = internal::ToProto(all_keys);
-  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
-}
-
-TEST(KeySetTest, EqualityEmpty) {
-  KeySet expected;
-  KeySet actual;
-  EXPECT_EQ(expected, actual);
-}
-
-TEST(KeySetTest, EqualityAll) {
-  KeySet expected = KeySet::All();
-  KeySet empty;
-  EXPECT_NE(expected, empty);
-  KeySet actual = KeySet::All();
-  EXPECT_EQ(expected, actual);
-}
-
-TEST(KeySetTest, EqualityKeys) {
-  auto ksb0 = KeySetBuilder<Row<std::string, std::string>>();
-  ksb0.Add(MakeRow("foo0", "bar0"));
-  ksb0.Add(MakeRow("foo1", "bar1"));
-
-  auto ksb1 = KeySetBuilder<Row<std::string, std::string>>();
-  ksb1.Add(MakeRow("foo0", "bar0"));
-  EXPECT_NE(ksb0.Build(), ksb1.Build());
-  ksb1.Add(MakeRow("foo1", "bar1"));
-  EXPECT_EQ(ksb0.Build(), ksb1.Build());
-}
-
-TEST(KeySetTest, EqualityKeyRanges) {
-  auto range0 = MakeKeyRangeClosed(MakeRow("start00", "start01"),
-                                   MakeRow("end00", "end01"));
-  auto range1 = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
-                             MakeBoundOpen(MakeRow("end10", "end11")));
-  auto ksb0 = KeySetBuilder<Row<std::string, std::string>>();
-  ksb0.Add(range0).Add(range1);
-  auto ksb1 = KeySetBuilder<Row<std::string, std::string>>();
-  ksb1.Add(range0);
-  EXPECT_NE(ksb0.Build(), ksb1.Build());
-  ksb1.Add(range1);
-  EXPECT_EQ(ksb0.Build(), ksb1.Build());
+TEST(BoundTest, MakeBoundOpen) {
+  std::string key_value_0("key0");
+  std::int64_t key_value_1(42);
+  auto bound = MakeBoundOpen(MakeRow(key_value_0, key_value_1));
+  EXPECT_EQ(key_value_0, bound.key().get<0>());
+  EXPECT_EQ(key_value_1, bound.key().get<1>());
+  EXPECT_TRUE(bound.IsOpen());
 }
 
 TEST(KeyRangeTest, ConstructorBoundModeUnspecified) {
@@ -98,22 +51,6 @@ TEST(KeyRangeTest, ConstructorBoundModeUnspecified) {
   EXPECT_TRUE(closed_range.start().IsClosed());
   EXPECT_EQ(end_value, closed_range.end().key().get<0>());
   EXPECT_TRUE(closed_range.end().IsClosed());
-}
-
-TEST(KeyRangeBoundTest, MakeBoundClosed) {
-  std::string key_value("key0");
-  auto bound = MakeBoundClosed(MakeRow(key_value));
-  EXPECT_EQ(key_value, bound.key().get<0>());
-  EXPECT_TRUE(bound.IsClosed());
-}
-
-TEST(KeyRangeBoundTest, MakeBoundOpen) {
-  std::string key_value_0("key0");
-  std::int64_t key_value_1(42);
-  auto bound = MakeBoundOpen(MakeRow(key_value_0, key_value_1));
-  EXPECT_EQ(key_value_0, bound.key().get<0>());
-  EXPECT_EQ(key_value_1, bound.key().get<1>());
-  EXPECT_TRUE(bound.IsOpen());
 }
 
 TEST(KeyRangeTest, ConstructorClosedClosed) {
@@ -159,6 +96,94 @@ TEST(KeyRangeTest, ConstructorOpenOpen) {
   EXPECT_TRUE(range.start().IsOpen());
   EXPECT_EQ(end_value, range.end().key().get<0>());
   EXPECT_TRUE(range.end().IsOpen());
+}
+
+TEST(KeySetTest, NoKeys) {
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+      )pb",
+      &expected));
+  KeySet no_keys;
+  ::google::spanner::v1::KeySet result = internal::ToProto(no_keys);
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+  EXPECT_EQ(internal::FromProto(expected), no_keys);
+}
+
+TEST(KeySetTest, AllKeys) {
+  ::google::spanner::v1::KeySet expected;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        all: true
+      )pb",
+      &expected));
+  auto all_keys = KeySet::All();
+  ::google::spanner::v1::KeySet result = internal::ToProto(all_keys);
+  EXPECT_THAT(result, spanner_testing::IsProtoEqual(expected));
+  EXPECT_EQ(internal::FromProto(expected), all_keys);
+}
+
+TEST(KeySetTest, EqualityEmpty) {
+  KeySet expected;
+  KeySet actual;
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(KeySetTest, EqualityAll) {
+  KeySet expected = KeySet::All();
+  KeySet empty;
+  EXPECT_NE(expected, empty);
+  KeySet actual = KeySet::All();
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(KeySetTest, EqualityKeys) {
+  auto ksb0 = KeySetBuilder<Row<std::string, std::string>>();
+  ksb0.Add(MakeRow("foo0", "bar0"));
+  ksb0.Add(MakeRow("foo1", "bar1"));
+
+  auto ksb1 = KeySetBuilder<Row<std::string, std::string>>();
+  ksb1.Add(MakeRow("foo0", "bar0"));
+  EXPECT_NE(ksb0.Build(), ksb1.Build());
+  ksb1.Add(MakeRow("foo1", "bar1"));
+  EXPECT_EQ(ksb0.Build(), ksb1.Build());
+}
+
+TEST(KeySetTest, EqualityKeyRanges) {
+  auto range0 = MakeKeyRangeClosed(MakeRow("start00", "start01"),
+                                   MakeRow("end00", "end01"));
+  auto range1 = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
+                             MakeBoundOpen(MakeRow("end10", "end11")));
+  auto ksb0 = KeySetBuilder<Row<std::string, std::string>>();
+  ksb0.Add(range0).Add(range1);
+  auto ksb1 = KeySetBuilder<Row<std::string, std::string>>();
+  ksb1.Add(range0);
+  EXPECT_NE(ksb0.Build(), ksb1.Build());
+  ksb1.Add(range1);
+  EXPECT_EQ(ksb0.Build(), ksb1.Build());
+}
+
+TEST(KeySetTest, RoundTripProtos) {
+  auto test_cases = {
+      KeySetBuilder<Row<>>().Build(),                  //
+      KeySetBuilder<Row<std::int64_t>>()               //
+          .Add(MakeRow(42))                            //
+          .Build(),                                    //
+      KeySetBuilder<Row<std::int64_t>>()               //
+          .Add(MakeRow(42))                            //
+          .Add(MakeRow(123))                           //
+          .Build(),                                    //
+      KeySetBuilder<Row<std::int64_t, std::string>>()  //
+          .Build(),                                    //
+      KeySetBuilder<Row<std::int64_t, std::string>>()  //
+          .Add(MakeRow(42, "hi"))                      //
+          .Add(MakeRow(123, "bye"))                    //
+          .Build(),                                    //
+  };
+
+  for (auto const& tc : test_cases) {
+    EXPECT_EQ(tc, internal::FromProto(internal::ToProto(tc)));
+  }
 }
 
 TEST(KeySetBuilderTest, ConstructorSingleKey) {
