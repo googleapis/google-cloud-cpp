@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
 
+#include "google/cloud/spanner/version.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 

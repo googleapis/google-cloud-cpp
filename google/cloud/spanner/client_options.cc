@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/client_options.h"
+#include "google/cloud/internal/getenv.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -21,7 +23,20 @@ inline namespace SPANNER_CLIENT_NS {
 ClientOptions::ClientOptions(
     std::shared_ptr<grpc::ChannelCredentials> credentials)
     : credentials_(std::move(credentials)),
-      admin_endpoint_("spanner.googleapis.com") {}
+      endpoint_("spanner.googleapis.com") {
+  auto tracing =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
+  if (tracing.has_value()) {
+    std::istringstream is{*tracing};
+    std::string token;
+    while (std::getline(is, token, ',')) {
+      tracing_components_.insert(token);
+    }
+  }
+  clog_enabled_ =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
+          .has_value();
+}
 
 ClientOptions::ClientOptions()
     : ClientOptions(grpc::GoogleDefaultCredentials()) {}

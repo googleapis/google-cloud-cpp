@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
@@ -39,71 +40,6 @@ using ::testing::SetArgPointee;
 
 namespace spanner_proto = ::google::spanner::v1;
 
-class MockSpannerStub : public internal::SpannerStub {
- public:
-  MOCK_METHOD2(CreateSession, StatusOr<spanner_proto::Session>(
-                                  grpc::ClientContext&,
-                                  spanner_proto::CreateSessionRequest const&));
-
-  MOCK_METHOD2(GetSession, StatusOr<spanner_proto::Session>(
-                               grpc::ClientContext&,
-                               spanner_proto::GetSessionRequest const&));
-
-  MOCK_METHOD2(ListSessions, StatusOr<spanner_proto::ListSessionsResponse>(
-                                 grpc::ClientContext&,
-                                 spanner_proto::ListSessionsRequest const&));
-
-  MOCK_METHOD2(DeleteSession,
-               Status(grpc::ClientContext&,
-                      spanner_proto::DeleteSessionRequest const&));
-
-  MOCK_METHOD2(ExecuteSql, StatusOr<spanner_proto::ResultSet>(
-                               grpc::ClientContext&,
-                               spanner_proto::ExecuteSqlRequest const&));
-
-  MOCK_METHOD2(
-      ExecuteStreamingSql,
-      std::unique_ptr<
-          grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>(
-          grpc::ClientContext&, spanner_proto::ExecuteSqlRequest const&));
-
-  MOCK_METHOD2(ExecuteBatchDml,
-               StatusOr<spanner_proto::ExecuteBatchDmlResponse>(
-                   grpc::ClientContext&,
-                   spanner_proto::ExecuteBatchDmlRequest const&));
-
-  MOCK_METHOD2(Read,
-               StatusOr<spanner_proto::ResultSet>(
-                   grpc::ClientContext&, spanner_proto::ReadRequest const&));
-
-  MOCK_METHOD2(
-      StreamingRead,
-      std::unique_ptr<
-          grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>(
-          grpc::ClientContext&, spanner_proto::ReadRequest const&));
-
-  MOCK_METHOD2(BeginTransaction,
-               StatusOr<spanner_proto::Transaction>(
-                   grpc::ClientContext&,
-                   spanner_proto::BeginTransactionRequest const&));
-
-  MOCK_METHOD2(Commit,
-               StatusOr<spanner_proto::CommitResponse>(
-                   grpc::ClientContext&, spanner_proto::CommitRequest const&));
-
-  MOCK_METHOD2(Rollback, Status(grpc::ClientContext&,
-                                spanner_proto::RollbackRequest const&));
-
-  MOCK_METHOD2(PartitionQuery,
-               StatusOr<spanner_proto::PartitionResponse>(
-                   grpc::ClientContext&,
-                   spanner_proto::PartitionQueryRequest const&));
-
-  MOCK_METHOD2(PartitionRead, StatusOr<spanner_proto::PartitionResponse>(
-                                  grpc::ClientContext&,
-                                  spanner_proto::PartitionReadRequest const&));
-};
-
 class MockGrpcReader
     : public ::grpc::ClientReaderInterface<spanner_proto::PartialResultSet> {
  public:
@@ -114,7 +50,7 @@ class MockGrpcReader
 };
 
 TEST(ConnectionImplTest, ReadGetSessionFailure) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -138,7 +74,7 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
 }
 
 TEST(ConnectionImplTest, ReadStreamingReadFailure) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -173,7 +109,7 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
 }
 
 TEST(ConnectionImplTest, ReadSuccess) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -238,7 +174,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
 }
 
 TEST(ConnectionImplTest, ExecuteSqlGetSessionFailure) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -259,7 +195,7 @@ TEST(ConnectionImplTest, ExecuteSqlGetSessionFailure) {
 }
 
 TEST(ConnectionImplTest, ExecuteSqlStreamingReadFailure) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -291,7 +227,7 @@ TEST(ConnectionImplTest, ExecuteSqlStreamingReadFailure) {
 }
 
 TEST(ConnectionImplTest, ExecuteSqlReadSuccess) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -353,7 +289,7 @@ TEST(ConnectionImplTest, ExecuteSqlReadSuccess) {
 }
 
 TEST(ConnectionImplTest, CommitGetSessionFailure) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -372,7 +308,7 @@ TEST(ConnectionImplTest, CommitGetSessionFailure) {
 }
 
 TEST(ConnectionImplTest, CommitCommitFailure) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -398,7 +334,7 @@ TEST(ConnectionImplTest, CommitCommitFailure) {
 }
 
 TEST(ConnectionImplTest, CommitTransactionId) {
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto database_name =
       MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id");
@@ -434,7 +370,7 @@ TEST(ConnectionImplTest, CommitTransactionId) {
 TEST(ConnectionImplTest, RollbackGetSessionFailure) {
   auto database_name = MakeDatabaseName("project", "instance", "database");
 
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(Invoke(
           [&database_name](grpc::ClientContext&,
@@ -455,7 +391,7 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
   auto database_name = MakeDatabaseName("project", "instance", "database");
   std::string const session_name = "test-session-name";
 
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(Invoke([&database_name, &session_name](
                            grpc::ClientContext&,
@@ -477,7 +413,7 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
   auto database_name = MakeDatabaseName("project", "instance", "database");
   std::string const session_name = "test-session-name";
 
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(Invoke([&database_name, &session_name](
                            grpc::ClientContext&,
@@ -502,7 +438,7 @@ TEST(ConnectionImplTest, RollbackFailure) {
   std::string const session_name = "test-session-name";
   std::string const transaction_id = "test-txn-id";
 
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(Invoke([&database_name, &session_name](
                            grpc::ClientContext&,
@@ -539,7 +475,7 @@ TEST(ConnectionImplTest, RollbackSuccess) {
   std::string const session_name = "test-session-name";
   std::string const transaction_id = "test-txn-id";
 
-  auto mock = std::make_shared<MockSpannerStub>();
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(Invoke([&database_name, &session_name](
                            grpc::ClientContext&,

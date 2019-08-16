@@ -103,8 +103,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
 
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
     ClientOptions const& options) {
-  auto channel =
-      grpc::CreateChannel(options.admin_endpoint(), options.credentials());
+  auto channel = grpc::CreateChannel(options.endpoint(), options.credentials());
   auto spanner_grpc_stub = gcsa::DatabaseAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);

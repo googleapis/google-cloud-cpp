@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/logging_spanner_stub.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/log.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 
 namespace google {
@@ -238,11 +240,22 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 }  // namespace
 
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    std::shared_ptr<grpc::ChannelCredentials> const& creds,
-    std::string const& endpoint) {
-  auto spanner_grpc_stub =
-      spanner_proto::Spanner::NewStub(grpc::CreateChannel(endpoint, creds));
-  return std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
+    ClientOptions const& options) {
+  if (options.clog_enabled()) {
+    google::cloud::LogSink::EnableStdClog();
+  }
+
+  auto spanner_grpc_stub = spanner_proto::Spanner::NewStub(
+      grpc::CreateChannel(options.endpoint(), options.credentials()));
+
+  auto stub =
+      std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
+
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    return std::make_shared<LoggingSpannerStub>(std::move(stub));
+  }
+  return stub;
 }
 
 }  // namespace internal

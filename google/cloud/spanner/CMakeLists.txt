@@ -109,6 +109,8 @@ add_library(spanner_client
             internal/database_admin_stub.h
             internal/date.cc
             internal/date.h
+            internal/logging_spanner_stub.cc
+            internal/logging_spanner_stub.h
             internal/merge_chunk.cc
             internal/merge_chunk.h
             internal/partial_result_set_reader.cc
@@ -138,6 +140,7 @@ add_library(spanner_client
             sql_partition.h
             sql_statement.cc
             sql_statement.h
+            testing/mock_spanner_stub.h
             timestamp.h
             transaction.cc
             transaction.h
@@ -209,6 +212,7 @@ function (spanner_client_define_tests)
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc
         internal/date_test.cc
+        internal/logging_spanner_stub_test.cc
         internal/merge_chunk_test.cc
         internal/partial_result_set_reader_test.cc
         internal/polling_loop_test.cc

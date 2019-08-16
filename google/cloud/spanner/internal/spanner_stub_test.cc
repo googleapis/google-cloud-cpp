@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/log.h"
+#include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,15 +24,42 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::testing::AnyOf;
+
 TEST(SpannerStub, CreateDefaultStub) {
   auto stub =
       CreateDefaultSpannerStub(grpc::GoogleDefaultCredentials(), "localhost");
   EXPECT_NE(stub, nullptr);
 }
 
-// TODO(#141) There aren't a lot of sensible unit tests we can write for this
-// class, but once Client is checked in, we should use integration tests to
-// cover its functionality.
+TEST(SpannerStub, CreateDefaultStubWithLogging) {
+  auto backend =
+      std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
+  auto id = google::cloud::LogSink::Instance().AddBackend(backend);
+
+  auto stub =
+      CreateDefaultSpannerStub(ClientOptions(grpc::InsecureChannelCredentials())
+                                   .set_endpoint("localhost:1")
+                                   .enable_tracing("rpc"));
+  EXPECT_NE(stub, nullptr);
+
+  grpc::ClientContext context;
+  context.set_deadline(std::chrono::system_clock::now() +
+                       std::chrono::milliseconds(5));
+  auto session =
+      stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
+  EXPECT_THAT(session.status().code(),
+              AnyOf(StatusCode::kUnavailable, StatusCode::kDeadlineExceeded));
+
+  auto const& lines = backend->log_lines;
+  auto count = std::count_if(
+      lines.begin(), lines.end(), [&session](std::string const& line) {
+        return line.find(session.status().message()) != std::string::npos;
+      });
+  EXPECT_NE(0, count);
+
+  google::cloud::LogSink::Instance().RemoveBackend(id);
+}
 
 }  // namespace
 }  // namespace internal

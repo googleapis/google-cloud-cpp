@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H_
 
+#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -98,11 +99,19 @@ class SpannerStub {
 };
 
 /**
- * Factory method to create a default stub.
+ * Factory method to create a default stub from ClientOptions
  */
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
+    ClientOptions const& options);
+
+/**
+ * Factory method to create a default stub.
+ */
+inline std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
     std::shared_ptr<grpc::ChannelCredentials> const& creds,
-    std::string const& endpoint);
+    std::string const& endpoint) {
+  return CreateDefaultSpannerStub(ClientOptions(creds).set_endpoint(endpoint));
+}
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

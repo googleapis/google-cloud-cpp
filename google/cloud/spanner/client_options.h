@@ -21,6 +21,7 @@
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <cstdint>
+#include <set>
 #include <string>
 
 namespace google {
@@ -46,15 +47,39 @@ class ClientOptions {
     return credentials_;
   }
 
-  ClientOptions& set_admin_endpoint(std::string v) {
-    admin_endpoint_ = std::move(v);
+  ClientOptions& set_endpoint(std::string v) {
+    endpoint_ = std::move(v);
     return *this;
   }
-  std::string const& admin_endpoint() const { return admin_endpoint_; }
+  std::string const& endpoint() const { return endpoint_; }
+
+  bool clog_enabled() const { return clog_enabled_; }
+  ClientOptions& enable_clog() {
+    clog_enabled_ = true;
+    return *this;
+  }
+  ClientOptions& disable_clog() {
+    clog_enabled_ = false;
+    return *this;
+  }
+
+  bool tracing_enabled(std::string const& component) const {
+    return tracing_components_.find(component) != tracing_components_.end();
+  }
+  ClientOptions& enable_tracing(std::string const& component) {
+    tracing_components_.insert(component);
+    return *this;
+  }
+  ClientOptions& disable_tracing(std::string const& component) {
+    tracing_components_.erase(component);
+    return *this;
+  }
 
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
-  std::string admin_endpoint_;
+  std::string endpoint_;
+  bool clog_enabled_ = false;
+  std::set<std::string> tracing_components_;
 };
 
 /// Options passed to `Client::Read` or `Client::PartitionRead`.
