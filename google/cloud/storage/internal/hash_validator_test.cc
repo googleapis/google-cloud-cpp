@@ -326,6 +326,14 @@ TEST(CreateHashValidator, Write_Both) {
 
   validator = CreateHashValidator(
       ResumableUploadRequest("test-bucket", "test-object")
+          .set_multiple_options(DisableCrc32cChecksum(), DisableMD5Hash()));
+  UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
+  result = std::move(*validator).Finish();
+  EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_MD5_HASH));
+  EXPECT_THAT(result.computed, HasSubstr(QUICK_FOX_CRC32C_CHECKSUM));
+
+  validator = CreateHashValidator(
+      ResumableUploadRequest("test-bucket", "test-object")
           .set_multiple_options(DisableCrc32cChecksum(false),
                                 DisableMD5Hash(false)));
   UpdateValidator(*validator, "The quick brown fox jumps over the lazy dog");
