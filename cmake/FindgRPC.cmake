@@ -18,7 +18,7 @@
 FindgRPC
 --------
 
-Locate and configure the gRPC library.
+Locate and configure the ``gRPC`` library.
 
 The following variables can be set and are optional:
 
@@ -35,7 +35,7 @@ Defines the following variables:
 ``gRPC_VERSION``
   Version of package found.
 
-The following :prop_tgt:`IMPORTED` targets are also defined:
+The following ``IMPORTED`` targets are also defined:
 
 ``gRPC::grpc++``
   The gRPC C++ library.
