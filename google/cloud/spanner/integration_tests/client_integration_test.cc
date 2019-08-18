@@ -100,7 +100,7 @@ std::string* IntegrationTestEnvironment::instance_id_;
 std::string* IntegrationTestEnvironment::database_id_;
 google::cloud::internal::DefaultPRNG* IntegrationTestEnvironment::generator_;
 
-class MutateAndReadIntegrationTest : public ::testing::Test {
+class ClientIntegrationTest : public ::testing::Test {
  public:
   static void SetUpTestSuite() {
     client_ = google::cloud::internal::make_unique<Client>(
@@ -122,10 +122,10 @@ class MutateAndReadIntegrationTest : public ::testing::Test {
   static std::unique_ptr<Client> client_;
 };
 
-std::unique_ptr<Client> MutateAndReadIntegrationTest::client_;
+std::unique_ptr<Client> ClientIntegrationTest::client_;
 
 /// @test Verify the basic insert operations for transaction commits.
-TEST_F(MutateAndReadIntegrationTest, InsertAndCommit) {
+TEST_F(ClientIntegrationTest, InsertAndCommit) {
   auto commit_result = client_->Commit(
       MakeReadWriteTransaction(),
       {InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
@@ -158,7 +158,7 @@ TEST_F(MutateAndReadIntegrationTest, InsertAndCommit) {
 }
 
 /// @test Verify the basic delete mutations work.
-TEST_F(MutateAndReadIntegrationTest, DeleteAndCommit) {
+TEST_F(ClientIntegrationTest, DeleteAndCommit) {
   auto commit_result = client_->Commit(
       MakeReadWriteTransaction(),
       {InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
@@ -195,7 +195,7 @@ TEST_F(MutateAndReadIntegrationTest, DeleteAndCommit) {
 }
 
 /// @test Verify that read-write transactions with multiple statements work.
-TEST_F(MutateAndReadIntegrationTest, MultipleInserts) {
+TEST_F(ClientIntegrationTest, MultipleInserts) {
   auto commit_result = client_->Commit(
       MakeReadWriteTransaction(),
       {InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
@@ -246,7 +246,7 @@ TEST_F(MutateAndReadIntegrationTest, MultipleInserts) {
 }
 
 /// @test Verify that Client::Rollback works as expected.
-TEST_F(MutateAndReadIntegrationTest, TransactionRollback) {
+TEST_F(ClientIntegrationTest, TransactionRollback) {
   auto commit_result = client_->Commit(
       MakeReadWriteTransaction(),
       {InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
@@ -316,7 +316,7 @@ TEST_F(MutateAndReadIntegrationTest, TransactionRollback) {
 }
 
 /// @test Verify the basics of RunTransaction().
-TEST_F(MutateAndReadIntegrationTest, RunTransaction) {
+TEST_F(ClientIntegrationTest, RunTransaction) {
   Transaction::ReadWriteOptions rw_opts{};
 
   // Insert SingerIds 100, 102, and 199.
