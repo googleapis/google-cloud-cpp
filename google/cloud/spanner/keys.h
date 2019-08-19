@@ -71,7 +71,9 @@ class Bound {
   Bound(Bound&& key_range) = default;
   Bound& operator=(Bound&& rhs) = default;
 
-  RowType const& key() const { return key_; }
+  RowType const& key() const& { return key_; }
+  RowType&& key() && { return std::move(key_); }
+
   bool IsClosed() const { return mode_ == Mode::kClosed; }
   bool IsOpen() const { return mode_ == Mode::kOpen; }
 
@@ -153,8 +155,11 @@ class KeyRange {
   KeyRange(KeyRange&& key_range) = default;
   KeyRange& operator=(KeyRange&& rhs) = default;
 
-  Bound<RowType> const& start() const { return start_; }
-  Bound<RowType> const& end() const { return end_; }
+  Bound<RowType> const& start() const& { return start_; }
+  Bound<RowType>&& start() && { return std::move(start_); }
+
+  Bound<RowType> const& end() const& { return end_; }
+  Bound<RowType>&& end() && { return std::move(end_); }
 
   friend bool operator==(KeyRange const& lhs, KeyRange const& rhs) {
     return lhs.start_ == rhs.start_ && lhs.end_ == rhs.end_;
@@ -223,26 +228,11 @@ class KeySet {
    */
   KeySet() = default;
 
-  /**
-   * Constructs a `KeySet` from a `KeySetBuilder`.
-   * @tparam RowType spanner::Row<Types...> that corresponds to the desired
-   * index definition.
-   */
-  template <typename RowType>
-  explicit KeySet(KeySetBuilder<RowType> const& builder) {
-    for (auto& key : builder.keys()) {
-      Append(proto_.add_keys(), std::move(key).values());
-    }
-    for (auto& range : builder.key_ranges()) {
-      auto* kr = proto_.add_ranges();
-      auto* start = range.start().IsClosed() ? kr->mutable_start_closed()
-                                             : kr->mutable_start_open();
-      Append(start, std::move(range).start().key().values());
-      auto* end = range.end().IsClosed() ? kr->mutable_end_closed()
-                                         : kr->mutable_end_open();
-      Append(end, std::move(range).end().key().values());
-    }
-  }
+  // Copy and move constructors and assignment operators.
+  KeySet(KeySet const& key_range) = default;
+  KeySet& operator=(KeySet const& rhs) = default;
+  KeySet(KeySet&& key_range) = default;
+  KeySet& operator=(KeySet&& rhs) = default;
 
   /// @name Equality
   /// Order of keys and key ranges in the `KeySet` is considered.
@@ -257,13 +247,6 @@ class KeySet {
 
   friend ::google::spanner::v1::KeySet internal::ToProto(KeySet keyset);
   friend KeySet internal::FromProto(::google::spanner::v1::KeySet keyset);
-
-  template <std::size_t N>
-  static void Append(google::protobuf::ListValue* lv, std::array<Value, N> a) {
-    for (auto& v : a) {
-      *lv->add_values() = internal::ToProto(std::move(v)).second;
-    }
-  }
 
   google::spanner::v1::KeySet proto_;
 };
@@ -316,6 +299,12 @@ class KeySetBuilder {
    */
   KeySetBuilder() = default;
 
+  /// Copy and move constructors and assignment operators.
+  KeySetBuilder(KeySetBuilder const& key_range) = default;
+  KeySetBuilder& operator=(KeySetBuilder const& rhs) = default;
+  KeySetBuilder(KeySetBuilder&& key_range) = default;
+  KeySetBuilder& operator=(KeySetBuilder&& rhs) = default;
+
   /**
    * Constructs a `KeySetBuilder` with a single key `spanner::Row`.
    */
@@ -342,32 +331,66 @@ class KeySetBuilder {
     return key_ranges_;
   }
 
-  /**
-   * Adds a key `spanner::Row` to the `KeySetBuilder`.
-   */
-  KeySetBuilder& Add(RowType key) {
+  /// Adds a key `spanner::Row` to the `KeySetBuilder`.
+  KeySetBuilder&& Add(RowType key) && {
+    keys_.push_back(std::move(key));
+    return std::move(*this);
+  }
+
+  /// Adds a key `spanner::Row` to the `KeySetBuilder`.
+  KeySetBuilder& Add(RowType key) & {
     keys_.push_back(std::move(key));
     return *this;
   }
 
-  /**
-   * Adds a `KeyRange` to the `KeySetBuilder`.
-   */
-  KeySetBuilder& Add(KeyRange<RowType> key_range) {
+  /// Adds a `KeyRange` to the `KeySetBuilder`.
+  KeySetBuilder&& Add(KeyRange<RowType> key_range) && {
+    key_ranges_.push_back(std::move(key_range));
+    return std::move(*this);
+  }
+
+  /// Adds a `KeyRange` to the `KeySetBuilder`.
+  KeySetBuilder& Add(KeyRange<RowType> key_range) & {
     key_ranges_.push_back(std::move(key_range));
     return *this;
   }
 
-  /**
-   * Builds a type-erased `KeySet` from the contents of the `KeySetBuilder`.
-   *
-   */
-  KeySet Build() const { return KeySet(*this); }
+  /// Builds a type-erased `KeySet` from the contents of the `KeySetBuilder`.
+  KeySet Build() && {
+    google::spanner::v1::KeySet ks;
+    for (auto& key : keys_) {
+      Append(ks.add_keys(), std::move(key).values());
+    }
+    for (auto& range : key_ranges_) {
+      auto* kr = ks.add_ranges();
+      auto* start = range.start().IsClosed() ? kr->mutable_start_closed()
+                                             : kr->mutable_start_open();
+      Append(start, std::move(range).start().key().values());
+      auto* end = range.end().IsClosed() ? kr->mutable_end_closed()
+                                         : kr->mutable_end_open();
+      Append(end, std::move(range).end().key().values());
+    }
+    return internal::FromProto(std::move(ks));
+  }
+
+  /// Builds a type-erased `KeySet` from the contents of the `KeySetBuilder`.
+  KeySet Build() const& {
+    auto copy = *this;
+    return std::move(copy).Build();
+  }
 
   // TODO(#322): Add methods to insert ranges of Keys and KeyRanges.
   // TODO(#323): Add methods to remove Keys or KeyRanges.
 
  private:
+  template <std::size_t N>
+  static void Append(google::protobuf::ListValue* lv,
+                     std::array<Value, N>&& a) {
+    for (auto& v : a) {
+      *lv->add_values() = internal::ToProto(std::move(v)).second;
+    }
+  }
+
   std::vector<RowType> keys_;
   std::vector<KeyRange<RowType>> key_ranges_;
 };
