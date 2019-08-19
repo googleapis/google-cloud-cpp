@@ -225,7 +225,7 @@ echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 # is an error, so disabling from this point on is the right choice.
 set +e
 mkdir -p "${BUILD_OUTPUT}"
-if docker build "${docker_build_flags[@]}" ci \
+if timeout 3600s docker build "${docker_build_flags[@]}" ci \
     >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
    update_cache="true"
 fi
