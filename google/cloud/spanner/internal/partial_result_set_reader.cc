@@ -73,7 +73,7 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
   }
 
   return {FromProto(fields.Get(next_value_type_index_++).type(),
-                    values_.Get(next_value_index_++))};
+                    std::move(*values_.Mutable(next_value_index_++)))};
 }
 
 PartialResultSetReader::~PartialResultSetReader() {
