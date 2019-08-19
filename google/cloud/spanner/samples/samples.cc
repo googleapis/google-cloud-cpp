@@ -139,6 +139,50 @@ void DropDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void InsertData(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "insert-data <project-id> <instance-id> <database-id>");
+  }
+
+  // TODO(#377) - cache the client across sample functions.
+  namespace spanner = google::cloud::spanner;
+  spanner::Client client(spanner::MakeConnection(
+      spanner::MakeDatabaseName(argv[0], argv[1], argv[2])));
+
+  //! [START spanner_insert_data]
+  namespace spanner = google::cloud::spanner;
+  [](spanner::Client client) {
+    auto insert_singers = spanner::InsertMutationBuilder(
+                              "Singers", {"SingerId", "FirstName", "LastName"})
+                              .EmplaceRow(1, "Marc", "Richards")
+                              .EmplaceRow(2, "Catalina", "Smith")
+                              .EmplaceRow(3, "Alice", "Trentor")
+                              .EmplaceRow(4, "Lea", "Martin")
+                              .EmplaceRow(5, "David", "Lomond")
+                              .Build();
+
+    auto insert_albums = spanner::InsertMutationBuilder(
+                             "Albums", {"SingerId", "AlbumId", "AlbumTitle"})
+                             .EmplaceRow(1, 1, "Total Junk")
+                             .EmplaceRow(1, 2, "Go, Go, Go")
+                             .EmplaceRow(2, 1, "Green")
+                             .EmplaceRow(2, 2, "Forever Hold Your Peace")
+                             .EmplaceRow(2, 3, "Terrified")
+                             .Build();
+
+    auto commit_result =
+        client.Commit(spanner::MakeReadWriteTransaction(),
+                      {std::move(insert_singers), std::move(insert_albums)});
+    if (!commit_result) {
+      throw std::runtime_error(commit_result.status().message());
+    }
+    std::cout << "Insert was successful\n";
+  }
+  //! [END spanner_insert_data]
+  (std::move(client));
+}
+
 void DmlStandardInsert(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -146,23 +190,24 @@ void DmlStandardInsert(std::vector<std::string> const& argv) {
   }
 
   // TODO(#377) - cache the client across sample functions.
-  namespace gcs = google::cloud::spanner;
-  gcs::Client client(
-      gcs::MakeConnection(gcs::MakeDatabaseName(argv[0], argv[1], argv[2])));
+  namespace spanner = google::cloud::spanner;
+  spanner::Client client(spanner::MakeConnection(
+      spanner::MakeDatabaseName(argv[0], argv[1], argv[2])));
 
   //! [START spanner_dml_standard_insert]
-  namespace gcs = google::cloud::spanner;
-  [](gcs::Client client) {
-    auto commit_result = gcs::RunTransaction(
-        std::move(client), gcs::Transaction::ReadWriteOptions{},
-        [](gcs::Client client, gcs::Transaction txn) {
+  namespace spanner = google::cloud::spanner;
+  [](spanner::Client client) {
+    auto commit_result = spanner::RunTransaction(
+        std::move(client), spanner::Transaction::ReadWriteOptions{},
+        [](spanner::Client client, spanner::Transaction txn) {
           client.ExecuteSql(
               std::move(txn),
-              gcs::SqlStatement(
+              spanner::SqlStatement(
                   "INSERT INTO Singers (SingerId, FirstName, LastName)"
                   "  VALUES (10, 'Virginia', 'Watson')",
                   {}));
-          return gcs::TransactionAction{gcs::TransactionAction::kCommit, {}};
+          return spanner::TransactionAction{spanner::TransactionAction::kCommit,
+                                            {}};
         });
     if (!commit_result) {
       throw std::runtime_error(commit_result.status().message());
@@ -181,6 +226,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-column", &AddColumn},
       {"query-with-struct", &QueryWithStruct},
       {"drop-database", &DropDatabase},
+      {"insert-data", &InsertData},
       {"dml-standard-insert", &DmlStandardInsert},
   };
 
@@ -243,6 +289,7 @@ void RunAll() {
 
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
+  RunOneCommand({"", "insert-data", project_id, instance_id, database_id});
   RunOneCommand(
       {"", "query-with-struct", project_id, instance_id, database_id});
 
