@@ -70,42 +70,22 @@ std::unique_ptr<HashValidator> CreateHashValidator(bool disable_md5,
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request) {
-  auto disable_md5 = false;
-  auto disable_crc32c = false;
   if (request.RequiresRangeHeader()) {
     return google::cloud::internal::make_unique<NullHashValidator>();
   }
-  if (request.HasOption<DisableMD5Hash>()) {
-    disable_md5 = request.GetOption<DisableMD5Hash>().value();
-    if (!request.HasOption<DisableCrc32cChecksum>()) {
-      disable_crc32c = !disable_md5;
-    }
-  }
-  if (request.HasOption<DisableCrc32cChecksum>()) {
-    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value();
-    if (!request.HasOption<DisableMD5Hash>()) {
-      disable_md5 = !disable_crc32c;
-    }
-  }
+  auto disable_md5 = request.HasOption<DisableMD5Hash>() &&
+                     request.GetOption<DisableMD5Hash>().value();
+  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
+                        request.GetOption<DisableCrc32cChecksum>().value();
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request) {
-  auto disable_md5 = false;
-  auto disable_crc32c = false;
-  if (request.HasOption<DisableMD5Hash>()) {
-    disable_md5 = request.GetOption<DisableMD5Hash>().value();
-    if (!request.HasOption<DisableCrc32cChecksum>()) {
-      disable_crc32c = !disable_md5;
-    }
-  }
-  if (request.HasOption<DisableCrc32cChecksum>()) {
-    disable_crc32c = request.GetOption<DisableCrc32cChecksum>().value();
-    if (!request.HasOption<DisableMD5Hash>()) {
-      disable_md5 = !disable_crc32c;
-    }
-  }
+  auto disable_md5 = request.HasOption<DisableMD5Hash>() &&
+                     request.GetOption<DisableMD5Hash>().value();
+  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
+                        request.GetOption<DisableCrc32cChecksum>().value();
   return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
