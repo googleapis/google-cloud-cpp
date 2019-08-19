@@ -73,14 +73,20 @@ std::unique_ptr<HashValidator> CreateHashValidator(
   if (request.RequiresRangeHeader()) {
     return google::cloud::internal::make_unique<NullHashValidator>();
   }
-  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
-                             request.HasOption<DisableCrc32cChecksum>());
+  auto disable_md5 = request.HasOption<DisableMD5Hash>() &&
+                     request.GetOption<DisableMD5Hash>().value();
+  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
+                        request.GetOption<DisableCrc32cChecksum>().value();
+  return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request) {
-  return CreateHashValidator(request.HasOption<DisableMD5Hash>(),
-                             request.HasOption<DisableCrc32cChecksum>());
+  auto disable_md5 = request.HasOption<DisableMD5Hash>() &&
+                     request.GetOption<DisableMD5Hash>().value();
+  auto disable_crc32c = request.HasOption<DisableCrc32cChecksum>() &&
+                        request.GetOption<DisableCrc32cChecksum>().value();
+  return CreateHashValidator(disable_md5, disable_crc32c);
 }
 
 }  // namespace internal

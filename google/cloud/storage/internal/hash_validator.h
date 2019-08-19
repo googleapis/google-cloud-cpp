@@ -102,6 +102,24 @@ class CompositeValidator : public HashValidator {
 class ReadObjectRangeRequest;
 class ResumableUploadRequest;
 
+/**
+ * @{
+ * The requests accepted by `CreateHashValidator` can be configured with the
+ * `DisableMD5Hash` and `DisableCrc32Checksum` options. You must explicitly
+ * pass these options to disable each respectively.
+ *
+ * The valid combinations are:
+ * - If neither `DisableMD5Hash(true)` nor `DisableCrc32cChecksum(true)` are
+ *   provided, then both MD5Hash and Crc32Checksum are used.
+ * - If only `DisableMD5Hash(true)` is provided, then only Crc32cChecksum is
+ *   used.
+ * - If only `DisableCrc32c(true)` is provided, then only MD5Hash is used.
+ * - If both `DisableMD5Hash(true)` and `DisableCrc32cChecksum(true)` are
+ *   provided, then neither are used.
+ *
+ * Specifying the option with `false` or no argument (default constructor) has
+ * the same effect as not passing the option at all.
+ */
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ReadObjectRangeRequest const& request);
@@ -109,6 +127,7 @@ std::unique_ptr<HashValidator> CreateHashValidator(
 /// Create a hash validator configured by @p request.
 std::unique_ptr<HashValidator> CreateHashValidator(
     ResumableUploadRequest const& request);
+/* @} */
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
