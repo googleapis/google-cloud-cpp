@@ -322,7 +322,8 @@ cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
-        "@com_github_madler_zlib//:z",
+        # Use the same version of zlib that gRPC does.
+        "//external:madler_zlib",
     ] + select({
         ":windows": [],
         "//conditions:default": [

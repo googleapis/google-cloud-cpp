@@ -117,6 +117,12 @@ google_cloud_cpp_deps()
 #   https://github.com/bazelbuild/bazel/issues/1550
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 grpc_deps()
+load("@upb//bazel:workspace_deps.bzl", "upb_deps")
+upb_deps()
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+apple_rules_dependencies()
+load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+apple_support_dependencies()
 ```
 
 Then you can link the libraries from your `BUILD` files:
