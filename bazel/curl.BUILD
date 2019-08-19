@@ -322,6 +322,7 @@ cc_library(
     }),
     visibility = ["//visibility:public"],
     deps = [
+        # Use the same version of zlib that gRPC does.
         "//external:madler_zlib",
     ] + select({
         ":windows": [],
