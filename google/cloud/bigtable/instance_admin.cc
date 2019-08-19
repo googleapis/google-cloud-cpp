@@ -508,8 +508,8 @@ Status InstanceAdmin::DeleteCluster(std::string const& instance_id,
   btadmin::DeleteClusterRequest request;
   request.set_name(ClusterName(instance_id, cluster_id));
 
-  MetadataUpdatePolicy metadata_update_policy(
-      ClusterName(instance_id, cluster_id), MetadataParamTypes::NAME);
+  auto metadata_update_policy = MetadataUpdatePolicy::FromClusterId(
+      instance_id, MetadataParamTypes::NAME, cluster_id);
 
   // This API is not idempotent, lets call it without retry
   ClientUtils::MakeNonIdemponentCall(
