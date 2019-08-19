@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -100,7 +101,11 @@ void AddColumn(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
-void QueryWithStruct(std::vector<std::string> const&) {
+void QueryWithStruct(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "query-with-struct <project-id> <instance-id> <database-id>");
+  }
   // TODO(#188): Add querying part once data client is ready.
   // [START spanner_create_struct_with_data]
   auto singer_info = std::make_tuple(std::make_pair("FirstName", "Elena"),
@@ -134,6 +139,40 @@ void DropDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void DmlStandardInsert(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "dml-standard-insert <project-id> <instance-id> <database-id>");
+  }
+
+  // TODO(#377) - cache the client across sample functions.
+  namespace gcs = google::cloud::spanner;
+  gcs::Client client(
+      gcs::MakeConnection(gcs::MakeDatabaseName(argv[0], argv[1], argv[2])));
+
+  //! [START spanner_dml_standard_insert]
+  namespace gcs = google::cloud::spanner;
+  [](gcs::Client client) {
+    auto commit_result = gcs::RunTransaction(
+        std::move(client), gcs::Transaction::ReadWriteOptions{},
+        [](gcs::Client client, gcs::Transaction txn) {
+          client.ExecuteSql(
+              std::move(txn),
+              gcs::SqlStatement(
+                  "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                  "  VALUES (10, 'Virginia', 'Watson')",
+                  {}));
+          return gcs::TransactionAction{gcs::TransactionAction::kCommit, {}};
+        });
+    if (!commit_result) {
+      throw std::runtime_error(commit_result.status().message());
+    }
+    std::cout << "Insert was successful\n";
+  }
+  //! [END spanner_dml_standard_insert]
+  (std::move(client));
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
@@ -142,9 +181,10 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-column", &AddColumn},
       {"query-with-struct", &QueryWithStruct},
       {"drop-database", &DropDatabase},
+      {"dml-standard-insert", &DmlStandardInsert},
   };
 
-  std::string usage_msg = [&argv, &commands] {
+  static std::string usage_msg = [&argv, &commands] {
     auto last_slash = std::string(argv[0]).find_last_of("/\\");
     auto program = argv[0].substr(last_slash + 1);
     std::string usage;
@@ -205,6 +245,10 @@ void RunAll() {
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
   RunOneCommand(
       {"", "query-with-struct", project_id, instance_id, database_id});
+
+  RunOneCommand(
+      {"", "dml-standard-insert", project_id, instance_id, database_id});
+
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
 
