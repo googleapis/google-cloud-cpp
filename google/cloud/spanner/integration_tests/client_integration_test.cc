@@ -29,6 +29,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::testing::UnorderedElementsAre;
+using ::testing::UnorderedElementsAreArray;
 
 // Use a ::testing::Environment to create the database once.
 class IntegrationTestEnvironment : public ::testing::Environment {
@@ -355,6 +356,62 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
     }
   }
   EXPECT_THAT(ids, UnorderedElementsAre(100, 199));
+}
+
+/// @test Test various forms of ExecuteSql()
+TEST_F(ClientIntegrationTest, ExecuteSql) {
+  {
+    auto insert =
+        client_->ExecuteSql(MakeReadWriteTransaction(),
+                            SqlStatement(R"sql(
+        INSERT INTO Singers (SingerId, FirstName, LastName)
+        VALUES (@id, @fname, @lname))sql",
+                                         {{"id", Value(1)},
+                                          {"fname", Value("test-fname-1")},
+                                          {"lname", Value("test-lname-1")}}));
+    EXPECT_STATUS_OK(insert);
+  }
+
+  using RowType = Row<std::int64_t, std::string, std::string>;
+  std::vector<RowType> expected_rows;
+  auto txn = MakeReadWriteTransaction();
+  for (int i = 2; i != 10; ++i) {
+    auto s = std::to_string(i);
+    auto insert = client_->ExecuteSql(
+        txn, SqlStatement(R"sql(
+        INSERT INTO Singers (SingerId, FirstName, LastName)
+        VALUES (@id, @fname, @lname))sql",
+                          {{"id", Value(i)},
+                           {"fname", Value("test-fname-" + s)},
+                           {"lname", Value("test-lname-" + s)}}));
+    EXPECT_STATUS_OK(insert);
+    expected_rows.push_back(MakeRow(i, "test-fname-" + s, "test-lname-" + s));
+  }
+
+  auto delete_1 = client_->ExecuteSql(txn, SqlStatement(R"sql(
+        DELETE FROM Singers WHERE SingerId = @id)sql",
+                                                        {{"id", Value(1)}}));
+  EXPECT_STATUS_OK(delete_1);
+  auto commit = client_->Commit(txn, {});
+  EXPECT_STATUS_OK(commit);
+
+  auto reader = client_->ExecuteSql(
+      SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers", {}));
+  EXPECT_STATUS_OK(reader);
+
+  using RowType = Row<std::int64_t, std::string, std::string>;
+  std::vector<RowType> actual_rows;
+  if (reader) {
+    int row_number = 0;
+    for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+      actual_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
 }  // namespace
