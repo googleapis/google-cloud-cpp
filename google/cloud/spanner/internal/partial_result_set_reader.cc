@@ -46,7 +46,7 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
   if (finished_) {
     return optional<Value>();
   }
-  if (next_value_index_ >= values_.size()) {
+  while (next_value_index_ >= values_.size()) {
     // Ran out of buffered values - try to read some more from gRPC.
     next_value_index_ = 0;
     auto status = ReadFromStream();
@@ -56,9 +56,8 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
     if (finished_) {
       return optional<Value>();
     }
-    if (values_.empty()) {
-      return Status(StatusCode::kInternal, "response has no values");
-    }
+    // If the response contained any values, the loop will exit, otherwise
+    // continue reading until we do get at least one value.
   }
 
   if (metadata_->row_type().fields().empty()) {

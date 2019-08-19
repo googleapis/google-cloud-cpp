@@ -156,8 +156,8 @@ TEST(PartialResultSetReaderTest, MissingMetadata) {
 }
 
 /**
- * @test Verify the behavior when the received metadata does not contain data
- * nor row type information.
+ * @test Verify the behavior when the response does not contain data nor row
+ * type information.
  */
 TEST(PartialResultSetReaderTest, MissingRowTypeNoData) {
   auto grpc_reader = make_unique<MockGrpcReader>();
@@ -390,6 +390,51 @@ TEST(PartialResultSetReaderTest, MultipleResponses) {
   EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value("user22")));
   EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(99)));
   EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value("99user99")));
+
+  // At end of stream, we get an 'ok' response with no value.
+  auto eos = (*reader)->NextValue();
+  EXPECT_STATUS_OK(eos);
+  EXPECT_FALSE(eos->has_value());
+}
+
+/**
+ * @test Verify the behavior when a response with no values is received.
+ */
+TEST(PartialResultSetReaderTest, ResponseWithNoValues) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  std::array<spanner_proto::PartialResultSet, 3> response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+          }
+        }
+      )pb",
+      &response[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString("", &response[1]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "22" }
+      )pb",
+      &response[2]));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[2]), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  EXPECT_STATUS_OK(reader.status());
+
+  // Verify the returned value is correct.
+  EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(22)));
 
   // At end of stream, we get an 'ok' response with no value.
   auto eos = (*reader)->NextValue();
