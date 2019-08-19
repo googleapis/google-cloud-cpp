@@ -112,10 +112,10 @@ class ResumableUploadRequest;
  * - If neither `DisableMD5Hash(true)` nor `DisableCrc32cChecksum(true)` are
  *   provided, then both MD5Hash and Crc32Checksum are used.
  * - If only `DisableMD5Hash(true)` is provided, then only Crc32cChecksum is
- * used.
+ *   used.
  * - If only `DisableCrc32c(true)` is provided, then only MD5Hash is used.
  * - If both `DisableMD5Hash(true)` and `DisableCrc32cChecksum(true)` are
- * provided, then neither are used.
+ *   provided, then neither are used.
  *
  * Specifying the option with `false` or no argument (default constructor) has
  * the same effect as not passing the option at all.
