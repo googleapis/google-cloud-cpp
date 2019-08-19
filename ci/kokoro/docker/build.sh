@@ -183,7 +183,10 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
   gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
 fi
-gcloud auth configure-docker
+
+if [[ "${RUNNING_CI:-}" == "yes" ]]; then
+  gcloud auth configure-docker
+fi
 
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
@@ -230,7 +233,8 @@ if [[ "$?" != 0 ]]; then
   dump_log "${BUILD_OUTPUT}/create-build-docker-image.log"
 fi
 
-if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
+if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
+   [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   echo "Uploading updated base image for ${DISTRO} $(date)."
   # Do not stop the build on a failure to update the cache.
