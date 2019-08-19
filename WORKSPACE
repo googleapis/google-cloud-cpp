@@ -33,7 +33,7 @@ load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
 
-# These come from grpc_deps().
+# Call the workspace dependency functions defined, but not invoked, in grpc_deps.bzl.
 load("@upb//bazel:workspace_deps.bzl", "upb_deps")
 upb_deps()
 load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
