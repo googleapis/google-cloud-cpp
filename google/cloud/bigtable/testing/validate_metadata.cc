@@ -90,7 +90,7 @@ StatusOr<std::map<std::string, std::string>> ExtractMDFromContext(
 /// A poorman's check if a value matches a glob used in URL patterns.
 bool ValueMatchesPattern(std::string val, std::string pattern) {
   std::string regexified_pattern =
-      regex_replace(pattern, std::regex("\\*"), "[^/]+");
+      regex_replace(pattern, std::regex("\\*"), std::string("[^/]+"));
   return std::regex_match(val, std::regex(regexified_pattern));
 }
 
