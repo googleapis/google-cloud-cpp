@@ -48,16 +48,18 @@ void CreateDatabase(std::vector<std::string> const& argv) {
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
     google::cloud::spanner::DatabaseAdminClient client;
+    google::cloud::spanner::Database database(project_id, instance_id,
+                                              database_id);
     future<StatusOr<google::spanner::admin::database::v1::Database>> future =
-        client.CreateDatabase(project_id, instance_id, database_id,
-                              {R"""(
+        client.CreateDatabase(database, {R"""(
                         CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,
                                 FirstName  STRING(1024),
                                 LastName   STRING(1024),
                                 SingerInfo BYTES(MAX)
                         ) PRIMARY KEY (SingerId))""",
-                               R"""(CREATE TABLE Albums (
+                                         R"""(
+                        CREATE TABLE Albums (
                                 SingerId     INT64 NOT NULL,
                                 AlbumId      INT64 NOT NULL,
                                 AlbumTitle   STRING(MAX)
@@ -67,7 +69,7 @@ void CreateDatabase(std::vector<std::string> const& argv) {
     if (!db) {
       throw std::runtime_error(db.status().message());
     }
-    std::cout << "Created database [" << database_id << "]\n";
+    std::cout << "Created database [" << database << "]\n";
   }
   //! [create-database] [END spanner_create_database]
   (argv[0], argv[1], argv[2]);
@@ -85,11 +87,12 @@ void AddColumn(std::vector<std::string> const& argv) {
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
     google::cloud::spanner::DatabaseAdminClient client;
+    google::cloud::spanner::Database database(project_id, instance_id,
+                                              database_id);
     future<StatusOr<
         google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
         future = client.UpdateDatabase(
-            project_id, instance_id, database_id,
-            {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
+            database, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
         metadata = future.get();
     if (!metadata) {
@@ -128,12 +131,13 @@ void DropDatabase(std::vector<std::string> const& argv) {
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
     google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::Status status =
-        client.DropDatabase(project_id, instance_id, database_id);
+    google::cloud::spanner::Database database(project_id, instance_id,
+                                              database_id);
+    google::cloud::Status status = client.DropDatabase(database);
     if (!status.ok()) {
       throw std::runtime_error(status.message());
     }
-    std::cout << "Database " << database_id << " successfully dropped\n";
+    std::cout << "Database " << database << " successfully dropped\n";
   }
   //! [drop-database] [END spanner_drop_database]
   (argv[0], argv[1], argv[2]);
@@ -147,8 +151,9 @@ void InsertData(std::vector<std::string> const& argv) {
 
   // TODO(#377) - cache the client across sample functions.
   namespace spanner = google::cloud::spanner;
-  spanner::Client client(spanner::MakeConnection(
-      spanner::MakeDatabaseName(argv[0], argv[1], argv[2])));
+
+  spanner::Database db(argv[0], argv[1], argv[2]);
+  spanner::Client client(spanner::MakeConnection(db));
 
   //! [START spanner_insert_data]
   namespace spanner = google::cloud::spanner;
@@ -191,8 +196,8 @@ void DmlStandardInsert(std::vector<std::string> const& argv) {
 
   // TODO(#377) - cache the client across sample functions.
   namespace spanner = google::cloud::spanner;
-  spanner::Client client(spanner::MakeConnection(
-      spanner::MakeDatabaseName(argv[0], argv[1], argv[2])));
+  spanner::Database db(argv[0], argv[1], argv[2]);
+  spanner::Client client(spanner::MakeConnection(db));
 
   //! [START spanner_dml_standard_insert]
   namespace spanner = google::cloud::spanner;

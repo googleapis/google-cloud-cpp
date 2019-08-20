@@ -92,6 +92,8 @@ add_library(spanner_client
             client_options.h
             commit_result.h
             connection.h
+            database.cc
+            database.h
             database_admin_client.cc
             database_admin_client.h
             date.cc
@@ -205,6 +207,7 @@ function (spanner_client_define_tests)
     set(spanner_client_unit_tests
         client_options_test.cc
         client_test.cc
+        database_test.cc
         database_admin_client_test.cc
         date_test.cc
         internal/base64_test.cc

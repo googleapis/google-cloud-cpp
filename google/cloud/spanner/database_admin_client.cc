@@ -29,13 +29,11 @@ DatabaseAdminClient::DatabaseAdminClient(ClientOptions const& client_options)
           internal::CreateDefaultDatabaseAdminStub(client_options))) {}
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
-    std::string const& project_id, std::string const& instance_id,
-    std::string const& database_id,
-    std::vector<std::string> const& extra_statements) {
+    Database const& db, std::vector<std::string> const& extra_statements) {
   grpc::ClientContext context;
   gcsa::CreateDatabaseRequest request;
-  request.set_parent("projects/" + project_id + "/instances/" + instance_id);
-  request.set_create_statement("CREATE DATABASE `" + database_id + "`");
+  request.set_parent(db.ParentName());
+  request.set_create_statement("CREATE DATABASE `" + db.DatabaseId() + "`");
   for (auto const& s : extra_statements) {
     *request.add_extra_statements() = s;
   }
@@ -50,13 +48,10 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
 
 future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
 DatabaseAdminClient::UpdateDatabase(
-    std::string const& project_id, std::string const& instance_id,
-    std::string const& database_id,
-    std::vector<std::string> const& statements) {
+    Database const& db, std::vector<std::string> const& statements) {
   grpc::ClientContext context;
   gcsa::UpdateDatabaseDdlRequest request;
-  request.set_database("projects/" + project_id + "/instances/" + instance_id +
-                       "/databases/" + database_id);
+  request.set_database(db.FullName());
   for (auto const& s : statements) {
     *request.add_statements() = s;
   }
@@ -69,14 +64,10 @@ DatabaseAdminClient::UpdateDatabase(
   return stub_->AwaitUpdateDatabase(*std::move(operation));
 }
 
-Status DatabaseAdminClient::DropDatabase(std::string const& project_id,
-                                         std::string const& instance_id,
-                                         std::string const& database_id) {
+Status DatabaseAdminClient::DropDatabase(Database const& db) {
   grpc::ClientContext context;
   google::spanner::admin::database::v1::DropDatabaseRequest request;
-  request.set_database("projects/" + project_id + "/instances/" + instance_id +
-                       "/databases/" + database_id);
-
+  request.set_database(db.FullName());
   return stub_->DropDatabase(context, request);
 }
 

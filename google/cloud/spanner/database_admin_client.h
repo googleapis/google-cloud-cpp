@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CLIENT_H_
 
 #include "google/cloud/spanner/client_options.h"
+#include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
@@ -137,8 +138,7 @@ class DatabaseAdminClient {
    *     for the regular expression that must be satisfied by the database id.
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(std::string const& project_id, std::string const& instance_id,
-                 std::string const& database_id,
+  CreateDatabase(Database const& db,
                  std::vector<std::string> const& extra_statements = {});
 
   /**
@@ -159,8 +159,7 @@ class DatabaseAdminClient {
    */
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabase(std::string const& project_id, std::string const& instance_id,
-                 std::string const& database_id,
+  UpdateDatabase(Database const& db,
                  std::vector<std::string> const& statements);
 
   /**
@@ -172,9 +171,7 @@ class DatabaseAdminClient {
    * @par Example
    * @snippet samples.cc drop-database
    */
-  Status DropDatabase(std::string const& project_id,
-                      std::string const& instance_id,
-                      std::string const& database_id);
+  Status DropDatabase(Database const& db);
 
   /// Create a new client with the given stub. For testing only.
   explicit DatabaseAdminClient(std::shared_ptr<internal::DatabaseAdminStub> s)

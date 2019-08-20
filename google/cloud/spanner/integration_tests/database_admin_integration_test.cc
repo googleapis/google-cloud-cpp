@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
@@ -41,8 +42,8 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   std::string database_id = spanner_testing::RandomDatabaseName(generator);
 
   DatabaseAdminClient client;
-  auto database_future =
-      client.CreateDatabase(project_id, instance_id, database_id);
+  Database db(project_id, instance_id, database_id);
+  auto database_future = client.CreateDatabase(db);
   auto database = database_future.get();
   ASSERT_STATUS_OK(database);
 
@@ -57,8 +58,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
                              ) PRIMARY KEY (SingerId)
                             )""";
 
-  auto update_future = client.UpdateDatabase(
-      project_id, instance_id, database_id, {create_table_statement});
+  auto update_future = client.UpdateDatabase(db, {create_table_statement});
   auto metadata = update_future.get();
   EXPECT_STATUS_OK(metadata);
   EXPECT_THAT(metadata->database(), EndsWith(database_id));
@@ -68,7 +68,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
     EXPECT_EQ(create_table_statement, metadata->statements(0));
   }
 
-  auto drop_status = client.DropDatabase(project_id, instance_id, database_id);
+  auto drop_status = client.DropDatabase(db);
   EXPECT_STATUS_OK(drop_status);
 }
 

@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H_
 
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
@@ -37,11 +38,11 @@ namespace internal {
  */
 class ConnectionImpl : public Connection {
  public:
-  // Creates a ConnectionImpl that will talk to the specified `database` using
-  // the given `stub`. We can test this class by injecting in a mock `stub`.
-  explicit ConnectionImpl(std::string database,
+  // Creates a ConnectionImpl that will talk to the specified `db` using the
+  // given `stub`. We can test this class by injecting in a mock `stub`.
+  explicit ConnectionImpl(Database db,
                           std::shared_ptr<internal::SpannerStub> stub)
-      : database_(std::move(database)), stub_(std::move(stub)) {}
+      : db_(std::move(db)), stub_(std::move(stub)) {}
 
   StatusOr<ResultSet> Read(ReadParams rp) override;
   StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams esp) override;
@@ -79,7 +80,7 @@ class ConnectionImpl : public Connection {
   /// Implementation details for Rollback.
   Status Rollback(google::spanner::v1::TransactionSelector& s);
 
-  std::string database_;
+  Database db_;
   std::shared_ptr<internal::SpannerStub> stub_;
 
   // The current session pool.

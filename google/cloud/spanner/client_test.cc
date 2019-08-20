@@ -334,21 +334,15 @@ TEST(ClientTest, RollbackError) {
   EXPECT_EQ(StatusCode::kInvalidArgument, rollback.code());
 }
 
-TEST(ClientTest, MakeDatabaseName) {
-  EXPECT_EQ(
-      "projects/dummy_project/instances/dummy_instance/databases/"
-      "dummy_database_id",
-      MakeDatabaseName("dummy_project", "dummy_instance", "dummy_database_id"));
-}
-
 TEST(ClientTest, MakeConnectionOptionalArguments) {
-  auto conn = MakeConnection("foo");
+  Database db("foo", "bar", "baz");
+  auto conn = MakeConnection(db);
   EXPECT_NE(conn, nullptr);
 
-  conn = MakeConnection("foo", grpc::GoogleDefaultCredentials());
+  conn = MakeConnection(db, grpc::GoogleDefaultCredentials());
   EXPECT_NE(conn, nullptr);
 
-  conn = MakeConnection("foo", grpc::GoogleDefaultCredentials(), "localhost");
+  conn = MakeConnection(db, grpc::GoogleDefaultCredentials(), "localhost");
   EXPECT_NE(conn, nullptr);
 }
 

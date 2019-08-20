@@ -22,6 +22,7 @@ spanner_client_hdrs = [
     "client_options.h",
     "commit_result.h",
     "connection.h",
+    "database.h",
     "database_admin_client.h",
     "date.h",
     "internal/base64.h",
@@ -61,6 +62,7 @@ spanner_client_hdrs = [
 spanner_client_srcs = [
     "client.cc",
     "client_options.cc",
+    "database.cc",
     "database_admin_client.cc",
     "date.cc",
     "internal/base64.cc",

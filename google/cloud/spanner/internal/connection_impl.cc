@@ -64,7 +64,7 @@ StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
   }
   grpc::ClientContext context;
   spanner_proto::CreateSessionRequest request;
-  request.set_database(database_);
+  request.set_database(db_.FullName());
   auto response = stub_->CreateSession(context, request);
   if (!response) {
     return response.status();

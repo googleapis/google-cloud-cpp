@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/result_set.h"
@@ -72,8 +73,8 @@ inline namespace SPANNER_CLIENT_NS {
  * namespace cs = ::google::cloud::spanner;
  * using ::google::cloud::StatusOr;
  *
- * auto db = cs::MakeDatabaseName("my_project", "my_instance", "my_db_id"));
- * auto conn = cs::MakeConnection(std::move(db));
+ * auto db = cs::Database("my_project", "my_instance", "my_db_id"));
+ * auto conn = cs::MakeConnection(db);
  * auto client = cs::Client(conn);
  *
  * StatusOr<cs::ResultSet> result = client.Read(...);
@@ -368,11 +369,6 @@ class Client {
   std::shared_ptr<Connection> conn_;
 };
 
-/// Format a database name given the `project`, `instance`, and `database_id`.
-std::string MakeDatabaseName(std::string const& project,
-                             std::string const& instance,
-                             std::string const& database_id);
-
 /**
  * Returns a Connection object that can be used for interacting with Spanner.
  *
@@ -383,12 +379,12 @@ std::string MakeDatabaseName(std::string const& project,
  *
  * @see `Connection`
  *
- * @param database the name of the database. See `MakeDatabaesName`.
+ * @param db See `Database`.
  * @param creds (optional) the gRPC credentials to use.
  * @param endpoint (optional) the Spanner service to connect to.
  */
 std::shared_ptr<Connection> MakeConnection(
-    std::string database,
+    Database const& db,
     std::shared_ptr<grpc::ChannelCredentials> const& creds =
         grpc::GoogleDefaultCredentials(),
     std::string const& endpoint = "spanner.googleapis.com");
