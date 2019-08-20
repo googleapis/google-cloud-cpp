@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include <google/cloud/storage/oauth2/anonymous_credentials.h>
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
@@ -181,7 +182,10 @@ TEST(CurlRequestTest, UserAgentPrefix) {
   storage::internal::CurlRequestBuilder builder(
       HttpBinEndpoint() + "/headers",
       storage::internal::GetDefaultCurlHandleFactory());
-  builder.AddUserAgentPrefix("test-program");
+  auto options =
+      ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
+          .add_user_agent_prefx("test-user-agent-prefix");
+  builder.CopyClientOptions(options);
   builder.AddHeader("Accept: application/json");
   builder.AddHeader("charsets: utf-8");
 
@@ -191,7 +195,8 @@ TEST(CurlRequestTest, UserAgentPrefix) {
   auto payload = nl::json::parse(response->payload);
   ASSERT_EQ(1U, payload.count("headers"));
   auto headers = payload["headers"];
-  EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("test-program"));
+  EXPECT_THAT(headers.value("User-Agent", ""),
+              HasSubstr("test-user-agent-prefix"));
 }
 
 /// @test Verify that the Projection parameter is included if set.
@@ -383,7 +388,10 @@ TEST(CurlRequestTest, Logging) {
     storage::internal::CurlRequestBuilder request(
         HttpBinEndpoint() + "/post?foo=bar",
         storage::internal::GetDefaultCurlHandleFactory());
-    request.SetDebugLogging(true);
+    auto options =
+        ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
+            .set_enable_http_tracing(true);
+    request.CopyClientOptions(options);
     request.AddHeader("Accept: application/json");
     request.AddHeader("charsets: utf-8");
     request.AddHeader("x-test-header: foo");

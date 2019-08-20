@@ -163,6 +163,25 @@ class ClientOptions {
     return *this;
   }
 
+  //@{
+  /**
+   * Control the maximum amount of time allowed for "stalls" during a download.
+   *
+   * A download that receives no data is considered "stalled". If the download
+   * remains stalled for more than the time set in this option then the download
+   * is aborted.
+   *
+   * The default value is 5 minutes. Can be disabled by setting the value to 0.
+   */
+  std::chrono::seconds download_stall_timeout() const {
+    return download_stall_timeout_;
+  }
+  ClientOptions& set_download_stall_timeout(std::chrono::seconds v) {
+    download_stall_timeout_ = v;
+    return *this;
+  }
+  //@}
+
  private:
   void SetupFromEnvironment();
 
@@ -183,6 +202,7 @@ class ClientOptions {
   bool enable_sigpipe_handler_ = true;
   std::size_t maximum_socket_recv_size_ = 0;
   std::size_t maximum_socket_send_size_ = 0;
+  std::chrono::seconds download_stall_timeout_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

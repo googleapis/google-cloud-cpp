@@ -456,14 +456,14 @@ def objects_get_common(bucket_name, object_name, revision):
     instructions = flask.request.headers.get('x-goog-testbench-instructions')
     if instructions == 'return-broken-stream':
         def streamer():
-            chunk_size = 128 * 1024
+            chunk_size = 64 * 1024
             for r in range(0, len(response_payload) / 2, chunk_size):
                 if r > 1024 * 1024:
                     print("\n\n###### EXIT to simulate crash\n")
                     sys.exit(1)
                 time.sleep(0.1)
                 chunk_end = min(r + chunk_size, len(response_payload))
-                yield response_payload[r:chunk_end - 1]
+                yield response_payload[r:chunk_end]
         length = len(response_payload)
         content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
         headers = {
@@ -475,6 +475,45 @@ def objects_get_common(bucket_name, object_name, revision):
 
     if instructions == 'return-corrupted-data':
         response_payload = testbench_utils.corrupt_media(response_payload)
+
+    if instructions == 'stall-always':
+        length = len(response_payload)
+        content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
+
+        def streamer():
+            chunk_size = 16 * 1024
+            for r in range(begin, end, chunk_size):
+                chunk_end = min(r + chunk_size, end)
+                if r == begin:
+                    time.sleep(10)
+                yield response_payload[r:chunk_end]
+
+        headers = {
+            'Content-Range': content_range,
+            'x-goog-hash': revision.x_goog_hash_header(),
+            'x-goog-generation': revision.generation
+        }
+        return flask.Response(streamer(), status=200, headers=headers)
+
+    if instructions == 'stall-at-256KiB' and begin == 0:
+        length = len(response_payload)
+        content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
+
+        def streamer():
+            chunk_size = 16 * 1024
+            for r in range(begin, end, chunk_size):
+                chunk_end = min(r + chunk_size, end)
+                if r == 256 * 1024:
+                    time.sleep(10)
+                yield response_payload[r:chunk_end]
+
+        headers = {
+            'Content-Range': content_range,
+            'x-goog-hash': revision.x_goog_hash_header(),
+            'x-goog-generation': revision.generation
+        }
+        return flask.Response(streamer(), status=200, headers=headers)
+
     response = flask.make_response(response_payload)
     length = len(response_payload)
     content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)

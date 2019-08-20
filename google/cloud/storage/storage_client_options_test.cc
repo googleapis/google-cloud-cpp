@@ -197,6 +197,16 @@ TEST_F(ClientOptionsTest, SetMaximumSocketSendSize) {
   EXPECT_EQ(16 * 1024, client_options.maximum_socket_send_size());
 }
 
+TEST_F(ClientOptionsTest, SetMaximumDownloadStall) {
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(opts);
+  ClientOptions client_options = *opts;
+  auto default_value = client_options.download_stall_timeout();
+  EXPECT_NE(0, default_value.count());
+  client_options.set_download_stall_timeout(std::chrono::seconds(60));
+  EXPECT_EQ(60, client_options.download_stall_timeout().count());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
