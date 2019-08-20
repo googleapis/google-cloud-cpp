@@ -218,6 +218,38 @@ void DmlStandardInsertCommand(std::vector<std::string> const& argv) {
   DmlStandardInsert(spanner::Client(spanner::MakeConnection(db)));
 }
 
+//! [START spanner_dml_standard_update]
+void DmlStandardUpdate(google::cloud::spanner::Client client) {
+  namespace gcs = google::cloud::spanner;
+  auto commit_result = gcs::RunTransaction(
+      std::move(client), gcs::Transaction::ReadWriteOptions{},
+      [](gcs::Client client, gcs::Transaction txn) {
+        client.ExecuteSql(
+            std::move(txn),
+            gcs::SqlStatement(
+                "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
+                " WHERE SingerId = 1 AND AlbumId = 1",
+                {}));
+        return gcs::TransactionAction{gcs::TransactionAction::kCommit, {}};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Update was successful\n";
+}
+//! [END spanner_dml_standard_update]
+
+void DmlStandardUpdateCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "dml-standard-update <project-id> <instance-id> <database-id>");
+  }
+
+  namespace spanner = google::cloud::spanner;
+  spanner::Database db(argv[0], argv[1], argv[2]);
+  DmlStandardUpdate(spanner::Client(spanner::MakeConnection(db)));
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
@@ -228,6 +260,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"drop-database", &DropDatabase},
       {"insert-data", &InsertDataCommand},
       {"dml-standard-insert", &DmlStandardInsertCommand},
+      {"dml-standard-update", &DmlStandardUpdateCommand},
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -299,6 +332,7 @@ void RunAll() {
   // TODO(#188) - Implement QueryWithStruct()
   QueryWithStructCommand({project_id, instance_id, database_id});
   DmlStandardInsert(client);
+  DmlStandardUpdate(client);
 
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
