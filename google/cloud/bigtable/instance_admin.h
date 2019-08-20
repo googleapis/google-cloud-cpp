@@ -24,7 +24,6 @@
 #include "google/cloud/bigtable/instance_config.h"
 #include "google/cloud/bigtable/instance_list_responses.h"
 #include "google/cloud/bigtable/instance_update_config.h"
-#include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
@@ -132,8 +131,7 @@ class InstanceAdmin {
         rpc_backoff_policy_(
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
         polling_policy_(
-            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)),
-        metadata_update_policy_(project_name(), MetadataParamTypes::PARENT) {}
+            DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {}
 
   /**
    * Create a new InstanceAdmin using explicit policies to handle RPC errors.
@@ -180,6 +178,11 @@ class InstanceAdmin {
   std::string ClusterName(std::string const& instance_id,
                           std::string const& cluster_id) const {
     return InstanceName(instance_id) + "/clusters/" + cluster_id;
+  }
+
+  std::string AppProfileName(std::string const& instance_id,
+                             std::string const& profile_id) {
+    return InstanceName(instance_id) + "/appProfiles/" + profile_id;
   }
 
   /**
@@ -1156,16 +1159,11 @@ class InstanceAdmin {
     return rpc_backoff_policy_->clone();
   }
 
-  MetadataUpdatePolicy clone_metadata_update_policy() {
-    return metadata_update_policy_;
-  }
-
   std::shared_ptr<InstanceAdminClient> client_;
   std::string project_name_;
   std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
   std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
   std::shared_ptr<PollingPolicy> polling_policy_;
-  MetadataUpdatePolicy metadata_update_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

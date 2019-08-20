@@ -43,6 +43,8 @@ class MetadataParamTypes final {
   static MetadataParamTypes const NAME;
   static MetadataParamTypes const RESOURCE;
   static MetadataParamTypes const TABLE_NAME;
+  static MetadataParamTypes const APP_PROFILE_NAME;
+  static MetadataParamTypes const INSTANCE_NAME;
 
   std::string const& type() const { return type_; }
 
@@ -74,35 +76,6 @@ class MetadataUpdatePolicy {
    */
   MetadataUpdatePolicy(std::string const& resource_name,
                        MetadataParamTypes const& metadata_param_type);
-
-  /**
-   * Constructor with default metadata pair.
-   *
-   * @param resource_name hierarchical name of resource, including  project id,
-   * instance id and/or table_id.
-   * @param metadata_param_type type to decide prefix for the value of
-   *     x-goog-request-params.
-   * @param table_id table_id used in RPC call.
-   */
-  static MetadataUpdatePolicy FromTableId(
-      std::string const& resource_name,
-      MetadataParamTypes const& metadata_param_type,
-      std::string const& table_id);
-
-  // TODO(#2704) - this seems to be used only in tests, remove or use.
-  /**
-   * Constructor with default metadata pair.
-   *
-   * @param resource_name hierarchical name of resource, including  project id,
-   * instance id and/or table_id.
-   * @param metadata_param_type type to decide prefix for the value of
-   *     x-goog-request-params.
-   * @param cluster_id cluster_id of the cluster.
-   */
-  static MetadataUpdatePolicy FromClusterId(
-      std::string const& resource_name,
-      MetadataParamTypes const& metadata_param_type,
-      std::string const& cluster_id);
 
   MetadataUpdatePolicy(MetadataUpdatePolicy&&) noexcept = default;
   MetadataUpdatePolicy(MetadataUpdatePolicy const&) = default;

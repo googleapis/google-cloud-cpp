@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
@@ -31,9 +32,11 @@ using namespace testing;
 auto create_rules_lambda = [](std::string expected_request_string,
                               std::string generated_response_string) {
   return [expected_request_string, generated_response_string](
-             grpc::ClientContext*,
+             grpc::ClientContext* context,
              btproto::ReadModifyWriteRowRequest const& request,
              btproto::ReadModifyWriteRowResponse* response) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
     btproto::ReadModifyWriteRowRequest expected_request;
     EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
         expected_request_string, &expected_request));
@@ -260,7 +263,13 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
 
   EXPECT_CALL(*client_, ReadModifyWriteRow(_, _, _))
       .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh")));
+          Invoke([](grpc::ClientContext* context,
+                    google::bigtable::v2::ReadModifyWriteRowRequest const&,
+                    google::bigtable::v2::ReadModifyWriteRowResponse*) {
+            EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+                *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
+            return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
+          }));
 
   EXPECT_FALSE(table_.ReadModifyWriteRow(
       row_key,

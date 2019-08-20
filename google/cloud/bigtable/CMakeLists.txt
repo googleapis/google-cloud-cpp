@@ -218,6 +218,7 @@ if (BUILD_TESTING)
                 testing/inprocess_data_client.cc
                 testing/inprocess_admin_client.h
                 testing/inprocess_admin_client.cc
+                testing/mock_async_failing_rpc_factory.h
                 testing/mock_completion_queue.h
                 testing/mock_mutate_rows_reader.h
                 testing/mock_read_rows_reader.h
@@ -226,7 +227,9 @@ if (BUILD_TESTING)
                 testing/table_integration_test.h
                 testing/table_integration_test.cc
                 testing/table_test_fixture.h
-                testing/table_test_fixture.cc)
+                testing/table_test_fixture.cc
+                testing/validate_metadata.h
+                testing/validate_metadata.cc)
     target_link_libraries(bigtable_client_testing
                           PUBLIC bigtable_client
                                  bigtable_protos

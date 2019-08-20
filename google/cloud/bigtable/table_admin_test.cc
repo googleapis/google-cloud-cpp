@@ -14,8 +14,10 @@
 
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
+#include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
+#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -54,8 +56,11 @@ auto create_list_tables_lambda = [](std::string expected_token,
                                     std::string returned_token,
                                     std::vector<std::string> table_names) {
   return [expected_token, returned_token, table_names](
-             grpc::ClientContext*, btadmin::ListTablesRequest const& request,
+             grpc::ClientContext* context,
+             btadmin::ListTablesRequest const& request,
              btadmin::ListTablesResponse* response) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
     auto const instance_name =
         "projects/" + kProjectId + "/instances/" + kInstanceId;
     EXPECT_EQ(instance_name, request.parent());
@@ -90,10 +95,14 @@ struct MockRpcFactory {
                                      ResponseType* response);
 
   /// Refactor the boilerplate common to most tests.
-  static std::function<SignatureType> Create(std::string expected_request) {
+  static std::function<SignatureType> Create(std::string expected_request,
+                                             std::string const& method) {
     return std::function<SignatureType>(
-        [expected_request](grpc::ClientContext*, RequestType const& request,
-                           ResponseType* response) {
+        [expected_request, method](grpc::ClientContext* context,
+                                   RequestType const& request,
+                                   ResponseType* response) {
+          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+              *context, method));
           if (response == nullptr) {
             return grpc::Status(grpc::StatusCode::INVALID_ARGUMENT,
                                 "invalid call to MockRpcFactory::Create()");
@@ -106,51 +115,6 @@ struct MockRpcFactory {
           google::protobuf::util::MessageDifferencer differencer;
           differencer.ReportDifferencesToString(&delta);
           EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
-
-          return grpc::Status::OK;
-        });
-  }
-};
-
-/**
- * Helper class to create the expectations and check consistency over
- * multiple calls for a simple RPC call.
- *
- * Given the type of the request and responses, this struct provides a function
- * to create a mock implementation with the right signature and checks.
- *
- * @tparam RequestType the protobuf type for the request.
- * @tparam ResponseType the protobuf type for the response.
- */
-template <typename RequestType, typename ResponseType>
-struct MockRpcMultiCallFactory {
-  using SignatureType = grpc::Status(grpc::ClientContext* ctx,
-                                     RequestType const& request,
-                                     ResponseType* response);
-
-  /// Refactor the boilerplate common to most tests.
-  static std::function<SignatureType> Create(std::string expected_request,
-                                             bool expected_result) {
-    return std::function<SignatureType>(
-        [expected_request, expected_result](grpc::ClientContext*,
-                                            RequestType const& request,
-                                            ResponseType* response) {
-          if (response == nullptr) {
-            return grpc::Status(
-                grpc::StatusCode::INVALID_ARGUMENT,
-                "invalid call to MockRpcMultiCallFactory::Create()");
-          }
-          RequestType expected;
-          response->clear_consistent();
-          // Cannot use ASSERT_TRUE() here, it has an embedded "return;"
-          EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(
-              expected_request, &expected));
-          std::string delta;
-          google::protobuf::util::MessageDifferencer differencer;
-          differencer.ReportDifferencesToString(&delta);
-          EXPECT_TRUE(differencer.Compare(expected, request)) << delta;
-
-          response->set_consistent(expected_result);
 
           return grpc::Status::OK;
         });
@@ -192,9 +156,11 @@ TEST_F(TableAdminTest, ListTablesRecoverableFailures) {
   using namespace ::testing;
 
   bigtable::TableAdmin tested(client_, "the-instance");
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListTablesRequest const&,
                                      btadmin::ListTablesResponse*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   auto batch0 = create_list_tables_lambda("", "token-001", {"t0", "t1"});
@@ -244,9 +210,11 @@ TEST_F(TableAdminTest, ListTablesTooManyFailures) {
   bigtable::TableAdmin tested(
       client_, "the-instance", bigtable::LimitedErrorCountRetryPolicy(3),
       bigtable::ExponentialBackoffPolicy(10_ms, 10_min));
-  auto mock_recoverable_failure = [](grpc::ClientContext*,
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
                                      btadmin::ListTablesRequest const&,
                                      btadmin::ListTablesResponse*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.ListTables"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
   EXPECT_CALL(*client_, ListTables(_, _, _))
@@ -282,7 +250,8 @@ initial_splits { key: 'p' }
 )""";
   auto mock_create_table =
       MockRpcFactory<btadmin::CreateTableRequest, btadmin::Table>::Create(
-          expected_text);
+          expected_text,
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable");
   EXPECT_CALL(*client_, CreateTable(_, _, _))
       .WillOnce(Invoke(mock_create_table));
 
@@ -372,7 +341,7 @@ TEST_F(TableAdminTest, GetTableSimple) {
       view: SCHEMA_VIEW
 )""";
   auto mock = MockRpcFactory<btadmin::GetTableRequest, btadmin::Table>::Create(
-      expected_text);
+      expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.GetTable");
   EXPECT_CALL(*client_, GetTable(_, _, _))
       .WillOnce(
           Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")))
@@ -427,8 +396,8 @@ TEST_F(TableAdminTest, DeleteTable) {
   std::string expected_text = R"""(
       name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
-  auto mock =
-      MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(expected_text);
+  auto mock = MockRpcFactory<btadmin::DeleteTableRequest, Empty>::Create(
+      expected_text, "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable");
   EXPECT_CALL(*client_, DeleteTable(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -473,7 +442,10 @@ modifications {
 }
 )""";
   auto mock = MockRpcFactory<btadmin::ModifyColumnFamiliesRequest,
-                             btadmin::Table>::Create(expected_text);
+                             btadmin::Table>::
+      Create(
+          expected_text,
+          "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies");
   EXPECT_CALL(*client_, ModifyColumnFamilies(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -516,7 +488,8 @@ TEST_F(TableAdminTest, DropRowsByPrefix) {
       row_key_prefix: 'foobar'
 )""";
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
-      expected_text);
+      expected_text,
+      "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
   EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -549,7 +522,8 @@ TEST_F(TableAdminTest, DropAllRows) {
       delete_all_data_from_table: true
 )""";
   auto mock = MockRpcFactory<btadmin::DropRowRangeRequest, Empty>::Create(
-      expected_text);
+      expected_text,
+      "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange");
   EXPECT_CALL(*client_, DropRowRange(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -583,9 +557,11 @@ TEST_F(TableAdminTest, GenerateConsistencyTokenSimple) {
   std::string expected_text = R"""(
       name: 'projects/the-project/instances/the-instance/tables/the-table'
 )""";
-  auto mock = MockRpcFactory<
-      btadmin::GenerateConsistencyTokenRequest,
-      btadmin::GenerateConsistencyTokenResponse>::Create(expected_text);
+  auto mock = MockRpcFactory<btadmin::GenerateConsistencyTokenRequest,
+                             btadmin::GenerateConsistencyTokenResponse>::
+      Create(expected_text,
+             "google.bigtable.admin.v2.BigtableTableAdmin."
+             "GenerateConsistencyToken");
   EXPECT_CALL(*client_, GenerateConsistencyToken(_, _, _))
       .WillOnce(Invoke(mock));
 
@@ -621,9 +597,10 @@ TEST_F(TableAdminTest, CheckConsistencySimple) {
       name: 'projects/the-project/instances/the-instance/tables/the-table'
       consistency_token: 'test-token'
 )""";
-  auto mock =
-      MockRpcFactory<btadmin::CheckConsistencyRequest,
-                     btadmin::CheckConsistencyResponse>::Create(expected_text);
+  auto mock = MockRpcFactory<btadmin::CheckConsistencyRequest,
+                             btadmin::CheckConsistencyResponse>::
+      Create(expected_text,
+             "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency");
   EXPECT_CALL(*client_, CheckConsistency(_, _, _)).WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
@@ -687,9 +664,12 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
       }));
 
   auto make_invoke = [](std::unique_ptr<MockAsyncCheckConsistencyResponse>& r) {
-    return [&r](grpc::ClientContext*,
+    return [&r](grpc::ClientContext* context,
                 btadmin::CheckConsistencyRequest const& request,
                 grpc::CompletionQueue*) {
+      EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+          *context,
+          "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency"));
       EXPECT_EQ(
           "projects/the-project/instances/test-instance/tables/test-table",
           request.name());
@@ -770,9 +750,12 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
       }));
   EXPECT_CALL(*client_, project()).WillRepeatedly(ReturnRef(kProjectId));
   EXPECT_CALL(*client_, AsyncCheckConsistency(_, _, _))
-      .WillOnce(Invoke([&](grpc::ClientContext*,
+      .WillOnce(Invoke([&](grpc::ClientContext* context,
                            btadmin::CheckConsistencyRequest const& request,
                            grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.CheckConsistency"));
         EXPECT_EQ(
             "projects/the-project/instances/test-instance/tables/test-table",
             request.name());
@@ -803,4 +786,149 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
 
   EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
             consistent.status().code());
+}
+
+class ValidContextMdAsyncTest : public ::testing::Test {
+ public:
+  ValidContextMdAsyncTest()
+      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+        cq_(cq_impl_),
+        client_(new MockAdminClient) {
+    EXPECT_CALL(*client_, project())
+        .WillRepeatedly(::testing::ReturnRef(kProjectId));
+    table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
+        client_, kInstanceId);
+  }
+
+ protected:
+  template <typename ResultType>
+  void FinishTest(
+      google::cloud::future<google::cloud::StatusOr<ResultType>> res_future) {
+    EXPECT_EQ(1U, cq_impl_->size());
+    cq_impl_->SimulateCompletion(cq_, true);
+    EXPECT_EQ(0U, cq_impl_->size());
+    auto res = res_future.get();
+    EXPECT_FALSE(res);
+    EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied,
+              res.status().code());
+  }
+
+  void FinishTest(google::cloud::future<google::cloud::Status> res_future) {
+    EXPECT_EQ(1U, cq_impl_->size());
+    cq_impl_->SimulateCompletion(cq_, true);
+    EXPECT_EQ(0U, cq_impl_->size());
+    auto res = res_future.get();
+    EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());
+  }
+
+  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  bigtable::CompletionQueue cq_;
+  std::shared_ptr<bigtable::testing::MockAdminClient> client_;
+  std::unique_ptr<bigtable::TableAdmin> table_admin_;
+};
+
+TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::CreateTableRequest,
+                                                btadmin::Table>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncCreateTable(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              parent: "projects/the-project/instances/the-instance"
+              table_id: "the-table"
+              table: { }
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable")));
+  FinishTest(table_admin_->AsyncCreateTable(cq_, "the-table",
+                                            bigtable::TableConfig()));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::DeleteTableRequest,
+                                                google::protobuf::Empty>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncDeleteTable(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              name: "projects/the-project/instances/the-instance/tables/the-table"
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable")));
+  FinishTest(table_admin_->AsyncDeleteTable(cq_, "the-table"));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::DropRowRangeRequest,
+                                                google::protobuf::Empty>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              name: "projects/the-project/instances/the-instance/tables/the-table"
+              delete_all_data_from_table: true
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
+  FinishTest(table_admin_->AsyncDropAllRows(cq_, "the-table"));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::DropRowRangeRequest,
+                                                google::protobuf::Empty>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncDropRowRange(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              name: "projects/the-project/instances/the-instance/tables/the-table"
+              row_key_prefix: "prefix"
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
+  FinishTest(table_admin_->AsyncDropRowsByPrefix(cq_, "the-table", "prefix"));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncGenerateConsistencyToken) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<
+      btadmin::GenerateConsistencyTokenRequest,
+      btadmin::GenerateConsistencyTokenResponse>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncGenerateConsistencyToken(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              name: "projects/the-project/instances/the-instance/tables/the-table"
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin."
+          "GenerateConsistencyToken")));
+  FinishTest(table_admin_->AsyncGenerateConsistencyToken(cq_, "the-table"));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<btadmin::ListTablesRequest,
+                                                btadmin::ListTablesResponse>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncListTables(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              parent: "projects/the-project/instances/the-instance"
+              view: SCHEMA_VIEW
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin.ListTables")));
+  FinishTest(table_admin_->AsyncListTables(cq_, btadmin::Table::SCHEMA_VIEW));
+}
+
+TEST_F(ValidContextMdAsyncTest, AsyncModifyColumnFamilies) {
+  using ::testing::_;
+  bigtable::testing::MockAsyncFailingRpcFactory<
+      btadmin::ModifyColumnFamiliesRequest, btadmin::Table>
+      rpc_factory;
+  EXPECT_CALL(*client_, AsyncModifyColumnFamilies(_, _, _))
+      .WillOnce(::testing::Invoke(rpc_factory.Create(
+          R"""(
+              name: "projects/the-project/instances/the-instance/tables/the-table"
+          )""",
+          "google.bigtable.admin.v2.BigtableTableAdmin.ModifyColumnFamilies")));
+  FinishTest(table_admin_->AsyncModifyColumnFamilies(cq_, "the-table", {}));
 }

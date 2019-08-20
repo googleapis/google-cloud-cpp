@@ -216,8 +216,8 @@ class Table {
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_(
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
-        metadata_update_policy_(MetadataUpdatePolicy::FromTableId(
-            InstanceName(client_), MetadataParamTypes::TABLE_NAME, table_id)),
+        metadata_update_policy_(
+            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}
 

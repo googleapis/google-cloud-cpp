@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>
@@ -103,9 +104,12 @@ std::vector<std::string> InstanceNames(InstanceList const& response) {
 /// @test One successful page with 1 one instance.
 TEST_F(AsyncListInstancesTest, Simple) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -132,27 +136,36 @@ TEST_F(AsyncListInstancesTest, Simple) {
 /// @test Test 3 pages, no failures, multiple clusters and failed locations.
 TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_1_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_2_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_EQ("token_2", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -203,27 +216,36 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
 /// @test Test 2 pages, with a filure between them.
 TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
   EXPECT_CALL(*client_, AsyncListInstances(_, _, _))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_TRUE(request.page_token().empty());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_1_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
             google::bigtable::admin::v2::ListInstancesResponse>>(
             instances_reader_2_.get());
       }))
-      .WillOnce(Invoke([this](grpc::ClientContext*,
+      .WillOnce(Invoke([this](grpc::ClientContext* context,
                               btproto::ListInstancesRequest const& request,
                               grpc::CompletionQueue*) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableInstanceAdmin.ListInstances"));
         EXPECT_EQ("token_1", request.page_token());
         // This is safe, see comments in MockAsyncResponseReader.
         return std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<

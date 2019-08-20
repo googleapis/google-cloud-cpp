@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -62,15 +63,17 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
             std::move(request_expectations));
 
     EXPECT_CALL(*client_, PrepareAsyncReadRows(_, _, _))
-        .WillOnce(
-            Invoke([&reader, request_expectations_ptr](
-                       grpc::ClientContext*, btproto::ReadRowsRequest const& r,
-                       grpc::CompletionQueue*) {
-              (*request_expectations_ptr)(r);
-              return std::unique_ptr<
-                  MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>(
-                  &reader);
-            }))
+        .WillOnce(Invoke([&reader, request_expectations_ptr](
+                             grpc::ClientContext* context,
+                             btproto::ReadRowsRequest const& r,
+                             grpc::CompletionQueue*) {
+          EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+              *context, "google.bigtable.v2.Bigtable.ReadRows"));
+          (*request_expectations_ptr)(r);
+          return std::unique_ptr<
+              MockClientAsyncReaderInterface<btproto::ReadRowsResponse>>(
+              &reader);
+        }))
         .RetiresOnSaturation();
 
     EXPECT_CALL(reader, StartCall(_)).WillOnce(Invoke([idx, this](void*) {

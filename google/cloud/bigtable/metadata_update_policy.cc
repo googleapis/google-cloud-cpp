@@ -30,6 +30,11 @@ MetadataParamTypes const MetadataParamTypes::NAME("name");
 MetadataParamTypes const MetadataParamTypes::RESOURCE("resource");
 // NOLINTNEXTLINE(readability-identifier-naming)
 MetadataParamTypes const MetadataParamTypes::TABLE_NAME("table_name");
+// NOLINTNEXTLINE(readability-identifier-naming)
+MetadataParamTypes const MetadataParamTypes::APP_PROFILE_NAME(
+    "app_profile.name");
+// NOLINTNEXTLINE(readability-identifier-naming)
+MetadataParamTypes const MetadataParamTypes::INSTANCE_NAME("instance.name");
 
 MetadataUpdatePolicy::MetadataUpdatePolicy(
     std::string const& resource_name,
@@ -44,24 +49,6 @@ MetadataUpdatePolicy::MetadataUpdatePolicy(
       google::cloud::internal::CompilerFeatures() + "-" +
       google::cloud::internal::LanguageVersion() + " gccl/" + version_string();
   api_client_header_ = std::move(api_client_header);
-}
-
-MetadataUpdatePolicy MetadataUpdatePolicy::FromTableId(
-    std::string const& resource_name,
-    MetadataParamTypes const& metadata_param_type,
-    std::string const& table_id) {
-  MetadataUpdatePolicy policy(resource_name, metadata_param_type);
-  policy.value_ += "/tables/" + table_id;
-  return policy;
-}
-
-MetadataUpdatePolicy MetadataUpdatePolicy::FromClusterId(
-    std::string const& resource_name,
-    MetadataParamTypes const& metadata_param_type,
-    std::string const& cluster_id) {
-  MetadataUpdatePolicy policy(resource_name, metadata_param_type);
-  policy.value_ += "/clusters/" + cluster_id;
-  return policy;
 }
 
 void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
