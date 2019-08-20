@@ -17,7 +17,6 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_stream.h"
 #include <cstring>
-#include <stdint.h>
 
 namespace google {
 namespace cloud {
@@ -245,12 +244,12 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
     return traits_type::eof();
   }
 
-  std::int64_t bytes_copied{0};
+  std::streamsize bytes_copied = 0;
   while (bytes_copied != count) {
-    auto remaining_buffer_size = epptr() - pptr();
-    auto bytes_to_copy = std::min(count - bytes_copied, remaining_buffer_size);
+    std::streamsize remaining_buffer_size = epptr() - pptr();
+    std::streamsize bytes_to_copy = std::min(count - bytes_copied, remaining_buffer_size);
     std::copy(s, s + bytes_to_copy, pptr());
-    pbump(bytes_to_copy);
+    pbump(static_cast<int>(bytes_to_copy));
     bytes_copied += bytes_to_copy;
     s += bytes_to_copy;
     last_response_ = Flush();
@@ -336,7 +335,7 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
   }
   std::copy(pbase() + chunk_size, epptr(), pbase());
   setp(pbase(), epptr());
-  pbump(actual_size - chunk_size);
+  pbump(static_cast<int>(actual_size - chunk_size));
   return last_response_;
 }
 
