@@ -104,7 +104,7 @@ void AddColumn(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
-void QueryWithStruct(std::vector<std::string> const& argv) {
+void QueryWithStructCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "query-with-struct <project-id> <instance-id> <database-id>");
@@ -143,84 +143,79 @@ void DropDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
-void InsertData(std::vector<std::string> const& argv) {
+//! [START spanner_insert_data]
+void InsertData(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto insert_singers = spanner::InsertMutationBuilder(
+                            "Singers", {"SingerId", "FirstName", "LastName"})
+                            .EmplaceRow(1, "Marc", "Richards")
+                            .EmplaceRow(2, "Catalina", "Smith")
+                            .EmplaceRow(3, "Alice", "Trentor")
+                            .EmplaceRow(4, "Lea", "Martin")
+                            .EmplaceRow(5, "David", "Lomond")
+                            .Build();
+
+  auto insert_albums = spanner::InsertMutationBuilder(
+                           "Albums", {"SingerId", "AlbumId", "AlbumTitle"})
+                           .EmplaceRow(1, 1, "Total Junk")
+                           .EmplaceRow(1, 2, "Go, Go, Go")
+                           .EmplaceRow(2, 1, "Green")
+                           .EmplaceRow(2, 2, "Forever Hold Your Peace")
+                           .EmplaceRow(2, 3, "Terrified")
+                           .Build();
+
+  auto commit_result =
+      client.Commit(spanner::MakeReadWriteTransaction(),
+                    {std::move(insert_singers), std::move(insert_albums)});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful\n";
+}
+//! [END spanner_insert_data]
+
+void InsertDataCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "insert-data <project-id> <instance-id> <database-id>");
   }
 
-  // TODO(#377) - cache the client across sample functions.
   namespace spanner = google::cloud::spanner;
-
   spanner::Database db(argv[0], argv[1], argv[2]);
-  spanner::Client client(spanner::MakeConnection(db));
-
-  //! [START spanner_insert_data]
-  namespace spanner = google::cloud::spanner;
-  [](spanner::Client client) {
-    auto insert_singers = spanner::InsertMutationBuilder(
-                              "Singers", {"SingerId", "FirstName", "LastName"})
-                              .EmplaceRow(1, "Marc", "Richards")
-                              .EmplaceRow(2, "Catalina", "Smith")
-                              .EmplaceRow(3, "Alice", "Trentor")
-                              .EmplaceRow(4, "Lea", "Martin")
-                              .EmplaceRow(5, "David", "Lomond")
-                              .Build();
-
-    auto insert_albums = spanner::InsertMutationBuilder(
-                             "Albums", {"SingerId", "AlbumId", "AlbumTitle"})
-                             .EmplaceRow(1, 1, "Total Junk")
-                             .EmplaceRow(1, 2, "Go, Go, Go")
-                             .EmplaceRow(2, 1, "Green")
-                             .EmplaceRow(2, 2, "Forever Hold Your Peace")
-                             .EmplaceRow(2, 3, "Terrified")
-                             .Build();
-
-    auto commit_result =
-        client.Commit(spanner::MakeReadWriteTransaction(),
-                      {std::move(insert_singers), std::move(insert_albums)});
-    if (!commit_result) {
-      throw std::runtime_error(commit_result.status().message());
-    }
-    std::cout << "Insert was successful\n";
-  }
-  //! [END spanner_insert_data]
-  (std::move(client));
+  InsertData(spanner::Client(spanner::MakeConnection(db)));
 }
 
-void DmlStandardInsert(std::vector<std::string> const& argv) {
+//! [START spanner_dml_standard_insert]
+namespace spanner = google::cloud::spanner;
+void DmlStandardInsert(google::cloud::spanner::Client client) {
+  auto commit_result = spanner::RunTransaction(
+      std::move(client), spanner::Transaction::ReadWriteOptions{},
+      [](spanner::Client client, spanner::Transaction txn) {
+        client.ExecuteSql(
+            std::move(txn),
+            spanner::SqlStatement(
+                "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                "  VALUES (10, 'Virginia', 'Watson')",
+                {}));
+        return spanner::TransactionAction{spanner::TransactionAction::kCommit,
+                                          {}};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful\n";
+}
+//! [END spanner_dml_standard_insert]
+
+void DmlStandardInsertCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "dml-standard-insert <project-id> <instance-id> <database-id>");
   }
 
-  // TODO(#377) - cache the client across sample functions.
   namespace spanner = google::cloud::spanner;
   spanner::Database db(argv[0], argv[1], argv[2]);
-  spanner::Client client(spanner::MakeConnection(db));
-
-  //! [START spanner_dml_standard_insert]
-  namespace spanner = google::cloud::spanner;
-  [](spanner::Client client) {
-    auto commit_result = spanner::RunTransaction(
-        std::move(client), spanner::Transaction::ReadWriteOptions{},
-        [](spanner::Client client, spanner::Transaction txn) {
-          client.ExecuteSql(
-              std::move(txn),
-              spanner::SqlStatement(
-                  "INSERT INTO Singers (SingerId, FirstName, LastName)"
-                  "  VALUES (10, 'Virginia', 'Watson')",
-                  {}));
-          return spanner::TransactionAction{spanner::TransactionAction::kCommit,
-                                            {}};
-        });
-    if (!commit_result) {
-      throw std::runtime_error(commit_result.status().message());
-    }
-    std::cout << "Insert was successful\n";
-  }
-  //! [END spanner_dml_standard_insert]
-  (std::move(client));
+  DmlStandardInsert(spanner::Client(spanner::MakeConnection(db)));
 }
 
 int RunOneCommand(std::vector<std::string> argv) {
@@ -229,10 +224,10 @@ int RunOneCommand(std::vector<std::string> argv) {
   std::map<std::string, CommandType> commands = {
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
-      {"query-with-struct", &QueryWithStruct},
+      {"query-with-struct", &QueryWithStructCommand},
       {"drop-database", &DropDatabase},
-      {"insert-data", &InsertData},
-      {"dml-standard-insert", &DmlStandardInsert},
+      {"insert-data", &InsertDataCommand},
+      {"dml-standard-insert", &DmlStandardInsertCommand},
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -294,12 +289,16 @@ void RunAll() {
 
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
-  RunOneCommand({"", "insert-data", project_id, instance_id, database_id});
-  RunOneCommand(
-      {"", "query-with-struct", project_id, instance_id, database_id});
 
-  RunOneCommand(
-      {"", "dml-standard-insert", project_id, instance_id, database_id});
+  namespace spanner = google::cloud::spanner;
+  spanner::Database db(project_id, instance_id, database_id);
+  google::cloud::spanner::Client client(
+      google::cloud::spanner::MakeConnection(db));
+
+  InsertData(client);
+  // TODO(#188) - Implement QueryWithStruct()
+  QueryWithStructCommand({project_id, instance_id, database_id});
+  DmlStandardInsert(client);
 
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
