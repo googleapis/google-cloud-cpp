@@ -141,7 +141,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
 
   std::unique_ptr<ResumableUploadSession> upload_session_;
 
-  std::string current_ios_buffer_;
+  std::vector<char> current_ios_buffer_;
   std::size_t max_buffer_size_;
 
   std::unique_ptr<HashValidator> hash_validator_;

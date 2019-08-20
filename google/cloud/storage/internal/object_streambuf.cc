@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/object_stream.h"
 #include <cstring>
+#include <stdint.h>
 
 namespace google {
 namespace cloud {
@@ -203,8 +204,8 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       hash_validator_(std::move(hash_validator)),
       last_response_(ResumableUploadResponse{
           {}, 0, {}, ResumableUploadResponse::kInProgress}) {
-  current_ios_buffer_.reserve(max_buffer_size_);
-  auto pbeg = &current_ios_buffer_[0];
+  current_ios_buffer_.resize(max_buffer_size_);
+  auto pbeg = current_ios_buffer_.data();
   auto pend = pbeg + current_ios_buffer_.size();
   setp(pbeg, pend);
   // Sessions start in a closed state for uploads that have already been
@@ -231,8 +232,8 @@ bool ObjectWriteStreambuf::ValidateHash(ObjectMetadata const& meta) {
 }
 
 int ObjectWriteStreambuf::sync() {
-  auto status = Flush();
-  if (!status.ok()) {
+  auto result = Flush();
+  if (!result.ok()) {
     return traits_type::eof();
   }
   return 0;
@@ -243,16 +244,23 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
   if (!IsOpen()) {
     return traits_type::eof();
   }
-  current_ios_buffer_.assign(pbase(), pptr());
-  current_ios_buffer_.append(s, static_cast<std::size_t>(count));
-  auto pbeg = &current_ios_buffer_[0];
-  auto pend = pbeg + current_ios_buffer_.size();
-  setp(pbeg, pend);
-  pbump(static_cast<int>(current_ios_buffer_.size()));
 
-  auto status = Flush();
-  if (!status.ok()) {
-    return traits_type::eof();
+  std::int64_t bytes_copied{0};
+  while (bytes_copied != count) {
+    auto remaining_buffer_size = epptr() - pptr();
+    auto bytes_to_copy = std::min(count - bytes_copied, remaining_buffer_size);
+    std::copy(s, s + bytes_to_copy, pptr());
+    pbump(bytes_to_copy);
+    bytes_copied += bytes_to_copy;
+    s += bytes_to_copy;
+    last_response_ = Flush();
+    // Upload failures are irrecoverable because the internal buffer is opaque
+    // to the caller, so there is no way to know what byte range to specify
+    // next.
+    if (!last_response_.ok()) {
+      upload_session_.reset();
+      return traits_type::eof();
+    }
   }
   return count;
 }
@@ -266,12 +274,16 @@ ObjectWriteStreambuf::int_type ObjectWriteStreambuf::overflow(int_type ch) {
     return 0;
   }
   // If the buffer is full flush it immediately.
-  auto status = Flush();
-  if (!status.ok()) {
+  auto result = Flush();
+  if (!result.ok()) {
+    return traits_type::eof();
+  }
+  // Make sure there is now room in the buffer for the char.
+  if (pptr() == epptr()) {
     return traits_type::eof();
   }
   // Push the character into the current buffer.
-  current_ios_buffer_.push_back(traits_type::to_char_type(ch));
+  *pptr() = traits_type::to_char_type(ch);
   pbump(1);
   return ch;
 }
@@ -283,12 +295,10 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::FlushFinal() {
   // Shorten the buffer to the actual used size.
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
   std::size_t upload_size = upload_session_->next_expected_byte() + actual_size;
-  current_ios_buffer_.resize(actual_size);
-  hash_validator_->Update(current_ios_buffer_.data(),
-                          current_ios_buffer_.size());
+  hash_validator_->Update(pbase(), actual_size);
 
-  last_response_ =
-      upload_session_->UploadFinalChunk(current_ios_buffer_, upload_size);
+  std::string to_upload(pbase(), actual_size);
+  last_response_ = upload_session_->UploadFinalChunk(to_upload, upload_size);
   if (!last_response_) {
     // This was an unrecoverable error, time to store status and signal an
     // error.
@@ -296,7 +306,7 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::FlushFinal() {
   }
   // Reset the iostream put area with valid pointers, but empty.
   current_ios_buffer_.resize(1);
-  auto pbeg = &current_ios_buffer_[0];
+  auto pbeg = current_ios_buffer_.data();
   setp(pbeg, pbeg);
 
   upload_session_.reset();
@@ -308,7 +318,7 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
   if (!IsOpen()) {
     return last_response_;
   }
-  // Shorten the buffer to the actual used size.
+
   auto actual_size = static_cast<std::size_t>(pptr() - pbase());
   if (actual_size < max_buffer_size_) {
     return last_response_;
@@ -316,24 +326,17 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
 
   auto chunk_count = actual_size / UploadChunkRequest::kChunkSizeQuantum;
   auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
-  std::string not_sent(pbase() + chunk_size, pbase() + actual_size);
-  current_ios_buffer_.assign(pbase(), pbase() + chunk_size);
-  hash_validator_->Update(current_ios_buffer_.data(),
-                          current_ios_buffer_.size());
 
-  last_response_ = upload_session_->UploadChunk(current_ios_buffer_);
+  hash_validator_->Update(pbase(), chunk_size);
+  StatusOr<ResumableUploadResponse> result;
+  std::string to_send(pbase(), chunk_size);
+  last_response_ = upload_session_->UploadChunk(to_send);
   if (!last_response_) {
     return last_response_;
   }
-  // Reset the put area, preserve any data not setn.
-  current_ios_buffer_.clear();
-  current_ios_buffer_.reserve(max_buffer_size_);
-  current_ios_buffer_.append(not_sent);
-  auto pbeg = &current_ios_buffer_[0];
-  auto pend = pbeg + current_ios_buffer_.size();
-  setp(pbeg, pend);
-  pbump(static_cast<int>(not_sent.size()));
-
+  std::copy(pbase() + chunk_size, epptr(), pbase());
+  setp(pbase(), epptr());
+  pbump(actual_size - chunk_size);
   return last_response_;
 }
 
