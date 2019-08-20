@@ -59,6 +59,18 @@ RUN make -j $(nproc)
 RUN make install
 RUN ldconfig
 
+# #### googleapis
+
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.3.tar.gz
+RUN tar -xf v0.1.3.tar.gz
+WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.3
+RUN cmake \
+    -DBUILD_SHARED_LIBS=YES \
+    -H. -Bcmake-out
+RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
+RUN ldconfig
+
 # Get the source code
 
 FROM google-cloud-cpp-dependencies AS google-cloud-cpp-build
