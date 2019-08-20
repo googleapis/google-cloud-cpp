@@ -143,6 +143,14 @@ void DropDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+google::cloud::spanner::Client MakeSampleClient(
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
+  namespace spanner = google::cloud::spanner;
+  return spanner::Client(spanner::MakeConnection(
+      spanner::Database(project_id, instance_id, database_id)));
+}
+
 //! [START spanner_insert_data]
 void InsertData(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -170,7 +178,7 @@ void InsertData(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
-  std::cout << "Insert was successful\n";
+  std::cout << "Insert was successful [spanner_insert_data]\n";
 }
 //! [END spanner_insert_data]
 
@@ -180,9 +188,142 @@ void InsertDataCommand(std::vector<std::string> const& argv) {
         "insert-data <project-id> <instance-id> <database-id>");
   }
 
+  InsertData(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
+//! [START spanner_update_data]
+void UpdateData(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
-  spanner::Database db(argv[0], argv[1], argv[2]);
-  InsertData(spanner::Client(spanner::MakeConnection(db)));
+  auto update_albums = spanner::UpdateMutationBuilder(
+      "Albums", {"SingerId", "AlbumId", "MarketingBudget"});
+
+  auto txn = spanner::MakeReadWriteTransaction();
+
+  auto read = client.ExecuteSql(
+      txn, spanner::SqlStatement("SELECT SingerId, AlbumId FROM Albums"));
+  if (!read) {
+    throw std::runtime_error(read.status().message());
+  }
+  for (auto row : read->Rows<std::int64_t, std::int64_t>()) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    if (row->get<0>() == 1 && row->get<1>() == 1) {
+      update_albums.EmplaceRow(1, 1, 100000);
+    }
+    if (row->get<0>() == 2 && row->get<1>() == 2) {
+      update_albums.EmplaceRow(2, 2, 500000);
+    }
+  }
+  auto commit_result = client.Commit(txn, {update_albums.Build()});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Update was successful [spanner_update_data]\n";
+}
+//! [END spanner_update_data]
+
+void UpdateDataCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "update-data <project-id> <instance-id> <database-id>");
+  }
+
+  UpdateData(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
+//! [START spanner_read_only_transaction]
+void ReadOnlyTransaction(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto read_only = spanner::MakeReadOnlyTransaction();
+
+  spanner::SqlStatement select(
+      "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
+
+  // Read#1.
+  auto read1 = client.ExecuteSql(read_only, select);
+  std::cout << "Read 1 results\n";
+  for (auto row : read1->Rows<std::int64_t, std::int64_t, std::string>()) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << "SingerId: " << row->get<0>() << " AlbumId: " << row->get<1>()
+              << " AlbumTitle: " << row->get<2>() << "\n";
+  }
+  // Read#2. Even if changes occur in-between the reads the transaction ensures
+  // that Read #1 and Read #2 return the same data.
+  auto read2 = client.ExecuteSql(read_only, select);
+  std::cout << "Read 2 results\n";
+  for (auto row : read2->Rows<std::int64_t, std::int64_t, std::string>()) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << "SingerId: " << row->get<0>() << " AlbumId: " << row->get<1>()
+              << " AlbumTitle: " << row->get<2>() << "\n";
+  }
+}
+//! [END spanner_read_only_transaction]
+
+void ReadOnlyTransactionCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "read-only-transaction <project-id> <instance-id> <database-id>");
+  }
+
+  ReadOnlyTransaction(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
+//! [START spanner_read_write_transaction]
+void ReadWriteTransaction(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto txn = spanner::MakeReadWriteTransaction();
+
+  auto get_current_budget = [&txn, &client](std::int64_t singer_id,
+                                            std::int64_t album_id) {
+    auto key = spanner::KeySetBuilder<spanner::Row<std::int64_t, std::int64_t>>(
+                   spanner::MakeRow(singer_id, album_id))
+                   .Build();
+    auto read = client.Read(txn, "Albums", std::move(key), {"MarketingBudget"});
+    if (!read) {
+      throw std::runtime_error(read.status().message());
+    }
+    for (auto row : read->Rows<std::int64_t>()) {
+      if (!row) {
+        throw std::runtime_error(read.status().message());
+      }
+      // We expect at most one result from the `Read()` request. Return the
+      // first one.
+      return row->get<0>();
+    }
+    throw std::runtime_error("Key not found (" + std::to_string(singer_id) +
+                             "," + std::to_string(album_id) + ")");
+  };
+
+  auto b1 = get_current_budget(1, 1);
+  auto b2 = get_current_budget(2, 2);
+  std::int64_t transfer_amount = 200000;
+
+  auto commit_result = client.Commit(
+      txn, {spanner::UpdateMutationBuilder(
+                "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
+                .EmplaceRow(1, 1, b1 + transfer_amount)
+                .EmplaceRow(2, 2, b2 - transfer_amount)
+                .Build()});
+
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Transfer was successful [spanner_read_write_transaction]\n";
+}
+//! [END spanner_read_write_transaction]
+
+void ReadWriteTransactionCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "read-write-transaction <project-id> <instance-id> <database-id>");
+  }
+
+  ReadWriteTransaction(MakeSampleClient(argv[0], argv[1], argv[2]));
 }
 
 //! [START spanner_dml_standard_insert]
@@ -203,7 +344,7 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
-  std::cout << "Insert was successful\n";
+  std::cout << "Insert was successful [spanner_dml_standard_insert]\n";
 }
 //! [END spanner_dml_standard_insert]
 
@@ -213,9 +354,7 @@ void DmlStandardInsertCommand(std::vector<std::string> const& argv) {
         "dml-standard-insert <project-id> <instance-id> <database-id>");
   }
 
-  namespace spanner = google::cloud::spanner;
-  spanner::Database db(argv[0], argv[1], argv[2]);
-  DmlStandardInsert(spanner::Client(spanner::MakeConnection(db)));
+  DmlStandardInsert(MakeSampleClient(argv[0], argv[1], argv[2]));
 }
 
 //! [START spanner_dml_standard_update]
@@ -235,7 +374,7 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
-  std::cout << "Update was successful\n";
+  std::cout << "Update was successful [spanner_dml_standard_update]\n";
 }
 //! [END spanner_dml_standard_update]
 
@@ -245,9 +384,7 @@ void DmlStandardUpdateCommand(std::vector<std::string> const& argv) {
         "dml-standard-update <project-id> <instance-id> <database-id>");
   }
 
-  namespace spanner = google::cloud::spanner;
-  spanner::Database db(argv[0], argv[1], argv[2]);
-  DmlStandardUpdate(spanner::Client(spanner::MakeConnection(db)));
+  DmlStandardUpdate(MakeSampleClient(argv[0], argv[1], argv[2]));
 }
 
 int RunOneCommand(std::vector<std::string> argv) {
@@ -259,6 +396,9 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"query-with-struct", &QueryWithStructCommand},
       {"drop-database", &DropDatabase},
       {"insert-data", &InsertDataCommand},
+      {"update-data", &UpdateDataCommand},
+      {"read-only-transaction", &ReadOnlyTransactionCommand},
+      {"read-write-transaction", &ReadWriteTransactionCommand},
       {"dml-standard-insert", &DmlStandardInsertCommand},
       {"dml-standard-update", &DmlStandardUpdateCommand},
   };
@@ -329,6 +469,9 @@ void RunAll() {
       google::cloud::spanner::MakeConnection(db));
 
   InsertData(client);
+  UpdateData(client);
+  ReadOnlyTransaction(client);
+  ReadWriteTransaction(client);
   // TODO(#188) - Implement QueryWithStruct()
   QueryWithStructCommand({project_id, instance_id, database_id});
   DmlStandardInsert(client);
