@@ -131,9 +131,6 @@ class CurlRequestBuilder {
     return *this;
   }
 
-  /// Adds a prefix to the user-agent string.
-  CurlRequestBuilder& AddUserAgentPrefix(std::string const& prefix);
-
   /// Adds request headers.
   CurlRequestBuilder& AddHeader(std::string const& header);
 
@@ -144,18 +141,11 @@ class CurlRequestBuilder {
   /// Changes the http method used for this request.
   CurlRequestBuilder& SetMethod(std::string const& method);
 
-  /// Enables (or disables) debug logging.
-  CurlRequestBuilder& SetDebugLogging(bool enabled);
+  /// Copy interesting configuration parameters from the client options.
+  CurlRequestBuilder& ApplyClientOptions(ClientOptions const& options);
 
   /// Sets the CURLSH* handle to share resources.
   CurlRequestBuilder& SetCurlShare(CURLSH* share);
-
-  CurlRequestBuilder& SetSocketBuffers(std::size_t recv_size,
-                                       std::size_t send_size) {
-    socket_options_.recv_buffer_size_ = recv_size;
-    socket_options_.send_buffer_size_ = send_size;
-    return *this;
-  }
 
   /// Gets the user-agent suffix.
   std::string UserAgentSuffix() const;
@@ -182,10 +172,9 @@ class CurlRequestBuilder {
   char const* query_parameter_separator_;
 
   std::string user_agent_prefix_;
-
   bool logging_enabled_;
-
   CurlHandle::SocketOptions socket_options_;
+  std::chrono::seconds download_stall_timeout_;
 };
 
 }  // namespace internal

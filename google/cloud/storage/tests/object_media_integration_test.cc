@@ -46,7 +46,16 @@ class ObjectMediaIntegrationTest
       : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
 
  protected:
-  ::google::cloud::testing_util::EnvironmentVariableRestore endpoint_;
+  void SetUp() override {
+    google::cloud::storage::testing::StorageIntegrationTest::SetUp();
+    endpoint_.SetUp();
+  }
+  void TearDown() override {
+    endpoint_.TearDown();
+    google::cloud::storage::testing::StorageIntegrationTest::TearDown();
+  }
+
+  google::cloud::testing_util::EnvironmentVariableRestore endpoint_;
 };
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
@@ -551,6 +560,84 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
       << ", status=" << meta.status();
 
   EXPECT_EQ(0, std::remove(file_name.c_str()));
+}
+
+TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
+  if (!UsingTestbench()) {
+    return;
+  }
+
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+
+  Client client(options->set_download_stall_timeout(std::chrono::seconds(3)),
+                LimitedErrorCountRetryPolicy(3));
+
+  std::string const bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // Construct an object large enough to not be downloaded in the first chunk.
+  auto const object_size = 512 * 1024L;
+  auto large_text = MakeRandomData(object_size);
+
+  // Create an object with the contents to download.
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  auto stream = client.ReadObject(
+      bucket_name, object_name,
+      CustomHeader("x-goog-testbench-instructions", "stall-always"));
+
+  std::vector<char> buffer(object_size);
+  stream.read(buffer.data(), object_size);
+  EXPECT_TRUE(stream.bad());
+  EXPECT_FALSE(stream.status().ok());
+
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
+  if (!UsingTestbench()) {
+    return;
+  }
+
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+
+  Client client(options->set_download_stall_timeout(std::chrono::seconds(3)),
+                LimitedErrorCountRetryPolicy(10));
+
+  std::string const bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // Construct an object large enough to not be downloaded in the first chunk.
+  auto const object_size = 512 * 1024L;
+  auto large_text = MakeRandomData(object_size);
+  EXPECT_EQ(object_size, large_text.size());
+
+  // Create an object with the contents to download.
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
+      bucket_name, object_name, large_text, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  auto stream = client.ReadObject(
+      bucket_name, object_name,
+      CustomHeader("x-goog-testbench-instructions", "stall-at-256KiB"));
+
+  std::vector<char> buffer(object_size);
+  stream.read(buffer.data(), object_size);
+  EXPECT_STATUS_OK(stream.status());
+  EXPECT_EQ(object_size, stream.gcount());
+  stream.read(buffer.data(), object_size);
+
+  EXPECT_TRUE(stream.eof());
+  EXPECT_EQ(0, stream.gcount());
+  EXPECT_STATUS_OK(stream.status());
+
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
 }
 
 }  // anonymous namespace

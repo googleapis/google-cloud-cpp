@@ -61,6 +61,10 @@ std::size_t DefaultConnectionPoolSize() {
   (20 * 1024 * 1024L)
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE
 
+#ifndef GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT
+#define GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT 120
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT
+
 }  // namespace
 
 StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
@@ -83,7 +87,9 @@ ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
           GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_BUFFER_SIZE),
       upload_buffer_size_(GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_UPLOAD_BUFFER_SIZE),
       maximum_simple_upload_size_(
-          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE) {
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_MAXIMUM_SIMPLE_UPLOAD_SIZE),
+      download_stall_timeout_(
+          GOOGLE_CLOUD_CPP_STORAGE_DEFAULT_DOWNLOAD_STALL_TIMEOUT) {
   auto emulator =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT");
   if (emulator.has_value()) {

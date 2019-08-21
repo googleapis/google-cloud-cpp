@@ -54,6 +54,7 @@ class CurlDownloadRequest : public ObjectReadSource {
         user_agent_(std::move(rhs.user_agent_)),
         logging_enabled_(rhs.logging_enabled_),
         socket_options_(rhs.socket_options_),
+        download_stall_timeout_(0),
         handle_(std::move(rhs.handle_)),
         multi_(std::move(rhs.multi_)),
         factory_(std::move(rhs.factory_)),
@@ -76,6 +77,7 @@ class CurlDownloadRequest : public ObjectReadSource {
     user_agent_ = std::move(rhs.user_agent_);
     logging_enabled_ = rhs.logging_enabled_;
     socket_options_ = rhs.socket_options_;
+    download_stall_timeout_ = rhs.download_stall_timeout_;
     handle_ = std::move(rhs.handle_);
     multi_ = std::move(rhs.multi_);
     factory_ = std::move(rhs.factory_);
@@ -141,6 +143,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   CurlReceivedHeaders received_headers_;
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
+  std::chrono::seconds download_stall_timeout_;
   CurlHandle handle_;
   CurlMulti multi_;
   std::shared_ptr<CurlHandleFactory> factory_;

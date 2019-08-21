@@ -62,14 +62,19 @@ CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
   request.factory_ = factory_;
   request.logging_enabled_ = logging_enabled_;
   request.socket_options_ = socket_options_;
+  request.download_stall_timeout_ = download_stall_timeout_;
   request.SetOptions();
   return request;
 }
 
-CurlRequestBuilder& CurlRequestBuilder::AddUserAgentPrefix(
-    std::string const& prefix) {
+CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
+    ClientOptions const& options) {
   ValidateBuilderState(__func__);
-  user_agent_prefix_ = prefix + user_agent_prefix_;
+  logging_enabled_ = options.enable_http_tracing();
+  socket_options_.recv_buffer_size_ = options.maximum_socket_recv_size();
+  socket_options_.send_buffer_size_ = options.maximum_socket_send_size();
+  user_agent_prefix_ = options.user_agent_prefix() + user_agent_prefix_;
+  download_stall_timeout_ = options.download_stall_timeout();
   return *this;
 }
 
@@ -101,12 +106,6 @@ CurlRequestBuilder& CurlRequestBuilder::SetMethod(std::string const& method) {
 
 CurlRequestBuilder& CurlRequestBuilder::SetCurlShare(CURLSH* share) {
   handle_.SetOption(CURLOPT_SHARE, share);
-  return *this;
-}
-
-CurlRequestBuilder& CurlRequestBuilder::SetDebugLogging(bool enabled) {
-  ValidateBuilderState(__func__);
-  logging_enabled_ = enabled;
   return *this;
 }
 

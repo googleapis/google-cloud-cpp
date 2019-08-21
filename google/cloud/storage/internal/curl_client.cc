@@ -126,11 +126,8 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
     return std::move(auth_header).status();
   }
   builder.SetMethod(method)
-      .SetDebugLogging(options_.enable_http_tracing())
-      .SetSocketBuffers(options_.maximum_socket_recv_size(),
-                        options_.maximum_socket_send_size())
+      .ApplyClientOptions(options_)
       .SetCurlShare(share_.get())
-      .AddUserAgentPrefix(options_.user_agent_prefix())
       .AddHeader(auth_header.value())
       .AddHeader("x-goog-api-client: " + x_goog_api_client());
   return Status();

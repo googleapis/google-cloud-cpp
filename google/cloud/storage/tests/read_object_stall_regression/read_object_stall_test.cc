@@ -102,7 +102,8 @@ TEST_F(ReadObjectStallTest, Streaming) {
       << "ERROR: Aborting test, cannot create client options";
 
   Client client(options->set_maximum_socket_recv_size(128 * 1024)
-                    .set_maximum_socket_send_size(128 * 1024));
+                    .set_maximum_socket_send_size(128 * 1024)
+                    .set_download_stall_timeout(std::chrono::seconds(30)));
 
   PreparePhase(client, 1000);
 
