@@ -171,7 +171,7 @@ class ClientOptions {
    * remains stalled for more than the time set in this option then the download
    * is aborted.
    *
-   * The default value is 5 minutes. Can be disabled by setting the value to 0.
+   * The default value is 2 minutes. Can be disabled by setting the value to 0.
    */
   std::chrono::seconds download_stall_timeout() const {
     return download_stall_timeout_;

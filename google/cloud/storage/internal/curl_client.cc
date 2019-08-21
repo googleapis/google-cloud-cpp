@@ -126,7 +126,7 @@ Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
     return std::move(auth_header).status();
   }
   builder.SetMethod(method)
-      .CopyClientOptions(options_)
+      .ApplyClientOptions(options_)
       .SetCurlShare(share_.get())
       .AddHeader(auth_header.value())
       .AddHeader("x-goog-api-client: " + x_goog_api_client());

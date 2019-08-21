@@ -185,7 +185,7 @@ TEST(CurlRequestTest, UserAgentPrefix) {
   auto options =
       ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
           .add_user_agent_prefx("test-user-agent-prefix");
-  builder.CopyClientOptions(options);
+  builder.ApplyClientOptions(options);
   builder.AddHeader("Accept: application/json");
   builder.AddHeader("charsets: utf-8");
 
@@ -391,7 +391,7 @@ TEST(CurlRequestTest, Logging) {
     auto options =
         ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>())
             .set_enable_http_tracing(true);
-    request.CopyClientOptions(options);
+    request.ApplyClientOptions(options);
     request.AddHeader("Accept: application/json");
     request.AddHeader("charsets: utf-8");
     request.AddHeader("x-test-header: foo");

@@ -67,7 +67,7 @@ CurlDownloadRequest CurlRequestBuilder::BuildDownloadRequest(
   return request;
 }
 
-CurlRequestBuilder& CurlRequestBuilder::CopyClientOptions(
+CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
     ClientOptions const& options) {
   ValidateBuilderState(__func__);
   logging_enabled_ = options.enable_http_tracing();
