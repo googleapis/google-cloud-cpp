@@ -66,6 +66,7 @@ class PartialResultSetReader : public internal::ResultSetSource {
   std::unique_ptr<GrpcReader> grpc_reader_;
 
   google::protobuf::RepeatedPtrField<google::protobuf::Value> values_;
+  optional<google::protobuf::Value> partial_chunked_value_;
   optional<google::spanner::v1::ResultSetMetadata> metadata_;
   optional<google::spanner::v1::ResultSetStats> stats_;
   bool finished_ = false;

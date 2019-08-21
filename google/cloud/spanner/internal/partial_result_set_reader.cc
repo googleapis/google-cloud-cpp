@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
+#include "google/cloud/spanner/internal/merge_chunk.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 
@@ -54,6 +55,10 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
       return status;
     }
     if (finished_) {
+      if (partial_chunked_value_.has_value()) {
+        return Status(StatusCode::kInternal,
+                      "incomplete chunked_value at end of stream");
+      }
       return optional<Value>();
     }
     // If the response contained any values, the loop will exit, otherwise
@@ -115,8 +120,60 @@ Status PartialResultSetReader::ReadFromStream() {
   }
 
   // TODO(#271) store and use resume_token.
-  // TODO(#270) handle chunked_value.
+
   values_.Swap(result_set.mutable_values());
+
+  // Merge values if necessary, as described in:
+  // https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#google.spanner.v1.PartialResultSet
+  //
+  // As an example, if we receive the following 4 responses (assume the values
+  // are all `string_value`s of type `STRING`):
+  //
+  // ```
+  // { { values: ["A", "B", "C1"] }  chunked_value: true }
+  // { { values: ["C2", "D", "E1"] } chunked_value: true }
+  // { { values: ["E2"] },           chunked_value: true }
+  // { { values: ["E3", "F"] }       chunked_value: false }
+  // ```
+  //
+  // The final values yielded are: `A`, `B`, `C1C2`, `D`, `E1E2E3`, `F`.
+  //
+  // n.b. One value can span more than two responses (the `E1E2E3` case above);
+  // the code "just works" without needing to treat that as a special-case.
+
+  // If the last response had `chunked_value` set, `partial_chunked_value_`
+  // contains the partial value from that response; merge it with the first
+  // value in this response and set the first entry in `values_` to the result.
+  if (partial_chunked_value_.has_value()) {
+    if (values_.empty()) {
+      return Status(StatusCode::kInternal,
+                    "PartialResultSet contained no values to merge with prior "
+                    "chunked_value");
+    }
+    auto merge_status =
+        MergeChunk(*partial_chunked_value_, std::move(values_[0]));
+    if (!merge_status.ok()) {
+      return merge_status;
+    }
+    // Move the merged value to the front of the array and make
+    // `partial_chunked_value_` empty.
+    values_[0] = *std::move(partial_chunked_value_);
+    partial_chunked_value_.reset();
+  }
+
+  // If `chunked_value` is set, the last value in *this* response is incomplete
+  // and needs to be merged with the first value in the *next* response. Move it
+  // into `partial_chunked_value_`; this ensures everything in `values_` is a
+  // complete value, which simplifies things elsewhere.
+  if (result_set.chunked_value()) {
+    if (values_.empty()) {
+      return Status(StatusCode::kInternal,
+                    "PartialResultSet had chunked_value set true but contained "
+                    "no values");
+    }
+    partial_chunked_value_ = std::move(values_[values_.size() - 1]);
+    values_.RemoveLast();
+  }
   return Status();
 }
 

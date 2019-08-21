@@ -442,6 +442,249 @@ TEST(PartialResultSetReaderTest, ResponseWithNoValues) {
   EXPECT_FALSE(eos->has_value());
 }
 
+/**
+ * @Test Verify reassembling chunked values works correctly, including a mixture
+ * of chunked and unchunked values.
+ */
+TEST(PartialResultSetReaderTest, ChunkedStringValueWellFormed) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  std::array<spanner_proto::PartialResultSet, 5> response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Prose",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "not_chunked" }
+        values: { string_value: "first_chunk" }
+        chunked_value: true
+      )pb",
+      &response[0]));
+  // Note this is part of a value that spans 3 responses.
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "second_chunk" }
+        chunked_value: true
+      )pb",
+      &response[1]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "third_chunk" }
+        values: { string_value: "second group first_chunk " }
+        chunked_value: true
+      )pb",
+      &response[2]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "second group second_chunk" }
+        values: { string_value: "also not_chunked" }
+      )pb",
+      &response[3]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "still not_chunked" }
+      )pb",
+      &response[4]));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[2]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[3]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[4]), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  EXPECT_STATUS_OK(reader.status());
+
+  // Verify the returned values are correct.
+  for (const auto& value :
+       {"not_chunked", "first_chunksecond_chunkthird_chunk",
+        "second group first_chunk second group second_chunk",
+        "also not_chunked", "still not_chunked"}) {
+    EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(value)));
+  }
+
+  // At end of stream, we get an 'ok' response with no value.
+  auto eos = (*reader)->NextValue();
+  EXPECT_STATUS_OK(eos);
+  EXPECT_FALSE(eos->has_value());
+}
+
+/**
+ * @test Verify the behavior when `chunked_value` is set but there are no
+ * values in the response.
+ */
+TEST(PartialResultSetReaderTest, ChunkedValueSetNoValue) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  std::array<spanner_proto::PartialResultSet, 2> response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Prose",
+              type: { code: STRING }
+            }
+          }
+        }
+      )pb",
+      &response[0]));
+  ASSERT_TRUE(
+      TextFormat::ParseFromString(R"pb(chunked_value: true)pb", &response[1]));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  EXPECT_STATUS_OK(reader.status());
+
+  // Trying to read the next value should fail.
+  auto value = (*reader)->NextValue();
+  EXPECT_EQ(value.status().code(), StatusCode::kInternal);
+  EXPECT_EQ(
+      value.status().message(),
+      "PartialResultSet had chunked_value set true but contained no values");
+}
+
+/**
+ * @test Verify the behavior when a response with no values follows one
+ * with `chunked_value` set.
+ */
+TEST(PartialResultSetReaderTest, ChunkedValueSetNoFollowingValue) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  std::array<spanner_proto::PartialResultSet, 2> response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Prose",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "incomplete" }
+        chunked_value: true
+      )pb",
+      &response[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString(R"pb()pb", &response[1]));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  EXPECT_STATUS_OK(reader.status());
+
+  // Trying to read the next value should fail.
+  auto value = (*reader)->NextValue();
+  EXPECT_EQ(value.status().code(), StatusCode::kInternal);
+  EXPECT_EQ(value.status().message(),
+            "PartialResultSet contained no values to merge with prior "
+            "chunked_value");
+}
+
+/**
+ * @test Verify the behavior when `chunked_value` is set in the final response.
+ */
+TEST(PartialResultSetReaderTest, ChunkedValueSetAtEndOfStream) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  std::array<spanner_proto::PartialResultSet, 2> response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Prose",
+              type: { code: STRING }
+            }
+          }
+        }
+      )pb",
+      &response[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { string_value: "incomplete" }
+        chunked_value: true
+      )pb",
+      &response[1]));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  EXPECT_STATUS_OK(reader.status());
+
+  // Trying to read the next value should fail.
+  auto value = (*reader)->NextValue();
+  EXPECT_EQ(value.status().code(), StatusCode::kInternal);
+  EXPECT_EQ(value.status().message(),
+            "incomplete chunked_value at end of stream");
+}
+
+/**
+ * @test Verify the behavior when attempting to merge a value that can't be
+ * chunked (float64/number).
+ */
+TEST(PartialResultSetReaderTest, ChunkedValueMergeFailure) {
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  std::array<spanner_proto::PartialResultSet, 3> response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "Number",
+              type: { code: FLOAT64 }
+            }
+          }
+        }
+      )pb",
+      &response[0]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { number_value: 86 }
+        chunked_value: true
+      )pb",
+      &response[1]));
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        values: { number_value: 99 }
+      )pb",
+      &response[2]));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response[0]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[1]), Return(true)))
+      .WillOnce(DoAll(SetArgPointee<0>(response[2]), Return(true)));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+
+  auto context = make_unique<grpc::ClientContext>();
+  auto reader = PartialResultSetReader::Create(std::move(context),
+                                               std::move(grpc_reader));
+  EXPECT_STATUS_OK(reader.status());
+
+  // Trying to read the next value should fail.
+  auto value = (*reader)->NextValue();
+  EXPECT_EQ(value.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_EQ(value.status().message(), "invalid type");
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
