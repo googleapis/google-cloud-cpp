@@ -217,6 +217,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
       SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 2);
   // It took only 2 failed recv() calls!
   is.read(read_buf.data(), read_buf.size());
+  // TODO(#2890) - change this to EXPECT_STATUS_OK once retries work.
   ASSERT_FALSE(is.status().ok());
   is.Close();
   EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
