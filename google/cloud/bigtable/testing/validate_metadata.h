@@ -24,7 +24,20 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
-Status IsContextMDValid(grpc::ClientContext const& context,
+/**
+ * Verify that the metadata in the context is appropriate for a gRPC method.
+ *
+ * `ClientContext` should instruct gRPC to set a `x-goog-request-params` HTTP
+ * header with a value dictated by a `google.api.http` option in the gRPC
+ * service specification. This function checks if the header is set and whether
+ * it has a valid value.
+ *
+ * @param context the context to validate
+ * @param method a gRPC method which which this context will be passed to
+ *
+ * @return an OK status if the `context` is properly set up
+ */
+Status IsContextMDValid(grpc::ClientContext& context,
                         std::string const& method);
 
 }  // namespace testing

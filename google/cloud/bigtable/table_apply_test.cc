@@ -24,7 +24,7 @@ using namespace google::cloud::testing_util::chrono_literals;
 /// Define helper types and functions for this test.
 namespace {
 
-auto mock_read_row = [](grpc::Status const& status) {
+auto mock_mutate_row = [](grpc::Status const& status) {
   return [status](grpc::ClientContext* context,
                   google::bigtable::v2::MutateRowRequest const&,
                   google::bigtable::v2::MutateRowResponse*) {
@@ -42,7 +42,7 @@ TEST_F(TableApplyTest, Simple) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, MutateRow(_, _, _))
-      .WillOnce(Invoke(mock_read_row(grpc::Status::OK)));
+      .WillOnce(Invoke(mock_mutate_row(grpc::Status::OK)));
 
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
@@ -54,7 +54,7 @@ TEST_F(TableApplyTest, Failure) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, MutateRow(_, _, _))
-      .WillRepeatedly(Invoke(mock_read_row(
+      .WillRepeatedly(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::FAILED_PRECONDITION, "uh-oh"))));
 
   auto status = table_.Apply(bigtable::SingleRowMutation(
@@ -68,13 +68,13 @@ TEST_F(TableApplyTest, Retry) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, MutateRow(_, _, _))
-      .WillOnce(Invoke(mock_read_row(
+      .WillOnce(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))))
-      .WillOnce(Invoke(mock_read_row(
+      .WillOnce(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))))
-      .WillOnce(Invoke(mock_read_row(
+      .WillOnce(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))))
-      .WillOnce(Invoke(mock_read_row((grpc::Status::OK))));
+      .WillOnce(Invoke(mock_mutate_row((grpc::Status::OK))));
 
   auto status = table_.Apply(bigtable::SingleRowMutation(
       "bar", {bigtable::SetCell("fam", "col", 0_ms, "val")}));
@@ -86,7 +86,7 @@ TEST_F(TableApplyTest, RetryIdempotent) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, MutateRow(_, _, _))
-      .WillRepeatedly(Invoke(mock_read_row(
+      .WillRepeatedly(Invoke(mock_mutate_row(
           grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))));
 
   auto status = table_.Apply(bigtable::SingleRowMutation(

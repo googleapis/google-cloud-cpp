@@ -76,7 +76,7 @@ auto create_list_instances_lambda = [](std::string expected_token,
 
 // A lambda to create lambdas. Basically we would be rewriting the same lambda
 // twice without using this thing.
-auto create_cluster = []() {
+auto create_get_cluster_mock = []() {
   return [](grpc::ClientContext* context,
             btadmin::GetClusterRequest const& request,
             btadmin::Cluster* response) {
@@ -88,7 +88,7 @@ auto create_cluster = []() {
   };
 };
 
-auto create_policy = []() {
+auto create_get_policy_mock = []() {
   return [](grpc::ClientContext* context,
             ::google::iam::v1::GetIamPolicyRequest const&,
             ::google::iam::v1::Policy* response) {
@@ -425,7 +425,7 @@ TEST_F(InstanceAdminTest, GetCluster) {
   using namespace ::testing;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock = create_cluster();
+  auto mock = create_get_cluster_mock();
   EXPECT_CALL(*client_, GetCluster(_, _, _)).WillOnce(Invoke(mock));
   // After all the setup, make the actual call we want to test.
   auto cluster = tested.GetCluster("the-instance", "the-cluster");
@@ -458,7 +458,7 @@ TEST_F(InstanceAdminTest, GetClusterRecoverableError) {
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
 
-  auto mock_cluster = create_cluster();
+  auto mock_cluster = create_get_cluster_mock();
   EXPECT_CALL(*client_, GetCluster(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
       .WillOnce(Invoke(mock_recoverable_failure))
@@ -516,7 +516,7 @@ TEST_F(InstanceAdminTest, GetIamPolicy) {
   using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_policy = create_policy();
+  auto mock_policy = create_get_policy_mock();
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
 
   std::string resource = "test-resource";
@@ -586,7 +586,7 @@ TEST_F(InstanceAdminTest, GetIamPolicyRecoverableError) {
         "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto mock_policy = create_policy();
+  auto mock_policy = create_get_policy_mock();
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
@@ -602,7 +602,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicy) {
   using ::testing::Invoke;
 
   bigtable::InstanceAdmin tested(client_);
-  auto mock_policy = create_policy();
+  auto mock_policy = create_get_policy_mock();
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
 
   std::string resource = "test-resource";
@@ -644,7 +644,7 @@ TEST_F(InstanceAdminTest, GetNativeIamPolicyRecoverableError) {
         "google.bigtable.admin.v2.BigtableInstanceAdmin.GetIamPolicy"));
     return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
   };
-  auto mock_policy = create_policy();
+  auto mock_policy = create_get_policy_mock();
 
   EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
       .WillOnce(Invoke(mock_recoverable_failure))
@@ -1433,8 +1433,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateAppProfile) {
               app_profile_id: "prof"
               app_profile: { multi_cluster_routing_use_any { } }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "CreateAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateAppProfile")));
   FinishTest(instance_admin_->AsyncCreateAppProfile(
       cq_, "the-instance",
       bigtable::AppProfileConfig::MultiClusterUseAny("prof")));
@@ -1451,8 +1450,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteAppProfile) {
               name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
               ignore_warnings: true
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "DeleteAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteAppProfile")));
   auto res_future = instance_admin_->AsyncDeleteAppProfile(cq_, "the-instance",
                                                            "the-profile");
   EXPECT_EQ(1U, cq_impl_->size());
@@ -1472,8 +1470,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteInstance) {
           R"""(
               name: "projects/the-project/instances/the-instance"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "DeleteInstance")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteInstance")));
   auto res_future = instance_admin_->AsyncDeleteInstance("the-instance", cq_);
   EXPECT_EQ(1U, cq_impl_->size());
   cq_impl_->SimulateCompletion(cq_, true);
@@ -1492,8 +1489,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetAppProfile) {
           R"""(
               name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "GetAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetAppProfile")));
   FinishTest(
       instance_admin_->AsyncGetAppProfile(cq_, "the-instance", "the-profile"));
 }
@@ -1508,8 +1504,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetCluster) {
           R"""(
               name: "projects/the-project/instances/the-instance/clusters/the-cluster"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "GetCluster")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetCluster")));
   FinishTest(
       instance_admin_->AsyncGetCluster(cq_, "the-instance", "the-cluster"));
 }
@@ -1524,8 +1519,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncGetInstance) {
           R"""(
               name: "projects/the-project/instances/the-instance"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "GetInstance")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.GetInstance")));
   FinishTest(instance_admin_->AsyncGetInstance(cq_, "the-instance"));
 }
 
@@ -1545,8 +1539,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateCluster) {
                   default_storage_type: SSD
               }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "CreateCluster")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateCluster")));
   FinishTest(instance_admin_->AsyncCreateCluster(
       cq_, bigtable::ClusterConfig("loc1", 3, bigtable::ClusterConfig::SSD),
       "the-instance", "the-cluster"));
@@ -1564,8 +1557,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateInstance) {
               instance_id: "the-instance"
               instance: { display_name: "Displayed instance" }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "CreateInstance")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.CreateInstance")));
   FinishTest(instance_admin_->AsyncCreateInstance(
       cq_, bigtable::InstanceConfig("the-instance", "Displayed instance", {})));
 }
@@ -1582,8 +1574,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateAppProfile) {
                   name: "projects/the-project/instances/the-instance/appProfiles/the-profile"
               }
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "UpdateAppProfile")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.UpdateAppProfile")));
   FinishTest(instance_admin_->AsyncUpdateAppProfile(
       cq_, "the-instance", "the-profile", bigtable::AppProfileUpdateConfig()));
 }
@@ -1601,8 +1592,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncUpdateCluster) {
               default_storage_type: SSD
               name: "projects/the-project/instances/the-instance/clusters/the-cluster"
           )""",
-          "google.bigtable.admin.v2.BigtableInstanceAdmin."
-          "UpdateCluster")));
+          "google.bigtable.admin.v2.BigtableInstanceAdmin.UpdateCluster")));
   auto cluster =
       bigtable::ClusterConfig("loc1", 3, bigtable::ClusterConfig::SSD)
           .as_proto();

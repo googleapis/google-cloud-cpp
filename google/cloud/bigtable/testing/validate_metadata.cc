@@ -16,35 +16,93 @@
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <grpcpp/generic/async_generic_service.h>
+#include <grpcpp/generic/generic_stub.h>
+#include <grpcpp/server.h>
+#include <grpcpp/server_builder.h>
+#include <grpcpp/server_context.h>
 #include <regex>
-
-namespace grpc {
-namespace testing {
-
-/**
- * A class allowing to access internal `ClientContext` members.
- *
- * It's a hack - `ClientContext` declares such a class as a friend.
- */
-class InteropClientContextInspector {
- public:
-  static std::multimap<std::string, std::string> GetMetadata(
-      grpc::ClientContext const& context) {
-    return std::multimap<std::string, std::string>(
-        context.send_initial_metadata_.begin(),
-        context.send_initial_metadata_.end());
-  }
-};
-}  // namespace testing
-}  // namespace grpc
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace testing {
+
+#if !defined(__clang__) && \
+    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 9))
+
+// gcc-4.8 and earlier have broken regexes - ignore the tests there.
+Status IsContextMDValid(grpc::ClientContext& context,
+                        std::string const& method) {
+  return Status();
+}
+
+#else
+
 namespace {
 
-StatusOr<std::map<std::string, std::string>> ExtractMDFromHeader(
+/**
+ * GetMetadata from `ClientContext`.
+ *
+ * `ClientContext` doesn't give access to the metadata, but `ServerContext`
+ * does. In order to transform the `ClientContext` into `ServerContext`
+ * we spin up a server and a client and send some garbage with this context.
+ */
+std::multimap<std::string, std::string> GetMetadata(
+    grpc::ClientContext& context) {
+  // Start the generic server.
+  grpc::ServerBuilder builder;
+  grpc::AsyncGenericService generic_service;
+  builder.RegisterAsyncGenericService(&generic_service);
+  auto srv_cq = builder.AddCompletionQueue();
+  auto server = builder.BuildAndStart();
+
+  // Send some garbage with the supplied context.
+  grpc::GenericStub generic_stub(
+      server->InProcessChannel(grpc::ChannelArguments()));
+  grpc::CompletionQueue cli_cq;
+  auto cli_stream =
+      generic_stub.PrepareCall(&context, "made_up_method", &cli_cq);
+  cli_stream->StartCall(nullptr);
+  bool ok;
+  void* dummy;
+  cli_cq.Next(&dummy, &ok);  // actually start the client call
+
+  // Receive the garbage with the supplied context.
+  grpc::GenericServerContext server_context;
+  grpc::GenericServerAsyncReaderWriter reader_writer(&server_context);
+  generic_service.RequestCall(&server_context, &reader_writer, srv_cq.get(),
+                              srv_cq.get(), nullptr);
+  srv_cq->Next(&dummy, &ok);  // actually receive the data
+
+  // Now we've got the data - save it before cleaning up.
+  std::multimap<std::string, std::string> res;
+  auto const& cli_md = server_context.client_metadata();
+  std::transform(cli_md.begin(), cli_md.end(), std::inserter(res, res.begin()),
+                 [](std::pair<grpc::string_ref, grpc::string_ref> const& md) {
+                   return std::make_pair(
+                       std::string(md.first.data(), md.first.length()),
+                       std::string(md.second.data(), md.second.length()));
+                 });
+
+  // Shut everything down.
+  server->Shutdown(std::chrono::system_clock::now());
+  srv_cq->Shutdown();
+  cli_cq.Shutdown();
+  // Drain completion queues.
+  while (srv_cq->Next(&dummy, &ok))
+    ;
+  while (cli_cq.Next(&dummy, &ok))
+    ;
+
+  return res;
+}
+
+/**
+ * Check if the `header` is of "foo=bar&baz=rab&..." and if it is, return a
+ * `map` containing `"foo"->"bar", "baz"->"rab"`.
+ */
+StatusOr<std::map<std::string, std::string> > ExtractMDFromHeader(
     std::string header) {
   std::map<std::string, std::string> res;
   std::regex pair_re("[^&]+");
@@ -74,9 +132,9 @@ StatusOr<std::map<std::string, std::string>> ExtractMDFromHeader(
   return res;
 }
 
-StatusOr<std::map<std::string, std::string>> ExtractMDFromContext(
-    grpc::ClientContext const& context) {
-  auto md = grpc::testing::InteropClientContextInspector::GetMetadata(context);
+StatusOr<std::map<std::string, std::string> > ExtractMDFromContext(
+    grpc::ClientContext& context) {
+  auto md = GetMetadata(context);
   auto param_header = md.equal_range("x-goog-request-params");
   if (param_header.first == param_header.second) {
     return Status(StatusCode::kInvalidArgument, "Expected header not found");
@@ -94,7 +152,14 @@ bool ValueMatchesPattern(std::string val, std::string pattern) {
   return std::regex_match(val, std::regex(regexified_pattern));
 }
 
-StatusOr<std::map<std::string, std::string>> ExtractParamsFromMethod(
+/**
+ * Given a `method`, extract its `google.api.http` option and parse it.
+ *
+ * The expected format of the option is
+ * `something{foo=bar}something_else{baz=rab}`. For such a content, a `map`
+ * containing `"foo"->"bar", "baz"->"rab"` is returned.
+ */
+StatusOr<std::map<std::string, std::string> > ExtractParamsFromMethod(
     std::string const& method) {
   auto method_desc =
       google::protobuf::DescriptorPool::generated_pool()->FindMethodByName(
@@ -150,16 +215,26 @@ StatusOr<std::map<std::string, std::string>> ExtractParamsFromMethod(
 
 }  // namespace
 
-Status IsContextMDValid(grpc::ClientContext const& context,
+/**
+ * We use reflection to extract the `google.api.http` option from the given
+ * `method`. We then parse it and check whether the contents of the
+ * `x-goog-request-params` header in `context` set all the parameters listed in
+ * the curly braces.
+ */
+Status IsContextMDValid(grpc::ClientContext& context,
                         std::string const& method) {
+  // Extract the metadata from `x-goog-request-params` header in context.
   auto md = ExtractMDFromContext(context);
   if (!md) {
     return md.status();
   }
+  // Extract expectations on `x-goog-request-params` from the `google.api.http`
+  // annotation on the specified method.
   auto params = ExtractParamsFromMethod(method);
   if (!params) {
     return params.status();
   }
+  // Check if the metadata in the context satisfied the expectations.
   for (auto const& param_pattern : *params) {
     auto const& param = param_pattern.first;
     auto const& expected_pattern = param_pattern.second;
@@ -178,6 +253,8 @@ Status IsContextMDValid(grpc::ClientContext const& context,
   }
   return Status();
 }
+
+#endif
 
 }  // namespace testing
 }  // namespace bigtable
