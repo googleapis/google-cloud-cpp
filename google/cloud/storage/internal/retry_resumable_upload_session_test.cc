@@ -345,7 +345,7 @@ TEST_F(RetryResumableUploadSessionTest, PermanentErrorOnUploadFinalChunk) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
 
-  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
 
   // Keep track of the sequence of calls.
@@ -382,7 +382,7 @@ TEST_F(RetryResumableUploadSessionTest, TooManyTransientOnUploadFinalChunk) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
 
-  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '0');
 
   // Keep track of the sequence of calls.

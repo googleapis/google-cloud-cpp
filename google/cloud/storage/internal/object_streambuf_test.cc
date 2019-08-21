@@ -103,7 +103,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
       testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
-  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  auto quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload(quantum, '*');
 
   int count = 0;
