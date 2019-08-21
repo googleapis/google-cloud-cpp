@@ -177,28 +177,13 @@ void InsertDataCommand(std::vector<std::string> const& argv) {
 //! [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
-  auto update_albums = spanner::UpdateMutationBuilder(
-      "Albums", {"SingerId", "AlbumId", "MarketingBudget"});
-
-  auto txn = spanner::MakeReadWriteTransaction();
-
-  auto read = client.ExecuteSql(
-      txn, spanner::SqlStatement("SELECT SingerId, AlbumId FROM Albums"));
-  if (!read) {
-    throw std::runtime_error(read.status().message());
-  }
-  for (auto row : read->Rows<std::int64_t, std::int64_t>()) {
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
-    if (row->get<0>() == 1 && row->get<1>() == 1) {
-      update_albums.EmplaceRow(1, 1, 100000);
-    }
-    if (row->get<0>() == 2 && row->get<1>() == 2) {
-      update_albums.EmplaceRow(2, 2, 500000);
-    }
-  }
-  auto commit_result = client.Commit(txn, {update_albums.Build()});
+  auto commit_result =
+      client.Commit(spanner::MakeReadWriteTransaction(),
+                    {spanner::UpdateMutationBuilder(
+                         "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
+                         .EmplaceRow(1, 1, 100000)
+                         .EmplaceRow(2, 2, 500000)
+                         .Build()});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
