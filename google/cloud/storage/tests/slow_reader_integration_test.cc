@@ -34,22 +34,7 @@ char const* flag_project_id;
 char const* flag_bucket_name;
 
 class SlowReaderIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
- protected:
-  std::string CreateLargeText(long desired_size) {
-    auto const line_size = 128;
-    auto const lines = desired_size / line_size;
-    std::string result;
-    for (long i = 0; i != lines; ++i) {
-      result.append(google::cloud::internal::Sample(generator_, line_size - 1,
-                                                    "abcdefghijklmnopqrstuvwxyz"
-                                                    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                    "012456789"));
-      result.push_back('\n');
-    }
-    return result;
-  }
-};
+    : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -60,7 +45,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   auto file_name = MakeRandomObjectName();
 
   // Construct an object large enough to not be downloaded in the first chunk.
-  auto large_text = CreateLargeText(4 * 1024 * 1024);
+  auto large_text = MakeRandomData(4 * 1024 * 1024);
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
@@ -122,7 +107,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
 
   // Construct an object large enough to not be downloaded in the first chunk.
   auto const object_size = 4 * 1024 * 1024L;
-  auto large_text = CreateLargeText(object_size);
+  auto large_text = MakeRandomData(object_size);
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
