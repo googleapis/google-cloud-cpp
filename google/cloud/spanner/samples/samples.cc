@@ -104,23 +104,6 @@ void AddColumn(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
-void QueryWithStructCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "query-with-struct <project-id> <instance-id> <database-id>");
-  }
-  // TODO(#188): Add querying part once data client is ready.
-  // [START spanner_create_struct_with_data]
-  auto singer_info = std::make_tuple(std::make_pair("FirstName", "Elena"),
-                                     std::make_pair("LastName", "Campbell"));
-  // [END spanner_create_struct_with_data]
-  std::cout << "Struct created with the following data:\n"
-            << std::get<0>(singer_info).first << ":"
-            << std::get<0>(singer_info).second << "\n"
-            << std::get<1>(singer_info).first << ":"
-            << std::get<1>(singer_info).second << "\n";
-}
-
 void DropDatabase(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -459,13 +442,69 @@ void DmlStandardDeleteCommand(std::vector<std::string> const& argv) {
   DmlStandardDelete(MakeSampleClient(argv[0], argv[1], argv[2]));
 }
 
+//! [START spanner_write_data_for_struct_queries]
+void WriteDataForStructQueries(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto commit_result =
+      client.Commit(spanner::MakeReadWriteTransaction(),
+                    {spanner::InsertMutationBuilder(
+                         "Singers", {"SingerId", "FirstName", "LastName"})
+                         .EmplaceRow(6, "Elena", "Campbell")
+                         .EmplaceRow(7, "Gabriel", "Wright")
+                         .EmplaceRow(8, "Benjamin", "Martinez")
+                         .EmplaceRow(9, "Hannah", "Harris")
+                         .Build()});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful "
+            << "[spanner_write_data_for_struct_queries]\n";
+}
+//! [END spanner_write_data_for_struct_queries]
+
+void WriteDataForStructQueriesCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "query-data-with-struct <project-id> <instance-id> <database-id>");
+  }
+  WriteDataForStructQueries(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
+//! [START spanner_query_data_with_struct]
+void QueryDataWithStruct(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  // [START spanner_create_struct_with_data]
+  auto singer_info = std::make_tuple(std::make_pair("FirstName", "Elena"),
+                                     std::make_pair("LastName", "Campbell"));
+  // [END spanner_create_struct_with_data]
+
+  auto reader = client.ExecuteSql(spanner::SqlStatement(
+      "SELECT SingerId FROM Singers WHERE (FirstName, LastName) = @name",
+      {{"name", spanner::Value(singer_info)}}));
+  if (!reader) throw std::runtime_error(reader.status().message());
+
+  for (auto row : reader->Rows<std::int64_t>()) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << row->get<0>() << "\n";
+  }
+  std::cout << "Query completed for [spanner_query_data_with_struct]\n";
+}
+//! [END spanner_query_data_with_struct]
+
+void QueryDataWithStructCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "query-data-with-struct <project-id> <instance-id> <database-id>");
+  }
+  QueryDataWithStruct(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
   std::map<std::string, CommandType> commands = {
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
-      {"query-with-struct", &QueryWithStructCommand},
       {"drop-database", &DropDatabase},
       {"insert-data", &InsertDataCommand},
       {"update-data", &UpdateDataCommand},
@@ -475,6 +514,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"dml-standard-insert", &DmlStandardInsertCommand},
       {"dml-standard-update", &DmlStandardUpdateCommand},
       {"dml-standard-delete", &DmlStandardDeleteCommand},
+      {"write-data-for-struct-queries", &WriteDataForStructQueriesCommand},
+      {"query-data-with-struct", &QueryDataWithStructCommand},
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -546,12 +587,13 @@ void RunAll() {
   UpdateData(client);
   ReadOnlyTransaction(client);
   ReadWriteTransaction(client);
-  // TODO(#188) - Implement QueryWithStruct()
-  QueryWithStructCommand({project_id, instance_id, database_id});
   DmlStandardInsert(client);
   DmlStandardUpdate(client);
   DmlStandardDelete(client);
   DeleteData(client);
+
+  WriteDataForStructQueries(client);
+  QueryDataWithStruct(client);
 
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
