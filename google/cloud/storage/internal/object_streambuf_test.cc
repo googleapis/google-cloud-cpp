@@ -33,9 +33,9 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Invoke;
-using ::testing::Property;
 using ::testing::Return;
 using ::testing::ReturnRef;
+using ::testing::SizeIs;
 
 /// @test Verify that uploading an empty stream creates a single chunk.
 TEST(ObjectWriteStreambufTest, EmptyStream) {
@@ -378,8 +378,7 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   std::string const payload_1(3 * quantum, '*');
   std::string const payload_2("trailer");
 
-  EXPECT_CALL(*mock,
-              UploadChunk(::testing::Property(&std::string::size, quantum)))
+  EXPECT_CALL(*mock, UploadChunk(SizeIs(quantum)))
       .WillOnce(
           Return(Status(StatusCode::kInvalidArgument, "Invalid Argument")));
 
