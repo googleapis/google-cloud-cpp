@@ -98,6 +98,14 @@ struct ReadOptions {
   std::int64_t limit = 0;
 };
 
+inline bool operator==(ReadOptions const& lhs, ReadOptions const& rhs) {
+  return lhs.limit == rhs.limit && lhs.index_name == rhs.index_name;
+}
+
+inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {
+  return !(lhs == rhs);
+}
+
 /// Options passed to `Client::PartitionRead` or `Client::PartitionQuery`
 using PartitionOptions = google::spanner::v1::PartitionOptions;
 
