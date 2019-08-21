@@ -247,7 +247,8 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
   std::streamsize bytes_copied = 0;
   while (bytes_copied != count) {
     std::streamsize remaining_buffer_size = epptr() - pptr();
-    std::streamsize bytes_to_copy = std::min(count - bytes_copied, remaining_buffer_size);
+    std::streamsize bytes_to_copy =
+        std::min(count - bytes_copied, remaining_buffer_size);
     std::copy(s, s + bytes_to_copy, pptr());
     pbump(static_cast<int>(bytes_to_copy));
     bytes_copied += bytes_to_copy;
