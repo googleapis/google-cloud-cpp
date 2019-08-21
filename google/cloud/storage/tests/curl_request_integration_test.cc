@@ -16,8 +16,8 @@
 #include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include <google/cloud/storage/oauth2/anonymous_credentials.h>
 #include <gmock/gmock.h>
 #include <cstdlib>
 #include <vector>
