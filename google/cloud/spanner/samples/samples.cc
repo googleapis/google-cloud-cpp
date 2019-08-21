@@ -232,6 +232,49 @@ void UpdateDataCommand(std::vector<std::string> const& argv) {
   UpdateData(MakeSampleClient(argv[0], argv[1], argv[2]));
 }
 
+//! [START spanner_delete_data]
+void DeleteData(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  // Delete each of the albums by individual key, then delete all the singers
+  // using a key range.
+  auto delete_albums =
+      spanner::DeleteMutationBuilder(
+          "Albums",
+          spanner::KeySetBuilder<spanner::Row<std::int64_t, std::int64_t>>()
+              .Add(spanner::MakeRow(1, 1))
+              .Add(spanner::MakeRow(1, 2))
+              .Add(spanner::MakeRow(2, 1))
+              .Add(spanner::MakeRow(2, 2))
+              .Add(spanner::MakeRow(2, 3))
+              .Build())
+          .Build();
+  using SingersKey = spanner::Row<std::int64_t>;
+  auto delete_singers =
+      spanner::DeleteMutationBuilder(
+          "Singers", spanner::KeySetBuilder<SingersKey>(
+                         MakeKeyRangeClosed(SingersKey(1), SingersKey(5)))
+                         .Build())
+          .Build();
+
+  auto commit_result = client.Commit(spanner::MakeReadWriteTransaction(),
+                                     {delete_albums, delete_singers});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Delete was successful [spanner_delete_data]\n";
+}
+//! [END spanner_update_data]
+
+void DeleteDataCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "delete-data <project-id> <instance-id> <database-id>");
+  }
+
+  DeleteData(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -388,6 +431,34 @@ void DmlStandardUpdateCommand(std::vector<std::string> const& argv) {
   DmlStandardUpdate(MakeSampleClient(argv[0], argv[1], argv[2]));
 }
 
+//! [START spanner_dml_standard_delete]
+void DmlStandardDelete(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto commit_result = spanner::RunTransaction(
+      std::move(client), spanner::Transaction::ReadWriteOptions{},
+      [](spanner::Client client, spanner::Transaction txn) {
+        client.ExecuteSql(std::move(txn),
+                          spanner::SqlStatement(
+                              "DELETE FROM Singers WHERE FirstName = 'Alice'"));
+        return spanner::TransactionAction{spanner::TransactionAction::kCommit,
+                                          {}};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Delete was successful [spanner_dml_standard_delete]\n";
+}
+//! [END spanner_dml_standard_delete]
+
+void DmlStandardDeleteCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "dml-standard-delete <project-id> <instance-id> <database-id>");
+  }
+
+  DmlStandardDelete(MakeSampleClient(argv[0], argv[1], argv[2]));
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
@@ -398,10 +469,12 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"drop-database", &DropDatabase},
       {"insert-data", &InsertDataCommand},
       {"update-data", &UpdateDataCommand},
+      {"delete-data", &DeleteDataCommand},
       {"read-only-transaction", &ReadOnlyTransactionCommand},
       {"read-write-transaction", &ReadWriteTransactionCommand},
       {"dml-standard-insert", &DmlStandardInsertCommand},
       {"dml-standard-update", &DmlStandardUpdateCommand},
+      {"dml-standard-delete", &DmlStandardDeleteCommand},
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -477,6 +550,8 @@ void RunAll() {
   QueryWithStructCommand({project_id, instance_id, database_id});
   DmlStandardInsert(client);
   DmlStandardUpdate(client);
+  DmlStandardDelete(client);
+  DeleteData(client);
 
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
