@@ -728,6 +728,75 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
   EXPECT_EQ(0, std::remove(filename.c_str()));
 }
 
+/// @test Verify we can obtain JWT assertion components given the info parsed
+/// from a keyfile.
+TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+  auto const clock_value_1 = 10000;
+  FakeClock::now_value = clock_value_1;
+  auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
+
+  auto header = internal::nl::json::parse(components.first);
+  EXPECT_EQ("RS256", header.value("alg", ""));
+  EXPECT_EQ("JWT", header.value("typ", ""));
+  EXPECT_EQ(info->private_key_id, header.value("kid", ""));
+
+  auto payload = internal::nl::json::parse(components.second);
+  EXPECT_EQ(clock_value_1, payload.value("iat", 0));
+  EXPECT_EQ(clock_value_1 + 3600, payload.value("exp", 0));
+  EXPECT_EQ(info->client_email, payload.value("iss", ""));
+  EXPECT_EQ(info->token_uri, payload.value("aud", ""));
+}
+
+/// @test Verify we can construct a JWT assertion given the info parsed from a
+/// keyfile.
+TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+  FakeClock::reset_clock();
+  auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
+  auto assertion =
+      MakeJWTAssertion(components.first, components.second, info->private_key);
+
+  std::istringstream is(kExpectedAssertionParam);
+  std::string expected_encoded_header;
+  std::getline(is, expected_encoded_header, '.');
+  std::string expected_encoded_payload;
+  std::getline(is, expected_encoded_payload, '.');
+  std::string expected_encoded_signature;
+  std::getline(is, expected_encoded_signature);
+
+  is.str(assertion);
+  is.clear();
+  std::string actual_encoded_header;
+  std::getline(is, actual_encoded_header, '.');
+  std::string actual_encoded_payload;
+  std::getline(is, actual_encoded_payload, '.');
+  std::string actual_encoded_signature;
+  std::getline(is, actual_encoded_signature);
+
+  EXPECT_EQ(expected_encoded_header, "assertion=" + actual_encoded_header);
+  EXPECT_EQ(expected_encoded_payload, actual_encoded_payload);
+  EXPECT_EQ(expected_encoded_signature, actual_encoded_signature);
+}
+
+/// @test Verify we can construct a service account refresh payload given the
+/// info parsed from a keyfile.
+TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+  FakeClock::reset_clock();
+  auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
+  auto assertion =
+      MakeJWTAssertion(components.first, components.second, info->private_key);
+  auto actual_payload = CreateServiceAccountRefreshPayload(
+      *info, kGrantParamEscaped, FakeClock::now());
+
+  EXPECT_THAT(actual_payload, HasSubstr(std::string("assertion=") + assertion));
+  EXPECT_THAT(actual_payload, HasSubstr(kGrantParamEscaped));
+}
+
 }  // namespace
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS

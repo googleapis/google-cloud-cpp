@@ -64,6 +64,13 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
+/// Parses a refresh response JSON string and uses the current time to create a
+/// TemporaryToken.
+StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
+ParseServiceAccountRefreshResponse(
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now);
+
 /**
  * Splits a ServiceAccountCredentialsInfo into header and payload components
  * and uses the current time to make a JWT assertion.
@@ -86,11 +93,11 @@ std::string MakeJWTAssertion(std::string const& header,
                              std::string const& payload,
                              std::string const& pem_contents);
 
-/// Parses a refresh response JSON string and uses the current time to create a
-/// TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseServiceAccountRefreshResponse(
-    storage::internal::HttpResponse const& response,
+/// Uses a ServiceAccountCredentialsInfo and the current time to construct a
+/// JWT assertion. The assertion combined with the grant type is used to create
+/// the refresh payload.
+std::string CreateServiceAccountRefreshPayload(
+    ServiceAccountCredentialsInfo const& info, std::string const& grant_type,
     std::chrono::system_clock::time_point now);
 
 /**
@@ -175,12 +182,8 @@ class ServiceAccountCredentials : public Credentials {
 
  private:
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
-    auto assertion_components =
-        std::move(AssertionComponentsFromInfo(info_, clock_.now()));
-    std::string payload = grant_type_;
-    payload += "&assertion=";
-    payload += MakeJWTAssertion(assertion_components.first,
-                                assertion_components.second, info_.private_key);
+    auto payload =
+        CreateServiceAccountRefreshPayload(info_, grant_type_, clock_.now());
 
     auto response = request_.MakeRequest(payload);
     if (!response) {
