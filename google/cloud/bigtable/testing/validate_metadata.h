@@ -35,7 +35,7 @@ namespace testing {
  * @param context the context to validate
  * @param method a gRPC method which which this context will be passed to
  *
- * @warning the `context` will be destroyed and shound't be used after passing
+ * @warning the `context` will be destroyed and shouldn't be used after passing
  *     it to this function.
  *
  * @return an OK status if the `context` is properly set up
