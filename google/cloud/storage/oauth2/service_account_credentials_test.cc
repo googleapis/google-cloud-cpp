@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
@@ -34,6 +35,7 @@ namespace oauth2 {
 namespace {
 
 using ::google::cloud::storage::internal::HttpResponse;
+using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
@@ -78,30 +80,12 @@ constexpr char kJsonKeyfileContents[] = R"""({
 })""";
 constexpr char kSubjectForGrant[] = "user@foo.bar";
 
-struct FakeClock : public std::chrono::system_clock {
- public:
-  static long now_value;
-
-  // gmock doesn't easily allow copying mock objects, but we require this
-  // struct to be copyable. So while the usual approach would be mocking this
-  // method and defining its return value in each test, we instead override
-  // this method and hard-code the return value for all instances.
-  static std::chrono::system_clock::time_point now() {
-    return std::chrono::system_clock::from_time_t(
-        static_cast<std::time_t>(now_value));
-  }
-
-  static void reset_clock() { now_value = kFixedJwtTimestamp; }
-};
-
-long FakeClock::now_value = kFixedJwtTimestamp;
-
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
   void SetUp() override {
     MockHttpRequestBuilder::mock =
         std::make_shared<MockHttpRequestBuilder::Impl>();
-    FakeClock::reset_clock();
+    FakeClock::reset_clock(kFixedJwtTimestamp);
   }
   void TearDown() override { MockHttpRequestBuilder::mock.reset(); }
 
@@ -754,7 +738,7 @@ TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
 TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
-  FakeClock::reset_clock();
+  FakeClock::reset_clock(kFixedJwtTimestamp);
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
@@ -786,7 +770,7 @@ TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
 TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
   auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
   ASSERT_STATUS_OK(info);
-  FakeClock::reset_clock();
+  FakeClock::reset_clock(kFixedJwtTimestamp);
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
