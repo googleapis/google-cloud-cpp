@@ -43,7 +43,7 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadOneRow) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new MockReadRowsReader;
+  auto stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
   EXPECT_CALL(*stream, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
@@ -85,8 +85,9 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
       )");
 
   // must be a new pointer, it is wrapped in unique_ptr by ReadRows
-  auto stream = new MockReadRowsReader;
-  auto stream_retry = new MockReadRowsReader;
+  auto stream = new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
+  auto stream_retry =
+      new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
 
   EXPECT_CALL(*client_, ReadRows(_, _))
       .WillOnce(Invoke(stream->MakeMockReturner()))
@@ -123,7 +124,8 @@ TEST_F(TableReadRowsTest, ReadRowsCanReadWithRetries) {
 TEST_F(TableReadRowsTest, ReadRowsThrowsWhenTooManyErrors) {
   EXPECT_CALL(*client_, ReadRows(_, _))
       .WillRepeatedly(testing::WithoutArgs(testing::Invoke([] {
-        auto stream = new MockReadRowsReader;
+        auto stream =
+            new MockReadRowsReader("google.bigtable.v2.Bigtable.ReadRows");
         EXPECT_CALL(*stream, Read(_)).WillOnce(Return(false));
         EXPECT_CALL(*stream, Finish())
             .WillOnce(

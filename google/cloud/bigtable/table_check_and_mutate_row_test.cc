@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 
@@ -24,6 +25,17 @@ using namespace google::cloud::testing_util::chrono_literals;
 namespace {
 class TableCheckAndMutateRowTest : public bigtable::testing::TableTestFixture {
 };
+
+auto mock_check_and_mutate = [](grpc::Status const& status) {
+  return [status](grpc::ClientContext* context,
+                  google::bigtable::v2::CheckAndMutateRowRequest const&,
+                  google::bigtable::v2::CheckAndMutateRowResponse*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.v2.Bigtable.CheckAndMutateRow"));
+    return status;
+  };
+};
+
 }  // anonymous namespace
 
 /// @test Verify that Table::CheckAndMutateRow() works in a simplest case.
@@ -31,7 +43,7 @@ TEST_F(TableCheckAndMutateRowTest, Simple) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
-      .WillOnce(Return(grpc::Status::OK));
+      .WillOnce(Invoke(mock_check_and_mutate(grpc::Status::OK)));
 
   auto mut = table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),
@@ -47,8 +59,8 @@ TEST_F(TableCheckAndMutateRowTest, Failure) {
   using namespace ::testing;
 
   EXPECT_CALL(*client_, CheckAndMutateRow(_, _, _))
-      .WillRepeatedly(
-          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+      .WillRepeatedly(Invoke(mock_check_and_mutate(
+          grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again"))));
 
   EXPECT_FALSE(table_.CheckAndMutateRow(
       "foo", bigtable::Filter::PassAllFilter(),

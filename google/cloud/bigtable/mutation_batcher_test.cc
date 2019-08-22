@@ -16,6 +16,7 @@
 #include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -158,9 +159,11 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
       EXPECT_CALL(*client_, PrepareAsyncMutateRows(_, _, _))
           .WillOnce(Invoke([reader, exchange](
-                               grpc::ClientContext*,
+                               grpc::ClientContext* context,
                                btproto::MutateRowsRequest const& r,
                                grpc::CompletionQueue*) {
+            EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+                *context, "google.bigtable.v2.Bigtable.MutateRows"));
             EXPECT_EQ(exchange.req.size(), r.entries_size());
             for (std::size_t i = 0; i != exchange.req.size(); ++i) {
               google::bigtable::v2::MutateRowsRequest::Entry expected;

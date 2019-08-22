@@ -88,7 +88,8 @@ future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
     CompletionQueue& cq, std::string const& table_id,
     btadmin::Table::View view) {
   google::bigtable::admin::v2::GetTableRequest request{};
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_view(view);
 
   // Copy the client because we lack C++14 extended lambda captures.
@@ -166,11 +167,11 @@ StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
                                               btadmin::Table::View view) {
   grpc::Status status;
   btadmin::GetTableRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_view(view);
 
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto result = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -186,10 +187,10 @@ StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
 Status TableAdmin::DeleteTable(std::string const& table_id) {
   grpc::Status status;
   btadmin::DeleteTableRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
 
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   // This is a non-idempotent API, use the correct retry loop for this type of
   // operation.
@@ -204,16 +205,15 @@ future<Status> TableAdmin::AsyncDeleteTable(CompletionQueue& cq,
                                             std::string const& table_id) {
   grpc::Status status;
   btadmin::DeleteTableRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
 
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(true),
-             clone_metadata_update_policy(),
+             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
              [client](
                  grpc::ClientContext* context,
                  google::bigtable::admin::v2::DeleteTableRequest const& request,
@@ -232,12 +232,12 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
   grpc::Status status;
 
   btadmin::ModifyColumnFamiliesRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   for (auto& m : modifications) {
     *request.add_modifications() = std::move(m).as_proto();
   }
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   auto result = ClientUtils::MakeNonIdemponentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::ModifyColumnFamilies, request, "ModifyColumnFamilies",
@@ -253,12 +253,12 @@ future<StatusOr<btadmin::Table>> TableAdmin::AsyncModifyColumnFamilies(
     CompletionQueue& cq, std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications) {
   btadmin::ModifyColumnFamiliesRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   for (auto& m : modifications) {
     *request.add_modifications() = std::move(m).as_proto();
   }
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
@@ -276,10 +276,10 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                     std::string row_key_prefix) {
   grpc::Status status;
   btadmin::DropRowRangeRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_row_key_prefix(std::move(row_key_prefix));
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   ClientUtils::MakeNonIdemponentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DropRowRange, request, "DropRowByPrefix", status);
@@ -291,10 +291,10 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
                                                  std::string const& table_id,
                                                  std::string row_key_prefix) {
   google::bigtable::admin::v2::DropRowRangeRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_row_key_prefix(std::move(row_key_prefix));
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -393,10 +393,10 @@ TableAdmin::AsyncWaitForConsistency(CompletionQueue& cq,
 Status TableAdmin::DropAllRows(std::string const& table_id) {
   grpc::Status status;
   btadmin::DropRowRangeRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_delete_all_data_from_table(true);
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   ClientUtils::MakeNonIdemponentCall(
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DropRowRange, request, "DropAllRows", status);
@@ -407,10 +407,10 @@ Status TableAdmin::DropAllRows(std::string const& table_id) {
 future<Status> TableAdmin::AsyncDropAllRows(CompletionQueue& cq,
                                             std::string const& table_id) {
   google::bigtable::admin::v2::DropRowRangeRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_delete_all_data_from_table(true);
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -430,9 +430,9 @@ StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
     std::string const& table_id) {
   grpc::Status status;
   btadmin::GenerateConsistencyTokenRequest request;
-  request.set_name(TableName(table_id));
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  auto name = TableName(table_id);
+  request.set_name(name);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto response = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -448,9 +448,9 @@ StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
 future<StatusOr<std::string>> TableAdmin::AsyncGenerateConsistencyToken(
     CompletionQueue& cq, std::string const& table_id) {
   btadmin::GenerateConsistencyTokenRequest request;
-  request.set_name(TableName(table_id));
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  auto name = TableName(table_id);
+  request.set_name(name);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -476,10 +476,10 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
     std::string const& table_id, std::string const& consistency_token) {
   grpc::Status status;
   btadmin::CheckConsistencyRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_consistency_token(consistency_token);
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto response = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -498,10 +498,10 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
     CompletionQueue& cq, std::string const& table_id,
     std::string const& consistency_token) {
   btadmin::CheckConsistencyRequest request;
-  request.set_name(TableName(table_id));
+  auto name = TableName(table_id);
+  request.set_name(name);
   request.set_consistency_token(consistency_token);
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      instance_name(), MetadataParamTypes::NAME, table_id);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
              __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),

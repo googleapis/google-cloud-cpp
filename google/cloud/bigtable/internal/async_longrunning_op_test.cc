@@ -89,8 +89,8 @@ TEST_P(AsyncLongrunningOpFutureTest, EndToEnd) {
   op_arg.set_name("test_operation_id");
   auto polling_policy =
       bigtable::DefaultPollingPolicy(internal::kBigtableLimits);
-  auto metadata_update_policy = MetadataUpdatePolicy::FromTableId(
-      "instance_id", MetadataParamTypes::NAME, "table_id");
+  auto metadata_update_policy =
+      MetadataUpdatePolicy(op_arg.name(), MetadataParamTypes::NAME);
 
   auto fut = internal::StartAsyncLongrunningOp<
       AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
@@ -119,8 +119,8 @@ TEST(AsyncLongrunningOpFutureSimpleTest, NoOperation) {
   auto fut = internal::StartAsyncLongrunningOp<
       AdminClient, google::bigtable::v2::SampleRowKeysResponse>(
       __func__, bigtable::DefaultPollingPolicy(internal::kBigtableLimits),
-      MetadataUpdatePolicy::FromTableId("instance_id", MetadataParamTypes::NAME,
-                                        "table_id"),
+      MetadataUpdatePolicy("projects/proj/instances/inst/tables/table",
+                           MetadataParamTypes::NAME),
       std::make_shared<testing::MockAdminClient>(), cq,
       make_ready_future<StatusOr<longrunning::Operation>>(
           Status(StatusCode::kUnavailable, "")));

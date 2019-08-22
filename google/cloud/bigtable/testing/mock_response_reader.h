@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TESTING_MOCK_RESPONSE_READER_H_
 
+#include "google/cloud/bigtable/testing/validate_metadata.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
 #include <grpcpp/impl/codegen/async_stream.h>
@@ -36,6 +38,7 @@ namespace testing {
 template <typename Response, typename Request>
 class MockResponseReader : public grpc::ClientReaderInterface<Response> {
  public:
+  MockResponseReader(std::string method) : method_(std::move(method)) {}
   MOCK_METHOD0(WaitForInitialMetadata, void());
   MOCK_METHOD0(Finish, grpc::Status());
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
@@ -60,10 +63,15 @@ class MockResponseReader : public grpc::ClientReaderInterface<Response> {
    */
   std::function<UniquePtr(grpc::ClientContext*, Request const&)>
   MakeMockReturner() {
-    return [this](grpc::ClientContext*, Request const&) {
+    return [this](grpc::ClientContext* context, Request const&) {
+      EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+          *context, method_));
       return UniquePtr(this);
     };
   }
+
+ private:
+  std::string method_;
 };
 
 /**

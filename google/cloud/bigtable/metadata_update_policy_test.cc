@@ -78,29 +78,3 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   EXPECT_THAT(created.api_client_header(),
               ::testing::AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
 }
-
-/// @test A test for lazy behaviour of metadata .
-TEST_F(MetadataUpdatePolicyTest, SimpleLazy) {
-  auto const x_google_request_params = "name=" + kTableName;
-  auto created = bigtable::MetadataUpdatePolicy::FromTableId(
-      kInstanceName, bigtable::MetadataParamTypes::NAME, kTableId);
-  EXPECT_EQ(x_google_request_params, created.value());
-}
-
-/// @test Another test for lazy behaviour of metadata.
-TEST_F(MetadataUpdatePolicyTest, SimpleLazy_Test) {
-  auto const x_google_request_params =
-      "name=" + kInstanceName + "/clusters/" + kClusterId;
-  auto created = bigtable::MetadataUpdatePolicy::FromClusterId(
-      kInstanceName, bigtable::MetadataParamTypes::NAME, kClusterId);
-  EXPECT_EQ(x_google_request_params, created.value());
-}
-
-//@test Another test for lazy behaviour of metadata.
-TEST_F(MetadataUpdatePolicyTest, SimpleClusterId_Test) {
-  auto const x_google_request_params =
-      "parent=" + kInstanceName + "/clusters/" + kClusterId;
-  auto created = bigtable::MetadataUpdatePolicy::FromClusterId(
-      kInstanceName, bigtable::MetadataParamTypes::PARENT, kClusterId);
-  EXPECT_EQ(x_google_request_params, created.value());
-}
