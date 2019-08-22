@@ -65,7 +65,7 @@ This is a short example that creates a Cloud Spanner database and two tables.
 This example assumes you have configured the authentication using
 `GOOGLE_APPLICATION_CREDENTIALS` and has created a Cloud Spanner instance:
 
-@snippet samples.cc create-database
+@snippet samples.cc quickstart
 
 This quickstart creates a database with two tables: `Singers` and `Albums`. You
 must provide the project id and instance in the command-line when you run the

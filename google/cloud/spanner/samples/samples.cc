@@ -12,7 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
+//! [END spanner_quickstart]
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -124,6 +126,33 @@ void DropDatabase(std::vector<std::string> const& argv) {
   }
   //! [drop-database] [END spanner_drop_database]
   (argv[0], argv[1], argv[2]);
+}
+
+//! [quickstart] [START spanner_quickstart]
+void Quickstart(std::string const& project_id, std::string const& instance_id,
+                std::string const& database_id) {
+  namespace spanner = google::cloud::spanner;
+
+  spanner::Client client(spanner::MakeConnection(
+      spanner::Database(project_id, instance_id, database_id)));
+
+  auto reader =
+      client.ExecuteSql(spanner::SqlStatement("SELECT 'Hello World'"));
+  if (!reader) throw std::runtime_error(reader.status().message());
+
+  for (auto row : reader->Rows<std::string>()) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << row->get<0>() << "\n";
+  }
+}
+//! [quickstart] [END spanner_quickstart]
+
+void QuickstartCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "quickstart <project-id> <instance-id> <database-id>");
+  }
+  Quickstart(argv[0], argv[1], argv[2]);
 }
 
 google::cloud::spanner::Client MakeSampleClient(
@@ -455,6 +484,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
       {"drop-database", &DropDatabase},
+      {"quickstart", &QuickstartCommand},
       make_command_entry("insert-data", &InsertData),
       make_command_entry("update-data", &UpdateData),
       make_command_entry("delete-data", &DeleteData),
@@ -534,6 +564,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_add_column sample\n";
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning spanner_quickstart sample\n";
+  RunOneCommand({"", "quickstart", project_id, instance_id, database_id});
 
   auto client = MakeSampleClient(project_id, instance_id, database_id);
 
