@@ -165,15 +165,6 @@ void InsertData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_insert_data]
 
-void InsertDataCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "insert-data <project-id> <instance-id> <database-id>");
-  }
-
-  InsertData(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
-
 //! [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -190,15 +181,6 @@ void UpdateData(google::cloud::spanner::Client client) {
   std::cout << "Update was successful [spanner_update_data]\n";
 }
 //! [END spanner_update_data]
-
-void UpdateDataCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "update-data <project-id> <instance-id> <database-id>");
-  }
-
-  UpdateData(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
 
 //! [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
@@ -234,15 +216,6 @@ void DeleteData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_update_data]
 
-void DeleteDataCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "delete-data <project-id> <instance-id> <database-id>");
-  }
-
-  DeleteData(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
-
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -274,15 +247,6 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   }
 }
 //! [END spanner_read_only_transaction]
-
-void ReadOnlyTransactionCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "read-only-transaction <project-id> <instance-id> <database-id>");
-  }
-
-  ReadOnlyTransaction(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
 
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
@@ -328,15 +292,6 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_write_transaction]
 
-void ReadWriteTransactionCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "read-write-transaction <project-id> <instance-id> <database-id>");
-  }
-
-  ReadWriteTransaction(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
-
 //! [START spanner_dml_standard_insert]
 void DmlStandardInsert(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -358,15 +313,6 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
   std::cout << "Insert was successful [spanner_dml_standard_insert]\n";
 }
 //! [END spanner_dml_standard_insert]
-
-void DmlStandardInsertCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "dml-standard-insert <project-id> <instance-id> <database-id>");
-  }
-
-  DmlStandardInsert(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
 
 //! [START spanner_dml_standard_update]
 void DmlStandardUpdate(google::cloud::spanner::Client client) {
@@ -390,15 +336,6 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
 }
 //! [END spanner_dml_standard_update]
 
-void DmlStandardUpdateCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "dml-standard-update <project-id> <instance-id> <database-id>");
-  }
-
-  DmlStandardUpdate(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
-
 //! [START spanner_dml_standard_delete]
 void DmlStandardDelete(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -417,15 +354,6 @@ void DmlStandardDelete(google::cloud::spanner::Client client) {
   std::cout << "Delete was successful [spanner_dml_standard_delete]\n";
 }
 //! [END spanner_dml_standard_delete]
-
-void DmlStandardDeleteCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "dml-standard-delete <project-id> <instance-id> <database-id>");
-  }
-
-  DmlStandardDelete(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
 
 //! [START spanner_write_data_for_struct_queries]
 void WriteDataForStructQueries(google::cloud::spanner::Client client) {
@@ -446,14 +374,6 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
             << "[spanner_write_data_for_struct_queries]\n";
 }
 //! [END spanner_write_data_for_struct_queries]
-
-void WriteDataForStructQueriesCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "query-data-with-struct <project-id> <instance-id> <database-id>");
-  }
-  WriteDataForStructQueries(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
 
 //! [START spanner_query_data_with_struct]
 void QueryDataWithStruct(google::cloud::spanner::Client client) {
@@ -476,31 +396,41 @@ void QueryDataWithStruct(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_data_with_struct]
 
-void QueryDataWithStructCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "query-data-with-struct <project-id> <instance-id> <database-id>");
-  }
-  QueryDataWithStruct(MakeSampleClient(argv[0], argv[1], argv[2]));
-}
-
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
 
-  std::map<std::string, CommandType> commands = {
+  using SampleFunction = void (*)(google::cloud::spanner::Client);
+
+  using CommandMap = std::map<std::string, CommandType>;
+  auto make_command_entry = [](char const* sample_name, SampleFunction sample) {
+    auto make_command = [](char const* sample_name, SampleFunction sample) {
+      return [sample_name, sample](std::vector<std::string> const& argv) {
+        if (argv.size() != 3) {
+          throw std::runtime_error(std::string(sample_name) +
+                                   " <project-id> <instance-id> <database-id>");
+        }
+        sample(MakeSampleClient(argv[0], argv[1], argv[2]));
+      };
+    };
+    return CommandMap::value_type(sample_name,
+                                  make_command(sample_name, sample));
+  };
+
+  CommandMap commands = {
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
       {"drop-database", &DropDatabase},
-      {"insert-data", &InsertDataCommand},
-      {"update-data", &UpdateDataCommand},
-      {"delete-data", &DeleteDataCommand},
-      {"read-only-transaction", &ReadOnlyTransactionCommand},
-      {"read-write-transaction", &ReadWriteTransactionCommand},
-      {"dml-standard-insert", &DmlStandardInsertCommand},
-      {"dml-standard-update", &DmlStandardUpdateCommand},
-      {"dml-standard-delete", &DmlStandardDeleteCommand},
-      {"write-data-for-struct-queries", &WriteDataForStructQueriesCommand},
-      {"query-data-with-struct", &QueryDataWithStructCommand},
+      make_command_entry("insert-data", &InsertData),
+      make_command_entry("update-data", &UpdateData),
+      make_command_entry("delete-data", &DeleteData),
+      make_command_entry("read-only-transaction", &ReadOnlyTransaction),
+      make_command_entry("read-write-transaction", &ReadWriteTransaction),
+      make_command_entry("dml-standard-insert", &DmlStandardInsert),
+      make_command_entry("dml-standard-update", &DmlStandardUpdate),
+      make_command_entry("dml-standard-delete", &DmlStandardDelete),
+      make_command_entry("write-data-for-struct-queries",
+                         &WriteDataForStructQueries),
+      make_command_entry("query-data-with-struct", &QueryDataWithStruct),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -560,26 +490,47 @@ void RunAll() {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string database_id = RandomDatabaseName(generator);
 
+  std::cout << "Running samples in database " << database_id << "\n";
+
+  std::cout << "\nRunning spanner_create_database sample\n";
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning spanner_add_column sample\n";
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
 
-  namespace spanner = google::cloud::spanner;
-  spanner::Database db(project_id, instance_id, database_id);
-  google::cloud::spanner::Client client(
-      google::cloud::spanner::MakeConnection(db));
+  auto client = MakeSampleClient(project_id, instance_id, database_id);
 
+  std::cout << "\nRunning spanner_insert_data sample\n";
   InsertData(client);
+
+  std::cout << "\nRunning spanner_update_data sample\n";
   UpdateData(client);
+
+  std::cout << "\nRunning spanner_read_only_transaction sample\n";
   ReadOnlyTransaction(client);
+
+  std::cout << "\nRunning spanner_read_write_transaction sample\n";
   ReadWriteTransaction(client);
+
+  std::cout << "\nRunning spanner_dml_standard_insert sample\n";
   DmlStandardInsert(client);
+
+  std::cout << "\nRunning spanner_dml_standard_update sample\n";
   DmlStandardUpdate(client);
+
+  std::cout << "\nRunning spanner_dml_standard_delete sample\n";
   DmlStandardDelete(client);
+
+  std::cout << "\nRunning spanner_delete_data sample\n";
   DeleteData(client);
 
+  std::cout << "\nRunning spanner_write_data_for_struct_queries sample\n";
   WriteDataForStructQueries(client);
+
+  std::cout << "\nRunning spanner_query_data_with_struct sample\n";
   QueryDataWithStruct(client);
 
+  std::cout << "\nRunning spanner_drop_database sample\n";
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
 }
 
