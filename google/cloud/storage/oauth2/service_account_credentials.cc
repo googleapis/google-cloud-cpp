@@ -234,6 +234,17 @@ std::string MakeJWTAssertion(std::string const& header,
   return encoded_header + '.' + encoded_payload + '.' + encoded_signature;
 }
 
+std::string CreateServiceAccountRefreshPayload(
+    ServiceAccountCredentialsInfo const& info, std::string const& grant_type,
+    std::chrono::system_clock::time_point now) {
+  auto assertion_components = AssertionComponentsFromInfo(info, now);
+  std::string payload = grant_type;
+  payload += "&assertion=";
+  payload += MakeJWTAssertion(assertion_components.first,
+                              assertion_components.second, info.private_key);
+  return payload;
+}
+
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
     storage::internal::HttpResponse const& response,
