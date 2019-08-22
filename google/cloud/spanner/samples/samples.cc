@@ -379,8 +379,7 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
 void QueryDataWithStruct(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
   // [START spanner_create_struct_with_data]
-  auto singer_info = std::make_tuple(std::make_pair("FirstName", "Elena"),
-                                     std::make_pair("LastName", "Campbell"));
+  auto singer_info = std::make_tuple("Elena", "Campbell");
   // [END spanner_create_struct_with_data]
 
   auto reader = client.ExecuteSql(spanner::SqlStatement(
@@ -395,6 +394,42 @@ void QueryDataWithStruct(google::cloud::spanner::Client client) {
   std::cout << "Query completed for [spanner_query_data_with_struct]\n";
 }
 //! [END spanner_query_data_with_struct]
+
+//! [START spanner_query_data_with_array_of_struct]
+void QueryDataWithArrayOfStruct(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  // [START spanner_create_array_of_struct_with_data]
+  // Cloud Spanner STRUCT<> types with named fields are represented by
+  // std::tuple<std::pair<std::string, T>...>, create an alias to make it easier
+  // to follow this code.
+  using SingerName = std::tuple<std::pair<std::string, std::string>,
+                                std::pair<std::string, std::string>>;
+  auto make_name = [](std::string first_name, std::string last_name) {
+    return std::make_tuple(std::make_pair("FirstName", std::move(first_name)),
+                           std::make_pair("LastName", std::move(last_name)));
+  };
+  std::vector<SingerName> singer_info{
+      make_name("Elena", "Campbell"),
+      make_name("Gabriel", "Wright"),
+      make_name("Benjamin", "Martinez"),
+  };
+  // [END spanner_create_array_of_struct_with_data]
+
+  auto reader = client.ExecuteSql(spanner::SqlStatement(
+      "SELECT SingerId FROM Singers"
+      " WHERE STRUCT<FirstName STRING, LastName STRING>(FirstName, LastName)"
+      "    IN UNNEST(@names)",
+      {{"names", spanner::Value(singer_info)}}));
+  if (!reader) throw std::runtime_error(reader.status().message());
+
+  for (auto row : reader->Rows<std::int64_t>()) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << row->get<0>() << "\n";
+  }
+  std::cout << "Query completed for"
+            << " [spanner_query_data_with_array_of_struct]\n";
+}
+//! [END spanner_query_data_with_array_of_struct]
 
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
@@ -431,6 +466,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("write-data-for-struct-queries",
                          &WriteDataForStructQueries),
       make_command_entry("query-data-with-struct", &QueryDataWithStruct),
+      make_command_entry("query-data-with-array-of-struct",
+                         &QueryDataWithArrayOfStruct),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -529,6 +566,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_query_data_with_struct sample\n";
   QueryDataWithStruct(client);
+
+  std::cout << "\nRunning spanner_query_data_with_array_of_struct sample\n";
+  QueryDataWithArrayOfStruct(client);
 
   std::cout << "\nRunning spanner_drop_database sample\n";
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
