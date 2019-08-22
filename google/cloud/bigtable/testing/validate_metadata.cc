@@ -16,6 +16,8 @@
 #include "google/cloud/status_or.h"
 #include <google/api/annotations.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <grpcpp/channel.h>
+#include <grpcpp/completion_queue.h>
 #include <grpcpp/generic/async_generic_service.h>
 #include <grpcpp/generic/generic_stub.h>
 #include <grpcpp/server.h>
@@ -32,8 +34,7 @@ namespace testing {
     (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 9))
 
 // gcc-4.8 and earlier have broken regexes - ignore the tests there.
-Status IsContextMDValid(grpc::ClientContext& context,
-                        std::string const& method) {
+Status IsContextMDValid(grpc::ClientContext&, std::string const&) {
   return Status();
 }
 
