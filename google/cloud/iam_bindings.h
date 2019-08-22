@@ -39,12 +39,12 @@ class IamBindings {
 
   explicit IamBindings(std::vector<IamBinding> bindings) {
     for (auto& it : bindings) {
-      bindings_.insert({std::move(it.role()), std::move(it.members())});
+      bindings_.insert({it.role(), it.members()});
     }
   }
 
   IamBindings(std::string const& role, std::set<std::string> const& members) {
-    bindings_.insert({std::move(role), std::move(members)});
+    bindings_.insert({role, members});
   }
 
   using iterator = std::map<std::string, std::set<std::string>>::const_iterator;

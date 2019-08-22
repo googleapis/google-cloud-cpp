@@ -192,7 +192,7 @@ class LifecycleRule {
 
   static LifecycleRuleCondition MatchesStorageClasses(
       std::initializer_list<std::string> list) {
-    std::vector<std::string> classes(std::move(list));
+    std::vector<std::string> classes(list);
     LifecycleRuleCondition result;
     result.matches_storage_class.emplace(std::move(classes));
     return result;

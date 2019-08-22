@@ -31,7 +31,8 @@ namespace internal {
 class PolicyDocumentRequest {
  public:
   PolicyDocumentRequest() = default;
-  PolicyDocumentRequest(PolicyDocument document) : document_(document) {}
+  PolicyDocumentRequest(PolicyDocument document)
+      : document_(std::move(document)) {}
 
   PolicyDocument const& policy_document() const { return document_; }
 
