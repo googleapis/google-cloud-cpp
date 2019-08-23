@@ -63,7 +63,8 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
-    storage::internal::HttpResponse const& response) {
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now) {
   auto access_token =
       storage::internal::nl::json::parse(response.payload, nullptr, false);
   if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
@@ -84,7 +85,7 @@ ParseAuthorizedUserRefreshResponse(
   std::string new_id = access_token.value("id_token", "");
   auto expires_in =
       std::chrono::seconds(access_token.value("expires_in", int(0)));
-  auto new_expiration = std::chrono::system_clock::now() + expires_in;
+  auto new_expiration = now + expires_in;
   return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                       new_expiration};
 }

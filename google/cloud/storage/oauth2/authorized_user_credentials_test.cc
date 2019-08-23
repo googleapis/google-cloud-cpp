@@ -16,6 +16,7 @@
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
@@ -29,6 +30,7 @@ namespace oauth2 {
 namespace {
 
 using ::google::cloud::storage::internal::HttpResponse;
+using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
@@ -258,6 +260,50 @@ TEST_F(AuthorizedUserCredentialsTest, ParseMissingFieldFails) {
     EXPECT_THAT(info.status().message(), HasSubstr(" field is missing"));
     EXPECT_THAT(info.status().message(), HasSubstr("test-data"));
   }
+}
+
+/// @test Parsing a refresh response with missing fields results in failure.
+TEST_F(AuthorizedUserCredentialsTest,
+       ParseAuthorizedUserRefreshResponseMissingFields) {
+  std::string r1 = R"""({})""";
+  // Does not have access_token.
+  std::string r2 = R"""({
+    "token_type": "Type",
+    "id_token": "id-token-value",
+    "expires_in": 1000
+})""";
+
+  FakeClock::reset_clock(1000);
+  auto status = ParseAuthorizedUserRefreshResponse(HttpResponse{400, r1, {}},
+                                                   FakeClock::now());
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+}
+
+/// @test Parsing a refresh response yields a TemporaryToken.
+TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
+  std::string r1 = R"""({
+    "token_type": "Type",
+    "access_token": "access-token-r1",
+    "id_token": "id-token-value",
+    "expires_in": 1000
+})""";
+
+  auto expires_in = 1000;
+  FakeClock::reset_clock(2000);
+  auto status = ParseAuthorizedUserRefreshResponse(HttpResponse{200, r1, {}},
+                                                   FakeClock::now());
+  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kOk);
+  auto token = *status;
+  EXPECT_EQ(
+      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
+          .time_since_epoch()
+          .count(),
+      FakeClock::now_value + expires_in);
+  EXPECT_EQ(token.token, "Authorization: Type access-token-r1");
 }
 
 }  // namespace
