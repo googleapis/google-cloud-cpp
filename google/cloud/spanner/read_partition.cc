@@ -82,6 +82,14 @@ ReadPartition MakeReadPartition(std::string transaction_id,
                        std::move(read_options));
 }
 
+Connection::ReadParams MakeReadParams(ReadPartition const& read_partition) {
+  return Connection::ReadParams(
+      MakeTransactionFromId(read_partition.TransactionId()),
+      read_partition.TableName(), FromProto(read_partition.KeySet()),
+      read_partition.ColumnNames(), read_partition.ReadOptions(),
+      read_partition.PartitionToken(), read_partition.SessionId());
+}
+
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

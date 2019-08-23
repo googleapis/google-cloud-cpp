@@ -91,8 +91,21 @@ Transaction::Transaction(SingleUseOptions opts) {
   impl_ = std::make_shared<internal::TransactionImpl>(std::move(selector));
 }
 
+Transaction::Transaction(std::string transaction_id) {
+  google::spanner::v1::TransactionSelector selector;
+  selector.set_id(std::move(transaction_id));
+  impl_ = std::make_shared<internal::TransactionImpl>(std::move(selector));
+}
+
 Transaction::~Transaction() = default;
 
+namespace internal {
+
+Transaction MakeTransactionFromId(std::string transaction_id) {
+  return Transaction(std::move(transaction_id));
+}
+
+}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

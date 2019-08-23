@@ -45,6 +45,8 @@ class ConnectionImpl : public Connection {
       : db_(std::move(db)), stub_(std::move(stub)) {}
 
   StatusOr<ResultSet> Read(ReadParams rp) override;
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      PartitionReadParams prp) override;
   StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams esp) override;
   StatusOr<CommitResult> Commit(CommitParams cp) override;
   Status Rollback(RollbackParams rp) override;
@@ -68,6 +70,11 @@ class ConnectionImpl : public Connection {
   /// Implementation details for Read.
   StatusOr<ResultSet> Read(google::spanner::v1::TransactionSelector& s,
                            ReadParams rp);
+
+  /// Implementation details for PartitionRead.
+  StatusOr<std::vector<ReadPartition>> PartitionRead(
+      google::spanner::v1::TransactionSelector& s, ReadParams const& rp,
+      PartitionOptions partition_options);
 
   /// Implementation details for ExecuteSql
   StatusOr<ResultSet> ExecuteSql(google::spanner::v1::TransactionSelector& s,

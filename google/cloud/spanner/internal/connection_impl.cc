@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/internal/time.h"
+#include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/internal/make_unique.h"
 #include <google/spanner/v1/spanner.pb.h>
 
@@ -31,6 +32,16 @@ StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
       std::move(rp.transaction),
       [this, &rp](spanner_proto::TransactionSelector& s, std::int64_t) {
         return Read(s, std::move(rp));
+      });
+}
+
+StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
+    PartitionReadParams prp) {
+  return internal::Visit(
+      std::move(prp.read_params.transaction),
+      [this, &prp](spanner_proto::TransactionSelector& s, std::int64_t) {
+        return PartitionRead(s, prp.read_params,
+                             std::move(prp.partition_options));
       });
 }
 
@@ -74,12 +85,18 @@ StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
 
 StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,
                                          ReadParams rp) {
-  auto session = GetSession();
-  if (!session) {
-    return std::move(session).status();
-  }
   spanner_proto::ReadRequest request;
-  request.set_session(session->session_name());
+  // TODO(#307): Refactor once correct location for session implemented.
+  if (rp.session_name) {
+    request.set_session(*std::move(rp.session_name));
+  } else {
+    auto session = GetSession();
+    if (!session) {
+      return std::move(session).status();
+    }
+    request.set_session(session->session_name());
+  }
+
   *request.mutable_transaction() = s;
   request.set_table(std::move(rp.table));
   request.set_index(std::move(rp.read_options.index_name));
@@ -88,6 +105,9 @@ StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,
   }
   *request.mutable_key_set() = internal::ToProto(std::move(rp.keys));
   request.set_limit(rp.read_options.limit);
+  if (rp.partition_token) {
+    request.set_partition_token(*std::move(rp.partition_token));
+  }
 
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
   auto rpc = stub_->StreamingRead(*context, request);
@@ -191,6 +211,45 @@ Status ConnectionImpl::Rollback(spanner_proto::TransactionSelector& s) {
   request.set_transaction_id(s.id());
   grpc::ClientContext context;
   return stub_->Rollback(context, request);
+}
+
+StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
+    spanner_proto::TransactionSelector& s, ReadParams const& rp,
+    PartitionOptions partition_options) {
+  auto session = GetSession();
+  if (!session) {
+    return std::move(session).status();
+  }
+  spanner_proto::PartitionReadRequest request;
+  request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  request.set_table(rp.table);
+  request.set_index(rp.read_options.index_name);
+  for (auto&& column : rp.columns) {
+    request.add_columns(column);
+  }
+  *request.mutable_key_set() = internal::ToProto(rp.keys);
+  *request.mutable_partition_options() = std::move(partition_options);
+
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto response = stub_->PartitionRead(*context, request);
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+
+  if (s.has_begin()) {
+    s.set_id(response->transaction().id());
+  }
+
+  std::vector<ReadPartition> read_partitions;
+  for (auto& partition : response->partitions()) {
+    read_partitions.push_back(internal::MakeReadPartition(
+        response->transaction().id(), session->session_name(),
+        partition.partition_token(), rp.table, rp.keys, rp.columns,
+        rp.read_options));
+  }
+
+  return read_partitions;
 }
 
 }  // namespace internal

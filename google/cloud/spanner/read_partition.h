@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_READ_PARTITION_H_
 
 #include "google/cloud/spanner/client_options.h"
+#include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
@@ -84,6 +85,10 @@ ReadPartition MakeReadPartition(std::string transaction_id,
                                 std::string table_name, KeySet key_set,
                                 std::vector<std::string> column_names,
                                 ReadOptions read_options = {});
+
+// TODO(#409): possibly change to pass by value when issue resolved.
+Connection::ReadParams MakeReadParams(ReadPartition const& read_partition);
+
 }  // namespace internal
 
 /**
@@ -135,6 +140,8 @@ class ReadPartition {
       std::string partition_token, std::string table_name, KeySet key_set,
       std::vector<std::string> column_names,
       google::cloud::spanner::ReadOptions read_options);
+  friend Connection::ReadParams internal::MakeReadParams(
+      ReadPartition const& read_partition);
   friend StatusOr<std::string> SerializeReadPartition(
       ReadPartition const& read_partition);
   friend StatusOr<ReadPartition> DeserializeReadPartition(

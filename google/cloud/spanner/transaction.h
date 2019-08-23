@@ -35,6 +35,7 @@ template <typename T>
 Transaction MakeSingleUseTransaction(T&&);
 template <typename Functor>
 VisitInvokeResult<Functor> Visit(Transaction, Functor&&);
+Transaction MakeTransactionFromId(std::string transaction_id);
 }  // namespace internal
 
 /**
@@ -154,9 +155,13 @@ class Transaction {
   template <typename Functor>
   friend internal::VisitInvokeResult<Functor> internal::Visit(Transaction,
                                                               Functor&&);
+  friend Transaction internal::MakeTransactionFromId(
+      std::string transaction_id);
 
   // Construction of a single-use transaction.
   explicit Transaction(SingleUseOptions opts);
+
+  explicit Transaction(std::string transaction_id_);
 
   std::shared_ptr<internal::TransactionImpl> impl_;
 };
@@ -186,7 +191,6 @@ VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
 }
 
 }  // namespace internal
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
