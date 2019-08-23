@@ -77,13 +77,23 @@ ObjectWriteStream::~ObjectWriteStream() {
 }
 
 void ObjectWriteStream::Close() {
-  if (!IsOpen()) {
+  if (!buf_) {
     return;
   }
   CloseBuf();
 }
 
 void ObjectWriteStream::CloseBuf() {
+  if (!buf_->IsOpen()) {
+    if (buf_->last_status().ok()) {
+      metadata_ = Status(StatusCode::kUnknown,
+                         "The underlying buffer was closed successfully, but "
+                         "underhandedly. Can't determine the upload metadata.");
+      return;
+    }
+    metadata_ = buf_->last_status();
+    return;
+  }
   auto response = buf_->Close();
   if (!response.ok()) {
     metadata_ = std::move(response).status();
