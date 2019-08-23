@@ -19,6 +19,7 @@
 storage_client_testing_hdrs = [
     "testing/canonical_errors.h",
     "testing/mock_client.h",
+    "testing/mock_fake_clock.h",
     "testing/mock_http_request.h",
     "testing/retry_tests.h",
     "testing/storage_integration_test.h",
