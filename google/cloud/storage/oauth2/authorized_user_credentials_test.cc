@@ -280,6 +280,13 @@ TEST_F(AuthorizedUserCredentialsTest,
   EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
   EXPECT_THAT(status.status().message(),
               ::testing::HasSubstr("Could not find all required fields"));
+
+  status = ParseAuthorizedUserRefreshResponse(HttpResponse{400, r2, {}},
+                                                   FakeClock::now());
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
 }
 
 /// @test Parsing a refresh response yields a TemporaryToken.
