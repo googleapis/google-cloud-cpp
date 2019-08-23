@@ -282,7 +282,7 @@ TEST_F(AuthorizedUserCredentialsTest,
               ::testing::HasSubstr("Could not find all required fields"));
 
   status = ParseAuthorizedUserRefreshResponse(HttpResponse{400, r2, {}},
-                                                   FakeClock::now());
+                                              FakeClock::now());
   EXPECT_FALSE(status);
   EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
   EXPECT_THAT(status.status().message(),
