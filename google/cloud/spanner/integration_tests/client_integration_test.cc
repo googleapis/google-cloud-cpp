@@ -317,7 +317,7 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
     isb.AddRow(MakeRow(100, "first-name-100", "last-name-100"));
     isb.AddRow(MakeRow(102, "first-name-102", "last-name-102"));
     isb.AddRow(MakeRow(199, "first-name-199", "last-name-199"));
-    return TransactionAction{TransactionAction::kCommit, {isb.Build()}};
+    return Mutations{isb.Build()};
   };
   auto insert_result = RunTransaction(*client_, rw_opts, insert);
   EXPECT_STATUS_OK(insert_result);
@@ -327,7 +327,7 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
   auto dele = [](Client const&, Transaction const&) {
     auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(MakeRow(102));
     auto mutation = MakeDeleteMutation("Singers", ksb.Build());
-    return TransactionAction{TransactionAction::kCommit, {mutation}};
+    return Mutations{mutation};
   };
   auto delete_result = RunTransaction(*client_, rw_opts, dele);
   EXPECT_STATUS_OK(delete_result);

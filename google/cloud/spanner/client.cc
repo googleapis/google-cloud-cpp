@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
 
 namespace google {
@@ -106,7 +107,7 @@ StatusOr<std::int64_t> Client::ExecutePartitionedDml(
 }
 
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
-                                      std::vector<Mutation> mutations) {
+                                      Mutations mutations) {
   return conn_->Commit({std::move(transaction), std::move(mutations)});
 }
 
@@ -123,33 +124,35 @@ std::shared_ptr<Connection> MakeConnection(
 
 StatusOr<CommitResult> RunTransaction(
     Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<TransactionAction(Client, Transaction)> const& f) {
+    std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
   Transaction txn = MakeReadWriteTransaction(opts);
-  TransactionAction action;
+  StatusOr<Mutations> mutations;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   try {
 #endif
-    action = f(client, txn);
+    mutations = f(client, txn);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   } catch (...) {
-    client.Rollback(txn);  // ignore error
+    auto status = client.Rollback(txn);
+    if (!status.ok()) {
+      GCP_LOG(WARNING) << "Rollback() failure in RunTransaction(): "
+                       << status.message();
+    }
     throw;
   }
 #endif
-  switch (action.action) {
-    case TransactionAction::kCommit: {
-      // TODO(#357): Automatically retry if Commit() aborts. Note: it is
-      // not a good idea to simply cap the number of retries. Instead, it
-      // is better to limit the total amount of wall time spent retrying.
-      return client.Commit(txn, action.mutations);
+  if (!mutations) {
+    auto status = client.Rollback(txn);
+    if (!status.ok()) {
+      GCP_LOG(WARNING) << "Rollback() failure in RunTransaction(): "
+                       << status.message();
     }
-    case TransactionAction::kRollback: {
-      auto status = client.Rollback(txn);
-      if (!status.ok()) return status;
-      return CommitResult{};  // TODO(#357): What should this return?
-    }
+    return mutations.status();
   }
-  return Status(StatusCode::kInvalidArgument, "bad TransactionAction");
+  // TODO(#357): Automatically retry if Commit() aborts. Note: it is
+  // not a good idea to simply cap the number of retries. Instead, it
+  // is better to limit the total amount of wall time spent retrying.
+  return client.Commit(txn, *mutations);
 }
 
 }  // namespace SPANNER_CLIENT_NS

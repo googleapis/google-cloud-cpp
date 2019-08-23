@@ -347,8 +347,7 @@ class Client {
    * @return A `StatusOr` containing the result of the commit or error status
    *     on failure.
    */
-  StatusOr<CommitResult> Commit(Transaction transaction,
-                                std::vector<Mutation> mutations);
+  StatusOr<CommitResult> Commit(Transaction transaction, Mutations mutations);
 
   /**
    * Rolls back a read-write transaction, releasing any locks it holds.
@@ -397,19 +396,15 @@ std::shared_ptr<Connection> MakeConnection(
  * The caller-provided function will be passed the `Client` argument and a
  * newly created read-write `Transaction`. It should use these objects to
  * issue any `Read()`s, `ExecuteSql()`s, etc., and return the `Mutation`s to
- * commit or whether to rollback the transaction instead.
+ * commit, or an error (which causes the transaction to be rolled back).
  *
  * The lock priority of the transaction increases after each prior aborted
  * transaction, meaning that the next attempt has a slightly better chance
  * of success than before.
  */
-struct TransactionAction {
-  enum { kCommit, kRollback } action;
-  std::vector<Mutation> mutations;
-};
 StatusOr<CommitResult> RunTransaction(
     Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<TransactionAction(Client, Transaction)> const& f);
+    std::function<StatusOr<Mutations>(Client, Transaction)> const& f);
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

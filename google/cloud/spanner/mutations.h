@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
 #include <google/spanner/v1/mutation.pb.h>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -84,6 +85,12 @@ class Mutation {
 
   google::spanner::v1::Mutation m_;
 };
+
+/**
+ * An ordered sequence of mutations to pass to `Client::Commit()` or return
+ * from the `Client::RunTransaction()` functor.
+ */
+using Mutations = std::vector<Mutation>;
 
 // This namespace contains implementation details. It is not part of the public
 // API, and subject to change without notice.

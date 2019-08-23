@@ -329,11 +329,12 @@ TEST(ClientTest, RollbackError) {
 
   Client client(conn);
   EXPECT_CALL(*conn, Rollback(_))
-      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
+      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "oops")));
 
   auto txn = MakeReadWriteTransaction();
   auto rollback = client.Rollback(txn);
   EXPECT_EQ(StatusCode::kInvalidArgument, rollback.code());
+  EXPECT_THAT(rollback.message(), HasSubstr("oops"));
 }
 
 TEST(ClientTest, MakeConnectionOptionalArguments) {
@@ -364,10 +365,10 @@ TEST(ClientTest, RunTransactionCommit) {
                       Return(CommitResult{*timestamp})));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
-  auto f = [&mutation](Client client, Transaction txn) {
+  auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) return TransactionAction{TransactionAction::kRollback, {}};
-    return TransactionAction{TransactionAction::kCommit, {mutation}};
+    if (!read) return read.status();
+    return Mutations{mutation};
   };
 
   Client client(conn);
@@ -392,16 +393,17 @@ TEST(ClientTest, RunTransactionRollback) {
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
-  auto f = [&mutation](Client client, Transaction txn) {
+  auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) return TransactionAction{TransactionAction::kRollback, {}};
-    return TransactionAction{TransactionAction::kCommit, {mutation}};
+    if (!read) return read.status();
+    return Mutations{mutation};
   };
 
   Client client(conn);
   auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
-  EXPECT_STATUS_OK(result);
-  EXPECT_EQ(Timestamp{}, result->commit_timestamp);
+  EXPECT_FALSE(result.ok());
+  EXPECT_EQ(StatusCode::kInvalidArgument, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("blah"));
 
   EXPECT_EQ("T", actual_read_params.table);
   EXPECT_EQ(KeySet::All(), actual_read_params.keys);
@@ -417,20 +419,20 @@ TEST(ClientTest, RunTransactionRollbackError) {
           DoAll(SaveArg<0>(&actual_read_params),
                 Return(ByMove(Status(StatusCode::kInvalidArgument, "blah")))));
   EXPECT_CALL(*conn, Rollback(_))
-      .WillOnce(Return(Status(StatusCode::kInternal, "blah blah")));
+      .WillOnce(Return(Status(StatusCode::kInternal, "oops")));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
-  auto f = [&mutation](Client client, Transaction txn) {
+  auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) return TransactionAction{TransactionAction::kRollback, {}};
-    return TransactionAction{TransactionAction::kCommit, {mutation}};
+    if (!read) return read.status();
+    return Mutations{mutation};
   };
 
   Client client(conn);
   auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
   EXPECT_FALSE(result.ok());
-  EXPECT_EQ(StatusCode::kInternal, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("blah blah"));
+  EXPECT_EQ(StatusCode::kInvalidArgument, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("blah"));
 
   EXPECT_EQ("T", actual_read_params.table);
   EXPECT_EQ(KeySet::All(), actual_read_params.keys);
@@ -445,10 +447,10 @@ TEST(ClientTest, RunTransactionException) {
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
-  auto f = [&mutation](Client client, Transaction txn) {
+  auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
     if (!read) throw "Read() error";
-    return TransactionAction{TransactionAction::kCommit, {mutation}};
+    return Mutations{mutation};
   };
 
   try {
