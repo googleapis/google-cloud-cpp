@@ -71,6 +71,7 @@ elseif(NOT BUILD_TESTING AND NOT GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 else()
     # Try to find the config package first. If that is not found
     find_package(GTest CONFIG QUIET)
+    find_package(GMock CONFIG QUIET)
     if (NOT GTest_FOUND)
         find_package(GTest REQUIRED)
 
@@ -104,5 +105,14 @@ else()
                                          "GTest::gmock;Threads::Threads"
                                          INTERFACE_INCLUDE_DIRECTORIES
                                          "${GMOCK_INCLUDE_DIRS}")
+    endif ()
+
+    if (NOT TARGET GTest::gmock AND TARGET GMock::gmock)
+        add_library(GTest_gmock INTERFACE)
+        target_link_libraries(GTest_gmock INTERFACE GMock::gmock)
+        add_library(GTest::gmock ALIAS GTest_gmock)
+        add_library(GTest_gmock_main INTERFACE)
+        target_link_libraries(GTest_gmock_main INTERFACE GMock::gmock_main)
+        add_library(GTest::gmock_main ALIAS GTest_gmock_main)
     endif ()
 endif ()
