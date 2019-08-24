@@ -68,11 +68,16 @@ Status ConnectionImpl::Rollback(RollbackParams rp) {
 }
 
 StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
+  std::unique_lock<std::mutex> lk(mu_);
   if (!sessions_.empty()) {
-    std::string session = sessions_.back();
+    std::string session = std::move(sessions_.back());
     sessions_.pop_back();
     return SessionHolder(std::move(session), this);
   }
+  // Release the mutex because we won't be doing any more changes to `sessions_`
+  // in this function and holding mutexes while making RPCs is (generally) a bad
+  // practice.
+  lk.unlock();
   grpc::ClientContext context;
   spanner_proto::CreateSessionRequest request;
   request.set_database(db_.FullName());
@@ -81,6 +86,11 @@ StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
     return response.status();
   }
   return SessionHolder(std::move(*response->mutable_name()), this);
+}
+
+void ConnectionImpl::ReleaseSession(std::string session) {
+  std::lock_guard<std::mutex> lk(mu_);
+  sessions_.push_back(std::move(session));
 }
 
 StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,

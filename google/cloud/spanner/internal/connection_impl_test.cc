@@ -20,7 +20,10 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
+#include <atomic>
+#include <future>
 #include <string>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -37,6 +40,7 @@ using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::SetArgPointee;
+using ::testing::StartsWith;
 
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -570,6 +574,68 @@ TEST(ConnectionImplTest, PartitionReadFailure) {
        PartitionOptions()});
   EXPECT_FALSE(result.ok());
   EXPECT_EQ(result.status(), failed_status);
+}
+
+TEST(ConnectionImplTest, MultipleThreads) {
+  auto db = Database("project", "instance", "database");
+  std::string const session_prefix = "test-session-prefix-";
+  std::string const transaction_id = "test-txn-id";
+  std::atomic<int> session_counter(0);
+
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillRepeatedly(
+          Invoke([&db, &session_prefix, &session_counter](
+                     grpc::ClientContext&,
+                     spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name(session_prefix +
+                             std::to_string(++session_counter));
+            return session;
+          }));
+  EXPECT_CALL(*mock, Rollback(_, _))
+      .WillRepeatedly(Invoke(
+          [session_prefix](grpc::ClientContext&,
+                           spanner_proto::RollbackRequest const& request) {
+            EXPECT_THAT(request.session(), StartsWith(session_prefix));
+            return Status();
+          }));
+
+  ConnectionImpl conn(db, mock);
+
+  int const per_thread_iterations = 1000;
+  auto const thread_count = []() -> unsigned {
+    if (std::thread::hardware_concurrency() == 0) {
+      return 16;
+    }
+    return std::thread::hardware_concurrency();
+  }();
+
+  auto runner = [](int thread_id, int iterations, Connection& conn) {
+    for (int i = 0; i != iterations; ++i) {
+      auto txn = MakeReadWriteTransaction();
+      auto begin_transaction = [thread_id, i](
+                                   spanner_proto::TransactionSelector& s,
+                                   std::int64_t) {
+        s.set_id("txn-" + std::to_string(thread_id) + ":" + std::to_string(i));
+        return 0;
+      };
+      internal::Visit(txn, begin_transaction);
+      auto rollback = conn.Rollback({txn});
+      EXPECT_TRUE(rollback.ok());
+    }
+  };
+
+  std::vector<std::future<void>> tasks;
+  for (unsigned i = 0; i != thread_count; ++i) {
+    tasks.push_back(std::async(std::launch::async, runner, i,
+                               per_thread_iterations, std::ref(conn)));
+  }
+
+  for (auto& f : tasks) {
+    f.get();
+  }
 }
 
 }  // namespace

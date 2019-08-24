@@ -23,6 +23,7 @@
 #include "google/cloud/status_or.h"
 #include <cstdint>
 #include <memory>
+#include <mutex>
 #include <string>
 
 namespace google {
@@ -56,7 +57,31 @@ class ConnectionImpl : public Connection {
    public:
     SessionHolder(std::string session, ConnectionImpl* conn) noexcept
         : session_(std::move(session)), conn_(conn) {}
-    ~SessionHolder() { conn_->sessions_.emplace_back(std::move(session_)); }
+
+    // This class is move-only because we want only one destructor returning the
+    // session back to `conn_`.
+    SessionHolder(SessionHolder const&) = delete;
+    SessionHolder& operator=(SessionHolder const&) = delete;
+
+    // Need explicit move constructor and assignment to clear the `conn_` from
+    // the source.
+    SessionHolder(SessionHolder&& rhs) noexcept
+        : session_(std::move(rhs.session_)), conn_(rhs.conn_) {
+      rhs.conn_ = nullptr;
+    }
+
+    SessionHolder& operator=(SessionHolder&& rhs) noexcept {
+      session_ = std::move(rhs.session_);
+      conn_ = rhs.conn_;
+      rhs.conn_ = nullptr;
+      return *this;
+    }
+
+    ~SessionHolder() {
+      if (conn_) {
+        conn_->ReleaseSession(std::move(session_));
+      }
+    }
 
     std::string const& session_name() const { return session_; }
 
@@ -66,6 +91,7 @@ class ConnectionImpl : public Connection {
   };
   friend class SessionHolder;
   StatusOr<SessionHolder> GetSession();
+  void ReleaseSession(std::string session);
 
   /// Implementation details for Read.
   StatusOr<ResultSet> Read(google::spanner::v1::TransactionSelector& s,
@@ -92,7 +118,8 @@ class ConnectionImpl : public Connection {
 
   // The current session pool.
   // TODO(#307) - improve session refresh and expiration.
-  std::vector<std::string> sessions_;
+  std::mutex mu_;
+  std::vector<std::string> sessions_;  // GUARDED_BY(mu_)
 };
 
 }  // namespace internal
