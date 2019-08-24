@@ -32,6 +32,33 @@ static_assert(
     std::is_same<promise<void>, ::google::cloud::promise<void>>::value,
     "std::promise in global namespace");
 
+/// @test Verify that destructing a promise does not introduce race conditions.
+TEST(FutureTestVoid, DestroyInWaitingThread) {
+  for (int i = 0; i != 1000; ++i) {
+    std::thread t;
+    {
+      promise<void> p;
+      t = std::thread([&p] { p.set_value(); });
+      p.get_future().get();
+    }
+    if (t.joinable()) t.join();
+  }
+}
+
+/// @test Verify that destructing a promise does not introduce race conditions.
+TEST(FutureTestVoid, DestroyInSignalingThread) {
+  for (int i = 0; i != 1000; ++i) {
+    std::thread t;
+    {
+      promise<void> p;
+      future<void> f = p.get_future();
+      t = std::thread([](promise<void> p) { p.set_value(); }, std::move(p));
+      f.get();
+    }
+    if (t.joinable()) t.join();
+  }
+}
+
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
 TEST(FutureTestVoid, conform_30_6_5_3) {
   // TODO(#1364) - allocators are not supported for now.

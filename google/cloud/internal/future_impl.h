@@ -210,7 +210,7 @@ class future_shared_state_base {
   }
 
   /// If needed, notify any waiting threads that the shared state is satisfied.
-  void notify_now(std::unique_lock<std::mutex>&& lk) {
+  void notify_now(std::unique_lock<std::mutex> lk) {
     if (continuation_) {
       // Release the lock before calling the continuation because the
       // continuation will likely call get() to fetch the state of the future.
@@ -221,9 +221,6 @@ class future_shared_state_base {
       // without notifying any other threads.
       return;
     }
-    // Unlock first to avoid waking up a thread which becomes immediately
-    // blocked on the mutex.
-    lk.unlock();
     cv_.notify_all();
   }
 
