@@ -62,6 +62,38 @@ function (google_cloud_cpp_gmock_library_import_location target lib)
     endif ()
 endfunction ()
 
+function (google_cloud_cpp_transfer_library_properties target source)
+
+    add_library(${target} UNKNOWN IMPORTED)
+    get_target_property(value ${source} IMPORTED_LOCATION)
+    if (NOT value)
+        get_target_property(value ${source} IMPORTED_LOCATION_DEBUG)
+        if (EXISTS "${value}")
+            set_target_properties(${target}
+                                  PROPERTIES IMPORTED_LOCATION ${value})
+        endif ()
+        get_target_property(value ${source} IMPORTED_LOCATION_RELEASE)
+        if (EXISTS "${value}")
+            set_target_properties(${target}
+                                  PROPERTIES IMPORTED_LOCATION ${value})
+        endif ()
+    endif ()
+    foreach (property
+             IMPORTED_LOCATION_DEBUG
+             IMPORTED_LOCATION_RELEASE
+             IMPORTED_CONFIGURATIONS
+             INTERFACE_INCLUDE_DIRECTORIES
+             IMPORTED_LINK_INTERFACE_LIBRARIES
+             IMPORTED_LINK_INTERFACE_LIBRARIES_DEBUG
+             IMPORTED_LINK_INTERFACE_LIBRARIES_RELEASE)
+        get_target_property(value ${source} ${property})
+        message("*** ${source} ${property} ${value}")
+        if (value)
+            set_target_properties(${target} PROPERTIES ${property} "${value}")
+        endif ()
+    endforeach ()
+endfunction ()
+
 include(CTest)
 if (TARGET GTest::gmock)
     # GTest::gmock is already defined, do not define it again.
@@ -73,7 +105,7 @@ else()
     find_package(GTest CONFIG QUIET)
     find_package(GMock CONFIG QUIET)
     if (NOT GTest_FOUND)
-        find_package(GTest REQUIRED)
+        find_package(GTest MODULE REQUIRED)
 
         google_cloud_cpp_create_googletest_aliases()
 
@@ -108,11 +140,8 @@ else()
     endif ()
 
     if (NOT TARGET GTest::gmock AND TARGET GMock::gmock)
-        add_library(GTest_gmock INTERFACE)
-        target_link_libraries(GTest_gmock INTERFACE GMock::gmock)
-        add_library(GTest::gmock ALIAS GTest_gmock)
-        add_library(GTest_gmock_main INTERFACE)
-        target_link_libraries(GTest_gmock_main INTERFACE GMock::gmock_main)
-        add_library(GTest::gmock_main ALIAS GTest_gmock_main)
+        google_cloud_cpp_transfer_library_properties(GTest::gmock GMock::gmock)
+        google_cloud_cpp_transfer_library_properties(GTest::gmock_main
+                                                     GMock::gmock_main)
     endif ()
 endif ()
