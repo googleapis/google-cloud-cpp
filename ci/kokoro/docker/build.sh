@@ -71,6 +71,22 @@ elif [[ "${BUILD_NAME}" = "asan" ]]; then
   export DISTRO_VERSION=18.04
   export BAZEL_CONFIG="asan"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
+elif [[ "${BUILD_NAME}" = "msan" ]]; then
+  # Compile with the MemorySanitizer enabled.
+  export CC=clang
+  export CXX=clang++
+  export DISTRO=fedora-libcxx-msan
+  export DISTRO_VERSION=30
+  export BAZEL_CONFIG="msan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
+elif [[ "${BUILD_NAME}" = "tsan" ]]; then
+  # Compile with the ThreadSanitizer enabled.
+  export CC=clang
+  export CXX=clang++
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=30
+  export BAZEL_CONFIG="tsan"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
   export CC=clang

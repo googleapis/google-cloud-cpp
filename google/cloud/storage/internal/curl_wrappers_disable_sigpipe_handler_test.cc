@@ -29,6 +29,14 @@ extern "C" void test_handler(int) {}
 /// @test Verify that configuring the library to disable the SIGPIPE handler
 /// works as expected.
 TEST(CurlWrappers, SigpipeHandlerDisabledTest) {
+#if defined(__has_feature)
+#if __has_feature(memory_sanitizer)
+  // The memory sanitizer seems to intercept SIGPIPE, simply disable the test
+  // in this case.
+  return;
+#endif  // __has_feature(memory_sanitizer)
+#endif  // __has_fature
+
 #if !defined(SIGPIPE)
   return;  // nothing to do
 #elif LIBCURL_VERSION_NUM > 0x072900

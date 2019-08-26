@@ -25,6 +25,33 @@ using ::testing::HasSubstr;
 using namespace testing_util::chrono_literals;
 using testing_util::ExpectFutureError;
 
+/// @test Verify that destructing a promise does not introduce race conditions.
+TEST(FutureTestInt, DestroyInWaitingThread) {
+  for (int i = 0; i != 1000; ++i) {
+    std::thread t;
+    {
+      promise<int> p;
+      t = std::thread([&p] { p.set_value(42); });
+      p.get_future().get();
+    }
+    if (t.joinable()) t.join();
+  }
+}
+
+/// @test Verify that destructing a promise does not introduce race conditions.
+TEST(FutureTestInt, DestroyInSignalingThread) {
+  for (int i = 0; i != 1000; ++i) {
+    std::thread t;
+    {
+      promise<int> p;
+      future<int> f = p.get_future();
+      t = std::thread([](promise<int> p) { p.set_value(42); }, std::move(p));
+      f.get();
+    }
+    if (t.joinable()) t.join();
+  }
+}
+
 /// @test Verify conformance with section 30.6.5 of the C++14 spec.
 TEST(FutureTestInt, conform_30_6_5_3) {
   // TODO(coryan) - allocators are not supported for now.
