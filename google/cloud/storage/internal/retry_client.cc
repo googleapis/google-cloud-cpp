@@ -88,7 +88,7 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
       return error(std::move(os).str());
     }
     if (!retry_policy.OnFailure(last_status)) {
-      if (!retry_policy.IsExhausted()) {
+      if (internal::StatusTraits::IsPermanentFailure(last_status)) {
         // The last error cannot be retried, but it is not because the retry
         // policy is exhausted, we call these "permanent errors", and they
         // get a special message.
