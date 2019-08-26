@@ -99,14 +99,11 @@ class ClientIntegrationTest : public ::testing::Test {
   }
 
   void SetUp() override {
-    auto commit =
-        RunTransaction(*client_, {}, [](Client client, Transaction const& txn) {
-          auto deleter = client.ExecuteSql(
-              txn, SqlStatement("DELETE FROM Singers WHERE true;"));
-          EXPECT_STATUS_OK(deleter);
-          return Mutations{};
+    auto commit_result =
+        RunTransaction(*client_, {}, [](Client const&, Transaction const&) {
+          return Mutations{MakeDeleteMutation("Singers", KeySet::All())};
         });
-    EXPECT_STATUS_OK(commit);
+    EXPECT_STATUS_OK(commit_result);
   }
 
   void InsertTwoSingers() {
@@ -149,7 +146,6 @@ TEST_F(ClientIntegrationTest, InsertAndCommit) {
       returned_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
                                    RowType(2, "test-fname-2", "test-lname-2")));
@@ -183,7 +179,6 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
       returned_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(2, "test-fname-2", "test-lname-2")));
 }
@@ -192,7 +187,7 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
 TEST_F(ClientIntegrationTest, MultipleInserts) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
-  auto insert_commit_result = RunTransaction(
+  auto commit_result = RunTransaction(
       *client_, {},
       [](Client client, Transaction const& txn) -> StatusOr<Mutations> {
         auto insert1 = client.ExecuteSql(
@@ -213,7 +208,7 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
         if (!insert2) return std::move(insert2).status();
         return Mutations{};
       });
-  EXPECT_STATUS_OK(insert_commit_result);
+  EXPECT_STATUS_OK(commit_result);
 
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
@@ -230,7 +225,6 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
       returned_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
                                    RowType(2, "test-fname-2", "test-lname-2"),
@@ -275,7 +269,6 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
       returned_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
                                    RowType(2, "test-fname-2", "test-lname-2"),
@@ -298,7 +291,6 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
       returned_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
                                    RowType(2, "test-fname-2", "test-lname-2")));
@@ -306,10 +298,8 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
 
 /// @test Verify the basics of RunTransaction().
 TEST_F(ClientIntegrationTest, RunTransaction) {
-  Transaction::ReadWriteOptions rw_opts{};
-
   // Insert SingerIds 100, 102, and 199.
-  auto insert = [](Client const&, Transaction const&) {
+  auto inserter = [](Client const&, Transaction const&) {
     auto isb =
         InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"});
     isb.AddRow(MakeRow(100, "first-name-100", "last-name-100"));
@@ -317,17 +307,17 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
     isb.AddRow(MakeRow(199, "first-name-199", "last-name-199"));
     return Mutations{isb.Build()};
   };
-  auto insert_result = RunTransaction(*client_, rw_opts, insert);
+  auto insert_result = RunTransaction(*client_, {}, inserter);
   EXPECT_STATUS_OK(insert_result);
   EXPECT_NE(Timestamp{}, insert_result->commit_timestamp);
 
   // Delete SingerId 102.
-  auto dele = [](Client const&, Transaction const&) {
+  auto deleter = [](Client const&, Transaction const&) {
     auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(MakeRow(102));
     auto mutation = MakeDeleteMutation("Singers", ksb.Build());
     return Mutations{mutation};
   };
-  auto delete_result = RunTransaction(*client_, rw_opts, dele);
+  auto delete_result = RunTransaction(*client_, {}, deleter);
   EXPECT_STATUS_OK(delete_result);
   EXPECT_LT(insert_result->commit_timestamp, delete_result->commit_timestamp);
 
@@ -348,23 +338,23 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
 
 /// @test Test various forms of ExecuteSql()
 TEST_F(ClientIntegrationTest, ExecuteSql) {
-  auto insert = RunTransaction(
-      *client_, {},
-      [](Client client, Transaction const& txn) -> StatusOr<Mutations> {
+  auto insert_result = RunTransaction(
+      *client_, {}, [](Client client, Transaction txn) -> StatusOr<Mutations> {
         auto insert = client.ExecuteSql(
-            txn, SqlStatement(R"sql(
+            std::move(txn), SqlStatement(R"sql(
         INSERT INTO Singers (SingerId, FirstName, LastName)
         VALUES (@id, @fname, @lname))sql",
-                              {{"id", Value(1)},
-                               {"fname", Value("test-fname-1")},
-                               {"lname", Value("test-lname-1")}}));
+                                         {{"id", Value(1)},
+                                          {"fname", Value("test-fname-1")},
+                                          {"lname", Value("test-lname-1")}}));
         if (!insert) return std::move(insert).status();
         return Mutations{};
       });
+  EXPECT_STATUS_OK(insert_result);
 
   using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> expected_rows;
-  auto commit = RunTransaction(
+  auto commit_result = RunTransaction(
       *client_, {},
       [&expected_rows](Client client,
                        Transaction const& txn) -> StatusOr<Mutations> {
@@ -390,13 +380,12 @@ TEST_F(ClientIntegrationTest, ExecuteSql) {
 
         return Mutations{};
       });
-  ASSERT_STATUS_OK(commit);
+  ASSERT_STATUS_OK(commit_result);
 
   auto reader = client_->ExecuteSql(
       SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers", {}));
   EXPECT_STATUS_OK(reader);
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> actual_rows;
   if (reader) {
     int row_number = 0;

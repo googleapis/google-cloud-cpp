@@ -26,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace spanner_proto = ::google::spanner::v1;
 
 StatusOr<ResultSet> Client::Read(std::string table, KeySet keys,
@@ -125,6 +126,8 @@ std::shared_ptr<Connection> MakeConnection(
   return std::make_shared<internal::ConnectionImpl>(db, std::move(stub));
 }
 
+namespace {
+
 StatusOr<CommitResult> RunTransactionImpl(
     Client& client, Transaction::ReadWriteOptions const& opts,
     std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
@@ -152,17 +155,18 @@ StatusOr<CommitResult> RunTransactionImpl(
     }
     return mutations.status();
   }
-  // TODO(#357): Automatically retry if Commit() aborts. Note: it is
-  // not a good idea to simply cap the number of retries. Instead, it
-  // is better to limit the total amount of wall time spent retrying.
   return client.Commit(txn, *mutations);
 }
+
+}  // namespace
 
 StatusOr<CommitResult> RunTransaction(
     Client client, Transaction::ReadWriteOptions const& opts,
     std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
   ExponentialBackoffPolicy backoff_policy(std::chrono::milliseconds(100),
                                           std::chrono::minutes(5), 2.0);
+  // TODO(#357,#442): It is not a good idea to simply cap the number of
+  // retries. It is better to limit the total amount of time spent retrying.
   LimitedErrorCountRetryPolicy retry_policy(/*maximum_failures=*/2);
 
   Status last_status(
