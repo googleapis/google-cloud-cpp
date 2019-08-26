@@ -43,10 +43,12 @@ struct ServiceAccountMetadata {
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     storage::internal::HttpResponse const& response);
 
-/// Parses a refresh response JSON string into a TemporaryToken.
+/// Parses a refresh response JSON string into an authorization header. The
+/// header and the current time (for the expiration) form a TemporaryToken.
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseComputeEngineRefeshResponse(
-    storage::internal::HttpResponse const& response);
+ParseComputeEngineRefreshResponse(
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 GCE instance service account credentials.
@@ -68,20 +70,23 @@ ParseComputeEngineRefeshResponse(
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
  *     possible to mock internal libcurl wrappers. This should generally not
  *     be overridden except for testing.
+ * @tparam ClockType a dependency injection point to fetch the current time.
+ *     This should generally not be overridden except for testing.
  */
 template <typename HttpRequestBuilderType =
-              storage::internal::CurlRequestBuilder>
+              storage::internal::CurlRequestBuilder,
+          typename ClockType = std::chrono::system_clock>
 class ComputeEngineCredentials : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
 
   explicit ComputeEngineCredentials(std::string const& service_account_email)
-      : service_account_email_(service_account_email) {}
+      : clock_(), service_account_email_(service_account_email) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds_.AuthorizationHeader(
-        std::chrono::system_clock::now(), [this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader(clock_.now(),
+                                                 [this] { return Refresh(); });
   }
 
   std::string AccountEmail() const override {
@@ -185,9 +190,10 @@ class ComputeEngineCredentials : public Credentials {
       return AsStatus(*response);
     }
 
-    return ParseComputeEngineRefeshResponse(*response);
+    return ParseComputeEngineRefreshResponse(*response, clock_.now());
   }
 
+  ClockType clock_;
   mutable std::mutex mu_;
   RefreshingCredentialsWrapper refreshing_creds_;
   mutable std::set<std::string> scopes_;

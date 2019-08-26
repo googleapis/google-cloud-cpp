@@ -47,8 +47,9 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseComputeEngineRefeshResponse(
-    storage::internal::HttpResponse const& response) {
+ParseComputeEngineRefreshResponse(
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now) {
   namespace nl = storage::internal::nl;
   // Response should have the attributes "access_token", "expires_in", and
   // "token_type".
@@ -69,7 +70,7 @@ ParseComputeEngineRefeshResponse(
   header += access_token.value("access_token", "");
   auto expires_in =
       std::chrono::seconds(access_token.value("expires_in", int(0)));
-  auto new_expiration = std::chrono::system_clock::now() + expires_in;
+  auto new_expiration = now + expires_in;
 
   return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                       new_expiration};

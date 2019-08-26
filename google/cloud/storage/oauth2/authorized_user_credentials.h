@@ -43,10 +43,12 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string into a TemporaryToken.
+/// Parses a refresh response JSON string into an authorization header. The
+/// header and the current time (for the expiration) form a TemporaryToken.
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
-    storage::internal::HttpResponse const& response);
+    storage::internal::HttpResponse const& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
@@ -67,13 +69,16 @@ ParseAuthorizedUserRefreshResponse(
  * @tparam HttpRequestBuilderType a dependency injection point. It makes it
  *     possible to mock internal libcurl wrappers. This should generally not be
  *     overridden except for testing.
+ * @tparam ClockType a dependency injection point to fetch the current time.
+ *     This should generally not be overridden except for testing.
  */
 template <typename HttpRequestBuilderType =
-              storage::internal::CurlRequestBuilder>
+              storage::internal::CurlRequestBuilder,
+          typename ClockType = std::chrono::system_clock>
 class AuthorizedUserCredentials : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(
-      AuthorizedUserCredentialsInfo const& info) {
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info)
+      : clock_() {
     HttpRequestBuilderType request_builder(
         info.token_uri, storage::internal::GetDefaultCurlHandleFactory());
     std::string payload("grant_type=refresh_token");
@@ -89,8 +94,8 @@ class AuthorizedUserCredentials : public Credentials {
 
   StatusOr<std::string> AuthorizationHeader() override {
     std::unique_lock<std::mutex> lock(mu_);
-    return refreshing_creds_.AuthorizationHeader(
-        std::chrono::system_clock::now(), [this] { return Refresh(); });
+    return refreshing_creds_.AuthorizationHeader(clock_.now(),
+                                                 [this] { return Refresh(); });
   }
 
  private:
@@ -102,9 +107,10 @@ class AuthorizedUserCredentials : public Credentials {
     if (response->status_code >= 300) {
       return AsStatus(*response);
     }
-    return ParseAuthorizedUserRefreshResponse(*response);
+    return ParseAuthorizedUserRefreshResponse(*response, clock_.now());
   }
 
+  ClockType clock_;
   typename HttpRequestBuilderType::RequestType request_;
   std::string payload_;
   mutable std::mutex mu_;

@@ -17,7 +17,9 @@
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
+#include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <cstring>
@@ -31,6 +33,7 @@ namespace {
 
 using ::google::cloud::storage::internal::GceMetadataHostname;
 using ::google::cloud::storage::internal::HttpResponse;
+using ::google::cloud::storage::testing::FakeClock;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::testing::_;
@@ -113,6 +116,99 @@ TEST_F(ComputeEngineCredentialsTest,
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());
   EXPECT_THAT(credentials.scopes(), UnorderedElementsAre("scope1", "scope2"));
+}
+
+/// @test Parsing a refresh response with missing fields results in failure.
+TEST_F(ComputeEngineCredentialsTest,
+       ParseComputeEngineRefreshResponseMissingFields) {
+  std::string token_info_resp = R"""({})""";
+  // Does not have access_token.
+  std::string token_info_resp2 = R"""({
+      "expires_in": 3600,
+      "token_type": "tokentype"
+)""";
+
+  FakeClock::reset_clock(1000);
+  auto status = ParseComputeEngineRefreshResponse(
+      HttpResponse{400, token_info_resp, {}}, FakeClock::now());
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+
+  status = ParseComputeEngineRefreshResponse(
+      HttpResponse{400, token_info_resp2, {}}, FakeClock::now());
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+}
+
+/// @test Parsing a refresh response yields a TemporaryToken.
+TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
+  std::string token_info_resp = R"""({
+      "access_token": "mysupersecrettoken",
+      "expires_in": 3600,
+      "token_type": "tokentype"
+})""";
+
+  auto expires_in = 3600;
+  auto clock_value = 2000;
+  FakeClock::reset_clock(clock_value);
+
+  auto status = ParseComputeEngineRefreshResponse(
+      HttpResponse{200, token_info_resp, {}}, FakeClock::now());
+  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kOk);
+  auto token = *status;
+  EXPECT_EQ(
+      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
+          .time_since_epoch()
+          .count(),
+      clock_value + expires_in);
+  EXPECT_EQ(token.token, "Authorization: tokentype mysupersecrettoken");
+}
+
+/// @test Parsing a metadata server response with missing fields results in
+/// failure.
+TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponseMissingFields) {
+  std::string email = "foo@bar.baz";
+  std::string svc_acct_info_resp = R"""({})""";
+  std::string svc_acct_info_resp2 = R"""({
+      "scopes": ["scope1","scope2"]
+  })""";
+
+  auto status =
+      ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp, {}});
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+
+  status =
+      ParseMetadataServerResponse(HttpResponse{400, svc_acct_info_resp2, {}});
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+}
+
+/// @test Parsing a metadata server response yields a ServiceAccountMetadata.
+TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
+  std::string email = "foo@bar.baz";
+  std::string svc_acct_info_resp = R"""({
+      "email": ")""" + email + R"""(",
+      "scopes": ["scope1","scope2"]
+  })""";
+
+  auto status =
+      ParseMetadataServerResponse(HttpResponse{200, svc_acct_info_resp, {}});
+  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kOk);
+  auto metadata = *status;
+  EXPECT_EQ(metadata.email, email);
+  EXPECT_TRUE(metadata.scopes.count("scope1"));
+  EXPECT_TRUE(metadata.scopes.count("scope2"));
 }
 
 }  // namespace
