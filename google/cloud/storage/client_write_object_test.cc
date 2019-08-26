@@ -156,37 +156,6 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
       << ", status=" << stream.metadata().status();
 }
 
-TEST_F(WriteObjectTest, WriteObjectUnderhandedStreamClose) {
-  testing::MockResumableUploadSession* mock_session =
-      new testing::MockResumableUploadSession;
-  auto returner = [mock_session](internal::ResumableUploadRequest const&) {
-    return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
-        std::unique_ptr<internal::ResumableUploadSession>(mock_session));
-  };
-  EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
-  EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
-  EXPECT_CALL(*mock_session, next_expected_byte()).WillRepeatedly(Return(0));
-  EXPECT_CALL(*mock_session, UploadFinalChunk(_, _))
-      .WillOnce(Return(make_status_or(internal::ResumableUploadResponse{
-          "fake-url", 0, ObjectMetadata(),
-          internal::ResumableUploadResponse::kDone})));
-
-  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
-  stream << "Hello world!";
-  EXPECT_FALSE(stream.bad());
-
-  auto stream_buf = dynamic_cast<internal::ObjectWriteStreambuf*>(stream.rdbuf());
-  ASSERT_NE(nullptr, stream_buf);
-  stream_buf->Close();
-  stream.Close();
-  EXPECT_FALSE(stream.metadata());
-  EXPECT_EQ(StatusCode::kUnknown, stream.metadata().status().code());
-  EXPECT_EQ(
-      "The underlying buffer was closed successfully, but underhandedly. Can't "
-      "determine the upload metadata.",
-      stream.metadata().status().message());
-}
-
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
