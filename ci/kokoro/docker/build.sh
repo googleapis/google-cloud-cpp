@@ -399,7 +399,7 @@ echo "================================================================"
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh"
 
-"${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${docker_flags[@]}"
+"${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${IMAGE}:latest" "${docker_flags[@]}"
 
 if [[ "${exit_status}" != 0 ]]; then
   echo "================================================================"
