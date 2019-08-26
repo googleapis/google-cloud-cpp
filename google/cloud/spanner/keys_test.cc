@@ -26,9 +26,9 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-TEST(BoundTest, Accessors) {
+TEST(KeyBoundTest, Accessors) {
   auto row = MakeRow("test");
-  auto bound = MakeBoundClosed(row);
+  auto bound = MakeKeyBoundClosed(row);
   EXPECT_EQ(row, bound.key());
   EXPECT_EQ(row, std::move(bound).key());
 
@@ -38,17 +38,17 @@ TEST(BoundTest, Accessors) {
       std::is_same<RowType&&, decltype(std::move(bound).key())>::value, "");
 }
 
-TEST(BoundTest, MakeBoundClosed) {
+TEST(KeyBoundTest, MakeKeyBoundClosed) {
   std::string key_value("key0");
-  auto bound = MakeBoundClosed(MakeRow(key_value));
+  auto bound = MakeKeyBoundClosed(MakeRow(key_value));
   EXPECT_EQ(key_value, bound.key().get<0>());
   EXPECT_TRUE(bound.IsClosed());
 }
 
-TEST(BoundTest, MakeBoundOpen) {
+TEST(KeyBoundTest, MakeKeyBoundOpen) {
   std::string key_value_0("key0");
   std::int64_t key_value_1(42);
-  auto bound = MakeBoundOpen(MakeRow(key_value_0, key_value_1));
+  auto bound = MakeKeyBoundOpen(MakeRow(key_value_0, key_value_1));
   EXPECT_EQ(key_value_0, bound.key().get<0>());
   EXPECT_EQ(key_value_1, bound.key().get<1>());
   EXPECT_TRUE(bound.IsOpen());
@@ -56,10 +56,10 @@ TEST(BoundTest, MakeBoundOpen) {
 
 TEST(KeyrangeTest, Accessors) {
   auto start_row = MakeRow("a");
-  auto start_bound = MakeBoundClosed(start_row);
+  auto start_bound = MakeKeyBoundClosed(start_row);
 
   auto end_row = MakeRow("z");
-  auto end_bound = MakeBoundClosed(end_row);
+  auto end_bound = MakeKeyBoundClosed(end_row);
 
   auto range = MakeKeyRange(start_bound, end_bound);
   EXPECT_EQ(start_bound, range.start());
@@ -78,7 +78,7 @@ TEST(KeyrangeTest, Accessors) {
       std::is_same<EndType&&, decltype(std::move(range).start())>::value, "");
 }
 
-TEST(KeyRangeTest, ConstructorBoundModeUnspecified) {
+TEST(KeyRangeTest, ConstructorKeyBoundModeUnspecified) {
   std::string start_value("key0");
   std::string end_value("key1");
   KeyRange<Row<std::string>> closed_range =
@@ -93,8 +93,8 @@ TEST(KeyRangeTest, ConstructorBoundModeUnspecified) {
 TEST(KeyRangeTest, ConstructorClosedClosed) {
   std::string start_value("key0");
   std::string end_value("key1");
-  auto start_bound = MakeBoundClosed(MakeRow(start_value));
-  auto end_bound = MakeBoundClosed(MakeRow(end_value));
+  auto start_bound = MakeKeyBoundClosed(MakeRow(start_value));
+  auto end_bound = MakeKeyBoundClosed(MakeRow(end_value));
   auto closed_range = MakeKeyRange(start_bound, end_bound);
   EXPECT_EQ(start_value, closed_range.start().key().get<0>());
   EXPECT_TRUE(closed_range.start().IsClosed());
@@ -105,8 +105,9 @@ TEST(KeyRangeTest, ConstructorClosedClosed) {
 TEST(KeyRangeTest, ConstructorClosedOpen) {
   std::string start_value("key0");
   std::string end_value("key1");
-  auto range = KeyRange<Row<std::string>>(MakeBoundClosed(MakeRow(start_value)),
-                                          MakeBoundOpen(MakeRow(end_value)));
+  auto range =
+      KeyRange<Row<std::string>>(MakeKeyBoundClosed(MakeRow(start_value)),
+                                 MakeKeyBoundOpen(MakeRow(end_value)));
   EXPECT_EQ(start_value, range.start().key().get<0>());
   EXPECT_TRUE(range.start().IsClosed());
   EXPECT_EQ(end_value, range.end().key().get<0>());
@@ -116,8 +117,9 @@ TEST(KeyRangeTest, ConstructorClosedOpen) {
 TEST(KeyRangeTest, ConstructorOpenClosed) {
   std::string start_value("key0");
   std::string end_value("key1");
-  auto range = KeyRange<Row<std::string>>(MakeBoundOpen(MakeRow(start_value)),
-                                          MakeBoundClosed(MakeRow(end_value)));
+  auto range =
+      KeyRange<Row<std::string>>(MakeKeyBoundOpen(MakeRow(start_value)),
+                                 MakeKeyBoundClosed(MakeRow(end_value)));
   EXPECT_EQ(start_value, range.start().key().get<0>());
   EXPECT_TRUE(range.start().IsOpen());
   EXPECT_EQ(end_value, range.end().key().get<0>());
@@ -127,8 +129,9 @@ TEST(KeyRangeTest, ConstructorOpenClosed) {
 TEST(KeyRangeTest, ConstructorOpenOpen) {
   std::string start_value("key0");
   std::string end_value("key1");
-  auto range = KeyRange<Row<std::string>>(MakeBoundOpen(MakeRow(start_value)),
-                                          MakeBoundOpen(MakeRow(end_value)));
+  auto range =
+      KeyRange<Row<std::string>>(MakeKeyBoundOpen(MakeRow(start_value)),
+                                 MakeKeyBoundOpen(MakeRow(end_value)));
   EXPECT_EQ(start_value, range.start().key().get<0>());
   EXPECT_TRUE(range.start().IsOpen());
   EXPECT_EQ(end_value, range.end().key().get<0>());
@@ -189,8 +192,8 @@ TEST(KeySetTest, EqualityKeys) {
 TEST(KeySetTest, EqualityKeyRanges) {
   auto range0 = MakeKeyRangeClosed(MakeRow("start00", "start01"),
                                    MakeRow("end00", "end01"));
-  auto range1 = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
-                             MakeBoundOpen(MakeRow("end10", "end11")));
+  auto range1 = MakeKeyRange(MakeKeyBoundOpen(MakeRow("start10", "start11")),
+                             MakeKeyBoundOpen(MakeRow("end10", "end11")));
   auto ksb0 = KeySetBuilder<Row<std::string, std::string>>();
   ksb0.Add(range0).Add(range1);
   auto ksb1 = KeySetBuilder<Row<std::string, std::string>>();
@@ -237,8 +240,8 @@ TEST(KeySetBuilderTest, ConstructorKeyRange) {
   std::string start_value("key0");
   std::string end_value("key1");
   auto ks = KeySetBuilder<Row<std::string>>(
-      KeyRange<Row<std::string>>(MakeBoundClosed(MakeRow(start_value)),
-                                 MakeBoundClosed(MakeRow(end_value))));
+      KeyRange<Row<std::string>>(MakeKeyBoundClosed(MakeRow(start_value)),
+                                 MakeKeyBoundClosed(MakeRow(end_value))));
   EXPECT_EQ(start_value, ks.key_ranges()[0].start().key().get<0>());
   EXPECT_TRUE(ks.key_ranges()[0].start().IsClosed());
   EXPECT_EQ(end_value, ks.key_ranges()[0].end().key().get<0>());
@@ -264,8 +267,8 @@ TEST(KeySetBuilderTest, AddKeyToNonEmptyKeySetBuilder) {
 TEST(KeySetBuilderTest, AddKeyRangeToEmptyKeySetBuilder) {
   auto ks = KeySetBuilder<Row<std::string, std::string>>();
   auto range = KeyRange<Row<std::string, std::string>>(
-      MakeBoundClosed(MakeRow("start00", "start01")),
-      MakeBoundClosed(MakeRow("end00", "end01")));
+      MakeKeyBoundClosed(MakeRow("start00", "start01")),
+      MakeKeyBoundClosed(MakeRow("end00", "end01")));
   ks.Add(range);
   EXPECT_EQ("start00", ks.key_ranges()[0].start().key().get<0>());
   EXPECT_EQ("start01", ks.key_ranges()[0].start().key().get<1>());
@@ -278,8 +281,8 @@ TEST(KeySetBuilderTest, AddKeyRangeToEmptyKeySetBuilder) {
 TEST(KeySetBuilderTest, AddKeyRangeToNonEmptyKeySetBuilder) {
   auto ks = KeySetBuilder<Row<std::string, std::string>>(MakeKeyRangeClosed(
       MakeRow("start00", "start01"), MakeRow("end00", "end01")));
-  auto range = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
-                            MakeBoundOpen(MakeRow("end10", "end11")));
+  auto range = MakeKeyRange(MakeKeyBoundOpen(MakeRow("start10", "start11")),
+                            MakeKeyBoundOpen(MakeRow("end10", "end11")));
   ks.Add(range);
   EXPECT_EQ("start00", ks.key_ranges()[0].start().key().get<0>());
   EXPECT_EQ("start01", ks.key_ranges()[0].start().key().get<1>());
@@ -337,8 +340,8 @@ TEST(InternalKeySetTest, BuildToProtoTwoKeys) {
 TEST(InternalKeySetTest, BuildToProtoTwoRanges) {
   auto ksb = KeySetBuilder<Row<std::string, std::string>>(MakeKeyRangeClosed(
       MakeRow("start00", "start01"), MakeRow("end00", "end01")));
-  auto range = MakeKeyRange(MakeBoundOpen(MakeRow("start10", "start11")),
-                            MakeBoundOpen(MakeRow("end10", "end11")));
+  auto range = MakeKeyRange(MakeKeyBoundOpen(MakeRow("start10", "start11")),
+                            MakeKeyBoundOpen(MakeRow("end10", "end11")));
   ksb.Add(range);
 
   ::google::spanner::v1::KeySet expected;

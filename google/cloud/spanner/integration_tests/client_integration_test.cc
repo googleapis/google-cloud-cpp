@@ -335,8 +335,8 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
 
   // Read SingerIds [100 ... 200).
   std::vector<std::int64_t> ids;
-  auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(
-      MakeKeyRange(MakeBoundClosed(MakeRow(100)), MakeBoundOpen(MakeRow(200))));
+  auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(MakeKeyRange(
+      MakeKeyBoundClosed(MakeRow(100)), MakeKeyBoundOpen(MakeRow(200))));
   auto results = client_->Read("Singers", ksb.Build(), {"SingerId"});
   EXPECT_STATUS_OK(results);
   if (results) {
