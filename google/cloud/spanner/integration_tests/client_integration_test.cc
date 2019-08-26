@@ -411,6 +411,90 @@ TEST_F(ClientIntegrationTest, ExecuteSql) {
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
+void CheckReadWithOptions(
+    Client client,
+    std::function<Transaction::SingleUseOptions(CommitResult const&)> const&
+        options_generator) {
+  using RowType = Row<std::int64_t, std::string, std::string>;
+  std::vector<RowType> expected_rows;
+
+  auto commit = RunTransaction(
+      client, Transaction::ReadWriteOptions{},
+      [&expected_rows](Client const&,
+                       Transaction const&) -> StatusOr<Mutations> {
+        InsertMutationBuilder insert("Singers",
+                                     {"SingerId", "FirstName", "LastName"});
+        for (int i = 1; i != 10; ++i) {
+          auto s = std::to_string(i);
+          auto row = MakeRow(i, "test-fname-" + s, "test-lname-" + s);
+          insert.AddRow(row);
+          expected_rows.push_back(row);
+        }
+        return Mutations{std::move(insert).Build()};
+      });
+  ASSERT_STATUS_OK(commit);
+
+  auto reader =
+      client.Read(options_generator(*commit), "Singers", KeySet::All(),
+                  {"SingerId", "FirstName", "LastName"});
+  ASSERT_STATUS_OK(reader);
+
+  std::vector<RowType> actual_rows;
+  if (reader) {
+    int row_number = 0;
+    for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
+      SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      actual_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
+}
+
+/// @test Test read with bounded staleness set by a timestamp.
+TEST_F(ClientIntegrationTest, Read_BoundedStaleness_Timestamp) {
+  CheckReadWithOptions(*client_, [](CommitResult const& result) {
+    return Transaction::SingleUseOptions(
+        /*min_read_timestamp=*/result.commit_timestamp);
+  });
+}
+
+/// @test Test read with bounded staleness set by duration.
+TEST_F(ClientIntegrationTest, Read_BoundedStaleness_Duration) {
+  CheckReadWithOptions(*client_, [](CommitResult const&) {
+    // We want a duration sufficiently recent to include the latest commit.
+    return Transaction::SingleUseOptions(
+        /*max_staleness=*/std::chrono::nanoseconds(1));
+  });
+}
+
+/// @test Test read with exact staleness set to "all previous transactions".
+TEST_F(ClientIntegrationTest, Read_ExactStaleness_Latest) {
+  CheckReadWithOptions(*client_, [](CommitResult const&) {
+    return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions());
+  });
+}
+
+/// @test Test read with exact staleness set by a timestamp.
+TEST_F(ClientIntegrationTest, Read_ExactStaleness_Timestamp) {
+  CheckReadWithOptions(*client_, [](CommitResult const& result) {
+    return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
+        /*read_timestamp=*/result.commit_timestamp));
+  });
+}
+
+/// @test Test read with exact staleness set by duration.
+TEST_F(ClientIntegrationTest, Read_ExactStaleness_Duration) {
+  // Query the state as-of N nanoseconds ago, where N is shorter than the time
+  // since the last commit.
+  CheckReadWithOptions(*client_, [](CommitResult const&) {
+    return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
+        /*exact_staleness=*/Timestamp::duration(0)));
+  });
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
