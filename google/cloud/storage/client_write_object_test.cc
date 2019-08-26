@@ -146,7 +146,7 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
 
-  // make sure it is acutally sent
+  // make sure it is actually sent
   std::vector<char> data(client_options.upload_buffer_size() + 1, 'X');
   stream.write(data.data(), data.size());
   EXPECT_TRUE(stream.bad());
