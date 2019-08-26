@@ -27,6 +27,9 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+
+using ::testing::HasSubstr;
+
 template <typename... Ts>
 void VerifyRegularType(Ts&&... ts) {
   auto const row = MakeRow(std::forward<Ts>(ts)...);
@@ -282,6 +285,36 @@ TEST(Row, ValuesAccessorRvalue) {
   auto v = array[0].get<std::string>();
   EXPECT_TRUE(v.ok());
   EXPECT_EQ(kData, *v);
+}
+
+TEST(Row, ValuesConst) {
+  auto const row = MakeRow("foo", 12345, "bar");
+  auto values = row.values();
+  EXPECT_EQ(3, values.size());
+  EXPECT_EQ(Value("foo"), values[0]);
+  EXPECT_EQ(Value(12345), values[1]);
+  EXPECT_EQ(Value("bar"), values[2]);
+}
+
+TEST(Row, ValuesMove) {
+  auto row = MakeRow("foo", 12345, "bar");
+  auto values = std::move(row).values();
+  EXPECT_EQ(3, values.size());
+  EXPECT_EQ(Value("foo"), values[0]);
+  EXPECT_EQ(Value(12345), values[1]);
+  EXPECT_EQ(Value("bar"), values[2]);
+}
+
+TEST(Row, PrintTo) {
+  auto row = MakeRow(1234, "foo", 2345, "bar", "baz");
+  std::ostringstream os;
+  PrintTo(row, &os);
+  auto actual = os.str();
+  EXPECT_THAT(actual, HasSubstr("1234"));
+  EXPECT_THAT(actual, HasSubstr("foo"));
+  EXPECT_THAT(actual, HasSubstr("2345"));
+  EXPECT_THAT(actual, HasSubstr("bar"));
+  EXPECT_THAT(actual, HasSubstr("baz"));
 }
 
 }  // namespace
