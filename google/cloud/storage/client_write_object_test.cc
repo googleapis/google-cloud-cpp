@@ -18,6 +18,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -128,6 +129,29 @@ TEST_F(WriteObjectTest, WriteObjectPermanentFailure) {
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
   EXPECT_TRUE(stream.bad());
   EXPECT_FALSE(stream.metadata().status().ok());
+  EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
+      << ", status=" << stream.metadata().status();
+}
+
+TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
+  testing::MockResumableUploadSession* mock_session =
+      new testing::MockResumableUploadSession;
+  auto returner = [mock_session](internal::ResumableUploadRequest const&) {
+    return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
+        std::unique_ptr<internal::ResumableUploadSession>(mock_session));
+  };
+  EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
+  EXPECT_CALL(*mock_session, UploadChunk(_))
+      .WillRepeatedly(Return(PermanentError()));
+  EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
+  auto stream = client->WriteObject("test-bucket-name", "test-object-name");
+
+  // make sure it is actually sent
+  std::vector<char> data(client_options.upload_buffer_size() + 1, 'X');
+  stream.write(data.data(), data.size());
+  EXPECT_TRUE(stream.bad());
+  stream.Close();
+  EXPECT_FALSE(stream.metadata());
   EXPECT_EQ(PermanentError().code(), stream.metadata().status().code())
       << ", status=" << stream.metadata().status();
 }

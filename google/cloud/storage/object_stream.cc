@@ -77,7 +77,7 @@ ObjectWriteStream::~ObjectWriteStream() {
 }
 
 void ObjectWriteStream::Close() {
-  if (!IsOpen()) {
+  if (!buf_) {
     return;
   }
   CloseBuf();
