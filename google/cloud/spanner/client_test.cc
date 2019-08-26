@@ -43,6 +43,7 @@ using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
+using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::SaveArg;
 
@@ -464,6 +465,65 @@ TEST(ClientTest, RunTransactionException) {
   }
 }
 #endif
+
+TEST(ClientTest, RunTransaction_RetryTransientFailures) {
+  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  ASSERT_STATUS_OK(timestamp);
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce(Invoke([](Connection::CommitParams const&) {
+        return Status(StatusCode::kAborted, "Aborted transaction");
+      }))
+      .WillOnce(Invoke([&timestamp](Connection::CommitParams const&) {
+        return CommitResult{*timestamp};
+      }));
+
+  auto f = [](Client const&, Transaction const&) -> StatusOr<Mutations> {
+    return Mutations{MakeDeleteMutation("table", KeySet::All())};
+  };
+
+  Client client(conn);
+  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
+TEST(ClientTest, RunTransaction_TooManyFailures) {
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit(_))
+      .WillRepeatedly(Invoke([](Connection::CommitParams const&) {
+        return Status(StatusCode::kAborted, "Aborted transaction");
+      }));
+
+  auto f = [](Client const&, Transaction const&) -> StatusOr<Mutations> {
+    return Mutations{MakeDeleteMutation("table", KeySet::All())};
+  };
+
+  Client client(conn);
+  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  EXPECT_EQ(StatusCode::kAborted, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("Aborted transaction"));
+  EXPECT_THAT(result.status().message(), HasSubstr("Too many failures "));
+}
+
+TEST(ClientTest, RunTransaction_PermanentFailure) {
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce(Invoke([](Connection::CommitParams const&) {
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      }));
+
+  auto f = [](Client const&, Transaction const&) -> StatusOr<Mutations> {
+    return Mutations{MakeDeleteMutation("table", KeySet::All())};
+  };
+
+  Client client(conn);
+  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh"));
+  EXPECT_THAT(result.status().message(), HasSubstr("Permanent failure "));
+}
 
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS

@@ -13,16 +13,19 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/client.h"
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/connection_impl.h"
+#include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/log.h"
 #include <grpcpp/grpcpp.h>
+#include <thread>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 namespace spanner_proto = ::google::spanner::v1;
 
 StatusOr<ResultSet> Client::Read(std::string table, KeySet keys,
@@ -122,8 +125,8 @@ std::shared_ptr<Connection> MakeConnection(
   return std::make_shared<internal::ConnectionImpl>(db, std::move(stub));
 }
 
-StatusOr<CommitResult> RunTransaction(
-    Client client, Transaction::ReadWriteOptions const& opts,
+StatusOr<CommitResult> RunTransactionImpl(
+    Client& client, Transaction::ReadWriteOptions const& opts,
     std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
   Transaction txn = MakeReadWriteTransaction(opts);
   StatusOr<Mutations> mutations;
@@ -153,6 +156,32 @@ StatusOr<CommitResult> RunTransaction(
   // not a good idea to simply cap the number of retries. Instead, it
   // is better to limit the total amount of wall time spent retrying.
   return client.Commit(txn, *mutations);
+}
+
+StatusOr<CommitResult> RunTransaction(
+    Client client, Transaction::ReadWriteOptions const& opts,
+    std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
+  ExponentialBackoffPolicy backoff_policy(std::chrono::milliseconds(100),
+                                          std::chrono::minutes(5), 2.0);
+  LimitedErrorCountRetryPolicy retry_policy(/*maximum_failures=*/2);
+
+  Status last_status(
+      StatusCode::kFailedPrecondition,
+      "Retry policy should not be exhausted when retry loop starts");
+  char const* reason = "Too many failures in ";
+  while (!retry_policy.IsExhausted()) {
+    auto result = RunTransactionImpl(client, opts, f);
+    if (result) return result;
+    last_status = std::move(result).status();
+    if (!retry_policy.OnFailure(last_status)) {
+      if (internal::SafeGrpcRetry::IsPermanentFailure(last_status)) {
+        reason = "Permanent failure in ";
+      }
+      break;
+    }
+    std::this_thread::sleep_for(backoff_policy.OnCompletion());
+  }
+  return internal::RetryLoopError(reason, __func__, last_status);
 }
 
 }  // namespace SPANNER_CLIENT_NS

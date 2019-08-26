@@ -19,4 +19,5 @@
 spanner_client_integration_tests = [
     "database_admin_integration_test.cc",
     "client_integration_test.cc",
+    "rpc_failure_threshold_integration_test.cc",
 ]
