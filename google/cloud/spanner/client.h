@@ -21,9 +21,9 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/result_set.h"
-#include "google/cloud/spanner/sql_partition.h"
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/optional.h"
@@ -258,13 +258,13 @@ class Client {
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.
    *
-   * @param partition A `SqlPartition`, obtained by calling `PartitionRead`.
+   * @param partition A `QueryPartition`, obtained by calling `PartitionRead`.
    *
    * @return A `StatusOr` containing a `ResultSet` or error status on failure.
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
    */
-  StatusOr<ResultSet> ExecuteSql(SqlPartition const& partition);
+  StatusOr<ResultSet> ExecuteSql(QueryPartition const& partition);
 
   /**
    * Creates a set of partitions that can be used to execute a query
@@ -281,10 +281,10 @@ class Client {
    * @param statement The SQL statement to execute.
    * @param partition_options `PartitionOptions` used for this request.
    *
-   * @return A `StatusOr` containing a vector of `SqlPartition`s or error
+   * @return A `StatusOr` containing a vector of `QueryPartition`s or error
    *     status on failure.
    */
-  StatusOr<std::vector<SqlPartition>> PartitionQuery(
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
       Transaction const& transaction, SqlStatement const& statement,
       PartitionOptions const& partition_options = {});
 

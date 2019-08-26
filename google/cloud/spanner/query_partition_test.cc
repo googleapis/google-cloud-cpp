@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/sql_partition.h"
+#include "google/cloud/spanner/query_partition.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,10 +20,10 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-class SqlPartitionTester {
+class QueryPartitionTester {
  public:
-  SqlPartitionTester() = default;
-  explicit SqlPartitionTester(SqlPartition partition)
+  QueryPartitionTester() = default;
+  explicit QueryPartitionTester(QueryPartition partition)
       : partition_(std::move(partition)) {}
   SqlStatement const& Statement() const { return partition_.sql_statement(); }
   std::string const& PartitionToken() const {
@@ -33,22 +33,22 @@ class SqlPartitionTester {
   std::string const& TransactionId() const {
     return partition_.transaction_id();
   }
-  SqlPartition Partition() const { return partition_; }
+  QueryPartition Partition() const { return partition_; }
 
  private:
-  SqlPartition partition_;
+  QueryPartition partition_;
 };
 
 namespace {
 
-TEST(SqlPartitionTest, MakeSqlPartition) {
+TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string stmt("select * from foo where name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  SqlPartitionTester actual_partition(internal::MakeSqlPartition(
+  QueryPartitionTester actual_partition(internal::MakeQueryPartition(
       transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
@@ -57,14 +57,14 @@ TEST(SqlPartitionTest, MakeSqlPartition) {
   EXPECT_EQ(session_id, actual_partition.SessionId());
 }
 
-TEST(SqlPartitionTest, Constructor) {
+TEST(QueryPartitionTest, Constructor) {
   std::string stmt("select * from foo where name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  SqlPartitionTester actual_partition(internal::MakeSqlPartition(
+  QueryPartitionTester actual_partition(internal::MakeQueryPartition(
       transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
   EXPECT_EQ(stmt, actual_partition.Statement().sql());
   EXPECT_EQ(params, actual_partition.Statement().params());
@@ -73,39 +73,39 @@ TEST(SqlPartitionTest, Constructor) {
   EXPECT_EQ(session_id, actual_partition.SessionId());
 }
 
-TEST(SqlPartitionTester, RegularSemantics) {
+TEST(QueryPartitionTester, RegularSemantics) {
   std::string stmt("select * from foo where name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
   std::string partition_token("token");
   std::string session_id("session");
   std::string transaction_id("foo");
 
-  SqlPartition sql_partition(internal::MakeSqlPartition(
+  QueryPartition query_partition(internal::MakeQueryPartition(
       transaction_id, session_id, partition_token, SqlStatement(stmt, params)));
 
-  EXPECT_NE(sql_partition, SqlPartition());
+  EXPECT_NE(query_partition, QueryPartition());
 
-  SqlPartition copy = sql_partition;
-  EXPECT_EQ(copy, sql_partition);
+  QueryPartition copy = query_partition;
+  EXPECT_EQ(copy, query_partition);
 
-  SqlPartition assign;
+  QueryPartition assign;
   assign = copy;
   EXPECT_EQ(assign, copy);
 
-  SqlPartition moved = std::move(copy);
+  QueryPartition moved = std::move(copy);
   EXPECT_EQ(moved, assign);
 }
 
-TEST(SqlPartitionTest, SerializeDeserialize) {
-  SqlPartitionTester expected_partition(internal::MakeSqlPartition(
+TEST(QueryPartitionTest, SerializeDeserialize) {
+  QueryPartitionTester expected_partition(internal::MakeQueryPartition(
       "foo", "session", "token",
       SqlStatement("select * from foo where name = @name",
                    {{"name", Value("Bob")}})));
-  StatusOr<SqlPartition> partition = DeserializeSqlPartition(
-      *(SerializeSqlPartition(expected_partition.Partition())));
+  StatusOr<QueryPartition> partition = DeserializeQueryPartition(
+      *(SerializeQueryPartition(expected_partition.Partition())));
 
   ASSERT_TRUE(partition.ok());
-  SqlPartitionTester actual_partition = SqlPartitionTester(*partition);
+  QueryPartitionTester actual_partition = QueryPartitionTester(*partition);
   EXPECT_EQ(expected_partition.PartitionToken(),
             actual_partition.PartitionToken());
   EXPECT_EQ(expected_partition.TransactionId(),
@@ -117,10 +117,10 @@ TEST(SqlPartitionTest, SerializeDeserialize) {
             actual_partition.Statement().params());
 }
 
-TEST(SqlPartitionTest, FailedDeserialize) {
+TEST(QueryPartitionTest, FailedDeserialize) {
   std::string bad_serialized_proto("ThisIsNotTheProtoYouAreLookingFor");
-  StatusOr<SqlPartition> partition =
-      DeserializeSqlPartition(bad_serialized_proto);
+  StatusOr<QueryPartition> partition =
+      DeserializeQueryPartition(bad_serialized_proto);
   EXPECT_FALSE(partition.ok());
 }
 

@@ -134,14 +134,14 @@ add_library(spanner_client
             mutations.cc
             mutations.h
             polling_policy.h
+            query_partition.cc
+            query_partition.h
             read_partition.cc
             read_partition.h
             result_set.h
             retry_policy.h
             row.h
             row_parser.h
-            sql_partition.cc
-            sql_partition.h
             sql_statement.cc
             sql_statement.h
             testing/mock_spanner_stub.h
@@ -234,7 +234,7 @@ function (spanner_client_define_tests)
         retry_policy_test.cc
         row_test.cc
         row_parser_test.cc
-        sql_partition_test.cc
+        query_partition_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
         transaction_test.cc
