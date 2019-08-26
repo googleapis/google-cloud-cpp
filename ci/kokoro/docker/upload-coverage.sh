@@ -26,8 +26,11 @@ if [[ "${BUILD_TYPE:-}" != "Coverage" ]]; then
   exit 0
 fi
 
-# The build script passes on the base docker flags. Otherwise we would need to
-# recompute the list here.
+# The build script passes on the image name and the the base docker flags.
+# Otherwise we would need to recompute the list here.
+BUILD_IMAGE=$1
+readonly BUILD_IMAGE
+shift
 docker_flags=("${@}")
 
 if [[ -z "${KOKORO_GFILE_DIR:-}" ]]; then
@@ -88,7 +91,7 @@ docker_flags+=(
 echo -n "Uploading code coverage to codecov.io..."
 # Run the upload script from codecov.io within a Docker container. Save the log
 # to a file because it can be very large (multiple MiB in size).
-sudo docker run "${docker_flags[@]}" "${IMAGE}:tip" /bin/bash -c \
+sudo docker run "${docker_flags[@]}" "${BUILD_IMAGE}" /bin/bash -c \
     "/bin/bash <(curl -s https://codecov.io/bash) >/v/${BUILD_OUTPUT}/codecov.log 2>&1"
 exit_status=$?
 echo "DONE"
