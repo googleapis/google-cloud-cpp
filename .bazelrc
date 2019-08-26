@@ -19,8 +19,9 @@
 
 # --config asan: Address Sanitizer
 build:asan --strip=never
+build:asan --copt=-Og
+build:asan --copt=-g
 build:asan --copt=-fsanitize=address
-build:asan --copt=-O0
 build:asan --copt=-fno-omit-frame-pointer
 build:asan --linkopt=-fsanitize=address
 build:asan --action_env=ASAN_OPTIONS=detect_leaks=1:color=always
@@ -28,6 +29,8 @@ build:asan --action_env=LSAN_OPTIONS=report_objects=1
 
 # --config tsan: Thread Sanitizer
 build:tsan --strip=never
+build:tsan --copt=-Og
+build:tsan --copt=-g
 build:tsan --copt=-fsanitize=thread
 build:tsan --copt=-fno-omit-frame-pointer
 build:tsan --linkopt=-fsanitize=thread
@@ -35,6 +38,8 @@ build:tsan --action_env=TSAN_OPTIONS=halt_on_error=1:second_deadlock_stack=1
 
 # --config ubsan: Undefined Behavior Sanitizer
 build:ubsan --strip=never
+build:ubsan --copt=-Og
+build:ubsan --copt=-g
 build:ubsan --copt=-fsanitize=undefined
 build:ubsan --copt=-fno-omit-frame-pointer
 build:ubsan --linkopt=-fsanitize=undefined
@@ -45,8 +50,9 @@ build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
 # with -fsanitize=memory.
 # --config msan: Memory Sanitizer
 # build:msan --strip=never
+# build:msan --copt=-Og
+# build:msan --copt=-g
 # build:msan --copt=-fsanitize=memory
-# build:msan --copt=-O0
 # build:msan --copt=-fno-omit-frame-pointer
 # build:msan --copt=-fsanitize-memory-track-origins
 # build:msan --copt=-fsanitize-memory-use-after-dtor
