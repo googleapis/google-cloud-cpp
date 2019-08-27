@@ -27,8 +27,7 @@ namespace {
 using ::testing::AnyOf;
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub =
-      CreateDefaultSpannerStub(grpc::GoogleDefaultCredentials(), "localhost");
+  auto stub = CreateDefaultSpannerStub(ConnectionOptions());
   EXPECT_NE(stub, nullptr);
 }
 

@@ -119,10 +119,9 @@ Status Client::Rollback(Transaction transaction) {
   return conn_->Rollback({std::move(transaction)});
 }
 
-std::shared_ptr<Connection> MakeConnection(
-    Database const& db, std::shared_ptr<grpc::ChannelCredentials> const& creds,
-    std::string const& endpoint) {
-  auto stub = internal::CreateDefaultSpannerStub(creds, endpoint);
+std::shared_ptr<Connection> MakeConnection(Database const& db,
+                                           ConnectionOptions const& options) {
+  auto stub = internal::CreateDefaultSpannerStub(options);
   return std::make_shared<internal::ConnectionImpl>(db, std::move(stub));
 }
 

@@ -375,19 +375,14 @@ class Client {
  * The returned connection object should not be used directly, rather it should
  * be given to a `Client` instance, and methods should be invoked on `Client`.
  *
- * TODO(#321): Move optional args into options struct.
- *
  * @see `Connection`
  *
  * @param db See `Database`.
- * @param creds (optional) the gRPC credentials to use.
- * @param endpoint (optional) the Spanner service to connect to.
+ * @param options (optional) configure the `Connection` created by this
+ *     function.
  */
 std::shared_ptr<Connection> MakeConnection(
-    Database const& db,
-    std::shared_ptr<grpc::ChannelCredentials> const& creds =
-        grpc::GoogleDefaultCredentials(),
-    std::string const& endpoint = "spanner.googleapis.com");
+    Database const& db, ConnectionOptions const& options = ConnectionOptions());
 
 /**
  * Execute a function in the context of a read-write transaction, with

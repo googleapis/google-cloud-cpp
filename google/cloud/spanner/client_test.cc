@@ -343,10 +343,7 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
   auto conn = MakeConnection(db);
   EXPECT_NE(conn, nullptr);
 
-  conn = MakeConnection(db, grpc::GoogleDefaultCredentials());
-  EXPECT_NE(conn, nullptr);
-
-  conn = MakeConnection(db, grpc::GoogleDefaultCredentials(), "localhost");
+  conn = MakeConnection(db, ConnectionOptions());
   EXPECT_NE(conn, nullptr);
 }
 
