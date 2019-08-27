@@ -162,7 +162,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
                  ReadOptions()});
   EXPECT_STATUS_OK(result);
   std::array<std::pair<std::int64_t, std::string>, 2> expected = {
-      std::make_pair(12, "Steve"), std::make_pair(42, "Ann")};
+      {std::make_pair(12, "Steve"), std::make_pair(42, "Ann")}};
   int row_number = 0;
   for (auto& row : result->Rows<std::int64_t, std::string>()) {
     EXPECT_STATUS_OK(row);
@@ -274,7 +274,7 @@ TEST(ConnectionImplTest, ExecuteSqlReadSuccess) {
                        SqlStatement("select * from table")});
   EXPECT_STATUS_OK(result);
   std::array<std::pair<std::int64_t, std::string>, 2> expected = {
-      std::make_pair(12, "Steve"), std::make_pair(42, "Ann")};
+      {std::make_pair(12, "Steve"), std::make_pair(42, "Ann")}};
   int row_number = 0;
   for (auto& row : result->Rows<std::int64_t, std::string>()) {
     EXPECT_STATUS_OK(row);

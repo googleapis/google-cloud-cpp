@@ -127,7 +127,7 @@ TEST(ClientTest, ReadSuccess) {
   EXPECT_STATUS_OK(result);
 
   std::array<std::pair<std::string, std::int64_t>, 2> expected = {
-      std::make_pair("Steve", 12), std::make_pair("Ann", 42)};
+      {std::make_pair("Steve", 12), std::make_pair("Ann", 42)}};
   int row_number = 0;
   for (auto& row : result->Rows<std::string, std::int64_t>()) {
     EXPECT_STATUS_OK(row);
@@ -225,7 +225,7 @@ TEST(ClientTest, ExecuteSqlSuccess) {
   EXPECT_STATUS_OK(result);
 
   std::array<std::pair<std::string, std::int64_t>, 2> expected = {
-      std::make_pair("Steve", 12), std::make_pair("Ann", 42)};
+      {std::make_pair("Steve", 12), std::make_pair("Ann", 42)}};
   int row_number = 0;
   for (auto& row : result->Rows<std::string, std::int64_t>()) {
     EXPECT_STATUS_OK(row);
