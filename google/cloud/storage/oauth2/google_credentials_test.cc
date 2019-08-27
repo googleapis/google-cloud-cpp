@@ -68,7 +68,7 @@ class GoogleCredentialsTest : public ::testing::Test {
   EnvironmentVariableRestore gce_check_override_env_var_;
 };
 
-// TODO: move these constants and WriteBase64AsBinary to a common place.
+// TODO(#3022): move these constants and WriteBase64AsBinary to a common place.
 
 // This is a base64-encoded p12 key-file. The service account was deleted
 // after creating the key-file, so the key was effectively invalidated, but
@@ -417,6 +417,9 @@ TEST_F(
 
 TEST_F(GoogleCredentialsTest,
        MissingCredentialsCreateServiceAccountCredentialsFromDefaultPaths) {
+  // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
+  // well-known path) aren't loaded.
+  UnsetEnv(GoogleAdcEnvVar());
   // Test that when CreateServiceAccountCredentialsFromDefaultPaths cannot
   // find any credentials, it fails.
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
