@@ -44,6 +44,13 @@ using ::testing::StartsWith;
 
 namespace spanner_proto = ::google::spanner::v1;
 
+MATCHER_P(TransactionIdEquals, expected_id,
+          "Verifies that a Transaction has the expected Transaction ID") {
+  return Visit(arg, [&](spanner_proto::TransactionSelector& s, std::int64_t) {
+    return s.id() == expected_id;
+  });
+}
+
 class MockGrpcReader
     : public ::grpc::ClientReaderInterface<spanner_proto::PartialResultSet> {
  public:
@@ -174,6 +181,39 @@ TEST(ConnectionImplTest, ReadSuccess) {
   EXPECT_EQ(row_number, 2);
 }
 
+/// @test Verify implicit "begin transaction" in Read() works.
+TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb", &response));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
+  auto result = conn.Read(
+      {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
+  EXPECT_STATUS_OK(result);
+  EXPECT_THAT(txn, TransactionIdEquals("ABCDEF00"));
+}
+
 TEST(ConnectionImplTest, ExecuteSqlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
@@ -284,6 +324,38 @@ TEST(ConnectionImplTest, ExecuteSqlReadSuccess) {
     ++row_number;
   }
   EXPECT_EQ(row_number, 2);
+}
+
+/// @test Verify implicit "begin transaction" in ExecuteSql() works.
+TEST(ConnectionImplTest, ExecuteSqlImplicitBeginTransaction) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  ConnectionImpl conn(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(metadata: { transaction: { id: "00FEDCBA" } })pb", &response));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
+  auto result = conn.ExecuteSql({txn, SqlStatement("select * from table")});
+  EXPECT_STATUS_OK(result);
+  EXPECT_THAT(txn, TransactionIdEquals("00FEDCBA"));
 }
 
 TEST(ConnectionImplTest, CommitGetSessionFailure) {
@@ -526,14 +598,12 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   EXPECT_CALL(*mock_spanner_stub, PartitionRead(_, _))
       .WillOnce(Return(partition_response));
 
+  Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   StatusOr<std::vector<ReadPartition>> result = conn.PartitionRead(
-      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
-        "table",
-        KeySet::All(),
-        {"UserId", "UserName"},
-        ReadOptions()},
+      {{txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()},
        PartitionOptions()});
   EXPECT_STATUS_OK(result);
+  EXPECT_THAT(txn, TransactionIdEquals("CAFEDEAD"));
 
   std::vector<ReadPartition> expected_read_partitions = {
       internal::MakeReadPartition("CAFEDEAD", "test-session-name", "BADDECAF",
