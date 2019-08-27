@@ -43,7 +43,10 @@ class BucketAccessControlsTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -118,10 +121,9 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
 
         return make_status_or(internal::ListBucketAclResponse{expected});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   StatusOr<std::vector<BucketAccessControl>> actual =
-      client.ListBucketAcl("test-bucket");
+      client->ListBucketAcl("test-bucket");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -161,9 +163,7 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<BucketAccessControl> actual = client.CreateBucketAcl(
+  StatusOr<BucketAccessControl> actual = client->CreateBucketAcl(
       "test-bucket", "user-test-user-1", BucketAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(actual);
 
@@ -211,9 +211,7 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
 
         return make_status_or(internal::EmptyResponse{});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  auto status = client.DeleteBucketAcl("test-bucket", "user-test-user-1");
+  auto status = client->DeleteBucketAcl("test-bucket", "user-test-user-1");
   ASSERT_STATUS_OK(status);
 }
 
@@ -256,10 +254,8 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
   StatusOr<BucketAccessControl> actual =
-      client.GetBucketAcl("test-bucket", "user-test-user-1");
+      client->GetBucketAcl("test-bucket", "user-test-user-1");
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(expected, *actual);
@@ -303,9 +299,7 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<BucketAccessControl> actual = client.UpdateBucketAcl(
+  StatusOr<BucketAccessControl> actual = client->UpdateBucketAcl(
       "test-bucket",
       BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"));
   ASSERT_STATUS_OK(actual);
@@ -368,9 +362,7 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
 
         return make_status_or(result);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<BucketAccessControl> actual = client.PatchBucketAcl(
+  StatusOr<BucketAccessControl> actual = client->PatchBucketAcl(
       "test-bucket", "user-test-user-1",
       BucketAccessControlPatchBuilder().set_role("OWNER"));
   ASSERT_STATUS_OK(actual);

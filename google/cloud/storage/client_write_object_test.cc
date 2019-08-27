@@ -47,7 +47,10 @@ class WriteObjectTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -102,7 +105,9 @@ TEST_F(WriteObjectTest, WriteObject) {
 
 TEST_F(WriteObjectTest, WriteObjectTooManyFailures) {
   Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
+                LimitedErrorCountRetryPolicy(2),
+                ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                         std::chrono::milliseconds(1), 2.0)};
 
   auto returner = [](internal::ResumableUploadRequest const&) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(

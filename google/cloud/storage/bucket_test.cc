@@ -49,7 +49,11 @@ class BucketTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        LimitedErrorCountRetryPolicy(2),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -91,10 +95,7 @@ TEST_F(BucketTest, CreateBucket) {
         EXPECT_EQ("test-project-name", r.project_id());
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.CreateBucket(
+  auto actual = client->CreateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
   ASSERT_STATUS_OK(actual);
@@ -149,10 +150,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
             EXPECT_EQ("foo-bar-baz", r.bucket_name());
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.GetBucketMetadata("foo-bar-baz");
+  auto actual = client->GetBucketMetadata("foo-bar-baz");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -182,10 +180,7 @@ TEST_F(BucketTest, DeleteBucket) {
         EXPECT_EQ("foo-bar-baz", r.bucket_name());
         return make_status_or(internal::EmptyResponse{});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto status = client.DeleteBucket("foo-bar-baz");
+  auto status = client->DeleteBucket("foo-bar-baz");
   ASSERT_STATUS_OK(status);
 }
 
@@ -232,10 +227,7 @@ TEST_F(BucketTest, UpdateBucket) {
         EXPECT_EQ("STANDARD", r.metadata().storage_class());
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.UpdateBucket(
+  auto actual = client->UpdateBucket(
       "test-bucket-name",
       BucketMetadata().set_location("US").set_storage_class("STANDARD"));
   ASSERT_STATUS_OK(actual);
@@ -291,10 +283,7 @@ TEST_F(BucketTest, PatchBucket) {
         EXPECT_THAT(r.payload(), HasSubstr("STANDARD"));
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.PatchBucket(
+  auto actual = client->PatchBucket(
       "test-bucket-name",
       BucketMetadataPatchBuilder().SetStorageClass("STANDARD"));
   ASSERT_STATUS_OK(actual);
@@ -341,10 +330,7 @@ TEST_F(BucketTest, GetBucketIamPolicy) {
             EXPECT_EQ("test-bucket-name", r.bucket_name());
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.GetBucketIamPolicy("test-bucket-name");
+  auto actual = client->GetBucketIamPolicy("test-bucket-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -380,10 +366,7 @@ TEST_F(BucketTest, SetBucketIamPolicy) {
             EXPECT_THAT(r.json_payload(), HasSubstr("test-user"));
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.SetBucketIamPolicy("test-bucket-name", expected);
+  auto actual = client->SetBucketIamPolicy("test-bucket-name", expected);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -427,11 +410,8 @@ TEST_F(BucketTest, TestBucketIamPermissions) {
             EXPECT_THAT(r.permissions(), ElementsAre("storage.buckets.delete"));
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.TestBucketIamPermissions("test-bucket-name",
-                                                {"storage.buckets.delete"});
+  auto actual = client->TestBucketIamPermissions("test-bucket-name",
+                                                 {"storage.buckets.delete"});
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, ElementsAreArray(expected.permissions));
 }
@@ -480,10 +460,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
             EXPECT_EQ(42, r.metageneration());
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto metadata = client.LockBucketRetentionPolicy("test-bucket-name", 42U);
+  auto metadata = client->LockBucketRetentionPolicy("test-bucket-name", 42U);
   ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(expected, *metadata);
 }

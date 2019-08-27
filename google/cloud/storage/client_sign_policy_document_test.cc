@@ -60,8 +60,10 @@ class CreateSignedPolicyDocTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(
-        new Client{std::static_pointer_cast<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::static_pointer_cast<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -137,10 +139,8 @@ TEST_F(CreateSignedPolicyDocTest, SignRemote) {
             return make_status_or(internal::SignBlobResponse{
                 "test-key-id", expected_signed_blob});
           }));
-  Client client{std::static_pointer_cast<internal::RawClient>(mock)};
-
   auto actual =
-      client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->signature, expected_signed_blob);
 }

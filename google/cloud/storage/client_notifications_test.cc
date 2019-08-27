@@ -46,7 +46,10 @@ class NotificationsTest : public ::testing::Test {
     mock_ = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock_, client_options())
         .WillRepeatedly(ReturnRef(client_options_));
-    client_.reset(new Client{std::shared_ptr<internal::RawClient>(mock_)});
+    client_.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock_),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client_.reset();
@@ -82,10 +85,8 @@ TEST_F(NotificationsTest, ListNotifications) {
 
         return make_status_or(internal::ListNotificationsResponse{expected});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock_)};
-
   StatusOr<std::vector<NotificationMetadata>> actual =
-      client.ListNotifications("test-bucket");
+      client_->ListNotifications("test-bucket");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
@@ -131,9 +132,7 @@ TEST_F(NotificationsTest, CreateNotification) {
 
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock_)};
-
-  StatusOr<NotificationMetadata> actual = client.CreateNotification(
+  StatusOr<NotificationMetadata> actual = client_->CreateNotification(
       "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
       NotificationMetadata()
           .set_object_name_prefix("test-object-prefix-")
@@ -187,10 +186,8 @@ TEST_F(NotificationsTest, GetNotification) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock_)};
-
   StatusOr<NotificationMetadata> actual =
-      client.GetNotification("test-bucket", "test-notification-1");
+      client_->GetNotification("test-bucket", "test-notification-1");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
@@ -224,9 +221,8 @@ TEST_F(NotificationsTest, DeleteNotification) {
 
         return make_status_or(internal::EmptyResponse{});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock_)};
-
-  auto status = client.DeleteNotification("test-bucket", "test-notification-1");
+  auto status =
+      client_->DeleteNotification("test-bucket", "test-notification-1");
   ASSERT_STATUS_OK(status);
 }
 
