@@ -20,7 +20,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-ClientOptions::ClientOptions(
+ConnectionOptions::ConnectionOptions(
     std::shared_ptr<grpc::ChannelCredentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("spanner.googleapis.com") {
@@ -38,8 +38,8 @@ ClientOptions::ClientOptions(
           .has_value();
 }
 
-ClientOptions::ClientOptions()
-    : ClientOptions(grpc::GoogleDefaultCredentials()) {}
+ConnectionOptions::ConnectionOptions()
+    : ConnectionOptions(grpc::GoogleDefaultCredentials()) {}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

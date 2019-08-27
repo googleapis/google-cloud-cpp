@@ -29,17 +29,18 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 /**
- * The configuration parameters for spanner clients.
+ * The configuration parameters for spanner connections.
  */
-class ClientOptions {
+class ConnectionOptions {
  public:
   /// The default options, using `grpc::GoogleDefaultCredentials()`.
-  ClientOptions();
+  ConnectionOptions();
 
   /// Default parameters, using an explicit credentials object.
-  explicit ClientOptions(std::shared_ptr<grpc::ChannelCredentials> c);
+  explicit ConnectionOptions(std::shared_ptr<grpc::ChannelCredentials> c);
 
-  ClientOptions& set_credentials(std::shared_ptr<grpc::ChannelCredentials> v) {
+  ConnectionOptions& set_credentials(
+      std::shared_ptr<grpc::ChannelCredentials> v) {
     credentials_ = std::move(v);
     return *this;
   }
@@ -47,18 +48,18 @@ class ClientOptions {
     return credentials_;
   }
 
-  ClientOptions& set_endpoint(std::string v) {
+  ConnectionOptions& set_endpoint(std::string v) {
     endpoint_ = std::move(v);
     return *this;
   }
   std::string const& endpoint() const { return endpoint_; }
 
   bool clog_enabled() const { return clog_enabled_; }
-  ClientOptions& enable_clog() {
+  ConnectionOptions& enable_clog() {
     clog_enabled_ = true;
     return *this;
   }
-  ClientOptions& disable_clog() {
+  ConnectionOptions& disable_clog() {
     clog_enabled_ = false;
     return *this;
   }
@@ -66,11 +67,11 @@ class ClientOptions {
   bool tracing_enabled(std::string const& component) const {
     return tracing_components_.find(component) != tracing_components_.end();
   }
-  ClientOptions& enable_tracing(std::string const& component) {
+  ConnectionOptions& enable_tracing(std::string const& component) {
     tracing_components_.insert(component);
     return *this;
   }
-  ClientOptions& disable_tracing(std::string const& component) {
+  ConnectionOptions& disable_tracing(std::string const& component) {
     tracing_components_.erase(component);
     return *this;
   }

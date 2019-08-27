@@ -240,7 +240,7 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 }  // namespace
 
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    ClientOptions const& options) {
+    ConnectionOptions const& options) {
   if (options.clog_enabled()) {
     google::cloud::LogSink::EnableStdClog();
   }

@@ -37,10 +37,10 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
       std::make_shared<google::cloud::testing_util::CaptureLogLinesBackend>();
   auto id = google::cloud::LogSink::Instance().AddBackend(backend);
 
-  auto stub =
-      CreateDefaultSpannerStub(ClientOptions(grpc::InsecureChannelCredentials())
-                                   .set_endpoint("localhost:1")
-                                   .enable_tracing("rpc"));
+  auto stub = CreateDefaultSpannerStub(
+      ConnectionOptions(grpc::InsecureChannelCredentials())
+          .set_endpoint("localhost:1")
+          .enable_tracing("rpc"));
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;

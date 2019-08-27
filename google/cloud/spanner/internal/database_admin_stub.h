@@ -71,7 +71,7 @@ class DatabaseAdminStub {
  * This stub does not create a channel pool, or retry operations.
  */
 std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
-    ClientOptions const& options);
+    ConnectionOptions const& options);
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
