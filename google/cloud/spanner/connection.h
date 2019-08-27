@@ -34,6 +34,7 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 class ReadPartition;
+class QueryPartition;
 /**
  * A connection to a Spanner database instance.
  *
@@ -58,7 +59,7 @@ class Connection {
     ReadOptions read_options;
     google::cloud::optional<std::string> partition_token;
 
-    // TODO(#307): Refactor once correct location for session implemented.
+    // TODO(#445): Refactor once correct location for session implemented.
     google::cloud::optional<std::string> session_name;
 
     ReadParams(Transaction transaction, std::string table, KeySet keys,
@@ -79,15 +80,33 @@ class Connection {
     ReadParams read_params;
     PartitionOptions partition_options;
   };
-
   virtual StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) = 0;
 
   struct ExecuteSqlParams {
     Transaction transaction;
     SqlStatement statement;
+    google::cloud::optional<std::string> partition_token;
+
+    // TODO(#445): Refactor once correct location for session implemented.
+    google::cloud::optional<std::string> session_name;
+
+    ExecuteSqlParams(Transaction transaction, SqlStatement statement,
+                     google::cloud::optional<std::string> partition_token = {},
+                     google::cloud::optional<std::string> session_name = {})
+        : transaction(std::move(transaction)),
+          statement(std::move(statement)),
+          partition_token(std::move(partition_token)),
+          session_name(std::move(session_name)) {}
   };
   virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
+
+  struct PartitionQueryParams {
+    ExecuteSqlParams sql_params;
+    PartitionOptions partition_options;
+  };
+  virtual StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      PartitionQueryParams) = 0;
 
   struct CommitParams {
     Transaction transaction;

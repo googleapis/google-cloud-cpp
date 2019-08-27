@@ -86,14 +86,15 @@ StatusOr<ResultSet> Client::ExecuteSql(Transaction transaction,
   return conn_->ExecuteSql({std::move(transaction), std::move(statement)});
 }
 
-StatusOr<ResultSet> Client::ExecuteSql(QueryPartition const& /* partition */) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+StatusOr<ResultSet> Client::ExecuteSql(QueryPartition const& partition) {
+  return conn_->ExecuteSql(internal::MakeExecuteSqlParams(partition));
 }
 
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
-    Transaction const& /*transaction*/, SqlStatement const& /*statement*/,
-    PartitionOptions const& /*partition_options*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
+    Transaction transaction, SqlStatement statement,
+    PartitionOptions partition_options) {
+  return conn_->PartitionQuery({{std::move(transaction), std::move(statement)},
+                                std::move(partition_options)});
 }
 
 std::vector<StatusOr<spanner_proto::ResultSetStats>> Client::ExecuteBatchDml(

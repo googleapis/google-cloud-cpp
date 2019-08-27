@@ -49,6 +49,8 @@ class ConnectionImpl : public Connection {
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams prp) override;
   StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams esp) override;
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      PartitionQueryParams) override;
   StatusOr<CommitResult> Commit(CommitParams cp) override;
   Status Rollback(RollbackParams rp) override;
 
@@ -105,6 +107,11 @@ class ConnectionImpl : public Connection {
   /// Implementation details for ExecuteSql
   StatusOr<ResultSet> ExecuteSql(google::spanner::v1::TransactionSelector& s,
                                  std::int64_t seqno, ExecuteSqlParams esp);
+
+  /// Implementation details for PartitionQuery
+  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      google::spanner::v1::TransactionSelector& s, ExecuteSqlParams const& esp,
+      PartitionOptions partition_options);
 
   /// Implementation details for Commit.
   StatusOr<CommitResult> Commit(google::spanner::v1::TransactionSelector& s,

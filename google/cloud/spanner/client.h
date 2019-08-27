@@ -285,8 +285,8 @@ class Client {
    *     status on failure.
    */
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      Transaction const& transaction, SqlStatement const& statement,
-      PartitionOptions const& partition_options = {});
+      Transaction transaction, SqlStatement statement,
+      PartitionOptions partition_options = {});
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements

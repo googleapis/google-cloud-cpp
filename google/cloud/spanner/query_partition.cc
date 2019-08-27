@@ -97,6 +97,13 @@ QueryPartition MakeQueryPartition(std::string const& transaction_id,
                         sql_statement);
 }
 
+Connection::ExecuteSqlParams MakeExecuteSqlParams(
+    QueryPartition const& query_partition) {
+  return {internal::MakeTransactionFromId(query_partition.transaction_id()),
+          query_partition.sql_statement(), query_partition.partition_token(),
+          query_partition.session_id()};
+}
+
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

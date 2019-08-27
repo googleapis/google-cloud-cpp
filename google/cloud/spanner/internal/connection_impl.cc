@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/internal/time.h"
+#include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/internal/make_unique.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -50,6 +51,16 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(ExecuteSqlParams esp) {
       std::move(esp.transaction),
       [this, &esp](spanner_proto::TransactionSelector& s, std::int64_t seqno) {
         return ExecuteSql(s, seqno, std::move(esp));
+      });
+}
+
+StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
+    PartitionQueryParams pqp) {
+  return internal::Visit(
+      std::move(pqp.sql_params.transaction),
+      [this, &pqp](spanner_proto::TransactionSelector& s, std::int64_t) {
+        return PartitionQuery(s, pqp.sql_params,
+                              std::move(pqp.partition_options));
       });
 }
 
@@ -96,7 +107,7 @@ void ConnectionImpl::ReleaseSession(std::string session) {
 StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,
                                          ReadParams rp) {
   spanner_proto::ReadRequest request;
-  // TODO(#307): Refactor once correct location for session implemented.
+  // TODO(#445): Refactor once correct location for session implemented.
   if (rp.session_name) {
     request.set_session(*std::move(rp.session_name));
   } else {
@@ -138,15 +149,59 @@ StatusOr<ResultSet> ConnectionImpl::Read(spanner_proto::TransactionSelector& s,
   return ResultSet(std::move(*reader));
 }
 
-StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
-    spanner_proto::TransactionSelector& s, std::int64_t seqno,
-    ExecuteSqlParams esp) {
+StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
+    spanner_proto::TransactionSelector& s, ReadParams const& rp,
+    PartitionOptions partition_options) {
   auto session = GetSession();
   if (!session) {
     return std::move(session).status();
   }
-  spanner_proto::ExecuteSqlRequest request;
+  spanner_proto::PartitionReadRequest request;
   request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  request.set_table(rp.table);
+  request.set_index(rp.read_options.index_name);
+  for (auto const& column : rp.columns) {
+    *request.add_columns() = column;
+  }
+  *request.mutable_key_set() = internal::ToProto(rp.keys);
+  *request.mutable_partition_options() = std::move(partition_options);
+
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto response = stub_->PartitionRead(*context, request);
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+
+  if (s.has_begin()) {
+    s.set_id(response->transaction().id());
+  }
+
+  std::vector<ReadPartition> read_partitions;
+  for (auto& partition : response->partitions()) {
+    read_partitions.push_back(internal::MakeReadPartition(
+        response->transaction().id(), session->session_name(),
+        partition.partition_token(), rp.table, rp.keys, rp.columns,
+        rp.read_options));
+  }
+
+  return read_partitions;
+}
+
+StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
+    spanner_proto::TransactionSelector& s, std::int64_t seqno,
+    ExecuteSqlParams esp) {
+  spanner_proto::ExecuteSqlRequest request;
+  // TODO(#445): Refactor once correct location for session implemented.
+  if (esp.session_name) {
+    request.set_session(*std::move(esp.session_name));
+  } else {
+    auto session = GetSession();
+    if (!session) {
+      return std::move(session).status();
+    }
+    request.set_session(session->session_name());
+  }
   *request.mutable_transaction() = s;
   auto sql_statement = internal::ToProto(std::move(esp.statement));
   request.set_sql(std::move(*sql_statement.mutable_sql()));
@@ -154,6 +209,9 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
+  if (esp.partition_token) {
+    request.set_partition_token(*std::move(esp.partition_token));
+  }
 
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
   auto rpc = stub_->ExecuteStreamingSql(*context, request);
@@ -172,6 +230,44 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
     s.set_id(metadata->transaction().id());
   }
   return ResultSet(std::move(*reader));
+}
+
+StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
+    spanner_proto::TransactionSelector& s, ExecuteSqlParams const& esp,
+    PartitionOptions partition_options) {
+  auto session = GetSession();
+  if (!session) {
+    return std::move(session).status();
+  }
+  spanner_proto::PartitionQueryRequest request;
+  request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  auto sql_statement = internal::ToProto(esp.statement);
+  request.set_sql(std::move(*sql_statement.mutable_sql()));
+  *request.mutable_params() = std::move(*sql_statement.mutable_params());
+  *request.mutable_param_types() =
+      std::move(*sql_statement.mutable_param_types());
+  *request.mutable_partition_options() = std::move(partition_options);
+
+  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+  auto response = stub_->PartitionQuery(*context, request);
+
+  if (!response.ok()) {
+    return std::move(response).status();
+  }
+
+  if (s.has_begin()) {
+    s.set_id(response->transaction().id());
+  }
+
+  std::vector<QueryPartition> query_partitions;
+  for (auto& partition : response->partitions()) {
+    query_partitions.push_back(internal::MakeQueryPartition(
+        response->transaction().id(), session->session_name(),
+        partition.partition_token(), esp.statement));
+  }
+
+  return query_partitions;
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(
@@ -221,45 +317,6 @@ Status ConnectionImpl::Rollback(spanner_proto::TransactionSelector& s) {
   request.set_transaction_id(s.id());
   grpc::ClientContext context;
   return stub_->Rollback(context, request);
-}
-
-StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
-    spanner_proto::TransactionSelector& s, ReadParams const& rp,
-    PartitionOptions partition_options) {
-  auto session = GetSession();
-  if (!session) {
-    return std::move(session).status();
-  }
-  spanner_proto::PartitionReadRequest request;
-  request.set_session(session->session_name());
-  *request.mutable_transaction() = s;
-  request.set_table(rp.table);
-  request.set_index(rp.read_options.index_name);
-  for (auto&& column : rp.columns) {
-    request.add_columns(column);
-  }
-  *request.mutable_key_set() = internal::ToProto(rp.keys);
-  *request.mutable_partition_options() = std::move(partition_options);
-
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-  auto response = stub_->PartitionRead(*context, request);
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-
-  if (s.has_begin()) {
-    s.set_id(response->transaction().id());
-  }
-
-  std::vector<ReadPartition> read_partitions;
-  for (auto& partition : response->partitions()) {
-    read_partitions.push_back(internal::MakeReadPartition(
-        response->transaction().id(), session->session_name(),
-        partition.partition_token(), rp.table, rp.keys, rp.columns,
-        rp.read_options));
-  }
-
-  return read_partitions;
 }
 
 }  // namespace internal

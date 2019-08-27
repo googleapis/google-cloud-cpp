@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/query_partition.h"
+#include "google/cloud/spanner/connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -122,6 +123,23 @@ TEST(QueryPartitionTest, FailedDeserialize) {
   StatusOr<QueryPartition> partition =
       DeserializeQueryPartition(bad_serialized_proto);
   EXPECT_FALSE(partition.ok());
+}
+
+TEST(QueryPartitionTest, MakeExecuteSqlParams) {
+  QueryPartitionTester expected_partition(internal::MakeQueryPartition(
+      "foo", "session", "token",
+      SqlStatement("select * from foo where name = @name",
+                   {{"name", Value("Bob")}})));
+
+  Connection::ExecuteSqlParams params =
+      internal::MakeExecuteSqlParams(expected_partition.Partition());
+
+  EXPECT_EQ(params.statement,
+            SqlStatement("select * from foo where name = @name",
+                         {{"name", Value("Bob")}}));
+  EXPECT_EQ(*params.partition_token, "token");
+  EXPECT_EQ(*params.session_name, "session");
+  // Testing for equivalent Transactions is not supported.
 }
 
 }  // namespace

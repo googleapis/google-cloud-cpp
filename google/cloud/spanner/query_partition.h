@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_QUERY_PARTITION_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_QUERY_PARTITION_H_
 
+#include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/status_or.h"
 #include <memory>
@@ -77,6 +78,9 @@ QueryPartition MakeQueryPartition(std::string const& transaction_id,
                                   std::string const& session_id,
                                   std::string const& partition_token,
                                   SqlStatement const& sql_statement);
+Connection::ExecuteSqlParams MakeExecuteSqlParams(
+    QueryPartition const& query_partition);
+
 }  // namespace internal
 
 /**
@@ -121,6 +125,8 @@ class QueryPartition {
   friend QueryPartition internal::MakeQueryPartition(
       std::string const& transaction_id, std::string const& session_id,
       std::string const& partition_token, SqlStatement const& sql_statement);
+  friend Connection::ExecuteSqlParams internal::MakeExecuteSqlParams(
+      QueryPartition const& query_partition);
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);
   friend StatusOr<QueryPartition> DeserializeQueryPartition(

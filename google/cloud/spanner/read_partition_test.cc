@@ -144,6 +144,22 @@ TEST(ReadPartitionTest, FailedDeserialize) {
   EXPECT_FALSE(partition.ok());
 }
 
+TEST(ReadPartitionTest, MakeReadParams) {
+  std::vector<std::string> columns = {"LastName", "FirstName"};
+  ReadPartitionTester expected_partition(internal::MakeReadPartition(
+      "foo", "session", "token", "Students", KeySet::All(), columns));
+
+  Connection::ReadParams params =
+      internal::MakeReadParams(expected_partition.Partition());
+
+  EXPECT_EQ(*params.session_name, "session");
+  EXPECT_EQ(*params.partition_token, "token");
+  EXPECT_EQ(params.keys, KeySet::All());
+  EXPECT_EQ(params.columns, columns);
+  EXPECT_EQ(params.table, "Students");
+  // Testing for equivalent Transactions is not supported.
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
