@@ -358,6 +358,7 @@ TEST_F(ClientIntegrationTest, ExecuteSql) {
       *client_, {},
       [&expected_rows](Client client,
                        Transaction const& txn) -> StatusOr<Mutations> {
+        expected_rows.clear();
         for (int i = 2; i != 10; ++i) {
           auto s = std::to_string(i);
           auto insert = client.ExecuteSql(
@@ -396,7 +397,6 @@ TEST_F(ClientIntegrationTest, ExecuteSql) {
       actual_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
@@ -406,11 +406,11 @@ void CheckReadWithOptions(
         options_generator) {
   using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> expected_rows;
-
   auto commit = RunTransaction(
       client, Transaction::ReadWriteOptions{},
       [&expected_rows](Client const&,
                        Transaction const&) -> StatusOr<Mutations> {
+        expected_rows.clear();
         InsertMutationBuilder insert("Singers",
                                      {"SingerId", "FirstName", "LastName"});
         for (int i = 1; i != 10; ++i) {
@@ -438,7 +438,6 @@ void CheckReadWithOptions(
       actual_rows.push_back(*std::move(row));
     }
   }
-
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
