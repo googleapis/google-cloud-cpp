@@ -211,6 +211,193 @@ TEST_F(ComputeEngineCredentialsTest, ParseMetadataServerResponse) {
   EXPECT_TRUE(metadata.scopes.count("scope2"));
 }
 
+/// @test Mock a failed refresh response during RetrieveServiceAccountInfo.
+TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
+  std::string alias = "default";
+  std::string email = "foo@bar.baz";
+  std::string hostname = GceMetadataHostname();
+
+  // Missing fields.
+  std::string svc_acct_info_resp = R"""({
+      "scopes": ["scope1","scope2"]
+  })""";
+
+  auto first_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*first_mock_req_impl, MakeRequest(_))
+      // Fail the first call to DoMetadataServerGetRequest immediately.
+      .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
+      // Likewise, except with a >= 300 status code.
+      .WillOnce(Return(HttpResponse{400, "", {}}))
+      // Parse with an invalid metadata response.
+      .WillOnce(Return(HttpResponse{1, svc_acct_info_resp, {}}));
+
+  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_req_builder, BuildRequest())
+      .Times(3)
+      .WillRepeatedly(Invoke([first_mock_req_impl] {
+        MockHttpRequest mock_request;
+        mock_request.mock = first_mock_req_impl;
+        return mock_request;
+      }));
+
+  EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
+      .Times(3);
+  EXPECT_CALL(*mock_req_builder,
+              AddQueryParameter(StrEq("recursive"), StrEq("true")))
+      .Times(3);
+  EXPECT_CALL(
+      *mock_req_builder,
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
+      .Times(3);
+
+  ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
+  // Response 1
+  auto status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_EQ(status.status().code(), StatusCode::kAborted);
+  // Response 2
+  status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  // Response 3
+  status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+}
+
+/// @test Mock a failed refresh response.
+TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
+  std::string alias = "default";
+  std::string email = "foo@bar.baz";
+  std::string hostname = GceMetadataHostname();
+  std::string svc_acct_info_resp = R"""({
+      "email": ")""" + email + R"""(",
+      "scopes": ["scope1","scope2"]
+  })""";
+  // Missing fields.
+  std::string token_info_resp = R"""({
+      "expires_in": 3600,
+      "token_type": "tokentype"
+  })""";
+
+  auto mock_req = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_req, MakeRequest(_))
+      // Fail the first call to RetrieveServiceAccountInfo immediately.
+      .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
+      // Make the call to RetrieveServiceAccountInfo return a good response,
+      // but fail the token request immediately.
+      .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}))
+      .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
+      // Likewise, except test with a >= 300 status code.
+      .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}))
+      .WillOnce(Return(HttpResponse{400, "", {}}))
+      // Parse with an invalid token response.
+      .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}))
+      .WillOnce(Return(HttpResponse{1, token_info_resp, {}}));
+
+  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  auto mock_matcher = Invoke([mock_req] {
+    MockHttpRequest mock_request;
+    mock_request.mock = mock_req;
+    return mock_request;
+  });
+  EXPECT_CALL(*mock_req_builder, BuildRequest())
+      .Times(7)
+      .WillRepeatedly(mock_matcher);
+
+  // This is added for all 7 requests.
+  EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
+      .Times(7);
+  // These requests happen after RetrieveServiceAccountInfo, so they only
+  // occur 3 times.
+  EXPECT_CALL(
+      *mock_req_builder,
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        email + "/token")))
+      .Times(3);
+  // This is only set when not retrieving the token.
+  EXPECT_CALL(*mock_req_builder,
+              AddQueryParameter(StrEq("recursive"), StrEq("true")))
+      .Times(4);
+  // For the first expected failures, the alias is used until the metadata
+  // request succeeds. Then the email is refreshed.
+  EXPECT_CALL(
+      *mock_req_builder,
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
+      .Times(2);
+  EXPECT_CALL(
+      *mock_req_builder,
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        email + "/")))
+      .Times(2);
+
+  ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
+  // Response 1
+  auto status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_EQ(status.status().code(), StatusCode::kAborted);
+  // Response 2
+  status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  // Response 3
+  status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  // Response 4
+  status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+}
+
+/// @test Verify that we can force a refresh of the service account email.
+TEST_F(ComputeEngineCredentialsTest, AccountEmail) {
+  std::string alias = "default";
+  std::string email = "foo@bar.baz";
+  std::string hostname = GceMetadataHostname();
+  std::string svc_acct_info_resp = R"""({
+      "email": ")""" + email + R"""(",
+      "scopes": ["scope1","scope2"]
+  })""";
+
+  auto first_mock_req_impl = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*first_mock_req_impl, MakeRequest(_))
+      .WillOnce(Return(HttpResponse{200, svc_acct_info_resp, {}}));
+
+  auto mock_req_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_req_builder, BuildRequest())
+      .WillOnce(Invoke([first_mock_req_impl] {
+        MockHttpRequest mock_request;
+        mock_request.mock = first_mock_req_impl;
+        return mock_request;
+      }));
+
+  // Both requests add this header.
+  EXPECT_CALL(*mock_req_builder, AddHeader(StrEq("metadata-flavor: Google")))
+      .Times(1);
+  // Only the call to retrieve service account info sends this query param.
+  EXPECT_CALL(*mock_req_builder,
+              AddQueryParameter(StrEq("recursive"), StrEq("true")))
+      .Times(1);
+  EXPECT_CALL(
+      *mock_req_builder,
+      Constructor(StrEq(std::string("http://") + hostname +
+                        "/computeMetadata/v1/instance/service-accounts/" +
+                        alias + "/")))
+      .Times(1);
+
+  ComputeEngineCredentials<MockHttpRequestBuilder> credentials(alias);
+  EXPECT_EQ(credentials.service_account_email(), alias);
+  auto refreshed_email = credentials.AccountEmail();
+  EXPECT_EQ(email, refreshed_email);
+  EXPECT_EQ(credentials.service_account_email(), refreshed_email);
+}
+
 }  // namespace
 }  // namespace oauth2
 }  // namespace STORAGE_CLIENT_NS
