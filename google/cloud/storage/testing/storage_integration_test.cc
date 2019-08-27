@@ -22,17 +22,26 @@ namespace testing {
 
 google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient() {
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  if (!options) {
+    return std::move(options).status();
+  }
+
+  std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
+  if (UsingTestbench()) {
+    initial_delay = std::chrono::milliseconds(10);
+  }
+
+  ExponentialBackoffPolicy backoff(initial_delay, std::chrono::minutes(5), 2.0);
+
   auto idempotency =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
   if (!idempotency || *idempotency == "always-retry") {
-    return google::cloud::storage::Client::CreateDefaultClient();
+    return Client(*std::move(options), std::move(backoff));
   }
   if (*idempotency == "strict") {
-    auto options = ClientOptions::CreateDefaultClientOptions();
-    if (!options) {
-      return std::move(options).status();
-    }
-    return Client(*std::move(options), StrictIdempotencyPolicy{});
+    return Client(*std::move(options), std::move(backoff),
+                  StrictIdempotencyPolicy{});
   }
   return Status(
       StatusCode::kInvalidArgument,

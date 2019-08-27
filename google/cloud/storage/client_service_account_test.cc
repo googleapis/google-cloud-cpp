@@ -44,7 +44,10 @@ class ServiceAccountTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -70,10 +73,8 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
 
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
   StatusOr<ServiceAccount> actual =
-      client.GetServiceAccountForProject("test-project");
+      client->GetServiceAccountForProject("test-project");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -111,11 +112,9 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
   StatusOr<std::pair<HmacKeyMetadata, std::string>> actual =
-      client.CreateHmacKey("test-service-account",
-                           OverrideDefaultProject("test-project"));
+      client->CreateHmacKey("test-service-account",
+                            OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.metadata, actual->first);
   EXPECT_EQ(expected.secret, actual->second);
@@ -148,10 +147,8 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
 
         return make_status_or(internal::EmptyResponse{});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  Status actual = client.DeleteHmacKey("test-access-id-1",
-                                       OverrideDefaultProject("test-project"));
+  Status actual = client->DeleteHmacKey("test-access-id-1",
+                                        OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
 }
 
@@ -183,9 +180,7 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<HmacKeyMetadata> actual = client.GetHmacKey(
+  StatusOr<HmacKeyMetadata> actual = client->GetHmacKey(
       "test-access-id-1", OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.access_id(), actual->access_id());
@@ -224,9 +219,7 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
 
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<HmacKeyMetadata> actual = client.UpdateHmacKey(
+  StatusOr<HmacKeyMetadata> actual = client->UpdateHmacKey(
       "test-access-id-1", HmacKeyMetadata().set_state("ACTIVE"),
       OverrideDefaultProject("test-project"));
   ASSERT_STATUS_OK(actual);

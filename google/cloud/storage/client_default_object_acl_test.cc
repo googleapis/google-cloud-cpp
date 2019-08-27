@@ -43,7 +43,10 @@ class DefaultObjectAccessControlsTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -81,10 +84,9 @@ TEST_F(DefaultObjectAccessControlsTest, ListDefaultObjectAcl) {
 
         return make_status_or(internal::ListDefaultObjectAclResponse{expected});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
 
   StatusOr<std::vector<ObjectAccessControl>> actual =
-      client.ListDefaultObjectAcl("test-bucket");
+      client->ListDefaultObjectAcl("test-bucket");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -125,9 +127,7 @@ TEST_F(DefaultObjectAccessControlsTest, CreateDefaultObjectAcl) {
 
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<ObjectAccessControl> actual = client.CreateDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> actual = client->CreateDefaultObjectAcl(
       "test-bucket", "user-test-user-1", ObjectAccessControl::ROLE_READER());
   ASSERT_STATUS_OK(actual);
   // Compare just a few fields because the values for most of the fields are
@@ -177,9 +177,7 @@ TEST_F(DefaultObjectAccessControlsTest, DeleteDefaultObjectAcl) {
 
         return make_status_or(internal::EmptyResponse{});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  auto status = client.DeleteDefaultObjectAcl("test-bucket", "user-test-user");
+  auto status = client->DeleteDefaultObjectAcl("test-bucket", "user-test-user");
   ASSERT_STATUS_OK(status);
 }
 
@@ -226,10 +224,8 @@ TEST_F(DefaultObjectAccessControlsTest, GetDefaultObjectAcl) {
 
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
   StatusOr<ObjectAccessControl> actual =
-      client.GetDefaultObjectAcl("test-bucket", "user-test-user-1");
+      client->GetDefaultObjectAcl("test-bucket", "user-test-user-1");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -274,9 +270,7 @@ TEST_F(DefaultObjectAccessControlsTest, UpdateDefaultObjectAcl) {
 
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
-  StatusOr<ObjectAccessControl> actual = client.UpdateDefaultObjectAcl(
+  StatusOr<ObjectAccessControl> actual = client->UpdateDefaultObjectAcl(
       "test-bucket", ObjectAccessControl()
                          .set_entity("user-test-user-1")
                          .set_role(ObjectAccessControl::ROLE_READER()));
@@ -337,9 +331,7 @@ TEST_F(DefaultObjectAccessControlsTest, PatchDefaultObjectAcl) {
 
             return make_status_or(result);
           }));
-
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-  auto actual = client.PatchDefaultObjectAcl(
+  auto actual = client->PatchDefaultObjectAcl(
       "test-bucket", "user-test-user-1",
       ObjectAccessControlPatchBuilder().set_role("OWNER"));
   ASSERT_STATUS_OK(actual);

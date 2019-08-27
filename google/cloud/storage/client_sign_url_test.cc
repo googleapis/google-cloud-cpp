@@ -60,7 +60,10 @@ class CreateSignedUrlTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -125,10 +128,8 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
             return make_status_or(internal::SignBlobResponse{
                 "test-key-id", expected_signed_blob});
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
   StatusOr<std::string> actual =
-      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+      client->CreateV2SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
 }
@@ -277,10 +278,8 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
             return make_status_or(internal::SignBlobResponse{
                 "test-key-id", expected_signed_blob});
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock)};
-
   StatusOr<std::string> actual =
-      client.CreateV4SignedUrl("GET", "test-bucket", "test-object");
+      client->CreateV4SignedUrl("GET", "test-bucket", "test-object");
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
 }

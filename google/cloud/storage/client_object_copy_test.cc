@@ -48,7 +48,10 @@ class ObjectCopyTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -74,12 +77,9 @@ TEST_F(ObjectCopyTest, CopyObject) {
         EXPECT_EQ("source-object-name", request.source_object());
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
   StatusOr<ObjectMetadata> actual =
-      client.CopyObject("source-bucket-name", "source-object-name",
-                        "test-bucket-name", "test-object-name");
+      client->CopyObject("source-bucket-name", "source-object-name",
+                         "test-bucket-name", "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -154,12 +154,9 @@ TEST_F(ObjectCopyTest, ComposeObject) {
         EXPECT_EQ(expected_payload, actual_payload);
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.ComposeObject("test-bucket-name",
-                                     {{"object1", {}, {}}, {"object2", {}, {}}},
-                                     "test-object-name");
+  auto actual = client->ComposeObject(
+      "test-bucket-name", {{"object1", {}, {}}, {"object2", {}, {}}},
+      "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -253,10 +250,7 @@ TEST_F(ObjectCopyTest, RewriteObject) {
         })""";
         return internal::RewriteObjectResponse::FromHttpResponse(response);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto copier = client.RewriteObject(
+  auto copier = client->RewriteObject(
       "test-source-bucket-name", "test-source-object-name",
       "test-destination-bucket-name", "test-destination-object-name",
       WithObjectMetadata(

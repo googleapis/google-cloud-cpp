@@ -49,7 +49,11 @@ class ObjectTest : public ::testing::Test {
     mock = std::make_shared<testing::MockClient>();
     EXPECT_CALL(*mock, client_options())
         .WillRepeatedly(ReturnRef(client_options));
-    client.reset(new Client{std::shared_ptr<internal::RawClient>(mock)});
+    client.reset(new Client{
+        std::shared_ptr<internal::RawClient>(mock),
+        LimitedErrorCountRetryPolicy(2),
+        ExponentialBackoffPolicy(std::chrono::milliseconds(1),
+                                 std::chrono::milliseconds(1), 2.0)});
   }
   void TearDown() override {
     client.reset();
@@ -147,11 +151,8 @@ TEST_F(ObjectTest, GetObjectMetadata) {
             EXPECT_EQ("test-object-name", r.object_name());
             return make_status_or(expected);
           }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
   auto actual =
-      client.GetObjectMetadata("test-bucket-name", "test-object-name");
+      client->GetObjectMetadata("test-bucket-name", "test-object-name");
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -184,11 +185,7 @@ TEST_F(ObjectTest, DeleteObject) {
         EXPECT_EQ("test-object-name", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2),
-                ExponentialBackoffPolicy(ms(100), ms(500), 2)};
-
-  auto status = client.DeleteObject("test-bucket-name", "test-object-name");
+  auto status = client->DeleteObject("test-bucket-name", "test-object-name");
   EXPECT_STATUS_OK(status);
 }
 
@@ -265,9 +262,6 @@ TEST_F(ObjectTest, UpdateObject) {
         EXPECT_EQ(expected_payload, actual_payload);
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
   ObjectMetadata update;
   update.mutable_acl().push_back(
       ObjectAccessControl().set_entity("user-test-user").set_role("READER"));
@@ -278,7 +272,7 @@ TEST_F(ObjectTest, UpdateObject) {
       .set_content_type("new-type");
   update.mutable_metadata().emplace("test-label", "test-value");
   auto actual =
-      client.UpdateObject("test-bucket-name", "test-object-name", update);
+      client->UpdateObject("test-bucket-name", "test-object-name", update);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -348,13 +342,11 @@ TEST_F(ObjectTest, PatchObject) {
         EXPECT_THAT(r.payload(), HasSubstr("x-made-up-lang"));
         return make_status_or(expected);
       }));
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
-  auto actual = client.PatchObject("test-bucket-name", "test-object-name",
-                                   ObjectMetadataPatchBuilder()
-                                       .SetContentDisposition("new-disposition")
-                                       .SetContentLanguage("x-made-up-lang"));
+  auto actual =
+      client->PatchObject("test-bucket-name", "test-object-name",
+                          ObjectMetadataPatchBuilder()
+                              .SetContentDisposition("new-disposition")
+                              .SetContentLanguage("x-made-up-lang"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -399,10 +391,6 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
   // copyable.
   using ReturnType = std::unique_ptr<internal::ObjectReadSource>;
 
-  // A storage::Client with a simple to test policy.
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
   auto transient_error = [](internal::ReadObjectRangeRequest const&) {
     return StatusOr<ReturnType>(TransientError());
   };
@@ -412,7 +400,7 @@ TEST_F(ObjectTest, ReadObjectTooManyFailures) {
       .WillOnce(Invoke(transient_error));
 
   Status status =
-      client.ReadObject("test-bucket-name", "test-object-name").status();
+      client->ReadObject("test-bucket-name", "test-object-name").status();
   EXPECT_EQ(TransientError().code(), status.code());
   EXPECT_THAT(status.message(), HasSubstr("Retry policy exhausted"));
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
@@ -424,17 +412,13 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   // copyable.
   using ReturnType = std::unique_ptr<internal::ObjectReadSource>;
 
-  // A storage::Client with a simple to test policy.
-  Client client{std::shared_ptr<internal::RawClient>(mock),
-                LimitedErrorCountRetryPolicy(2)};
-
   auto permanent_error = [](internal::ReadObjectRangeRequest const&) {
     return StatusOr<ReturnType>(PermanentError());
   };
   EXPECT_CALL(*mock, ReadObject(_)).WillOnce(Invoke(permanent_error));
 
   Status status =
-      client.ReadObject("test-bucket-name", "test-object-name").status();
+      client->ReadObject("test-bucket-name", "test-object-name").status();
   EXPECT_EQ(PermanentError().code(), status.code());
   EXPECT_THAT(status.message(), HasSubstr("Permanent error"));
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
