@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/client_options.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
@@ -95,22 +95,6 @@ TEST(ClientOptionsTest, DefaultTracingSet) {
   EXPECT_TRUE(options.tracing_enabled("foo"));
   EXPECT_TRUE(options.tracing_enabled("bar"));
   EXPECT_TRUE(options.tracing_enabled("baz"));
-}
-
-TEST(ReadOptionsTest, Equality) {
-  ReadOptions test_options_0;
-  ReadOptions test_options_1;
-  EXPECT_EQ(test_options_0, test_options_1);
-  test_options_0.index_name = "secondary";
-  EXPECT_NE(test_options_0, test_options_1);
-  test_options_1.index_name = "secondary";
-  EXPECT_EQ(test_options_0, test_options_1);
-  test_options_0.limit = 42;
-  EXPECT_NE(test_options_0, test_options_1);
-  test_options_1.limit = 42;
-  EXPECT_EQ(test_options_0, test_options_1);
-  test_options_1 = test_options_0;
-  EXPECT_EQ(test_options_0, test_options_1);
 }
 
 }  // namespace

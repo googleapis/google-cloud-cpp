@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H_
 
-#include "google/cloud/spanner/client_options.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"

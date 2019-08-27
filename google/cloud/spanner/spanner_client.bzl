@@ -19,9 +19,9 @@
 spanner_client_hdrs = [
     "backoff_policy.h",
     "client.h",
-    "client_options.h",
     "commit_result.h",
     "connection.h",
+    "connection_options.h",
     "database.h",
     "database_admin_client.h",
     "date.h",
@@ -46,6 +46,7 @@ spanner_client_hdrs = [
     "mutations.h",
     "polling_policy.h",
     "query_partition.h",
+    "read_options.h",
     "read_partition.h",
     "result_set.h",
     "retry_policy.h",
@@ -62,7 +63,7 @@ spanner_client_hdrs = [
 
 spanner_client_srcs = [
     "client.cc",
-    "client_options.cc",
+    "connection_options.cc",
     "database.cc",
     "database_admin_client.cc",
     "date.cc",

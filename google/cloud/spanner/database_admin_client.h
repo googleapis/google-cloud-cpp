@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CLIENT_H_
 
-#include "google/cloud/spanner/client_options.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/future.h"

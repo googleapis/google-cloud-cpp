@@ -17,7 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 spanner_client_unit_tests = [
-    "client_options_test.cc",
+    "connection_options_test.cc",
     "client_test.cc",
     "database_test.cc",
     "database_admin_client_test.cc",
@@ -39,6 +39,7 @@ spanner_client_unit_tests = [
     "internal/tuple_utils_test.cc",
     "keys_test.cc",
     "mutations_test.cc",
+    "read_options_test.cc",
     "read_partition_test.cc",
     "result_set_test.cc",
     "retry_policy_test.cc",

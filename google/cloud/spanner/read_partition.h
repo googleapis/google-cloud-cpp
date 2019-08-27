@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_READ_PARTITION_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_READ_PARTITION_H_
 
-#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/version.h"

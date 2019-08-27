@@ -12,35 +12,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/client_options.h"
-#include "google/cloud/internal/getenv.h"
-#include <sstream>
+#include "google/cloud/spanner/read_options.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-ConnectionOptions::ConnectionOptions(
-    std::shared_ptr<grpc::ChannelCredentials> credentials)
-    : credentials_(std::move(credentials)),
-      endpoint_("spanner.googleapis.com") {
-  auto tracing =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  if (tracing.has_value()) {
-    std::istringstream is{*tracing};
-    std::string token;
-    while (std::getline(is, token, ',')) {
-      tracing_components_.insert(token);
-    }
-  }
-  clog_enabled_ =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
-          .has_value();
+namespace {
+
+TEST(ReadOptionsTest, Equality) {
+  ReadOptions test_options_0{};
+  ReadOptions test_options_1{};
+  EXPECT_EQ(test_options_0, test_options_1);
+  test_options_0.index_name = "secondary";
+  EXPECT_NE(test_options_0, test_options_1);
+  test_options_1.index_name = "secondary";
+  EXPECT_EQ(test_options_0, test_options_1);
+  test_options_0.limit = 42;
+  EXPECT_NE(test_options_0, test_options_1);
+  test_options_1.limit = 42;
+  EXPECT_EQ(test_options_0, test_options_1);
+  test_options_1 = test_options_0;
+  EXPECT_EQ(test_options_0, test_options_1);
 }
 
-ConnectionOptions::ConnectionOptions()
-    : ConnectionOptions(grpc::GoogleDefaultCredentials()) {}
-
+}  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

@@ -88,10 +88,10 @@ add_library(spanner_client
             backoff_policy.h
             client.cc
             client.h
-            client_options.cc
-            client_options.h
             commit_result.h
             connection.h
+            connection_options.cc
+            connection_options.h
             database.cc
             database.h
             database_admin_client.cc
@@ -136,6 +136,7 @@ add_library(spanner_client
             polling_policy.h
             query_partition.cc
             query_partition.h
+            read_options.h
             read_partition.cc
             read_partition.h
             result_set.h
@@ -207,7 +208,7 @@ function (spanner_client_define_tests)
                            PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
     set(spanner_client_unit_tests
-        client_options_test.cc
+        connection_options_test.cc
         client_test.cc
         database_test.cc
         database_admin_client_test.cc
@@ -229,6 +230,7 @@ function (spanner_client_define_tests)
         internal/tuple_utils_test.cc
         keys_test.cc
         mutations_test.cc
+        read_options_test.cc
         read_partition_test.cc
         result_set_test.cc
         retry_policy_test.cc
