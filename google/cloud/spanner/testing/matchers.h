@@ -20,7 +20,7 @@
 #include "google/cloud/spanner/version.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
-#include <cinttypes>
+#include <cstdint>
 
 namespace google {
 namespace cloud {
