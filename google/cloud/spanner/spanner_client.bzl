@@ -37,6 +37,7 @@ spanner_client_hdrs = [
     "internal/partial_result_set_reader.h",
     "internal/polling_loop.h",
     "internal/retry_loop.h",
+    "internal/session_holder.h",
     "internal/spanner_stub.h",
     "internal/time.h",
     "internal/time_format.h",

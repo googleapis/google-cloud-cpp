@@ -78,25 +78,29 @@ Status ConnectionImpl::Rollback(RollbackParams rp) {
                                 std::int64_t) { return this->Rollback(s); });
 }
 
-StatusOr<ConnectionImpl::SessionHolder> ConnectionImpl::GetSession() {
+StatusOr<SessionHolder> ConnectionImpl::GetSession() {
+  std::string session;
   std::unique_lock<std::mutex> lk(mu_);
   if (!sessions_.empty()) {
-    std::string session = std::move(sessions_.back());
+    session = std::move(sessions_.back());
     sessions_.pop_back();
-    return SessionHolder(std::move(session), this);
+  } else {
+    // Release the mutex because we won't be doing any more changes to
+    // `sessions_` in this function and holding mutexes while making RPCs is
+    // (generally) a bad practice.
+    lk.unlock();
+    grpc::ClientContext context;
+    spanner_proto::CreateSessionRequest request;
+    request.set_database(db_.FullName());
+    auto response = stub_->CreateSession(context, request);
+    if (!response) {
+      return response.status();
+    }
+    session = std::move(*response->mutable_name());
   }
-  // Release the mutex because we won't be doing any more changes to `sessions_`
-  // in this function and holding mutexes while making RPCs is (generally) a bad
-  // practice.
-  lk.unlock();
-  grpc::ClientContext context;
-  spanner_proto::CreateSessionRequest request;
-  request.set_database(db_.FullName());
-  auto response = stub_->CreateSession(context, request);
-  if (!response) {
-    return response.status();
-  }
-  return SessionHolder(std::move(*response->mutable_name()), this);
+  return SessionHolder(std::move(session), [this](std::string release) {
+    this->ReleaseSession(std::move(release));
+  });
 }
 
 void ConnectionImpl::ReleaseSession(std::string session) {

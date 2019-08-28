@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/internal/session_holder.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
@@ -55,43 +56,6 @@ class ConnectionImpl : public Connection {
   Status Rollback(RollbackParams rp) override;
 
  private:
-  class SessionHolder {
-   public:
-    SessionHolder(std::string session, ConnectionImpl* conn) noexcept
-        : session_(std::move(session)), conn_(conn) {}
-
-    // This class is move-only because we want only one destructor returning the
-    // session back to `conn_`.
-    SessionHolder(SessionHolder const&) = delete;
-    SessionHolder& operator=(SessionHolder const&) = delete;
-
-    // Need explicit move constructor and assignment to clear the `conn_` from
-    // the source.
-    SessionHolder(SessionHolder&& rhs) noexcept
-        : session_(std::move(rhs.session_)), conn_(rhs.conn_) {
-      rhs.conn_ = nullptr;
-    }
-
-    SessionHolder& operator=(SessionHolder&& rhs) noexcept {
-      session_ = std::move(rhs.session_);
-      conn_ = rhs.conn_;
-      rhs.conn_ = nullptr;
-      return *this;
-    }
-
-    ~SessionHolder() {
-      if (conn_) {
-        conn_->ReleaseSession(std::move(session_));
-      }
-    }
-
-    std::string const& session_name() const { return session_; }
-
-   private:
-    std::string session_;
-    ConnectionImpl* conn_;
-  };
-  friend class SessionHolder;
   StatusOr<SessionHolder> GetSession();
   void ReleaseSession(std::string session);
 

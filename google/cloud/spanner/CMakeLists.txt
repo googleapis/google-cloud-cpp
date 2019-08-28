@@ -120,6 +120,7 @@ add_library(spanner_client
             internal/polling_loop.h
             internal/retry_loop.cc
             internal/retry_loop.h
+            internal/session_holder.h
             internal/spanner_stub.cc
             internal/spanner_stub.h
             internal/time.cc
