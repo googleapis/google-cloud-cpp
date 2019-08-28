@@ -105,12 +105,6 @@ std::vector<StatusOr<spanner_proto::ResultSetStats>> Client::ExecuteBatchDml(
   return {Status(StatusCode::kUnimplemented, "not implemented")};
 }
 
-// returns a lower bound on the number of modified rows
-StatusOr<std::int64_t> Client::ExecutePartitionedDml(
-    SqlStatement const& /*statement*/) {
-  return Status(StatusCode::kUnimplemented, "not implemented");
-}
-
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
                                       Mutations mutations) {
   return conn_->Commit({std::move(transaction), std::move(mutations)});

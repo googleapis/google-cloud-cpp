@@ -317,18 +317,6 @@ class Client {
       std::vector<SqlStatement> const& statements);
 
   /**
-   * Executes single Partitioned DML statement. Partitions the key space and
-   * runs the DML statement over each partition in parallel using separate,
-   * internal transactions that commit independently.
-   *
-   * @param statement The SQL DML statement to execute.
-   *
-   * @return A `StatusOr` containing a lower bound on the number of modified
-   *     rows or error status on failure.
-   */
-  StatusOr<std::int64_t> ExecutePartitionedDml(SqlStatement const& statement);
-
-  /**
    * Commits a read-write transaction.
    *
    * The commit might return an `ABORTED` error. This can occur at any time;
