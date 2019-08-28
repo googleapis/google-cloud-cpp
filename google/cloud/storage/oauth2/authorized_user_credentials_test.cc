@@ -154,6 +154,48 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
             credentials.AuthorizationHeader().value());
 }
 
+/// @test Mock a failed refresh response.
+TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
+  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
+  EXPECT_CALL(*mock_request, MakeRequest(_))
+      .WillOnce(Return(Status(StatusCode::kAborted, "Fake Curl error")))
+      .WillOnce(Return(HttpResponse{400, "", {}}));
+
+  // Now setup the builder to return those responses.
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([mock_request] {
+    MockHttpRequest request;
+    request.mock = mock_request;
+    return request;
+  }));
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(Invoke([](std::string const& s) {
+        auto t = std::unique_ptr<char[]>(new char[s.size() + 1]);
+        std::copy(s.begin(), s.end(), t.get());
+        t[s.size()] = '\0';
+        return t;
+      }));
+
+  std::string config = R"""({
+      "client_id": "a-client-id.example.com",
+      "client_secret": "a-123456ABCDEF",
+      "refresh_token": "1/THETOKEN",
+      "type": "magic_type"
+})""";
+  auto info = ParseAuthorizedUserCredentials(config, "test");
+  ASSERT_STATUS_OK(info);
+  AuthorizedUserCredentials<MockHttpRequestBuilder> credentials(*info);
+  // Response 1
+  auto status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+  EXPECT_EQ(status.status().code(), StatusCode::kAborted);
+  // Response 2
+  status = credentials.AuthorizationHeader();
+  EXPECT_FALSE(status) << "status=" << status.status();
+}
+
 /// @test Verify that parsing an authorized user account JSON string works.
 TEST_F(AuthorizedUserCredentialsTest, ParseSimple) {
   std::string config = R"""({

@@ -492,6 +492,42 @@ x-goog-meta-foo:bar,baz
   EXPECT_EQ(expected_signed, internal::Base64Encode(*actual));
 }
 
+/// @test Verify that signing blobs fails with invalid e-mail.
+TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
+  auto mock_builder = MockHttpRequestBuilder::mock;
+  std::string expected_header =
+      "Content-Type: application/x-www-form-urlencoded";
+  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
+  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint()))
+      .Times(1);
+  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
+      .WillRepeatedly(
+          Invoke([](std::string const& s) -> std::unique_ptr<char[]> {
+            EXPECT_EQ(kGrantParamUnescaped, s);
+            auto t =
+                std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
+            std::copy(kGrantParamEscaped,
+                      kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
+            return t;
+          }));
+  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce(Invoke([] {
+    return MockHttpRequest();
+  }));
+
+  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ASSERT_STATUS_OK(info);
+  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
+      *info);
+
+  auto actual =
+      credentials.SignBlob(SigningAccount("fake@fake.com"), "test-blob");
+  EXPECT_FALSE(actual);
+  EXPECT_EQ(actual.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(
+      actual.status().message(),
+      ::testing::HasSubstr("The current_credentials cannot sign blobs for "));
+}
+
 /// @test Verify that we can get the client id from a service account.
 TEST_F(ServiceAccountCredentialsTest, ClientId) {
   auto mock_builder = MockHttpRequestBuilder::mock;
@@ -521,6 +557,7 @@ TEST_F(ServiceAccountCredentialsTest, ClientId) {
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com",
             credentials.AccountEmail());
+  EXPECT_EQ("a1a111aa1111a11a11a11aa111a111a1a1111111", credentials.KeyId());
 }
 
 // This is a base64-encoded p12 key-file. The service account was deleted
@@ -779,6 +816,56 @@ TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
 
   EXPECT_THAT(actual_payload, HasSubstr(std::string("assertion=") + assertion));
   EXPECT_THAT(actual_payload, HasSubstr(kGrantParamEscaped));
+}
+
+/// @test Parsing a refresh response with missing fields results in failure.
+TEST_F(ServiceAccountCredentialsTest,
+       ParseServiceAccountRefreshResponseMissingFields) {
+  std::string r1 = R"""({})""";
+  // Does not have access_token.
+  std::string r2 = R"""({
+    "token_type": "Type",
+    "id_token": "id-token-value",
+    "expires_in": 1000
+})""";
+
+  FakeClock::reset_clock(1000);
+  auto status = ParseServiceAccountRefreshResponse(HttpResponse{400, r1, {}},
+                                                   FakeClock::now());
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+
+  status = ParseServiceAccountRefreshResponse(HttpResponse{400, r2, {}},
+                                              FakeClock::now());
+  EXPECT_FALSE(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(status.status().message(),
+              ::testing::HasSubstr("Could not find all required fields"));
+}
+
+/// @test Parsing a refresh response yields a TemporaryToken.
+TEST_F(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
+  std::string r1 = R"""({
+    "token_type": "Type",
+    "access_token": "access-token-r1",
+    "expires_in": 1000
+})""";
+
+  auto expires_in = 1000;
+  FakeClock::reset_clock(2000);
+  auto status = ParseServiceAccountRefreshResponse(HttpResponse{200, r1, {}},
+                                                   FakeClock::now());
+  EXPECT_STATUS_OK(status);
+  EXPECT_EQ(status.status().code(), StatusCode::kOk);
+  auto token = *status;
+  EXPECT_EQ(
+      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
+          .time_since_epoch()
+          .count(),
+      FakeClock::now_value + expires_in);
+  EXPECT_EQ(token.token, "Authorization: Type access-token-r1");
 }
 
 }  // namespace
