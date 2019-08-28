@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -41,6 +42,8 @@ class QueryPartitionTester {
 };
 
 namespace {
+
+using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
 
 TEST(QueryPartitionTest, MakeQueryPartition) {
   std::string stmt("select * from foo where name = @name");
@@ -138,8 +141,7 @@ TEST(QueryPartitionTest, MakeExecuteSqlParams) {
             SqlStatement("select * from foo where name = @name",
                          {{"name", Value("Bob")}}));
   EXPECT_EQ(*params.partition_token, "token");
-  EXPECT_EQ(*params.session_name, "session");
-  // Testing for equivalent Transactions is not supported.
+  EXPECT_THAT(params.transaction, HasSessionAndTransactionId("session", "foo"));
 }
 
 }  // namespace

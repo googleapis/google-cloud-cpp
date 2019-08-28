@@ -59,20 +59,15 @@ class Connection {
     ReadOptions read_options;
     google::cloud::optional<std::string> partition_token;
 
-    // TODO(#445): Refactor once correct location for session implemented.
-    google::cloud::optional<std::string> session_name;
-
     ReadParams(Transaction transaction, std::string table, KeySet keys,
                std::vector<std::string> columns, ReadOptions read_options,
-               google::cloud::optional<std::string> partition_token = {},
-               google::cloud::optional<std::string> session_name = {})
+               google::cloud::optional<std::string> partition_token = {})
         : transaction(std::move(transaction)),
           table(std::move(table)),
           keys(std::move(keys)),
           columns(std::move(columns)),
           read_options(std::move(read_options)),
-          partition_token(std::move(partition_token)),
-          session_name(std::move(session_name)) {}
+          partition_token(std::move(partition_token)) {}
   };
   virtual StatusOr<ResultSet> Read(ReadParams) = 0;
 
@@ -88,16 +83,11 @@ class Connection {
     SqlStatement statement;
     google::cloud::optional<std::string> partition_token;
 
-    // TODO(#445): Refactor once correct location for session implemented.
-    google::cloud::optional<std::string> session_name;
-
     ExecuteSqlParams(Transaction transaction, SqlStatement statement,
-                     google::cloud::optional<std::string> partition_token = {},
-                     google::cloud::optional<std::string> session_name = {})
+                     google::cloud::optional<std::string> partition_token = {})
         : transaction(std::move(transaction)),
           statement(std::move(statement)),
-          partition_token(std::move(partition_token)),
-          session_name(std::move(session_name)) {}
+          partition_token(std::move(partition_token)) {}
   };
   virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
 

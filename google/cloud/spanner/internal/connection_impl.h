@@ -56,33 +56,37 @@ class ConnectionImpl : public Connection {
   Status Rollback(RollbackParams rp) override;
 
  private:
-  StatusOr<SessionHolder> GetSession();
+  StatusOr<SessionHolder> GetSession(bool release = false);
   void ReleaseSession(std::string session);
 
   /// Implementation details for Read.
-  StatusOr<ResultSet> Read(google::spanner::v1::TransactionSelector& s,
+  StatusOr<ResultSet> Read(SessionHolder& session,
+                           google::spanner::v1::TransactionSelector& s,
                            ReadParams rp);
 
   /// Implementation details for PartitionRead.
   StatusOr<std::vector<ReadPartition>> PartitionRead(
-      google::spanner::v1::TransactionSelector& s, ReadParams const& rp,
-      PartitionOptions partition_options);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      ReadParams const& rp, PartitionOptions partition_options);
 
   /// Implementation details for ExecuteSql
-  StatusOr<ResultSet> ExecuteSql(google::spanner::v1::TransactionSelector& s,
+  StatusOr<ResultSet> ExecuteSql(SessionHolder& session,
+                                 google::spanner::v1::TransactionSelector& s,
                                  std::int64_t seqno, ExecuteSqlParams esp);
 
   /// Implementation details for PartitionQuery
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      google::spanner::v1::TransactionSelector& s, ExecuteSqlParams const& esp,
-      PartitionOptions partition_options);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      ExecuteSqlParams const& esp, PartitionOptions partition_options);
 
   /// Implementation details for Commit.
-  StatusOr<CommitResult> Commit(google::spanner::v1::TransactionSelector& s,
+  StatusOr<CommitResult> Commit(SessionHolder& session,
+                                google::spanner::v1::TransactionSelector& s,
                                 CommitParams cp);
 
   /// Implementation details for Rollback.
-  Status Rollback(google::spanner::v1::TransactionSelector& s);
+  Status Rollback(SessionHolder& session,
+                  google::spanner::v1::TransactionSelector& s);
 
   Database db_;
   std::shared_ptr<internal::SpannerStub> stub_;

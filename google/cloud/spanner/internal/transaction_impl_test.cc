@@ -30,6 +30,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+namespace internal {
 namespace {
 
 using TransactionSelector = google::spanner::v1::TransactionSelector;
@@ -48,10 +49,12 @@ class Client {
 
   explicit Client(Mode mode) : mode_(mode), begin_seqno_(0) {}
 
-  // Set the `read_timestamp` we expect to see, and the `txn_id` we want to
-  // use during the upcoming `Read()` calls.
-  void Reset(Timestamp read_timestamp, std::string txn_id) {
+  // Set the `read_timestamp` we expect to see, and the `session_id` and
+  // `txn_id` we want to use during the upcoming `Read()` calls.
+  void Reset(Timestamp read_timestamp, std::string session_id,
+             std::string txn_id) {
     read_timestamp_ = read_timestamp;
+    session_id_ = std::move(session_id);
     txn_id_ = std::move(txn_id);
     std::unique_lock<std::mutex> lock(mu_);
     valid_visits_ = 0;
@@ -67,9 +70,10 @@ class Client {
   // User-visible read operation.
   ResultSet Read(Transaction txn, std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns) {
-    auto read = [this, &table, &keys, &columns](TransactionSelector& selector,
+    auto read = [this, &table, &keys, &columns](SessionHolder& session,
+                                                TransactionSelector& selector,
                                                 std::int64_t seqno) {
-      return this->Read(selector, seqno, table, keys, columns);
+      return this->Read(session, selector, seqno, table, keys, columns);
     };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
@@ -83,12 +87,13 @@ class Client {
   }
 
  private:
-  ResultSet Read(TransactionSelector& selector, std::int64_t seqno,
-                 std::string const& table, KeySet const& keys,
-                 std::vector<std::string> const& columns);
+  ResultSet Read(SessionHolder& session, TransactionSelector& selector,
+                 std::int64_t seqno, std::string const& table,
+                 KeySet const& keys, std::vector<std::string> const& columns);
 
   Mode mode_;
   Timestamp read_timestamp_;
+  std::string session_id_;
   std::string txn_id_;
   std::mutex mu_;
   std::int64_t begin_seqno_;  // GUARDED_BY(mu_)
@@ -99,10 +104,11 @@ class Client {
 // to make a StreamingRead() RPC, and then, if the selector was a `begin`,
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
-ResultSet Client::Read(TransactionSelector& selector, std::int64_t seqno,
-                       std::string const&, KeySet const&,
+ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
+                       std::int64_t seqno, std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
   if (selector.has_begin()) {
+    EXPECT_EQ("", session.session_name());
     bool fail_with_throw = false;
     if (selector.begin().has_read_only() &&
         selector.begin().read_only().has_read_timestamp()) {
@@ -123,6 +129,7 @@ ResultSet Client::Read(TransactionSelector& selector, std::int64_t seqno,
     }
     switch (mode_) {
       case Mode::kReadSucceeds:  // `begin` -> `id`, calls now parallelized
+        session = SessionHolder(session_id_, /*deleter=*/nullptr);
         selector.set_id(txn_id_);
         break;
       case Mode::kReadFails:  // leave as `begin`, calls stay serialized
@@ -135,6 +142,7 @@ ResultSet Client::Read(TransactionSelector& selector, std::int64_t seqno,
     }
   } else {
     if (selector.id() == txn_id_) {
+      EXPECT_EQ(session_id_, session.session_name());
       std::unique_lock<std::mutex> lock(mu_);
       switch (mode_) {
         case Mode::kReadSucceeds:  // non-initial visits valid
@@ -152,10 +160,11 @@ ResultSet Client::Read(TransactionSelector& selector, std::int64_t seqno,
 // read-only transaction with an exact-staleness timestamp, and return the
 // number of valid visitations to that transaction (should be `n_threads`).
 int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
+                      std::string const& session_id,
                       std::string const& txn_id) {
   Timestamp read_timestamp = std::chrono::time_point_cast<Timestamp::duration>(
       std::chrono::system_clock::from_time_t(read_time));
-  client->Reset(read_timestamp, txn_id);
+  client->Reset(read_timestamp, session_id, txn_id);
 
   Transaction::ReadOnlyOptions opts(read_timestamp);
   Transaction txn(opts);
@@ -189,19 +198,20 @@ int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
 
 TEST(InternalTransaction, ReadSucceeds) {
   Client client(Client::Mode::kReadSucceeds);
-  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "id-0"));
-  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "id-1"));
-  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "id-2"));
+  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess-0", "tx-0"));
+  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess-1", "tx-1"));
+  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess-2", "tx-2"));
 }
 
 TEST(InternalTransaction, ReadFails) {
   Client client(Client::Mode::kReadFails);
-  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "id-0"));
-  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "id-1"));
-  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "id-2"));
+  EXPECT_EQ(1, MultiThreadedRead(1, &client, 1562359982, "sess-0", "tx-0"));
+  EXPECT_EQ(64, MultiThreadedRead(64, &client, 1562360571, "sess-1", "tx-1"));
+  EXPECT_EQ(128, MultiThreadedRead(128, &client, 1562361252, "sess-2", "tx-2"));
 }
 
 }  // namespace
+}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

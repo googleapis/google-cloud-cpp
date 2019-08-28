@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_TRANSACTION_IMPL_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_TRANSACTION_IMPL_H_
 
+#include "google/cloud/spanner/internal/session_holder.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/port_platform.h"
@@ -31,7 +32,8 @@ namespace internal {
 
 template <typename Functor>
 using VisitInvokeResult = google::cloud::internal::invoke_result_t<
-    Functor, google::spanner::v1::TransactionSelector&, std::int64_t>;
+    Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
+    std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -39,24 +41,36 @@ using VisitInvokeResult = google::cloud::internal::invoke_result_t<
 class TransactionImpl {
  public:
   TransactionImpl(google::spanner::v1::TransactionSelector selector)
-      : selector_(std::move(selector)), seqno_(0) {
+      : TransactionImpl(/*session=*/{}, std::move(selector)) {}
+
+  TransactionImpl(SessionHolder session,
+                  google::spanner::v1::TransactionSelector selector)
+      : session_(std::move(session)),
+        selector_(std::move(selector)),
+        seqno_(0) {
     state_ = selector_.has_begin() ? State::kBegin : State::kDone;
   }
 
   ~TransactionImpl();
 
-  // Visit the transaction with the given functor, which should use the
-  // passed TransactionSelector in its Client::Read()/Client::ExecuteSql()
-  // call. If initially selector.has_begin(), and the operation successfully
-  // allocates a transaction ID, then the functor should selector.set_id(id).
-  // Otherwise the functor should not modify the selector. A monotonically-
-  // increasing sequence number is also passed to the functor.
+  // Visit the transaction with the given functor, which should use (and
+  // modify, if appropriate) the passed SessionHolder and TransactionSelector.
+  //
+  // If the SessionHolder has a session, the functor must use it.
+  // Otherwise it must allocate a session and assign to the SessionHolder.
+  //
+  // If initially selector.has_begin(), and the operation successfully allocates
+  // a transaction ID, then the functor should selector.set_id(id). Otherwise
+  // the functor should not modify the selector.
+  //
+  // A monotonically-increasing sequence number is also passed to the functor.
   template <typename Functor>
   VisitInvokeResult<Functor> Visit(Functor&& f) {
-    static_assert(google::cloud::internal::is_invocable<
-                      Functor, google::spanner::v1::TransactionSelector&,
-                      std::int64_t>::value,
-                  "TransactionImpl::Visit() functor has incompatible type.");
+    static_assert(
+        google::cloud::internal::is_invocable<
+            Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
+            std::int64_t>::value,
+        "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
     {
       std::unique_lock<std::mutex> lock(mu_);
@@ -64,7 +78,7 @@ class TransactionImpl {
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(selector_, seqno);
+        return f(session_, selector_, seqno);
       }
       state_ = State::kPending;
     }
@@ -72,7 +86,7 @@ class TransactionImpl {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      auto r = f(selector_, seqno);
+      auto r = f(session_, selector_, seqno);
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);
@@ -107,6 +121,7 @@ class TransactionImpl {
 
   std::mutex mu_;
   std::condition_variable cond_;
+  internal::SessionHolder session_;
   google::spanner::v1::TransactionSelector selector_;
   std::int64_t seqno_;
 };

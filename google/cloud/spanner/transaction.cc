@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/transaction.h"
+#include "google/cloud/spanner/internal/session_holder.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/internal/transaction_impl.h"
 
@@ -91,18 +92,21 @@ Transaction::Transaction(SingleUseOptions opts) {
   impl_ = std::make_shared<internal::TransactionImpl>(std::move(selector));
 }
 
-Transaction::Transaction(std::string transaction_id) {
+Transaction::Transaction(std::string session_id, std::string transaction_id) {
   google::spanner::v1::TransactionSelector selector;
   selector.set_id(std::move(transaction_id));
-  impl_ = std::make_shared<internal::TransactionImpl>(std::move(selector));
+  impl_ = std::make_shared<internal::TransactionImpl>(
+      internal::SessionHolder(std::move(session_id), /*deleter=*/nullptr),
+      std::move(selector));
 }
 
 Transaction::~Transaction() = default;
 
 namespace internal {
 
-Transaction MakeTransactionFromId(std::string transaction_id) {
-  return Transaction(std::move(transaction_id));
+Transaction MakeTransactionFromIds(std::string session_id,
+                                   std::string transaction_id) {
+  return Transaction(std::move(session_id), std::move(transaction_id));
 }
 
 }  // namespace internal

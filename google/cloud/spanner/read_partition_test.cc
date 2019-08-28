@@ -45,6 +45,8 @@ class ReadPartitionTester {
 
 namespace {
 
+using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
+
 TEST(ReadPartitionTest, MakeReadPartition) {
   std::string partition_token("token");
   std::string session_id("session");
@@ -152,12 +154,11 @@ TEST(ReadPartitionTest, MakeReadParams) {
   Connection::ReadParams params =
       internal::MakeReadParams(expected_partition.Partition());
 
-  EXPECT_EQ(*params.session_name, "session");
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_EQ(params.keys, KeySet::All());
   EXPECT_EQ(params.columns, columns);
   EXPECT_EQ(params.table, "Students");
-  // Testing for equivalent Transactions is not supported.
+  EXPECT_THAT(params.transaction, HasSessionAndTransactionId("session", "foo"));
 }
 
 }  // namespace
