@@ -563,6 +563,106 @@ TEST_F(ClientIntegrationTest, ExecuteSql_ExactStaleness_Duration) {
   });
 }
 
+StatusOr<std::vector<Row<std::int64_t, std::string, std::string>>>
+AddSingerDataToTable(Client const& client) {
+  std::vector<Row<std::int64_t, std::string, std::string>> expected_rows;
+  auto commit = RunTransaction(
+      client, Transaction::ReadWriteOptions{},
+      [&expected_rows](Client const&,
+                       Transaction const&) -> StatusOr<Mutations> {
+        expected_rows.clear();
+        InsertMutationBuilder insert("Singers",
+                                     {"SingerId", "FirstName", "LastName"});
+        for (int i = 1; i != 10; ++i) {
+          auto s = std::to_string(i);
+          auto row = MakeRow(i, "test-fname-" + s, "test-lname-" + s);
+          insert.AddRow(row);
+          expected_rows.push_back(row);
+        }
+        return Mutations{std::move(insert).Build()};
+      });
+  if (!commit.ok()) {
+    return commit.status();
+  }
+  return expected_rows;
+}
+
+TEST_F(ClientIntegrationTest, PartitionRead) {
+  auto expected_rows = AddSingerDataToTable(*client_);
+  ASSERT_STATUS_OK(expected_rows);
+
+  auto ro_transaction = MakeReadOnlyTransaction();
+  auto read_partitions =
+      client_->PartitionRead(ro_transaction, "Singers", KeySet::All(),
+                             {"SingerId", "FirstName", "LastName"});
+  ASSERT_STATUS_OK(read_partitions);
+
+  std::vector<std::string> serialized_partitions;
+  for (auto& partition : *read_partitions) {
+    auto serialized_partition = SerializeReadPartition(partition);
+    ASSERT_STATUS_OK(serialized_partition);
+    serialized_partitions.push_back(*serialized_partition);
+  }
+
+  std::vector<Row<std::int64_t, std::string, std::string>> actual_rows;
+  int partition_number = 0;
+  for (auto& partition : serialized_partitions) {
+    int row_number = 0;
+    auto deserialized_partition = DeserializeReadPartition(partition);
+    ASSERT_STATUS_OK(deserialized_partition);
+    auto partition_result_set = client_->Read(*deserialized_partition);
+    ASSERT_STATUS_OK(partition_result_set);
+    for (auto& row :
+         partition_result_set->Rows<std::int64_t, std::string, std::string>()) {
+      SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
+                   "] row[" + std::to_string(row_number++) + "]");
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      actual_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(actual_rows, UnorderedElementsAreArray(*expected_rows));
+}
+
+TEST_F(ClientIntegrationTest, PartitionQuery) {
+  auto expected_rows = AddSingerDataToTable(*client_);
+  ASSERT_STATUS_OK(expected_rows);
+
+  auto ro_transaction = MakeReadOnlyTransaction();
+  auto query_partitions = client_->PartitionQuery(
+      ro_transaction,
+      SqlStatement("select SingerId, FirstName, LastName from Singers"));
+  ASSERT_STATUS_OK(query_partitions);
+
+  std::vector<std::string> serialized_partitions;
+  for (auto& partition : *query_partitions) {
+    auto serialized_partition = SerializeQueryPartition(partition);
+    ASSERT_STATUS_OK(serialized_partition);
+    serialized_partitions.push_back(*serialized_partition);
+  }
+
+  std::vector<Row<std::int64_t, std::string, std::string>> actual_rows;
+  int partition_number = 0;
+  for (auto& partition : serialized_partitions) {
+    int row_number = 0;
+    auto deserialized_partition = DeserializeQueryPartition(partition);
+    ASSERT_STATUS_OK(deserialized_partition);
+    auto partition_result_set = client_->ExecuteSql(*deserialized_partition);
+    ASSERT_STATUS_OK(partition_result_set);
+    for (auto& row :
+         partition_result_set->Rows<std::int64_t, std::string, std::string>()) {
+      SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
+                   "] row[" + std::to_string(row_number++) + "]");
+      EXPECT_STATUS_OK(row);
+      if (!row) break;
+      actual_rows.push_back(*std::move(row));
+    }
+  }
+
+  EXPECT_THAT(actual_rows, UnorderedElementsAreArray(*expected_rows));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
