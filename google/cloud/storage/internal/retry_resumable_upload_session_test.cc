@@ -476,10 +476,8 @@ TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
       std::string(UploadChunkRequest::kChunkSizeQuantum, 'X'));
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
-  EXPECT_EQ(
-      "Retry policy exhausted in UploadChunk: Retry policy exhausted before "
-      "first attempt was made. [DEADLINE_EXCEEDED]",
-      res.status().message());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("Retry policy exhausted before first attempt"));
 }
 
 TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
@@ -491,10 +489,8 @@ TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
   auto res = session.UploadFinalChunk("blah", 4);
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
-  EXPECT_EQ(
-      "Retry policy exhausted in UploadFinalChunk: Retry policy exhausted "
-      "before first attempt was made. [DEADLINE_EXCEEDED]",
-      res.status().message());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("Retry policy exhausted before first attempt"));
 }
 
 TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
@@ -506,10 +502,8 @@ TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
   auto res = session.ResetSession();
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
-  EXPECT_EQ(
-      "Retry policy exhausted in ResetSession: Retry policy exhausted "
-      "before first attempt was made. [DEADLINE_EXCEEDED]",
-      res.status().message());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("Retry policy exhausted before first attempt"));
 }
 
 }  // namespace

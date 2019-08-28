@@ -100,10 +100,8 @@ TEST_F(RetryClientTest, ExpiredRetryPolicy) {
       GetObjectMetadataRequest("test-bucket", "test-object"));
   ASSERT_FALSE(result);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, result.status().code());
-  EXPECT_EQ(
-      "Retry policy exhausted in GetObjectMetadata: Retry policy exhausted "
-      "before first attempt was made. [DEADLINE_EXCEEDED]",
-      result.status().message());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("Retry policy exhausted before first attempt"));
 }
 
 }  // namespace

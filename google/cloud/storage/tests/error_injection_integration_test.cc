@@ -221,10 +221,9 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   EXPECT_FALSE(os.metadata());
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kDeadlineExceeded, os.metadata().status().code());
-  EXPECT_EQ(
-      "Retry policy exhausted in ResetSession: Retry policy exhausted before "
-      "first attempt was made. [DEADLINE_EXCEEDED]",
-      os.metadata().status().message());
+  EXPECT_THAT(
+      os.metadata().status().message(),
+      ::testing::HasSubstr("Retry policy exhausted before first attempt"));
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
