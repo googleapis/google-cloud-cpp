@@ -206,19 +206,18 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   // Create the object, but only if it does not exist already.
   auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
-  os.exceptions(std::ios_base::badbit);
   // Make sure the buffer is big enough to cause a flush.
   std::vector<char> buf(opts->upload_buffer_size() + 1, 'X');
   os << buf.data();
   SymbolInterceptor::Instance().StartFailingSend(
       SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
-  EXPECT_THROW(os << buf.data(), std::ios_base::failure);
+  os << buf.data();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.IsOpen());
   EXPECT_EQ(StatusCode::kDeadlineExceeded, os.last_status().code());
 
   SymbolInterceptor::Instance().StopFailingSend();
-  EXPECT_THROW(os.Close(), std::ios_base::failure);
+  os.Close();
   EXPECT_FALSE(os.metadata());
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kDeadlineExceeded, os.metadata().status().code());
