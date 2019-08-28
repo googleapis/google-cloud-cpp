@@ -16,7 +16,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
-#include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/spanner/testing/database_environment.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -32,70 +32,11 @@ namespace {
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 
-// Use a ::testing::Environment to create the database once.
-class IntegrationTestEnvironment : public ::testing::Environment {
- public:
-  static Database const& GetDatabase() { return *db_; }
-
- protected:
-  void SetUp() override {
-    auto project_id =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    ASSERT_FALSE(project_id.empty());
-    auto instance_id =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-            .value_or("");
-    ASSERT_FALSE(instance_id.empty());
-
-    generator_ = new google::cloud::internal::DefaultPRNG(
-        google::cloud::internal::MakeDefaultPRNG());
-    auto database_id = spanner_testing::RandomDatabaseName(*generator_);
-
-    db_ = new Database(project_id, instance_id, database_id);
-
-    std::cout << "Creating database and table " << std::flush;
-    DatabaseAdminClient admin_client;
-    auto database_future =
-        admin_client.CreateDatabase(*db_, {R"""(CREATE TABLE Singers (
-                                SingerId   INT64 NOT NULL,
-                                FirstName  STRING(1024),
-                                LastName   STRING(1024)
-                             ) PRIMARY KEY (SingerId))"""});
-    int i = 0;
-    int const timeout = 120;
-    while (++i < timeout) {
-      auto status = database_future.wait_for(std::chrono::seconds(1));
-      if (status == std::future_status::ready) break;
-      std::cout << '.' << std::flush;
-    }
-    if (i >= timeout) {
-      std::cout << "TIMEOUT\n";
-      FAIL();
-    }
-    auto database = database_future.get();
-    ASSERT_STATUS_OK(database);
-    std::cout << "DONE\n";
-  }
-
-  void TearDown() override {
-    DatabaseAdminClient admin_client;
-    auto drop_status = admin_client.DropDatabase(*db_);
-    EXPECT_STATUS_OK(drop_status);
-  }
-
- private:
-  static Database* db_;
-  static google::cloud::internal::DefaultPRNG* generator_;
-};
-
-Database* IntegrationTestEnvironment::db_;
-google::cloud::internal::DefaultPRNG* IntegrationTestEnvironment::generator_;
-
 class ClientIntegrationTest : public ::testing::Test {
  public:
   static void SetUpTestSuite() {
     client_ = google::cloud::internal::make_unique<Client>(
-        MakeConnection(IntegrationTestEnvironment::GetDatabase()));
+        MakeConnection(spanner_testing::DatabaseEnvironment::GetDatabase()));
   }
 
   void SetUp() override {
@@ -672,7 +613,7 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
 int main(int argc, char* argv[]) {
   ::google::cloud::testing_util::InitGoogleMock(argc, argv);
   (void)::testing::AddGlobalTestEnvironment(
-      new google::cloud::spanner::IntegrationTestEnvironment());
+      new google::cloud::spanner_testing::DatabaseEnvironment());
 
   return RUN_ALL_TESTS();
 }

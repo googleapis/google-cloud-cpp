@@ -17,10 +17,12 @@
 """Automatically generated source lists for spanner_client_testing - DO NOT EDIT."""
 
 spanner_client_testing_hdrs = [
+    "testing/database_environment.h",
     "testing/matchers.h",
     "testing/random_database_name.h",
 ]
 
 spanner_client_testing_srcs = [
+    "testing/database_environment.cc",
     "testing/random_database_name.cc",
 ]
