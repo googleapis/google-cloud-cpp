@@ -38,7 +38,8 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     std::string const& buffer) {
-  Status last_status;
+  Status last_status(StatusCode::kDeadlineExceeded,
+                     "Retry policy exhausted before first attempt was made.");
   while (!retry_policy_->IsExhausted()) {
     auto result = session_->UploadChunk(buffer);
     if (result.ok()) {
@@ -63,7 +64,8 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
     std::string const& buffer, std::uint64_t upload_size) {
-  Status last_status;
+  Status last_status(StatusCode::kDeadlineExceeded,
+                     "Retry policy exhausted before first attempt was made.");
   while (!retry_policy_->IsExhausted()) {
     auto result = session_->UploadFinalChunk(buffer, upload_size);
     if (result.ok()) {
@@ -87,7 +89,8 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
-  Status last_status;
+  Status last_status(StatusCode::kDeadlineExceeded,
+                     "Retry policy exhausted before first attempt was made.");
   while (!retry_policy_->IsExhausted()) {
     auto result = session_->ResetSession();
     if (result.ok()) {
