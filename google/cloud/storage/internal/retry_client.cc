@@ -69,7 +69,8 @@ typename Signature<MemberFunction>::ReturnType MakeCall(
     bool is_idempotent, RawClient& client, MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,
     char const* error_message) {
-  Status last_status;
+  Status last_status(StatusCode::kDeadlineExceeded,
+                     "Retry policy exhausted before first attempt was made.");
   auto error = [&last_status](std::string const& msg) {
     return Status(last_status.code(), msg);
   };

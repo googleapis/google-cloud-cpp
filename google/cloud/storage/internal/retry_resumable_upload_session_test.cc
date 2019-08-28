@@ -466,6 +466,52 @@ TEST(RetryResumableUploadSession, LastResponse) {
   EXPECT_EQ(result.value(), last_response.value());
 }
 
+TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+  RetryResumableUploadSession session(
+      std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
+      {});
+  auto res = session.UploadChunk(
+      std::string(UploadChunkRequest::kChunkSizeQuantum, 'X'));
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
+  EXPECT_EQ(
+      "Retry policy exhausted in UploadChunk: Retry policy exhausted before "
+      "first attempt was made. [DEADLINE_EXCEEDED]",
+      res.status().message());
+}
+
+TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+  RetryResumableUploadSession session(
+      std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
+      {});
+  auto res = session.UploadFinalChunk("blah", 4);
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
+  EXPECT_EQ(
+      "Retry policy exhausted in UploadFinalChunk: Retry policy exhausted "
+      "before first attempt was made. [DEADLINE_EXCEEDED]",
+      res.status().message());
+}
+
+TEST(RetryResumableUploadSession, ResetSessionPolicyExhaustedOnStart) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+  RetryResumableUploadSession session(
+      std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
+      {});
+  auto res = session.ResetSession();
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
+  EXPECT_EQ(
+      "Retry policy exhausted in ResetSession: Retry policy exhausted "
+      "before first attempt was made. [DEADLINE_EXCEEDED]",
+      res.status().message());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

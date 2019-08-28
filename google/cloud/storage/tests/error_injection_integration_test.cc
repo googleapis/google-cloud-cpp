@@ -189,6 +189,45 @@ extern "C" ssize_t recv(int sockfd, void* buf, size_t len, int flags) {
   return SymbolInterceptor::Instance().Recv(sockfd, buf, len, flags);
 }
 
+TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
+  auto opts = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(opts);
+  // Make sure buffer is at least equal to curl max buffer size (which is 2MiB)
+  opts->SetUploadBufferSize(2 * 1024 * 1024);
+
+  Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(100)));
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // We will construct the expected response while streaming the data up.
+  std::ostringstream expected;
+
+  // Create the object, but only if it does not exist already.
+  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+                               NewResumableUploadSession());
+  os.exceptions(std::ios_base::badbit);
+  // Make sure the buffer is big enough to cause a flush.
+  std::vector<char> buf(opts->upload_buffer_size() + 1, 'X');
+  os << buf.data();
+  SymbolInterceptor::Instance().StartFailingSend(
+      SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
+  EXPECT_THROW(os << buf.data(), std::ios_base::failure);
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.IsOpen());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, os.last_status().code());
+
+  SymbolInterceptor::Instance().StopFailingSend();
+  EXPECT_THROW(os.Close(), std::ios_base::failure);
+  EXPECT_FALSE(os.metadata());
+  EXPECT_FALSE(os.metadata().ok());
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, os.metadata().status().code());
+  EXPECT_EQ(
+      "Retry policy exhausted in ResetSession: Retry policy exhausted before "
+      "first attempt was made. [DEADLINE_EXCEEDED]",
+      os.metadata().status().message());
+}
+
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(opts);

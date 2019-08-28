@@ -90,6 +90,22 @@ TEST_F(RetryClientTest, TooManyTransientsHandling) {
   EXPECT_EQ(TransientError().code(), result.status().code());
 }
 
+/// @test Verify that the retry loop works with exhausted retry policy.
+TEST_F(RetryClientTest, ExpiredRetryPolicy) {
+  RetryClient client(std::shared_ptr<internal::RawClient>(mock),
+                     LimitedTimeRetryPolicy(std::chrono::milliseconds(0)),
+                     ExponentialBackoffPolicy(1_us, 2_us, 2));
+
+  StatusOr<ObjectMetadata> result = client.GetObjectMetadata(
+      GetObjectMetadataRequest("test-bucket", "test-object"));
+  ASSERT_FALSE(result);
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, result.status().code());
+  EXPECT_EQ(
+      "Retry policy exhausted in GetObjectMetadata: Retry policy exhausted "
+      "before first attempt was made. [DEADLINE_EXCEEDED]",
+      result.status().message());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
