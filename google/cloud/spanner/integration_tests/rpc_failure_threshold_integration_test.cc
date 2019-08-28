@@ -96,8 +96,16 @@ struct Result {
 /// Run a single copy of the experiment
 Result RunExperiment(Database const& db, int iterations) {
   // Use a different client on each thread because we do not want to share
-  // sessions.
-  Client client(MakeConnection(db));
+  // sessions, also ensure that each of these clients has a different pool of
+  // gRPC channels.
+  std::string pool = [] {
+    std::ostringstream os;
+    os << "thread-pool:" << std::this_thread::get_id();
+    return std::move(os).str();
+  }();
+
+  Client client(
+      MakeConnection(db, ConnectionOptions().set_channel_pool_domain(pool)));
 
   int number_of_successes = 0;
   int number_of_failures = 0;

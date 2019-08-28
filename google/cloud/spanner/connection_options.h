@@ -76,11 +76,18 @@ class ConnectionOptions {
     return *this;
   }
 
+  std::string channel_pool_domain() const { return channel_pool_domain_; }
+  ConnectionOptions& set_channel_pool_domain(std::string v) {
+    channel_pool_domain_ = std::move(v);
+    return *this;
+  }
+
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
   bool clog_enabled_ = false;
   std::set<std::string> tracing_components_;
+  std::string channel_pool_domain_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

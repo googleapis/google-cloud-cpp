@@ -245,8 +245,19 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
     google::cloud::LogSink::EnableStdClog();
   }
 
-  auto spanner_grpc_stub = spanner_proto::Spanner::NewStub(
-      grpc::CreateChannel(options.endpoint(), options.credentials()));
+  grpc::ChannelArguments channel_arguments;
+  if (!options.channel_pool_domain().empty()) {
+    // To get a different channel pool one just needs to set any channel
+    // parameter to a different value. Newer versions of gRPC include a macro
+    // for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling
+    // against older versions in some cases, we use the actual value.
+    channel_arguments.SetString("grpc.channel_pooling_domain",
+                                options.channel_pool_domain());
+  }
+
+  auto spanner_grpc_stub =
+      spanner_proto::Spanner::NewStub(grpc::CreateCustomChannel(
+          options.endpoint(), options.credentials(), channel_arguments));
 
   auto stub =
       std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));

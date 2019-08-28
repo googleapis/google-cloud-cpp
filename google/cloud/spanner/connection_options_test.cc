@@ -25,7 +25,7 @@ namespace {
 
 using google::cloud::testing_util::EnvironmentVariableRestore;
 
-TEST(ClientOptionsTest, Credentials) {
+TEST(ConnectionOptionsTest, Credentials) {
   // In the CI environment grpc::GoogleDefaultCredentials() may assert. Use the
   // insecure credentials to initialize the options in any unit test.
   auto expected = grpc::InsecureChannelCredentials();
@@ -38,14 +38,14 @@ TEST(ClientOptionsTest, Credentials) {
   EXPECT_EQ(other_credentials, options.credentials());
 }
 
-TEST(ClientOptionsTest, AdminEndpoint) {
+TEST(ConnectionOptionsTest, AdminEndpoint) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ("spanner.googleapis.com", options.endpoint());
   options.set_endpoint("invalid-endpoint");
   EXPECT_EQ("invalid-endpoint", options.endpoint());
 }
 
-TEST(ClientOptionsTest, Clog) {
+TEST(ConnectionOptionsTest, Clog) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   options.enable_clog();
   EXPECT_TRUE(options.clog_enabled());
@@ -53,7 +53,7 @@ TEST(ClientOptionsTest, Clog) {
   EXPECT_FALSE(options.clog_enabled());
 }
 
-TEST(ClientOptionsTest, Tracing) {
+TEST(ConnectionOptionsTest, Tracing) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   options.enable_tracing("fake-component");
   EXPECT_TRUE(options.tracing_enabled("fake-component"));
@@ -61,7 +61,7 @@ TEST(ClientOptionsTest, Tracing) {
   EXPECT_FALSE(options.tracing_enabled("fake-component"));
 }
 
-TEST(ClientOptionsTest, DefaultClogUnset) {
+TEST(ConnectionOptionsTest, DefaultClogUnset) {
   EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
 
   google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
@@ -69,7 +69,7 @@ TEST(ClientOptionsTest, DefaultClogUnset) {
   EXPECT_FALSE(options.clog_enabled());
 }
 
-TEST(ClientOptionsTest, DefaultClogSet) {
+TEST(ConnectionOptionsTest, DefaultClogSet) {
   EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
 
   google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "");
@@ -77,7 +77,7 @@ TEST(ClientOptionsTest, DefaultClogSet) {
   EXPECT_TRUE(options.clog_enabled());
 }
 
-TEST(ClientOptionsTest, DefaultTracingUnset) {
+TEST(ConnectionOptionsTest, DefaultTracingUnset) {
   EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
 
   google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
@@ -85,7 +85,7 @@ TEST(ClientOptionsTest, DefaultTracingUnset) {
   EXPECT_FALSE(options.tracing_enabled("rpc"));
 }
 
-TEST(ClientOptionsTest, DefaultTracingSet) {
+TEST(ConnectionOptionsTest, DefaultTracingSet) {
   EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
 
   google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
@@ -97,6 +97,12 @@ TEST(ClientOptionsTest, DefaultTracingSet) {
   EXPECT_TRUE(options.tracing_enabled("baz"));
 }
 
+TEST(ConnectionOptionsTest, ChannelPoolName) {
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  EXPECT_TRUE(options.channel_pool_domain().empty());
+  options.set_channel_pool_domain("test-channel-pool");
+  EXPECT_EQ("test-channel-pool", options.channel_pool_domain());
+}
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
