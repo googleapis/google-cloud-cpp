@@ -307,11 +307,14 @@ endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
     add_subdirectory(grpc_utils)
 endif ()
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS
-    AND GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
-    AND GOOGLE_CLOUD_CPP_ENABLE_STORAGE
-    AND GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
-    # The examples are more readable if we use exceptions for error handling. We
-    # had to tradeoff readability vs. "making them compile everywhere".
-    add_subdirectory(examples)
+
+# The examples are more readable if we use exceptions for error handling. We had
+# to tradeoff readability vs. "making them compile everywhere".
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    # The examples require these libraries to be enabled.
+    if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+        AND GOOGLE_CLOUD_CPP_ENABLE_STORAGE
+        AND GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
+        add_subdirectory(examples)
+    endif ()
 endif ()

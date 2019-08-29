@@ -78,6 +78,10 @@ add_library(bigtable_protos INTERFACE)
 target_link_libraries(bigtable_protos INTERFACE googleapis-c++::bigtable_protos)
 add_library(bigtable::protos ALIAS bigtable_protos)
 
+# This should happen before include(CTest), because we are not interested in
+# compiling and running the gRPC tests.
+find_package(gRPC)
+
 # Enable unit tests
 include(CTest)
 
