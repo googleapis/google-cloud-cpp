@@ -295,11 +295,22 @@ install(
         DESTINATION
         "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
 
-add_subdirectory(bigtable)
-add_subdirectory(firestore)
-add_subdirectory(storage)
-add_subdirectory(grpc_utils)
-if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
+    add_subdirectory(bigtable)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
+    add_subdirectory(firestore)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    add_subdirectory(storage)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
+    add_subdirectory(grpc_utils)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS
+    AND GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+    AND GOOGLE_CLOUD_CPP_ENABLE_STORAGE
+    AND GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
     # The examples are more readable if we use exceptions for error handling. We
     # had to tradeoff readability vs. "making them compile everywhere".
     add_subdirectory(examples)
