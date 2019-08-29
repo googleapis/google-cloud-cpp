@@ -262,23 +262,25 @@ StatusOr<ObjectMetadata> RetryClient::GetObjectMetadata(
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObjectNotWrapped(
-    ReadObjectRangeRequest const& request) {
-  auto retry_policy = retry_policy_->clone();
-  auto backoff_policy = backoff_policy_->clone();
+    ReadObjectRangeRequest const& request, RetryPolicy& retry_policy,
+    BackoffPolicy& backoff_policy) {
   auto is_idempotent = idempotency_policy_->IsIdempotent(request);
-  return MakeCall(*retry_policy, *backoff_policy, is_idempotent, *client_,
+  return MakeCall(retry_policy, backoff_policy, is_idempotent, *client_,
                   &RawClient::ReadObject, request, __func__);
 }
 
 StatusOr<std::unique_ptr<ObjectReadSource>> RetryClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  auto child = ReadObjectNotWrapped(request);
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  auto child = ReadObjectNotWrapped(request, *retry_policy, *backoff_policy);
   if (!child) {
     return child;
   }
   auto self = shared_from_this();
-  return std::unique_ptr<ObjectReadSource>(
-      new RetryObjectReadSource(self, request, *std::move(child)));
+  return std::unique_ptr<ObjectReadSource>(new RetryObjectReadSource(
+      self, request, *std::move(child), std::move(retry_policy),
+      std::move(backoff_policy)));
 }
 
 StatusOr<ListObjectsResponse> RetryClient::ListObjects(

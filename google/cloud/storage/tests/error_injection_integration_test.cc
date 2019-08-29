@@ -17,6 +17,7 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
@@ -28,6 +29,8 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace {
+
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
 // Initialized in main() below.
 char const* flag_bucket_name;
@@ -231,7 +234,8 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   ASSERT_STATUS_OK(opts);
   // Make it at least the maximum curl buffer size (which is 512KiB)
   opts->SetDownloadBufferSize(512 * 1024);
-  Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(500)));
+  Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(500)),
+                ExponentialBackoffPolicy(1_us, 2_us, 2));
 
   std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
@@ -251,13 +255,10 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
-      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 2);
-  // It took only 2 failed recv() calls!
+      SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 10);
   is.read(read_buf.data(), read_buf.size());
-  // TODO(#2890) - change this to EXPECT_STATUS_OK once retries work.
-  ASSERT_FALSE(is.status().ok());
+  ASSERT_TRUE(is.status().ok());
   is.Close();
-  EXPECT_EQ(StatusCode::kUnavailable, is.status().code());
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 2);
 
   auto status = client.DeleteObject(bucket_name, object_name);
@@ -294,7 +295,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   SymbolInterceptor::Instance().StartFailingRecv(
       SymbolInterceptor::Instance().LastSeenRecvDescriptor(), ECONNRESET, 1);
   SymbolInterceptor::Instance().StartFailingSend(
-      SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET);
+      SymbolInterceptor::Instance().LastSeenSendDescriptor(), ECONNRESET, 3);
   is.read(read_buf.data(), read_buf.size());
   ASSERT_FALSE(is.status().ok());
   is.Close();

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/log.h"
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -22,11 +23,16 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 RetryObjectReadSource::RetryObjectReadSource(
     std::shared_ptr<RetryClient> client, ReadObjectRangeRequest request,
-    std::unique_ptr<ObjectReadSource> child)
+    std::unique_ptr<ObjectReadSource> child,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy)
     : client_(std::move(client)),
       request_(std::move(request)),
       child_(std::move(child)),
-      current_offset_(request_.StartingByte()) {}
+      current_offset_(request_.StartingByte()),
+      retry_policy_(std::move(retry_policy)),
+      backoff_policy_(std::move(backoff_policy)),
+      backoff_policy_prototype_(backoff_policy_->clone()) {}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
@@ -35,32 +41,44 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
   auto result = child_->Read(buf, n);
-  if (!result) {
-    // A Read() request failed, most likely that means the connection closed,
-    // try to create a new child. The current child is no longer usable, we will
-    // try to create a new one and replace it. Should that fail the current
-    // child would be erased anyway so we reset it here.
+  bool backoff_policy_used = false;
+  for (; !result && retry_policy_->OnFailure(result.status());
+       std::this_thread::sleep_for(backoff_policy_->OnCompletion()),
+       backoff_policy_used = true, result = child_->Read(buf, n)) {
+    // A Read() request failed, most likely that means the connection failed or
+    // stalled. The current child might no longer be usable, so we will try to
+    // create a new one and replace it. Should that fail, the retry policy would
+    // already be exhausted, so we should fail this operation too.
     child_.reset();
     request_.set_option(ReadFromOffset(current_offset_));
     if (generation_) {
       request_.set_option(Generation(*generation_));
     }
-    auto new_child = client_->ReadObjectNotWrapped(request_);
+    auto new_child = client_->ReadObjectNotWrapped(request_, *retry_policy_,
+                                                   *backoff_policy_);
     if (!new_child) {
-      // Failing to create a new child is an unrecoverable error: the
-      // ReadObjectNotWrapped() function already retried multiple times.
+      // We've exhausted the retry policy while trying to create the child, so
+      // return right away.
       return new_child.status();
     }
-    // Repeat the Read() request on the new child.
-    result = (*new_child)->Read(buf, n);
-    if (!result) {
-      // This is a permanent failure, we created a new child but it turned out
-      // to be unusable.
-      return result;
-    }
-    child_ = *std::move(new_child);
+    child_ = std::move(*new_child);
   }
-  // assert(response.ok());
+  if (!result) {
+    // We've tried retrying but failed.
+    auto const& status = result.status();
+    std::stringstream os;
+    if (internal::StatusTraits::IsPermanentFailure(status)) {
+      os << "Permanent error in Read(): " << status;
+    } else {
+      os << "Retry policy exhausted in Read(): " << status;
+    }
+    return Status(status.code(), os.str());
+  }
+  // Somethig is working, so let's reset the backoff policy if it was used, so
+  // that if a failure happens, we start from small wait periods.
+  if (backoff_policy_used) {
+    backoff_policy_ = backoff_policy_prototype_->clone();
+  }
   auto g = result->response.headers.find("x-goog-generation");
   if (g != result->response.headers.end()) {
     generation_ = std::stoll(g->second);

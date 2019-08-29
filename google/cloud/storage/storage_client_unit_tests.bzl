@@ -66,6 +66,7 @@ storage_client_unit_tests = [
     "internal/policy_document_request_test.cc",
     "internal/resumable_upload_session_test.cc",
     "internal/retry_client_test.cc",
+    "internal/retry_object_read_source_test.cc",
     "internal/retry_resumable_upload_session_test.cc",
     "internal/service_account_requests_test.cc",
     "internal/sha256_hash_test.cc",
