@@ -71,7 +71,7 @@ Result LogHelper(Functor&& functor, grpc::ClientContext& context,
                  Request const& request, char const* where) {
   GCP_LOG(DEBUG) << where << "() << " << request.DebugString();
   auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "null" : "not null")
+  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
                  << " stream";
   return response;
 }
