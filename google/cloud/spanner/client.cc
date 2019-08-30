@@ -27,8 +27,6 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace spanner_proto = ::google::spanner::v1;
-
 StatusOr<ResultSet> Client::Read(std::string table, KeySet keys,
                                  std::vector<std::string> columns,
                                  ReadOptions read_options) {
@@ -97,12 +95,10 @@ StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
                                 std::move(partition_options)});
 }
 
-std::vector<StatusOr<spanner_proto::ResultSetStats>> Client::ExecuteBatchDml(
-    Transaction const& /*transaction*/,
-    std::vector<SqlStatement> const& /*statements*/) {
-  // This method is NOT part of the Alpha release. Please do not work on this
-  // until all the higher-priority alpha work is finished.
-  return {Status(StatusCode::kUnimplemented, "not implemented")};
+StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
+    Transaction transaction, std::vector<SqlStatement> statements) {
+  return conn_->ExecuteBatchDml(
+      {std::move(transaction), std::move(statements)});
 }
 
 StatusOr<CommitResult> Client::Commit(Transaction transaction,

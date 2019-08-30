@@ -18,6 +18,7 @@
 
 spanner_client_hdrs = [
     "backoff_policy.h",
+    "batch_dml_result.h",
     "client.h",
     "commit_result.h",
     "connection.h",

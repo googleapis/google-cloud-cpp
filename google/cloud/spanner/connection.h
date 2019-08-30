@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_H_
 
+#include "google/cloud/spanner/batch_dml_result.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/keys.h"
@@ -97,6 +98,12 @@ class Connection {
   };
   virtual StatusOr<std::vector<QueryPartition>> PartitionQuery(
       PartitionQueryParams) = 0;
+
+  struct BatchDmlParams {
+    Transaction transaction;
+    std::vector<SqlStatement> statements;
+  };
+  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(BatchDmlParams) = 0;
 
   struct CommitParams {
     Transaction transaction;

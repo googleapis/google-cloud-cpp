@@ -55,6 +55,7 @@ class MockConnection : public Connection {
   MOCK_METHOD1(ExecuteSql, StatusOr<ResultSet>(ExecuteSqlParams));
   MOCK_METHOD1(PartitionQuery,
                StatusOr<std::vector<QueryPartition>>(PartitionQueryParams));
+  MOCK_METHOD1(ExecuteBatchDml, StatusOr<BatchDmlResult>(BatchDmlParams));
   MOCK_METHOD1(Commit, StatusOr<CommitResult>(CommitParams));
   MOCK_METHOD1(Rollback, Status(RollbackParams));
 };
@@ -285,6 +286,60 @@ TEST(ClientTest, ExecuteSqlFailure) {
   ++iter;
   EXPECT_FALSE((*iter).ok());
   EXPECT_EQ((*iter).status().code(), StatusCode::kDeadlineExceeded);
+}
+
+TEST(ClientTest, ExecuteBatchDmlSuccess) {
+  auto request = {
+      SqlStatement("UPDATE Foo SET Bar = 1"),
+      SqlStatement("UPDATE Foo SET Bar = 1"),
+      SqlStatement("UPDATE Foo SET Bar = 1"),
+  };
+
+  BatchDmlResult result;
+  result.stats = std::vector<BatchDmlResult::Stats>{
+      {10},
+      {10},
+      {10},
+  };
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, ExecuteBatchDml(_)).WillOnce(Return(result));
+
+  Client client(conn);
+  auto txn = MakeReadWriteTransaction();
+  auto actual = client.ExecuteBatchDml(txn, request);
+
+  EXPECT_STATUS_OK(actual);
+  EXPECT_STATUS_OK(actual->status);
+  EXPECT_EQ(actual->stats.size(), request.size());
+}
+
+TEST(ClientTest, ExecuteBatchDmlError) {
+  auto request = {
+      SqlStatement("UPDATE Foo SET Bar = 1"),
+      SqlStatement("UPDATE Foo SET Bar = 1"),
+      SqlStatement("UPDATE Foo SET Bar = 1"),
+  };
+
+  BatchDmlResult result;
+  result.status = Status(StatusCode::kUnknown, "some error");
+  result.stats = std::vector<BatchDmlResult::Stats>{
+      {10},
+      // Oops: Only one SqlStatement was processed, then "some error"
+  };
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, ExecuteBatchDml(_)).WillOnce(Return(result));
+
+  Client client(conn);
+  auto txn = MakeReadWriteTransaction();
+  auto actual = client.ExecuteBatchDml(txn, request);
+
+  EXPECT_STATUS_OK(actual);
+  EXPECT_FALSE(actual->status.ok());
+  EXPECT_EQ(actual->status.message(), "some error");
+  EXPECT_NE(actual->stats.size(), request.size());
+  EXPECT_EQ(actual->stats.size(), 1);
 }
 
 TEST(ClientTest, CommitSuccess) {

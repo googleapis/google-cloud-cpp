@@ -52,6 +52,7 @@ class ConnectionImpl : public Connection {
   StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams esp) override;
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       PartitionQueryParams) override;
+  StatusOr<BatchDmlResult> ExecuteBatchDml(BatchDmlParams) override;
   StatusOr<CommitResult> Commit(CommitParams cp) override;
   Status Rollback(RollbackParams rp) override;
 
@@ -78,6 +79,11 @@ class ConnectionImpl : public Connection {
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       ExecuteSqlParams const& esp, PartitionOptions partition_options);
+
+  /// Implementation details for ExecuteBatchDml
+  StatusOr<BatchDmlResult> ExecuteBatchDml(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, BatchDmlParams params);
 
   /// Implementation details for Commit.
   StatusOr<CommitResult> Commit(SessionHolder& session,

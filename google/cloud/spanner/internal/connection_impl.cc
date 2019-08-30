@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/internal/make_unique.h"
 #include <google/spanner/v1/spanner.pb.h>
 
@@ -64,6 +65,17 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
         return PartitionQuery(session, s, pqp.sql_params,
                               std::move(pqp.partition_options));
       });
+}
+
+StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
+    BatchDmlParams params) {
+  return internal::Visit(std::move(params.transaction),
+                         [this, &params](SessionHolder& session,
+                                         spanner_proto::TransactionSelector& s,
+                                         std::int64_t seqno) {
+                           return ExecuteBatchDml(session, s, seqno,
+                                                  std::move(params));
+                         });
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(CommitParams cp) {
@@ -295,6 +307,43 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
   }
 
   return query_partitions;
+}
+
+StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
+    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+    std::int64_t seqno, BatchDmlParams params) {
+  if (session.session_name().empty()) {
+    auto session_or = GetSession();
+    if (!session_or) {
+      return std::move(session_or).status();
+    }
+    session = std::move(*session_or);
+  }
+  spanner_proto::ExecuteBatchDmlRequest request;
+  request.set_session(session.session_name());
+  request.set_seqno(seqno);
+  *request.mutable_transaction() = s;
+  for (auto& sql : params.statements) {
+    *request.add_statements() = internal::ToProto(std::move(sql));
+  }
+
+  grpc::ClientContext context;
+  auto response = stub_->ExecuteBatchDml(context, request);
+  if (!response) {
+    return std::move(response).status();
+  }
+
+  if (response->result_sets_size() > 0 && s.has_begin()) {
+    s.set_id(response->result_sets(0).metadata().transaction().id());
+  }
+
+  BatchDmlResult result;
+  result.status = grpc_utils::MakeStatusFromRpcError(response->status());
+  for (auto const& result_set : response->result_sets()) {
+    result.stats.push_back({result_set.stats().row_count_exact()});
+  }
+
+  return result;
 }
 
 StatusOr<CommitResult> ConnectionImpl::Commit(

@@ -86,6 +86,7 @@ configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
             backoff_policy.h
+            batch_dml_result.h
             client.cc
             client.h
             commit_result.h

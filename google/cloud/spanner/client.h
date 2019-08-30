@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 
+#include "google/cloud/spanner/batch_dml_result.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/connection_options.h"
@@ -293,28 +294,26 @@ class Client {
    * to be run with lower latency than submitting them sequentially with
    * `ExecuteSql`.
    *
-   * @warning This method is not supported in the alpha release and will return
-   *     "Unimplemented" status.
+   * Statements are executed in order, sequentially. Execution will stop at the
+   * first failed statement; the remaining statements will not run.
    *
-   * Statements are executed in order, sequentially. Execution will stop at
-   * the first failed statement; the remaining statements will not run.
+   * As with all read-write transactions, the results will not be visible
+   * outside of the transaction until it is committed. For that reason, it is
+   * advisable to run this method with `RunTransaction`.
    *
-   * @param transaction The transaction to execute the operation in.
+   * @warning A returned status of OK from this function does not imply that
+   *     all the statements were executed successfully. For that, you need to
+   *     inspect the `BatchDmlResult::status` field.
+   *
+   * @param transaction The read-write transaction to execute the operation in.
    * @param statements The list of statements to execute in this batch.
    *     Statements are executed serially, such that the effects of statement i
    *     are visible to statement i+1. Each statement must be a DML statement.
    *     Execution will stop at the first failed statement; the remaining
    *     statements will not run. Must not be empty.
-   *
-   * @return A vector of `StatusOr` corresponding to each statement in
-   *     `statements`. Statements that were successfully executed return
-   *     statistics. If a statement fails, its error status is returned and
-   *     entries for subsequent statements are not present in the returned
-   *     vector.
    */
-  std::vector<StatusOr<google::spanner::v1::ResultSetStats>> ExecuteBatchDml(
-      Transaction const& transaction,
-      std::vector<SqlStatement> const& statements);
+  StatusOr<BatchDmlResult> ExecuteBatchDml(
+      Transaction transaction, std::vector<SqlStatement> statements);
 
   /**
    * Commits a read-write transaction.
