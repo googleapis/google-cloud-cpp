@@ -116,6 +116,8 @@ add_library(spanner_client
             internal/logging_spanner_stub.h
             internal/merge_chunk.cc
             internal/merge_chunk.h
+            internal/metadata_spanner_stub.cc
+            internal/metadata_spanner_stub.h
             internal/partial_result_set_reader.cc
             internal/partial_result_set_reader.h
             internal/polling_loop.h
@@ -196,7 +198,9 @@ function (spanner_client_define_tests)
                 testing/database_environment.h
                 testing/matchers.h
                 testing/random_database_name.cc
-                testing/random_database_name.h)
+                testing/random_database_name.h
+                testing/validate_metadata.cc
+                testing/validate_metadata.h)
     target_link_libraries(spanner_client_testing
                           PUBLIC googleapis-c++::spanner_client
                                  google_cloud_cpp_testing
@@ -224,6 +228,7 @@ function (spanner_client_define_tests)
         internal/connection_impl_test.cc
         internal/date_test.cc
         internal/logging_spanner_stub_test.cc
+        internal/metadata_spanner_stub_test.cc
         internal/merge_chunk_test.cc
         internal/partial_result_set_reader_test.cc
         internal/polling_loop_test.cc

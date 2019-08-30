@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/logging_spanner_stub.h"
+#include "google/cloud/spanner/internal/metadata_spanner_stub.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
@@ -259,8 +260,9 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
       spanner_proto::Spanner::NewStub(grpc::CreateCustomChannel(
           options.endpoint(), options.credentials(), channel_arguments));
 
-  auto stub =
+  std::shared_ptr<SpannerStub> stub =
       std::make_shared<DefaultSpannerStub>(std::move(spanner_grpc_stub));
+  stub = std::make_shared<MetadataSpannerStub>(std::move(stub));
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

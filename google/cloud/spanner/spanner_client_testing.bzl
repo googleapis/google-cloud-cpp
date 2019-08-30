@@ -20,9 +20,11 @@ spanner_client_testing_hdrs = [
     "testing/database_environment.h",
     "testing/matchers.h",
     "testing/random_database_name.h",
+    "testing/validate_metadata.h",
 ]
 
 spanner_client_testing_srcs = [
     "testing/database_environment.cc",
     "testing/random_database_name.cc",
+    "testing/validate_metadata.cc",
 ]
