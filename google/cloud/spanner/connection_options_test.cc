@@ -72,7 +72,7 @@ TEST(ConnectionOptionsTest, DefaultClogUnset) {
 TEST(ConnectionOptionsTest, DefaultClogSet) {
   EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
 
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "");
+  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "true");
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_TRUE(options.clog_enabled());
 }
