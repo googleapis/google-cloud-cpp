@@ -555,7 +555,15 @@ TEST(ClientTest, RunTransaction_TooManyFailures) {
   };
 
   Client client(conn);
-  auto result = RunTransaction(client, Transaction::ReadWriteOptions{}, f);
+  // Use a retry policy with a limited number of errors, or this will wait for a
+  // long time, also change the backoff policy to sleep for very short periods,
+  // so the unit tests run faster.
+  auto result = internal::RunTransactionWithPolicies(
+      client, Transaction::ReadWriteOptions{}, f,
+      LimitedErrorCountRetryPolicy(2).clone(),
+      ExponentialBackoffPolicy(std::chrono::microseconds(10),
+                               std::chrono::microseconds(10), 2.0)
+          .clone());
   EXPECT_EQ(StatusCode::kAborted, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("Aborted transaction"));
   EXPECT_THAT(result.status().message(), HasSubstr("Too many failures "));

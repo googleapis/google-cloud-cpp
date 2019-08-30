@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CLIENT_H_
 
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/batch_dml_result.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
@@ -25,6 +26,7 @@
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/result_set.h"
+#include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/optional.h"
@@ -371,6 +373,42 @@ class Client {
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& options = ConnectionOptions());
 
+namespace internal {
+/**
+ * Execute a function in the context of a read-write transaction, with
+ * automatic retries if the transaction commit results in an abort.
+ *
+ * The caller-provided function will be passed the `Client` argument and a
+ * newly created read-write `Transaction`. It should use these objects to
+ * issue any `Read()`s, `ExecuteSql()`s, etc., and return the `Mutation`s to
+ * commit, or an error (which causes the transaction to be rolled back).
+ *
+ * The lock priority of the transaction increases after each prior aborted
+ * transaction, meaning that the next attempt has a slightly better chance
+ * of success than before.
+ *
+ * @param client how to contact Cloud Spanner
+ * @param opts options for the transaction created by this function
+ * @param f the function to call in the transaction.
+ * @param retry_policy controls for how long (or how many times) will the
+ *     function retry the operation when there is a retryable failure.
+ * @param backoff_policy controls how long does the function wait between
+ *     retries.
+ */
+StatusOr<CommitResult> RunTransactionWithPolicies(
+    Client client, Transaction::ReadWriteOptions const& opts,
+    std::function<StatusOr<Mutations>(Client, Transaction)> const& f,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy);
+
+/// The default retry policy for RunTransaction()
+std::unique_ptr<RetryPolicy> DefaultRunTransactionRetryPolicy();
+
+/// The default backoff policy for RunTransaction()
+std::unique_ptr<BackoffPolicy> DefaultRunTransactionBackoffPolicy();
+
+}  // namespace internal
+
 /**
  * Execute a function in the context of a read-write transaction, with
  * automatic retries if the transaction commit results in an abort.
@@ -384,9 +422,14 @@ std::shared_ptr<Connection> MakeConnection(
  * transaction, meaning that the next attempt has a slightly better chance
  * of success than before.
  */
-StatusOr<CommitResult> RunTransaction(
+inline StatusOr<CommitResult> RunTransaction(
     Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<StatusOr<Mutations>(Client, Transaction)> const& f);
+    std::function<StatusOr<Mutations>(Client, Transaction)> f) {
+  return internal::RunTransactionWithPolicies(
+      std::move(client), opts, std::move(f),
+      internal::DefaultRunTransactionRetryPolicy(),
+      internal::DefaultRunTransactionBackoffPolicy());
+}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

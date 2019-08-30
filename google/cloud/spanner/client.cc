@@ -150,34 +150,44 @@ StatusOr<CommitResult> RunTransactionImpl(
 
 }  // namespace
 
-StatusOr<CommitResult> RunTransaction(
-    Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
-  ExponentialBackoffPolicy backoff_policy(std::chrono::milliseconds(100),
-                                          std::chrono::minutes(5), 2.0);
-  // TODO(#357,#442): It is not a good idea to simply cap the number of
-  // retries. It is better to limit the total amount of time spent retrying.
-  LimitedErrorCountRetryPolicy retry_policy(/*maximum_failures=*/2);
+namespace internal {
 
+StatusOr<CommitResult> RunTransactionWithPolicies(
+    Client client, Transaction::ReadWriteOptions const& opts,
+    std::function<StatusOr<Mutations>(Client, Transaction)> const& f,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
   Status last_status(
       StatusCode::kFailedPrecondition,
       "Retry policy should not be exhausted when retry loop starts");
   char const* reason = "Too many failures in ";
-  while (!retry_policy.IsExhausted()) {
+  while (!retry_policy->IsExhausted()) {
     auto result = RunTransactionImpl(client, opts, f);
     if (result) return result;
     last_status = std::move(result).status();
-    if (!retry_policy.OnFailure(last_status)) {
+    if (!retry_policy->OnFailure(last_status)) {
       if (internal::SafeGrpcRetry::IsPermanentFailure(last_status)) {
         reason = "Permanent failure in ";
       }
       break;
     }
-    std::this_thread::sleep_for(backoff_policy.OnCompletion());
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }
   return internal::RetryLoopError(reason, __func__, last_status);
 }
 
+std::unique_ptr<RetryPolicy> DefaultRunTransactionRetryPolicy() {
+  return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(10))
+      .clone();
+}
+
+std::unique_ptr<BackoffPolicy> DefaultRunTransactionBackoffPolicy() {
+  return ExponentialBackoffPolicy(std::chrono::milliseconds(100),
+                                  std::chrono::minutes(5), 2.0)
+      .clone();
+}
+
+}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
