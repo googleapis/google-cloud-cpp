@@ -20,6 +20,7 @@
 // On Unix-like systems we need setenv()/unsetenv(), which are defined here:
 #include <cstdlib>
 #endif  // _WIN32
+#include <cstring>
 
 namespace google {
 namespace cloud {
@@ -40,7 +41,13 @@ void SetEnv(char const* variable, char const* value) {
     return;
   }
 #ifdef _WIN32
-  (void)_putenv_s(variable, value);
+  // On Windows an empty string passed to _putenv_s will delete the environment
+  // variable. As a workaround, we pass a space.
+  if (std::strlen(value) == 0) {
+    (void)_putenv_s(variable, " ");
+  } else {
+    (void)_putenv_s(variable, value);
+  }
 #else
   (void)setenv(variable, value, 1);
 #endif  // _WIN32
