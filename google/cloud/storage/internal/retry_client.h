@@ -81,7 +81,7 @@ class RetryClient : public RawClient,
 
   /// Call ReadObject() but do not wrap the result in a RetryObjectReadSource.
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectNotWrapped(
-      ReadObjectRangeRequest const&);
+      ReadObjectRangeRequest const&, RetryPolicy&, BackoffPolicy&);
   StatusOr<std::unique_ptr<ObjectReadSource>> ReadObject(
       ReadObjectRangeRequest const&) override;
 

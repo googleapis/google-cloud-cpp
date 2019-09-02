@@ -36,7 +36,9 @@ class RetryObjectReadSource : public ObjectReadSource {
  public:
   RetryObjectReadSource(std::shared_ptr<RetryClient> client,
                         ReadObjectRangeRequest request,
-                        std::unique_ptr<ObjectReadSource> child);
+                        std::unique_ptr<ObjectReadSource> child,
+                        std::unique_ptr<RetryPolicy> retry_policy,
+                        std::unique_ptr<BackoffPolicy> backoff_policy);
 
   bool IsOpen() const override { return child_ && child_->IsOpen(); }
   StatusOr<HttpResponse> Close() override { return child_->Close(); }
@@ -48,6 +50,8 @@ class RetryObjectReadSource : public ObjectReadSource {
   std::unique_ptr<ObjectReadSource> child_;
   std::int64_t current_offset_;
   optional<std::int64_t> generation_;
+  std::unique_ptr<RetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
 };
 
 }  // namespace internal
