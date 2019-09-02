@@ -31,8 +31,7 @@ RetryObjectReadSource::RetryObjectReadSource(
       child_(std::move(child)),
       current_offset_(request_.StartingByte()),
       retry_policy_(std::move(retry_policy)),
-      backoff_policy_(std::move(backoff_policy)),
-      backoff_policy_prototype_(backoff_policy_->clone()) {}
+      backoff_policy_prototype_(std::move(backoff_policy)) {}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
@@ -41,10 +40,15 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
   auto result = child_->Read(buf, n);
-  bool backoff_policy_used = false;
+  // Whenever we successfully get a piece of data, we should reset the backoff
+  // policy to its initial state. It is easier to keep it fresh in the object
+  // and clone on every Read(). By the time we return from this function we will
+  // have either successfully read a piece of data or we will have failed for
+  // good.
+  auto backoff_policy = backoff_policy_prototype_->clone();
   for (; !result && retry_policy_->OnFailure(result.status());
-       std::this_thread::sleep_for(backoff_policy_->OnCompletion()),
-       backoff_policy_used = true, result = child_->Read(buf, n)) {
+       std::this_thread::sleep_for(backoff_policy->OnCompletion()),
+       result = child_->Read(buf, n)) {
     // A Read() request failed, most likely that means the connection failed or
     // stalled. The current child might no longer be usable, so we will try to
     // create a new one and replace it. Should that fail, the retry policy would
@@ -55,7 +59,7 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
       request_.set_option(Generation(*generation_));
     }
     auto new_child = client_->ReadObjectNotWrapped(request_, *retry_policy_,
-                                                   *backoff_policy_);
+                                                   *backoff_policy);
     if (!new_child) {
       // We've exhausted the retry policy while trying to create the child, so
       // return right away.
@@ -73,11 +77,6 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
       os << "Retry policy exhausted in Read(): " << status;
     }
     return Status(status.code(), os.str());
-  }
-  // Somethig is working, so let's reset the backoff policy if it was used, so
-  // that if a failure happens, we start from small wait periods.
-  if (backoff_policy_used) {
-    backoff_policy_ = backoff_policy_prototype_->clone();
   }
   auto g = result->response.headers.find("x-goog-generation");
   if (g != result->response.headers.end()) {

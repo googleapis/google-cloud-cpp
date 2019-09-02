@@ -41,12 +41,7 @@ class BackoffPolicyMockState {
  public:
   BackoffPolicyMockState() : num_calls_from_last_clone_(), num_clones_() {}
 
-  MOCK_METHOD0(OnCompletionHook, std::chrono::milliseconds());
-
-  std::chrono::milliseconds OnCompletion() {
-    num_calls_from_last_clone_++;
-    return OnCompletionHook();
-  }
+  MOCK_METHOD0(OnCompletion, std::chrono::milliseconds());
 
   int num_calls_from_last_clone_;
   int num_clones_;
@@ -59,6 +54,7 @@ class BackoffPolicyMock : public BackoffPolicy {
   BackoffPolicyMock() : state_(new BackoffPolicyMockState) {}
 
   std::chrono::milliseconds OnCompletion() override {
+    ++state_->num_calls_from_last_clone_;
     return state_->OnCompletion();
   }
 
@@ -182,9 +178,10 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   auto raw_source1 = new MockObjectReadSource;
   auto raw_source2 = new MockObjectReadSource;
   auto raw_source3 = new MockObjectReadSource;
+  auto raw_source4 = new MockObjectReadSource;
   int num_backoff_policy_called = 0;
   BackoffPolicyMock backoff_policy_mock;
-  EXPECT_CALL(*backoff_policy_mock.state_, OnCompletionHook())
+  EXPECT_CALL(*backoff_policy_mock.state_, OnCompletion())
       .WillRepeatedly(Invoke([&] {
         ++num_backoff_policy_called;
         return std::chrono::milliseconds(0);
@@ -205,28 +202,43 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
       }))
       .WillOnce(Invoke([raw_source3](ReadObjectRangeRequest) {
         return std::unique_ptr<ObjectReadSource>(raw_source3);
+      }))
+      .WillOnce(Invoke([raw_source4](ReadObjectRangeRequest) {
+        return std::unique_ptr<ObjectReadSource>(raw_source4);
       }));
   EXPECT_CALL(*raw_source1, Read(_, _)).WillOnce(Return(TransientError()));
 
   EXPECT_CALL(*raw_source2, Read(_, _)).WillOnce(Return(TransientError()));
 
-  EXPECT_CALL(*raw_source3, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
+  EXPECT_CALL(*raw_source3, Read(_, _))
+      .WillOnce(Return(ReadSourceResult{}))
+      .WillOnce(Return(TransientError()));
+
+  EXPECT_CALL(*raw_source4, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
 
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
-  // The policy was cloned twice by the ctor and once by the RetryClient
-  EXPECT_EQ(3, backoff_policy_mock.NumClones());
+  // The policy was cloned by the ctor and once by the RetryClient
+  EXPECT_EQ(2, backoff_policy_mock.NumClones());
   EXPECT_EQ(0, num_backoff_policy_called);
 
   // raw_source1 and raw_source2 fail, then a success
   ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
   // Two retries, so the backoff policy was called twice.
   EXPECT_EQ(2, num_backoff_policy_called);
-  // The backoff should have been cloned during the read (after the successful
-  // read, but not after a successful ReadObject).
+  // The backoff should have been cloned during the read.
+  EXPECT_EQ(3, backoff_policy_mock.NumClones());
+  // The backoff policy was used twice in the first retry.
+  EXPECT_EQ(2, backoff_policy_mock.NumCallsFromLastClone());
+
+  // raw_source3 fails, then a success
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+  // This read caused a third retry.
+  EXPECT_EQ(3, num_backoff_policy_called);
+  // The backoff should have been cloned during the read.
   EXPECT_EQ(4, backoff_policy_mock.NumClones());
-  // After backoff policy had been cloned, no OnFailure() was called.
-  EXPECT_EQ(0, backoff_policy_mock.NumCallsFromLastClone());
+  // The backoff policy was only once in the second retry.
+  EXPECT_EQ(1, backoff_policy_mock.NumCallsFromLastClone());
 }
 
 /// @test Check that retry policy is shared between reads and resetting session
