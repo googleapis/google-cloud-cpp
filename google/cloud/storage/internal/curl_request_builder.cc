@@ -33,7 +33,8 @@ CurlRequestBuilder::CurlRequestBuilder(
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_("?"),
-      logging_enabled_(false) {}
+      logging_enabled_(false),
+      download_stall_timeout_(0) {}
 
 CurlRequest CurlRequestBuilder::BuildRequest() {
   ValidateBuilderState(__func__);
