@@ -27,7 +27,7 @@ TEST(SetEnv, SetEmptyEnvVar) {
   EXPECT_FALSE(GetEnv("foo").has_value());
 #else
   EXPECT_TRUE(GetEnv("foo").has_value());
-#endif // _WIN32
+#endif  // _WIN32
 }
 
 /// @test Verify we can unset an environment variable with nullptr.
