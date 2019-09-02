@@ -53,8 +53,8 @@ TEST(CurlDownloadRequestTest, SimpleStream) {
   do {
     auto n = sizeof(buffer);
     result = download.Read(buffer, n);
-    EXPECT_STATUS_OK(result);
-    EXPECT_LE(result->bytes_received, sizeof(buffer));
+    ASSERT_STATUS_OK(result);
+    ASSERT_LE(result->bytes_received, sizeof(buffer));
     count += std::count(buffer, buffer + result->bytes_received, '\n');
   } while (result->response.status_code == 100);
 
