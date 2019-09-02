@@ -78,6 +78,8 @@ add_library(bigtable_protos INTERFACE)
 target_link_libraries(bigtable_protos INTERFACE googleapis-c++::bigtable_protos)
 add_library(bigtable::protos ALIAS bigtable_protos)
 
+find_package(gRPC)
+
 # Enable unit tests
 include(CTest)
 

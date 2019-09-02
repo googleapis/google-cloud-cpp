@@ -128,17 +128,28 @@ option(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL
        "Install the testing utilities." OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
+include(CMakeDependentOption)
+
+option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
+       ON)
+option(
+    GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library." ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
+       "Enable building the Firestore library." ON)
+
+cmake_dependent_option(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS
+                       "Enable building the gRPC utilities library."
+                       ON
+                       "GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE"
+                       OFF)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
+
 # There are a number of targets that are pure dependencies, i.e., do not contain
 # our own code. These targets can be skipped when using static analysis tools.
 # Can be built earlier in the CI environment (for example to warm up the cache).
 # And in general can receive special treatment. This custom target collects all
 # these special targets with a single name.
 add_custom_target(google-cloud-cpp-dependencies)
-
-# Add gRPC and protobuf targets as submodules or packages, depending on the
-# configuration.  This should happen before enable_testing(), because we are not
-# interested in compiling and running the gRPC tests.
-find_package(gRPC)
 
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
@@ -147,5 +158,10 @@ include(CTest)
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
 
-# Add subprojects here.
-add_subdirectory(google/cloud)
+# Only build the common library if any of the other libraries are enabled.
+if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE
+    OR GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+    OR GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
+    # Add subprojects here.
+    add_subdirectory(google/cloud)
+endif ()
