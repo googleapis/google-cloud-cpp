@@ -23,7 +23,11 @@ using google::cloud::internal::UnsetEnv;
 /// @test Verify passing an empty string creates an environment variable.
 TEST(SetEnv, SetEmptyEnvVar) {
   SetEnv("foo", "");
+#ifdef _WIN32
+  EXPECT_FALSE(GetEnv("foo").has_value());
+#else
   EXPECT_TRUE(GetEnv("foo").has_value());
+#endif // _WIN32
 }
 
 /// @test Verify we can unset an environment variable with nullptr.
