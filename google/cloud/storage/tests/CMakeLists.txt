@@ -16,7 +16,6 @@
 
 set(storage_client_integration_tests
     bucket_integration_test.cc
-    curl_download_request_integration_test.cc
     curl_request_integration_test.cc
     object_write_streambuf_integration_test.cc
     curl_resumable_upload_session_integration_test.cc
