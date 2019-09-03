@@ -83,10 +83,15 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
 
 PartialResultSetReader::~PartialResultSetReader() {
   if (!finished_) {
+    // If there is actual data in the streaming RPC Finish() can deadlock, so
+    // before trying to read the final status we need to cancel the streaming
+    // RPC.
+    context_->TryCancel();
     // The user didn't iterate over all the data; finish the stream on their
     // behalf, but we have no way to communicate error status.
     grpc::Status finish_status = grpc_reader_->Finish();
-    if (!finish_status.ok()) {
+    if (!finish_status.ok() &&
+        finish_status.error_code() != grpc::StatusCode::CANCELLED) {
       GCP_LOG(WARNING) << "Finish() failed in destructor: "
                        << grpc_utils::MakeStatusFromRpcError(finish_status);
     }

@@ -137,6 +137,7 @@ add_library(spanner_client
             keys.h
             mutations.cc
             mutations.h
+            partitioned_dml_result.h
             polling_policy.h
             query_partition.cc
             query_partition.h

@@ -47,6 +47,7 @@ spanner_client_hdrs = [
     "internal/tuple_utils.h",
     "keys.h",
     "mutations.h",
+    "partitioned_dml_result.h",
     "polling_policy.h",
     "query_partition.h",
     "read_options.h",

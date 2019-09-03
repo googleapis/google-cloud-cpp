@@ -391,6 +391,27 @@ void DmlStandardDelete(google::cloud::spanner::Client client) {
 }
 //! [END spanner_dml_standard_delete]
 
+//! [execute-sql-partitioned] [START spanner_dml_partitioned_delete]
+void DmlPartitionedDelete(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto result = client.ExecutePartitionedDml(
+      spanner::SqlStatement("DELETE FROM Singers WHERE SingerId > 10"));
+  if (!result) throw std::runtime_error(result.status().message());
+  std::cout << "Delete was successful [spanner_dml_partitioned_delete]\n";
+}
+//! [execute-sql-partitioned] [END spanner_dml_partitioned_delete]
+
+//! [START spanner_dml_partitioned_update]
+void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto result = client.ExecutePartitionedDml(
+      spanner::SqlStatement("UPDATE Albums SET MarketingBudget = 100000"
+                            " WHERE SingerId > 1"));
+  if (!result) throw std::runtime_error(result.status().message());
+  std::cout << "Update was successful [spanner_dml_partitioned_update]\n";
+}
+//! [END spanner_dml_partitioned_update]
+
 //! [START spanner_write_data_for_struct_queries]
 void WriteDataForStructQueries(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -560,6 +581,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("dml-standard-insert", &DmlStandardInsert),
       make_command_entry("dml-standard-update", &DmlStandardUpdate),
       make_command_entry("dml-standard-delete", &DmlStandardDelete),
+      make_command_entry("dml-partitioned-update", &DmlPartitionedUpdate),
+      make_command_entry("dml-partitioned-delete", &DmlPartitionedDelete),
       make_command_entry("write-data-for-struct-queries",
                          &WriteDataForStructQueries),
       make_command_entry("query-data-with-struct", &QueryDataWithStruct),
@@ -679,6 +702,16 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_field_access_on_nested_struct sample\n";
   FieldAccessOnNestedStruct(client);
+
+  namespace s = google::cloud::spanner;
+  s::Client c2(s::MakeConnection(
+      s::Database(project_id, instance_id, database_id),
+      s::ConnectionOptions().enable_clog().enable_tracing("rpc")));
+  std::cout << "\nRunning spanner_dml_partitioned_update sample\n";
+  DmlPartitionedUpdate(c2);
+
+  std::cout << "\nRunning spanner_dml_partitioned_delete sample\n" << std::endl;
+  DmlPartitionedDelete(c2);
 
   std::cout << "\nRunning spanner_drop_database sample\n";
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});

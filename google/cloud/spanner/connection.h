@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/partitioned_dml_result.h"
 #include "google/cloud/spanner/read_options.h"
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/sql_statement.h"
@@ -91,6 +92,12 @@ class Connection {
           partition_token(std::move(partition_token)) {}
   };
   virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
+
+  struct ExecutePartitionedDmlParams {
+    SqlStatement statement;
+  };
+  virtual StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+      ExecutePartitionedDmlParams) = 0;
 
   struct PartitionQueryParams {
     ExecuteSqlParams sql_params;

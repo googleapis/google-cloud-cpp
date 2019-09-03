@@ -325,6 +325,29 @@ TEST(ClientTest, ExecuteBatchDmlError) {
   EXPECT_EQ(actual->stats.size(), 1);
 }
 
+TEST(ClientTest, ExecuteSqlPartitionedDml_Success) {
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, Stats())
+      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
+  EXPECT_CALL(*source, NextValue()).WillRepeatedly(Return(optional<Value>()));
+
+  std::string const sql_statement = "UPDATE Singers SET MarketingBudget = 1000";
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, ExecutePartitionedDml(_))
+      .WillOnce([&sql_statement](
+                    Connection::ExecutePartitionedDmlParams const& epdp) {
+        EXPECT_EQ(sql_statement, epdp.statement.sql());
+        return PartitionedDmlResult{7};
+      });
+
+  Client client(conn);
+  auto result = client.ExecutePartitionedDml(SqlStatement(sql_statement));
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(7, result->row_count_lower_bound);
+}
+
 TEST(ClientTest, CommitSuccess) {
   auto conn = std::make_shared<MockConnection>();
 

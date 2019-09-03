@@ -257,6 +257,26 @@ class Client {
   //@}
 
   /**
+   * Executes a Partitioned DML SQL query.
+   *
+   * @param statement the SQL statement to execute. Please see the
+   *     [spanner documentation][dml-partitioned] for the restrictions on the
+   *     SQL statements supported by this function.
+   *
+   * @par Example
+   * @snippet samples.cc execute-sql-partitioned
+   *
+   * @see [Partitioned DML Transactions][txn-partitioned] for an overview of
+   *     Partitioned DML transactions.
+   * @see [Partitioned DML][dml-partitioned] for a description of which SQL
+   *     statements are supported in Partitioned DML transactions.
+   * [txn-partitioned]:
+   * https://cloud.google.com/spanner/docs/transactions#partitioned_dml_transactions
+   * [dml-partitioned]: https://cloud.google.com/spanner/docs/dml-partitioned
+   */
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement);
+
+  /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.

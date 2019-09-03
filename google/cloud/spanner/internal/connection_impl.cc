@@ -56,6 +56,17 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(ExecuteSqlParams esp) {
       });
 }
 
+StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
+    ExecutePartitionedDmlParams epdp) {
+  auto txn = MakeReadOnlyTransaction();
+  return internal::Visit(
+      txn,
+      [this, &epdp](SessionHolder& session,
+                    spanner_proto::TransactionSelector& s, std::int64_t seqno) {
+        return ExecutePartitionedDml(session, s, seqno, std::move(epdp));
+      });
+}
+
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
     PartitionQueryParams pqp) {
   return internal::Visit(
@@ -263,6 +274,52 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
     s.set_id(metadata->transaction().id());
   }
   return ResultSet(std::move(*reader));
+}
+
+StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
+    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+    std::int64_t seqno, ExecutePartitionedDmlParams epdp) {
+  if (session.session_name().empty()) {
+    // Since the session may be sent to other machines, it should not be
+    // returned to the pool when the Transaction is destroyed (release=true).
+    auto session_or = GetSession(/*release=*/true);
+    if (!session_or) {
+      return std::move(session_or).status();
+    }
+    session = std::move(*session_or);
+  }
+
+  grpc::ClientContext begin_context;
+  spanner_proto::BeginTransactionRequest begin_request;
+  begin_request.set_session(session.session_name());
+  *begin_request.mutable_options()->mutable_partitioned_dml() =
+      spanner_proto::TransactionOptions_PartitionedDml();
+
+  auto begin_response = stub_->BeginTransaction(begin_context, begin_request);
+  if (!begin_response) return std::move(begin_response).status();
+
+  s.set_id(begin_response->id());
+
+  grpc::ClientContext context;
+  spanner_proto::ExecuteSqlRequest request;
+  request.set_session(session.session_name());
+  *request.mutable_transaction() = s;
+  auto sql_statement = internal::ToProto(std::move(epdp.statement));
+  request.set_sql(std::move(*sql_statement.mutable_sql()));
+  *request.mutable_params() = std::move(*sql_statement.mutable_params());
+  *request.mutable_param_types() =
+      std::move(*sql_statement.mutable_param_types());
+  request.set_seqno(seqno);
+
+  auto response = stub_->ExecuteSql(context, request);
+  if (!response) return std::move(response).status();
+
+  PartitionedDmlResult result{0};
+  if (response->has_stats()) {
+    result.row_count_lower_bound = response->stats().row_count_lower_bound();
+  }
+
+  return result;
 }
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(

@@ -351,6 +351,28 @@ TEST_F(ClientIntegrationTest, ExecuteSql) {
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
+/// @test Test ExecuteSql(PartitionDmlOptions...)
+TEST_F(ClientIntegrationTest, ExecuteSqlPartitionDml) {
+  auto insert_result = RunTransaction(
+      *client_, {}, [](Client client, Transaction txn) -> StatusOr<Mutations> {
+        auto insert = client.ExecuteSql(
+            std::move(txn), SqlStatement(R"sql(
+        INSERT INTO Singers (SingerId, FirstName, LastName)
+        VALUES (@id, @fname, @lname))sql",
+                                         {{"id", Value(1)},
+                                          {"fname", Value("test-fname-1")},
+                                          {"lname", Value("test-lname-1")}}));
+        if (!insert) return std::move(insert).status();
+        return Mutations{};
+      });
+  EXPECT_STATUS_OK(insert_result);
+
+  auto result = client_->ExecutePartitionedDml(
+      SqlStatement("UPDATE Singers SET LastName = 'test-only'"
+                   " WHERE SingerId >= 1"));
+  EXPECT_STATUS_OK(result);
+}
+
 void CheckReadWithOptions(
     Client client,
     std::function<Transaction::SingleUseOptions(CommitResult const&)> const&
