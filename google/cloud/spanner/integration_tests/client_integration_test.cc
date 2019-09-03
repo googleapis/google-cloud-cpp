@@ -177,36 +177,42 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
 TEST_F(ClientIntegrationTest, TransactionRollback) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
-  // Cannot use RunTransaction in this test because we want to call Rollback
-  // explicitly.
   using RowType = Row<std::int64_t, std::string, std::string>;
-  std::vector<RowType> returned_rows;
 
-  Transaction txn = MakeReadOnlyTransaction();
+  // Cannot use RunTransaction in this test because we want to call Rollback
+  // explicitly. This means we need to retry ABORTED calls ourselves.
   for (auto start = std::chrono::steady_clock::now(),
             deadline = start + std::chrono::minutes(1);
        start < deadline; start = std::chrono::steady_clock::now()) {
-    txn = MakeReadWriteTransaction();
+    auto is_retryable_failure = [](StatusOr<ResultSet> const& s) {
+      return !s && s.status().code() == StatusCode::kAborted;
+    };
+
+    Transaction txn = MakeReadWriteTransaction();
     auto insert1 = client_->ExecuteSql(
         txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                           "VALUES (@id, @fname, @lname)",
                           {{"id", Value(3)},
                            {"fname", Value("test-fname-3")},
                            {"lname", Value("test-lname-3")}}));
-    if (!insert1) continue;
+    if (is_retryable_failure(insert1)) continue;
+    ASSERT_STATUS_OK(insert1);
+
     auto insert2 = client_->ExecuteSql(
         txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                           "VALUES (@id, @fname, @lname)",
                           {{"id", Value(4)},
                            {"fname", Value("test-fname-4")},
                            {"lname", Value("test-lname-4")}}));
-    if (!insert2) continue;
+    if (is_retryable_failure(insert2)) continue;
+    ASSERT_STATUS_OK(insert2);
 
     auto reader = client_->Read(txn, "Singers", KeySet::All(),
                                 {"SingerId", "FirstName", "LastName"});
-    if (!reader) continue;
+    if (is_retryable_failure(reader)) continue;
+    ASSERT_STATUS_OK(reader);
 
-    returned_rows.clear();
+    std::vector<RowType> returned_rows;
     int row_number = 0;
     for (auto& row : reader->Rows<std::int64_t, std::string, std::string>()) {
       if (!row) break;
@@ -218,13 +224,13 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
                                    RowType(2, "test-fname-2", "test-lname-2"),
                                    RowType(3, "test-fname-3", "test-lname-3"),
                                    RowType(4, "test-fname-4", "test-lname-4")));
+
+    auto insert_rollback_result = client_->Rollback(txn);
+    ASSERT_STATUS_OK(insert_rollback_result);
     break;
   }
 
-  auto insert_rollback_result = client_->Rollback(txn);
-  EXPECT_STATUS_OK(insert_rollback_result);
-
-  returned_rows.clear();
+  std::vector<RowType> returned_rows;
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
   ASSERT_STATUS_OK(reader);
