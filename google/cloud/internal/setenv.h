@@ -29,6 +29,12 @@ void UnsetEnv(char const* variable);
  * Set the @p variable environment variable to @p value.
  *
  * If @value is the null pointer then the variable is unset.
+ *
+ * @note On Windows, due to the underlying API function, an empty @value unsets
+ * the variable, while on Linux an empty environment variable is created.
+ *
+ * @see
+ * https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/putenv-s-wputenv-s?view=vs-2019
  */
 void SetEnv(char const* variable, char const* value);
 
