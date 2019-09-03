@@ -33,7 +33,11 @@ TEST(SetEnv, SetEmptyEnvVar) {
 /// @test Verify we can unset an environment variable with nullptr.
 TEST(SetEnv, UnsetEnvWithNullptr) {
   SetEnv("foo", "");
+#ifdef _WIN32
+  EXPECT_FALSE(GetEnv("foo").has_value());
+#else
   EXPECT_TRUE(GetEnv("foo").has_value());
+#endif  // _WIN32
   SetEnv("foo", nullptr);
   EXPECT_FALSE(GetEnv("foo").has_value());
 }
@@ -41,7 +45,11 @@ TEST(SetEnv, UnsetEnvWithNullptr) {
 /// @test Verify we can unset an environment variable.
 TEST(SetEnv, UnsetEnv) {
   SetEnv("foo", "");
+#ifdef _WIN32
+  EXPECT_FALSE(GetEnv("foo").has_value());
+#else
   EXPECT_TRUE(GetEnv("foo").has_value());
+#endif  // _WIN32
   UnsetEnv("foo");
   EXPECT_FALSE(GetEnv("foo").has_value());
 }
