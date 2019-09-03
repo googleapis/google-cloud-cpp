@@ -17,5 +17,4 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 spanner_client_samples = [
-    "samples.cc",
 ]

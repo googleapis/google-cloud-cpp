@@ -149,7 +149,6 @@ add_library(spanner_client
             row_parser.h
             sql_statement.cc
             sql_statement.h
-            testing/mock_spanner_stub.h
             timestamp.h
             transaction.cc
             transaction.h
@@ -197,6 +196,8 @@ function (spanner_client_define_tests)
                 testing/database_environment.cc
                 testing/database_environment.h
                 testing/matchers.h
+                testing/mock_spanner_connection.h
+                testing/mock_spanner_stub.h
                 testing/random_database_name.cc
                 testing/random_database_name.h
                 testing/validate_metadata.cc

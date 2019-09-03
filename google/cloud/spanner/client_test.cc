@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/result_set.h"
+#include "google/cloud/spanner/testing/mock_spanner_connection.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
@@ -37,6 +38,8 @@ namespace {
 namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::internal::make_unique;
+using ::google::cloud::spanner_testing::MockConnection;
+using ::google::cloud::spanner_testing::MockResultSetSource;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
@@ -46,26 +49,6 @@ using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::SaveArg;
-
-class MockConnection : public Connection {
- public:
-  MOCK_METHOD1(Read, StatusOr<ResultSet>(ReadParams));
-  MOCK_METHOD1(PartitionRead,
-               StatusOr<std::vector<ReadPartition>>(PartitionReadParams));
-  MOCK_METHOD1(ExecuteSql, StatusOr<ResultSet>(ExecuteSqlParams));
-  MOCK_METHOD1(PartitionQuery,
-               StatusOr<std::vector<QueryPartition>>(PartitionQueryParams));
-  MOCK_METHOD1(ExecuteBatchDml, StatusOr<BatchDmlResult>(BatchDmlParams));
-  MOCK_METHOD1(Commit, StatusOr<CommitResult>(CommitParams));
-  MOCK_METHOD1(Rollback, Status(RollbackParams));
-};
-
-class MockResultSetSource : public internal::ResultSetSource {
- public:
-  MOCK_METHOD0(NextValue, StatusOr<optional<Value>>());
-  MOCK_METHOD0(Metadata, optional<spanner_proto::ResultSetMetadata>());
-  MOCK_METHOD0(Stats, optional<spanner_proto::ResultSetStats>());
-};
 
 TEST(ClientTest, CopyAndMove) {
   auto conn1 = std::make_shared<MockConnection>();

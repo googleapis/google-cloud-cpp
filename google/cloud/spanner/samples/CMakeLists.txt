@@ -17,29 +17,52 @@
 include(EnableClangTidy)
 include(EnableWerror)
 
+function (google_cloud_cpp_test_name_to_target var fname)
+    string(REPLACE "/"
+                   "_"
+                   target
+                   ${fname})
+    string(REPLACE ".cc"
+                   ""
+                   target
+                   ${target})
+    set("${var}" "${target}" PARENT_SCOPE)
+endfunction ()
+
 function (spanner_client_define_samples)
-    set(spanner_client_samples samples.cc)
+    set(spanner_client_integration_samples samples.cc)
+    set(spanner_client_unit_samples mock_execute_sql.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_samples.bzl" "spanner_client_samples")
 
     # Generate a target for each unit test.
-    foreach (fname ${spanner_client_samples})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+    foreach (fname ${spanner_client_integration_samples}
+             ${spanner_client_unit_samples})
+        google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
-        target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+
+    foreach (fname ${spanner_client_integration_samples})
+        google_cloud_cpp_test_name_to_target(target "${fname}")
+        target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client)
         set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
+    endforeach ()
+
+    foreach (fname ${spanner_client_unit_samples})
+        google_cloud_cpp_test_name_to_target(target "${fname}")
+        target_link_libraries(${target}
+                              PRIVATE googleapis-c++::spanner_client
+                                      spanner_client_testing
+                                      google_cloud_cpp_testing
+                                      GTest::gmock_main
+                                      GTest::gmock
+                                      GTest::gtest)
+
     endforeach ()
 endfunction ()
 
