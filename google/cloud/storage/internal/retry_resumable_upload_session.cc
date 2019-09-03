@@ -38,10 +38,18 @@ StatusOr<ResumableUploadResponse> ReturnError(Status&& last_status,
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     std::string const& buffer) {
+  std::uint64_t next_byte = next_expected_byte();
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
+  // On occasion, we might need to retry uploading only a part of the buffer.
+  // The current APIs require us to copy the buffer in such a scenario. We can
+  // and want to avoid the copy in the common case, so we use this variable to
+  // either reference the copy or the original buffer.
+  // TODO(#3036): change the APIs to avoid this extra copy.
+  std::string const* buffer_to_use = &buffer;
+  std::string truncated_buffer;
   while (!retry_policy_->IsExhausted()) {
-    auto result = session_->UploadChunk(buffer);
+    auto result = session_->UploadChunk(*buffer_to_use);
     if (result.ok()) {
       return result;
     }
@@ -55,6 +63,20 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
     result = ResetSession();
     if (!result.ok()) {
       return result;
+    }
+    std::uint64_t new_next_byte = session_->next_expected_byte();
+    if (new_next_byte < next_byte) {
+      std::stringstream os;
+      os << "Server has not confirmed bytes which we no longer hold ("
+         << new_next_byte << "-" << next_byte
+         << "). This is most liekely a bug in the GCS client. Please report it "
+            "at https://github.com/googleapis/google-cloud-cpp/issues/new";
+      return Status(StatusCode::kInternal, os.str());
+    }
+    if (new_next_byte > next_byte) {
+      truncated_buffer = buffer_to_use->substr(new_next_byte - next_byte);
+      buffer_to_use = &truncated_buffer;
+      next_byte = new_next_byte;
     }
   }
   std::ostringstream os;
@@ -64,10 +86,18 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadChunk(
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
     std::string const& buffer, std::uint64_t upload_size) {
+  std::uint64_t next_byte = next_expected_byte();
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
+  // On occasion, we might need to retry uploading only a part of the buffer.
+  // The current APIs require us to copy the buffer in such a scenario. We can
+  // and want to avoid the copy in the common case, so we use this variable to
+  // either reference the copy or the original buffer.
+  // TODO(#3036): change the APIs to avoid this extra copy.
+  std::string const* buffer_to_use = &buffer;
+  std::string truncated_buffer;
   while (!retry_policy_->IsExhausted()) {
-    auto result = session_->UploadFinalChunk(buffer, upload_size);
+    auto result = session_->UploadFinalChunk(*buffer_to_use, upload_size);
     if (result.ok()) {
       return result;
     }
@@ -79,8 +109,22 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::UploadFinalChunk(
     std::this_thread::sleep_for(delay);
 
     result = ResetSession();
+    std::uint64_t new_next_byte = session_->next_expected_byte();
     if (!result.ok()) {
       return result;
+    }
+    if (new_next_byte < next_byte) {
+      std::stringstream os;
+      os << "Server has not confirmed bytes which we no longer hold ("
+         << new_next_byte << "-" << next_byte
+         << "). This is most liekely a bug in the GCS client. Please report it "
+            "at https://github.com/googleapis/google-cloud-cpp/issues/new";
+      return Status(StatusCode::kInternal, os.str());
+    }
+    if (new_next_byte > next_byte) {
+      truncated_buffer = buffer_to_use->substr(new_next_byte - next_byte);
+      buffer_to_use = &truncated_buffer;
+      next_byte = new_next_byte;
     }
   }
   std::ostringstream os;
