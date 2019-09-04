@@ -54,7 +54,9 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
     ConnectionOptions const& options) {
-  auto channel = grpc::CreateChannel(options.endpoint(), options.credentials());
+  auto channel =
+      grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
+                                options.CreateChannelArguments());
   auto spanner_grpc_stub = gcsa::InstanceAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
