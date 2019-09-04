@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
@@ -22,39 +23,14 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::testing::_;
 using ::testing::Invoke;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
-class MockDatabaseAdminClientStub : public internal::DatabaseAdminStub {
- public:
-  MOCK_METHOD2(CreateDatabase,
-               StatusOr<google::longrunning::Operation>(
-                   grpc::ClientContext&, gcsa::CreateDatabaseRequest const&));
-
-  MOCK_METHOD1(AwaitCreateDatabase, future<StatusOr<gcsa::Database>>(
-                                        google::longrunning::Operation));
-
-  MOCK_METHOD2(UpdateDatabase, StatusOr<google::longrunning::Operation>(
-                                   grpc::ClientContext&,
-                                   gcsa::UpdateDatabaseDdlRequest const&));
-
-  MOCK_METHOD1(AwaitUpdateDatabase,
-               future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>(
-                   google::longrunning::Operation));
-
-  MOCK_METHOD2(DropDatabase,
-               Status(grpc::ClientContext&, gcsa::DropDatabaseRequest const&));
-
-  MOCK_METHOD2(GetOperation,
-               StatusOr<google::longrunning::Operation>(
-                   grpc::ClientContext&,
-                   google::longrunning::GetOperationRequest const&));
-};
-
 /// @test Verify that successful case works.
 TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
-  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, CreateDatabase(_, _))
       .WillOnce(
@@ -90,7 +66,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
 /// @test Verify that a permanent error in CreateDatabase is immediately
 /// reported.
 TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
-  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, CreateDatabase(_, _))
       .WillOnce(
@@ -109,7 +85,7 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
 
 /// @test Verify that successful case works.
 TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
-  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
       .WillOnce(Invoke(
@@ -146,7 +122,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
 /// @test Verify that a permanent error in UpdateDatabase is immediately
 /// reported.
 TEST(DatabaseAdminClientTest, HandleUpdateDatabaseError) {
-  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
       .WillOnce(Invoke(
@@ -166,7 +142,7 @@ TEST(DatabaseAdminClientTest, HandleUpdateDatabaseError) {
 
 /// @test Verify that errors in the polling loop are reported.
 TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
-  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, CreateDatabase(_, _))
       .WillOnce(
@@ -191,7 +167,7 @@ TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
 
 /// @test Verify that errors in the polling loop are reported.
 TEST(DatabaseAdminClientTest, HandleAwaitUpdateDatabaseError) {
-  auto mock = std::make_shared<MockDatabaseAdminClientStub>();
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
       .WillOnce(Invoke(

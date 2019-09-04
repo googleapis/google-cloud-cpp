@@ -197,6 +197,7 @@ function (spanner_client_define_tests)
                 testing/database_environment.cc
                 testing/database_environment.h
                 testing/matchers.h
+                testing/mock_database_admin_stub.h
                 testing/mock_spanner_connection.h
                 testing/mock_spanner_stub.h
                 testing/random_database_name.cc
