@@ -112,6 +112,7 @@ add_library(spanner_client
             internal/database_admin_stub.h
             internal/date.cc
             internal/date.h
+            internal/log_wrapper.h
             internal/logging_spanner_stub.cc
             internal/logging_spanner_stub.h
             internal/merge_chunk.cc

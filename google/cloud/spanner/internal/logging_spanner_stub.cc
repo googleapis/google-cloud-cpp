@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/logging_spanner_stub.h"
+#include "google/cloud/spanner/internal/log_wrapper.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 
@@ -21,69 +22,13 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
-namespace {
-
-template <typename T>
-struct IsStatusOr : public std::false_type {};
-template <typename T>
-struct IsStatusOr<StatusOr<T>> : public std::true_type {};
-
-template <typename T>
-struct IsUniquePtr : public std::false_type {};
-template <typename T>
-struct IsUniquePtr<std::unique_ptr<T>> : public std::true_type {};
-
-template <
-    typename Functor, typename Request,
-    typename Result = google::cloud::internal::invoke_result_t<
-        Functor, grpc::ClientContext&, Request const&>,
-    typename std::enable_if<std::is_same<Result, google::cloud::Status>::value,
-                            int>::type = 0>
-Result LogHelper(Functor&& functor, grpc::ClientContext& context,
-                 Request const& request, char const* where) {
-  GCP_LOG(DEBUG) << where << "() << " << request.DebugString();
-  auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> status=" << response;
-  return response;
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext&, Request const&>,
-          typename std::enable_if<IsStatusOr<Result>::value, int>::type = 0>
-Result LogHelper(Functor&& functor, grpc::ClientContext& context,
-                 Request const& request, char const* where) {
-  GCP_LOG(DEBUG) << where << "() << " << request.DebugString();
-  auto response = functor(context, request);
-  if (!response) {
-    GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
-  } else {
-    GCP_LOG(DEBUG) << where << "() >> response=" << response->DebugString();
-  }
-  return response;
-}
-
-template <typename Functor, typename Request,
-          typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext&, Request const&>,
-          typename std::enable_if<IsUniquePtr<Result>::value, int>::type = 0>
-Result LogHelper(Functor&& functor, grpc::ClientContext& context,
-                 Request const& request, char const* where) {
-  GCP_LOG(DEBUG) << where << "() << " << request.DebugString();
-  auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
-                 << " stream";
-  return response;
-}
-
-}  // namespace
 
 namespace spanner_proto = ::google::spanner::v1;
 
 StatusOr<spanner_proto::Session> LoggingSpannerStub::CreateSession(
     grpc::ClientContext& client_context,
     spanner_proto::CreateSessionRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::CreateSessionRequest const& request) {
         return child_->CreateSession(context, request);
@@ -94,7 +39,7 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::CreateSession(
 StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
     grpc::ClientContext& client_context,
     spanner_proto::GetSessionRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::GetSessionRequest const& request) {
         return child_->GetSession(context, request);
@@ -105,7 +50,7 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
 StatusOr<spanner_proto::ListSessionsResponse> LoggingSpannerStub::ListSessions(
     grpc::ClientContext& client_context,
     spanner_proto::ListSessionsRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::ListSessionsRequest const& request) {
         return child_->ListSessions(context, request);
@@ -116,7 +61,7 @@ StatusOr<spanner_proto::ListSessionsResponse> LoggingSpannerStub::ListSessions(
 Status LoggingSpannerStub::DeleteSession(
     grpc::ClientContext& client_context,
     spanner_proto::DeleteSessionRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::DeleteSessionRequest const& request) {
         return child_->DeleteSession(context, request);
@@ -127,7 +72,7 @@ Status LoggingSpannerStub::DeleteSession(
 StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(
     grpc::ClientContext& client_context,
     spanner_proto::ExecuteSqlRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::ExecuteSqlRequest const& request) {
         return child_->ExecuteSql(context, request);
@@ -139,7 +84,7 @@ std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
 LoggingSpannerStub::ExecuteStreamingSql(
     grpc::ClientContext& client_context,
     spanner_proto::ExecuteSqlRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::ExecuteSqlRequest const& request) {
         return child_->ExecuteStreamingSql(context, request);
@@ -151,7 +96,7 @@ StatusOr<spanner_proto::ExecuteBatchDmlResponse>
 LoggingSpannerStub::ExecuteBatchDml(
     grpc::ClientContext& client_context,
     spanner_proto::ExecuteBatchDmlRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::ExecuteBatchDmlRequest const& request) {
         return child_->ExecuteBatchDml(context, request);
@@ -162,7 +107,7 @@ LoggingSpannerStub::ExecuteBatchDml(
 StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::Read(
     grpc::ClientContext& client_context,
     spanner_proto::ReadRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::ReadRequest const& request) {
         return child_->Read(context, request);
@@ -173,7 +118,7 @@ StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::Read(
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
 LoggingSpannerStub::StreamingRead(grpc::ClientContext& client_context,
                                   spanner_proto::ReadRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::ReadRequest const& request) {
         return child_->StreamingRead(context, request);
@@ -184,7 +129,7 @@ LoggingSpannerStub::StreamingRead(grpc::ClientContext& client_context,
 StatusOr<spanner_proto::Transaction> LoggingSpannerStub::BeginTransaction(
     grpc::ClientContext& client_context,
     spanner_proto::BeginTransactionRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::BeginTransactionRequest const& request) {
         return child_->BeginTransaction(context, request);
@@ -195,7 +140,7 @@ StatusOr<spanner_proto::Transaction> LoggingSpannerStub::BeginTransaction(
 StatusOr<spanner_proto::CommitResponse> LoggingSpannerStub::Commit(
     grpc::ClientContext& client_context,
     spanner_proto::CommitRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::CommitRequest const& request) {
         return child_->Commit(context, request);
@@ -206,7 +151,7 @@ StatusOr<spanner_proto::CommitResponse> LoggingSpannerStub::Commit(
 Status LoggingSpannerStub::Rollback(
     grpc::ClientContext& client_context,
     spanner_proto::RollbackRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::RollbackRequest const& request) {
         return child_->Rollback(context, request);
@@ -217,7 +162,7 @@ Status LoggingSpannerStub::Rollback(
 StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionQuery(
     grpc::ClientContext& client_context,
     spanner_proto::PartitionQueryRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::PartitionQueryRequest const& request) {
         return child_->PartitionQuery(context, request);
@@ -228,7 +173,7 @@ StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionQuery(
 StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionRead(
     grpc::ClientContext& client_context,
     spanner_proto::PartitionReadRequest const& request) {
-  return LogHelper(
+  return LogWrapper(
       [this](grpc::ClientContext& context,
              spanner_proto::PartitionReadRequest const& request) {
         return child_->PartitionRead(context, request);

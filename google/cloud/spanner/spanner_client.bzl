@@ -33,6 +33,7 @@ spanner_client_hdrs = [
     "internal/database_admin_retry.h",
     "internal/database_admin_stub.h",
     "internal/date.h",
+    "internal/log_wrapper.h",
     "internal/logging_spanner_stub.h",
     "internal/merge_chunk.h",
     "internal/metadata_spanner_stub.h",
