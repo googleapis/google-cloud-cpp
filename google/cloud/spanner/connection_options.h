@@ -28,6 +28,10 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+namespace internal {
+std::string BaseUserAgentPrefix();
+}  // namespace internal
+
 /**
  * The configuration parameters for spanner connections.
  */
@@ -82,12 +86,32 @@ class ConnectionOptions {
     return *this;
   }
 
+  /**
+   * Prepend @p prefix to the user-agent string.
+   *
+   * Libraries or services that use the Cloud Spanner C++ client may want to
+   * set their own user-agent prefix. This can help them develop telemetry
+   * information about number of users running particular versions of their
+   * system or library.
+   */
+  ConnectionOptions& add_user_agent_prefix(std::string prefix) {
+    prefix += " ";
+    prefix += user_agent_prefix_;
+    user_agent_prefix_ = std::move(prefix);
+    return *this;
+  }
+  std::string const& user_agent_prefix() const { return user_agent_prefix_; }
+
+  grpc::ChannelArguments CreateChannelArguments() const;
+
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
   bool clog_enabled_ = false;
   std::set<std::string> tracing_components_;
   std::string channel_pool_domain_;
+
+  std::string user_agent_prefix_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

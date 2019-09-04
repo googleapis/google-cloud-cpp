@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/connection_options.h"
+#include "google/cloud/spanner/internal/compiler_info.h"
 #include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
@@ -24,6 +25,8 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using google::cloud::testing_util::EnvironmentVariableRestore;
+using ::testing::HasSubstr;
+using ::testing::StartsWith;
 
 TEST(ConnectionOptionsTest, Credentials) {
   // In the CI environment grpc::GoogleDefaultCredentials() may assert. Use the
@@ -103,6 +106,70 @@ TEST(ConnectionOptionsTest, ChannelPoolName) {
   options.set_channel_pool_domain("test-channel-pool");
   EXPECT_EQ("test-channel-pool", options.channel_pool_domain());
 }
+
+TEST(ConnectionOptionsTest, BaseUserAgentPrefix) {
+  auto actual = internal::BaseUserAgentPrefix();
+
+  EXPECT_THAT(actual, StartsWith("gcloud-cpp/" + VersionString()));
+  EXPECT_THAT(actual, HasSubstr(internal::CompilerId()));
+  EXPECT_THAT(actual, HasSubstr(internal::CompilerVersion()));
+  EXPECT_THAT(actual, HasSubstr(internal::CompilerFeatures()));
+}
+
+TEST(ConnectionOptionsTest, UserAgentPrefix) {
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  EXPECT_EQ(internal::BaseUserAgentPrefix(), options.user_agent_prefix());
+  options.add_user_agent_prefix("test-prefix/1.2.3");
+  EXPECT_EQ("test-prefix/1.2.3 " + internal::BaseUserAgentPrefix(),
+            options.user_agent_prefix());
+}
+
+TEST(ConnectionOptionsTest, CreateChannelArguments_Default) {
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+
+  auto actual = options.CreateChannelArguments();
+
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
+  grpc_channel_args test_args = actual.c_channel_args();
+  ASSERT_EQ(1, test_args.num_args);
+  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[0].type);
+  EXPECT_EQ("grpc.primary_user_agent", std::string(test_args.args[0].key));
+  // The gRPC library adds its own version to the user-agent string, so we only
+  // check that our component appears in it.
+  EXPECT_THAT(std::string(test_args.args[0].value.string),
+              StartsWith(options.user_agent_prefix()));
+}
+
+TEST(ConnectionOptionsTest, CreateChannelArguments_WithChannelPool) {
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  options.set_channel_pool_domain("testing-pool");
+  options.add_user_agent_prefix("test-prefix/1.2.3");
+
+  auto actual = options.CreateChannelArguments();
+
+  // Use the low-level C API because grpc::ChannelArguments lacks high-level
+  // accessors.
+  grpc_channel_args test_args = actual.c_channel_args();
+  ASSERT_EQ(2, test_args.num_args);
+  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[0].type);
+  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[1].type);
+
+  // There is no (AFAICT) guarantee on the order of the arguments in this array,
+  // and the C types are hard to work with. Capture the arguments in a map to
+  // make it easier to work with them.
+  std::map<std::string, std::string> args;
+  for (std::size_t i = 0; i != test_args.num_args; ++i) {
+    args[test_args.args[i].key] = test_args.args[i].value.string;
+  }
+
+  EXPECT_EQ("testing-pool", args["grpc.channel_pooling_domain"]);
+  // The gRPC library adds its own version to the user-agent string, so we only
+  // check that our component appears in it.
+  EXPECT_THAT(args["grpc.primary_user_agent"],
+              StartsWith(options.user_agent_prefix()));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
