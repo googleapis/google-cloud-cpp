@@ -46,61 +46,52 @@ class ConnectionImpl : public Connection {
                           std::shared_ptr<internal::SpannerStub> stub)
       : db_(std::move(db)), stub_(std::move(stub)) {}
 
-  StatusOr<ResultSet> Read(ReadParams rp) override;
+  StatusOr<ResultSet> Read(ReadParams) override;
   StatusOr<std::vector<ReadPartition>> PartitionRead(
-      PartitionReadParams prp) override;
-  StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams esp) override;
+      PartitionReadParams) override;
+  StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) override;
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
       ExecutePartitionedDmlParams) override;
-
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       PartitionQueryParams) override;
   StatusOr<BatchDmlResult> ExecuteBatchDml(BatchDmlParams) override;
-  StatusOr<CommitResult> Commit(CommitParams cp) override;
-  Status Rollback(RollbackParams rp) override;
+  StatusOr<CommitResult> Commit(CommitParams) override;
+  Status Rollback(RollbackParams) override;
 
  private:
-  StatusOr<SessionHolder> GetSession(bool release = false);
-  void ReleaseSession(std::string session);
+  StatusOr<ResultSet> ReadImpl(SessionHolder& session,
+                               google::spanner::v1::TransactionSelector& s,
+                               ReadParams rp);
 
-  /// Implementation details for Read.
-  StatusOr<ResultSet> Read(SessionHolder& session,
-                           google::spanner::v1::TransactionSelector& s,
-                           ReadParams rp);
-
-  /// Implementation details for PartitionRead.
-  StatusOr<std::vector<ReadPartition>> PartitionRead(
+  StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       ReadParams const& rp, PartitionOptions partition_options);
 
-  /// Implementation details for ExecuteSql
-  StatusOr<ResultSet> ExecuteSql(SessionHolder& session,
-                                 google::spanner::v1::TransactionSelector& s,
-                                 std::int64_t seqno, ExecuteSqlParams esp);
+  StatusOr<ResultSet> ExecuteSqlImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams esp);
 
-  /// Implementation details for ExecutePartitionedDml
-  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       std::int64_t seqno, ExecutePartitionedDmlParams epdp);
 
-  /// Implementation details for PartitionQuery
-  StatusOr<std::vector<QueryPartition>> PartitionQuery(
+  StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       ExecuteSqlParams const& esp, PartitionOptions partition_options);
 
-  /// Implementation details for ExecuteBatchDml
-  StatusOr<BatchDmlResult> ExecuteBatchDml(
+  StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       std::int64_t seqno, BatchDmlParams params);
 
-  /// Implementation details for Commit.
-  StatusOr<CommitResult> Commit(SessionHolder& session,
-                                google::spanner::v1::TransactionSelector& s,
-                                CommitParams cp);
+  StatusOr<CommitResult> CommitImpl(SessionHolder& session,
+                                    google::spanner::v1::TransactionSelector& s,
+                                    CommitParams cp);
 
-  /// Implementation details for Rollback.
-  Status Rollback(SessionHolder& session,
-                  google::spanner::v1::TransactionSelector& s);
+  Status RollbackImpl(SessionHolder& session,
+                      google::spanner::v1::TransactionSelector& s);
+
+  StatusOr<SessionHolder> GetSession(bool release = false);
+  void ReleaseSession(std::string session);
 
   Database db_;
   std::shared_ptr<internal::SpannerStub> stub_;

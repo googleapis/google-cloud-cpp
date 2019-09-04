@@ -33,7 +33,9 @@ StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
   return internal::Visit(
       std::move(rp.transaction),
       [this, &rp](SessionHolder& session, spanner_proto::TransactionSelector& s,
-                  std::int64_t) { return Read(session, s, std::move(rp)); });
+                  std::int64_t) {
+        return ReadImpl(session, s, std::move(rp));
+      });
 }
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
@@ -42,8 +44,8 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
       std::move(prp.read_params.transaction),
       [this, &prp](SessionHolder& session,
                    spanner_proto::TransactionSelector& s, std::int64_t) {
-        return PartitionRead(session, s, prp.read_params,
-                             std::move(prp.partition_options));
+        return PartitionReadImpl(session, s, prp.read_params,
+                                 std::move(prp.partition_options));
       });
 }
 
@@ -52,7 +54,7 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(ExecuteSqlParams esp) {
       std::move(esp.transaction),
       [this, &esp](SessionHolder& session,
                    spanner_proto::TransactionSelector& s, std::int64_t seqno) {
-        return ExecuteSql(session, s, seqno, std::move(esp));
+        return ExecuteSqlImpl(session, s, seqno, std::move(esp));
       });
 }
 
@@ -63,7 +65,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
       txn,
       [this, &epdp](SessionHolder& session,
                     spanner_proto::TransactionSelector& s, std::int64_t seqno) {
-        return ExecutePartitionedDml(session, s, seqno, std::move(epdp));
+        return ExecutePartitionedDmlImpl(session, s, seqno, std::move(epdp));
       });
 }
 
@@ -73,8 +75,8 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
       std::move(pqp.sql_params.transaction),
       [this, &pqp](SessionHolder& session,
                    spanner_proto::TransactionSelector& s, std::int64_t) {
-        return PartitionQuery(session, s, pqp.sql_params,
-                              std::move(pqp.partition_options));
+        return PartitionQueryImpl(session, s, pqp.sql_params,
+                                  std::move(pqp.partition_options));
       });
 }
 
@@ -84,8 +86,8 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
                          [this, &params](SessionHolder& session,
                                          spanner_proto::TransactionSelector& s,
                                          std::int64_t seqno) {
-                           return ExecuteBatchDml(session, s, seqno,
-                                                  std::move(params));
+                           return ExecuteBatchDmlImpl(session, s, seqno,
+                                                      std::move(params));
                          });
 }
 
@@ -94,7 +96,7 @@ StatusOr<CommitResult> ConnectionImpl::Commit(CommitParams cp) {
       std::move(cp.transaction),
       [this, &cp](SessionHolder& session, spanner_proto::TransactionSelector& s,
                   std::int64_t) {
-        return this->Commit(session, s, std::move(cp));
+        return CommitImpl(session, s, std::move(cp));
       });
 }
 
@@ -102,51 +104,12 @@ Status ConnectionImpl::Rollback(RollbackParams rp) {
   return internal::Visit(
       std::move(rp.transaction),
       [this](SessionHolder& session, spanner_proto::TransactionSelector& s,
-             std::int64_t) { return this->Rollback(session, s); });
+             std::int64_t) { return RollbackImpl(session, s); });
 }
 
-/**
- * Get a session from the pool, or create one if the pool is empty.
- * The `SessionHolder` usually returns the session to the pool when it is
- * destroyed, but if `release` is true the session will never be returned
- * to the pool.
- */
-StatusOr<SessionHolder> ConnectionImpl::GetSession(bool release) {
-  std::string session_name;
-  std::unique_lock<std::mutex> lk(mu_);
-  if (!sessions_.empty()) {
-    session_name = std::move(sessions_.back());
-    sessions_.pop_back();
-  } else {
-    // Release the mutex because we won't be doing any more changes to
-    // `sessions_` in this function and holding mutexes while making RPCs is
-    // (generally) a bad practice.
-    lk.unlock();
-    grpc::ClientContext context;
-    spanner_proto::CreateSessionRequest request;
-    request.set_database(db_.FullName());
-    auto response = stub_->CreateSession(context, request);
-    if (!response) {
-      return response.status();
-    }
-    session_name = std::move(*response->mutable_name());
-  }
-
-  return release ? SessionHolder(std::move(session_name), /*deleter=*/nullptr)
-                 : SessionHolder(std::move(session_name),
-                                 [this](std::string session) {
-                                   this->ReleaseSession(std::move(session));
-                                 });
-}
-
-void ConnectionImpl::ReleaseSession(std::string session) {
-  std::lock_guard<std::mutex> lk(mu_);
-  sessions_.push_back(std::move(session));
-}
-
-StatusOr<ResultSet> ConnectionImpl::Read(SessionHolder& session,
-                                         spanner_proto::TransactionSelector& s,
-                                         ReadParams rp) {
+StatusOr<ResultSet> ConnectionImpl::ReadImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    ReadParams rp) {
   if (session.session_name().empty()) {
     auto session_or = GetSession();
     if (!session_or) {
@@ -188,7 +151,7 @@ StatusOr<ResultSet> ConnectionImpl::Read(SessionHolder& session,
   return ResultSet(std::move(*reader));
 }
 
-StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
+StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     ReadParams const& rp, PartitionOptions partition_options) {
   if (session.session_name().empty()) {
@@ -233,7 +196,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
   return read_partitions;
 }
 
-StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
+StatusOr<ResultSet> ConnectionImpl::ExecuteSqlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteSqlParams esp) {
   if (session.session_name().empty()) {
@@ -276,8 +239,8 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSql(
   return ResultSet(std::move(*reader));
 }
 
-StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
-    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecutePartitionedDmlParams epdp) {
   if (session.session_name().empty()) {
     // Since the session may be sent to other machines, it should not be
@@ -322,7 +285,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
   return result;
 }
 
-StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
+StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     ExecuteSqlParams const& esp, PartitionOptions partition_options) {
   if (session.session_name().empty()) {
@@ -366,8 +329,8 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
   return query_partitions;
 }
 
-StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
-    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, BatchDmlParams params) {
   if (session.session_name().empty()) {
     auto session_or = GetSession();
@@ -403,7 +366,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
   return result;
 }
 
-StatusOr<CommitResult> ConnectionImpl::Commit(
+StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     CommitParams cp) {
   if (session.session_name().empty()) {
@@ -436,8 +399,8 @@ StatusOr<CommitResult> ConnectionImpl::Commit(
   return r;
 }
 
-Status ConnectionImpl::Rollback(SessionHolder& session,
-                                spanner_proto::TransactionSelector& s) {
+Status ConnectionImpl::RollbackImpl(SessionHolder& session,
+                                    spanner_proto::TransactionSelector& s) {
   if (session.session_name().empty()) {
     auto session_or = GetSession();
     if (!session_or) {
@@ -460,6 +423,45 @@ Status ConnectionImpl::Rollback(SessionHolder& session,
   request.set_transaction_id(s.id());
   grpc::ClientContext context;
   return stub_->Rollback(context, request);
+}
+
+/**
+ * Get a session from the pool, or create one if the pool is empty.
+ * The `SessionHolder` usually returns the session to the pool when it is
+ * destroyed, but if `release` is true the session will never be returned
+ * to the pool.
+ */
+StatusOr<SessionHolder> ConnectionImpl::GetSession(bool release) {
+  std::string session_name;
+  std::unique_lock<std::mutex> lk(mu_);
+  if (!sessions_.empty()) {
+    session_name = std::move(sessions_.back());
+    sessions_.pop_back();
+  } else {
+    // Release the mutex because we won't be doing any more changes to
+    // `sessions_` in this function and holding mutexes while making RPCs is
+    // (generally) a bad practice.
+    lk.unlock();
+    grpc::ClientContext context;
+    spanner_proto::CreateSessionRequest request;
+    request.set_database(db_.FullName());
+    auto response = stub_->CreateSession(context, request);
+    if (!response) {
+      return response.status();
+    }
+    session_name = std::move(*response->mutable_name());
+  }
+
+  return release ? SessionHolder(std::move(session_name), /*deleter=*/nullptr)
+                 : SessionHolder(std::move(session_name),
+                                 [this](std::string session) {
+                                   ReleaseSession(std::move(session));
+                                 });
+}
+
+void ConnectionImpl::ReleaseSession(std::string session) {
+  std::lock_guard<std::mutex> lk(mu_);
+  sessions_.push_back(std::move(session));
 }
 
 }  // namespace internal
