@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/client.h"
 //! [END spanner_quickstart]
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
@@ -36,6 +37,28 @@ std::string RandomDatabaseName(
              generator, size, "abcdefghijlkmnopqrstuvwxyz012345689_-") +
          google::cloud::internal::Sample(generator, 1,
                                          "abcdefghijlkmnopqrstuvwxyz");
+}
+
+//! [get-instance]
+void GetInstance(google::cloud::spanner::InstanceAdminClient client,
+                 std::string const& project_id,
+                 std::string const& instance_id) {
+  auto instance = client.GetInstance(project_id, instance_id);
+  if (!instance) throw std::runtime_error(instance.status().message());
+
+  std::cout << "The instance " << instance->name()
+            << " exists and its metadata is:\n"
+            << instance->DebugString() << "\n";
+}
+//! [get-instance]
+
+void GetInstanceCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("get-instance <project-id> <instance-id>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  GetInstance(std::move(client), argv[0], argv[1]);
 }
 
 void CreateDatabase(std::vector<std::string> const& argv) {
@@ -569,6 +592,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   CommandMap commands = {
+      {"get-instance", &GetInstanceCommand},
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
       {"drop-database", &DropDatabase},
@@ -648,6 +672,10 @@ void RunAll() {
     throw std::runtime_error(
         "GOOGLE_CLOUD_CPP_SPANNER_INSTANCE is not set or is empty");
   }
+
+  std::cout << "Running instance admin samples on " << instance_id << "\n";
+  RunOneCommand({"", "get-instance", project_id, instance_id});
+
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string database_id = RandomDatabaseName(generator);
 
