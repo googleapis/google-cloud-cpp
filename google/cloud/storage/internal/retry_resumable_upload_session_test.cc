@@ -579,11 +579,11 @@ TEST(RetryResumableUploadSession, LastResponse) {
 TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
       {});
 
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   auto res = session.UploadChunk(
       std::string(UploadChunkRequest::kChunkSizeQuantum, 'X'));
   ASSERT_FALSE(res);
@@ -595,11 +595,11 @@ TEST(RetryResumableUploadSession, UploadChunkPolicyExhaustedOnStart) {
 TEST(RetryResumableUploadSession, UploadFinalChunkPolicyExhaustedOnStart) {
   auto mock = google::cloud::internal::make_unique<
       testing::MockResumableUploadSession>();
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   RetryResumableUploadSession session(
       std::move(mock), LimitedTimeRetryPolicy(std::chrono::seconds(0)).clone(),
       {});
 
-  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
   auto res = session.UploadFinalChunk("blah", 4);
   ASSERT_FALSE(res);
   EXPECT_EQ(StatusCode::kDeadlineExceeded, res.status().code());
