@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_LOG_WRAPPER_H_
 
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
@@ -36,6 +37,11 @@ template <typename T>
 struct IsUniquePtr : public std::false_type {};
 template <typename T>
 struct IsUniquePtr<std::unique_ptr<T>> : public std::true_type {};
+
+template <typename T>
+struct IsFutureStatusOr : public std::false_type {};
+template <typename T>
+struct IsFutureStatusOr<future<StatusOr<T>>> : public std::true_type {};
 
 template <
     typename Functor, typename Request,
@@ -77,6 +83,34 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
   auto response = functor(context, request);
   GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
                  << " stream";
+  return response;
+}
+
+template <
+    typename Functor, typename Request,
+    typename Result =
+        google::cloud::internal::invoke_result_t<Functor, Request>,
+    typename std::enable_if<IsFutureStatusOr<Result>::value, int>::type = 0>
+Result LogWrapper(Functor&& functor, Request request, char const* where) {
+  GCP_LOG(DEBUG) << where << "() << " << request.DebugString();
+  auto response = functor(std::move(request));
+  // We cannot log the value of the future, even when it is available, because
+  // the value can only be extracted once. But we can log if the future is
+  // satisfied.
+  auto status = response.wait_for(std::chrono::microseconds(0));
+  char const* msg = "a future in an unknown state";
+  switch (status) {
+    case std::future_status::ready:
+      msg = "a ready future";
+      break;
+    case std::future_status::timeout:
+      msg = "an unsatisfied future";
+      break;
+    case std::future_status::deferred:
+      msg = "a deferred future";
+      break;
+  }
+  GCP_LOG(DEBUG) << where << "() >> " << msg;
   return response;
 }
 

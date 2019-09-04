@@ -110,6 +110,8 @@ add_library(spanner_client
             internal/compiler_info.h
             internal/connection_impl.cc
             internal/connection_impl.h
+            internal/database_admin_logging.cc
+            internal/database_admin_logging.h
             internal/database_admin_retry.cc
             internal/database_admin_retry.h
             internal/database_admin_stub.cc
@@ -243,6 +245,7 @@ function (spanner_client_define_tests)
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc
         internal/date_test.cc
+        internal/database_admin_logging_test.cc
         internal/logging_spanner_stub_test.cc
         internal/metadata_spanner_stub_test.cc
         internal/merge_chunk_test.cc

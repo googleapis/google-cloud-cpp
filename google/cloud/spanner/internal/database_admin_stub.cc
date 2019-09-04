@@ -13,7 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/database_admin_stub.h"
+#include "google/cloud/spanner/internal/database_admin_logging.h"
+#include "google/cloud/spanner/internal/database_admin_retry.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
 namespace google {
@@ -108,8 +111,15 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
 
-  return std::make_shared<DefaultDatabaseAdminStub>(
-      std::move(spanner_grpc_stub), std::move(longrunning_grpc_stub));
+  std::shared_ptr<DatabaseAdminStub> stub =
+      std::make_shared<DefaultDatabaseAdminStub>(
+          std::move(spanner_grpc_stub), std::move(longrunning_grpc_stub));
+
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<DatabaseAdminLogging>(std::move(stub));
+  }
+  return std::make_shared<internal::DatabaseAdminRetry>(std::move(stub));
 }
 
 }  // namespace internal
