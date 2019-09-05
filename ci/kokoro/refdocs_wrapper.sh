@@ -41,7 +41,7 @@ base_image_build_flags=(
   "--build-arg" "NCPU=$(nproc)"
 )
 
-if "has_cache"; then
+if "${has_cache}"; then
   base_image_build_flags+=(
     "--cache-from=${BASE_IMAGE}"
   )
