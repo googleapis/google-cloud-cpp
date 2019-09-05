@@ -35,18 +35,7 @@ class QueryPartition;
  * @param query_partition - instance to be serialized.
  *
  * @par Example
- *
- * @code
- * spanner::SqlStatement stmt("select * from Albums");
- * std::vector<spanner::QueryPartition> partitions =
- *   spanner_client.PartitionSql(stmt);
- * for (auto const& partition : partitions) {
- *   auto serialized_partition = spanner::SerializeQueryPartition(partition);
- *   if (serialized_partition.ok()) {
- *     SendToRemoteMachine(*serialized_partition);
- *   }
- * }
- * @endcode
+ * @snippet samples.cc serialize-query-partition
  */
 StatusOr<std::string> SerializeQueryPartition(
     QueryPartition const& query_partition);
@@ -60,13 +49,7 @@ StatusOr<std::string> SerializeQueryPartition(
  * @param serialized_query_partition
  *
  * @par Example
- *
- * @code
- * std::string serialized_partition = ReceiveFromRemoteMachine();
- * spanner::QueryPartition partition =
- *   spanner::DeserializeQueryPartition(serialized_partition);
- * auto rows = spanner_client.ExecuteSql(partition);
- * @endcode
+ * @snippet samples.cc deserialize-query-partition
  */
 StatusOr<QueryPartition> DeserializeQueryPartition(
     std::string const& serialized_query_partition);

@@ -37,18 +37,7 @@ class ReadPartition;
  * @param read_partition - instance to be serialized.
  *
  * @par Example
- *
- * TODO(#388): use snippet in lieu of code/endcode for all examples.
- * @code
- * std::vector<spanner::ReadPartition> partitions =
- *   spanner_client.PartitionRead(...);
- * for (auto const& partition : partitions) {
- *   auto serialized_partition = spanner::SerializeReadPartition(partition);
- *   if (serialized_partition.ok()) {
- *     SendToRemoteMachine(*serialized_partition);
- *   }
- * }
- * @endcode
+ * @snippet samples.cc serialize-read-partition
  */
 StatusOr<std::string> SerializeReadPartition(
     ReadPartition const& read_partition);
@@ -62,15 +51,7 @@ StatusOr<std::string> SerializeReadPartition(
  * @param serialized_read_partition - string representation to be deserialized.
  *
  * @par Example
- *
- * @code
- * std::string serialized_partition = ReceiveFromRemoteMachine();
- * StatusOr<spanner::ReadPartition> partition =
- *   spanner::DeserializeReadPartition(serialized_partition);
- * if (partition.ok()) {
- *   auto rows = spanner_client.Read(*partition);
- * }
- * @endcode
+ * @snippet samples.cc deserialize-read-partition
  */
 StatusOr<ReadPartition> DeserializeReadPartition(
     std::string const& serialized_read_partition);

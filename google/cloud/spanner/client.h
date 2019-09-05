@@ -179,6 +179,9 @@ class Client {
    * @return A `StatusOr` containing a `ResultSet` or error status on failure.
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
+   *
+   * @par Example
+   * @snippet samples.cc read-read-partition
    */
   // TODO(#409): possibly change to pass by value when issue resolved.
   StatusOr<ResultSet> Read(ReadPartition const& partition);
@@ -211,6 +214,9 @@ class Client {
    *
    * @return A `StatusOr` containing a vector of `ReadPartition` or error
    *     status on failure.
+   *
+   * @par Example
+   * @snippet samples.cc partition-read
    */
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       Transaction transaction, std::string table, KeySet keys,
@@ -286,6 +292,9 @@ class Client {
    * @return A `StatusOr` containing a `ResultSet` or error status on failure.
    *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
    *     value can exceed 10 MiB.
+   *
+   * @par Example
+   * @snippet samples.cc execute-sql-query-partition
    */
   StatusOr<ResultSet> ExecuteSql(QueryPartition const& partition);
 
@@ -306,6 +315,9 @@ class Client {
    *
    * @return A `StatusOr` containing a vector of `QueryPartition`s or error
    *     status on failure.
+   *
+   * @par Example
+   * @snippet samples.cc partition-query
    */
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       Transaction transaction, SqlStatement statement,

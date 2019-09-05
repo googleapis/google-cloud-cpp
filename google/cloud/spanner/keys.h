@@ -268,27 +268,7 @@ class KeySet {
  * definition.
  *
  * @par Example
- *
- * // TODO(#328): use snippet for example code
- * @code
- * // EmployeeTable has a primary key on EmployeeID.
- * using EmployeeTablePrimaryKey = Row<std::int64_t>;
- *
- * // A KeySet where EmployeeID >= 1 and EmployeeID <= 10.
- * auto first_ten_employees =
- *   KeySetBuilder<EmployeeTablePrimaryKey>()
- *       .Add(MakeKeyRange(MakeRow(1), MakeRow(10)))
- *       .Build();
- *
- * // EmployeeTable also has an index on LastName, FirstName.
- * using EmployeeNameKey = Row<std::string, std::string>;
- *
- * // A KeySet where LastName, FirstName is ("Smith", "John").
- * auto all_employees_named_john_smith =
- *   KeySetBuilder<EmployeeNameKey>()
- *       .Add(MakeRow("Smith", "John")))
- *       .Build();
- * @endcode
+ * @snippet samples.cc key-set-builder
  */
 template <typename RowType>
 class KeySetBuilder {
