@@ -78,7 +78,7 @@ git push origin "${RELEASE}.0"
 Create a new branch based on that tag and push the branch to the upstream repository:
 
 ```bash
-git checkout -b "${RELEASE}.x" "${RELEASE.0}"
+git checkout -b "${RELEASE}.x" "${RELEASE}.0"
 git push --set-upstream origin "${RELEASE}.x"
 ```
 
