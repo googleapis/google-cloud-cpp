@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/metadata_spanner_stub.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/spanner/internal/api_client_header.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 
@@ -26,13 +26,7 @@ namespace internal {
 namespace spanner_proto = ::google::spanner::v1;
 
 MetadataSpannerStub::MetadataSpannerStub(std::shared_ptr<SpannerStub> child)
-    : child_(std::move(child)),
-      api_client_header_(
-          "gl-cpp/" + google::cloud::spanner::internal::CompilerId() + "-" +
-          google::cloud::spanner::internal::CompilerVersion() + "-" +
-          google::cloud::spanner::internal::CompilerFeatures() + "-" +
-          google::cloud::spanner::internal::LanguageVersion() + " gccl/" +
-          VersionString()) {}
+    : child_(std::move(child)), api_client_header_(ApiClientHeader()) {}
 
 StatusOr<spanner_proto::Session> MetadataSpannerStub::CreateSession(
     grpc::ClientContext& client_context,
@@ -137,7 +131,7 @@ StatusOr<spanner_proto::PartitionResponse> MetadataSpannerStub::PartitionRead(
 void MetadataSpannerStub::SetMetadata(grpc::ClientContext& context,
                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
-  context.AddMetadata("x-goog-api-client", api_client_header());
+  context.AddMetadata("x-goog-api-client", api_client_header_);
 }
 
 }  // namespace internal

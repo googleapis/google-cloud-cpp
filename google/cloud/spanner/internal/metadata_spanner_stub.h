@@ -31,8 +31,6 @@ class MetadataSpannerStub : public SpannerStub {
   explicit MetadataSpannerStub(std::shared_ptr<SpannerStub> child);
   ~MetadataSpannerStub() override = default;
 
-  std::string const& api_client_header() const { return api_client_header_; }
-
   StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::CreateSessionRequest const& request) override;

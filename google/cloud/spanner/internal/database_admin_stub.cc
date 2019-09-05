@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/internal/database_admin_logging.h"
+#include "google/cloud/spanner/internal/database_admin_metadata.h"
 #include "google/cloud/spanner/internal/database_admin_retry.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/log.h"
@@ -116,6 +117,8 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
   std::shared_ptr<DatabaseAdminStub> stub =
       std::make_shared<DefaultDatabaseAdminStub>(
           std::move(spanner_grpc_stub), std::move(longrunning_grpc_stub));
+
+  stub = std::make_shared<DatabaseAdminMetadata>(std::move(stub));
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";

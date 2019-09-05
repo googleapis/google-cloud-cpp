@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/metadata_spanner_stub.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
+#include "google/cloud/spanner/internal/api_client_header.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/spanner/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -27,7 +27,6 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-using ::testing::HasSubstr;
 using ::testing::Invoke;
 namespace spanner_proto = google::spanner::v1;
 
@@ -41,7 +40,7 @@ class MetadataSpannerStubTest : public ::testing::Test {
   void SetUp() override {
     mock_ = std::make_shared<spanner_testing::MockSpannerStub>();
     MetadataSpannerStub stub(mock_);
-    expected_api_client_header_ = stub.api_client_header();
+    expected_api_client_header_ = ApiClientHeader();
   }
 
   void TearDown() override {}
@@ -86,15 +85,6 @@ class MetadataSpannerStubTest : public ::testing::Test {
   std::shared_ptr<spanner_testing::MockSpannerStub> mock_;
   std::string expected_api_client_header_;
 };
-
-TEST_F(MetadataSpannerStubTest, ApiClientHeader) {
-  MetadataSpannerStub stub(mock_);
-
-  EXPECT_THAT(stub.api_client_header(), HasSubstr("gccl/" + VersionString()));
-  EXPECT_THAT(stub.api_client_header(),
-              HasSubstr("gl-cpp/" + CompilerId() + "-" + CompilerVersion() +
-                        "-" + CompilerFeatures() + "-" + LanguageVersion()));
-}
 
 TEST_F(MetadataSpannerStubTest, CreateSession) {
   EXPECT_CALL(*mock_, CreateSession(_, _))
