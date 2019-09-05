@@ -20,7 +20,17 @@ Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.11.x - TBD
+### v0.12.x - TBD
+
+### v0.11.x - 2019-09
+
+* feat: Use macros for compiler id and version (#2937)
+* fix: Fix bazel build on windows. (#2940)
+* chore: Keep release tags in master branch. (#2963)
+* cleanup: Use only find_package to find dependencies. (#2967)
+* feat: Add ability to disable building libraries (#3025)
+* bug: fix builds with CMake 3.15 (#3033)
+* feat: Document behavior of passing empty string to SetEnv on Windows (#3030)
 
 ### v0.10.x - 2019-08
 

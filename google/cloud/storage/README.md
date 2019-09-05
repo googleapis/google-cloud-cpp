@@ -44,7 +44,32 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.4.x - TBD
+### v1.5.x - TBD
+
+### v1.4.x - 2019-09
+
+* feat: Random CRC and MD5 in storage throughput benchmark (#2943)
+* feat: Make GCS throughput benchmark record progress. (#2944)
+* feat: Increase download and upload buffers. (#2945)
+* feat: Increase the threshold for using resumable uploads (#2946)
+* cleanup: Don't include nljson.h from public oauth2 headers. (#2954)
+* bug: Handle CURLE_{RECV,SEND}_ERROR as StatusCode::kUnavailable. (#2965)
+* cleanup: Use ObjectMetadata in ResumableUploadResponse. (#2969)
+* bug: do not disable hashes when Disable{MD5,Crc32c} are set to false (#2979)
+* feat: Improve ObjectWriteStreambuf by replacing O(n^2) code. (#2989)
+* cleanup: use existing function to generate data. (#2992)
+* feat: allow applications to timeout stalled downloads. (#2993)
+* fix: Actually enable the error injection test. (#2995)
+* cleanup: Factor out payload creation from ServiceAccountCredentials:: (#2997)
+* cleanup: Add additional testing for credential helpers. (#3004)
+* fix: return proper error code from upload metadata (#3005)
+* bug: Fix the initial backoff interval. (#3007)
+* fix: eliminate a race condition from retry loop (#3013)
+* bug: Unit tests are too slow. (#3021)
+* fix: don't throw on expired retry policies (#3023)
+* bug: ReadObject() retries only once (#3028)
+* bug: CurlRequestBuilder not initializing all members. (#3035)
+* fix: use next_expected_byte() in retried uploads (#3037)
 
 ### v1.3.x - 2019-08
 

@@ -42,7 +42,13 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.2.x - TBD
+### v1.3.x - TBD
+
+### v1.2.x - 2019-09
+
+* feat: Configure C++17 build. (#2961)
+* fix: use MetadataUpdatePolicy::FromClusterId. (#2968)
+* fix: correct invalid routing headers. (#2988)
 
 ### v1.1.x - 2019-08
 
