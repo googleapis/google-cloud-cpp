@@ -20,19 +20,52 @@ if [[ -z "${TRAMPOLINE_IMAGE:-}" ]]; then
   TRAMPOLINE_IMAGE="gcr.io/cloud-devrel-kokoro-resources/cpp/refdocs"
 fi
 
+if [[ -z "${BASE_IMAGE:-}" ]]; then
+  BASE_IMAGE="gcr.io/cloud-devrel-kokoro-resources/cpp/refdocs-base"
+fi
+
 # work from the git root directory
 cd "$(dirname "$0")/../../"
 
-if [[ "${BUILD_DOCKER_IMAGE:-false}" == "true" ]]; then
-  # First build the docker image with dependency installed
-  docker build -t gcr.io/cloud-devrel-kokoro-resources/cpp/refdoc-base \
-    --build-arg NCPU="$(nproc)" \
-    -f ci/kokoro/docker/Dockerfile.ubuntu-install ci
-
-  docker build -t "${TRAMPOLINE_IMAGE}" -f ci/kokoro/Dockerfile.refdocs ci
-
-  gcloud auth configure-docker
-  docker push "${TRAMPOLINE_IMAGE}"
+# Download the base image
+has_cache="false"
+gcloud auth configure-docker
+if docker pull "${BASE_IMAGE}"; then
+  echo "Base image successfully downloaded."
+  has_cache="true"
 fi
+
+base_image_build_flags=(
+  "-t" "${BASE_IMAGE}"
+  "-f" "ci/kokoro/docker/Dockerfile.ubuntu-install"
+  "--build-arg" "NCPU=$(nproc)"
+)
+
+if "has_cache"; then
+  base_image_build_flags+=(
+    "--cache-from=${BASE_IMAGE}"
+  )
+fi
+
+update_cache="false"
+if docker build "${base_image_build_flags[@]}" ci; then
+  update_cache="true"
+  echo "Base image created $(date)."
+  docker image ls | grep "${BASE_IMAGE}"
+else
+  "Failed creating base image $(date)."
+  if "${has_cache}"; then
+    echo "Continue the build with the cache."
+  else
+    exit 1
+  fi
+fi
+
+if "${update_cache}"; then
+  docker push "${BASE_IMAGE}"
+fi
+
+docker build -t "${TRAMPOLINE_IMAGE}" -f ci/kokoro/Dockerfile.refdocs ci
+docker push "${TRAMPOLINE_IMAGE}"
 
 exec ci/kokoro/trampoline.sh
