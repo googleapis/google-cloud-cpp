@@ -22,6 +22,14 @@ namespace google {
 namespace cloud {
 namespace spanner_mocks {
 inline namespace SPANNER_CLIENT_NS {
+/**
+ * A class to mock `google::cloud::spanner::InstanceAdminConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors from a `spanner::InstanceAdminClient`. To do so, construct a
+ * `spanner::InstanceAdminClient` with an instance of this class. Then use the
+ * Google Test framework functions to program the behavior of this mock.
+ */
 class MockInstanceAdminConnection
     : public google::cloud::spanner::InstanceAdminConnection {
  public:

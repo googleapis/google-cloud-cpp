@@ -1,6 +1,6 @@
 /*!
 
-@page spanner-mocking Mocking the Cloud Spanner C++ Client with Google Mock.
+@page spanner-mocking Mocking the Cloud Spanner C++ Client with Google Mock
 
 In this document we describe how to write unit tests that mock
 `google::cloud::spanner::Client` using Google Mock. This document assumes the

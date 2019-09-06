@@ -20,12 +20,21 @@
 
 namespace google {
 namespace cloud {
-/**
- * Contains all the types and functions to help test
- */
+/// Define classes to mock the Cloud Spanner C++ client APIs.
 namespace spanner_mocks {
+/// An inlined versioned namespace to avoid dependency diamonds.
 inline namespace SPANNER_CLIENT_NS {
 
+/**
+ * A class to mock `google::cloud::spanner::Connection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors from a `spanner::Client`. To do so, construct a
+ * `spanner::Client` with an instance of this class. Then use the Google Test
+ * framework functions to program the behavior of this mock.
+ *
+ * @see @ref spanner-mocking for an example using this class.
+ */
 class MockConnection : public spanner::Connection {
  public:
   MOCK_METHOD1(Read, StatusOr<spanner::ResultSet>(ReadParams));
@@ -42,6 +51,11 @@ class MockConnection : public spanner::Connection {
   MOCK_METHOD1(Rollback, Status(RollbackParams));
 };
 
+/**
+ * Mock the results of a ExecuteSql() or Read() operation.
+ *
+ * @see @ref spanner-mocking for an example using this class.
+ */
 class MockResultSetSource : public spanner::internal::ResultSetSource {
  public:
   MOCK_METHOD0(NextValue, StatusOr<optional<spanner::Value>>());
