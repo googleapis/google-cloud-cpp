@@ -129,6 +129,32 @@ void AddColumn(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+//! [list-databases]
+void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
+                   std::string const& project_id,
+                   std::string const& instance_id) {
+  int count = 0;
+  for (auto database : client.ListDatabases(project_id, instance_id)) {
+    if (!database) throw std::runtime_error(database.status().message());
+    std::cout << "Database " << database->name() << " full metadata:\n"
+              << database->DebugString() << "\n";
+    ++count;
+  }
+  if (count == 0) {
+    std::cout << "No databases found in instance " << instance_id
+              << " for project << " << project_id << "\n";
+  }
+}
+//! [list-databases]
+
+void ListDatabasesCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("list-databases <project-id> <instance-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  ListDatabases(std::move(client), argv[0], argv[1]);
+}
+
 void DropDatabase(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -714,6 +740,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"get-instance", &GetInstanceCommand},
       {"create-database", &CreateDatabase},
       {"add-column", &AddColumn},
+      {"list-databases", &ListDatabasesCommand},
       {"drop-database", &DropDatabase},
       {"quickstart", &QuickstartCommand},
       make_command_entry("insert-data", &InsertData),
@@ -805,6 +832,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_create_database sample\n";
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
+
+  std::cout << "\nList all databases\n";
+  RunOneCommand({"", "list-databases", project_id, instance_id});
 
   std::cout << "\nRunning spanner_add_column sample\n";
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});

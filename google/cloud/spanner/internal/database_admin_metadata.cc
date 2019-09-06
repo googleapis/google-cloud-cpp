@@ -59,6 +59,14 @@ Status DatabaseAdminMetadata::DropDatabase(
   return child_->DropDatabase(context, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
+DatabaseAdminMetadata::ListDatabases(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListDatabases(context, request);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

@@ -88,6 +88,18 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return google::cloud::Status();
   }
 
+  StatusOr<gcsa::ListDatabasesResponse> ListDatabases(
+      grpc::ClientContext& client_context,
+      gcsa::ListDatabasesRequest const& request) override {
+    gcsa::ListDatabasesResponse response;
+    auto status =
+        database_admin_->ListDatabases(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) override {

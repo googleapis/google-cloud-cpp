@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
+#include "google/cloud/spanner/internal/range_from_pagination.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 
@@ -25,6 +26,20 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
+/**
+ * An input range to stream all the databases in a Cloud Spanner instance.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::spanner::admin::v1::Database` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListDatabaseRange = internal::PaginationRange<
+    google::spanner::admin::database::v1::Database,
+    google::spanner::admin::database::v1::ListDatabasesRequest,
+    google::spanner::admin::database::v1::ListDatabasesResponse>;
 
 /**
  * Performs database administration operations on Spanner.
@@ -172,6 +187,18 @@ class DatabaseAdminClient {
    * @snippet samples.cc drop-database
    */
   Status DropDatabase(Database const& db);
+
+  /**
+   * List all the databases in a give project and instance.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore always idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc list-databases
+   */
+  ListDatabaseRange ListDatabases(std::string const& project_id,
+                                  std::string const& instance_id);
 
   /// Create a new client with the given stub. For testing only.
   explicit DatabaseAdminClient(std::shared_ptr<internal::DatabaseAdminStub> s)

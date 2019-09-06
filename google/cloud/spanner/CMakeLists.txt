@@ -136,6 +136,7 @@ add_library(spanner_client
             internal/partial_result_set_reader.cc
             internal/partial_result_set_reader.h
             internal/polling_loop.h
+            internal/range_from_pagination.h
             internal/retry_loop.cc
             internal/retry_loop.h
             internal/session_holder.h

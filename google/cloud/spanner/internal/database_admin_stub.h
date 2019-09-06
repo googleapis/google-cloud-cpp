@@ -59,6 +59,12 @@ class DatabaseAdminStub {
       google::spanner::admin::database::v1::DropDatabaseRequest const&
           request) = 0;
 
+  /// Fetch a page of databases.
+  virtual StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
+  ListDatabases(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::ListDatabasesRequest const&) = 0;
+
   /// Poll a long-running operation.
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,

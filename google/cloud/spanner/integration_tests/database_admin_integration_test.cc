@@ -42,7 +42,30 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   std::string database_id = spanner_testing::RandomDatabaseName(generator);
 
   DatabaseAdminClient client;
+
+  // We test client.ListDatabases() by verifying that (a) it does not return a
+  // randomly generated database name before we create a database with that
+  // name, (b) it *does* return that database name once created, and (c) it no
+  // longer returns that name once the database is dropped. Implicitly that also
+  // tests that client.DropDatabase() and client.CreateDatabase() do something,
+  // which is nice.
+  auto get_current_databases = [&client, project_id, instance_id] {
+    std::vector<std::string> names;
+    for (auto database : client.ListDatabases(project_id, instance_id)) {
+      EXPECT_STATUS_OK(database);
+      if (!database) return names;
+      names.push_back(database->name());
+    }
+    return names;
+  };
+
   Database db(project_id, instance_id, database_id);
+
+  auto db_list = get_current_databases();
+  ASSERT_EQ(0, std::count(db_list.begin(), db_list.end(), db.FullName()))
+      << "Database " << database_id << " already exists, this is unexpected"
+      << " as the database id is selected at random.";
+
   auto database_future = client.CreateDatabase(db);
   auto database = database_future.get();
   ASSERT_STATUS_OK(database);
@@ -68,8 +91,14 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
     EXPECT_EQ(create_table_statement, metadata->statements(0));
   }
 
+  db_list = get_current_databases();
+  ASSERT_EQ(1, std::count(db_list.begin(), db_list.end(), db.FullName()));
+
   auto drop_status = client.DropDatabase(db);
   EXPECT_STATUS_OK(drop_status);
+
+  db_list = get_current_databases();
+  ASSERT_EQ(0, std::count(db_list.begin(), db_list.end(), db.FullName()));
 }
 
 }  // namespace

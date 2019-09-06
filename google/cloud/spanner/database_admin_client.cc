@@ -63,6 +63,26 @@ DatabaseAdminClient::UpdateDatabase(
   return stub_->AwaitUpdateDatabase(*std::move(operation));
 }
 
+ListDatabaseRange DatabaseAdminClient::ListDatabases(
+    std::string const& project_id, std::string const& instance_id) {
+  gcsa::ListDatabasesRequest request;
+  request.set_parent("projects/" + project_id + "/instances/" + instance_id);
+  request.clear_page_token();
+  auto stub = stub_;
+  return ListDatabaseRange(
+      std::move(request),
+      [stub](gcsa::ListDatabasesRequest const& r) {
+        grpc::ClientContext context;
+        return stub->ListDatabases(context, r);
+      },
+      [](gcsa::ListDatabasesResponse r) {
+        std::vector<gcsa::Database> result(r.databases().size());
+        auto& dbs = *r.mutable_databases();
+        std::move(dbs.begin(), dbs.end(), result.begin());
+        return result;
+      });
+}
+
 Status DatabaseAdminClient::DropDatabase(Database const& db) {
   grpc::ClientContext context;
   google::spanner::admin::database::v1::DropDatabaseRequest request;

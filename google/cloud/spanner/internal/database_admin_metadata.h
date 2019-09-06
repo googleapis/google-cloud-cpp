@@ -57,6 +57,12 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
       override;
 
+  StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
+  ListDatabases(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::ListDatabasesRequest const&)
+      override;
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context,
       google::longrunning::GetOperationRequest const& request) override;

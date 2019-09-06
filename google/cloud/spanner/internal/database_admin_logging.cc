@@ -75,6 +75,17 @@ Status DatabaseAdminLogging::DropDatabase(
       context, request, __func__);
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
+DatabaseAdminLogging::ListDatabases(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabasesRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::spanner::admin::database::v1::ListDatabasesRequest const&
+                 request) { return child_->ListDatabases(context, request); },
+      context, request, __func__);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

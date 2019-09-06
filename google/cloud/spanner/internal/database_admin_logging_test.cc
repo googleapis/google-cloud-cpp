@@ -143,6 +143,19 @@ TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
+  EXPECT_CALL(*mock_, ListDatabases(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response = stub.ListDatabases(context, gcsa::ListDatabasesRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("ListDatabases");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
 

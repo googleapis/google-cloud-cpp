@@ -208,6 +208,17 @@ Status DatabaseAdminRetry::DropDatabase(
       context, request, __func__);
 }
 
+StatusOr<gcsa::ListDatabasesResponse> DatabaseAdminRetry::ListDatabases(
+    grpc::ClientContext& context, gcsa::ListDatabasesRequest const& request) {
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             gcsa::ListDatabasesRequest const& request) {
+        return child_->ListDatabases(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminRetry::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

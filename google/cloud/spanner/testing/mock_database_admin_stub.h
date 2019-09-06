@@ -53,6 +53,12 @@ class MockDatabaseAdminStub
       Status(grpc::ClientContext&,
              google::spanner::admin::database::v1::DropDatabaseRequest const&));
 
+  MOCK_METHOD2(
+      ListDatabases,
+      StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::ListDatabasesRequest const&));
+
   MOCK_METHOD2(GetOperation,
                StatusOr<google::longrunning::Operation>(
                    grpc::ClientContext&,

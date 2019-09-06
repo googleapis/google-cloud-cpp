@@ -116,6 +116,28 @@ TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
   EXPECT_EQ(TransientError(), status);
 }
 
+TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
+  EXPECT_CALL(*mock_, ListDatabases(_, _))
+      .WillOnce(Invoke([this](grpc::ClientContext& context,
+                              gcsa::ListDatabasesRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.database.v1.DatabaseAdmin."
+            "ListDatabases",
+            expected_api_client_header_));
+        return TransientError();
+      }));
+
+  DatabaseAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  gcsa::ListDatabasesRequest request;
+  request.set_parent(
+      "projects/test-project-id/"
+      "instances/test-instance-id");
+  auto response = stub.ListDatabases(context, request);
+  EXPECT_EQ(TransientError(), response.status());
+}
+
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _))
       .WillOnce(Invoke([this](grpc::ClientContext& context,
