@@ -209,21 +209,46 @@ function (spanner_client_define_tests)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
+    # Create a header-only library for the mocks. We use a CMake `INTERFACE`
+    # library for these, a regular library would not work on macOS (where the
+    # library needs at least one .o file). Unfortunately INTERFACE libraries are
+    # a bit weird in that they need absolute paths for their sources.
+    add_library(spanner_client_mocks INTERFACE)
+    target_sources(
+        spanner_client_mocks
+        INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+    target_link_libraries(spanner_client_mocks
+                          INTERFACE googleapis-c++::spanner_client
+                                    google_cloud_cpp_testing
+                                    GTest::gmock_main
+                                    GTest::gmock
+                                    GTest::gtest)
+    create_bazel_config(spanner_client_mocks)
+    target_include_directories(
+        spanner_client_mocks
+        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+                  $<INSTALL_INTERFACE:include>)
+    target_compile_options(
+        spanner_client_mocks
+        INTERFACE ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+
     add_library(spanner_client_testing
                 testing/database_environment.cc
                 testing/database_environment.h
                 testing/matchers.h
                 testing/mock_database_admin_stub.h
-                testing/mock_instance_admin_connection.h
                 testing/mock_instance_admin_stub.h
-                testing/mock_spanner_connection.h
                 testing/mock_spanner_stub.h
                 testing/random_database_name.cc
                 testing/random_database_name.h
                 testing/validate_metadata.cc
                 testing/validate_metadata.h)
     target_link_libraries(spanner_client_testing
-                          PUBLIC googleapis-c++::spanner_client
+                          PUBLIC spanner_client_mocks
+                                 googleapis-c++::spanner_client
                                  google_cloud_cpp_testing
                                  GTest::gmock_main
                                  GTest::gmock

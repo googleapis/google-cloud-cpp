@@ -15,9 +15,9 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/internal/time.h"
+#include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/result_set.h"
-#include "google/cloud/spanner/testing/mock_spanner_connection.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
@@ -38,8 +38,8 @@ namespace {
 namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::internal::make_unique;
-using ::google::cloud::spanner_testing::MockConnection;
-using ::google::cloud::spanner_testing::MockResultSetSource;
+using ::google::cloud::spanner_mocks::MockConnection;
+using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;

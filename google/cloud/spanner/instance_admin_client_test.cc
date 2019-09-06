@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance_admin_client.h"
-#include "google/cloud/spanner/testing/mock_instance_admin_connection.h"
+#include "google/cloud/spanner/mocks/mock_instance_admin_connection.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -22,7 +22,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using spanner_testing::MockInstanceAdminConnection;
+using spanner_mocks::MockInstanceAdminConnection;
 using ::testing::_;
 
 TEST(InstanceAdminClientTest, CopyAndMove) {

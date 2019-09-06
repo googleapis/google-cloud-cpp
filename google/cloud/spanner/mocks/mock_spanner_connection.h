@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_SPANNER_CONNECTION_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_SPANNER_CONNECTION_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_SPANNER_CONNECTION_H_
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_SPANNER_CONNECTION_H_
 
 #include "google/cloud/spanner/connection.h"
 #include <gmock/gmock.h>
@@ -23,7 +23,7 @@ namespace cloud {
 /**
  * Contains all the types and functions to help test
  */
-namespace spanner_testing {
+namespace spanner_mocks {
 inline namespace SPANNER_CLIENT_NS {
 
 class MockConnection : public spanner::Connection {
@@ -50,8 +50,8 @@ class MockResultSetSource : public spanner::internal::ResultSetSource {
 };
 
 }  // namespace SPANNER_CLIENT_NS
-}  // namespace spanner_testing
+}  // namespace spanner_mocks
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_SPANNER_CONNECTION_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_SPANNER_CONNECTION_H_

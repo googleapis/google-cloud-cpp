@@ -16,7 +16,7 @@
 
 //! [required-includes]
 #include "google/cloud/spanner/client.h"
-#include "google/cloud/spanner/testing/mock_spanner_connection.h"
+#include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 //! [required-includes]
@@ -33,8 +33,8 @@ TEST(MockSpannerClient, SuccessfulExecuteSql) {
   // Create a mock object to stream the results of a ExecuteSql query.
   //! [create-streaming-source]
   auto source =
-      std::unique_ptr<google::cloud::spanner_testing::MockResultSetSource>(
-          new google::cloud::spanner_testing::MockResultSetSource);
+      std::unique_ptr<google::cloud::spanner_mocks::MockResultSetSource>(
+          new google::cloud::spanner_mocks::MockResultSetSource);
   //! [create-streaming-source]
 
   // Setup the return type of the ExecuteSql results:
@@ -71,8 +71,7 @@ TEST(MockSpannerClient, SuccessfulExecuteSql) {
 
   // Create a mock for `spanner::Connection`:
   //! [create-mock]
-  auto conn =
-      std::make_shared<google::cloud::spanner_testing::MockConnection>();
+  auto conn = std::make_shared<google::cloud::spanner_mocks::MockConnection>();
   //! [create-mock]
 
   // Setup the connection mock to return the results previously setup:
