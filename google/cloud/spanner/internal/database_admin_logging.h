@@ -47,6 +47,10 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
   future<StatusOr<google::spanner::admin::database::v1::Database>>
       AwaitCreateDatabase(google::longrunning::Operation) override;
 
+  StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::GetDatabaseRequest const&) override;
+
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&

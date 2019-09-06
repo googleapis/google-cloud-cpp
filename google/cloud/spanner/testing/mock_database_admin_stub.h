@@ -33,6 +33,12 @@ class MockDatabaseAdminStub
           grpc::ClientContext&,
           google::spanner::admin::database::v1::CreateDatabaseRequest const&));
 
+  MOCK_METHOD2(
+      GetDatabase,
+      StatusOr<google::spanner::admin::database::v1::Database>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::GetDatabaseRequest const&));
+
   MOCK_METHOD1(AwaitCreateDatabase,
                future<StatusOr<google::spanner::admin::database::v1::Database>>(
                    google::longrunning::Operation));

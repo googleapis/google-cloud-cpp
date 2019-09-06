@@ -78,6 +78,19 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
+  EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response = stub.GetDatabase(context, gcsa::GetDatabaseRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("GetDatabase");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(DatabaseAdminLoggingTest, AwaitCreateDatabase) {
   auto result = google::cloud::make_ready_future(
       StatusOr<gcsa::Database>(TransientError()));

@@ -31,6 +31,15 @@ using ::testing::Invoke;
 using ::testing::Return;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
+DatabaseAdminClient CreateTestingClient(
+    std::shared_ptr<internal::DatabaseAdminStub> mock) {
+  auto stub = std::make_shared<internal::DatabaseAdminRetry>(
+      std::move(mock), LimitedErrorCountRetryPolicy(/*maximum_failures=*/2),
+      ExponentialBackoffPolicy(std::chrono::microseconds(1),
+                               std::chrono::microseconds(1), 2.0));
+  return DatabaseAdminClient(std::move(stub));
+}
+
 /// @test Verify that successful case works.
 TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
@@ -84,6 +93,58 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto db = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+}
+
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, GetDatabase_Success) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+
+  EXPECT_CALL(*mock, GetDatabase(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  gcsa::GetDatabaseRequest const& request) {
+            EXPECT_EQ(expected_name, request.name());
+            gcsa::Database response;
+            response.set_name(request.name());
+            response.set_state(gcsa::Database::READY);
+            return response;
+          }));
+
+  auto client = CreateTestingClient(std::move(mock));
+  auto response = client.GetDatabase(
+      Database("test-project", "test-instance", "test-database"));
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Database::READY, response->state());
+  EXPECT_EQ(expected_name, response->name());
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, GetDatabase_PermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetDatabase(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto client = CreateTestingClient(std::move(mock));
+  auto response = client.GetDatabase(
+      Database("test-project", "test-instance", "test-database"));
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+/// @test Verify that too many transients errors are reported corrrectly.
+TEST(DatabaseAdminClientTest, GetDatabase_TooManyTransients) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetDatabase(_, _))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto client = CreateTestingClient(std::move(mock));
+  auto response = client.GetDatabase(
+      Database("test-project", "test-instance", "test-database"));
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
 
 /// @test Verify that successful case works.

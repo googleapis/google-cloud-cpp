@@ -72,6 +72,10 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
 
   EXPECT_THAT(database->name(), EndsWith(database_id));
 
+  auto get_result = client.GetDatabase(db);
+  ASSERT_STATUS_OK(get_result);
+  EXPECT_EQ(database->name(), get_result->name());
+
   auto const create_table_statement = R"""(
                              CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,
@@ -83,7 +87,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
 
   auto update_future = client.UpdateDatabase(db, {create_table_statement});
   auto metadata = update_future.get();
-  EXPECT_STATUS_OK(metadata);
+  ASSERT_STATUS_OK(metadata);
   EXPECT_THAT(metadata->database(), EndsWith(database_id));
   EXPECT_EQ(1, metadata->statements_size());
   EXPECT_EQ(1, metadata->commit_timestamps_size());

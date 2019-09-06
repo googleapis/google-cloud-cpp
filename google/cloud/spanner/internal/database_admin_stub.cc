@@ -58,6 +58,18 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
         StatusOr<gcsa::Database>(Status(StatusCode::kUnimplemented, __func__)));
   }
 
+  StatusOr<gcsa::Database> GetDatabase(
+      grpc::ClientContext& client_context,
+      gcsa::GetDatabaseRequest const& request) override {
+    gcsa::Database response;
+    auto status =
+        database_admin_->GetDatabase(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&

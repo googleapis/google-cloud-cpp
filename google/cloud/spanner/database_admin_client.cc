@@ -45,6 +45,13 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
   return stub_->AwaitCreateDatabase(*std::move(operation));
 }
 
+StatusOr<gcsa::Database> DatabaseAdminClient::GetDatabase(Database const& db) {
+  grpc::ClientContext context;
+  gcsa::GetDatabaseRequest request;
+  request.set_name(db.FullName());
+  return stub_->GetDatabase(context, request);
+}
+
 future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
 DatabaseAdminClient::UpdateDatabase(
     Database const& db, std::vector<std::string> const& statements) {

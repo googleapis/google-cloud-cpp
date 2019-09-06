@@ -43,6 +43,11 @@ class DatabaseAdminStub {
   virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
       AwaitCreateDatabase(google::longrunning::Operation) = 0;
 
+  /// Fetch the metadata for a particular database.
+  virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::GetDatabaseRequest const&) = 0;
+
   /// Start a database update, using a sequence of DDL statements.
   virtual StatusOr<google::longrunning::Operation> UpdateDatabase(
       grpc::ClientContext&, google::spanner::admin::database::v1::

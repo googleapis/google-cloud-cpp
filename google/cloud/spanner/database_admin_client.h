@@ -157,6 +157,19 @@ class DatabaseAdminClient {
                  std::vector<std::string> const& extra_statements = {});
 
   /**
+   * Retrieve metadata information about a database.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore always idempotent. Transient
+   * failures are automatically retried.
+   *
+   * @par Example
+   * @snippet samples.cc get-database
+   */
+  StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
+      Database const& db);
+
+  /**
    * Updates the database using a series of DDL statements.
    *
    * This function schedules a series of updates to the database using a

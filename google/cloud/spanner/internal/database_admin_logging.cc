@@ -42,6 +42,16 @@ future<StatusOr<gcsa::Database>> DatabaseAdminLogging::AwaitCreateDatabase(
       std::move(operation), __func__);
 }
 
+StatusOr<gcsa::Database> DatabaseAdminLogging::GetDatabase(
+    grpc::ClientContext& context, gcsa::GetDatabaseRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::GetDatabaseRequest const& request) {
+        return child_->GetDatabase(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
