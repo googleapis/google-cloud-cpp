@@ -20,6 +20,9 @@
 
 namespace google {
 namespace cloud {
+/**
+ * Contains all the types and functions to help test
+ */
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 

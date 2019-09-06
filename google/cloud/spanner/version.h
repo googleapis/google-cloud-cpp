@@ -23,14 +23,17 @@
   GOOGLE_CLOUD_CPP_VEVAL(SPANNER_CLIENT_VERSION_MAJOR, \
                          SPANNER_CLIENT_VERSION_MINOR)
 
-/**
- * Contains all the Cloud spanner C++ client APIs.
- */
 namespace google {
+/**
+ * The namespace Google Cloud Platform C++ client libraries.
+ */
 namespace cloud {
+/**
+ * Contains all the Cloud Spanner C++ client types and functions.
+ */
 namespace spanner {
 /**
- * The inlined, versioned namespace for the Cloud spanner C++ client APIs.
+ * The inlined, versioned namespace for the Cloud Spanner C++ client APIs.
  *
  * Applications may need to link multiple versions of the Cloud spanner C++
  * client, for example, if they link a library that uses an older version of

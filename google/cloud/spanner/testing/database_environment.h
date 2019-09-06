@@ -22,7 +22,9 @@
 
 namespace google {
 namespace cloud {
+/// Helper types and functions used in Cloud Spanner C++ client library tests.
 namespace spanner_testing {
+/// An inlined, versioned namespace for the testing helpers.
 inline namespace SPANNER_CLIENT_NS {
 
 class DatabaseEnvironment : public ::testing::Environment {
