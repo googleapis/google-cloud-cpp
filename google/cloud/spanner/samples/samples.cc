@@ -914,15 +914,11 @@ void RunAll() {
   std::cout << "\nRunning spanner_partition_query sample\n";
   PartitionQuery(client);
 
-  namespace s = google::cloud::spanner;
-  s::Client c2(s::MakeConnection(
-      s::Database(project_id, instance_id, database_id),
-      s::ConnectionOptions().enable_clog().enable_tracing("rpc")));
   std::cout << "\nRunning spanner_dml_partitioned_update sample\n";
-  DmlPartitionedUpdate(c2);
+  DmlPartitionedUpdate(client);
 
-  std::cout << "\nRunning spanner_dml_partitioned_delete sample\n" << std::endl;
-  DmlPartitionedDelete(c2);
+  std::cout << "\nRunning spanner_dml_partitioned_delete sample\n";
+  DmlPartitionedDelete(client);
 
   std::cout << "\nRunning spanner_drop_database sample\n";
   RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
