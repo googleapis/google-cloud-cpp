@@ -186,7 +186,7 @@ class Row {
   /**
    * Returns a std::array of `Value` objects holding all the items in this row.
    *
-   * @note: If the Row's values are large, it may be move efficient to "move"
+   * @note If the Row's values are large, it may be move efficient to "move"
    *     them into the returned array.
    *
    * @par Example
@@ -272,9 +272,16 @@ class Row {
   std::tuple<Types...> values_;
 };
 
-// Returns the row-element at column `I`. This function will be found via ADL
-// to make `Row<Ts...>` work with `internal::ForEach`. Users should not call
-// this function directly; instead, simply call `row.get<I>()`.
+/**
+ * Returns the row-element at column `I`.
+ *
+ * @note Library users should not need to call this function directly; instead,
+ *     simply call `row.get<I>()`.
+ *
+ * This function makes `Row<Ts...>` usable in as a tuple-like class in the
+ * library implementation. For example, `internal::ForEach` finds this function
+ * via ADL.
+ */
 template <std::size_t I, typename... Ts>
 auto GetElement(Row<Ts...>& row) -> decltype(row.template get<I>()) {
   return row.template get<I>();
