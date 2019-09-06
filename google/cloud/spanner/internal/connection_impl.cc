@@ -243,9 +243,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecutePartitionedDmlParams epdp) {
   if (session.session_name().empty()) {
-    // Since the session may be sent to other machines, it should not be
-    // returned to the pool when the Transaction is destroyed (release=true).
-    auto session_or = GetSession(/*release=*/true);
+    auto session_or = GetSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
