@@ -360,9 +360,6 @@ class KeySetBuilder {
     return std::move(copy).Build();
   }
 
-  // TODO(#322): Add methods to insert ranges of Keys and KeyRanges.
-  // TODO(#323): Add methods to remove Keys or KeyRanges.
-
  private:
   template <std::size_t N>
   static void Append(google::protobuf::ListValue* lv,

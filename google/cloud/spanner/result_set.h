@@ -92,8 +92,6 @@ class ResultSet {
    * Statistics are only available for SQL requests with `query_mode` set to
    * `PROFILE`, and only after consuming the entire result stream (i.e.
    * iterating through `Rows()` until the end).
-   *
-   * TODO(#217) Determine what type we should return from this method.
    */
   optional<google::spanner::v1::ResultSetStats> Stats() {
     return source_->Stats();

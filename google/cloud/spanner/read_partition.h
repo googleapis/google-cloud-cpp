@@ -66,7 +66,6 @@ ReadPartition MakeReadPartition(std::string transaction_id,
                                 std::vector<std::string> column_names,
                                 ReadOptions read_options = {});
 
-// TODO(#409): possibly change to pass by value when issue resolved.
 Connection::ReadParams MakeReadParams(ReadPartition const& read_partition);
 
 }  // namespace internal
