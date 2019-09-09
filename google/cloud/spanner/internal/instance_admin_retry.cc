@@ -73,6 +73,17 @@ StatusOr<gcsa::Instance> InstanceAdminRetry::GetInstance(
       context, request, __func__);
 }
 
+StatusOr<gcsa::ListInstancesResponse> InstanceAdminRetry::ListInstances(
+    grpc::ClientContext& context, gcsa::ListInstancesRequest const& request) {
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             gcsa::ListInstancesRequest const& request) {
+        return child_->ListInstances(context, request);
+      },
+      context, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

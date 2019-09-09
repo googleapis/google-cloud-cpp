@@ -41,6 +41,19 @@ TEST(InstanceAdminClient, InstanceBasicCRUD) {
   EXPECT_THAT(instance->name(), HasSubstr(project_id));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id));
   EXPECT_NE(0, instance->node_count());
+
+  std::vector<std::string> instance_names = [client, project_id]() mutable {
+    std::vector<std::string> names;
+    for (auto instance : client.ListInstances(project_id, "")) {
+      EXPECT_STATUS_OK(instance);
+      if (!instance) break;
+      names.push_back(instance->name());
+    }
+    return names;
+  }();
+
+  EXPECT_EQ(1, std::count(instance_names.begin(), instance_names.end(),
+                          instance->name()));
 }
 
 }  // namespace

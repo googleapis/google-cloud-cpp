@@ -24,6 +24,7 @@ namespace {
 
 using spanner_mocks::MockInstanceAdminConnection;
 using ::testing::_;
+namespace gcsa = google::spanner::admin::instance::v1;
 
 TEST(InstanceAdminClientTest, CopyAndMove) {
   auto conn1 = std::make_shared<MockInstanceAdminConnection>();
@@ -62,6 +63,33 @@ TEST(InstanceAdminClientTest, GetInstance) {
   InstanceAdminClient client(mock);
   auto actual = client.GetInstance("test-project", "test-instance");
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminClientTest, ListInstances) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+
+  EXPECT_CALL(*mock, ListInstances(_))
+      .WillOnce([](InstanceAdminConnection::ListInstancesParams const& p) {
+        EXPECT_EQ("test-project", p.project_id);
+        EXPECT_EQ("labels.test-key:test-value", p.filter);
+
+        return ListInstancesRange(
+            gcsa::ListInstancesRequest{},
+            [](gcsa::ListInstancesRequest const&) {
+              return StatusOr<gcsa::ListInstancesResponse>(
+                  Status(StatusCode::kPermissionDenied, "uh-oh"));
+            },
+            [](gcsa::ListInstancesResponse const&) {
+              return std::vector<gcsa::Instance>{};
+            });
+      });
+
+  InstanceAdminClient client(mock);
+  auto range =
+      client.ListInstances("test-project", "labels.test-key:test-value");
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
 }  // namespace

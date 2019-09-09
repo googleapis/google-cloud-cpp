@@ -47,6 +47,17 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
+  StatusOr<gcsa::ListInstancesResponse> ListInstances(
+      grpc::ClientContext& context,
+      gcsa::ListInstancesRequest const& request) override {
+    gcsa::ListInstancesResponse response;
+    auto status = instance_admin_->ListInstances(&context, request, &response);
+    if (!status.ok()) {
+      return grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
  private:
   std::unique_ptr<gcsa::InstanceAdmin::Stub> instance_admin_;
   std::unique_ptr<google::longrunning::Operations::Stub> operations_;

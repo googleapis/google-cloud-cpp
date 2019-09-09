@@ -48,6 +48,12 @@ class InstanceAdminRetry : public InstanceAdminStub {
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
+
+  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::ListInstancesRequest const&)
+      override;
   //@}
 
  private:

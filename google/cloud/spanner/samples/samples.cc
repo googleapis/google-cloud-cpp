@@ -61,6 +61,31 @@ void GetInstanceCommand(std::vector<std::string> const& argv) {
   GetInstance(std::move(client), argv[0], argv[1]);
 }
 
+//! [list-instances]
+void ListInstances(google::cloud::spanner::InstanceAdminClient client,
+                   std::string const& project_id) {
+  int count = 0;
+  for (auto instance : client.ListInstances(project_id, "")) {
+    if (!instance) throw std::runtime_error(instance.status().message());
+    ++count;
+    std::cout << "Instance [" << count << "]:\n"
+              << instance->DebugString() << "\n";
+  }
+  if (count == 0) {
+    std::cout << "No instances found in project " << project_id;
+  }
+}
+//! [list-instances]
+
+void ListInstancesCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("get-instance <project-id>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  ListInstances(std::move(client), argv[0]);
+}
+
 void CreateDatabase(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -759,6 +784,7 @@ int RunOneCommand(std::vector<std::string> argv) {
 
   CommandMap commands = {
       {"get-instance", &GetInstanceCommand},
+      {"list-instances", &ListInstancesCommand},
       {"create-database", &CreateDatabase},
       {"get-database", &GetDatabaseCommand},
       {"add-column", &AddColumn},
@@ -845,7 +871,12 @@ void RunAll() {
   }
 
   std::cout << "Running instance admin samples on " << instance_id << "\n";
+
+  std::cout << "\nRunning get-instance sample\n";
   RunOneCommand({"", "get-instance", project_id, instance_id});
+
+  std::cout << "\nRunning list-instances sample\n";
+  RunOneCommand({"", "list-instances", project_id});
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string database_id = RandomDatabaseName(generator);

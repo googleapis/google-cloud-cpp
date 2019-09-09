@@ -34,6 +34,11 @@ class InstanceAdminStub {
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) = 0;
+
+  virtual StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::ListInstancesRequest const&) = 0;
 };
 
 /**

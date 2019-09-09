@@ -30,6 +30,11 @@ class MockInstanceAdminStub
       StatusOr<google::spanner::admin::instance::v1::Instance>(
           grpc::ClientContext&,
           google::spanner::admin::instance::v1::GetInstanceRequest const&));
+  MOCK_METHOD2(
+      ListInstances,
+      StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>(
+          grpc::ClientContext&,
+          google::spanner::admin::instance::v1::ListInstancesRequest const&));
 };
 
 }  // namespace SPANNER_CLIENT_NS

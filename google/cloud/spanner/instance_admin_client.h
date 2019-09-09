@@ -98,6 +98,18 @@ class InstanceAdminClient {
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       std::string const& project_id, std::string const& instance_id);
 
+  /**
+   * Retrieve a list of instances for a given project.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc list-instances
+   */
+  ListInstancesRange ListInstances(std::string project_id, std::string filter);
+
  private:
   std::shared_ptr<InstanceAdminConnection> conn_;
 };

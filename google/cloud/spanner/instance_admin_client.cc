@@ -18,12 +18,16 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminClient::GetInstance(std::string const& project_id,
                                  std::string const& instance_id) {
   return conn_->GetInstance(
       {"projects/" + project_id + "/instances/" + instance_id});
+}
+
+ListInstancesRange InstanceAdminClient::ListInstances(std::string project_id,
+                                                      std::string filter) {
+  return conn_->ListInstances({std::move(project_id), std::move(filter)});
 }
 
 }  // namespace SPANNER_CLIENT_NS

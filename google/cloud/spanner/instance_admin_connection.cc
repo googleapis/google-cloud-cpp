@@ -36,6 +36,26 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     return stub_->GetInstance(context, request);
   }
 
+  ListInstancesRange ListInstances(ListInstancesParams params) override {
+    gcsa::ListInstancesRequest request;
+    request.set_parent("projects/" + params.project_id);
+    request.set_filter(std::move(params.filter));
+    request.clear_page_token();
+    auto stub = stub_;
+    return ListInstancesRange(
+        std::move(request),
+        [stub](gcsa::ListInstancesRequest const& r) {
+          grpc::ClientContext context;
+          return stub->ListInstances(context, r);
+        },
+        [](gcsa::ListInstancesResponse r) {
+          std::vector<gcsa::Instance> result(r.instances().size());
+          auto& dbs = *r.mutable_instances();
+          std::move(dbs.begin(), dbs.end(), result.begin());
+          return result;
+        });
+  }
+
  private:
   std::shared_ptr<internal::InstanceAdminStub> stub_;
 };
