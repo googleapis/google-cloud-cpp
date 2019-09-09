@@ -186,7 +186,7 @@ class Row {
   /**
    * Returns a std::array of `Value` objects holding all the items in this row.
    *
-   * @note If the Row's values are large, it may be move efficient to "move"
+   * @note If the Row's values are large, it may be more efficient to "move"
    *     them into the returned array.
    *
    * @par Example
