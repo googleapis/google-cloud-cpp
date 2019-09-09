@@ -53,6 +53,16 @@ class Connection {
  public:
   virtual ~Connection() = default;
 
+  //@{
+  /**
+   * Define the arguments for each member function.
+   *
+   * Applications may define classes derived from `Connection`, for example,
+   * because they want to mock the class. To avoid breaking all such derived
+   * classes when we change the number or type of the arguments to the member
+   * functions we define light weight structures to pass the arguments.
+   */
+  /// Wrap the arguments to `Read()`.
   struct ReadParams {
     Transaction transaction;
     std::string table;
@@ -71,15 +81,14 @@ class Connection {
           read_options(std::move(read_options)),
           partition_token(std::move(partition_token)) {}
   };
-  virtual StatusOr<ResultSet> Read(ReadParams) = 0;
 
+  /// Wrap the arguments to `PartitionRead()`.
   struct PartitionReadParams {
     ReadParams read_params;
     PartitionOptions partition_options;
   };
-  virtual StatusOr<std::vector<ReadPartition>> PartitionRead(
-      PartitionReadParams) = 0;
 
+  /// Wrap the arguments to `ExecuteSql()`.
   struct ExecuteSqlParams {
     Transaction transaction;
     SqlStatement statement;
@@ -91,36 +100,62 @@ class Connection {
           statement(std::move(statement)),
           partition_token(std::move(partition_token)) {}
   };
-  virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
 
+  /// Wrap the arguments to `ExecutePartitionedDmlParams()`.
   struct ExecutePartitionedDmlParams {
     SqlStatement statement;
   };
-  virtual StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
-      ExecutePartitionedDmlParams) = 0;
 
+  /// Wrap the arguments to `PartitionQuery()`.
   struct PartitionQueryParams {
     ExecuteSqlParams sql_params;
     PartitionOptions partition_options;
   };
-  virtual StatusOr<std::vector<QueryPartition>> PartitionQuery(
-      PartitionQueryParams) = 0;
 
+  /// Wrap the arguments to `ExecuteBatchDml()`.
   struct BatchDmlParams {
     Transaction transaction;
     std::vector<SqlStatement> statements;
   };
-  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(BatchDmlParams) = 0;
 
+  /// Wrap the arguments to `Commit()`.
   struct CommitParams {
     Transaction transaction;
     Mutations mutations;
   };
-  virtual StatusOr<CommitResult> Commit(CommitParams) = 0;
 
+  /// Wrap the arguments to `Rollback()`.
   struct RollbackParams {
     Transaction transaction;
   };
+  //@}
+
+  /// Define the interface for a google.spanner.v1.Spanner.Read RPC
+  virtual StatusOr<ResultSet> Read(ReadParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.PartitionRead RPC
+  virtual StatusOr<std::vector<ReadPartition>> PartitionRead(
+      PartitionReadParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
+  virtual StatusOr<ResultSet> ExecuteSql(ExecuteSqlParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.ExecutePartitionedDml
+  /// RPC
+  virtual StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
+      ExecutePartitionedDmlParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.PartitionQuery RPC
+  virtual StatusOr<std::vector<QueryPartition>> PartitionQuery(
+      PartitionQueryParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.ExecuteBatchDml RPC
+  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(BatchDmlParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.Commit RPC
+  virtual StatusOr<CommitResult> Commit(CommitParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.Spanner.Rollback RPC
   virtual Status Rollback(RollbackParams) = 0;
 };
 
