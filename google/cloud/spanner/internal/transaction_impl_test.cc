@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/transaction.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/port_platform.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -33,7 +34,9 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
-using TransactionSelector = google::spanner::v1::TransactionSelector;
+using ::google::spanner::v1::TransactionSelector;
+using ::testing::IsNull;
+using ::testing::NotNull;
 
 class KeySet {};
 class ResultSet {};
@@ -70,9 +73,9 @@ class Client {
   // User-visible read operation.
   ResultSet Read(Transaction txn, std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns) {
-    auto read = [this, &table, &keys, &columns](SessionHolder& session,
-                                                TransactionSelector& selector,
-                                                std::int64_t seqno) {
+    auto read = [this, &table, &keys, &columns](
+                    std::unique_ptr<SessionHolder>& session,
+                    TransactionSelector& selector, std::int64_t seqno) {
       return this->Read(session, selector, seqno, table, keys, columns);
     };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -87,9 +90,10 @@ class Client {
   }
 
  private:
-  ResultSet Read(SessionHolder& session, TransactionSelector& selector,
-                 std::int64_t seqno, std::string const& table,
-                 KeySet const& keys, std::vector<std::string> const& columns);
+  ResultSet Read(std::unique_ptr<SessionHolder>& session,
+                 TransactionSelector& selector, std::int64_t seqno,
+                 std::string const& table, KeySet const& keys,
+                 std::vector<std::string> const& columns);
 
   Mode mode_;
   Timestamp read_timestamp_;
@@ -104,11 +108,12 @@ class Client {
 // to make a StreamingRead() RPC, and then, if the selector was a `begin`,
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
-ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
-                       std::int64_t seqno, std::string const&, KeySet const&,
+ResultSet Client::Read(std::unique_ptr<SessionHolder>& session,
+                       TransactionSelector& selector, std::int64_t seqno,
+                       std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
   if (selector.has_begin()) {
-    EXPECT_EQ("", session.session_name());
+    EXPECT_THAT(session, IsNull());
     bool fail_with_throw = false;
     if (selector.begin().has_read_only() &&
         selector.begin().read_only().has_read_timestamp()) {
@@ -129,7 +134,8 @@ ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
     }
     switch (mode_) {
       case Mode::kReadSucceeds:  // `begin` -> `id`, calls now parallelized
-        session = SessionHolder(session_id_, /*deleter=*/nullptr);
+        session = ::google::cloud::internal::make_unique<SessionHolder>(
+            session_id_, /*deleter=*/nullptr);
         selector.set_id(txn_id_);
         break;
       case Mode::kReadFails:  // leave as `begin`, calls stay serialized
@@ -142,7 +148,8 @@ ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
     }
   } else {
     if (selector.id() == txn_id_) {
-      EXPECT_EQ(session_id_, session.session_name());
+      EXPECT_THAT(session, NotNull());
+      EXPECT_EQ(session_id_, session->session_name());
       std::unique_lock<std::mutex> lock(mu_);
       switch (mode_) {
         case Mode::kReadSucceeds:  // non-initial visits valid

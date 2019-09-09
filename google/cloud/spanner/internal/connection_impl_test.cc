@@ -526,8 +526,8 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
       }));
 
   auto txn = MakeReadWriteTransaction();
-  internal::Visit(txn, [](SessionHolder&, spanner_proto::TransactionSelector& s,
-                          std::int64_t) {
+  internal::Visit(txn, [](std::unique_ptr<SessionHolder>&,
+                          spanner_proto::TransactionSelector& s, std::int64_t) {
     s.set_id("test-txn-id");
     return 0;
   });
@@ -630,8 +630,8 @@ TEST(ConnectionImplTest, RollbackFailure) {
   ConnectionImpl conn(db, mock);
   auto txn = MakeReadWriteTransaction();
   auto begin_transaction =
-      [&transaction_id](SessionHolder&, spanner_proto::TransactionSelector& s,
-                        std::int64_t) {
+      [&transaction_id](std::unique_ptr<SessionHolder>&,
+                        spanner_proto::TransactionSelector& s, std::int64_t) {
         s.set_id(transaction_id);
         return 0;
       };
@@ -668,8 +668,8 @@ TEST(ConnectionImplTest, RollbackSuccess) {
   ConnectionImpl conn(db, mock);
   auto txn = MakeReadWriteTransaction();
   auto begin_transaction =
-      [&transaction_id](SessionHolder&, spanner_proto::TransactionSelector& s,
-                        std::int64_t) {
+      [&transaction_id](std::unique_ptr<SessionHolder>&,
+                        spanner_proto::TransactionSelector& s, std::int64_t) {
         s.set_id(transaction_id);
         return 0;
       };
@@ -891,7 +891,7 @@ TEST(ConnectionImplTest, MultipleThreads) {
     for (int i = 0; i != iterations; ++i) {
       auto txn = MakeReadWriteTransaction();
       auto begin_transaction = [thread_id, i](
-                                   SessionHolder&,
+                                   std::unique_ptr<SessionHolder>&,
                                    spanner_proto::TransactionSelector& s,
                                    std::int64_t) {
         s.set_id("txn-" + std::to_string(thread_id) + ":" + std::to_string(i));

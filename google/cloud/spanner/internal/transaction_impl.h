@@ -22,6 +22,7 @@
 #include <google/spanner/v1/transaction.pb.h>
 #include <condition_variable>
 #include <cstdint>
+#include <memory>
 #include <mutex>
 
 namespace google {
@@ -32,8 +33,8 @@ namespace internal {
 
 template <typename Functor>
 using VisitInvokeResult = google::cloud::internal::invoke_result_t<
-    Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
-    std::int64_t>;
+    Functor, std::unique_ptr<SessionHolder>&,
+    google::spanner::v1::TransactionSelector&, std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -43,7 +44,7 @@ class TransactionImpl {
   TransactionImpl(google::spanner::v1::TransactionSelector selector)
       : TransactionImpl(/*session=*/{}, std::move(selector)) {}
 
-  TransactionImpl(SessionHolder session,
+  TransactionImpl(std::unique_ptr<SessionHolder> session,
                   google::spanner::v1::TransactionSelector selector)
       : session_(std::move(session)),
         selector_(std::move(selector)),
@@ -56,7 +57,7 @@ class TransactionImpl {
   // Visit the transaction with the given functor, which should use (and
   // modify, if appropriate) the passed SessionHolder and TransactionSelector.
   //
-  // If the SessionHolder has a session, the functor must use it.
+  // If the SessionHolder is not nullptr, the functor must use the session.
   // Otherwise it must allocate a session and assign to the SessionHolder.
   //
   // If initially selector.has_begin(), and the operation successfully allocates
@@ -68,8 +69,8 @@ class TransactionImpl {
   VisitInvokeResult<Functor> Visit(Functor&& f) {
     static_assert(
         google::cloud::internal::is_invocable<
-            Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
-            std::int64_t>::value,
+            Functor, std::unique_ptr<SessionHolder>&,
+            google::spanner::v1::TransactionSelector&, std::int64_t>::value,
         "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
     {
@@ -121,7 +122,7 @@ class TransactionImpl {
 
   std::mutex mu_;
   std::condition_variable cond_;
-  internal::SessionHolder session_;
+  std::unique_ptr<SessionHolder> session_;
   google::spanner::v1::TransactionSelector selector_;
   std::int64_t seqno_;
 };

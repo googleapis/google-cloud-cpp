@@ -30,7 +30,6 @@ namespace internal {
  */
 class SessionHolder {
  public:
-  SessionHolder() = default;
   SessionHolder(std::string session,
                 std::function<void(std::string)> deleter) noexcept
       : session_(std::move(session)), deleter_(std::move(deleter)) {}

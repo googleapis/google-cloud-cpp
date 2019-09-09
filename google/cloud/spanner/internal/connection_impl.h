@@ -59,38 +59,44 @@ class ConnectionImpl : public Connection {
   Status Rollback(RollbackParams) override;
 
  private:
-  StatusOr<ResultSet> ReadImpl(SessionHolder& session,
+  StatusOr<ResultSet> ReadImpl(std::unique_ptr<SessionHolder>& session,
                                google::spanner::v1::TransactionSelector& s,
                                ReadParams rp);
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
-      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      ReadParams const& rp, PartitionOptions partition_options);
+      std::unique_ptr<SessionHolder>& session,
+      google::spanner::v1::TransactionSelector& s, ReadParams const& rp,
+      PartitionOptions partition_options);
 
   StatusOr<ResultSet> ExecuteSqlImpl(
-      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      std::int64_t seqno, ExecuteSqlParams esp);
+      std::unique_ptr<SessionHolder>& session,
+      google::spanner::v1::TransactionSelector& s, std::int64_t seqno,
+      ExecuteSqlParams esp);
 
   StatusOr<PartitionedDmlResult> ExecutePartitionedDmlImpl(
-      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      std::int64_t seqno, ExecutePartitionedDmlParams epdp);
+      std::unique_ptr<SessionHolder>& session,
+      google::spanner::v1::TransactionSelector& s, std::int64_t seqno,
+      ExecutePartitionedDmlParams epdp);
 
   StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
-      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      ExecuteSqlParams const& esp, PartitionOptions partition_options);
+      std::unique_ptr<SessionHolder>& session,
+      google::spanner::v1::TransactionSelector& s, ExecuteSqlParams const& esp,
+      PartitionOptions partition_options);
 
   StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
-      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      std::int64_t seqno, BatchDmlParams params);
+      std::unique_ptr<SessionHolder>& session,
+      google::spanner::v1::TransactionSelector& s, std::int64_t seqno,
+      BatchDmlParams params);
 
-  StatusOr<CommitResult> CommitImpl(SessionHolder& session,
+  StatusOr<CommitResult> CommitImpl(std::unique_ptr<SessionHolder>& session,
                                     google::spanner::v1::TransactionSelector& s,
                                     CommitParams cp);
 
-  Status RollbackImpl(SessionHolder& session,
+  Status RollbackImpl(std::unique_ptr<SessionHolder>& session,
                       google::spanner::v1::TransactionSelector& s);
 
-  StatusOr<SessionHolder> GetSession(bool release = false);
+  StatusOr<std::unique_ptr<SessionHolder>> GetSession(
+      bool dissociate_from_pool = false);
   void ReleaseSession(std::string session);
 
   Database db_;
