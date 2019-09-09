@@ -64,9 +64,7 @@ StatusOr<ReadPartition> DeserializeReadPartition(
     return Status(StatusCode::kInvalidArgument,
                   "Failed to deserialize into SqlPartition");
   }
-  ReadPartition read_partition;
-  read_partition.proto_ = std::move(proto);
-  return read_partition;
+  return ReadPartition(std::move(proto));
 }
 
 namespace internal {

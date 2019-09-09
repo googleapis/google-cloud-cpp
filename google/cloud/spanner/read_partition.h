@@ -126,6 +126,8 @@ class ReadPartition {
   friend StatusOr<ReadPartition> DeserializeReadPartition(
       std::string const& serialized_read_partition);
 
+  explicit ReadPartition(google::spanner::v1::ReadRequest proto)
+      : proto_(std::move(proto)) {}
   ReadPartition(std::string transaction_id, std::string session_id,
                 std::string partition_token, std::string table_name,
                 google::cloud::spanner::KeySet key_set,
