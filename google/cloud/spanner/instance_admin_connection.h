@@ -54,11 +54,21 @@ class InstanceAdminConnection {
  public:
   virtual ~InstanceAdminConnection() = 0;
 
+  //@{
+  /**
+   * Define the arguments for each member function.
+   *
+   * Applications may define classes derived from `Connection`, for example,
+   * because they want to mock the class. To avoid breaking all such derived
+   * classes when we change the number or type of the arguments to the member
+   * functions we define light weight structures to pass the arguments.
+   */
+  /// Wrap the arguments for `GetInstance()`.
   struct GetInstanceParams {
+    /// The full name of the instance in
+    /// `projects/<project-id>/instances/<instance-id>` format.
     std::string instance_name;
   };
-  virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      GetInstanceParams) = 0;
 
   /**
    * The parameters for a `ListInstances()` request.
@@ -83,6 +93,11 @@ class InstanceAdminConnection {
      */
     std::string filter;
   };
+  //@}
+
+  /// Return the metadata for the given instance.
+  virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      GetInstanceParams) = 0;
 
   /**
    * Returns a one-pass input range with all the instances meeting the
