@@ -37,6 +37,7 @@ inline namespace SPANNER_CLIENT_NS {
  * information about the failed statement.
  */
 struct BatchDmlResult {
+  /// The stats for each successfully executed `SqlStatement`.
   struct Stats {
     /// The number of rows modified by a DML statement.
     std::int64_t row_count;
