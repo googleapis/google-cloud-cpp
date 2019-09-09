@@ -37,26 +37,19 @@ SqlStatementProto ToProto(SqlStatement s);
 }  // namespace internal
 
 /**
- * @brief Represents a potentially parameterized SQL statement.
+ * Represents a potentially parameterized SQL statement.
  *
  * Details on case sensitivity for SQL statements and string values can be
- * found here: <a
- * href="https://cloud.google.com/spanner/docs/lexical#case-sensitivity">Case
- * Sensitivity</a>.
+ * found here: [Case
+ * Sensitivity](https://cloud.google.com/spanner/docs/lexical#case-sensitivity)
  *
- * @note `SqlStatement` supports case-sensitive equality comparisons.
+ * @note `SqlStatement` equality comparisons are case-sensitive.
  *
  * Parameter placeholders are specified by `@<param name>` in the SQL string.
  * Values for parameters are a collection of `std::pair<std::string const,
  * google::cloud:spanner::Value>`.
- * @par Example:
- *
- *     using google::cloud::spanner::SqlStatement;
- *     using google::cloud::spanner::Value;
- *     SqlStatement stmt("select * from scmods where last_name = @param1",
- *       {{"param1", Value("Blues")}});
- *     SqlStatement copy = stmt;
- *     assert(copy == stmt);
+ * @par Example
+ * @snippet samples.cc spanner-sql-statement-params
  */
 class SqlStatement {
  public:
@@ -77,9 +70,28 @@ class SqlStatement {
   SqlStatement& operator=(SqlStatement const&) = default;
   SqlStatement& operator=(SqlStatement&&) = default;
 
+  /**
+   * Returns the SQL statement.
+   * No parameter substitution is performed in the statement string.
+   */
   std::string const& sql() const { return statement_; }
+
+  /**
+   * Returns the collection of parameters.
+   * @return If no parameters were specified, the container will be empty.
+   */
   ParamType const& params() const { return params_; }
+
+  /**
+   * Returns the names of all the parameters.
+   */
   std::vector<std::string> ParameterNames() const;
+
+  /**
+   * Returns the value of the requested parameter.
+   * @param parameter_name name of requested parameter.
+   * @return `StatusCode::kNotFound` returned for invalid names.
+   */
   google::cloud::StatusOr<Value> GetParameter(
       std::string const& parameter_name) const;
 

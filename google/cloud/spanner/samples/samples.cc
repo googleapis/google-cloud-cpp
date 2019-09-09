@@ -530,14 +530,14 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_data_with_struct]
 void QueryDataWithStruct(google::cloud::spanner::Client client) {
+  //! [spanner-sql-statement-params] [START spanner_create_struct_with_data]
   namespace spanner = google::cloud::spanner;
-  // [START spanner_create_struct_with_data]
   auto singer_info = std::make_tuple("Elena", "Campbell");
-  // [END spanner_create_struct_with_data]
-
+  //! [END spanner_create_struct_with_data]
   auto reader = client.ExecuteSql(spanner::SqlStatement(
       "SELECT SingerId FROM Singers WHERE (FirstName, LastName) = @name",
       {{"name", spanner::Value(singer_info)}}));
+  //! [spanner-sql-statement-params]
   if (!reader) throw std::runtime_error(reader.status().message());
 
   for (auto row : reader->Rows<std::int64_t>()) {
