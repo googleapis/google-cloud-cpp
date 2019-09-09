@@ -45,16 +45,6 @@ function (spanner_client_define_samples)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
-    endforeach ()
-
-    foreach (fname ${spanner_client_integration_samples})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
-        target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client)
-        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
-    endforeach ()
-
-    foreach (fname ${spanner_client_unit_samples})
-        google_cloud_cpp_test_name_to_target(target "${fname}")
         target_link_libraries(${target}
                               PRIVATE googleapis-c++::spanner_client
                                       spanner_client_testing
@@ -62,7 +52,11 @@ function (spanner_client_define_samples)
                                       GTest::gmock_main
                                       GTest::gmock
                                       GTest::gtest)
+    endforeach ()
 
+    foreach (fname ${spanner_client_integration_samples})
+        google_cloud_cpp_test_name_to_target(target "${fname}")
+        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     endforeach ()
 endfunction ()
 

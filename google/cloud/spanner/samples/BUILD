@@ -26,6 +26,9 @@ load(":spanner_client_samples.bzl", "spanner_client_samples")
     tags = ["integration-tests"],
     deps = [
         "//google/cloud/spanner:spanner_client",
+        "//google/cloud/spanner:spanner_client_testing",
         "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest",
     ],
 ) for test in spanner_client_samples]

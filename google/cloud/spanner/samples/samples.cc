@@ -17,6 +17,7 @@
 //! [END spanner_quickstart]
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
@@ -858,18 +859,19 @@ int RunOneCommand(std::vector<std::string> argv) {
 void RunAll() {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  auto instance_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-          .value_or("");
-
   if (project_id.empty()) {
     throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
   }
-  if (instance_id.empty()) {
-    throw std::runtime_error(
-        "GOOGLE_CLOUD_CPP_SPANNER_INSTANCE is not set or is empty");
+
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  auto random_instance =
+      google::cloud::spanner_testing::PickRandomInstance(generator, project_id);
+  if (!random_instance) {
+    throw std::runtime_error("Cannot find an instance to run the examples: " +
+                             random_instance.status().message());
   }
 
+  std::string instance_id = *std::move(random_instance);
   std::cout << "Running instance admin samples on " << instance_id << "\n";
 
   std::cout << "\nRunning get-instance sample\n";
@@ -878,7 +880,6 @@ void RunAll() {
   std::cout << "\nRunning list-instances sample\n";
   RunOneCommand({"", "list-instances", project_id});
 
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string database_id = RandomDatabaseName(generator);
 
   std::cout << "Running samples in database " << database_id << "\n";

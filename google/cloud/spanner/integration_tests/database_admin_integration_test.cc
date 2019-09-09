@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -32,13 +33,12 @@ using ::testing::EndsWith;
 TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  auto instance_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-          .value_or("");
   ASSERT_FALSE(project_id.empty());
-  ASSERT_FALSE(instance_id.empty());
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
+  auto instance_id = spanner_testing::PickRandomInstance(generator, project_id);
+  ASSERT_STATUS_OK(instance_id);
+
   std::string database_id = spanner_testing::RandomDatabaseName(generator);
 
   DatabaseAdminClient client;
@@ -51,7 +51,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   // which is nice.
   auto get_current_databases = [&client, project_id, instance_id] {
     std::vector<std::string> names;
-    for (auto database : client.ListDatabases(project_id, instance_id)) {
+    for (auto database : client.ListDatabases(project_id, *instance_id)) {
       EXPECT_STATUS_OK(database);
       if (!database) return names;
       names.push_back(database->name());
@@ -59,7 +59,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
     return names;
   };
 
-  Database db(project_id, instance_id, database_id);
+  Database db(project_id, *instance_id, database_id);
 
   auto db_list = get_current_databases();
   ASSERT_EQ(0, std::count(db_list.begin(), db_list.end(), db.FullName()))

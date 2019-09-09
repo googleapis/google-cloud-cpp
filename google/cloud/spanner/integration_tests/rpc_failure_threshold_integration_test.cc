@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
@@ -36,16 +37,16 @@ class RpcFailureThresholdTest : public ::testing::Test {
     auto project_id =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id.empty());
-    auto instance_id =
-        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-            .value_or("");
-    ASSERT_FALSE(instance_id.empty());
 
     generator_ = google::cloud::internal::MakeDefaultPRNG();
+    auto instance_id =
+        spanner_testing::PickRandomInstance(generator_, project_id);
+    ASSERT_STATUS_OK(instance_id);
+
     auto database_id = spanner_testing::RandomDatabaseName(generator_);
 
     db_ = google::cloud::internal::make_unique<Database>(
-        project_id, instance_id, database_id);
+        project_id, *instance_id, database_id);
 
     std::cout << "Creating database [" << database_id << "] and table "
               << std::flush;
