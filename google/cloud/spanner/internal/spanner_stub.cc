@@ -242,10 +242,6 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
     ConnectionOptions const& options) {
-  if (options.clog_enabled()) {
-    google::cloud::LogSink::EnableStdClog();
-  }
-
   grpc::ChannelArguments channel_arguments = options.CreateChannelArguments();
 
   auto spanner_grpc_stub =

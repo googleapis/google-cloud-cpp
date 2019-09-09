@@ -48,36 +48,12 @@ TEST(ConnectionOptionsTest, AdminEndpoint) {
   EXPECT_EQ("invalid-endpoint", options.endpoint());
 }
 
-TEST(ConnectionOptionsTest, Clog) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  options.enable_clog();
-  EXPECT_TRUE(options.clog_enabled());
-  options.disable_clog();
-  EXPECT_FALSE(options.clog_enabled());
-}
-
 TEST(ConnectionOptionsTest, Tracing) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   options.enable_tracing("fake-component");
   EXPECT_TRUE(options.tracing_enabled("fake-component"));
   options.disable_tracing("fake-component");
   EXPECT_FALSE(options.tracing_enabled("fake-component"));
-}
-
-TEST(ConnectionOptionsTest, DefaultClogUnset) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-
-  google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_FALSE(options.clog_enabled());
-}
-
-TEST(ConnectionOptionsTest, DefaultClogSet) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "true");
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_TRUE(options.clog_enabled());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingUnset) {

@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include <sstream>
 
 namespace google {
@@ -43,9 +44,11 @@ ConnectionOptions::ConnectionOptions(
       tracing_components_.insert(token);
     }
   }
-  clog_enabled_ =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
-          .has_value();
+
+  if (google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
+          .has_value()) {
+    google::cloud::LogSink::EnableStdClog();
+  }
 }
 
 ConnectionOptions::ConnectionOptions()

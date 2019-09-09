@@ -43,44 +43,80 @@ class ConnectionOptions {
   /// Default parameters, using an explicit credentials object.
   explicit ConnectionOptions(std::shared_ptr<grpc::ChannelCredentials> c);
 
+  /// Change the gRPC credentials from the default of
+  /// `grpc::GoogleDefaultCredentials()`.
   ConnectionOptions& set_credentials(
       std::shared_ptr<grpc::ChannelCredentials> v) {
     credentials_ = std::move(v);
     return *this;
   }
+
+  /// The gRPC credentials used by clients configured with this object.
   std::shared_ptr<grpc::ChannelCredentials> credentials() const {
     return credentials_;
   }
 
+  /**
+   * Change the gRPC endpoint used to contact the Cloud Spanner service.
+   *
+   * In almost all cases the default ("spanner.googleapis.com") is the correct
+   * endpoint to use. It may need to be changed to (1) test against a fake or
+   * simulator, or (2) to use a beta or EAP version of the service.
+   */
   ConnectionOptions& set_endpoint(std::string v) {
     endpoint_ = std::move(v);
     return *this;
   }
+
+  /// The endpoint used by clients configured with this object.
   std::string const& endpoint() const { return endpoint_; }
 
-  bool clog_enabled() const { return clog_enabled_; }
-  ConnectionOptions& enable_clog() {
-    clog_enabled_ = true;
-    return *this;
-  }
-  ConnectionOptions& disable_clog() {
-    clog_enabled_ = false;
-    return *this;
-  }
-
+  /**
+   * Return whether tracing is enabled for the given @p component.
+   *
+   * The Cloud Spanner C++ client can log interesting events to help library and
+   * application developers troubleshoot problems with the library or their
+   * configuration. This flag returns true if tracing should be enabled by
+   * clients configured with this option.
+   *
+   * Currently only the `rpc` component is supported, which enables logging of
+   * each RPC, including its parameters and any responses.
+   */
   bool tracing_enabled(std::string const& component) const {
     return tracing_components_.find(component) != tracing_components_.end();
   }
+
+  /// Enable tracing for @p component in clients configured with this object.
   ConnectionOptions& enable_tracing(std::string const& component) {
     tracing_components_.insert(component);
     return *this;
   }
+
+  /// Disable tracing for @p component in clients configured with this object.
   ConnectionOptions& disable_tracing(std::string const& component) {
     tracing_components_.erase(component);
     return *this;
   }
 
+  /**
+   * Define the gRPC channel domain for clients configured with this object.
+   *
+   * In some cases applications may want to use a separate gRPC connections for
+   * different clients. gRPC may share the connection used by separate channels
+   * created with the same configuration. The client objects created with this
+   * object will create gRPC channels configured with
+   * `grpc.channel_pooling_domain` set to the value returned by
+   * `channel_pool_domain()`. gRPC channels with different values for
+   * `grpc.channel_pooling_domain` are guaranteed to use different connections.
+   * Note that there is no guarantee that channels with the same value will have
+   * the same connection though.
+   *
+   * This option might be useful for applications that want to segregate traffic
+   * for whatever reason.
+   */
   std::string channel_pool_domain() const { return channel_pool_domain_; }
+
+  /// Set the value for `channel_pool_domain()`.
   ConnectionOptions& set_channel_pool_domain(std::string v) {
     channel_pool_domain_ = std::move(v);
     return *this;
@@ -100,14 +136,22 @@ class ConnectionOptions {
     user_agent_prefix_ = std::move(prefix);
     return *this;
   }
+
+  /// Return the current value for the user agent string.
   std::string const& user_agent_prefix() const { return user_agent_prefix_; }
 
+  /**
+   * Create a new `grpc::ChannelArguments` configured with the options in this
+   * object.
+   *
+   * The caller would typically pass this argument to
+   * `grpc::CreateCustomChannel` and create one more more gRPC channels.
+   */
   grpc::ChannelArguments CreateChannelArguments() const;
 
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
-  bool clog_enabled_ = false;
   std::set<std::string> tracing_components_;
   std::string channel_pool_domain_;
 
