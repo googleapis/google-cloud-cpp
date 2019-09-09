@@ -99,6 +99,8 @@ add_library(spanner_client
             database_admin_client.h
             date.cc
             date.h
+            instance.cc
+            instance.h
             instance_admin_client.cc
             instance_admin_client.h
             instance_admin_connection.cc
@@ -272,6 +274,7 @@ function (spanner_client_define_tests)
         date_test.cc
         instance_admin_client_test.cc
         instance_admin_connection_test.cc
+        instance_test.cc
         internal/api_client_header_test.cc
         internal/base64_test.cc
         internal/build_info_test.cc

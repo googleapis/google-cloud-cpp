@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/internal/range_from_pagination.h"
 #include "google/cloud/future.h"
@@ -210,8 +211,7 @@ class DatabaseAdminClient {
    * @par Example
    * @snippet samples.cc list-databases
    */
-  ListDatabaseRange ListDatabases(std::string const& project_id,
-                                  std::string const& instance_id);
+  ListDatabaseRange ListDatabases(Instance const& in);
 
   /// Create a new client with the given stub. For testing only.
   explicit DatabaseAdminClient(std::shared_ptr<internal::DatabaseAdminStub> s)

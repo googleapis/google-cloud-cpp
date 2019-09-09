@@ -24,6 +24,7 @@ spanner_client_unit_tests = [
     "date_test.cc",
     "instance_admin_client_test.cc",
     "instance_admin_connection_test.cc",
+    "instance_test.cc",
     "internal/api_client_header_test.cc",
     "internal/base64_test.cc",
     "internal/build_info_test.cc",

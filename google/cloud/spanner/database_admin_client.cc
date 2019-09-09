@@ -70,10 +70,9 @@ DatabaseAdminClient::UpdateDatabase(
   return stub_->AwaitUpdateDatabase(*std::move(operation));
 }
 
-ListDatabaseRange DatabaseAdminClient::ListDatabases(
-    std::string const& project_id, std::string const& instance_id) {
+ListDatabaseRange DatabaseAdminClient::ListDatabases(Instance const& in) {
   gcsa::ListDatabasesRequest request;
-  request.set_parent("projects/" + project_id + "/instances/" + instance_id);
+  request.set_parent(in.FullName());
   request.clear_page_token();
   auto stub = stub_;
   return ListDatabaseRange(

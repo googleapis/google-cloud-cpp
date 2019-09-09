@@ -39,6 +39,8 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto instance_id = spanner_testing::PickRandomInstance(generator, project_id);
   ASSERT_STATUS_OK(instance_id);
 
+  Instance const in(project_id, *instance_id);
+
   std::string database_id = spanner_testing::RandomDatabaseName(generator);
 
   DatabaseAdminClient client;
@@ -49,9 +51,9 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   // longer returns that name once the database is dropped. Implicitly that also
   // tests that client.DropDatabase() and client.CreateDatabase() do something,
   // which is nice.
-  auto get_current_databases = [&client, project_id, instance_id] {
+  auto get_current_databases = [&client, in] {
     std::vector<std::string> names;
-    for (auto database : client.ListDatabases(project_id, *instance_id)) {
+    for (auto database : client.ListDatabases(in)) {
       EXPECT_STATUS_OK(database);
       if (!database) return names;
       names.push_back(database->name());

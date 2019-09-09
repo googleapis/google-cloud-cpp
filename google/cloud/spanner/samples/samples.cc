@@ -44,7 +44,8 @@ std::string RandomDatabaseName(
 void GetInstance(google::cloud::spanner::InstanceAdminClient client,
                  std::string const& project_id,
                  std::string const& instance_id) {
-  auto instance = client.GetInstance(project_id, instance_id);
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto instance = client.GetInstance(in);
   if (!instance) throw std::runtime_error(instance.status().message());
 
   std::cout << "The instance " << instance->name()
@@ -180,8 +181,9 @@ void AddColumn(std::vector<std::string> const& argv) {
 void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
                    std::string const& project_id,
                    std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
   int count = 0;
-  for (auto database : client.ListDatabases(project_id, instance_id)) {
+  for (auto database : client.ListDatabases(in)) {
     if (!database) throw std::runtime_error(database.status().message());
     std::cout << "Database " << database->name() << " full metadata:\n"
               << database->DebugString() << "\n";

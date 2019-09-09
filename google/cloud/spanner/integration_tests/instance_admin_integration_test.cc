@@ -35,8 +35,10 @@ TEST(InstanceAdminClient, InstanceBasicCRUD) {
   ASSERT_FALSE(project_id.empty());
   ASSERT_FALSE(instance_id.empty());
 
+  Instance in(project_id, instance_id);
+
   InstanceAdminClient client(MakeInstanceAdminConnection());
-  auto instance = client.GetInstance(project_id, instance_id);
+  auto instance = client.GetInstance(in);
   EXPECT_STATUS_OK(instance);
   EXPECT_THAT(instance->name(), HasSubstr(project_id));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id));

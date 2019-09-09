@@ -261,8 +261,8 @@ TEST(DatabaseAdminClientTest, HandleAwaitUpdateDatabaseError) {
 /// @test Verify that we can list databases in multiple pages.
 TEST(DatabaseAdminClientTest, ListDatabases) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
-  std::string const expected_parent =
-      "projects/test-project/instances/test-instance";
+  Instance in("test-project", "test-instance");
+  std::string const expected_parent = in.FullName();
 
   EXPECT_CALL(*mock, ListDatabases(_, _))
       .WillOnce(
@@ -306,7 +306,7 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
 
   DatabaseAdminClient client(mock);
   std::vector<std::string> actual_names;
-  for (auto database : client.ListDatabases("test-project", "test-instance")) {
+  for (auto database : client.ListDatabases(in)) {
     ASSERT_STATUS_OK(database);
     actual_names.push_back(database->name());
   }
@@ -316,15 +316,14 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
 
 TEST(DatabaseAdminClientTest, ListDatabasesPermanentFailure) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
-  std::string const expected_parent =
-      "projects/test-project/instances/test-instance";
+  Instance in("test-project", "test-instance");
 
   EXPECT_CALL(*mock, ListDatabases(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   auto stub = std::make_shared<internal::DatabaseAdminRetry>(std::move(mock));
   DatabaseAdminClient client(std::move(stub));
-  auto range = client.ListDatabases("test-project", "test-instance");
+  auto range = client.ListDatabases(in);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
@@ -332,8 +331,7 @@ TEST(DatabaseAdminClientTest, ListDatabasesPermanentFailure) {
 
 TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
-  std::string const expected_parent =
-      "projects/test-project/instances/test-instance";
+  Instance in("test-project", "test-instance");
 
   EXPECT_CALL(*mock, ListDatabases(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -343,7 +341,7 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
       ExponentialBackoffPolicy(std::chrono::microseconds(1),
                                std::chrono::microseconds(1), 2.0));
   DatabaseAdminClient client(std::move(stub));
-  auto range = client.ListDatabases("test-project", "test-instance");
+  auto range = client.ListDatabases(in);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());

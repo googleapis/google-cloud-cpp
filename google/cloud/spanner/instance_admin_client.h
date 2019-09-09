@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CLIENT_H_
 
+#include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/status_or.h"
 
@@ -96,7 +97,7 @@ class InstanceAdminClient {
    * @snippet samples.cc get-instance
    */
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      std::string const& project_id, std::string const& instance_id);
+      Instance const& in);
 
   /**
    * Retrieve a list of instances for a given project.

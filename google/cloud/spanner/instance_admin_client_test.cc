@@ -61,7 +61,7 @@ TEST(InstanceAdminClientTest, GetInstance) {
       });
 
   InstanceAdminClient client(mock);
-  auto actual = client.GetInstance("test-project", "test-instance");
+  auto actual = client.GetInstance(Instance("test-project", "test-instance"));
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
