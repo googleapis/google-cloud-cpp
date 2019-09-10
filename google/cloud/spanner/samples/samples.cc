@@ -88,6 +88,32 @@ void ListInstancesCommand(std::vector<std::string> const& argv) {
   ListInstances(std::move(client), argv[0]);
 }
 
+//! [instance-test-iam-permissions]
+void InstanceTestIamPermissions(
+    google::cloud::spanner::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto actual = client.TestIamPermissions(in, {"spanner.databases.list"});
+  if (!actual) throw std::runtime_error(actual.status().message());
+
+  char const* msg = actual->permissions().empty() ? "does not" : "does";
+
+  std::cout
+      << "The caller " << msg
+      << " have permission to list databases on the Cloud Spanner instance "
+      << in.InstanceId() << "\n";
+}
+//! [instance-test-iam-permissions]
+
+void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("get-instance <project-id> <instance-id>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  InstanceTestIamPermissions(std::move(client), argv[0], argv[1]);
+}
+
 void CreateDatabase(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -810,6 +836,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   CommandMap commands = {
       {"get-instance", &GetInstanceCommand},
       {"list-instances", &ListInstancesCommand},
+      {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
       {"create-database", &CreateDatabase},
       {"get-database", &GetDatabaseCommand},
       {"get-database-ddl", &GetDatabaseCommandDdl},
@@ -904,6 +931,9 @@ void RunAll() {
 
   std::cout << "\nRunning list-instances sample\n";
   RunOneCommand({"", "list-instances", project_id});
+
+  std::cout << "\nRunning (instance) test-iam-permissions sample\n";
+  RunOneCommand({"", "instance-test-iam-permissions", project_id, instance_id});
 
   std::string database_id = RandomDatabaseName(generator);
 

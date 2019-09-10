@@ -32,6 +32,7 @@ using ::testing::Invoke;
 using ::testing::Return;
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
+namespace giam = ::google::iam::v1;
 
 std::shared_ptr<InstanceAdminConnection> MakeTestConnection(
     std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock) {
@@ -167,6 +168,57 @@ TEST(InstanceAdminConnectionTest, ListInstances_TooManyTransients) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
+TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance";
+
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, TestIamPermissions(_, _))
+      .WillOnce(Invoke(
+          [&expected_name](grpc::ClientContext&,
+                           giam::TestIamPermissionsRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            return Status(StatusCode::kUnavailable, "try-again");
+          }))
+      .WillOnce(Invoke(
+          [&expected_name](grpc::ClientContext&,
+                           giam::TestIamPermissionsRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            giam::TestIamPermissionsResponse response;
+            response.add_permissions("test.permission2");
+            return response;
+          }));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->TestIamPermissions(
+      {expected_name, {"test.permission1", "test.permission2"}});
+  ASSERT_STATUS_OK(actual);
+  ASSERT_EQ(1, actual->permissions_size());
+  ASSERT_EQ("test.permission2", actual->permissions(0));
+}
+
+TEST(InstanceAdminConnectionTest, TestIamPermissions_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, TestIamPermissions(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual =
+      conn->TestIamPermissions({"test-instance-name", {"test.permission"}});
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminConnectionTest, TestIamPermissions_TooManyTransients) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, TestIamPermissions(_, _))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual =
+      conn->TestIamPermissions({"test-instance-name", {"test.permission"}});
+  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
 }  // namespace

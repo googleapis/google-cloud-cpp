@@ -28,6 +28,12 @@ ListInstancesRange InstanceAdminClient::ListInstances(std::string project_id,
   return conn_->ListInstances({std::move(project_id), std::move(filter)});
 }
 
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+InstanceAdminClient::TestIamPermissions(Instance const& in,
+                                        std::vector<std::string> permissions) {
+  return conn_->TestIamPermissions({in.FullName(), std::move(permissions)});
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

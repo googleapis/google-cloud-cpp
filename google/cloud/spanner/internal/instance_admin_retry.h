@@ -54,6 +54,9 @@ class InstanceAdminRetry : public InstanceAdminStub {
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::ListInstancesRequest const&)
       override;
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext&,
+      google::iam::v1::TestIamPermissionsRequest const&) override;
   //@}
 
  private:

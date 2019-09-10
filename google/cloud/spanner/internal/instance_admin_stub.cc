@@ -23,6 +23,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 namespace gcsa = google::spanner::admin::instance::v1;
+namespace giam = google::iam::v1;
 
 InstanceAdminStub::~InstanceAdminStub() = default;
 
@@ -52,6 +53,18 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
       gcsa::ListInstancesRequest const& request) override {
     gcsa::ListInstancesResponse response;
     auto status = instance_admin_->ListInstances(&context, request, &response);
+    if (!status.ok()) {
+      return grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  StatusOr<giam::TestIamPermissionsResponse> TestIamPermissions(
+      grpc::ClientContext& context,
+      giam::TestIamPermissionsRequest const& request) override {
+    giam::TestIamPermissionsResponse response;
+    auto status =
+        instance_admin_->TestIamPermissions(&context, request, &response);
     if (!status.ok()) {
       return grpc_utils::MakeStatusFromRpcError(status);
     }

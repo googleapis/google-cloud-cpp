@@ -93,6 +93,12 @@ class InstanceAdminConnection {
      */
     std::string filter;
   };
+
+  /// Wrap the arguments for `TestIamPermissions()`.
+  struct TestIamPermissionsParams {
+    std::string instance_name;
+    std::vector<std::string> permissions;
+  };
   //@}
 
   /// Return the metadata for the given instance.
@@ -104,6 +110,11 @@ class InstanceAdminConnection {
    * requirements in @p params
    */
   virtual ListInstancesRange ListInstances(ListInstancesParams params) = 0;
+
+  /// Define the interface for a
+  /// google.spanner.v1.DatabaseAdmin.TestIamPermissions RPC.
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+      TestIamPermissions(TestIamPermissionsParams) = 0;
 };
 
 /**

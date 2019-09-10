@@ -61,6 +61,7 @@ InstanceAdminRetry::InstanceAdminRetry(PrivateConstructorTag,
       backoff_policy_(DefaultInstanceAdminBackoffPolicy()) {}
 
 namespace gcsa = google::spanner::admin::instance::v1;
+namespace giam = google::iam::v1;
 
 StatusOr<gcsa::Instance> InstanceAdminRetry::GetInstance(
     grpc::ClientContext& context, gcsa::GetInstanceRequest const& request) {
@@ -80,6 +81,19 @@ StatusOr<gcsa::ListInstancesResponse> InstanceAdminRetry::ListInstances(
       [this](grpc::ClientContext& context,
              gcsa::ListInstancesRequest const& request) {
         return child_->ListInstances(context, request);
+      },
+      context, request, __func__);
+}
+
+StatusOr<giam::TestIamPermissionsResponse>
+InstanceAdminRetry::TestIamPermissions(
+    grpc::ClientContext& context,
+    giam::TestIamPermissionsRequest const& request) {
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             giam::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, request);
       },
       context, request, __func__);
 }

@@ -24,6 +24,7 @@ namespace {
 
 using spanner_mocks::MockInstanceAdminConnection;
 using ::testing::_;
+using ::testing::ElementsAre;
 namespace gcsa = google::spanner::admin::instance::v1;
 
 TEST(InstanceAdminClientTest, CopyAndMove) {
@@ -90,6 +91,24 @@ TEST(InstanceAdminClientTest, ListInstances) {
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(InstanceAdminClientTest, TestIamPermissions) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, TestIamPermissions(_))
+      .WillOnce([](InstanceAdminConnection::TestIamPermissionsParams const& p) {
+        EXPECT_EQ("projects/test-project/instances/test-instance",
+                  p.instance_name);
+        EXPECT_THAT(p.permissions,
+                    ElementsAre("test.permission1", "test.permission2"));
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      });
+
+  InstanceAdminClient client(mock);
+  auto actual =
+      client.TestIamPermissions(Instance("test-project", "test-instance"),
+                                {"test.permission1", "test.permission2"});
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
 }  // namespace

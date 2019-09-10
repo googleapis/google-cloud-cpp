@@ -56,6 +56,17 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         });
   }
 
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      TestIamPermissionsParams p) override {
+    google::iam::v1::TestIamPermissionsRequest request;
+    request.set_resource(std::move(p.instance_name));
+    for (auto& permission : p.permissions) {
+      request.add_permissions(std::move(permission));
+    }
+    grpc::ClientContext context;
+    return stub_->TestIamPermissions(context, request);
+  }
+
  private:
   std::shared_ptr<internal::InstanceAdminStub> stub_;
 };

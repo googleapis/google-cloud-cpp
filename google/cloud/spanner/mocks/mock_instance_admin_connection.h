@@ -37,6 +37,9 @@ class MockInstanceAdminConnection
                StatusOr<google::spanner::admin::instance::v1::Instance>(
                    GetInstanceParams));
   MOCK_METHOD1(ListInstances, spanner::ListInstancesRange(ListInstancesParams));
+  MOCK_METHOD1(TestIamPermissions,
+               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
+                   TestIamPermissionsParams));
 };
 
 }  // namespace SPANNER_CLIENT_NS

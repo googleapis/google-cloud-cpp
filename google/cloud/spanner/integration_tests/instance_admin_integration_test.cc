@@ -24,6 +24,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::UnorderedElementsAre;
 
 /// @test Verify the basic CRUD operations for instances work.
 TEST(InstanceAdminClient, InstanceBasicCRUD) {
@@ -56,6 +57,26 @@ TEST(InstanceAdminClient, InstanceBasicCRUD) {
 
   EXPECT_EQ(1, std::count(instance_names.begin(), instance_names.end(),
                           instance->name()));
+}
+
+TEST(InstanceAdminClient, InstanceIam) {
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto instance_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
+          .value_or("");
+  ASSERT_FALSE(project_id.empty());
+  ASSERT_FALSE(instance_id.empty());
+
+  Instance in(project_id, instance_id);
+
+  InstanceAdminClient client(MakeInstanceAdminConnection());
+  auto actual = client.TestIamPermissions(
+      in, {"spanner.databases.list", "spanner.databases.get"});
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(
+      actual->permissions(),
+      UnorderedElementsAre("spanner.databases.list", "spanner.databases.get"));
 }
 
 }  // namespace

@@ -39,6 +39,10 @@ class InstanceAdminStub {
   ListInstances(
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::ListInstancesRequest const&) = 0;
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(grpc::ClientContext&,
+                     google::iam::v1::TestIamPermissionsRequest const&) = 0;
 };
 
 /**

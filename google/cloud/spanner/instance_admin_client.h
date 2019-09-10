@@ -111,6 +111,28 @@ class InstanceAdminClient {
    */
   ListInstancesRange ListInstances(std::string project_id, std::string filter);
 
+  /**
+   * Get the subset of the permissions the caller has on the given instance.
+   *
+   * This function compares the given list of permissions against those
+   * permissions granted to the caller, and returns the subset of the list that
+   * the caller actually holds.
+   *
+   * @note Permission wildcards, such as `spanner.*` are not allowed.
+   *
+   * @par Example
+   * @snippet samples.cc instance-test-iam-permissions
+   *
+   * @see The [Cloud Spanner
+   * documentation](https://cloud.google.com/spanner/docs/iam) for a description
+   * of the roles and permissions supported by Cloud Spanner.
+   * @see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions)
+   *     for an introduction to Identity and Access Management in Google Cloud
+   *     Platform.
+   */
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      Instance const& in, std::vector<std::string> permissions);
+
  private:
   std::shared_ptr<InstanceAdminConnection> conn_;
 };
