@@ -30,6 +30,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 /**
  * The `Row<Ts...>` class template represents a heterogeneous set of C++ values.
  *

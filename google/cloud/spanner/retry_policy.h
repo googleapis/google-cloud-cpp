@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace internal {
 /// Define the gRPC status code semantics for retrying requests.
 struct SafeGrpcRetry {
@@ -30,7 +31,6 @@ struct SafeGrpcRetry {
     return code == StatusCode::kAborted || code == StatusCode::kUnavailable ||
            code == StatusCode::kDeadlineExceeded;
   }
-
   static inline bool IsOk(google::cloud::Status const& status) {
     return status.ok();
   }

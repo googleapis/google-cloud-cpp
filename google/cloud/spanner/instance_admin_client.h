@@ -23,6 +23,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 /**
  * Performs instance administration operations on Cloud Spanner.
  *

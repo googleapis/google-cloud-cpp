@@ -25,6 +25,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 /**
  * An input range to stream all the databases in a Cloud Spanner instance.
  *

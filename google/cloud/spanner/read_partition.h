@@ -58,16 +58,13 @@ StatusOr<ReadPartition> DeserializeReadPartition(
 
 // Internal implementation details that callers should not use.
 namespace internal {
-
 ReadPartition MakeReadPartition(std::string transaction_id,
                                 std::string session_id,
                                 std::string partition_token,
                                 std::string table_name, KeySet key_set,
                                 std::vector<std::string> column_names,
                                 ReadOptions read_options = {});
-
 Connection::ReadParams MakeReadParams(ReadPartition const& read_partition);
-
 }  // namespace internal
 
 /**

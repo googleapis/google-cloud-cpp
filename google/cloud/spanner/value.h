@@ -38,6 +38,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 class Value;  // Defined later in this file.
+
 // Internal implementation details that callers should not use.
 namespace internal {
 Value FromProto(google::spanner::v1::Type t, google::protobuf::Value v);

@@ -56,14 +56,12 @@ StatusOr<QueryPartition> DeserializeQueryPartition(
 
 // Internal implementation details that callers should not use.
 namespace internal {
-
 QueryPartition MakeQueryPartition(std::string const& transaction_id,
                                   std::string const& session_id,
                                   std::string const& partition_token,
                                   SqlStatement const& sql_statement);
 Connection::ExecuteSqlParams MakeExecuteSqlParams(
     QueryPartition const& query_partition);
-
 }  // namespace internal
 
 /**

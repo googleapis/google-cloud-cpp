@@ -27,6 +27,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 class SqlStatement;  // Defined later in this file.
+
 // Internal implementation details that callers should not use.
 namespace internal {
 // Use this proto type because it conveniently wraps all three attributes

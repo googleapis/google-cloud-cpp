@@ -25,6 +25,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace internal {
 template <typename Op>
 class WriteMutationBuilder;
