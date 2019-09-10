@@ -39,6 +39,12 @@ StatusOr<gcsa::Database> DatabaseAdminMetadata::GetDatabase(
   return child_->GetDatabase(context, request);
 }
 
+StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminMetadata::GetDatabaseDdl(
+    grpc::ClientContext& context, gcsa::GetDatabaseDdlRequest const& request) {
+  SetMetadata(context, "name=" + request.database());
+  return child_->GetDatabaseDdl(context, request);
+}
+
 future<StatusOr<gcsa::Database>> DatabaseAdminMetadata::AwaitCreateDatabase(
     google::longrunning::Operation operation) {
   return child_->AwaitCreateDatabase(std::move(operation));

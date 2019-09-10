@@ -78,6 +78,10 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
 
+  auto get_ddl_result = client.GetDatabaseDdl(db);
+  ASSERT_STATUS_OK(get_ddl_result);
+  EXPECT_EQ(0, get_ddl_result->statements_size());
+
   auto const create_table_statement = R"""(
                              CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,

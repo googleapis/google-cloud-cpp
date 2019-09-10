@@ -52,6 +52,16 @@ StatusOr<gcsa::Database> DatabaseAdminLogging::GetDatabase(
       context, request, __func__);
 }
 
+StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminLogging::GetDatabaseDdl(
+    grpc::ClientContext& context, gcsa::GetDatabaseDdlRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::GetDatabaseDdlRequest const& request) {
+        return child_->GetDatabaseDdl(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&

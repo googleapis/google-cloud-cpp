@@ -147,6 +147,57 @@ TEST(DatabaseAdminClientTest, GetDatabase_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
 
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, GetDatabaseDdl_Success) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+
+  EXPECT_CALL(*mock, GetDatabaseDdl(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  gcsa::GetDatabaseDdlRequest const& request) {
+            EXPECT_EQ(expected_name, request.database());
+            gcsa::GetDatabaseDdlResponse response;
+            response.add_statements("CREATE DATABASE test-database");
+            return response;
+          }));
+
+  auto client = CreateTestingClient(std::move(mock));
+  auto response = client.GetDatabaseDdl(
+      Database("test-project", "test-instance", "test-database"));
+  EXPECT_STATUS_OK(response);
+  ASSERT_EQ(1, response->statements_size());
+  ASSERT_EQ("CREATE DATABASE test-database", response->statements(0));
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, GetDatabaseDdl_PermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetDatabaseDdl(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto client = CreateTestingClient(std::move(mock));
+  auto response = client.GetDatabaseDdl(
+      Database("test-project", "test-instance", "test-database"));
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+/// @test Verify that too many transients errors are reported corrrectly.
+TEST(DatabaseAdminClientTest, GetDatabaseDdl_TooManyTransients) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetDatabaseDdl(_, _))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto client = CreateTestingClient(std::move(mock));
+  auto response = client.GetDatabaseDdl(
+      Database("test-project", "test-instance", "test-database"));
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
 /// @test Verify that successful case works.
 TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();

@@ -171,6 +171,19 @@ class DatabaseAdminClient {
       Database const& db);
 
   /**
+   * Retrieve a database schema.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore always idempotent. Transient
+   * failures are automatically retried.
+   *
+   * @par Example
+   * @snippet samples.cc get-database-ddl
+   */
+  StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
+  GetDatabaseDdl(Database const& db);
+
+  /**
    * Updates the database using a series of DDL statements.
    *
    * This function schedules a series of updates to the database using a

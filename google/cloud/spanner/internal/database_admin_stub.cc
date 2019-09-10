@@ -70,6 +70,18 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
+  StatusOr<gcsa::GetDatabaseDdlResponse> GetDatabaseDdl(
+      grpc::ClientContext& client_context,
+      gcsa::GetDatabaseDdlRequest const& request) override {
+    gcsa::GetDatabaseDdlResponse response;
+    auto status =
+        database_admin_->GetDatabaseDdl(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&

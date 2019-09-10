@@ -52,6 +52,14 @@ StatusOr<gcsa::Database> DatabaseAdminClient::GetDatabase(Database const& db) {
   return stub_->GetDatabase(context, request);
 }
 
+StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminClient::GetDatabaseDdl(
+    Database const& db) {
+  grpc::ClientContext context;
+  gcsa::GetDatabaseDdlRequest request;
+  request.set_database(db.FullName());
+  return stub_->GetDatabaseDdl(context, request);
+}
+
 future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
 DatabaseAdminClient::UpdateDatabase(
     Database const& db, std::vector<std::string> const& statements) {

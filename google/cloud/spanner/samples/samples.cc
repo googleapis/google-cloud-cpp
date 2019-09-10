@@ -148,6 +148,28 @@ void GetDatabaseCommand(std::vector<std::string> const& argv) {
   GetDatabase(std::move(client), argv[0], argv[1], argv[2]);
 }
 
+//! [get-database-ddl]
+void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& database_id) {
+  namespace spanner = google::cloud::spanner;
+  auto database = client.GetDatabaseDdl(
+      spanner::Database(project_id, instance_id, database_id));
+  if (!database) throw std::runtime_error(database.status().message());
+  std::cout << "Database metadata is:\n" << database->DebugString() << "\n";
+}
+//! [get-database-ddl]
+
+void GetDatabaseCommandDdl(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "get-database-ddl <project-id> <instance-id> <database-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  GetDatabaseDdl(std::move(client), argv[0], argv[1], argv[2]);
+}
+
 void AddColumn(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -790,6 +812,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"list-instances", &ListInstancesCommand},
       {"create-database", &CreateDatabase},
       {"get-database", &GetDatabaseCommand},
+      {"get-database-ddl", &GetDatabaseCommandDdl},
       {"add-column", &AddColumn},
       {"list-databases", &ListDatabasesCommand},
       {"drop-database", &DropDatabase},
@@ -891,6 +914,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner get-database sample\n";
   RunOneCommand({"", "get-database", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning spanner get-database-ddl sample\n";
+  RunOneCommand({"", "get-database-ddl", project_id, instance_id, database_id});
 
   std::cout << "\nList all databases\n";
   RunOneCommand({"", "list-databases", project_id, instance_id});

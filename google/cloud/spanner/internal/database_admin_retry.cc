@@ -117,6 +117,17 @@ StatusOr<gcsa::Database> DatabaseAdminRetry::GetDatabase(
       context, request, __func__);
 }
 
+StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminRetry::GetDatabaseDdl(
+    grpc::ClientContext& context, gcsa::GetDatabaseDdlRequest const& request) {
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             gcsa::GetDatabaseDdlRequest const& request) {
+        return child_->GetDatabaseDdl(context, request);
+      },
+      context, request, __func__);
+}
+
 future<StatusOr<gcsa::Database>> DatabaseAdminRetry::AwaitCreateDatabase(
     google::longrunning::Operation operation) {
   promise<StatusOr<gcsa::Database>> promise;

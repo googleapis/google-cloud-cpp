@@ -91,6 +91,19 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
+  EXPECT_CALL(*mock_, GetDatabaseDdl(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response = stub.GetDatabaseDdl(context, gcsa::GetDatabaseDdlRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("GetDatabaseDdl");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(DatabaseAdminLoggingTest, AwaitCreateDatabase) {
   auto result = google::cloud::make_ready_future(
       StatusOr<gcsa::Database>(TransientError()));

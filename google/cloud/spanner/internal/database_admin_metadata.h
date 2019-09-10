@@ -47,6 +47,12 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
       grpc::ClientContext&,
       google::spanner::admin::database::v1::GetDatabaseRequest const&) override;
 
+  StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
+  GetDatabaseDdl(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::GetDatabaseDdlRequest const&)
+      override;
+
   StatusOr<google::longrunning::Operation> UpdateDatabase(
       grpc::ClientContext& context,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
