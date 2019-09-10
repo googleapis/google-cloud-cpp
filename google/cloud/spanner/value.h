@@ -518,7 +518,7 @@ class Value {
   // types from a ListValue proto and store then in a tuple.
   struct ExtractTupleValues {
     Status& status;
-    std::size_t i;
+    int i;
     google::protobuf::ListValue const& list_value;
     google::spanner::v1::Type const& type;
     template <typename T>

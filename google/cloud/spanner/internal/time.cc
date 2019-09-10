@@ -37,7 +37,7 @@ google::protobuf::Duration ToProto(std::chrono::nanoseconds ns) {
   ns -= std::chrono::duration_cast<std::chrono::nanoseconds>(s);
   google::protobuf::Duration proto;
   proto.set_seconds(s.count());
-  proto.set_nanos(ns.count());
+  proto.set_nanos(static_cast<int>(ns.count()));
   return proto;
 }
 
@@ -145,7 +145,7 @@ google::protobuf::Timestamp ToProto(Timestamp ts) {
   auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(p.second);
   google::protobuf::Timestamp proto;
   proto.set_seconds(p.first.count());
-  proto.set_nanos(ns.count());
+  proto.set_nanos(static_cast<int>(ns.count()));
   return proto;
 }
 

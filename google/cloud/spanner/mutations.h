@@ -103,7 +103,7 @@ class WriteMutationBuilder {
                        std::vector<std::string> column_names) {
     auto& field = Op::mutable_field(m_);
     field.set_table(std::move(table_name));
-    field.mutable_columns()->Reserve(column_names.size());
+    field.mutable_columns()->Reserve(static_cast<int>(column_names.size()));
     for (auto& name : column_names) {
       *field.add_columns() = std::move(name);
     }

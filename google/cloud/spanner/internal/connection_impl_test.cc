@@ -40,6 +40,7 @@ using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
+using ::testing::DoAll;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Invoke;
