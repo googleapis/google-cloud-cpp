@@ -49,7 +49,7 @@ spanner_client_hdrs = [
     "internal/polling_loop.h",
     "internal/range_from_pagination.h",
     "internal/retry_loop.h",
-    "internal/session_holder.h",
+    "internal/session.h",
     "internal/spanner_stub.h",
     "internal/time.h",
     "internal/time_format.h",

@@ -77,24 +77,22 @@ TEST(Transaction, RegularSemantics) {
 TEST(Transaction, Visit) {
   Transaction a = MakeReadOnlyTransaction();
   std::int64_t a_seqno;
-  internal::Visit(
-      a, [&a_seqno](std::unique_ptr<internal::SessionHolder>& /*session*/,
-                    google::spanner::v1::TransactionSelector& s,
-                    std::int64_t seqno) {
-        EXPECT_TRUE(s.has_begin());
-        EXPECT_TRUE(s.begin().has_read_only());
-        s.set_id("test-txn-id");
-        a_seqno = seqno;
-        return 0;
-      });
-  internal::Visit(
-      a, [a_seqno](std::unique_ptr<internal::SessionHolder>& /*session*/,
-                   google::spanner::v1::TransactionSelector& s,
-                   std::int64_t seqno) {
-        EXPECT_EQ("test-txn-id", s.id());
-        EXPECT_GT(seqno, a_seqno);
-        return 0;
-      });
+  internal::Visit(a, [&a_seqno](internal::SessionHolder& /*session*/,
+                                google::spanner::v1::TransactionSelector& s,
+                                std::int64_t seqno) {
+    EXPECT_TRUE(s.has_begin());
+    EXPECT_TRUE(s.begin().has_read_only());
+    s.set_id("test-txn-id");
+    a_seqno = seqno;
+    return 0;
+  });
+  internal::Visit(a, [a_seqno](internal::SessionHolder& /*session*/,
+                               google::spanner::v1::TransactionSelector& s,
+                               std::int64_t seqno) {
+    EXPECT_EQ("test-txn-id", s.id());
+    EXPECT_GT(seqno, a_seqno);
+    return 0;
+  });
 }
 
 }  // namespace

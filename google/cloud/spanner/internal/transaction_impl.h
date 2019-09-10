@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_TRANSACTION_IMPL_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_TRANSACTION_IMPL_H_
 
-#include "google/cloud/spanner/internal/session_holder.h"
+#include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/port_platform.h"
@@ -33,8 +33,8 @@ namespace internal {
 
 template <typename Functor>
 using VisitInvokeResult = google::cloud::internal::invoke_result_t<
-    Functor, std::unique_ptr<SessionHolder>&,
-    google::spanner::v1::TransactionSelector&, std::int64_t>;
+    Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
+    std::int64_t>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -44,7 +44,7 @@ class TransactionImpl {
   TransactionImpl(google::spanner::v1::TransactionSelector selector)
       : TransactionImpl(/*session=*/{}, std::move(selector)) {}
 
-  TransactionImpl(std::unique_ptr<SessionHolder> session,
+  TransactionImpl(SessionHolder session,
                   google::spanner::v1::TransactionSelector selector)
       : session_(std::move(session)),
         selector_(std::move(selector)),
@@ -69,8 +69,8 @@ class TransactionImpl {
   VisitInvokeResult<Functor> Visit(Functor&& f) {
     static_assert(
         google::cloud::internal::is_invocable<
-            Functor, std::unique_ptr<SessionHolder>&,
-            google::spanner::v1::TransactionSelector&, std::int64_t>::value,
+            Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
+            std::int64_t>::value,
         "TransactionImpl::Visit() functor has incompatible type.");
     std::int64_t seqno;
     {
@@ -122,7 +122,7 @@ class TransactionImpl {
 
   std::mutex mu_;
   std::condition_variable cond_;
-  std::unique_ptr<SessionHolder> session_;
+  SessionHolder session_;
   google::spanner::v1::TransactionSelector selector_;
   std::int64_t seqno_;
 };

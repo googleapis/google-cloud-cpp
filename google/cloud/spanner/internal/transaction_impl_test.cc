@@ -73,9 +73,9 @@ class Client {
   // User-visible read operation.
   ResultSet Read(Transaction txn, std::string const& table, KeySet const& keys,
                  std::vector<std::string> const& columns) {
-    auto read = [this, &table, &keys, &columns](
-                    std::unique_ptr<SessionHolder>& session,
-                    TransactionSelector& selector, std::int64_t seqno) {
+    auto read = [this, &table, &keys, &columns](SessionHolder& session,
+                                                TransactionSelector& selector,
+                                                std::int64_t seqno) {
       return this->Read(session, selector, seqno, table, keys, columns);
     };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -90,10 +90,9 @@ class Client {
   }
 
  private:
-  ResultSet Read(std::unique_ptr<SessionHolder>& session,
-                 TransactionSelector& selector, std::int64_t seqno,
-                 std::string const& table, KeySet const& keys,
-                 std::vector<std::string> const& columns);
+  ResultSet Read(SessionHolder& session, TransactionSelector& selector,
+                 std::int64_t seqno, std::string const& table,
+                 KeySet const& keys, std::vector<std::string> const& columns);
 
   Mode mode_;
   Timestamp read_timestamp_;
@@ -108,9 +107,8 @@ class Client {
 // to make a StreamingRead() RPC, and then, if the selector was a `begin`,
 // switch the selector to use the allocated transaction ID.  Here we use
 // the pre-assigned transaction ID after checking the read timestamp.
-ResultSet Client::Read(std::unique_ptr<SessionHolder>& session,
-                       TransactionSelector& selector, std::int64_t seqno,
-                       std::string const&, KeySet const&,
+ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
+                       std::int64_t seqno, std::string const&, KeySet const&,
                        std::vector<std::string> const&) {
   if (selector.has_begin()) {
     EXPECT_THAT(session, IsNull());
@@ -134,8 +132,7 @@ ResultSet Client::Read(std::unique_ptr<SessionHolder>& session,
     }
     switch (mode_) {
       case Mode::kReadSucceeds:  // `begin` -> `id`, calls now parallelized
-        session = ::google::cloud::internal::make_unique<SessionHolder>(
-            session_id_, /*deleter=*/nullptr);
+        session = internal::MakeDissociatedSessionHolder(session_id_);
         selector.set_id(txn_id_);
         break;
       case Mode::kReadFails:  // leave as `begin`, calls stay serialized

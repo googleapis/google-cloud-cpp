@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MATCHERS_H_
 
-#include "google/cloud/spanner/internal/session_holder.h"
+#include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/spanner/version.h"
 #include <google/protobuf/util/message_differencer.h>
@@ -42,8 +42,7 @@ MATCHER_P2(
     HasSessionAndTransactionId, session_id, transaction_id,
     "Verifies a Transaction has the expected Session and Transaction IDs") {
   return google::cloud::spanner::internal::Visit(
-      arg, [&](std::unique_ptr<google::cloud::spanner::internal::SessionHolder>&
-                   session,
+      arg, [&](google::cloud::spanner::internal::SessionHolder& session,
                google::spanner::v1::TransactionSelector& s, std::int64_t) {
         bool result = true;
         if (!session) {

@@ -17,7 +17,7 @@
 
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
-#include "google/cloud/spanner/internal/session_holder.h"
+#include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
@@ -59,45 +59,39 @@ class ConnectionImpl : public Connection {
   Status Rollback(RollbackParams) override;
 
  private:
-  StatusOr<ResultSet> ReadImpl(std::unique_ptr<SessionHolder>& session,
+  StatusOr<ResultSet> ReadImpl(SessionHolder& session,
                                google::spanner::v1::TransactionSelector& s,
                                ReadParams rp);
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
-      std::unique_ptr<SessionHolder>& session,
-      google::spanner::v1::TransactionSelector& s, ReadParams const& rp,
-      PartitionOptions partition_options);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      ReadParams const& rp, PartitionOptions partition_options);
 
   StatusOr<ResultSet> ExecuteSqlImpl(
-      std::unique_ptr<SessionHolder>& session,
-      google::spanner::v1::TransactionSelector& s, std::int64_t seqno,
-      ExecuteSqlParams esp);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams esp);
 
   StatusOr<PartitionedDmlResult> ExecutePartitionedDmlImpl(
-      std::unique_ptr<SessionHolder>& session,
-      google::spanner::v1::TransactionSelector& s, std::int64_t seqno,
-      ExecutePartitionedDmlParams epdp);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecutePartitionedDmlParams epdp);
 
   StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
-      std::unique_ptr<SessionHolder>& session,
-      google::spanner::v1::TransactionSelector& s, ExecuteSqlParams const& esp,
-      PartitionOptions partition_options);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      ExecuteSqlParams const& esp, PartitionOptions partition_options);
 
   StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
-      std::unique_ptr<SessionHolder>& session,
-      google::spanner::v1::TransactionSelector& s, std::int64_t seqno,
-      BatchDmlParams params);
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, BatchDmlParams params);
 
-  StatusOr<CommitResult> CommitImpl(std::unique_ptr<SessionHolder>& session,
+  StatusOr<CommitResult> CommitImpl(SessionHolder& session,
                                     google::spanner::v1::TransactionSelector& s,
                                     CommitParams cp);
 
-  Status RollbackImpl(std::unique_ptr<SessionHolder>& session,
+  Status RollbackImpl(SessionHolder& session,
                       google::spanner::v1::TransactionSelector& s);
 
-  StatusOr<std::unique_ptr<SessionHolder>> GetSession(
-      bool dissociate_from_pool = false);
-  void ReleaseSession(std::string session);
+  StatusOr<SessionHolder> GetSession(bool dissociate_from_pool = false);
+  void ReleaseSession(Session* session);
 
   Database db_;
   std::shared_ptr<internal::SpannerStub> stub_;
@@ -105,7 +99,7 @@ class ConnectionImpl : public Connection {
   // The current session pool.
   // TODO(#307) - improve session refresh and expiration.
   std::mutex mu_;
-  std::vector<std::string> sessions_;  // GUARDED_BY(mu_)
+  std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
 };
 
 }  // namespace internal

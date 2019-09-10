@@ -141,7 +141,7 @@ add_library(spanner_client
             internal/range_from_pagination.h
             internal/retry_loop.cc
             internal/retry_loop.h
-            internal/session_holder.h
+            internal/session.h
             internal/spanner_stub.cc
             internal/spanner_stub.h
             internal/time.cc
