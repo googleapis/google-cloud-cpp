@@ -460,9 +460,17 @@ StatusOr<SessionHolder> ConnectionImpl::GetSession(bool dissociate_from_pool) {
     // Uses the default deleter; the Session is not returned to the pool.
     return {std::move(session)};
   }
-  // TODO(#409) take a (weak) reference to `this` to avoid use-after-free.
-  return SessionHolder(session.release(), [this](Session* session) {
-    this->ReleaseSession(session);
+
+  std::weak_ptr<ConnectionImpl> connection = shared_from_this();
+  return SessionHolder(session.release(), [connection](Session* session) {
+    auto shared_connection = connection.lock();
+    // If `connection` is still alive, release the `Session` to its pool;
+    // otherwise just delete the `Session`.
+    if (shared_connection) {
+      shared_connection->ReleaseSession(session);
+    } else {
+      delete session;
+    }
   });
 }
 

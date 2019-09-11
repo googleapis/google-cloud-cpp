@@ -38,7 +38,8 @@ namespace internal {
  * Spanner instance. See `MakeConnection()` for a factory function that creates
  * and returns instances of this class.
  */
-class ConnectionImpl : public Connection {
+class ConnectionImpl : public Connection,
+                       public std::enable_shared_from_this<ConnectionImpl> {
  public:
   // Creates a ConnectionImpl that will talk to the specified `db` using the
   // given `stub`. We can test this class by injecting in a mock `stub`.
