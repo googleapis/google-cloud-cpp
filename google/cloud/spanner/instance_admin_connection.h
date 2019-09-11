@@ -95,6 +95,11 @@ class InstanceAdminConnection {
     std::string filter;
   };
 
+  /// Wrap the arguments for `GetIamPolicy()`.
+  struct GetIamPolicyParams {
+    std::string instance_name;
+  };
+
   /// Wrap the arguments for `TestIamPermissions()`.
   struct TestIamPermissionsParams {
     std::string instance_name;
@@ -111,6 +116,11 @@ class InstanceAdminConnection {
    * requirements in @p params
    */
   virtual ListInstancesRange ListInstances(ListInstancesParams params) = 0;
+
+  /// Define the interface for a
+  /// google.spanner.v1.DatabaseAdmin.GetIamPolicy RPC.
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      GetIamPolicyParams) = 0;
 
   /// Define the interface for a
   /// google.spanner.v1.DatabaseAdmin.TestIamPermissions RPC.

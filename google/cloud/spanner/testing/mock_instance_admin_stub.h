@@ -35,6 +35,9 @@ class MockInstanceAdminStub
       StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>(
           grpc::ClientContext&,
           google::spanner::admin::instance::v1::ListInstancesRequest const&));
+  MOCK_METHOD2(GetIamPolicy, StatusOr<google::iam::v1::Policy>(
+                                 grpc::ClientContext&,
+                                 google::iam::v1::GetIamPolicyRequest const&));
   MOCK_METHOD2(TestIamPermissions,
                StatusOr<google::iam::v1::TestIamPermissionsResponse>(
                    grpc::ClientContext&,

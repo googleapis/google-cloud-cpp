@@ -85,6 +85,18 @@ StatusOr<gcsa::ListInstancesResponse> InstanceAdminRetry::ListInstances(
       context, request, __func__);
 }
 
+StatusOr<google::iam::v1::Policy> InstanceAdminRetry::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             giam::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<giam::TestIamPermissionsResponse>
 InstanceAdminRetry::TestIamPermissions(
     grpc::ClientContext& context,

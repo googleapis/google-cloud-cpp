@@ -28,6 +28,11 @@ ListInstancesRange InstanceAdminClient::ListInstances(std::string project_id,
   return conn_->ListInstances({std::move(project_id), std::move(filter)});
 }
 
+StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
+    Instance const& in) {
+  return conn_->GetIamPolicy({in.FullName()});
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminClient::TestIamPermissions(Instance const& in,
                                         std::vector<std::string> permissions) {

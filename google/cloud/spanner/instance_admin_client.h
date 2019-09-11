@@ -113,6 +113,29 @@ class InstanceAdminClient {
   ListInstancesRange ListInstances(std::string project_id, std::string filter);
 
   /**
+   * Get the IAM policy in effect for the given instance.
+   *
+   * This function retrieves the IAM policy configured in the given instance,
+   * that is, which roles are enabled in the instance, and what entities are
+   * members of each role.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc instance-get-iam-policy
+   *
+   * @see The [Cloud Spanner
+   *     documentation](https://cloud.google.com/spanner/docs/iam) for a
+   *     description of the roles and permissions supported by Cloud Spanner.
+   * @see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions)
+   *     for an introduction to Identity and Access Management in Google Cloud
+   *     Platform.
+   */
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(Instance const& in);
+
+  /**
    * Get the subset of the permissions the caller has on the given instance.
    *
    * This function compares the given list of permissions against those

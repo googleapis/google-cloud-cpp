@@ -71,6 +71,11 @@ TEST(InstanceAdminClient, InstanceIam) {
   Instance in(project_id, instance_id);
 
   InstanceAdminClient client(MakeInstanceAdminConnection());
+
+  auto actual_policy = client.GetIamPolicy(in);
+  ASSERT_STATUS_OK(actual_policy);
+  EXPECT_FALSE(actual_policy->etag().empty());
+
   auto actual = client.TestIamPermissions(
       in, {"spanner.databases.list", "spanner.databases.get"});
   ASSERT_STATUS_OK(actual);

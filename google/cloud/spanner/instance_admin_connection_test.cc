@@ -170,6 +170,58 @@ TEST(InstanceAdminConnectionTest, ListInstances_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
+TEST(InstanceAdminConnectionTest, GetIamPolicy_Success) {
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance";
+
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  giam::GetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            return Status(StatusCode::kUnavailable, "try-again");
+          }))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  giam::GetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            giam::Policy response;
+            auto& binding = *response.add_bindings();
+            binding.set_role("roles/spanner.databaseReader");
+            binding.add_members("user:test-account@example.com");
+            return response;
+          }));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->GetIamPolicy({expected_name});
+  ASSERT_STATUS_OK(actual);
+  ASSERT_EQ(1, actual->bindings_size());
+  EXPECT_EQ("roles/spanner.databaseReader", actual->bindings(0).role());
+  ASSERT_EQ(1, actual->bindings(0).members_size());
+  ASSERT_EQ("user:test-account@example.com", actual->bindings(0).members(0));
+}
+
+TEST(InstanceAdminConnectionTest, GetIamPolicy_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->GetIamPolicy({"test-instance-name"});
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminConnectionTest, GetIamPolicy_TooManyTransients) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->GetIamPolicy({"test-instance-name"});
+  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+}
+
 TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";

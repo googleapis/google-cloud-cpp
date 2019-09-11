@@ -88,6 +88,29 @@ void ListInstancesCommand(std::vector<std::string> const& argv) {
   ListInstances(std::move(client), argv[0]);
 }
 
+//! [instance-get-iam-policy]
+void InstanceGetIamPolicy(google::cloud::spanner::InstanceAdminClient client,
+                          std::string const& project_id,
+                          std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto actual = client.GetIamPolicy(in);
+  if (!actual) throw std::runtime_error(actual.status().message());
+
+  std::cout << "The IAM policy for instance " << instance_id << " is:\n"
+            << actual->DebugString() << "\n";
+}
+//! [instance-get-iam-policy]
+
+void InstanceGetIamPolicyCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error(
+        "instance-get-iam-policy <project-id> <instance-id>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  InstanceGetIamPolicy(std::move(client), argv[0], argv[1]);
+}
+
 //! [instance-test-iam-permissions]
 void InstanceTestIamPermissions(
     google::cloud::spanner::InstanceAdminClient client,
@@ -107,7 +130,8 @@ void InstanceTestIamPermissions(
 
 void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 2) {
-    throw std::runtime_error("get-instance <project-id> <instance-id>");
+    throw std::runtime_error(
+        "instance-test-iam-permissions <project-id> <instance-id>");
   }
   google::cloud::spanner::InstanceAdminClient client(
       google::cloud::spanner::MakeInstanceAdminConnection());
@@ -836,6 +860,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   CommandMap commands = {
       {"get-instance", &GetInstanceCommand},
       {"list-instances", &ListInstancesCommand},
+      {"instance-get-iam-policy", &InstanceGetIamPolicyCommand},
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
       {"create-database", &CreateDatabase},
       {"get-database", &GetDatabaseCommand},
@@ -931,6 +956,9 @@ void RunAll() {
 
   std::cout << "\nRunning list-instances sample\n";
   RunOneCommand({"", "list-instances", project_id});
+
+  std::cout << "\nRunning (instance) get-iam-policy sample\n";
+  RunOneCommand({"", "instance-get-iam-policy", project_id, instance_id});
 
   std::cout << "\nRunning (instance) test-iam-permissions sample\n";
   RunOneCommand({"", "instance-test-iam-permissions", project_id, instance_id});
