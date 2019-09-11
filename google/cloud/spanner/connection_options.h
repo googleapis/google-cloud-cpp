@@ -115,7 +115,9 @@ class ConnectionOptions {
    * This option might be useful for applications that want to segregate traffic
    * for whatever reason.
    */
-  std::string channel_pool_domain() const { return channel_pool_domain_; }
+  std::string const& channel_pool_domain() const {
+    return channel_pool_domain_;
+  }
 
   /// Set the value for `channel_pool_domain()`.
   ConnectionOptions& set_channel_pool_domain(std::string v) {
