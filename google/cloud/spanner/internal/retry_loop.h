@@ -72,13 +72,14 @@ template <typename Functor, typename Request, typename Sleeper,
 auto RetryLoopImpl(std::unique_ptr<RetryPolicy> retry_policy,
                    std::unique_ptr<BackoffPolicy> backoff_policy,
                    bool is_idempotent, Functor&& functor,
-                   grpc::ClientContext& context, Request const& request,
-                   char const* location, Sleeper sleeper)
+                   Request const& request, char const* location,
+                   Sleeper sleeper)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
   Status last_status;
-
   while (!retry_policy->IsExhausted()) {
+    // Need to create a new context for each retry.
+    grpc::ClientContext context;
     auto result = functor(context, request);
     if (result.ok()) {
       return result;
@@ -112,14 +113,13 @@ template <typename Functor, typename Request,
               int>::type = 0>
 auto RetryLoop(std::unique_ptr<RetryPolicy> retry_policy,
                std::unique_ptr<BackoffPolicy> backoff_policy,
-               bool is_idempotent, Functor&& functor,
-               grpc::ClientContext& context, Request const& request,
+               bool is_idempotent, Functor&& functor, Request const& request,
                char const* location)
     -> google::cloud::internal::invoke_result_t<Functor, grpc::ClientContext&,
                                                 Request const&> {
   return RetryLoopImpl(
       std::move(retry_policy), std::move(backoff_policy), is_idempotent,
-      std::forward<Functor>(functor), context, request, location,
+      std::forward<Functor>(functor), request, location,
       [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); });
 }
 

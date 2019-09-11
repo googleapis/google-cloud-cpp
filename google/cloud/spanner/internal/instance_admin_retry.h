@@ -27,6 +27,9 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 /**
  * Implements the retry Decorator for InstanceAdminStub.
+ *
+ * @note All retry decorators ignore the `grpc::ClientContext` parameter, and
+ *     create a new context for each child request.
  */
 class InstanceAdminRetry : public InstanceAdminStub {
  public:
@@ -46,19 +49,19 @@ class InstanceAdminRetry : public InstanceAdminStub {
    * Run the retry loop (if appropriate) for the child InstanceAdminStub.
    */
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
 
   StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::instance::v1::ListInstancesRequest const&)
       override;
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::iam::v1::GetIamPolicyRequest const&) override;
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::iam::v1::TestIamPermissionsRequest const&) override;
   //@}
 

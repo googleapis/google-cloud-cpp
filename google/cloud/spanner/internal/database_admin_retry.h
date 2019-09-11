@@ -27,6 +27,9 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 /**
  * Implements the retry Decorator for DatabaseAdminStub.
+ *
+ * @note All retry decorators ignore the `grpc::ClientContext` parameter, and
+ *     create a new context for each child request.
  */
 class DatabaseAdminRetry : public DatabaseAdminStub {
  public:
@@ -47,7 +50,7 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
    */
   ///
   StatusOr<google::longrunning::Operation> CreateDatabase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) override;
 
@@ -55,17 +58,17 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
       AwaitCreateDatabase(google::longrunning::Operation) override;
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::database::v1::GetDatabaseRequest const&) override;
 
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::database::v1::GetDatabaseDdlRequest const&)
       override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
           request) override;
 
@@ -74,18 +77,18 @@ class DatabaseAdminRetry : public DatabaseAdminStub {
   AwaitUpdateDatabase(google::longrunning::Operation operation) override;
 
   Status DropDatabase(
-      grpc::ClientContext& context,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::database::v1::DropDatabaseRequest const& request)
       override;
 
   StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
   ListDatabases(
-      grpc::ClientContext&,
+      grpc::ClientContext& /*unused*/,
       google::spanner::admin::database::v1::ListDatabasesRequest const&)
       override;
 
   StatusOr<google::longrunning::Operation> GetOperation(
-      grpc::ClientContext& context,
+      grpc::ClientContext& /*unused*/,
       google::longrunning::GetOperationRequest const& request) override;
   //@}
 

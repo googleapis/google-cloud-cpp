@@ -96,36 +96,36 @@ DatabaseAdminRetry::DatabaseAdminRetry(PrivateConstructorTag,
 namespace gcsa = google::spanner::admin::database::v1;
 
 StatusOr<google::longrunning::Operation> DatabaseAdminRetry::CreateDatabase(
-    grpc::ClientContext& context, gcsa::CreateDatabaseRequest const& request) {
+    grpc::ClientContext&, gcsa::CreateDatabaseRequest const& request) {
   return RetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(), false,
       [this](grpc::ClientContext& context,
              gcsa::CreateDatabaseRequest const& request) {
         return child_->CreateDatabase(context, request);
       },
-      context, request, __func__);
+      request, __func__);
 }
 
 StatusOr<gcsa::Database> DatabaseAdminRetry::GetDatabase(
-    grpc::ClientContext& context, gcsa::GetDatabaseRequest const& request) {
+    grpc::ClientContext&, gcsa::GetDatabaseRequest const& request) {
   return RetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(), true,
       [this](grpc::ClientContext& context,
              gcsa::GetDatabaseRequest const& request) {
         return child_->GetDatabase(context, request);
       },
-      context, request, __func__);
+      request, __func__);
 }
 
 StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminRetry::GetDatabaseDdl(
-    grpc::ClientContext& context, gcsa::GetDatabaseDdlRequest const& request) {
+    grpc::ClientContext&, gcsa::GetDatabaseDdlRequest const& request) {
   return RetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(), true,
       [this](grpc::ClientContext& context,
              gcsa::GetDatabaseDdlRequest const& request) {
         return child_->GetDatabaseDdl(context, request);
       },
-      context, request, __func__);
+      request, __func__);
 }
 
 future<StatusOr<gcsa::Database>> DatabaseAdminRetry::AwaitCreateDatabase(
@@ -166,7 +166,7 @@ future<StatusOr<gcsa::Database>> DatabaseAdminRetry::AwaitCreateDatabase(
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminRetry::UpdateDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext&,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   return RetryLoop(
@@ -175,7 +175,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminRetry::UpdateDatabase(
              gcsa::UpdateDatabaseDdlRequest const& request) {
         return child_->UpdateDatabase(context, request);
       },
-      context, request, __func__);
+      request, __func__);
 }
 
 future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
@@ -219,7 +219,7 @@ DatabaseAdminRetry::AwaitUpdateDatabase(
 }
 
 Status DatabaseAdminRetry::DropDatabase(
-    grpc::ClientContext& context,
+    grpc::ClientContext&,
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
   return RetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(), true,
@@ -227,18 +227,18 @@ Status DatabaseAdminRetry::DropDatabase(
              gcsa::DropDatabaseRequest const& request) {
         return child_->DropDatabase(context, request);
       },
-      context, request, __func__);
+      request, __func__);
 }
 
 StatusOr<gcsa::ListDatabasesResponse> DatabaseAdminRetry::ListDatabases(
-    grpc::ClientContext& context, gcsa::ListDatabasesRequest const& request) {
+    grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
   return RetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(), true,
       [this](grpc::ClientContext& context,
              gcsa::ListDatabasesRequest const& request) {
         return child_->ListDatabases(context, request);
       },
-      context, request, __func__);
+      request, __func__);
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminRetry::GetOperation(

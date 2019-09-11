@@ -38,19 +38,17 @@ std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
 }
 
 TEST(RetryLoopTest, Success) {
-  grpc::ClientContext context;
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), true,
       [](grpc::ClientContext&, int request) {
         return StatusOr<int>(2 * request);
       },
-      context, 42, "error message");
+      42, "error message");
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
 
 TEST(RetryLoopTest, TransientThenSuccess) {
-  grpc::ClientContext context;
   int counter = 0;
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), true,
@@ -60,13 +58,12 @@ TEST(RetryLoopTest, TransientThenSuccess) {
         }
         return StatusOr<int>(2 * request);
       },
-      context, 42, "error message");
+      42, "error message");
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
 }
 
 TEST(RetryLoopTest, ReturnJustStatus) {
-  grpc::ClientContext context;
   int counter = 0;
   Status actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), true,
@@ -76,7 +73,7 @@ TEST(RetryLoopTest, ReturnJustStatus) {
         }
         return Status();
       },
-      context, 42, "error message");
+      42, "error message");
   EXPECT_STATUS_OK(actual);
 }
 
@@ -100,7 +97,6 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
       .WillOnce(Return(ms(20)))
       .WillOnce(Return(ms(30)));
 
-  grpc::ClientContext context;
   int counter = 0;
   std::vector<ms> sleep_for;
   StatusOr<int> actual = RetryLoopImpl(
@@ -111,8 +107,7 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
         }
         return StatusOr<int>(2 * request);
       },
-      context, 42, "error message",
-      [&sleep_for](ms p) { sleep_for.push_back(p); });
+      42, "error message", [&sleep_for](ms p) { sleep_for.push_back(p); });
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(84, *actual);
   EXPECT_THAT(sleep_for,
@@ -120,13 +115,12 @@ TEST(RetryLoopTest, UsesBackoffPolicy) {
 }
 
 TEST(RetryLoopTest, TransientFailureNonIdempotent) {
-  grpc::ClientContext context;
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), false,
       [](grpc::ClientContext&, int) {
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      context, 42, "the answer to everything");
+      42, "the answer to everything");
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
@@ -134,13 +128,12 @@ TEST(RetryLoopTest, TransientFailureNonIdempotent) {
 }
 
 TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
-  grpc::ClientContext context;
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), true,
       [](grpc::ClientContext&, int) {
         return StatusOr<int>(Status(StatusCode::kPermissionDenied, "uh oh"));
       },
-      context, 42, "the answer to everything");
+      42, "the answer to everything");
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("uh oh"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
@@ -148,13 +141,12 @@ TEST(RetryLoopTest, PermanentFailureFailureIdempotent) {
 }
 
 TEST(RetryLoopTest, TooManyTransientFailuresIdempotent) {
-  grpc::ClientContext context;
   StatusOr<int> actual = RetryLoop(
       TestRetryPolicy(), TestBackoffPolicy(), true,
       [](grpc::ClientContext&, int) {
         return StatusOr<int>(Status(StatusCode::kUnavailable, "try again"));
       },
-      context, 42, "the answer to everything");
+      42, "the answer to everything");
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("try again"));
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
