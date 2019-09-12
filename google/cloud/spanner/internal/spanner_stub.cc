@@ -43,6 +43,9 @@ class DefaultSpannerStub : public SpannerStub {
   StatusOr<spanner_proto::Session> CreateSession(
       grpc::ClientContext& client_context,
       spanner_proto::CreateSessionRequest const& request) override;
+  StatusOr<spanner_proto::BatchCreateSessionsResponse> BatchCreateSessions(
+      grpc::ClientContext& client_context,
+      spanner_proto::BatchCreateSessionsRequest const& request) override;
   StatusOr<spanner_proto::Session> GetSession(
       grpc::ClientContext& client_context,
       spanner_proto::GetSessionRequest const& request) override;
@@ -92,6 +95,19 @@ StatusOr<spanner_proto::Session> DefaultSpannerStub::CreateSession(
   spanner_proto::Session response;
   grpc::Status grpc_status =
       grpc_stub_->CreateSession(&client_context, request, &response);
+  if (!grpc_status.ok()) {
+    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+  }
+  return response;
+}
+
+StatusOr<spanner_proto::BatchCreateSessionsResponse>
+DefaultSpannerStub::BatchCreateSessions(
+    grpc::ClientContext& client_context,
+    spanner_proto::BatchCreateSessionsRequest const& request) {
+  spanner_proto::BatchCreateSessionsResponse response;
+  grpc::Status grpc_status =
+      grpc_stub_->BatchCreateSessions(&client_context, request, &response);
   if (!grpc_status.ok()) {
     return grpc_utils::MakeStatusFromRpcError(grpc_status);
   }

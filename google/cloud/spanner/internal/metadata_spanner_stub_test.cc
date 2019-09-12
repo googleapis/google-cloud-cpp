@@ -107,6 +107,29 @@ TEST_F(MetadataSpannerStubTest, CreateSession) {
   EXPECT_EQ(TransientError(), status.status());
 }
 
+TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
+  EXPECT_CALL(*mock_, BatchCreateSessions(_, _))
+      .WillOnce(
+          Invoke([this](grpc::ClientContext& context,
+                        spanner_proto::BatchCreateSessionsRequest const&) {
+            EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+                context, "google.spanner.v1.Spanner.BatchCreateSessions",
+                expected_api_client_header_));
+            return TransientError();
+          }));
+
+  MetadataSpannerStub stub(mock_);
+  grpc::ClientContext context;
+  spanner_proto::BatchCreateSessionsRequest request;
+  request.set_database(
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database-id");
+  request.set_session_count(3);
+  auto status = stub.BatchCreateSessions(context, request);
+  EXPECT_EQ(TransientError(), status.status());
+}
+
 TEST_F(MetadataSpannerStubTest, GetSession) {
   EXPECT_CALL(*mock_, GetSession(_, _))
       .WillOnce(Invoke([this](grpc::ClientContext& context,

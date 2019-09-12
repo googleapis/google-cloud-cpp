@@ -99,6 +99,20 @@ TEST_F(LoggingSpannerStubTest, CreateSession) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(LoggingSpannerStubTest, BatchCreateSessions) {
+  EXPECT_CALL(*mock_, BatchCreateSessions(_, _))
+      .WillOnce(Return(TransientError()));
+
+  LoggingSpannerStub stub(mock_);
+  grpc::ClientContext context;
+  auto status = stub.BatchCreateSessions(
+      context, spanner_proto::BatchCreateSessionsRequest());
+  EXPECT_EQ(TransientError(), status.status());
+
+  HasLogLineWith("BatchCreateSessions");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(LoggingSpannerStubTest, GetSession) {
   EXPECT_CALL(*mock_, GetSession(_, _)).WillOnce(Return(TransientError()));
 

@@ -36,6 +36,18 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::CreateSession(
       client_context, request, __func__);
 }
 
+StatusOr<spanner_proto::BatchCreateSessionsResponse>
+LoggingSpannerStub::BatchCreateSessions(
+    grpc::ClientContext& client_context,
+    spanner_proto::BatchCreateSessionsRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             spanner_proto::BatchCreateSessionsRequest const& request) {
+        return child_->BatchCreateSessions(context, request);
+      },
+      client_context, request, __func__);
+}
+
 StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
     grpc::ClientContext& client_context,
     spanner_proto::GetSessionRequest const& request) {

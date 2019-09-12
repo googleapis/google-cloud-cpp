@@ -35,6 +35,14 @@ StatusOr<spanner_proto::Session> MetadataSpannerStub::CreateSession(
   return child_->CreateSession(client_context, request);
 }
 
+StatusOr<spanner_proto::BatchCreateSessionsResponse>
+MetadataSpannerStub::BatchCreateSessions(
+    grpc::ClientContext& client_context,
+    google::spanner::v1::BatchCreateSessionsRequest const& request) {
+  SetMetadata(client_context, "database=" + request.database());
+  return child_->BatchCreateSessions(client_context, request);
+}
+
 StatusOr<spanner_proto::Session> MetadataSpannerStub::GetSession(
     grpc::ClientContext& client_context,
     spanner_proto::GetSessionRequest const& request) {

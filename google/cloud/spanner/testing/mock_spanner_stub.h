@@ -31,6 +31,11 @@ class MockSpannerStub : public google::cloud::spanner::internal::SpannerStub {
                    grpc::ClientContext&,
                    google::spanner::v1::CreateSessionRequest const&));
 
+  MOCK_METHOD2(BatchCreateSessions,
+               StatusOr<google::spanner::v1::BatchCreateSessionsResponse>(
+                   grpc::ClientContext&,
+                   google::spanner::v1::BatchCreateSessionsRequest const&));
+
   MOCK_METHOD2(GetSession, StatusOr<google::spanner::v1::Session>(
                                grpc::ClientContext&,
                                google::spanner::v1::GetSessionRequest const&));

@@ -50,6 +50,10 @@ class SpannerStub {
   virtual StatusOr<google::spanner::v1::Session> CreateSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::CreateSessionRequest const& request) = 0;
+  virtual StatusOr<google::spanner::v1::BatchCreateSessionsResponse>
+  BatchCreateSessions(
+      grpc::ClientContext& client_context,
+      google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
   virtual StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::GetSessionRequest const& request) = 0;
