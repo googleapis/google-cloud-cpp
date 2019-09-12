@@ -21,7 +21,7 @@ include(EnableClangTidy)
 include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
-set(DOXYGEN_PROJECT_NUMBER "${SPANNER_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${SPANNER_CLIENT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 include(EnableDoxygen)
 
