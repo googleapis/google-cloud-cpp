@@ -173,12 +173,13 @@ TEST(CurlRequestTest, CheckResponseHeaders) {
   EXPECT_EQ("bar", response->headers.find("x-test-foo")->second);
 }
 
-/// @test Verify the user agent prefix affects the request.
-TEST(CurlRequestTest, UserAgentPrefix) {
+/// @test Verify the user agent header.
+TEST(CurlRequestTest, UserAgent) {
   // Test that headers are parsed correctly. We send capitalized headers
   // because some versions of httpbin capitalize and others do not, in real
   // code (as opposed to a test), we should search for headers in a
   // case-insensitive manner, but that is not the purpose of this test.
+  // Also verifying the telemetry header is present.
   storage::internal::CurlRequestBuilder builder(
       HttpBinEndpoint() + "/headers",
       storage::internal::GetDefaultCurlHandleFactory());
@@ -197,6 +198,7 @@ TEST(CurlRequestTest, UserAgentPrefix) {
   auto headers = payload["headers"];
   EXPECT_THAT(headers.value("User-Agent", ""),
               HasSubstr("test-user-agent-prefix"));
+  EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
 }
 
 /// @test Verify that the Projection parameter is included if set.
