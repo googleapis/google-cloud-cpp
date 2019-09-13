@@ -39,8 +39,21 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
+  // Refactor code to handle a successful read so we can return early.
+  auto handle_result = [this](StatusOr<ReadSourceResult> const& r) {
+    if (!r) {
+      return false;
+    }
+    auto g = r->response.headers.find("x-goog-generation");
+    if (g != r->response.headers.end()) {
+      generation_ = std::stoll(g->second);
+    }
+    current_offset_ += r->bytes_received;
+    return true;
+  };
+  // Read some data, if successful return immediately, saving some allocations.
   auto result = child_->Read(buf, n);
-  if (result) {
+  if (handle_result(result)) {
     return result;
   }
   // Start a new retry loop to get the data.
@@ -67,23 +80,18 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     }
     child_ = std::move(*new_child);
   }
-  if (!result) {
-    // We've tried retrying but failed.
-    auto const& status = result.status();
-    std::stringstream os;
-    if (internal::StatusTraits::IsPermanentFailure(status)) {
-      os << "Permanent error in Read(): " << status;
-    } else {
-      os << "Retry policy exhausted in Read(): " << status;
-    }
-    return Status(status.code(), os.str());
+  if (handle_result(result)) {
+    return result;
   }
-  auto g = result->response.headers.find("x-goog-generation");
-  if (g != result->response.headers.end()) {
-    generation_ = std::stoll(g->second);
+  // We have exhausted the retry policy, return an error.
+  auto status = std::move(result).status();
+  std::stringstream os;
+  if (internal::StatusTraits::IsPermanentFailure(status)) {
+    os << "Permanent error in Read(): " << status;
+  } else {
+    os << "Retry policy exhausted in Read(): " << status;
   }
-  current_offset_ += result->bytes_received;
-  return result;
+  return Status(status.code(), os.str());
 }
 
 }  // namespace internal
