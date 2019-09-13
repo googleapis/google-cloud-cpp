@@ -30,7 +30,7 @@ RetryObjectReadSource::RetryObjectReadSource(
       request_(std::move(request)),
       child_(std::move(child)),
       current_offset_(request_.StartingByte()),
-      retry_policy_(std::move(retry_policy)),
+      retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)) {}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
@@ -40,13 +40,13 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
   auto result = child_->Read(buf, n);
-  // Whenever we successfully get a piece of data, we should reset the backoff
-  // policy to its initial state. It is easier to keep it fresh in the object
-  // and clone on every Read(). By the time we return from this function we will
-  // have either successfully read a piece of data or we will have failed for
-  // good.
+  if (result) {
+    return result;
+  }
+  // Start a new retry loop to get the data.
   auto backoff_policy = backoff_policy_prototype_->clone();
-  for (; !result && retry_policy_->OnFailure(result.status());
+  auto retry_policy = retry_policy_prototype_->clone();
+  for (; !result && retry_policy->OnFailure(result.status());
        std::this_thread::sleep_for(backoff_policy->OnCompletion()),
        result = child_->Read(buf, n)) {
     // A Read() request failed, most likely that means the connection failed or
@@ -58,8 +58,8 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     if (generation_) {
       request_.set_option(Generation(*generation_));
     }
-    auto new_child = client_->ReadObjectNotWrapped(request_, *retry_policy_,
-                                                   *backoff_policy);
+    auto new_child =
+        client_->ReadObjectNotWrapped(request_, *retry_policy, *backoff_policy);
     if (!new_child) {
       // We've exhausted the retry policy while trying to create the child, so
       // return right away.
