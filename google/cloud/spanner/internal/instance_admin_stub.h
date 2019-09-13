@@ -43,6 +43,9 @@ class InstanceAdminStub {
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext&, google::iam::v1::GetIamPolicyRequest const&) = 0;
 
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext&, google::iam::v1::SetIamPolicyRequest const&) = 0;
+
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(grpc::ClientContext&,
                      google::iam::v1::TestIamPermissionsRequest const&) = 0;

@@ -96,6 +96,18 @@ StatusOr<google::iam::v1::Policy> InstanceAdminRetry::GetIamPolicy(
       request, __func__);
 }
 
+StatusOr<google::iam::v1::Policy> InstanceAdminRetry::SetIamPolicy(
+    grpc::ClientContext&, google::iam::v1::SetIamPolicyRequest const& request) {
+  bool is_idempotent = !request.policy().etag().empty();
+  return RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+      [this](grpc::ClientContext& context,
+             giam::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<giam::TestIamPermissionsResponse>
 InstanceAdminRetry::TestIamPermissions(
     grpc::ClientContext&, giam::TestIamPermissionsRequest const& request) {

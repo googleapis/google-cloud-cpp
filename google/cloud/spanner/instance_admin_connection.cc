@@ -64,6 +64,15 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     return stub_->GetIamPolicy(context, request);
   }
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      SetIamPolicyParams p) override {
+    google::iam::v1::SetIamPolicyRequest request;
+    request.set_resource(std::move(p.instance_name));
+    *request.mutable_policy() = std::move(p.policy);
+    grpc::ClientContext context;
+    return stub_->SetIamPolicy(context, request);
+  }
+
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       TestIamPermissionsParams p) override {
     google::iam::v1::TestIamPermissionsRequest request;

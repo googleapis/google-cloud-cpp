@@ -33,6 +33,11 @@ StatusOr<google::iam::v1::Policy> InstanceAdminClient::GetIamPolicy(
   return conn_->GetIamPolicy({in.FullName()});
 }
 
+StatusOr<google::iam::v1::Policy> InstanceAdminClient::SetIamPolicy(
+    Instance const& in, google::iam::v1::Policy policy) {
+  return conn_->SetIamPolicy({in.FullName(), std::move(policy)});
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminClient::TestIamPermissions(Instance const& in,
                                         std::vector<std::string> permissions) {

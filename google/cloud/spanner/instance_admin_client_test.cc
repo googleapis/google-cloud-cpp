@@ -107,6 +107,21 @@ TEST(InstanceAdminClientTest, GetIamPolicy) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
+TEST(InstanceAdminClientTest, SetIamPolicy) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, SetIamPolicy(_))
+      .WillOnce([](InstanceAdminConnection::SetIamPolicyParams const& p) {
+        EXPECT_EQ("projects/test-project/instances/test-instance",
+                  p.instance_name);
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      });
+
+  InstanceAdminClient client(mock);
+  auto actual =
+      client.SetIamPolicy(Instance("test-project", "test-instance"), {});
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
 TEST(InstanceAdminClientTest, TestIamPermissions) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
   EXPECT_CALL(*mock, TestIamPermissions(_))

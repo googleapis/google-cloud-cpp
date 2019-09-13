@@ -60,6 +60,9 @@ class InstanceAdminRetry : public InstanceAdminStub {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& /*unused*/,
       google::iam::v1::GetIamPolicyRequest const&) override;
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext&,
+      google::iam::v1::SetIamPolicyRequest const&) override;
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& /*unused*/,
       google::iam::v1::TestIamPermissionsRequest const&) override;

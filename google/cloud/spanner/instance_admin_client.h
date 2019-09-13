@@ -136,6 +136,30 @@ class InstanceAdminClient {
   StatusOr<google::iam::v1::Policy> GetIamPolicy(Instance const& in);
 
   /**
+   * Set the IAM policy for the given instance.
+   *
+   * This function changes the IAM policy configured in the given instance to
+   * the value of @p policy.
+   *
+   * @par Idempotency
+   * This function is only idempotent if the `etag` field in @p policy is set.
+   * Therefore, the underlying RPCs are only retried if the field is set, and
+   * the function returns the first RPC error in any other case.
+   *
+   * @par Example
+   * @snippet samples.cc add-database-reader
+   *
+   * @see The [Cloud Spanner
+   *     documentation](https://cloud.google.com/spanner/docs/iam) for a
+   *     description of the roles and permissions supported by Cloud Spanner.
+   * @see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions)
+   *     for an introduction to Identity and Access Management in Google Cloud
+   *     Platform.
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      Instance const& in, google::iam::v1::Policy policy);
+
+  /**
    * Get the subset of the permissions the caller has on the given instance.
    *
    * This function compares the given list of permissions against those

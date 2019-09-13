@@ -20,3 +20,10 @@ configured via the `GOOGLE_CLOUD_PROJECT` environment variable.
 The `GOOGLE_CLOUD_CPP_SPANNER_INSTANCE` environment variable must be the id of a
 Cloud Spanner instance in the project. This instance is used by most tests, as
 it saves them from creating a new instance for just a few operations.
+
+## Test Service Account
+
+The `GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA` environment variable must be the id
+of a Google Cloud Platform service account in the project. This service account
+is used to test IAM operations, the account is added to and removed from
+standard spanner roles.

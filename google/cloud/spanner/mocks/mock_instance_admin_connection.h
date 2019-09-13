@@ -39,6 +39,8 @@ class MockInstanceAdminConnection
   MOCK_METHOD1(ListInstances, spanner::ListInstancesRange(ListInstancesParams));
   MOCK_METHOD1(GetIamPolicy,
                StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));
+  MOCK_METHOD1(SetIamPolicy,
+               StatusOr<google::iam::v1::Policy>(SetIamPolicyParams));
   MOCK_METHOD1(TestIamPermissions,
                StatusOr<google::iam::v1::TestIamPermissionsResponse>(
                    TestIamPermissionsParams));

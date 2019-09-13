@@ -65,8 +65,12 @@ TEST(InstanceAdminClient, InstanceIam) {
   auto instance_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
           .value_or("");
+  auto test_iam_service_account =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+          .value_or("");
   ASSERT_FALSE(project_id.empty());
   ASSERT_FALSE(instance_id.empty());
+  ASSERT_FALSE(test_iam_service_account.empty());
 
   Instance in(project_id, instance_id);
 
@@ -74,6 +78,12 @@ TEST(InstanceAdminClient, InstanceIam) {
 
   auto actual_policy = client.GetIamPolicy(in);
   ASSERT_STATUS_OK(actual_policy);
+  EXPECT_FALSE(actual_policy->etag().empty());
+
+  // Set the policy to the existing value of the policy. While this changes
+  // nothing it tests all the code in the client library.
+  auto updated_policy = client.SetIamPolicy(in, *actual_policy);
+  ASSERT_STATUS_OK(updated_policy);
   EXPECT_FALSE(actual_policy->etag().empty());
 
   auto actual = client.TestIamPermissions(

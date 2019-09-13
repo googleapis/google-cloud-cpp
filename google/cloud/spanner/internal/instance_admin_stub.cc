@@ -70,6 +70,17 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
+  StatusOr<giam::Policy> SetIamPolicy(
+      grpc::ClientContext& context,
+      giam::SetIamPolicyRequest const& request) override {
+    giam::Policy response;
+    auto status = instance_admin_->SetIamPolicy(&context, request, &response);
+    if (!status.ok()) {
+      return grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<giam::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
       giam::TestIamPermissionsRequest const& request) override {

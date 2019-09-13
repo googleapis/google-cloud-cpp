@@ -38,6 +38,9 @@ class MockInstanceAdminStub
   MOCK_METHOD2(GetIamPolicy, StatusOr<google::iam::v1::Policy>(
                                  grpc::ClientContext&,
                                  google::iam::v1::GetIamPolicyRequest const&));
+  MOCK_METHOD2(SetIamPolicy, StatusOr<google::iam::v1::Policy>(
+                                 grpc::ClientContext&,
+                                 google::iam::v1::SetIamPolicyRequest const&));
   MOCK_METHOD2(TestIamPermissions,
                StatusOr<google::iam::v1::TestIamPermissionsResponse>(
                    grpc::ClientContext&,

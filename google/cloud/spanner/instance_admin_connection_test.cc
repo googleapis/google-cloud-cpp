@@ -28,6 +28,7 @@ namespace {
 using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::Invoke;
 using ::testing::Return;
 
@@ -222,6 +223,83 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
+TEST(InstanceAdminConnectionTest, SetIamPolicy_Success) {
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance";
+
+  giam::Policy expected_policy;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        etag: "request-etag"
+        bindings {
+          role: "roles/spanner.databaseReader"
+          members: "user:test-user-1@example.com"
+          members: "user:test-user-2@example.com"
+        }
+      )pb",
+      &expected_policy));
+
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  giam::SetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            return Status(StatusCode::kUnavailable, "try-again");
+          }))
+      .WillOnce(Invoke(
+          [&expected_name, &expected_policy](
+              grpc::ClientContext&, giam::SetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            EXPECT_THAT(request.policy(), IsProtoEqual(expected_policy));
+            giam::Policy response = expected_policy;
+            response.set_etag("response-etag");
+            return response;
+          }));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->SetIamPolicy({expected_name, expected_policy});
+  ASSERT_STATUS_OK(actual);
+  expected_policy.set_etag("response-etag");
+  EXPECT_THAT(*actual, IsProtoEqual(expected_policy));
+}
+
+TEST(InstanceAdminConnectionTest, SetIamPolicy_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->SetIamPolicy({"test-instance-name", {}});
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminConnectionTest, SetIamPolicy_NonIdempotent) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  // If the Etag field is not set, then the RPC is not idempotent and should
+  // fail on the first transient error.
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  google::iam::v1::Policy policy;
+  auto actual = conn->SetIamPolicy({"test-instance-name", policy});
+  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+}
+
+TEST(InstanceAdminConnectionTest, SetIamPolicy_Idempotent) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  google::iam::v1::Policy policy;
+  policy.set_etag("test-etag-value");
+  auto actual = conn->SetIamPolicy({"test-instance-name", policy});
+  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+}
+
 TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
@@ -265,6 +343,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_PermanentFailure) {
 TEST(InstanceAdminConnectionTest, TestIamPermissions_TooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions(_, _))
+      .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto conn = MakeTestConnection(mock);

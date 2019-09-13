@@ -111,6 +111,109 @@ void InstanceGetIamPolicyCommand(std::vector<std::string> const& argv) {
   InstanceGetIamPolicy(std::move(client), argv[0], argv[1]);
 }
 
+//! [add-database-reader]
+void AddDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
+                       std::string const& project_id,
+                       std::string const& instance_id,
+                       std::string const& new_reader) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  auto current = client.GetIamPolicy(in);
+  if (!current) throw std::runtime_error(current.status().message());
+
+  // Find (or create) the binding for "roles/spanner.databaseReader".
+  auto& binding = [&current]() -> google::iam::v1::Binding& {
+    auto role_pos =
+        std::find_if(current->mutable_bindings()->begin(),
+                     current->mutable_bindings()->end(),
+                     [](google::iam::v1::Binding const& b) {
+                       return b.role() == "roles/spanner.databaseReader" &&
+                              !b.has_condition();
+                     });
+    if (role_pos != current->mutable_bindings()->end()) {
+      return *role_pos;
+    }
+    auto& binding = *current->add_bindings();
+    binding.set_role("roles/spanner.databaseReader");
+    return binding;
+  }();
+
+  auto member_pos =
+      std::find(binding.members().begin(), binding.members().end(), new_reader);
+  if (member_pos != binding.members().end()) {
+    std::cout << "The entity " << new_reader
+              << " is already a database reader:\n"
+              << current->DebugString();
+    return;
+  }
+  if (member_pos == binding.members().end()) {
+    binding.add_members(new_reader);
+  }
+
+  auto result = client.SetIamPolicy(in, *std::move(current));
+  if (!result) throw std::runtime_error(result.status().message());
+
+  std::cout << "Successfully added " << new_reader
+            << " to the database reader role:\n"
+            << result->DebugString() << "\n";
+}
+//! [add-database-reader]
+
+void AddDatabaseReaderCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "add-database-reader <project-id> <instance-id> <new-reader>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  AddDatabaseReader(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [remove-database-reader]
+void RemoveDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
+                          std::string const& project_id,
+                          std::string const& instance_id,
+                          std::string const& reader) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  auto current = client.GetIamPolicy(in);
+  if (!current) throw std::runtime_error(current.status().message());
+
+  // Find the binding for "roles/spanner.databaseReader".
+  auto role_pos = std::find_if(
+      current->mutable_bindings()->begin(), current->mutable_bindings()->end(),
+      [](google::iam::v1::Binding const& b) {
+        return b.role() == "roles/spanner.databaseReader" && !b.has_condition();
+      });
+  if (role_pos == current->mutable_bindings()->end()) {
+    std::cout
+        << "Nothing to do as the roles/spanner.databaseReader role is empty\n";
+    return;
+  }
+  role_pos->mutable_members()->erase(
+      std::remove(role_pos->mutable_members()->begin(),
+                  role_pos->mutable_members()->end(), reader),
+      role_pos->mutable_members()->end());
+
+  auto result = client.SetIamPolicy(in, *std::move(current));
+  if (!result) throw std::runtime_error(result.status().message());
+
+  std::cout << "Successfully remove " << reader
+            << " from the database reader role:\n"
+            << result->DebugString() << "\n";
+}
+//! [remove-database-reader]
+
+void RemoveDatabaseReaderCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "remove-database-reader <project-id> <instance-id> <existing-reader>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  RemoveDatabaseReader(std::move(client), argv[0], argv[1], argv[2]);
+}
+
 //! [instance-test-iam-permissions]
 void InstanceTestIamPermissions(
     google::cloud::spanner::InstanceAdminClient client,
@@ -861,6 +964,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"get-instance", &GetInstanceCommand},
       {"list-instances", &ListInstancesCommand},
       {"instance-get-iam-policy", &InstanceGetIamPolicyCommand},
+      {"add-database-reader", &AddDatabaseReaderCommand},
+      {"remove-database-reader", &RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
       {"create-database", &CreateDatabase},
       {"get-database", &GetDatabaseCommand},
@@ -940,6 +1045,14 @@ void RunAll() {
     throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
   }
 
+  auto test_iam_service_account =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+          .value_or("");
+  if (test_iam_service_account.empty()) {
+    throw std::runtime_error(
+        "GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA is not set or is empty");
+  }
+
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto random_instance =
       google::cloud::spanner_testing::PickRandomInstance(generator, project_id);
@@ -959,6 +1072,14 @@ void RunAll() {
 
   std::cout << "\nRunning (instance) get-iam-policy sample\n";
   RunOneCommand({"", "instance-get-iam-policy", project_id, instance_id});
+
+  std::cout << "\nRunning (instance) add-database-reader sample\n";
+  RunOneCommand({"", "add-database-reader", project_id, instance_id,
+                 "serviceAccount:" + test_iam_service_account});
+
+  std::cout << "\nRunning (instance) remove-database-reader sample\n";
+  RunOneCommand({"", "remove-database-reader", project_id, instance_id,
+                 "serviceAccount:" + test_iam_service_account});
 
   std::cout << "\nRunning (instance) test-iam-permissions sample\n";
   RunOneCommand({"", "instance-test-iam-permissions", project_id, instance_id});
