@@ -13,27 +13,77 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance_admin_connection.h"
-#include "google/cloud/spanner/internal/instance_admin_retry.h"
+#include "google/cloud/spanner/internal/retry_loop.h"
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::instance::v1;
+namespace giam = google::iam::v1;
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT \
+  std::chrono::minutes(30)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF \
+  std::chrono::seconds(1)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF \
+  std::chrono::minutes(5)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING 2.0
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
 
 namespace {
+
+std::unique_ptr<RetryPolicy> DefaultInstanceAdminRetryPolicy() {
+  return google::cloud::spanner::LimitedTimeRetryPolicy(
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT)
+      .clone();
+}
+
+std::unique_ptr<BackoffPolicy> DefaultInstanceAdminBackoffPolicy() {
+  return google::cloud::spanner::ExponentialBackoffPolicy(
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF,
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF,
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING)
+      .clone();
+}
+
 class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
+  InstanceAdminConnectionImpl(std::shared_ptr<internal::InstanceAdminStub> stub,
+                              std::unique_ptr<RetryPolicy> retry_policy,
+                              std::unique_ptr<BackoffPolicy> backoff_policy)
+      : stub_(std::move(stub)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
+
   explicit InstanceAdminConnectionImpl(
       std::shared_ptr<internal::InstanceAdminStub> stub)
-      : stub_(std::move(stub)) {}
+      : InstanceAdminConnectionImpl(std::move(stub),
+                                    DefaultInstanceAdminRetryPolicy(),
+                                    DefaultInstanceAdminBackoffPolicy()) {}
+
   ~InstanceAdminConnectionImpl() override = default;
 
   StatusOr<gcsa::Instance> GetInstance(GetInstanceParams gip) override {
     gcsa::GetInstanceRequest request;
     request.set_name(std::move(gip.instance_name));
-    grpc::ClientContext context;
-    return stub_->GetInstance(context, request);
+    return internal::RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::GetInstanceRequest const& request) {
+          return stub_->GetInstance(context, request);
+        },
+        request, __func__);
   }
 
   ListInstancesRange ListInstances(ListInstancesParams params) override {
@@ -42,11 +92,23 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     request.set_filter(std::move(params.filter));
     request.clear_page_token();
     auto stub = stub_;
+    // Because we do not have C++14 generalized lambda captures we cannot just
+    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
+    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_->clone());
+    auto backoff = std::shared_ptr<BackoffPolicy>(backoff_policy_->clone());
+
+    char const* function_name = __func__;
     return ListInstancesRange(
         std::move(request),
-        [stub](gcsa::ListInstancesRequest const& r) {
-          grpc::ClientContext context;
-          return stub->ListInstances(context, r);
+        [stub, retry, backoff,
+         function_name](gcsa::ListInstancesRequest const& r) {
+          return RetryLoop(
+              retry->clone(), backoff->clone(), true,
+              [stub](grpc::ClientContext& context,
+                     gcsa::ListInstancesRequest const& request) {
+                return stub->ListInstances(context, request);
+              },
+              r, function_name);
         },
         [](gcsa::ListInstancesResponse r) {
           std::vector<gcsa::Instance> result(r.instances().size());
@@ -56,21 +118,30 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         });
   }
 
-  StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      GetIamPolicyParams p) override {
+  StatusOr<giam::Policy> GetIamPolicy(GetIamPolicyParams p) override {
     google::iam::v1::GetIamPolicyRequest request;
     request.set_resource(std::move(p.instance_name));
-    grpc::ClientContext context;
-    return stub_->GetIamPolicy(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               giam::GetIamPolicyRequest const& request) {
+          return stub_->GetIamPolicy(context, request);
+        },
+        request, __func__);
   }
 
-  StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      SetIamPolicyParams p) override {
+  StatusOr<giam::Policy> SetIamPolicy(SetIamPolicyParams p) override {
     google::iam::v1::SetIamPolicyRequest request;
     request.set_resource(std::move(p.instance_name));
     *request.mutable_policy() = std::move(p.policy);
-    grpc::ClientContext context;
-    return stub_->SetIamPolicy(context, request);
+    bool is_idempotent = !request.policy().etag().empty();
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+        [this](grpc::ClientContext& context,
+               giam::SetIamPolicyRequest const& request) {
+          return stub_->SetIamPolicy(context, request);
+        },
+        request, __func__);
   }
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
@@ -80,12 +151,19 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     for (auto& permission : p.permissions) {
       request.add_permissions(std::move(permission));
     }
-    grpc::ClientContext context;
-    return stub_->TestIamPermissions(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               giam::TestIamPermissionsRequest const& request) {
+          return stub_->TestIamPermissions(context, request);
+        },
+        request, __func__);
   }
 
  private:
   std::shared_ptr<internal::InstanceAdminStub> stub_;
+  std::unique_ptr<RetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
 };
 }  // namespace
 
@@ -102,8 +180,7 @@ namespace internal {
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
     ConnectionOptions const&) {
-  return std::make_shared<InstanceAdminConnectionImpl>(
-      std::make_shared<internal::InstanceAdminRetry>(std::move(base_stub)));
+  return std::make_shared<InstanceAdminConnectionImpl>(std::move(base_stub));
 }
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
@@ -111,8 +188,7 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const&, std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   return std::make_shared<InstanceAdminConnectionImpl>(
-      std::make_shared<internal::InstanceAdminRetry>(
-          std::move(base_stub), *retry_policy, *backoff_policy));
+      std::move(base_stub), std::move(retry_policy), std::move(backoff_policy));
 }
 
 }  // namespace internal

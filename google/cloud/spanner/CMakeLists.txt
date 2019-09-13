@@ -134,8 +134,6 @@ add_library(spanner_client
             internal/database_admin_stub.h
             internal/date.cc
             internal/date.h
-            internal/instance_admin_retry.cc
-            internal/instance_admin_retry.h
             internal/instance_admin_stub.cc
             internal/instance_admin_stub.h
             internal/log_wrapper.h
