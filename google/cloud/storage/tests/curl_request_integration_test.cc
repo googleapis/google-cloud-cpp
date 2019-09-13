@@ -199,6 +199,30 @@ TEST(CurlRequestTest, UserAgentPrefix) {
               HasSubstr("test-user-agent-prefix"));
 }
 
+/// @test Verify the telemetry headers are present.
+TEST(CurlRequestTest, UserAgent) {
+  // Test that headers are sent correctly. We send capitalized headers
+  // because some versions of httpbin capitalize and others do not, in real
+  // code (as opposed to a test), we should search for headers in a
+  // case-insensitive manner, but that is not the purpose of this test.
+  storage::internal::CurlRequestBuilder builder(
+      HttpBinEndpoint() + "/headers",
+      storage::internal::GetDefaultCurlHandleFactory());
+  auto options =
+      ClientOptions(std::make_shared<storage::oauth2::AnonymousCredentials>());
+  builder.ApplyClientOptions(options);
+  builder.AddHeader("Accept: application/json");
+  builder.AddHeader("charsets: utf-8");
+
+  auto response = builder.BuildRequest().MakeRequest(std::string{});
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(200, response->status_code);
+  auto payload = nl::json::parse(response->payload);
+  ASSERT_EQ(1U, payload.count("headers"));
+  auto headers = payload["headers"];
+  EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
+}
+
 /// @test Verify that the Projection parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParameters_Projection) {
   storage::internal::CurlRequestBuilder request(
