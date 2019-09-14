@@ -126,6 +126,32 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     return 0;
   }
 
+  auto const* function_name = __func__;
+  auto run_validator_if_closed = [this, function_name, &offset](Status s) {
+    status_ = std::move(s);
+    if (IsOpen()) {
+      return offset;
+    }
+    hash_validator_result_ = std::move(*hash_validator_).Finish();
+    if (!hash_validator_result_.is_mismatch) {
+      return offset;
+    }
+    std::string msg;
+    msg += function_name;
+    msg += "(): mismatched hashes in download";
+    msg += ", expected=";
+    msg += hash_validator_result_.computed;
+    msg += ", received=";
+    msg += hash_validator_result_.received;
+    status_ = Status(StatusCode::kDataLoss, msg);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    throw HashMismatchError(msg, hash_validator_result_.received,
+                            hash_validator_result_.computed);
+#else
+    return -1;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  };
+
   // Maybe the internal get area is enough to satisfy this request, no need to
   // read more in that case:
   auto from_internal = (std::min)(count, in_avail());
@@ -135,7 +161,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   if (offset >= count) {
     GCP_LOG(INFO) << __func__ << "(): count=" << count
                   << ", in_avail=" << in_avail() << ", offset=" << offset;
-    return offset;
+    return run_validator_if_closed(Status());
   }
 
   StatusOr<ReadSourceResult> read_result =
@@ -146,8 +172,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     GCP_LOG(INFO) << __func__ << "(): count=" << count
                   << ", in_avail=" << in_avail() << ", offset=" << offset
                   << ", status=" << read_result.status();
-    status_ = std::move(read_result).status();
-    return offset;
+    return run_validator_if_closed(std::move(read_result).status());
   }
   GCP_LOG(INFO) << __func__ << "(): count=" << count
                 << ", in_avail=" << in_avail() << ", offset=" << offset
@@ -162,10 +187,9 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     headers_.emplace(kv.first, kv.second);
   }
   if (read_result->response.status_code >= 300) {
-    status_ = AsStatus(read_result->response);
+    return run_validator_if_closed(AsStatus(read_result->response));
   }
-
-  return offset;
+  return run_validator_if_closed(Status());
 }
 
 ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {
