@@ -29,15 +29,35 @@ gcloud iam service-accounts keys create \
 
 kubectl create secret generic service-account-key \
         --from-file=key.json=/dev/shm/key.json
+```
 
+Create source and target buckets:
 
+```
+export SRC_BUCKET_NAME=...
+export DST_BUCKET_NAME=...
 gsutil mb -s regional -l us-west1 gs://${SRC_BUCKET_NAME}
 gsutil mb -s regional -l us-west1 gs://${DST_BUCKET_NAME}
+```
 
-sed -e "s/@PROJECT_ID@/${PROJECT_ID}/" \
-    -e "s/@ID@/$(date +%s)-${RANDOM}/" \
-    -e "s/@SRC_BUCKET_NAME@/${SRC_BUCKET_NAME}/" \
-    -e "s/@DST_BUCKET_NAME@/${DST_BUCKET_NAME}/" \
-    google/cloud/storage/tests/read_object_stall_regression/k8s.yaml | kubectl apply -f -
+Create a docker image to run the job:
 
+```sh
+gcloud builds submit \
+     --substitutions=SHORT_SHA=$(git rev-parse --short HEAD) \
+     --config=google/cloud/storage/tests/read_object_stall_regression/cloudbuild.yaml
+```
+
+You may need to fetch the k8s credentials:
+
+```sh
+gcloud container clusters get-credentials regression-tests \
+    --zone us-west1-a
+```
+
+Start the k8s job:
+
+```sh
+./google/cloud/storage/tests/read_object_stall_regression/create-job.sh | \
+    kubectl apply -f -
 ```

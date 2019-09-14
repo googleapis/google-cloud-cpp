@@ -29,13 +29,23 @@ spec:
   parallelism: 500
   completions: 500
   template:
+    metadata:
+      annotations:
+        # https://kubernetes.io/docs/tutorials/clusters/apparmor/
+        container.apparmor.security.beta.kubernetes.io/read-object-stall-regression: "unconfined"
     spec:
       restartPolicy: OnFailure
-      activeDeadlineSeconds: 1800
+      activeDeadlineSeconds: 3600
       volumes:
         - name: google-cloud-key
           secret:
             secretName: service-account-key
+        - name: proc
+          hostPath:
+            path: /proc
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0
       containers:
         - name: read-object-stall-regression
           image: gcr.io/@PROJECT_ID@/read-object-stall-regression:latest
@@ -46,16 +56,25 @@ spec:
             '@DST_BUCKET_NAME@',
             '4.0',
             '--gtest_filter=ReadObjectStallTest.Streaming',
-            '--gtest_repeat=3'
+            '--gtest_repeat=5'
           ]
+          securityContext:
+              privileged: true
+              capabilities:
+                  add: ["NET_ADMIN", "SYS_ADMIN", "SYS_PTRACE"]
+              allowPrivilegeEscalation: true
           resources:
             requests:
               memory: "40Mi"
-              cpu: "25m"
+              cpu: "82m"
               ephemeral-storage: "128Mi"
           volumeMounts:
             - name: google-cloud-key
               mountPath: /var/secrets/google
+            - name: proc
+              readOnly: true
+              mountPath: /host/proc
+              mountPropagation: HostToContainer
           env:
             - name: POD_NAME
               valueFrom:
