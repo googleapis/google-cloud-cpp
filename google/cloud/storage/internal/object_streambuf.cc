@@ -256,9 +256,13 @@ std::streamsize ObjectWriteStreambuf::xsputn(char const* s,
     last_response_ = Flush();
     // Upload failures are irrecoverable because the internal buffer is opaque
     // to the caller, so there is no way to know what byte range to specify
-    // next.
+    // next.  Replace it with a SessionError so next_expected_byte and
+    // resumable_session_id can still be retrieved.
     if (!last_response_.ok()) {
-      upload_session_.reset();
+      upload_session_ = std::unique_ptr<ResumableUploadSession>(
+          new ResumableUploadSessionError(last_response_.status(),
+                                          next_expected_byte(),
+                                          resumable_session_id()));
       return traits_type::eof();
     }
   }

@@ -377,11 +377,12 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload_1(3 * quantum, '*');
   std::string const payload_2("trailer");
+  std::string const session_id = "upload_id";
 
   EXPECT_CALL(*mock, UploadChunk(SizeIs(quantum)))
       .WillOnce(
           Return(Status(StatusCode::kInvalidArgument, "Invalid Argument")));
-
+  EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(session_id));
   ObjectWriteStreambuf streambuf(
       std::move(mock), quantum,
       google::cloud::internal::make_unique<NullHashValidator>());
@@ -389,6 +390,7 @@ TEST(ObjectWriteStreambufTest, ErrorInLargePayload) {
   streambuf.sputn(payload_1.data(), payload_1.size());
   EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
       << ", status=" << streambuf.last_status();
+  EXPECT_EQ(streambuf.resumable_session_id(), session_id);
 
   streambuf.sputn(payload_2.data(), payload_2.size());
   EXPECT_EQ(StatusCode::kInvalidArgument, streambuf.last_status().code())
