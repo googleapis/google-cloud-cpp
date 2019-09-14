@@ -378,6 +378,57 @@ TEST_F(ObjectMediaIntegrationTest, ReadLastChunk) {
   EXPECT_STATUS_OK(status);
 }
 
+/// @test Verify left over data in the spill buffer is read.
+TEST_F(ObjectMediaIntegrationTest, ReadFromSpill) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  // This is a regression test for #3051, where the object was treated as
+  // "closed" because the underlying HTTP download had completed, but the spill
+  // buffer in the CurlDownloadRequest had not been drained yet. To reproduce
+  // this failure we need to ask for N bytes via the .read() function, while
+  // the underlying socket returns N+delta bytes and then closes. That is
+  // easy to do if N+delta is less than 1024 (for complicated reasons one is
+  // very unlikely to get less than 1024 bytes from a socket).
+  //
+  // However, the library reads 128 KiB as soon as the stream is created, so
+  // we need to create an object that has just a little over 128 KiB:
+  const int initial_read_size = 128 * 1024;
+  const int trailer_size = 512;
+  int const unread_bytes = 16;
+  std::string contents = MakeRandomData(initial_read_size + trailer_size);
+
+  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
+      bucket_name, object_name, contents, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  // Create an iostream to read just the first few bytes of the object.
+  auto stream = client->ReadObject(bucket_name, object_name);
+
+  // Read most of the data, but leave some in the spill buffer, this `is testing
+  // for a regression of #3051.
+  std::vector<char> buffer(contents.size() - unread_bytes);
+  stream.read(buffer.data(), buffer.size());
+  EXPECT_FALSE(stream.eof());
+  EXPECT_FALSE(stream.fail());
+  EXPECT_FALSE(stream.bad());
+  EXPECT_TRUE(stream.IsOpen());
+
+  // Read the remaining data.
+  buffer.resize(contents.size());
+  stream.read(buffer.data(), buffer.size());
+  EXPECT_TRUE(stream.eof());
+  EXPECT_TRUE(stream.fail());
+  EXPECT_FALSE(stream.bad());
+  EXPECT_FALSE(stream.IsOpen());
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 /// @test Read an object by chunks of equal size.
 TEST_F(ObjectMediaIntegrationTest, ReadByChunk) {
   StatusOr<Client> client = MakeIntegrationTestClient();
