@@ -150,11 +150,19 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
       // produce invalid checksums, but that is not the interesting information.
       status_ = Status(StatusCode::kDataLoss, msg);
     }
+    // The only way to report errors from a std::basic_streambuf<> (which this
+    // class derives from) is to throw exceptions:
+    //   https://stackoverflow.com/questions/50716688/how-to-set-the-badbit-of-a-stream-by-a-customized-streambuf
+    // but we need to be able to report errors when the application has disabled
+    // exceptions via `-fno-exceptions` or a similar option. In that case we set
+    // `status_`, and report the error as an 0-byte read. This is obviously not
+    // ideal, but it is the best we can do when the application disables the
+    // standard mechanism to signal errors.
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     throw HashMismatchError(msg, hash_validator_result_.received,
                             hash_validator_result_.computed);
 #else
-    return -1;
+    return std::streamsize(0);
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   };
 
