@@ -52,6 +52,7 @@ class RetryObjectReadSource : public ObjectReadSource {
   optional<std::int64_t> generation_;
   std::unique_ptr<RetryPolicy> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
+  bool read_last_;
 };
 
 }  // namespace internal

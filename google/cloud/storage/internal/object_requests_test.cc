@@ -240,6 +240,12 @@ TEST(ObjectRequestsTest, ReadObjectRange_RequiresRangeHeader) {
       ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(ReadRange(0, 2048), ReadFromOffset(1024))
           .RequiresRangeHeader());
+  EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
+                  .set_multiple_options(ReadLast(1024))
+                  .RequiresRangeHeader());
+  EXPECT_FALSE(ReadObjectRangeRequest("test-bucket", "test-object")
+                   .set_multiple_options(ReadLast(0))
+                   .RequiresRangeHeader());
 }
 
 TEST(ObjectRequestsTest, ReadObjectRange_RequiresNoCache) {
@@ -258,6 +264,12 @@ TEST(ObjectRequestsTest, ReadObjectRange_RequiresNoCache) {
       ReadObjectRangeRequest("test-bucket", "test-object")
           .set_multiple_options(ReadRange(0, 2048), ReadFromOffset(1024))
           .RequiresNoCache());
+  EXPECT_TRUE(ReadObjectRangeRequest("test-bucket", "test-object")
+                  .set_multiple_options(ReadLast(1024))
+                  .RequiresNoCache());
+  EXPECT_FALSE(ReadObjectRangeRequest("test-bucket", "test-object")
+                   .set_multiple_options(ReadLast(0))
+                   .RequiresNoCache());
 }
 
 TEST(ObjectRequestsTest, ReadObjectRange_RangeHeader) {
@@ -278,6 +290,13 @@ TEST(ObjectRequestsTest, ReadObjectRange_RangeHeader) {
             ReadObjectRangeRequest("test-bucket", "test-object")
                 .set_multiple_options(ReadRange(0, 2048), ReadFromOffset(1024))
                 .RangeHeader());
+  EXPECT_EQ("Range: bytes=-1024",
+            ReadObjectRangeRequest("test-bucket", "test-object")
+                .set_multiple_options(ReadLast(1024))
+                .RangeHeader());
+  EXPECT_EQ("", ReadObjectRangeRequest("test-bucket", "test-object")
+                    .set_multiple_options(ReadLast(0))
+                    .RangeHeader());
 }
 
 TEST(ObjectRequestsTest, RangeResponseParse) {
