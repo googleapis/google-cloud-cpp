@@ -128,7 +128,8 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
 
   auto const* function_name = __func__;
   auto run_validator_if_closed = [this, function_name, &offset](Status s) {
-    status_ = std::move(s);
+    ReportError(std::move(s));
+    // Only validate the checksums once the stream is closed.
     if (IsOpen()) {
       return offset;
     }
@@ -143,7 +144,12 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     msg += hash_validator_result_.computed;
     msg += ", received=";
     msg += hash_validator_result_.received;
-    status_ = Status(StatusCode::kDataLoss, msg);
+    if (status_.ok()) {
+      // If there is an existing error, we should report that instead because
+      // it is more specific, for example, every permanent network error will
+      // produce invalid checksums, but that is not the interesting information.
+      status_ = Status(StatusCode::kDataLoss, msg);
+    }
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     throw HashMismatchError(msg, hash_validator_result_.received,
                             hash_validator_result_.computed);
