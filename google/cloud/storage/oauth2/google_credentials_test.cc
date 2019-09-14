@@ -420,6 +420,10 @@ TEST_F(GoogleCredentialsTest,
   // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
   // well-known path) aren't loaded.
   UnsetEnv(GoogleAdcEnvVar());
+  // The developer may have configured something that are not service account
+  // credentials in the well-known path. Change the search location to a
+  // directory that should have have developer configuration files.
+  SetEnv(GoogleAdcHomeEnvVar(), ::testing::TempDir());
   // Test that when CreateServiceAccountCredentialsFromDefaultPaths cannot
   // find any credentials, it fails.
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
