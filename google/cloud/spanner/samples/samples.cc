@@ -555,43 +555,44 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
-  auto txn = spanner::MakeReadWriteTransaction();
 
-  auto get_current_budget = [&txn, &client](std::int64_t singer_id,
-                                            std::int64_t album_id) {
+  // A helper to read a single album MarketingBudget.
+  auto get_current_budget = [](spanner::Client client, spanner::Transaction txn,
+                               std::int64_t singer_id, std::int64_t album_id) {
     auto key = spanner::KeySetBuilder<spanner::Row<std::int64_t, std::int64_t>>(
                    spanner::MakeRow(singer_id, album_id))
                    .Build();
-    auto read = client.Read(txn, "Albums", std::move(key), {"MarketingBudget"});
-    if (!read) {
-      throw std::runtime_error(read.status().message());
-    }
+    auto read = client.Read(std::move(txn), "Albums", std::move(key),
+                            {"MarketingBudget"});
+    if (!read) throw std::runtime_error(read.status().message());
     for (auto row : read->Rows<spanner::Row<std::int64_t>>()) {
-      if (!row) {
-        throw std::runtime_error(read.status().message());
-      }
-      // We expect at most one result from the `Read()` request. Return the
-      // first one.
+      if (!row) throw std::runtime_error(read.status().message());
+      // We expect at most one result from the `Read()` request. Return
+      // the first one.
       return row->get<0>();
     }
     throw std::runtime_error("Key not found (" + std::to_string(singer_id) +
                              "," + std::to_string(album_id) + ")");
   };
 
-  auto b1 = get_current_budget(1, 1);
-  auto b2 = get_current_budget(2, 2);
-  std::int64_t transfer_amount = 200000;
+  auto commit = spanner::RunTransaction(
+      std::move(client), {},
+      [&get_current_budget](spanner::Client const& client,
+                            spanner::Transaction const& txn)
+          -> google::cloud::StatusOr<spanner::Mutations> {
+        auto b1 = get_current_budget(client, txn, 1, 1);
+        auto b2 = get_current_budget(client, txn, 2, 2);
+        std::int64_t transfer_amount = 200000;
 
-  auto commit_result = client.Commit(
-      txn, {spanner::UpdateMutationBuilder(
+        return spanner::Mutations{
+            spanner::UpdateMutationBuilder(
                 "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
                 .EmplaceRow(1, 1, b1 + transfer_amount)
                 .EmplaceRow(2, 2, b2 - transfer_amount)
-                .Build()});
+                .Build()};
+      });
 
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit) throw std::runtime_error(commit.status().message());
   std::cout << "Transfer was successful [spanner_read_write_transaction]\n";
 }
 //! [END spanner_read_write_transaction]
