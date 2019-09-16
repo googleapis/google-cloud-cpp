@@ -17,9 +17,8 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/database_admin_connection.h"
 #include "google/cloud/spanner/instance.h"
-#include "google/cloud/spanner/internal/database_admin_stub.h"
-#include "google/cloud/spanner/internal/range_from_pagination.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 
@@ -27,20 +26,6 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-
-/**
- * An input range to stream all the databases in a Cloud Spanner instance.
- *
- * This type models an [input range][cppref-input-range] of
- * `google::spanner::admin::v1::Database` objects. Applications can make a
- * single pass through the results.
- *
- * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
- */
-using ListDatabaseRange = internal::PaginationRange<
-    google::spanner::admin::database::v1::Database,
-    google::spanner::admin::database::v1::ListDatabasesRequest,
-    google::spanner::admin::database::v1::ListDatabasesResponse>;
 
 /**
  * Performs database administration operations on Spanner.
@@ -154,8 +139,7 @@ class DatabaseAdminClient {
    *     for the regular expression that must be satisfied by the database id.
    */
   future<StatusOr<google::spanner::admin::database::v1::Database>>
-  CreateDatabase(Database const& db,
-                 std::vector<std::string> const& extra_statements = {});
+  CreateDatabase(Database db, std::vector<std::string> extra_statements = {});
 
   /**
    * Retrieve metadata information about a database.
@@ -168,7 +152,7 @@ class DatabaseAdminClient {
    * @snippet samples.cc get-database
    */
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
-      Database const& db);
+      Database db);
 
   /**
    * Retrieve a database schema.
@@ -181,7 +165,7 @@ class DatabaseAdminClient {
    * @snippet samples.cc get-database-ddl
    */
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(Database const& db);
+  GetDatabaseDdl(Database db);
 
   /**
    * Updates the database using a series of DDL statements.
@@ -201,8 +185,7 @@ class DatabaseAdminClient {
    */
   future<
       StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabase(Database const& db,
-                 std::vector<std::string> const& statements);
+  UpdateDatabase(Database db, std::vector<std::string> statements);
 
   /**
    * Drops (deletes) an existing Cloud Spanner database.
@@ -213,7 +196,7 @@ class DatabaseAdminClient {
    * @par Example
    * @snippet samples.cc drop-database
    */
-  Status DropDatabase(Database const& db);
+  Status DropDatabase(Database db);
 
   /**
    * List all the databases in a give project and instance.
@@ -224,14 +207,14 @@ class DatabaseAdminClient {
    * @par Example
    * @snippet samples.cc list-databases
    */
-  ListDatabaseRange ListDatabases(Instance const& in);
+  ListDatabaseRange ListDatabases(Instance in);
 
   /// Create a new client with the given stub. For testing only.
-  explicit DatabaseAdminClient(std::shared_ptr<internal::DatabaseAdminStub> s)
-      : stub_(std::move(s)) {}
+  explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> c)
+      : conn_(std::move(c)) {}
 
  private:
-  std::shared_ptr<internal::DatabaseAdminStub> stub_;
+  std::shared_ptr<DatabaseAdminConnection> conn_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

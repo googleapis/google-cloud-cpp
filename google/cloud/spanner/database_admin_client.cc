@@ -25,83 +25,34 @@ inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = google::spanner::admin::database::v1;
 
 DatabaseAdminClient::DatabaseAdminClient(ConnectionOptions const& options)
-    : stub_(internal::CreateDefaultDatabaseAdminStub(options)) {}
+    : conn_(MakeDatabaseAdminConnection(options)) {}
 
 future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
-    Database const& db, std::vector<std::string> const& extra_statements) {
-  grpc::ClientContext context;
-  gcsa::CreateDatabaseRequest request;
-  request.set_parent(db.instance().FullName());
-  request.set_create_statement("CREATE DATABASE `" + db.database_id() + "`");
-  for (auto const& s : extra_statements) {
-    *request.add_extra_statements() = s;
-  }
-  auto operation = stub_->CreateDatabase(context, request);
-  if (!operation) {
-    return google::cloud::make_ready_future(
-        StatusOr<gcsa::Database>(operation.status()));
-  }
-
-  return stub_->AwaitCreateDatabase(*std::move(operation));
+    Database db, std::vector<std::string> extra_statements) {
+  return conn_->CreateDatabase({std::move(db), std::move(extra_statements)});
 }
 
-StatusOr<gcsa::Database> DatabaseAdminClient::GetDatabase(Database const& db) {
-  grpc::ClientContext context;
-  gcsa::GetDatabaseRequest request;
-  request.set_name(db.FullName());
-  return stub_->GetDatabase(context, request);
+StatusOr<gcsa::Database> DatabaseAdminClient::GetDatabase(Database db) {
+  return conn_->GetDatabase({std::move(db)});
 }
 
 StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminClient::GetDatabaseDdl(
-    Database const& db) {
-  grpc::ClientContext context;
-  gcsa::GetDatabaseDdlRequest request;
-  request.set_database(db.FullName());
-  return stub_->GetDatabaseDdl(context, request);
+    Database db) {
+  return conn_->GetDatabaseDdl({std::move(db)});
 }
 
 future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
-DatabaseAdminClient::UpdateDatabase(
-    Database const& db, std::vector<std::string> const& statements) {
-  grpc::ClientContext context;
-  gcsa::UpdateDatabaseDdlRequest request;
-  request.set_database(db.FullName());
-  for (auto const& s : statements) {
-    *request.add_statements() = s;
-  }
-  auto operation = stub_->UpdateDatabase(context, request);
-  if (!operation) {
-    return google::cloud::make_ready_future(
-        StatusOr<gcsa::UpdateDatabaseDdlMetadata>(operation.status()));
-  }
-
-  return stub_->AwaitUpdateDatabase(*std::move(operation));
+DatabaseAdminClient::UpdateDatabase(Database db,
+                                    std::vector<std::string> statements) {
+  return conn_->UpdateDatabase({std::move(db), std::move(statements)});
 }
 
-ListDatabaseRange DatabaseAdminClient::ListDatabases(Instance const& in) {
-  gcsa::ListDatabasesRequest request;
-  request.set_parent(in.FullName());
-  request.clear_page_token();
-  auto stub = stub_;
-  return ListDatabaseRange(
-      std::move(request),
-      [stub](gcsa::ListDatabasesRequest const& r) {
-        grpc::ClientContext context;
-        return stub->ListDatabases(context, r);
-      },
-      [](gcsa::ListDatabasesResponse r) {
-        std::vector<gcsa::Database> result(r.databases().size());
-        auto& dbs = *r.mutable_databases();
-        std::move(dbs.begin(), dbs.end(), result.begin());
-        return result;
-      });
+ListDatabaseRange DatabaseAdminClient::ListDatabases(Instance in) {
+  return conn_->ListDatabases({std::move(in)});
 }
 
-Status DatabaseAdminClient::DropDatabase(Database const& db) {
-  grpc::ClientContext context;
-  google::spanner::admin::database::v1::DropDatabaseRequest request;
-  request.set_database(db.FullName());
-  return stub_->DropDatabase(context, request);
+Status DatabaseAdminClient::DropDatabase(Database db) {
+  return conn_->DropDatabase({std::move(db)});
 }
 
 }  // namespace SPANNER_CLIENT_NS

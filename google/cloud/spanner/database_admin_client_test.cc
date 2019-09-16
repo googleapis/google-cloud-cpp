@@ -26,6 +26,7 @@ namespace {
 
 using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::Invoke;
 using ::testing::Return;
@@ -33,11 +34,19 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 
 DatabaseAdminClient CreateTestingClient(
     std::shared_ptr<internal::DatabaseAdminStub> mock) {
-  auto stub = std::make_shared<internal::DatabaseAdminRetry>(
-      std::move(mock), LimitedErrorCountRetryPolicy(/*maximum_failures=*/2),
+  auto conn = internal::MakeDatabaseAdminConnection(
+      std::move(mock),
+      LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
       ExponentialBackoffPolicy(std::chrono::microseconds(1),
-                               std::chrono::microseconds(1), 2.0));
-  return DatabaseAdminClient(std::move(stub));
+                               std::chrono::microseconds(1), 2.0)
+          .clone());
+  return DatabaseAdminClient(std::move(conn));
+}
+
+DatabaseAdminClient CreatePlainTestingClient(
+    std::shared_ptr<internal::DatabaseAdminStub> mock) {
+  return DatabaseAdminClient(
+      internal::MakePlainDatabaseAdminConnection(std::move(mock)));
 }
 
 /// @test Verify that successful case works.
@@ -65,7 +74,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
         return make_ready_future(make_status_or(database));
       }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreatePlainTestingClient(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = client.CreateDatabase(dbase);
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
@@ -87,7 +96,7 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreateTestingClient(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = client.CreateDatabase(dbase);
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
@@ -139,6 +148,7 @@ TEST(DatabaseAdminClientTest, GetDatabase_TooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetDatabase(_, _))
+      .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto client = CreateTestingClient(std::move(mock));
@@ -190,6 +200,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdl_TooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetDatabaseDdl(_, _))
+      .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
   auto client = CreateTestingClient(std::move(mock));
@@ -223,7 +234,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
         return make_ready_future(make_status_or(metadata));
       }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreatePlainTestingClient(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = client.UpdateDatabase(
       dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
@@ -246,7 +257,7 @@ TEST(DatabaseAdminClientTest, HandleUpdateDatabaseError) {
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreateTestingClient(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = client.UpdateDatabase(
       dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
@@ -274,7 +285,7 @@ TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
             StatusOr<gcsa::Database>(Status(StatusCode::kAborted, "oh noes")));
       }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreatePlainTestingClient(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto db = client.CreateDatabase(dbase).get();
   EXPECT_EQ(StatusCode::kAborted, db.status().code());
@@ -299,7 +310,7 @@ TEST(DatabaseAdminClientTest, HandleAwaitUpdateDatabaseError) {
             Status(StatusCode::kAborted, "oh noes")));
       }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreatePlainTestingClient(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto db =
       client
@@ -355,7 +366,7 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
             return make_status_or(page);
           }));
 
-  DatabaseAdminClient client(mock);
+  auto client = CreateTestingClient(std::move(mock));
   std::vector<std::string> actual_names;
   for (auto database : client.ListDatabases(in)) {
     ASSERT_STATUS_OK(database);
@@ -370,10 +381,9 @@ TEST(DatabaseAdminClientTest, ListDatabasesPermanentFailure) {
   Instance in("test-project", "test-instance");
 
   EXPECT_CALL(*mock, ListDatabases(_, _))
-      .WillRepeatedly(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto stub = std::make_shared<internal::DatabaseAdminRetry>(std::move(mock));
-  DatabaseAdminClient client(std::move(stub));
+  auto client = CreateTestingClient(std::move(mock));
   auto range = client.ListDatabases(in);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -385,13 +395,10 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
   Instance in("test-project", "test-instance");
 
   EXPECT_CALL(*mock, ListDatabases(_, _))
+      .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto stub = std::make_shared<internal::DatabaseAdminRetry>(
-      std::move(mock), LimitedErrorCountRetryPolicy(/*maximum_failures=*/2),
-      ExponentialBackoffPolicy(std::chrono::microseconds(1),
-                               std::chrono::microseconds(1), 2.0));
-  DatabaseAdminClient client(std::move(stub));
+  auto client = CreateTestingClient(std::move(mock));
   auto range = client.ListDatabases(in);
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());

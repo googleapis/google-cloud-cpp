@@ -107,6 +107,8 @@ add_library(spanner_client
             database.h
             database_admin_client.cc
             database_admin_client.h
+            database_admin_connection.cc
+            database_admin_connection.h
             date.cc
             date.h
             instance.cc
@@ -227,6 +229,7 @@ function (spanner_client_define_tests)
     target_sources(
         spanner_client_mocks
         INTERFACE
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
     target_link_libraries(spanner_client_mocks
