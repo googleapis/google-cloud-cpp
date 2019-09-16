@@ -30,7 +30,7 @@ RetryObjectReadSource::RetryObjectReadSource(
       request_(std::move(request)),
       child_(std::move(child)),
       current_offset_(request_.StartingByte()),
-      retry_policy_(std::move(retry_policy)),
+      retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)) {}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
@@ -39,14 +39,27 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
+  // Refactor code to handle a successful read so we can return early.
+  auto handle_result = [this](StatusOr<ReadSourceResult> const& r) {
+    if (!r) {
+      return false;
+    }
+    auto g = r->response.headers.find("x-goog-generation");
+    if (g != r->response.headers.end()) {
+      generation_ = std::stoll(g->second);
+    }
+    current_offset_ += r->bytes_received;
+    return true;
+  };
+  // Read some data, if successful return immediately, saving some allocations.
   auto result = child_->Read(buf, n);
-  // Whenever we successfully get a piece of data, we should reset the backoff
-  // policy to its initial state. It is easier to keep it fresh in the object
-  // and clone on every Read(). By the time we return from this function we will
-  // have either successfully read a piece of data or we will have failed for
-  // good.
+  if (handle_result(result)) {
+    return result;
+  }
+  // Start a new retry loop to get the data.
   auto backoff_policy = backoff_policy_prototype_->clone();
-  for (; !result && retry_policy_->OnFailure(result.status());
+  auto retry_policy = retry_policy_prototype_->clone();
+  for (; !result && retry_policy->OnFailure(result.status());
        std::this_thread::sleep_for(backoff_policy->OnCompletion()),
        result = child_->Read(buf, n)) {
     // A Read() request failed, most likely that means the connection failed or
@@ -58,8 +71,8 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     if (generation_) {
       request_.set_option(Generation(*generation_));
     }
-    auto new_child = client_->ReadObjectNotWrapped(request_, *retry_policy_,
-                                                   *backoff_policy);
+    auto new_child =
+        client_->ReadObjectNotWrapped(request_, *retry_policy, *backoff_policy);
     if (!new_child) {
       // We've exhausted the retry policy while trying to create the child, so
       // return right away.
@@ -67,23 +80,18 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     }
     child_ = std::move(*new_child);
   }
-  if (!result) {
-    // We've tried retrying but failed.
-    auto const& status = result.status();
-    std::stringstream os;
-    if (internal::StatusTraits::IsPermanentFailure(status)) {
-      os << "Permanent error in Read(): " << status;
-    } else {
-      os << "Retry policy exhausted in Read(): " << status;
-    }
-    return Status(status.code(), os.str());
+  if (handle_result(result)) {
+    return result;
   }
-  auto g = result->response.headers.find("x-goog-generation");
-  if (g != result->response.headers.end()) {
-    generation_ = std::stoll(g->second);
+  // We have exhausted the retry policy, return an error.
+  auto status = std::move(result).status();
+  std::stringstream os;
+  if (internal::StatusTraits::IsPermanentFailure(status)) {
+    os << "Permanent error in Read(): " << status;
+  } else {
+    os << "Retry policy exhausted in Read(): " << status;
   }
-  current_offset_ += result->bytes_received;
-  return result;
+  return Status(status.code(), os.str());
 }
 
 }  // namespace internal
