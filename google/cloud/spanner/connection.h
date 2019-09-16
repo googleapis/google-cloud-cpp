@@ -115,7 +115,7 @@ class Connection {
   };
 
   /// Wrap the arguments to `ExecuteBatchDml()`.
-  struct BatchDmlParams {
+  struct ExecuteBatchDmlParams {
     Transaction transaction;
     std::vector<SqlStatement> statements;
   };
@@ -152,7 +152,7 @@ class Connection {
       PartitionQueryParams) = 0;
 
   /// Define the interface for a google.spanner.v1.Spanner.ExecuteBatchDml RPC
-  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(BatchDmlParams) = 0;
+  virtual StatusOr<BatchDmlResult> ExecuteBatchDml(ExecuteBatchDmlParams) = 0;
 
   /// Define the interface for a google.spanner.v1.Spanner.Commit RPC
   virtual StatusOr<CommitResult> Commit(CommitParams) = 0;

@@ -46,7 +46,7 @@ class MockConnection : public spanner::Connection {
   MOCK_METHOD1(PartitionQuery, StatusOr<std::vector<spanner::QueryPartition>>(
                                    PartitionQueryParams));
   MOCK_METHOD1(ExecuteBatchDml,
-               StatusOr<spanner::BatchDmlResult>(BatchDmlParams));
+               StatusOr<spanner::BatchDmlResult>(ExecuteBatchDmlParams));
   MOCK_METHOD1(Commit, StatusOr<spanner::CommitResult>(CommitParams));
   MOCK_METHOD1(Rollback, Status(RollbackParams));
 };

@@ -81,7 +81,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
 }
 
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDml(
-    BatchDmlParams params) {
+    ExecuteBatchDmlParams params) {
   return internal::Visit(std::move(params.transaction),
                          [this, &params](SessionHolder& session,
                                          spanner_proto::TransactionSelector& s,
@@ -329,7 +329,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
-    std::int64_t seqno, BatchDmlParams params) {
+    std::int64_t seqno, ExecuteBatchDmlParams params) {
   if (!session) {
     auto session_or = GetSession();
     if (!session_or) {
