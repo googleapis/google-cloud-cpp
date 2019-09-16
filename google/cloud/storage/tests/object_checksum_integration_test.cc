@@ -394,6 +394,85 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
   EXPECT_STATUS_OK(status);
 }
 
+/// @test Verify that CRC32C checksum mismatches are reported when using
+/// .read().
+TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
+  if (!UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+  auto contents = MakeRandomData(1024 * 1024);
+
+  // Create an object and a stream to read it back.
+  StatusOr<ObjectMetadata> meta =
+      client->InsertObject(bucket_name, object_name, contents,
+                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_STATUS_OK(meta);
+
+  auto stream = client->ReadObject(
+      bucket_name, object_name, DisableMD5Hash(true),
+      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+
+  // Create a buffer large enough to hold the results and read pas EOF.
+  std::vector<char> buffer(2 * contents.size());
+  stream.read(buffer.data(), buffer.size());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(StatusCode::kDataLoss, stream.status().code());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.received_hash(), meta->crc32c());
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Verify that CRC32C checksum mismatches are reported when using
+/// .read().
+TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
+  if (!UsingTestbench()) {
+    // This test is disabled when not using the testbench as it relies on the
+    // testbench to inject faults.
+    return;
+  }
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+  auto contents = MakeRandomData(1024 * 1024);
+
+  // Create an object and a stream to read it back.
+  StatusOr<ObjectMetadata> meta =
+      client->InsertObject(bucket_name, object_name, contents,
+                           IfGenerationMatch(0), Projection::Full());
+  ASSERT_STATUS_OK(meta);
+
+  auto stream = client->ReadObject(
+      bucket_name, object_name, DisableMD5Hash(true),
+      IfMetagenerationNotMatch(0),
+      CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
+
+  // Create a buffer large enough to hold the results and read pas EOF.
+  std::vector<char> buffer(2 * contents.size());
+  stream.read(buffer.data(), buffer.size());
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_TRUE(stream.bad());
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  EXPECT_EQ(StatusCode::kDataLoss, stream.status().code());
+  EXPECT_NE(stream.received_hash(), stream.computed_hash());
+  EXPECT_EQ(stream.received_hash(), meta->crc32c());
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {

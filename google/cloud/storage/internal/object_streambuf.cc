@@ -126,6 +126,46 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     return 0;
   }
 
+  auto const* function_name = __func__;
+  auto run_validator_if_closed = [this, function_name, &offset](Status s) {
+    ReportError(std::move(s));
+    // Only validate the checksums once the stream is closed.
+    if (IsOpen()) {
+      return offset;
+    }
+    hash_validator_result_ = std::move(*hash_validator_).Finish();
+    if (!hash_validator_result_.is_mismatch) {
+      return offset;
+    }
+    std::string msg;
+    msg += function_name;
+    msg += "(): mismatched hashes in download";
+    msg += ", expected=";
+    msg += hash_validator_result_.computed;
+    msg += ", received=";
+    msg += hash_validator_result_.received;
+    if (status_.ok()) {
+      // If there is an existing error, we should report that instead because
+      // it is more specific, for example, every permanent network error will
+      // produce invalid checksums, but that is not the interesting information.
+      status_ = Status(StatusCode::kDataLoss, msg);
+    }
+    // The only way to report errors from a std::basic_streambuf<> (which this
+    // class derives from) is to throw exceptions:
+    //   https://stackoverflow.com/questions/50716688/how-to-set-the-badbit-of-a-stream-by-a-customized-streambuf
+    // but we need to be able to report errors when the application has disabled
+    // exceptions via `-fno-exceptions` or a similar option. In that case we set
+    // `status_`, and report the error as an 0-byte read. This is obviously not
+    // ideal, but it is the best we can do when the application disables the
+    // standard mechanism to signal errors.
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    throw HashMismatchError(msg, hash_validator_result_.received,
+                            hash_validator_result_.computed);
+#else
+    return std::streamsize(0);
+#endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  };
+
   // Maybe the internal get area is enough to satisfy this request, no need to
   // read more in that case:
   auto from_internal = (std::min)(count, in_avail());
@@ -135,7 +175,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   if (offset >= count) {
     GCP_LOG(INFO) << __func__ << "(): count=" << count
                   << ", in_avail=" << in_avail() << ", offset=" << offset;
-    return offset;
+    return run_validator_if_closed(Status());
   }
 
   StatusOr<ReadSourceResult> read_result =
@@ -146,8 +186,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     GCP_LOG(INFO) << __func__ << "(): count=" << count
                   << ", in_avail=" << in_avail() << ", offset=" << offset
                   << ", status=" << read_result.status();
-    status_ = std::move(read_result).status();
-    return offset;
+    return run_validator_if_closed(std::move(read_result).status());
   }
   GCP_LOG(INFO) << __func__ << "(): count=" << count
                 << ", in_avail=" << in_avail() << ", offset=" << offset
@@ -162,10 +201,9 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     headers_.emplace(kv.first, kv.second);
   }
   if (read_result->response.status_code >= 300) {
-    status_ = AsStatus(read_result->response);
+    return run_validator_if_closed(AsStatus(read_result->response));
   }
-
-  return offset;
+  return run_validator_if_closed(Status());
 }
 
 ObjectReadStreambuf::int_type ObjectReadStreambuf::ReportError(Status status) {
