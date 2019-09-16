@@ -150,8 +150,8 @@ class ResumableUploadSessionError : public ResumableUploadSession {
 
  private:
   StatusOr<ResumableUploadResponse> last_response_;
-  const std::uint64_t next_expected_byte_ = 0;
-  const std::string id_;
+  std::uint64_t const next_expected_byte_ = 0;
+  std::string const id_;
 };
 
 }  // namespace internal
