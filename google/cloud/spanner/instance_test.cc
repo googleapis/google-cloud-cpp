@@ -25,22 +25,26 @@ namespace {
 
 TEST(Instance, Basics) {
   Instance in("p1", "i1");
-  EXPECT_EQ("i1", in.InstanceId());
+  EXPECT_EQ("p1", in.project_id());
+  EXPECT_EQ("i1", in.instance_id());
   EXPECT_EQ("projects/p1/instances/i1", in.FullName());
 
   auto copy = in;
   EXPECT_EQ(copy, in);
-  EXPECT_EQ("i1", copy.InstanceId());
+  EXPECT_EQ("p1", copy.project_id());
+  EXPECT_EQ("i1", copy.instance_id());
   EXPECT_EQ("projects/p1/instances/i1", copy.FullName());
 
   auto moved = std::move(copy);
   EXPECT_EQ(moved, in);
-  EXPECT_EQ("i1", moved.InstanceId());
+  EXPECT_EQ("p1", moved.project_id());
+  EXPECT_EQ("i1", moved.instance_id());
   EXPECT_EQ("projects/p1/instances/i1", moved.FullName());
 
   Instance in2("p2", "i2");
   EXPECT_NE(in2, in);
-  EXPECT_EQ("i2", in2.InstanceId());
+  EXPECT_EQ("p2", in2.project_id());
+  EXPECT_EQ("i2", in2.instance_id());
   EXPECT_EQ("projects/p2/instances/i2", in2.FullName());
 }
 

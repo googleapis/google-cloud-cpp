@@ -31,8 +31,8 @@ future<StatusOr<gcsa::Database>> DatabaseAdminClient::CreateDatabase(
     Database const& db, std::vector<std::string> const& extra_statements) {
   grpc::ClientContext context;
   gcsa::CreateDatabaseRequest request;
-  request.set_parent(db.ParentName());
-  request.set_create_statement("CREATE DATABASE `" + db.DatabaseId() + "`");
+  request.set_parent(db.instance().FullName());
+  request.set_create_statement("CREATE DATABASE `" + db.database_id() + "`");
   for (auto const& s : extra_statements) {
     *request.add_extra_statements() = s;
   }

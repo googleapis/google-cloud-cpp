@@ -41,7 +41,7 @@ inline namespace SPANNER_CLIENT_NS {
 class Instance {
  public:
   /// Constructs a Instance object identified by the given IDs.
-  Instance(std::string const& project_id, std::string const& instance_id);
+  Instance(std::string project_id, std::string instance_id);
 
   /// @name Copy and move
   //@{
@@ -51,8 +51,11 @@ class Instance {
   Instance& operator=(Instance&&) = default;
   //@}
 
-  /// Returns the instance ID.
-  std::string InstanceId() const;
+  /// Returns the Project ID
+  std::string const& project_id() const { return project_id_; }
+
+  /// Returns the Instance ID
+  std::string const& instance_id() const { return instance_id_; }
 
   /**
    * Returns the fully qualified instance name as a string of the form:
@@ -70,7 +73,8 @@ class Instance {
   friend std::ostream& operator<<(std::ostream& os, Instance const& dn);
 
  private:
-  std::string full_name_;
+  std::string project_id_;
+  std::string instance_id_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

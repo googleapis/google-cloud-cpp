@@ -77,7 +77,7 @@ class RpcFailureThresholdTest : public ::testing::Test {
     if (!db_) {
       return;
     }
-    std::cout << "Dropping database " << db_->DatabaseId() << std::flush;
+    std::cout << "Dropping database " << db_->database_id() << std::flush;
     DatabaseAdminClient admin_client;
     auto drop_status = admin_client.DropDatabase(*db_);
     std::cout << " DONE\n";

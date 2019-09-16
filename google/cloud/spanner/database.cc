@@ -20,32 +20,26 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-Database::Database(std::string const& project_id,
-                   std::string const& instance_id,
-                   std::string const& database_id)
-    : full_name_("projects/" + project_id + "/instances/" + instance_id +
-                 "/databases/" + database_id) {}
+Database::Database(Instance instance, std::string database_id)
+    : instance_(std::move(instance)), database_id_(std::move(database_id)) {}
 
-std::string Database::FullName() const { return full_name_; }
+Database::Database(std::string project_id, std::string instance_id,
+                   std::string database_id)
+    : Database(Instance(std::move(project_id), std::move(instance_id)),
+               std::move(database_id)) {}
 
-std::string Database::DatabaseId() const {
-  auto pos = full_name_.rfind("/databases/");
-  return full_name_.substr(pos + sizeof("/databases/") - 1);
-}
-
-std::string Database::ParentName() const {
-  auto pos = full_name_.rfind("/databases/");
-  return full_name_.substr(0, pos);
+std::string Database::FullName() const {
+  return instance().FullName() + "/databases/" + database_id_;
 }
 
 bool operator==(Database const& a, Database const& b) {
-  return a.full_name_ == b.full_name_;
+  return a.instance_ == b.instance_ && a.database_id_ == b.database_id_;
 }
 
 bool operator!=(Database const& a, Database const& b) { return !(a == b); }
 
 std::ostream& operator<<(std::ostream& os, Database const& dn) {
-  return os << dn.full_name_;
+  return os << dn.FullName();
 }
 
 }  // namespace SPANNER_CLIENT_NS

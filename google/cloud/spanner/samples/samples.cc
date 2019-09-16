@@ -227,7 +227,7 @@ void InstanceTestIamPermissions(
   std::cout
       << "The caller " << msg
       << " have permission to list databases on the Cloud Spanner instance "
-      << in.InstanceId() << "\n";
+      << in.instance_id() << "\n";
 }
 //! [instance-test-iam-permissions]
 

@@ -24,32 +24,35 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(Database, Basics) {
-  Database db("p1", "i1", "d1");
-  EXPECT_EQ("d1", db.DatabaseId());
+  Instance in("p1", "i1");
+  Database db(in, "d1");
+  EXPECT_EQ("d1", db.database_id());
+  EXPECT_EQ(in, db.instance());
   EXPECT_EQ("projects/p1/instances/i1/databases/d1", db.FullName());
-  EXPECT_EQ("projects/p1/instances/i1", db.ParentName());
 
   auto copy = db;
   EXPECT_EQ(copy, db);
-  EXPECT_EQ("d1", copy.DatabaseId());
+  EXPECT_EQ("d1", copy.database_id());
+  EXPECT_EQ(in, copy.instance());
   EXPECT_EQ("projects/p1/instances/i1/databases/d1", copy.FullName());
-  EXPECT_EQ("projects/p1/instances/i1", db.ParentName());
 
   auto moved = std::move(copy);
   EXPECT_EQ(moved, db);
-  EXPECT_EQ("d1", moved.DatabaseId());
+  EXPECT_EQ("d1", moved.database_id());
+  EXPECT_EQ(in, moved.instance());
   EXPECT_EQ("projects/p1/instances/i1/databases/d1", moved.FullName());
-  EXPECT_EQ("projects/p1/instances/i1", db.ParentName());
 
-  Database db2("p2", "i2", "d2");
+  Instance in2("p2", "i2");
+  Database db2(in2, "d2");
   EXPECT_NE(db2, db);
-  EXPECT_EQ("d2", db2.DatabaseId());
+  EXPECT_EQ("d2", db2.database_id());
+  EXPECT_EQ(in2, db2.instance());
   EXPECT_EQ("projects/p2/instances/i2/databases/d2", db2.FullName());
-  EXPECT_EQ("projects/p2/instances/i2", db2.ParentName());
 }
 
 TEST(Database, OutputStream) {
-  Database db("p1", "i1", "d1");
+  Instance in("p1", "i1");
+  Database db(in, "d1");
   std::ostringstream os;
   os << db;
   EXPECT_EQ("projects/p1/instances/i1/databases/d1", os.str());

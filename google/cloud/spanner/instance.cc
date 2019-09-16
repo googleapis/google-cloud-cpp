@@ -20,25 +20,22 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-Instance::Instance(std::string const& project_id,
-                   std::string const& instance_id)
-    : full_name_("projects/" + project_id + "/instances/" + instance_id) {}
+Instance::Instance(std::string project_id, std::string instance_id)
+    : project_id_(std::move(project_id)),
+      instance_id_(std::move(instance_id)) {}
 
-std::string Instance::FullName() const { return full_name_; }
-
-std::string Instance::InstanceId() const {
-  auto pos = full_name_.rfind("/instances/");
-  return full_name_.substr(pos + sizeof("/instances/") - 1);
+std::string Instance::FullName() const {
+  return "projects/" + project_id_ + "/instances/" + instance_id_;
 }
 
 bool operator==(Instance const& a, Instance const& b) {
-  return a.full_name_ == b.full_name_;
+  return a.project_id_ == b.project_id_ && a.instance_id_ == b.instance_id_;
 }
 
 bool operator!=(Instance const& a, Instance const& b) { return !(a == b); }
 
 std::ostream& operator<<(std::ostream& os, Instance const& dn) {
-  return os << dn.full_name_;
+  return os << dn.FullName();
 }
 
 }  // namespace SPANNER_CLIENT_NS
