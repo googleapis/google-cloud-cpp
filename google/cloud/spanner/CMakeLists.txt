@@ -282,6 +282,7 @@ function (spanner_client_define_tests)
         client_test.cc
         database_test.cc
         database_admin_client_test.cc
+        database_admin_connection_test.cc
         date_test.cc
         instance_admin_client_test.cc
         instance_admin_connection_test.cc
