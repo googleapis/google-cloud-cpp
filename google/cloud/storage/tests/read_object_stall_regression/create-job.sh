@@ -35,7 +35,7 @@ spec:
         container.apparmor.security.beta.kubernetes.io/read-object-stall-regression: "unconfined"
     spec:
       restartPolicy: OnFailure
-      activeDeadlineSeconds: 3600
+      activeDeadlineSeconds: 42300
       volumes:
         - name: google-cloud-key
           secret:
@@ -55,8 +55,9 @@ spec:
             '@SRC_BUCKET_NAME@',
             '@DST_BUCKET_NAME@',
             '4.0',
+            '32',
             '--gtest_filter=ReadObjectStallTest.Streaming',
-            '--gtest_repeat=5'
+            '--gtest_repeat=2'
           ]
           securityContext:
               privileged: true
