@@ -220,7 +220,7 @@ TEST(Row, MakeRowCVQualifications) {
 
 TEST(Row, ParseRowEmpty) {
   std::array<Value, 0> const array = {};
-  auto const row = ParseRow(array);
+  auto const row = ParseRow<Row<>>(array);
   EXPECT_TRUE(row.ok());
   EXPECT_EQ(MakeRow(), *row);
   EXPECT_EQ(array, row->values());
@@ -230,12 +230,12 @@ TEST(Row, ParseRowOneValue) {
   // The extra braces are working around an old clang bug that was fixed in 6.0
   // https://bugs.llvm.org/show_bug.cgi?id=21629
   std::array<Value, 1> const array = {{Value(42)}};
-  auto const row = ParseRow<std::int64_t>(array);
+  auto const row = ParseRow<Row<std::int64_t>>(array);
   EXPECT_TRUE(row.ok());
   EXPECT_EQ(MakeRow(42), *row);
   EXPECT_EQ(array, row->values());
   // Tests parsing the Value with the wrong type.
-  auto const error_row = ParseRow<double>(array);
+  auto const error_row = ParseRow<Row<double>>(array);
   EXPECT_FALSE(error_row.ok());
 }
 
@@ -243,19 +243,19 @@ TEST(Row, ParseRowThree) {
   // The extra braces are working around an old clang bug that was fixed in 6.0
   // https://bugs.llvm.org/show_bug.cgi?id=21629
   std::array<Value, 3> array = {{Value(true), Value(42), Value("hello")}};
-  auto row = ParseRow<bool, std::int64_t, std::string>(array);
+  auto row = ParseRow<Row<bool, std::int64_t, std::string>>(array);
   EXPECT_TRUE(row.ok());
   EXPECT_EQ(MakeRow(true, 42, "hello"), *row);
   EXPECT_EQ(array, row->values());
   // Tests parsing the Value with the wrong type.
-  auto const error_row = ParseRow<bool, double, std::string>(array);
+  auto const error_row = ParseRow<Row<bool, double, std::string>>(array);
   EXPECT_FALSE(error_row.ok());
 }
 
-template <typename... Ts>
-void RoundTripRow(Row<Ts...> const& row) {
+template <typename RowType>
+void RoundTripRow(RowType const& row) {
   auto array = row.values();
-  auto parsed = ParseRow<Ts...>(array);
+  auto parsed = ParseRow<RowType>(array);
   EXPECT_TRUE(parsed.ok());
   EXPECT_EQ(row, *parsed);
 }

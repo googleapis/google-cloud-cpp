@@ -112,17 +112,18 @@ TEST(ClientTest, ReadSuccess) {
   auto result = client.Read("table", std::move(keys), {"column1", "column2"});
   EXPECT_STATUS_OK(result);
 
-  std::array<std::pair<std::string, std::int64_t>, 2> expected = {
-      {std::make_pair("Steve", 12), std::make_pair("Ann", 42)}};
+  using RowType = Row<std::string, std::int64_t>;
+  auto expected = std::vector<RowType>{
+      RowType("Steve", 12),
+      RowType("Ann", 42),
+  };
   int row_number = 0;
-  for (auto& row : result->Rows<std::string, std::int64_t>()) {
+  for (auto& row : result->Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
-    EXPECT_EQ(row->size(), 2);
-    EXPECT_EQ(row->get<0>(), expected[row_number].first);
-    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
-  EXPECT_EQ(row_number, 2);
+  EXPECT_EQ(row_number, expected.size());
 }
 
 TEST(ClientTest, ReadFailure) {
@@ -156,7 +157,7 @@ TEST(ClientTest, ReadFailure) {
   auto result = client.Read("table", std::move(keys), {"column1"});
   EXPECT_STATUS_OK(result);
 
-  auto rows = result->Rows<std::string>();
+  auto rows = result->Rows<Row<std::string>>();
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
@@ -210,17 +211,18 @@ TEST(ClientTest, ExecuteSqlSuccess) {
   auto result = client.ExecuteSql(SqlStatement("select * from table;"));
   EXPECT_STATUS_OK(result);
 
-  std::array<std::pair<std::string, std::int64_t>, 2> expected = {
-      {std::make_pair("Steve", 12), std::make_pair("Ann", 42)}};
+  using RowType = Row<std::string, std::int64_t>;
+  auto expected = std::vector<RowType>{
+      RowType("Steve", 12),
+      RowType("Ann", 42),
+  };
   int row_number = 0;
-  for (auto& row : result->Rows<std::string, std::int64_t>()) {
+  for (auto& row : result->Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
-    EXPECT_EQ(row->size(), 2);
-    EXPECT_EQ(row->get<0>(), expected[row_number].first);
-    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
-  EXPECT_EQ(row_number, 2);
+  EXPECT_EQ(row_number, expected.size());
 }
 
 TEST(ClientTest, ExecuteSqlFailure) {
@@ -255,7 +257,7 @@ TEST(ClientTest, ExecuteSqlFailure) {
   auto result = client.ExecuteSql(SqlStatement("select * from table;"));
   EXPECT_STATUS_OK(result);
 
-  auto rows = result->Rows<std::string>();
+  auto rows = result->Rows<Row<std::string>>();
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);

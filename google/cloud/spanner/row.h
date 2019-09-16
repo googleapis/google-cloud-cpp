@@ -342,24 +342,26 @@ Row<internal::PromoteLiteral<Ts>...> MakeRow(Ts&&... ts) {
 }
 
 /**
- * Parses a `std::array` of `Value` objects into the specified C++ types and
- * returns a `Row<Ts...>` with all the parsed values. If the specified C++ type
- * is unable to be extracted from a `Value`, an error `Status` is returned. The
- * given array size must exactly match the number of specified C++ types.
+ * Parses a `std::array` of `Value` objects into a `Row<Ts...>` holding C++
+ * types.
+ *
+ * If parsing fails, an error `Status` is returned. The given array size must
+ * exactly match the number of types in the specified `Row<Ts...>`. See
+ * `Row::size()`.
  *
  * @par Example
  *
  * @code
  * std::array<Value, 3> array = {Value(true), Value(42), Value("hello")};
- * auto row = ParseRow<bool, std::int64_t, std::string>(array);
+ * using RowType = Row<bool, std::int64_t, std::string>;
+ * auto row = ParseRow<RowType>(array);
  * assert(row.ok());
  * assert(MakeRow(true, 42, "hello"), *row);
  * @endcode
  */
-template <typename... Ts>
-StatusOr<Row<internal::PromoteLiteral<Ts>...>> ParseRow(
-    std::array<Value, sizeof...(Ts)> const& array) {
-  Row<internal::PromoteLiteral<Ts>...> row;
+template <typename RowType>
+StatusOr<RowType> ParseRow(std::array<Value, RowType::size()> const& array) {
+  RowType row;
   auto it = array.begin();
   Status status;
   internal::ForEach(row, internal::ExtractValue{status}, it);

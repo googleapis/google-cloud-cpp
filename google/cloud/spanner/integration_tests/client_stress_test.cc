@@ -106,8 +106,8 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
                           {"max", spanner::Value(key + size)}}));
         result.Update(reader.status());
         if (!reader) continue;
-        for (auto row :
-             reader->Rows<std::int64_t, std::string, std::string>()) {
+        using RowType = Row<std::int64_t, std::string, std::string>;
+        for (auto row : reader->Rows<RowType>()) {
           result.Update(row.status());
         }
       }
@@ -179,8 +179,8 @@ TEST(ClientStressTest, UpsertAndRead) {
                                   {"SingerId", "FirstName", "LastName"});
         result.Update(reader.status());
         if (!reader) continue;
-        for (auto row :
-             reader->Rows<std::int64_t, std::string, std::string>()) {
+        using RowType = Row<std::int64_t, std::string, std::string>;
+        for (auto row : reader->Rows<RowType>()) {
           result.Update(row.status());
         }
       }

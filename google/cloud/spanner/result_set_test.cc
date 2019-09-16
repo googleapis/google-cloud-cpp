@@ -44,7 +44,7 @@ TEST(ResultSet, IterateNoRows) {
 
   ResultSet result_set(std::move(mock_source));
   int num_rows = 0;
-  for (auto const& row : result_set.Rows<bool>()) {
+  for (auto const& row : result_set.Rows<Row<bool>>()) {
     static_cast<void>(row);
     ++num_rows;
   }
@@ -64,7 +64,8 @@ TEST(ResultSet, IterateOverRows) {
 
   ResultSet result_set(std::move(mock_source));
   int num_rows = 0;
-  for (auto const& row : result_set.Rows<std::int64_t, bool, std::string>()) {
+  for (auto const& row :
+       result_set.Rows<Row<std::int64_t, bool, std::string>>()) {
     EXPECT_TRUE(row.ok());
     switch (num_rows++) {
       case 0:
@@ -98,7 +99,8 @@ TEST(ResultSet, IterateError) {
 
   ResultSet result_set(std::move(mock_source));
   int num_rows = 0;
-  for (auto const& row : result_set.Rows<std::int64_t, bool, std::string>()) {
+  for (auto const& row :
+       result_set.Rows<Row<std::int64_t, bool, std::string>>()) {
     switch (num_rows++) {
       case 0:
         EXPECT_TRUE(row.ok());

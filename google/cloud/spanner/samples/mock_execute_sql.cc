@@ -97,7 +97,8 @@ TEST(MockSpannerClient, SuccessfulExecuteSql) {
 
   //! [expected-results]
   int count = 0;
-  for (auto row : reader->Rows<std::int64_t, std::string>()) {
+  using RowType = spanner::Row<std::int64_t, std::string>;
+  for (auto row : reader->Rows<RowType>()) {
     ASSERT_TRUE(row);
     auto expected_id = ++count;
     EXPECT_EQ(expected_id, row->get<0>());

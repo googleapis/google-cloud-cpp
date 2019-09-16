@@ -85,7 +85,8 @@ inline namespace SPANNER_CLIENT_NS {
  * if (!result) {
  *   return result.status();
  * }
- * for (auto const& row : result.Rows<std::int64_t, std::string>()) {
+ * using RowType = Row<std::int64_t, std::string>;
+ * for (auto const& row : result.Rows<RowType>()) {
  *   // ...
  * }
  * @endcode

@@ -66,9 +66,10 @@ class ResultSet {
    * time. Doing so is not thread safe, and may result in errors or data
    * corruption.
    */
-  template <typename... Ts>
-  RowParser<Ts...> Rows() {
-    return RowParser<Ts...>([this]() mutable { return source_->NextValue(); });
+  template <typename RowType>
+  RowParser<RowType> Rows() {
+    return RowParser<RowType>(
+        [this]() mutable { return source_->NextValue(); });
   }
 
   /**

@@ -192,17 +192,18 @@ TEST(ConnectionImplTest, ReadSuccess) {
                   {"UserId", "UserName"},
                   ReadOptions()});
   EXPECT_STATUS_OK(result);
-  std::array<std::pair<std::int64_t, std::string>, 2> expected = {
-      {std::make_pair(12, "Steve"), std::make_pair(42, "Ann")}};
+  using RowType = Row<std::int64_t, std::string>;
+  auto expected = std::vector<RowType>{
+      RowType(12, "Steve"),
+      RowType(42, "Ann"),
+  };
   int row_number = 0;
-  for (auto& row : result->Rows<std::int64_t, std::string>()) {
+  for (auto& row : result->Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
-    EXPECT_EQ(row->size(), 2);
-    EXPECT_EQ(row->get<0>(), expected[row_number].first);
-    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
-  EXPECT_EQ(row_number, 2);
+  EXPECT_EQ(row_number, expected.size());
 }
 
 /// @test Verify implicit "begin transaction" in Read() works.
@@ -337,17 +338,18 @@ TEST(ConnectionImplTest, ExecuteSqlReadSuccess) {
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        SqlStatement("select * from table")});
   EXPECT_STATUS_OK(result);
-  std::array<std::pair<std::int64_t, std::string>, 2> expected = {
-      {std::make_pair(12, "Steve"), std::make_pair(42, "Ann")}};
+  using RowType = Row<std::int64_t, std::string>;
+  auto expected = std::vector<RowType>{
+      RowType(12, "Steve"),
+      RowType(42, "Ann"),
+  };
   int row_number = 0;
-  for (auto& row : result->Rows<std::int64_t, std::string>()) {
+  for (auto& row : result->Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
-    EXPECT_EQ(row->size(), 2);
-    EXPECT_EQ(row->get<0>(), expected[row_number].first);
-    EXPECT_EQ(row->get<1>(), expected[row_number].second);
+    EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
   }
-  EXPECT_EQ(row_number, 2);
+  EXPECT_EQ(row_number, expected.size());
 }
 
 /// @test Verify implicit "begin transaction" in ExecuteSql() works.
@@ -1003,7 +1005,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
       conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
-  for (auto& row : result->Rows<std::int64_t>()) {
+  for (auto& row : result->Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 0);
@@ -1014,7 +1016,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
       conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
-  for (auto& row : result->Rows<std::int64_t>()) {
+  for (auto& row : result->Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 1);
@@ -1024,7 +1026,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
       conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
-  for (auto& row : result->Rows<std::int64_t>()) {
+  for (auto& row : result->Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 2);
@@ -1034,7 +1036,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
       conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
-  for (auto& row : result->Rows<std::int64_t>()) {
+  for (auto& row : result->Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 3);

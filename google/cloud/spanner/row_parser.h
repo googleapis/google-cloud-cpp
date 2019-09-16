@@ -60,8 +60,8 @@ using ValueSource = std::function<StatusOr<optional<Value>>()>;
  * range of `Row<Ts...>` objects.
  *
  * Instances of this class are typically obtained from the
- * `ResultSet::rows<Ts...>` member function. Callers should iterate `RowParser`
- * using a range-for loop as follows.
+ * `ResultSet::Rows<Row<Ts...>>` member function. Callers should iterate
+ * `RowParser` using a range-for loop as follows.
  *
  * @warning Moving a `RowParser` invalidates all iterators referring to the
  *     moved-from instance.
@@ -70,7 +70,7 @@ using ValueSource = std::function<StatusOr<optional<Value>>()>;
  *
  * @code
  * ValueSource vs = ...
- * RowParser<bool, std::int64_t> rp(std::move(vs));
+ * RowParser<Row<bool, std::int64_t>> rp(std::move(vs));
  * for (auto row : rp) {
  *   if (!row) {
  *     // handle error
@@ -84,13 +84,11 @@ using ValueSource = std::function<StatusOr<optional<Value>>()>;
  * }
  * @endcode
  *
- * @tparam T the C++ type of the first column in each `Row` (required)
- * @tparam Ts... the types of the remaining columns in each `Row` (optional)
+ * @tparam RowType a `Row<Ts...>`
  */
-template <typename T, typename... Ts>
+template <typename RowType>
 class RowParser {
  public:
-  using RowType = Row<T, Ts...>;
   using value_type = StatusOr<RowType>;
 
   /// A single-pass input iterator that coalesces multiple `Value` results into
@@ -187,7 +185,7 @@ class RowParser {
       }
       values[i] = **std::move(v);
     }
-    curr_ = ParseRow<T, Ts...>(values);
+    curr_ = ParseRow<RowType>(values);
   }
 
   ValueSource value_source_;  // nullpr is end
