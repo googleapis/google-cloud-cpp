@@ -386,7 +386,7 @@ install(EXPORT spanner-targets
 # GNUInstallDirs
 install(TARGETS spanner_client
         EXPORT spanner-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
