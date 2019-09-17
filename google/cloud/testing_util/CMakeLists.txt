@@ -77,7 +77,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # GNUInstallDirs
     install(TARGETS google_cloud_cpp_testing
             EXPORT google_cloud_cpp_testing-targets
-            RUNTIME DESTINATION bin
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
             ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
     google_cloud_cpp_install_headers(google_cloud_cpp_testing

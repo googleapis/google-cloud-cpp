@@ -263,7 +263,7 @@ install(EXPORT google_cloud_cpp_common-targets
 # GNUInstallDirs
 install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
         EXPORT google_cloud_cpp_common-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 google_cloud_cpp_install_headers(google_cloud_cpp_common include/google/cloud)
