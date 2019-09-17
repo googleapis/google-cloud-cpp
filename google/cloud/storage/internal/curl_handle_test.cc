@@ -32,6 +32,7 @@ TEST(CurlHandleTest, AsStatus) {
       {CURLE_OK, StatusCode::kOk},
       {CURLE_RECV_ERROR, StatusCode::kUnavailable},
       {CURLE_SEND_ERROR, StatusCode::kUnavailable},
+      {CURLE_PARTIAL_FILE, StatusCode::kUnavailable},
       {CURLE_COULDNT_RESOLVE_HOST, StatusCode::kUnavailable},
       {CURLE_COULDNT_RESOLVE_PROXY, StatusCode::kUnavailable},
       {CURLE_COULDNT_CONNECT, StatusCode::kUnavailable},

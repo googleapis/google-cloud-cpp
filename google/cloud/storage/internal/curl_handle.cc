@@ -225,6 +225,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_COULDNT_CONNECT:
     case CURLE_RECV_ERROR:
     case CURLE_SEND_ERROR:
+    case CURLE_PARTIAL_FILE:
       code = StatusCode::kUnavailable;
       break;
     case CURLE_REMOTE_ACCESS_DENIED:
