@@ -366,7 +366,7 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 # GNUInstallDirs
 install(TARGETS bigtable_protos bigtable_common_options
         EXPORT bigtable-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
@@ -376,7 +376,7 @@ install(EXPORT bigtable-targets
 
 install(TARGETS bigtable_client
         EXPORT bigtable-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 google_cloud_cpp_install_headers(bigtable_client include/google/cloud/bigtable)

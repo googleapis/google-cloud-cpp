@@ -109,7 +109,7 @@ endif ()
 # GNUInstallDirs
 install(TARGETS
         EXPORT firestore-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
@@ -120,7 +120,7 @@ install(EXPORT firestore-targets
 
 install(TARGETS firestore_client firestore_common_options
         EXPORT firestore-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 google_cloud_cpp_install_headers(

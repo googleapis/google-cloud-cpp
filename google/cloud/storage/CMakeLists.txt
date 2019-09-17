@@ -431,7 +431,7 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 # GNUInstallDirs
 install(TARGETS storage_common_options nlohmann_json
         EXPORT storage-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
@@ -441,7 +441,7 @@ install(EXPORT storage-targets
 
 install(TARGETS storage_client
         EXPORT storage-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 google_cloud_cpp_install_headers(storage_client include/google/cloud/storage)

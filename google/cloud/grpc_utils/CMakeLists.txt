@@ -161,7 +161,7 @@ endif ()
 # GNUInstallDirs
 install(TARGETS grpc_utils_common_options
         EXPORT grpc_utils-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
@@ -171,7 +171,7 @@ install(EXPORT grpc_utils-targets
 
 install(TARGETS google_cloud_cpp_grpc_utils
         EXPORT grpc_utils-targets
-        RUNTIME DESTINATION bin
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 google_cloud_cpp_install_headers(google_cloud_cpp_grpc_utils
