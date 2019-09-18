@@ -95,7 +95,7 @@ inline namespace SPANNER_CLIENT_NS {
  * database.then([](auto f) {
  *   StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
  *   if (!db) {
- *       std::cout << "Database created!\n";
+ *       std::cout << "Failed creating a database!\n";
  *       return;
  *   }
  *   std::cout << "Database created!\n";
