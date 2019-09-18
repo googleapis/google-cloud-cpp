@@ -1015,8 +1015,8 @@ class Client {
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, and
-   *     `UserProject`.
+   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`
+   *     and `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1030,7 +1030,6 @@ class Client {
    * @par Example: read a object encrypted with a CSEK.
    * @snippet storage_object_samples.cc read encrypted object
    */
-
   template <typename... Options>
   ObjectReadStream ReadObject(std::string const& bucket_name,
                               std::string const& object_name,
@@ -1046,10 +1045,10 @@ class Client {
         : public std::integral_constant<bool, HasReadLast::value &&
                                                   (HasReadFromOffset::value ||
                                                    HasReadRange::value)> {};
+
     static_assert(!HasIncompatibleRangeOptions::value,
                   "Cannot set ReadLast option with either ReadFromOffset or "
-                  "ReadRange. They are incompatible with each other as reading "
-                  "strategies are different. ");
+                  "ReadRange.");
 
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);

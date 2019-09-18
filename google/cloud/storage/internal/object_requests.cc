@@ -259,7 +259,7 @@ bool ReadObjectRangeRequest::RequiresNoCache() const {
   if (HasOption<ReadFromOffset>() && GetOption<ReadFromOffset>().value() != 0) {
     return true;
   }
-  return HasOption<ReadLast>() && GetOption<ReadLast>().value() != 0;
+  return HasOption<ReadLast>();
 }
 
 bool ReadObjectRangeRequest::RequiresRangeHeader() const {
@@ -287,9 +287,7 @@ std::string ReadObjectRangeRequest::RangeHeader() const {
   }
   if (HasOption<ReadLast>()) {
     auto last = GetOption<ReadLast>().value();
-    if (last != 0) {
-      return "Range: bytes=-" + std::to_string(last);
-    }
+    return "Range: bytes=-" + std::to_string(last);
   }
   return "";
 }
@@ -303,7 +301,8 @@ std::int64_t ReadObjectRangeRequest::StartingByte() const {
     result = (std::max)(result, GetOption<ReadFromOffset>().value());
   }
   if (HasOption<ReadLast>()) {
-    result = (std::max)(result, GetOption<ReadLast>().value());
+    // The value of `StartingByte()` is unknown if `ReadLast` is set
+    result = -1;
   }
   return result;
 }
