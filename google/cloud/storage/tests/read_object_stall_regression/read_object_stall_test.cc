@@ -48,7 +48,7 @@ struct ReadSummary {
 };
 
 std::ostream& operator<<(std::ostream& os, ReadSummary const& x) {
-  return os << "ReadSummary={bucket_name" << x.bucket_name
+  return os << "ReadSummary={bucket_name=" << x.bucket_name
             << ", object_name=" << x.object_name
             << ", received_hashes=" << x.received_hashes
             << ", computed_hashes=" << x.computed_hashes << ", size=" << x.size
@@ -96,7 +96,7 @@ void UpdateFromReader(ReadSummary& read_summary, ObjectReadStream& r,
       r.gcount());
 
   EXPECT_FALSE(r.bad()) << "ERROR: bad bit detected: " << r.status();
-  EXPECT_FALSE(!r.status().ok() && !r.bad())
+  EXPECT_EQ(r.status().ok(), !r.bad())
       << "ERROR: mismatched status vs. bad: " << r.status();
   bool short_read = (static_cast<std::size_t>(r.gcount()) != buffer.size());
   EXPECT_EQ(r.fail(), short_read)
