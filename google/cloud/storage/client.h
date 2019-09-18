@@ -35,6 +35,7 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -1014,8 +1015,8 @@ class Client {
    *     Valid types for this operation include `DisableCrc32cChecksum`,
    *     `DisableMD5Hash`, `IfGenerationMatch`, `EncryptionKey`, `Generation`,
    *     `IfGenerationMatch`, `IfGenerationNotMatch`, `IfMetagenerationMatch`,
-   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, and
-   *     `UserProject`.
+   *     `IfMetagenerationNotMatch`, `ReadFromOffset`, `ReadRange`, `ReadLast`
+   *     and `UserProject`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -1033,6 +1034,22 @@ class Client {
   ObjectReadStream ReadObject(std::string const& bucket_name,
                               std::string const& object_name,
                               Options&&... options) {
+    struct HasReadRange : public google::cloud::internal::disjunction<
+                              std::is_same<ReadRange, Options>...> {};
+    struct HasReadFromOffset : public google::cloud::internal::disjunction<
+                                   std::is_same<ReadFromOffset, Options>...> {};
+    struct HasReadLast : public google::cloud::internal::disjunction<
+                             std::is_same<ReadLast, Options>...> {};
+
+    struct HasIncompatibleRangeOptions
+        : public std::integral_constant<bool, HasReadLast::value &&
+                                                  (HasReadFromOffset::value ||
+                                                   HasReadRange::value)> {};
+
+    static_assert(!HasIncompatibleRangeOptions::value,
+                  "Cannot set ReadLast option with either ReadFromOffset or "
+                  "ReadRange.");
+
     internal::ReadObjectRangeRequest request(bucket_name, object_name);
     request.set_multiple_options(std::forward<Options>(options)...);
     return ReadObjectImpl(request);

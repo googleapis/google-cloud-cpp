@@ -274,6 +274,41 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
   EXPECT_THAT(res.status().message(), HasSubstr("Retry policy exhausted"));
 }
 
+/// @test `ReadLast` behaviour after a transient failure
+TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
+  auto raw_client = std::make_shared<testing::MockClient>();
+  auto raw_source1 = new MockObjectReadSource;
+  auto raw_source2 = new MockObjectReadSource;
+  auto client = std::make_shared<RetryClient>(
+      std::shared_ptr<internal::RawClient>(raw_client),
+      LimitedErrorCountRetryPolicy(3), StrictIdempotencyPolicy(),
+      ExponentialBackoffPolicy(1_us, 2_us, 2));
+
+  EXPECT_CALL(*raw_client, ReadObject(_))
+      .WillOnce(Invoke([raw_source1](ReadObjectRangeRequest req) {
+        EXPECT_EQ(1029, req.GetOption<ReadLast>().value());
+        return std::unique_ptr<ObjectReadSource>(raw_source1);
+      }))
+      .WillOnce(Invoke([raw_source2](ReadObjectRangeRequest req) {
+        EXPECT_EQ(5, req.GetOption<ReadLast>().value());
+        return std::unique_ptr<ObjectReadSource>(raw_source2);
+      }));
+
+  EXPECT_CALL(*raw_source1, Read(_, _))
+      .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(1024),
+                                        HttpResponse{200, "", {}}}))
+      .WillOnce(Return(TransientError()));
+
+  EXPECT_CALL(*raw_source2, Read(_, _)).WillOnce(Return(ReadSourceResult{}));
+
+  ReadObjectRangeRequest req("test_bucket", "test_object");
+  req.set_option(ReadLast(1029));
+  auto source = client->ReadObject(req);
+  ASSERT_STATUS_OK(source);
+  ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
+  auto res = (*source)->Read(nullptr, 1024);
+  ASSERT_TRUE(res);
+}
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

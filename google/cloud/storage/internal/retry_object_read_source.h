@@ -24,6 +24,9 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
+enum OffsetDirection { kFromBeginning, kFromEnd };
+
 /**
  * A data source for ObjectReadStreambuf.
  *
@@ -48,10 +51,11 @@ class RetryObjectReadSource : public ObjectReadSource {
   std::shared_ptr<RetryClient> client_;
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
-  std::int64_t current_offset_;
   optional<std::int64_t> generation_;
   std::unique_ptr<RetryPolicy> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
+  OffsetDirection offset_direction_;
+  std::int64_t current_offset_;
 };
 
 }  // namespace internal

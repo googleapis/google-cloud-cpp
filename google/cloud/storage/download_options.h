@@ -57,6 +57,14 @@ struct ReadFromOffset
   static char const* name() { return "read-offset"; }
 };
 
+/**
+ * Read last N bytes from the GCS object.
+ */
+struct ReadLast : public internal::ComplexOption<ReadLast, std::int64_t> {
+  using ComplexOption::ComplexOption;
+  static char const* name() { return "read-last"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
