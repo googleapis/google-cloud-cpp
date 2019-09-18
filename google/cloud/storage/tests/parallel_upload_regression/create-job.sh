@@ -25,8 +25,8 @@ metadata:
   labels:
     app: parallel-upload-regression
 spec:
-  parallelism: 5
-  completions: 5
+  parallelism: 15
+  completions: 15
   template:
     spec:
       restartPolicy: OnFailure
@@ -41,11 +41,12 @@ spec:
           imagePullPolicy: Always
           args: [
             '/r/parallel_upload_test',
-            '@DST_BUCKET_NAME@'
+            '@DST_BUCKET_NAME@',
+            '--gtest_repeat=5'
           ]
           resources:
             requests:
-              memory: "40Mi"
+              memory: "200Mi"
               cpu: "25m"
               ephemeral-storage: "128Mi"
           volumeMounts:

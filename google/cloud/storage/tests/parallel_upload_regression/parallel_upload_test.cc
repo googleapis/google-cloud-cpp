@@ -38,7 +38,7 @@ class ParallelUploadTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   static constexpr auto max_object_size = 128 * 1024 * 1024L;
-  static constexpr auto object_count_per_thread = 4;
+  static constexpr auto object_count_per_thread = 16;
 
   void SetUp() override {
     StorageIntegrationTest::SetUp();
@@ -62,13 +62,16 @@ class ParallelUploadTest
         writer.write(upload_contents_.data() + offset, count);
         EXPECT_FALSE(writer.bad());
         EXPECT_STATUS_OK(writer.last_status());
-        std::cout << '.' << std::flush;
       }
       writer.Close();
+      std::cout << '.' << std::flush;
       auto metadata = writer.metadata();
       EXPECT_STATUS_OK(metadata);
-      EXPECT_EQ(upload_contents_.size(), metadata->size());
-      EXPECT_EQ(expected_crc32c_, metadata->crc32c());
+      if (!metadata) continue;
+      EXPECT_EQ(upload_contents_.size(), metadata->size())
+          << "ERROR: mismatched size, metadata=" << *metadata;
+      EXPECT_EQ(expected_crc32c_, metadata->crc32c())
+          << "ERROR: mismatched size, metadata=" << *metadata;
     }
   }
 
@@ -80,10 +83,14 @@ class ParallelUploadTest
       EXPECT_FALSE(writer.bad());
       writer << upload_contents_;
       writer.Close();
+      std::cout << '.' << std::flush;
       auto metadata = writer.metadata();
       EXPECT_STATUS_OK(metadata);
-      EXPECT_EQ(upload_contents_.size(), metadata->size());
-      EXPECT_EQ(expected_crc32c_, metadata->crc32c());
+      if (!metadata) continue;
+      EXPECT_EQ(upload_contents_.size(), metadata->size())
+          << "ERROR: mismatched size, metadata=" << *metadata;
+      EXPECT_EQ(expected_crc32c_, metadata->crc32c())
+          << "ERROR: mismatched size, metadata=" << *metadata;
     }
   }
 
@@ -93,9 +100,13 @@ class ParallelUploadTest
 
       auto metadata =
           client.InsertObject(flag_dst_bucket_name, name, upload_contents_);
+      std::cout << '.' << std::flush;
       EXPECT_STATUS_OK(metadata);
-      EXPECT_EQ(upload_contents_.size(), metadata->size());
-      EXPECT_EQ(expected_crc32c_, metadata->crc32c());
+      if (!metadata) continue;
+      EXPECT_EQ(upload_contents_.size(), metadata->size())
+          << "ERROR: mismatched size, metadata=" << *metadata;
+      EXPECT_EQ(expected_crc32c_, metadata->crc32c())
+          << "ERROR: mismatched size, metadata=" << *metadata;
     }
   }
 
