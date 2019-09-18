@@ -33,15 +33,6 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateDatabase(
       context, request, __func__);
 }
 
-future<StatusOr<gcsa::Database>> DatabaseAdminLogging::AwaitCreateDatabase(
-    google::longrunning::Operation operation) {
-  return LogWrapper(
-      [this](google::longrunning::Operation operation) {
-        return child_->AwaitCreateDatabase(std::move(operation));
-      },
-      std::move(operation), __func__);
-}
-
 StatusOr<gcsa::Database> DatabaseAdminLogging::GetDatabase(
     grpc::ClientContext& context, gcsa::GetDatabaseRequest const& request) {
   return LogWrapper(
@@ -72,16 +63,6 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
         return child_->UpdateDatabase(context, request);
       },
       context, request, __func__);
-}
-
-future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
-DatabaseAdminLogging::AwaitUpdateDatabase(
-    google::longrunning::Operation operation) {
-  return LogWrapper(
-      [this](google::longrunning::Operation operation) {
-        return child_->AwaitUpdateDatabase(std::move(operation));
-      },
-      std::move(operation), __func__);
 }
 
 Status DatabaseAdminLogging::DropDatabase(

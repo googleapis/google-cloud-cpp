@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/spanner/internal/database_admin_retry.h"
 #include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>

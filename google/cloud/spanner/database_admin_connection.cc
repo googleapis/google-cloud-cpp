@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
-#include "google/cloud/spanner/internal/database_admin_retry.h"
+#include "google/cloud/spanner/internal/polling_loop.h"
+#include "google/cloud/spanner/internal/retry_loop.h"
 
 namespace google {
 namespace cloud {
@@ -22,11 +23,88 @@ inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 namespace {
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT \
+  std::chrono::minutes(30)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF \
+  std::chrono::seconds(1)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF \
+  std::chrono::minutes(5)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING 2.0
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT \
+  std::chrono::minutes(30)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF \
+  std::chrono::seconds(10)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF \
+  std::chrono::minutes(5)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING 2.0
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
+
+std::unique_ptr<RetryPolicy> DefaultAdminRetryPolicy() {
+  return google::cloud::spanner::LimitedTimeRetryPolicy(
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT)
+      .clone();
+}
+
+std::unique_ptr<BackoffPolicy> DefaultAdminBackoffPolicy() {
+  return google::cloud::spanner::ExponentialBackoffPolicy(
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF,
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF,
+             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING)
+      .clone();
+}
+
+std::unique_ptr<PollingPolicy> DefaultAdminPollingPolicy() {
+  return GenericPollingPolicy<>(
+             LimitedTimeRetryPolicy(
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT),
+             ExponentialBackoffPolicy(
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF,
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF,
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING))
+      .clone();
+}
+
 class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
  public:
   explicit DatabaseAdminConnectionImpl(
+      std::shared_ptr<internal::DatabaseAdminStub> stub,
+      std::unique_ptr<RetryPolicy> retry_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy,
+      std::unique_ptr<PollingPolicy> polling_policy)
+      : stub_(std::move(stub)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)),
+        polling_policy_(std::move(polling_policy)) {}
+
+  explicit DatabaseAdminConnectionImpl(
       std::shared_ptr<internal::DatabaseAdminStub> stub)
-      : stub_(std::move(stub)) {}
+      : DatabaseAdminConnectionImpl(std::move(stub), DefaultAdminRetryPolicy(),
+                                    DefaultAdminBackoffPolicy(),
+                                    DefaultAdminPollingPolicy()) {}
+
   ~DatabaseAdminConnectionImpl() override = default;
 
   future<StatusOr<google::spanner::admin::database::v1::Database>>
@@ -39,30 +117,45 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       *request.add_extra_statements() = std::move(s);
     }
 
-    grpc::ClientContext context;
-    auto operation = stub_->CreateDatabase(context, request);
+    auto operation = RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), false,
+        [this](grpc::ClientContext& context,
+               gcsa::CreateDatabaseRequest const& request) {
+          return stub_->CreateDatabase(context, request);
+        },
+        request, __func__);
     if (!operation) {
       return google::cloud::make_ready_future(
           StatusOr<gcsa::Database>(operation.status()));
     }
 
-    return stub_->AwaitCreateDatabase(*std::move(operation));
+    return AwaitCreateDatabase(*std::move(operation));
   }
 
   StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       GetDatabaseParams p) override {
     gcsa::GetDatabaseRequest request;
     request.set_name(p.database.FullName());
-    grpc::ClientContext context;
-    return stub_->GetDatabase(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::GetDatabaseRequest const& request) {
+          return stub_->GetDatabase(context, request);
+        },
+        request, __func__);
   }
 
   StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
   GetDatabaseDdl(GetDatabaseDdlParams p) override {
     gcsa::GetDatabaseDdlRequest request;
     request.set_database(p.database.FullName());
-    grpc::ClientContext context;
-    return stub_->GetDatabaseDdl(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::GetDatabaseDdlRequest const& request) {
+          return stub_->GetDatabaseDdl(context, request);
+        },
+        request, __func__);
   }
 
   future<
@@ -73,21 +166,31 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     for (auto& s : p.statements) {
       *request.add_statements() = std::move(s);
     }
-    grpc::ClientContext context;
-    auto operation = stub_->UpdateDatabase(context, request);
+    auto operation = RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), false,
+        [this](grpc::ClientContext& context,
+               gcsa::UpdateDatabaseDdlRequest const& request) {
+          return stub_->UpdateDatabase(context, request);
+        },
+        request, __func__);
     if (!operation) {
       return google::cloud::make_ready_future(
           StatusOr<gcsa::UpdateDatabaseDdlMetadata>(operation.status()));
     }
 
-    return stub_->AwaitUpdateDatabase(*std::move(operation));
+    return AwaitUpdateDatabase(*std::move(operation));
   }
 
   Status DropDatabase(DropDatabaseParams p) override {
     google::spanner::admin::database::v1::DropDatabaseRequest request;
     request.set_database(p.database.FullName());
-    grpc::ClientContext context;
-    return stub_->DropDatabase(context, request);
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::DropDatabaseRequest const& request) {
+          return stub_->DropDatabase(context, request);
+        },
+        request, __func__);
   }
 
   ListDatabaseRange ListDatabases(ListDatabasesParams p) override {
@@ -95,11 +198,24 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     request.set_parent(p.instance.FullName());
     request.clear_page_token();
     auto stub = stub_;
+    // Because we do not have C++14 generalized lambda captures we cannot just
+    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
+    auto retry = std::shared_ptr<RetryPolicy const>(retry_policy_->clone());
+    auto backoff =
+        std::shared_ptr<BackoffPolicy const>(backoff_policy_->clone());
+
+    char const* function_name = __func__;
     return ListDatabaseRange(
         std::move(request),
-        [stub](gcsa::ListDatabasesRequest const& r) {
-          grpc::ClientContext context;
-          return stub->ListDatabases(context, r);
+        [stub, retry, backoff,
+         function_name](gcsa::ListDatabasesRequest const& r) {
+          return RetryLoop(
+              retry->clone(), backoff->clone(), true,
+              [stub](grpc::ClientContext& context,
+                     gcsa::ListDatabasesRequest const& request) {
+                return stub->ListDatabases(context, request);
+              },
+              r, function_name);
         },
         [](gcsa::ListDatabasesResponse r) {
           std::vector<gcsa::Database> result(r.databases().size());
@@ -110,7 +226,80 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
   }
 
  private:
+  future<StatusOr<gcsa::Database>> AwaitCreateDatabase(
+      google::longrunning::Operation operation) {
+    promise<StatusOr<gcsa::Database>> pr;
+    auto f = pr.get_future();
+
+    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    std::thread t(
+        [](std::shared_ptr<internal::DatabaseAdminStub> stub,
+           google::longrunning::Operation operation,
+           std::unique_ptr<PollingPolicy> polling_policy,
+           google::cloud::promise<StatusOr<gcsa::Database>> promise,
+           char const* location) mutable {
+          auto result = internal::PollingLoop<
+              internal::PollingLoopResponseExtractor<gcsa::Database>>(
+              std::move(polling_policy),
+              [stub](grpc::ClientContext& context,
+                     google::longrunning::GetOperationRequest const& request) {
+                return stub->GetOperation(context, request);
+              },
+              std::move(operation), location);
+
+          // Drop our reference to stub; ideally we'd have std::moved into the
+          // lambda. Doing this also prevents a false leak from being reported
+          // when using googlemock.
+          stub.reset();
+          promise.set_value(std::move(result));
+        },
+        stub_, std::move(operation), polling_policy_->clone(), std::move(pr),
+        __func__);
+    t.detach();
+
+    return f;
+  }
+
+  future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> AwaitUpdateDatabase(
+      google::longrunning::Operation operation) {
+    promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> pr;
+    auto f = pr.get_future();
+
+    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    std::thread t(
+        [](std::shared_ptr<internal::DatabaseAdminStub> stub,
+           google::longrunning::Operation operation,
+           std::unique_ptr<PollingPolicy> polling_policy,
+           promise<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> promise,
+           char const* location) mutable {
+          auto result =
+              internal::PollingLoop<internal::PollingLoopMetadataExtractor<
+                  gcsa::UpdateDatabaseDdlMetadata>>(
+                  std::move(polling_policy),
+                  [stub](
+                      grpc::ClientContext& context,
+                      google::longrunning::GetOperationRequest const& request) {
+                    return stub->GetOperation(context, request);
+                  },
+                  std::move(operation), location);
+
+          // Drop our reference to stub; ideally we'd have std::moved into the
+          // lambda. Doing this also prevents a false leak from being reported
+          // when using googlemock.
+          stub.reset();
+          promise.set_value(std::move(result));
+        },
+        stub_, std::move(operation), polling_policy_->clone(), std::move(pr),
+        __func__);
+    t.detach();
+
+    return f;
+  }
+
   std::shared_ptr<internal::DatabaseAdminStub> stub_;
+  std::unique_ptr<RetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
 };
 }  // namespace
 
@@ -127,15 +316,11 @@ namespace internal {
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<internal::DatabaseAdminStub> stub,
     std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
-  stub = std::make_shared<DatabaseAdminRetry>(
-      std::move(stub), *std::move(retry_policy), *std::move(backoff_policy));
-  return std::make_shared<DatabaseAdminConnectionImpl>(std::move(stub));
-}
-
-std::shared_ptr<DatabaseAdminConnection> MakePlainDatabaseAdminConnection(
-    std::shared_ptr<internal::DatabaseAdminStub> stub) {
-  return std::make_shared<DatabaseAdminConnectionImpl>(std::move(stub));
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy) {
+  return std::make_shared<DatabaseAdminConnectionImpl>(
+      std::move(stub), std::move(retry_policy), std::move(backoff_policy),
+      std::move(polling_policy));
 }
 
 }  // namespace internal

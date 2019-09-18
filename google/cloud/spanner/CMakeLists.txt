@@ -130,8 +130,6 @@ add_library(spanner_client
             internal/database_admin_logging.h
             internal/database_admin_metadata.cc
             internal/database_admin_metadata.h
-            internal/database_admin_retry.cc
-            internal/database_admin_retry.h
             internal/database_admin_stub.cc
             internal/database_admin_stub.h
             internal/date.cc

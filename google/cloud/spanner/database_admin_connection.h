@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/internal/range_from_pagination.h"
+#include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <string>
@@ -159,10 +160,8 @@ namespace internal {
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     std::shared_ptr<internal::DatabaseAdminStub> stub,
     std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy);
-
-std::shared_ptr<DatabaseAdminConnection> MakePlainDatabaseAdminConnection(
-    std::shared_ptr<internal::DatabaseAdminStub> stub);
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy);
 }  // namespace internal
 
 }  // namespace SPANNER_CLIENT_NS

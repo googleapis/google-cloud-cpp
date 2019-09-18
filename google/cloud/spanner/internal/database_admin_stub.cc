@@ -15,7 +15,6 @@
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/internal/database_admin_logging.h"
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
-#include "google/cloud/spanner/internal/database_admin_retry.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -50,12 +49,6 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
       return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
     return response;
-  }
-
-  future<StatusOr<gcsa::Database>> AwaitCreateDatabase(
-      google::longrunning::Operation) override {
-    return make_ready_future(
-        StatusOr<gcsa::Database>(Status(StatusCode::kUnimplemented, __func__)));
   }
 
   StatusOr<gcsa::Database> GetDatabase(
@@ -93,12 +86,6 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
       return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
     return response;
-  }
-
-  future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>> AwaitUpdateDatabase(
-      google::longrunning::Operation) override {
-    return make_ready_future(StatusOr<gcsa::UpdateDatabaseDdlMetadata>(
-        Status(StatusCode::kUnimplemented, __func__)));
   }
 
   Status DropDatabase(grpc::ClientContext& client_context,
@@ -160,7 +147,7 @@ std::shared_ptr<DatabaseAdminStub> CreateDefaultDatabaseAdminStub(
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<DatabaseAdminLogging>(std::move(stub));
   }
-  return std::make_shared<internal::DatabaseAdminRetry>(std::move(stub));
+  return stub;
 }
 
 }  // namespace internal

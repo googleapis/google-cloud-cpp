@@ -38,11 +38,6 @@ class DatabaseAdminStub {
       google::spanner::admin::database::v1::CreateDatabaseRequest const&
           request) = 0;
 
-  /// Wait for a long-running operation to create a new Cloud Spanner database
-  /// completes.
-  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
-      AwaitCreateDatabase(google::longrunning::Operation) = 0;
-
   /// Fetch the metadata for a particular database.
   virtual StatusOr<google::spanner::admin::database::v1::Database> GetDatabase(
       grpc::ClientContext&,
@@ -58,11 +53,6 @@ class DatabaseAdminStub {
   virtual StatusOr<google::longrunning::Operation> UpdateDatabase(
       grpc::ClientContext&, google::spanner::admin::database::v1::
                                 UpdateDatabaseDdlRequest const&) = 0;
-
-  /// Wait for the long-running operation created by `UpdateDatabase()`.
-  virtual future<
-      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-      AwaitUpdateDatabase(google::longrunning::Operation) = 0;
 
   /// Drop an existing Cloud Spanner database.
   virtual Status DropDatabase(

@@ -27,7 +27,6 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-using ::testing::ByMove;
 using ::testing::Return;
 namespace gcsa = google::spanner::admin::database::v1;
 
@@ -104,32 +103,6 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
   HasLogLineWith(TransientError().message());
 }
 
-TEST_F(DatabaseAdminLoggingTest, AwaitCreateDatabase) {
-  auto result = google::cloud::make_ready_future(
-      StatusOr<gcsa::Database>(TransientError()));
-  EXPECT_CALL(*mock_, AwaitCreateDatabase(_))
-      .WillOnce(Return(ByMove(std::move(result))));
-
-  DatabaseAdminLogging stub(mock_);
-
-  auto fut = stub.AwaitCreateDatabase(google::longrunning::Operation{});
-  HasLogLineWith("AwaitCreateDatabase");
-  HasLogLineWith("a ready future");
-}
-
-TEST_F(DatabaseAdminLoggingTest, AwaitCreateDatabase_Pending) {
-  promise<StatusOr<gcsa::Database>> promise;
-  auto result = promise.get_future();
-  EXPECT_CALL(*mock_, AwaitCreateDatabase(_))
-      .WillOnce(Return(ByMove(std::move(result))));
-
-  DatabaseAdminLogging stub(mock_);
-
-  auto fut = stub.AwaitCreateDatabase(google::longrunning::Operation{});
-  HasLogLineWith("AwaitCreateDatabase");
-  HasLogLineWith("an unsatisfied future");
-}
-
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, UpdateDatabase(_, _)).WillOnce(Return(TransientError()));
 
@@ -141,19 +114,6 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
 
   HasLogLineWith("UpdateDatabase");
   HasLogLineWith(TransientError().message());
-}
-
-TEST_F(DatabaseAdminLoggingTest, AwaitUpdateDatabase) {
-  auto result = google::cloud::make_ready_future(
-      StatusOr<gcsa::UpdateDatabaseDdlMetadata>(TransientError()));
-  EXPECT_CALL(*mock_, AwaitUpdateDatabase(_))
-      .WillOnce(Return(ByMove(std::move(result))));
-
-  DatabaseAdminLogging stub(mock_);
-
-  auto fut = stub.AwaitUpdateDatabase(google::longrunning::Operation{});
-  HasLogLineWith("AwaitUpdateDatabase");
-  HasLogLineWith("a ready future");
 }
 
 TEST_F(DatabaseAdminLoggingTest, DropDatabase) {

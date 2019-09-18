@@ -45,23 +45,12 @@ StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminMetadata::GetDatabaseDdl(
   return child_->GetDatabaseDdl(context, request);
 }
 
-future<StatusOr<gcsa::Database>> DatabaseAdminMetadata::AwaitCreateDatabase(
-    google::longrunning::Operation operation) {
-  return child_->AwaitCreateDatabase(std::move(operation));
-}
-
 StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::UpdateDatabase(
     grpc::ClientContext& context,
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   SetMetadata(context, "database=" + request.database());
   return child_->UpdateDatabase(context, request);
-}
-
-future<StatusOr<gcsa::UpdateDatabaseDdlMetadata>>
-DatabaseAdminMetadata::AwaitUpdateDatabase(
-    google::longrunning::Operation operation) {
-  return child_->AwaitUpdateDatabase(std::move(operation));
 }
 
 Status DatabaseAdminMetadata::DropDatabase(

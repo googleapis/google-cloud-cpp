@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
-#include "google/cloud/spanner/internal/database_admin_retry.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
@@ -34,17 +33,14 @@ namespace gcsa = ::google::spanner::admin::database::v1;
 
 std::shared_ptr<DatabaseAdminConnection> CreateTestingConnection(
     std::shared_ptr<internal::DatabaseAdminStub> mock) {
+  LimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
+  ExponentialBackoffPolicy backoff(
+      /*initial_delay=*/std::chrono::microseconds(1),
+      /*maximum_delay=*/std::chrono::microseconds(1),
+      /*scaling=*/2.0);
+  GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
   return internal::MakeDatabaseAdminConnection(
-      std::move(mock),
-      LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
-      ExponentialBackoffPolicy(std::chrono::microseconds(1),
-                               std::chrono::microseconds(1), 2.0)
-          .clone());
-}
-
-std::shared_ptr<DatabaseAdminConnection> CreatePlainTestingConnection(
-    std::shared_ptr<internal::DatabaseAdminStub> mock) {
-  return internal::MakePlainDatabaseAdminConnection(std::move(mock));
+      std::move(mock), retry.clone(), backoff.clone(), polling.clone());
 }
 
 /// @test Verify that successful case works.
@@ -54,28 +50,28 @@ TEST(DatabaseAdminClientTest, CreateDatabaseSuccess) {
   EXPECT_CALL(*mock, CreateDatabase(_, _))
       .WillOnce(
           Invoke([](grpc::ClientContext&, gcsa::CreateDatabaseRequest const&) {
-            gcsa::Database database;
-            database.set_name("test-db");
             google::longrunning::Operation op;
             op.set_name("test-operation-name");
-            op.set_done(true);
-            op.mutable_response()->PackFrom(database);
+            op.set_done(false);
             return make_status_or(op);
           }));
-  EXPECT_CALL(*mock, AwaitCreateDatabase(_))
-      .WillOnce(Invoke([](google::longrunning::Operation const& op) {
-        EXPECT_EQ("test-operation-name", op.name());
-        EXPECT_TRUE(op.done());
-        EXPECT_TRUE(op.has_response());
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
         gcsa::Database database;
-        op.response().UnpackTo(&database);
-        return make_ready_future(make_status_or(database));
+        database.set_name("test-db");
+        op.mutable_response()->PackFrom(database);
+        return make_status_or(op);
       }));
 
-  auto conn = CreatePlainTestingConnection(std::move(mock));
+  auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->CreateDatabase({dbase, {}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto db = fut.get();
   EXPECT_STATUS_OK(db);
 
@@ -218,25 +214,27 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
             metadata.set_database("test-db");
             google::longrunning::Operation op;
             op.set_name("test-operation-name");
-            op.set_done(true);
-            op.mutable_response()->PackFrom(metadata);
+            op.set_done(false);
             return make_status_or(op);
           }));
-  EXPECT_CALL(*mock, AwaitUpdateDatabase(_))
-      .WillOnce(Invoke([](google::longrunning::Operation const& op) {
-        EXPECT_EQ("test-operation-name", op.name());
-        EXPECT_TRUE(op.done());
-        EXPECT_TRUE(op.has_response());
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
         gcsa::UpdateDatabaseDdlMetadata metadata;
-        op.response().UnpackTo(&metadata);
-        return make_ready_future(make_status_or(metadata));
+        metadata.set_database("test-db");
+        op.mutable_metadata()->PackFrom(metadata);
+        return make_status_or(op);
       }));
 
-  auto conn = CreatePlainTestingConnection(std::move(mock));
+  auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto fut = conn->UpdateDatabase(
       {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}});
-  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto metadata = fut.get();
   EXPECT_STATUS_OK(metadata);
 
@@ -245,7 +243,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
 
 /// @test Verify that a permanent error in UpdateDatabase is immediately
 /// reported.
-TEST(DatabaseAdminClientTest, HandleUpdateDatabaseError) {
+TEST(DatabaseAdminClientTest, UpdateDatabase_ErrorInPoll) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
@@ -265,7 +263,7 @@ TEST(DatabaseAdminClientTest, HandleUpdateDatabaseError) {
 }
 
 /// @test Verify that errors in the polling loop are reported.
-TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
+TEST(DatabaseAdminClientTest, CreateDatabase_ErrorInPoll) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, CreateDatabase(_, _))
@@ -276,21 +274,26 @@ TEST(DatabaseAdminClientTest, HandleAwaitCreateDatabaseError) {
             op.set_done(false);
             return make_status_or(std::move(op));
           }));
-  EXPECT_CALL(*mock, AwaitCreateDatabase(_))
-      .WillOnce(Invoke([](google::longrunning::Operation const& op) {
-        EXPECT_EQ("test-operation-name", op.name());
-        return make_ready_future(
-            StatusOr<gcsa::Database>(Status(StatusCode::kAborted, "oh noes")));
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_done(true);
+        op.mutable_error()->set_code(
+            static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
+        op.mutable_error()->set_message("uh-oh");
+        return op;
       }));
 
-  auto conn = CreatePlainTestingConnection(std::move(mock));
+  auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto db = conn->CreateDatabase({dbase, {}}).get();
-  EXPECT_EQ(StatusCode::kAborted, db.status().code());
+  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
 }
 
 /// @test Verify that errors in the polling loop are reported.
-TEST(DatabaseAdminClientTest, HandleAwaitUpdateDatabaseError) {
+TEST(DatabaseAdminClientTest, UpdateDatabase_GetOperationError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
@@ -301,20 +304,25 @@ TEST(DatabaseAdminClientTest, HandleAwaitUpdateDatabaseError) {
             op.set_done(false);
             return make_status_or(std::move(op));
           }));
-  EXPECT_CALL(*mock, AwaitUpdateDatabase(_))
-      .WillOnce(Invoke([](google::longrunning::Operation const& op) {
-        EXPECT_EQ("test-operation-name", op.name());
-        return make_ready_future(StatusOr<gcsa::UpdateDatabaseDdlMetadata>(
-            Status(StatusCode::kAborted, "oh noes")));
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_done(true);
+        op.mutable_error()->set_code(
+            static_cast<int>(grpc::StatusCode::PERMISSION_DENIED));
+        op.mutable_error()->set_message("uh-oh");
+        return op;
       }));
 
-  auto conn = CreatePlainTestingConnection(std::move(mock));
+  auto conn = CreateTestingConnection(std::move(mock));
   Database dbase("test-project", "test-instance", "test-db");
   auto db =
       conn->UpdateDatabase(
               {dbase, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"}})
           .get();
-  EXPECT_EQ(StatusCode::kAborted, db.status().code());
+  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
 }
 
 /// @test Verify that we can list databases in multiple pages.
