@@ -38,7 +38,7 @@ RetryObjectReadSource::RetryObjectReadSource(
     : client_(std::move(client)),
       request_(std::move(request)),
       child_(std::move(child)),
-	  retry_policy_prototype_(std::move(retry_policy)),
+      retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
       offset_direction_(request_.HasOption<ReadLast>() ? kFromEnd
                                                        : kFromBeginning),
