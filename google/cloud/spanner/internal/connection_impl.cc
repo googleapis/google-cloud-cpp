@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
+#include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
@@ -28,6 +29,37 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT
+#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT std::chrono::minutes(10)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF \
+  std::chrono::milliseconds(100)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF std::chrono::minutes(1)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING
+#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING 2.0
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING
+
+std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy() {
+  return google::cloud::spanner::LimitedTimeRetryPolicy(
+             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT)
+      .clone();
+}
+
+std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
+  return google::cloud::spanner::ExponentialBackoffPolicy(
+             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF,
+             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF,
+             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING)
+      .clone();
+}
 
 StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
   return internal::Visit(
@@ -420,8 +452,13 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
   spanner_proto::RollbackRequest request;
   request.set_session(session->session_name());
   request.set_transaction_id(s.id());
-  grpc::ClientContext context;
-  return stub_->Rollback(context, request);
+  return internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::RollbackRequest const& request) {
+        return stub_->Rollback(context, request);
+      },
+      request, __func__);
 }
 
 /**

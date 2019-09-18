@@ -39,6 +39,7 @@ using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_testing::HasSessionAndTransactionId;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::HasSubstr;
@@ -68,6 +69,18 @@ MATCHER_P(ReadRequestHasSessionAndBeginTransaction, session,
 MATCHER_P(CreateSessionRequestHasDatabase, database,
           "CreateSessionRequest has expected database") {
   return arg.database() == database;
+}
+
+std::shared_ptr<Connection> MakeTestConnection(
+    Database const& db,
+    std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
+  return std::make_shared<ConnectionImpl>(
+      db, std::move(mock),
+      LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
+      ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
+                               /*maximum_delay=*/std::chrono::microseconds(1),
+                               /*scaling=*/2.0)
+          .clone());
 }
 
 class MockGrpcReader
@@ -611,7 +624,7 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
   EXPECT_THAT(rollback.message(), HasSubstr("Cannot rollback"));
 }
 
-TEST(ConnectionImplTest, RollbackFailure) {
+TEST(ConnectionImplTest, Rollback_PermanentFailure) {
   auto db = Database("project", "instance", "database");
   std::string const session_name = "test-session-name";
   std::string const transaction_id = "test-txn-id";
@@ -635,7 +648,7 @@ TEST(ConnectionImplTest, RollbackFailure) {
         return Status(StatusCode::kPermissionDenied, "uh-oh in Rollback");
       }));
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeTestConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   auto begin_transaction =
       [&transaction_id](SessionHolder&, spanner_proto::TransactionSelector& s,
@@ -649,7 +662,7 @@ TEST(ConnectionImplTest, RollbackFailure) {
   EXPECT_THAT(rollback.message(), HasSubstr("uh-oh in Rollback"));
 }
 
-TEST(ConnectionImplTest, RollbackSuccess) {
+TEST(ConnectionImplTest, Rollback_TooManyTransientFailures) {
   auto db = Database("project", "instance", "database");
   std::string const session_name = "test-session-name";
   std::string const transaction_id = "test-txn-id";
@@ -665,6 +678,47 @@ TEST(ConnectionImplTest, RollbackSuccess) {
         return session;
       }));
   EXPECT_CALL(*mock, Rollback(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Invoke([&session_name, &transaction_id](
+                     grpc::ClientContext&,
+                     spanner_proto::RollbackRequest const& request) {
+            EXPECT_EQ(session_name, request.session());
+            EXPECT_EQ(transaction_id, request.transaction_id());
+            return Status(StatusCode::kUnavailable, "try-again in Rollback");
+          }));
+
+  auto conn = MakeTestConnection(db, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto begin_transaction =
+      [&transaction_id](SessionHolder&, spanner_proto::TransactionSelector& s,
+                        std::int64_t) {
+        s.set_id(transaction_id);
+        return 0;
+      };
+  internal::Visit(txn, begin_transaction);
+  auto rollback = conn->Rollback({txn});
+  EXPECT_EQ(StatusCode::kUnavailable, rollback.code());
+  EXPECT_THAT(rollback.message(), HasSubstr("try-again in Rollback"));
+}
+
+TEST(ConnectionImplTest, Rollback_Success) {
+  auto db = Database("project", "instance", "database");
+  std::string const session_name = "test-session-name";
+  std::string const transaction_id = "test-txn-id";
+
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(Invoke([&db, &session_name](
+                           grpc::ClientContext&,
+                           spanner_proto::CreateSessionRequest const& request) {
+        EXPECT_EQ(db.FullName(), request.database());
+        spanner_proto::Session session;
+        session.set_name(session_name);
+        return session;
+      }));
+  EXPECT_CALL(*mock, Rollback(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Invoke([&session_name, &transaction_id](
                            grpc::ClientContext&,
                            spanner_proto::RollbackRequest const& request) {

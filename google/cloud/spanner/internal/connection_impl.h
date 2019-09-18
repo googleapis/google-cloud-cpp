@@ -15,10 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_CONNECTION_IMPL_H_
 
+#include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -33,6 +35,12 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
+/// Return the default retry policy for `ConnectionImpl`
+std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy();
+
+/// Return the default backoff policy for `ConnectionImpl`
+std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
+
 /**
  * A concrete `Connection` subclass that uses gRPC to actually talk to a real
  * Spanner instance. See `MakeConnection()` for a factory function that creates
@@ -41,11 +49,28 @@ namespace internal {
 class ConnectionImpl : public Connection,
                        public std::enable_shared_from_this<ConnectionImpl> {
  public:
-  // Creates a ConnectionImpl that will talk to the specified `db` using the
-  // given `stub`. We can test this class by injecting in a mock `stub`.
-  explicit ConnectionImpl(Database db,
-                          std::shared_ptr<internal::SpannerStub> stub)
-      : db_(std::move(db)), stub_(std::move(stub)) {}
+  /**
+   * A constructor that sets the retry abd backoff policies.
+   *
+   * @note In tests we can use a mock stub and custom (or mock) policies.
+   */
+  ConnectionImpl(Database db, std::shared_ptr<internal::SpannerStub> stub,
+                 std::unique_ptr<RetryPolicy> retry_policy,
+                 std::unique_ptr<BackoffPolicy> backoff_policy)
+      : db_(std::move(db)),
+        stub_(std::move(stub)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
+
+  /**
+   * A constructor using the default retry and backoff policies.
+   *
+   * @note We can test this class by injecting in a mock `stub`.
+   */
+  ConnectionImpl(Database db, std::shared_ptr<internal::SpannerStub> stub)
+      : ConnectionImpl(std::move(db), std::move(stub),
+                       DefaultConnectionRetryPolicy(),
+                       DefaultConnectionBackoffPolicy()) {}
 
   StatusOr<ResultSet> Read(ReadParams) override;
   StatusOr<std::vector<ReadPartition>> PartitionRead(
@@ -101,6 +126,9 @@ class ConnectionImpl : public Connection,
   // TODO(#307) - improve session refresh and expiration.
   std::mutex mu_;
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
+
+  std::unique_ptr<RetryPolicy> retry_policy_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_;
 };
 
 }  // namespace internal
