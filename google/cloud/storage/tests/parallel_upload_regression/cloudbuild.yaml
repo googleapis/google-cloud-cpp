@@ -25,7 +25,7 @@ steps:
            '--target', 'devtools',
            '-t', 'gcr.io/${PROJECT_ID}/parallel-upload-regression-devtools',
            '--cache-from', 'gcr.io/${PROJECT_ID}/parallel-upload-regression-devtools',
-           '-f', 'google/cloud/storage/tests/read_object_stall_regression/Dockerfile',
+           '-f', 'google/cloud/storage/tests/parallel_upload_regression/Dockerfile',
            '--build-arg', 'CMAKE_BUILD_TYPE=${_CMAKE_BUILD_TYPE}',
            '.']
     timeout: 3600s
