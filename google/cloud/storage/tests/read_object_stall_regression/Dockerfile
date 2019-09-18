@@ -17,19 +17,8 @@ FROM ubuntu:bionic AS devtools
 # Install the typical development tools and some additions:
 RUN apt update && \
     apt install -y build-essential cmake git gcc g++ cmake \
-        libssl-dev make pkg-config tar wget zlib1g-dev
-
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/curl/curl/archive/curl-7_64_0.tar.gz
-RUN tar -xf curl-7_64_0.tar.gz
-WORKDIR /var/tmp/build/curl-curl-7_64_0
-RUN ls -l
-RUN cmake -H. -B.build \
-        -DHTTP_ONLY=ON \
-        -DCMAKE_USE_OPENSSL=ON \
-        -DBUILD_SHARED_LIBS=OFF \
-        -DCURL_STATICLIB=ON
-RUN cmake --build .build --target install -- -j $(nproc)
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
 
 FROM devtools AS build
 
@@ -40,18 +29,12 @@ COPY . /w
 ARG CMAKE_BUILD_TYPE=Release
 ARG SHORT_SHA=""
 
-RUN cmake -H. -B.build \
+RUN cmake -Hsuper -B.build \
     -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE} \
     -DGOOGLE_CLOUD_CPP_BUILD_METADATA=${SHORT_SHA}
 
 RUN cmake \
     --build .build \
-    --target read_object_stall_test \
-    -- -j $(nproc)
-
-RUN cmake \
-    --build .build \
-    --target storage_object_samples \
     -- -j $(nproc)
 
 # ================================================================
@@ -60,13 +43,13 @@ RUN cmake \
 # dependencies are installed.
 FROM ubuntu:bionic
 RUN apt update && \
-    apt install -y libstdc++6 zlib1g binutils ca-certificates \
-        tcpdump coreutils strace procps
+    apt install -y libstdc++6 libc-ares2 libcurl4 zlib1g binutils \
+        ca-certificates tcpdump coreutils strace procps
 RUN /usr/sbin/update-ca-certificates
 
 COPY --from=build \
-    /w/.build/google/cloud/storage/tests/read_object_stall_regression/read_object_stall_test \
-    /w/.build/google/cloud/storage/examples/storage_object_samples \
+    /w/.build/build/google-cloud-cpp/src/google_cloud_cpp_project-build/google/cloud/storage/tests/read_object_stall_regression/read_object_stall_test \
+    /w/.build/build/google-cloud-cpp/src/google_cloud_cpp_project-build/google/cloud/storage/examples/storage_object_samples \
     /r/
 
 CMD ["/bin/false"]
