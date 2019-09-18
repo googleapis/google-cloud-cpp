@@ -113,22 +113,32 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r);
 class ResumableUploadSessionError : public ResumableUploadSession {
  public:
   explicit ResumableUploadSessionError(Status status)
-      : status_(std::move(status)), last_response_(status_) {}
+      : last_response_(std::move(status)) {}
+
+  ResumableUploadSessionError(Status status, std::uint64_t next_expected_byte,
+                              std::string id)
+      : last_response_(std::move(status)),
+        next_expected_byte_(next_expected_byte),
+        id_(id) {}
 
   ~ResumableUploadSessionError() override = default;
 
   StatusOr<ResumableUploadResponse> UploadChunk(std::string const&) override {
-    return status_;
+    return last_response_;
   }
 
   StatusOr<ResumableUploadResponse> UploadFinalChunk(std::string const&,
                                                      std::uint64_t) override {
-    return status_;
+    return last_response_;
   }
 
-  StatusOr<ResumableUploadResponse> ResetSession() override { return status_; }
+  StatusOr<ResumableUploadResponse> ResetSession() override {
+    return last_response_;
+  }
 
-  std::uint64_t next_expected_byte() const override { return 0; }
+  std::uint64_t next_expected_byte() const override {
+    return next_expected_byte_;
+  }
 
   std::string const& session_id() const override { return id_; }
 
@@ -139,8 +149,8 @@ class ResumableUploadSessionError : public ResumableUploadSession {
   }
 
  private:
-  Status status_;
   StatusOr<ResumableUploadResponse> last_response_;
+  std::uint64_t next_expected_byte_ = 0;
   std::string id_;
 };
 

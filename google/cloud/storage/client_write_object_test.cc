@@ -145,10 +145,12 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
     return StatusOr<std::unique_ptr<internal::ResumableUploadSession>>(
         std::unique_ptr<internal::ResumableUploadSession>(mock_session));
   };
+  std::string const empty;
   EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
   EXPECT_CALL(*mock_session, UploadChunk(_))
       .WillRepeatedly(Return(PermanentError()));
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
+  EXPECT_CALL(*mock_session, session_id()).WillRepeatedly(ReturnRef(empty));
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
 
   // make sure it is actually sent
