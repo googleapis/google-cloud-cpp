@@ -477,11 +477,11 @@ TEST(ConnectionImplTest, ExecuteBatchDmlFailure) {
   EXPECT_THAT(txn, HasSessionAndTransactionId("session-name", "1234567890"));
 }
 
-TEST(ConnectionImplTest, CommitGetSessionFailure) {
+TEST(ConnectionImplTest, CommitGetSession_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeTestConnection(db, mock);
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(
           Invoke([&db](grpc::ClientContext&,
@@ -493,6 +493,57 @@ TEST(ConnectionImplTest, CommitGetSessionFailure) {
   auto commit = conn->Commit({MakeReadWriteTransaction(), {}});
   EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, CommitGetSession_TooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Invoke([&db](grpc::ClientContext&,
+                       spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return Status(StatusCode::kUnavailable, "try-again in GetSession");
+          }));
+
+  auto commit = conn->Commit({MakeReadWriteTransaction(), {}});
+  EXPECT_EQ(StatusCode::kUnavailable, commit.status().code());
+  EXPECT_THAT(commit.status().message(), HasSubstr("try-again in GetSession"));
+}
+
+TEST(ConnectionImplTest, CommitGetSession_Retry) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(
+          Invoke([&db](grpc::ClientContext&,
+                       spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return Status(StatusCode::kUnavailable, "try-again in GetSession");
+          }))
+      .WillOnce(
+          Invoke([&db](grpc::ClientContext&,
+                       spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+  EXPECT_CALL(*mock, Commit(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          spanner_proto::CommitRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_TRUE(request.has_single_use_transaction());
+        return Status(StatusCode::kPermissionDenied, "uh-oh in Commit");
+      }));
+  auto commit = conn->Commit({MakeReadWriteTransaction(), {}});
+  EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
+  EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
 }
 
 TEST(ConnectionImplTest, CommitCommitFailure) {

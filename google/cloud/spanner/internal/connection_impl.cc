@@ -482,10 +482,15 @@ StatusOr<SessionHolder> ConnectionImpl::GetSession(bool dissociate_from_pool) {
     // `sessions_` in this function and holding mutexes while making RPCs is
     // (generally) a bad practice.
     lk.unlock();
-    grpc::ClientContext context;
     spanner_proto::CreateSessionRequest request;
     request.set_database(db_.FullName());
-    auto response = stub_->CreateSession(context, request);
+    auto response = RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               spanner_proto::CreateSessionRequest const& request) {
+          return stub_->CreateSession(context, request);
+        },
+        request, __func__);
     if (!response) {
       return response.status();
     }
