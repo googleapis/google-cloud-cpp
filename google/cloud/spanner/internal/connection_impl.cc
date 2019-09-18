@@ -378,8 +378,13 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     *request.add_statements() = internal::ToProto(std::move(sql));
   }
 
-  grpc::ClientContext context;
-  auto response = stub_->ExecuteBatchDml(context, request);
+  auto response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::ExecuteBatchDmlRequest const& request) {
+        return stub_->ExecuteBatchDml(context, request);
+      },
+      request, __func__);
   if (!response) {
     return std::move(response).status();
   }

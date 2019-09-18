@@ -416,7 +416,9 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
         result_sets: { stats: { row_count_exact: 2 } }
       )pb",
       &response));
-  EXPECT_CALL(*mock, ExecuteBatchDml(_, _)).WillOnce(Return(response));
+  EXPECT_CALL(*mock, ExecuteBatchDml(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(response));
 
   auto request = {
       SqlStatement("update ..."),
@@ -437,7 +439,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
   EXPECT_THAT(txn, HasSessionAndTransactionId("session-name", "1234567890"));
 }
 
-TEST(ConnectionImplTest, ExecuteBatchDmlFailure) {
+TEST(ConnectionImplTest, ExecuteBatchDml_PartialFailure) {
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
@@ -475,6 +477,58 @@ TEST(ConnectionImplTest, ExecuteBatchDmlFailure) {
   EXPECT_EQ(result->stats[0].row_count, 42);
   EXPECT_EQ(result->stats[1].row_count, 43);
   EXPECT_THAT(txn, HasSessionAndTransactionId("session-name", "1234567890"));
+}
+
+TEST(ConnectionImplTest, ExecuteBatchDml_PermanmentFailure) {
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  spanner_proto::Session session;
+  session.set_name("session-name");
+  EXPECT_CALL(*mock, CreateSession(_, _)).WillOnce(Return(session));
+
+  EXPECT_CALL(*mock, ExecuteBatchDml(_, _))
+      .WillOnce(Return(
+          Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteBatchDml")));
+
+  auto request = {
+      SqlStatement("update ..."),
+      SqlStatement("update ..."),
+      SqlStatement("update ..."),
+  };
+
+  auto conn = MakeTestConnection(db, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto result = conn->ExecuteBatchDml({txn, request});
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in ExecuteBatchDml"));
+}
+
+TEST(ConnectionImplTest, ExecuteBatchDml_TooManyTransientFailures) {
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  spanner_proto::Session session;
+  session.set_name("session-name");
+  EXPECT_CALL(*mock, CreateSession(_, _)).WillOnce(Return(session));
+
+  EXPECT_CALL(*mock, ExecuteBatchDml(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(
+          Status(StatusCode::kUnavailable, "try-again in ExecuteBatchDml")));
+
+  auto request = {
+      SqlStatement("update ..."),
+      SqlStatement("update ..."),
+      SqlStatement("update ..."),
+  };
+
+  auto conn = MakeTestConnection(db, mock);
+  auto txn = MakeReadWriteTransaction();
+  auto result = conn->ExecuteBatchDml({txn, request});
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("try-again in ExecuteBatchDml"));
 }
 
 TEST(ConnectionImplTest, CommitGetSession_PermanentFailure) {
