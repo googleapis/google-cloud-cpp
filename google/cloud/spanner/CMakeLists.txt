@@ -387,15 +387,29 @@ install(EXPORT spanner-targets
 install(TARGETS spanner_client
         EXPORT spanner-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_spanner_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                COMPONENT google_cloud_cpp_spanner_runtime
+                NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_spanner_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(TARGETS spanner_client
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_spanner_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_spanner_development)
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
         DESTINATION include/google/cloud/spanner
+        COMPONENT google_cloud_cpp_spanner_development
         FILES_MATCHING
         PATTERN "*.h")
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
         DESTINATION include/google/cloud/spanner
+        COMPONENT google_cloud_cpp_spanner_development
         FILES_MATCHING
         PATTERN "*.inc")
 
@@ -414,7 +428,8 @@ set(GOOGLE_CLOUD_SPANNER_PC_LIBS "-lspanner_client")
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
                "spanner_client.pc" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+        COMPONENT google_cloud_cpp_spanner_development)
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
@@ -423,4 +438,5 @@ configure_file(
     "spanner_client-config-version.cmake" @ONLY)
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
               "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client")
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client"
+        COMPONENT google_cloud_cpp_spanner_development)
