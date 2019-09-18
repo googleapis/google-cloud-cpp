@@ -46,8 +46,8 @@ spec:
           ]
           resources:
             requests:
-              memory: "200Mi"
-              cpu: "25m"
+              memory: "2Gi"
+              cpu: "1000m"
               ephemeral-storage: "128Mi"
           volumeMounts:
             - name: google-cloud-key

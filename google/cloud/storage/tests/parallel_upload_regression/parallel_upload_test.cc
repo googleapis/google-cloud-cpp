@@ -38,7 +38,7 @@ class ParallelUploadTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   static constexpr auto max_object_size = 128 * 1024 * 1024L;
-  static constexpr auto object_count_per_thread = 16;
+  static constexpr auto object_count_per_thread = 100;
 
   void SetUp() override {
     StorageIntegrationTest::SetUp();
@@ -113,9 +113,9 @@ class ParallelUploadTest
   static int ThreadCount() {
     auto count = std::thread::hardware_concurrency();
     if (count == 0) {
-      return 4;
+      return 2;
     }
-    return 4 * static_cast<int>(count);
+    return 2 * static_cast<int>(count);
   }
 
  private:
