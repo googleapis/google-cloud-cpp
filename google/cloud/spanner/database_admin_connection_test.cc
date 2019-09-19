@@ -410,6 +410,65 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, GetIamPolicy_Success) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+  std::string const expected_role = "roles/spanner.databaseReader";
+  std::string const expected_member = "foobar@example.com";
+
+  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(
+          Invoke([&expected_name, &expected_role, &expected_member](
+                     grpc::ClientContext&,
+                     google::iam::v1::GetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            google::iam::v1::Policy response;
+            auto& binding = *response.add_bindings();
+            binding.set_role(expected_role);
+            *binding.add_members() = expected_member;
+            return response;
+          }));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->GetIamPolicy(
+      {Database("test-project", "test-instance", "test-database")});
+  EXPECT_STATUS_OK(response);
+  ASSERT_EQ(1, response->bindings().size());
+  ASSERT_EQ(expected_role, response->bindings().Get(0).role());
+  ASSERT_EQ(1, response->bindings().Get(0).members().size());
+  ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, GetIamPolicy_PermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->GetIamPolicy(
+      {Database("test-project", "test-instance", "test-database")});
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+/// @test Verify that too many transients errors are reported corrrectly.
+TEST(DatabaseAdminClientTest, GetIamPolicy_TooManyTransients) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetIamPolicy(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->GetIamPolicy(
+      {Database("test-project", "test-instance", "test-database")});
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

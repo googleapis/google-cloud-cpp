@@ -54,6 +54,11 @@ Status DatabaseAdminClient::DropDatabase(Database db) {
   return conn_->DropDatabase({std::move(db)});
 }
 
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
+    Database db) {
+  return conn_->GetIamPolicy({std::move(db)});
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

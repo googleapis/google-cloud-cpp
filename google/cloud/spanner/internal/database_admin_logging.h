@@ -70,6 +70,10 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListDatabasesRequest const&)
       override;
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      grpc::ClientContext& context,
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context,
       google::longrunning::GetOperationRequest const& request) override;

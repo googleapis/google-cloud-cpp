@@ -68,6 +68,13 @@ DatabaseAdminMetadata::ListDatabases(
   return child_->ListDatabases(context, request);
 }
 
+StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->GetIamPolicy(context, request);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

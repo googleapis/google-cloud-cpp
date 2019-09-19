@@ -87,6 +87,17 @@ DatabaseAdminLogging::ListDatabases(
       context, request, __func__);
 }
 
+StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

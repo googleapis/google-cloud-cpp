@@ -78,6 +78,10 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
 
+  auto get_iam_policy_result = client.GetIamPolicy(db);
+  ASSERT_STATUS_OK(get_iam_policy_result);
+  EXPECT_EQ(0, get_iam_policy_result->bindings_size());
+
   auto get_ddl_result = client.GetDatabaseDdl(db);
   ASSERT_STATUS_OK(get_ddl_result);
   EXPECT_EQ(0, get_ddl_result->statements_size());

@@ -401,6 +401,30 @@ void DropDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+//! [database-get-iam-policy]
+void DatabaseGetIamPolicy(google::cloud::spanner::DatabaseAdminClient client,
+                          std::string const& project_id,
+                          std::string const& instance_id,
+                          std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  auto actual = client.GetIamPolicy(database);
+  if (!actual) throw std::runtime_error(actual.status().message());
+
+  std::cout << "The IAM policy for database " << database_id << " is:\n"
+            << actual->DebugString() << "\n";
+}
+//! [database-get-iam-policy]
+
+void DatabaseGetIamPolicyCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "database-get-iam-policy <project-id> <instance-id> <database-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  DatabaseGetIamPolicy(std::move(client), argv[0], argv[1], argv[2]);
+}
+
 //! [quickstart] [START spanner_quickstart]
 void Quickstart(std::string const& project_id, std::string const& instance_id,
                 std::string const& database_id) {
@@ -979,6 +1003,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-column", &AddColumn},
       {"list-databases", &ListDatabasesCommand},
       {"drop-database", &DropDatabase},
+      {"database-get-iam-policy", &DatabaseGetIamPolicyCommand},
       {"quickstart", &QuickstartCommand},
       make_command_entry("insert-data", &InsertData),
       make_command_entry("update-data", &UpdateData),
@@ -1108,6 +1133,10 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_add_column sample\n";
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning (database) get-iam-policy sample\n";
+  RunOneCommand(
+      {"", "database-get-iam-policy", project_id, instance_id, database_id});
 
   std::cout << "\nRunning spanner_quickstart sample\n";
   RunOneCommand({"", "quickstart", project_id, instance_id, database_id});

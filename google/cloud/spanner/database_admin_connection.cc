@@ -225,6 +225,20 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         });
   }
 
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      GetIamPolicyParams p) override {
+    google::iam::v1::GetIamPolicyRequest request;
+    request.set_resource(p.database.FullName());
+    grpc::ClientContext context;
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::iam::v1::GetIamPolicyRequest const& request) {
+          return stub_->GetIamPolicy(context, request);
+        },
+        request, __func__);
+  }
+
  private:
   future<StatusOr<gcsa::Database>> AwaitCreateDatabase(
       google::longrunning::Operation operation) {

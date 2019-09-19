@@ -209,6 +209,17 @@ class DatabaseAdminClient {
    */
   ListDatabaseRange ListDatabases(Instance in);
 
+  /**
+   * Gets the IAM policy for a database.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore always idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc database-get-iam-policy
+   */
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(Database db);
+
   /// Create a new client with the given stub. For testing only.
   explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> c)
       : conn_(std::move(c)) {}

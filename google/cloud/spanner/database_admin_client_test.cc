@@ -152,6 +152,33 @@ TEST(DatabaseAdminClientTest, ListInstances) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
+/// @test Verify DatabaseAdminClient uses GetIamPolicy() correctly.
+TEST(DatabaseAdminClientTest, GetIamPolicy) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Database const expected_db("test-project", "test-instance", "test-database");
+  std::string const expected_role = "roles/spanner.databaseReader";
+  std::string const expected_member = "foobar@example.com";
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce(
+          Invoke([&expected_db, &expected_role, &expected_member](
+                     DatabaseAdminConnection::GetIamPolicyParams const& p) {
+            EXPECT_EQ(expected_db, p.database);
+            google::iam::v1::Policy response;
+            auto& binding = *response.add_bindings();
+            binding.set_role(expected_role);
+            *binding.add_members() = expected_member;
+            return response;
+          }));
+
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.GetIamPolicy(expected_db);
+  EXPECT_STATUS_OK(response);
+  ASSERT_EQ(1, response->bindings().size());
+  ASSERT_EQ(expected_role, response->bindings().Get(0).role());
+  ASSERT_EQ(1, response->bindings().Get(0).members().size());
+  ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

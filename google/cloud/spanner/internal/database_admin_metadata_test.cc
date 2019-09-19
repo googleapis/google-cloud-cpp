@@ -138,6 +138,29 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
   EXPECT_EQ(TransientError(), response.status());
 }
 
+TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
+  EXPECT_CALL(*mock_, GetIamPolicy(_, _))
+      .WillOnce(Invoke([this](grpc::ClientContext& context,
+                              google::iam::v1::GetIamPolicyRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.database.v1.DatabaseAdmin."
+            "GetIamPolicy",
+            expected_api_client_header_));
+        return TransientError();
+      }));
+
+  DatabaseAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database");
+  auto response = stub.GetIamPolicy(context, request);
+  EXPECT_EQ(TransientError(), response.status());
+}
+
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _))
       .WillOnce(Invoke([this](grpc::ClientContext& context,
