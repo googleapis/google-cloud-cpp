@@ -24,7 +24,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 /**
- * Implements the logging Decorator for DatabaseAdminStub.
+ * Implements the logging Decorator for InstanceAdminStub.
  */
 class InstanceAdminLogging : public InstanceAdminStub {
  public:
@@ -35,9 +35,9 @@ class InstanceAdminLogging : public InstanceAdminStub {
 
   //@{
   /**
-   * @name Override the functions from `DatabaseAdminStub`.
+   * @name Override the functions from `InstanceAdminStub`.
    *
-   * Run the logging loop (if appropriate) for the child DatabaseAdminStub.
+   * Run the logging loop (if appropriate) for the child InstanceAdminStub.
    */
   ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
