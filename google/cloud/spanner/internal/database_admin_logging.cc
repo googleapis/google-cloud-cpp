@@ -98,6 +98,17 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::GetIamPolicy(
       context, request, __func__);
 }
 
+StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

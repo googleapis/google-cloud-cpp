@@ -425,6 +425,66 @@ void DatabaseGetIamPolicyCommand(std::vector<std::string> const& argv) {
   DatabaseGetIamPolicy(std::move(client), argv[0], argv[1], argv[2]);
 }
 
+//! [add-database-reader-on-database]
+void AddDatabaseReaderOnDatabase(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& new_reader) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  auto current = client.GetIamPolicy(database);
+  if (!current) throw std::runtime_error(current.status().message());
+
+  // Find (or create) the binding for "roles/spanner.databaseReader".
+  auto& binding = [&current]() -> google::iam::v1::Binding& {
+    auto role_pos =
+        std::find_if(current->mutable_bindings()->begin(),
+                     current->mutable_bindings()->end(),
+                     [](google::iam::v1::Binding const& b) {
+                       return b.role() == "roles/spanner.databaseReader" &&
+                              !b.has_condition();
+                     });
+    if (role_pos != current->mutable_bindings()->end()) {
+      return *role_pos;
+    }
+    auto& binding = *current->add_bindings();
+    binding.set_role("roles/spanner.databaseReader");
+    return binding;
+  }();
+
+  auto member_pos =
+      std::find(binding.members().begin(), binding.members().end(), new_reader);
+  if (member_pos != binding.members().end()) {
+    std::cout << "The entity " << new_reader
+              << " is already a database reader:\n"
+              << current->DebugString();
+    return;
+  }
+  if (member_pos == binding.members().end()) {
+    binding.add_members(new_reader);
+  }
+
+  auto result = client.SetIamPolicy(database, *std::move(current));
+  if (!result) throw std::runtime_error(result.status().message());
+
+  std::cout << "Successfully added " << new_reader
+            << " to the database reader role:\n"
+            << result->DebugString() << "\n";
+}
+//! [add-database-reader-on-database]
+
+void AddDatabaseReaderOnDatabaseCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "add-database-reader-on-database <project-id> <instance-id>"
+        " <database-id> <new-reader>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client(
+      google::cloud::spanner::MakeDatabaseAdminConnection());
+  AddDatabaseReaderOnDatabase(std::move(client), argv[0], argv[1], argv[2],
+                              argv[3]);
+}
+
 //! [quickstart] [START spanner_quickstart]
 void Quickstart(std::string const& project_id, std::string const& instance_id,
                 std::string const& database_id) {
@@ -1004,6 +1064,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"list-databases", &ListDatabasesCommand},
       {"drop-database", &DropDatabase},
       {"database-get-iam-policy", &DatabaseGetIamPolicyCommand},
+      {"add-database-reader-on-database", &AddDatabaseReaderOnDatabaseCommand},
       {"quickstart", &QuickstartCommand},
       make_command_entry("insert-data", &InsertData),
       make_command_entry("update-data", &UpdateData),
@@ -1137,6 +1198,10 @@ void RunAll() {
   std::cout << "\nRunning (database) get-iam-policy sample\n";
   RunOneCommand(
       {"", "database-get-iam-policy", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning (database) add-database-reader sample\n";
+  RunOneCommand({"", "add-database-reader-on-database", project_id, instance_id,
+                 database_id, "serviceAccount:" + test_iam_service_account});
 
   std::cout << "\nRunning spanner_quickstart sample\n";
   RunOneCommand({"", "quickstart", project_id, instance_id, database_id});

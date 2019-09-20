@@ -123,6 +123,18 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& client_context,
+      google::iam::v1::SetIamPolicyRequest const& request) override {
+    google::iam::v1::Policy response;
+    auto status =
+        database_admin_->SetIamPolicy(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) override {

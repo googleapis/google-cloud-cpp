@@ -114,6 +114,13 @@ class DatabaseAdminConnection {
     /// The name of the database.
     Database database;
   };
+
+  /// Wrap the arguments for `SetIamPolicy()`.
+  struct SetIamPolicyParams {
+    /// The name of the database.
+    Database database;
+    google::iam::v1::Policy policy;
+  };
   //@}
 
   /// Define the interface for a google.spanner.v1.DatabaseAdmin.CreateDatabase
@@ -149,6 +156,11 @@ class DatabaseAdminConnection {
   /// RPC.
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       GetIamPolicyParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.SetIamPolicy
+  /// RPC.
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      SetIamPolicyParams) = 0;
 };
 
 /**

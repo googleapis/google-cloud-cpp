@@ -53,6 +53,8 @@ class MockDatabaseAdminConnection
   MOCK_METHOD1(ListDatabases, spanner::ListDatabaseRange(ListDatabasesParams));
   MOCK_METHOD1(GetIamPolicy,
                StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));
+  MOCK_METHOD1(SetIamPolicy,
+               StatusOr<google::iam::v1::Policy>(SetIamPolicyParams));
 };
 
 }  // namespace SPANNER_CLIENT_NS

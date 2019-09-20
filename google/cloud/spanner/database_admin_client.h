@@ -220,6 +220,30 @@ class DatabaseAdminClient {
    */
   StatusOr<google::iam::v1::Policy> GetIamPolicy(Database db);
 
+  /**
+   * Set the IAM policy for the given database.
+   *
+   * This function changes the IAM policy configured in the given database to
+   * the value of @p policy.
+   *
+   * @par Idempotency
+   * This function is only idempotent if the `etag` field in @p policy is set.
+   * Therefore, the underlying RPCs are only retried if the field is set, and
+   * the function returns the first RPC error in any other case.
+   *
+   * @par Example
+   * @snippet samples.cc add-database-reader-on-database
+   *
+   * @see The [Cloud Spanner
+   *     documentation](https://cloud.google.com/spanner/docs/iam) for a
+   *     description of the roles and permissions supported by Cloud Spanner.
+   * @see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions)
+   *     for an introduction to Identity and Access Management in Google Cloud
+   *     Platform.
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      Database db, google::iam::v1::Policy policy);
+
   /// Create a new client with the given stub. For testing only.
   explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> c)
       : conn_(std::move(c)) {}

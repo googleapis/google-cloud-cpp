@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/internal/getenv.h"
@@ -27,6 +28,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::testing::EndsWith;
 
 /// @test Verify the basic CRUD operations for databases work.
@@ -38,6 +40,11 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto instance_id = spanner_testing::PickRandomInstance(generator, project_id);
   ASSERT_STATUS_OK(instance_id);
+
+  auto test_iam_service_account =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+          .value_or("");
+  ASSERT_FALSE(test_iam_service_account.empty());
 
   Instance const in(project_id, *instance_id);
 
@@ -78,9 +85,29 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
 
-  auto get_iam_policy_result = client.GetIamPolicy(db);
-  ASSERT_STATUS_OK(get_iam_policy_result);
-  EXPECT_EQ(0, get_iam_policy_result->bindings_size());
+  auto current_policy = client.GetIamPolicy(db);
+  ASSERT_STATUS_OK(current_policy);
+  EXPECT_EQ(0, current_policy->bindings_size());
+
+  std::string const expected_role = "roles/spanner.databaseReader";
+  std::string const expected_member =
+      "serviceAccount:" + test_iam_service_account;
+  auto& binding = *current_policy->add_bindings();
+  binding.set_role(expected_role);
+  *binding.add_members() = expected_member;
+
+  auto updated_policy = client.SetIamPolicy(db, *current_policy);
+  ASSERT_STATUS_OK(updated_policy);
+  EXPECT_EQ(1, updated_policy->bindings_size());
+  ASSERT_EQ(expected_role, updated_policy->bindings().Get(0).role());
+  ASSERT_EQ(1, updated_policy->bindings().Get(0).members().size());
+  ASSERT_EQ(expected_member,
+            updated_policy->bindings().Get(0).members().Get(0));
+
+  // Fetch the Iam Policy again.
+  current_policy = client.GetIamPolicy(db);
+  ASSERT_STATUS_OK(current_policy);
+  EXPECT_THAT(*updated_policy, IsProtoEqual(*current_policy));
 
   auto get_ddl_result = client.GetDatabaseDdl(db);
   ASSERT_STATUS_OK(get_ddl_result);

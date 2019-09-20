@@ -157,7 +157,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Database const expected_db("test-project", "test-instance", "test-database");
   std::string const expected_role = "roles/spanner.databaseReader";
-  std::string const expected_member = "foobar@example.com";
+  std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, GetIamPolicy(_))
       .WillOnce(
           Invoke([&expected_db, &expected_role, &expected_member](
@@ -177,6 +177,21 @@ TEST(DatabaseAdminClientTest, GetIamPolicy) {
   ASSERT_EQ(expected_role, response->bindings().Get(0).role());
   ASSERT_EQ(1, response->bindings().Get(0).members().size());
   ASSERT_EQ(expected_member, response->bindings().Get(0).members().Get(0));
+}
+
+/// @test Verify DatabaseAdminClient uses SetIamPolicy() correctly.
+TEST(DatabaseAdminClientTest, SetIamPolicy) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Database const expected_db("test-project", "test-instance", "test-database");
+  EXPECT_CALL(*mock, SetIamPolicy(_))
+      .WillOnce(Invoke(
+          [&expected_db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
+            EXPECT_EQ(expected_db, p.database);
+            return p.policy;
+          }));
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.SetIamPolicy(expected_db, {});
+  EXPECT_STATUS_OK(response);
 }
 
 }  // namespace

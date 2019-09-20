@@ -70,6 +70,10 @@ class DatabaseAdminStub {
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext&, google::iam::v1::GetIamPolicyRequest const&) = 0;
 
+  /// Fetch the IAM policy for a particular database.
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext&, google::iam::v1::SetIamPolicyRequest const&) = 0;
+
   /// Poll a long-running operation.
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,

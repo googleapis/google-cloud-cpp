@@ -13,8 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_connection.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 
 namespace google {
@@ -23,7 +25,9 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
+using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
+using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
@@ -416,7 +420,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy_Success) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
   std::string const expected_role = "roles/spanner.databaseReader";
-  std::string const expected_member = "foobar@example.com";
+  std::string const expected_member = "user:foobar@example.com";
 
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
@@ -466,6 +470,96 @@ TEST(DatabaseAdminClientTest, GetIamPolicy_TooManyTransients) {
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetIamPolicy(
       {Database("test-project", "test-instance", "test-database")});
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, SetIamPolicy_Success) {
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/databases/test-database";
+  google::iam::v1::Policy expected_policy;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        etag: "request-etag"
+        bindings {
+          role: "roles/spanner.databaseReader"
+          members: "user:test-user-1@example.com"
+          members: "user:test-user-2@example.com"
+        }
+      )pb",
+      &expected_policy));
+
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce(
+          Invoke([&expected_name](
+                     grpc::ClientContext&,
+                     google::iam::v1::SetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            return Status(StatusCode::kUnavailable, "try-again");
+          }))
+      .WillOnce(
+          Invoke([&expected_name, &expected_policy](
+                     grpc::ClientContext&,
+                     google::iam::v1::SetIamPolicyRequest const& request) {
+            EXPECT_EQ(expected_name, request.resource());
+            EXPECT_THAT(request.policy(), IsProtoEqual(expected_policy));
+            auto response = expected_policy;
+            response.set_etag("response-etag");
+            return response;
+          }));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->SetIamPolicy(
+      {Database("test-project", "test-instance", "test-database"),
+       expected_policy});
+  EXPECT_STATUS_OK(response);
+  expected_policy.set_etag("response-etag");
+  EXPECT_THAT(*response, IsProtoEqual(expected_policy));
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, SetIamPolicy_PermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->SetIamPolicy(
+      {Database("test-project", "test-instance", "test-database"), {}});
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+/// @test Verify that request without the Etag field should fail with the first
+/// transient error.
+TEST(DatabaseAdminClientTest, SetIamPolicy_NonIdempotent) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  google::iam::v1::Policy policy;
+  auto response = conn->SetIamPolicy(
+      {Database("test-project", "test-instance", "test-database"), policy});
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+/// @test Verify that request with the Etag field is retried for transient
+/// errors.
+TEST(DatabaseAdminClientTest, SetIamPolicy_Idempotent) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  google::iam::v1::Policy policy;
+  policy.set_etag("test-etag-value");
+  auto response = conn->SetIamPolicy(
+      {Database("test-project", "test-instance", "test-database"), policy});
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
 }
 

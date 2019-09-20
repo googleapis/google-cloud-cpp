@@ -229,12 +229,26 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       GetIamPolicyParams p) override {
     google::iam::v1::GetIamPolicyRequest request;
     request.set_resource(p.database.FullName());
-    grpc::ClientContext context;
     return RetryLoop(
         retry_policy_->clone(), backoff_policy_->clone(), true,
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
+        },
+        request, __func__);
+  }
+
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      SetIamPolicyParams p) override {
+    google::iam::v1::SetIamPolicyRequest request;
+    request.set_resource(p.database.FullName());
+    *request.mutable_policy() = std::move(p.policy);
+    bool is_idempotent = !request.policy().etag().empty();
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+        [this](grpc::ClientContext& context,
+               google::iam::v1::SetIamPolicyRequest const& request) {
+          return stub_->SetIamPolicy(context, request);
         },
         request, __func__);
   }

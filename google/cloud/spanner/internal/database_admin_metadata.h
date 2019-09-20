@@ -70,6 +70,10 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      grpc::ClientContext& context,
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context,
       google::longrunning::GetOperationRequest const& request) override;
