@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
 #include "google/cloud/spanner/internal/instance_admin_logging.h"
+#include "google/cloud/spanner/internal/instance_admin_metadata.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
@@ -112,6 +113,8 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
   std::shared_ptr<InstanceAdminStub> stub =
       std::make_shared<DefaultInstanceAdminStub>(
           std::move(spanner_grpc_stub), std::move(longrunning_grpc_stub));
+
+  stub = std::make_shared<InstanceAdminMetadata>(std::move(stub));
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
