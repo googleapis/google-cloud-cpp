@@ -207,8 +207,13 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_key_set() = internal::ToProto(rp.keys);
   *request.mutable_partition_options() = std::move(partition_options);
 
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-  auto response = stub_->PartitionRead(*context, request);
+  auto response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::PartitionReadRequest const& request) {
+        return stub_->PartitionRead(context, request);
+      },
+      request, __func__);
   if (!response.ok()) {
     return std::move(response).status();
   }

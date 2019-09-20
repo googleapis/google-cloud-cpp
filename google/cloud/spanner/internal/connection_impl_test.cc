@@ -886,13 +886,14 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
   EXPECT_CALL(
       *mock_spanner_stub,
       PartitionRead(_, spanner_testing::IsProtoEqual(partition_request)))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   StatusOr<std::vector<ReadPartition>> result = conn->PartitionRead(
       {{txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()},
        PartitionOptions()});
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "CAFEDEAD"));
 
   std::vector<ReadPartition> expected_read_partitions = {
@@ -907,10 +908,10 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
                                                    expected_read_partitions));
 }
 
-TEST(ConnectionImplTest, PartitionReadFailure) {
+TEST(ConnectionImplTest, PartitionRead_PermanentFailure) {
   auto mock_spanner_stub = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock_spanner_stub);
+  auto conn = MakeTestConnection(db, mock_spanner_stub);
   EXPECT_CALL(*mock_spanner_stub, CreateSession(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -921,9 +922,8 @@ TEST(ConnectionImplTest, PartitionReadFailure) {
             return session;
           }));
 
-  Status failed_status = Status(StatusCode::kPermissionDenied, "End of line.");
   EXPECT_CALL(*mock_spanner_stub, PartitionRead(_, _))
-      .WillOnce(Return(failed_status));
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
   StatusOr<std::vector<ReadPartition>> result = conn->PartitionRead(
       {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
@@ -932,8 +932,37 @@ TEST(ConnectionImplTest, PartitionReadFailure) {
         {"UserId", "UserName"},
         ReadOptions()},
        PartitionOptions()});
-  EXPECT_FALSE(result.ok());
-  EXPECT_EQ(result.status(), failed_status);
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh"));
+}
+
+TEST(ConnectionImplTest, PartitionRead_TooManyTransientFailures) {
+  auto mock_spanner_stub = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock_spanner_stub);
+  EXPECT_CALL(*mock_spanner_stub, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  EXPECT_CALL(*mock_spanner_stub, PartitionRead(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  StatusOr<std::vector<ReadPartition>> result = conn->PartitionRead(
+      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
+        "table",
+        KeySet::All(),
+        {"UserId", "UserName"},
+        ReadOptions()},
+       PartitionOptions()});
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("try-again"));
 }
 
 TEST(ConnectionImplTest, PartitionQuerySuccess) {
