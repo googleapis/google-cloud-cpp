@@ -134,6 +134,8 @@ add_library(spanner_client
             internal/database_admin_stub.h
             internal/date.cc
             internal/date.h
+            internal/instance_admin_logging.cc
+            internal/instance_admin_logging.h
             internal/instance_admin_stub.cc
             internal/instance_admin_stub.h
             internal/log_wrapper.h
@@ -293,6 +295,7 @@ function (spanner_client_define_tests)
         internal/date_test.cc
         internal/database_admin_logging_test.cc
         internal/database_admin_metadata_test.cc
+        internal/instance_admin_logging_test.cc
         internal/logging_spanner_stub_test.cc
         internal/metadata_spanner_stub_test.cc
         internal/merge_chunk_test.cc

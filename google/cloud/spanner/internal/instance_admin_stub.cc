@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
+#include "google/cloud/spanner/internal/instance_admin_logging.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
 namespace google {
@@ -107,8 +109,15 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
 
-  return std::make_shared<DefaultInstanceAdminStub>(
-      std::move(spanner_grpc_stub), std::move(longrunning_grpc_stub));
+  std::shared_ptr<InstanceAdminStub> stub =
+      std::make_shared<DefaultInstanceAdminStub>(
+          std::move(spanner_grpc_stub), std::move(longrunning_grpc_stub));
+
+  if (options.tracing_enabled("rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for gRPC calls";
+    stub = std::make_shared<InstanceAdminLogging>(std::move(stub));
+  }
+  return stub;
 }
 
 }  // namespace internal
