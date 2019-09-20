@@ -24,12 +24,28 @@ namespace {
 TEST(RetryPolicyTest, PermanentFailure) {
   EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(Status()));
   EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
-      Status(StatusCode::kAborted, "nothing done")));
-  EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kUnavailable, "try again")));
   EXPECT_FALSE(internal::SafeGrpcRetry::IsPermanentFailure(
+      Status(StatusCode::kResourceExhausted, "slow down please")));
+  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kDeadlineExceeded, "not enough time")));
   EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
+      Status(StatusCode::kAborted, "nothing done")));
+  EXPECT_TRUE(internal::SafeGrpcRetry::IsPermanentFailure(
+      Status(StatusCode::kPermissionDenied, "uh oh")));
+}
+
+TEST(TransactionRerunPolicyTest, PermanentFailure) {
+  EXPECT_FALSE(internal::SafeTransactionRerun::IsPermanentFailure(Status()));
+  EXPECT_FALSE(internal::SafeTransactionRerun::IsPermanentFailure(
+      Status(StatusCode::kAborted, "nothing done")));
+  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+      Status(StatusCode::kUnavailable, "try again")));
+  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+      Status(StatusCode::kResourceExhausted, "slow down please")));
+  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
+      Status(StatusCode::kDeadlineExceeded, "not enough time")));
+  EXPECT_TRUE(internal::SafeTransactionRerun::IsPermanentFailure(
       Status(StatusCode::kPermissionDenied, "uh oh")));
 }
 

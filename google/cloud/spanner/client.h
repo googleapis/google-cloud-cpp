@@ -430,11 +430,11 @@ namespace internal {
 StatusOr<CommitResult> RunTransactionWithPolicies(
     Client client, Transaction::ReadWriteOptions const& opts,
     std::function<StatusOr<Mutations>(Client, Transaction)> const& f,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy);
 
-/// The default retry policy for RunTransaction()
-std::unique_ptr<RetryPolicy> DefaultRunTransactionRetryPolicy();
+/// The default rerun policy for RunTransaction()
+std::unique_ptr<TransactionRerunPolicy> DefaultRunTransactionRerunPolicy();
 
 /// The default backoff policy for RunTransaction()
 std::unique_ptr<BackoffPolicy> DefaultRunTransactionBackoffPolicy();
@@ -459,7 +459,7 @@ inline StatusOr<CommitResult> RunTransaction(
     std::function<StatusOr<Mutations>(Client, Transaction)> f) {
   return internal::RunTransactionWithPolicies(
       std::move(client), opts, std::move(f),
-      internal::DefaultRunTransactionRetryPolicy(),
+      internal::DefaultRunTransactionRerunPolicy(),
       internal::DefaultRunTransactionBackoffPolicy());
 }
 

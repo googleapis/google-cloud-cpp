@@ -160,18 +160,18 @@ namespace internal {
 StatusOr<CommitResult> RunTransactionWithPolicies(
     Client client, Transaction::ReadWriteOptions const& opts,
     std::function<StatusOr<Mutations>(Client, Transaction)> const& f,
-    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   Status last_status(
       StatusCode::kFailedPrecondition,
       "Retry policy should not be exhausted when retry loop starts");
   char const* reason = "Too many failures in ";
-  while (!retry_policy->IsExhausted()) {
+  while (!rerun_policy->IsExhausted()) {
     auto result = RunTransactionImpl(client, opts, f);
     if (result) return result;
     last_status = std::move(result).status();
-    if (!retry_policy->OnFailure(last_status)) {
-      if (internal::SafeGrpcRetry::IsPermanentFailure(last_status)) {
+    if (!rerun_policy->OnFailure(last_status)) {
+      if (internal::SafeTransactionRerun::IsPermanentFailure(last_status)) {
         reason = "Permanent failure in ";
       }
       break;
@@ -181,8 +181,9 @@ StatusOr<CommitResult> RunTransactionWithPolicies(
   return internal::RetryLoopError(reason, __func__, last_status);
 }
 
-std::unique_ptr<RetryPolicy> DefaultRunTransactionRetryPolicy() {
-  return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(10))
+std::unique_ptr<TransactionRerunPolicy> DefaultRunTransactionRerunPolicy() {
+  return LimitedTimeTransactionRerunPolicy(
+             /*maximum_duration=*/std::chrono::minutes(10))
       .clone();
 }
 

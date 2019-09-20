@@ -69,7 +69,7 @@ TEST(RetryLoopTest, ReturnJustStatus) {
       TestRetryPolicy(), TestBackoffPolicy(), true,
       [&counter](grpc::ClientContext&, int) {
         if (++counter <= 3) {
-          return Status(StatusCode::kAborted, "nothing done");
+          return Status(StatusCode::kResourceExhausted, "slow-down");
         }
         return Status();
       },

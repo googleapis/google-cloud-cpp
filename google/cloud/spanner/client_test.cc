@@ -568,7 +568,7 @@ TEST(ClientTest, RunTransaction_TooManyFailures) {
   // so the unit tests run faster.
   auto result = internal::RunTransactionWithPolicies(
       client, Transaction::ReadWriteOptions{}, f,
-      LimitedErrorCountRetryPolicy(2).clone(),
+      LimitedErrorCountTransactionRerunPolicy(2).clone(),
       ExponentialBackoffPolicy(std::chrono::microseconds(10),
                                std::chrono::microseconds(10), 2.0)
           .clone());
