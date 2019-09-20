@@ -974,13 +974,14 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
   EXPECT_CALL(
       *mock_spanner_stub,
       PartitionQuery(_, spanner_testing::IsProtoEqual(partition_request)))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(partition_response));
 
   SqlStatement sql_statement("select * from table");
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
       {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()), sql_statement},
        PartitionOptions()});
-  EXPECT_STATUS_OK(result);
+  ASSERT_STATUS_OK(result);
 
   std::vector<QueryPartition> expected_query_partitions = {
       internal::MakeQueryPartition("CAFEDEAD", "test-session-name", "BADDECAF",
@@ -992,10 +993,10 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
                                                    expected_query_partitions));
 }
 
-TEST(ConnectionImplTest, PartitionQueryFailure) {
+TEST(ConnectionImplTest, PartitionQuery_PermanentFailure) {
   auto mock_spanner_stub = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock_spanner_stub);
+  auto conn = MakeTestConnection(db, mock_spanner_stub);
   EXPECT_CALL(*mock_spanner_stub, CreateSession(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -1014,8 +1015,36 @@ TEST(ConnectionImplTest, PartitionQueryFailure) {
       {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
         SqlStatement("select * from table")},
        PartitionOptions()});
-  EXPECT_FALSE(result.ok());
-  EXPECT_EQ(result.status(), failed_status);
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr(failed_status.message()));
+}
+
+TEST(ConnectionImplTest, PartitionQuery_TooManyTransientFailures) {
+  auto mock_spanner_stub = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock_spanner_stub);
+  EXPECT_CALL(*mock_spanner_stub, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  Status failed_status =
+      Status(StatusCode::kUnavailable, "try-again in PartitionQuery");
+  EXPECT_CALL(*mock_spanner_stub, PartitionQuery(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(failed_status));
+
+  StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
+      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
+        SqlStatement("select * from table")},
+       PartitionOptions()});
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr(failed_status.message()));
 }
 
 TEST(ConnectionImplTest, MultipleThreads) {

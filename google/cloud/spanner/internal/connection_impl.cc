@@ -338,9 +338,13 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
       std::move(*sql_statement.mutable_param_types());
   *request.mutable_partition_options() = std::move(partition_options);
 
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-  auto response = stub_->PartitionQuery(*context, request);
-
+  auto response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::PartitionQueryRequest const& request) {
+        return stub_->PartitionQuery(context, request);
+      },
+      request, __func__);
   if (!response.ok()) {
     return std::move(response).status();
   }
