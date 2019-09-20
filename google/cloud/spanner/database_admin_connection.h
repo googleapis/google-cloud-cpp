@@ -121,6 +121,13 @@ class DatabaseAdminConnection {
     Database database;
     google::iam::v1::Policy policy;
   };
+
+  /// Wrap the arguments for `TestIamPermissions()`.
+  struct TestIamPermissionsParams {
+    /// The name of the database.
+    Database database;
+    std::vector<std::string> permissions;
+  };
   //@}
 
   /// Define the interface for a google.spanner.v1.DatabaseAdmin.CreateDatabase
@@ -161,6 +168,11 @@ class DatabaseAdminConnection {
   /// RPC.
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       SetIamPolicyParams) = 0;
+
+  /// Define the interface for a
+  /// google.spanner.v1.DatabaseAdmin.TestIamPermissions RPC.
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+      TestIamPermissions(TestIamPermissionsParams) = 0;
 };
 
 /**

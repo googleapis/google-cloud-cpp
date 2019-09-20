@@ -55,6 +55,9 @@ class MockDatabaseAdminConnection
                StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));
   MOCK_METHOD1(SetIamPolicy,
                StatusOr<google::iam::v1::Policy>(SetIamPolicyParams));
+  MOCK_METHOD1(TestIamPermissions,
+               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
+                   TestIamPermissionsParams));
 };
 
 }  // namespace SPANNER_CLIENT_NS

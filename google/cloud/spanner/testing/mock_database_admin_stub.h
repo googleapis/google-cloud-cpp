@@ -69,6 +69,11 @@ class MockDatabaseAdminStub
                                  grpc::ClientContext&,
                                  google::iam::v1::SetIamPolicyRequest const&));
 
+  MOCK_METHOD2(TestIamPermissions,
+               StatusOr<google::iam::v1::TestIamPermissionsResponse>(
+                   grpc::ClientContext&,
+                   google::iam::v1::TestIamPermissionsRequest const&));
+
   MOCK_METHOD2(GetOperation,
                StatusOr<google::longrunning::Operation>(
                    grpc::ClientContext&,

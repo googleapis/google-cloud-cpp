@@ -253,6 +253,22 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
         request, __func__);
   }
 
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      TestIamPermissionsParams p) override {
+    google::iam::v1::TestIamPermissionsRequest request;
+    request.set_resource(p.database.FullName());
+    for (auto& permission : p.permissions) {
+      request.add_permissions(std::move(permission));
+    }
+    return RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               google::iam::v1::TestIamPermissionsRequest const& request) {
+          return stub_->TestIamPermissions(context, request);
+        },
+        request, __func__);
+  }
+
  private:
   future<StatusOr<gcsa::Database>> AwaitCreateDatabase(
       google::longrunning::Operation operation) {

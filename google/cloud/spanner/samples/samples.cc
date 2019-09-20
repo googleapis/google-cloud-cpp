@@ -485,6 +485,34 @@ void AddDatabaseReaderOnDatabaseCommand(std::vector<std::string> const& argv) {
                               argv[3]);
 }
 
+//! [database-test-iam-permissions]
+void DatabaseTestIamPermissions(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& permission) {
+  google::cloud::spanner::Database db(project_id, instance_id, database_id);
+  auto actual = client.TestIamPermissions(db, {permission});
+  if (!actual) throw std::runtime_error(actual.status().message());
+
+  char const* msg = actual->permissions().empty() ? "does not" : "does";
+
+  std::cout << "The caller " << msg << " have permission '" << permission
+            << "' on the Cloud Spanner database " << db.database_id() << "\n";
+}
+//! [database-test-iam-permissions]
+
+void DatabaseTestIamPermissionsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "database-test-iam-permissions <project-id> <instance-id>"
+        " <database-id> <permission>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client(
+      google::cloud::spanner::MakeDatabaseAdminConnection());
+  DatabaseTestIamPermissions(std::move(client), argv[0], argv[1], argv[2],
+                             argv[3]);
+}
+
 //! [quickstart] [START spanner_quickstart]
 void Quickstart(std::string const& project_id, std::string const& instance_id,
                 std::string const& database_id) {
@@ -1065,6 +1093,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"drop-database", &DropDatabase},
       {"database-get-iam-policy", &DatabaseGetIamPolicyCommand},
       {"add-database-reader-on-database", &AddDatabaseReaderOnDatabaseCommand},
+      {"database-test-iam-permissions", &DatabaseTestIamPermissionsCommand},
       {"quickstart", &QuickstartCommand},
       make_command_entry("insert-data", &InsertData),
       make_command_entry("update-data", &UpdateData),
@@ -1202,6 +1231,10 @@ void RunAll() {
   std::cout << "\nRunning (database) add-database-reader sample\n";
   RunOneCommand({"", "add-database-reader-on-database", project_id, instance_id,
                  database_id, "serviceAccount:" + test_iam_service_account});
+
+  std::cout << "\nRunning (database) test-iam-permissions sample\n";
+  RunOneCommand({"", "database-test-iam-permissions", project_id, instance_id,
+                 database_id, "spanner.databases.read"});
 
   std::cout << "\nRunning spanner_quickstart sample\n";
   RunOneCommand({"", "quickstart", project_id, instance_id, database_id});

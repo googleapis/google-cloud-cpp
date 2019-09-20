@@ -194,6 +194,29 @@ TEST(DatabaseAdminClientTest, SetIamPolicy) {
   EXPECT_STATUS_OK(response);
 }
 
+/// @test Verify DatabaseAdminClient uses TestIamPermissions() correctly.
+TEST(DatabaseAdminClientTest, TestIamPermissions) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Database const expected_db("test-project", "test-instance", "test-database");
+  std::string expected_permission = "spanner.databases.read";
+  EXPECT_CALL(*mock, TestIamPermissions(_))
+      .WillOnce(Invoke(
+          [&expected_db, &expected_permission](
+              DatabaseAdminConnection::TestIamPermissionsParams const& p) {
+            EXPECT_EQ(expected_db, p.database);
+            EXPECT_EQ(1, p.permissions.size());
+            EXPECT_EQ(expected_permission, p.permissions.at(0));
+            google::iam::v1::TestIamPermissionsResponse response;
+            response.add_permissions(expected_permission);
+            return response;
+          }));
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.TestIamPermissions(expected_db, {expected_permission});
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(1, response->permissions_size());
+  EXPECT_EQ(expected_permission, response->permissions(0));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

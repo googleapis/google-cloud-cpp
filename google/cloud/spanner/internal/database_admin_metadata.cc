@@ -82,6 +82,14 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::SetIamPolicy(
   return child_->SetIamPolicy(context, request);
 }
 
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DatabaseAdminMetadata::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->TestIamPermissions(context, request);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {

@@ -170,6 +170,21 @@ TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
+  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
+      .WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response = stub.TestIamPermissions(
+      context, google::iam::v1::TestIamPermissionsRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("TestIamPermissions");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
 

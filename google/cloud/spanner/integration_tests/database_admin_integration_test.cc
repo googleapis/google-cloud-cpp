@@ -109,6 +109,13 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(current_policy);
   EXPECT_THAT(*updated_policy, IsProtoEqual(*current_policy));
 
+  auto test_iam_permission_result =
+      client.TestIamPermissions(db, {"spanner.databases.read"});
+  ASSERT_STATUS_OK(test_iam_permission_result);
+  ASSERT_EQ(1, test_iam_permission_result->permissions_size());
+  ASSERT_EQ("spanner.databases.read",
+            test_iam_permission_result->permissions(0));
+
   auto get_ddl_result = client.GetDatabaseDdl(db);
   ASSERT_STATUS_OK(get_ddl_result);
   EXPECT_EQ(0, get_ddl_result->statements_size());

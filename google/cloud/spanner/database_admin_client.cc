@@ -64,6 +64,12 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
   return conn_->SetIamPolicy({std::move(db), std::move(policy)});
 }
 
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DatabaseAdminClient::TestIamPermissions(Database db,
+                                        std::vector<std::string> permissions) {
+  return conn_->TestIamPermissions({std::move(db), std::move(permissions)});
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

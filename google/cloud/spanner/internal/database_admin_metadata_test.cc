@@ -190,6 +190,30 @@ TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
   EXPECT_EQ(TransientError(), response.status());
 }
 
+TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
+  EXPECT_CALL(*mock_, TestIamPermissions(_, _))
+      .WillOnce(
+          Invoke([this](grpc::ClientContext& context,
+                        google::iam::v1::TestIamPermissionsRequest const&) {
+            EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+                context,
+                "google.spanner.admin.database.v1.DatabaseAdmin."
+                "TestIamPermissions",
+                expected_api_client_header_));
+            return TransientError();
+          }));
+
+  DatabaseAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  google::iam::v1::TestIamPermissionsRequest request;
+  request.set_resource(
+      "projects/test-project-id/"
+      "instances/test-instance-id/"
+      "databases/test-database");
+  auto response = stub.TestIamPermissions(context, request);
+  EXPECT_EQ(TransientError(), response.status());
+}
+
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _))
       .WillOnce(Invoke([this](grpc::ClientContext& context,

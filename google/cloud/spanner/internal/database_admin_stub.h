@@ -74,6 +74,11 @@ class DatabaseAdminStub {
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext&, google::iam::v1::SetIamPolicyRequest const&) = 0;
 
+  /// Get the subset of the permissions the caller has on a particular database.
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(grpc::ClientContext&,
+                     google::iam::v1::TestIamPermissionsRequest const&) = 0;
+
   /// Poll a long-running operation.
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
