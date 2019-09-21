@@ -427,15 +427,23 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   for (auto&& m : cp.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
+  bool is_idempotent = false;
   if (s.has_single_use()) {
     *request.mutable_single_use_transaction() = s.single_use();
   } else if (s.has_begin()) {
     *request.mutable_single_use_transaction() = s.begin();
   } else {
     request.set_transaction_id(s.id());
+    is_idempotent = true;
   }
-  grpc::ClientContext context;
-  auto response = stub_->Commit(context, request);
+
+  auto response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+      [this](grpc::ClientContext& context,
+             spanner_proto::CommitRequest const& request) {
+        return stub_->Commit(context, request);
+      },
+      request, __func__);
   if (!response) {
     return std::move(response).status();
   }

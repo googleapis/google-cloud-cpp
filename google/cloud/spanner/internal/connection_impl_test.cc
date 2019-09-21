@@ -600,11 +600,11 @@ TEST(ConnectionImplTest, CommitGetSession_Retry) {
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
 }
 
-TEST(ConnectionImplTest, CommitCommitFailure) {
+TEST(ConnectionImplTest, CommitCommit_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeTestConnection(db, mock);
   EXPECT_CALL(*mock, CreateSession(_, _))
       .WillOnce(
           Invoke([&db](grpc::ClientContext&,
@@ -624,6 +624,106 @@ TEST(ConnectionImplTest, CommitCommitFailure) {
   auto commit = conn->Commit({MakeReadWriteTransaction(), {}});
   EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
   EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
+}
+
+TEST(ConnectionImplTest, CommitCommit_TooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(
+          Invoke([&db](grpc::ClientContext&,
+                       spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+  EXPECT_CALL(*mock, Commit(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          spanner_proto::CommitRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_TRUE(request.has_single_use_transaction());
+        return Status(StatusCode::kPermissionDenied, "uh-oh in Commit");
+      }));
+  auto commit = conn->Commit({MakeReadWriteTransaction(), {}});
+  EXPECT_EQ(StatusCode::kPermissionDenied, commit.status().code());
+  EXPECT_THAT(commit.status().message(), HasSubstr("uh-oh in Commit"));
+}
+
+TEST(ConnectionImplTest, CommitCommit_IdempotentTransientSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(
+          Invoke([&db](grpc::ClientContext&,
+                       spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+  EXPECT_CALL(*mock, Commit(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          spanner_proto::CommitRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ("test-txn-id", request.transaction_id());
+        return Status(StatusCode::kUnavailable, "try-again");
+      }))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          spanner_proto::CommitRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        EXPECT_EQ("test-txn-id", request.transaction_id());
+        spanner_proto::CommitResponse response;
+        *response.mutable_commit_timestamp() =
+            internal::ToProto(Timestamp{std::chrono::seconds(123)});
+        return response;
+      }));
+
+  // Set the id because that makes the commit idempotent.
+  auto txn = MakeReadWriteTransaction();
+  internal::Visit(txn, [](SessionHolder&, spanner_proto::TransactionSelector& s,
+                          std::int64_t) {
+    s.set_id("test-txn-id");
+    return 0;
+  });
+
+  auto commit = conn->Commit({txn, {}});
+  EXPECT_STATUS_OK(commit);
+  EXPECT_EQ(Timestamp(std::chrono::seconds(123)), commit->commit_timestamp);
+}
+
+TEST(ConnectionImplTest, CommitCommit_NonIdempotentTransientFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(
+          Invoke([&db](grpc::ClientContext&,
+                       spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+  EXPECT_CALL(*mock, Commit(_, _))
+      .WillOnce(Invoke([](grpc::ClientContext&,
+                          spanner_proto::CommitRequest const& request) {
+        EXPECT_EQ("test-session-name", request.session());
+        return Status(StatusCode::kUnavailable, "try-again in Commit");
+      }));
+
+  // Create a transaction without an id, that makes `Commit()` non-idempotent,
+  // so the transient failure should not be retried.
+  auto txn = MakeReadWriteTransaction();
+
+  auto commit = conn->Commit({txn, {}});
+  EXPECT_EQ(StatusCode::kUnavailable, commit.status().code());
+  EXPECT_THAT(commit.status().message(), HasSubstr("try-again in Commit"));
 }
 
 TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
@@ -651,6 +751,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
         return response;
       }));
 
+  // Set the id because that makes the commit idempotent.
   auto txn = MakeReadWriteTransaction();
   internal::Visit(txn, [](SessionHolder&, spanner_proto::TransactionSelector& s,
                           std::int64_t) {
@@ -660,7 +761,6 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
 
   auto commit = conn->Commit({txn, {}});
   EXPECT_STATUS_OK(commit);
-  EXPECT_EQ(commit->commit_timestamp, Timestamp{std::chrono::seconds(123)});
 }
 
 TEST(ConnectionImplTest, RollbackGetSessionFailure) {
