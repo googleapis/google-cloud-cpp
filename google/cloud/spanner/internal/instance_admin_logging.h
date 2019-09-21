@@ -23,6 +23,8 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
+namespace gcsa = google::spanner::admin::instance::v1;
+
 /**
  * Implements the logging Decorator for InstanceAdminStub.
  */
@@ -40,15 +42,14 @@ class InstanceAdminLogging : public InstanceAdminStub {
    * Run the logging loop (if appropriate) for the child InstanceAdminStub.
    */
   ///
-  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      grpc::ClientContext&,
-      google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
+  StatusOr<gcsa::Instance> GetInstance(
+      grpc::ClientContext&, gcsa::GetInstanceRequest const&) override;
 
-  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
-  ListInstances(
-      grpc::ClientContext&,
-      google::spanner::admin::instance::v1::ListInstancesRequest const&)
-      override;
+  StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
+      grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) override;
+
+  StatusOr<gcsa::ListInstancesResponse> ListInstances(
+      grpc::ClientContext&, gcsa::ListInstancesRequest const&) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext&,

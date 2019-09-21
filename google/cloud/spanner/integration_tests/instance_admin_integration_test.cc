@@ -59,6 +59,20 @@ TEST(InstanceAdminClient, InstanceBasicCRUD) {
                           instance->name()));
 }
 
+TEST(InstanceAdminClient, InstanceConfig) {
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  ASSERT_FALSE(project_id.empty());
+
+  InstanceAdminClient client(MakeInstanceAdminConnection());
+  // TODO(#515) - use the first instance in the list instead of hardcoding a
+  // value.
+  auto instance_config = client.GetInstanceConfig(
+      "projects/" + project_id + "/instanceConfigs/regional-us-central1");
+  EXPECT_STATUS_OK(instance_config);
+  EXPECT_THAT(instance_config->name(), HasSubstr(project_id));
+}
+
 TEST(InstanceAdminClient, InstanceIam) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");

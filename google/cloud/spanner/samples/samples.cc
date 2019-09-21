@@ -63,6 +63,32 @@ void GetInstanceCommand(std::vector<std::string> const& argv) {
   GetInstance(std::move(client), argv[0], argv[1]);
 }
 
+//! [get-instance-config]
+void GetInstanceConfig(google::cloud::spanner::InstanceAdminClient client,
+                       std::string const& project_id,
+                       std::string const& instance_config_name) {
+  auto instance_config = client.GetInstanceConfig(
+      "projects/" + project_id + "/instanceConfigs/" + instance_config_name);
+  if (!instance_config) {
+    throw std::runtime_error(instance_config.status().message());
+  }
+
+  std::cout << "The instanceConfig " << instance_config->name()
+            << " exists and its metadata is:\n"
+            << instance_config->DebugString() << "\n";
+}
+//! [get-instance-config]
+
+void GetInstanceConfigCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error(
+        "get-instance-config <project-id> <instance-config-name>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  GetInstanceConfig(std::move(client), argv[0], argv[1]);
+}
+
 //! [list-instances]
 void ListInstances(google::cloud::spanner::InstanceAdminClient client,
                    std::string const& project_id) {
@@ -81,7 +107,7 @@ void ListInstances(google::cloud::spanner::InstanceAdminClient client,
 
 void ListInstancesCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 1) {
-    throw std::runtime_error("get-instance <project-id>");
+    throw std::runtime_error("list-instances <project-id>");
   }
   google::cloud::spanner::InstanceAdminClient client(
       google::cloud::spanner::MakeInstanceAdminConnection());
@@ -1080,6 +1106,7 @@ int RunOneCommand(std::vector<std::string> argv) {
 
   CommandMap commands = {
       {"get-instance", &GetInstanceCommand},
+      {"get-instance-config", &GetInstanceConfigCommand},
       {"list-instances", &ListInstancesCommand},
       {"instance-get-iam-policy", &InstanceGetIamPolicyCommand},
       {"add-database-reader", &AddDatabaseReaderCommand},
@@ -1187,6 +1214,10 @@ void RunAll() {
 
   std::cout << "\nRunning get-instance sample\n";
   RunOneCommand({"", "get-instance", project_id, instance_id});
+
+  std::cout << "\nRunning get-instance-config sample\n";
+  RunOneCommand(
+      {"", "get-instance-config", project_id, "regional-us-central1"});
 
   std::cout << "\nRunning list-instances sample\n";
   RunOneCommand({"", "list-instances", project_id});

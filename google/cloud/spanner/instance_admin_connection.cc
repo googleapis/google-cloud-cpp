@@ -86,6 +86,19 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         request, __func__);
   }
 
+  StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
+      GetInstanceConfigParams p) override {
+    gcsa::GetInstanceConfigRequest request;
+    request.set_name(std::move(p.instance_config_name));
+    return internal::RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::GetInstanceConfigRequest const& request) {
+          return stub_->GetInstanceConfig(context, request);
+        },
+        request, __func__);
+  }
+
   ListInstancesRange ListInstances(ListInstancesParams params) override {
     gcsa::ListInstancesRequest request;
     request.set_parent("projects/" + params.project_id);

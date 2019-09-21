@@ -101,6 +101,59 @@ TEST(InstanceAdminConnectionTest, GetInstance_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
+TEST(InstanceAdminConnectionTest, GetInstanceConfig_Success) {
+  std::string const expected_name =
+      "projects/test-project/instanceConfigs/test-instance-config";
+  gcsa::InstanceConfig expected_instance_config;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/test-project/instanceConfigs/test-instance-config"
+        display_name: "test display name"
+      )pb",
+      &expected_instance_config));
+
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, GetInstanceConfig(_, _))
+      .WillOnce(Invoke(
+          [&expected_name](grpc::ClientContext&,
+                           gcsa::GetInstanceConfigRequest const& request) {
+            EXPECT_EQ(expected_name, request.name());
+            return Status(StatusCode::kUnavailable, "try-again");
+          }))
+      .WillOnce(Invoke([&expected_name, &expected_instance_config](
+                           grpc::ClientContext&,
+                           gcsa::GetInstanceConfigRequest const& request) {
+        EXPECT_EQ(expected_name, request.name());
+        return expected_instance_config;
+      }));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual = conn->GetInstanceConfig({expected_name});
+  EXPECT_THAT(*actual, IsProtoEqual(expected_instance_config));
+}
+
+TEST(InstanceAdminConnectionTest, GetInstanceConfig_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, GetInstanceConfig(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual =
+      conn->GetInstanceConfig({"projects/test/instanceConfig/test-name"});
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminConnectionTest, GetInstanceConfig_TooManyTransients) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, GetInstanceConfig(_, _))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  auto actual =
+      conn->GetInstanceConfig({"projects/test/instanceConfig/test-name"});
+  EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+}
+
 TEST(InstanceAdminConnectionTest, ListInstances_Success) {
   std::string const expected_parent = "projects/test-project";
 

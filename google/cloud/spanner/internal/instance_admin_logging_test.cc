@@ -77,6 +77,21 @@ TEST_F(InstanceAdminLoggingTest, GetInstance) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(InstanceAdminLoggingTest, GetInstanceConfig) {
+  EXPECT_CALL(*mock_, GetInstanceConfig(_, _))
+      .WillOnce(Return(TransientError()));
+
+  InstanceAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response =
+      stub.GetInstanceConfig(context, gcsa::GetInstanceConfigRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("GetInstanceConfig");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(InstanceAdminLoggingTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances(_, _)).WillOnce(Return(TransientError()));
 

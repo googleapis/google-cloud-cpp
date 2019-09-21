@@ -51,6 +51,18 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
+  StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
+      grpc::ClientContext& context,
+      gcsa::GetInstanceConfigRequest const& request) override {
+    gcsa::InstanceConfig response;
+    auto status =
+        instance_admin_->GetInstanceConfig(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<gcsa::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
       gcsa::ListInstancesRequest const& request) override {

@@ -101,6 +101,19 @@ class InstanceAdminClient {
       Instance const& in);
 
   /**
+   * Retrieve information about a Cloud Spanner Instance Config.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc get-instance-config
+   */
+  StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
+  GetInstanceConfig(std::string const& name);
+
+  /**
    * Retrieve a list of instances for a given project.
    *
    * @par Idempotency

@@ -24,6 +24,9 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+
+namespace gcsa = google::spanner::admin::instance::v1;
+
 /**
  * Defines the low-level interface for instance administration RPCs.
  */
@@ -31,14 +34,14 @@ class InstanceAdminStub {
  public:
   virtual ~InstanceAdminStub() = 0;
 
-  virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
-      grpc::ClientContext&,
-      google::spanner::admin::instance::v1::GetInstanceRequest const&) = 0;
+  virtual StatusOr<gcsa::Instance> GetInstance(
+      grpc::ClientContext&, gcsa::GetInstanceRequest const&) = 0;
 
-  virtual StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
-  ListInstances(
-      grpc::ClientContext&,
-      google::spanner::admin::instance::v1::ListInstancesRequest const&) = 0;
+  virtual StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
+      grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) = 0;
+
+  virtual StatusOr<gcsa::ListInstancesResponse> ListInstances(
+      grpc::ClientContext&, gcsa::ListInstancesRequest const&) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext&, google::iam::v1::GetIamPolicyRequest const&) = 0;

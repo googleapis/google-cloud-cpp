@@ -33,6 +33,17 @@ StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
       context, request, __func__);
 }
 
+StatusOr<gcsa::InstanceConfig> InstanceAdminLogging::GetInstanceConfig(
+    grpc::ClientContext& context,
+    gcsa::GetInstanceConfigRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::GetInstanceConfigRequest const& request) {
+        return child_->GetInstanceConfig(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<gcsa::ListInstancesResponse> InstanceAdminLogging::ListInstances(
     grpc::ClientContext& context, gcsa::ListInstancesRequest const& request) {
   return LogWrapper(

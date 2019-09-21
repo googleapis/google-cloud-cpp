@@ -22,19 +22,21 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
+
+namespace gcsa = google::spanner::admin::instance::v1;
+
 class MockInstanceAdminStub
     : public google::cloud::spanner::internal::InstanceAdminStub {
  public:
-  MOCK_METHOD2(
-      GetInstance,
-      StatusOr<google::spanner::admin::instance::v1::Instance>(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::GetInstanceRequest const&));
-  MOCK_METHOD2(
-      ListInstances,
-      StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>(
-          grpc::ClientContext&,
-          google::spanner::admin::instance::v1::ListInstancesRequest const&));
+  MOCK_METHOD2(GetInstance,
+               StatusOr<gcsa::Instance>(grpc::ClientContext&,
+                                        gcsa::GetInstanceRequest const&));
+  MOCK_METHOD2(GetInstanceConfig, StatusOr<gcsa::InstanceConfig>(
+                                      grpc::ClientContext&,
+                                      gcsa::GetInstanceConfigRequest const&));
+  MOCK_METHOD2(ListInstances,
+               StatusOr<gcsa::ListInstancesResponse>(
+                   grpc::ClientContext&, gcsa::ListInstancesRequest const&));
   MOCK_METHOD2(GetIamPolicy, StatusOr<google::iam::v1::Policy>(
                                  grpc::ClientContext&,
                                  google::iam::v1::GetIamPolicyRequest const&));

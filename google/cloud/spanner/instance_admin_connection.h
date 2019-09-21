@@ -71,6 +71,11 @@ class InstanceAdminConnection {
     std::string instance_name;
   };
 
+  /// Wrap the arguments for `GetInstanceConfig()`.
+  struct GetInstanceConfigParams {
+    std::string instance_config_name;
+  };
+
   /**
    * The parameters for a `ListInstances()` request.
    */
@@ -116,6 +121,10 @@ class InstanceAdminConnection {
   /// Return the metadata for the given instance.
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       GetInstanceParams) = 0;
+
+  /// Return the InstanceConfig with the given name.
+  virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
+      GetInstanceConfig(GetInstanceConfigParams) = 0;
 
   /**
    * Returns a one-pass input range with all the instances meeting the
