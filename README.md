@@ -346,7 +346,7 @@ If you prefer to compile against installed versions of the dependencies please
 check the [INSTALL.md file](INSTALL.md).
 
 If you prefer to install dependencies at a custom location and want to compile
-aginst it, please check the instruction at [build with CMake](./doc/setup-cmake-environment.md).
+against it, please check the instruction at [build with CMake](./doc/setup-cmake-environment.md).
 
 #### macOS
 
