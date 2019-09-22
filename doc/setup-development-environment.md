@@ -78,38 +78,24 @@ $HOME/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
 
 ### Clone and compile `google-cloud-cpp`
 
-You may need to create a new key pair to connect to GitHub.  Search the web
-for how to do this.  Then you can clone the code:
-
-```console
-cd $HOME
-git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
-cd google-cloud-cpp
-```
-
-And compile the code using:
-
-```console
-cmake -H. -Bcmake-out
-cmake --build cmake-out -- -j $(nproc)
-```
+You may need to clone and compile the code as described [here](setup-cmake-environment.md)
 
 Run the tests using:
 
 ```console
-env -C cmake-out ctest --output-on-failure
+env -C cmake-out/home ctest --output-on-failure
 ```
 
 Run the Google Cloud Storage integration tests:
 
 ```console
-env -C cmake-out $PWD/google/cloud/storage/ci/run_integration_tests.sh
+env -C cmake-out/home $PWD/google/cloud/storage/ci/run_integration_tests.sh
 ```
 
 Run the Google Cloud Bigtable integration tests:
 
 ```console
-env -C cmake-out \
+env -C cmake-out/home \
     CBT=$HOME/google-cloud-sdk/bin/cbt \
     CBT_EMULATOR=$HOME/google-cloud-sdk/platform/bigtable-emulator/cbtemulator \
     $PWD/google/cloud/bigtable/ci/run_integration_tests.sh
