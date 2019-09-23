@@ -132,6 +132,8 @@ TEST_F(ParallelUploadTest, StreamingByChunk) {
                     .set_maximum_socket_send_size(128 * 1024)
                     .set_download_stall_timeout(std::chrono::seconds(30)));
 
+  std::cout << "Uploading, using WriteObject and multiple .write() calls "
+            << std::flush;
   std::vector<std::future<void>> tasks(ThreadCount());
   for (auto& t : tasks) {
     t = std::async(std::launch::async,
@@ -140,6 +142,7 @@ TEST_F(ParallelUploadTest, StreamingByChunk) {
   for (auto& t : tasks) {
     t.get();
   }
+  std::cout << " DONE\n";
 }
 
 TEST_F(ParallelUploadTest, StreamingAll) {
@@ -151,6 +154,8 @@ TEST_F(ParallelUploadTest, StreamingAll) {
                     .set_maximum_socket_send_size(128 * 1024)
                     .set_download_stall_timeout(std::chrono::seconds(30)));
 
+  std::cout << "Uploading, using WriteObject and a single operator<<() call "
+            << std::flush;
   std::vector<std::future<void>> tasks(ThreadCount());
   for (auto& t : tasks) {
     t = std::async(std::launch::async,
@@ -159,6 +164,7 @@ TEST_F(ParallelUploadTest, StreamingAll) {
   for (auto& t : tasks) {
     t.get();
   }
+  std::cout << " DONE\n";
 }
 
 TEST_F(ParallelUploadTest, Insert) {
@@ -170,6 +176,7 @@ TEST_F(ParallelUploadTest, Insert) {
                     .set_maximum_socket_send_size(128 * 1024)
                     .set_download_stall_timeout(std::chrono::seconds(30)));
 
+  std::cout << "Uploading using a single InsertObject call " << std::flush;
   std::vector<std::future<void>> tasks(ThreadCount());
   for (auto& t : tasks) {
     t = std::async(std::launch::async,
@@ -178,6 +185,7 @@ TEST_F(ParallelUploadTest, Insert) {
   for (auto& t : tasks) {
     t.get();
   }
+  std::cout << " DONE\n";
 }
 
 }  // anonymous namespace
