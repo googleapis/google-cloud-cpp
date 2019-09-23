@@ -532,30 +532,6 @@ sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
 ```
 
-#### c-ares
-
-Many distributions include c-ares, but they do not include the CMake support
-files for the library, so manually install it.  c-ares requires two install
-steps because
-(1) the CMake-based build does not install pkg-config files, and
-(2) the Makefile-based build does not install CMake config files.
-
-```bash
-cd $HOME/Downloads
-wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
-tar -xf cares-1_14_0.tar.gz
-cd $HOME/Downloads/c-ares-cares-1_14_0
-cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j ${NCPU}
-./buildconf
-./configure
-sudo install -m 644 -D -t /usr/local/lib/pkgconfig libcares.pc
-sudo ldconfig
-```
-
 #### gRPC
 
 Likewise, Ubuntu has packages for grpc-1.3.x, but this version is too old for
