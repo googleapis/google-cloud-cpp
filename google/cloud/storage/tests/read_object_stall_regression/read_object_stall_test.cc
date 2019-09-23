@@ -343,8 +343,7 @@ class ReadObjectStallTest
     std::uniform_real_distribution<double> use_long_delay(0.0, 1.0);
     for (int i = 0; i != max_chunks; ++i) {
       auto sleep_seconds = Delay();
-      std::cout << "Sleeping for " << sleep_seconds.count() << "s\n"
-                << std::flush;
+      std::cout << "Sleeping for " << sleep_seconds.count() << "s\n";
       std::this_thread::sleep_for(sleep_seconds);
       WriteSummary(client, summary_name, read_summaries);
     }
