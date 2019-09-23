@@ -73,10 +73,11 @@ class InstanceAdminConnection {
   /**
    * Define the arguments for each member function.
    *
-   * Applications may define classes derived from `Connection`, for example,
-   * because they want to mock the class. To avoid breaking all such derived
-   * classes when we change the number or type of the arguments to the member
-   * functions we define light weight structures to pass the arguments.
+   * Applications may define classes derived from `InstanceAdminConnection`,
+   * for example, because they want to mock the class. To avoid breaking all
+   * such derived classes when we change the number or type of the arguments
+   * to the member functions we define light weight structures to pass the
+   * arguments.
    */
   /// Wrap the arguments for `GetInstance()`.
   struct GetInstanceParams {
