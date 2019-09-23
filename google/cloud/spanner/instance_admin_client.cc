@@ -29,6 +29,11 @@ InstanceAdminClient::GetInstanceConfig(std::string const& name) {
   return conn_->GetInstanceConfig({name});
 }
 
+ListInstanceConfigsRange InstanceAdminClient::ListInstanceConfigs(
+    std::string project_id) {
+  return conn_->ListInstanceConfigs({std::move(project_id)});
+}
+
 ListInstancesRange InstanceAdminClient::ListInstances(std::string project_id,
                                                       std::string filter) {
   return conn_->ListInstances({std::move(project_id), std::move(filter)});

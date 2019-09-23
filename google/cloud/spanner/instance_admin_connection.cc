@@ -99,6 +99,38 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         request, __func__);
   }
 
+  ListInstanceConfigsRange ListInstanceConfigs(
+      ListInstanceConfigsParams params) override {
+    gcsa::ListInstanceConfigsRequest request;
+    request.set_parent("projects/" + params.project_id);
+    request.clear_page_token();
+    auto stub = stub_;
+    // Because we do not have C++14 generalized lambda captures we cannot just
+    // use the unique_ptr<> here, so convert to shared_ptr<> instead.
+    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_->clone());
+    auto backoff = std::shared_ptr<BackoffPolicy>(backoff_policy_->clone());
+
+    char const* function_name = __func__;
+    return ListInstanceConfigsRange(
+        std::move(request),
+        [stub, retry, backoff,
+         function_name](gcsa::ListInstanceConfigsRequest const& r) {
+          return RetryLoop(
+              retry->clone(), backoff->clone(), true,
+              [stub](grpc::ClientContext& context,
+                     gcsa::ListInstanceConfigsRequest const& request) {
+                return stub->ListInstanceConfigs(context, request);
+              },
+              r, function_name);
+        },
+        [](gcsa::ListInstanceConfigsResponse r) {
+          std::vector<gcsa::InstanceConfig> result(r.instance_configs().size());
+          auto& configs = *r.mutable_instance_configs();
+          std::move(configs.begin(), configs.end(), result.begin());
+          return result;
+        });
+  }
+
   ListInstancesRange ListInstances(ListInstancesParams params) override {
     gcsa::ListInstancesRequest request;
     request.set_parent("projects/" + params.project_id);
@@ -125,8 +157,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         },
         [](gcsa::ListInstancesResponse r) {
           std::vector<gcsa::Instance> result(r.instances().size());
-          auto& dbs = *r.mutable_instances();
-          std::move(dbs.begin(), dbs.end(), result.begin());
+          auto& instances = *r.mutable_instances();
+          std::move(instances.begin(), instances.end(), result.begin());
           return result;
         });
   }

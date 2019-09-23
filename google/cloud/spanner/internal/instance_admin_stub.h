@@ -40,6 +40,9 @@ class InstanceAdminStub {
   virtual StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
       grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) = 0;
 
+  virtual StatusOr<gcsa::ListInstanceConfigsResponse> ListInstanceConfigs(
+      grpc::ClientContext&, gcsa::ListInstanceConfigsRequest const&) = 0;
+
   virtual StatusOr<gcsa::ListInstancesResponse> ListInstances(
       grpc::ClientContext&, gcsa::ListInstancesRequest const&) = 0;
 

@@ -40,6 +40,14 @@ StatusOr<gcsa::InstanceConfig> InstanceAdminMetadata::GetInstanceConfig(
   return child_->GetInstanceConfig(context, request);
 }
 
+StatusOr<gcsa::ListInstanceConfigsResponse>
+InstanceAdminMetadata::ListInstanceConfigs(
+    grpc::ClientContext& context,
+    gcsa::ListInstanceConfigsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListInstanceConfigs(context, request);
+}
+
 StatusOr<gcsa::ListInstancesResponse> InstanceAdminMetadata::ListInstances(
     grpc::ClientContext& context, gcsa::ListInstancesRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());

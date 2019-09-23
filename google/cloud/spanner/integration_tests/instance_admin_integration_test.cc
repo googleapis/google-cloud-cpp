@@ -54,7 +54,6 @@ TEST(InstanceAdminClient, InstanceBasicCRUD) {
     }
     return names;
   }();
-
   EXPECT_EQ(1, std::count(instance_names.begin(), instance_names.end(),
                           instance->name()));
 }
@@ -65,12 +64,25 @@ TEST(InstanceAdminClient, InstanceConfig) {
   ASSERT_FALSE(project_id.empty());
 
   InstanceAdminClient client(MakeInstanceAdminConnection());
-  // TODO(#515) - use the first instance in the list instead of hardcoding a
-  // value.
-  auto instance_config = client.GetInstanceConfig(
-      "projects/" + project_id + "/instanceConfigs/regional-us-central1");
+
+  std::vector<std::string> instance_config_names = [client,
+                                                    project_id]() mutable {
+    std::vector<std::string> names;
+    for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+      EXPECT_STATUS_OK(instance_config);
+      if (!instance_config) break;
+      names.push_back(instance_config->name());
+    }
+    return names;
+  }();
+  ASSERT_FALSE(instance_config_names.empty());
+  // Use the name of the first element from the list of instance configs.
+  auto instance_config = client.GetInstanceConfig(instance_config_names[0]);
   EXPECT_STATUS_OK(instance_config);
   EXPECT_THAT(instance_config->name(), HasSubstr(project_id));
+  EXPECT_EQ(
+      1, std::count(instance_config_names.begin(), instance_config_names.end(),
+                    instance_config->name()));
 }
 
 TEST(InstanceAdminClient, InstanceIam) {

@@ -34,6 +34,10 @@ class MockInstanceAdminStub
   MOCK_METHOD2(GetInstanceConfig, StatusOr<gcsa::InstanceConfig>(
                                       grpc::ClientContext&,
                                       gcsa::GetInstanceConfigRequest const&));
+  MOCK_METHOD2(ListInstanceConfigs,
+               StatusOr<gcsa::ListInstanceConfigsResponse>(
+                   grpc::ClientContext&,
+                   gcsa::ListInstanceConfigsRequest const&));
   MOCK_METHOD2(ListInstances,
                StatusOr<gcsa::ListInstancesResponse>(
                    grpc::ClientContext&, gcsa::ListInstancesRequest const&));

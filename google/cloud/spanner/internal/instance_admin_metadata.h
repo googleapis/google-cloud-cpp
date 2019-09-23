@@ -45,6 +45,9 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
       grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) override;
 
+  StatusOr<gcsa::ListInstanceConfigsResponse> ListInstanceConfigs(
+      grpc::ClientContext&, gcsa::ListInstanceConfigsRequest const&) override;
+
   StatusOr<gcsa::ListInstancesResponse> ListInstances(
       grpc::ClientContext&, gcsa::ListInstancesRequest const&) override;
 

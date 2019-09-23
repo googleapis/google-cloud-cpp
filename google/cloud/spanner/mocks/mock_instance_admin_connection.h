@@ -39,6 +39,8 @@ class MockInstanceAdminConnection
   MOCK_METHOD1(GetInstanceConfig,
                StatusOr<google::spanner::admin::instance::v1::InstanceConfig>(
                    GetInstanceConfigParams));
+  MOCK_METHOD1(ListInstanceConfigs,
+               spanner::ListInstanceConfigsRange(ListInstanceConfigsParams));
   MOCK_METHOD1(ListInstances, spanner::ListInstancesRange(ListInstancesParams));
   MOCK_METHOD1(GetIamPolicy,
                StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));

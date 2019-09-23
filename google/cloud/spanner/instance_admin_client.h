@@ -114,6 +114,18 @@ class InstanceAdminClient {
   GetInstanceConfig(std::string const& name);
 
   /**
+   * Retrieve a list of instance configs for a given project.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore it is always treated as
+   * idempotent.
+   *
+   * @par Example
+   * @snippet samples.cc list-instance-configs
+   */
+  ListInstanceConfigsRange ListInstanceConfigs(std::string project_id);
+
+  /**
    * Retrieve a list of instances for a given project.
    *
    * @par Idempotency

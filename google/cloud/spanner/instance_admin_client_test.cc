@@ -81,6 +81,30 @@ TEST(InstanceAdminClientTest, GetInstanceConfig) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
+TEST(InstanceAdminClientTest, ListInstanceConfigs) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, ListInstanceConfigs(_))
+      .WillOnce(
+          [](InstanceAdminConnection::ListInstanceConfigsParams const& p) {
+            EXPECT_EQ("test-project", p.project_id);
+            return ListInstanceConfigsRange(
+                gcsa::ListInstanceConfigsRequest{},
+                [](gcsa::ListInstanceConfigsRequest const&) {
+                  return StatusOr<gcsa::ListInstanceConfigsResponse>(
+                      Status(StatusCode::kPermissionDenied, "uh-oh"));
+                },
+                [](gcsa::ListInstanceConfigsResponse const&) {
+                  return std::vector<gcsa::InstanceConfig>{};
+                });
+          });
+
+  InstanceAdminClient client(mock);
+  auto range = client.ListInstanceConfigs("test-project");
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
 TEST(InstanceAdminClientTest, ListInstances) {
   auto mock = std::make_shared<MockInstanceAdminConnection>();
 

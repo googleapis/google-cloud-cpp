@@ -92,6 +92,26 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
   EXPECT_EQ(TransientError(), response.status());
 }
 
+TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
+  EXPECT_CALL(*mock_, ListInstanceConfigs(_, _))
+      .WillOnce(Invoke([this](grpc::ClientContext& context,
+                              gcsa::ListInstanceConfigsRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.instance.v1.InstanceAdmin."
+            "ListInstanceConfigs",
+            expected_api_client_header_));
+        return TransientError();
+      }));
+
+  InstanceAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  gcsa::ListInstanceConfigsRequest request;
+  request.set_parent("projects/test-project-id");
+  auto response = stub.ListInstanceConfigs(context, request);
+  EXPECT_EQ(TransientError(), response.status());
+}
+
 TEST_F(InstanceAdminMetadataTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances(_, _))
       .WillOnce(Invoke([this](grpc::ClientContext& context,

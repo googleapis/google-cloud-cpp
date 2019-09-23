@@ -27,10 +27,10 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /**
- * An input range to stream all the databases in a Cloud Spanner instance.
+ * An input range to stream all the instances in a Cloud project.
  *
  * This type models an [input range][cppref-input-range] of
- * `google::spanner::admin::v1::Database` objects. Applications can make a
+ * `google::spanner::admin::v1::Instance` objects. Applications can make a
  * single pass through the results.
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
@@ -39,6 +39,20 @@ using ListInstancesRange = internal::PaginationRange<
     google::spanner::admin::instance::v1::Instance,
     google::spanner::admin::instance::v1::ListInstancesRequest,
     google::spanner::admin::instance::v1::ListInstancesResponse>;
+
+/**
+ * An input range to stream all the instance configs in a Cloud project.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::spanner::admin::v1::Instance` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListInstanceConfigsRange = internal::PaginationRange<
+    google::spanner::admin::instance::v1::InstanceConfig,
+    google::spanner::admin::instance::v1::ListInstanceConfigsRequest,
+    google::spanner::admin::instance::v1::ListInstanceConfigsResponse>;
 
 /**
  * A connection to the Cloud Spanner instance administration service.
@@ -74,6 +88,11 @@ class InstanceAdminConnection {
   /// Wrap the arguments for `GetInstanceConfig()`.
   struct GetInstanceConfigParams {
     std::string instance_config_name;
+  };
+
+  /// Wrap the arguments for `ListInstanceConfigs()`.
+  struct ListInstanceConfigsParams {
+    std::string project_id;
   };
 
   /**
@@ -125,6 +144,12 @@ class InstanceAdminConnection {
   /// Return the InstanceConfig with the given name.
   virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
       GetInstanceConfig(GetInstanceConfigParams) = 0;
+
+  /**
+   * Returns a one-pass input range with all the instance configs.
+   */
+  virtual ListInstanceConfigsRange ListInstanceConfigs(
+      ListInstanceConfigsParams) = 0;
 
   /**
    * Returns a one-pass input range with all the instances meeting the

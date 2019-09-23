@@ -154,6 +154,73 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
+TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
+  std::string const expected_parent = "projects/test-project";
+
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
+      .WillOnce(Invoke([&](grpc::ClientContext&,
+                           gcsa::ListInstanceConfigsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
+        return Status(StatusCode::kUnavailable, "try-again");
+      }))
+      .WillOnce(Invoke([&](grpc::ClientContext&,
+                           gcsa::ListInstanceConfigsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
+
+        gcsa::ListInstanceConfigsResponse response;
+        response.set_next_page_token("p1");
+        response.add_instance_configs()->set_name("c1");
+        response.add_instance_configs()->set_name("c2");
+        return response;
+      }))
+      .WillOnce(Invoke([&](grpc::ClientContext&,
+                           gcsa::ListInstanceConfigsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("p1", request.page_token());
+
+        gcsa::ListInstanceConfigsResponse response;
+        response.clear_next_page_token();
+        response.add_instance_configs()->set_name("c3");
+        return response;
+      }));
+
+  auto conn = MakeTestConnection(mock);
+  std::vector<std::string> actual_names;
+  for (auto instance_config : conn->ListInstanceConfigs({"test-project"})) {
+    ASSERT_STATUS_OK(instance_config);
+    actual_names.push_back(instance_config->name());
+  }
+  EXPECT_THAT(actual_names, ::testing::ElementsAre("c1", "c2", "c3"));
+}
+
+TEST(InstanceAdminConnectionTest, ListInstanceConfigs_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = MakeTestConnection(mock);
+  auto range = conn->ListInstanceConfigs({"test-project"});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(InstanceAdminConnectionTest, ListInstanceConfigs_TooManyTransients) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  auto range = conn->ListInstanceConfigs({"test-project"});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
 TEST(InstanceAdminConnectionTest, ListInstances_Success) {
   std::string const expected_parent = "projects/test-project";
 
