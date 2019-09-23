@@ -335,10 +335,8 @@ examples you can use the CMake [super build][super-build-link]:
 cmake -Hsuper -Bcmake-out
 
 # Adjust the number of threads used by modifying parameter for `-j 4`
+# following command will also invoke ctest at the end
 cmake --build cmake-out -- -j 4
-
-# Verify build by running tests
-(cd cmake-out && ctest --output-on-failure)
 ```
 
 You will find compiled binaries in `cmake-out/` respective to their source
@@ -346,6 +344,9 @@ paths.
 
 If you prefer to compile against installed versions of the dependencies please
 check the [INSTALL.md file](INSTALL.md).
+
+If you prefer to install dependencies at a custom location and want to compile
+against it, please check the instruction at [build with CMake](./doc/setup-cmake-environment.md).
 
 #### macOS
 

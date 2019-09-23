@@ -70,4 +70,10 @@ Now you can use these dependencies multiple times. To use them, add the
 
 ```console
 cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local
+
+# Adjust the number of threads used by modifying parameter for `-j 4`
+cmake --build cmake-out/home -- -j 4
+
+# Verify build by running tests
+(cd cmake-out/home && ctest --output-on-failure)
 ```
