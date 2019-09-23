@@ -36,6 +36,8 @@ char const* flag_src_bucket_name;
 char const* flag_dst_bucket_name;
 double flag_average_delay = 1.0;
 int flag_object_count = 32;
+double flag_long_delay_rate = 0.10;
+int flag_long_delay_seconds = 360;
 
 struct ReadSummary {
   std::string bucket_name;
@@ -66,7 +68,8 @@ void WriteSummary(Client client, std::string const& summary_name,
   EXPECT_STATUS_OK(metadata);
 }
 
-void VerifySummary(Client client, std::vector<ReadSummary> object_summaries) {
+void VerifySummary(Client client,
+                   std::vector<ReadSummary> const& object_summaries) {
   int i = 0;
   for (auto const& summary : object_summaries) {
     SCOPED_TRACE("Checking headers and metadata for file [" +
@@ -116,9 +119,6 @@ void UpdateFromReader(ReadSummary& read_summary, ObjectReadStream& r,
       google::cloud::internal::EncodeBigEndian(read_summary.crc32c));
 
   auto const& headers = r.headers();
-  for (auto const& kv : headers) {
-    std::cout << "    " << kv.first << ": " << kv.second << "\n";
-  }
   auto object_size_begin = headers.lower_bound("x-goog-stored-content-length");
   EXPECT_TRUE(object_size_begin != headers.end())
       << "ERROR: cloud not x-goog-stored-content-length header";
@@ -151,6 +151,9 @@ void UpdateFromReader(ReadSummary& read_summary, ObjectReadStream& r,
 class ReadObjectStallTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
+  ReadObjectStallTest()
+      : sleep_period_(1.0 / flag_average_delay), use_long_delay_(0, 1) {}
+
   std::vector<std::string> GetObjectNames(Client client) {
     std::vector<std::string> object_names;
     for (auto const& object : client.ListObjects(flag_src_bucket_name)) {
@@ -207,6 +210,14 @@ class ReadObjectStallTest
     return object_names;
   }
 
+  std::chrono::seconds Delay() {
+    if (use_long_delay_(generator_) <= flag_long_delay_rate) {
+      std::cout << '+' << std::flush;
+      return std::chrono::seconds(flag_long_delay_seconds);
+    }
+    return std::chrono::seconds(sleep_period_(generator_));
+  }
+
   std::vector<ReadSummary> ReadStreaming(
       Client client, std::vector<std::string> const& object_names) {
     std::vector<ReadSummary> read_summaries(object_names.size());
@@ -221,8 +232,6 @@ class ReadObjectStallTest
       ++index;
       readers.emplace_back(client.ReadObject(flag_src_bucket_name, name));
     }
-
-    std::geometric_distribution<int> sleep_period(1.0 / flag_average_delay);
 
     std::size_t offset = 0;
     int open_count;
@@ -242,9 +251,8 @@ class ReadObjectStallTest
       }
       offset += chunk_size;
       // Flush because we want to see the output in the GKE logs.
-      int sleep_seconds = sleep_period(generator_);
       std::cout << '.' << std::flush;
-      std::this_thread::sleep_for(std::chrono::seconds(sleep_seconds));
+      std::this_thread::sleep_for(Delay());
       WriteSummary(client, summary_name, read_summaries);
     } while (open_count != 0);
     std::cout << "DONE: All files closed\n";
@@ -293,12 +301,8 @@ class ReadObjectStallTest
       }
       offset += chunk_size;
       // Flush because we want to see the output in the GKE logs.
-      int sleep_seconds = sleep_period(generator_);
-      std::cout << "Reading, still has " << open_count
-                << " open files at offset=" << offset << "\n"
-                << "Sleeping for " << sleep_seconds << "s\n"
-                << std::flush;
-      std::this_thread::sleep_for(std::chrono::seconds(sleep_seconds));
+      std::cout << '.' << std::flush;
+      std::this_thread::sleep_for(Delay());
       WriteSummary(client, summary_name, read_summaries);
     } while (open_count != 0);
     std::cout << "DONE: All files closed\n";
@@ -336,17 +340,21 @@ class ReadObjectStallTest
                 << std::flush;
     }
     std::geometric_distribution<int> sleep_period(1.0 / flag_average_delay);
+    std::uniform_real_distribution<double> use_long_delay(0.0, 1.0);
     for (int i = 0; i != max_chunks; ++i) {
-      int sleep_seconds = sleep_period(generator_);
-      std::cout << "Sleeping for " << sleep_seconds << "s\n" << std::flush;
-      std::this_thread::sleep_for(std::chrono::seconds(sleep_seconds));
-
+      auto sleep_seconds = Delay();
+      std::cout << "Sleeping for " << sleep_seconds.count() << "s\n";
+      std::this_thread::sleep_for(sleep_seconds);
       WriteSummary(client, summary_name, read_summaries);
     }
 
     std::cout << "DONE\n";
     return read_summaries;
   }
+
+ private:
+  std::geometric_distribution<int> sleep_period_;
+  std::uniform_real_distribution<double> use_long_delay_;
 };
 
 TEST_F(ReadObjectStallTest, Streaming) {
