@@ -163,11 +163,15 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     //   if not.
     // if the option is not supported then we cannot use HTTP at all in libcurl
     // and the whole class would fail.
-    long http_code = handle_.GetResponseCode().value();
-    TRACE_STATE() << ", code=" << http_code;
-    return ReadSourceResult{
-        bytes_read,
-        HttpResponse{http_code, std::string{}, std::move(received_headers_)}};
+    HttpResponse response{handle_.GetResponseCode().value(), std::string{},
+                          std::move(received_headers_)};
+    TRACE_STATE() << ", code=" << response.status_code;
+    status = google::cloud::storage::internal::AsStatus(response);
+    if (!status.ok()) {
+      TRACE_STATE() << ", status=" << response.status_code;
+      return status;
+    }
+    return ReadSourceResult{bytes_read, std::move(response)};
   }
   TRACE_STATE() << ", code=100";
   return ReadSourceResult{bytes_read,

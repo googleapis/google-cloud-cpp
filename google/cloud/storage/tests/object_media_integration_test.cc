@@ -743,6 +743,44 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
   EXPECT_STATUS_OK(status);
 }
 
+TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
+  if (!UsingTestbench()) {
+    return;
+  }
+
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+
+  Client client(options->set_download_stall_timeout(std::chrono::seconds(3)),
+                LimitedErrorCountRetryPolicy(5));
+
+  std::string const bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+  auto contents = MakeRandomData(512 * 1024);
+  StatusOr<ObjectMetadata> source_meta = client.InsertObject(
+      bucket_name, object_name, contents, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(source_meta);
+
+  auto stream = client.ReadObject(
+      bucket_name, object_name,
+      CustomHeader("x-goog-testbench-instructions", "return-503-after-256K"));
+  std::vector<char> actual(64 * 1024);
+  for (std::size_t offset = 0;
+       offset < contents.size() && !stream.bad() && !stream.eof();
+       offset += actual.size()) {
+    SCOPED_TRACE("Reading from offset = " + std::to_string(offset));
+    stream.read(actual.data(), actual.size());
+    EXPECT_FALSE(stream.bad());
+    EXPECT_FALSE(stream.eof());
+    auto expected_count = (std::min)(actual.size(), contents.size() - offset);
+    EXPECT_EQ(expected_count, stream.gcount());
+    EXPECT_STATUS_OK(stream.status());
+  }
+
+  auto status = client.DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

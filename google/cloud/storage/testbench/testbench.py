@@ -480,7 +480,7 @@ def objects_get_common(bucket_name, object_name, revision):
     if instructions == 'return-corrupted-data':
         response_payload = testbench_utils.corrupt_media(response_payload)
 
-    if instructions == 'stall-always':
+    if instructions is not None and instructions.startswith(u'stall-always'):
         length = len(response_payload)
         content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
 
@@ -517,6 +517,33 @@ def objects_get_common(bucket_name, object_name, revision):
             'x-goog-generation': revision.generation
         }
         return flask.Response(streamer(), status=200, headers=headers)
+
+    if instructions is not None and instructions.startswith(u'return-503-after-256K'):
+        length = len(response_payload)
+        headers = {
+            'Content-Range': 'bytes %d-%d/%d' % (begin, end - 1, length),
+            'x-goog-hash': revision.x_goog_hash_header(),
+            'x-goog-generation': revision.generation
+        }
+        if begin == 0:
+            def streamer():
+                chunk_size = 4 * 1024
+                for r in range(0, len(response_payload), chunk_size):
+                    if r >= 256 * 1024:
+                        print("\n\n###### EXIT to simulate crash\n")
+                        sys.exit(1)
+                    time.sleep(0.01)
+                    chunk_end = min(r + chunk_size, len(response_payload))
+                    yield response_payload[r:chunk_end]
+            return flask.Response(streamer(), status=200, headers=headers)
+        if instructions.endswith(u'/retry-1'):
+            print("## Return error for retry 1")
+            return flask.Response('Service Unavailable', status=503)
+        if instructions.endswith(u'/retry-2'):
+            print("## Return error for retry 2")
+            return flask.Response('Service Unavailable', status=503)
+        print("## Return success for %s" % instructions)
+        return flask.Response(response_payload, status=200, headers=headers)
 
     response = flask.make_response(response_payload)
     length = len(response_payload)

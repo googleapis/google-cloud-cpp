@@ -71,9 +71,18 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
   if (handle_result(result)) {
     return result;
   }
+  bool has_testbench_instructions = false;
+  std::string instructions;
+  if (request_.HasOption<CustomHeader>()) {
+    auto name = request_.GetOption<CustomHeader>().custom_header_name();
+    has_testbench_instructions = (name == "x-goog-testbench-instructions");
+    instructions = request_.GetOption<CustomHeader>().value();
+  }
+
   // Start a new retry loop to get the data.
   auto backoff_policy = backoff_policy_prototype_->clone();
   auto retry_policy = retry_policy_prototype_->clone();
+  int counter = 0;
   for (; !result && retry_policy->OnFailure(result.status());
        std::this_thread::sleep_for(backoff_policy->OnCompletion()),
        result = child_->Read(buf, n)) {
@@ -82,6 +91,12 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     // create a new one and replace it. Should that fail, the retry policy would
     // already be exhausted, so we should fail this operation too.
     child_.reset();
+
+    if (has_testbench_instructions) {
+      request_.set_multiple_options(
+          CustomHeader("x-goog-testbench-instructions",
+                       instructions + "/retry-" + std::to_string(++counter)));
+    }
 
     if (offset_direction_ == kFromEnd) {
       request_.set_option(ReadLast(current_offset_));
