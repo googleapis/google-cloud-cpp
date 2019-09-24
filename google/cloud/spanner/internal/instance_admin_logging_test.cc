@@ -77,6 +77,45 @@ TEST_F(InstanceAdminLoggingTest, GetInstance) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(InstanceAdminLoggingTest, CreateInstance) {
+  EXPECT_CALL(*mock_, CreateInstance(_, _)).WillOnce(Return(TransientError()));
+
+  InstanceAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response = stub.CreateInstance(context, gcsa::CreateInstanceRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("CreateInstance");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
+  EXPECT_CALL(*mock_, UpdateInstance(_, _)).WillOnce(Return(TransientError()));
+
+  InstanceAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto response = stub.UpdateInstance(context, gcsa::UpdateInstanceRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("UpdateInstance");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(InstanceAdminLoggingTest, DeleteInstance) {
+  EXPECT_CALL(*mock_, DeleteInstance(_, _)).WillOnce(Return(TransientError()));
+
+  InstanceAdminLogging stub(mock_);
+
+  grpc::ClientContext context;
+  auto status = stub.DeleteInstance(context, gcsa::DeleteInstanceRequest{});
+  EXPECT_EQ(TransientError(), status);
+
+  HasLogLineWith("DeleteInstance");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(InstanceAdminLoggingTest, GetInstanceConfig) {
   EXPECT_CALL(*mock_, GetInstanceConfig(_, _))
       .WillOnce(Return(TransientError()));

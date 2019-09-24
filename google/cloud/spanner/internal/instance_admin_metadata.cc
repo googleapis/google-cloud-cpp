@@ -33,6 +33,24 @@ StatusOr<gcsa::Instance> InstanceAdminMetadata::GetInstance(
   return child_->GetInstance(context, request);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::CreateInstance(
+    grpc::ClientContext& context, gcsa::CreateInstanceRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateInstance(context, request);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::UpdateInstance(
+    grpc::ClientContext& context, gcsa::UpdateInstanceRequest const& request) {
+  SetMetadata(context, "instance.name=" + request.instance().name());
+  return child_->UpdateInstance(context, request);
+}
+
+Status InstanceAdminMetadata::DeleteInstance(
+    grpc::ClientContext& context, gcsa::DeleteInstanceRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteInstance(context, request);
+}
+
 StatusOr<gcsa::InstanceConfig> InstanceAdminMetadata::GetInstanceConfig(
     grpc::ClientContext& context,
     gcsa::GetInstanceConfigRequest const& request) {

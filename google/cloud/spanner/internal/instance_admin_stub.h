@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_INSTANCE_ADMIN_STUB_H_
 
 #include "google/cloud/spanner/connection_options.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
 
@@ -36,6 +37,15 @@ class InstanceAdminStub {
 
   virtual StatusOr<gcsa::Instance> GetInstance(
       grpc::ClientContext&, gcsa::GetInstanceRequest const&) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext&, gcsa::CreateInstanceRequest const&) = 0;
+
+  virtual StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) = 0;
+
+  virtual Status DeleteInstance(grpc::ClientContext&,
+                                gcsa::DeleteInstanceRequest const&) = 0;
 
   virtual StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
       grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) = 0;

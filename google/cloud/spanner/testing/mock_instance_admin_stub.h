@@ -31,6 +31,14 @@ class MockInstanceAdminStub
   MOCK_METHOD2(GetInstance,
                StatusOr<gcsa::Instance>(grpc::ClientContext&,
                                         gcsa::GetInstanceRequest const&));
+  MOCK_METHOD2(CreateInstance,
+               StatusOr<google::longrunning::Operation>(
+                   grpc::ClientContext&, gcsa::CreateInstanceRequest const&));
+  MOCK_METHOD2(UpdateInstance,
+               StatusOr<google::longrunning::Operation>(
+                   grpc::ClientContext&, gcsa::UpdateInstanceRequest const&));
+  MOCK_METHOD2(DeleteInstance, Status(grpc::ClientContext&,
+                                      gcsa::DeleteInstanceRequest const&));
   MOCK_METHOD2(GetInstanceConfig, StatusOr<gcsa::InstanceConfig>(
                                       grpc::ClientContext&,
                                       gcsa::GetInstanceConfigRequest const&));

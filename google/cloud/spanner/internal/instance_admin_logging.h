@@ -45,6 +45,15 @@ class InstanceAdminLogging : public InstanceAdminStub {
   StatusOr<gcsa::Instance> GetInstance(
       grpc::ClientContext&, gcsa::GetInstanceRequest const&) override;
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext&, gcsa::CreateInstanceRequest const&) override;
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) override;
+
+  Status DeleteInstance(grpc::ClientContext&,
+                        gcsa::DeleteInstanceRequest const&) override;
+
   StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
       grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) override;
 

@@ -51,6 +51,41 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
+  StatusOr<google::longrunning::Operation> CreateInstance(
+      grpc::ClientContext& context,
+      gcsa::CreateInstanceRequest const& request) override {
+    google::longrunning::Operation response;
+    grpc::Status status =
+        instance_admin_->CreateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  StatusOr<google::longrunning::Operation> UpdateInstance(
+      grpc::ClientContext& context,
+      gcsa::UpdateInstanceRequest const& request) override {
+    google::longrunning::Operation response;
+    grpc::Status status =
+        instance_admin_->UpdateInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  Status DeleteInstance(grpc::ClientContext& context,
+                        gcsa::DeleteInstanceRequest const& request) override {
+    google::protobuf::Empty response;
+    grpc::Status status =
+        instance_admin_->DeleteInstance(&context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+  }
+
   StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
       grpc::ClientContext& context,
       gcsa::GetInstanceConfigRequest const& request) override {

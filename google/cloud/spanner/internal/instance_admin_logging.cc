@@ -33,6 +33,36 @@ StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
       context, request, __func__);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminLogging::CreateInstance(
+    grpc::ClientContext& context, gcsa::CreateInstanceRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::CreateInstanceRequest const& request) {
+        return child_->CreateInstance(context, request);
+      },
+      context, request, __func__);
+}
+
+StatusOr<google::longrunning::Operation> InstanceAdminLogging::UpdateInstance(
+    grpc::ClientContext& context, gcsa::UpdateInstanceRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::UpdateInstanceRequest const& request) {
+        return child_->UpdateInstance(context, request);
+      },
+      context, request, __func__);
+}
+
+Status InstanceAdminLogging::DeleteInstance(
+    grpc::ClientContext& context, gcsa::DeleteInstanceRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::DeleteInstanceRequest const& request) {
+        return child_->DeleteInstance(context, request);
+      },
+      context, request, __func__);
+}
+
 StatusOr<gcsa::InstanceConfig> InstanceAdminLogging::GetInstanceConfig(
     grpc::ClientContext& context,
     gcsa::GetInstanceConfigRequest const& request) {

@@ -112,6 +112,68 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
   EXPECT_EQ(TransientError(), response.status());
 }
 
+TEST_F(InstanceAdminMetadataTest, CreateInstance) {
+  EXPECT_CALL(*mock_, CreateInstance(_, _))
+      .WillOnce(Invoke([this](grpc::ClientContext& context,
+                              gcsa::CreateInstanceRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.instance.v1.InstanceAdmin."
+            "CreateInstance",
+            expected_api_client_header_));
+        return TransientError();
+      }));
+
+  InstanceAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  gcsa::CreateInstanceRequest request;
+  request.set_parent("projects/test-project-id");
+  request.set_instance_id("test-instance-id");
+  auto response = stub.CreateInstance(context, request);
+  EXPECT_EQ(TransientError(), response.status());
+}
+
+TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
+  EXPECT_CALL(*mock_, UpdateInstance(_, _))
+      .WillOnce(Invoke([this](grpc::ClientContext& context,
+                              gcsa::UpdateInstanceRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.instance.v1.InstanceAdmin."
+            "UpdateInstance",
+            expected_api_client_header_));
+        return TransientError();
+      }));
+
+  InstanceAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  gcsa::UpdateInstanceRequest request;
+  request.mutable_instance()->set_name(
+      "projects/test-project-id/instances/test-instance-id");
+  auto response = stub.UpdateInstance(context, request);
+  EXPECT_EQ(TransientError(), response.status());
+}
+
+TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
+  EXPECT_CALL(*mock_, DeleteInstance(_, _))
+      .WillOnce(Invoke([this](grpc::ClientContext& context,
+                              gcsa::DeleteInstanceRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.instance.v1.InstanceAdmin."
+            "DeleteInstance",
+            expected_api_client_header_));
+        return TransientError();
+      }));
+
+  InstanceAdminMetadata stub(mock_);
+  grpc::ClientContext context;
+  gcsa::DeleteInstanceRequest request;
+  request.set_name("projects/test-project-id/instances/test-instance-id");
+  auto status = stub.DeleteInstance(context, request);
+  EXPECT_EQ(TransientError(), status);
+}
+
 TEST_F(InstanceAdminMetadataTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances(_, _))
       .WillOnce(Invoke([this](grpc::ClientContext& context,
