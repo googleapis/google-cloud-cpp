@@ -86,6 +86,9 @@ TEST(InstanceAdminClient, InstanceConfig) {
 }
 
 TEST(InstanceAdminClient, InstanceIam) {
+  auto run_slow_integration_tests =
+      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+          .value_or("");
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   auto instance_id =
@@ -106,11 +109,13 @@ TEST(InstanceAdminClient, InstanceIam) {
   ASSERT_STATUS_OK(actual_policy);
   EXPECT_FALSE(actual_policy->etag().empty());
 
-  // Set the policy to the existing value of the policy. While this changes
-  // nothing it tests all the code in the client library.
-  auto updated_policy = client.SetIamPolicy(in, *actual_policy);
-  ASSERT_STATUS_OK(updated_policy);
-  EXPECT_FALSE(actual_policy->etag().empty());
+  if (run_slow_integration_tests == "yes") {
+    // Set the policy to the existing value of the policy. While this changes
+    // nothing it tests all the code in the client library.
+    auto updated_policy = client.SetIamPolicy(in, *actual_policy);
+    ASSERT_STATUS_OK(updated_policy);
+    EXPECT_FALSE(actual_policy->etag().empty());
+  }
 
   auto actual = client.TestIamPermissions(
       in, {"spanner.databases.list", "spanner.databases.get"});

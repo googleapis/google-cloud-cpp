@@ -1215,6 +1215,9 @@ int RunOneCommand(std::vector<std::string> argv) {
 }
 
 void RunAll() {
+  auto run_slow_integration_tests =
+      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+          .value_or("");
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   if (project_id.empty()) {
@@ -1256,13 +1259,14 @@ void RunAll() {
   std::cout << "\nRunning (instance) get-iam-policy sample\n";
   RunOneCommand({"", "instance-get-iam-policy", project_id, instance_id});
 
-  std::cout << "\nRunning (instance) add-database-reader sample\n";
-  RunOneCommand({"", "add-database-reader", project_id, instance_id,
-                 "serviceAccount:" + test_iam_service_account});
-
-  std::cout << "\nRunning (instance) remove-database-reader sample\n";
-  RunOneCommand({"", "remove-database-reader", project_id, instance_id,
-                 "serviceAccount:" + test_iam_service_account});
+  if (run_slow_integration_tests == "yes") {
+    std::cout << "\nRunning (instance) add-database-reader sample\n";
+    RunOneCommand({"", "add-database-reader", project_id, instance_id,
+                   "serviceAccount:" + test_iam_service_account});
+    std::cout << "\nRunning (instance) remove-database-reader sample\n";
+    RunOneCommand({"", "remove-database-reader", project_id, instance_id,
+                   "serviceAccount:" + test_iam_service_account});
+  }
 
   std::cout << "\nRunning (instance) test-iam-permissions sample\n";
   RunOneCommand({"", "instance-test-iam-permissions", project_id, instance_id});
