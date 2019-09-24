@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_SPANNER_CONNECTION_H_
 
 #include "google/cloud/spanner/connection.h"
+#include "google/cloud/spanner/query_partition.h"
+#include "google/cloud/spanner/read_partition.h"
 #include <gmock/gmock.h>
 
 namespace google {

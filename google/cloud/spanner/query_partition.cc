@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/query_partition.h"
-#include <google/protobuf/map.h>
 #include <google/spanner/v1/spanner.pb.h>
 
 namespace google {
