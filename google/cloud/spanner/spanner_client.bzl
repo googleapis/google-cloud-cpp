@@ -46,6 +46,7 @@ spanner_client_hdrs = [
     "internal/logging_spanner_stub.h",
     "internal/merge_chunk.h",
     "internal/metadata_spanner_stub.h",
+    "internal/partial_result_set_reader.h",
     "internal/partial_result_set_source.h",
     "internal/polling_loop.h",
     "internal/range_from_pagination.h",

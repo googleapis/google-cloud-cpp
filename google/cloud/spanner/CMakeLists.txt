@@ -147,6 +147,7 @@ add_library(spanner_client
             internal/merge_chunk.h
             internal/metadata_spanner_stub.cc
             internal/metadata_spanner_stub.h
+            internal/partial_result_set_reader.h
             internal/partial_result_set_source.cc
             internal/partial_result_set_source.h
             internal/polling_loop.h

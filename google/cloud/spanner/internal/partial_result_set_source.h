@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H_
 
+#include "google/cloud/spanner/internal/partial_result_set_reader.h"
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/optional.h"
@@ -38,37 +39,35 @@ namespace internal {
  */
 class PartialResultSetSource : public internal::ResultSetSource {
  public:
-  using GrpcReader =
-      ::grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>;
-
-  /// Factory method to create a PartialResultSetReader.
+  /// Factory method to create a PartialResultSetSource.
   static StatusOr<std::unique_ptr<PartialResultSetSource>> Create(
-      std::unique_ptr<grpc::ClientContext> context,
-      std::unique_ptr<GrpcReader> grpc_reader);
+      std::unique_ptr<PartialResultSetReader> reader);
   ~PartialResultSetSource() override;
 
   StatusOr<optional<Value>> NextValue() override;
   optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
-    return metadata_;
+    if (last_result_.has_metadata()) {
+      return last_result_.metadata();
+    }
+    return {};
   }
   optional<google::spanner::v1::ResultSetStats> Stats() override {
-    return stats_;
+    if (last_result_.has_stats()) {
+      return last_result_.stats();
+    }
+    return {};
   }
 
  private:
-  PartialResultSetSource(std::unique_ptr<grpc::ClientContext> context,
-                         std::unique_ptr<GrpcReader> grpc_reader)
-      : context_(std::move(context)), grpc_reader_(std::move(grpc_reader)) {}
+  explicit PartialResultSetSource(
+      std::unique_ptr<PartialResultSetReader> reader)
+      : reader_(std::move(reader)) {}
 
   Status ReadFromStream();
 
-  std::unique_ptr<grpc::ClientContext> context_;
-  std::unique_ptr<GrpcReader> grpc_reader_;
-
-  google::protobuf::RepeatedPtrField<google::protobuf::Value> values_;
+  std::unique_ptr<PartialResultSetReader> reader_;
+  google::spanner::v1::PartialResultSet last_result_;
   optional<google::protobuf::Value> partial_chunked_value_;
-  optional<google::spanner::v1::ResultSetMetadata> metadata_;
-  optional<google::spanner::v1::ResultSetStats> stats_;
   bool finished_ = false;
   int next_value_index_ = 0;
   int next_value_type_index_ = 0;
