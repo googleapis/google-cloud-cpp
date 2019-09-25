@@ -147,8 +147,8 @@ add_library(spanner_client
             internal/merge_chunk.h
             internal/metadata_spanner_stub.cc
             internal/metadata_spanner_stub.h
-            internal/partial_result_set_reader.cc
-            internal/partial_result_set_reader.h
+            internal/partial_result_set_source.cc
+            internal/partial_result_set_source.h
             internal/polling_loop.h
             internal/range_from_pagination.h
             internal/retry_loop.cc
@@ -302,7 +302,7 @@ function (spanner_client_define_tests)
         internal/logging_spanner_stub_test.cc
         internal/metadata_spanner_stub_test.cc
         internal/merge_chunk_test.cc
-        internal/partial_result_set_reader_test.cc
+        internal/partial_result_set_source_test.cc
         internal/polling_loop_test.cc
         internal/retry_loop_test.cc
         internal/spanner_stub_test.cc

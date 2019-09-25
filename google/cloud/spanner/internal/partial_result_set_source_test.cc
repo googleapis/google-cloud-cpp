@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/partial_result_set_reader.h"
+#include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
@@ -82,7 +82,7 @@ testing::Matcher<StatusOr<optional<Value>> const&> IsValidAndEquals(
   return testing::MakeMatcher(new ReaderValueMatcher(std::move(expected)));
 }
 
-class MockGrpcReader : public PartialResultSetReader::GrpcReader {
+class MockGrpcReader : public PartialResultSetSource::GrpcReader {
  public:
   MOCK_METHOD1(Read, bool(spanner_proto::PartialResultSet*));
   MOCK_METHOD1(NextMessageSize, bool(std::uint32_t*));
@@ -91,14 +91,14 @@ class MockGrpcReader : public PartialResultSetReader::GrpcReader {
 };
 
 /// @test Verify the behavior when the initial `Read()` fails.
-TEST(PartialResultSetReaderTest, InitialReadFailure) {
+TEST(PartialResultSetSourceTest, InitialReadFailure) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
   grpc::Status finish_status(grpc::StatusCode::INVALID_ARGUMENT, "invalid");
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_FALSE(reader.status().ok());
   EXPECT_EQ(reader.status().code(), StatusCode::kInvalidArgument);
@@ -108,7 +108,7 @@ TEST(PartialResultSetReaderTest, InitialReadFailure) {
  * @test Verify the behavior when we have a successful `Read()` followed by a
  * failed `Read()`.
  */
-TEST(PartialResultSetReaderTest, ReadSuccessThenFailure) {
+TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -131,7 +131,7 @@ TEST(PartialResultSetReaderTest, ReadSuccessThenFailure) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
   // The first call to NextValue() yields a value but the second gives an error.
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
   EXPECT_THAT((*reader)->NextValue(), IsValidAndEquals(Value(80)));
@@ -140,7 +140,7 @@ TEST(PartialResultSetReaderTest, ReadSuccessThenFailure) {
 }
 
 /// @test Verify the behavior when the first response does not contain metadata.
-TEST(PartialResultSetReaderTest, MissingMetadata) {
+TEST(PartialResultSetSourceTest, MissingMetadata) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   EXPECT_CALL(*grpc_reader, Read(_))
@@ -148,7 +148,7 @@ TEST(PartialResultSetReaderTest, MissingMetadata) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_FALSE(reader.status().ok());
   EXPECT_EQ(reader.status().code(), StatusCode::kInternal);
@@ -159,7 +159,7 @@ TEST(PartialResultSetReaderTest, MissingMetadata) {
  * @test Verify the behavior when the response does not contain data nor row
  * type information.
  */
-TEST(PartialResultSetReaderTest, MissingRowTypeNoData) {
+TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(R"pb(metadata: {})pb", &response));
@@ -169,7 +169,7 @@ TEST(PartialResultSetReaderTest, MissingRowTypeNoData) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   StatusOr<optional<Value>> value = reader.value()->NextValue();
@@ -181,7 +181,7 @@ TEST(PartialResultSetReaderTest, MissingRowTypeNoData) {
  * @test Verify the behavior when the received metadata contains data but not
  * row type information.
  */
-TEST(PartialResultSetReaderTest, MissingRowTypeWithData) {
+TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(R"pb(
@@ -193,7 +193,7 @@ TEST(PartialResultSetReaderTest, MissingRowTypeWithData) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   ASSERT_STATUS_OK(reader);
   StatusOr<optional<Value>> value = reader.value()->NextValue();
@@ -203,11 +203,11 @@ TEST(PartialResultSetReaderTest, MissingRowTypeWithData) {
 }
 
 /**
- * @test Verify the functionality of the PartialResultSetReader, including
+ * @test Verify the functionality of the PartialResultSetSource, including
  * properly handling metadata, stats, and data values.
  * All of the data is returned in a single Read() from the gRPC reader.
  */
-TEST(PartialResultSetReaderTest, SingleResponse) {
+TEST(PartialResultSetSourceTest, SingleResponse) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -250,7 +250,7 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -309,10 +309,10 @@ TEST(PartialResultSetReaderTest, SingleResponse) {
 }
 
 /**
- * @test Verify the functionality of the PartialResultSetReader when the gRPC
+ * @test Verify the functionality of the PartialResultSetSource when the gRPC
  * reader returns data across multiple Read() calls.
  */
-TEST(PartialResultSetReaderTest, MultipleResponses) {
+TEST(PartialResultSetSourceTest, MultipleResponses) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 5> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -379,7 +379,7 @@ TEST(PartialResultSetReaderTest, MultipleResponses) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -400,7 +400,7 @@ TEST(PartialResultSetReaderTest, MultipleResponses) {
 /**
  * @test Verify the behavior when a response with no values is received.
  */
-TEST(PartialResultSetReaderTest, ResponseWithNoValues) {
+TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 3> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -429,7 +429,7 @@ TEST(PartialResultSetReaderTest, ResponseWithNoValues) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -446,7 +446,7 @@ TEST(PartialResultSetReaderTest, ResponseWithNoValues) {
  * @Test Verify reassembling chunked values works correctly, including a mixture
  * of chunked and unchunked values.
  */
-TEST(PartialResultSetReaderTest, ChunkedStringValueWellFormed) {
+TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 5> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -499,7 +499,7 @@ TEST(PartialResultSetReaderTest, ChunkedStringValueWellFormed) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -521,7 +521,7 @@ TEST(PartialResultSetReaderTest, ChunkedStringValueWellFormed) {
  * @test Verify the behavior when `chunked_value` is set but there are no
  * values in the response.
  */
-TEST(PartialResultSetReaderTest, ChunkedValueSetNoValue) {
+TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 2> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -544,7 +544,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueSetNoValue) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -560,7 +560,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueSetNoValue) {
  * @test Verify the behavior when a response with no values follows one
  * with `chunked_value` set.
  */
-TEST(PartialResultSetReaderTest, ChunkedValueSetNoFollowingValue) {
+TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 2> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -584,7 +584,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueSetNoFollowingValue) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -599,7 +599,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueSetNoFollowingValue) {
 /**
  * @test Verify the behavior when `chunked_value` is set in the final response.
  */
-TEST(PartialResultSetReaderTest, ChunkedValueSetAtEndOfStream) {
+TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 2> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -627,7 +627,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueSetAtEndOfStream) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 
@@ -642,7 +642,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueSetAtEndOfStream) {
  * @test Verify the behavior when attempting to merge a value that can't be
  * chunked (float64/number).
  */
-TEST(PartialResultSetReaderTest, ChunkedValueMergeFailure) {
+TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
   auto grpc_reader = make_unique<MockGrpcReader>();
   std::array<spanner_proto::PartialResultSet, 3> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -675,7 +675,7 @@ TEST(PartialResultSetReaderTest, ChunkedValueMergeFailure) {
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
 
   auto context = make_unique<grpc::ClientContext>();
-  auto reader = PartialResultSetReader::Create(std::move(context),
+  auto reader = PartialResultSetSource::Create(std::move(context),
                                                std::move(grpc_reader));
   EXPECT_STATUS_OK(reader.status());
 

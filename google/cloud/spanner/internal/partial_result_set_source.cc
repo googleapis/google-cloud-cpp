@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/partial_result_set_reader.h"
+#include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/merge_chunk.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/log.h"
@@ -23,11 +23,11 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-StatusOr<std::unique_ptr<PartialResultSetReader>>
-PartialResultSetReader::Create(std::unique_ptr<grpc::ClientContext> context,
+StatusOr<std::unique_ptr<PartialResultSetSource>>
+PartialResultSetSource::Create(std::unique_ptr<grpc::ClientContext> context,
                                std::unique_ptr<GrpcReader> grpc_reader) {
-  std::unique_ptr<PartialResultSetReader> reader(
-      new PartialResultSetReader(std::move(context), std::move(grpc_reader)));
+  std::unique_ptr<PartialResultSetSource> reader(
+      new PartialResultSetSource(std::move(context), std::move(grpc_reader)));
 
   // Do the first read so the metadata is immediately available.
   auto status = reader->ReadFromStream();
@@ -43,7 +43,7 @@ PartialResultSetReader::Create(std::unique_ptr<grpc::ClientContext> context,
   return {std::move(reader)};
 }
 
-StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
+StatusOr<optional<Value>> PartialResultSetSource::NextValue() {
   if (finished_) {
     return optional<Value>();
   }
@@ -81,7 +81,7 @@ StatusOr<optional<Value>> PartialResultSetReader::NextValue() {
                     std::move(*values_.Mutable(next_value_index_++)))};
 }
 
-PartialResultSetReader::~PartialResultSetReader() {
+PartialResultSetSource::~PartialResultSetSource() {
   if (!finished_) {
     // If there is actual data in the streaming RPC Finish() can deadlock, so
     // before trying to read the final status we need to cancel the streaming
@@ -98,7 +98,7 @@ PartialResultSetReader::~PartialResultSetReader() {
   }
 }
 
-Status PartialResultSetReader::ReadFromStream() {
+Status PartialResultSetSource::ReadFromStream() {
   google::spanner::v1::PartialResultSet result_set;
   if (!grpc_reader_->Read(&result_set)) {
     // Read() returns false for end of stream, whether we read all the data or

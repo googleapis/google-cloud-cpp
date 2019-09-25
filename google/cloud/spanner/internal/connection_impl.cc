@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/connection_impl.h"
-#include "google/cloud/spanner/internal/partial_result_set_reader.h"
+#include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/query_partition.h"
@@ -166,7 +166,7 @@ StatusOr<ResultSet> ConnectionImpl::ReadImpl(
 
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
   auto rpc = stub_->StreamingRead(*context, request);
-  auto reader = internal::PartialResultSetReader::Create(std::move(context),
+  auto reader = internal::PartialResultSetSource::Create(std::move(context),
                                                          std::move(rpc));
   if (!reader.ok()) {
     return std::move(reader).status();
@@ -259,7 +259,7 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSqlImpl(
 
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
   auto rpc = stub_->ExecuteStreamingSql(*context, request);
-  auto reader = internal::PartialResultSetReader::Create(std::move(context),
+  auto reader = internal::PartialResultSetSource::Create(std::move(context),
                                                          std::move(rpc));
   if (!reader.ok()) {
     return std::move(reader).status();

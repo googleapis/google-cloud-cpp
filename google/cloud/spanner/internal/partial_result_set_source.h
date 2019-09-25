@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_READER_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_READER_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H_
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H_
 
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/value.h"
@@ -36,16 +36,16 @@ namespace internal {
  * reader and the spanner `ResultSet`, which is used to iterate over the rows
  * returned from a read operation.
  */
-class PartialResultSetReader : public internal::ResultSetSource {
+class PartialResultSetSource : public internal::ResultSetSource {
  public:
   using GrpcReader =
       ::grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>;
 
   /// Factory method to create a PartialResultSetReader.
-  static StatusOr<std::unique_ptr<PartialResultSetReader>> Create(
+  static StatusOr<std::unique_ptr<PartialResultSetSource>> Create(
       std::unique_ptr<grpc::ClientContext> context,
       std::unique_ptr<GrpcReader> grpc_reader);
-  ~PartialResultSetReader() override;
+  ~PartialResultSetSource() override;
 
   StatusOr<optional<Value>> NextValue() override;
   optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
@@ -56,7 +56,7 @@ class PartialResultSetReader : public internal::ResultSetSource {
   }
 
  private:
-  PartialResultSetReader(std::unique_ptr<grpc::ClientContext> context,
+  PartialResultSetSource(std::unique_ptr<grpc::ClientContext> context,
                          std::unique_ptr<GrpcReader> grpc_reader)
       : context_(std::move(context)), grpc_reader_(std::move(grpc_reader)) {}
 
@@ -80,4 +80,4 @@ class PartialResultSetReader : public internal::ResultSetSource {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_READER_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_PARTIAL_RESULT_SET_SOURCE_H_
