@@ -49,7 +49,7 @@ TEST_F(ClientOptionsTest, Default) {
   EXPECT_FALSE(options.enable_http_tracing());
   EXPECT_FALSE(options.enable_raw_client_tracing());
   EXPECT_TRUE(creds.get() == options.credentials().get());
-  EXPECT_EQ("https://www.googleapis.com", options.endpoint());
+  EXPECT_EQ("https://storage.googleapis.com", options.endpoint());
   EXPECT_EQ("v1", options.version());
   EXPECT_EQ("https://iamcredentials.googleapis.com/v1", options.iam_endpoint());
 }

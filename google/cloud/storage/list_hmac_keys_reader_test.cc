@@ -38,7 +38,7 @@ using ::testing::Return;
 HmacKeyMetadata CreateElement(int index) {
   std::string id = "bucket-" + std::to_string(index);
   std::string name = id;
-  std::string link = "https://www.googleapis.com/storage/v1/b/" + id;
+  std::string link = "https://storage.googleapis.com/storage/v1/b/" + id;
   internal::nl::json metadata{
       {"id", id},
       {"name", name},

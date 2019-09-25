@@ -43,7 +43,7 @@ NotificationMetadata CreateNotificationMetadataForTest() {
       "kind": "storage#notification",
       "object_name_prefix": "test-prefix-",
       "payload_format": "JSON_API_V1",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
       "topic": "test-topic"
 })""";
   return internal::NotificationMetadataParser::FromString(text).value();
@@ -67,7 +67,7 @@ TEST(NotificationMetadataTest, IOStream) {
   EXPECT_THAT(actual, HasSubstr("test-id-123"));
   EXPECT_THAT(actual, HasSubstr("storage#notification"));
   EXPECT_THAT(actual, HasSubstr(payload_format::JsonApiV1()));
-  EXPECT_THAT(actual, HasSubstr("https://www.googleapis.com/"));
+  EXPECT_THAT(actual, HasSubstr("https://storage.googleapis.com/"));
   EXPECT_THAT(actual, HasSubstr("test-topic"));
 }
 

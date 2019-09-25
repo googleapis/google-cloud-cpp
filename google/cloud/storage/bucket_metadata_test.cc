@@ -36,7 +36,7 @@ BucketMetadata CreateBucketMetadataForTest() {
       "acl": [{
         "kind": "storage#bucketAccessControl",
         "id": "acl-id-0",
-        "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/acl/user-test-user",
+        "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket/acl/user-test-user",
         "bucket": "test-bucket",
         "entity": "user-test-user",
         "role": "OWNER",
@@ -51,7 +51,7 @@ BucketMetadata CreateBucketMetadataForTest() {
       }, {
         "kind": "storage#objectAccessControl",
         "id": "acl-id-1",
-        "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/acl/user-test-user2",
+        "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket/acl/user-test-user2",
         "bucket": "test-bucket",
         "entity": "user-test-user2",
         "role": "READER",
@@ -146,7 +146,7 @@ BucketMetadata CreateBucketMetadataForTest() {
           "isLocked": false,
           "retentionPeriod": 86400
       },
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
       "updated": "2018-05-19T19:31:24Z",
@@ -248,7 +248,7 @@ TEST(BucketMetadataTest, Parse) {
             actual.retention_policy().retention_period);
   EXPECT_FALSE(actual.retention_policy().is_locked);
 
-  EXPECT_EQ("https://www.googleapis.com/storage/v1/b/test-bucket",
+  EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/test-bucket",
             actual.self_link());
   EXPECT_EQ(storage_class::Standard(), actual.storage_class());
   // Use `date -u +%s --date='2018-05-19T19:31:14Z'` to get the magic number:
