@@ -31,7 +31,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "acl": [{
         "kind": "storage#objectAccessControl",
         "id": "acl-id-0",
-        "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-qux",
+        "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-qux",
         "bucket": "foo-bar",
         "object": "foo",
         "generation": 12345,
@@ -48,7 +48,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       }, {
         "kind": "storage#objectAccessControl",
         "id": "acl-id-1",
-        "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-quux",
+        "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-quux",
         "bucket": "foo-bar",
         "object": "foo",
         "generation": 12345,
@@ -83,7 +83,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "kind": "storage#object",
       "kmsKeyName": "/foo/bar/baz/key",
       "md5Hash": "deaderBeef=",
-      "mediaLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz?generation=12345&alt=media",
+      "mediaLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz?generation=12345&alt=media",
       "metadata": {
         "foo": "bar",
         "baz": "qux"
@@ -95,7 +95,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "entityId": "user-qux-id-123"
       },
       "retentionExpirationTime": "2019-01-01T00:00:00Z",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz",
       "size": 102400,
       "storageClass": "STANDARD",
       "temporaryHold": true,
@@ -128,7 +128,7 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("/foo/bar/baz/key", actual.kms_key_name());
   EXPECT_EQ("deaderBeef=", actual.md5_hash());
   EXPECT_EQ(
-      "https://www.googleapis.com/storage/v1/b/foo-bar/o/"
+      "https://storage.googleapis.com/storage/v1/b/foo-bar/o/"
       "baz?generation=12345&alt=media",
       actual.media_link());
   EXPECT_EQ(2, actual.metadata().size());
@@ -140,7 +140,7 @@ TEST(ObjectMetadataTest, Parse) {
   EXPECT_EQ("user-qux-id-123", actual.owner().entity_id);
   EXPECT_EQ(google::cloud::internal::ParseRfc3339("2019-01-01T00:00:00Z"),
             actual.retention_expiration_time());
-  EXPECT_EQ("https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
+  EXPECT_EQ("https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz",
             actual.self_link());
   EXPECT_EQ(102400, actual.size());
   EXPECT_EQ("STANDARD", actual.storage_class());

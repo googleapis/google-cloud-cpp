@@ -44,7 +44,7 @@ TEST(NotificationRequestTest, Parse) {
       "kind": "storage#notification",
       "object_name_prefix": "test-prefix-",
       "payload_format": "JSON_API_V1",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket/notificationConfigs/test-id-123",
       "topic": "test-topic"
   })""")
                     .value();
@@ -66,7 +66,7 @@ TEST(NotificationRequestTest, Parse) {
   EXPECT_EQ("storage#notification", actual.kind());
   EXPECT_EQ(payload_format::JsonApiV1(), actual.payload_format());
   EXPECT_EQ(
-      "https://www.googleapis.com/storage/v1/b/test-bucket/"
+      "https://storage.googleapis.com/storage/v1/b/test-bucket/"
       "notificationConfigs/test-id-123",
       actual.self_link());
   EXPECT_EQ("test-topic", actual.topic());

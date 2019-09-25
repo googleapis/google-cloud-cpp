@@ -70,7 +70,7 @@ TEST_F(BucketTest, CreateBucket) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "test-bucket-name",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket-name",
       "projectNumber": "123456789",
       "name": "test-bucket-name",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -130,7 +130,7 @@ TEST_F(BucketTest, GetBucketMetadata) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "foo-bar-baz",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar-baz",
       "projectNumber": "123456789",
       "name": "foo-bar-baz",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -206,7 +206,7 @@ TEST_F(BucketTest, UpdateBucket) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "test-bucket-name",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket-name",
       "projectNumber": "123456789",
       "name": "test-bucket-name",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -264,7 +264,7 @@ TEST_F(BucketTest, PatchBucket) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "test-bucket-name",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket-name",
       "projectNumber": "123456789",
       "name": "test-bucket-name",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -440,7 +440,7 @@ TEST_F(BucketTest, LockBucketRetentionPolicy) {
   std::string text = R"""({
       "kind": "storage#bucket",
       "id": "test-bucket-name",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket-name",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket-name",
       "projectNumber": "123456789",
       "name": "test-bucket-name",
       "timeCreated": "2018-05-19T19:31:14Z",

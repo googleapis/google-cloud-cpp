@@ -77,7 +77,7 @@ StatusOr<ClientOptions> ClientOptions::CreateDefaultClientOptions() {
 
 ClientOptions::ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
     : credentials_(std::move(credentials)),
-      endpoint_("https://www.googleapis.com"),
+      endpoint_("https://storage.googleapis.com"),
       iam_endpoint_("https://iamcredentials.googleapis.com/v1"),
       version_("v1"),
       enable_http_tracing_(false),

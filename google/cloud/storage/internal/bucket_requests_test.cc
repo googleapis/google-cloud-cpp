@@ -101,7 +101,7 @@ TEST(ListBucketsResponseTest, Parse) {
   std::string bucket1 = R"""({
       "kind": "storage#bucket",
       "id": "foo-bar-baz-1",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz-1",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar-baz-1",
       "projectNumber": "123456789",
       "name": "foo-bar-baz",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -115,7 +115,7 @@ TEST(ListBucketsResponseTest, Parse) {
   std::string bucket2 = R"""({
       "kind": "storage#bucket",
       "id": "foo-bar-baz-2",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar-baz-2",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar-baz-2",
       "projectNumber": "123456789",
       "name": "foo-bar-baz",
       "timeCreated": "2018-05-19T19:31:14Z",
@@ -189,7 +189,7 @@ BucketMetadata CreateBucketMetadataForTest() {
   return internal::BucketMetadataParser::FromString(R"""({
       "kind": "storage#bucket",
       "id": "test-bucket",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/test-bucket",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/test-bucket",
       "projectNumber": "123456789",
       "name": "test-bucket",
       "timeCreated": "2018-05-19T19:31:14Z",

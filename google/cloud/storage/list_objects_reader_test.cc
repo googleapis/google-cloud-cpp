@@ -39,7 +39,7 @@ ObjectMetadata CreateElement(int index) {
   std::string id = "object-" + std::to_string(index);
   std::string name = id;
   std::string link =
-      "https://www.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
+      "https://storage.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
   internal::nl::json metadata{
       {"bucket", "test-bucket"},
       {"id", id},

@@ -77,7 +77,7 @@ TEST(ObjectRequestsTest, ParseListResponse) {
       "metageneration": "4",
       "name": "foo-bar-baz",
       "projectNumber": "123456789",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/baz/1",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/baz/1",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
       "updated": "2018-05-19T19:31:24Z"
@@ -96,7 +96,7 @@ TEST(ObjectRequestsTest, ParseListResponse) {
       "metageneration": "4",
       "name": "qux",
       "projectNumber": "123456789",
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/qux/7",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/qux/7",
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
       "updated": "2018-05-19T19:31:24Z"
@@ -502,7 +502,7 @@ TEST(ObjectRequestsTest, ResumableUpload) {
 
 TEST(ObjectRequestsTest, UploadChunk) {
   std::string const url =
-      "https://www.googleapis.com/upload/storage/v1/b/"
+      "https://storage.googleapis.com/upload/storage/v1/b/"
       "myBucket/o?uploadType=resumable"
       "&upload_id=xa298sd_sdlkj2";
   UploadChunkRequest request(url, 0, "abc123", 2048);
@@ -551,7 +551,7 @@ TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadEmpty) {
 
 TEST(ObjectRequestsTest, QueryResumableUpload) {
   std::string const url =
-      "https://www.googleapis.com/upload/storage/v1/b/"
+      "https://storage.googleapis.com/upload/storage/v1/b/"
       "myBucket/o?uploadType=resumable"
       "&upload_id=xa298sd_sdlkj2";
   QueryResumableUploadRequest request(url);
@@ -570,7 +570,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "acl": [{
         "kind": "storage#objectAccessControl",
         "id": "acl-id-0",
-        "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-qux",
+        "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-qux",
         "bucket": "foo-bar",
         "object": "foo",
         "generation": 12345,
@@ -587,7 +587,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       }, {
         "kind": "storage#objectAccessControl",
         "id": "acl-id-1",
-        "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-quux",
+        "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz/acl/user-quux",
         "bucket": "foo-bar",
         "object": "foo",
         "generation": 12345,
@@ -621,7 +621,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
       "kind": "storage#object",
       "kmsKeyName": "/foo/bar/baz/key",
       "md5Hash": "deaderBeef=",
-      "mediaLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz?generation=12345&alt=media",
+      "mediaLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz?generation=12345&alt=media",
       "metadata": {
         "foo": "bar",
         "baz": "qux"
@@ -632,7 +632,7 @@ ObjectMetadata CreateObjectMetadataForTest() {
         "entity": "user-qux",
         "entityId": "user-qux-id-123"
       },
-      "selfLink": "https://www.googleapis.com/storage/v1/b/foo-bar/o/baz",
+      "selfLink": "https://storage.googleapis.com/storage/v1/b/foo-bar/o/baz",
       "size": 102400,
       "storageClass": "STANDARD",
       "timeCreated": "2018-05-19T19:31:14Z",
