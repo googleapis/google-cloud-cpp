@@ -169,7 +169,13 @@ TEST(ConnectionImplTest, ReadSuccess) {
             return session;
           }));
 
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto reader1 = make_unique<MockGrpcReader>();
+  EXPECT_CALL(*reader1, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*reader1, Finish())
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+
+  auto reader2 = make_unique<MockGrpcReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -191,12 +197,13 @@ TEST(ConnectionImplTest, ReadSuccess) {
         values: { string_value: "Ann" }
       )pb",
       &response));
-  EXPECT_CALL(*grpc_reader, Read(_))
+  EXPECT_CALL(*reader2, Read(_))
       .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
       .WillOnce(Return(false));
-  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*reader2, Finish()).WillOnce(Return(grpc::Status()));
   EXPECT_CALL(*mock, StreamingRead(_, _))
-      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+      .WillOnce(Return(ByMove(std::move(reader1))))
+      .WillOnce(Return(ByMove(std::move(reader2))));
 
   auto result =
       conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
@@ -217,6 +224,76 @@ TEST(ConnectionImplTest, ReadSuccess) {
     ++row_number;
   }
   EXPECT_EQ(row_number, expected.size());
+}
+
+TEST(ConnectionImplTest, Read_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  auto reader1 = make_unique<MockGrpcReader>();
+  EXPECT_CALL(*reader1, Read(_)).WillOnce(Return(false));
+  EXPECT_CALL(*reader1, Finish())
+      .WillOnce(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh-oh")));
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .WillOnce(Return(ByMove(std::move(reader1))));
+
+  auto result =
+      conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                  "table",
+                  KeySet::All(),
+                  {"UserId", "UserName"},
+                  ReadOptions()});
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh"));
+}
+
+TEST(ConnectionImplTest, Read_TooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+  EXPECT_CALL(*mock, CreateSession(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::CreateSessionRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            spanner_proto::Session session;
+            session.set_name("test-session-name");
+            return session;
+          }));
+
+  EXPECT_CALL(*mock, StreamingRead(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Invoke([](grpc::ClientContext&, spanner_proto::ReadRequest const&) {
+            auto reader = make_unique<MockGrpcReader>();
+            EXPECT_CALL(*reader, Read(_)).WillOnce(Return(false));
+            EXPECT_CALL(*reader, Finish())
+                .WillOnce(Return(
+                    grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again")));
+            return reader;
+          }));
+
+  auto result =
+      conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+                  "table",
+                  KeySet::All(),
+                  {"UserId", "UserName"},
+                  ReadOptions()});
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("try-again"));
 }
 
 /// @test Verify implicit "begin transaction" in Read() works.

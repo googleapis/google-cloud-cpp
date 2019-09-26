@@ -148,6 +148,8 @@ add_library(spanner_client
             internal/metadata_spanner_stub.cc
             internal/metadata_spanner_stub.h
             internal/partial_result_set_reader.h
+            internal/partial_result_set_resume.cc
+            internal/partial_result_set_resume.h
             internal/partial_result_set_source.cc
             internal/partial_result_set_source.h
             internal/polling_loop.h
@@ -304,6 +306,7 @@ function (spanner_client_define_tests)
         internal/metadata_spanner_stub_test.cc
         internal/merge_chunk_test.cc
         internal/partial_result_set_source_test.cc
+        internal/partial_result_set_resume_test.cc
         internal/polling_loop_test.cc
         internal/retry_loop_test.cc
         internal/spanner_stub_test.cc
