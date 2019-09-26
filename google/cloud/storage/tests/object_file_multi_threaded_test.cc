@@ -93,21 +93,40 @@ class ObjectFileMultiThreadedTest
     }
   }
 
-  Status DownloadSomeObjects(Client client,
-                             std::vector<std::string> const& object_names,
-                             int thread_count, int modulo) {
-    std::cout << '+' << std::flush;
+  Status DeleteSomeObjects(Client client,
+                           std::vector<std::string> const& object_names,
+                           int thread_count, int modulo) {
     auto contents = MakeRandomData(kObjectSize);
     int index = 0;
+    Status status;
     for (auto& name : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
         std::cout << '.' << std::flush;
       }
-      auto status = client.DownloadToFile(flag_bucket_name, name, name);
-      if (!status.ok()) return status;
+      auto result = client.DeleteObject(flag_bucket_name, name);
+      if (!result.ok()) status = result;
     }
-    return Status();
+    return status;
+  }
+
+  void DeleteObjects(Client const& client,
+                     std::vector<std::string> const& object_names) {
+    int const thread_count = ThreadCount();
+    std::vector<std::future<Status>> tasks(thread_count);
+    // Parallelize the object deletion too because it can be slow.
+    int modulo = 0;
+    auto create_some_objects = [this, &client, &object_names,
+        thread_count](int modulo) {
+      return DeleteSomeObjects(client, object_names, thread_count, modulo);
+    };
+    for (auto& t : tasks) {
+      t = std::async(std::launch::async, create_some_objects, modulo++);
+    }
+    for (auto& t : tasks) {
+      auto const status = t.get();
+      EXPECT_STATUS_OK(status);
+    }
   }
 };
 
@@ -126,7 +145,18 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   int modulo = 0;
   auto download_some_objects = [this, thread_count, &client,
                                 &object_names](int modulo) {
-    return DownloadSomeObjects(*client, object_names, thread_count, modulo);
+    std::cout << '+' << std::flush;
+    auto contents = MakeRandomData(kObjectSize);
+    int index = 0;
+    for (auto& name : object_names) {
+      if (index++ % thread_count != modulo) continue;
+      if (modulo == 0) {
+        std::cout << '.' << std::flush;
+      }
+      auto status = client->DownloadToFile(flag_bucket_name, name, name);
+      if (!status.ok()) return status; // stop on the first error
+    }
+    return Status();
   };
   std::cout << "Performing downloads " << std::flush;
   for (auto& t : tasks) {
@@ -141,6 +171,10 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
   for (auto& name : object_names) {
     EXPECT_EQ(0, std::remove(name.c_str()));
   }
+
+  std::cout << "Delete test objects " << std::flush;
+  ASSERT_NO_FATAL_FAILURE(DeleteObjects(*client, object_names));
+  std::cout << " DONE\n";
 }
 
 }  // anonymous namespace
