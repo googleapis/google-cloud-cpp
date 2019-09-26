@@ -122,7 +122,7 @@ class ObjectFileMultiThreadedTest
     // Parallelize the object deletion too because it can be slow.
     int modulo = 0;
     auto create_some_objects = [this, &client, &object_names,
-        thread_count](int modulo) {
+                                thread_count](int modulo) {
       return DeleteSomeObjects(client, object_names, thread_count, modulo);
     };
     for (auto& t : tasks) {
@@ -163,7 +163,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
         std::cout << '.' << std::flush;
       }
       auto status = client->DownloadToFile(flag_bucket_name, name, name);
-      if (!status.ok()) return status; // stop on the first error
+      if (!status.ok()) return status;  // stop on the first error
     }
     return Status();
   };
