@@ -80,14 +80,14 @@ class ObjectFileMultiThreadedTest
 
   void CreateObjects(Client const& client,
                      std::vector<std::string> const& object_names) {
-    int const thread_count = ThreadCount();
-    std::vector<std::future<Status>> tasks(thread_count);
     // Parallelize the object creation too because it can be slow.
-    int modulo = 0;
+    int const thread_count = ThreadCount();
     auto create_some_objects = [this, &client, &object_names,
                                 thread_count](int modulo) {
       return CreateSomeObjects(client, object_names, thread_count, modulo);
     };
+    std::vector<std::future<Status>> tasks(thread_count);
+    int modulo = 0;
     for (auto& t : tasks) {
       t = std::async(std::launch::async, create_some_objects, modulo++);
     }
@@ -117,14 +117,14 @@ class ObjectFileMultiThreadedTest
 
   void DeleteObjects(Client const& client,
                      std::vector<std::string> const& object_names) {
-    int const thread_count = ThreadCount();
-    std::vector<std::future<Status>> tasks(thread_count);
     // Parallelize the object deletion too because it can be slow.
-    int modulo = 0;
+    int const thread_count = ThreadCount();
     auto create_some_objects = [this, &client, &object_names,
                                 thread_count](int modulo) {
       return DeleteSomeObjects(client, object_names, thread_count, modulo);
     };
+    std::vector<std::future<Status>> tasks(thread_count);
+    int modulo = 0;
     for (auto& t : tasks) {
       t = std::async(std::launch::async, create_some_objects, modulo++);
     }
@@ -149,8 +149,6 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
 
   // Create multiple threads, each downloading a portion of the objects.
   int const thread_count = ThreadCount();
-  std::vector<std::future<Status>> tasks(thread_count);
-  int modulo = 0;
   auto download_some_objects = [this, thread_count, &client,
                                 &object_names](int modulo) {
     std::cout << '+' << std::flush;
@@ -168,6 +166,8 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
     return Status();
   };
   std::cout << "Performing downloads " << std::flush;
+  std::vector<std::future<Status>> tasks(thread_count);
+  int modulo = 0;
   for (auto& t : tasks) {
     t = std::async(std::launch::async, download_some_objects, modulo++);
   }
