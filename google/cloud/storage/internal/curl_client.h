@@ -227,6 +227,7 @@ class CurlClient : public RawClient,
   std::mutex mu_dns_;
   std::mutex mu_ssl_session_;
   std::mutex mu_connect_;
+  std::mutex mu_psl_;
   CurlShare share_;
 
   std::mutex mu_;

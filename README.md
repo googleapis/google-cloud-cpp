@@ -126,10 +126,10 @@ The libraries also depend on gRPC, libcurl, and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
 versions of these dependencies:
 
-| Library | Minimum version |
-| ------- | --------------- |
-| gRPC    | v1.16.x |
-| libcurl | 7.47.0  |
+| Library | Minimum version | Notes |
+| ------- | --------------- | ----- |
+| gRPC    | v1.16.x | |
+| libcurl | 7.47.0  | 7.64.0 has known problems for multi-threaded applications |
 
 #### Tests
 
