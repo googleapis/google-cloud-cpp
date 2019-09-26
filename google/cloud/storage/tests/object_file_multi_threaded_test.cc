@@ -60,11 +60,15 @@ class ObjectFileMultiThreadedTest
   Status CreateSomeObjects(Client client,
                            std::vector<std::string> const& object_names,
                            int thread_count, int modulo) {
-    auto contents = MakeRandomData(kObjectSize);
+    auto contents = [this] {
+      std::unique_lock<std::mutex> lk(mu_);
+      return MakeRandomData(kObjectSize);
+    }();
     int index = 0;
     for (auto& n : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
+        std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
       auto metadata = client.InsertObject(flag_bucket_name, n, contents,
@@ -102,6 +106,7 @@ class ObjectFileMultiThreadedTest
     for (auto& name : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
+        std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
       auto result = client.DeleteObject(flag_bucket_name, name);
@@ -128,6 +133,9 @@ class ObjectFileMultiThreadedTest
       EXPECT_STATUS_OK(status);
     }
   }
+
+ protected:
+  std::mutex mu_;
 };
 
 TEST_F(ObjectFileMultiThreadedTest, Download) {
@@ -151,6 +159,7 @@ TEST_F(ObjectFileMultiThreadedTest, Download) {
     for (auto& name : object_names) {
       if (index++ % thread_count != modulo) continue;
       if (modulo == 0) {
+        std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
       auto status = client->DownloadToFile(flag_bucket_name, name, name);
