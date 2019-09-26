@@ -81,7 +81,7 @@ echo "Running GCS Object file upload/download integration tests."
 
 echo
 echo "Running GCS Object file download multi-threaded test."
-./object_file_multi_threaded_test.cc "${BUCKET_NAME}" "128"
+./object_file_multi_threaded_test "${BUCKET_NAME}" "128"
 
 echo
 echo "Running GCS Object media integration tests."
