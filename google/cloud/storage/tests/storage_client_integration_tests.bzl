@@ -27,6 +27,7 @@ storage_client_integration_tests = [
     "key_file_integration_test.cc",
     "object_checksum_integration_test.cc",
     "object_file_integration_test.cc",
+    "object_file_multi_threaded_test.cc",
     "object_hash_integration_test.cc",
     "object_insert_integration_test.cc",
     "object_integration_test.cc",
