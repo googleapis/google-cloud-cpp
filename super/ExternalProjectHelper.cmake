@@ -20,33 +20,6 @@ set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX "${CMAKE_BINARY_DIR}/external"
     CACHE STRING "Configure where the external projects are installed.")
 mark_as_advanced(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX)
 
-function (create_external_project_library_byproduct_list var_name)
-    cmake_parse_arguments(_BYPRODUCT_OPT "ALWAYS_SHARED" "" "" ${ARGN})
-    if ("${BUILD_SHARED_LIBS}" OR "${_BYPRODUCT_OPT_ALWAYS_SHARED}")
-        set(_byproduct_prefix "${CMAKE_SHARED_LIBRARY_PREFIX}")
-        set(_byproduct_suffix "${CMAKE_SHARED_LIBRARY_SUFFIX}")
-    else()
-        set(_byproduct_prefix "${CMAKE_STATIC_LIBRARY_PREFIX}")
-        set(_byproduct_suffix "${CMAKE_STATIC_LIBRARY_SUFFIX}")
-    endif ()
-
-    set(_decorated_byproduct_names)
-    foreach (lib ${_BYPRODUCT_OPT_UNPARSED_ARGUMENTS})
-        list(
-            APPEND
-                _decorated_byproduct_names
-                "<INSTALL_DIR>/lib/${_byproduct_prefix}${lib}${_byproduct_suffix}"
-            )
-        list(
-            APPEND
-                _decorated_byproduct_names
-                "<INSTALL_DIR>/lib/${_byproduct_prefix}${lib}d${_byproduct_suffix}"
-            )
-    endforeach ()
-
-    set(${var_name} ${_decorated_byproduct_names} PARENT_SCOPE)
-endfunction ()
-
 function (set_external_project_build_parallel_level var_name)
     if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
         OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")

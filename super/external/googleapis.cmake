@@ -31,35 +31,6 @@ if (NOT TARGET googleapis_project)
 
     set_external_project_prefix_vars()
 
-    create_external_project_library_byproduct_list(
-        googleapis_byproducts
-        "googleapis_cpp_api_http_protos"
-        "googleapis_cpp_api_annotations_protos"
-        "googleapis_cpp_api_auth_protos"
-        "googleapis_cpp_api_resource_protos"
-        "googleapis_cpp_type_expr_protos"
-        "googleapis_cpp_iam_v1_policy_protos"
-        "googleapis_cpp_iam_v1_iam_policy_protos"
-        "googleapis_cpp_rpc_error_details_protos"
-        "googleapis_cpp_rpc_status_protos"
-        "googleapis_cpp_longrunning_operations_protos"
-        "googleapis_cpp_bigtable_protos"
-        "googleapis_cpp_spanner_protos")
-
-    # When passing a semi-colon delimited list to ExternalProject_Add, we need
-    # to escape the semi-colon. Quoting does not work and escaping the semi-
-    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
-    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
-    # then be replaced by an escaped semi-colon by CMake. This allows us to use
-    # multiple directories for our RPATH. Normally, it'd make sense to use : as
-    # a delimiter since it is a typical path-list separator, but it is a special
-    # character in CMake.
-    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${CMAKE_PREFIX_PATH};<INSTALL_DIR>")
-    string(REPLACE ";"
-                   "|"
-                   GOOGLE_CLOUD_CPP_PREFIX_PATH
-                   "${GOOGLE_CLOUD_CPP_PREFIX_PATH}")
-
     include(ExternalProject)
     externalproject_add(
         googleapis_project
@@ -87,7 +58,6 @@ if (NOT TARGET googleapis_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS ${googleapis_byproducts}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

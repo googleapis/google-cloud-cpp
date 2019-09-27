@@ -28,12 +28,6 @@ if (NOT TARGET googletest_project)
 
     set_external_project_build_parallel_level(PARALLEL)
 
-    create_external_project_library_byproduct_list(googletest_byproducts
-                                                   "gtest"
-                                                   "gtest_main"
-                                                   "gmock"
-                                                   "gmock_main")
-
     set_external_project_prefix_vars()
 
     include(ExternalProject)
@@ -56,7 +50,6 @@ if (NOT TARGET googletest_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS ${googletest_byproducts}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

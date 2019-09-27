@@ -31,22 +31,6 @@ if (NOT TARGET protobuf_project)
 
     set_external_project_prefix_vars()
 
-    create_external_project_library_byproduct_list(protobuf_byproducts
-                                                   "protobuf")
-
-    # to escape the semi-colon. Quoting does not work and escaping the semi-
-    # colon does not seem to work (see https://reviews.llvm.org/D40257). A
-    # workaround is to use LIST_SEPARATOR to change the delimiter, which will
-    # then be replaced by an escaped semi-colon by CMake. This allows us to use
-    # multiple directories for our RPATH. Normally, it'd make sense to use : as
-    # a delimiter since it is a typical path-list separator, but it is a special
-    # character in CMake.
-    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${CMAKE_PREFIX_PATH};<INSTALL_DIR>")
-    string(REPLACE ";"
-                   "|"
-                   GOOGLE_CLOUD_CPP_PREFIX_PATH
-                   "${GOOGLE_CLOUD_CPP_PREFIX_PATH}")
-
     include(ExternalProject)
     externalproject_add(
         protobuf_project
@@ -82,8 +66,6 @@ if (NOT TARGET protobuf_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS ${protobuf_byproducts}
-                         <INSTALL_DIR>/bin/protoc${CMAKE_EXECUTABLE_SUFFIX}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

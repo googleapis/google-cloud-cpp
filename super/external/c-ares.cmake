@@ -26,9 +26,6 @@ if (NOT TARGET c_ares_project)
 
     set_external_project_build_parallel_level(PARALLEL)
 
-    create_external_project_library_byproduct_list(c_ares_byproducts
-                                                   ALWAYS_SHARED "cares")
-
     set_external_project_prefix_vars()
 
     include(ExternalProject)
@@ -50,7 +47,6 @@ if (NOT TARGET c_ares_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS ${c_ares_byproducts}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

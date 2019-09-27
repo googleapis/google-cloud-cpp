@@ -26,8 +26,6 @@ if (NOT TARGET crc32c_project)
 
     set_external_project_build_parallel_level(PARALLEL)
 
-    create_external_project_library_byproduct_list(crc32c_byproducts "crc32c")
-
     set_external_project_prefix_vars()
 
     include(ExternalProject)
@@ -53,7 +51,6 @@ if (NOT TARGET crc32c_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS ${crc32c_byproducts}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

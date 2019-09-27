@@ -30,8 +30,6 @@ if (NOT TARGET curl_project)
 
     set_external_project_prefix_vars()
 
-    create_external_project_library_byproduct_list(curl_byproducts "curl")
-
     include(ExternalProject)
     externalproject_add(
         curl_project
@@ -67,7 +65,6 @@ if (NOT TARGET curl_project)
                       --build
                       <BINARY_DIR>
                       ${PARALLEL}
-        BUILD_BYPRODUCTS ${curl_byproducts}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
