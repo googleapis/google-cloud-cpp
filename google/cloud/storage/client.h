@@ -2454,7 +2454,7 @@ class Client {
    *     service accounts authentication.
    *
    * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
-   * for a detailed description on how to use the feature.
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   ListHmacKeysReader ListHmacKeys(Options&&... options) {
@@ -2499,7 +2499,7 @@ class Client {
    *     service accounts authentication.
    *
    * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
-   * for a detailed description on how to use the feature.
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKey(
@@ -2542,7 +2542,7 @@ class Client {
    *     service accounts authentication.
    *
    * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
-   * for a detailed description on how to use the feature.
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   Status DeleteHmacKey(std::string access_id, Options&&... options) {
@@ -2577,7 +2577,7 @@ class Client {
    *     service accounts authentication.
    *
    * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
-   * for a detailed description on how to use the feature.
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   StatusOr<HmacKeyMetadata> GetHmacKey(std::string access_id,
@@ -2617,7 +2617,7 @@ class Client {
    *     service accounts authentication.
    *
    * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
-   * for a detailed description on how to use the feature.
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   StatusOr<HmacKeyMetadata> UpdateHmacKey(std::string access_id,
