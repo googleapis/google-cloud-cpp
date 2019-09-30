@@ -285,6 +285,9 @@ CurlClient::CurlClient(ClientOptions options)
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_CONNECT);
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
   curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+#if LIBCURL_VERSION_NUM >= 0x076100
+  curl_share_setopt(share_.get(), CURLSHOPT_SHARE, CURL_LOCK_DATA_PSL);
+#endif  // LIBCURL_VERSION_NUM
 
   CurlInitializeOnce(options);
 }
@@ -1195,6 +1198,11 @@ void CurlClient::LockShared(curl_lock_data data) {
     case CURL_LOCK_DATA_CONNECT:
       mu_connect_.lock();
       return;
+#if LIBCURL_VERSION_NUM >= 0x076100
+    case CURL_LOCK_DATA_PSL:
+      mu_psl_.lock();
+      return;
+#endif  // LIBCURL_VERSION_NUM
     default:
       // We use a default because different versions of libcurl have different
       // values in the `curl_lock_data` enum.
@@ -1219,6 +1227,11 @@ void CurlClient::UnlockShared(curl_lock_data data) {
     case CURL_LOCK_DATA_CONNECT:
       mu_connect_.unlock();
       return;
+#if LIBCURL_VERSION_NUM >= 0x076100
+    case CURL_LOCK_DATA_PSL:
+      mu_psl_.unlock();
+      return;
+#endif  // LIBCURL_VERSION_NUM
     default:
       // We use a default because different versions of libcurl have different
       // values in the `curl_lock_data` enum.

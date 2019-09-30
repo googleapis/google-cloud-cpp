@@ -1,5 +1,5 @@
-# This is a copy of:
-#   https://github.com/tensorflow/tensorflow/blob/d034768fa9454208c7c7c24666b70ef66f5c1f46/third_party/curl.BUILD#L1
+# This is based on:
+#   https://github.com/tensorflow/tensorflow/blob/6dcdbbf6211706d78ef499f2f134dadc3804cd25/third_party/curl.BUILD
 # Description:
 #   curl is a tool for talking to web servers.
 
@@ -48,7 +48,6 @@ CURL_WIN_SRCS = [
     "lib/vtls/schannel.c",
     "lib/vtls/schannel_verify.c",
     "lib/idn_win32.c",
-    "lib/x509asn1.c",
 ]
 
 cc_library(
@@ -176,8 +175,7 @@ cc_library(
         "lib/parsedate.c",
         "lib/parsedate.h",
         "lib/pingpong.h",
-        "lib/pipeline.c",
-        "lib/pipeline.h",
+        "lib/pingpong.c",
         "lib/pop3.h",
         "lib/progress.c",
         "lib/progress.h",
@@ -239,9 +237,6 @@ cc_library(
         "lib/vauth/vauth.c",
         "lib/vauth/vauth.h",
         "lib/version.c",
-        "lib/vtls/axtls.h",
-        "lib/vtls/cyassl.h",
-        "lib/vtls/darwinssl.h",
         "lib/vtls/gskit.h",
         "lib/vtls/gtls.h",
         "lib/vtls/mbedtls.h",
@@ -252,14 +247,29 @@ cc_library(
         "lib/vtls/schannel.h",
         "lib/vtls/vtls.c",
         "lib/vtls/vtls.h",
+        "lib/vtls/wolfssl.h",
         "lib/warnless.c",
         "lib/warnless.h",
         "lib/wildcard.c",
         "lib/wildcard.h",
+        "lib/x509asn1.c",
         "lib/x509asn1.h",
+        "lib/psl.h",
+        "lib/psl.c",
+        "lib/vtls/sectransp.h",
+        "lib/vtls/mesalink.h",
+        "lib/vtls/mesalink.c",
+        "lib/curl_get_line.h",
+        "lib/curl_get_line.c",
+        "lib/urlapi-int.h",
+        "lib/urlapi.c",
+        "lib/altsvc.h",
+        "lib/altsvc.c",
+        "lib/doh.h",
+        "lib/doh.c",
     ] + select({
         ":darwin": [
-            "lib/vtls/darwinssl.c",
+            "lib/vtls/sectransp.c",
         ],
         ":windows": CURL_WIN_SRCS,
         "//conditions:default": [
@@ -275,6 +285,7 @@ cc_library(
         "include/curl/stdcheaders.h",
         "include/curl/system.h",
         "include/curl/typecheck-gcc.h",
+        "include/curl/urlapi.h",
     ],
     copts = select({
         ":windows": CURL_WIN_COPTS,
@@ -372,8 +383,6 @@ cc_binary(
         "src/tool_easysrc.h",
         "src/tool_formparse.c",
         "src/tool_formparse.h",
-        "src/tool_filetime.c",
-        "src/tool_filetime.h",
         "src/tool_getparam.c",
         "src/tool_getparam.h",
         "src/tool_getpass.c",
@@ -392,6 +401,8 @@ cc_binary(
         "src/tool_main.h",
         "src/tool_metalink.c",
         "src/tool_metalink.h",
+        "src/tool_mfiles.c",
+        "src/tool_mfiles.h",
         "src/tool_msgs.c",
         "src/tool_msgs.h",
         "src/tool_operate.c",
@@ -419,6 +430,8 @@ cc_binary(
         "src/tool_version.h",
         "src/tool_vms.c",
         "src/tool_vms.h",
+        "src/tool_writeenv.c",
+        "src/tool_writeenv.h",
         "src/tool_writeout.c",
         "src/tool_writeout.h",
         "src/tool_xattr.c",
@@ -479,13 +492,14 @@ genrule(
         "#  define HAVE_SYS_FILIO_H 1",
         "#  define HAVE_SYS_SOCKIO_H 1",
         "#  define OS \"x86_64-apple-darwin15.5.0\"",
-        "#  define USE_DARWINSSL 1",
+        "#  define USE_SECTRANSP 1",
         "#else",
         "#  define CURL_CA_BUNDLE \"/etc/ssl/certs/ca-certificates.crt\"",
         "#  define GETSERVBYPORT_R_ARGS 6",
         "#  define GETSERVBYPORT_R_BUFSIZE 4096",
         "#  define HAVE_BORINGSSL 1",
         "#  define HAVE_CLOCK_GETTIME_MONOTONIC 1",
+        "#  define HAVE_CONNECT 1",
         "#  define HAVE_CRYPTO_CLEANUP_ALL_EX_DATA 1",
         "#  define HAVE_FSETXATTR_5 1",
         "#  define HAVE_GETHOSTBYADDR_R 1",
@@ -563,6 +577,7 @@ genrule(
         "#    define HAVE_GETIFADDRS 1",
         "#  endif",
         "#  define HAVE_GETNAMEINFO 1",
+        "#  define HAVE_GETPEERNAME 1",
         "#  define HAVE_GETPPID 1",
         "#  define HAVE_GETPROTOBYNAME 1",
         "#  define HAVE_GETPWUID 1",
@@ -570,6 +585,7 @@ genrule(
         "#    define HAVE_GETPWUID_R 1",
         "#  endif",
         "#  define HAVE_GETRLIMIT 1",
+        "#  define HAVE_GETSOCKNAME 1",
         "#  define HAVE_GETTIMEOFDAY 1",
         "#  define HAVE_GMTIME_R 1",
         "#  if !defined(__ANDROID__)",
