@@ -71,7 +71,7 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
 fi
 gcloud auth configure-docker
 
-readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-readme-${DISTRO}"
+readonly DEV_IMAGE="gcr.io/${PROJECT_ID:-__invalid-project-id__}/google-cloud-cpp/test-readme-${DISTRO}"
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
 has_cache="false"
