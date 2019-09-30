@@ -2449,8 +2449,12 @@ class Client {
    * @par Example
    * @snippet storage_service_account_samples.cc list hmac keys service account
    *
-   * @see https://cloud.google.com/iam/docs/service-accounts for general
-   *     information on Google Cloud Platform service accounts.
+   * @see https://cloud.google.com/storage/docs/authentication/hmackeys for
+   *     general information on using HMAC keys for Google Cloud Platform
+   *     service accounts authentication.
+   *
+   * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   ListHmacKeysReader ListHmacKeys(Options&&... options) {
@@ -2490,8 +2494,12 @@ class Client {
    * @par Example
    * @snippet storage_service_account_samples.cc create hmac key project
    *
-   * @see https://cloud.google.com/iam/docs/service-accounts for general
-   *     information on Google Cloud Platform service accounts.
+   * @see https://cloud.google.com/storage/docs/authentication/hmackeys for
+   *     general information on using HMAC keys for Google Cloud Platform
+   *     service accounts authentication.
+   *
+   * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   StatusOr<std::pair<HmacKeyMetadata, std::string>> CreateHmacKey(
@@ -2529,8 +2537,12 @@ class Client {
    * @par Example
    * @snippet storage_service_account_samples.cc delete hmac key
    *
-   * @see https://cloud.google.com/iam/docs/service-accounts for general
-   *     information on Google Cloud Platform service accounts.
+   * @see https://cloud.google.com/storage/docs/authentication/hmackeys for
+   *     general information on using HMAC keys for Google Cloud Platform
+   *     service accounts authentication.
+   *
+   * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   Status DeleteHmacKey(std::string access_id, Options&&... options) {
@@ -2560,8 +2572,12 @@ class Client {
    * @par Example
    * @snippet storage_service_account_samples.cc get hmac key
    *
-   * @see https://cloud.google.com/iam/docs/service-accounts for general
-   *     information on Google Cloud Platform service accounts.
+   * @see https://cloud.google.com/storage/docs/authentication/hmackeys for
+   *     general information on using HMAC keys for Google Cloud Platform
+   *     service accounts authentication.
+   *
+   * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   StatusOr<HmacKeyMetadata> GetHmacKey(std::string access_id,
@@ -2596,8 +2612,12 @@ class Client {
    * @par Example
    * @snippet storage_service_account_samples.cc update hmac key
    *
-   * @see https://cloud.google.com/iam/docs/service-accounts for general
-   *     information on Google Cloud Platform service accounts.
+   * @see https://cloud.google.com/storage/docs/authentication/hmackeys for
+   *     general information on using HMAC keys for Google Cloud Platform
+   *     service accounts authentication.
+   *
+   * @see https://cloud.google.com/storage/docs/authentication/managing-hmackeys
+   *     for a detailed description on how to use the feature.
    */
   template <typename... Options>
   StatusOr<HmacKeyMetadata> UpdateHmacKey(std::string access_id,
