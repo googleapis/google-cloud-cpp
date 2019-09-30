@@ -663,7 +663,16 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
   auto count = std::count_if(
       backend->log_lines.begin(), backend->log_lines.end(),
       [&re](std::string const& line) { return std::regex_match(line, re); });
-  EXPECT_LT(0, count);
+  EXPECT_LT(0, count) << "logs=" << [&backend] {
+    std::string msg;
+    for (auto const& l : backend->log_lines) {
+      if (msg.find(" POST ") == std::string::npos) continue;
+      msg += l;
+      msg += "\n";
+    }
+    msg += "===================================================\n";
+    return msg;
+  }();
 
   auto status = client.DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);

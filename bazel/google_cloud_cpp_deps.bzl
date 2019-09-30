@@ -67,7 +67,6 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_github_curl_curl",
             urls = [
-                "https://mirror.bazel.build/curl.haxx.se/download/curl-7.65.3.tar.gz",
                 "https://curl.haxx.se/download/curl-7.65.3.tar.gz",
             ],
             strip_prefix = "curl-7.65.3",
