@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance_admin_connection.h"
+#include "google/cloud/spanner/instance.h"
+#include "google/cloud/spanner/internal/polling_loop.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
 
 namespace google {
@@ -41,6 +43,25 @@ namespace giam = google::iam::v1;
 #define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING 2.0
 #endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
 
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT \
+  std::chrono::minutes(30)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF \
+  std::chrono::seconds(10)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF \
+  std::chrono::minutes(5)
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
+
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
+#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING 2.0
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
+
 namespace {
 
 std::unique_ptr<RetryPolicy> DefaultInstanceAdminRetryPolicy() {
@@ -57,20 +78,34 @@ std::unique_ptr<BackoffPolicy> DefaultInstanceAdminBackoffPolicy() {
       .clone();
 }
 
+std::unique_ptr<PollingPolicy> DefaultInstanceAdminPollingPolicy() {
+  return GenericPollingPolicy<>(
+             LimitedTimeRetryPolicy(
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT),
+             ExponentialBackoffPolicy(
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF,
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF,
+                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING))
+      .clone();
+}
+
 class InstanceAdminConnectionImpl : public InstanceAdminConnection {
  public:
   InstanceAdminConnectionImpl(std::shared_ptr<internal::InstanceAdminStub> stub,
                               std::unique_ptr<RetryPolicy> retry_policy,
-                              std::unique_ptr<BackoffPolicy> backoff_policy)
+                              std::unique_ptr<BackoffPolicy> backoff_policy,
+                              std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
         retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        backoff_policy_(std::move(backoff_policy)),
+        polling_policy_(std::move(polling_policy)) {}
 
   explicit InstanceAdminConnectionImpl(
       std::shared_ptr<internal::InstanceAdminStub> stub)
       : InstanceAdminConnectionImpl(std::move(stub),
                                     DefaultInstanceAdminRetryPolicy(),
-                                    DefaultInstanceAdminBackoffPolicy()) {}
+                                    DefaultInstanceAdminBackoffPolicy(),
+                                    DefaultInstanceAdminPollingPolicy()) {}
 
   ~InstanceAdminConnectionImpl() override = default;
 
@@ -82,6 +117,48 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
         [this](grpc::ClientContext& context,
                gcsa::GetInstanceRequest const& request) {
           return stub_->GetInstance(context, request);
+        },
+        request, __func__);
+  }
+
+  future<StatusOr<gcsa::Instance>> CreateInstance(
+      CreateInstanceParams p) override {
+    gcsa::CreateInstanceRequest request;
+    google::cloud::spanner::Instance in(p.project_id, p.instance_id);
+    request.set_parent("projects/" + p.project_id);
+    request.set_instance_id(std::move(p.instance_id));
+    auto instance = request.mutable_instance();
+    instance->set_config(std::move(p.instance_config));
+    instance->set_name(in.FullName());
+    instance->set_display_name(std::move(p.display_name));
+    instance->set_node_count(p.node_count);
+    auto mutable_labels = instance->mutable_labels();
+    for (auto& pair : p.labels) {
+      (*mutable_labels)[pair.first] = std::move(pair.second);
+    }
+    auto operation = RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), false,
+        [this](grpc::ClientContext& context,
+               gcsa::CreateInstanceRequest const& request) {
+          return stub_->CreateInstance(context, request);
+        },
+        request, __func__);
+    if (!operation) {
+      return google::cloud::make_ready_future(
+          StatusOr<gcsa::Instance>(operation.status()));
+    }
+
+    return AwaitCreateInstance(*std::move(operation));
+  }
+
+  Status DeleteInstance(DeleteInstanceParams p) override {
+    gcsa::DeleteInstanceRequest request;
+    request.set_name(std::move(p.instance_name));
+    return internal::RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::DeleteInstanceRequest const& request) {
+          return stub_->DeleteInstance(context, request);
         },
         request, __func__);
   }
@@ -206,9 +283,43 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   }
 
  private:
+  future<StatusOr<gcsa::Instance>> AwaitCreateInstance(
+      google::longrunning::Operation operation) {
+    promise<StatusOr<gcsa::Instance>> pr;
+    auto f = pr.get_future();
+
+    // TODO(#127) - use the (implicit) completion queue to run this loop.
+    std::thread t(
+        [](std::shared_ptr<internal::InstanceAdminStub> stub,
+           google::longrunning::Operation operation,
+           std::unique_ptr<PollingPolicy> polling_policy,
+           google::cloud::promise<StatusOr<gcsa::Instance>> promise,
+           char const* location) mutable {
+          auto result = internal::PollingLoop<
+              internal::PollingLoopResponseExtractor<gcsa::Instance>>(
+              std::move(polling_policy),
+              [stub](grpc::ClientContext& context,
+                     google::longrunning::GetOperationRequest const& request) {
+                return stub->GetOperation(context, request);
+              },
+              std::move(operation), location);
+
+          // Drop our reference to stub; ideally we'd have std::moved into the
+          // lambda. Doing this also prevents a false leak from being reported
+          // when using googlemock.
+          stub.reset();
+          promise.set_value(std::move(result));
+        },
+        stub_, std::move(operation), polling_policy_->clone(), std::move(pr),
+        __func__);
+    t.detach();
+
+    return f;
+  }
   std::shared_ptr<internal::InstanceAdminStub> stub_;
   std::unique_ptr<RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::unique_ptr<PollingPolicy> polling_policy_;
 };
 }  // namespace
 
@@ -230,10 +341,12 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const&, std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy) {
   return std::make_shared<InstanceAdminConnectionImpl>(
-      std::move(base_stub), std::move(retry_policy), std::move(backoff_policy));
+      std::move(base_stub), std::move(retry_policy), std::move(backoff_policy),
+      std::move(polling_policy));
 }
 
 }  // namespace internal

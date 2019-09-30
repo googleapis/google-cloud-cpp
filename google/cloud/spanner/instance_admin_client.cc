@@ -24,6 +24,19 @@ InstanceAdminClient::GetInstance(Instance const& in) {
   return conn_->GetInstance({in.FullName()});
 }
 
+future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+InstanceAdminClient::CreateInstance(
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& display_name, std::string const& instance_config,
+    int node_count, std::map<std::string, std::string> const& labels) {
+  return conn_->CreateInstance({project_id, instance_id, display_name,
+                                instance_config, node_count, labels});
+}
+
+Status InstanceAdminClient::DeleteInstance(Instance const& in) {
+  return conn_->DeleteInstance({in.FullName()});
+}
+
 StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminClient::GetInstanceConfig(std::string const& name) {
   return conn_->GetInstanceConfig({name});

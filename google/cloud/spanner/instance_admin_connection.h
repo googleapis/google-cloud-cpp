@@ -18,8 +18,10 @@
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
 #include "google/cloud/spanner/internal/range_from_pagination.h"
+#include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
+#include <map>
 
 namespace google {
 namespace cloud {
@@ -86,6 +88,21 @@ class InstanceAdminConnection {
     std::string instance_name;
   };
 
+  /// Wrap the arguments for `CreateInstance()`.
+  struct CreateInstanceParams {
+    std::string project_id;
+    std::string instance_id;
+    std::string display_name;
+    std::string instance_config;
+    int node_count;
+    std::map<std::string, std::string> labels;
+  };
+
+  /// Wrap the arguments for `DeleteInstance()`.
+  struct DeleteInstanceParams {
+    std::string instance_name;
+  };
+
   /// Wrap the arguments for `GetInstanceConfig()`.
   struct GetInstanceConfigParams {
     std::string instance_config_name;
@@ -141,6 +158,11 @@ class InstanceAdminConnection {
   /// Return the metadata for the given instance.
   virtual StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       GetInstanceParams) = 0;
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  CreateInstance(CreateInstanceParams p) = 0;
+
+  virtual Status DeleteInstance(DeleteInstanceParams p) = 0;
 
   /// Return the InstanceConfig with the given name.
   virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
@@ -202,8 +224,10 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     std::shared_ptr<internal::InstanceAdminStub> base_stub,
-    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy);
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy);
+
 }  // namespace internal
 
 }  // namespace SPANNER_CLIENT_NS

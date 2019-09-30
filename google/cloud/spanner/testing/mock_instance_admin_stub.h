@@ -59,6 +59,10 @@ class MockInstanceAdminStub
                StatusOr<google::iam::v1::TestIamPermissionsResponse>(
                    grpc::ClientContext&,
                    google::iam::v1::TestIamPermissionsRequest const&));
+  MOCK_METHOD2(GetOperation,
+               StatusOr<google::longrunning::Operation>(
+                   grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const&));
 };
 
 }  // namespace SPANNER_CLIENT_NS

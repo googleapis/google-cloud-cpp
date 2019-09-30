@@ -37,13 +37,14 @@ namespace giam = ::google::iam::v1;
 
 std::shared_ptr<InstanceAdminConnection> MakeTestConnection(
     std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock) {
+  LimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
+  ExponentialBackoffPolicy backoff(
+      /*initial_delay=*/std::chrono::microseconds(1),
+      /*maximum_delay=*/std::chrono::microseconds(1),
+      /*scaling=*/2.0);
+  GenericPollingPolicy<LimitedErrorCountRetryPolicy> polling(retry, backoff);
   return internal::MakeInstanceAdminConnection(
-      std::move(mock), ConnectionOptions(),
-      LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
-      ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
-                               /*maximum_delay=*/std::chrono::microseconds(1),
-                               /*scaling=*/2.0)
-          .clone());
+      std::move(mock), retry.clone(), backoff.clone(), polling.clone());
 }
 
 TEST(InstanceAdminConnectionTest, GetInstance_Success) {
@@ -99,6 +100,118 @@ TEST(InstanceAdminConnectionTest, GetInstance_TooManyTransients) {
   auto conn = MakeTestConnection(mock);
   auto actual = conn->GetInstance({"test-name"});
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
+}
+
+TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance";
+
+  EXPECT_CALL(*mock, CreateInstance(_, _))
+      .WillOnce(Invoke([&expected_name](grpc::ClientContext&,
+                                        gcsa::CreateInstanceRequest const& r) {
+        EXPECT_EQ("test-instance", r.instance_id());
+        EXPECT_EQ("projects/test-project", r.parent());
+        auto const& instance = r.instance();
+        EXPECT_EQ(expected_name, instance.name());
+        EXPECT_EQ("test-instance-config", instance.config());
+        EXPECT_EQ("test-display-name", instance.display_name());
+        auto const& labels = instance.labels();
+        EXPECT_EQ(1, labels.count("key"));
+        EXPECT_EQ("value", labels.at("key"));
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      }));
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce(Invoke(
+          [&expected_name](grpc::ClientContext&,
+                           google::longrunning::GetOperationRequest const& r) {
+            EXPECT_EQ("test-operation-name", r.name());
+            google::longrunning::Operation op;
+            op.set_name(r.name());
+            op.set_done(true);
+            gcsa::Instance instance;
+            instance.set_name(expected_name);
+            op.mutable_response()->PackFrom(instance);
+            return make_status_or(op);
+          }));
+
+  auto conn = MakeTestConnection(std::move(mock));
+  auto fut = conn->CreateInstance(
+      {"test-project", "test-instance", "test-display-name",
+       "test-instance-config", 1,
+       std::map<std::string, std::string>({{"key", "value"}})});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto instance = fut.get();
+  EXPECT_STATUS_OK(instance);
+
+  EXPECT_EQ(expected_name, instance->name());
+}
+
+TEST(InstanceAdminClientTest, CreateInstanceError) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+
+  EXPECT_CALL(*mock, CreateInstance(_, _))
+      .WillOnce(
+          Invoke([](grpc::ClientContext&, gcsa::CreateInstanceRequest const&) {
+            return StatusOr<google::longrunning::Operation>(
+                Status(StatusCode::kPermissionDenied, "uh-oh"));
+          }));
+
+  auto conn = MakeTestConnection(std::move(mock));
+  auto fut = conn->CreateInstance(
+      {"test-project", "test-instance", "test-display-name",
+       "test-instance-config", 1,
+       std::map<std::string, std::string>({{"key", "value"}})});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto instance = fut.get();
+  EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());
+}
+
+TEST(InstanceAdminConnectionTest, DeleteInstance_Success) {
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance";
+
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, DeleteInstance(_, _))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  gcsa::DeleteInstanceRequest const& request) {
+            EXPECT_EQ(expected_name, request.name());
+            return Status(StatusCode::kUnavailable, "try-again");
+          }))
+      .WillOnce(
+          Invoke([&expected_name](grpc::ClientContext&,
+                                  gcsa::DeleteInstanceRequest const& request) {
+            EXPECT_EQ(expected_name, request.name());
+            return Status();
+          }));
+
+  auto conn = MakeTestConnection(mock);
+  auto status = conn->DeleteInstance({expected_name});
+  ASSERT_STATUS_OK(status);
+}
+
+TEST(InstanceAdminConnectionTest, DeleteInstance_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, DeleteInstance(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = MakeTestConnection(mock);
+  auto status = conn->DeleteInstance({"test-name"});
+  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+}
+
+TEST(InstanceAdminConnectionTest, DeleteInstance_TooManyTransients) {
+  auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
+  EXPECT_CALL(*mock, DeleteInstance(_, _))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = MakeTestConnection(mock);
+  auto status = conn->DeleteInstance({"test-name"});
+  EXPECT_EQ(StatusCode::kUnavailable, status.code());
 }
 
 TEST(InstanceAdminConnectionTest, GetInstanceConfig_Success) {

@@ -155,6 +155,18 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& client_context,
+      google::longrunning::GetOperationRequest const& request) override {
+    google::longrunning::Operation response;
+    grpc::Status status =
+        operations_->GetOperation(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
  private:
   std::unique_ptr<gcsa::InstanceAdmin::Stub> instance_admin_;
   std::unique_ptr<google::longrunning::Operations::Stub> operations_;

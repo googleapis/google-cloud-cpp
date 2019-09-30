@@ -71,6 +71,10 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext&,
       google::iam::v1::TestIamPermissionsRequest const&) override;
+
+  StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& context,
+      google::longrunning::GetOperationRequest const& request) override;
   //@}
  private:
   void SetMetadata(grpc::ClientContext& context,

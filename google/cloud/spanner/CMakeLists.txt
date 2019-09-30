@@ -264,6 +264,8 @@ function (spanner_client_define_tests)
                 testing/pick_random_instance.h
                 testing/random_database_name.cc
                 testing/random_database_name.h
+                testing/random_instance_name.cc
+                testing/random_instance_name.h
                 testing/validate_metadata.cc
                 testing/validate_metadata.h)
     target_link_libraries(spanner_client_testing

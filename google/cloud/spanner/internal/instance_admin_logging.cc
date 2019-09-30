@@ -130,6 +130,17 @@ InstanceAdminLogging::TestIamPermissions(
       context, request, __func__);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
+    grpc::ClientContext& context,
+    google::longrunning::GetOperationRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->GetOperation(context, request);
+      },
+      context, request, __func__);
+}
+
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

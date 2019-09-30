@@ -94,6 +94,13 @@ InstanceAdminMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::longrunning::Operation> InstanceAdminMetadata::GetOperation(
+    grpc::ClientContext& context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetOperation(context, request);
+}
+
 void InstanceAdminMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

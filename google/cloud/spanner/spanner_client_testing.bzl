@@ -24,6 +24,7 @@ spanner_client_testing_hdrs = [
     "testing/mock_spanner_stub.h",
     "testing/pick_random_instance.h",
     "testing/random_database_name.h",
+    "testing/random_instance_name.h",
     "testing/validate_metadata.h",
 ]
 
@@ -31,5 +32,6 @@ spanner_client_testing_srcs = [
     "testing/database_environment.cc",
     "testing/pick_random_instance.cc",
     "testing/random_database_name.cc",
+    "testing/random_instance_name.cc",
     "testing/validate_metadata.cc",
 ]

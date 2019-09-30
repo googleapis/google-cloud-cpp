@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
@@ -26,8 +28,8 @@ namespace {
 using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAre;
 
-/// @test Verify the basic CRUD operations for instances work.
-TEST(InstanceAdminClient, InstanceBasicCRUD) {
+/// @test Verify the basic read operations for instances work.
+TEST(InstanceAdminClient, InstanceReadOperations) {
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   auto instance_id =
@@ -56,6 +58,56 @@ TEST(InstanceAdminClient, InstanceBasicCRUD) {
   }();
   EXPECT_EQ(1, std::count(instance_names.begin(), instance_names.end(),
                           instance->name()));
+}
+
+/// @test Verify the basic CRUD operations for instances work.
+TEST(InstanceAdminClient, InstanceCRUDOperations) {
+  auto run_slow_integration_tests =
+      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+          .value_or("");
+  if (run_slow_integration_tests != "yes") {
+    GTEST_SKIP();
+  }
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  std::string instance_id =
+      google::cloud::spanner_testing::RandomInstanceName(generator);
+  ASSERT_FALSE(project_id.empty());
+  ASSERT_FALSE(instance_id.empty());
+  Instance in(project_id, instance_id);
+
+  InstanceAdminClient client(MakeInstanceAdminConnection());
+  std::vector<std::string> instance_config_names = [client,
+                                                    project_id]() mutable {
+    std::vector<std::string> names;
+    for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+      EXPECT_STATUS_OK(instance_config);
+      if (!instance_config) break;
+      names.push_back(instance_config->name());
+    }
+    return names;
+  }();
+  ASSERT_FALSE(instance_config_names.empty());
+  // Use the name of the first element from the list of instance configs.
+  auto instance_config = instance_config_names[0];
+
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
+      client.CreateInstance(
+          project_id, instance_id, "test-display-name", instance_config, 1,
+          std::map<std::string, std::string>{{"label-key", "label-value"}});
+  StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
+
+  EXPECT_STATUS_OK(instance.status());
+  EXPECT_THAT(instance->name(), HasSubstr(project_id));
+  EXPECT_THAT(instance->name(), HasSubstr(instance_id));
+  EXPECT_NE(0, instance->node_count());
+  EXPECT_NE(0, instance->labels_size());
+  EXPECT_EQ(instance_config, instance->config());
+  EXPECT_EQ("label-value", instance->labels().at("label-key"));
+
+  auto status = client.DeleteInstance(in);
+  EXPECT_STATUS_OK(status);
 }
 
 TEST(InstanceAdminClient, InstanceConfig) {

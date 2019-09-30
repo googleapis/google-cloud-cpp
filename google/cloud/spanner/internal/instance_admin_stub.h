@@ -65,6 +65,9 @@ class InstanceAdminStub {
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
   TestIamPermissions(grpc::ClientContext&,
                      google::iam::v1::TestIamPermissionsRequest const&) = 0;
+  virtual StatusOr<google::longrunning::Operation> GetOperation(
+      grpc::ClientContext& client_context,
+      google::longrunning::GetOperationRequest const& request) = 0;
 };
 
 /**

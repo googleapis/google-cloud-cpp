@@ -18,6 +18,8 @@
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/random_database_name.h"
+#include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
@@ -25,20 +27,6 @@
 #include <utility>
 
 namespace {
-
-std::string RandomDatabaseName(
-    google::cloud::internal::DefaultPRNG& generator) {
-  // A database ID must be between 2 and 30 characters, fitting the regular
-  // expression `[a-z][a-z0-9_\-]*[a-z0-9]`
-  int max_size = 30;
-  std::string const prefix = "db-";
-  auto size = static_cast<int>(max_size - 1 - prefix.size());
-  return prefix +
-         google::cloud::internal::Sample(
-             generator, size, "abcdefghijlkmnopqrstuvwxyz012345689_-") +
-         google::cloud::internal::Sample(generator, 1,
-                                         "abcdefghijlkmnopqrstuvwxyz");
-}
 
 //! [get-instance]
 void GetInstance(google::cloud::spanner::InstanceAdminClient client,
@@ -61,6 +49,74 @@ void GetInstanceCommand(std::vector<std::string> const& argv) {
   google::cloud::spanner::InstanceAdminClient client(
       google::cloud::spanner::MakeInstanceAdminConnection());
   GetInstance(std::move(client), argv[0], argv[1]);
+}
+
+//! [create-instance]
+void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& display_name) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  std::vector<std::string> instance_config_names = [client,
+                                                    project_id]() mutable {
+    std::vector<std::string> names;
+    for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+      if (!instance_config) break;
+      names.push_back(instance_config->name());
+    }
+    return names;
+  }();
+  if (instance_config_names.empty()) {
+    throw std::runtime_error("Can not retrieve the list of instance configs.");
+  }
+  // Use the name of the first element from the list of instance configs.
+  auto instance_config = instance_config_names[0];
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
+      client.CreateInstance(
+          project_id, instance_id, display_name, instance_config, 1,
+          std::map<std::string, std::string>{{"label-key", "label-value"}});
+  StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
+  if (!instance) {
+    throw std::runtime_error(instance.status().message());
+  }
+  std::cout << "Created instance [" << in << "]\n";
+}
+//! [create-instance]
+
+void CreateInstanceCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-instance <project-id> <instance-id> <display_name>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  CreateInstance(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [delete-instance]
+void DeleteInstance(google::cloud::spanner::InstanceAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  auto status = client.DeleteInstance(in);
+  if (!status.ok()) {
+    throw std::runtime_error(status.message());
+  }
+  std::cout << "Deleted instance [" << in << "]\n";
+}
+//! [delete-instance]
+
+void DeleteInstanceCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("delete-instance <project-id> <instance-id>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  DeleteInstance(std::move(client), argv[0], argv[1]);
 }
 
 //! [list-instance-configs]
@@ -1133,6 +1189,8 @@ int RunOneCommand(std::vector<std::string> argv) {
 
   CommandMap commands = {
       {"get-instance", &GetInstanceCommand},
+      {"create-instance", &CreateInstanceCommand},
+      {"delete-instance", &DeleteInstanceCommand},
       {"list-instance-configs", &ListInstanceConfigsCommand},
       {"get-instance-config", &GetInstanceConfigCommand},
       {"list-instances", &ListInstancesCommand},
@@ -1260,18 +1318,27 @@ void RunAll() {
   RunOneCommand({"", "instance-get-iam-policy", project_id, instance_id});
 
   if (run_slow_integration_tests == "yes") {
+    std::string crud_instance_id =
+        google::cloud::spanner_testing::RandomInstanceName(generator);
+    std::cout << "\nRunning create-instance sample\n";
+    RunOneCommand(
+        {"", "create-instance", project_id, crud_instance_id, "Test Instance"});
+
     std::cout << "\nRunning (instance) add-database-reader sample\n";
-    RunOneCommand({"", "add-database-reader", project_id, instance_id,
+    RunOneCommand({"", "add-database-reader", project_id, crud_instance_id,
                    "serviceAccount:" + test_iam_service_account});
     std::cout << "\nRunning (instance) remove-database-reader sample\n";
-    RunOneCommand({"", "remove-database-reader", project_id, instance_id,
+    RunOneCommand({"", "remove-database-reader", project_id, crud_instance_id,
                    "serviceAccount:" + test_iam_service_account});
+    std::cout << "\nRunning delete-instance sample\n";
+    RunOneCommand({"", "delete-instance", project_id, crud_instance_id});
   }
 
   std::cout << "\nRunning (instance) test-iam-permissions sample\n";
   RunOneCommand({"", "instance-test-iam-permissions", project_id, instance_id});
 
-  std::string database_id = RandomDatabaseName(generator);
+  std::string database_id =
+      google::cloud::spanner_testing::RandomDatabaseName(generator);
 
   std::cout << "Running samples in database " << database_id << "\n";
 
