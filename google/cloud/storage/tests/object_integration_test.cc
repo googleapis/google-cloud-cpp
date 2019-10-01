@@ -20,7 +20,16 @@
 #include "google/cloud/testing_util/expect_exception.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
+#include <sys/types.h>
+#include <cstddef>
+#include <cstring>
+#ifdef __unix__
+#include <dirent.h>
+#endif  // __unix__
+#include <iostream>
+#include <memory>
 #include <regex>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -324,6 +333,137 @@ TEST_F(ObjectIntegrationTest, BasicReadWrite) {
   auto stream = client->ReadObject(bucket_name, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
+StatusOr<std::size_t> GetNumEntries(std::string const& path) {
+#ifdef __unix__
+  dirent** namelist;
+  int res = scandir(path.c_str(), &namelist, nullptr, alphasort);
+  if (res < 0) {
+    return Status(StatusCode::kInternal, "Failed to open directory \"" + path +
+                                             "\": " + strerror(errno));
+  }
+  for (int i = 0; i < res; ++i) {
+    free(namelist[i]);
+  }
+  free(namelist);
+  return res;
+#else   // __unix__
+  return Status(StatusCode::kUnimplemented,
+                "Can't check #entries in " + path +
+                    ", because only UNIX systems are supported");
+#endif  // __unix__
+}
+
+StatusOr<std::size_t> GetNumOpenFiles() {
+  auto res = GetNumEntries("/proc/self/fd");
+  if (!res) {
+    return res;
+  }
+  if (*res < 3) {
+    return Status(StatusCode::kInternal,
+                  "Expected at least three entries in /proc/self/fd: ., .., "
+                  "and the directory itself, found " +
+                      std::to_string(*res));
+  }
+  return *res - 3;
+}
+
+TEST_F(ObjectIntegrationTest, PlentyClientsSimultaneously) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
+
+  // Create a iostream to read the object back.
+  auto num_fds_before_test = GetNumOpenFiles();
+  std::vector<Client> read_clients;
+  std::vector<ObjectReadStream> read_streams;
+  for (int i = 0; i != 100; ++i) {
+    auto read_client = MakeIntegrationTestClient();
+    ASSERT_STATUS_OK(read_client);
+    auto stream = read_client->ReadObject(bucket_name, object_name);
+    char c;
+    stream.read(&c, 1);
+    read_streams.emplace_back(std::move(stream));
+    read_clients.emplace_back(*std::move(read_client));
+  }
+  auto num_fds_during_test = GetNumOpenFiles();
+  read_streams.clear();
+  read_clients.clear();
+  auto num_fds_after_test = GetNumOpenFiles();
+
+#ifdef __linux__
+  ASSERT_STATUS_OK(num_fds_before_test);
+  ASSERT_STATUS_OK(num_fds_during_test);
+  ASSERT_STATUS_OK(num_fds_after_test);
+
+  EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
+      << "Clients are leaking descriptors";
+
+  EXPECT_GE(*num_fds_before_test + 200, *num_fds_during_test)
+      << "100 clients should open at most 200 descriptors";
+#endif  // __linux__
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  ASSERT_STATUS_OK(status);
+}
+
+TEST_F(ObjectIntegrationTest, PlentyClientsSerially) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  std::string expected = LoremIpsum();
+
+  // Create the object, but only if it does not exist already.
+  StatusOr<ObjectMetadata> meta = client->InsertObject(
+      bucket_name, object_name, expected, IfGenerationMatch(0));
+  ASSERT_STATUS_OK(meta);
+
+  EXPECT_EQ(object_name, meta->name());
+  EXPECT_EQ(bucket_name, meta->bucket());
+
+  // Create a iostream to read the object back.
+  auto num_fds_before_test = GetNumOpenFiles();
+  for (int i = 0; i != 100; ++i) {
+    auto read_client = MakeIntegrationTestClient();
+    ASSERT_STATUS_OK(read_client);
+    auto stream = read_client->ReadObject(bucket_name, object_name);
+    char c;
+    stream.read(&c, 1);
+#ifdef __linux__
+    auto num_fds_during_test = GetNumOpenFiles();
+    ASSERT_STATUS_OK(num_fds_before_test);
+    ASSERT_STATUS_OK(num_fds_before_test);
+    EXPECT_GE(*num_fds_before_test + 2, *num_fds_during_test)
+        << "One client should open at most two descriptors";
+#endif  // __linux__
+  }
+#ifdef __linux__
+  auto num_fds_after_test = GetNumOpenFiles();
+  ASSERT_STATUS_OK(num_fds_before_test);
+  ASSERT_STATUS_OK(num_fds_after_test);
+
+  EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
+      << "Clients are leaking descriptors";
+#endif  // __linux__
 
   auto status = client->DeleteObject(bucket_name, object_name);
   ASSERT_STATUS_OK(status);
