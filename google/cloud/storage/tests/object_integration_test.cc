@@ -415,8 +415,8 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSimultaneously) {
   EXPECT_EQ(*num_fds_before_test, *num_fds_after_test)
       << "Clients are leaking descriptors";
 
-  EXPECT_EQ(*num_fds_before_test + 100, *num_fds_during_test)
-      << "100 clients should open 100 descriptors";
+  EXPECT_GE(*num_fds_before_test + 200, *num_fds_during_test)
+      << "100 clients should open at most 200 descriptors";
 #endif  // __linux__
 
   auto status = client->DeleteObject(bucket_name, object_name);
@@ -452,8 +452,8 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSerially) {
     auto num_fds_during_test = GetNumOpenFiles();
     ASSERT_STATUS_OK(num_fds_before_test);
     ASSERT_STATUS_OK(num_fds_before_test);
-    EXPECT_EQ(*num_fds_before_test + 1, *num_fds_during_test)
-        << "One client should open one descriptor";
+    EXPECT_GE(*num_fds_before_test + 2, *num_fds_during_test)
+        << "One client should open at most two descriptors";
 #endif  // __linux__
   }
 #ifdef __linux__
