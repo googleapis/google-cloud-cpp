@@ -26,7 +26,7 @@ RUN zypper refresh && \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 # ```
 
-# OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
+# openSUSE Tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
 # versions of these packages are recent enough to support the Google Cloud
 # Platform proto files.
 
@@ -37,7 +37,7 @@ RUN zypper refresh && \
 
 # #### crc32c
 
-# There is no OpenSUSE package for this library. To install it, use:
+# There is no openSUSE package for this library. To install it, use:
 
 # ```bash
 WORKDIR /var/tmp/build
@@ -57,7 +57,7 @@ RUN ldconfig
 
 # #### googleapis
 
-# There is no OpenSUSE package for this library. To install it, use:
+# There is no openSUSE package for this library. To install it, use:
 
 # ```bash
 WORKDIR /var/tmp/build
