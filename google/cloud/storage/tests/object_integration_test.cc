@@ -393,7 +393,7 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSimultaneously) {
   auto num_fds_before_test = GetNumOpenFiles();
   std::vector<Client> read_clients;
   std::vector<ObjectReadStream> read_streams;
-  for (int i = 0; i < 100; ++i) {
+  for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(read_client);
     auto stream = read_client->ReadObject(bucket_name, object_name);
@@ -442,7 +442,7 @@ TEST_F(ObjectIntegrationTest, PlentyClientsSerially) {
 
   // Create a iostream to read the object back.
   auto num_fds_before_test = GetNumOpenFiles();
-  for (int i = 0; i < 100; ++i) {
+  for (int i = 0; i != 100; ++i) {
     auto read_client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(read_client);
     auto stream = read_client->ReadObject(bucket_name, object_name);
