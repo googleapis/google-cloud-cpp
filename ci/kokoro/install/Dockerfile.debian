@@ -37,8 +37,6 @@ RUN apt update && \
         pkg-config tar wget zlib1g-dev
 # ```
 
-FROM devtools AS install
-
 # #### crc32c
 
 # There is no Debian package for this library. To install it use:
