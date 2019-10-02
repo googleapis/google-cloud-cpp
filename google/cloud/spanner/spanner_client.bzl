@@ -72,6 +72,7 @@ spanner_client_hdrs = [
     "sql_statement.h",
     "timestamp.h",
     "transaction.h",
+    "update_instance_request_builder.h",
     "value.h",
     "version.h",
     "version_info.h",
@@ -114,6 +115,7 @@ spanner_client_srcs = [
     "read_partition.cc",
     "sql_statement.cc",
     "transaction.cc",
+    "update_instance_request_builder.cc",
     "value.cc",
     "version.cc",
 ]

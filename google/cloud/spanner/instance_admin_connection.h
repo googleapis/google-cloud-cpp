@@ -98,6 +98,11 @@ class InstanceAdminConnection {
     std::map<std::string, std::string> labels;
   };
 
+  /// Wrap the arguments for `UpdateInstance()`.
+  struct UpdateInstanceParams {
+    google::spanner::admin::instance::v1::UpdateInstanceRequest request;
+  };
+
   /// Wrap the arguments for `DeleteInstance()`.
   struct DeleteInstanceParams {
     std::string instance_name;
@@ -161,6 +166,9 @@ class InstanceAdminConnection {
 
   virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
   CreateInstance(CreateInstanceParams p) = 0;
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(UpdateInstanceParams p) = 0;
 
   virtual Status DeleteInstance(DeleteInstanceParams p) = 0;
 

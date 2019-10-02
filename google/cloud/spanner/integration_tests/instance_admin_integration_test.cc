@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
+#include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -101,11 +102,23 @@ TEST(InstanceAdminClient, InstanceCRUDOperations) {
   EXPECT_STATUS_OK(instance.status());
   EXPECT_THAT(instance->name(), HasSubstr(project_id));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id));
+  EXPECT_EQ("test-display-name", instance->display_name());
   EXPECT_NE(0, instance->node_count());
   EXPECT_NE(0, instance->labels_size());
   EXPECT_EQ(instance_config, instance->config());
   EXPECT_EQ("label-value", instance->labels().at("label-key"));
 
+  // Then update the instance
+  f = client.UpdateInstance(std::move(UpdateInstanceRequestBuilder(*instance)
+                                          .SetDisplayName("New display name")
+                                          .AddLabels({{"new-key", "new-value"}})
+                                          .SetNodeCount(2))
+                                .Build());
+  instance = f.get();
+  EXPECT_EQ("New display name", instance->display_name());
+  EXPECT_EQ(2, instance->labels_size());
+  EXPECT_EQ("new-value", instance->labels().at("new-key"));
+  EXPECT_EQ(2, instance->node_count());
   auto status = client.DeleteInstance(in);
   EXPECT_STATUS_OK(status);
 }

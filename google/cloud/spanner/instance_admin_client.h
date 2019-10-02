@@ -118,6 +118,27 @@ class InstanceAdminClient {
                  std::string const& display_name,
                  std::string const& instance_config, int node_count,
                  std::map<std::string, std::string> const& labels = {});
+
+  /**
+   * Updates a Cloud Spanner instance.
+   *
+   * Use `google::cloud::spanner::UpdateInstanceRequestBuilder` to build the
+   * `google::spanner::admin::instance::v1::UpdateInstanceRequest` object.
+   *
+   * @par Idempotency
+   * This operation is idempotent as its result does not depend on the previous
+   * state of the instance. Note that, as is the case with all operations, it is
+   * subject to race conditions if multiple tasks are attempting to change the
+   * same fields in the same instance.
+   *
+   * @par Example
+   * @snippet samples.cc update-instance
+   *
+   */
+  future<StatusOr<google::spanner::admin::instance::v1::Instance>>
+  UpdateInstance(
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&);
+
   /**
    * Deletes an existing Cloud Spanner instance.
    *

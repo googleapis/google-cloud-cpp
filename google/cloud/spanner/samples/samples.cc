@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
+#include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
@@ -94,6 +95,37 @@ void CreateInstanceCommand(std::vector<std::string> const& argv) {
   google::cloud::spanner::InstanceAdminClient client(
       google::cloud::spanner::MakeInstanceAdminConnection());
   CreateInstance(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [update-instance]
+void UpdateInstance(google::cloud::spanner::InstanceAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& new_display_name) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  auto f = client.UpdateInstance(
+      google::cloud::spanner::UpdateInstanceRequestBuilder(in)
+          .SetDisplayName(new_display_name)
+          .Build());
+  auto instance = f.get();
+  if (!instance) {
+    throw std::runtime_error(instance.status().message());
+  }
+  std::cout << "Updated instance [" << in << "]\n";
+}
+//! [update-instance]
+
+void UpdateInstanceCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "update-instance <project-id> <instance-id> <new_display_name>");
+  }
+  google::cloud::spanner::InstanceAdminClient client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+  UpdateInstance(std::move(client), argv[0], argv[1], argv[2]);
 }
 
 //! [delete-instance]
@@ -1190,6 +1222,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   CommandMap commands = {
       {"get-instance", &GetInstanceCommand},
       {"create-instance", &CreateInstanceCommand},
+      {"update-instance", &UpdateInstanceCommand},
       {"delete-instance", &DeleteInstanceCommand},
       {"list-instance-configs", &ListInstanceConfigsCommand},
       {"get-instance-config", &GetInstanceConfigCommand},
@@ -1323,6 +1356,10 @@ void RunAll() {
     std::cout << "\nRunning create-instance sample\n";
     RunOneCommand(
         {"", "create-instance", project_id, crud_instance_id, "Test Instance"});
+
+    std::cout << "\nRunning update-instance sample\n";
+    RunOneCommand(
+        {"", "update-instance", project_id, crud_instance_id, "New name"});
 
     std::cout << "\nRunning (instance) add-database-reader sample\n";
     RunOneCommand({"", "add-database-reader", project_id, crud_instance_id,

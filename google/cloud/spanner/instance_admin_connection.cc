@@ -148,7 +148,24 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
           StatusOr<gcsa::Instance>(operation.status()));
     }
 
-    return AwaitCreateInstance(*std::move(operation));
+    return AwaitCreateOrUpdateInstance(*std::move(operation));
+  }
+
+  future<StatusOr<gcsa::Instance>> UpdateInstance(
+      UpdateInstanceParams p) override {
+    auto operation = RetryLoop(
+        retry_policy_->clone(), backoff_policy_->clone(), true,
+        [this](grpc::ClientContext& context,
+               gcsa::UpdateInstanceRequest const& request) {
+          return stub_->UpdateInstance(context, request);
+        },
+        p.request, __func__);
+    if (!operation) {
+      return google::cloud::make_ready_future(
+          StatusOr<gcsa::Instance>(operation.status()));
+    }
+
+    return AwaitCreateOrUpdateInstance(*std::move(operation));
   }
 
   Status DeleteInstance(DeleteInstanceParams p) override {
@@ -283,7 +300,7 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   }
 
  private:
-  future<StatusOr<gcsa::Instance>> AwaitCreateInstance(
+  future<StatusOr<gcsa::Instance>> AwaitCreateOrUpdateInstance(
       google::longrunning::Operation operation) {
     promise<StatusOr<gcsa::Instance>> pr;
     auto f = pr.get_future();
