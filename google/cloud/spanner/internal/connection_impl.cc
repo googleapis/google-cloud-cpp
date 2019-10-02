@@ -94,6 +94,15 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
       .clone();
 }
 
+std::shared_ptr<ConnectionImpl> MakeConnection(
+    Database db, std::shared_ptr<SpannerStub> stub,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
+  return std::shared_ptr<ConnectionImpl>(
+      new ConnectionImpl(std::move(db), std::move(stub),
+                         std::move(retry_policy), std::move(backoff_policy)));
+}
+
 StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
   return internal::Visit(
       std::move(rp.transaction),

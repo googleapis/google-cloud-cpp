@@ -118,7 +118,7 @@ Status Client::Rollback(Transaction transaction) {
 std::shared_ptr<Connection> MakeConnection(Database const& db,
                                            ConnectionOptions const& options) {
   auto stub = internal::CreateDefaultSpannerStub(options);
-  return std::make_shared<internal::ConnectionImpl>(db, std::move(stub));
+  return internal::MakeConnection(db, std::move(stub));
 }
 
 namespace {

@@ -42,6 +42,21 @@ std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy();
 std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
 
 /**
+ * Factory method to construct a `ConnectionImpl`.
+ *
+ * @note `ConnectionImpl` relies on `std::enable_shared_from_this`; the
+ * factory method ensures it can only be constructed using a `std::shared_ptr`
+ *
+ * @note In tests we can use a mock stub and custom (or mock) policies.
+ */
+class ConnectionImpl;
+std::shared_ptr<ConnectionImpl> MakeConnection(
+    Database db, std::shared_ptr<SpannerStub> stub,
+    std::unique_ptr<RetryPolicy> retry_policy = DefaultConnectionRetryPolicy(),
+    std::unique_ptr<BackoffPolicy> backoff_policy =
+        DefaultConnectionBackoffPolicy());
+
+/**
  * A concrete `Connection` subclass that uses gRPC to actually talk to a real
  * Spanner instance. See `MakeConnection()` for a factory function that creates
  * and returns instances of this class.
@@ -49,29 +64,6 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
 class ConnectionImpl : public Connection,
                        public std::enable_shared_from_this<ConnectionImpl> {
  public:
-  /**
-   * A constructor that sets the retry abd backoff policies.
-   *
-   * @note In tests we can use a mock stub and custom (or mock) policies.
-   */
-  ConnectionImpl(Database db, std::shared_ptr<internal::SpannerStub> stub,
-                 std::unique_ptr<RetryPolicy> retry_policy,
-                 std::unique_ptr<BackoffPolicy> backoff_policy)
-      : db_(std::move(db)),
-        stub_(std::move(stub)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
-
-  /**
-   * A constructor using the default retry and backoff policies.
-   *
-   * @note We can test this class by injecting in a mock `stub`.
-   */
-  ConnectionImpl(Database db, std::shared_ptr<internal::SpannerStub> stub)
-      : ConnectionImpl(std::move(db), std::move(stub),
-                       DefaultConnectionRetryPolicy(),
-                       DefaultConnectionBackoffPolicy()) {}
-
   StatusOr<ResultSet> Read(ReadParams) override;
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) override;
@@ -85,6 +77,18 @@ class ConnectionImpl : public Connection,
   Status Rollback(RollbackParams) override;
 
  private:
+  // Only the factory method can construct instances of this class.
+  friend std::shared_ptr<ConnectionImpl> MakeConnection(
+      Database, std::shared_ptr<SpannerStub>, std::unique_ptr<RetryPolicy>,
+      std::unique_ptr<BackoffPolicy>);
+  ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
+                 std::unique_ptr<RetryPolicy> retry_policy,
+                 std::unique_ptr<BackoffPolicy> backoff_policy)
+      : db_(std::move(db)),
+        stub_(std::move(stub)),
+        retry_policy_(std::move(retry_policy)),
+        backoff_policy_(std::move(backoff_policy)) {}
+
   StatusOr<ResultSet> ReadImpl(SessionHolder& session,
                                google::spanner::v1::TransactionSelector& s,
                                ReadParams rp);

@@ -74,7 +74,7 @@ MATCHER_P(CreateSessionRequestHasDatabase, database,
 std::shared_ptr<Connection> MakeTestConnection(
     Database const& db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
-  return std::make_shared<ConnectionImpl>(
+  return MakeConnection(
       db, std::move(mock),
       LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
       ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
@@ -91,11 +91,6 @@ class MockGrpcReader
   MOCK_METHOD0(Finish, grpc::Status());
   MOCK_METHOD0(WaitForInitialMetadata, void());
 };
-
-std::shared_ptr<Connection> MakeConnection(Database const& db,
-                                           std::shared_ptr<SpannerStub> stub) {
-  return std::make_shared<ConnectionImpl>(db, std::move(stub));
-}
 
 TEST(ConnectionImplTest, ReadGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
