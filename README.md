@@ -83,18 +83,21 @@ at the [GA](#versioning) quality level:
   - [CentOS (7)](#centos-7)
   - [Debian (Stretch)](#debian-stretch)
   - [Fedora (30)](#fedora-30)
-  - [OpenSuSE (Tumbleweed)](#opensuse-tumbleweed)
-  - [OpenSuSE (Leap)](#opensuse-leap)
+  - [openSUSE (Tumbleweed)](#opensuse-tumbleweed)
+  - [openSUSE (Leap)](#opensuse-leap)
   - [Ubuntu (18.04 - Bionic Beaver)](#ubuntu-1804---bionic-beaver)
   - [Ubuntu (16.04 - Xenial Xerus)](#ubuntu-1604---xenial-xerus)
   - [Ubuntu (14.04 - Trusty Tahr)](#ubuntu-1404---trusty-tahr)
   - [macOS (using brew)](#macos-using-brew)
-  - [Windows](#windows-using-vcpkg)
+  - [Windows (using vcpkg)](#windows-using-vcpkg)
 - [Build](#build)
   - [Linux](#linux)
   - [macOS](#macOS)
   - [Windows](#windows)
 - [Install](#install)
+- [Versioning](#versioning)
+- [Contributing changes](#contributing-changes)
+- [Licensing](#licensing)
 
 ## Requirements
 
@@ -195,7 +198,7 @@ sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
         zlib-devel
 ```
 
-### OpenSUSE (Tumbleweed)
+### openSUSE (Tumbleweed)
 
 [![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link]
 
@@ -208,7 +211,7 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
-### OpenSUSE (Leap)
+### openSUSE (Leap)
 
 [![Kokoro install opensuse-leap status][kokoro-install-opensuse-leap-shield]][kokoro-install-opensuse-leap-link]
 

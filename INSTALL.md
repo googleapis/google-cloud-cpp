@@ -247,7 +247,7 @@ sudo cmake --build . --target install
 ```
 
 
-### OpenSUSE (Tumbleweed)
+### openSUSE (Tumbleweed)
 
 Install the minimal development tools:
 
@@ -257,7 +257,7 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 ```
 
-OpenSUSE:tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
+openSUSE Tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
 versions of these packages are recent enough to support the Google Cloud
 Platform proto files.
 
@@ -268,7 +268,7 @@ sudo zypper install -y grpc-devel gzip libcurl-devel tar wget
 
 #### crc32c
 
-There is no OpenSUSE package for this library. To install it, use:
+There is no openSUSE package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
@@ -288,7 +288,7 @@ sudo ldconfig
 
 #### googleapis
 
-There is no OpenSUSE package for this library. To install it, use:
+There is no openSUSE package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
@@ -334,7 +334,7 @@ sudo cmake --build . --target install
 ```
 
 
-### OpenSUSE (Leap)
+### openSUSE (Leap)
 
 Install the minimal development tools:
 
@@ -346,7 +346,7 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
 
 #### crc32c
 
-There is no OpenSUSE package for this library. To install it, use:
+There is no openSUSE package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
@@ -366,7 +366,7 @@ sudo ldconfig
 
 #### Protobuf
 
-OpenSUSE Leap includes a package for protobuf-2.6, but this is too old to
+openSUSE Leap includes a package for protobuf-2.6, but this is too old to
 support the Google Cloud Platform proto files, or to support gRPC for that
 matter. Manually install protobuf:
 
@@ -386,7 +386,7 @@ sudo ldconfig
 
 #### c-ares
 
-Recent versions of gRPC require c-ares >= 1.11, while OpenSUSE Leap
+Recent versions of gRPC require c-ares >= 1.11, while openSUSE Leap
 distributes c-ares-1.9. We need some additional development tools to compile
 this library:
 
@@ -435,7 +435,7 @@ sudo ldconfig
 
 #### googleapis
 
-There is no OpenSUSE package for this library. To install it, use:
+There is no openSUSE package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads

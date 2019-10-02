@@ -188,11 +188,11 @@ echo "### Fedora (30)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.fedora"
 
 echo
-echo "### OpenSUSE (Tumbleweed)"
+echo "### openSUSE (Tumbleweed)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse"
 
 echo
-echo "### OpenSUSE (Leap)"
+echo "### openSUSE (Leap)"
 "${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
 
 echo

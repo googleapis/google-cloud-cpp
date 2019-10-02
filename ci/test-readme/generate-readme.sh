@@ -43,11 +43,11 @@ echo "### Fedora (30)"
 badge fedora
 "${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.fedora"
 
-echo "### OpenSUSE (Tumbleweed)"
+echo "### openSUSE (Tumbleweed)"
 badge opensuse
 "${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse"
 
-echo "### OpenSUSE (Leap)"
+echo "### openSUSE (Leap)"
 badge opensuse-leap
 "${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
 

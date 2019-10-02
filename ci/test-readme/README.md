@@ -48,7 +48,7 @@ sudo docker build --build-arg "NCPU=${NCPU}" -f ci/kokoro/readme/Dockerfile.ubun
 ```
 
 Recall that Docker caches intermediate results. If you are testing with very
-active distributions (e.g. `opensuse:tumbleweed`), where the base image changes
+active distributions (e.g. `openSUSE Tumbleweed`), where the base image changes
 frequently, you may need to manually delete that base image from your cache to
 get newer versions of said image.
 
