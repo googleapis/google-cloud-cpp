@@ -46,7 +46,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ### v1.3.x - 2019-10
 
-* *no bigtable-specific changes; see [common](../README.md) v0.12.x*
+* bug: fix runtime install directory (#3063)
 
 ### v1.2.x - 2019-09
 

@@ -54,6 +54,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 * bug: calls to `resumable_session_id()` result in segfaults (#3062)
 * feat: added `ReadLast` option for reading object from end (#3058)
 * bug: handle `CURLE_PARTIAL_FILE` as recoverable (#3061)
+* bug: fix runtime install directory (#3063)
 * bug: verify checksums and hashes on `xgetsn()` (#3057)
 * bug: return all bytes when stream is closed (#3054)
 * feat: reset retry policy for each retry loop (#3050)
