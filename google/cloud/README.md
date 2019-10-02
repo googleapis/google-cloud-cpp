@@ -20,7 +20,11 @@ Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.12.x - TBD
+### v0.13.x - TBD
+
+### v0.12.x - 2019-10
+
+* bug: fix runtime install directory (#3063)
 
 ### v0.11.x - 2019-09
 
