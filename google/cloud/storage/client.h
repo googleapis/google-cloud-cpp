@@ -3059,6 +3059,7 @@ class Client {
  * length, hence it is guaranteed that neither of them will be a prefix of the
  * other.
  *
+ * @param client the client on which to perform the operation.
  * @param bucket_name the name of the bucket that will contain the object.
  * @param prefix the prefix of the prefix to be created.
  * @param options a list of optional query parameters and/or request headers.
@@ -3066,7 +3067,7 @@ class Client {
  *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
  */
 template <typename... Options>
-StatusOr<std::string> CreateRandomPrefix(Client client,
+StatusOr<std::string> CreateRandomPrefix(Client& client,
                                          std::string const& bucket_name,
                                          std::string const& prefix,
                                          Options&&... options) {
