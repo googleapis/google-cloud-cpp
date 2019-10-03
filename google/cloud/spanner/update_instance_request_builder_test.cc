@@ -69,6 +69,33 @@ TEST(UpdateInstanceRequestBuilder, AddLabels) {
       "labels", req.field_mask()));
 }
 
+TEST(UpdateInstanceRequestBuilder, AddLabelsRvalueReference) {
+  std::string expected_name = "projects/test-project/instances/test-instance";
+  std::string expected_display_name =
+      "projects/test-project/instances/test-display-name";
+  google::spanner::admin::instance::v1::Instance instance;
+  instance.set_name(expected_name);
+  instance.set_display_name("projects/test-project/insance/old-display-name");
+  instance.set_node_count(1);
+  instance.mutable_labels()->insert({"key", "value"});
+  auto req = UpdateInstanceRequestBuilder(instance)
+                 .SetNodeCount(2)
+                 .SetDisplayName(expected_display_name)
+                 .AddLabels({{"newkey", "newvalue"}})
+                 .Build();
+  EXPECT_EQ(expected_name, req.instance().name());
+  EXPECT_EQ(expected_display_name, req.instance().display_name());
+  EXPECT_EQ(2, req.instance().node_count());
+  EXPECT_EQ(2, req.instance().labels_size());
+  EXPECT_EQ("newvalue", req.instance().labels().at("newkey"));
+  EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+      "display_name", req.field_mask()));
+  EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+      "node_count", req.field_mask()));
+  EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+      "labels", req.field_mask()));
+}
+
 TEST(UpdateInstanceRequestBuilder, SetLabels) {
   std::string expected_name = "projects/test-project/instances/test-instance";
   std::string expected_display_name =
@@ -80,6 +107,33 @@ TEST(UpdateInstanceRequestBuilder, SetLabels) {
   instance.mutable_labels()->insert({"key", "value"});
   auto builder = UpdateInstanceRequestBuilder(instance);
   auto req = builder.SetNodeCount(2)
+                 .SetDisplayName(expected_display_name)
+                 .SetLabels({{"newkey", "newvalue"}})
+                 .Build();
+  EXPECT_EQ(expected_name, req.instance().name());
+  EXPECT_EQ(expected_display_name, req.instance().display_name());
+  EXPECT_EQ(2, req.instance().node_count());
+  EXPECT_EQ(1, req.instance().labels_size());
+  EXPECT_EQ("newvalue", req.instance().labels().at("newkey"));
+  EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+      "display_name", req.field_mask()));
+  EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+      "node_count", req.field_mask()));
+  EXPECT_TRUE(google::protobuf::util::FieldMaskUtil::IsPathInFieldMask(
+      "labels", req.field_mask()));
+}
+
+TEST(UpdateInstanceRequestBuilder, SetLabelsRvalueReference) {
+  std::string expected_name = "projects/test-project/instances/test-instance";
+  std::string expected_display_name =
+      "projects/test-project/instances/test-display-name";
+  google::spanner::admin::instance::v1::Instance instance;
+  instance.set_name(expected_name);
+  instance.set_display_name("projects/test-project/insance/old-display-name");
+  instance.set_node_count(1);
+  instance.mutable_labels()->insert({"key", "value"});
+  auto req = UpdateInstanceRequestBuilder(instance)
+                 .SetNodeCount(2)
                  .SetDisplayName(expected_display_name)
                  .SetLabels({{"newkey", "newvalue"}})
                  .Build();

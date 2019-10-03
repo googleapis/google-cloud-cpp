@@ -188,7 +188,6 @@ add_library(spanner_client
             timestamp.h
             transaction.cc
             transaction.h
-            update_instance_request_builder.cc
             update_instance_request_builder.h
             value.cc
             value.h

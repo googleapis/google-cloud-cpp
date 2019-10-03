@@ -171,12 +171,11 @@ TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   EXPECT_EQ("label-value", instance->labels().at("label-key"));
 
   // Then update the instance
-  f = client_.UpdateInstance(
-      std::move(UpdateInstanceRequestBuilder(*instance)
-                    .SetDisplayName("New display name")
-                    .AddLabels({{"new-key", "new-value"}})
-                    .SetNodeCount(2))
-          .Build());
+  f = client_.UpdateInstance(UpdateInstanceRequestBuilder(*instance)
+                                 .SetDisplayName("New display name")
+                                 .AddLabels({{"new-key", "new-value"}})
+                                 .SetNodeCount(2)
+                                 .Build());
   instance = f.get();
   EXPECT_EQ("New display name", instance->display_name());
   EXPECT_EQ(2, instance->labels_size());

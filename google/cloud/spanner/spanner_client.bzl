@@ -117,7 +117,6 @@ spanner_client_srcs = [
     "read_partition.cc",
     "sql_statement.cc",
     "transaction.cc",
-    "update_instance_request_builder.cc",
     "value.cc",
     "version.cc",
 ]
