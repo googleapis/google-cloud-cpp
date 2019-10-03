@@ -157,6 +157,8 @@ add_library(spanner_client
             internal/retry_loop.cc
             internal/retry_loop.h
             internal/session.h
+            internal/session_pool.cc
+            internal/session_pool.h
             internal/spanner_stub.cc
             internal/spanner_stub.h
             internal/time.cc
@@ -313,6 +315,7 @@ function (spanner_client_define_tests)
         internal/partial_result_set_resume_test.cc
         internal/polling_loop_test.cc
         internal/retry_loop_test.cc
+        internal/session_pool_test.cc
         internal/spanner_stub_test.cc
         internal/time_format_test.cc
         internal/time_test.cc

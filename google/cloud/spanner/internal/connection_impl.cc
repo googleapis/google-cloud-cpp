@@ -103,6 +103,15 @@ std::shared_ptr<ConnectionImpl> MakeConnection(
                          std::move(retry_policy), std::move(backoff_policy)));
 }
 
+ConnectionImpl::ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
+                               std::unique_ptr<RetryPolicy> retry_policy,
+                               std::unique_ptr<BackoffPolicy> backoff_policy)
+    : db_(std::move(db)),
+      stub_(std::move(stub)),
+      retry_policy_(std::move(retry_policy)),
+      backoff_policy_(std::move(backoff_policy)),
+      session_pool_(this) {}
+
 StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
   return internal::Visit(
       std::move(rp.transaction),
@@ -185,7 +194,7 @@ StatusOr<ResultSet> ConnectionImpl::ReadImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     ReadParams rp) {
   if (!session) {
-    auto session_or = GetSession();
+    auto session_or = AllocateSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -241,7 +250,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   if (!session) {
     // Since the session may be sent to other machines, it should not be
     // returned to the pool when the Transaction is destroyed.
-    auto session_or = GetSession(/*dissociate_from_pool=*/true);
+    auto session_or = AllocateSession(/*dissociate_from_pool=*/true);
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -289,7 +298,7 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSqlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteSqlParams esp) {
   if (!session) {
-    auto session_or = GetSession();
+    auto session_or = AllocateSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -333,7 +342,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecutePartitionedDmlParams epdp) {
   if (!session) {
-    auto session_or = GetSession();
+    auto session_or = AllocateSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -379,7 +388,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   if (!session) {
     // Since the session may be sent to other machines, it should not be
     // returned to the pool when the Transaction is destroyed.
-    auto session_or = GetSession(/*dissociate_from_pool=*/true);
+    auto session_or = AllocateSession(/*dissociate_from_pool=*/true);
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -425,7 +434,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteBatchDmlParams params) {
   if (!session) {
-    auto session_or = GetSession();
+    auto session_or = AllocateSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -468,7 +477,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     CommitParams cp) {
   if (!session) {
-    auto session_or = GetSession();
+    auto session_or = AllocateSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -508,7 +517,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
 Status ConnectionImpl::RollbackImpl(SessionHolder& session,
                                     spanner_proto::TransactionSelector& s) {
   if (!session) {
-    auto session_or = GetSession();
+    auto session_or = AllocateSession();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -536,50 +545,20 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
       request, __func__);
 }
 
-/**
- * Get a session from the pool, or create one if the pool is empty.
- * @returns an error if session creation fails; always returns a valid
- * `SessionHolder` (never `nullptr`) on success.
- *
- * The `SessionHolder` usually returns the session to the pool when it is
- * destroyed. However, if `dissociate_from_pool` is true the session will not
- * be returned to the session pool. This is used in partitioned operations,
- * since we don't know when all parties are done using the session.
- */
-StatusOr<SessionHolder> ConnectionImpl::GetSession(bool dissociate_from_pool) {
-  std::unique_ptr<Session> session;
-  std::unique_lock<std::mutex> lk(mu_);
-  if (!sessions_.empty()) {
-    session = std::move(sessions_.back());
-    sessions_.pop_back();
-  } else {
-    // Release the mutex because we won't be doing any more changes to
-    // `sessions_` in this function and holding mutexes while making RPCs is
-    // (generally) a bad practice.
-    lk.unlock();
-    spanner_proto::CreateSessionRequest request;
-    request.set_database(db_.FullName());
-    auto response = RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
-        [this](grpc::ClientContext& context,
-               spanner_proto::CreateSessionRequest const& request) {
-          return stub_->CreateSession(context, request);
-        },
-        request, __func__);
-    if (!response) {
-      return response.status();
-    }
-    session = google::cloud::internal::make_unique<Session>(
-        std::move(*response->mutable_name()));
+StatusOr<SessionHolder> ConnectionImpl::AllocateSession(
+    bool dissociate_from_pool) {
+  auto session = session_pool_.Allocate();
+  if (!session.ok()) {
+    return std::move(session).status();
   }
 
   if (dissociate_from_pool) {
     // Uses the default deleter; the Session is not returned to the pool.
-    return {std::move(session)};
+    return {*std::move(session)};
   }
 
   std::weak_ptr<ConnectionImpl> connection = shared_from_this();
-  return SessionHolder(session.release(), [connection](Session* session) {
+  return SessionHolder(session->release(), [connection](Session* session) {
     auto shared_connection = connection.lock();
     // If `connection` is still alive, release the `Session` to its pool;
     // otherwise just delete the `Session`.
@@ -591,9 +570,26 @@ StatusOr<SessionHolder> ConnectionImpl::GetSession(bool dissociate_from_pool) {
   });
 }
 
-void ConnectionImpl::ReleaseSession(Session* session) {
-  std::lock_guard<std::mutex> lk(mu_);
-  sessions_.emplace_back(session);
+StatusOr<std::vector<std::unique_ptr<Session>>> ConnectionImpl::CreateSessions(
+    size_t /*num_sessions*/) {
+  // TODO(#307) use BatchCreateSessions. For now, `num_sessions` is ignored.
+  spanner_proto::CreateSessionRequest request;
+  request.set_database(db_.FullName());
+  auto response = RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::CreateSessionRequest const& request) {
+        return stub_->CreateSession(context, request);
+      },
+      request, __func__);
+  if (!response) {
+    return response.status();
+  }
+  std::vector<std::unique_ptr<Session>> ret;
+  ret.reserve(1);
+  ret.push_back(google::cloud::internal::make_unique<Session>(
+      std::move(*response->mutable_name())));
+  return {std::move(ret)};
 }
 
 }  // namespace internal

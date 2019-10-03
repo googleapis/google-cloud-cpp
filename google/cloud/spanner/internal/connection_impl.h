@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
@@ -28,6 +29,7 @@
 #include <memory>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -62,6 +64,7 @@ std::shared_ptr<ConnectionImpl> MakeConnection(
  * and returns instances of this class.
  */
 class ConnectionImpl : public Connection,
+                       public SessionManager,
                        public std::enable_shared_from_this<ConnectionImpl> {
  public:
   StatusOr<ResultSet> Read(ReadParams) override;
@@ -83,11 +86,7 @@ class ConnectionImpl : public Connection,
       std::unique_ptr<BackoffPolicy>);
   ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
                  std::unique_ptr<RetryPolicy> retry_policy,
-                 std::unique_ptr<BackoffPolicy> backoff_policy)
-      : db_(std::move(db)),
-        stub_(std::move(stub)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+                 std::unique_ptr<BackoffPolicy> backoff_policy);
 
   StatusOr<ResultSet> ReadImpl(SessionHolder& session,
                                google::spanner::v1::TransactionSelector& s,
@@ -120,19 +119,36 @@ class ConnectionImpl : public Connection,
   Status RollbackImpl(SessionHolder& session,
                       google::spanner::v1::TransactionSelector& s);
 
-  StatusOr<SessionHolder> GetSession(bool dissociate_from_pool = false);
-  void ReleaseSession(Session* session);
+  /**
+   * Get a session from the pool, or create one if the pool is empty.
+   * @returns an error if session creation fails; always returns a valid
+   * `SessionHolder` (never `nullptr`) on success.
+   *
+   * The `SessionHolder` usually returns the session to the pool when it is
+   * destroyed. However, if `dissociate_from_pool` is true the session will not
+   * be returned to the session pool. This is used in partitioned operations,
+   * since we don't know when all parties are done using the session.
+   */
+  StatusOr<SessionHolder> AllocateSession(bool dissociate_from_pool = false);
+
+  // Forwards calls for the `SessionPool`; used in the `SessionHolder` deleter
+  // so it can hold a `weak_ptr` to `ConnectionImpl` (it's already reference
+  // counted, and manages the lifetime of `SessionPool`).
+  void ReleaseSession(Session* session) {
+    session_pool_.Release(std::unique_ptr<Session>(session));
+  }
+
+  // `SessionManager` methods; used by the `SessionPool`
+  StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
+      size_t num_sessions) override;
 
   Database db_;
-  std::shared_ptr<internal::SpannerStub> stub_;
-
-  // The current session pool.
-  // TODO(#307) - improve session refresh and expiration.
-  std::mutex mu_;
-  std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
+  std::shared_ptr<SpannerStub> stub_;
 
   std::unique_ptr<RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;
+
+  SessionPool session_pool_;
 };
 
 }  // namespace internal
