@@ -21,6 +21,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
+#include "google/cloud/storage/internal/parameter_pack.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
@@ -3044,6 +3045,71 @@ class Client {
 
   std::shared_ptr<internal::RawClient> raw_client_;
 };
+
+/**
+ * Creates an object with a random name.
+ *
+ * This is useful for operations which require a unique prefix for temporary
+ * files.
+ *
+ * It atomically picks a name and creates the object to ensure that no other
+ * invocation of this function conflicts with it.
+ *
+ * Given the same `prefix`, the randomly generated names will have the same
+ * length, hence it is guaranteed that neither of them will be a prefix of the
+ * other.
+ *
+ * @param bucket_name the name of the bucket that will contain the object.
+ * @param prefix the prefix of the prefix to be created.
+ * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `EncryptionKey` `KmsKeyName`,
+ *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
+ */
+template <typename... Options>
+StatusOr<std::string> CreateRandomPrefix(Client client,
+                                         std::string const& bucket_name,
+                                         std::string const& prefix,
+                                         Options&&... options) {
+  // Make sure the user isn't using options which make little sense for an empty
+  // object or which would conflict with IfGenerationMatch(0).
+  using internal::ContainsType;
+  static_assert(
+      !ContainsType<ContentEncoding, typename std::decay<Options>::type...>() &&
+          !ContainsType<ContentType, typename std::decay<Options>::type...>() &&
+          !ContainsType<Crc32cChecksumValue,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<DisableCrc32cChecksum,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<DisableMD5Hash,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<MD5HashValue,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<IfGenerationMatch,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<IfGenerationNotMatch,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<IfMetagenerationMatch,
+                        typename std::decay<Options>::type...>() &&
+          !ContainsType<IfMetagenerationNotMatch,
+                        typename std::decay<Options>::type...>(),
+      "one of the options doesn't make sense for CreateRandomPrefix");
+
+  // Running this in a retry loop to eliminate collisions makes little sense.
+  // Instead of the retry loop, we might simply increase the number of random
+  // characters in the name to achieve the same probability as the retry loop
+  // would give us. If this is not satisfactory due to our rng limitations, we
+  // improve the rng (initialization).
+  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  auto object_name = prefix + google::cloud::internal::Sample(
+                                  rng, 8, "abcdefghijklmnopqrstuvwxyz");
+  auto res = client.InsertObject(bucket_name, object_name, std::string(),
+                                 IfGenerationMatch(0),
+                                 std::forward<Options>(options)...);
+  if (!res) {
+    return res.status();
+  }
+  return object_name;
+}
 
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

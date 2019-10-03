@@ -748,6 +748,28 @@ TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
   ASSERT_STATUS_OK(status);
 }
 
+TEST_F(ObjectInsertIntegrationTest, CreateRandomPrefix) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  std::string prefix("prefix.");
+
+  auto object_name = CreateRandomPrefix(*client, bucket_name, prefix);
+
+  ASSERT_STATUS_OK(object_name);
+  ASSERT_EQ(prefix.length() + 8, object_name->length());
+  ASSERT_EQ(prefix, object_name->substr(0, prefix.length()));
+
+  // Create a iostream to read the object back.
+  auto stream = client->ReadObject(bucket_name, *object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ("", actual);
+
+  auto status = client->DeleteObject(bucket_name, *object_name);
+  ASSERT_STATUS_OK(status);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
