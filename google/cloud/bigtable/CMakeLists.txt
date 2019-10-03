@@ -369,7 +369,7 @@ install(TARGETS bigtable_protos bigtable_common_options
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_spanner_runtime
+                COMPONENT google_cloud_cpp_runtime
         NAMELINK_SKIP
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 COMPONENT google_cloud_cpp_development)
@@ -391,7 +391,7 @@ install(TARGETS bigtable_client
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_spanner_runtime
+                COMPONENT google_cloud_cpp_runtime
         NAMELINK_SKIP
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 COMPONENT google_cloud_cpp_development)
