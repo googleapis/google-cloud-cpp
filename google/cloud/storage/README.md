@@ -44,7 +44,20 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.5.x - TBD
+### v1.6.x - TBD
+
+### v1.5.x - 2019-10
+
+* feat: treat `CURLE_SSL_CONNECT_ERROR as retryable` (#3077)
+* feat: Change JSON endpoint for `google/cloud/storage`. (#3076)
+* bug: restart downloads with retryable HTTP errors. (#3072)
+* bug: calls to `resumable_session_id()` result in segfaults (#3062)
+* feat: added `ReadLast` option for reading object from end (#3058)
+* bug: handle `CURLE_PARTIAL_FILE` as recoverable (#3061)
+* bug: fix runtime install directory (#3063)
+* bug: verify checksums and hashes on `xgetsn()` (#3057)
+* bug: return all bytes when stream is closed (#3054)
+* feat: reset retry policy for each retry loop (#3050)
 
 ### v1.4.x - 2019-09
 

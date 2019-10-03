@@ -42,7 +42,11 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.3.x - TBD
+### v1.4.x - TBD
+
+### v1.3.x - 2019-10
+
+* bug: fix runtime install directory (#3063)
 
 ### v1.2.x - 2019-09
 
