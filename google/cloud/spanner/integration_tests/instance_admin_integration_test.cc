@@ -19,6 +19,9 @@
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <chrono>
+#include <ctime>
+#include <regex>
 
 namespace google {
 namespace cloud {
@@ -29,28 +32,90 @@ namespace {
 using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAre;
 
+class InstanceAdminClientTest : public testing::Test {
+ public:
+  InstanceAdminClientTest() : client_(MakeInstanceAdminConnection()) {}
+
+ protected:
+  void SetUp() override {
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    instance_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
+            .value_or("");
+    run_slow_integration_tests_ =
+        google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+            .value_or("");
+    test_iam_service_account_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
+            .value_or("");
+  }
+  InstanceAdminClient client_;
+  std::string project_id_;
+  std::string instance_id_;
+  std::string run_slow_integration_tests_;
+  std::string test_iam_service_account_;
+};
+
+class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
+ protected:
+  void SetUp() override {
+    InstanceAdminClientTest::SetUp();
+    instance_name_regex_ = std::regex(
+        R"(projects/.+/instances/(temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
+    if (run_slow_integration_tests_ != "yes") {
+      return;
+    }
+    // Deletes leaked temporary instances.
+    std::vector<std::string> instance_ids = [this]() mutable {
+      std::vector<std::string> instance_ids;
+      for (auto instance : client_.ListInstances(project_id_, "")) {
+        EXPECT_STATUS_OK(instance);
+        if (!instance) break;
+        auto name = instance->name();
+        std::smatch m;
+        if (std::regex_match(name, m, instance_name_regex_)) {
+          auto instance_id = m[1];
+          auto date_str = m[2];
+          std::string cut_off_date = "1973-03-01";
+          auto cut_off_time_t = std::chrono::system_clock::to_time_t(
+              std::chrono::system_clock::now() - std::chrono::hours(48));
+          std::strftime(&cut_off_date[0], cut_off_date.size() + 1, "%Y-%m-%d",
+                        std::localtime(&cut_off_time_t));
+          // Compare the strings
+          if (date_str < cut_off_date) {
+            instance_ids.push_back(instance_id);
+          }
+        }
+      }
+      return instance_ids;
+    }();
+    // Let it fail if we have too many leaks.
+    EXPECT_GT(20, instance_ids.size());
+    for (auto const& id_to_delete : instance_ids) {
+      // Probably better to ignore failures.
+      client_.DeleteInstance(Instance(project_id_, id_to_delete));
+    }
+  }
+  std::regex instance_name_regex_;
+};
+
 /// @test Verify the basic read operations for instances work.
-TEST(InstanceAdminClient, InstanceReadOperations) {
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  auto instance_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-          .value_or("");
-  ASSERT_FALSE(project_id.empty());
-  ASSERT_FALSE(instance_id.empty());
+TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
+  ASSERT_FALSE(project_id_.empty());
+  ASSERT_FALSE(instance_id_.empty());
 
-  Instance in(project_id, instance_id);
+  Instance in(project_id_, instance_id_);
 
-  InstanceAdminClient client(MakeInstanceAdminConnection());
-  auto instance = client.GetInstance(in);
+  auto instance = client_.GetInstance(in);
   EXPECT_STATUS_OK(instance);
-  EXPECT_THAT(instance->name(), HasSubstr(project_id));
-  EXPECT_THAT(instance->name(), HasSubstr(instance_id));
+  EXPECT_THAT(instance->name(), HasSubstr(project_id_));
+  EXPECT_THAT(instance->name(), HasSubstr(instance_id_));
   EXPECT_NE(0, instance->node_count());
 
-  std::vector<std::string> instance_names = [client, project_id]() mutable {
+  std::vector<std::string> instance_names = [this]() mutable {
     std::vector<std::string> names;
-    for (auto instance : client.ListInstances(project_id, "")) {
+    for (auto instance : client_.ListInstances(project_id_, "")) {
       EXPECT_STATUS_OK(instance);
       if (!instance) break;
       names.push_back(instance->name());
@@ -62,27 +127,24 @@ TEST(InstanceAdminClient, InstanceReadOperations) {
 }
 
 /// @test Verify the basic CRUD operations for instances work.
-TEST(InstanceAdminClient, InstanceCRUDOperations) {
-  auto run_slow_integration_tests =
-      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
-          .value_or("");
-  if (run_slow_integration_tests != "yes") {
+TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
+  if (run_slow_integration_tests_ != "yes") {
     GTEST_SKIP();
   }
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   std::string instance_id =
       google::cloud::spanner_testing::RandomInstanceName(generator);
-  ASSERT_FALSE(project_id.empty());
+  ASSERT_FALSE(project_id_.empty());
   ASSERT_FALSE(instance_id.empty());
-  Instance in(project_id, instance_id);
+  Instance in(project_id_, instance_id);
 
-  InstanceAdminClient client(MakeInstanceAdminConnection());
-  std::vector<std::string> instance_config_names = [client,
-                                                    project_id]() mutable {
+  // Make sure we're using correct regex.
+  std::smatch m;
+  auto full_name = in.FullName();
+  EXPECT_TRUE(std::regex_match(full_name, m, instance_name_regex_));
+  std::vector<std::string> instance_config_names = [this]() mutable {
     std::vector<std::string> names;
-    for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+    for (auto instance_config : client_.ListInstanceConfigs(project_id_)) {
       EXPECT_STATUS_OK(instance_config);
       if (!instance_config) break;
       names.push_back(instance_config->name());
@@ -94,13 +156,13 @@ TEST(InstanceAdminClient, InstanceCRUDOperations) {
   auto instance_config = instance_config_names[0];
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
-      client.CreateInstance(
-          project_id, instance_id, "test-display-name", instance_config, 1,
+      client_.CreateInstance(
+          project_id_, instance_id, "test-display-name", instance_config, 1,
           std::map<std::string, std::string>{{"label-key", "label-value"}});
   StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
 
   EXPECT_STATUS_OK(instance.status());
-  EXPECT_THAT(instance->name(), HasSubstr(project_id));
+  EXPECT_THAT(instance->name(), HasSubstr(project_id_));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id));
   EXPECT_EQ("test-display-name", instance->display_name());
   EXPECT_NE(0, instance->node_count());
@@ -109,31 +171,27 @@ TEST(InstanceAdminClient, InstanceCRUDOperations) {
   EXPECT_EQ("label-value", instance->labels().at("label-key"));
 
   // Then update the instance
-  f = client.UpdateInstance(std::move(UpdateInstanceRequestBuilder(*instance)
-                                          .SetDisplayName("New display name")
-                                          .AddLabels({{"new-key", "new-value"}})
-                                          .SetNodeCount(2))
-                                .Build());
+  f = client_.UpdateInstance(
+      std::move(UpdateInstanceRequestBuilder(*instance)
+                    .SetDisplayName("New display name")
+                    .AddLabels({{"new-key", "new-value"}})
+                    .SetNodeCount(2))
+          .Build());
   instance = f.get();
   EXPECT_EQ("New display name", instance->display_name());
   EXPECT_EQ(2, instance->labels_size());
   EXPECT_EQ("new-value", instance->labels().at("new-key"));
   EXPECT_EQ(2, instance->node_count());
-  auto status = client.DeleteInstance(in);
+  auto status = client_.DeleteInstance(in);
   EXPECT_STATUS_OK(status);
 }
 
-TEST(InstanceAdminClient, InstanceConfig) {
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  ASSERT_FALSE(project_id.empty());
+TEST_F(InstanceAdminClientTest, InstanceConfig) {
+  ASSERT_FALSE(project_id_.empty());
 
-  InstanceAdminClient client(MakeInstanceAdminConnection());
-
-  std::vector<std::string> instance_config_names = [client,
-                                                    project_id]() mutable {
+  std::vector<std::string> instance_config_names = [this]() mutable {
     std::vector<std::string> names;
-    for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+    for (auto instance_config : client_.ListInstanceConfigs(project_id_)) {
       EXPECT_STATUS_OK(instance_config);
       if (!instance_config) break;
       names.push_back(instance_config->name());
@@ -142,47 +200,34 @@ TEST(InstanceAdminClient, InstanceConfig) {
   }();
   ASSERT_FALSE(instance_config_names.empty());
   // Use the name of the first element from the list of instance configs.
-  auto instance_config = client.GetInstanceConfig(instance_config_names[0]);
+  auto instance_config = client_.GetInstanceConfig(instance_config_names[0]);
   EXPECT_STATUS_OK(instance_config);
-  EXPECT_THAT(instance_config->name(), HasSubstr(project_id));
+  EXPECT_THAT(instance_config->name(), HasSubstr(project_id_));
   EXPECT_EQ(
       1, std::count(instance_config_names.begin(), instance_config_names.end(),
                     instance_config->name()));
 }
 
-TEST(InstanceAdminClient, InstanceIam) {
-  auto run_slow_integration_tests =
-      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
-          .value_or("");
-  auto project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  auto instance_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-          .value_or("");
-  auto test_iam_service_account =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
-          .value_or("");
-  ASSERT_FALSE(project_id.empty());
-  ASSERT_FALSE(instance_id.empty());
-  ASSERT_FALSE(test_iam_service_account.empty());
+TEST_F(InstanceAdminClientTest, InstanceIam) {
+  ASSERT_FALSE(project_id_.empty());
+  ASSERT_FALSE(instance_id_.empty());
+  ASSERT_FALSE(test_iam_service_account_.empty());
 
-  Instance in(project_id, instance_id);
+  Instance in(project_id_, instance_id_);
 
-  InstanceAdminClient client(MakeInstanceAdminConnection());
-
-  auto actual_policy = client.GetIamPolicy(in);
+  auto actual_policy = client_.GetIamPolicy(in);
   ASSERT_STATUS_OK(actual_policy);
   EXPECT_FALSE(actual_policy->etag().empty());
 
-  if (run_slow_integration_tests == "yes") {
+  if (run_slow_integration_tests_ == "yes") {
     // Set the policy to the existing value of the policy. While this changes
     // nothing it tests all the code in the client library.
-    auto updated_policy = client.SetIamPolicy(in, *actual_policy);
+    auto updated_policy = client_.SetIamPolicy(in, *actual_policy);
     ASSERT_STATUS_OK(updated_policy);
     EXPECT_FALSE(actual_policy->etag().empty());
   }
 
-  auto actual = client.TestIamPermissions(
+  auto actual = client_.TestIamPermissions(
       in, {"spanner.databases.list", "spanner.databases.get"});
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(

@@ -17,6 +17,16 @@
 include(EnableClangTidy)
 include(EnableWerror)
 
+if (MSVC)
+    # MSVC warns about using localtime(), this is a valuable warning, so we do
+    # not want to disable for everything. But for these files the usage is
+    # "safe". This is a relatively obscure feature to add compile flags to just
+    # one source:
+    set_property(SOURCE instance_admin_integration_test.cc
+                 APPEND_STRING
+                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+endif ()
+
 function (spanner_client_define_integration_tests)
     # The tests require googletest to be installed. Force CMake to use the
     # config file for googletest (that is, the CMake file installed by

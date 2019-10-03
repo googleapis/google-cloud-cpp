@@ -20,6 +20,9 @@ namespace google {
 namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
+/**
+ * Generate a random instance name for InstanceAdminClient CRUD tests.
+ */
 std::string RandomInstanceName(
     google::cloud::internal::DefaultPRNG& generator) {
   // An instance ID must be between 2 and 64 characters, fitting the regular
