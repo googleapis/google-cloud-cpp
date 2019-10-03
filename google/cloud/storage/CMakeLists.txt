@@ -442,8 +442,21 @@ install(EXPORT storage-targets
 install(TARGETS storage_client
         EXPORT storage-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                COMPONENT google_cloud_cpp_runtime
+        NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(TARGETS storage_client
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
 google_cloud_cpp_install_headers(storage_client include/google/cloud/storage)
 install(
     FILES

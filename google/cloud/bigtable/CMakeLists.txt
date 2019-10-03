@@ -367,8 +367,20 @@ endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 install(TARGETS bigtable_protos bigtable_common_options
         EXPORT bigtable-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                COMPONENT google_cloud_cpp_runtime
+        NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(TARGETS bigtable_protos bigtable_common_options
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT bigtable-targets
@@ -377,8 +389,21 @@ install(EXPORT bigtable-targets
 install(TARGETS bigtable_client
         EXPORT bigtable-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                COMPONENT google_cloud_cpp_runtime
+        NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(TARGETS bigtable_client
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
 google_cloud_cpp_install_headers(bigtable_client include/google/cloud/bigtable)
 
 # Setup global variables used in the following *.in files.
