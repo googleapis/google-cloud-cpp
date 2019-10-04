@@ -51,6 +51,32 @@ class PartialResultSetSource : public internal::ResultSetSource {
     }
     return {};
   }
+
+  std::int64_t RowsModified() const override {
+    if (last_result_.stats().row_count_case() ==
+        google::spanner::v1::ResultSetStats::kRowCountLowerBound) {
+      return last_result_.stats().row_count_lower_bound();
+    } else {
+      return last_result_.stats().row_count_exact();
+    }
+  }
+
+  optional<std::unordered_map<std::string, std::string>> QueryStats()
+      const override {
+    if (last_result_.has_stats() && last_result_.stats().has_query_stats()) {
+      std::unordered_map<std::string, std::string> query_stats;
+      return query_stats;
+    }
+    return {};
+  }
+
+  optional<QueryPlan> QueryExecutionPlan() const override {
+    if (last_result_.has_stats() && last_result_.stats().has_query_plan()) {
+      return last_result_.stats().query_plan();
+    }
+    return {};
+  }
+
   optional<google::spanner::v1::ResultSetStats> Stats() override {
     if (last_result_.has_stats()) {
       return last_result_.stats();

@@ -29,15 +29,15 @@ using ::testing::Return;
 namespace spanner = google::cloud::spanner;
 //! [helper-aliases]
 
-TEST(MockSpannerClient, SuccessfulExecuteSql) {
-  // Create a mock object to stream the results of a ExecuteSql query.
+TEST(MockSpannerClient, SuccessfulExecuteQuery) {
+  // Create a mock object to stream the results of a ExecuteQuery.
   //! [create-streaming-source]
   auto source =
       std::unique_ptr<google::cloud::spanner_mocks::MockResultSetSource>(
           new google::cloud::spanner_mocks::MockResultSetSource);
   //! [create-streaming-source]
 
-  // Setup the return type of the ExecuteSql results:
+  // Setup the return type of the ExecuteQuery results:
   //! [return-metadata]
   google::spanner::v1::ResultSetMetadata metadata;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
@@ -76,10 +76,10 @@ TEST(MockSpannerClient, SuccessfulExecuteSql) {
 
   // Setup the connection mock to return the results previously setup:
   //! [mock-execute-sql]
-  EXPECT_CALL(*conn, ExecuteSql(_))
+  EXPECT_CALL(*conn, ExecuteQuery(_))
       .WillOnce([&source](spanner::Connection::ExecuteSqlParams const&)
-                    -> google::cloud::StatusOr<spanner::ResultSet> {
-        return spanner::ResultSet(std::move(source));
+                    -> spanner::ExecuteQueryResult {
+        return spanner::ExecuteQueryResult(std::move(source));
       });
   //! [mock-execute-sql]
 
@@ -90,15 +90,14 @@ TEST(MockSpannerClient, SuccessfulExecuteSql) {
 
   // Make the request and verify the expected results:
   //! [client-call]
-  auto reader = client.ExecuteSql(
+  auto reader = client.ExecuteQuery(
       spanner::SqlStatement("SELECT Id, Greeting FROM Greetings"));
-  ASSERT_TRUE(reader);
   //! [client-call]
 
   //! [expected-results]
   int count = 0;
   using RowType = spanner::Row<std::int64_t, std::string>;
-  for (auto row : reader->Rows<RowType>()) {
+  for (auto row : reader.Rows<RowType>()) {
     ASSERT_TRUE(row);
     auto expected_id = ++count;
     EXPECT_EQ(expected_id, row->get<0>());

@@ -127,7 +127,7 @@ Result RunExperiment(Database const& db, int iterations) {
     auto delete_status = RunTransaction(
         client, Transaction::ReadWriteOptions{},
         [&](Client client, Transaction const& txn) -> StatusOr<Mutations> {
-          auto status = client.ExecuteSql(
+          auto status = client.ExecuteDml(
               txn, SqlStatement("DELETE FROM Singers WHERE true"));
           if (!status) return std::move(status).status();
           return Mutations{};
@@ -139,10 +139,10 @@ Result RunExperiment(Database const& db, int iterations) {
 }
 
 /**
- * @test Verify that the error rate for ExecuteSql(...DELETE) operations is
+ * @test Verify that the error rate for ExecuteDml(...DELETE) operations is
  *     within bounds.
  *
- * This program estimates the error rate for ExecuteSql() when the SQL statement
+ * This program estimates the error rate for ExecuteDml() when the SQL statement
  * is 'DELETE FROM table WHERE true'. We expect this to be very low for an empty
  * table, but was high at some point.
  *
@@ -164,7 +164,7 @@ Result RunExperiment(Database const& db, int iterations) {
  * that the conventional values (0.8 are 0.05). We can afford more strict tests
  * because the experiments are "cheap", so there is no reason not to.
  */
-TEST_F(RpcFailureThresholdTest, ExecuteSqlDeleteErrors) {
+TEST_F(RpcFailureThresholdTest, ExecuteDmlDeleteErrors) {
   ASSERT_TRUE(db_);
 
   // We are using the approximation via a normal distribution from here:

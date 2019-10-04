@@ -237,51 +237,28 @@ class Client {
    *
    * @param statement The SQL statement to execute.
    *
-   * @return A `StatusOr` containing a `ResultSet` or error status on failure.
-   *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
-   *     value can exceed 10 MiB.
+   * @note No individual row in the `ResultSet` can exceed 100 MiB, and no
+   * column value can exceed 10 MiB.
    */
-  StatusOr<ResultSet> ExecuteSql(SqlStatement statement);
+  ExecuteQueryResult ExecuteQuery(SqlStatement statement);
 
   /**
-   * @copydoc ExecuteSql(SqlStatement)
+   * @copydoc ExecuteQuery(SqlStatement)
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
-  StatusOr<ResultSet> ExecuteSql(
+  ExecuteQueryResult ExecuteQuery(
       Transaction::SingleUseOptions transaction_options,
       SqlStatement statement);
 
   /**
-   * @copydoc ExecuteSql(SqlStatement)
+   * @copydoc ExecuteQuery(SqlStatement)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
-  StatusOr<ResultSet> ExecuteSql(Transaction transaction,
-                                 SqlStatement statement);
-  //@}
-
-  /**
-   * Executes a Partitioned DML SQL query.
-   *
-   * @param statement the SQL statement to execute. Please see the
-   *     [spanner documentation][dml-partitioned] for the restrictions on the
-   *     SQL statements supported by this function.
-   *
-   * @par Example
-   * @snippet samples.cc execute-sql-partitioned
-   *
-   * @see [Partitioned DML Transactions][txn-partitioned] for an overview of
-   *     Partitioned DML transactions.
-   * @see [Partitioned DML][dml-partitioned] for a description of which SQL
-   *     statements are supported in Partitioned DML transactions.
-   * [txn-partitioned]:
-   * https://cloud.google.com/spanner/docs/transactions#partitioned_dml_transactions
-   * [dml-partitioned]: https://cloud.google.com/spanner/docs/dml-partitioned
-   */
-  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement);
-
+  ExecuteQueryResult ExecuteQuery(Transaction transaction,
+                                  SqlStatement statement);
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
@@ -289,14 +266,14 @@ class Client {
    *
    * @param partition A `QueryPartition`, obtained by calling `PartitionRead`.
    *
-   * @return A `StatusOr` containing a `ResultSet` or error status on failure.
-   *     No individual row in the `ResultSet` can exceed 100 MiB, and no column
-   *     value can exceed 10 MiB.
+   * @note No individual row in the `ResultSet` can exceed 100 MiB, and no
+   * column value can exceed 10 MiB.
    *
    * @par Example
    * @snippet samples.cc execute-sql-query-partition
    */
-  StatusOr<ResultSet> ExecuteSql(QueryPartition const& partition);
+  ExecuteQueryResult ExecuteQuery(QueryPartition const& partition);
+  //@}
 
   /**
    * Creates a set of partitions that can be used to execute a query
@@ -322,6 +299,20 @@ class Client {
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       Transaction transaction, SqlStatement statement,
       PartitionOptions partition_options = {});
+
+  /**
+   * Executes a SQL DML statement.
+   *
+   * Operations inside read-write transactions might return `ABORTED`. If this
+   * occurs, the application should restart the transaction from the beginning.
+   *
+   * @note Single-use transactions are not supported with DML statements.
+
+   * @param transaction Execute this query as part of an existing transaction.
+   * @param statement The SQL statement to execute.
+   */
+  StatusOr<ExecuteDmlResult> ExecuteDml(Transaction transaction,
+                                        SqlStatement statement);
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements
@@ -385,6 +376,26 @@ class Client {
    * @return The error status of the rollback.
    */
   Status Rollback(Transaction transaction);
+
+  /**
+   * Executes a Partitioned DML SQL query.
+   *
+   * @param statement the SQL statement to execute. Please see the
+   *     [spanner documentation][dml-partitioned] for the restrictions on the
+   *     SQL statements supported by this function.
+   *
+   * @par Example
+   * @snippet samples.cc execute-sql-partitioned
+   *
+   * @see [Partitioned DML Transactions][txn-partitioned] for an overview of
+   *     Partitioned DML transactions.
+   * @see [Partitioned DML][dml-partitioned] for a description of which SQL
+   *     statements are supported in Partitioned DML transactions.
+   * [txn-partitioned]:
+   * https://cloud.google.com/spanner/docs/transactions#partitioned_dml_transactions
+   * [dml-partitioned]: https://cloud.google.com/spanner/docs/dml-partitioned
+   */
+  StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement);
 
  private:
   std::shared_ptr<Connection> conn_;

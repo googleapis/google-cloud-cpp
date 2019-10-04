@@ -66,31 +66,26 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
        std::move(partition_options)});
 }
 
-StatusOr<ResultSet> Client::ExecuteSql(SqlStatement statement) {
-  return conn_->ExecuteSql(
+ExecuteQueryResult Client::ExecuteQuery(SqlStatement statement) {
+  return conn_->ExecuteQuery(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        std::move(statement)});
 }
 
-StatusOr<ResultSet> Client::ExecuteSql(
+ExecuteQueryResult Client::ExecuteQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement) {
-  return conn_->ExecuteSql(
+  return conn_->ExecuteQuery(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
        std::move(statement)});
 }
 
-StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
-    SqlStatement statement) {
-  return conn_->ExecutePartitionedDml({std::move(statement)});
+ExecuteQueryResult Client::ExecuteQuery(Transaction transaction,
+                                        SqlStatement statement) {
+  return conn_->ExecuteQuery({std::move(transaction), std::move(statement)});
 }
 
-StatusOr<ResultSet> Client::ExecuteSql(Transaction transaction,
-                                       SqlStatement statement) {
-  return conn_->ExecuteSql({std::move(transaction), std::move(statement)});
-}
-
-StatusOr<ResultSet> Client::ExecuteSql(QueryPartition const& partition) {
-  return conn_->ExecuteSql(internal::MakeExecuteSqlParams(partition));
+ExecuteQueryResult Client::ExecuteQuery(QueryPartition const& partition) {
+  return conn_->ExecuteQuery(internal::MakeExecuteSqlParams(partition));
 }
 
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
@@ -100,6 +95,10 @@ StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
                                 std::move(partition_options)});
 }
 
+StatusOr<ExecuteDmlResult> Client::ExecuteDml(Transaction transaction,
+                                              SqlStatement statement) {
+  return conn_->ExecuteDml({std::move(transaction), std::move(statement)});
+}
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
     Transaction transaction, std::vector<SqlStatement> statements) {
   return conn_->ExecuteBatchDml(
@@ -113,6 +112,11 @@ StatusOr<CommitResult> Client::Commit(Transaction transaction,
 
 Status Client::Rollback(Transaction transaction) {
   return conn_->Rollback({std::move(transaction)});
+}
+
+StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
+    SqlStatement statement) {
+  return conn_->ExecutePartitionedDml({std::move(statement)});
 }
 
 std::shared_ptr<Connection> MakeConnection(Database const& db,

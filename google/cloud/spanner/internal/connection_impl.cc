@@ -132,12 +132,21 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
       });
 }
 
-StatusOr<ResultSet> ConnectionImpl::ExecuteSql(ExecuteSqlParams esp) {
+ExecuteQueryResult ConnectionImpl::ExecuteQuery(ExecuteSqlParams esp) {
   return internal::Visit(
       std::move(esp.transaction),
       [this, &esp](SessionHolder& session,
                    spanner_proto::TransactionSelector& s, std::int64_t seqno) {
-        return ExecuteSqlImpl(session, s, seqno, std::move(esp));
+        return ExecuteQueryImpl(session, s, seqno, std::move(esp));
+      });
+}
+
+StatusOr<ExecuteDmlResult> ConnectionImpl::ExecuteDml(ExecuteSqlParams esp) {
+  return internal::Visit(
+      std::move(esp.transaction),
+      [this, &esp](SessionHolder& session,
+                   spanner_proto::TransactionSelector& s, std::int64_t seqno) {
+        return ExecuteDmlImpl(session, s, seqno, std::move(esp));
       });
 }
 
@@ -294,7 +303,89 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   return read_partitions;
 }
 
-StatusOr<ResultSet> ConnectionImpl::ExecuteSqlImpl(
+class StatusOnlyResultSetSource : public internal::ResultSetSource {
+ public:
+  explicit StatusOnlyResultSetSource(google::cloud::Status status)
+      : status_(std::move(status)) {}
+  ~StatusOnlyResultSetSource() override = default;
+
+  StatusOr<optional<Value>> NextValue() override { return status_; }
+  optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+    return {};
+  }
+  optional<google::spanner::v1::ResultSetStats> Stats() override { return {}; }
+  std::int64_t RowsModified() const override { return {}; }
+  optional<std::unordered_map<std::string, std::string>> QueryStats()
+      const override {
+    return {};
+  }
+  optional<QueryPlan> QueryExecutionPlan() const override { return {}; }
+
+ private:
+  google::cloud::Status status_;
+};
+
+ExecuteQueryResult ConnectionImpl::ExecuteQueryImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams esp) {
+  if (!session) {
+    auto session_or = AllocateSession();
+    if (!session_or) {
+      return ExecuteQueryResult(
+          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+              std::move(session_or).status()));
+    }
+    session = std::move(*session_or);
+  }
+
+  spanner_proto::ExecuteSqlRequest request;
+  request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  auto sql_statement = internal::ToProto(std::move(esp.statement));
+  request.set_sql(std::move(*sql_statement.mutable_sql()));
+  *request.mutable_params() = std::move(*sql_statement.mutable_params());
+  *request.mutable_param_types() =
+      std::move(*sql_statement.mutable_param_types());
+  request.set_seqno(seqno);
+  if (esp.partition_token) {
+    request.set_partition_token(*std::move(esp.partition_token));
+  }
+
+  auto const& stub = stub_;
+  // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
+  // the lifetime of the lambda. Note that the local variable `stub` is a
+  // reference to avoid increasing refcounts twice, but the capture is by value.
+  auto factory = [stub, request](std::string const& resume_token) mutable {
+    request.set_resume_token(resume_token);
+    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    return google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
+        std::move(context), stub->ExecuteStreamingSql(*context, request));
+  };
+  auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
+      std::move(factory), Idempotency::kIdempotent, retry_policy_->clone(),
+      backoff_policy_->clone());
+  auto reader = PartialResultSetSource::Create(std::move(rpc));
+
+  if (!reader.ok()) {
+    return ExecuteQueryResult(
+        google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+            std::move(reader).status()));
+  }
+  if (s.has_begin()) {
+    auto metadata = (*reader)->Metadata();
+    if (!metadata || metadata->transaction().id().empty()) {
+      return ExecuteQueryResult(
+          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+              Status(StatusCode::kInternal,
+                     "Begin transaction requested but no transaction returned "
+                     "(in ExecuteQuery).")));
+    }
+    s.set_id(metadata->transaction().id());
+  }
+  return ExecuteQueryResult(std::move(*reader));
+}
+
+StatusOr<ExecuteDmlResult> ConnectionImpl::ExecuteDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteSqlParams esp) {
   if (!session) {
@@ -318,68 +409,37 @@ StatusOr<ResultSet> ConnectionImpl::ExecuteSqlImpl(
     request.set_partition_token(*std::move(esp.partition_token));
   }
 
-  auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-  auto rpc =
-      google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
-          std::move(context), stub_->ExecuteStreamingSql(*context, request));
-  auto reader = internal::PartialResultSetSource::Create(std::move(rpc));
+  auto const& stub = stub_;
+  // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
+  // the lifetime of the lambda. Note that the local variable `stub` is a
+  // reference to avoid increasing refcounts twice, but the capture is by value.
+  auto factory = [stub, request](std::string const& resume_token) mutable {
+    request.set_resume_token(resume_token);
+    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
+    return google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
+        std::move(context), stub->ExecuteStreamingSql(*context, request));
+  };
+
+  auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
+      std::move(factory), Idempotency::kIdempotent, retry_policy_->clone(),
+      backoff_policy_->clone());
+  auto reader = PartialResultSetSource::Create(std::move(rpc));
+
   if (!reader.ok()) {
     return std::move(reader).status();
   }
   if (s.has_begin()) {
     auto metadata = (*reader)->Metadata();
     if (!metadata || metadata->transaction().id().empty()) {
-      return Status(StatusCode::kInternal,
-                    "Begin transaction requested but no transaction returned "
-                    "(in ExecuteSql).");
+      return ExecuteDmlResult(
+          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+              Status(StatusCode::kInternal,
+                     "Begin transaction requested but no transaction returned "
+                     "(in ExecuteDml).")));
     }
     s.set_id(metadata->transaction().id());
   }
-  return ResultSet(std::move(*reader));
-}
-
-StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
-    SessionHolder& session, spanner_proto::TransactionSelector& s,
-    std::int64_t seqno, ExecutePartitionedDmlParams epdp) {
-  if (!session) {
-    auto session_or = AllocateSession();
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
-  }
-
-  grpc::ClientContext begin_context;
-  spanner_proto::BeginTransactionRequest begin_request;
-  begin_request.set_session(session->session_name());
-  *begin_request.mutable_options()->mutable_partitioned_dml() =
-      spanner_proto::TransactionOptions_PartitionedDml();
-
-  auto begin_response = stub_->BeginTransaction(begin_context, begin_request);
-  if (!begin_response) return std::move(begin_response).status();
-
-  s.set_id(begin_response->id());
-
-  grpc::ClientContext context;
-  spanner_proto::ExecuteSqlRequest request;
-  request.set_session(session->session_name());
-  *request.mutable_transaction() = s;
-  auto sql_statement = internal::ToProto(std::move(epdp.statement));
-  request.set_sql(std::move(*sql_statement.mutable_sql()));
-  *request.mutable_params() = std::move(*sql_statement.mutable_params());
-  *request.mutable_param_types() =
-      std::move(*sql_statement.mutable_param_types());
-  request.set_seqno(seqno);
-
-  auto response = stub_->ExecuteSql(context, request);
-  if (!response) return std::move(response).status();
-
-  PartitionedDmlResult result{0};
-  if (response->has_stats()) {
-    result.row_count_lower_bound = response->stats().row_count_lower_bound();
-  }
-
-  return result;
+  return ExecuteDmlResult(std::move(*reader));
 }
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
@@ -468,6 +528,50 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   result.status = grpc_utils::MakeStatusFromRpcError(response->status());
   for (auto const& result_set : response->result_sets()) {
     result.stats.push_back({result_set.stats().row_count_exact()});
+  }
+
+  return result;
+}
+
+StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    std::int64_t seqno, ExecutePartitionedDmlParams epdp) {
+  if (!session) {
+    auto session_or = AllocateSession();
+    if (!session_or) {
+      return std::move(session_or).status();
+    }
+    session = std::move(*session_or);
+  }
+
+  grpc::ClientContext begin_context;
+  spanner_proto::BeginTransactionRequest begin_request;
+  begin_request.set_session(session->session_name());
+  *begin_request.mutable_options()->mutable_partitioned_dml() =
+      spanner_proto::TransactionOptions_PartitionedDml();
+
+  auto begin_response = stub_->BeginTransaction(begin_context, begin_request);
+  if (!begin_response) return std::move(begin_response).status();
+
+  s.set_id(begin_response->id());
+
+  grpc::ClientContext context;
+  spanner_proto::ExecuteSqlRequest request;
+  request.set_session(session->session_name());
+  *request.mutable_transaction() = s;
+  auto sql_statement = internal::ToProto(std::move(epdp.statement));
+  request.set_sql(std::move(*sql_statement.mutable_sql()));
+  *request.mutable_params() = std::move(*sql_statement.mutable_params());
+  *request.mutable_param_types() =
+      std::move(*sql_statement.mutable_param_types());
+  request.set_seqno(seqno);
+
+  auto response = stub_->ExecuteSql(context, request);
+  if (!response) return std::move(response).status();
+
+  PartitionedDmlResult result{0};
+  if (response->has_stats()) {
+    result.row_count_lower_bound = response->stats().row_count_lower_bound();
   }
 
   return result;

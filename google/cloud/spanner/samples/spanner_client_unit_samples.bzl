@@ -17,5 +17,5 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 spanner_client_unit_samples = [
-    "mock_execute_sql.cc",
+    "mock_execute_query.cc",
 ]

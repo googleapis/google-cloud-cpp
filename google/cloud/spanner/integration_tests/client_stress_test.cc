@@ -60,7 +60,7 @@ int TaskCount() {
                     : static_cast<int>(cores) * flag_threads_per_core;
 }
 
-/// @test Stress test the library using ExecuteSql calls.
+/// @test Stress test the library using ExecuteQuery calls.
 TEST(ClientSqlStressTest, UpsertAndSelect) {
   int const task_count = TaskCount();
 
@@ -97,17 +97,15 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
         result.Update(commit.status());
       } else {
         auto size = random_limit(generator);
-        auto reader = client.ExecuteSql(
+        auto reader = client.ExecuteQuery(
             SqlStatement("SELECT SingerId, FirstName, LastName"
                          "  FROM Singers"
                          " WHERE SingerId >= @min"
                          "   AND SingerId <= @max",
                          {{"min", spanner::Value(key)},
                           {"max", spanner::Value(key + size)}}));
-        result.Update(reader.status());
-        if (!reader) continue;
         using RowType = Row<std::int64_t, std::string, std::string>;
-        for (auto row : reader->Rows<RowType>()) {
+        for (auto row : reader.Rows<RowType>()) {
           result.Update(row.status());
         }
       }

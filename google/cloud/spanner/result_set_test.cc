@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/result_set.h"
 #include "google/cloud/spanner/internal/time.h"
+#include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/make_unique.h"
 #include <gmock/gmock.h>
@@ -29,14 +30,8 @@ namespace {
 namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::internal::make_unique;
+using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::testing::Return;
-
-class MockResultSetSource : public internal::ResultSetSource {
- public:
-  MOCK_METHOD0(NextValue, StatusOr<optional<Value>>());
-  MOCK_METHOD0(Metadata, optional<spanner_proto::ResultSetMetadata>());
-  MOCK_METHOD0(Stats, optional<spanner_proto::ResultSetStats>());
-};
 
 TEST(ResultSet, IterateNoRows) {
   auto mock_source = make_unique<MockResultSetSource>();
