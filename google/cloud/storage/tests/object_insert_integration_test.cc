@@ -758,7 +758,7 @@ TEST_F(ObjectInsertIntegrationTest, CreateRandomPrefix) {
   auto object_name = CreateRandomPrefix(*client, bucket_name, prefix);
 
   ASSERT_STATUS_OK(object_name);
-  ASSERT_EQ(prefix.length() + 8, object_name->length());
+  ASSERT_EQ(prefix.length() + 16, object_name->length());
   ASSERT_EQ(prefix, object_name->substr(0, prefix.length()));
 
   // Create a iostream to read the object back.

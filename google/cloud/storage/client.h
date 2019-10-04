@@ -21,7 +21,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/parameter_pack.h"
+#include "google/cloud/storage/internal/parameter_pack_validation.h"
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
@@ -3061,6 +3061,7 @@ class Client {
  *
  * @param client the client on which to perform the operation.
  * @param bucket_name the name of the bucket that will contain the object.
+ *     Maximum length is 1008 characters.
  * @param prefix the prefix of the prefix to be created.
  * @param options a list of optional query parameters and/or request headers.
  *     Valid types for this operation include `EncryptionKey` `KmsKeyName`,
@@ -3102,7 +3103,7 @@ StatusOr<std::string> CreateRandomPrefix(Client& client,
   // improve the rng (initialization).
   auto rng = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = prefix + google::cloud::internal::Sample(
-                                  rng, 8, "abcdefghijklmnopqrstuvwxyz");
+                                  rng, 16, "abcdefghijklmnopqrstuvwxyz");
   auto res = client.InsertObject(bucket_name, object_name, std::string(),
                                  IfGenerationMatch(0),
                                  std::forward<Options>(options)...);

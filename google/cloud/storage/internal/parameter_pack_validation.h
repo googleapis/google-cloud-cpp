@@ -12,26 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/internal/parameter_pack.h"
-#include <gmock/gmock.h>
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARAMETER_PACK_VALIDATION_H_
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARAMETER_PACK_VALIDATION_H_
+
+#include "google/cloud/internal/disjunction.h"
+#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-namespace {
 
-TEST(ContainsType, Static) {
-  static_assert(!ContainsType<int>(), "empty list doesn't contain anything");
-  static_assert(ContainsType<int, int>(), "");
-  static_assert(ContainsType<int, float, int, double>(), "");
-  static_assert(!ContainsType<int, float, double>(), "");
+// Check if a parameter pack contains a type
+template <typename Type, typename... TypeList>
+constexpr bool ContainsType() {
+  return google::cloud::internal::disjunction<
+      std::is_same<Type, TypeList>...>::value;
 }
 
-}  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARAMETER_PACK_VALIDATION_H_

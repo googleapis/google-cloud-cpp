@@ -431,7 +431,7 @@ TEST_F(ObjectTest, CreateRandomPrefix) {
       .WillOnce(Invoke([&](internal::InsertObjectMediaRequest const& request) {
         EXPECT_EQ("test-bucket-name", request.bucket_name());
 
-        EXPECT_EQ(prefix.length() + 8, request.object_name().length());
+        EXPECT_EQ(prefix.length() + 16, request.object_name().length());
         EXPECT_EQ(prefix, request.object_name().substr(0, prefix.length()));
         EXPECT_EQ("", request.contents());
         EXPECT_TRUE(request.HasOption<UserProject>());
@@ -445,7 +445,7 @@ TEST_F(ObjectTest, CreateRandomPrefix) {
   auto actual = CreateRandomPrefix(*client, "test-bucket-name", prefix,
                                    UserProject("some_project"));
   ASSERT_STATUS_OK(actual);
-  ASSERT_EQ(prefix.length() + 8, actual->length());
+  ASSERT_EQ(prefix.length() + 16, actual->length());
   ASSERT_EQ(prefix, actual->substr(0, prefix.length()));
 }
 
