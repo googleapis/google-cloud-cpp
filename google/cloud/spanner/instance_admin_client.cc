@@ -26,11 +26,9 @@ InstanceAdminClient::GetInstance(Instance const& in) {
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
 InstanceAdminClient::CreateInstance(
-    std::string const& project_id, std::string const& instance_id,
-    std::string const& display_name, std::string const& instance_config,
-    int node_count, std::map<std::string, std::string> const& labels) {
-  return conn_->CreateInstance({project_id, instance_id, display_name,
-                                instance_config, node_count, labels});
+    google::spanner::admin::instance::v1::CreateInstanceRequest const&
+        request) {
+  return conn_->CreateInstance({request});
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>

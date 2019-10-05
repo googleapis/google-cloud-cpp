@@ -90,12 +90,7 @@ class InstanceAdminConnection {
 
   /// Wrap the arguments for `CreateInstance()`.
   struct CreateInstanceParams {
-    std::string project_id;
-    std::string instance_id;
-    std::string display_name;
-    std::string instance_config;
-    int node_count;
-    std::map<std::string, std::string> labels;
+    google::spanner::admin::instance::v1::CreateInstanceRequest request;
   };
 
   /// Wrap the arguments for `UpdateInstance()`.

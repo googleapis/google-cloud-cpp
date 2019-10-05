@@ -103,6 +103,9 @@ class InstanceAdminClient {
   /**
    * Creates a new Cloud Spanner instance in the given project.
    *
+   * Use CreateInstanceRequestBuilder to build the
+   * `google::spanner::admin::instance::v1::CreateInstanceRequest` object.
+   *
    * Note that the instance id must be between 2 and 64 characters long, it must
    * start with a lowercase letter (`[a-z]`), it must end with a lowercase
    * letter or a number (`[a-z0-9]`) and any characters between the beginning
@@ -114,10 +117,8 @@ class InstanceAdminClient {
    *
    */
   future<StatusOr<google::spanner::admin::instance::v1::Instance>>
-  CreateInstance(std::string const& project_id, std::string const& instance_id,
-                 std::string const& display_name,
-                 std::string const& instance_config, int node_count,
-                 std::map<std::string, std::string> const& labels = {});
+  CreateInstance(
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&);
 
   /**
    * Updates a Cloud Spanner instance.

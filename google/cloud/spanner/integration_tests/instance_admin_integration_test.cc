@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
@@ -156,9 +157,11 @@ TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   auto instance_config = instance_config_names[0];
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
-      client_.CreateInstance(
-          project_id_, instance_id, "test-display-name", instance_config, 1,
-          std::map<std::string, std::string>{{"label-key", "label-value"}});
+      client_.CreateInstance(CreateInstanceRequestBuilder(in, instance_config)
+                                 .SetDisplayName("test-display-name")
+                                 .SetNodeCount(1)
+                                 .SetLabels({{"label-key", "label-value"}})
+                                 .Build());
   StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
 
   EXPECT_STATUS_OK(instance.status());

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/instance_admin_connection.h"
+#include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -139,10 +140,13 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
           }));
 
   auto conn = MakeTestConnection(std::move(mock));
+  Instance in("test-project", "test-instance");
   auto fut = conn->CreateInstance(
-      {"test-project", "test-instance", "test-display-name",
-       "test-instance-config", 1,
-       std::map<std::string, std::string>({{"key", "value"}})});
+      {CreateInstanceRequestBuilder(in, "test-instance-config")
+           .SetDisplayName("test-display-name")
+           .SetNodeCount(1)
+           .SetLabels({{"key", "value"}})
+           .Build()});
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
   auto instance = fut.get();
   EXPECT_STATUS_OK(instance);
@@ -161,10 +165,13 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
           }));
 
   auto conn = MakeTestConnection(std::move(mock));
+  Instance in("test-project", "test-instance");
   auto fut = conn->CreateInstance(
-      {"test-project", "test-instance", "test-display-name",
-       "test-instance-config", 1,
-       std::map<std::string, std::string>({{"key", "value"}})});
+      {CreateInstanceRequestBuilder(in, "test-instance-config")
+           .SetDisplayName("test-display-name")
+           .SetNodeCount(1)
+           .SetLabels({{"key", "value"}})
+           .Build()});
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
   EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());

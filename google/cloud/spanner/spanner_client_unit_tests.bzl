@@ -61,6 +61,7 @@ spanner_client_unit_tests = [
     "spanner_version_test.cc",
     "sql_statement_test.cc",
     "transaction_test.cc",
+    "create_instance_request_builder_test.cc",
     "update_instance_request_builder_test.cc",
     "value_test.cc",
 ]

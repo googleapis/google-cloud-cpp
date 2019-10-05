@@ -103,6 +103,7 @@ add_library(spanner_client
             connection.h
             connection_options.cc
             connection_options.h
+            create_instance_request_builder.h
             database.cc
             database.h
             database_admin_client.cc
@@ -332,6 +333,7 @@ function (spanner_client_define_tests)
         spanner_version_test.cc
         sql_statement_test.cc
         transaction_test.cc
+        create_instance_request_builder_test.cc
         update_instance_request_builder_test.cc
         value_test.cc)
 

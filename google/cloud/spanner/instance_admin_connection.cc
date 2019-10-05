@@ -123,26 +123,13 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
 
   future<StatusOr<gcsa::Instance>> CreateInstance(
       CreateInstanceParams p) override {
-    gcsa::CreateInstanceRequest request;
-    google::cloud::spanner::Instance in(p.project_id, p.instance_id);
-    request.set_parent("projects/" + p.project_id);
-    request.set_instance_id(std::move(p.instance_id));
-    auto instance = request.mutable_instance();
-    instance->set_config(std::move(p.instance_config));
-    instance->set_name(in.FullName());
-    instance->set_display_name(std::move(p.display_name));
-    instance->set_node_count(p.node_count);
-    auto mutable_labels = instance->mutable_labels();
-    for (auto& pair : p.labels) {
-      (*mutable_labels)[pair.first] = std::move(pair.second);
-    }
     auto operation = RetryLoop(
         retry_policy_->clone(), backoff_policy_->clone(), false,
         [this](grpc::ClientContext& context,
                gcsa::CreateInstanceRequest const& request) {
           return stub_->CreateInstance(context, request);
         },
-        request, __func__);
+        p.request, __func__);
     if (!operation) {
       return google::cloud::make_ready_future(
           StatusOr<gcsa::Instance>(operation.status()));

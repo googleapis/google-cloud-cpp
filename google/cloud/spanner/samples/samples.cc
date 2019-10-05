@@ -15,6 +15,7 @@
 //! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
 //! [END spanner_quickstart]
+#include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
@@ -77,8 +78,12 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
   auto instance_config = instance_config_names[0];
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
       client.CreateInstance(
-          project_id, instance_id, display_name, instance_config, 1,
-          std::map<std::string, std::string>{{"label-key", "label-value"}});
+          google::cloud::spanner::CreateInstanceRequestBuilder(in,
+                                                               instance_config)
+              .SetDisplayName(display_name)
+              .SetNodeCount(1)
+              .SetLabels({{"label-key", "label-value"}})
+              .Build());
   StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
   if (!instance) {
     throw std::runtime_error(instance.status().message());

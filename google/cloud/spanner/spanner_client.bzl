@@ -23,6 +23,7 @@ spanner_client_hdrs = [
     "commit_result.h",
     "connection.h",
     "connection_options.h",
+    "create_instance_request_builder.h",
     "database.h",
     "database_admin_client.h",
     "database_admin_connection.h",
