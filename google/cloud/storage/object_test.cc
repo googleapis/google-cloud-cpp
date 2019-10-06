@@ -437,16 +437,15 @@ TEST_F(ObjectTest, CreateRandomPrefix) {
         EXPECT_TRUE(request.HasOption<UserProject>());
         return make_status_or(
             storage::internal::ObjectMetadataParser::FromString(
-                "{ \"name\": \"test-bucket-name/" + request.object_name() +
-                "/1\" }")
+                "{ \"name\": \"" + request.object_name() + "\"}")
                 .value());
       }));
 
   auto actual = CreateRandomPrefix(*client, "test-bucket-name", prefix,
                                    UserProject("some_project"));
   ASSERT_STATUS_OK(actual);
-  ASSERT_EQ(prefix.length() + 16, actual->length());
-  ASSERT_EQ(prefix, actual->substr(0, prefix.length()));
+  ASSERT_EQ(prefix.length() + 16, actual->name().length());
+  ASSERT_EQ(prefix, actual->name().substr(0, prefix.length()));
 }
 
 TEST_F(ObjectTest, CreateRandomPrefixPermanentFailure) {

@@ -755,18 +755,18 @@ TEST_F(ObjectInsertIntegrationTest, CreateRandomPrefix) {
   std::string bucket_name = flag_bucket_name;
   std::string prefix("prefix.");
 
-  auto object_name = CreateRandomPrefix(*client, bucket_name, prefix);
+  auto object = CreateRandomPrefix(*client, bucket_name, prefix);
 
-  ASSERT_STATUS_OK(object_name);
-  ASSERT_EQ(prefix.length() + 16, object_name->length());
-  ASSERT_EQ(prefix, object_name->substr(0, prefix.length()));
+  ASSERT_STATUS_OK(object);
+  ASSERT_EQ(prefix.length() + 16, object->name().length());
+  ASSERT_EQ(prefix, object->name().substr(0, prefix.length()));
 
   // Create a iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name, *object_name);
+  auto stream = client->ReadObject(bucket_name, object->name());
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ("", actual);
 
-  auto status = client->DeleteObject(bucket_name, *object_name);
+  auto status = client->DeleteObject(bucket_name, object->name());
   ASSERT_STATUS_OK(status);
 }
 

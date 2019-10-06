@@ -3068,10 +3068,10 @@ class Client {
  *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
  */
 template <typename... Options>
-StatusOr<std::string> CreateRandomPrefix(Client& client,
-                                         std::string const& bucket_name,
-                                         std::string const& prefix,
-                                         Options&&... options) {
+StatusOr<ObjectMetadata> CreateRandomPrefix(Client& client,
+                                            std::string const& bucket_name,
+                                            std::string const& prefix,
+                                            Options&&... options) {
   // Make sure the user isn't using options which make little sense for an empty
   // object or which would conflict with IfGenerationMatch(0).
   using internal::ContainsType;
@@ -3104,13 +3104,9 @@ StatusOr<std::string> CreateRandomPrefix(Client& client,
   auto rng = google::cloud::internal::MakeDefaultPRNG();
   auto object_name = prefix + google::cloud::internal::Sample(
                                   rng, 16, "abcdefghijklmnopqrstuvwxyz");
-  auto res = client.InsertObject(bucket_name, object_name, std::string(),
-                                 IfGenerationMatch(0),
-                                 std::forward<Options>(options)...);
-  if (!res) {
-    return res.status();
-  }
-  return object_name;
+  return client.InsertObject(bucket_name, object_name, std::string(),
+                             IfGenerationMatch(0),
+                             std::forward<Options>(options)...);
 }
 
 }  // namespace STORAGE_CLIENT_NS
