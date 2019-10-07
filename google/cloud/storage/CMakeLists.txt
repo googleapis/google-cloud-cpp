@@ -151,6 +151,7 @@ add_library(storage_client
             internal/object_streambuf.cc
             internal/object_read_source.h
             internal/patch_builder.h
+            internal/parameter_pack_validation.h
             internal/policy_document_request.h
             internal/policy_document_request.cc
             internal/range_from_pagination.h
@@ -348,6 +349,7 @@ if (BUILD_TESTING)
         internal/object_streambuf_test.cc
         internal/openssl_util_test.cc
         internal/patch_builder_test.cc
+        internal/parameter_pack_validation_test.cc
         internal/policy_document_request_test.cc
         internal/resumable_upload_session_test.cc
         internal/retry_client_test.cc

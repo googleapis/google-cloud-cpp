@@ -424,6 +424,39 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
 }
 
+TEST_F(ObjectTest, CreateRandomPrefix) {
+  std::string const prefix = "object_name_prefix";
+
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([&](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+
+        EXPECT_EQ(prefix.length() + 16, request.object_name().length());
+        EXPECT_EQ(prefix, request.object_name().substr(0, prefix.length()));
+        EXPECT_EQ("", request.contents());
+        EXPECT_TRUE(request.HasOption<UserProject>());
+        return make_status_or(
+            storage::internal::ObjectMetadataParser::FromString(
+                "{ \"name\": \"" + request.object_name() + "\"}")
+                .value());
+      }));
+
+  auto actual = CreateRandomPrefix(*client, "test-bucket-name", prefix,
+                                   UserProject("some_project"));
+  ASSERT_STATUS_OK(actual);
+  ASSERT_EQ(prefix.length() + 16, actual->name().length());
+  ASSERT_EQ(prefix, actual->name().substr(0, prefix.length()));
+}
+
+TEST_F(ObjectTest, CreateRandomPrefixPermanentFailure) {
+  testing::PermanentFailureStatusTest<ObjectMetadata>(
+      *client, EXPECT_CALL(*mock, InsertObjectMedia(_)),
+      [](Client& client) {
+        return CreateRandomPrefix(client, "bucket", "prefix").status();
+      },
+      "InsertObjectMedia");
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
