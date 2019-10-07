@@ -16,7 +16,7 @@
 
 # This should be included from the top level CMakeLists file
 set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
-set(GOOGLE_CLOUD_CPP_VERSION_MINOR 12)
+set(GOOGLE_CLOUD_CPP_VERSION_MINOR 13)
 set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
 
 string(CONCAT GOOGLE_CLOUD_CPP_VERSION
@@ -266,8 +266,21 @@ install(EXPORT google_cloud_cpp_common-targets
 install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
         EXPORT google_cloud_cpp_common-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                COMPONENT google_cloud_cpp_runtime
+                NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+# With CMake-3.12 and higher we could avoid this separate command (and the
+# duplication).
+install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
 google_cloud_cpp_install_headers(google_cloud_cpp_common include/google/cloud)
 
 # Setup global variables used in the following *.in files.

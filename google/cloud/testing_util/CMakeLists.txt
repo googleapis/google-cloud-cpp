@@ -78,8 +78,21 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     install(TARGETS google_cloud_cpp_testing
             EXPORT google_cloud_cpp_testing-targets
             RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                    COMPONENT google_cloud_cpp_runtime
             LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+                    COMPONENT google_cloud_cpp_runtime
+                    NAMELINK_SKIP
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                    COMPONENT google_cloud_cpp_development)
+    # With CMake-3.12 and higher we could avoid this separate command (and the
+    # duplication).
+    install(TARGETS google_cloud_cpp_testing
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                    COMPONENT google_cloud_cpp_development
+                    NAMELINK_ONLY
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                    COMPONENT google_cloud_cpp_development)
+
     google_cloud_cpp_install_headers(google_cloud_cpp_testing
                                      include/google/cloud/testing_util)
 
