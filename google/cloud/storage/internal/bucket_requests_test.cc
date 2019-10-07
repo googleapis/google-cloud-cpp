@@ -381,7 +381,7 @@ TEST(PatchBucketRequestTest, DiffResetEncryption) {
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffSetIamConfiguration) {
+TEST(PatchBucketRequestTest, DiffSetIamConfiguration_BPO) {
   BucketMetadata original = CreateBucketMetadataForTest();
   original.reset_encryption();
   BucketMetadata updated = original;
@@ -392,15 +392,53 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration) {
 
   nl::json patch = nl::json::parse(request.payload());
   nl::json expected = nl::json::parse(R"""({
-      "iamConfiguration": {"bucketPolicyOnly": {"enabled": true}}
+      "iamConfiguration": {
+          "bucketPolicyOnly": {"enabled": true},
+          "uniformBucketLevelAccess":{"enabled":true}
+       }
   })""");
   EXPECT_EQ(expected, patch);
 }
 
-TEST(PatchBucketRequestTest, DiffResetIamConfiguration) {
+TEST(PatchBucketRequestTest, DiffSetIamConfiguration_UBLA) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  original.reset_encryption();
+  BucketMetadata updated = original;
+  BucketIamConfiguration configuration;
+  configuration.uniform_bucket_level_access =
+      UniformBucketLevelAccess{true, {}};
+  updated.set_iam_configuration(std::move(configuration));
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({
+      "iamConfiguration": {
+          "bucketPolicyOnly": {"enabled": true},
+          "uniformBucketLevelAccess":{"enabled":true}
+       }
+  })""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetIamConfiguration_BPO) {
   BucketMetadata original = CreateBucketMetadataForTest();
   BucketIamConfiguration configuration;
   configuration.bucket_policy_only = BucketPolicyOnly{true, {}};
+  original.set_iam_configuration(std::move(configuration));
+  BucketMetadata updated = original;
+  updated.reset_iam_configuration();
+  PatchBucketRequest request("test-bucket", original, updated);
+
+  nl::json patch = nl::json::parse(request.payload());
+  nl::json expected = nl::json::parse(R"""({"iamConfiguration": null})""");
+  EXPECT_EQ(expected, patch);
+}
+
+TEST(PatchBucketRequestTest, DiffResetIamConfiguration_UBLA) {
+  BucketMetadata original = CreateBucketMetadataForTest();
+  BucketIamConfiguration configuration;
+  configuration.uniform_bucket_level_access =
+      UniformBucketLevelAccess{true, {}};
   original.set_iam_configuration(std::move(configuration));
   BucketMetadata updated = original;
   updated.reset_iam_configuration();

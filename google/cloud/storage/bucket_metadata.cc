@@ -58,7 +58,14 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs) {
 
 std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs) {
   os << "BucketIamConfiguration={";
+  if (rhs.uniform_bucket_level_access.has_value()) {
+    os << "uniform_bucket_level_access=" << *rhs.uniform_bucket_level_access
+       << ", ";
+    os << "bucket_policy_only=" << *rhs.uniform_bucket_level_access;
+    return os << "}";
+  };
   if (rhs.bucket_policy_only.has_value()) {
+    os << "uniform_bucket_level_access=" << *rhs.bucket_policy_only << ", ";
     os << "bucket_policy_only=" << *rhs.bucket_policy_only;
   }
   return os << "}";
@@ -332,11 +339,34 @@ BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::ResetEncryption() {
 BucketMetadataPatchBuilder& BucketMetadataPatchBuilder::SetIamConfiguration(
     BucketIamConfiguration const& v) {
   internal::PatchBuilder iam_configuration;
-  if (v.bucket_policy_only.has_value()) {
+
+  if (v.uniform_bucket_level_access.has_value()) {
+    internal::PatchBuilder uniform_bucket_level_access;
     internal::PatchBuilder bucket_policy_only;
+    uniform_bucket_level_access.SetBoolField(
+        "enabled", v.uniform_bucket_level_access->enabled);
+    bucket_policy_only.SetBoolField("enabled",
+                                    v.uniform_bucket_level_access->enabled);
+    // The lockedTime field should not be set, this is not a mutable field, it
+    // is set by the server when the policy is enabled.
+    iam_configuration.AddSubPatch("uniformBucketLevelAccess",
+                                  uniform_bucket_level_access);
+    iam_configuration.AddSubPatch("bucketPolicyOnly",
+                                  uniform_bucket_level_access);
+    impl_.AddSubPatch("iamConfiguration", iam_configuration);
+    return *this;
+  }
+
+  if (v.bucket_policy_only.has_value()) {
+    internal::PatchBuilder uniform_bucket_level_access;
+    internal::PatchBuilder bucket_policy_only;
+    uniform_bucket_level_access.SetBoolField("enabled",
+                                             v.bucket_policy_only->enabled);
     bucket_policy_only.SetBoolField("enabled", v.bucket_policy_only->enabled);
     // The lockedTime field should not be set, this is not a mutable field, it
     // is set by the server when the policy is enabled.
+    iam_configuration.AddSubPatch("uniformBucketLevelAccess",
+                                  bucket_policy_only);
     iam_configuration.AddSubPatch("bucketPolicyOnly", bucket_policy_only);
   }
   impl_.AddSubPatch("iamConfiguration", iam_configuration);
