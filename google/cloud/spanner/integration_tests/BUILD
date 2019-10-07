@@ -17,6 +17,7 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests")
+load(":spanner_client_install_tests.bzl", "spanner_client_install_tests")
 
 [cc_test(
     name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
@@ -32,3 +33,14 @@ load(":spanner_client_integration_tests.bzl", "spanner_client_integration_tests"
         "@com_google_googletest//:gtest",
     ],
 ) for test in spanner_client_integration_tests]
+
+[cc_test(
+    name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    tags = ["integration-tests"],
+    deps = [
+        "//google/cloud/spanner:spanner_client",
+        "//google/cloud/spanner:spanner_client_testing",
+        "@com_github_googleapis_google_cloud_cpp//google/cloud:google_cloud_cpp_common",
+    ],
+) for test in spanner_client_install_tests]

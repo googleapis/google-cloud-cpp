@@ -16,6 +16,7 @@
 
 include(EnableClangTidy)
 include(EnableWerror)
+include(GoogleCloudCppSpannerFunctions)
 
 if (MSVC)
     # MSVC warns about using localtime(), this is a valuable warning, so we do
@@ -42,25 +43,21 @@ function (spanner_client_define_integration_tests)
         client_stress_test.cc
         instance_admin_integration_test.cc
         rpc_failure_threshold_integration_test.cc)
+    set(spanner_client_install_tests spanner_install_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
     export_list_to_bazel("spanner_client_integration_tests.bzl"
                          "spanner_client_integration_tests")
+    export_list_to_bazel("spanner_client_install_tests.bzl"
+                         "spanner_client_install_tests")
 
     # Create a custom target so we can say "build all the tests"
     add_custom_target(spanner-client-integration-tests)
 
     # Generate a target for each unit test.
     foreach (fname ${spanner_client_integration_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
         target_link_libraries(${target}
                               PRIVATE googleapis-c++::spanner_client
@@ -81,6 +78,21 @@ function (spanner_client_define_integration_tests)
         add_test(NAME ${target} COMMAND ${target})
         set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
         add_dependencies(spanner-client-integration-tests ${target})
+    endforeach ()
+
+    if (NOT GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
+        return()
+    endif ()
+
+    foreach (fname ${spanner_client_install_tests})
+        google_cloud_cpp_test_name_to_target(target "${fname}")
+        add_executable(${target} ${fname})
+        target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client)
+        google_cloud_cpp_add_clang_tidy(${target})
+        google_cloud_cpp_add_common_options(${target})
+
+        add_test(NAME ${target} COMMAND ${target})
+        set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     endforeach ()
 endfunction ()
 

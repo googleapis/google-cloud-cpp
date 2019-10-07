@@ -16,18 +16,7 @@
 
 include(EnableClangTidy)
 include(EnableWerror)
-
-function (google_cloud_cpp_test_name_to_target var fname)
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
-    set("${var}" "${target}" PARENT_SCOPE)
-endfunction ()
+include(GoogleCloudCppSpannerFunctions)
 
 function (spanner_client_define_samples)
     set(spanner_client_integration_samples samples.cc)
