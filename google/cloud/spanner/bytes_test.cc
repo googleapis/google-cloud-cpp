@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/base64.h"
+#include "google/cloud/spanner/bytes.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <cstdint>
+#include <deque>
 #include <limits>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -27,7 +30,7 @@ namespace {
 
 using ::testing::HasSubstr;
 
-TEST(Base64, RoundTrip) {
+TEST(Bytes, RoundTrip) {
   char c = std::numeric_limits<char>::min();
   std::string chars(1, c);
   while (c != std::numeric_limits<char>::max()) {
@@ -35,65 +38,49 @@ TEST(Base64, RoundTrip) {
   }
 
   // Empty string.
-  std::string bytes;
-  auto const encoded = internal::Base64Encode(bytes);
-  EXPECT_EQ(0, encoded.size());
-  auto const decoded = internal::Base64Decode(encoded);
-  EXPECT_STATUS_OK(decoded) << encoded;
-  if (decoded) {
-    EXPECT_EQ(bytes, *decoded);
-  }
+  std::string data;
+  Bytes bytes(data);
+  EXPECT_EQ("", internal::BytesToBase64(bytes));
+  EXPECT_EQ(data, bytes.get<std::string>());
 
   // All 1-char strings.
-  bytes.resize(1);
+  data.resize(1);
   for (auto c : chars) {
-    bytes[0] = c;
-    auto const encoded = internal::Base64Encode(bytes);
-    EXPECT_EQ(4, encoded.size()) << bytes;
-    auto const decoded = internal::Base64Decode(encoded);
-    EXPECT_STATUS_OK(decoded) << encoded;
-    if (decoded) {
-      EXPECT_EQ(bytes, *decoded) << encoded;
-    }
+    data[0] = c;
+    Bytes bytes(data);
+    EXPECT_EQ(4, internal::BytesToBase64(bytes).size());
+    EXPECT_EQ(data, bytes.get<std::string>());
   }
 
   // All 2-char strings.
-  bytes.resize(2);
+  data.resize(2);
   for (auto c0 : chars) {
-    bytes[0] = c0;
+    data[0] = c0;
     for (auto c1 : chars) {
-      bytes[1] = c1;
-      auto const encoded = internal::Base64Encode(bytes);
-      EXPECT_EQ(4, encoded.size()) << bytes;
-      auto const decoded = internal::Base64Decode(encoded);
-      EXPECT_STATUS_OK(decoded) << encoded;
-      if (decoded) {
-        EXPECT_EQ(bytes, *decoded) << encoded;
-      }
+      data[1] = c1;
+      Bytes bytes(data);
+      EXPECT_EQ(4, internal::BytesToBase64(bytes).size());
+      EXPECT_EQ(data, bytes.get<std::string>());
     }
   }
 
   // Some 3-char strings.
-  bytes.resize(3);
+  data.resize(3);
   for (auto c0 : {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'}) {
-    bytes[0] = c0;
+    data[0] = c0;
     for (auto c1 : chars) {
-      bytes[1] = c1;
+      data[1] = c1;
       for (auto c2 : chars) {
-        bytes[2] = c2;
-        auto const encoded = internal::Base64Encode(bytes);
-        EXPECT_EQ(4, encoded.size()) << bytes;
-        auto const decoded = internal::Base64Decode(encoded);
-        EXPECT_STATUS_OK(decoded) << encoded;
-        if (decoded) {
-          EXPECT_EQ(bytes, *decoded) << encoded;
-        }
+        data[2] = c2;
+        Bytes bytes(data);
+        EXPECT_EQ(4, internal::BytesToBase64(bytes).size());
+        EXPECT_EQ(data, bytes.get<std::string>());
       }
     }
   }
 }
 
-TEST(Base64, LongerRoundTrip) {
+TEST(Bytes, LongerRoundTrip) {
   std::vector<std::pair<std::string, std::string>> test_cases = {
       {"abcd", "YWJjZA=="},
       {"abcde", "YWJjZGU="},
@@ -120,16 +107,17 @@ TEST(Base64, LongerRoundTrip) {
       {"abcdefghijklmnopqrstuvwxyz", "YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXo="},
   };
   for (auto const& test_case : test_cases) {
-    EXPECT_EQ(test_case.second, internal::Base64Encode(test_case.first));
-    auto const decoded = internal::Base64Decode(test_case.second);
-    EXPECT_STATUS_OK(decoded) << test_case.second;
-    if (decoded) {
-      EXPECT_EQ(test_case.first, *decoded);
-    }
+    Bytes bytes(test_case.first);
+    EXPECT_EQ(test_case.second, internal::BytesToBase64(bytes));
+    EXPECT_EQ(test_case.first, bytes.get<std::string>());
+    auto decoded = internal::BytesFromBase64(test_case.second);
+    EXPECT_STATUS_OK(decoded) << test_case.first;
+    EXPECT_EQ(test_case.first, decoded->get<std::string>());
+    EXPECT_EQ(bytes, *decoded);
   }
 }
 
-TEST(Base64, RFC4648TestVectors) {
+TEST(Bytes, RFC4648TestVectors) {
   // https://tools.ietf.org/html/rfc4648#section-10
   std::vector<std::pair<std::string, std::string>> test_cases = {
       {"", ""},
@@ -141,16 +129,17 @@ TEST(Base64, RFC4648TestVectors) {
       {"foobar", "Zm9vYmFy"},
   };
   for (auto const& test_case : test_cases) {
-    EXPECT_EQ(test_case.second, internal::Base64Encode(test_case.first));
-    auto const decoded = internal::Base64Decode(test_case.second);
-    EXPECT_STATUS_OK(decoded) << test_case.second;
-    if (decoded) {
-      EXPECT_EQ(test_case.first, *decoded);
-    }
+    Bytes bytes(test_case.first);
+    EXPECT_EQ(test_case.second, internal::BytesToBase64(bytes));
+    EXPECT_EQ(test_case.first, bytes.get<std::string>());
+    auto decoded = internal::BytesFromBase64(test_case.second);
+    EXPECT_STATUS_OK(decoded) << test_case.first;
+    EXPECT_EQ(test_case.first, decoded->get<std::string>());
+    EXPECT_EQ(bytes, *decoded);
   }
 }
 
-TEST(Base64, WikiExample) {
+TEST(Bytes, WikiExample) {
   // https://en.wikipedia.org/wiki/Base64#Examples
   std::string const plain =
       "Man is distinguished, not only by his reason, but by this singular "
@@ -164,18 +153,19 @@ TEST(Base64, WikiExample) {
       "aGUgY29udGludWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdl"
       "LCBleGNlZWRzIHRoZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4"
       "=";
-  EXPECT_EQ(coded, internal::Base64Encode(plain));
-  auto const decoded = internal::Base64Decode(coded);
+  Bytes bytes(plain);
+  EXPECT_EQ(coded, internal::BytesToBase64(bytes));
+  EXPECT_EQ(plain, bytes.get<std::string>());
+  auto decoded = internal::BytesFromBase64(coded);
   EXPECT_STATUS_OK(decoded) << coded;
-  if (decoded) {
-    EXPECT_EQ(plain, *decoded);
-  }
+  EXPECT_EQ(plain, decoded->get<std::string>());
+  EXPECT_EQ(bytes, *decoded);
 }
 
-TEST(Base64, DecodeFailures) {
+TEST(Bytes, FromBase64Failures) {
   // Bad lengths.
   for (std::string const base64 : {"x", "xx", "xxx"}) {
-    auto decoded = internal::Base64Decode(base64);
+    auto decoded = internal::BytesFromBase64(base64);
     EXPECT_FALSE(decoded.ok());
     if (!decoded) {
       EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
@@ -183,7 +173,7 @@ TEST(Base64, DecodeFailures) {
     }
   }
   for (std::string const base64 : {"xxxxx", "xxxxxx", "xxxxxxx"}) {
-    auto decoded = internal::Base64Decode(base64);
+    auto decoded = internal::BytesFromBase64(base64);
     EXPECT_FALSE(decoded.ok());
     if (!decoded) {
       EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
@@ -193,7 +183,7 @@ TEST(Base64, DecodeFailures) {
 
   // Chars outside base64 alphabet.
   for (std::string const base64 : {".xxx", "x.xx", "xx.x", "xxx.", "xx.="}) {
-    auto decoded = internal::Base64Decode(base64);
+    auto decoded = internal::BytesFromBase64(base64);
     EXPECT_FALSE(decoded.ok());
     if (!decoded) {
       EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
@@ -203,13 +193,63 @@ TEST(Base64, DecodeFailures) {
 
   // Non-zero padding bits.
   for (std::string const base64 : {"xx==", "xxx="}) {
-    auto decoded = internal::Base64Decode(base64);
+    auto decoded = internal::BytesFromBase64(base64);
     EXPECT_FALSE(decoded.ok());
     if (!decoded) {
       EXPECT_THAT(decoded.status().message(), HasSubstr("Invalid base64"));
       EXPECT_THAT(decoded.status().message(), HasSubstr("at offset 0"));
     }
   }
+}
+
+TEST(Bytes, Conversions) {
+  std::string const s_coded = "Zm9vYmFy";
+  std::string const s_plain = "foobar";
+  std::deque<char> const d_plain(s_plain.begin(), s_plain.end());
+  std::vector<std::uint8_t> const v_plain(s_plain.begin(), s_plain.end());
+
+  auto bytes = internal::BytesFromBase64(s_coded);
+  EXPECT_STATUS_OK(bytes) << s_coded;
+  EXPECT_EQ(s_coded, internal::BytesToBase64(*bytes));
+  EXPECT_EQ(s_plain, bytes->get<std::string>());
+  EXPECT_EQ(d_plain, bytes->get<std::deque<char>>());
+  EXPECT_EQ(v_plain, bytes->get<std::vector<std::uint8_t>>());
+
+  bytes = Bytes(s_plain);
+  EXPECT_EQ(s_coded, internal::BytesToBase64(*bytes));
+  EXPECT_EQ(s_plain, bytes->get<std::string>());
+  EXPECT_EQ(d_plain, bytes->get<std::deque<char>>());
+  EXPECT_EQ(v_plain, bytes->get<std::vector<std::uint8_t>>());
+
+  bytes = Bytes(d_plain);
+  EXPECT_EQ(s_coded, internal::BytesToBase64(*bytes));
+  EXPECT_EQ(s_plain, bytes->get<std::string>());
+  EXPECT_EQ(d_plain, bytes->get<std::deque<char>>());
+  EXPECT_EQ(v_plain, bytes->get<std::vector<std::uint8_t>>());
+
+  bytes = Bytes(v_plain);
+  EXPECT_EQ(s_coded, internal::BytesToBase64(*bytes));
+  EXPECT_EQ(s_plain, bytes->get<std::string>());
+  EXPECT_EQ(d_plain, bytes->get<std::deque<char>>());
+  EXPECT_EQ(v_plain, bytes->get<std::vector<std::uint8_t>>());
+}
+
+TEST(Bytes, RelationalOperators) {
+  std::string const s_plain = "The quick brown fox jumps over the lazy dog.";
+  std::deque<char> const d_plain(s_plain.begin(), s_plain.end());
+  std::vector<std::uint8_t> const v_plain(s_plain.begin(), s_plain.end());
+
+  auto s_bytes = Bytes(s_plain.begin(), s_plain.end());
+  auto d_bytes = Bytes(d_plain.begin(), d_plain.end());
+  auto v_bytes = Bytes(v_plain.begin(), v_plain.end());
+  EXPECT_EQ(s_bytes, d_bytes);
+  EXPECT_EQ(d_bytes, v_bytes);
+  EXPECT_EQ(v_bytes, s_bytes);
+
+  auto x_bytes = Bytes(s_plain + " How vexingly quick daft zebras jump!");
+  EXPECT_NE(x_bytes, s_bytes);
+  EXPECT_NE(x_bytes, d_bytes);
+  EXPECT_NE(x_bytes, v_bytes);
 }
 
 }  // namespace

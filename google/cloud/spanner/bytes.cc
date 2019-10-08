@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/base64.h"
+#include "google/cloud/spanner/bytes.h"
+#include "google/cloud/status.h"
 #include <array>
 #include <climits>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
-namespace internal {
+
 namespace {
 
 constexpr char kPadding = '=';
@@ -51,48 +51,71 @@ constexpr std::array<unsigned char, UCHAR_MAX + 1> kCharToIndexExcessOne = {{
 // UCHAR_MAX is required to be at least 255, meaning std::string::value_type
 // can always hold an octet. If UCHAR_MAX > 255, however, we have no way to
 // base64 encode large values. So, we demand exactly 255.
-static_assert(UCHAR_MAX == 255, "required by Base64Encode()");
+static_assert(UCHAR_MAX == 255, "required by base64 encoder");
 
 }  // namespace
 
-std::string Base64Encode(std::string const& bytes) {
-  std::string encoded;
-  auto* p = reinterpret_cast<unsigned char const*>(bytes.data());
-  auto* const ep = p + bytes.size();
-  encoded.reserve((ep - p + 2) / 3 * 4);  // 3 octets to 4 sextets
-  while (ep - p >= 3) {
-    unsigned int const v = p[0] << 16 | p[1] << 8 | p[2];
-    encoded.push_back(kIndexToChar[v >> 18]);
-    encoded.push_back(kIndexToChar[v >> 12 & 0x3f]);
-    encoded.push_back(kIndexToChar[v >> 6 & 0x3f]);
-    encoded.push_back(kIndexToChar[v & 0x3f]);
-    p += 3;
-  }
-  switch (ep - p) {
+void Bytes::Encoder::Flush() {
+  unsigned int const v = buf_[0] << 16 | buf_[1] << 8 | buf_[2];
+  rep_.push_back(kIndexToChar[v >> 18]);
+  rep_.push_back(kIndexToChar[v >> 12 & 0x3f]);
+  rep_.push_back(kIndexToChar[v >> 6 & 0x3f]);
+  rep_.push_back(kIndexToChar[v & 0x3f]);
+  len_ = 0;
+}
+
+void Bytes::Encoder::FlushAndPad() {
+  switch (len_) {
     case 2: {
-      unsigned int const v = p[0] << 16 | p[1] << 8;
-      encoded.push_back(kIndexToChar[v >> 18]);
-      encoded.push_back(kIndexToChar[v >> 12 & 0x3f]);
-      encoded.push_back(kIndexToChar[v >> 6 & 0x3f]);
-      encoded.push_back(kPadding);
+      unsigned int const v = buf_[0] << 16 | buf_[1] << 8;
+      rep_.push_back(kIndexToChar[v >> 18]);
+      rep_.push_back(kIndexToChar[v >> 12 & 0x3f]);
+      rep_.push_back(kIndexToChar[v >> 6 & 0x3f]);
+      rep_.push_back(kPadding);
       break;
     }
     case 1: {
-      unsigned int const v = p[0] << 16;
-      encoded.push_back(kIndexToChar[v >> 18]);
-      encoded.push_back(kIndexToChar[v >> 12 & 0x3f]);
-      encoded.append(2, kPadding);
+      unsigned int const v = buf_[0] << 16;
+      rep_.push_back(kIndexToChar[v >> 18]);
+      rep_.push_back(kIndexToChar[v >> 12 & 0x3f]);
+      rep_.append(2, kPadding);
       break;
     }
   }
-  return encoded;
 }
 
-StatusOr<std::string> Base64Decode(std::string const& base64) {
-  std::string decoded;
-  auto* p = reinterpret_cast<unsigned char const*>(base64.data());
-  auto* ep = p + base64.size();
-  decoded.reserve((ep - p + 3) / 4 * 3);  // 4 sextets to 3 octets
+void Bytes::Decoder::iterator::Fill() {
+  if (pos_ != end_) {
+    unsigned char p0 = *pos_++;
+    unsigned char p1 = *pos_++;
+    unsigned char p2 = *pos_++;
+    unsigned char p3 = *pos_++;
+    auto i0 = kCharToIndexExcessOne[p0] - 1;
+    auto i1 = kCharToIndexExcessOne[p1] - 1;
+    if (p3 == kPadding) {
+      if (p2 == kPadding) {
+        buf_[++len_] = i0 << 2 | i1 >> 4;
+      } else {
+        auto i2 = kCharToIndexExcessOne[p2] - 1;
+        buf_[++len_] = i1 << 4 | i2 >> 2;
+        buf_[++len_] = i0 << 2 | i1 >> 4;
+      }
+    } else {
+      auto i2 = kCharToIndexExcessOne[p2] - 1;
+      auto i3 = kCharToIndexExcessOne[p3] - 1;
+      buf_[++len_] = i2 << 6 | i3;
+      buf_[++len_] = i1 << 4 | i2 >> 2;
+      buf_[++len_] = i0 << 2 | i1 >> 4;
+    }
+  }
+}
+
+namespace internal {
+
+// Construction from a base64-encoded US-ASCII `std::string`.
+StatusOr<Bytes> BytesFromBase64(std::string input) {
+  auto* p = reinterpret_cast<unsigned char const*>(input.data());
+  auto* ep = p + input.size();
   while (ep - p >= 4) {
     auto i0 = kCharToIndexExcessOne[p[0]];
     auto i1 = kCharToIndexExcessOne[p[1]];
@@ -100,12 +123,9 @@ StatusOr<std::string> Base64Decode(std::string const& base64) {
     if (p[3] == kPadding) {
       if (p[2] == kPadding) {
         if ((i1 & 0xf) != 0) break;
-        decoded.push_back(i0 << 2 | i1 >> 4);
       } else {
         auto i2 = kCharToIndexExcessOne[p[2]];
         if (--i2 >= 64 || (i2 & 0x3) != 0) break;
-        decoded.push_back(i0 << 2 | i1 >> 4);
-        decoded.push_back(i1 << 4 | i2 >> 2);
       }
       p += 4;
       break;
@@ -113,20 +133,22 @@ StatusOr<std::string> Base64Decode(std::string const& base64) {
     auto i2 = kCharToIndexExcessOne[p[2]];
     auto i3 = kCharToIndexExcessOne[p[3]];
     if (--i2 >= 64 || --i3 >= 64) break;
-    decoded.push_back(i0 << 2 | i1 >> 4);
-    decoded.push_back(i1 << 4 | i2 >> 2);
-    decoded.push_back(i2 << 6 | i3);
     p += 4;
   }
   if (p != ep) {
-    auto const offset = reinterpret_cast<char const*>(p) - base64.data();
-    auto const bad_chunk = base64.substr(offset, 4);
+    auto const offset = reinterpret_cast<char const*>(p) - input.data();
+    auto const bad_chunk = input.substr(offset, 4);
     auto message = "Invalid base64 chunk \"" + bad_chunk + "\"" +
                    " at offset " + std::to_string(offset);
     return Status(StatusCode::kInvalidArgument, std::move(message));
   }
-  return decoded;
+  Bytes bytes;
+  bytes.base64_rep_ = std::move(input);
+  return bytes;
 }
+
+// Conversion to a base64-encoded US-ASCII `std::string`.
+std::string BytesToBase64(Bytes const& b) { return b.base64_rep_; }
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

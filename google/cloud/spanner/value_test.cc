@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/spanner/internal/base64.h"
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/optional.h"
@@ -112,13 +111,12 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
-  for (auto const& x : std::vector<Value::Bytes>{
-           Value::Bytes{""}, Value::Bytes{"f"}, Value::Bytes{"foo"},
-           Value::Bytes{"12345678901234567"}}) {
-    SCOPED_TRACE("Testing: Value::Bytes " + std::string(x.data));
+  for (auto const& x : std::vector<Bytes>{Bytes(""), Bytes("f"), Bytes("foo"),
+                                          Bytes("12345678901234567")}) {
+    SCOPED_TRACE("Testing: Bytes " + x.get<std::string>());
     TestBasicSemantics(x);
-    TestBasicSemantics(std::vector<Value::Bytes>(5, x));
-    std::vector<optional<Value::Bytes>> v(5, x);
+    TestBasicSemantics(std::vector<Bytes>(5, x));
+    std::vector<optional<Bytes>> v(5, x);
     v.resize(10);
     TestBasicSemantics(v);
   }
@@ -179,7 +177,7 @@ TEST(Value, DoubleNaN) {
 }
 
 TEST(Value, BytesDecodingError) {
-  Value const v(Value::Bytes("some data"));
+  Value const v(Bytes("some data"));
   auto p = internal::ToProto(v);
   EXPECT_EQ(v, internal::FromProto(p.first, p.second));
 
@@ -190,26 +188,17 @@ TEST(Value, BytesDecodingError) {
 
   // We know the type is Bytes, but we cannot get a value out of it because the
   // base64 decoding will fail.
-  StatusOr<Value::Bytes> bytes = bad.get<Value::Bytes>();
+  StatusOr<Bytes> bytes = bad.get<Bytes>();
   EXPECT_FALSE(bytes.ok());
   EXPECT_THAT(bytes.status().message(), testing::HasSubstr("Invalid base64"));
 }
 
 TEST(Value, BytesRelationalOperators) {
-  // Note that Value::Bytes inequalities treat the bytes as unsigned, so
-  // b1 is always less than b2, without respect to the signedness of char.
-  Value::Bytes b1(std::string(1, '\x00'));
-  Value::Bytes b2(std::string(1, '\xff'));
+  Bytes b1(std::string(1, '\x00'));
+  Bytes b2(std::string(1, '\xff'));
 
   EXPECT_EQ(b1, b1);
-  EXPECT_LE(b1, b1);
-  EXPECT_GE(b1, b1);
-
   EXPECT_NE(b1, b2);
-  EXPECT_LT(b1, b2);
-  EXPECT_LE(b1, b2);
-  EXPECT_GE(b2, b1);
-  EXPECT_GT(b2, b1);
 }
 
 TEST(Value, ConstructionFromLiterals) {
@@ -479,14 +468,13 @@ TEST(Value, ProtoConversionString) {
 }
 
 TEST(Value, ProtoConversionBytes) {
-  for (auto const& x : std::vector<Value::Bytes>{
-           Value::Bytes(""), Value::Bytes("f"), Value::Bytes("foo"),
-           Value::Bytes("12345678901234567890")}) {
+  for (auto const& x : std::vector<Bytes>{Bytes(""), Bytes("f"), Bytes("foo"),
+                                          Bytes("12345678901234567890")}) {
     Value const v(x);
     auto const p = internal::ToProto(v);
     EXPECT_EQ(v, internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::BYTES, p.first.code());
-    EXPECT_EQ(internal::Base64Encode(x.data), p.second.string_value());
+    EXPECT_EQ(internal::BytesToBase64(x), p.second.string_value());
   }
 }
 
@@ -639,18 +627,18 @@ TEST(Value, GetBadString) {
 }
 
 TEST(Value, GetBadBytes) {
-  Value v(Value::Bytes("hello"));
+  Value v(Bytes("hello"));
   ClearProtoKind(v);
-  EXPECT_FALSE(v.get<Value::Bytes>().ok());
+  EXPECT_FALSE(v.get<Bytes>().ok());
 
   SetProtoKind(v, google::protobuf::NULL_VALUE);
-  EXPECT_FALSE(v.get<Value::Bytes>().ok());
+  EXPECT_FALSE(v.get<Bytes>().ok());
 
   SetProtoKind(v, true);
-  EXPECT_FALSE(v.get<Value::Bytes>().ok());
+  EXPECT_FALSE(v.get<Bytes>().ok());
 
   SetProtoKind(v, 0.0);
-  EXPECT_FALSE(v.get<Value::Bytes>().ok());
+  EXPECT_FALSE(v.get<Bytes>().ok());
 }
 
 TEST(Value, GetBadInt) {

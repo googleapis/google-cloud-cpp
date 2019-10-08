@@ -97,6 +97,8 @@ add_library(spanner_client
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
             backoff_policy.h
             batch_dml_result.h
+            bytes.cc
+            bytes.h
             client.cc
             client.h
             commit_result.h
@@ -120,8 +122,6 @@ add_library(spanner_client
             instance_admin_connection.h
             internal/api_client_header.cc
             internal/api_client_header.h
-            internal/base64.cc
-            internal/base64.h
             internal/build_info.h
             internal/compiler_info.cc
             internal/compiler_info.h
@@ -299,7 +299,6 @@ function (spanner_client_define_tests)
         instance_admin_connection_test.cc
         instance_test.cc
         internal/api_client_header_test.cc
-        internal/base64_test.cc
         internal/build_info_test.cc
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc
@@ -321,6 +320,7 @@ function (spanner_client_define_tests)
         internal/time_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
+        bytes_test.cc
         keys_test.cc
         mutations_test.cc
         read_options_test.cc

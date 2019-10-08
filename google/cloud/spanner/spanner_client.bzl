@@ -19,6 +19,7 @@
 spanner_client_hdrs = [
     "backoff_policy.h",
     "batch_dml_result.h",
+    "bytes.h",
     "client.h",
     "commit_result.h",
     "connection.h",
@@ -32,7 +33,6 @@ spanner_client_hdrs = [
     "instance_admin_client.h",
     "instance_admin_connection.h",
     "internal/api_client_header.h",
-    "internal/base64.h",
     "internal/build_info.h",
     "internal/compiler_info.h",
     "internal/connection_impl.h",
@@ -81,6 +81,7 @@ spanner_client_hdrs = [
 ]
 
 spanner_client_srcs = [
+    "bytes.cc",
     "client.cc",
     "connection_options.cc",
     "database.cc",
@@ -91,7 +92,6 @@ spanner_client_srcs = [
     "instance_admin_client.cc",
     "instance_admin_connection.cc",
     "internal/api_client_header.cc",
-    "internal/base64.cc",
     "internal/compiler_info.cc",
     "internal/connection_impl.cc",
     "internal/database_admin_logging.cc",

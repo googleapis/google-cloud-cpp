@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/value.h"
-#include "google/cloud/spanner/internal/base64.h"
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/log.h"
@@ -142,7 +141,7 @@ google::spanner::v1::Type Value::MakeTypeProto(std::string const&) {
   return t;
 }
 
-google::spanner::v1::Type Value::MakeTypeProto(Value::Bytes const&) {
+google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::BYTES);
   return t;
@@ -202,9 +201,9 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
   return v;
 }
 
-google::protobuf::Value Value::MakeValueProto(Value::Bytes const& bytes) {
+google::protobuf::Value Value::MakeValueProto(Bytes const& bytes) {
   google::protobuf::Value v;
-  v.set_string_value(internal::Base64Encode(bytes.data));
+  v.set_string_value(internal::BytesToBase64(bytes));
   return v;
 }
 
@@ -288,15 +287,14 @@ StatusOr<std::string> Value::GetValue(std::string const&,
   return pv.string_value();
 }
 
-StatusOr<Value::Bytes> Value::GetValue(Value::Bytes const&,
-                                       google::protobuf::Value const& pv,
-                                       google::spanner::v1::Type const&) {
+StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
+                                google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
-    return Status(StatusCode::kUnknown, "missing BYTES data");
+    return Status(StatusCode::kUnknown, "missing BYTES");
   }
-  auto decoded = internal::Base64Decode(pv.string_value());
+  auto decoded = internal::BytesFromBase64(pv.string_value());
   if (!decoded) return decoded.status();
-  return Bytes{*std::move(decoded)};
+  return *decoded;
 }
 
 StatusOr<Timestamp> Value::GetValue(Timestamp,

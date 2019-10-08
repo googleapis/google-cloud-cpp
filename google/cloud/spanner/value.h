@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_VALUE_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_VALUE_H_
 
+#include "google/cloud/spanner/bytes.h"
 #include "google/cloud/spanner/date.h"
 #include "google/cloud/spanner/internal/tuple_utils.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -60,7 +61,7 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * INT64        | `std::int64_t`
  * FLOAT64      | `double`
  * STRING       | `std::string`
- * BYTES        | `Value::Bytes`
+ * BYTES        | `google::cloud::spanner::Bytes`
  * TIMESTAMP    | `google::cloud::spanner::Timestamp`
  * DATE         | `google::cloud::spanner::Date`
  * ARRAY        | `std::vector<T>`  // [1]
@@ -177,52 +178,11 @@ class Value {
   /// @copydoc Value(bool)
   explicit Value(std::string v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
+  explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
   explicit Value(Timestamp v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Date v) : Value(PrivateConstructor{}, std::move(v)) {}
-
-  /**
-   * A struct that represents a collection of bytes.
-   *
-   * This struct is a thin wrapper around a `std::string` to distinguish BYTES
-   * from STRINGs. The `.data` member can be set/get directly. Consructors and
-   * relational operators are provided for convenience and to make `Bytes` a
-   * regular type that is easy to work with.
-   *
-   * Note that the relational operators behave as if the `std::string` chars
-   * are unsigned, which is exactly how Spanner BYTES values compare.
-   */
-  struct Bytes {
-    std::string data;
-
-    /// Constructs a Bytes struct from the given string.
-    explicit Bytes(std::string s) : data(std::move(s)) {}
-
-    /// @name Copy and move
-    ///@{
-    Bytes() = default;
-    Bytes(Bytes const&) = default;
-    Bytes(Bytes&&) = default;
-    Bytes& operator=(Bytes const&) = default;
-    Bytes& operator=(Bytes&&) = default;
-    ///@}
-
-    /// @name Relational operators
-    ///@{
-    friend bool operator==(Bytes const& a, Bytes const& b) {
-      return a.data == b.data;
-    }
-    friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
-    friend bool operator<(Bytes const& a, Bytes const& b) {
-      return a.data < b.data;
-    }
-    friend bool operator<=(Bytes const& a, Bytes const& b) { return !(b < a); }
-    friend bool operator>=(Bytes const& a, Bytes const& b) { return !(a < b); }
-    friend bool operator>(Bytes const& a, Bytes const& b) { return b < a; }
-    ///@}
-  };
-  /// Constructs an instance with the specicified bytes.
-  explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
 
   /**
    * Constructs an instance from common C++ literal types that closely, though
