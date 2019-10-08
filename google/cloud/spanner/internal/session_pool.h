@@ -33,8 +33,9 @@ class SessionManager {
  public:
   virtual ~SessionManager() = default;
   // Create up to `num_sessions` sessions (note that fewer may be returned).
+  // `num_sessions` must be > 0 or an error is returned.
   virtual StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
-      size_t num_sessions) = 0;
+      int num_sessions) = 0;
 };
 
 /**

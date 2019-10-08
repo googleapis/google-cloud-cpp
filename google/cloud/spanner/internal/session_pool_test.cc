@@ -35,7 +35,7 @@ using ::testing::Return;
 class MockSessionManager : public SessionManager {
  public:
   MOCK_METHOD1(CreateSessions,
-               StatusOr<std::vector<std::unique_ptr<Session>>>(size_t));
+               StatusOr<std::vector<std::unique_ptr<Session>>>(int));
 };
 
 // Helper to build a vector of Sessions.

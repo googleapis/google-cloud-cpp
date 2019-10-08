@@ -145,7 +145,7 @@ class ConnectionImpl : public Connection,
 
   // `SessionManager` methods; used by the `SessionPool`
   StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
-      size_t num_sessions) override;
+      int num_sessions) override;
 
   Database db_;
   std::shared_ptr<SpannerStub> stub_;

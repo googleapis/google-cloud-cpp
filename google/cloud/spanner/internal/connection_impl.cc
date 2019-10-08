@@ -22,6 +22,7 @@
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/internal/make_unique.h"
 #include <google/spanner/v1/spanner.pb.h>
+#include <limits>
 #include <memory>
 
 namespace google {
@@ -675,25 +676,27 @@ StatusOr<SessionHolder> ConnectionImpl::AllocateSession(
 }
 
 StatusOr<std::vector<std::unique_ptr<Session>>> ConnectionImpl::CreateSessions(
-    size_t /*num_sessions*/) {
-  // TODO(#307) use BatchCreateSessions. For now, `num_sessions` is ignored.
-  spanner_proto::CreateSessionRequest request;
+    int num_sessions) {
+  spanner_proto::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
+  request.set_session_count(std::int32_t{num_sessions});
   auto response = RetryLoop(
       retry_policy_->clone(), backoff_policy_->clone(), true,
       [this](grpc::ClientContext& context,
-             spanner_proto::CreateSessionRequest const& request) {
-        return stub_->CreateSession(context, request);
+             spanner_proto::BatchCreateSessionsRequest const& request) {
+        return stub_->BatchCreateSessions(context, request);
       },
       request, __func__);
   if (!response) {
     return response.status();
   }
-  std::vector<std::unique_ptr<Session>> ret;
-  ret.reserve(1);
-  ret.push_back(google::cloud::internal::make_unique<Session>(
-      std::move(*response->mutable_name())));
-  return {std::move(ret)};
+  std::vector<std::unique_ptr<Session>> sessions;
+  sessions.reserve(response->session_size());
+  for (auto& session : *response->mutable_session()) {
+    sessions.push_back(google::cloud::internal::make_unique<Session>(
+        std::move(*session.mutable_name())));
+  }
+  return {std::move(sessions)};
 }
 
 }  // namespace internal
