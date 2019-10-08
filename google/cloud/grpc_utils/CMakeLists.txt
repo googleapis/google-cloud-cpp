@@ -107,10 +107,9 @@ create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
 google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
 
 if (BUILD_TESTING)
-    # TODO: add google_cloud_cpp_grpc_utils_testing if necessary.
-
     # List the unit tests, then setup the targets and dependencies.
-    set(google_cloud_cpp_grpc_utils_unit_tests grpc_error_delegate_test.cc)
+    set(google_cloud_cpp_grpc_utils_unit_tests completion_queue_test.cc
+                                               grpc_error_delegate_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
