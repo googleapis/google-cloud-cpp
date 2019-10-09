@@ -83,6 +83,7 @@ fi
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
+    "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" \
     "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
     ${CMAKE_FLAGS:-} \
     "-H${SOURCE_DIR}" \
