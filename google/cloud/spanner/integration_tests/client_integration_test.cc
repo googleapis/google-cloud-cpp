@@ -250,10 +250,10 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
   // Insert SingerIds 100, 102, and 199.
   auto inserter = [](Client const&, Transaction const&) {
     auto isb =
-        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"});
-    isb.AddRow(MakeRow(100, "first-name-100", "last-name-100"));
-    isb.AddRow(MakeRow(102, "first-name-102", "last-name-102"));
-    isb.AddRow(MakeRow(199, "first-name-199", "last-name-199"));
+        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+            .EmplaceRow(100, "first-name-100", "last-name-100")
+            .EmplaceRow(102, "first-name-102", "last-name-102")
+            .EmplaceRow(199, "first-name-199", "last-name-199");
     return Mutations{isb.Build()};
   };
   auto insert_result = RunTransaction(*client_, {}, inserter);
@@ -373,8 +373,8 @@ void CheckReadWithOptions(
     Client client,
     std::function<Transaction::SingleUseOptions(CommitResult const&)> const&
         options_generator) {
-  using RowType = Row<std::int64_t, std::string, std::string>;
-  std::vector<RowType> expected_rows;
+  using RowValues = std::vector<Value>;
+  std::vector<RowValues> expected_rows;
   auto commit = RunTransaction(
       client, Transaction::ReadWriteOptions{},
       [&expected_rows](Client const&,
@@ -384,7 +384,8 @@ void CheckReadWithOptions(
                                      {"SingerId", "FirstName", "LastName"});
         for (int i = 1; i != 10; ++i) {
           auto s = std::to_string(i);
-          auto row = MakeRow(i, "test-fname-" + s, "test-lname-" + s);
+          auto row = RowValues{Value(i), Value("test-fname-" + s),
+                               Value("test-lname-" + s)};
           insert.AddRow(row);
           expected_rows.push_back(row);
         }
@@ -397,14 +398,16 @@ void CheckReadWithOptions(
                   {"SingerId", "FirstName", "LastName"});
   ASSERT_STATUS_OK(reader);
 
-  std::vector<RowType> actual_rows;
+  std::vector<RowValues> actual_rows;
   if (reader) {
     int row_number = 0;
-    for (auto& row : reader->Rows<RowType>()) {
+    for (auto& row :
+         reader->Rows<Row<std::int64_t, std::string, std::string>>()) {
       SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
       if (!row) break;
-      actual_rows.push_back(*std::move(row));
+      auto array = std::move(row)->values();
+      actual_rows.emplace_back(array.begin(), array.end());
     }
   }
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
@@ -454,8 +457,8 @@ void CheckExecuteQueryWithSingleUseOptions(
     Client client,
     std::function<Transaction::SingleUseOptions(CommitResult const&)> const&
         options_generator) {
-  using RowType = Row<std::int64_t, std::string, std::string>;
-  std::vector<RowType> expected_rows;
+  using RowValues = std::vector<Value>;
+  std::vector<RowValues> expected_rows;
   auto commit = RunTransaction(
       client, Transaction::ReadWriteOptions{},
       [&expected_rows](Client const&,
@@ -464,7 +467,8 @@ void CheckExecuteQueryWithSingleUseOptions(
                                      {"SingerId", "FirstName", "LastName"});
         for (int i = 1; i != 10; ++i) {
           auto s = std::to_string(i);
-          auto row = MakeRow(i, "test-fname-" + s, "test-lname-" + s);
+          auto row = RowValues{Value(i), Value("test-fname-" + s),
+                               Value("test-lname-" + s)};
           insert.AddRow(row);
           expected_rows.push_back(row);
         }
@@ -476,13 +480,14 @@ void CheckExecuteQueryWithSingleUseOptions(
       options_generator(*commit),
       SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers"));
 
-  std::vector<RowType> actual_rows;
+  std::vector<RowValues> actual_rows;
   int row_number = 0;
-  for (auto& row : reader.Rows<RowType>()) {
+  for (auto& row : reader.Rows<Row<std::int64_t, std::string, std::string>>()) {
     SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
     EXPECT_STATUS_OK(row);
     if (!row) break;
-    actual_rows.push_back(*std::move(row));
+    auto array = std::move(row)->values();
+    actual_rows.emplace_back(array.begin(), array.end());
   }
 
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
@@ -531,9 +536,9 @@ TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Duration) {
   });
 }
 
-StatusOr<std::vector<Row<std::int64_t, std::string, std::string>>>
-AddSingerDataToTable(Client const& client) {
-  std::vector<Row<std::int64_t, std::string, std::string>> expected_rows;
+StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(
+    Client const& client) {
+  std::vector<std::vector<Value>> expected_rows;
   auto commit = RunTransaction(
       client, Transaction::ReadWriteOptions{},
       [&expected_rows](Client const&,
@@ -543,7 +548,8 @@ AddSingerDataToTable(Client const& client) {
                                      {"SingerId", "FirstName", "LastName"});
         for (int i = 1; i != 10; ++i) {
           auto s = std::to_string(i);
-          auto row = MakeRow(i, "test-fname-" + s, "test-lname-" + s);
+          auto row = std::vector<Value>{Value(i), Value("test-fname-" + s),
+                                        Value("test-lname-" + s)};
           insert.AddRow(row);
           expected_rows.push_back(row);
         }
@@ -572,21 +578,22 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
     serialized_partitions.push_back(*serialized_partition);
   }
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
-  std::vector<RowType> actual_rows;
+  std::vector<std::vector<Value>> actual_rows;
   int partition_number = 0;
   for (auto& partition : serialized_partitions) {
     int row_number = 0;
     auto deserialized_partition = DeserializeReadPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
-    auto partition_result_set = client_->Read(*deserialized_partition);
-    ASSERT_STATUS_OK(partition_result_set);
-    for (auto& row : partition_result_set->Rows<RowType>()) {
+    auto result_set = client_->Read(*deserialized_partition);
+    ASSERT_STATUS_OK(result_set);
+    for (auto& row :
+         result_set->Rows<Row<std::int64_t, std::string, std::string>>()) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
       if (!row) break;
-      actual_rows.push_back(*std::move(row));
+      auto array = std::move(row)->values();
+      actual_rows.emplace_back(array.begin(), array.end());
     }
   }
 
@@ -610,20 +617,21 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
     serialized_partitions.push_back(*serialized_partition);
   }
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
-  std::vector<RowType> actual_rows;
+  std::vector<std::vector<Value>> actual_rows;
   int partition_number = 0;
   for (auto& partition : serialized_partitions) {
     int row_number = 0;
     auto deserialized_partition = DeserializeQueryPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
-    auto partition_result_set = client_->ExecuteQuery(*deserialized_partition);
-    for (auto& row : partition_result_set.Rows<RowType>()) {
+    auto result_set = client_->ExecuteQuery(*deserialized_partition);
+    for (auto& row :
+         result_set.Rows<Row<std::int64_t, std::string, std::string>>()) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
       if (!row) break;
-      actual_rows.push_back(*std::move(row));
+      auto array = std::move(row)->values();
+      actual_rows.emplace_back(array.begin(), array.end());
     }
   }
 

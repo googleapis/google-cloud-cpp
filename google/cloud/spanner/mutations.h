@@ -113,10 +113,9 @@ class WriteMutationBuilder {
   Mutation Build() const& { return Mutation(m_); }
   Mutation Build() && { return Mutation(std::move(m_)); }
 
-  template <typename... Ts>
-  WriteMutationBuilder& AddRow(Row<Ts...> row) {
+  WriteMutationBuilder& AddRow(std::vector<Value> values) {
     auto& lv = *Op::mutable_field(m_).add_values();
-    for (auto& v : std::move(row).values()) {
+    for (auto& v : values) {
       std::tie(std::ignore, *lv.add_values()) = internal::ToProto(std::move(v));
     }
     return *this;
@@ -124,7 +123,7 @@ class WriteMutationBuilder {
 
   template <typename... Ts>
   WriteMutationBuilder& EmplaceRow(Ts&&... values) {
-    return AddRow(MakeRow(std::forward<Ts>(values)...));
+    return AddRow({Value(std::forward<Ts>(values))...});
   }
 
  private:
