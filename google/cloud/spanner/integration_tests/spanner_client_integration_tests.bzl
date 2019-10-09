@@ -22,4 +22,5 @@ spanner_client_integration_tests = [
     "client_stress_test.cc",
     "instance_admin_integration_test.cc",
     "rpc_failure_threshold_integration_test.cc",
+    "throughput_benchmark.cc",
 ]
