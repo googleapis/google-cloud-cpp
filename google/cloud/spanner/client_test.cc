@@ -96,8 +96,6 @@ TEST(ClientTest, ReadSuccess) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, Stats())
-      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(optional<Value>("Steve")))
       .WillOnce(Return(optional<Value>(12)))
@@ -105,12 +103,11 @@ TEST(ClientTest, ReadSuccess) {
       .WillOnce(Return(optional<Value>(42)))
       .WillOnce(Return(optional<Value>()));
 
-  ResultSet result_set(std::move(source));
+  ReadResult result_set(std::move(source));
   EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
 
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1", "column2"});
-  EXPECT_STATUS_OK(result);
 
   using RowType = Row<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
@@ -118,7 +115,7 @@ TEST(ClientTest, ReadSuccess) {
       RowType("Ann", 42),
   };
   int row_number = 0;
-  for (auto& row : result->Rows<RowType>()) {
+  for (auto& row : result.Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -143,21 +140,18 @@ TEST(ClientTest, ReadFailure) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, Stats())
-      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(optional<Value>("Steve")))
       .WillOnce(Return(optional<Value>("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  ResultSet result_set(std::move(source));
+  ReadResult result_set(std::move(source));
   EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
 
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1"});
-  EXPECT_STATUS_OK(result);
 
-  auto rows = result->Rows<Row<std::string>>();
+  auto rows = result.Rows<Row<std::string>>();
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
@@ -194,8 +188,6 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, Stats())
-      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(optional<Value>("Steve")))
       .WillOnce(Return(optional<Value>(12)))
@@ -241,8 +233,6 @@ TEST(ClientTest, ExecuteQueryFailure) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, Stats())
-      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(optional<Value>("Steve")))
       .WillOnce(Return(optional<Value>("Ann")))
@@ -329,8 +319,6 @@ TEST(ClientTest, ExecutePartitionedDml_Success) {
   auto source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata metadata;
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, Stats())
-      .WillRepeatedly(Return(optional<spanner_proto::ResultSetStats>()));
   EXPECT_CALL(*source, NextValue()).WillRepeatedly(Return(optional<Value>()));
 
   std::string const sql_statement = "UPDATE Singers SET MarketingBudget = 1000";
@@ -418,9 +406,28 @@ TEST(ClientTest, RunTransactionCommit) {
   Transaction txn = MakeReadWriteTransaction();  // dummy
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}};
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: STRING }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(optional<Value>("Bob")))
+      .WillOnce(Return(optional<Value>()));
+  ReadResult result_set(std::move(source));
+
   EXPECT_CALL(*conn, Read(_))
-      .WillOnce(
-          DoAll(SaveArg<0>(&actual_read_params), Return(ByMove(ResultSet{}))));
+      .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
+                      Return(ByMove(std::move(result_set)))));
   EXPECT_CALL(*conn, Commit(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_commit_params),
                       Return(CommitResult{*timestamp})));
@@ -428,7 +435,9 @@ TEST(ClientTest, RunTransactionCommit) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) return read.status();
+    for (auto& row : read.Rows<Row<std::string>>()) {
+      if (!row) return row.status();
+    }
     return Mutations{mutation};
   };
 
@@ -447,16 +456,35 @@ TEST(ClientTest, RunTransactionRollback) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // dummy
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
+  ReadResult result_set(std::move(source));
+
   EXPECT_CALL(*conn, Read(_))
-      .WillOnce(
-          DoAll(SaveArg<0>(&actual_read_params),
-                Return(ByMove(Status(StatusCode::kInvalidArgument, "blah")))));
+      .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
+                      Return(ByMove(std::move(result_set)))));
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) return read.status();
+    for (auto& row : read.Rows<Row<std::string>>()) {
+      if (!row) return row.status();
+    }
     return Mutations{mutation};
   };
 
@@ -475,17 +503,36 @@ TEST(ClientTest, RunTransactionRollbackError) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // dummy
   Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
+  ReadResult result_set(std::move(source));
+
   EXPECT_CALL(*conn, Read(_))
-      .WillOnce(
-          DoAll(SaveArg<0>(&actual_read_params),
-                Return(ByMove(Status(StatusCode::kInvalidArgument, "blah")))));
+      .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
+                      Return(ByMove(std::move(result_set)))));
   EXPECT_CALL(*conn, Rollback(_))
       .WillOnce(Return(Status(StatusCode::kInternal, "oops")));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) return read.status();
+    for (auto& row : read.Rows<Row<std::string>>()) {
+      if (!row) return row.status();
+    }
     return Mutations{mutation};
   };
 
@@ -503,14 +550,33 @@ TEST(ClientTest, RunTransactionRollbackError) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 TEST(ClientTest, RunTransactionException) {
   auto conn = std::make_shared<MockConnection>();
-  EXPECT_CALL(*conn, Read(_))
-      .WillOnce(Return(ByMove(Status(StatusCode::kInvalidArgument, "blah"))));
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, NextValue())
+      .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
+  ReadResult result_set(std::move(source));
+
+  EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    if (!read) throw "Read() error";
+    for (auto& row : read.Rows<Row<std::string>>()) {
+      if (!row) throw "Read() error";
+    }
     return Mutations{mutation};
   };
 

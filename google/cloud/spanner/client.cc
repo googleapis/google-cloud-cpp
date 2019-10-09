@@ -27,32 +27,33 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-StatusOr<ResultSet> Client::Read(std::string table, KeySet keys,
-                                 std::vector<std::string> columns,
-                                 ReadOptions read_options) {
+ReadResult Client::Read(std::string table, KeySet keys,
+                        std::vector<std::string> columns,
+                        ReadOptions read_options) {
   return conn_->Read(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        std::move(table), std::move(keys), std::move(columns),
        std::move(read_options)});
 }
 
-StatusOr<ResultSet> Client::Read(
-    Transaction::SingleUseOptions transaction_options, std::string table,
-    KeySet keys, std::vector<std::string> columns, ReadOptions read_options) {
+ReadResult Client::Read(Transaction::SingleUseOptions transaction_options,
+                        std::string table, KeySet keys,
+                        std::vector<std::string> columns,
+                        ReadOptions read_options) {
   return conn_->Read(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
        std::move(table), std::move(keys), std::move(columns),
        std::move(read_options)});
 }
 
-StatusOr<ResultSet> Client::Read(Transaction transaction, std::string table,
-                                 KeySet keys, std::vector<std::string> columns,
-                                 ReadOptions read_options) {
+ReadResult Client::Read(Transaction transaction, std::string table, KeySet keys,
+                        std::vector<std::string> columns,
+                        ReadOptions read_options) {
   return conn_->Read({std::move(transaction), std::move(table), std::move(keys),
                       std::move(columns), std::move(read_options)});
 }
 
-StatusOr<ResultSet> Client::Read(ReadPartition const& read_partition) {
+ReadResult Client::Read(ReadPartition const& read_partition) {
   return conn_->Read(internal::MakeReadParams(read_partition));
 }
 

@@ -33,11 +33,11 @@ using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::testing::Return;
 
-TEST(ResultSet, IterateNoRows) {
+TEST(ReadResult, IterateNoRows) {
   auto mock_source = make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextValue()).WillOnce(Return(optional<Value>()));
 
-  ResultSet result_set(std::move(mock_source));
+  ReadResult result_set(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row : result_set.Rows<Row<bool>>()) {
     static_cast<void>(row);
@@ -46,7 +46,7 @@ TEST(ResultSet, IterateNoRows) {
   EXPECT_EQ(num_rows, 0);
 }
 
-TEST(ResultSet, IterateOverRows) {
+TEST(ReadResult, IterateOverRows) {
   auto mock_source = make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextValue())
       .WillOnce(Return(optional<Value>(5)))
@@ -57,7 +57,7 @@ TEST(ResultSet, IterateOverRows) {
       .WillOnce(Return(optional<Value>("bar")))
       .WillOnce(Return(optional<Value>()));
 
-  ResultSet result_set(std::move(mock_source));
+  ReadResult result_set(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row :
        result_set.Rows<Row<std::int64_t, bool, std::string>>()) {
@@ -83,7 +83,7 @@ TEST(ResultSet, IterateOverRows) {
   EXPECT_EQ(num_rows, 2);
 }
 
-TEST(ResultSet, IterateError) {
+TEST(ReadResult, IterateError) {
   auto mock_source = make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextValue())
       .WillOnce(Return(optional<Value>(5)))
@@ -92,7 +92,7 @@ TEST(ResultSet, IterateError) {
       .WillOnce(Return(optional<Value>(10)))
       .WillOnce(Return(Status(StatusCode::kUnknown, "oops")));
 
-  ResultSet result_set(std::move(mock_source));
+  ReadResult result_set(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row :
        result_set.Rows<Row<std::int64_t, bool, std::string>>()) {
@@ -118,27 +118,27 @@ TEST(ResultSet, IterateError) {
   EXPECT_EQ(num_rows, 2);
 }
 
-TEST(ResultSet, TimestampNoTransaction) {
+TEST(ReadResult, TimestampNoTransaction) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata no_transaction;
   EXPECT_CALL(*mock_source, Metadata()).WillOnce(Return(no_transaction));
 
-  ResultSet result_set(std::move(mock_source));
+  ReadResult result_set(std::move(mock_source));
   EXPECT_FALSE(result_set.ReadTimestamp().has_value());
 }
 
-TEST(ResultSet, TimestampNotPresent) {
+TEST(ReadResult, TimestampNotPresent) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_no_timestamp;
   transaction_no_timestamp.mutable_transaction()->set_id("dummy");
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_no_timestamp));
 
-  ResultSet result_set(std::move(mock_source));
+  ReadResult result_set(std::move(mock_source));
   EXPECT_FALSE(result_set.ReadTimestamp().has_value());
 }
 
-TEST(ResultSet, TimestampPresent) {
+TEST(ReadResult, TimestampPresent) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
@@ -148,20 +148,8 @@ TEST(ResultSet, TimestampPresent) {
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 
-  ResultSet result_set(std::move(mock_source));
+  ReadResult result_set(std::move(mock_source));
   EXPECT_EQ(*result_set.ReadTimestamp(), timestamp);
-}
-
-TEST(ResultSet, Stats) {
-  // TODO(#217) this test is a placeholder until we decide on what type to
-  // return from Stats().
-  auto mock_source = make_unique<MockResultSetSource>();
-  EXPECT_CALL(*mock_source, Stats())
-      .WillOnce(Return(spanner_proto::ResultSetStats()));
-
-  ResultSet result_set(std::move(mock_source));
-  auto stats = result_set.Stats();
-  EXPECT_TRUE(stats.has_value());
 }
 
 }  // namespace

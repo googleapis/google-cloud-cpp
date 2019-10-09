@@ -175,10 +175,8 @@ TEST(ClientStressTest, UpsertAndRead) {
 
         auto reader = client.Read("Singers", range,
                                   {"SingerId", "FirstName", "LastName"});
-        result.Update(reader.status());
-        if (!reader) continue;
         using RowType = Row<std::int64_t, std::string, std::string>;
-        for (auto row : reader->Rows<RowType>()) {
+        for (auto row : reader.Rows<RowType>()) {
           result.Update(row.status());
         }
       }

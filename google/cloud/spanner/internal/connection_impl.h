@@ -67,7 +67,7 @@ class ConnectionImpl : public Connection,
                        public SessionManager,
                        public std::enable_shared_from_this<ConnectionImpl> {
  public:
-  StatusOr<ResultSet> Read(ReadParams) override;
+  ReadResult Read(ReadParams) override;
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) override;
   ExecuteQueryResult ExecuteQuery(ExecuteSqlParams) override;
@@ -89,9 +89,9 @@ class ConnectionImpl : public Connection,
                  std::unique_ptr<RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy);
 
-  StatusOr<ResultSet> ReadImpl(SessionHolder& session,
-                               google::spanner::v1::TransactionSelector& s,
-                               ReadParams rp);
+  ReadResult ReadImpl(SessionHolder& session,
+                      google::spanner::v1::TransactionSelector& s,
+                      ReadParams rp);
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,

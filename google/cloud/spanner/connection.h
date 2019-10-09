@@ -133,7 +133,7 @@ class Connection {
   //@}
 
   /// Define the interface for a google.spanner.v1.Spanner.Read RPC
-  virtual StatusOr<ResultSet> Read(ReadParams) = 0;
+  virtual ReadResult Read(ReadParams) = 0;
 
   /// Define the interface for a google.spanner.v1.Spanner.PartitionRead RPC
   virtual StatusOr<std::vector<ReadPartition>> PartitionRead(

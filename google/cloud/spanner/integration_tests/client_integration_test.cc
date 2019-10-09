@@ -73,19 +73,14 @@ TEST_F(ClientIntegrationTest, InsertAndCommit) {
 
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
-  // Cannot assert, we need to call DeleteDatabase() later.
-  EXPECT_STATUS_OK(reader);
-
   using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
-  if (reader) {
-    int row_number = 0;
-    for (auto& row : reader->Rows<RowType>()) {
-      EXPECT_STATUS_OK(row);
-      if (!row) break;
-      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
-      returned_rows.push_back(*std::move(row));
-    }
+  int row_number = 0;
+  for (auto& row : reader.Rows<RowType>()) {
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+    returned_rows.push_back(*std::move(row));
   }
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
@@ -107,18 +102,15 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
 
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
-  EXPECT_STATUS_OK(reader);
 
   using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
-  if (reader) {
-    int row_number = 0;
-    for (auto& row : reader->Rows<RowType>()) {
-      EXPECT_STATUS_OK(row);
-      if (!row) break;
-      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
-      returned_rows.push_back(*std::move(row));
-    }
+  int row_number = 0;
+  for (auto& row : reader.Rows<RowType>()) {
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+    returned_rows.push_back(*std::move(row));
   }
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(2, "test-fname-2", "test-lname-2")));
@@ -153,18 +145,15 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
 
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
-  EXPECT_STATUS_OK(reader);
 
   using RowType = Row<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
-  if (reader) {
-    int row_number = 0;
-    for (auto& row : reader->Rows<RowType>()) {
-      EXPECT_STATUS_OK(row);
-      if (!row) break;
-      SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
-      returned_rows.push_back(*std::move(row));
-    }
+  int row_number = 0;
+  for (auto& row : reader.Rows<RowType>()) {
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+    SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
+    returned_rows.push_back(*std::move(row));
   }
   EXPECT_THAT(returned_rows,
               UnorderedElementsAre(RowType(1, "test-fname-1", "test-lname-1"),
@@ -212,7 +201,7 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
 
     std::vector<RowType> returned_rows;
     int row_number = 0;
-    for (auto& row : reader->Rows<RowType>()) {
+    for (auto& row : reader.Rows<RowType>()) {
       if (!row) break;
       SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
       returned_rows.push_back(*std::move(row));
@@ -231,10 +220,8 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
   std::vector<RowType> returned_rows;
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
-  ASSERT_STATUS_OK(reader);
-
   int row_number = 0;
-  for (auto& row : reader->Rows<RowType>()) {
+  for (auto& row : reader.Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
     if (!row) break;
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
@@ -276,12 +263,9 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
   auto ksb = KeySetBuilder<RowType>().Add(MakeKeyRange(
       MakeKeyBoundClosed(MakeRow(100)), MakeKeyBoundOpen(MakeRow(200))));
   auto results = client_->Read("Singers", ksb.Build(), {"SingerId"});
-  EXPECT_STATUS_OK(results);
-  if (results) {
-    for (auto& row : results->Rows<RowType>()) {
-      EXPECT_STATUS_OK(row);
-      if (row) ids.push_back(row->get<0>());
-    }
+  for (auto& row : results.Rows<RowType>()) {
+    EXPECT_STATUS_OK(row);
+    if (row) ids.push_back(row->get<0>());
   }
   EXPECT_THAT(ids, UnorderedElementsAre(100, 199));
 }
@@ -396,19 +380,15 @@ void CheckReadWithOptions(
   auto reader =
       client.Read(options_generator(*commit), "Singers", KeySet::All(),
                   {"SingerId", "FirstName", "LastName"});
-  ASSERT_STATUS_OK(reader);
 
   std::vector<RowValues> actual_rows;
-  if (reader) {
-    int row_number = 0;
-    for (auto& row :
-         reader->Rows<Row<std::int64_t, std::string, std::string>>()) {
-      SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
-      EXPECT_STATUS_OK(row);
-      if (!row) break;
-      auto array = std::move(row)->values();
-      actual_rows.emplace_back(array.begin(), array.end());
-    }
+  int row_number = 0;
+  for (auto& row : reader.Rows<Row<std::int64_t, std::string, std::string>>()) {
+    SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
+    EXPECT_STATUS_OK(row);
+    if (!row) break;
+    auto array = std::move(row)->values();
+    actual_rows.emplace_back(array.begin(), array.end());
   }
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
@@ -585,9 +565,8 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
     auto deserialized_partition = DeserializeReadPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
     auto result_set = client_->Read(*deserialized_partition);
-    ASSERT_STATUS_OK(result_set);
     for (auto& row :
-         result_set->Rows<Row<std::int64_t, std::string, std::string>>()) {
+         result_set.Rows<Row<std::int64_t, std::string, std::string>>()) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);

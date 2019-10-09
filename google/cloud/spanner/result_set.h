@@ -114,10 +114,10 @@ class ExecuteQueryResult {
   /**
    * Returns a `RowParser` which can be used to iterate the returned `Row`s.
    *
-   * Since there is a single result stream for each `ResultSet` instance, users
-   * should not use multiple `RowParser`s from the same `ResultSet` at the same
-   * time. Doing so is not thread safe, and may result in errors or data
-   * corruption.
+   * Since there is a single result stream for each `ExecuteQueryResult`
+   * instance, users should not use multiple `RowParser`s from the same
+   * `ExecuteQueryResult` at the same time. Doing so is not thread safe, and may
+   * result in errors or data corruption.
    */
   template <typename RowType>
   RowParser<RowType> Rows() {
@@ -207,71 +207,6 @@ class ExecuteDmlResult {
    * explicitly requested.
    */
   optional<QueryPlan> QueryExecutionPlan() const;
-
- private:
-  std::unique_ptr<internal::ResultSetSource> source_;
-};
-
-/**
- * Represents the result of a query operation, such as `SpannerClient::Read()`
- * or `SpannerClient::ExecuteSql()`.
- *
- * This class encapsulates the result of a Cloud Spanner query, including all
- * DML operations, i.e., `UPDATE` and `DELETE` also return a `ResultSet`.
- *
- * Note that a `ResultSet` returns both the data for the operation, as a
- * single-pass, input range returned by `Rows()`, as well as the metadata for
- * the results, and execution statistics (if requested).
- */
-class ResultSet {
- public:
-  ResultSet() = default;
-  explicit ResultSet(std::unique_ptr<internal::ResultSetSource> source)
-      : source_(std::move(source)) {}
-
-  // This class is moveable but not copyable.
-  ResultSet(ResultSet&&) = default;
-  ResultSet& operator=(ResultSet&&) = default;
-
-  /**
-   * Returns a `RowParser` which can be used to iterate the returned `Row`s.
-   *
-   * Since there is a single result stream for each `ResultSet` instance, users
-   * should not use multiple `RowParser`s from the same `ResultSet` at the same
-   * time. Doing so is not thread safe, and may result in errors or data
-   * corruption.
-   */
-  template <typename RowType>
-  RowParser<RowType> Rows() {
-    return RowParser<RowType>(
-        [this]() mutable { return source_->NextValue(); });
-  }
-
-  /**
-   * Retrieve the timestamp at which the read occurred.
-   *
-   * Only available if a read-only transaction was used, and the timestamp
-   * was requested by setting `return_read_timestamp` true.
-   */
-  optional<Timestamp> ReadTimestamp() const {
-    auto metadata = source_->Metadata();
-    if (metadata.has_value() && metadata->has_transaction() &&
-        metadata->transaction().has_read_timestamp()) {
-      return internal::FromProto(metadata->transaction().read_timestamp());
-    }
-    return optional<Timestamp>();
-  }
-
-  /**
-   * Return statistics about the transaction.
-   *
-   * Statistics are only available for SQL requests with `query_mode` set to
-   * `PROFILE`, and only after consuming the entire result stream (i.e.
-   * iterating through `Rows()` until the end).
-   */
-  optional<google::spanner::v1::ResultSetStats> Stats() {
-    return source_->Stats();
-  }
 
  private:
   std::unique_ptr<internal::ResultSetSource> source_;

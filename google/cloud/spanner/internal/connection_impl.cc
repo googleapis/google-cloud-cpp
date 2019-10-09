@@ -113,7 +113,7 @@ ConnectionImpl::ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
       backoff_policy_(std::move(backoff_policy)),
       session_pool_(this) {}
 
-StatusOr<ResultSet> ConnectionImpl::Read(ReadParams rp) {
+ReadResult ConnectionImpl::Read(ReadParams rp) {
   return internal::Visit(
       std::move(rp.transaction),
       [this, &rp](SessionHolder& session, spanner_proto::TransactionSelector& s,
@@ -200,13 +200,37 @@ Status ConnectionImpl::Rollback(RollbackParams rp) {
              std::int64_t) { return this->RollbackImpl(session, s); });
 }
 
-StatusOr<ResultSet> ConnectionImpl::ReadImpl(
-    SessionHolder& session, spanner_proto::TransactionSelector& s,
-    ReadParams rp) {
+class StatusOnlyResultSetSource : public internal::ResultSetSource {
+ public:
+  explicit StatusOnlyResultSetSource(google::cloud::Status status)
+      : status_(std::move(status)) {}
+  ~StatusOnlyResultSetSource() override = default;
+
+  StatusOr<optional<Value>> NextValue() override { return status_; }
+  optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+    return {};
+  }
+  optional<google::spanner::v1::ResultSetStats> Stats() override { return {}; }
+  std::int64_t RowsModified() const override { return {}; }
+  optional<std::unordered_map<std::string, std::string>> QueryStats()
+      const override {
+    return {};
+  }
+  optional<QueryPlan> QueryExecutionPlan() const override { return {}; }
+
+ private:
+  google::cloud::Status status_;
+};
+
+ReadResult ConnectionImpl::ReadImpl(SessionHolder& session,
+                                    spanner_proto::TransactionSelector& s,
+                                    ReadParams rp) {
   if (!session) {
     auto session_or = AllocateSession();
     if (!session_or) {
-      return std::move(session_or).status();
+      return ReadResult(
+          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+              std::move(session_or).status()));
     }
     session = std::move(*session_or);
   }
@@ -240,18 +264,22 @@ StatusOr<ResultSet> ConnectionImpl::ReadImpl(
       backoff_policy_->clone());
   auto reader = PartialResultSetSource::Create(std::move(rpc));
   if (!reader.ok()) {
-    return std::move(reader).status();
+    return ReadResult(
+        google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+            std::move(reader).status()));
   }
   if (s.has_begin()) {
     auto metadata = (*reader)->Metadata();
     if (!metadata || metadata->transaction().id().empty()) {
-      return Status(
-          StatusCode::kInternal,
-          "Begin transaction requested but no transaction returned (in Read).");
+      return ReadResult(
+          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+              Status(StatusCode::kInternal,
+                     "Begin transaction requested but no transaction returned "
+                     "(in Read).")));
     }
     s.set_id(metadata->transaction().id());
   }
-  return ResultSet(*std::move(reader));
+  return ReadResult(*std::move(reader));
 }
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
@@ -303,28 +331,6 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
 
   return read_partitions;
 }
-
-class StatusOnlyResultSetSource : public internal::ResultSetSource {
- public:
-  explicit StatusOnlyResultSetSource(google::cloud::Status status)
-      : status_(std::move(status)) {}
-  ~StatusOnlyResultSetSource() override = default;
-
-  StatusOr<optional<Value>> NextValue() override { return status_; }
-  optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
-    return {};
-  }
-  optional<google::spanner::v1::ResultSetStats> Stats() override { return {}; }
-  std::int64_t RowsModified() const override { return {}; }
-  optional<std::unordered_map<std::string, std::string>> QueryStats()
-      const override {
-    return {};
-  }
-  optional<QueryPlan> QueryExecutionPlan() const override { return {}; }
-
- private:
-  google::cloud::Status status_;
-};
 
 ExecuteQueryResult ConnectionImpl::ExecuteQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,

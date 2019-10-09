@@ -39,7 +39,7 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class MockConnection : public spanner::Connection {
  public:
-  MOCK_METHOD1(Read, StatusOr<spanner::ResultSet>(ReadParams));
+  MOCK_METHOD1(Read, spanner::ReadResult(ReadParams));
   MOCK_METHOD1(PartitionRead, StatusOr<std::vector<spanner::ReadPartition>>(
                                   PartitionReadParams));
   MOCK_METHOD1(ExecuteQuery, spanner::ExecuteQueryResult(ExecuteSqlParams));

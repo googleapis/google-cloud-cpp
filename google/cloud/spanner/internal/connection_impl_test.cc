@@ -123,8 +123,10 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
                   KeySet::All(),
                   {"column1"},
                   ReadOptions()});
-  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
+  for (auto& row : result.Rows<Row<std::string>>()) {
+    EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
+    EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
+  }
 }
 
 TEST(ConnectionImplTest, ReadStreamingReadFailure) {
@@ -155,9 +157,11 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
                   KeySet::All(),
                   {"column1"},
                   ReadOptions()});
-  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
-  EXPECT_THAT(result.status().message(),
-              HasSubstr("uh-oh in GrpcReader::Finish"));
+  for (auto& row : result.Rows<Row<std::string>>()) {
+    EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
+    EXPECT_THAT(row.status().message(),
+                HasSubstr("uh-oh in GrpcReader::Finish"));
+  }
 }
 
 TEST(ConnectionImplTest, ReadSuccess) {
@@ -215,14 +219,13 @@ TEST(ConnectionImplTest, ReadSuccess) {
                   KeySet::All(),
                   {"UserId", "UserName"},
                   ReadOptions()});
-  EXPECT_STATUS_OK(result);
   using RowType = Row<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
       RowType(42, "Ann"),
   };
   int row_number = 0;
-  for (auto& row : result->Rows<RowType>()) {
+  for (auto& row : result.Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -257,8 +260,10 @@ TEST(ConnectionImplTest, Read_PermanentFailure) {
                   KeySet::All(),
                   {"UserId", "UserName"},
                   ReadOptions()});
-  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh"));
+  for (auto& row : result.Rows<Row<std::string>>()) {
+    EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
+    EXPECT_THAT(row.status().message(), HasSubstr("uh-oh"));
+  }
 }
 
 TEST(ConnectionImplTest, Read_TooManyTransientFailures) {
@@ -292,8 +297,10 @@ TEST(ConnectionImplTest, Read_TooManyTransientFailures) {
                   KeySet::All(),
                   {"UserId", "UserName"},
                   ReadOptions()});
-  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
-  EXPECT_THAT(result.status().message(), HasSubstr("try-again"));
+  for (auto& row : result.Rows<Row<std::string>>()) {
+    EXPECT_EQ(StatusCode::kUnavailable, row.status().code());
+    EXPECT_THAT(row.status().message(), HasSubstr("try-again"));
+  }
 }
 
 /// @test Verify implicit "begin transaction" in Read() works.
@@ -315,7 +322,8 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(metadata: { transaction: { id: "ABCDEF00" } })pb", &response));
   EXPECT_CALL(*grpc_reader, Read(_))
-      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)));
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
+      .WillOnce(Return(false));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
   EXPECT_CALL(*mock, StreamingRead(_, _))
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
@@ -323,7 +331,9 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto result = conn->Read(
       {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
-  EXPECT_STATUS_OK(result);
+  for (auto& row : result.Rows<Row<std::string>>()) {
+    EXPECT_STATUS_OK(row);
+  }
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 }
 
@@ -1443,9 +1453,8 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   Transaction txn1 = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto result =
       conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
-  EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
-  for (auto& row : result->Rows<Row<std::int64_t>>()) {
+  for (auto& row : result.Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 0);
@@ -1454,9 +1463,8 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   Transaction txn2 = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   result =
       conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
-  EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
-  for (auto& row : result->Rows<Row<std::int64_t>>()) {
+  for (auto& row : result.Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 1);
@@ -1464,9 +1472,8 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
 
   result =
       conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
-  EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
-  for (auto& row : result->Rows<Row<std::int64_t>>()) {
+  for (auto& row : result.Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 2);
@@ -1474,9 +1481,8 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
 
   result =
       conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
-  EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
-  for (auto& row : result->Rows<Row<std::int64_t>>()) {
+  for (auto& row : result.Rows<Row<std::int64_t>>()) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(row->size(), 1);
     EXPECT_EQ(row->get<0>(), 3);
@@ -1514,7 +1520,6 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto result = conn->Read(
       {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
-  EXPECT_STATUS_OK(result);
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 
   // `conn` is the only reference to the `ConnectionImpl`, so dropping it will

@@ -821,9 +821,8 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                    .Build();
     auto read = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
-    if (!read) throw std::runtime_error(read.status().message());
-    for (auto row : read->Rows<spanner::Row<std::int64_t>>()) {
-      if (!row) throw std::runtime_error(read.status().message());
+    for (auto row : read.Rows<spanner::Row<std::int64_t>>()) {
+      if (!row) throw std::runtime_error(row.status().message());
       // We expect at most one result from the `Read()` request. Return
       // the first one.
       return row->get<0>();
@@ -1131,8 +1130,8 @@ class RemoteConnectionFake {
   std::string serialized_partition_in_transit_;
 };
 
-void ProcessRow(google::cloud::spanner::Row<std::int64_t, std::string,
-                                            std::string> const&) {}
+void ProcessRow(const google::cloud::spanner::Row<std::int64_t, std::string,
+                                                  std::string>&) {}
 
 void PartitionRead(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1160,9 +1159,8 @@ void PartitionRead(google::cloud::spanner::Client client) {
       remote_connection.ReceiveReadPartitionFromRemoteMachine();
   if (!partition) throw std::runtime_error(partition.status().message());
   auto result_set = client.Read(*partition);
-  if (!result_set) throw std::runtime_error(result_set.status().message());
   using RowType = spanner::Row<std::int64_t, std::string, std::string>;
-  for (auto& row : result_set->Rows<RowType>()) {
+  for (auto const& row : result_set.Rows<RowType>()) {
     if (!row) throw std::runtime_error(row.status().message());
     ProcessRow(*row);
   }
@@ -1191,7 +1189,7 @@ void PartitionQuery(google::cloud::spanner::Client client) {
   if (!partition) throw std::runtime_error(partition.status().message());
   auto result_set = client.ExecuteQuery(*partition);
   using RowType = spanner::Row<std::int64_t, std::string, std::string>;
-  for (auto& row : result_set.Rows<RowType>()) {
+  for (auto const& row : result_set.Rows<RowType>()) {
     if (!row) throw std::runtime_error(row.status().message());
     ProcessRow(*row);
   }
