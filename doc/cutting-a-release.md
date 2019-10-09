@@ -134,7 +134,7 @@ the instructions above. You may now remove this directory.
 Working in your fork of `gooogle-cloud-cpp`: bump the version numbers to the
 *next* version (i.e., one version past the release you just did above), and
 send the PR for review against `master`. For an example, look at
-[#1962](https://github.com/googleapis/google-cloud-cpp/pull/1962)
+[#3182](https://github.com/googleapis/google-cloud-cpp/pull/3182)
 
 ## Review the branch protections
 
