@@ -61,7 +61,7 @@ def google_cloud_cpp_deps():
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
-    # This implictly loads "com_google_protobuf", which we use.
+    # This implicitly loads "com_google_protobuf", which we use.
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
