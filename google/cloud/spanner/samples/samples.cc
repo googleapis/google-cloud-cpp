@@ -748,23 +748,18 @@ void DeleteData(google::cloud::spanner::Client client) {
 
   // Delete each of the albums by individual key, then delete all the singers
   // using a key range.
-  auto delete_albums =
-      spanner::DeleteMutationBuilder(
-          "Albums",
-          spanner::KeySetBuilder<spanner::Row<std::int64_t, std::int64_t>>()
-              .Add(spanner::MakeRow(1, 1))
-              .Add(spanner::MakeRow(1, 2))
-              .Add(spanner::MakeRow(2, 1))
-              .Add(spanner::MakeRow(2, 2))
-              .Add(spanner::MakeRow(2, 3))
-              .Build())
-          .Build();
-  using SingersKey = spanner::Row<std::int64_t>;
+  auto delete_albums = spanner::DeleteMutationBuilder(
+                           "Albums", spanner::KeySet()
+                                         .AddKey(spanner::MakeKey(1, 1))
+                                         .AddKey(spanner::MakeKey(1, 2))
+                                         .AddKey(spanner::MakeKey(2, 1))
+                                         .AddKey(spanner::MakeKey(2, 2))
+                                         .AddKey(spanner::MakeKey(2, 3)))
+                           .Build();
   auto delete_singers =
       spanner::DeleteMutationBuilder(
-          "Singers", spanner::KeySetBuilder<SingersKey>(
-                         MakeKeyRangeClosed(SingersKey(1), SingersKey(5)))
-                         .Build())
+          "Singers", spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(1),
+                                                spanner::MakeKeyBoundClosed(5)))
           .Build();
 
   auto commit_result = client.Commit(spanner::MakeReadWriteTransaction(),
@@ -816,9 +811,7 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
   // A helper to read a single album MarketingBudget.
   auto get_current_budget = [](spanner::Client client, spanner::Transaction txn,
                                std::int64_t singer_id, std::int64_t album_id) {
-    auto key = spanner::KeySetBuilder<spanner::Row<std::int64_t, std::int64_t>>(
-                   spanner::MakeRow(singer_id, album_id))
-                   .Build();
+    auto key = spanner::KeySet().AddKey(spanner::MakeKey(singer_id, album_id));
     auto read = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
     for (auto row : read.Rows<spanner::Row<std::int64_t>>()) {
@@ -1137,10 +1130,8 @@ void PartitionRead(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
   RemoteConnectionFake remote_connection;
   //! [key-set-builder]
-  auto key_set = spanner::KeySetBuilder<spanner::Row<int64_t>>()
-                     .Add(spanner::MakeKeyRangeClosed(spanner::MakeRow(1),
-                                                      spanner::MakeRow(10)))
-                     .Build();
+  auto key_set = spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(1),
+                                            spanner::MakeKeyBoundClosed(10));
   //! [key-set-builder]
 
   //! [partition-read]

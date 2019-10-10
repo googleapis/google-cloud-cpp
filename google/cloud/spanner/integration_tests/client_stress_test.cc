@@ -167,11 +167,9 @@ TEST(ClientStressTest, UpsertAndRead) {
         result.Update(commit.status());
       } else {
         auto size = random_limit(generator);
-        using KeyType = Row<std::int64_t>;
         auto range =
-            spanner::KeySetBuilder<KeyType>(
-                spanner::MakeKeyRangeClosed(KeyType(key), KeyType(key + size)))
-                .Build();
+            spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(key),
+                                       spanner::MakeKeyBoundClosed(key + size));
 
         auto reader = client.Read("Singers", range,
                                   {"SingerId", "FirstName", "LastName"});

@@ -94,9 +94,7 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
   auto commit_result =
       RunTransaction(*client_, {}, [](Client const&, Transaction const&) {
         return Mutations{
-            MakeDeleteMutation("Singers", KeySetBuilder<Row<std::int64_t>>()
-                                              .Add(MakeRow(std::int64_t(1)))
-                                              .Build())};
+            MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(1)))};
       });
   EXPECT_STATUS_OK(commit_result);
 
@@ -249,8 +247,8 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
 
   // Delete SingerId 102.
   auto deleter = [](Client const&, Transaction const&) {
-    auto ksb = KeySetBuilder<Row<std::int64_t>>().Add(MakeRow(102));
-    auto mutation = MakeDeleteMutation("Singers", ksb.Build());
+    auto mutation =
+        MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(102)));
     return Mutations{mutation};
   };
   auto delete_result = RunTransaction(*client_, {}, deleter);
@@ -260,9 +258,8 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
   // Read SingerIds [100 ... 200).
   using RowType = Row<std::int64_t>;
   std::vector<std::int64_t> ids;
-  auto ksb = KeySetBuilder<RowType>().Add(MakeKeyRange(
-      MakeKeyBoundClosed(MakeRow(100)), MakeKeyBoundOpen(MakeRow(200))));
-  auto results = client_->Read("Singers", ksb.Build(), {"SingerId"});
+  auto ks = KeySet().AddRange(MakeKeyBoundClosed(100), MakeKeyBoundOpen(200));
+  auto results = client_->Read("Singers", std::move(ks), {"SingerId"});
   for (auto& row : results.Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
     if (row) ids.push_back(row->get<0>());

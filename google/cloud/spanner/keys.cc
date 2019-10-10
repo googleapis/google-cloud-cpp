@@ -22,24 +22,56 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-bool operator==(KeySet const& lhs, KeySet const& rhs) {
-  google::protobuf::util::MessageDifferencer differencer;
-  return differencer.Compare(lhs.proto_, rhs.proto_);
+namespace {
+// Appends the values in the given `key` to the `lv` proto.
+void AppendKey(google::protobuf::ListValue& lv, Key&& key) {
+  for (auto& v : key) {
+    *lv.add_values() = internal::ToProto(std::move(v)).second;
+  }
 }
-
-bool operator!=(KeySet const& lhs, KeySet const& rhs) { return !(lhs == rhs); }
+}  // namespace
 
 namespace internal {
 
-::google::spanner::v1::KeySet ToProto(KeySet keyset) {
-  return std::move(keyset.proto_);
+::google::spanner::v1::KeySet ToProto(KeySet ks) {
+  return std::move(ks.proto_);
 }
 
-KeySet FromProto(::google::spanner::v1::KeySet keyset) {
-  return KeySet(std::move(keyset));
+KeySet FromProto(::google::spanner::v1::KeySet proto) {
+  return KeySet(std::move(proto));
 }
 
 }  // namespace internal
+
+bool operator==(KeyBound const& a, KeyBound const& b) {
+  return a.key_ == b.key_ && a.bound_ == b.bound_;
+}
+
+KeySet& KeySet::AddKey(Key key) {
+  if (proto_.all()) return *this;
+  AppendKey(*proto_.add_keys(), std::move(key));
+  return *this;
+}
+
+KeySet& KeySet::AddRange(KeyBound start, KeyBound end) {
+  if (proto_.all()) return *this;
+  auto* range = proto_.add_ranges();
+  auto* start_proto = start.bound() == KeyBound::Bound::kClosed
+                          ? range->mutable_start_closed()
+                          : range->mutable_start_open();
+  AppendKey(*start_proto, std::move(start).key());
+  auto* end_proto = end.bound() == KeyBound::Bound::kClosed
+                        ? range->mutable_end_closed()
+                        : range->mutable_end_open();
+  AppendKey(*end_proto, std::move(end).key());
+  return *this;
+}
+
+bool operator==(KeySet const& a, KeySet const& b) {
+  google::protobuf::util::MessageDifferencer differencer;
+  return differencer.Compare(a.proto_, b.proto_);
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
