@@ -658,7 +658,7 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
 
 StatusOr<SessionHolder> ConnectionImpl::AllocateSession(
     bool dissociate_from_pool) {
-  auto session = session_pool_.Allocate();
+  auto session = session_pool_.Allocate(dissociate_from_pool);
   if (!session.ok()) {
     return std::move(session).status();
   }

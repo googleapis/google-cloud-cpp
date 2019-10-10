@@ -20,6 +20,7 @@
 #include <gmock/gmock.h>
 #include <memory>
 #include <string>
+#include <thread>
 #include <vector>
 
 namespace google {
@@ -59,6 +60,33 @@ TEST(SessionPool, Allocate) {
   auto session = pool.Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
+}
+
+TEST(SessionPool, CreateResourceExhaustedRetry) {
+  auto mock = google::cloud::internal::make_unique<MockSessionManager>();
+  EXPECT_CALL(*mock, CreateSessions(1))
+      .WillOnce(
+          Return(ByMove(Status(StatusCode::kResourceExhausted, "no sessions"))))
+      .WillOnce(Return(ByMove(MakeSessions({"session1"}))));
+
+  SessionPool pool(mock.get());
+  auto session = pool.Allocate();
+  ASSERT_STATUS_OK(session);
+  EXPECT_EQ((*session)->session_name(), "session1");
+}
+
+TEST(SessionPool, CreateResourceExhaustedFail) {
+  auto mock = google::cloud::internal::make_unique<MockSessionManager>();
+  EXPECT_CALL(*mock, CreateSessions(1))
+      .WillOnce(Return(
+          ByMove(Status(StatusCode::kResourceExhausted, "no sessions"))));
+
+  SessionPoolOptions options;
+  options.action_on_exhaustion = ActionOnExhaustion::FAIL;
+  SessionPool pool(mock.get(), options);
+  auto session = pool.Allocate();
+  EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
+  EXPECT_EQ(session.status().message(), "session pool exhausted");
 }
 
 TEST(SessionPool, CreateError) {
@@ -116,6 +144,89 @@ TEST(SessionPool, Lifo) {
   auto session4 = pool.Allocate();
   ASSERT_STATUS_OK(session4);
   EXPECT_EQ((*session4)->session_name(), "session1");
+}
+
+TEST(SessionPool, MinSessionsEagerAllocation) {
+  const int min_sessions = 3;
+  auto mock = google::cloud::internal::make_unique<MockSessionManager>();
+  EXPECT_CALL(*mock, CreateSessions(min_sessions))
+      .WillOnce(Return(ByMove(MakeSessions({"s3", "s2", "s1"}))));
+
+  SessionPoolOptions options;
+  options.min_sessions = min_sessions;
+  SessionPool pool(mock.get(), options);
+}
+
+TEST(SessionPool, MinSessionsMultipleAllocations) {
+  const int min_sessions = 3;
+  auto mock = google::cloud::internal::make_unique<MockSessionManager>();
+  // The constructor will make this call.
+  EXPECT_CALL(*mock, CreateSessions(min_sessions))
+      .WillOnce(Return(ByMove(MakeSessions({"s3", "s2", "s1"}))));
+
+  SessionPoolOptions options;
+  options.min_sessions = min_sessions;
+  SessionPool pool(mock.get(), options);
+
+  // When we run out of sessions it will make this call.
+  EXPECT_CALL(*mock, CreateSessions(min_sessions + 1))
+      .WillOnce(Return(ByMove(MakeSessions({"s7", "s6", "s5", "s4"}))));
+  std::vector<std::unique_ptr<Session>> sessions;
+  for (int i = 1; i <= 7; ++i) {
+    auto session = pool.Allocate();
+    ASSERT_STATUS_OK(session);
+    EXPECT_EQ((*session)->session_name(), "s" + std::to_string(i));
+    sessions.push_back(*std::move(session));
+  }
+}
+
+TEST(SessionPool, MaxSessionsFailOnExhaustion) {
+  const int max_sessions = 3;
+  auto mock = google::cloud::internal::make_unique<MockSessionManager>();
+  EXPECT_CALL(*mock, CreateSessions(1))
+      .WillOnce(Return(ByMove(MakeSessions({"s1"}))))
+      .WillOnce(Return(ByMove(MakeSessions({"s2"}))))
+      .WillOnce(Return(ByMove(MakeSessions({"s3"}))));
+
+  SessionPoolOptions options;
+  options.max_sessions = max_sessions;
+  options.action_on_exhaustion = ActionOnExhaustion::FAIL;
+  SessionPool pool(mock.get(), options);
+  std::vector<std::unique_ptr<Session>> sessions;
+  for (int i = 1; i <= 3; ++i) {
+    auto session = pool.Allocate();
+    ASSERT_STATUS_OK(session);
+    EXPECT_EQ((*session)->session_name(), "s" + std::to_string(i));
+    sessions.push_back(*std::move(session));
+  }
+  auto session = pool.Allocate();
+  EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
+  EXPECT_EQ(session.status().message(), "session pool exhausted");
+}
+
+TEST(SessionPool, MaxSessionsBlockUntilRelease) {
+  const int max_sessions = 1;
+  auto mock = google::cloud::internal::make_unique<MockSessionManager>();
+  EXPECT_CALL(*mock, CreateSessions(1))
+      .WillOnce(Return(ByMove(MakeSessions({"s1"}))));
+
+  SessionPoolOptions options;
+  options.max_sessions = max_sessions;
+  options.action_on_exhaustion = ActionOnExhaustion::BLOCK;
+  SessionPool pool(mock.get(), options);
+  auto session = pool.Allocate();
+  ASSERT_STATUS_OK(session);
+  EXPECT_EQ((*session)->session_name(), "s1");
+
+  // This thread will block in Allocate() until the main thread releases s1.
+  std::thread t([&pool]() {
+    auto session = pool.Allocate();
+    ASSERT_STATUS_OK(session);
+    EXPECT_EQ((*session)->session_name(), "s1");
+  });
+
+  pool.Release(*std::move(session));
+  t.join();
 }
 
 }  // namespace
