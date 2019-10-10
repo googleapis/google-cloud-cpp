@@ -134,7 +134,7 @@ switched_rules_by_language(
 
 # You have to manually call the corresponding function for google-cloud-cpp and
 # gRPC:  https://github.com/bazelbuild/bazel/issues/1550
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@com_github_googleapis_google_cloud_cpp_common//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 
