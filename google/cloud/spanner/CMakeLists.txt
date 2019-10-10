@@ -180,7 +180,8 @@ add_library(spanner_client
             read_options.h
             read_partition.cc
             read_partition.h
-            result_set.h
+            results.cc
+            results.h
             retry_policy.h
             row.h
             row_parser.h
@@ -325,7 +326,7 @@ function (spanner_client_define_tests)
         mutations_test.cc
         read_options_test.cc
         read_partition_test.cc
-        result_set_test.cc
+        results_test.cc
         retry_policy_test.cc
         row_test.cc
         row_parser_test.cc

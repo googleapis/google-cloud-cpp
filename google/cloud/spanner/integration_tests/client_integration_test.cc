@@ -171,7 +171,7 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
   for (auto start = std::chrono::steady_clock::now(),
             deadline = start + std::chrono::minutes(1);
        start < deadline; start = std::chrono::steady_clock::now()) {
-    auto is_retryable_failure = [](StatusOr<ExecuteDmlResult> const& s) {
+    auto is_retryable_failure = [](StatusOr<DmlResult> const& s) {
       return !s && s.status().code() == StatusCode::kAborted;
     };
 

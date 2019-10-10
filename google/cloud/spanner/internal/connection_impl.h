@@ -67,11 +67,11 @@ class ConnectionImpl : public Connection,
                        public SessionManager,
                        public std::enable_shared_from_this<ConnectionImpl> {
  public:
-  ReadResult Read(ReadParams) override;
+  QueryResult Read(ReadParams) override;
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) override;
-  ExecuteQueryResult ExecuteQuery(ExecuteSqlParams) override;
-  StatusOr<ExecuteDmlResult> ExecuteDml(ExecuteSqlParams) override;
+  QueryResult ExecuteQuery(ExecuteSqlParams) override;
+  StatusOr<DmlResult> ExecuteDml(ExecuteSqlParams) override;
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
       ExecutePartitionedDmlParams) override;
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
@@ -89,19 +89,19 @@ class ConnectionImpl : public Connection,
                  std::unique_ptr<RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy);
 
-  ReadResult ReadImpl(SessionHolder& session,
-                      google::spanner::v1::TransactionSelector& s,
-                      ReadParams rp);
+  QueryResult ReadImpl(SessionHolder& session,
+                       google::spanner::v1::TransactionSelector& s,
+                       ReadParams rp);
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       ReadParams const& rp, PartitionOptions partition_options);
 
-  ExecuteQueryResult ExecuteQueryImpl(
-      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      std::int64_t seqno, ExecuteSqlParams esp);
+  QueryResult ExecuteQueryImpl(SessionHolder& session,
+                               google::spanner::v1::TransactionSelector& s,
+                               std::int64_t seqno, ExecuteSqlParams esp);
 
-  StatusOr<ExecuteDmlResult> ExecuteDmlImpl(
+  StatusOr<DmlResult> ExecuteDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       std::int64_t seqno, ExecuteSqlParams esp);
 

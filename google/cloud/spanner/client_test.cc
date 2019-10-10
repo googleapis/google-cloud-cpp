@@ -17,7 +17,7 @@
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mutations.h"
-#include "google/cloud/spanner/result_set.h"
+#include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
@@ -103,7 +103,7 @@ TEST(ClientTest, ReadSuccess) {
       .WillOnce(Return(optional<Value>(42)))
       .WillOnce(Return(optional<Value>()));
 
-  ReadResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
 
   KeySet keys = KeySet::All();
@@ -145,7 +145,7 @@ TEST(ClientTest, ReadFailure) {
       .WillOnce(Return(optional<Value>("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  ReadResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
 
   KeySet keys = KeySet::All();
@@ -195,7 +195,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       .WillOnce(Return(optional<Value>(42)))
       .WillOnce(Return(optional<Value>()));
 
-  ExecuteQueryResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, ExecuteQuery(_))
       .WillOnce(Return(ByMove(std::move(result_set))));
 
@@ -238,7 +238,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
       .WillOnce(Return(optional<Value>("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  ExecuteQueryResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, ExecuteQuery(_))
       .WillOnce(Return(ByMove(std::move(result_set))));
 
@@ -423,7 +423,7 @@ TEST(ClientTest, RunTransactionCommit) {
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(optional<Value>("Bob")))
       .WillOnce(Return(optional<Value>()));
-  ReadResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
@@ -472,7 +472,7 @@ TEST(ClientTest, RunTransactionRollback) {
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
-  ReadResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
@@ -519,7 +519,7 @@ TEST(ClientTest, RunTransactionRollbackError) {
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
-  ReadResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
@@ -566,7 +566,7 @@ TEST(ClientTest, RunTransactionException) {
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextValue())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
-  ReadResult result_set(std::move(source));
+  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));

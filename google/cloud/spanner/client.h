@@ -25,7 +25,7 @@
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
-#include "google/cloud/spanner/result_set.h"
+#include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
@@ -142,27 +142,27 @@ class Client {
    * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    */
-  ReadResult Read(std::string table, KeySet keys,
-                  std::vector<std::string> columns,
-                  ReadOptions read_options = {});
+  QueryResult Read(std::string table, KeySet keys,
+                   std::vector<std::string> columns,
+                   ReadOptions read_options = {});
   /**
    * @copydoc Read
    *
    * @param transaction_options Execute this read in a single-use transaction
    * with these options.
    */
-  ReadResult Read(Transaction::SingleUseOptions transaction_options,
-                  std::string table, KeySet keys,
-                  std::vector<std::string> columns,
-                  ReadOptions read_options = {});
+  QueryResult Read(Transaction::SingleUseOptions transaction_options,
+                   std::string table, KeySet keys,
+                   std::vector<std::string> columns,
+                   ReadOptions read_options = {});
   /**
    * @copydoc Read
    *
    * @param transaction Execute this read as part of an existing transaction.
    */
-  ReadResult Read(Transaction transaction, std::string table, KeySet keys,
-                  std::vector<std::string> columns,
-                  ReadOptions read_options = {});
+  QueryResult Read(Transaction transaction, std::string table, KeySet keys,
+                   std::vector<std::string> columns,
+                   ReadOptions read_options = {});
   //@}
 
   /**
@@ -178,7 +178,7 @@ class Client {
    * @par Example
    * @snippet samples.cc read-read-partition
    */
-  ReadResult Read(ReadPartition const& partition);
+  QueryResult Read(ReadPartition const& partition);
 
   /**
    * Creates a set of partitions that can be used to execute a read
@@ -234,7 +234,7 @@ class Client {
    * @note No individual row in the `ExecuteQueryResult` can exceed 100 MiB, and
    * no column value can exceed 10 MiB.
    */
-  ExecuteQueryResult ExecuteQuery(SqlStatement statement);
+  QueryResult ExecuteQuery(SqlStatement statement);
 
   /**
    * @copydoc ExecuteQuery(SqlStatement)
@@ -242,17 +242,15 @@ class Client {
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
-  ExecuteQueryResult ExecuteQuery(
-      Transaction::SingleUseOptions transaction_options,
-      SqlStatement statement);
+  QueryResult ExecuteQuery(Transaction::SingleUseOptions transaction_options,
+                           SqlStatement statement);
 
   /**
    * @copydoc ExecuteQuery(SqlStatement)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
-  ExecuteQueryResult ExecuteQuery(Transaction transaction,
-                                  SqlStatement statement);
+  QueryResult ExecuteQuery(Transaction transaction, SqlStatement statement);
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
@@ -266,7 +264,7 @@ class Client {
    * @par Example
    * @snippet samples.cc execute-sql-query-partition
    */
-  ExecuteQueryResult ExecuteQuery(QueryPartition const& partition);
+  QueryResult ExecuteQuery(QueryPartition const& partition);
   //@}
 
   /**
@@ -305,8 +303,8 @@ class Client {
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    */
-  StatusOr<ExecuteDmlResult> ExecuteDml(Transaction transaction,
-                                        SqlStatement statement);
+  StatusOr<DmlResult> ExecuteDml(Transaction transaction,
+                                 SqlStatement statement);
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements

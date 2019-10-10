@@ -27,33 +27,33 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-ReadResult Client::Read(std::string table, KeySet keys,
-                        std::vector<std::string> columns,
-                        ReadOptions read_options) {
+QueryResult Client::Read(std::string table, KeySet keys,
+                         std::vector<std::string> columns,
+                         ReadOptions read_options) {
   return conn_->Read(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        std::move(table), std::move(keys), std::move(columns),
        std::move(read_options)});
 }
 
-ReadResult Client::Read(Transaction::SingleUseOptions transaction_options,
-                        std::string table, KeySet keys,
-                        std::vector<std::string> columns,
-                        ReadOptions read_options) {
+QueryResult Client::Read(Transaction::SingleUseOptions transaction_options,
+                         std::string table, KeySet keys,
+                         std::vector<std::string> columns,
+                         ReadOptions read_options) {
   return conn_->Read(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
        std::move(table), std::move(keys), std::move(columns),
        std::move(read_options)});
 }
 
-ReadResult Client::Read(Transaction transaction, std::string table, KeySet keys,
-                        std::vector<std::string> columns,
-                        ReadOptions read_options) {
+QueryResult Client::Read(Transaction transaction, std::string table,
+                         KeySet keys, std::vector<std::string> columns,
+                         ReadOptions read_options) {
   return conn_->Read({std::move(transaction), std::move(table), std::move(keys),
                       std::move(columns), std::move(read_options)});
 }
 
-ReadResult Client::Read(ReadPartition const& read_partition) {
+QueryResult Client::Read(ReadPartition const& read_partition) {
   return conn_->Read(internal::MakeReadParams(read_partition));
 }
 
@@ -67,25 +67,25 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
        std::move(partition_options)});
 }
 
-ExecuteQueryResult Client::ExecuteQuery(SqlStatement statement) {
+QueryResult Client::ExecuteQuery(SqlStatement statement) {
   return conn_->ExecuteQuery(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        std::move(statement)});
 }
 
-ExecuteQueryResult Client::ExecuteQuery(
+QueryResult Client::ExecuteQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement) {
   return conn_->ExecuteQuery(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
        std::move(statement)});
 }
 
-ExecuteQueryResult Client::ExecuteQuery(Transaction transaction,
-                                        SqlStatement statement) {
+QueryResult Client::ExecuteQuery(Transaction transaction,
+                                 SqlStatement statement) {
   return conn_->ExecuteQuery({std::move(transaction), std::move(statement)});
 }
 
-ExecuteQueryResult Client::ExecuteQuery(QueryPartition const& partition) {
+QueryResult Client::ExecuteQuery(QueryPartition const& partition) {
   return conn_->ExecuteQuery(internal::MakeExecuteSqlParams(partition));
 }
 
@@ -96,8 +96,8 @@ StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
                                 std::move(partition_options)});
 }
 
-StatusOr<ExecuteDmlResult> Client::ExecuteDml(Transaction transaction,
-                                              SqlStatement statement) {
+StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
+                                       SqlStatement statement) {
   return conn_->ExecuteDml({std::move(transaction), std::move(statement)});
 }
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(

@@ -53,7 +53,7 @@ spanner_client_unit_tests = [
     "mutations_test.cc",
     "read_options_test.cc",
     "read_partition_test.cc",
-    "result_set_test.cc",
+    "results_test.cc",
     "retry_policy_test.cc",
     "row_test.cc",
     "row_parser_test.cc",
