@@ -15,6 +15,8 @@
 # ~~~
 
 find_package(googleapis)
+find_package(google_cloud_cpp_common CONFIG REQUIRED)
+find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 1)

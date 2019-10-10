@@ -27,6 +27,10 @@ switched_rules_by_language(
     grpc = True,
 )
 
+load("@com_github_googleapis_google_cloud_cpp_common//bazel:google_cloud_cpp_common_deps.bzl", "google_cloud_cpp_common_deps")
+
+google_cloud_cpp_common_deps()
+
 # Have to manually call the corresponding function for gRPC:
 #   https://github.com/bazelbuild/bazel/issues/1550
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
