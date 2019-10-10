@@ -26,7 +26,7 @@
 
 namespace {
 
-namespace spanner = google::cloud::spanner;
+namespace cloud_spanner = google::cloud::spanner;
 
 struct Config {
   std::string experiment;
@@ -87,8 +87,8 @@ class Experiment {
   virtual ~Experiment() = default;
 
   virtual void SetUp(Config const& config,
-                     spanner::Database const& database) = 0;
-  virtual void Run(Config const& config, spanner::Client client,
+                     cloud_spanner::Database const& database) = 0;
+  virtual void Run(Config const& config, cloud_spanner::Client client,
                    SampleSink const& sink) = 0;
 };
 
@@ -99,8 +99,8 @@ void RunParallel(int task_count,
 /// The work of a single thread in the 'InsertSingleRow' experiment.
 class InsertSingleRow : public Experiment {
  public:
-  void SetUp(Config const&, spanner::Database const&) override {}
-  void Run(Config const& config, spanner::Client client,
+  void SetUp(Config const&, cloud_spanner::Database const&) override {}
+  void Run(Config const& config, cloud_spanner::Client client,
            SampleSink const& sink) override {
     // Save the samples and report them every so many entries.
     std::size_t constexpr kReportSamples = 512;
@@ -123,15 +123,15 @@ class InsertSingleRow : public Experiment {
               deadline = start + config.duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = random_key(generator);
-      auto m = spanner::MakeInsertOrUpdateMutation(
+      auto m = cloud_spanner::MakeInsertOrUpdateMutation(
           "Singers", {"SingerId", "FirstName", "LastName"}, key,
           make_string("fname:", key), make_string("lname:", key));
       auto start_txn = std::chrono::steady_clock::now();
-      auto result = RunTransaction(
-          client, {},
-          [&m](spanner::Client const&, spanner::Transaction const&) {
-            return spanner::Mutations{m};
-          });
+      auto result = RunTransaction(client, {},
+                                   [&m](cloud_spanner::Client const&,
+                                        cloud_spanner::Transaction const&) {
+                                     return cloud_spanner::Mutations{m};
+                                   });
       samples.push_back(
           {Operation::kInsert, 1, ElapsedTime(start_txn), result.ok()});
 
@@ -149,8 +149,8 @@ class InsertSingleRow : public Experiment {
  */
 class InsertMultipleRows : public Experiment {
  public:
-  void SetUp(Config const&, spanner::Database const&) override {}
-  void Run(Config const& config, spanner::Client client,
+  void SetUp(Config const&, cloud_spanner::Database const&) override {}
+  void Run(Config const& config, cloud_spanner::Client client,
            SampleSink const& sink) override {
     // Save the samples and report them every so many entries.
     std::size_t constexpr kReportSamples = 512;
@@ -176,7 +176,7 @@ class InsertMultipleRows : public Experiment {
               deadline = start + config.duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto row_count = random_row_count(generator);
-      spanner::InsertOrUpdateMutationBuilder builder(
+      cloud_spanner::InsertOrUpdateMutationBuilder builder(
           "Singers", {"SingerId", "FirstName", "LastName"});
       for (auto i = 0; i != row_count; ++i) {
         auto key = random_key(generator);
@@ -185,10 +185,11 @@ class InsertMultipleRows : public Experiment {
       }
       auto start_txn = std::chrono::steady_clock::now();
       auto m = std::move(builder).Build();
-      auto result = spanner::RunTransaction(
+      auto result = cloud_spanner::RunTransaction(
           client, {},
-          [&m](spanner::Client const&, spanner::Transaction const&) {
-            return spanner::Mutations{m};
+          [&m](cloud_spanner::Client const&,
+               cloud_spanner::Transaction const&) {
+            return cloud_spanner::Mutations{m};
           });
       samples.push_back(
           {Operation::kInsert, row_count, ElapsedTime(start_txn), result.ok()});
@@ -205,7 +206,7 @@ class InsertMultipleRows : public Experiment {
 /// The work of a single thread in the 'InsertSingleRow' experiment.
 class SelectSingleRow : public Experiment {
  public:
-  void SetUpTask(Config const& config, spanner::Client const& client,
+  void SetUpTask(Config const& config, cloud_spanner::Client const& client,
                  int task_count, int task_id) {
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     std::uniform_int_distribution<std::int64_t> random_key(0,
@@ -225,19 +226,20 @@ class SelectSingleRow : public Experiment {
       }
       // Each thread does a fraction of the key space.
       if (key % task_count != task_id) continue;
-      auto m = spanner::MakeInsertOrUpdateMutation(
+      auto m = cloud_spanner::MakeInsertOrUpdateMutation(
           "Singers", {"SingerId", "FirstName", "LastName"}, key,
           make_string("fname:", key), make_string("lname:", key));
-      (void)RunTransaction(
-          client, {},
-          [&m](spanner::Client const&, spanner::Transaction const&) {
-            return spanner::Mutations{m};
-          });
+      (void)RunTransaction(client, {},
+                           [&m](cloud_spanner::Client const&,
+                                cloud_spanner::Transaction const&) {
+                             return cloud_spanner::Mutations{m};
+                           });
     }
   }
 
-  void SetUp(Config const& config, spanner::Database const& database) override {
-    spanner::Client client(spanner::MakeConnection(database));
+  void SetUp(Config const& config,
+             cloud_spanner::Database const& database) override {
+    cloud_spanner::Client client(cloud_spanner::MakeConnection(database));
     std::cout << "# Populating database " << std::flush;
     RunParallel(TaskCount(config),
                 [this, &config, &client](int task_count, int task_id) {
@@ -246,7 +248,7 @@ class SelectSingleRow : public Experiment {
     std::cout << " DONE\n";
   }
 
-  void Run(Config const& config, spanner::Client client,
+  void Run(Config const& config, cloud_spanner::Client client,
            SampleSink const& sink) override {
     // Save the samples and report them every so many entries.
     std::size_t constexpr kReportSamples = 512;
@@ -268,13 +270,15 @@ class SelectSingleRow : public Experiment {
 
       auto key = random_key(generator);
       auto start_query = std::chrono::steady_clock::now();
-      using RowType = spanner::Row<std::int64_t, std::string, std::string>;
-      spanner::SqlStatement statement(R"sql(
+      using RowType =
+          cloud_spanner::Row<std::int64_t, std::string, std::string>;
+      cloud_spanner::SqlStatement statement(
+          R"sql(
         SELECT SingerId, FirstName, LastName
           FROM Singers
          WHERE SingerId = @key
          LIMIT 1)sql",
-                                      {{"key", spanner::Value(key)}});
+          {{"key", cloud_spanner::Value(key)}});
       auto reader = client.ExecuteQuery(statement);
       for (auto& row : reader.Rows<RowType>()) {
         samples.push_back(
@@ -301,7 +305,7 @@ std::map<std::string, std::shared_ptr<Experiment>> ListExperiments() {
  * tests, the intention is to detect crashes or problems that stop the tests
  * from running.
  */
-void SmokeTest(Config const& setup, spanner::Database const& database,
+void SmokeTest(Config const& setup, cloud_spanner::Database const& database,
                SampleSink const& sink) {
   Config config = setup;
   config.duration = std::chrono::seconds(1);
@@ -336,7 +340,7 @@ void SmokeTest(Config const& setup, spanner::Database const& database,
     success_count = 0;
     error_count = 0;
   };
-  spanner::Client client(spanner::MakeConnection(database));
+  cloud_spanner::Client client(cloud_spanner::MakeConnection(database));
   auto experiments = ListExperiments();
   for (auto& kv : experiments) {
     kv.second->SetUp(config, database);
@@ -379,7 +383,7 @@ int main(int argc, char* argv[]) {
     config.instance_id = *std::move(instance);
   }
 
-  spanner::Database database(
+  cloud_spanner::Database database(
       config.project_id, config.instance_id,
       google::cloud::spanner_testing::RandomDatabaseName(generator));
 
@@ -393,13 +397,14 @@ int main(int argc, char* argv[]) {
             << "\n# Table Size: " << config.table_size
             << "\n# Maximum Read Size: " << config.maximum_read_size
             << "\n# Mutations per Request: " << config.mutations_per_request
-            << "\n# Compiler: " << spanner::internal::CompilerId() << "-"
-            << spanner::internal::CompilerVersion()
-            << "\n# Build Flags: " << spanner::internal::BuildFlags() << "\n"
+            << "\n# Compiler: " << cloud_spanner::internal::CompilerId() << "-"
+            << cloud_spanner::internal::CompilerVersion()
+            << "\n# Build Flags: " << cloud_spanner::internal::BuildFlags()
+            << "\n"
             << std::flush;
 
-  using Runner = std::function<void(Config const&, spanner::Database const&,
-                                    SampleSink const&)>;
+  using Runner = std::function<void(
+      Config const&, cloud_spanner::Database const&, SampleSink const&)>;
 
   Runner runner = &SmokeTest;
   if (config.experiment != "smoke-test") {
@@ -410,16 +415,18 @@ int main(int argc, char* argv[]) {
       return 1;
     }
     auto exp = entry->second;
-    runner = [exp](Config const& config, spanner::Database const& database,
+    runner = [exp](Config const& config,
+                   cloud_spanner::Database const& database,
                    SampleSink const& sink) {
       exp->SetUp(config, database);
       auto task = [config, database, sink, exp](int, int task_id) {
-        spanner::Client client(spanner::MakeConnection(database));
+        cloud_spanner::Client client(cloud_spanner::MakeConnection(database));
         if (!config.shared_client) {
           std::string domain = "task:" + std::to_string(task_id);
-          client = spanner::Client(spanner::MakeConnection(
+          client = cloud_spanner::Client(cloud_spanner::MakeConnection(
               database,
-              spanner::ConnectionOptions().set_channel_pool_domain(domain)));
+              cloud_spanner::ConnectionOptions().set_channel_pool_domain(
+                  domain)));
         }
         exp->Run(config, client, sink);
       };
@@ -427,7 +434,7 @@ int main(int argc, char* argv[]) {
     };
   }
 
-  spanner::DatabaseAdminClient admin_client;
+  cloud_spanner::DatabaseAdminClient admin_client;
   auto created =
       admin_client.CreateDatabase(database, {R"sql(CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,
