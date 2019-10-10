@@ -15,7 +15,7 @@
 # ~~~
 
 include(ExternalProject)
-include(external/external-project-helpers)
+include(ExternalProjectHelper)
 include(external/grpc)
 include(external/googleapis)
 include(external/googletest)
@@ -30,13 +30,13 @@ if (NOT TARGET google-cloud-cpp-common-project)
     set(GOOGLE_CLOUD_CPP_SHA256
         "ea7f8f64ee8a6964f8755d1024b908bf13170e505f54b57ffc72c0002d478b8c")
 
-    google_cloud_cpp_set_prefix_vars()
+    set_external_project_prefix_vars()
 
     set_external_project_build_parallel_level(PARALLEL)
 
     ExternalProject_Add(
         google-cloud-cpp-common-project
-        DEPENDS googleapis-project googletest-project grpc-project
+        DEPENDS googleapis_project googletest_project grpc_project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/google-cloud-cpp-common"
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"

@@ -15,6 +15,7 @@
 # ~~~
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
+find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 1)

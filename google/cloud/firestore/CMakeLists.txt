@@ -14,6 +14,9 @@
 # limitations under the License.
 # ~~~
 
+find_package(google_cloud_cpp_common CONFIG REQUIRED)
+find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
 # This should be included from the top level CMakeLists file
 set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
 set(FIRESTORE_CLIENT_VERSION_MINOR 0)

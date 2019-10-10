@@ -150,13 +150,14 @@ include(CTest)
 
 # Each subproject adds dependencies to this target to have their docs generated.
 add_custom_target(doxygen-docs)
+include(GoogleCloudCppCommon)
 
 # Only build the common library if any of the other libraries are enabled.
 if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
     add_subdirectory(google/cloud/storage)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
-    add_subdirectory(google/cloud/storage)
+    add_subdirectory(google/cloud/bigtable)
 endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
     add_subdirectory(google/cloud/firestore)

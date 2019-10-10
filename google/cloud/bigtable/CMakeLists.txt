@@ -17,6 +17,7 @@
 find_package(googleapis)
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 1)
@@ -84,8 +85,6 @@ find_package(gRPC)
 
 # Enable unit tests
 include(CTest)
-
-add_dependencies(google-cloud-cpp-dependencies bigtable_protos)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)

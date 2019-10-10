@@ -28,6 +28,7 @@ include(external/crc32c)
 include(external/grpc)
 include(external/googleapis)
 include(external/googletest)
+include(external/google-cloud-cpp-common)
 
 include(ExternalProjectHelper)
 set_external_project_prefix_vars()
@@ -39,7 +40,8 @@ set(GOOGLE_CLOUD_CPP_DEPENDENCIES_LIST
     curl_project
     crc32c_project
     googleapis_project
-    googletest_project)
+    googletest_project
+    google-cloud-cpp-common-project)
 
 include(ExternalProject)
 externalproject_add(
