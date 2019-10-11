@@ -170,7 +170,7 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
     }
     // Applications written before UBLA was introduced may have set only BPO,
     // only in this case we use the BPO value.  Applications that set UBLA are
-    // assumed to have prefer UBLA values, and would rarely have a reason to set
+    // assumed to prefer UBLA values, and would rarely have a reason to set
     // both.
     if (config.count("uniformBucketLevelAccess") == 0 &&
         config.count("bucketPolicyOnly") != 0) {
