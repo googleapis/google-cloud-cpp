@@ -106,6 +106,7 @@ class GcsBucket(object):
         or BucketPolicyOnly patch.
 
         :param patch:dict a dictionary of metadata values.
+        :param field: one of 'uniformBucketLevelAccess' or 'bucketPolicyOnly' 
         """
         field_was_enabled = False
         if self.metadata.get('iamConfiguration'):

@@ -168,11 +168,10 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
       c.bucket_policy_only =
           ParseUniformBucketLevelAccess(config["uniformBucketLevelAccess"]);
     }
-    // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
-    // Only(BPO). UBLA is preferred and recommended over BPO. UBLA field must be
-    // populated for bucket metadata JSON object including legacy applications
-    // having  only `bucketPolicyOnly`(legacy). This will ensure continual
-    // support for legacy applications.
+    // Applications written before UBLA was introduced may have set only BPO,
+    // only in this case we use the BPO value.  Applications that set UBLA are
+    // assumed to have prefer UBLA values, and would rarely have a reason to set
+    // both.
     if (config.count("uniformBucketLevelAccess") == 0 &&
         config.count("bucketPolicyOnly") != 0) {
       c.uniform_bucket_level_access =
@@ -318,7 +317,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       c["uniformBucketLevelAccess"] = std::move(ubla);
 
       // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
-      // Only(BPO). UBLA is preferred and recommended over BPO but currently
+      // Only (BPO). UBLA is preferred and recommended over BPO but currently
       // both fields are supported. At the moment both fields being set is
       // required but this is a workaround and will be fixed when the feature
       // GA's in GCS.
@@ -330,10 +329,10 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       c["bucketPolicyOnly"] = std::move(bpo);
     }
     // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
-    // Only(BPO). UBLA is preferred and recommended over BPO. UBLA field must be
-    // populated for bucket metadata JSON object including legacy applications
-    // having  only `bucketPolicyOnly`(legacy). This will ensure continual
-    // support for legacy applications.
+    // Only (BPO). UBLA is preferred and recommended over BPO. The UBLA field
+    // must be populated for bucket metadata JSON object including legacy
+    // applications having  only `bucketPolicyOnly`(legacy). This will ensure
+    // continual support for legacy applications.
     if (!meta.iam_configuration().uniform_bucket_level_access.has_value() &&
         meta.iam_configuration().bucket_policy_only.has_value()) {
       json ubla;
