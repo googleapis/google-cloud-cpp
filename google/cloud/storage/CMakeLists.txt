@@ -43,9 +43,6 @@ set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
 google_cloud_cpp_set_doxygen_tagfiles()
 
 include(GoogleCloudCppCommon)
-if (TARGET storage-docs AND TARGET cloud-docs)
-    add_dependencies(storage-docs cloud-docs)
-endif ()
 
 include(IncludeNlohmannJson)
 find_package(Crc32c)

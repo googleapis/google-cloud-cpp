@@ -43,13 +43,9 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
 google_cloud_cpp_set_doxygen_tagfiles()
 
 include(GoogleCloudCppCommon)
-if (TARGET bigtable-docs AND TARGET cloud-docs)
-    add_dependencies(bigtable-docs cloud-docs)
-endif ()
 
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
