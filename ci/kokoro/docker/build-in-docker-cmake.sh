@@ -75,6 +75,13 @@ if [[ "${USE_NINJA:-}" == "yes" ]]; then
   cmake_extra_flags+=( "-GNinja" )
 fi
 
+if [[ "${BUILD_NAME:-}" == "publish-refdocs" ]]; then
+  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=on" )
+  if [[ "${BRANCH:-}" == "master" ]]; then
+    cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS=on" )
+  fi
+fi
+
 # We use parameter expansion for ${cmake_extra_flags} because set -u doesn't
 # like empty arrays on older versions of Bash (which some of our builds use).
 # The expression ${parameter+word} will expand word only if parameter is not
