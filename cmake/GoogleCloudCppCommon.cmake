@@ -62,14 +62,12 @@ else()
             google-cloud-cpp-common-tag
             URL
                 "https://cloud-cpp-doxygen-resources.storage.googleapis.com/google-cloud-common.tag"
-            PREFIX "tags"
+            PREFIX "${PROJECT_BINARY_DIR}/tags"
             DOWNLOAD_NO_EXTRACT 1
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ""
             INSTALL_COMMAND "")
         externalproject_get_property(google-cloud-cpp-common-tag DOWNLOAD_DIR)
-        set(GOOGLE_CLOUD_CPP_COMMON_TAG
-            "${DOWNLOAD_DIR}/google-cloud-common.tag")
     endif ()
 
     find_package(Doxygen)
@@ -117,16 +115,10 @@ else()
         set(DOXYGEN_LAYOUT_FILE
             "${PROJECT_SOURCE_DIR}/doc/config/DoxygenLayout.xml")
 
-        doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
-                         ${CMAKE_CURRENT_SOURCE_DIR}
-                         WORKING_DIRECTORY
-                         ${CMAKE_CURRENT_SOURCE_DIR}
-                         COMMENT
-                         "Generate HTML documentation")
-        add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
-        add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
-                         google-cloud-cpp-common-tag)
-
+        set(
+            GOOGLE_CLOUD_CPP_COMMON_TAG
+            "${PROJECT_BINARY_DIR}/tags/src/google-cloud-common.tag"
+            )
         if (NOT "${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
             set(
                 DOXYGEN_TAGFILES
@@ -143,6 +135,17 @@ else()
                 "${GOOGLE_CLOUD_CPP_COMMON_TAG}=../../google-cloud-common/master/"
                 )
         endif ()
+
+        doxygen_add_docs(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
+                         ${CMAKE_CURRENT_SOURCE_DIR}
+                         WORKING_DIRECTORY
+                         ${CMAKE_CURRENT_SOURCE_DIR}
+                         COMMENT
+                         "Generate HTML documentation")
+        add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
+        add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
+                         google-cloud-cpp-common-tag)
+
     endif ()
 endif ()
 
