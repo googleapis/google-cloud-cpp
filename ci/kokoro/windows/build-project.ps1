@@ -35,6 +35,11 @@ $cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bcmake-out
 # path to that directory:
 $dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
 
+Invoke-Expression "$dir\vcpkg\vcpkg.exe install google-cloud-cpp-common:x64-windows-static --ports-overlay=$dir/ci/kokoro/windows/vcpkg-ports"
+if ($LastExitCode) {
+    throw "Installing google-cloud-cpp-common failed with $LastExitCode"
+}
+
 # Setup the environment for vcpkg:
 $cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
 $cmake_flags += "-DVCPKG_TARGET_TRIPLET=x64-windows-static"
