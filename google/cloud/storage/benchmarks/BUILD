@@ -23,12 +23,12 @@ cc_library(
     srcs = storage_benchmarks_srcs,
     hdrs = storage_benchmarks_hdrs,
     deps = [
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:nlohmann_json",
         "//google/cloud/storage:storage_client",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
     ],
 )
 
@@ -43,12 +43,12 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
     }),
     deps = [
         ":storage_benchmarks",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:nlohmann_json",
         "//google/cloud/storage:storage_client",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
     ],
 ) for test in storage_benchmark_programs]
 
@@ -63,13 +63,13 @@ load(":storage_benchmarks_unit_tests.bzl", "storage_benchmarks_unit_tests")
     }),
     deps = [
         ":storage_benchmarks",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],

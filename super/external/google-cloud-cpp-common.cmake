@@ -34,7 +34,7 @@ if (NOT TARGET google-cloud-cpp-common-project)
 
     set_external_project_build_parallel_level(PARALLEL)
 
-    ExternalProject_Add(
+    externalproject_add(
         google-cloud-cpp-common-project
         DEPENDS googleapis_project googletest_project grpc_project
         EXCLUDE_FROM_ALL ON
