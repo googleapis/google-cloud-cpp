@@ -39,7 +39,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/testing/*"
     "*/google/cloud/storage/tests/*"
     "*/google/cloud/storage/*_test.cc")
-set(DOXYGEN_EXCLUDE_SYMBOL "internal")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
