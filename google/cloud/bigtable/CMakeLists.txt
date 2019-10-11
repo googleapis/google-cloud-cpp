@@ -43,7 +43,6 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-google_cloud_cpp_set_doxygen_tagfiles()
 
 include(GoogleCloudCppCommon)
 
