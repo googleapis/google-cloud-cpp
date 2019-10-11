@@ -31,7 +31,9 @@ set(
     "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}"
     )
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
+    "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/README.md"
     "*/google/cloud/bigtable/benchmarks/*"
@@ -43,6 +45,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_WARN_AS_ERROR YES)
 
 include(GoogleCloudCppCommon)
 

@@ -80,7 +80,6 @@ else()
         set(DOXYGEN_EXCLUDE "third_party" "cmake-build-debug" "cmake-out")
         set(DOXYGEN_EXCLUDE_SYMLINKS YES)
         set(DOXYGEN_QUIET YES)
-        set(DOXYGEN_WARN_AS_ERROR YES)
         set(DOXYGEN_INLINE_INHERITED_MEMB YES)
         set(DOXYGEN_JAVADOC_AUTOBRIEF YES)
         set(DOXYGEN_BUILTIN_STL_SUPPORT YES)
@@ -92,12 +91,11 @@ else()
         set(DOXYGEN_GENERATE_BUGLIST NO)
         set(DOXYGEN_GENERATE_TESTLIST NO)
         set(DOXYGEN_CLANG_ASSISTED_PARSING YES)
-        set(DOXYGEN_CLANG_OPTIONS "\
--std=c++11 \
--I${PROJECT_SOURCE_DIR} \
--I${PROJECT_BINARY_DIR} \
--I${PROJECT_SOURCE_DIR}/googletest/include \
--I${PROJECT_SOURCE_DIR}/googletest/googlemock/include")
+        set(DOXYGEN_CLANG_OPTIONS "-std=c++11")
+        set(DOXYGEN_SEARCH_INCLUDES YES)
+        set(
+            DOXYGEN_INCLUDE_PATH "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}"
+            )
         set(DOXYGEN_GENERATE_LATEX NO)
         set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
         set(DOXYGEN_DIRECTORY_GRAPH NO)
