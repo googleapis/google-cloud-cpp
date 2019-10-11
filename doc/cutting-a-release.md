@@ -123,8 +123,10 @@ Manually run a Kokoro job
 internal testing dashboard and specify the branch name (e.g. `v0.11.x`) in the
 `Committish` field. This job will generate and upload the doxygen documentation
 to the staging bucket for googleapis.dev hosting. The uploaded documentation
-will generally be live in an hour at URLs like
-`https://googleapis.dev/cpp/google-cloud-bigtable/latest/`.
+will generally be live in an hour at the following URLs:
+* https://googleapis.dev/cpp/google-cloud-bigtable/latest/
+* https://googleapis.dev/cpp/google-cloud-storage/latest/
+* https://googleapis.dev/cpp/google-cloud-common/latest/
 
 You are now finished with this "releases" clone of the repo that we created in
 the instructions above. You may now remove this directory.
