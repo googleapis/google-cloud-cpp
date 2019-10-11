@@ -344,25 +344,25 @@ TEST(ObjectRequestsTest, RangeResponseParseErrors) {
   EXPECT_DEATH_IF_SUPPORTED(
       ReadObjectRangeResponse::FromHttpResponse(
           CreateRangeRequestResponse("bits 100-200/20000")),
-      "exceptions are disabled");
+      "");
   EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
                                 CreateRangeRequestResponse("100-200/20000")),
-                            "exceptions are disabled");
+                            "");
   EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
                                 CreateRangeRequestResponse("bytes ")),
-                            "exceptions are disabled");
+                            "");
   EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
                                 CreateRangeRequestResponse("bytes */")),
-                            "exceptions are disabled");
+                            "");
   EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
                                 CreateRangeRequestResponse("bytes 100-200/")),
-                            "exceptions are disabled");
+                            "");
   EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
                                 CreateRangeRequestResponse("bytes 100-/20000")),
-                            "exceptions are disabled");
+                            "");
   EXPECT_DEATH_IF_SUPPORTED(ReadObjectRangeResponse::FromHttpResponse(
                                 CreateRangeRequestResponse("bytes -200/20000")),
-                            "exceptions are disabled");
+                            "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

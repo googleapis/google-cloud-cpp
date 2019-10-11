@@ -267,8 +267,7 @@ TEST(LifecycleRuleTest, ConditionConjunctionIsLiveInvalid) {
   },
                std::invalid_argument);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(LifecycleRule::ConditionConjunction(c1, c2),
-                            "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(LifecycleRule::ConditionConjunction(c1, c2), "");
 #endif
 }
 
