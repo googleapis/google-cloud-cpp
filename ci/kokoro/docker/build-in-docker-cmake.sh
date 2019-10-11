@@ -99,17 +99,6 @@ if [[ "${CREATE_GRAPHVIZ:-}" == "yes" ]]; then
       --build "${BINARY_DIR}"
 fi
 
-# If scan-build is enabled, we need to manually compile the dependencies;
-# otherwise, the static analyzer finds issues in them, and there is no way to
-# ignore them.  When scan-build is not enabled, this is still useful because
-# we can fold the output in Travis and make the log more interesting.
-echo "${COLOR_YELLOW}Started dependency build at: $(date)${COLOR_RESET}"
-echo
-cmake --build "${BINARY_DIR}" \
-    --target google-cloud-cpp-dependencies -- -j "${NCPU}"
-echo
-echo "${COLOR_YELLOW}Finished dependency build at: $(date)${COLOR_RESET}"
-
 # If scan-build is enabled we build the smallest subset of things that is
 # needed; otherwise, we pick errors from things we do not care about. With
 # scan-build disabled we compile everything, to test the build as most
@@ -197,15 +186,10 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
         echo /var/tmp/staging/include/google/cloud/bigtable ; \
         echo /var/tmp/staging/include/google/cloud/bigtable/internal ; \
         echo /var/tmp/staging/include/google/cloud/firestore ; \
-        echo /var/tmp/staging/include/google/cloud/grpc_utils ; \
-        echo /var/tmp/staging/include/google/cloud/grpc_utils/internal ; \
-        echo /var/tmp/staging/include/google/cloud/internal ; \
-        echo /var/tmp/staging/include/google/cloud/spanner; \
         echo /var/tmp/staging/include/google/cloud/storage ; \
         echo /var/tmp/staging/include/google/cloud/storage/internal ; \
         echo /var/tmp/staging/include/google/cloud/storage/oauth2 ; \
         echo /var/tmp/staging/include/google/cloud/storage/testing ; \
-        echo /var/tmp/staging/include/google/cloud/testing_util ; \
         /bin/true) | grep -q /var/tmp; then
       echo "${COLOR_YELLOW}Installed directories do not match expectation.${COLOR_RESET}"
       echo "${COLOR_RED}Found:"
@@ -225,5 +209,5 @@ fi
 if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Generating Doxygen documentation at: $(date).${COLOR_RESET}"
-  cmake --build "${BINARY_DIR}" --target doxygen-docs
+  cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
