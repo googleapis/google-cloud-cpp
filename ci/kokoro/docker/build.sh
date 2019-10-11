@@ -63,6 +63,13 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_CLANG_TIDY=yes"
   export CHECK_STYLE=yes
   export GENERATE_DOCS=yes
+elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
+  export BUILD_TYPE=Debug
+  export CC=clang
+  export CXX=clang++
+  export GENERATE_DOCS=yes
+  export RUN_INTEGRATION_TESTS=no
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "asan" ]]; then
   # Compile with the AddressSanitizer enabled.
   export CC=clang
@@ -257,6 +264,28 @@ if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
   docker push "${IMAGE}:latest" || true
 fi
 
+# Because Kokoro checks out the code in `detached HEAD` mode there is no easy
+# way to discover what is the current branch (and Kokoro does not expose the
+# branch as an enviroment variable, like other CI systems do). We use the
+# following trick:
+# - Find out the current commit using git rev-parse HEAD.
+# - Exclude "HEAD detached" branches (they are not really branches).
+# - Choose the branch from the bottom of the list.
+# - Typically this is the branch that was checked out by Kokoro.
+echo "================================================================"
+echo "Detecting the branch name $(date)."
+BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
+  grep -v 'HEAD' | tail -1 || exit 0)"
+# Enable extglob if not enabled
+shopt -q extglob || shopt -s extglob
+BRANCH="${BRANCH##*( )}"
+BRANCH="${BRANCH%%*( )}"
+BRANCH="${BRANCH##remotes/origin/}"
+BRANCH="${BRANCH##remotes/upstream/}"
+export BRANCH
+echo "================================================================"
+echo "Detected the branch name: ${BRANCH} $(date)."
+
 echo "================================================================"
 echo "Running the full build inside docker $(date)."
 # The default user for a Docker container has uid 0 (root). To avoid creating
@@ -288,6 +317,10 @@ docker_flags=(
     "--env" "CC=${CC}"
 
     "--env" "NCPU=${NCPU}"
+
+    # Pass down the BUILD_NAME.
+    "--env" "BUILD_NAME=${BUILD_NAME}"
+    "--env" "BRANCH=${BRANCH}"
 
     # Disable ccache(1) for Kokoro builds.
     "--env" "NEEDS_CCACHE=no"
@@ -397,7 +430,12 @@ exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
 
-"${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh"
+if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
+  "${PROJECT_ROOT}/ci/kokoro/docker/publish-refdocs.sh"
+  exit_status=$?
+else
+  "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh"
+fi
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${IMAGE}:latest" "${docker_flags[@]}"
 
