@@ -34,7 +34,7 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/firestore/README.md"
     "*/google/cloud/firestore/internal/*"
     "*/google/cloud/firestore/*_test.cc")
-set(DOXYGEN_WARN_AS_ERROR YES)
+set(DOXYGEN_EXCLUDE_SYMBOL "internal")
 
 include(GoogleCloudCppCommon)
 

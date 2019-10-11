@@ -45,7 +45,6 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_WARN_AS_ERROR YES)
 
 include(GoogleCloudCppCommon)
 
