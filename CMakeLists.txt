@@ -162,3 +162,11 @@ endif ()
 if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
     add_subdirectory(google/cloud/firestore)
 endif ()
+
+# The examples are more readable if we use exceptions for error handling. We had
+# to tradeoff readability vs. "making them compile everywhere".
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS
+    AND GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+    AND GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    add_subdirectory(google/cloud/examples)
+endif ()
