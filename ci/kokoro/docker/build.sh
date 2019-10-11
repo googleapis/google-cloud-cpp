@@ -380,6 +380,7 @@ docker_flags=(
     # in your workstation.
     "--volume" "/v/cmake-out/home"
     "--volume" "/v/cmake-out"
+    "--volume" "/v/cmake-build-debug"
     "--volume" "${PWD}/${BUILD_OUTPUT}:/v/${BUILD_OUTPUT}"
 )
 
