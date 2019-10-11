@@ -622,7 +622,7 @@ TEST(BucketMetadataTest, SetIamConfiguration_BPO) {
 }
 
 /// @test Verify we can change the IAM Configuration in BucketMetadata.
-TEST(BucketMetadataTest, SetIamConfiguration_ULBA) {
+TEST(BucketMetadataTest, SetIamConfiguration_UBLA) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   BucketIamConfiguration new_configuration;

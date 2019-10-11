@@ -168,6 +168,11 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
       c.bucket_policy_only =
           ParseUniformBucketLevelAccess(config["uniformBucketLevelAccess"]);
     }
+    // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
+    // Only(BPO). UBLA is preferred and recommended over BPO. UBLA field must be
+    // populated for bucket metadata JSON object including legacy applications
+    // having  only `bucketPolicyOnly`(legacy). This will ensure continual
+    // support for legacy applications.
     if (config.count("uniformBucketLevelAccess") == 0 &&
         config.count("bucketPolicyOnly") != 0) {
       c.uniform_bucket_level_access =
@@ -312,6 +317,11 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       // the server will provide a value.
       c["uniformBucketLevelAccess"] = std::move(ubla);
 
+      // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
+      // Only(BPO). UBLA is preferred and recommended over BPO but currently
+      // both fields are supported. At the moment both fields being set is
+      // required but this is a workaround and will be fixed when the feature
+      // GA's in GCS.
       json bpo;
       bpo["enabled"] =
           meta.iam_configuration().uniform_bucket_level_access->enabled;
@@ -319,6 +329,11 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
       // the server will provide a value.
       c["bucketPolicyOnly"] = std::move(bpo);
     }
+    // Uniform Bucket Level Access(UBLA) is the new name for Bucket Policy
+    // Only(BPO). UBLA is preferred and recommended over BPO. UBLA field must be
+    // populated for bucket metadata JSON object including legacy applications
+    // having  only `bucketPolicyOnly`(legacy). This will ensure continual
+    // support for legacy applications.
     if (!meta.iam_configuration().uniform_bucket_level_access.has_value() &&
         meta.iam_configuration().bucket_policy_only.has_value()) {
       json ubla;

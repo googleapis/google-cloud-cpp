@@ -394,7 +394,7 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration_BPO) {
   nl::json expected = nl::json::parse(R"""({
       "iamConfiguration": {
           "bucketPolicyOnly": {"enabled": true},
-          "uniformBucketLevelAccess":{"enabled":true}
+          "uniformBucketLevelAccess":{"enabled": true}
        }
   })""");
   EXPECT_EQ(expected, patch);
@@ -414,7 +414,7 @@ TEST(PatchBucketRequestTest, DiffSetIamConfiguration_UBLA) {
   nl::json expected = nl::json::parse(R"""({
       "iamConfiguration": {
           "bucketPolicyOnly": {"enabled": true},
-          "uniformBucketLevelAccess":{"enabled":true}
+          "uniformBucketLevelAccess":{"enabled": true}
        }
   })""");
   EXPECT_EQ(expected, patch);

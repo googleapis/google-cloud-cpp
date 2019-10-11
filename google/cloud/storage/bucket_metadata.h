@@ -136,7 +136,7 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
  * @warning this is a Beta feature of Google Cloud Storage, it is not subject
  *     to the deprecation policy and subject to change without notice.
  *
- * @see Before enabling Bucket Policy Only or UniformBucketLevelAccess please
+ * @see Before enabling Uniform Bucket Level Access please
  *     review the [feature documentation][bpo-link], as well as
  *     ["Should you use Bucket Policy Only?"][bpo-should-link].
  *
