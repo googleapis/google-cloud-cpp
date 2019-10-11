@@ -218,6 +218,32 @@ class StatusOnlyResultSetSource : public internal::ResultSourceInterface {
   google::cloud::Status status_;
 };
 
+class DmlResultSetSource : public internal::ResultSourceInterface {
+ public:
+  explicit DmlResultSetSource(spanner_proto::ResultSet result_set)
+      : result_set_(std::move(result_set)) {}
+  ~DmlResultSetSource() override = default;
+
+  StatusOr<optional<Value>> NextValue() override { return {}; }
+
+  optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
+    if (result_set_.has_metadata()) {
+      return result_set_.metadata();
+    }
+    return {};
+  }
+
+  optional<google::spanner::v1::ResultSetStats> Stats() const override {
+    if (result_set_.has_stats()) {
+      return result_set_.stats();
+    }
+    return {};
+  }
+
+ private:
+  spanner_proto::ResultSet result_set_;
+};
+
 QueryResult ConnectionImpl::ReadImpl(SessionHolder& session,
                                      spanner_proto::TransactionSelector& s,
                                      ReadParams rp) {
@@ -412,27 +438,21 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
     request.set_partition_token(*std::move(esp.partition_token));
   }
 
-  auto const& stub = stub_;
-  // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
-  // the lifetime of the lambda. Note that the local variable `stub` is a
-  // reference to avoid increasing refcounts twice, but the capture is by value.
-  auto factory = [stub, request](std::string const& resume_token) mutable {
-    request.set_resume_token(resume_token);
-    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    return google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
-        std::move(context), stub->ExecuteStreamingSql(*context, request));
-  };
-
-  auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
-      std::move(factory), Idempotency::kIdempotent, retry_policy_->clone(),
-      backoff_policy_->clone());
-  auto reader = PartialResultSetSource::Create(std::move(rpc));
-
-  if (!reader.ok()) {
-    return std::move(reader).status();
+  StatusOr<spanner_proto::ResultSet> response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::ExecuteSqlRequest const& request) {
+        return stub_->ExecuteSql(context, request);
+      },
+      request, __func__);
+  if (!response) {
+    return std::move(response).status();
   }
+
+  auto reader = google::cloud::internal::make_unique<DmlResultSetSource>(
+      std::move(*response));
   if (s.has_begin()) {
-    auto metadata = (*reader)->Metadata();
+    auto metadata = (reader)->Metadata();
     if (!metadata || metadata->transaction().id().empty()) {
       return DmlResult(
           google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
@@ -442,7 +462,7 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
     }
     s.set_id(metadata->transaction().id());
   }
-  return DmlResult(std::move(*reader));
+  return DmlResult(std::move(reader));
 }
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
