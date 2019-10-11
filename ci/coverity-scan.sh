@@ -34,10 +34,6 @@ cmake -H. -B.coverity \
     -DCMAKE_BUILD_TYPE=Debug \
     -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF
 
-# The project dependencies, including the generated protos, should be built
-# without coverity-scan, any errors in them are not actionable.
-cmake --build .coverity --target google-cloud-cpp-dependencies -- -j "$(nproc)"
-
 # Run coverity scan over our code.
 cov-build --dir cov-int cmake --build .coverity -- -j "$(nproc)"
 
