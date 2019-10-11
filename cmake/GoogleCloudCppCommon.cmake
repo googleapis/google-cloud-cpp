@@ -115,10 +115,8 @@ else()
         set(DOXYGEN_LAYOUT_FILE
             "${PROJECT_SOURCE_DIR}/doc/config/DoxygenLayout.xml")
 
-        set(
-            GOOGLE_CLOUD_CPP_COMMON_TAG
-            "${PROJECT_BINARY_DIR}/tags/src/google-cloud-common.tag"
-            )
+        set(GOOGLE_CLOUD_CPP_COMMON_TAG
+            "${PROJECT_BINARY_DIR}/tags/src/google-cloud-common.tag")
         if (NOT "${GOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV}")
             set(
                 DOXYGEN_TAGFILES
