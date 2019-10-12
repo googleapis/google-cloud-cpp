@@ -33,9 +33,10 @@ $cmake_flags=@("-G$GENERATOR", "-DCMAKE_BUILD_TYPE=$CONFIG", "-H.", "-Bcmake-out
 
 # This script expects vcpkg to be installed in ..\vcpkg, discover the full
 # path to that directory:
-$dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
+$cwd = (Get-Item -Path ".\" -Verbose).FullName
+$dir = Split-Path "$cwd"
 
-Invoke-Expression "$dir\vcpkg\vcpkg.exe install google-cloud-cpp-common:x64-windows-static --overlay-ports=$dir/ci/kokoro/windows/vcpkg-ports"
+Invoke-Expression "$dir\vcpkg\vcpkg.exe install google-cloud-cpp-common:x64-windows-static --overlay-ports=$cwd/ci/kokoro/windows/vcpkg-ports"
 if ($LastExitCode) {
     throw "Installing google-cloud-cpp-common failed with $LastExitCode"
 }
