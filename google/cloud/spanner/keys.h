@@ -155,10 +155,10 @@ class KeySet {
   KeySet() = default;
 
   // Copy and move constructors and assignment operators.
-  KeySet(KeySet const& key_range) = default;
-  KeySet& operator=(KeySet const& rhs) = default;
-  KeySet(KeySet&& key_range) = default;
-  KeySet& operator=(KeySet&& rhs) = default;
+  KeySet(KeySet const&) = default;
+  KeySet& operator=(KeySet const&) = default;
+  KeySet(KeySet&&) = default;
+  KeySet& operator=(KeySet&&) = default;
 
   /// Adds the given @p key to the `KeySet`.
   KeySet& AddKey(Key key);
