@@ -31,6 +31,7 @@ TEST(StorageClassTest, Values) {
   EXPECT_EQ(std::string("COLDLINE"), Coldline());
   EXPECT_EQ(std::string("DURABLE_REDUCED_AVAILABILITY"),
             DurableReducedAvailability());
+  EXPECT_EQ(std::string("ARCHIVE"), Archive());
 }
 
 }  // namespace
