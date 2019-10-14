@@ -807,19 +807,25 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
+  using google::cloud::StatusOr;
 
   // A helper to read a single album MarketingBudget.
-  auto get_current_budget = [](spanner::Client client, spanner::Transaction txn,
-                               std::int64_t singer_id, std::int64_t album_id) {
+  auto get_current_budget =
+      [](spanner::Client client, spanner::Transaction txn,
+         std::int64_t singer_id,
+         std::int64_t album_id) -> StatusOr<std::int64_t> {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(singer_id, album_id));
     auto read = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
     for (auto row : read.Rows<spanner::Row<std::int64_t>>()) {
-      if (!row) throw std::runtime_error(row.status().message());
+      // Return the error (as opposed to throwing an exception) because
+      // RunTransaction() only retries on StatusCode::kAborted.
+      if (!row) return std::move(row).status();
       // We expect at most one result from the `Read()` request. Return
       // the first one.
       return row->get<0>();
     }
+    // Throw an exception because this should terminate the transaction.
     throw std::runtime_error("Key not found (" + std::to_string(singer_id) +
                              "," + std::to_string(album_id) + ")");
   };
@@ -830,14 +836,16 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                             spanner::Transaction const& txn)
           -> google::cloud::StatusOr<spanner::Mutations> {
         auto b1 = get_current_budget(client, txn, 1, 1);
+        if (!b1) return std::move(b1).status();
         auto b2 = get_current_budget(client, txn, 2, 2);
+        if (!b2) return std::move(b2).status();
         std::int64_t transfer_amount = 200000;
 
         return spanner::Mutations{
             spanner::UpdateMutationBuilder(
                 "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
-                .EmplaceRow(1, 1, b1 + transfer_amount)
-                .EmplaceRow(2, 2, b2 - transfer_amount)
+                .EmplaceRow(1, 1, *b1 + transfer_amount)
+                .EmplaceRow(2, 2, *b2 - transfer_amount)
                 .Build()};
       });
 
