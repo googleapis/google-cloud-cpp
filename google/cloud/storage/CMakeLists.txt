@@ -14,6 +14,9 @@
 # limitations under the License.
 # ~~~
 
+find_package(google_cloud_cpp_common CONFIG REQUIRED)
+find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 1)
 set(STORAGE_CLIENT_VERSION_MINOR 6)
@@ -26,7 +29,8 @@ set(
     "${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}"
     )
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-set(DOXYGEN_PREDEFINED "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
+    "STORAGE_CLIENT_NS=v${STORAGE_CLIENT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/README.md"
     "*/google/cloud/storage/ci/*"
@@ -36,13 +40,8 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/tests/*"
     "*/google/cloud/storage/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
-google_cloud_cpp_set_doxygen_tagfiles()
 
 include(GoogleCloudCppCommon)
-if (TARGET storage-docs AND TARGET cloud-docs)
-    add_dependencies(storage-docs cloud-docs)
-endif ()
 
 include(IncludeNlohmannJson)
 find_package(Crc32c)

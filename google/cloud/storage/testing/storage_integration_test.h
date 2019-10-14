@@ -74,7 +74,7 @@ void TestPermanentFailure(Callable&& callable) {
   },
                std::runtime_error);
 #else
-  EXPECT_DEATH_IF_SUPPORTED(callable(), "exceptions are disabled");
+  EXPECT_DEATH_IF_SUPPORTED(callable(), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 }
 

@@ -25,11 +25,11 @@ load(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/bigtable:bigtable_client_testing",
-        "//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
 ) for test in bigtable_client_integration_tests]

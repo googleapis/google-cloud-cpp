@@ -144,13 +144,6 @@ cmake_dependent_option(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS
                        OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
 
-# There are a number of targets that are pure dependencies, i.e., do not contain
-# our own code. These targets can be skipped when using static analysis tools.
-# Can be built earlier in the CI environment (for example to warm up the cache).
-# And in general can receive special treatment. This custom target collects all
-# these special targets with a single name.
-add_custom_target(google-cloud-cpp-dependencies)
-
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
 include(CTest)
@@ -159,9 +152,20 @@ include(CTest)
 add_custom_target(doxygen-docs)
 
 # Only build the common library if any of the other libraries are enabled.
-if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE
-    OR GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
-    OR GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
-    # Add subprojects here.
-    add_subdirectory(google/cloud)
+if (GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    add_subdirectory(google/cloud/storage)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
+    add_subdirectory(google/cloud/bigtable)
+endif ()
+if (GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE)
+    add_subdirectory(google/cloud/firestore)
+endif ()
+
+# The examples are more readable if we use exceptions for error handling. We had
+# to tradeoff readability vs. "making them compile everywhere".
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS
+    AND GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+    AND GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    add_subdirectory(google/cloud/examples)
 endif ()

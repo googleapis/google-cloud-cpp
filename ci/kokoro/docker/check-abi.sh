@@ -75,7 +75,7 @@ check_library() {
 exit_status=0
 # We are keeping the library list alphabetical for now, there is no preferred
 # order otherwise.
-for library in bigtable_client google_cloud_cpp_common google_cloud_cpp_grpc_utils storage_client; do
+for library in bigtable_client storage_client; do
   check_library "${library}" || exit_status=1
 done
 

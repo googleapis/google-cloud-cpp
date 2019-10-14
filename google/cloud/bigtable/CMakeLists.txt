@@ -15,6 +15,9 @@
 # ~~~
 
 find_package(googleapis)
+find_package(google_cloud_cpp_common CONFIG REQUIRED)
+find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 1)
@@ -28,7 +31,9 @@ set(
     "${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}"
     )
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-set(DOXYGEN_PREDEFINED "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
+    "BIGTABLE_CLIENT_NS=v${BIGTABLE_CLIENT_VERSION_MAJOR}")
+
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/README.md"
     "*/google/cloud/bigtable/benchmarks/*"
@@ -40,13 +45,8 @@ set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/bigtable/tools/*"
     "*/google/cloud/bigtable/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
-set(DOXYGEN_TAGFILES "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag=../common")
-google_cloud_cpp_set_doxygen_tagfiles()
 
 include(GoogleCloudCppCommon)
-if (TARGET bigtable-docs AND TARGET cloud-docs)
-    add_dependencies(bigtable-docs cloud-docs)
-endif ()
 
 # Define an interface library, i.e., a library that really has no sources, and
 # add public target options to it.  The targets then use the library via
@@ -82,8 +82,6 @@ find_package(gRPC)
 
 # Enable unit tests
 include(CTest)
-
-add_dependencies(google-cloud-cpp-dependencies bigtable_protos)
 
 # Generate the version information from the CMake values.
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)

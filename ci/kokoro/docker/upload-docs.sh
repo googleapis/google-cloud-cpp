@@ -104,12 +104,10 @@ fi
 # recover any unmodified files in a second.
 (cd cmake-out/github-io-staging ; \
  git rm -qfr --ignore-unmatch \
-   "${subdir}/{bigtable,common,firestore,storage}")
+   "${subdir}/{bigtable,firestore,storage}")
 
 # Copy the build results into the gh-pages clone.
 mkdir -p "cmake-out/github-io-staging/${subdir}"
-cp -r "${BUILD_OUTPUT}/google/cloud/html/." \
-    "cmake-out/github-io-staging/${subdir}/common/"
 for lib in bigtable firestore storage; do
   cp -r "${BUILD_OUTPUT}/google/cloud/${lib}/html/." \
       "cmake-out/github-io-staging/${subdir}/${lib}"

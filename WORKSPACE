@@ -18,6 +18,10 @@ load("//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 
+load("@com_github_googleapis_google_cloud_cpp_common//bazel:google_cloud_cpp_common_deps.bzl", "google_cloud_cpp_common_deps")
+
+google_cloud_cpp_common_deps()
+
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
 # Configure @com_google_googleapis to only compile C++ and gRPC:
@@ -35,9 +39,13 @@ grpc_deps()
 
 # Call the workspace dependency functions defined, but not invoked, in grpc_deps.bzl.
 load("@upb//bazel:workspace_deps.bzl", "upb_deps")
-upb_deps()
-load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
-apple_rules_dependencies()
-load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
-apple_support_dependencies()
 
+upb_deps()
+
+load("@build_bazel_rules_apple//apple:repositories.bzl", "apple_rules_dependencies")
+
+apple_rules_dependencies()
+
+load("@build_bazel_apple_support//lib:repositories.bzl", "apple_support_dependencies")
+
+apple_support_dependencies()

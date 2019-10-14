@@ -39,34 +39,38 @@ The build takes a few minutes the first time, as it needs to create a Docker
 image with all the development tools and dependencies installed. Future builds
 (with no changes to the source) take only a few seconds.
 
-## Install the dependencies in `$HOME/local`.
+## Install the dependencies in `$HOME/local-cpp`.
 
 This is the recommended way to develop `google-cloud-cpp` using CMake. You will
-install the dependencies in `$HOME/local` (or a similar directory), and compile
-the project against these libraries. The installation needs to be done every
-time the version of the dependencies is changed, and it is not done
+install the dependencies in `$HOME/local-cpp` (or a similar directory), and
+compile the project against these libraries. The installation needs to be done
+every time the version of the dependencies is changed, and it is not done
 automatically. But once installed you can use them for any build.
 
-Configure the super-build to install in `$HOME/local`:
+
+Configure the super-build to install in `$HOME/local-spanner`. We recommend that
+you use Ninja for this build because it is substantially faster than Make in
+this case. Note that if Ninja is not installed in your workstation you may need
+to remove the `-GNinja` flag:
 
 ```console
-cmake -Hsuper -Bcmake-out/super-install \
-    -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
+cmake -Hsuper -Bcmake-out/si \
+    -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local-cpp -GNinja
 ```
 
-If you have Ninja installed, you should consider using `-GNinja` to speed up the
-build.
-
-Once the configuration is done, install the dependencies, but not the project
-itself:
+Install the dependencies:
 
 ```console
-cmake --build cmake-out/super-install --target google-cloud-cpp-dependencies \
-    -- -j $(nproc)
+cmake --build cmake-out/si --target project-dependencies -- -j $(nproc)
 ```
 
 Now you can use these dependencies multiple times. To use them, add the
-`$HOME/local` directory to `CMAKE_PREFIX_PATH` when you configure the project:
+`$HOME/local-spanner` directory to `CMAKE_PREFIX_PATH` when you configure the
+project:
+
+```console
+cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local-cpp
+```
 
 ```console
 cmake -H. -Bcmake-out/home -DCMAKE_PREFIX_PATH=$HOME/local

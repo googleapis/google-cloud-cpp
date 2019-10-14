@@ -14,6 +14,9 @@
 # limitations under the License.
 # ~~~
 
+find_package(google_cloud_cpp_common CONFIG REQUIRED)
+find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
 # This should be included from the top level CMakeLists file
 set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
 set(FIRESTORE_CLIENT_VERSION_MINOR 0)
@@ -25,11 +28,13 @@ set(
     DOXYGEN_PROJECT_NUMBER
     "${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}"
     )
-set(DOXYGEN_PREDEFINED "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
+set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
+    "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/firestore/README.md"
     "*/google/cloud/firestore/internal/*"
     "*/google/cloud/firestore/*_test.cc")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
 include(GoogleCloudCppCommon)
 
