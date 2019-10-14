@@ -8,7 +8,7 @@ This directory contains the following C++ client libraries:
 ## Common Utilities
 
 This directory used to contain common libraries shared by the Cloud Bigtable and
-Google Cloud Storage clients, the have moved to their
+Google Cloud Storage clients; they have moved to their
 [own repository][github-cpp-common].
 
 [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
