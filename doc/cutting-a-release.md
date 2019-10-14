@@ -119,11 +119,11 @@ Uncheck the pre-release checkbox and publish.
 ## Generate and upload the documentation to googleapis.dev
 
 Manually run a Kokoro job
-`cloud-devrel/client-libraries/cpp/google-cloud-cpp/refdocs` in the Cloud C++
-internal testing dashboard and specify the branch name (e.g. `v0.11.x`) in the
-`Committish` field. This job will generate and upload the doxygen documentation
-to the staging bucket for googleapis.dev hosting. The uploaded documentation
-will generally be live in an hour at the following URLs:
+`cloud-devrel/client-libraries/cpp/google-cloud-cpp/publish-refdocs` in the
+Cloud C++ internal testing dashboard and specify the branch name (e.g.
+`v0.11.x`) in the `Committish` field. This job will generate and upload the
+doxygen documentation to the staging bucket for googleapis.dev hosting. The
+uploaded documentation will generally be live in an hour at the following URLs:
 * https://googleapis.dev/cpp/google-cloud-bigtable/latest/
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
