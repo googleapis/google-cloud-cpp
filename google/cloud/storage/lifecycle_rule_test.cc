@@ -72,6 +72,8 @@ TEST(LifecycleRuleTest, SetStorageClass) {
   EXPECT_EQ(LifecycleRule::SetStorageClass(
                 storage_class::DurableReducedAvailability()),
             LifecycleRule::SetStorageClassDurableReducedAvailability());
+  EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::Archive()),
+            LifecycleRule::SetStorageClassArchive());
 }
 
 /// @test Verify that LifecycleRuleCondition comparisons work as expected.
@@ -228,6 +230,14 @@ TEST(LifecycleRuleTest, MatchesStorageClassDurableReducedAvailability) {
   ASSERT_FALSE(condition.matches_storage_class->empty());
   EXPECT_EQ(storage_class::DurableReducedAvailability(),
             condition.matches_storage_class->front());
+}
+
+/// @test LifecycleRule::MatchesStorageClassArchive.
+TEST(LifecycleRuleTest, MatchesStorageClassArchive) {
+  auto condition = LifecycleRule::MatchesStorageClassArchive();
+  ASSERT_TRUE(condition.matches_storage_class.has_value());
+  ASSERT_FALSE(condition.matches_storage_class->empty());
+  EXPECT_EQ(storage_class::Archive(), condition.matches_storage_class->front());
 }
 
 /// @test Verify that LifecycleRule::NumNewerVersions() works as expected.
