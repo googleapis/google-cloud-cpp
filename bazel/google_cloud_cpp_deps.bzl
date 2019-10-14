@@ -64,10 +64,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/a8ee1416f4c588f2ab92da72e7c1f588c784d3e6.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/9c9f778aedde02f9826d2ae5d0f9c96409ba0f25.tar.gz",
             ],
-            strip_prefix = "googleapis-a8ee1416f4c588f2ab92da72e7c1f588c784d3e6",
-            sha256 = "6b8a9b2bcb4476e9a5a9872869996f0d639c8d5df76dd8a893e79201f211b1cf",
+            strip_prefix = "googleapis-9c9f778aedde02f9826d2ae5d0f9c96409ba0f25",
+            sha256 = "13af135d8cc9b81b47d6fbfc258fe790a151956d06e01fd16671aa49fe536ab1",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
@@ -83,6 +83,18 @@ def google_cloud_cpp_deps():
             ],
             sha256 = "c84b3fa140fcd6cce79b3f9de6357c5733a0071e04ca4e65ba5f8d306f10f033",
         )
+
+    # We use the cc_proto_library() rule from @com_google_protobuf, which
+    # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
+    native.bind(
+        name = "grpc_cpp_plugin",
+        actual = "@com_github_grpc_grpc//src/compiler:grpc_cpp_plugin",
+    )
+
+    native.bind(
+        name = "grpc_lib",
+        actual = "@com_github_grpc_grpc//:grpc++",
+    )
 
     # We need libcurl for the Google Cloud Storage client.
     if "com_github_curl_curl" not in native.existing_rules():
@@ -117,15 +129,3 @@ def google_cloud_cpp_deps():
             sha256 = "6b3b1d861bb8307658b2407bc7a4c59e566855ef5368a60b35c893551e4788e9",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:crc32c.BUILD",
         )
-
-    # We use the cc_proto_library() rule from @com_google_protobuf, which
-    # assumes that grpc_cpp_plugin and grpc_lib are in the //external: module
-    native.bind(
-        name = "grpc_cpp_plugin",
-        actual = "@com_github_grpc_grpc//:grpc_cpp_plugin",
-    )
-
-    native.bind(
-        name = "grpc_lib",
-        actual = "@com_github_grpc_grpc//:grpc++",
-    )
