@@ -381,12 +381,12 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
   EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
-INSTANTIATE_TEST_CASE_P(SizeOrNumMutationsLimit, MutationBatcherBoolParamTest,
-                        ::testing::Values(
-                            // Test the #mutations limit
-                            false,
-                            // Test the size of mutations limit
-                            true));
+INSTANTIATE_TEST_SUITE_P(SizeOrNumMutationsLimit, MutationBatcherBoolParamTest,
+                         ::testing::Values(
+                             // Test the #mutations limit
+                             false,
+                             // Test the size of mutations limit
+                             true));
 
 TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
   std::vector<SingleRowMutation> mutations(
