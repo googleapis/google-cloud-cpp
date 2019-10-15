@@ -96,7 +96,7 @@ class GcsBucket(object):
             'labels', 'lifecycle', 'location', 'logging', 'retentionPolicy',
             'storageClass', 'versioning', 'website', 'iamConfiguration'
         }
-        for key in metadata.keys():
+        for key in list(metadata.keys()):
             if key not in writeable_keys:
                 metadata.pop(key, None)
         return metadata

@@ -103,7 +103,7 @@ def filter_fields_from_response(fields, response):
     :rtype:str
     """
     if fields is None:
-        return json.dumps(response)
+        return json.dumps(list(response))
     tmp = {}
     # TODO(#1037) - support full filter expressions
     for key in fields.split(','):
