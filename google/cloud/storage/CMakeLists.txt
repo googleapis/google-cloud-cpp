@@ -171,6 +171,7 @@ add_library(
     internal/sign_blob_requests.cc
     internal/signed_url_requests.h
     internal/signed_url_requests.cc
+    internal/tuple_filter.h
     lifecycle_rule.h
     lifecycle_rule.cc
     list_buckets_reader.h
@@ -363,6 +364,7 @@ if (BUILD_TESTING)
         internal/sha256_hash_test.cc
         internal/sign_blob_requests_test.cc
         internal/signed_url_requests_test.cc
+        internal/tuple_filter_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc
