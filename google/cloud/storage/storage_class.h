@@ -28,6 +28,16 @@ inline char const* Standard() {
   return kStorageClass;
 }
 
+inline char const* MultiRegional() {
+  static constexpr char kStorageClass[] = "MULTI_REGIONAL";
+  return kStorageClass;
+}
+
+inline char const* Regional() {
+  static constexpr char kStorageClass[] = "REGIONAL";
+  return kStorageClass;
+}
+
 inline char const* Nearline() {
   static constexpr char kStorageClass[] = "NEARLINE";
   return kStorageClass;

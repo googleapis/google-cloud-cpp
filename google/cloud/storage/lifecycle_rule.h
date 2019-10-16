@@ -144,6 +144,8 @@ class LifecycleRule {
    */
   static LifecycleRuleAction Delete();
   static LifecycleRuleAction SetStorageClassStandard();
+  static LifecycleRuleAction SetStorageClassMultiRegional();
+  static LifecycleRuleAction SetStorageClassRegional();
   static LifecycleRuleAction SetStorageClassNearline();
   static LifecycleRuleAction SetStorageClassColdline();
   static LifecycleRuleAction SetStorageClassDurableReducedAvailability();
@@ -208,6 +210,14 @@ class LifecycleRule {
 
   static LifecycleRuleCondition MatchesStorageClassStandard() {
     return MatchesStorageClass(storage_class::Standard());
+  }
+
+  static LifecycleRuleCondition MatchesStorageClassMultiRegional() {
+    return MatchesStorageClass(storage_class::MultiRegional());
+  }
+
+  static LifecycleRuleCondition MatchesStorageClassRegional() {
+    return MatchesStorageClass(storage_class::Regional());
   }
 
   static LifecycleRuleCondition MatchesStorageClassNearline() {
