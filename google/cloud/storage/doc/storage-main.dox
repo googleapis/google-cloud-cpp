@@ -80,8 +80,8 @@ This example assumes you have configured the authentication using
 
 @snippet storage_quickstart.cc full quickstart
 
-This quickstart will always create a **regional** bucket in the **us-east1**
-region. You must provide the project id and bucket name in the command-line when
+This quickstart will always create a bucket and use **US** for the location.
+You must provide the project id and bucket name in the command-line when
 you run the quickstart program. Assuming you followed the build instructions
 referenced above this would be:
 

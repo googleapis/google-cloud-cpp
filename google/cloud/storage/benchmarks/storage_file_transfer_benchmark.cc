@@ -37,7 +37,7 @@ the GCS object to a separate file. The program reports the time taken to perform
 the each operation, as well as the effective bandwidth (in Gbps and MiB/s). The
 program deletes the target GCS object after each iteration.
 
-To perform this benchmark the program creates a new regional bucket, in a region
+To perform this benchmark the program creates a new standard bucket, in a region
 configured via the command line. Other test parameters, such as the project id,
 the file size, and the buffer sizes are configurable via the command line too.
 
@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
       client
           .CreateBucket(bucket_name,
                         gcs::BucketMetadata()
-                            .set_storage_class(gcs::storage_class::Regional())
+                            .set_storage_class(gcs::storage_class::Standard())
                             .set_location(options->region),
                         gcs::PredefinedAcl("private"),
                         gcs::PredefinedDefaultObjectAcl("projectPrivate"),

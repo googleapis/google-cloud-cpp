@@ -99,7 +99,7 @@ TEST_F(ThreadIntegrationTest, Unshared) {
   StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata()
-          .set_storage_class(storage_class::Regional())
+          .set_storage_class(storage_class::Standard())
           .set_location(flag_location)
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
@@ -177,7 +177,7 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
   StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata()
-          .set_storage_class(storage_class::Regional())
+          .set_storage_class(storage_class::Standard())
           .set_location(flag_location)
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),

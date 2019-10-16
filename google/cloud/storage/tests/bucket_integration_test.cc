@@ -201,7 +201,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata().set_location("US").set_storage_class(
-          storage_class::MultiRegional()),
+          storage_class::Standard()),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
