@@ -26,7 +26,7 @@ inline namespace BIGQUERY_CLIENT_NS {
 namespace internal {
 std::string BaseUserAgentPrefix() {
   // TODO(aryann): Add more info here.
-  return "aryann-cpp-google/cloud/bigquery/" + VersionString();
+  return "gcloud-cpp/" + VersionString();
 }
 }  // namespace internal
 

@@ -15,11 +15,17 @@
 #include "google/cloud/bigquery/client.h"
 
 int main(int argc, char* argv[]) {
+  if (argc != 2) {
+    std::cerr << "You must provide a project ID as a positional argument.\n";
+    return EXIT_FAILURE;
+  }
+  std::string project_id = argv[1];
+
   google::cloud::bigquery::ConnectionOptions options;
   google::cloud::bigquery::Client client(
       google::cloud::bigquery::MakeConnection(options));
   google::cloud::StatusOr<std::string> res = client.CreateSession(
-      "aryann-bigquery", "bigquery-public-data:samples.shakespeare");
+      project_id, "bigquery-public-data:samples.shakespeare");
 
   if (res.ok()) {
     std::cout << "Session name: " << res.value() << "\n";
