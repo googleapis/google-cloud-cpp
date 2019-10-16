@@ -34,7 +34,7 @@ PartialResultSetSource::Create(std::unique_ptr<PartialResultSetReader> reader) {
   }
 
   // The first response must contain metadata.
-  if (!source->last_result_.has_metadata()) {
+  if (!source->metadata_) {
     return Status(StatusCode::kInternal, "response contained no metadata");
   }
 
@@ -45,39 +45,32 @@ StatusOr<optional<Value>> PartialResultSetSource::NextValue() {
   if (finished_) {
     return optional<Value>();
   }
-  while (next_value_index_ >= last_result_.values_size()) {
-    // Ran out of buffered values - try to read some more from gRPC.
-    next_value_index_ = 0;
+
+  while (values_.empty()) {
     auto status = ReadFromStream();
     if (!status.ok()) {
       return status;
     }
     if (finished_) {
-      if (partial_chunked_value_.has_value()) {
+      if (chunk_) {
         return Status(StatusCode::kInternal,
                       "incomplete chunked_value at end of stream");
       }
       return optional<Value>();
     }
-    // If the response contained any values, the loop will exit, otherwise
-    // continue reading until we do get at least one value.
   }
 
-  if (last_result_.metadata().row_type().fields().empty()) {
+  auto const& fields = metadata_->row_type().fields();
+  if (fields.empty()) {
     return Status(StatusCode::kInternal,
                   "response metadata is missing row type information");
   }
 
-  // The metadata tells us the sequence of types for the field Values;
-  // when we reach the end of the sequence start over at the beginning.
-  auto const& fields = last_result_.metadata().row_type().fields();
-  if (next_value_type_index_ >= fields.size()) {
-    next_value_type_index_ = 0;
-  }
-
-  return {
-      FromProto(fields.Get(next_value_type_index_++).type(),
-                std::move(*last_result_.mutable_values(next_value_index_++)))};
+  auto t = fields.Get(field_index_).type();
+  field_index_ = (field_index_ + 1) % fields.size();
+  auto v = std::move(values_.front());
+  values_.pop_front();
+  return {FromProto(std::move(t), std::move(v))};
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
@@ -105,25 +98,23 @@ Status PartialResultSetSource::ReadFromStream() {
   }
 
   if (result_set->has_metadata()) {
-    if (!last_result_.has_metadata()) {
-      last_result_.mutable_metadata()->Swap(result_set->mutable_metadata());
-    } else {
+    // If we got metadata more than once, log it, but use the first one.
+    if (metadata_) {
       GCP_LOG(WARNING) << "Unexpectedly received two sets of metadata";
+    } else {
+      metadata_ = std::move(*result_set->mutable_metadata());
     }
   }
 
   if (result_set->has_stats()) {
-    // We should only get stats once; if not, use the last one.
-    if (last_result_.has_stats()) {
+    // If we got stats more than once, log it, but use the last one.
+    if (stats_) {
       GCP_LOG(WARNING) << "Unexpectedly received two sets of stats";
     }
-    last_result_.mutable_stats()->Swap(result_set->mutable_stats());
+    stats_ = std::move(*result_set->mutable_stats());
   }
 
-  last_result_.mutable_resume_token()->swap(
-      *result_set->mutable_resume_token());
-
-  last_result_.mutable_values()->Swap(result_set->mutable_values());
+  auto& new_values = *result_set->mutable_values();
 
   // Merge values if necessary, as described in:
   // https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.v1#google.spanner.v1.PartialResultSet
@@ -142,42 +133,38 @@ Status PartialResultSetSource::ReadFromStream() {
   //
   // n.b. One value can span more than two responses (the `E1E2E3` case above);
   // the code "just works" without needing to treat that as a special-case.
-
-  // If the last response had `chunked_value` set, `partial_chunked_value_`
-  // contains the partial value from that response; merge it with the first
-  // value in this response and set the first entry in `values_` to the result.
-  if (partial_chunked_value_.has_value()) {
-    if (last_result_.values().empty()) {
+  if (chunk_) {
+    if (new_values.empty()) {
       return Status(StatusCode::kInternal,
-                    "PartialResultSet contained no values to merge with prior "
-                    "chunked_value");
+                    "PartialResultSet contained no values "
+                    "to merge with prior chunked_value");
     }
-    auto merge_status = MergeChunk(*partial_chunked_value_,
-                                   std::move(*last_result_.mutable_values(0)));
+    auto& front = new_values[0];
+    auto merge_status = MergeChunk(*chunk_, std::move(front));
     if (!merge_status.ok()) {
       return merge_status;
     }
-    // Move the merged value to the front of the array and make
-    // `partial_chunked_value_` empty.
-    *last_result_.mutable_values(0) = *std::move(partial_chunked_value_);
-    partial_chunked_value_.reset();
+    using std::swap;
+    swap(*chunk_, front);
+    chunk_ = {};
   }
 
-  // If `chunked_value` is set, the last value in *this* response is incomplete
-  // and needs to be merged with the first value in the *next* response. Move it
-  // into `partial_chunked_value_`; this ensures everything in `values_` is a
-  // complete value, which simplifies things elsewhere.
   if (result_set->chunked_value()) {
-    if (last_result_.values().empty()) {
+    if (new_values.empty()) {
       return Status(StatusCode::kInternal,
-                    "PartialResultSet had chunked_value set true but contained "
-                    "no values");
+                    "PartialResultSet had chunked_value "
+                    "set true but contained no values");
     }
-    auto& values = *last_result_.mutable_values();
-    partial_chunked_value_ = std::move(values[values.size() - 1]);
-    values.RemoveLast();
+    chunk_ = std::move(new_values[new_values.size() - 1]);
+    new_values.RemoveLast();
   }
-  return Status();
+
+  // Moves all the remaining in new_values to values_
+  for (auto& value_proto : new_values) {
+    values_.push_back(std::move(value_proto));
+  }
+
+  return {};  // OK
 }
 
 }  // namespace internal

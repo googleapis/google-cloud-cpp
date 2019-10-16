@@ -24,6 +24,7 @@
 #include <google/spanner/v1/spanner.grpc.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
+#include <deque>
 #include <memory>
 
 namespace google {
@@ -45,18 +46,13 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
   ~PartialResultSetSource() override;
 
   StatusOr<optional<Value>> NextValue() override;
+
   optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
-    if (last_result_.has_metadata()) {
-      return last_result_.metadata();
-    }
-    return {};
+    return metadata_;
   }
 
   optional<google::spanner::v1::ResultSetStats> Stats() const override {
-    if (last_result_.has_stats()) {
-      return last_result_.stats();
-    }
-    return {};
+    return stats_;
   }
 
  private:
@@ -67,11 +63,12 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
   Status ReadFromStream();
 
   std::unique_ptr<PartialResultSetReader> reader_;
-  google::spanner::v1::PartialResultSet last_result_;
-  optional<google::protobuf::Value> partial_chunked_value_;
+  optional<google::spanner::v1::ResultSetMetadata> metadata_;
+  optional<google::spanner::v1::ResultSetStats> stats_;
+  std::deque<google::protobuf::Value> values_;
+  optional<google::protobuf::Value> chunk_;
+  int field_index_ = 0;
   bool finished_ = false;
-  int next_value_index_ = 0;
-  int next_value_type_index_ = 0;
 };
 
 }  // namespace internal
