@@ -38,7 +38,7 @@ on the results to estimate likely values for p95 and p99 of the latency.
 The program first creates a Bucket that will contain all the Objects used in the
 test.  The Bucket is deleted at the end of the test. The name of the Bucket is
 selected at random, so multiple instances of this test can run simultaneously.
-The Bucket uses the `REGIONAL` storage class, in a region set via the
+The Bucket uses the `STANDARD` storage class, in a region set via the
 command-line.
 
 After creating this Bucket the program creates a prescribed number of objects,
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
       client
           .CreateBucket(bucket_name,
                         gcs::BucketMetadata()
-                            .set_storage_class(gcs::storage_class::Regional())
+                            .set_storage_class(gcs::storage_class::Standard())
                             .set_location(options->region),
                         gcs::PredefinedAcl("private"),
                         gcs::PredefinedDefaultObjectAcl("projectPrivate"),

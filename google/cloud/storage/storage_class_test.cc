@@ -25,8 +25,6 @@ namespace {
 /// @test Verify the values for the storage class functions.
 TEST(StorageClassTest, Values) {
   EXPECT_EQ(std::string("STANDARD"), Standard());
-  EXPECT_EQ(std::string("MULTI_REGIONAL"), MultiRegional());
-  EXPECT_EQ(std::string("REGIONAL"), Regional());
   EXPECT_EQ(std::string("NEARLINE"), Nearline());
   EXPECT_EQ(std::string("COLDLINE"), Coldline());
   EXPECT_EQ(std::string("DURABLE_REDUCED_AVAILABILITY"),

@@ -97,7 +97,7 @@ func main() {
 	bucketName := MakeRandomBucketName()
 	bucket := client.Bucket(bucketName)
 	if err := bucket.Create(ctx, projectID, &storage.BucketAttrs{
-		StorageClass:               "REGIONAL",
+		StorageClass:               "STANDARD",
 		Location:                   location,
 		PredefinedACL:              "private",
 		PredefinedDefaultObjectACL: "projectPrivate",

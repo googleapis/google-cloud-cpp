@@ -34,14 +34,6 @@ LifecycleRuleAction LifecycleRule::SetStorageClassStandard() {
   return SetStorageClass(storage_class::Standard());
 }
 
-LifecycleRuleAction LifecycleRule::SetStorageClassMultiRegional() {
-  return SetStorageClass(storage_class::MultiRegional());
-}
-
-LifecycleRuleAction LifecycleRule::SetStorageClassRegional() {
-  return SetStorageClass(storage_class::Regional());
-}
-
 LifecycleRuleAction LifecycleRule::SetStorageClassNearline() {
   return SetStorageClass(storage_class::Nearline());
 }

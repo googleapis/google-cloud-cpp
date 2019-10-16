@@ -144,8 +144,6 @@ class LifecycleRule {
    */
   static LifecycleRuleAction Delete();
   static LifecycleRuleAction SetStorageClassStandard();
-  static LifecycleRuleAction SetStorageClassMultiRegional();
-  static LifecycleRuleAction SetStorageClassRegional();
   static LifecycleRuleAction SetStorageClassNearline();
   static LifecycleRuleAction SetStorageClassColdline();
   static LifecycleRuleAction SetStorageClassDurableReducedAvailability();
@@ -212,14 +210,6 @@ class LifecycleRule {
     return MatchesStorageClass(storage_class::Standard());
   }
 
-  static LifecycleRuleCondition MatchesStorageClassMultiRegional() {
-    return MatchesStorageClass(storage_class::MultiRegional());
-  }
-
-  static LifecycleRuleCondition MatchesStorageClassRegional() {
-    return MatchesStorageClass(storage_class::Regional());
-  }
-
   static LifecycleRuleCondition MatchesStorageClassNearline() {
     return MatchesStorageClass(storage_class::Nearline());
   }
@@ -253,11 +243,11 @@ class LifecycleRule {
    * @par Example
    *
    * @code
-   * // Affect objects that are in the MULTI_REGIONAL storage class, have at
+   * // Affect objects that are in the STANDARD storage class, have at
    * // least 2 new versions, are at least 7 days old, and are alive.
    * LifecycleRuleCondition condition = LifecycleRule::ConditionConjunction(
    *     LifecycleRule::NumNewerVersions(2),
-   *     LifecycleRule::MatchesStorageClassMultiRegional(),
+   *     LifecycleRule::MatchesStorageClassStandard(),
    *     LifecycleRule::MaxAge(7), LifecycleRule::IsLive(true));
    * @endcode
    *

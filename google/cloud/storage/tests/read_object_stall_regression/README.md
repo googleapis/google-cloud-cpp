@@ -36,8 +36,8 @@ Create source and target buckets:
 ```
 export SRC_BUCKET_NAME=...
 export DST_BUCKET_NAME=...
-gsutil mb -s regional -l us-west1 gs://${SRC_BUCKET_NAME}
-gsutil mb -s regional -l us-west1 gs://${DST_BUCKET_NAME}
+gsutil mb -s standard -l us-west1 gs://${SRC_BUCKET_NAME}
+gsutil mb -s standard -l us-west1 gs://${DST_BUCKET_NAME}
 ```
 
 Create a docker image to run the job:

@@ -61,10 +61,6 @@ TEST(LifecycleRuleTest, SetStorageClass) {
   EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::Standard()),
             LifecycleRule::SetStorageClassStandard());
 
-  EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::MultiRegional()),
-            LifecycleRule::SetStorageClassMultiRegional());
-  EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::Regional()),
-            LifecycleRule::SetStorageClassRegional());
   EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::Nearline()),
             LifecycleRule::SetStorageClassNearline());
   EXPECT_EQ(LifecycleRule::SetStorageClass(storage_class::Coldline()),
@@ -93,18 +89,16 @@ TEST(LifecycleRuleTest, ConditionCompare) {
 TEST(LifecycleRuleTest, ConditionStream) {
   auto c1 = LifecycleRule::NumNewerVersions(7);
   auto c2 = LifecycleRule::MaxAge(42);
-  auto c3 = LifecycleRule::MatchesStorageClasses({storage_class::Nearline(),
-                                                  storage_class::Standard(),
-                                                  storage_class::Regional()});
+  auto c3 = LifecycleRule::MatchesStorageClasses(
+      {storage_class::Nearline(), storage_class::Standard()});
   auto condition = LifecycleRule::ConditionConjunction(c1, c2, c3);
   std::ostringstream os;
   os << condition;
   auto actual = os.str();
   EXPECT_THAT(actual, ::testing::HasSubstr("age=42"));
   EXPECT_THAT(actual, ::testing::HasSubstr("num_newer_versions=7"));
-  EXPECT_THAT(actual,
-              ::testing::HasSubstr(
-                  "matches_storage_class=[NEARLINE, STANDARD, REGIONAL]"));
+  EXPECT_THAT(actual, ::testing::HasSubstr(
+                          "matches_storage_class=[NEARLINE, STANDARD]"));
   EXPECT_THAT(actual, ::testing::Not(::testing::HasSubstr("created_before")));
   EXPECT_THAT(actual, ::testing::Not(::testing::HasSubstr("is_live")));
 }
@@ -158,23 +152,23 @@ TEST(LifecycleRuleTest, MatchesStorageClass) {
 /// @test Verify that LifecycleRule::MatchesStorageClasses works as expected.
 TEST(LifecycleRuleTest, MatchesStorageClasses) {
   auto condition = LifecycleRule::MatchesStorageClasses(
-      {storage_class::Standard(), storage_class::Regional()});
+      {storage_class::Standard(), storage_class::Archive()});
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   EXPECT_THAT(*condition.matches_storage_class,
               ::testing::ElementsAre(storage_class::Standard(),
-                                     storage_class::Regional()));
+                                     storage_class::Archive()));
 }
 
 /// @test Verify that LifecycleRule::MatchesStorageClasses works as expected.
 TEST(LifecycleRuleTest, MatchesStorageClassesIterator) {
   std::set<std::string> classes{storage_class::Standard(),
-                                storage_class::Regional()};
+                                storage_class::Archive()};
   auto condition =
       LifecycleRule::MatchesStorageClasses(classes.begin(), classes.end());
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   EXPECT_THAT(*condition.matches_storage_class,
               ::testing::UnorderedElementsAre(storage_class::Standard(),
-                                              storage_class::Regional()));
+                                              storage_class::Archive()));
 }
 
 /// @test LifecycleRule::MatchesStorageClassStandard.
@@ -183,24 +177,6 @@ TEST(LifecycleRuleTest, MatchesStorageClassStandard) {
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   ASSERT_FALSE(condition.matches_storage_class->empty());
   EXPECT_EQ(storage_class::Standard(),
-            condition.matches_storage_class->front());
-}
-
-/// @test LifecycleRule::MatchesStorageClassMultiRegional.
-TEST(LifecycleRuleTest, MatchesStorageClassMultiRegional) {
-  auto condition = LifecycleRule::MatchesStorageClassMultiRegional();
-  ASSERT_TRUE(condition.matches_storage_class.has_value());
-  ASSERT_FALSE(condition.matches_storage_class->empty());
-  EXPECT_EQ(storage_class::MultiRegional(),
-            condition.matches_storage_class->front());
-}
-
-/// @test LifecycleRule::MatchesStorageClassRegional.
-TEST(LifecycleRuleTest, MatchesStorageClassRegional) {
-  auto condition = LifecycleRule::MatchesStorageClassRegional();
-  ASSERT_TRUE(condition.matches_storage_class.has_value());
-  ASSERT_FALSE(condition.matches_storage_class->empty());
-  EXPECT_EQ(storage_class::Regional(),
             condition.matches_storage_class->front());
 }
 
@@ -306,7 +282,7 @@ TEST(LifecycleRuleTest, ConditionConjunctionMatchesStorageClass) {
                                                   storage_class::Coldline()});
   auto c2 = LifecycleRule::MatchesStorageClasses({storage_class::Nearline(),
                                                   storage_class::Standard(),
-                                                  storage_class::Regional()});
+                                                  storage_class::Archive()});
   auto condition = LifecycleRule::ConditionConjunction(c1, c2);
   ASSERT_TRUE(condition.matches_storage_class.has_value());
   EXPECT_THAT(*condition.matches_storage_class,
@@ -329,7 +305,7 @@ TEST(LifecycleRuleTest, ConditionConjunctionMultiple) {
   auto c2 = LifecycleRule::MaxAge(42);
   auto c3 = LifecycleRule::MatchesStorageClasses({storage_class::Nearline(),
                                                   storage_class::Standard(),
-                                                  storage_class::Regional()});
+                                                  storage_class::Archive()});
   auto condition = LifecycleRule::ConditionConjunction(c1, c2, c3);
   ASSERT_TRUE(condition.age.has_value());
   EXPECT_EQ(42, *condition.age);
@@ -341,7 +317,7 @@ TEST(LifecycleRuleTest, ConditionConjunctionMultiple) {
   EXPECT_THAT(*condition.matches_storage_class,
               ::testing::UnorderedElementsAre(storage_class::Nearline(),
                                               storage_class::Standard(),
-                                              storage_class::Regional()));
+                                              storage_class::Archive()));
 }
 
 /// @test Verify that LifecycleRule parsing works as expected.
