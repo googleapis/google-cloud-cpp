@@ -15,12 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_OPTIONS_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_OPTIONS_H_
 
+#include "google/cloud/spanner/background_threads.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/grpc_utils/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
 #include <grpcpp/grpcpp.h>
 #include <cstdint>
+#include <functional>
 #include <set>
 #include <string>
 
@@ -152,6 +155,25 @@ class ConnectionOptions {
    */
   grpc::ChannelArguments CreateChannelArguments() const;
 
+  /**
+   * Configure the connection to use @p cq for all background work.
+   *
+   * Connections need to perform background work on behalf of the application.
+   * Normally they just create a background thread and a `CompletionQueue` for
+   * this work, but the application may need more fine-grained control of their
+   * threads. In this case the application can provide the `CompletionQueue` and
+   * it assumes responsibility for creating one or more threads blocked on
+   * `CompletionQueue::Run()`.
+   */
+  ConnectionOptions& DisableBackgroundThreads(
+      google::cloud::grpc_utils::CompletionQueue const& cq);
+
+  using BackgroundThreadsFactory =
+      std::function<std::unique_ptr<BackgroundThreads>()>;
+  BackgroundThreadsFactory background_threads_factory() {
+    return background_threads_factory_;
+  }
+
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
@@ -159,6 +181,7 @@ class ConnectionOptions {
   std::string channel_pool_domain_;
 
   std::string user_agent_prefix_;
+  BackgroundThreadsFactory background_threads_factory_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

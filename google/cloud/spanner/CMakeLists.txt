@@ -95,6 +95,7 @@ endif ()
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(spanner_client
             ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+            background_threads.h
             backoff_policy.h
             batch_dml_result.h
             bytes.cc
@@ -122,6 +123,8 @@ add_library(spanner_client
             instance_admin_connection.h
             internal/api_client_header.cc
             internal/api_client_header.h
+            internal/background_threads_impl.cc
+            internal/background_threads_impl.h
             internal/build_info.h
             internal/compiler_info.cc
             internal/compiler_info.h
@@ -300,6 +303,7 @@ function (spanner_client_define_tests)
         instance_admin_connection_test.cc
         instance_test.cc
         internal/api_client_header_test.cc
+        internal/background_threads_test.cc
         internal/build_info_test.cc
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc

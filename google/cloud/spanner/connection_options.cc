@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/connection_options.h"
+#include "google/cloud/spanner/internal/background_threads_impl.h"
 #include "google/cloud/spanner/internal/compiler_info.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
@@ -34,7 +35,11 @@ ConnectionOptions::ConnectionOptions(
     std::shared_ptr<grpc::ChannelCredentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("spanner.googleapis.com"),
-      user_agent_prefix_(internal::BaseUserAgentPrefix()) {
+      user_agent_prefix_(internal::BaseUserAgentPrefix()),
+      background_threads_factory_([] {
+        return google::cloud::internal::make_unique<
+            internal::AutomaticallyCreatedBackgroundThreads>();
+      }) {
   auto tracing =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (tracing.has_value()) {
@@ -67,6 +72,15 @@ grpc::ChannelArguments ConnectionOptions::CreateChannelArguments() const {
   }
   channel_arguments.SetUserAgentPrefix(user_agent_prefix());
   return channel_arguments;
+}
+
+ConnectionOptions& ConnectionOptions::DisableBackgroundThreads(
+    google::cloud::grpc_utils::CompletionQueue const& cq) {
+  background_threads_factory_ = [cq] {
+    return google::cloud::internal::make_unique<
+        internal::CustomerSuppliedBackgroundThreads>(cq);
+  };
+  return *this;
 }
 
 }  // namespace SPANNER_CLIENT_NS
