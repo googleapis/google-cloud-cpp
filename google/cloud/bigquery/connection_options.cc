@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigquery/connection_options.h"
+
 #include <grpcpp/grpcpp.h>
+
 #include <memory>
 #include <string>
 
-#include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/version.h"
 
 namespace google {

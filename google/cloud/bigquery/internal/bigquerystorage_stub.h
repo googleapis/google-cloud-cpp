@@ -16,6 +16,7 @@
 #define BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
 
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
+
 #include <memory>
 
 #include "google/cloud/bigquery/connection.h"

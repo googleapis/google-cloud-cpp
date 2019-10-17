@@ -12,9 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigquery/client.h"
+
 #include <memory>
 
-#include "google/cloud/bigquery/client.h"
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/connection_impl.h"
@@ -29,6 +30,19 @@ using ::google::cloud::StatusOr;
 StatusOr<std::string> Client::CreateSession(std::string parent_project_id,
                                             std::string table) {
   return conn_->CreateSession(parent_project_id, table);
+}
+
+ReadResult<Row> Client::Read(std::string parent_project_id, std::string table,
+                             std::vector<std::string> columns) {
+  return {};
+}
+
+ReadResult<Row> Client::Read(ReadStream<Row> const& read_stream) { return {}; }
+
+StatusOr<std::vector<ReadStream<Row>>> Client::ParallelRead(
+    std::string parent_project_id, std::string table,
+    std::vector<std::string> columns) {
+  return {};
 }
 
 std::shared_ptr<Connection> MakeConnection(ConnectionOptions const& options) {

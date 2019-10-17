@@ -16,6 +16,7 @@
 #define BIGQUERY_CONNECTION_OPTIONS_H_
 
 #include <grpcpp/grpcpp.h>
+
 #include <memory>
 #include <string>
 
