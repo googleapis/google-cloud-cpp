@@ -73,11 +73,13 @@ void ParallelRead() {
 }  // namespace
 
 int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    std::cerr << "You must provide a project ID as a positional argument.\n";
+  if (argc != 3) {
+    std::cerr << "You must provide a command and project ID as positional"
+              << " arguments.\n";
     return EXIT_FAILURE;
   }
-  std::string project_id = argv[1];
+  std::string cmd = argv[1];
+  std::string project_id = argv[2];
 
   google::cloud::bigquery::ConnectionOptions options;
   google::cloud::bigquery::Client client(
@@ -87,9 +89,21 @@ int main(int argc, char* argv[]) {
 
   if (res.ok()) {
     std::cout << "Session name: " << res.value() << "\n";
-    return EXIT_SUCCESS;
   } else {
     std::cerr << "Session creation failed with error: " << res.status() << "\n";
     return EXIT_FAILURE;
   }
+
+  if (cmd == "SimpleRead") {
+    SimpleRead();
+  } else if (cmd == "ParallelRead") {
+    ParallelRead();
+  } else if (cmd == "None") {
+    std::cout << "Doing nothing really fast\n";
+  } else {
+    std::cerr << "Unknown command: " << cmd << "\n";
+    return EXIT_FAILURE;
+  }
+
+  return EXIT_SUCCESS;
 }

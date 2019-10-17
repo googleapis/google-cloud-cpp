@@ -13,13 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/client.h"
-
-#include <memory>
-
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/connection_impl.h"
 #include "google/cloud/bigquery/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -32,16 +30,19 @@ StatusOr<std::string> Client::CreateSession(std::string parent_project_id,
   return conn_->CreateSession(parent_project_id, table);
 }
 
-ReadResult<Row> Client::Read(std::string parent_project_id, std::string table,
-                             std::vector<std::string> columns) {
+ReadResult<Row> Client::Read(std::string /*parent_project_id*/,
+                             std::string /*table*/,
+                             std::vector<std::string> /*columns*/) {
   return {};
 }
 
-ReadResult<Row> Client::Read(ReadStream<Row> const& read_stream) { return {}; }
+ReadResult<Row> Client::Read(ReadStream<Row> const& /*read_stream*/) {
+  return {};
+}
 
 StatusOr<std::vector<ReadStream<Row>>> Client::ParallelRead(
-    std::string parent_project_id, std::string table,
-    std::vector<std::string> columns) {
+    std::string /*parent_project_id*/, std::string /*table*/,
+    std::vector<std::string> /*columns*/) {
   return {};
 }
 

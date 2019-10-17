@@ -53,7 +53,7 @@ class RowSet {
 
     iterator operator++(int) { return {}; }
 
-    friend bool operator==(iterator const& a, iterator const& b) { return {}; }
+    friend bool operator==(iterator const& , iterator const& ) { return {}; }
 
     friend bool operator!=(iterator const& a, iterator const& b) {
       return !(a == b);
@@ -110,14 +110,14 @@ class ReadStream {};
 // Serializes an instance of `ReadStream` for transmission to another process.
 template <typename RowType>
 StatusOr<std::string> SerializeReadStream(
-    ReadStream<RowType> const& read_stream) {
+    ReadStream<RowType> const& /*read_stream*/) {
   return {};
 }
 
 // Deserializes the provided string to a `ReadStream`, if able.
 template <typename RowType>
 StatusOr<ReadStream<RowType>> DeserializeReadStream(
-    std::string serialized_read_stream) {
+    std::string /*serialized_read_stream*/) {
   return {};
 }
 
