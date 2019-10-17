@@ -33,6 +33,8 @@ google_cloud_cpp_common_unit_tests = [
     "internal/random_test.cc",
     "internal/retry_policy_test.cc",
     "internal/throw_delegate_test.cc",
+    "internal/tuple_test.cc",
+    "internal/utility_test.cc",
     "internal/env_test.cc",
     "log_test.cc",
     "optional_test.cc",

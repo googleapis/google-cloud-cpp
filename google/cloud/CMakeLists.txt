@@ -162,6 +162,8 @@ add_library(google_cloud_cpp_common
             internal/setenv.h
             internal/throw_delegate.cc
             internal/throw_delegate.h
+            internal/tuple.h
+            internal/utility.h
             internal/version_info.h
             log.cc
             log.h
@@ -222,6 +224,8 @@ if (BUILD_TESTING)
         internal/random_test.cc
         internal/retry_policy_test.cc
         internal/throw_delegate_test.cc
+        internal/tuple_test.cc
+        internal/utility_test.cc
         internal/env_test.cc
         log_test.cc
         optional_test.cc
