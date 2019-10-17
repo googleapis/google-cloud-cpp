@@ -91,27 +91,27 @@ class ConnectionImpl : public Connection,
 
   QueryResult ReadImpl(SessionHolder& session,
                        google::spanner::v1::TransactionSelector& s,
-                       ReadParams rp);
+                       ReadParams params);
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      ReadParams const& rp, PartitionOptions partition_options);
+      ReadParams const& params, PartitionOptions partition_options);
 
   QueryResult ExecuteQueryImpl(SessionHolder& session,
                                google::spanner::v1::TransactionSelector& s,
-                               std::int64_t seqno, ExecuteSqlParams esp);
+                               std::int64_t seqno, ExecuteSqlParams params);
 
   StatusOr<DmlResult> ExecuteDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      std::int64_t seqno, ExecuteSqlParams esp);
+      std::int64_t seqno, ExecuteSqlParams params);
 
   StatusOr<PartitionedDmlResult> ExecutePartitionedDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      std::int64_t seqno, ExecutePartitionedDmlParams epdp);
+      std::int64_t seqno, ExecutePartitionedDmlParams params);
 
   StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      ExecuteSqlParams const& esp, PartitionOptions partition_options);
+      ExecuteSqlParams const& params, PartitionOptions partition_options);
 
   StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
@@ -119,7 +119,7 @@ class ConnectionImpl : public Connection,
 
   StatusOr<CommitResult> CommitImpl(SessionHolder& session,
                                     google::spanner::v1::TransactionSelector& s,
-                                    CommitParams cp);
+                                    CommitParams params);
 
   Status RollbackImpl(SessionHolder& session,
                       google::spanner::v1::TransactionSelector& s);
