@@ -109,7 +109,7 @@ TEST(ClientTest, ReadSuccess) {
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1", "column2"});
 
-  using RowType = Row<std::string, std::int64_t>;
+  using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
       RowType("Steve", 12),
       RowType("Ann", 42),
@@ -151,16 +151,16 @@ TEST(ClientTest, ReadFailure) {
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1"});
 
-  auto rows = result.Rows<Row<std::string>>();
+  auto rows = result.Rows<std::tuple<std::string>>();
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
-  EXPECT_EQ((*iter)->get<0>(), "Steve");
+  EXPECT_EQ(std::get<0>(**iter), "Steve");
 
   ++iter;
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
-  EXPECT_EQ((*iter)->get<0>(), "Ann");
+  EXPECT_EQ(std::get<0>(**iter), "Ann");
 
   ++iter;
   EXPECT_FALSE((*iter).ok());
@@ -202,7 +202,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
   KeySet keys = KeySet::All();
   auto result = client.ExecuteQuery(SqlStatement("select * from table;"));
 
-  using RowType = Row<std::string, std::int64_t>;
+  using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
       RowType("Steve", 12),
       RowType("Ann", 42),
@@ -245,16 +245,16 @@ TEST(ClientTest, ExecuteQueryFailure) {
   KeySet keys = KeySet::All();
   auto result = client.ExecuteQuery(SqlStatement("select * from table;"));
 
-  auto rows = result.Rows<Row<std::string>>();
+  auto rows = result.Rows<std::tuple<std::string>>();
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
-  EXPECT_EQ((*iter)->get<0>(), "Steve");
+  EXPECT_EQ(std::get<0>(**iter), "Steve");
 
   ++iter;
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
-  EXPECT_EQ((*iter)->get<0>(), "Ann");
+  EXPECT_EQ(std::get<0>(**iter), "Ann");
 
   ++iter;
   EXPECT_FALSE((*iter).ok());
@@ -435,7 +435,7 @@ TEST(ClientTest, RunTransactionCommit) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<Row<std::string>>()) {
+    for (auto& row : read.Rows<std::tuple<std::string>>()) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -482,7 +482,7 @@ TEST(ClientTest, RunTransactionRollback) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<Row<std::string>>()) {
+    for (auto& row : read.Rows<std::tuple<std::string>>()) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -530,7 +530,7 @@ TEST(ClientTest, RunTransactionRollbackError) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<Row<std::string>>()) {
+    for (auto& row : read.Rows<std::tuple<std::string>>()) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -574,7 +574,7 @@ TEST(ClientTest, RunTransactionException) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<Row<std::string>>()) {
+    for (auto& row : read.Rows<std::tuple<std::string>>()) {
       if (!row) throw "Read() error";
     }
     return Mutations{mutation};

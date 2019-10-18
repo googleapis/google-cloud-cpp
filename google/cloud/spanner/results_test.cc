@@ -45,7 +45,7 @@ TEST(QueryResult, IterateNoRows) {
 
   QueryResult result_set(std::move(mock_source));
   int num_rows = 0;
-  for (auto const& row : result_set.Rows<Row<bool>>()) {
+  for (auto const& row : result_set.Rows<std::tuple<bool>>()) {
     static_cast<void>(row);
     ++num_rows;
   }
@@ -66,19 +66,19 @@ TEST(QueryResult, IterateOverRows) {
   QueryResult result_set(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row :
-       result_set.Rows<Row<std::int64_t, bool, std::string>>()) {
+       result_set.Rows<std::tuple<std::int64_t, bool, std::string>>()) {
     EXPECT_TRUE(row.ok());
     switch (num_rows++) {
       case 0:
-        EXPECT_EQ(row->get<0>(), 5);
-        EXPECT_EQ(row->get<1>(), true);
-        EXPECT_EQ(row->get<2>(), "foo");
+        EXPECT_EQ(std::get<0>(*row), 5);
+        EXPECT_EQ(std::get<1>(*row), true);
+        EXPECT_EQ(std::get<2>(*row), "foo");
         break;
 
       case 1:
-        EXPECT_EQ(row->get<0>(), 10);
-        EXPECT_EQ(row->get<1>(), false);
-        EXPECT_EQ(row->get<2>(), "bar");
+        EXPECT_EQ(std::get<0>(*row), 10);
+        EXPECT_EQ(std::get<1>(*row), false);
+        EXPECT_EQ(std::get<2>(*row), "bar");
         break;
 
       default:
@@ -101,13 +101,13 @@ TEST(QueryResult, IterateError) {
   QueryResult result_set(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row :
-       result_set.Rows<Row<std::int64_t, bool, std::string>>()) {
+       result_set.Rows<std::tuple<std::int64_t, bool, std::string>>()) {
     switch (num_rows++) {
       case 0:
         EXPECT_TRUE(row.ok());
-        EXPECT_EQ(row->get<0>(), 5);
-        EXPECT_EQ(row->get<1>(), true);
-        EXPECT_EQ(row->get<2>(), "foo");
+        EXPECT_EQ(std::get<0>(*row), 5);
+        EXPECT_EQ(std::get<1>(*row), true);
+        EXPECT_EQ(std::get<2>(*row), "foo");
         break;
 
       case 1:

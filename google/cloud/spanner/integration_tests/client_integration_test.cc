@@ -73,7 +73,7 @@ TEST_F(ClientIntegrationTest, InsertAndCommit) {
 
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
-  using RowType = Row<std::int64_t, std::string, std::string>;
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
   int row_number = 0;
   for (auto& row : reader.Rows<RowType>()) {
@@ -101,7 +101,7 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
   int row_number = 0;
   for (auto& row : reader.Rows<RowType>()) {
@@ -144,7 +144,7 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
   auto reader = client_->Read("Singers", KeySet::All(),
                               {"SingerId", "FirstName", "LastName"});
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
   int row_number = 0;
   for (auto& row : reader.Rows<RowType>()) {
@@ -164,7 +164,7 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
 TEST_F(ClientIntegrationTest, TransactionRollback) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
 
   // Cannot use RunTransaction in this test because we want to call Rollback
   // explicitly. This means we need to retry ABORTED calls ourselves.
@@ -256,13 +256,13 @@ TEST_F(ClientIntegrationTest, RunTransaction) {
   EXPECT_LT(insert_result->commit_timestamp, delete_result->commit_timestamp);
 
   // Read SingerIds [100 ... 200).
-  using RowType = Row<std::int64_t>;
+  using RowType = std::tuple<std::int64_t>;
   std::vector<std::int64_t> ids;
   auto ks = KeySet().AddRange(MakeKeyBoundClosed(100), MakeKeyBoundOpen(200));
   auto results = client_->Read("Singers", std::move(ks), {"SingerId"});
   for (auto& row : results.Rows<RowType>()) {
     EXPECT_STATUS_OK(row);
-    if (row) ids.push_back(row->get<0>());
+    if (row) ids.push_back(std::get<0>(*row));
   }
   EXPECT_THAT(ids, UnorderedElementsAre(100, 199));
 }
@@ -283,7 +283,7 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
       });
   EXPECT_STATUS_OK(insert_result);
 
-  using RowType = Row<std::int64_t, std::string, std::string>;
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> expected_rows;
   auto commit_result = RunTransaction(
       *client_, {},
@@ -300,8 +300,8 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
                                  {"fname", Value("test-fname-" + s)},
                                  {"lname", Value("test-lname-" + s)}}));
           if (!insert) return std::move(insert).status();
-          expected_rows.push_back(
-              MakeRow(i, "test-fname-" + s, "test-lname-" + s));
+          expected_rows.emplace_back(
+              std::make_tuple(i, "test-fname-" + s, "test-lname-" + s));
         }
 
         auto delete_result =
@@ -380,12 +380,16 @@ void CheckReadWithOptions(
 
   std::vector<RowValues> actual_rows;
   int row_number = 0;
-  for (auto& row : reader.Rows<Row<std::int64_t, std::string, std::string>>()) {
+  for (auto& row :
+       reader.Rows<std::tuple<std::int64_t, std::string, std::string>>()) {
     SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
     EXPECT_STATUS_OK(row);
     if (!row) break;
-    auto array = std::move(row)->values();
-    actual_rows.emplace_back(array.begin(), array.end());
+    std::vector<Value> v;
+    v.emplace_back(std::get<0>(*row));
+    v.emplace_back(std::get<1>(*row));
+    v.emplace_back(std::get<2>(*row));
+    actual_rows.push_back(std::move(v));
   }
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
@@ -459,12 +463,16 @@ void CheckExecuteQueryWithSingleUseOptions(
 
   std::vector<RowValues> actual_rows;
   int row_number = 0;
-  for (auto& row : reader.Rows<Row<std::int64_t, std::string, std::string>>()) {
+  for (auto& row :
+       reader.Rows<std::tuple<std::int64_t, std::string, std::string>>()) {
     SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
     EXPECT_STATUS_OK(row);
     if (!row) break;
-    auto array = std::move(row)->values();
-    actual_rows.emplace_back(array.begin(), array.end());
+    std::vector<Value> v;
+    v.emplace_back(std::get<0>(*row));
+    v.emplace_back(std::get<1>(*row));
+    v.emplace_back(std::get<2>(*row));
+    actual_rows.push_back(std::move(v));
   }
 
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
@@ -563,13 +571,17 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
     ASSERT_STATUS_OK(deserialized_partition);
     auto result_set = client_->Read(*deserialized_partition);
     for (auto& row :
-         result_set.Rows<Row<std::int64_t, std::string, std::string>>()) {
+         result_set
+             .Rows<std::tuple<std::int64_t, std::string, std::string>>()) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
       if (!row) break;
-      auto array = std::move(row)->values();
-      actual_rows.emplace_back(array.begin(), array.end());
+      std::vector<Value> v;
+      v.emplace_back(std::get<0>(*row));
+      v.emplace_back(std::get<1>(*row));
+      v.emplace_back(std::get<2>(*row));
+      actual_rows.push_back(std::move(v));
     }
   }
 
@@ -601,13 +613,17 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
     ASSERT_STATUS_OK(deserialized_partition);
     auto result_set = client_->ExecuteQuery(*deserialized_partition);
     for (auto& row :
-         result_set.Rows<Row<std::int64_t, std::string, std::string>>()) {
+         result_set
+             .Rows<std::tuple<std::int64_t, std::string, std::string>>()) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
       if (!row) break;
-      auto array = std::move(row)->values();
-      actual_rows.emplace_back(array.begin(), array.end());
+      std::vector<Value> v;
+      v.emplace_back(std::get<0>(*row));
+      v.emplace_back(std::get<1>(*row));
+      v.emplace_back(std::get<2>(*row));
+      actual_rows.push_back(std::move(v));
     }
   }
 
@@ -661,11 +677,11 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
   };
   std::size_t counter = 0;
   for (auto const& row :
-       query.Rows<Row<std::int64_t, std::string, std::string>>()) {
+       query.Rows<std::tuple<std::int64_t, std::string, std::string>>()) {
     ASSERT_STATUS_OK(row);
-    ASSERT_EQ(row->get<0>(), expected[counter].id);
-    ASSERT_EQ(row->get<1>(), expected[counter].fname);
-    ASSERT_EQ(row->get<2>(), expected[counter].lname);
+    ASSERT_EQ(std::get<0>(*row), expected[counter].id);
+    ASSERT_EQ(std::get<1>(*row), expected[counter].fname);
+    ASSERT_EQ(std::get<2>(*row), expected[counter].lname);
     ++counter;
   }
   ASSERT_EQ(counter, expected.size());
@@ -727,14 +743,14 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
 
   auto counter = 0;
   for (auto const& row :
-       query.Rows<Row<std::int64_t, std::string, std::string>>()) {
+       query.Rows<std::tuple<std::int64_t, std::string, std::string>>()) {
     ASSERT_STATUS_OK(row);
     std::string const singer_id = std::to_string(counter);
     std::string const first_name = "Foo" + singer_id;
     std::string const last_name = "Bar" + singer_id;
-    ASSERT_EQ(row->get<0>(), counter);
-    ASSERT_EQ(row->get<1>(), first_name);
-    ASSERT_EQ(row->get<2>(), last_name);
+    ASSERT_EQ(std::get<0>(*row), counter);
+    ASSERT_EQ(std::get<1>(*row), first_name);
+    ASSERT_EQ(std::get<2>(*row), last_name);
     ++counter;
   }
 

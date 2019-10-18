@@ -104,7 +104,7 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
                          "   AND SingerId <= @max",
                          {{"min", spanner::Value(key)},
                           {"max", spanner::Value(key + size)}}));
-        using RowType = Row<std::int64_t, std::string, std::string>;
+        using RowType = std::tuple<std::int64_t, std::string, std::string>;
         for (auto row : reader.Rows<RowType>()) {
           result.Update(row.status());
         }
@@ -173,7 +173,7 @@ TEST(ClientStressTest, UpsertAndRead) {
 
         auto reader = client.Read("Singers", range,
                                   {"SingerId", "FirstName", "LastName"});
-        using RowType = Row<std::int64_t, std::string, std::string>;
+        using RowType = std::tuple<std::int64_t, std::string, std::string>;
         for (auto row : reader.Rows<RowType>()) {
           result.Update(row.status());
         }

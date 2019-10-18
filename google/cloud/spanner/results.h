@@ -64,7 +64,8 @@ class QueryResult {
   QueryResult& operator=(QueryResult&&) = default;
 
   /**
-   * Returns a `RowParser` which can be used to iterate the returned `Row`s.
+   * Returns a `RowParser` which can be used to iterate the returned
+   * `std::tuple`s.
    *
    * Since there is a single result stream for each `QueryResult` instance,
    * users should not use multiple `RowParser`s from the same `QueryResult` at
@@ -133,7 +134,8 @@ class ProfileQueryResult {
   ProfileQueryResult& operator=(ProfileQueryResult&&) = default;
 
   /**
-   * Returns a `RowParser` which can be used to iterate the returned `Row`s.
+   * Returns a `RowParser` which can be used to iterate the returned
+   * `std::tuple`s.
    *
    * Since there is a single result stream for each `ProfileQueryResult`
    * instance, users should not use multiple `RowParser`s from the same

@@ -81,7 +81,7 @@ inline namespace SPANNER_CLIENT_NS {
  * auto client = cs::Client(conn);
  *
  * cs::ReadResult result = client.Read(...);
- * using RowType = Row<std::int64_t, std::string>;
+ * using RowType = std::tuple<std::int64_t, std::string>;
  * for (auto const& row : result.Rows<RowType>()) {
  *   // ...
  * }

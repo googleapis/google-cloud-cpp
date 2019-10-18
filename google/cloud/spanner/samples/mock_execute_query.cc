@@ -96,12 +96,12 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
 
   //! [expected-results]
   int count = 0;
-  using RowType = spanner::Row<std::int64_t, std::string>;
+  using RowType = std::tuple<std::int64_t, std::string>;
   for (auto row : reader.Rows<RowType>()) {
     ASSERT_TRUE(row);
     auto expected_id = ++count;
-    EXPECT_EQ(expected_id, row->get<0>());
-    EXPECT_EQ("Hello World", row->get<1>());
+    EXPECT_EQ(expected_id, std::get<0>(*row));
+    EXPECT_EQ("Hello World", std::get<1>(*row));
   }
   //! [expected-results]
 }
