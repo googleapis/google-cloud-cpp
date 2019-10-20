@@ -32,7 +32,7 @@ and run the same script the CI build uses:
 
 ```console
 cd $HOME/google-cloud-cpp
-./ci/kokoro/build.sh clang-tidy
+./ci/kokoro/docker/build.sh clang-tidy
 ```
 
 The build takes a few minutes the first time, as it needs to create a Docker
