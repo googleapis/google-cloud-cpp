@@ -16,11 +16,9 @@ ARG DISTRO_VERSION=latest
 FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-## [START INSTALL.md]
+## [START README.md]
 
 # Install the minimal development tools:
-
-## [START README.md]
 
 # ```bash
 RUN zypper refresh && \

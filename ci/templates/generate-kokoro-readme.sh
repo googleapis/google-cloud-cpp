@@ -27,7 +27,8 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
   PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
   readonly PROJECT_ROOT
 fi
-source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
+
+source "${DESTINATION_ROOT}/ci/etc/repo-config.sh"
 
 BUILD_NAMES=(
   centos-7

@@ -19,11 +19,9 @@ ARG NCPU=4
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
-## [START INSTALL.md]
+## [START README.md]
 
 # Install the minimal development tools:
-
-## [START README.md]
 
 # ```bash
 RUN apt update && \

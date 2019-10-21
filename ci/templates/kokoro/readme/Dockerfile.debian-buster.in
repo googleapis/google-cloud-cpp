@@ -19,11 +19,9 @@ ARG NCPU=4
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
-## [START INSTALL.md]
-
-# First install the development tools and libcurl.
-
 ## [START README.md]
+
+# First install the development tools.
 
 # ```bash
 RUN apt update && \

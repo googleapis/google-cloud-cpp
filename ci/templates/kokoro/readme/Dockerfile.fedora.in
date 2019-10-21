@@ -20,11 +20,9 @@ ARG NCPU=4
 # `extract-install.md` to generate the contents of the top-level README.md and
 # INSTALL.md files.
 
-## [START INSTALL.md]
+## [START README.md]
 
 # Install the minimal development tools:
-
-## [START README.md]
 
 # ```bash
 RUN dnf makecache && \

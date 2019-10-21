@@ -16,17 +16,13 @@ ARG DISTRO_VERSION=trusty
 FROM ubuntu:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-COPY ci/install-retry.sh /retry3
-
 # Please keep the formatting below, it is used by `extract-readme.sh` and
 # `extract-install.md` to generate the contents of the top-level README.md and
 # INSTALL.md files.
 
-## [START INSTALL.md]
+## [START README.md]
 
 # Install the minimal development tools.
-
-## [START README.md]
 
 # We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 

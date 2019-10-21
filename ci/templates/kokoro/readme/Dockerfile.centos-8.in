@@ -19,10 +19,6 @@ ARG NCPU=4
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
-## [START INSTALL.md]
-
-# First install the development tools and OpenSSL.
-
 ## [START README.md]
 
 # Install the development tools needed to compile the project:

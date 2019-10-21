@@ -19,19 +19,9 @@ ARG NCPU=4
 # Please keep the formatting in these commands, it is optimized to cut & paste
 # into the README.md file.
 
-## [START INSTALL.md]
-
-# First install the development tools and libcurl.
-
 ## [START README.md]
 
-# On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
-# against the same version or risk an inconsistent configuration of the library.
-# This is especially important for multi-threaded applications, as openssl-1.0.2
-# requires explicitly setting locking callbacks. Therefore, to use libcurl one
-# must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
-# Note that this removes libssl-dev if you have it installed already, and would
-# prevent you from compiling against openssl-1.1.0.
+# First install the development tools.
 
 # ```bash
 RUN apt update && \
