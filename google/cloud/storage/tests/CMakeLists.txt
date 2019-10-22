@@ -40,27 +40,22 @@ set(storage_client_integration_tests
     thread_integration_test.cc)
 
 foreach (fname ${storage_client_integration_tests})
-    string(REPLACE "/"
-                   "_"
-                   target
-                   ${fname})
-    string(REPLACE ".cc"
-                   ""
-                   target
-                   ${target})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
-    target_link_libraries(${target}
-                          PRIVATE storage_client
-                                  storage_client_testing
-                                  google_cloud_cpp_testing
-                                  google_cloud_cpp_common
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  CURL::libcurl
-                                  Threads::Threads
-                                  nlohmann_json
-                                  storage_common_options)
+    target_link_libraries(
+        ${target}
+        PRIVATE storage_client
+                storage_client_testing
+                google_cloud_cpp_testing
+                google_cloud_cpp_common
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                CURL::libcurl
+                Threads::Threads
+                nlohmann_json
+                storage_common_options)
 endforeach ()
 
 target_link_libraries(error_injection_integration_test PRIVATE ${CMAKE_DL_LIBS})

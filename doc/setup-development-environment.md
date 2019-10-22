@@ -47,7 +47,7 @@ because some third party changed something.
 ```console
 sudo apt install -y python python-pip
 pip install --upgrade pip
-pip install numpy cmake_format==0.4.0
+pip install cmake_format==0.6.0
 ```
 
 Install the Python modules used in the integration tests:

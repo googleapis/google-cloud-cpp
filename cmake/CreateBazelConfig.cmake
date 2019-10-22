@@ -15,7 +15,9 @@
 # ~~~
 
 function (write_bazel_copyright FILENAME YEAR)
-    file(WRITE "${FILENAME}" [=[
+    file(
+        WRITE "${FILENAME}"
+        [=[
 # Copyright ]=])
     file(APPEND "${FILENAME}" ${YEAR})
     file(APPEND "${FILENAME}" [=[ Google LLC

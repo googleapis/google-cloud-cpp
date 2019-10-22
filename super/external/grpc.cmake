@@ -32,7 +32,7 @@ if (NOT TARGET grpc_project)
     set_external_project_prefix_vars()
 
     include(ExternalProject)
-    externalproject_add(
+    ExternalProject_Add(
         grpc_project
         DEPENDS c_ares_project protobuf_project ssl_project
         EXCLUDE_FROM_ALL ON
@@ -40,7 +40,8 @@ if (NOT TARGET grpc_project)
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
         URL ${GOOGLE_CLOUD_CPP_GRPC_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GRPC_SHA256}
-        LIST_SEPARATOR |
+                 LIST_SEPARATOR
+                 |
         CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE}
                    -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
                    -DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}
@@ -54,10 +55,7 @@ if (NOT TARGET grpc_project)
                    -DgRPC_SSL_PROVIDER=package
                    -DgRPC_CARES_PROVIDER=package
                    -DgRPC_PROTOBUF_PROVIDER=package
-        BUILD_COMMAND ${CMAKE_COMMAND}
-                      --build
-                      <BINARY_DIR>
-                      ${PARALLEL}
+        BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON
