@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MUTATIONS_H_
 
 #include "google/cloud/spanner/keys.h"
-#include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
 #include <google/spanner/v1/mutation.pb.h>
 #include <vector>

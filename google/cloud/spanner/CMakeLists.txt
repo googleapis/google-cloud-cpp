@@ -186,6 +186,7 @@ add_library(spanner_client
             results.cc
             results.h
             retry_policy.h
+            row.cc
             row.h
             row_parser.h
             sql_statement.cc

@@ -16,7 +16,6 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_ROW_PARSER_H_
 
 #include "google/cloud/spanner/internal/tuple_utils.h"
-#include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"

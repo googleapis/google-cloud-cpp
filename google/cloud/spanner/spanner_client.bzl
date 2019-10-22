@@ -120,6 +120,7 @@ spanner_client_srcs = [
     "query_partition.cc",
     "read_partition.cc",
     "results.cc",
+    "row.cc",
     "sql_statement.cc",
     "transaction.cc",
     "value.cc",
