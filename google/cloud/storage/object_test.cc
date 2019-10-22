@@ -457,6 +457,147 @@ TEST_F(ObjectTest, CreateRandomPrefixPermanentFailure) {
       "InsertObjectMedia");
 }
 
+ObjectMetadata CreateObject(int index) {
+  std::string id = "object-" + std::to_string(index);
+  std::string name = id;
+  std::string link =
+      "https://storage.googleapis.com/storage/v1/b/test-bucket/" + id + "/1";
+  internal::nl::json metadata{
+      {"bucket", "test-bucket"},
+      {"id", id},
+      {"name", name},
+      {"selfLink", link},
+      {"kind", "storage#object"},
+  };
+  return internal::ObjectMetadataParser::FromJson(metadata).value();
+};
+
+TEST_F(ObjectTest, DeleteByPrefix) {
+  // Pretend ListObjects returns object-1, object-2, object-3.
+
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListObjects(_))
+      .WillOnce(Invoke([](internal::ListObjectsRequest const& req)
+                           -> StatusOr<internal::ListObjectsResponse> {
+        EXPECT_EQ("test-bucket", req.bucket_name());
+        std::ostringstream os;
+        os << req;
+        EXPECT_THAT(os.str(), HasSubstr("userProject=project-to-bill"));
+        EXPECT_THAT(os.str(), HasSubstr("prefix=object-"));
+
+        internal::ListObjectsResponse response;
+        response.items.emplace_back(CreateObject(1));
+        response.items.emplace_back(CreateObject(2));
+        response.items.emplace_back(CreateObject(3));
+        return response;
+      }));
+  EXPECT_CALL(*mock, DeleteObject(_))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-1", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-2", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-3", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }));
+  Client client(mock);
+
+  auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
+                               UserProject("project-to-bill"));
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(ObjectTest, DeleteByPrefixNoOptions) {
+  // Pretend ListObjects returns object-1, object-2, object-3.
+
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListObjects(_))
+      .WillOnce(Invoke([](internal::ListObjectsRequest const& req)
+                           -> StatusOr<internal::ListObjectsResponse> {
+        EXPECT_EQ("test-bucket", req.bucket_name());
+
+        internal::ListObjectsResponse response;
+        response.items.emplace_back(CreateObject(1));
+        response.items.emplace_back(CreateObject(2));
+        response.items.emplace_back(CreateObject(3));
+        return response;
+      }));
+  EXPECT_CALL(*mock, DeleteObject(_))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-1", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-2", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-3", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }));
+  Client client(mock);
+
+  auto status = DeleteByPrefix(client, "test-bucket", "object-");
+
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(ObjectTest, DeleteByPrefixListFailure) {
+  // Pretend ListObjects returns object-1, object-2, object-3.
+
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListObjects(_))
+      .WillOnce(Return(StatusOr<internal::ListObjectsResponse>(
+          Status(StatusCode::kPermissionDenied, ""))));
+  Client client(mock);
+
+  auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
+                               UserProject("project-to-bill"));
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+}
+
+TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
+  // Pretend ListObjects returns object-1, object-2, object-3.
+
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListObjects(_))
+      .WillOnce(Invoke([](internal::ListObjectsRequest const& req)
+                           -> StatusOr<internal::ListObjectsResponse> {
+        EXPECT_EQ("test-bucket", req.bucket_name());
+
+        internal::ListObjectsResponse response;
+        response.items.emplace_back(CreateObject(1));
+        response.items.emplace_back(CreateObject(2));
+        response.items.emplace_back(CreateObject(3));
+        return response;
+      }));
+  EXPECT_CALL(*mock, DeleteObject(_))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("object-1", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
+      .WillOnce(Return(StatusOr<internal::EmptyResponse>(
+          Status(StatusCode::kPermissionDenied, ""))));
+  Client client(mock);
+
+  auto status = DeleteByPrefix(client, "test-bucket", "object-", Versions(),
+                               UserProject("project-to-bill"));
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
