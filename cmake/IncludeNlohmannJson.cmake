@@ -15,25 +15,18 @@
 # ~~~
 
 include(ExternalProject)
-externalproject_add(
+ExternalProject_Add(
     nlohmann_json_project
     PREFIX "${CMAKE_BINARY_DIR}/external/nlohmann_json"
-    DOWNLOAD_COMMAND ${CMAKE_COMMAND}
-                     -DDEST=<INSTALL_DIR>/src
-                     -P
+    DOWNLOAD_COMMAND ${CMAKE_COMMAND} -DDEST=<INSTALL_DIR>/src -P
                      ${PROJECT_SOURCE_DIR}/cmake/DownloadNlohmannJson.cmake
-    CONFIGURE_COMMAND "" # This is not great, we abuse the `build` step to
-                         # create the target directory. Unfortunately there is
-                         # no way to specify two commands in the install step.
-    BUILD_COMMAND ${CMAKE_COMMAND}
-                  -E
-                  make_directory
-                  <INSTALL_DIR>/include
+    CONFIGURE_COMMAND
+        "" # This is not great, we abuse the `build` step to create the target
+           # directory. Unfortunately there is no way to specify two commands in
+           # the install step.
+    BUILD_COMMAND ${CMAKE_COMMAND} -E make_directory <INSTALL_DIR>/include
     INSTALL_COMMAND
-        ${CMAKE_COMMAND}
-        -E
-        copy
-        <INSTALL_DIR>/src/json.hpp
+        ${CMAKE_COMMAND} -E copy <INSTALL_DIR>/src/json.hpp
         <INSTALL_DIR>/include/google/cloud/storage/internal/nlohmann_json.hpp
     LOG_DOWNLOAD ON
     LOG_INSTALL ON)

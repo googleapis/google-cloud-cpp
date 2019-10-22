@@ -26,7 +26,7 @@ find_package(Threads REQUIRED)
 find_package(CURL CONFIG QUIET)
 if (CURL_FOUND)
     message(STATUS "CURL found using via CONFIG module")
-else()
+else ()
     # As searching for libcurl using CONFIG mode failed, try again using the
     # CMake config module. We will need to fix up a few things if the module is
     # found this way.
@@ -39,13 +39,14 @@ else()
     # does not have to deal with these details:
     if (NOT TARGET CURL::libcurl)
         add_library(CURL::libcurl UNKNOWN IMPORTED)
-        set_property(TARGET CURL::libcurl
-                     APPEND
-                     PROPERTY INTERFACE_INCLUDE_DIRECTORIES
-                              "${CURL_INCLUDE_DIR}")
-        set_property(TARGET CURL::libcurl
-                     APPEND
-                     PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
+        set_property(
+            TARGET CURL::libcurl
+            APPEND
+            PROPERTY INTERFACE_INCLUDE_DIRECTORIES "${CURL_INCLUDE_DIR}")
+        set_property(
+            TARGET CURL::libcurl
+            APPEND
+            PROPERTY IMPORTED_LOCATION "${CURL_LIBRARY}")
     endif ()
     # If the library is static, we need to explicitly link its dependencies. The
     # CMake module does not do so. However, we should not do so for shared
@@ -54,29 +55,27 @@ else()
     if ("${CURL_LIBRARY}" MATCHES "${CMAKE_STATIC_LIBRARY_SUFFIX}$")
         find_package(OpenSSL REQUIRED)
         find_package(ZLIB REQUIRED)
-        set_property(TARGET CURL::libcurl
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES
-                              OpenSSL::SSL
-                              OpenSSL::Crypto
-                              ZLIB::ZLIB)
+        set_property(
+            TARGET CURL::libcurl
+            APPEND
+            PROPERTY INTERFACE_LINK_LIBRARIES OpenSSL::SSL OpenSSL::Crypto
+                     ZLIB::ZLIB)
         message(STATUS "CURL linkage will be static")
         # On WIN32 and APPLE there are even more libraries needed for static
         # linking.
         if (WIN32)
-            set_property(TARGET CURL::libcurl
-                         APPEND
-                         PROPERTY INTERFACE_LINK_LIBRARIES
-                                  crypt32
-                                  wsock32
-                                  ws2_32)
+            set_property(
+                TARGET CURL::libcurl
+                APPEND
+                PROPERTY INTERFACE_LINK_LIBRARIES crypt32 wsock32 ws2_32)
         endif ()
         if (APPLE)
-            set_property(TARGET CURL::libcurl
-                         APPEND
-                         PROPERTY INTERFACE_LINK_LIBRARIES ldap)
+            set_property(
+                TARGET CURL::libcurl
+                APPEND
+                PROPERTY INTERFACE_LINK_LIBRARIES ldap)
         endif ()
-    else()
+    else ()
         message(STATUS "CURL linkage will be non-static")
     endif ()
 endif (CURL_FOUND)

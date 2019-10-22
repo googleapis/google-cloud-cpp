@@ -21,8 +21,6 @@ find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 include(SelectMSVCRuntime)
 
 add_executable(gcs2cbt gcs2cbt.cc)
-target_link_libraries(gcs2cbt
-                      bigtable_client
-                      storage_client
-                      google_cloud_cpp_grpc_utils
-                      google_cloud_cpp_common_options)
+target_link_libraries(
+    gcs2cbt bigtable_client storage_client google_cloud_cpp_grpc_utils
+    google_cloud_cpp_common_options)

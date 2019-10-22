@@ -15,15 +15,16 @@
 # ~~~
 
 add_executable(parallel_upload_test parallel_upload_test.cc)
-target_link_libraries(parallel_upload_test
-                      PRIVATE storage_client
-                              storage_client_testing
-                              google_cloud_cpp_testing
-                              google_cloud_cpp_common
-                              GTest::gmock_main
-                              GTest::gmock
-                              GTest::gtest
-                              CURL::libcurl
-                              Threads::Threads
-                              nlohmann_json
-                              storage_common_options)
+target_link_libraries(
+    parallel_upload_test
+    PRIVATE storage_client
+            storage_client_testing
+            google_cloud_cpp_testing
+            google_cloud_cpp_common
+            GTest::gmock_main
+            GTest::gmock
+            GTest::gtest
+            CURL::libcurl
+            Threads::Threads
+            nlohmann_json
+            storage_common_options)

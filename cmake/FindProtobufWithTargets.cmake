@@ -101,44 +101,48 @@ if (Protobuf_FOUND)
 
     if (NOT TARGET protobuf::libprotobuf)
         add_library(protobuf::libprotobuf INTERFACE IMPORTED)
-        set_property(TARGET protobuf::libprotobuf
-                     PROPERTY INTERFACE_INCLUDE_DIRECTORIES
-                              ${Protobuf_INCLUDE_DIR})
-        set_property(TARGET protobuf::libprotobuf
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LIBRARY}
-                              Threads::Threads)
+        set_property(
+            TARGET protobuf::libprotobuf PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+                                                  ${Protobuf_INCLUDE_DIR})
+        set_property(
+            TARGET protobuf::libprotobuf
+            APPEND
+            PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LIBRARY}
+                     Threads::Threads)
     endif ()
 
     if (NOT TARGET protobuf::libprotobuf-lite)
         add_library(protobuf::libprotobuf-lite INTERFACE IMPORTED)
-        set_property(TARGET protobuf::libprotobuf-lite
-                     PROPERTY INTERFACE_INCLUDE_DIRECTORIES
-                              ${Protobuf_INCLUDE_DIR})
-        set_property(TARGET protobuf::libprotobuf-lite
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LITE_LIBRARY}
-                              Threads::Threads)
+        set_property(
+            TARGET protobuf::libprotobuf-lite
+            PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${Protobuf_INCLUDE_DIR})
+        set_property(
+            TARGET protobuf::libprotobuf-lite
+            APPEND
+            PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LITE_LIBRARY}
+                     Threads::Threads)
     endif ()
 
     if (NOT TARGET protobuf::libprotoc)
         add_library(protobuf::libprotoc INTERFACE IMPORTED)
-        set_property(TARGET protobuf::libprotoc
-                     PROPERTY INTERFACE_INCLUDE_DIRECTORIES
-                              ${Protobuf_INCLUDE_DIR})
-        set_property(TARGET protobuf::libprotoc
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES
-                              ${Protobuf_PROTOC_LIBRARY} Threads::Threads)
+        set_property(
+            TARGET protobuf::libprotoc PROPERTY INTERFACE_INCLUDE_DIRECTORIES
+                                                ${Protobuf_INCLUDE_DIR})
+        set_property(
+            TARGET protobuf::libprotoc
+            APPEND
+            PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_PROTOC_LIBRARY}
+                     Threads::Threads)
     endif ()
 
     if (NOT TARGET protobuf::protoc)
         add_executable(protobuf::protoc IMPORTED)
 
         # Discover the protoc compiler location.
-        find_program(_protobuf_PROTOC_EXECUTABLE
-                     NAMES protoc
-                     DOC "The Google Protocol Buffers Compiler")
+        find_program(
+            _protobuf_PROTOC_EXECUTABLE
+            NAMES protoc
+            DOC "The Google Protocol Buffers Compiler")
         if (protobuf_DEBUG)
             message(
                 STATUS
@@ -149,12 +153,12 @@ if (Protobuf_FOUND)
         endif ()
         set_property(TARGET protobuf::protoc
                      PROPERTY IMPORTED_LOCATION ${_protobuf_PROTOC_EXECUTABLE})
-        set_property(TARGET protobuf::protoc
-                     PROPERTY IMPORTED_LOCATION_DEBUG
-                              ${_protobuf_PROTOC_EXECUTABLE})
-        set_property(TARGET protobuf::protoc
-                     PROPERTY IMPORTED_LOCATION_RELEASE
-                              ${_protobuf_PROTOC_EXECUTABLE})
+        set_property(
+            TARGET protobuf::protoc PROPERTY IMPORTED_LOCATION_DEBUG
+                                             ${_protobuf_PROTOC_EXECUTABLE})
+        set_property(
+            TARGET protobuf::protoc PROPERTY IMPORTED_LOCATION_RELEASE
+                                             ${_protobuf_PROTOC_EXECUTABLE})
         unset(_protobuf_PROTOC_EXECUTABLE)
 
         if (protobuf_DEBUG)
@@ -181,9 +185,7 @@ if (protobuf_DEBUG)
                "ProtobufWithTargets_FOUND = ${ProtobufWithTargets_FOUND}"
                " ProtobufWithTargets_VERSION = ${ProtobufWithTargets_VERSION}")
     if (ProtobufWithTargets_FOUND)
-        foreach (_target
-                 protobuf::libprotobuf
-                 protobuf::libprotobuf-lite
+        foreach (_target protobuf::libprotobuf protobuf::libprotobuf-lite
                  protobuf::libprotoc)
             if (NOT TARGET ${_target})
                 message(
@@ -196,7 +198,6 @@ if (protobuf_DEBUG)
     endif ()
 endif ()
 
-find_package_handle_standard_args(ProtobufWithTargets
-                                  REQUIRED_VARS
-                                  ProtobufWithTargets_FOUND
-                                  ProtobufWithTargets_VERSION)
+find_package_handle_standard_args(
+    ProtobufWithTargets REQUIRED_VARS ProtobufWithTargets_FOUND
+    ProtobufWithTargets_VERSION)

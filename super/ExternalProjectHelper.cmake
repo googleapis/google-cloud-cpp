@@ -16,22 +16,29 @@
 
 include(GNUInstallDirs)
 
-set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX "${CMAKE_BINARY_DIR}/external"
+set(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX
+    "${CMAKE_BINARY_DIR}/external"
     CACHE STRING "Configure where the external projects are installed.")
 mark_as_advanced(GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX)
 
 function (set_external_project_build_parallel_level var_name)
-    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles"
-        OR "${CMAKE_GENERATOR}" STREQUAL "Ninja")
+    if ("${CMAKE_GENERATOR}" STREQUAL "Unix Makefiles" OR "${CMAKE_GENERATOR}"
+                                                          STREQUAL "Ninja")
         if (DEFINED ENV{NCPU})
-            set(${var_name} "--" "-j" "$ENV{NCPU}" PARENT_SCOPE)
-        else()
+            set(${var_name}
+                "--" "-j" "$ENV{NCPU}"
+                PARENT_SCOPE)
+        else ()
             include(ProcessorCount)
             processorcount(NCPU)
-            set(${var_name} "--" "-j" "${NCPU}" PARENT_SCOPE)
+            set(${var_name}
+                "--" "-j" "${NCPU}"
+                PARENT_SCOPE)
         endif ()
-    else()
-        set(${var_name} "" PARENT_SCOPE)
+    else ()
+        set(${var_name}
+            ""
+            PARENT_SCOPE)
     endif ()
 endfunction ()
 
@@ -54,19 +61,17 @@ function (set_external_project_prefix_vars)
     # multiple directories for our RPATH. Normally, it'd make sense to use : as
     # a delimiter since it is a typical path-list separator, but it is a special
     # character in CMake.
-    string(REPLACE ";"
-                   "|"
-                   GOOGLE_CLOUD_CPP_INSTALL_RPATH
+    string(REPLACE ";" "|" GOOGLE_CLOUD_CPP_INSTALL_RPATH
                    "${GOOGLE_CLOUD_CPP_INSTALL_RPATH}")
 
     set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${CMAKE_PREFIX_PATH};<INSTALL_DIR>")
-    string(REPLACE ";"
-                   "|"
-                   GOOGLE_CLOUD_CPP_PREFIX_PATH
+    string(REPLACE ";" "|" GOOGLE_CLOUD_CPP_PREFIX_PATH
                    "${GOOGLE_CLOUD_CPP_PREFIX_PATH}")
 
-    set(GOOGLE_CLOUD_CPP_PREFIX_PATH "${GOOGLE_CLOUD_CPP_PREFIX_PATH}"
+    set(GOOGLE_CLOUD_CPP_PREFIX_PATH
+        "${GOOGLE_CLOUD_CPP_PREFIX_PATH}"
         PARENT_SCOPE)
-    set(GOOGLE_CLOUD_CPP_PREFIX_RPATH "${GOOGLE_CLOUD_CPP_PREFIX_RPATH}"
+    set(GOOGLE_CLOUD_CPP_PREFIX_RPATH
+        "${GOOGLE_CLOUD_CPP_PREFIX_RPATH}"
         PARENT_SCOPE)
 endfunction ()

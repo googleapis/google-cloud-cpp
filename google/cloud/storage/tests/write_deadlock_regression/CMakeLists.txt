@@ -20,18 +20,19 @@ if ("${Backtrace_FOUND}")
     configure_file(backtrace.h.in backtrace.h)
     add_executable(object_write_deadlock_regression_test
                    object_write_deadlock_regression_test.cc)
-    target_link_libraries(object_write_deadlock_regression_test
-                          PRIVATE storage_client
-                                  storage_client_testing
-                                  google_cloud_cpp_testing
-                                  google_cloud_cpp_common
-                                  GTest::gmock_main
-                                  GTest::gmock
-                                  GTest::gtest
-                                  CURL::libcurl
-                                  Threads::Threads
-                                  nlohmann_json
-                                  storage_common_options)
+    target_link_libraries(
+        object_write_deadlock_regression_test
+        PRIVATE storage_client
+                storage_client_testing
+                google_cloud_cpp_testing
+                google_cloud_cpp_common
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                CURL::libcurl
+                Threads::Threads
+                nlohmann_json
+                storage_common_options)
     target_include_directories(object_write_deadlock_regression_test
                                PRIVATE "${Backtrace_INCLUDE_DIRS}")
     target_link_libraries(object_write_deadlock_regression_test

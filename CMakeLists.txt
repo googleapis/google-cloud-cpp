@@ -21,7 +21,8 @@ set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(google-cloud-cpp CXX C)
 
 # Configure the Compiler options, we use C++11 features by default.
-set(GOOGLE_CLOUD_CPP_CXX_STANDARD 11
+set(GOOGLE_CLOUD_CPP_CXX_STANDARD
+    11
     CACHE STRING "Configure CMAKE_CXX_STANDARD")
 mark_as_advanced(GOOGLE_CLOUD_CPP_CXX_STANDARD)
 
@@ -38,7 +39,7 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                 " either lack C++11 support or have bugs that prevent us from"
                 " using them.")
     endif ()
-elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
     # Before Clang-3.8 we ran into bugs with std::async() and exceptions.
     if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.8)
@@ -57,9 +58,10 @@ if (APPLE)
     # This is an easy mistake to make, and the error messages are very
     # confusing. Help our users by giving them some guidance.
     if ("${GOOGLE_CLOUD_CPP_ENABLE_MACOS_OPENSSL_CHECK}"
-        AND
-        NOT DEFINED ENV{OPENSSL_ROOT_DIR})
-        message(FATAL_ERROR [===[
+        AND NOT DEFINED ENV{OPENSSL_ROOT_DIR})
+        message(
+            FATAL_ERROR
+                [===[
 The Google Cloud C++ client libraries use the native OpenSSL library. In most
 macOS systems, you need to set the OPENSSL_ROOT_DIR environment variable to find
 this dependency, for example:
@@ -78,8 +80,8 @@ endif (APPLE)
 
 # If ccache is installed use it for the build. This makes the Travis
 # configuration agnostic as to wether ccache is installed or not.
-option(
-    GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available" ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available"
+       ON)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
 
 if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
@@ -87,12 +89,10 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     mark_as_advanced(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
     if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
         message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-        set_property(GLOBAL
-                     PROPERTY RULE_LAUNCH_COMPILE
-                              "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-        set_property(GLOBAL
-                     PROPERTY RULE_LAUNCH_LINK
-                              "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE
+                                     "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK
+                                     "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
 
         set(GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE
             "-DCMAKE_CXX_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}"
@@ -101,14 +101,12 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
 endif ()
 
 # The default source for dependencies.
-set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER "unused"
+set(GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
+    "unused"
     CACHE STRING "This option is no longer used.")
 
 set_property(CACHE GOOGLE_CLOUD_CPP_DEPENDENCY_PROVIDER
-             PROPERTY STRINGS
-                      "external"
-                      "package"
-                      "unused")
+             PROPERTY STRINGS "external" "package" "unused")
 
 # Generate docs with relative URLs matching with the directory structure on
 # googleapis.dev hositng.
@@ -132,16 +130,15 @@ include(CMakeDependentOption)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
        ON)
-option(
-    GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library." ON)
+option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
+       ON)
 option(GOOGLE_CLOUD_CPP_ENABLE_FIRESTORE
        "Enable building the Firestore library." ON)
 
-cmake_dependent_option(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS
-                       "Enable building the gRPC utilities library."
-                       ON
-                       "GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE"
-                       OFF)
+cmake_dependent_option(
+    GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS
+    "Enable building the gRPC utilities library." ON
+    "GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
 
 # Enable testing in this directory so we can do a top-level `make test`. This
