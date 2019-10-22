@@ -38,17 +38,17 @@ function (google_cloud_cpp_spanner_initialize_git_head var)
         if (GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM)
             # Run `git rev-parse --short HEAD` and capture the output in a
             # variable.
-            execute_process(COMMAND "${GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM}"
-                                    rev-parse --short HEAD
-                            OUTPUT_VARIABLE GIT_HEAD_LOG
-                            ERROR_VARIABLE GIT_HEAD_LOG)
-            string(REPLACE "\n"
-                           ""
-                           result
-                           "${GIT_HEAD_LOG}")
+            execute_process(
+                COMMAND "${GOOGLE_CLOUD_CPP_SPANNER_GIT_PROGRAM}" rev-parse
+                        --short HEAD
+                OUTPUT_VARIABLE GIT_HEAD_LOG
+                ERROR_VARIABLE GIT_HEAD_LOG)
+            string(REPLACE "\n" "" result "${GIT_HEAD_LOG}")
         endif ()
     endif ()
-    set(${var} "${result}" PARENT_SCOPE)
+    set(${var}
+        "${result}"
+        PARENT_SCOPE)
 endfunction ()
 
 # Capture the compiler version and the git revision into variables, then
@@ -87,131 +87,132 @@ if (MSVC)
     # want to disable for everything. But for these files the usage is "safe".
     # This is a relatively obscure feature to add compile flags to just few
     # sources:
-    set_property(SOURCE value.cc internal/date.cc
-                 APPEND_STRING
-                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+    set_property(
+        SOURCE value.cc internal/date.cc
+        APPEND_STRING
+        PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 endif ()
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
-add_library(spanner_client
-            ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
-            background_threads.h
-            backoff_policy.h
-            batch_dml_result.h
-            bytes.cc
-            bytes.h
-            client.cc
-            client.h
-            commit_result.h
-            connection.h
-            connection_options.cc
-            connection_options.h
-            create_instance_request_builder.h
-            database.cc
-            database.h
-            database_admin_client.cc
-            database_admin_client.h
-            database_admin_connection.cc
-            database_admin_connection.h
-            date.cc
-            date.h
-            instance.cc
-            instance.h
-            instance_admin_client.cc
-            instance_admin_client.h
-            instance_admin_connection.cc
-            instance_admin_connection.h
-            internal/api_client_header.cc
-            internal/api_client_header.h
-            internal/background_threads_impl.cc
-            internal/background_threads_impl.h
-            internal/build_info.h
-            internal/compiler_info.cc
-            internal/compiler_info.h
-            internal/connection_impl.cc
-            internal/connection_impl.h
-            internal/database_admin_logging.cc
-            internal/database_admin_logging.h
-            internal/database_admin_metadata.cc
-            internal/database_admin_metadata.h
-            internal/database_admin_stub.cc
-            internal/database_admin_stub.h
-            internal/date.cc
-            internal/date.h
-            internal/instance_admin_logging.cc
-            internal/instance_admin_logging.h
-            internal/instance_admin_metadata.cc
-            internal/instance_admin_metadata.h
-            internal/instance_admin_stub.cc
-            internal/instance_admin_stub.h
-            internal/log_wrapper.h
-            internal/logging_spanner_stub.cc
-            internal/logging_spanner_stub.h
-            internal/merge_chunk.cc
-            internal/merge_chunk.h
-            internal/metadata_spanner_stub.cc
-            internal/metadata_spanner_stub.h
-            internal/partial_result_set_reader.h
-            internal/partial_result_set_resume.cc
-            internal/partial_result_set_resume.h
-            internal/partial_result_set_source.cc
-            internal/partial_result_set_source.h
-            internal/polling_loop.h
-            internal/range_from_pagination.h
-            internal/retry_loop.cc
-            internal/retry_loop.h
-            internal/session.h
-            internal/session_pool.cc
-            internal/session_pool.h
-            internal/spanner_stub.cc
-            internal/spanner_stub.h
-            internal/time.cc
-            internal/time.h
-            internal/time_format.cc
-            internal/time_format.h
-            internal/transaction_impl.cc
-            internal/transaction_impl.h
-            internal/tuple_utils.h
-            keys.cc
-            keys.h
-            mutations.cc
-            mutations.h
-            partitioned_dml_result.h
-            polling_policy.h
-            query_partition.cc
-            query_partition.h
-            read_options.h
-            read_partition.cc
-            read_partition.h
-            results.cc
-            results.h
-            retry_policy.h
-            row.cc
-            row.h
-            row_parser.h
-            sql_statement.cc
-            sql_statement.h
-            timestamp.h
-            transaction.cc
-            transaction.h
-            update_instance_request_builder.h
-            value.cc
-            value.h
-            version.cc
-            version.h
-            version_info.h)
-target_include_directories(spanner_client
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
-target_link_libraries(spanner_client
-                      PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                             googleapis-c++::spanner_protos)
-set_target_properties(spanner_client
-                      PROPERTIES VERSION
-                                 "${SPANNER_CLIENT_VERSION}"
-                                 SOVERSION
-                                 "${SPANNER_CLIENT_VERSION_MAJOR}")
+add_library(
+    spanner_client
+    ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    background_threads.h
+    backoff_policy.h
+    batch_dml_result.h
+    bytes.cc
+    bytes.h
+    client.cc
+    client.h
+    commit_result.h
+    connection.h
+    connection_options.cc
+    connection_options.h
+    create_instance_request_builder.h
+    database.cc
+    database.h
+    database_admin_client.cc
+    database_admin_client.h
+    database_admin_connection.cc
+    database_admin_connection.h
+    date.cc
+    date.h
+    instance.cc
+    instance.h
+    instance_admin_client.cc
+    instance_admin_client.h
+    instance_admin_connection.cc
+    instance_admin_connection.h
+    internal/api_client_header.cc
+    internal/api_client_header.h
+    internal/background_threads_impl.cc
+    internal/background_threads_impl.h
+    internal/build_info.h
+    internal/compiler_info.cc
+    internal/compiler_info.h
+    internal/connection_impl.cc
+    internal/connection_impl.h
+    internal/database_admin_logging.cc
+    internal/database_admin_logging.h
+    internal/database_admin_metadata.cc
+    internal/database_admin_metadata.h
+    internal/database_admin_stub.cc
+    internal/database_admin_stub.h
+    internal/date.cc
+    internal/date.h
+    internal/instance_admin_logging.cc
+    internal/instance_admin_logging.h
+    internal/instance_admin_metadata.cc
+    internal/instance_admin_metadata.h
+    internal/instance_admin_stub.cc
+    internal/instance_admin_stub.h
+    internal/log_wrapper.h
+    internal/logging_spanner_stub.cc
+    internal/logging_spanner_stub.h
+    internal/merge_chunk.cc
+    internal/merge_chunk.h
+    internal/metadata_spanner_stub.cc
+    internal/metadata_spanner_stub.h
+    internal/partial_result_set_reader.h
+    internal/partial_result_set_resume.cc
+    internal/partial_result_set_resume.h
+    internal/partial_result_set_source.cc
+    internal/partial_result_set_source.h
+    internal/polling_loop.h
+    internal/range_from_pagination.h
+    internal/retry_loop.cc
+    internal/retry_loop.h
+    internal/session.h
+    internal/session_pool.cc
+    internal/session_pool.h
+    internal/spanner_stub.cc
+    internal/spanner_stub.h
+    internal/time.cc
+    internal/time.h
+    internal/time_format.cc
+    internal/time_format.h
+    internal/transaction_impl.cc
+    internal/transaction_impl.h
+    internal/tuple_utils.h
+    keys.cc
+    keys.h
+    mutations.cc
+    mutations.h
+    partitioned_dml_result.h
+    polling_policy.h
+    query_partition.cc
+    query_partition.h
+    read_options.h
+    read_partition.cc
+    read_partition.h
+    results.cc
+    results.h
+    retry_policy.h
+    row.cc
+    row.h
+    row_parser.h
+    sql_statement.cc
+    sql_statement.h
+    timestamp.h
+    transaction.cc
+    transaction.h
+    update_instance_request_builder.h
+    value.cc
+    value.h
+    version.cc
+    version.h
+    version_info.h)
+target_include_directories(
+    spanner_client
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:include>)
+target_link_libraries(
+    spanner_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+                          googleapis-c++::spanner_protos)
+set_target_properties(
+    spanner_client PROPERTIES VERSION "${SPANNER_CLIENT_VERSION}" SOVERSION
+                              "${SPANNER_CLIENT_VERSION_MAJOR}")
 target_compile_options(spanner_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
@@ -246,12 +247,10 @@ function (spanner_client_define_tests)
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
-    target_link_libraries(spanner_client_mocks
-                          INTERFACE googleapis-c++::spanner_client
-                                    google_cloud_cpp_testing
-                                    GTest::gmock_main
-                                    GTest::gmock
-                                    GTest::gtest)
+    target_link_libraries(
+        spanner_client_mocks
+        INTERFACE googleapis-c++::spanner_client google_cloud_cpp_testing
+                  GTest::gmock_main GTest::gmock GTest::gtest)
     create_bazel_config(spanner_client_mocks)
     target_include_directories(
         spanner_client_mocks
@@ -262,38 +261,39 @@ function (spanner_client_define_tests)
         spanner_client_mocks
         INTERFACE ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
-    add_library(spanner_client_testing
-                testing/database_environment.cc
-                testing/database_environment.h
-                testing/matchers.h
-                testing/mock_database_admin_stub.h
-                testing/mock_instance_admin_stub.h
-                testing/mock_spanner_stub.h
-                testing/pick_random_instance.cc
-                testing/pick_random_instance.h
-                testing/random_database_name.cc
-                testing/random_database_name.h
-                testing/random_instance_name.cc
-                testing/random_instance_name.h
-                testing/validate_metadata.cc
-                testing/validate_metadata.h)
-    target_link_libraries(spanner_client_testing
-                          PUBLIC spanner_client_mocks
-                                 googleapis-c++::spanner_client
-                                 google_cloud_cpp_testing
-                                 GTest::gmock_main
-                                 GTest::gmock
-                                 GTest::gtest)
+    add_library(
+        spanner_client_testing
+        testing/database_environment.cc
+        testing/database_environment.h
+        testing/matchers.h
+        testing/mock_database_admin_stub.h
+        testing/mock_instance_admin_stub.h
+        testing/mock_spanner_stub.h
+        testing/pick_random_instance.cc
+        testing/pick_random_instance.h
+        testing/random_database_name.cc
+        testing/random_database_name.h
+        testing/random_instance_name.cc
+        testing/random_instance_name.h
+        testing/validate_metadata.cc
+        testing/validate_metadata.h)
+    target_link_libraries(
+        spanner_client_testing
+        PUBLIC spanner_client_mocks googleapis-c++::spanner_client
+               google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+               GTest::gtest)
     create_bazel_config(spanner_client_testing)
 
-    target_include_directories(spanner_client_testing
-                               PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                      $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                      $<INSTALL_INTERFACE:include>)
+    target_include_directories(
+        spanner_client_testing
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
     target_compile_options(spanner_client_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
     set(spanner_client_unit_tests
+        # cmake-format: sortable
         connection_options_test.cc
         client_test.cc
         database_test.cc
@@ -353,22 +353,14 @@ function (spanner_client_define_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${spanner_client_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE spanner_client_testing
-                                      googleapis-c++::spanner_client
-                                      google_cloud_cpp_testing
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest)
+        target_link_libraries(
+            ${target}
+            PRIVATE spanner_client_testing googleapis-c++::spanner_client
+                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
@@ -407,34 +399,38 @@ install(EXPORT spanner-targets
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS spanner_client
-        EXPORT spanner-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                COMPONENT google_cloud_cpp_spanner_runtime
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_spanner_runtime
-                NAMELINK_SKIP
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_spanner_development)
+install(
+    TARGETS spanner_client
+    EXPORT spanner-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_spanner_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_spanner_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_spanner_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
-install(TARGETS spanner_client
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_spanner_development
-                NAMELINK_ONLY
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_spanner_development)
+install(
+    TARGETS spanner_client
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_spanner_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_spanner_development)
 
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-        DESTINATION include/google/cloud/spanner
-        COMPONENT google_cloud_cpp_spanner_development
-        FILES_MATCHING
-        PATTERN "*.h")
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-        DESTINATION include/google/cloud/spanner
-        COMPONENT google_cloud_cpp_spanner_development
-        FILES_MATCHING
-        PATTERN "*.inc")
+install(
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
+    DESTINATION include/google/cloud/spanner
+    COMPONENT google_cloud_cpp_spanner_development
+    FILES_MATCHING
+    PATTERN "*.h")
+install(
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
+    DESTINATION include/google/cloud/spanner
+    COMPONENT google_cloud_cpp_spanner_development
+    FILES_MATCHING
+    PATTERN "*.inc")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
@@ -450,16 +446,18 @@ set(GOOGLE_CLOUD_SPANNER_PC_LIBS "-lspanner_client")
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
                "spanner_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-        COMPONENT google_cloud_cpp_spanner_development)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_spanner_development)
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "spanner_client-config.cmake" @ONLY)
 configure_file(
     "${PROJECT_SOURCE_DIR}/google/cloud/spanner/config-version.cmake.in"
     "spanner_client-config-version.cmake" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client"
-        COMPONENT google_cloud_cpp_spanner_development)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/spanner_client-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/spanner_client"
+    COMPONENT google_cloud_cpp_spanner_development)

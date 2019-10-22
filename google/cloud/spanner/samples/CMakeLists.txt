@@ -19,8 +19,10 @@ include(EnableWerror)
 include(GoogleCloudCppSpannerFunctions)
 
 function (spanner_client_define_samples)
-    set(spanner_client_integration_samples samples.cc)
-    set(spanner_client_unit_samples mock_execute_query.cc)
+    set(spanner_client_integration_samples # cmake-format: sortable
+                                           samples.cc)
+    set(spanner_client_unit_samples # cmake-format: sortable
+                                    mock_execute_query.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
@@ -37,13 +39,11 @@ function (spanner_client_define_samples)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target}
-                              PRIVATE googleapis-c++::spanner_client
-                                      spanner_client_testing
-                                      google_cloud_cpp_testing
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest)
+        target_link_libraries(
+            ${target}
+            PRIVATE googleapis-c++::spanner_client spanner_client_testing
+                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+                    GTest::gtest)
     endforeach ()
 
     foreach (fname ${spanner_client_integration_samples})

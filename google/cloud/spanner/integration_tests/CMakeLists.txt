@@ -23,9 +23,10 @@ if (MSVC)
     # not want to disable for everything. But for these files the usage is
     # "safe". This is a relatively obscure feature to add compile flags to just
     # one source:
-    set_property(SOURCE instance_admin_integration_test.cc
-                 APPEND_STRING
-                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+    set_property(
+        SOURCE instance_admin_integration_test.cc
+        APPEND_STRING
+        PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 endif ()
 
 function (spanner_client_define_integration_tests)
@@ -38,6 +39,7 @@ function (spanner_client_define_integration_tests)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     set(spanner_client_integration_tests
+        # cmake-format: sortable
         client_integration_test.cc
         database_admin_integration_test.cc
         client_stress_test.cc
@@ -60,13 +62,11 @@ function (spanner_client_define_integration_tests)
     foreach (fname ${spanner_client_integration_tests})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE googleapis-c++::spanner_client
-                                      spanner_client_testing
-                                      google_cloud_cpp_testing
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest)
+        target_link_libraries(
+            ${target}
+            PRIVATE googleapis-c++::spanner_client spanner_client_testing
+                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
