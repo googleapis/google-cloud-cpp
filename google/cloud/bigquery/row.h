@@ -12,29 +12,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
-#define GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
+#ifndef GOOGLE_CLOUD_BIGQUERY_ROW_H_
+#define GOOGLE_CLOUD_BIGQUERY_ROW_H_
 
-#include "google/cloud/bigquery/read_result.h"
-#include "google/cloud/bigquery/read_stream.h"
-#include "google/cloud/bigquery/row.h"
 #include "google/cloud/bigquery/version.h"
-#include "google/cloud/status_or.h"
-#include <vector>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
-class Connection {
+// TODO(aryann): Move all of the classes defined here except Client to their own
+// files.
+
+// TODO(aryann): Add an implementation for a row. We must support schemas that
+// are known at compile-time as well as those that are known at run-time.
+class Row {
  public:
-  virtual ~Connection() = default;
+  Row() = default;
 
-  virtual ReadResult Read(ReadStream const& read_stream) = 0;
+  ~Row() = default;
 
-  virtual StatusOr<std::vector<ReadStream>> ParallelRead(
-      std::string const& parent_project_id, std::string const& table,
-      std::vector<std::string> const& columns = {}) = 0;
+  Row(Row const&) = default;
+  Row& operator=(Row const&) = default;
+  Row(Row&&) = default;
+  Row& operator=(Row&&) = default;
 };
 
 }  // namespace BIGQUERY_CLIENT_NS
@@ -42,4 +43,4 @@ class Connection {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
+#endif  // GOOGLE_CLOUD_BIGQUERY_ROW_H_

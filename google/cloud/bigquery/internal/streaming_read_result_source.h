@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
-#define BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
+#ifndef GOOGLE_CLOUD_BIGQUERY_INTERNAL_STREAMING_READ_RESULT_SOURCE_H_
+#define GOOGLE_CLOUD_BIGQUERY_INTERNAL_STREAMING_READ_RESULT_SOURCE_H_
 
-#include "google/cloud/bigquery/connection.h"
-#include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/stream_reader.h"
+#include "google/cloud/bigquery/read_result.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
@@ -29,30 +28,31 @@ namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
 namespace internal {
 
-// BigQueryStorageStub is a thin stub layer over the BigQuery Storage API
-// that hides the underlying transport stub, e.g., gRPC.
-class BigQueryStorageStub {
+class StreamingReadResultSource : public ReadResultSource {
  public:
-  virtual ~BigQueryStorageStub() = default;
+  explicit StreamingReadResultSource(
+      std::unique_ptr<StreamReader<
+          google::cloud::bigquery::storage::v1beta1::ReadRowsResponse>>
+          reader)
+      : reader_(std::move(reader)),
+        offset_in_curr_response_(0),
+        offset_(0),
+        fraction_consumed_(0) {}
 
-  // Sends a CreateReadSession RPC.
-  virtual google::cloud::StatusOr<
-      google::cloud::bigquery::storage::v1beta1::ReadSession>
-  CreateReadSession(
-      google::cloud::bigquery::storage::v1beta1::CreateReadSessionRequest const&
-          request) = 0;
+  StatusOr<optional<Row>> NextRow() override;
+  std::size_t CurrentOffset() override { return offset_; }
+  double FractionConsumed() override { return fraction_consumed_; }
 
-  virtual std::unique_ptr<
+ private:
+  std::unique_ptr<
       StreamReader<google::cloud::bigquery::storage::v1beta1::ReadRowsResponse>>
-  ReadRows(google::cloud::bigquery::storage::v1beta1::ReadRowsRequest const&
-               request) = 0;
+      reader_;
 
- protected:
-  BigQueryStorageStub() = default;
+  optional<google::cloud::bigquery::storage::v1beta1::ReadRowsResponse> curr_;
+  std::int64_t offset_in_curr_response_;
+  std::size_t offset_;
+  double fraction_consumed_;
 };
-
-std::shared_ptr<BigQueryStorageStub> MakeDefaultBigQueryStorageStub(
-    ConnectionOptions const& options);
 
 }  // namespace internal
 }  // namespace BIGQUERY_CLIENT_NS
@@ -60,4 +60,4 @@ std::shared_ptr<BigQueryStorageStub> MakeDefaultBigQueryStorageStub(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
+#endif  // BIGQUERY_INTERNAL_CONNECTION_H_

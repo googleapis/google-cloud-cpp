@@ -17,4 +17,5 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigquery_client_unit_tests = [
+    "internal/connection_impl_test.cc",
 ]

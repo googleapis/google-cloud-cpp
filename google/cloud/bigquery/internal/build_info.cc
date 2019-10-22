@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2017 Google Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,34 +12,35 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
-#define GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
-
-#include "google/cloud/bigquery/read_result.h"
-#include "google/cloud/bigquery/read_stream.h"
-#include "google/cloud/bigquery/row.h"
-#include "google/cloud/bigquery/version.h"
-#include "google/cloud/status_or.h"
-#include <vector>
+#include "google/cloud/bigquery/internal/build_info.h"
+#include "google/cloud/internal/port_platform.h"
+#include <algorithm>
+#include <cctype>
+#include <iterator>
 
 namespace google {
 namespace cloud {
 namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
-class Connection {
- public:
-  virtual ~Connection() = default;
+namespace internal {
 
-  virtual ReadResult Read(ReadStream const& read_stream) = 0;
+std::string BuildFlags() {
+  static auto const* const kFlags = [] {
+    auto* flags = new std::string(R"""()""");
+    if (!flags->empty()) {
+      *flags += ' ';
+    }
+    *flags +=
+        R"""()""";
+    return flags;
+  }();
+  return *kFlags;
+}
 
-  virtual StatusOr<std::vector<ReadStream>> ParallelRead(
-      std::string const& parent_project_id, std::string const& table,
-      std::vector<std::string> const& columns = {}) = 0;
-};
+std::string BuildMetadata() { return R"""(2ebb053)"""; }
 
+}  // namespace internal
 }  // namespace BIGQUERY_CLIENT_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_

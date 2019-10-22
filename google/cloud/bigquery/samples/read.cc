@@ -33,9 +33,9 @@ using google::cloud::bigquery::SerializeReadStream;
 void SimpleRead() {
   ConnectionOptions options;
   Client client(MakeConnection(options));
-  ReadResult<Row> result = client.Read(
-      "my-parent-project", "bigquery-public-data:samples.shakespeare",
-      /* columns = */ {"c1", "c2", "c3"});
+  ReadResult result = client.Read("my-parent-project",
+                                  "bigquery-public-data:samples.shakespeare",
+                                  /* columns = */ {"c1", "c2", "c3"});
   for (StatusOr<Row> const& row : result.Rows()) {
     if (row.ok()) {
       // Do something with row.value();
@@ -47,27 +47,57 @@ void ParallelRead() {
   // From coordinating job:
   ConnectionOptions options;
   Client client(MakeConnection(options));
-  StatusOr<std::vector<ReadStream<Row>>> read_session = client.ParallelRead(
+  StatusOr<std::vector<ReadStream>> read_session = client.ParallelRead(
       "my-parent-project", "bigquery-public-data:samples.shakespeare",
       /* columns = */ {"c1", "c2", "c3"});
   if (!read_session.ok()) {
     // Handle error;
   }
 
-  for (ReadStream<Row> const& stream : read_session.value()) {
-    std::string bits = SerializeReadStream(stream).value();
+  for (ReadStream const& stream : read_session.value()) {
+    std::string bits = SerializeReadStream(stream);
     // Send bits to worker job.
   }
 
   // From a worker job:
   std::string bits;  // Sent by coordinating job.
-  ReadStream<Row> stream = DeserializeReadStream<Row>(bits).value();
-  ReadResult<Row> result = client.Read(stream);
+  ReadStream stream = DeserializeReadStream(bits).value();
+  ReadResult result = client.Read(stream);
   for (StatusOr<Row> const& row : result.Rows()) {
     if (row.ok()) {
       // Do something with row.value();
     }
   }
+}
+
+int CreateSession(std::string const& project_id) {
+  google::cloud::bigquery::ConnectionOptions options;
+  google::cloud::bigquery::Client client(
+      google::cloud::bigquery::MakeConnection(options));
+  google::cloud::StatusOr<std::vector<ReadStream>> res = client.ParallelRead(
+      project_id, "bigquery-public-data:samples.shakespeare");
+
+  if (!res.ok()) {
+    std::cerr << "Session creation failed with error: " << res.status() << "\n";
+    return EXIT_FAILURE;
+  }
+
+  for (ReadStream const& stream : res.value()) {
+    std::cout << "Starting stream: " << stream.stream_name() << "\n";
+    ReadResult read_result = client.Read(stream);
+    for (StatusOr<Row> const& row : read_result.Rows()) {
+      if (!row.ok()) {
+        std::cerr << "Error at row offset " << read_result.CurrentOffset()
+                  << ": " << row.status() << "\n";
+        return EXIT_FAILURE;
+      }
+      std::cout << "  Current offset: " << read_result.CurrentOffset()
+                << "; fraction consumed: " << read_result.FractionConsumed()
+                << "\n";
+    }
+    std::cout << "Done with stream: " << stream.stream_name() << "\n\n";
+  }
+  return EXIT_SUCCESS;
 }
 
 }  // namespace
@@ -81,25 +111,12 @@ int main(int argc, char* argv[]) {
   std::string cmd = argv[1];
   std::string project_id = argv[2];
 
-  google::cloud::bigquery::ConnectionOptions options;
-  google::cloud::bigquery::Client client(
-      google::cloud::bigquery::MakeConnection(options));
-  google::cloud::StatusOr<std::string> res = client.CreateSession(
-      project_id, "bigquery-public-data:samples.shakespeare");
-
-  if (res.ok()) {
-    std::cout << "Session name: " << res.value() << "\n";
-  } else {
-    std::cerr << "Session creation failed with error: " << res.status() << "\n";
-    return EXIT_FAILURE;
-  }
-
   if (cmd == "SimpleRead") {
     SimpleRead();
   } else if (cmd == "ParallelRead") {
     ParallelRead();
-  } else if (cmd == "None") {
-    std::cout << "Doing nothing really fast\n";
+  } else if (cmd == "PrintProgress") {
+    return CreateSession(project_id);
   } else {
     std::cerr << "Unknown command: " << cmd << "\n";
     return EXIT_FAILURE;

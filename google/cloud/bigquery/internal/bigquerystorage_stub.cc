@@ -13,13 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
-
-#include <google/cloud/bigquery/storage/v1beta1/storage.grpc.pb.h>
-#include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
-#include <grpcpp/create_channel.h>
-
-#include <memory>
-
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/stream_reader.h"
@@ -27,6 +20,10 @@
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
+#include <google/cloud/bigquery/storage/v1beta1/storage.grpc.pb.h>
+#include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
+#include <grpcpp/create_channel.h>
+#include <memory>
 
 namespace google {
 namespace cloud {

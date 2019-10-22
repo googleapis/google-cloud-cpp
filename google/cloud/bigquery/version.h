@@ -15,11 +15,10 @@
 #ifndef BIGQUERY_VERSION_H_
 #define BIGQUERY_VERSION_H_
 
-#include <sstream>
-#include <string>
-
 #include "google/cloud/bigquery/version_info.h"
 #include "google/cloud/version.h"
+#include <sstream>
+#include <string>
 
 #define BIGQUERY_CLIENT_NS                              \
   GOOGLE_CLOUD_CPP_VEVAL(BIGQUERY_CLIENT_VERSION_MAJOR, \

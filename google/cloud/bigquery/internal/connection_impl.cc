@@ -13,16 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/internal/connection_impl.h"
-
+#include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
+#include "google/cloud/bigquery/internal/streaming_read_result_source.h"
+#include "google/cloud/bigquery/version.h"
+#include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
-
 #include <memory>
 #include <sstream>
 #include <string>
-
-#include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
-#include "google/cloud/bigquery/version.h"
-#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
@@ -59,8 +57,34 @@ std::istream& operator>>(std::istream& is, DelimitedBy<delimiter>& output) {
 ConnectionImpl::ConnectionImpl(std::shared_ptr<BigQueryStorageStub> read_stub)
     : read_stub_(read_stub) {}
 
-StatusOr<std::string> ConnectionImpl::CreateSession(
-    std::string parent_project_id, std::string table) {
+ReadResult ConnectionImpl::Read(ReadStream const& read_stream) {
+  bigquerystorage_proto::ReadRowsRequest request;
+  request.mutable_read_position()->mutable_stream()->set_name(
+      read_stream.stream_name());
+  auto source = std::unique_ptr<StreamingReadResultSource>(
+      new StreamingReadResultSource(read_stub_->ReadRows(request)));
+  return ReadResult(std::move(source));
+}
+
+StatusOr<std::vector<ReadStream>> ConnectionImpl::ParallelRead(
+    std::string const& parent_project_id, std::string const& table,
+    std::vector<std::string> const& columns) {
+  auto response = NewReadSession(parent_project_id, table, columns);
+  if (!response.ok()) {
+    return response.status();
+  }
+
+  std::vector<ReadStream> result;
+  for (bigquerystorage_proto::Stream const& stream :
+       response.value().streams()) {
+    result.push_back(MakeReadStream(stream.name()));
+  }
+  return result;
+}
+
+StatusOr<bigquerystorage_proto::ReadSession> ConnectionImpl::NewReadSession(
+    std::string const& parent_project_id, std::string const& table,
+    std::vector<std::string> const& columns) {
   auto parts = StrSplit<':'>(table);
   if (parts.size() != 2) {
     return Status(
@@ -82,11 +106,11 @@ StatusOr<std::string> ConnectionImpl::CreateSession(
   request.mutable_table_reference()->set_project_id(project_id);
   request.mutable_table_reference()->set_dataset_id(dataset_id);
   request.mutable_table_reference()->set_table_id(table_id);
-  auto response = read_stub_->CreateReadSession(request);
-  if (!response.ok()) {
-    return response.status();
+  for (std::string const& column : columns) {
+    request.mutable_read_options()->add_selected_fields(column);
   }
-  return response.value().name();
+
+  return read_stub_->CreateReadSession(request);
 }
 
 std::shared_ptr<ConnectionImpl> MakeConnection(

@@ -15,12 +15,10 @@
 #ifndef BIGQUERY_CONNECTION_OPTIONS_H_
 #define BIGQUERY_CONNECTION_OPTIONS_H_
 
+#include "google/cloud/bigquery/version.h"
 #include <grpcpp/grpcpp.h>
-
 #include <memory>
 #include <string>
-
-#include "google/cloud/bigquery/version.h"
 
 namespace google {
 namespace cloud {

@@ -15,12 +15,11 @@
 #ifndef BIGQUERY_INTERNAL_CONNECTION_H_
 #define BIGQUERY_INTERNAL_CONNECTION_H_
 
-#include <memory>
-
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -34,13 +33,21 @@ namespace internal {
 // transport-related logic (e.g., any gRPC-specific code).
 class ConnectionImpl : public Connection {
  public:
-  google::cloud::StatusOr<std::string> CreateSession(
-      std::string parent_project_id, std::string table) override;
+  ReadResult Read(ReadStream const& read_stream) override;
+
+  StatusOr<std::vector<ReadStream>> ParallelRead(
+      std::string const& parent_project_id, std::string const& table,
+      std::vector<std::string> const& columns = {}) override;
 
  private:
   friend std::shared_ptr<ConnectionImpl> MakeConnection(
       std::shared_ptr<BigQueryStorageStub> read_stub);
   ConnectionImpl(std::shared_ptr<BigQueryStorageStub> read_stub);
+
+  google::cloud::StatusOr<
+      google::cloud::bigquery::storage::v1beta1::ReadSession>
+  NewReadSession(std::string const& parent_project_id, std::string const& table,
+                 std::vector<std::string> const& columns = {});
 
   std::shared_ptr<BigQueryStorageStub> read_stub_;
 };

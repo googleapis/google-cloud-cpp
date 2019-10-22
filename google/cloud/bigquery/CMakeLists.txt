@@ -95,9 +95,18 @@ add_library(bigquery_client
             internal/connection_impl.cc
             internal/connection_impl.h
             internal/stream_reader.h
+            internal/streaming_read_result_source.cc
+            internal/streaming_read_result_source.h
+            read_result.h
+            read_stream.h
+            read_stream.cc
+            row.h
+            row_set.h
+            testing/mock_bigquerystorage_stub.h
             version.cc
             version.h
-            version_info.h)
+            version_info.h
+	    )
 target_include_directories(bigquery_client
                            PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
                                   $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
@@ -134,6 +143,7 @@ function (bigquery_client_define_tests)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     set(bigquery_client_unit_tests
+        internal/connection_impl_test.cc
         )
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
