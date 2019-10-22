@@ -1017,8 +1017,7 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetryExhausted) {
         return StatusOr<ResumableUploadResponse>(TransientError());
       }));
 
-  EXPECT_CALL(*mock, ResetSession())
-  .WillRepeatedly(Invoke([&]() {
+  EXPECT_CALL(*mock, ResetSession()).WillRepeatedly(Invoke([&]() {
     return make_status_or(ResumableUploadResponse{
         "", neb - 1, {}, ResumableUploadResponse::kInProgress});
   }));
@@ -1070,11 +1069,10 @@ TEST_F(RetryResumableUploadSessionTest, ShortWriteRetrySucceeds) {
             "", neb - 1, {}, ResumableUploadResponse::kInProgress});
       }));
 
-  EXPECT_CALL(*mock, ResetSession())
-      .WillRepeatedly(Invoke([&]() {
-        return make_status_or(ResumableUploadResponse{
-            "", neb - 1, {}, ResumableUploadResponse::kInProgress});
-      }));
+  EXPECT_CALL(*mock, ResetSession()).WillRepeatedly(Invoke([&]() {
+    return make_status_or(ResumableUploadResponse{
+        "", neb - 1, {}, ResumableUploadResponse::kInProgress});
+  }));
 
   RetryResumableUploadSession session(std::move(mock),
                                       LimitedErrorCountRetryPolicy(10).clone(),
