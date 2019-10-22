@@ -87,15 +87,17 @@ RetryResumableUploadSession::UploadGenericChunk(
         // If it's a final chunk and it was sent successfully, return.
         return result;
       }
-      if (next_expected_byte() - next_byte == buffer_to_use->size()) {
+      auto current_next_expected_byte = next_expected_byte();
+      if (current_next_expected_byte - next_byte == buffer_to_use->size()) {
         // Otherwise, return only if there were no failures and it wasn't a
         // short write.
         return result;
       }
       std::stringstream os;
       os << "Short write. Previous next_byte=" << next_byte
-         << ", current next_byte=" << next_expected_byte()
-         << ", inteded to write " << buffer_to_use->size();
+         << ", current next_byte=" << current_next_expected_byte
+         << ", intended to write=" << buffer_to_use->size()
+         << ", wrote=" << current_next_expected_byte - next_byte;
       last_status = Status(StatusCode::kUnavailable, os.str());
       // Don't reset the session on a short write nor wait according to the
       // backoff policy - we did get a response from the server after all.
