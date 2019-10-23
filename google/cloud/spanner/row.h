@@ -20,8 +20,12 @@
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
+#include <functional>
+#include <iterator>
 #include <memory>
 #include <string>
+#include <tuple>
+#include <type_traits>
 #include <utility>
 #include <vector>
 
@@ -204,6 +208,203 @@ class Row {
  * @endcode
  */
 Row MakeRow(std::vector<std::pair<std::string, Value>> pairs);
+
+/**
+ * A `RowStreamIterator` is an [Input Iterator][input-iterator] that returns a
+ * sequence of `StatusOr<Row>` objects.
+ *
+ * As an Input Iterator, the sequence may only be consumed once. Default
+ * constructing a `RowStreamIterator` creates an instance that represents
+ * "end".
+ *
+ * @note The term "stream" in this name refers to the general nature
+ *     of the the data source, and is not intended to suggest any similarity to
+ *     C++'s I/O streams library. Syntactically, this class is an "iterator".
+ *
+ * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+ */
+class RowStreamIterator {
+ public:
+  /**
+   * A function that returns a sequence of `StatusOr<Row>` objects. Returning
+   * an empty `Row` indicates that there are no more rows to be returned.
+   */
+  using Source = std::function<StatusOr<Row>()>;
+
+  /// @name Iterator type aliases
+  ///@{
+  using iterator_category = std::input_iterator_tag;
+  using value_type = StatusOr<Row>;
+  using difference_type = std::ptrdiff_t;
+  using pointer = value_type*;
+  using reference = value_type&;
+  using const_pointer = value_type const*;
+  using const_reference = value_type const&;
+  ///@}
+
+  /// Default constructs an "end" iterator.
+  RowStreamIterator();
+
+  /**
+   * Constructs a `RowStreamIterator` that will consume rows from the given
+   * @p source, which must not be `nullptr`.
+   */
+  explicit RowStreamIterator(Source source);
+
+  reference operator*() { return row_; }
+  pointer operator->() { return &row_; }
+
+  const_reference operator*() const { return row_; }
+  const_pointer operator->() const { return &row_; }
+
+  RowStreamIterator& operator++();
+  RowStreamIterator operator++(int);
+
+  friend bool operator==(RowStreamIterator const&, RowStreamIterator const&);
+  friend bool operator!=(RowStreamIterator const&, RowStreamIterator const&);
+
+ private:
+  value_type row_;
+  Source source_;  // nullptr means "end"
+};
+
+/**
+ * A `TupleStreamIterator<Tuple>` is an "Input Iterator" that wraps a
+ * `RowStreamIterator`, parsing its elements into a sequence of
+ * `StatusOr<Tuple>` objects.
+ *
+ * As an Input Iterator, the sequence may only be consumed once. See
+ * https://en.cppreference.com/w/cpp/named_req/InputIterator for more details.
+ *
+ * Default constructing this object creates an instance that represents "end".
+ *
+ * Each `Row` returned by the wrapped `RowStreamIterator` must be convertible
+ * to the specified `Tuple` template parameter.
+ *
+ * @note The term "stream" in this name refers to the general nature
+ *     of the the data source, and is not intended to suggest any similarity to
+ *     C++'s I/O streams library. Syntactically, this class is an "iterator".
+ *
+ * @tparam Tuple the std::tuple<...> to parse each `Row` into.
+ */
+template <typename Tuple>
+class TupleStreamIterator {
+ public:
+  /// @name Iterator type aliases
+  ///@{
+  using iterator_category = std::input_iterator_tag;
+  using value_type = StatusOr<Tuple>;
+  using difference_type = std::ptrdiff_t;
+  using pointer = value_type*;
+  using reference = value_type&;
+  using const_pointer = value_type const*;
+  using const_reference = value_type const&;
+  ///@}
+
+  /// Default constructs an "end" iterator.
+  TupleStreamIterator() = default;
+
+  /// Creates an iterator that wraps the given `RowStreamIterator` range.
+  TupleStreamIterator(RowStreamIterator begin, RowStreamIterator end)
+      : it_(std::move(begin)), end_(std::move(end)) {
+    ParseTuple();
+  }
+
+  reference operator*() { return tup_; }
+  pointer operator->() { return &tup_; }
+
+  const_reference operator*() const { return tup_; }
+  const_pointer operator->() const { return &tup_; }
+
+  TupleStreamIterator& operator++() {
+    if (!tup_) {
+      it_ = end_;
+      return *this;
+    }
+    ++it_;
+    ParseTuple();
+    return *this;
+  }
+
+  TupleStreamIterator operator++(int) {
+    auto const old = *this;
+    ++*this;
+    return old;
+  }
+
+  friend bool operator==(TupleStreamIterator const& a,
+                         TupleStreamIterator const& b) {
+    return a.it_ == b.it_;
+  }
+
+  friend bool operator!=(TupleStreamIterator const& a,
+                         TupleStreamIterator const& b) {
+    return !(a == b);
+  }
+
+ private:
+  void ParseTuple() {
+    if (it_ != end_) tup_ = (*it_)->template get<Tuple>();
+  }
+
+  value_type tup_;
+  RowStreamIterator it_;
+  RowStreamIterator end_;
+};
+
+/**
+ * A `StreamOf<Tuple>` defines a range that parses `Tuple` objects from the
+ * given range of `RowStreamIterator`s.
+ *
+ * Users will typically use this class in a range-for loop as follows:
+ *
+ * @code
+ * auto row_range = ...
+ * using RowType = std::tuple<std::int64_t, std::string, bool>;
+ * for (auto row : StreamOf<RowType>(row_range)) {
+ *   if (!row) {
+ *     // Handle error;
+ *   }
+ *   std::int64_t x = std::get<0>(*row);
+ *   ...
+ * }
+ * @endcode
+ *
+ * @note The term "stream" in this name refers to the general nature
+ *     of the the data source, and is not intended to suggest any similarity to
+ *     C++'s I/O streams library. Syntactically, this class is a "range"
+ *     defined by two "iterator" objects of type `TupleStreamIterator<Tuple>`.
+ *
+ * @tparam Tuple the std::tuple<...> to parse each `Row` into.
+ */
+template <typename Tuple>
+class StreamOf {
+ public:
+  using iterator = TupleStreamIterator<Tuple>;
+  static_assert(internal::IsTuple<Tuple>::value,
+                "StreamOf<T> requires a std::tuple parameter");
+
+  /**
+   * Creates a `StreamOf<Tuple>` by wrapping the given @p range. The `RowRange`
+   * must be a range defined by `RowStreamIterator` objects.
+   *
+   * @tparam RowRange must be a range defined by `RowStreamIterator`s.
+   */
+  template <typename RowRange>
+  explicit StreamOf(RowRange const& range)
+      : begin_(std::begin(range), std::end(range)) {
+    using T = decltype(std::begin(range));
+    static_assert(std::is_same<RowStreamIterator, T>::value,
+                  "StreamOf must be given a RowStreamIterator range.");
+  }
+
+  iterator begin() const { return begin_; }
+  iterator end() const { return end_; }
+
+ private:
+  iterator begin_;
+  iterator end_;
+};
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

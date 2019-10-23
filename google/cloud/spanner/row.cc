@@ -71,6 +71,48 @@ bool operator==(Row const& a, Row const& b) {
   return a.values_ == b.values_ && *a.columns_ == *b.columns_;
 }
 
+//
+// RowStreamIterator
+//
+
+RowStreamIterator::RowStreamIterator() = default;
+
+RowStreamIterator::RowStreamIterator(Source source)
+    : row_(Row{}), source_(std::move(source)) {
+  ++*this;
+}
+
+RowStreamIterator& RowStreamIterator::operator++() {
+  if (!row_) {
+    source_ = nullptr;  // Last row was an error; become "end"
+    return *this;
+  }
+  row_ = source_();
+  if (row_ && row_->size() == 0) {
+    source_ = nullptr;  // No more Rows to consume; become "end"
+    return *this;
+  }
+  return *this;
+}
+
+RowStreamIterator RowStreamIterator::operator++(int) {
+  auto const old = *this;
+  ++*this;
+  return old;
+}
+
+bool operator==(RowStreamIterator const& a, RowStreamIterator const& b) {
+  // Input iterators may only be compared to (copies of) themselves and end.
+  // See https://en.cppreference.com/w/cpp/named_req/InputIterator. Therefore,
+  // by definition, all input iterators are equal unless one is end and the
+  // other is not.
+  return !a.source_ == !b.source_;
+}
+
+bool operator!=(RowStreamIterator const& a, RowStreamIterator const& b) {
+  return !(a == b);
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
