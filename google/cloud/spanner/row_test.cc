@@ -521,6 +521,43 @@ TEST(StreamOf, RangeForLoop) {
   EXPECT_EQ(product, 30);
 }
 
+TEST(StreamOf, IterationError) {
+  std::vector<StatusOr<Row>> rows;
+  rows.emplace_back(MakeRow({
+      {"a", Value(1)},      //
+      {"b", Value("foo")},  //
+      {"c", Value(true)}    //
+  }));
+  rows.emplace_back(Status(StatusCode::kUnknown, "some error"));
+  rows.emplace_back(MakeRow({
+      {"a", Value(2)},      //
+      {"b", Value("bar")},  //
+      {"c", Value(true)}    //
+  }));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+
+  using RowType = std::tuple<std::int64_t, std::string, bool>;
+  StreamOf<RowType> stream(range);
+
+  auto end = stream.end();
+  auto it = stream.begin();
+  EXPECT_NE(it, end);
+  EXPECT_STATUS_OK(*it);
+  EXPECT_EQ(std::make_tuple(1, "foo", true), **it);
+
+  ++it;
+  EXPECT_EQ(it, it);
+  EXPECT_NE(it, end);
+  EXPECT_FALSE(*it);
+  EXPECT_EQ(StatusCode::kUnknown, it->status().code());
+  EXPECT_EQ("some error", it->status().message());
+
+  ++it;
+  EXPECT_EQ(it, it);
+  EXPECT_EQ(it, end);
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
