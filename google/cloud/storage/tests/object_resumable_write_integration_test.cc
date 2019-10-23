@@ -17,6 +17,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -215,6 +216,37 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());
   EXPECT_EQ(StatusCode::kFailedPrecondition, os.metadata().status().code());
+
+  auto status = client->DeleteObject(bucket_name, object_name);
+  EXPECT_STATUS_OK(status);
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
+  std::chrono::seconds timeout(3);
+  auto retry_policy =
+      LimitedTimeRetryPolicy(/*maximum_duration=*/timeout).clone();
+  StatusOr<Client> client = MakeIntegrationTestClient(std::move(retry_policy));
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  auto data = MakeRandomData(1024 * 1024);
+
+  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  os.write(data.data(), data.size());
+  EXPECT_FALSE(os.bad());
+  std::cout << "Sleeping to force timeout ... " << std::flush;
+  std::this_thread::sleep_for(2 * timeout);
+  std::cout << "DONE\n";
+
+  os.write(data.data(), data.size());
+  EXPECT_FALSE(os.bad());
+
+  // This operation should fail because the object already exists.
+  os.Close();
+  EXPECT_FALSE(os.bad());
+  EXPECT_STATUS_OK(os.metadata());
 
   auto status = client->DeleteObject(bucket_name, object_name);
   EXPECT_STATUS_OK(status);

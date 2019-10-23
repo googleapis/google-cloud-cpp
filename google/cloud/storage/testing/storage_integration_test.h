@@ -34,6 +34,12 @@ class StorageIntegrationTest : public ::testing::Test {
   google::cloud::StatusOr<google::cloud::storage::Client>
   MakeIntegrationTestClient();
 
+  google::cloud::StatusOr<google::cloud::storage::Client>
+  MakeIntegrationTestClient(std::unique_ptr<RetryPolicy> retry_policy);
+
+  std::unique_ptr<BackoffPolicy> TestBackoffPolicy();
+  std::unique_ptr<RetryPolicy> TestRetryPolicy();
+
   std::string MakeRandomObjectName();
 
   std::string LoremIpsum() const;

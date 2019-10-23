@@ -22,30 +22,47 @@ namespace testing {
 
 google::cloud::StatusOr<google::cloud::storage::Client>
 StorageIntegrationTest::MakeIntegrationTestClient() {
+  return MakeIntegrationTestClient(TestRetryPolicy());
+}
+
+google::cloud::StatusOr<google::cloud::storage::Client>
+StorageIntegrationTest::MakeIntegrationTestClient(
+    std::unique_ptr<RetryPolicy> retry_policy) {
   auto options = ClientOptions::CreateDefaultClientOptions();
   if (!options) {
     return std::move(options).status();
   }
 
-  std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
-  if (UsingTestbench()) {
-    initial_delay = std::chrono::milliseconds(10);
-  }
-
-  ExponentialBackoffPolicy backoff(initial_delay, std::chrono::minutes(5), 2.0);
-
+  auto backoff = TestBackoffPolicy();
   auto idempotency =
       google::cloud::internal::GetEnv("CLOUD_STORAGE_IDEMPOTENCY");
   if (!idempotency || *idempotency == "always-retry") {
-    return Client(*std::move(options), std::move(backoff));
+    return Client(*std::move(options), *retry_policy, *backoff);
   }
   if (*idempotency == "strict") {
-    return Client(*std::move(options), std::move(backoff),
+    return Client(*std::move(options), *retry_policy, *backoff,
                   StrictIdempotencyPolicy{});
   }
   return Status(
       StatusCode::kInvalidArgument,
       "Invalid value for CLOUD_STORAGE_IDEMPOTENCY environment variable");
+}
+
+std::unique_ptr<BackoffPolicy> StorageIntegrationTest::TestBackoffPolicy() {
+  std::chrono::milliseconds initial_delay(std::chrono::seconds(1));
+  if (UsingTestbench()) {
+    initial_delay = std::chrono::milliseconds(10);
+  }
+
+  return ExponentialBackoffPolicy(initial_delay,
+                                  /*maximum_delay=*/std::chrono::minutes(5),
+                                  /*scaling=*/2.0)
+      .clone();
+}
+
+std::unique_ptr<RetryPolicy> StorageIntegrationTest::TestRetryPolicy() {
+  return LimitedTimeRetryPolicy(/*maximum_duration=*/std::chrono::minutes(2))
+      .clone();
 }
 
 std::string StorageIntegrationTest::MakeRandomObjectName() {
