@@ -1097,6 +1097,48 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
    std::move(compose_objects));
 }
 
+void ComposeObjectFromMany(google::cloud::storage::Client client, int& argc,
+                           char* argv[]) {
+  if (argc < 4) {
+    throw Usage{
+        "compose-object-from-many <bucket-name> <destination-object-name>"
+        " <object_1> ..."};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto destination_object_name = ConsumeArg(argc, argv);
+  std::vector<google::cloud::storage::ComposeSourceObject> compose_objects;
+  while (argc > 1) {
+    compose_objects.push_back({ConsumeArg(argc, argv), {}, {}});
+  }
+  //! [compose object from many] [START storage_compose_file_from_many]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name,
+     std::string destination_object_name,
+     std::vector<gcs::ComposeSourceObject> compose_objects) {
+    StatusOr<gcs::ObjectMetadata> prefix_md =
+        gcs::CreateRandomPrefix(client, bucket_name, ".tmpfiles");
+    if (!prefix_md) {
+      throw std::runtime_error(prefix_md.status().message());
+    }
+    std::string const prefix = prefix_md->name();
+    StatusOr<gcs::ObjectMetadata> composed_object =
+        ComposeMany(client, bucket_name, compose_objects, prefix,
+                    destination_object_name, false);
+
+    if (!composed_object) {
+      throw std::runtime_error(composed_object.status().message());
+    }
+
+    std::cout << "Composed new object " << composed_object->name()
+              << " in bucket " << composed_object->bucket()
+              << "\nFull metadata: " << *composed_object << "\n";
+  }
+  //! [compose object from many] [END storage_compose_file_from_many]
+  (std::move(client), bucket_name, destination_object_name,
+   std::move(compose_objects));
+}
+
 void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
                            char* argv[]) {
   if (argc != 4) {
@@ -1777,6 +1819,7 @@ int main(int argc, char* argv[]) try {
       {"compose-object", &ComposeObject},
       {"compose-object-from-encrypted-objects",
        &ComposeObjectFromEncryptedObjects},
+      {"compose-object-from-many", &ComposeObjectFromMany},
       {"write-object-with-kms-key", &WriteObjectWithKmsKey},
       {"rewrite-object", &RewriteObject},
       {"rewrite-object-non-blocking", &RewriteObjectNonBlocking},

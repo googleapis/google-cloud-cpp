@@ -3171,6 +3171,210 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
   return Status();
 }
 
+namespace internal {
+
+// Just a wrapper to allow for use in `google::cloud::internal::apply`.
+struct ComposeApplyHelper {
+  template <typename... Options>
+  StatusOr<ObjectMetadata> operator()(Options... options) const {
+    return client.ComposeObject(
+        std::move(bucket_name), std::move(source_objects),
+        std::move(destination_object_name), std::move(options)...);
+  }
+
+  Client& client;
+  std::string bucket_name;
+  std::vector<ComposeSourceObject> source_objects;
+  std::string destination_object_name;
+};
+
+}  // namespace internal
+
+/**
+ * Compose existing objects into a new object in the same bucket.
+ *
+ * Contrary to `Client::ComposeObject`, this function doesn't have a limit on
+ * the number of source objects.
+ *
+ * Under the hood, it performs many `Client::ComposeObject` calls to create
+ * intermediate, temporary files which are then further composed. Due to the
+ * lack of atomicity of this series of operations, stray temporary files might
+ * be left over in case of network problems, temporary service unavailability,
+ * etc. In order to allow the user to easily control for such situations, the
+ * user is expected to provide a unique @p prefix parameter, which will become
+ * the prefix of all the temporary files created by this function. Once this
+ * function finishes, the user may safely remove all files with the provided
+ * prefix (e.g. via `DeleteByPrefixa`). The use of `CreateRandomPrefix` is
+ * advised for selecting a random prefix.
+ *
+ * @param client the client on which to perform the operation.
+ * @param bucket_name the name of the bucket used for source object and
+ *     destination object.
+ * @param source_objects objects used to compose `destination_object_name`.
+ * @param destination_object_name the composed object name.
+ * @param prefix prefix for temporary files created by this function; the user
+ *     should guarantee that there are no objects with this prefix (except for a
+ *     marker, as created by `CreateRandomPrefix`)
+ * @param ignore_cleanup_failures if the composition succeeds but cleanup of
+ *     temporary files fails, depending on this parameter either a success will
+ *     be returned (`true`) or the relevant cleanup error (`false`)
+ * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `DestinationPredefinedAcl`,
+ *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`
+ *     `KmsKeyName`, `QuotaUser`, `UserIp`, `UserProject` and
+ *     `WithObjectMetadata`.
+ *
+ * @par Idempotency
+ * This operation is not idempotent.
+ *
+ * @par Example
+ * @snippet storage_object_samples.cc compose object from many
+ */
+template <typename... Options>
+StatusOr<ObjectMetadata> ComposeMany(
+    Client& client, std::string const& bucket_name,
+    std::vector<ComposeSourceObject> source_objects, std::string const& prefix,
+    std::string destination_object_name, bool ignore_cleanup_failures,
+    Options&&... options) {
+  using internal::Among;
+  using internal::NotAmong;
+  using internal::StaticTupleFilter;
+  std::size_t const max_num_objects = 32;
+
+  if (prefix.empty()) {
+    // In theory, nothing prevents us from using an empty prefix, but this is
+    // most likely a misuse. We recommend running `DeleteByPrefix` on this
+    // prefix, so this might not be the best idea.
+    return Status(StatusCode::kInvalidArgument,
+                  "ComposeMany requires a non-empty prefix to create temporary "
+                  "files. Please check the documentation.");
+  }
+
+  if (source_objects.empty()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "ComposeMany requires at least one source object.");
+  }
+
+  auto all_options = std::tie(options...);
+
+  static_assert(
+      std::tuple_size<decltype(
+              StaticTupleFilter<NotAmong<
+                  DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
+                  IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp,
+                  UserProject, WithObjectMetadata>::TPred>(
+                  all_options))>::value == 0,
+      "This functions accepts only options of type DestinationPredefinedAcl, "
+      "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
+      "QuotaUser, UserIp, UserProject or WithObjectMetadata.");
+
+  class ScopedDeleter {
+   public:
+    // The actual deletion depends on local's types in a very non-trivial way,
+    // so we abstract this away by providing the function to delete one object.
+    ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun)
+        : delete_fun_(std::move(delete_fun)) {}
+    ~ScopedDeleter() { ExecuteDelete(); }
+
+    void Add(ObjectMetadata object) {
+      object_list_.emplace_back(std::move(object));
+    }
+
+    Status ExecuteDelete() {
+      std::vector<ObjectMetadata> object_list;
+      // make sure the dtor will not do this again
+      object_list.swap(object_list_);
+
+      for (auto& object : object_list) {
+        Status status = delete_fun_(std::move(object));
+        // Fail on first error. If the service is unavailable, every deletion
+        // would potentially keep retrying until the timeout passes - this would
+        // take way too much time and would be pointless.
+        if (!status.ok()) {
+          return status;
+        }
+      }
+      return Status();
+    }
+
+   private:
+    std::function<Status(ObjectMetadata)> delete_fun_;
+    std::vector<ObjectMetadata> object_list_;
+  };
+
+  ScopedDeleter deleter([&](ObjectMetadata const& object) {
+    return google::cloud::internal::apply(
+        internal::DeleteApplyHelper{client, bucket_name, object.name()},
+        std::tuple_cat(
+            std::make_tuple(IfGenerationMatch(object.generation())),
+            StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
+  });
+
+  std::size_t num_tmp_files = 0;
+  auto tmpfile_name_gen = [&num_tmp_files, &prefix] {
+    return prefix + ".compose-tmp-" + std::to_string(num_tmp_files++);
+  };
+
+  for (;;) {
+    // The next layer in the tree of joined objects.
+    std::vector<ComposeSourceObject> next_source_objects;
+
+    for (auto range_begin = source_objects.begin();
+         range_begin != source_objects.end();) {
+      auto range_end = std::next(
+          range_begin, std::min<std::size_t>(
+                           std::distance(range_begin, source_objects.end()),
+                           max_num_objects));
+      std::vector<ComposeSourceObject> compose_range;
+      std::move(range_begin, range_end, std::back_inserter(compose_range));
+
+      bool const is_final_composition = range_begin == source_objects.begin() &&
+                                        range_end == source_objects.end();
+
+      auto object =
+          is_final_composition
+              ? google::cloud::internal::apply(
+                    internal::ComposeApplyHelper{
+                        client, bucket_name, std::move(compose_range),
+                        std::move(destination_object_name)},
+                    all_options)
+              : google::cloud::internal::apply(
+                    internal::ComposeApplyHelper{client, bucket_name,
+                                                 std::move(compose_range),
+                                                 tmpfile_name_gen()},
+                    StaticTupleFilter<NotAmong<IfGenerationMatch,
+                                               IfMetagenerationMatch>::TPred>(
+                        all_options));
+      if (!object) {
+        // deleter will try to cleanup. Even if it fails, original error is
+        // returned.
+        return object.status();
+      }
+      if (is_final_composition) {
+        // Don't defer the deletions to `deleter`'s dtor because we might want
+        // to return the status to the user.
+        auto deletion_status = deleter.ExecuteDelete();
+        if (!deletion_status.ok() && !ignore_cleanup_failures) {
+          return deletion_status;
+        }
+        return object;
+      }
+
+      next_source_objects.emplace_back(
+          ComposeSourceObject{object->name(), object->generation(), {}});
+      deleter.Add(*std::move(object));
+
+      range_begin = range_end;
+    }
+
+    source_objects.swap(next_source_objects);
+  }
+  // we should never reach this
+  return Status(StatusCode::kInternal,
+                "Bug in ComposeMany. Please report it at "
+                "https://github.com/googleapis/google-cloud-cpp/issues/new");
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

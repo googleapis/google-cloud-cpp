@@ -398,6 +398,11 @@ run_all_object_examples() {
       "${object_name}"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${composed_object_name}"
+  run_example ./storage_object_samples compose-object-from-many \
+      "${bucket_name}" "${composed_object_name}" "${object_name}" \
+      "${object_name}"
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${composed_object_name}"
   run_example ./storage_object_samples copy-object \
       "${bucket_name}" "${object_name}" \
       "${bucket_name}" "${copied_object_name}"
