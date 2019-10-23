@@ -153,6 +153,36 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDml(ExecuteSqlParams params) {
                          });
 }
 
+ProfileQueryResult ConnectionImpl::ProfileQuery(ExecuteSqlParams params) {
+  return internal::Visit(std::move(params.transaction),
+                         [this, &params](SessionHolder& session,
+                                         spanner_proto::TransactionSelector& s,
+                                         std::int64_t seqno) {
+                           return ProfileQueryImpl(session, s, seqno,
+                                                   std::move(params));
+                         });
+}
+
+StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDml(ExecuteSqlParams params) {
+  return internal::Visit(std::move(params.transaction),
+                         [this, &params](SessionHolder& session,
+                                         spanner_proto::TransactionSelector& s,
+                                         std::int64_t seqno) {
+                           return ProfileDmlImpl(session, s, seqno,
+                                                 std::move(params));
+                         });
+}
+
+StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSql(ExecuteSqlParams params) {
+  return internal::Visit(std::move(params.transaction),
+                         [this, &params](SessionHolder& session,
+                                         spanner_proto::TransactionSelector& s,
+                                         std::int64_t seqno) {
+                           return AnalyzeSqlImpl(session, s, seqno,
+                                                 std::move(params));
+                         });
+}
+
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
     ExecutePartitionedDmlParams params) {
   auto txn = MakeReadOnlyTransaction();
@@ -222,6 +252,12 @@ class StatusOnlyResultSetSource : public internal::ResultSourceInterface {
 
 class DmlResultSetSource : public internal::ResultSourceInterface {
  public:
+  static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
+      spanner_proto::ResultSet result_set) {
+    return std::unique_ptr<ResultSourceInterface>(
+        new DmlResultSetSource(std::move(result_set)));
+  }
+
   explicit DmlResultSetSource(spanner_proto::ResultSet result_set)
       : result_set_(std::move(result_set)) {}
   ~DmlResultSetSource() override = default;
@@ -356,69 +392,14 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   return read_partitions;
 }
 
-QueryResult ConnectionImpl::ExecuteQueryImpl(
-    SessionHolder& session, spanner_proto::TransactionSelector& s,
-    std::int64_t seqno, ExecuteSqlParams params) {
-  if (!session) {
-    auto session_or = AllocateSession();
-    if (!session_or) {
-      return QueryResult(
-          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-              std::move(session_or).status()));
-    }
-    session = std::move(*session_or);
-  }
-
-  spanner_proto::ExecuteSqlRequest request;
-  request.set_session(session->session_name());
-  *request.mutable_transaction() = s;
-  auto sql_statement = internal::ToProto(std::move(params.statement));
-  request.set_sql(std::move(*sql_statement.mutable_sql()));
-  *request.mutable_params() = std::move(*sql_statement.mutable_params());
-  *request.mutable_param_types() =
-      std::move(*sql_statement.mutable_param_types());
-  request.set_seqno(seqno);
-  if (params.partition_token) {
-    request.set_partition_token(*std::move(params.partition_token));
-  }
-
-  auto const& stub = stub_;
-  // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
-  // the lifetime of the lambda. Note that the local variable `stub` is a
-  // reference to avoid increasing refcounts twice, but the capture is by value.
-  auto factory = [stub, request](std::string const& resume_token) mutable {
-    request.set_resume_token(resume_token);
-    auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    return google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
-        std::move(context), stub->ExecuteStreamingSql(*context, request));
-  };
-  auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
-      std::move(factory), Idempotency::kIdempotent, retry_policy_->clone(),
-      backoff_policy_->clone());
-  auto reader = PartialResultSetSource::Create(std::move(rpc));
-
-  if (!reader.ok()) {
-    return QueryResult(
-        google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-            std::move(reader).status()));
-  }
-  if (s.has_begin()) {
-    auto metadata = (*reader)->Metadata();
-    if (!metadata || metadata->transaction().id().empty()) {
-      return QueryResult(
-          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-              Status(StatusCode::kInternal,
-                     "Begin transaction requested but no transaction returned "
-                     "(in ExecuteQuery).")));
-    }
-    s.set_id(metadata->transaction().id());
-  }
-  return QueryResult(std::move(*reader));
-}
-
-StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
-    SessionHolder& session, spanner_proto::TransactionSelector& s,
-    std::int64_t seqno, ExecuteSqlParams params) {
+template <typename ResultType>
+StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
+    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params,
+    google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
+    std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
+        google::spanner::v1 ::ExecuteSqlRequest& request)> const&
+        retry_resume_fn) {
   if (!session) {
     auto session_or = AllocateSession();
     if (!session_or) {
@@ -439,32 +420,138 @@ StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
   if (params.partition_token) {
     request.set_partition_token(*std::move(params.partition_token));
   }
+  request.set_query_mode(query_mode);
 
-  StatusOr<spanner_proto::ResultSet> response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
-      [this](grpc::ClientContext& context,
-             spanner_proto::ExecuteSqlRequest const& request) {
-        return stub_->ExecuteSql(context, request);
-      },
-      request, __func__);
-  if (!response) {
-    return std::move(response).status();
+  auto reader = retry_resume_fn(request);
+  if (!reader.ok()) {
+    return std::move(reader).status();
   }
-
-  auto reader = google::cloud::internal::make_unique<DmlResultSetSource>(
-      std::move(*response));
   if (s.has_begin()) {
-    auto metadata = (reader)->Metadata();
+    auto metadata = (*reader)->Metadata();
     if (!metadata || metadata->transaction().id().empty()) {
-      return DmlResult(
-          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-              Status(StatusCode::kInternal,
-                     "Begin transaction requested but no transaction returned "
-                     "(in ExecuteDml).")));
+      return Status(StatusCode::kInternal,
+                    "Begin transaction requested but no transaction returned.");
     }
     s.set_id(metadata->transaction().id());
   }
-  return DmlResult(std::move(reader));
+  return ResultType(std::move(*reader));
+}
+
+template <typename ResultType>
+ResultType ConnectionImpl::CommonQueryImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params,
+    google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  // Capture a copy of of these member variables to ensure the `shared_ptr<>`
+  // remains valid through the lifetime of the lambda. Note that the local
+  // variables are a reference to avoid increasing refcounts twice, but the
+  // capture is by value.
+  auto const& stub = stub_;
+  auto const& retry_policy = retry_policy_;
+  auto const& backoff_policy = backoff_policy_;
+
+  auto retry_resume_fn = [stub, retry_policy, backoff_policy](
+                             spanner_proto::ExecuteSqlRequest& request) mutable
+      -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
+    auto factory = [stub, request](std::string const& resume_token) mutable {
+      request.set_resume_token(resume_token);
+      auto context =
+          google::cloud::internal::make_unique<grpc::ClientContext>();
+      return google::cloud::internal::make_unique<
+          DefaultPartialResultSetReader>(
+          std::move(context), stub->ExecuteStreamingSql(*context, request));
+    };
+    auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
+        std::move(factory), Idempotency::kIdempotent, retry_policy->clone(),
+        backoff_policy->clone());
+
+    return PartialResultSetSource::Create(std::move(rpc));
+  };
+
+  StatusOr<ResultType> ret_val =
+      ExecuteSqlImpl<ResultType>(session, s, seqno, std::move(params),
+                                 query_mode, std::move(retry_resume_fn));
+  if (!ret_val) {
+    return ResultType(
+        google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+            std::move(ret_val).status()));
+  }
+  return std::move(*ret_val);
+}
+
+QueryResult ConnectionImpl::ExecuteQueryImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params) {
+  return CommonQueryImpl<QueryResult>(session, s, seqno, std::move(params),
+                                      spanner_proto::ExecuteSqlRequest::NORMAL);
+}
+
+ProfileQueryResult ConnectionImpl::ProfileQueryImpl(
+    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params) {
+  return CommonQueryImpl<ProfileQueryResult>(
+      session, s, seqno, std::move(params),
+      spanner_proto::ExecuteSqlRequest::PROFILE);
+}
+
+template <typename ResultType>
+StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params,
+    google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  auto function_name = __func__;
+  // Capture a copy of of these member variables to ensure the `shared_ptr<>`
+  // remains valid through the lifetime of the lambda. Note that the local
+  // variables are a reference to avoid increasing refcounts twice, but the
+  // capture is by value.
+  auto const& stub = stub_;
+  auto const& retry_policy = retry_policy_;
+  auto const& backoff_policy = backoff_policy_;
+
+  auto retry_resume_fn = [function_name, stub, retry_policy, backoff_policy](
+                             spanner_proto::ExecuteSqlRequest& request) mutable
+      -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
+    StatusOr<spanner_proto::ResultSet> response = internal::RetryLoop(
+        retry_policy->clone(), backoff_policy->clone(), true,
+        [stub](grpc::ClientContext& context,
+               spanner_proto::ExecuteSqlRequest const& request) {
+          return stub->ExecuteSql(context, request);
+        },
+        request, function_name);
+    if (!response) {
+      return std::move(response).status();
+    }
+    return DmlResultSetSource::Create(std::move(*response));
+  };
+  return ExecuteSqlImpl<ResultType>(session, s, seqno, std::move(params),
+                                    query_mode, std::move(retry_resume_fn));
+}
+
+StatusOr<DmlResult> ConnectionImpl::ExecuteDmlImpl(
+    SessionHolder& session, spanner_proto::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params) {
+  return CommonDmlImpl<DmlResult>(session, s, seqno, std::move(params),
+                                  spanner_proto::ExecuteSqlRequest::NORMAL);
+}
+
+StatusOr<ProfileDmlResult> ConnectionImpl::ProfileDmlImpl(
+    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params) {
+  return CommonDmlImpl<ProfileDmlResult>(
+      session, s, seqno, std::move(params),
+      spanner_proto::ExecuteSqlRequest::PROFILE);
+}
+
+StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
+    SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+    std::int64_t seqno, ExecuteSqlParams params) {
+  auto result =
+      CommonDmlImpl<ProfileDmlResult>(session, s, seqno, std::move(params),
+                                      spanner_proto::ExecuteSqlRequest::PLAN);
+  if (result.status().ok()) {
+    return *result->ExecutionPlan();
+  }
+  return result.status();
 }
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(

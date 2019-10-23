@@ -89,6 +89,24 @@ QueryResult Client::ExecuteQuery(QueryPartition const& partition) {
   return conn_->ExecuteQuery(internal::MakeExecuteSqlParams(partition));
 }
 
+ProfileQueryResult Client::ProfileQuery(SqlStatement statement) {
+  return conn_->ProfileQuery(
+      {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       std::move(statement)});
+}
+
+ProfileQueryResult Client::ProfileQuery(
+    Transaction::SingleUseOptions transaction_options, SqlStatement statement) {
+  return conn_->ProfileQuery(
+      {internal::MakeSingleUseTransaction(std::move(transaction_options)),
+       std::move(statement)});
+}
+
+ProfileQueryResult Client::ProfileQuery(Transaction transaction,
+                                        SqlStatement statement) {
+  return conn_->ProfileQuery({std::move(transaction), std::move(statement)});
+}
+
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
     Transaction transaction, SqlStatement statement,
     PartitionOptions partition_options) {
@@ -100,6 +118,17 @@ StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
                                        SqlStatement statement) {
   return conn_->ExecuteDml({std::move(transaction), std::move(statement)});
 }
+
+StatusOr<ProfileDmlResult> Client::ProfileDml(Transaction transaction,
+                                              SqlStatement statement) {
+  return conn_->ProfileDml({std::move(transaction), std::move(statement)});
+}
+
+StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
+                                           SqlStatement statement) {
+  return conn_->AnalyzeSql({std::move(transaction), std::move(statement)});
+}
+
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
     Transaction transaction, std::vector<SqlStatement> statements) {
   return conn_->ExecuteBatchDml(

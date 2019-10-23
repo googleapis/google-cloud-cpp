@@ -102,7 +102,7 @@ class Transaction {
    *
    * Because selection of the timestamp requires knowledge of which rows will
    * be read, a single-use transaction can only be used with one read. See
-   * Client::Read() and Client::ExecuteSql(). SingleUseOptions cannot be used
+   * Client::Read() and Client::ExecuteQuery(). SingleUseOptions cannot be used
    * to construct an application-level Transaction.
    */
   class SingleUseOptions {
@@ -128,8 +128,8 @@ class Transaction {
   /**
    * @note This is a lazy evaluated operation. No RPCs are made as part of
    *     creating a `Transaction` object, instead, the first request to the
-   *     server (for example as part of a `ExecuteSql()` call) will also create
-   *     the transaction.
+   *     server (for example as part of a `ExecuteQuery()` call) will also
+   *     create the transaction.
    */
   explicit Transaction(ReadOnlyOptions opts);
   /// @copydoc Transaction(ReadOnlyOptions)

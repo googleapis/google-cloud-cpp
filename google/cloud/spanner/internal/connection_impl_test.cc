@@ -43,12 +43,14 @@ using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::DoAll;
+using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::StartsWith;
+using ::testing::UnorderedPointwise;
 
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -576,6 +578,382 @@ TEST(ConnectionImplTest, ExecuteDmlDelete_TooManyTransientFailures) {
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
   auto result = conn->ExecuteDml({txn, SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));
+}
+
+TEST(ConnectionImplTest, ProfileQuerySuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return MakeSessionsResponse({"test-session-name"});
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::PartialResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {
+          row_type: {
+            fields: {
+              name: "UserId",
+              type: { code: INT64 }
+            }
+            fields: {
+              name: "UserName",
+              type: { code: STRING }
+            }
+          }
+        }
+        values: { string_value: "12" }
+        values: { string_value: "Steve" }
+        values: { string_value: "42" }
+        values: { string_value: "Ann" }
+        stats: {
+          query_plan { plan_nodes: { index: 42 } }
+          query_stats {
+            fields {
+              key: "elapsed_time"
+              value { string_value: "42 secs" }
+            }
+          }
+        }
+      )pb",
+      &response));
+  EXPECT_CALL(*grpc_reader, Read(_))
+      .WillOnce(DoAll(SetArgPointee<0>(response), Return(true)))
+      .WillOnce(Return(false));
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(grpc::Status()));
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  auto result = conn->ProfileQuery(
+      {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       SqlStatement("select * from table")});
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto expected = std::vector<RowType>{
+      RowType(12, "Steve"),
+      RowType(42, "Ann"),
+  };
+  int row_number = 0;
+  for (auto& row : result.Rows<RowType>()) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+
+  google::spanner::v1::QueryPlan expected_plan;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        plan_nodes: { index: 42 }
+      )pb",
+      &expected_plan));
+
+  auto plan = result.ExecutionPlan();
+  ASSERT_TRUE(plan);
+  EXPECT_THAT(*plan, spanner_testing::IsProtoEqual(expected_plan));
+
+  std::vector<std::pair<const std::string, std::string>> expected_stats;
+  expected_stats.emplace_back("elapsed_time", "42 secs");
+  auto execution_stats = result.ExecutionStats();
+  ASSERT_TRUE(execution_stats);
+  EXPECT_THAT(*execution_stats, UnorderedPointwise(Eq(), expected_stats));
+}
+
+TEST(ConnectionImplTest, ProfileQueryGetSessionFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+
+  auto result = conn->ProfileQuery(
+      {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       SqlStatement("select * from table")});
+  for (auto& row : result.Rows<std::tuple<std::int64_t>>()) {
+    EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
+    EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
+  }
+}
+
+TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return MakeSessionsResponse({"test-session-name"});
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  EXPECT_CALL(*grpc_reader, Read(_)).WillOnce(Return(false));
+  grpc::Status finish_status(grpc::StatusCode::PERMISSION_DENIED,
+                             "uh-oh in GrpcReader::Finish");
+  EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(finish_status));
+  EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
+      .WillOnce(Return(ByMove(std::move(grpc_reader))));
+
+  auto result = conn->ProfileQuery(
+      {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       SqlStatement("select * from table")});
+  for (auto& row : result.Rows<std::tuple<std::int64_t>>()) {
+    EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
+    EXPECT_THAT(row.status().message(),
+                HasSubstr("uh-oh in GrpcReader::Finish"));
+  }
+}
+
+TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: { transaction: { id: "1234567890" } }
+        stats: {
+          row_count_exact: 42
+          query_plan { plan_nodes: { index: 42 } }
+          query_stats {
+            fields {
+              key: "elapsed_time"
+              value { string_value: "42 secs" }
+            }
+          }
+        }
+      )pb",
+      &response));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(response));
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result->RowsModified(), 42);
+
+  google::spanner::v1::QueryPlan expected_plan;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        plan_nodes: { index: 42 }
+      )pb",
+      &expected_plan));
+
+  auto plan = result->ExecutionPlan();
+  ASSERT_TRUE(plan);
+  EXPECT_THAT(*plan, spanner_testing::IsProtoEqual(expected_plan));
+
+  std::vector<std::pair<const std::string, std::string>> expected_stats;
+  expected_stats.emplace_back("elapsed_time", "42 secs");
+  auto execution_stats = result->ExecutionStats();
+  ASSERT_TRUE(execution_stats);
+  EXPECT_THAT(*execution_stats, UnorderedPointwise(Eq(), expected_stats));
+}
+
+TEST(ConnectionImplTest, ProfileDmlDelete_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: { transaction: { id: "1234567890" } }
+        stats: { row_count_exact: 42 }
+      )pb",
+      &response));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(
+          Return(Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteDml")));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in ExecuteDml"));
+}
+
+TEST(ConnectionImplTest, ProfileDmlDelete_TooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: { transaction: { id: "1234567890" } }
+        stats: { row_count_exact: 42 }
+      )pb",
+      &response));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(Status(StatusCode::kUnavailable, "try-again in ExecuteDml")));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));
+}
+
+TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return MakeSessionsResponse({"test-session-name"});
+          }));
+
+  auto grpc_reader = make_unique<MockGrpcReader>();
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: {}
+        stats: { query_plan { plan_nodes: { index: 42 } } }
+      )pb",
+      &response));
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(ByMove(std::move(response))));
+
+  auto result = conn->AnalyzeSql(
+      {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
+       SqlStatement("select * from table")});
+
+  google::spanner::v1::QueryPlan expected_plan;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        plan_nodes: { index: 42 }
+      )pb",
+      &expected_plan));
+
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, spanner_testing::IsProtoEqual(expected_plan));
+}
+
+TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->AnalyzeSql({txn, SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, AnalyzeSqlDelete_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: { transaction: { id: "1234567890" } }
+        stats: { row_count_exact: 42 }
+      )pb",
+      &response));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(
+          Return(Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteDml")));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->AnalyzeSql({txn, SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in ExecuteDml"));
+}
+
+TEST(ConnectionImplTest, AnalyzeSqlDelete_TooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: { transaction: { id: "1234567890" } }
+        stats: { row_count_exact: 42 }
+      )pb",
+      &response));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          Return(Status(StatusCode::kUnavailable, "try-again in ExecuteDml")));
+
+  Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
+  auto result = conn->AnalyzeSql({txn, SqlStatement("delete * from table")});
 
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));

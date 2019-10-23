@@ -123,7 +123,7 @@ class Client {
   //@{
   /**
    * Reads rows from the database using key lookups and scans, as a simple
-   * key/value style alternative to `ExecuteSql()`.
+   * key/value style alternative to `ExecuteQuery()`.
    *
    * Callers can optionally supply a `Transaction` or
    * `Transaction::SingleUseOptions` used to create a single-use transaction -
@@ -267,10 +267,54 @@ class Client {
   QueryResult ExecuteQuery(QueryPartition const& partition);
   //@}
 
+  //@{
+  /**
+   * Profiles a SQL query.
+   *
+   * Profiling executes the query, provides the resulting rows, `ExecutionPlan`,
+   * and execution statistics.
+   *
+   * Operations inside read-write transactions might return `kAborted`. If this
+   * occurs, the application should restart the transaction from the beginning.
+   *
+   * Callers can optionally supply a `Transaction` or
+   * `Transaction::SingleUseOptions` used to create a single-use transaction -
+   * or neither, in which case a single-use transaction with default options
+   * is used.
+   *
+   * @note Callers must consume all rows from the result before execution
+   *     statistics and `ExecutionPlan` are available.
+   *
+   * @param statement The SQL statement to execute.
+   *
+   * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
+   *     no column value can exceed 10 MiB.
+   */
+  ProfileQueryResult ProfileQuery(SqlStatement statement);
+
+  /**
+   * @copydoc ProfileQuery(SqlStatement)
+   *
+   * @param transaction_options Execute this query in a single-use transaction
+   *     with these options.
+   */
+  ProfileQueryResult ProfileQuery(
+      Transaction::SingleUseOptions transaction_options,
+      SqlStatement statement);
+
+  /**
+   * @copydoc ProfileQuery(SqlStatement)
+   *
+   * @param transaction Execute this query as part of an existing transaction.
+   */
+  ProfileQueryResult ProfileQuery(Transaction transaction,
+                                  SqlStatement statement);
+  //@}
+
   /**
    * Creates a set of partitions that can be used to execute a query
    * operation in parallel.  Each of the returned partitions can be passed
-   * to `ExecuteSql` to specify a subset of the query result to read.
+   * to `ExecuteQuery` to specify a subset of the query result to read.
    *
    * Partitions become invalid when the session used to create them is deleted,
    * is idle for too long, begins a new transaction, or becomes too old. When
@@ -307,9 +351,43 @@ class Client {
                                  SqlStatement statement);
 
   /**
+   * Profiles a SQL DML statement.
+   *
+   * Profiling executes the DML statement, provides the modified row count,
+   * `ExecutionPlan`, and execution statistics.
+   *
+   * Operations inside read-write transactions might return `ABORTED`. If this
+   * occurs, the application should restart the transaction from the beginning.
+   *
+   * @note Single-use transactions are not supported with DML statements.
+
+   * @param transaction Execute this query as part of an existing transaction.
+   * @param statement The SQL statement to execute.
+   */
+  StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
+                                        SqlStatement statement);
+
+  /**
+   * Analyzes the execution plan of a SQL statement.
+   *
+   * Analyzing provides the `ExecutionPlan`, but does not execute the SQL
+   * statement.
+   *
+   * Operations inside read-write transactions might return `ABORTED`. If this
+   * occurs, the application should restart the transaction from the beginning.
+   *
+   * @note Single-use transactions are not supported with DML statements.
+
+   * @param transaction Execute this query as part of an existing transaction.
+   * @param statement The SQL statement to execute.
+   */
+  StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
+                                     SqlStatement statement);
+
+  /**
    * Executes a batch of SQL DML statements. This method allows many statements
    * to be run with lower latency than submitting them sequentially with
-   * `ExecuteSql`.
+   * `ExecuteDml`.
    *
    * Statements are executed in order, sequentially. Execution will stop at the
    * first failed statement; the remaining statements will not run.
@@ -358,8 +436,8 @@ class Client {
    *
    * At any time before `Commit`, the client can call `Rollback` to abort the
    * transaction. It is a good idea to call this for any read-write transaction
-   * that includes  one or more `Read` or `ExecuteSql` requests and ultimately
-   * decides not to commit.
+   * that includes  one or more `Read`, `ExecuteQuery`, or `ExecuteDml` requests
+   * and ultimately decides not to commit.
    *
    * @warning It is an error to call `Rollback` with a read-only `transaction`.
    *
@@ -415,8 +493,9 @@ namespace internal {
  *
  * The caller-provided function will be passed the `Client` argument and a
  * newly created read-write `Transaction`. It should use these objects to
- * issue any `Read()`s, `ExecuteSql()`s, etc., and return the `Mutation`s to
- * commit, or an error (which causes the transaction to be rolled back).
+ * issue any `Read()`s, `ExecuteQuery()`s, `ExecuteDml()`s, etc., and return the
+ * `Mutation`s to commit, or an error (which causes the transaction to be rolled
+ * back).
  *
  * The lock priority of the transaction increases after each prior aborted
  * transaction, meaning that the next attempt has a slightly better chance
@@ -450,8 +529,9 @@ std::unique_ptr<BackoffPolicy> DefaultRunTransactionBackoffPolicy();
  *
  * The caller-provided function will be passed the `Client` argument and a
  * newly created read-write `Transaction`. It should use these objects to
- * issue any `Read()`s, `ExecuteSql()`s, etc., and return the `Mutation`s to
- * commit, or an error (which causes the transaction to be rolled back).
+ * issue any `Read()`s, `ExecuteQuery()`s, `ExecuteDml()`s, etc., and return
+ * the `Mutation`s to commit, or an error (which causes the transaction to be
+ * rolled back).
  *
  * The lock priority of the transaction increases after each prior aborted
  * transaction, meaning that the next attempt has a slightly better chance

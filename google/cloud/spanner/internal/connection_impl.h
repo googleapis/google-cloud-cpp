@@ -72,6 +72,9 @@ class ConnectionImpl : public Connection,
       PartitionReadParams) override;
   QueryResult ExecuteQuery(ExecuteSqlParams) override;
   StatusOr<DmlResult> ExecuteDml(ExecuteSqlParams) override;
+  ProfileQueryResult ProfileQuery(ExecuteSqlParams) override;
+  StatusOr<ProfileDmlResult> ProfileDml(ExecuteSqlParams) override;
+  StatusOr<ExecutionPlan> AnalyzeSql(ExecuteSqlParams) override;
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
       ExecutePartitionedDmlParams) override;
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
@@ -102,6 +105,18 @@ class ConnectionImpl : public Connection,
                                std::int64_t seqno, ExecuteSqlParams params);
 
   StatusOr<DmlResult> ExecuteDmlImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams params);
+
+  ProfileQueryResult ProfileQueryImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams params);
+
+  StatusOr<ProfileDmlResult> ProfileDmlImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams params);
+
+  StatusOr<ExecutionPlan> AnalyzeSqlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       std::int64_t seqno, ExecuteSqlParams params);
 
@@ -147,12 +162,31 @@ class ConnectionImpl : public Connection,
   StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
       int num_sessions) override;
 
+  template <typename ResultType>
+  StatusOr<ResultType> ExecuteSqlImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams params,
+      google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode,
+      std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
+          google::spanner::v1 ::ExecuteSqlRequest& request)> const&
+          retry_resume_fn);
+
+  template <typename ResultType>
+  ResultType CommonQueryImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams params,
+      google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode);
+
+  template <typename ResultType>
+  StatusOr<ResultType> CommonDmlImpl(
+      SessionHolder& session, google::spanner::v1::TransactionSelector& s,
+      std::int64_t seqno, ExecuteSqlParams params,
+      google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode);
+
   Database db_;
   std::shared_ptr<SpannerStub> stub_;
-
-  std::unique_ptr<RetryPolicy> retry_policy_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_;
-
+  std::shared_ptr<RetryPolicy> retry_policy_;
+  std::shared_ptr<BackoffPolicy> backoff_policy_;
   SessionPool session_pool_;
 };
 

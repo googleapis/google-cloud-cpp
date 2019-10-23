@@ -41,8 +41,9 @@ namespace internal {
 class PartialResultSetSource : public internal::ResultSourceInterface {
  public:
   /// Factory method to create a PartialResultSetSource.
-  static StatusOr<std::unique_ptr<PartialResultSetSource>> Create(
+  static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
       std::unique_ptr<PartialResultSetReader> reader);
+
   ~PartialResultSetSource() override;
 
   StatusOr<optional<Value>> NextValue() override;

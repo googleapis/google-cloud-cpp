@@ -70,7 +70,7 @@ Connection::ExecuteSqlParams MakeExecuteSqlParams(
  *
  * Instances of `QueryPartition` are created by `Client::PartitionSql`. Once
  * created, `QueryPartition` objects can be serialized, transmitted to separate
- * process, and used to read data in parallel using `Client::ExecuteSql`.
+ * process, and used to read data in parallel using `Client::ExecuteQuery`.
  */
 class QueryPartition {
  public:
