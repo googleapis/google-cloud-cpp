@@ -20,7 +20,11 @@ Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.14.x - TBD
+### v0.15.x - TBD
+
+### v0.14.x - 2019-10
+
+* feat: implement std::apply (#59)
 
 ### v0.13.x - 2019-10
 
