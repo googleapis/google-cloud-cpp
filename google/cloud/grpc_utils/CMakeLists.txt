@@ -18,11 +18,8 @@
 set(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR 0)
 set(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR 1)
 set(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH 0)
-string(CONCAT GRPC_UTILS_VERSION
-              "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR}"
-              "."
-              "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR}"
-              "."
+string(CONCAT GRPC_UTILS_VERSION "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR}"
+              "." "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR}" "."
               "${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH}")
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ gRPC Utilities")
@@ -30,10 +27,9 @@ set(DOXYGEN_PROJECT_BRIEF
     "gRPC Utilities for the Google Cloud C++ Client Library")
 set(DOXYGEN_PROJECT_NUMBER "${GRPC_UTILS_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/examples)
-set(
-    DOXYGEN_PREDEFINED
+set(DOXYGEN_PREDEFINED
     "GOOGLE_CLOUD_CPP_GRPC_UTILS_NS=v${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR}"
-    )
+)
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/grpc_utils/README.md"
     "*/google/cloud/grpc_utils/ci/*"
@@ -72,35 +68,35 @@ configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 include(CreateBazelConfig)
 
 # the library
-add_library(google_cloud_cpp_grpc_utils
-            async_operation.h
-            completion_queue.cc
-            completion_queue.h
-            grpc_error_delegate.cc
-            grpc_error_delegate.h
-            internal/async_read_stream_impl.h
-            internal/completion_queue_impl.cc
-            internal/completion_queue_impl.h
-            version.cc
-            version.h
-            version_info.h)
-target_link_libraries(google_cloud_cpp_grpc_utils
-                      PUBLIC googleapis-c++::rpc_status_protos
-                             google_cloud_cpp_common
-                             gRPC::grpc++
-                             gRPC::grpc
-                      PRIVATE grpc_utils_common_options)
-target_include_directories(google_cloud_cpp_grpc_utils
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
+add_library(
+    google_cloud_cpp_grpc_utils
+    async_operation.h
+    completion_queue.cc
+    completion_queue.h
+    grpc_error_delegate.cc
+    grpc_error_delegate.h
+    internal/async_read_stream_impl.h
+    internal/completion_queue_impl.cc
+    internal/completion_queue_impl.h
+    version.cc
+    version.h
+    version_info.h)
+target_link_libraries(
+    google_cloud_cpp_grpc_utils
+    PUBLIC googleapis-c++::rpc_status_protos google_cloud_cpp_common
+           gRPC::grpc++ gRPC::grpc
+    PRIVATE grpc_utils_common_options)
+target_include_directories(
+    google_cloud_cpp_grpc_utils
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_grpc_utils
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
-set_target_properties(google_cloud_cpp_grpc_utils
-                      PROPERTIES VERSION
-                                 ${GRPC_UTILS_VERSION}
-                                 SOVERSION
-                                 ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
+set_target_properties(
+    google_cloud_cpp_grpc_utils
+    PROPERTIES VERSION ${GRPC_UTILS_VERSION} SOVERSION
+               ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
@@ -113,30 +109,23 @@ if (BUILD_TESTING)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
-                         "google_cloud_cpp_grpc_utils_unit_tests"
-                         YEAR
-                         2019)
+                         "google_cloud_cpp_grpc_utils_unit_tests" YEAR 2019)
 
     foreach (fname ${google_cloud_cpp_grpc_utils_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE google_cloud_cpp_grpc_utils
-                                      google_cloud_cpp_testing
-                                      google_cloud_cpp_common
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest
-                                      gRPC::grpc++
-                                      gRPC::grpc
-                                      grpc_utils_common_options)
+        target_link_libraries(
+            ${target}
+            PRIVATE google_cloud_cpp_grpc_utils
+                    google_cloud_cpp_testing
+                    google_cloud_cpp_common
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    gRPC::grpc++
+                    gRPC::grpc
+                    grpc_utils_common_options)
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -156,33 +145,36 @@ endif ()
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS grpc_utils_common_options
-        EXPORT grpc_utils-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(
+    TARGETS grpc_utils_common_options
+    EXPORT grpc_utils-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT grpc_utils-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
 
-install(TARGETS google_cloud_cpp_grpc_utils
-        EXPORT grpc_utils-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                COMPONENT google_cloud_cpp_runtime
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_runtime
-                NAMELINK_SKIP
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
+install(
+    TARGETS google_cloud_cpp_grpc_utils
+    EXPORT grpc_utils-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
-install(TARGETS google_cloud_cpp_grpc_utils
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development
-                NAMELINK_ONLY
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
+install(
+    TARGETS google_cloud_cpp_grpc_utils
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_headers(google_cloud_cpp_grpc_utils
                                  include/google/cloud/grpc_utils)

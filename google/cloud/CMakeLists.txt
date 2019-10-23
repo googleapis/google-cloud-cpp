@@ -19,11 +19,8 @@ set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 0)
 set(GOOGLE_CLOUD_CPP_VERSION_MINOR 13)
 set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
 
-string(CONCAT GOOGLE_CLOUD_CPP_VERSION
-              "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}"
-              "."
-              "${GOOGLE_CLOUD_CPP_VERSION_MINOR}"
-              "."
+string(CONCAT GOOGLE_CLOUD_CPP_VERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}" "."
+              "${GOOGLE_CLOUD_CPP_VERSION_MINOR}" "."
               "${GOOGLE_CLOUD_CPP_VERSION_PATCH}")
 
 # Generate the version information from the CMake values.
@@ -32,10 +29,9 @@ configure_file(internal/version_info.h.in
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
-set(
-    DOXYGEN_PROJECT_NUMBER
+set(DOXYGEN_PROJECT_NUMBER
     "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
-    )
+)
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/README.md"
@@ -75,17 +71,16 @@ function (google_cloud_cpp_initialize_git_head var)
         if (GOOGLE_CLOUD_CPP_GIT_PROGRAM)
             # Run `git rev-parse --short HEAD` and capture the output in a
             # variable.
-            execute_process(COMMAND "${GOOGLE_CLOUD_CPP_GIT_PROGRAM}" rev-parse
-                                    --short HEAD
-                            OUTPUT_VARIABLE GIT_HEAD_LOG
-                            ERROR_VARIABLE GIT_HEAD_LOG)
-            string(REPLACE "\n"
-                           ""
-                           result
-                           "${GIT_HEAD_LOG}")
+            execute_process(
+                COMMAND "${GOOGLE_CLOUD_CPP_GIT_PROGRAM}" rev-parse --short HEAD
+                OUTPUT_VARIABLE GIT_HEAD_LOG
+                ERROR_VARIABLE GIT_HEAD_LOG)
+            string(REPLACE "\n" "" result "${GIT_HEAD_LOG}")
         endif ()
     endif ()
-    set(${var} "${result}" PARENT_SCOPE)
+    set(${var}
+        "${result}"
+        PARENT_SCOPE)
 endfunction ()
 
 # Capture the compiler version and the git revision into variables, then
@@ -119,69 +114,72 @@ string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER)
 configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 # the client library
-add_library(google_cloud_cpp_common
-            ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
-            future.h
-            future_generic.h
-            future_void.h
-            iam_binding.h
-            iam_bindings.cc
-            iam_bindings.h
-            iam_policy.cc
-            iam_policy.h
-            internal/backoff_policy.cc
-            internal/backoff_policy.h
-            internal/big_endian.h
-            internal/build_info.h
-            internal/compiler_info.cc
-            internal/compiler_info.h
-            internal/conjunction.h
-            internal/disjunction.h
-            internal/filesystem.cc
-            internal/filesystem.h
-            internal/format_time_point.cc
-            internal/format_time_point.h
-            internal/future_base.h
-            internal/future_fwd.h
-            internal/future_impl.cc
-            internal/future_impl.h
-            internal/future_then_impl.h
-            internal/future_then_meta.h
-            internal/getenv.cc
-            internal/getenv.h
-            internal/invoke_result.h
-            internal/ios_flags_saver.h
-            internal/make_unique.h
-            internal/parse_rfc3339.cc
-            internal/parse_rfc3339.h
-            internal/port_platform.h
-            internal/random.cc
-            internal/random.h
-            internal/retry_policy.h
-            internal/setenv.cc
-            internal/setenv.h
-            internal/throw_delegate.cc
-            internal/throw_delegate.h
-            internal/tuple.h
-            internal/utility.h
-            internal/version_info.h
-            log.cc
-            log.h
-            optional.h
-            status.cc
-            status.h
-            status_or.h
-            terminate_handler.cc
-            terminate_handler.h
-            version.cc
-            version.h)
-target_link_libraries(google_cloud_cpp_common
-                      PUBLIC Threads::Threads
-                      PRIVATE google_cloud_cpp_common_options)
-target_include_directories(google_cloud_cpp_common
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
+add_library(
+    google_cloud_cpp_common
+    ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    future.h
+    future_generic.h
+    future_void.h
+    iam_binding.h
+    iam_bindings.cc
+    iam_bindings.h
+    iam_policy.cc
+    iam_policy.h
+    internal/backoff_policy.cc
+    internal/backoff_policy.h
+    internal/big_endian.h
+    internal/build_info.h
+    internal/compiler_info.cc
+    internal/compiler_info.h
+    internal/conjunction.h
+    internal/disjunction.h
+    internal/filesystem.cc
+    internal/filesystem.h
+    internal/format_time_point.cc
+    internal/format_time_point.h
+    internal/future_base.h
+    internal/future_fwd.h
+    internal/future_impl.cc
+    internal/future_impl.h
+    internal/future_then_impl.h
+    internal/future_then_meta.h
+    internal/getenv.cc
+    internal/getenv.h
+    internal/invoke_result.h
+    internal/ios_flags_saver.h
+    internal/make_unique.h
+    internal/parse_rfc3339.cc
+    internal/parse_rfc3339.h
+    internal/port_platform.h
+    internal/random.cc
+    internal/random.h
+    internal/retry_policy.h
+    internal/setenv.cc
+    internal/setenv.h
+    internal/throw_delegate.cc
+    internal/throw_delegate.h
+    internal/tuple.h
+    internal/utility.h
+    internal/version_info.h
+    log.cc
+    log.h
+    optional.h
+    status.cc
+    status.h
+    status_or.h
+    terminate_handler.cc
+    terminate_handler.h
+    version.cc
+    version.h)
+target_link_libraries(
+    google_cloud_cpp_common
+    PUBLIC Threads::Threads
+    PRIVATE google_cloud_cpp_common_options)
+target_include_directories(
+    google_cloud_cpp_common
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:include>)
 target_compile_options(google_cloud_cpp_common
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 if (MSVC)
@@ -189,16 +187,16 @@ if (MSVC)
     # want to disable for everything. But for these files the usage is "safe".
     # This is a relatively obscure feature to add compile flags to just one
     # source:
-    set_property(SOURCE internal/parse_rfc3339.cc
-                 APPEND_STRING
-                 PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
+    set_property(
+        SOURCE internal/parse_rfc3339.cc
+        APPEND_STRING
+        PROPERTY COMPILE_DEFINITIONS "_CRT_SECURE_NO_WARNINGS")
 endif ()
 
-set_target_properties(google_cloud_cpp_common
-                      PROPERTIES VERSION
-                                 ${GOOGLE_CLOUD_CPP_VERSION}
-                                 SOVERSION
-                                 ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+set_target_properties(
+    google_cloud_cpp_common
+    PROPERTIES VERSION ${GOOGLE_CLOUD_CPP_VERSION} SOVERSION
+               ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
@@ -238,22 +236,14 @@ if (BUILD_TESTING)
                          "google_cloud_cpp_common_unit_tests")
 
     foreach (fname ${google_cloud_cpp_common_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE google_cloud_cpp_testing
-                                      google_cloud_cpp_common
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest
-                                      google_cloud_cpp_common_options)
+        target_link_libraries(
+            ${target}
+            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                    GTest::gmock_main GTest::gmock GTest::gtest
+                    google_cloud_cpp_common_options)
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -267,23 +257,25 @@ install(EXPORT google_cloud_cpp_common-targets
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
-        EXPORT google_cloud_cpp_common-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                COMPONENT google_cloud_cpp_runtime
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_runtime
-                NAMELINK_SKIP
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
+install(
+    TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
+    EXPORT google_cloud_cpp_common-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
-install(TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development
-                NAMELINK_ONLY
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_development)
+install(
+    TARGETS google_cloud_cpp_common google_cloud_cpp_common_options
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_development)
 
 google_cloud_cpp_install_headers(google_cloud_cpp_common include/google/cloud)
 

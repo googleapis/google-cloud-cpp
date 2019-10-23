@@ -17,25 +17,27 @@
 # We check this separately. A library may wish to use the testing util lib but
 # not build all of the tests.
 if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
-    add_library(google_cloud_cpp_testing
-                assert_ok.cc
-                assert_ok.h
-                capture_log_lines_backend.cc
-                capture_log_lines_backend.h
-                check_predicate_becomes_false.h
-                chrono_literals.h
-                custom_google_mock_main.cc
-                environment_variable_restore.cc
-                environment_variable_restore.h
-                expect_exception.h
-                expect_future_error.h
-                init_google_mock.cc
-                init_google_mock.h
-                testing_types.cc
-                testing_types.h)
-    target_link_libraries(google_cloud_cpp_testing
-                          PUBLIC google_cloud_cpp_common GTest::gmock
-                          PRIVATE google_cloud_cpp_common_options)
+    add_library(
+        google_cloud_cpp_testing
+        assert_ok.cc
+        assert_ok.h
+        capture_log_lines_backend.cc
+        capture_log_lines_backend.h
+        check_predicate_becomes_false.h
+        chrono_literals.h
+        custom_google_mock_main.cc
+        environment_variable_restore.cc
+        environment_variable_restore.h
+        expect_exception.h
+        expect_future_error.h
+        init_google_mock.cc
+        init_google_mock.h
+        testing_types.cc
+        testing_types.h)
+    target_link_libraries(
+        google_cloud_cpp_testing
+        PUBLIC google_cloud_cpp_common GTest::gmock
+        PRIVATE google_cloud_cpp_common_options)
 
     create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 
@@ -46,22 +48,14 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
                          "google_cloud_cpp_testing_unit_tests")
 
     foreach (fname ${google_cloud_cpp_testing_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE google_cloud_cpp_testing
-                                      google_cloud_cpp_common
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest
-                                      google_cloud_cpp_common_options)
+        target_link_libraries(
+            ${target}
+            PRIVATE google_cloud_cpp_testing google_cloud_cpp_common
+                    GTest::gmock_main GTest::gmock GTest::gtest
+                    google_cloud_cpp_common_options)
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -75,23 +69,25 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     # Install the libraries and headers in the locations determined by
     # GNUInstallDirs
-    install(TARGETS google_cloud_cpp_testing
-            EXPORT google_cloud_cpp_testing-targets
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                    COMPONENT google_cloud_cpp_runtime
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                    COMPONENT google_cloud_cpp_runtime
-                    NAMELINK_SKIP
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                    COMPONENT google_cloud_cpp_development)
+    install(
+        TARGETS google_cloud_cpp_testing
+        EXPORT google_cloud_cpp_testing-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_runtime
+                NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
     # With CMake-3.12 and higher we could avoid this separate command (and the
     # duplication).
-    install(TARGETS google_cloud_cpp_testing
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                    COMPONENT google_cloud_cpp_development
-                    NAMELINK_ONLY
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                    COMPONENT google_cloud_cpp_development)
+    install(
+        TARGETS google_cloud_cpp_testing
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
 
     google_cloud_cpp_install_headers(google_cloud_cpp_testing
                                      include/google/cloud/testing_util)
