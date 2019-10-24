@@ -656,18 +656,22 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     session = std::move(*session_or);
   }
 
-  grpc::ClientContext begin_context;
   spanner_proto::BeginTransactionRequest begin_request;
   begin_request.set_session(session->session_name());
   *begin_request.mutable_options()->mutable_partitioned_dml() =
       spanner_proto::TransactionOptions_PartitionedDml();
-
-  auto begin_response = stub_->BeginTransaction(begin_context, begin_request);
-  if (!begin_response) return std::move(begin_response).status();
-
+  auto begin_response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::BeginTransactionRequest const& request) {
+        return stub_->BeginTransaction(context, request);
+      },
+      begin_request, __func__);
+  if (!begin_response) {
+    return std::move(begin_response).status();
+  }
   s.set_id(begin_response->id());
 
-  grpc::ClientContext context;
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = s;
@@ -677,10 +681,16 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
-
-  auto response = stub_->ExecuteSql(context, request);
-  if (!response) return std::move(response).status();
-
+  auto response = internal::RetryLoop(
+      retry_policy_->clone(), backoff_policy_->clone(), true,
+      [this](grpc::ClientContext& context,
+             spanner_proto::ExecuteSqlRequest const& request) {
+        return stub_->ExecuteSql(context, request);
+      },
+      request, __func__);
+  if (!response) {
+    return std::move(response).status();
+  }
   PartitionedDmlResult result{0};
   if (response->has_stats()) {
     result.row_count_lower_bound = response->stats().row_count_lower_bound();

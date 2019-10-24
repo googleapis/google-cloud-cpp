@@ -536,14 +536,6 @@ TEST(ConnectionImplTest, ExecuteDmlDelete_PermanentFailure) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
 
-  spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
-
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .WillOnce(
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteDml")));
@@ -562,14 +554,6 @@ TEST(ConnectionImplTest, ExecuteDmlDelete_TooManyTransientFailures) {
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
-
-  spanner_proto::ResultSet response;
-  ASSERT_TRUE(TextFormat::ParseFromString(
-      R"pb(
-        metadata: { transaction: { id: "1234567890" } }
-        stats: { row_count_exact: 42 }
-      )pb",
-      &response));
 
   EXPECT_CALL(*mock, ExecuteSql(_, _))
       .Times(AtLeast(2))
@@ -1087,6 +1071,165 @@ TEST(ConnectionImplTest, ExecuteBatchDml_TooManyTransientFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(),
               HasSubstr("try-again in ExecuteBatchDml"));
+}
+
+TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::Transaction txn;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        id: "1234567890"
+      )pb",
+      &txn));
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(txn));
+
+  spanner_proto::ResultSet response;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        metadata: { transaction: { id: "1234567890" } }
+        stats: { row_count_lower_bound: 42 }
+      )pb",
+      &response));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(response));
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  ASSERT_STATUS_OK(result);
+  EXPECT_EQ(result->row_count_lower_bound, 42);
+}
+
+TEST(ConnectionImplTest, ExecutePartitionedDmlGetSessionFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(::testing::Invoke(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
+          }));
+
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
+}
+
+TEST(ConnectionImplTest, ExecutePartitionedDmlDelete_PermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::Transaction txn;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        id: "1234567890"
+      )pb",
+      &txn));
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(txn));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in ExecutePartitionedDml")));
+
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("uh-oh in ExecutePartitionedDml"));
+}
+
+TEST(ConnectionImplTest, ExecutePartitionedDmlDelete_TooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  spanner_proto::Transaction txn;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        id: "1234567890"
+      )pb",
+      &txn));
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce(Return(txn));
+
+  EXPECT_CALL(*mock, ExecuteSql(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
+                                    "try-again in ExecutePartitionedDml")));
+
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("try-again in ExecutePartitionedDml"));
+}
+
+TEST(ConnectionImplTest,
+     ExecutePartitionedDmlDelete_BeginTransactionPermanentFailure) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied,
+                              "uh-oh in ExecutePartitionedDml")));
+
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("uh-oh in ExecutePartitionedDml"));
+}
+
+TEST(ConnectionImplTest,
+     ExecutePartitionedDmlDelete_BeginTransactionTooManyTransientFailures) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+  auto conn = MakeTestConnection(db, mock);
+
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+  EXPECT_CALL(*mock, BeginTransaction(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable,
+                                    "try-again in ExecutePartitionedDml")));
+
+  auto result =
+      conn->ExecutePartitionedDml({SqlStatement("delete * from table")});
+
+  EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
+  EXPECT_THAT(result.status().message(),
+              HasSubstr("try-again in ExecutePartitionedDml"));
 }
 
 TEST(ConnectionImplTest, CommitGetSession_PermanentFailure) {
