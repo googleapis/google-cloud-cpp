@@ -222,14 +222,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -309,14 +328,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -456,14 +494,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -570,14 +627,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -708,14 +784,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -891,14 +986,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -1013,14 +1127,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
@@ -1148,14 +1281,33 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-cd $HOME/Downloads/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+tar -xf release-1.10.0.tar.gz
+cd $HOME/Downloads/googletest-release-1.10.0
 cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+sudo ldconfig
+```
+
+#### google-cloud-cpp-common
+
+We need to install the Google Cloud C++ common libraries:
+
+```bash
+cd $HOME/Downloads
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
+tar -xf v0.13.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+Compile without the tests because we are testing google-cloud-cpp, not the base
+libraries
+cmake -H. -Bcmake-out \
+    -DBUILD_TESTING=OFF \
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+cmake --build cmake-out -- -j $(nproc)
+sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
 
