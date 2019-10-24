@@ -69,12 +69,12 @@ std::unique_ptr<Client> ClientIntegrationTest::client_;
 TEST_F(ClientIntegrationTest, InsertAndCommit) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
-  auto reader = client_->Read("Singers", KeySet::All(),
-                              {"SingerId", "FirstName", "LastName"});
+  auto rows = client_->Read("Singers", KeySet::All(),
+                            {"SingerId", "FirstName", "LastName"});
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(reader)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (!row) break;
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
@@ -95,13 +95,13 @@ TEST_F(ClientIntegrationTest, DeleteAndCommit) {
   });
   EXPECT_STATUS_OK(commit_result);
 
-  auto reader = client_->Read("Singers", KeySet::All(),
-                              {"SingerId", "FirstName", "LastName"});
+  auto rows = client_->Read("Singers", KeySet::All(),
+                            {"SingerId", "FirstName", "LastName"});
 
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(reader)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (!row) break;
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
@@ -138,13 +138,13 @@ TEST_F(ClientIntegrationTest, MultipleInserts) {
       });
   EXPECT_STATUS_OK(commit_result);
 
-  auto reader = client_->Read("Singers", KeySet::All(),
-                              {"SingerId", "FirstName", "LastName"});
+  auto rows = client_->Read("Singers", KeySet::All(),
+                            {"SingerId", "FirstName", "LastName"});
 
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
   std::vector<RowType> returned_rows;
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(reader)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (!row) break;
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
@@ -191,12 +191,12 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
     if (is_retryable_failure(insert2)) continue;
     ASSERT_STATUS_OK(insert2);
 
-    auto reader = client_->Read(txn, "Singers", KeySet::All(),
-                                {"SingerId", "FirstName", "LastName"});
+    auto rows = client_->Read(txn, "Singers", KeySet::All(),
+                              {"SingerId", "FirstName", "LastName"});
 
     std::vector<RowType> returned_rows;
     int row_number = 0;
-    for (auto& row : StreamOf<RowType>(reader)) {
+    for (auto& row : StreamOf<RowType>(rows)) {
       if (!row) break;
       SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
       returned_rows.push_back(*std::move(row));
@@ -213,10 +213,10 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
   }
 
   std::vector<RowType> returned_rows;
-  auto reader = client_->Read("Singers", KeySet::All(),
-                              {"SingerId", "FirstName", "LastName"});
+  auto rows = client_->Read("Singers", KeySet::All(),
+                            {"SingerId", "FirstName", "LastName"});
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(reader)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (!row) break;
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
@@ -256,8 +256,8 @@ TEST_F(ClientIntegrationTest, Commit) {
   using RowType = std::tuple<std::int64_t>;
   std::vector<std::int64_t> ids;
   auto ks = KeySet().AddRange(MakeKeyBoundClosed(100), MakeKeyBoundOpen(200));
-  auto results = client_->Read("Singers", std::move(ks), {"SingerId"});
-  for (auto& row : StreamOf<RowType>(results)) {
+  auto rows = client_->Read("Singers", std::move(ks), {"SingerId"});
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (row) ids.push_back(std::get<0>(*row));
   }
@@ -310,12 +310,12 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
       });
   ASSERT_STATUS_OK(commit_result);
 
-  auto reader = client_->ExecuteQuery(
+  auto rows = client_->ExecuteQuery(
       SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers", {}));
 
   std::vector<RowType> actual_rows;
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(reader)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (!row) break;
     SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
@@ -450,14 +450,14 @@ void CheckExecuteQueryWithSingleUseOptions(
       });
   ASSERT_STATUS_OK(commit);
 
-  auto reader = client.ExecuteQuery(
+  auto rows = client.ExecuteQuery(
       options_generator(*commit),
       SqlStatement("SELECT SingerId, FirstName, LastName FROM Singers"));
 
   std::vector<RowValues> actual_rows;
   int row_number = 0;
   for (auto& row :
-       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(reader)) {
+       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
     SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
     EXPECT_STATUS_OK(row);
     if (!row) break;
@@ -559,10 +559,9 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
     int row_number = 0;
     auto deserialized_partition = DeserializeReadPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
-    auto result_set = client_->Read(*deserialized_partition);
+    auto rows = client_->Read(*deserialized_partition);
     for (auto& row :
-         StreamOf<std::tuple<std::int64_t, std::string, std::string>>(
-             result_set)) {
+         StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
@@ -601,10 +600,9 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
     int row_number = 0;
     auto deserialized_partition = DeserializeQueryPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
-    auto result_set = client_->ExecuteQuery(*deserialized_partition);
+    auto rows = client_->ExecuteQuery(*deserialized_partition);
     for (auto& row :
-         StreamOf<std::tuple<std::int64_t, std::string, std::string>>(
-             result_set)) {
+         StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
       SCOPED_TRACE("Reading partition[" + std::to_string(partition_number++) +
                    "] row[" + std::to_string(row_number++) + "]");
       EXPECT_STATUS_OK(row);
@@ -652,7 +650,7 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
   ASSERT_EQ(batch_result->stats[2].row_count, 1);
   ASSERT_EQ(batch_result->stats[3].row_count, 2);
 
-  auto query = client_->ExecuteQuery(SqlStatement(
+  auto rows = client_->ExecuteQuery(SqlStatement(
       "SELECT SingerId, FirstName, LastName FROM Singers ORDER BY SingerId"));
 
   struct Expectation {
@@ -667,7 +665,7 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
   };
   std::size_t counter = 0;
   for (auto const& row :
-       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(query)) {
+       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
     ASSERT_STATUS_OK(row);
     ASSERT_EQ(std::get<0>(*row), expected[counter].id);
     ASSERT_EQ(std::get<1>(*row), expected[counter].fname);
@@ -728,12 +726,12 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
     ASSERT_EQ(stats.row_count, 1);
   }
 
-  auto query = client_->ExecuteQuery(SqlStatement(
+  auto rows = client_->ExecuteQuery(SqlStatement(
       "SELECT SingerId, FirstName, LastName FROM Singers ORDER BY SingerId"));
 
   auto counter = 0;
   for (auto const& row :
-       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(query)) {
+       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
     ASSERT_STATUS_OK(row);
     std::string const singer_id = std::to_string(counter);
     std::string const first_name = "Foo" + singer_id;

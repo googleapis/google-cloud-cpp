@@ -80,9 +80,9 @@ inline namespace SPANNER_CLIENT_NS {
  * auto conn = cs::MakeConnection(db);
  * auto client = cs::Client(conn);
  *
- * cs::ReadResult result = client.Read(...);
+ * auto rows = client.Read(...);
  * using RowType = std::tuple<std::int64_t, std::string>;
- * for (auto const& row : cs::StreamOf<RowType>(result)) {
+ * for (auto const& row : cs::StreamOf<RowType>(rows)) {
  *   // ...
  * }
  * @endcode
@@ -142,27 +142,27 @@ class Client {
    * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    */
-  QueryResult Read(std::string table, KeySet keys,
-                   std::vector<std::string> columns,
-                   ReadOptions read_options = {});
+  RowStream Read(std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions read_options = {});
   /**
    * @copydoc Read
    *
    * @param transaction_options Execute this read in a single-use transaction
    * with these options.
    */
-  QueryResult Read(Transaction::SingleUseOptions transaction_options,
-                   std::string table, KeySet keys,
-                   std::vector<std::string> columns,
-                   ReadOptions read_options = {});
+  RowStream Read(Transaction::SingleUseOptions transaction_options,
+                 std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions read_options = {});
   /**
    * @copydoc Read
    *
    * @param transaction Execute this read as part of an existing transaction.
    */
-  QueryResult Read(Transaction transaction, std::string table, KeySet keys,
-                   std::vector<std::string> columns,
-                   ReadOptions read_options = {});
+  RowStream Read(Transaction transaction, std::string table, KeySet keys,
+                 std::vector<std::string> columns,
+                 ReadOptions read_options = {});
   //@}
 
   /**
@@ -178,7 +178,7 @@ class Client {
    * @par Example
    * @snippet samples.cc read-read-partition
    */
-  QueryResult Read(ReadPartition const& partition);
+  RowStream Read(ReadPartition const& partition);
 
   /**
    * Creates a set of partitions that can be used to execute a read
@@ -231,10 +231,10 @@ class Client {
    *
    * @param statement The SQL statement to execute.
    *
-   * @note No individual row in the `ExecuteQueryResult` can exceed 100 MiB, and
-   * no column value can exceed 10 MiB.
+   * @note No individual row in the `RowStream` can exceed 100 MiB, and no
+   *     column value can exceed 10 MiB.
    */
-  QueryResult ExecuteQuery(SqlStatement statement);
+  RowStream ExecuteQuery(SqlStatement statement);
 
   /**
    * @copydoc ExecuteQuery(SqlStatement)
@@ -242,15 +242,15 @@ class Client {
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
-  QueryResult ExecuteQuery(Transaction::SingleUseOptions transaction_options,
-                           SqlStatement statement);
+  RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
+                         SqlStatement statement);
 
   /**
    * @copydoc ExecuteQuery(SqlStatement)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
-  QueryResult ExecuteQuery(Transaction transaction, SqlStatement statement);
+  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement);
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
@@ -258,13 +258,13 @@ class Client {
    *
    * @param partition A `QueryPartition`, obtained by calling `PartitionRead`.
    *
-   * @note No individual row in the `ExecuteQueryResult` can exceed 100 MiB, and
-   * no column value can exceed 10 MiB.
+   * @note No individual row in the `RowStream` can exceed 100 MiB, and no
+   *     column value can exceed 10 MiB.
    *
    * @par Example
    * @snippet samples.cc execute-sql-query-partition
    */
-  QueryResult ExecuteQuery(QueryPartition const& partition);
+  RowStream ExecuteQuery(QueryPartition const& partition);
   //@}
 
   //@{

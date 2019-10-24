@@ -134,14 +134,14 @@ class Connection {
   //@}
 
   /// Define the interface for a google.spanner.v1.Spanner.Read RPC
-  virtual QueryResult Read(ReadParams) = 0;
+  virtual RowStream Read(ReadParams) = 0;
 
   /// Define the interface for a google.spanner.v1.Spanner.PartitionRead RPC
   virtual StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) = 0;
 
   /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
-  virtual QueryResult ExecuteQuery(ExecuteSqlParams) = 0;
+  virtual RowStream ExecuteQuery(ExecuteSqlParams) = 0;
 
   /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
   virtual StatusOr<DmlResult> ExecuteDml(ExecuteSqlParams) = 0;

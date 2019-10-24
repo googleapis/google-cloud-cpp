@@ -270,8 +270,8 @@ class SelectSingleRow : public Experiment {
          WHERE SingerId = @key
          LIMIT 1)sql",
           {{"key", cloud_spanner::Value(key)}});
-      auto reader = client.ExecuteQuery(statement);
-      for (auto& row : reader) {
+      auto rows = client.ExecuteQuery(statement);
+      for (auto& row : rows) {
         samples.push_back(
             {Operation::kSelect, 1, ElapsedTime(start_query), row.ok()});
         break;

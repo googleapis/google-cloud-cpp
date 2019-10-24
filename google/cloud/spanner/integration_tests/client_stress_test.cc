@@ -95,14 +95,14 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
         result.Update(commit.status());
       } else {
         auto size = random_limit(generator);
-        auto reader = client.ExecuteQuery(
+        auto rows = client.ExecuteQuery(
             SqlStatement("SELECT SingerId, FirstName, LastName"
                          "  FROM Singers"
                          " WHERE SingerId >= @min"
                          "   AND SingerId <= @max",
                          {{"min", spanner::Value(key)},
                           {"max", spanner::Value(key + size)}}));
-        for (auto row : reader) {
+        for (auto row : rows) {
           result.Update(row.status());
         }
       }
@@ -166,9 +166,9 @@ TEST(ClientStressTest, UpsertAndRead) {
             spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(key),
                                        spanner::MakeKeyBoundClosed(key + size));
 
-        auto reader = client.Read("Singers", range,
-                                  {"SingerId", "FirstName", "LastName"});
-        for (auto row : reader) {
+        auto rows = client.Read("Singers", range,
+                                {"SingerId", "FirstName", "LastName"});
+        for (auto row : rows) {
           result.Update(row.status());
         }
       }

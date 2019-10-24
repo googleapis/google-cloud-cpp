@@ -331,9 +331,9 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  auto result = conn->Read(
+  auto rows = conn->Read(
       {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_STATUS_OK(row);
   }
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
@@ -351,10 +351,10 @@ TEST(ConnectionImplTest, ExecuteQueryGetSessionFailure) {
             return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
           }));
 
-  auto result = conn->ExecuteQuery(
+  auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        SqlStatement("select * from table")});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
   }
@@ -381,10 +381,10 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
   EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
-  auto result = conn->ExecuteQuery(
+  auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        SqlStatement("select * from table")});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(),
                 HasSubstr("uh-oh in GrpcReader::Finish"));
@@ -433,7 +433,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   EXPECT_CALL(*mock, ExecuteStreamingSql(_, _))
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
-  auto result = conn->ExecuteQuery(
+  auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
        SqlStatement("select * from table")});
   using RowType = std::tuple<std::int64_t, std::string>;
@@ -442,7 +442,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
       RowType(42, "Ann"),
   };
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(result)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -476,8 +476,8 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  auto result = conn->ExecuteQuery({txn, SqlStatement("select * from table")});
-  for (auto& row : result) {
+  auto rows = conn->ExecuteQuery({txn, SqlStatement("select * from table")});
+  for (auto& row : rows) {
     EXPECT_STATUS_OK(row);
   }
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "00FEDCBA"));
@@ -1909,7 +1909,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  auto result = conn->Read(
+  auto rows = conn->Read(
       {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 

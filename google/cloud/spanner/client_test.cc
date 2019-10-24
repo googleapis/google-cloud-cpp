@@ -101,8 +101,8 @@ TEST(ClientTest, ReadSuccess) {
       .WillOnce(Return(MakeTestRow("Ann", 42)))
       .WillOnce(Return(Row()));
 
-  QueryResult result_set(std::move(source));
-  EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1", "column2"});
@@ -143,8 +143,8 @@ TEST(ClientTest, ReadFailure) {
       .WillOnce(Return(MakeTestRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  QueryResult result_set(std::move(source));
-  EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1"});
@@ -191,12 +191,11 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       .WillOnce(Return(MakeTestRow("Ann", 42)))
       .WillOnce(Return(Row()));
 
-  QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, ExecuteQuery(_))
-      .WillOnce(Return(ByMove(std::move(result_set))));
+      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto result = client.ExecuteQuery(SqlStatement("select * from table;"));
+  auto rows = client.ExecuteQuery(SqlStatement("select * from table;"));
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
@@ -204,7 +203,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       RowType("Ann", 42),
   };
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(result)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -234,21 +233,20 @@ TEST(ClientTest, ExecuteQueryFailure) {
       .WillOnce(Return(MakeTestRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
-  QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, ExecuteQuery(_))
-      .WillOnce(Return(ByMove(std::move(result_set))));
+      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto result = client.ExecuteQuery(SqlStatement("select * from table;"));
+  auto rows = client.ExecuteQuery(SqlStatement("select * from table;"));
 
-  auto rows = StreamOf<std::tuple<std::string>>(result);
-  auto iter = rows.begin();
-  EXPECT_NE(iter, rows.end());
+  auto tups = StreamOf<std::tuple<std::string>>(rows);
+  auto iter = tups.begin();
+  EXPECT_NE(iter, tups.end());
   EXPECT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Steve");
 
   ++iter;
-  EXPECT_NE(iter, rows.end());
+  EXPECT_NE(iter, tups.end());
   EXPECT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Ann");
 
@@ -419,11 +417,10 @@ TEST(ClientTest, CommitMutatorSuccess) {
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(MakeTestRow("Bob")))
       .WillOnce(Return(Row()));
-  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
-                      Return(ByMove(std::move(result_set)))));
+                      Return(ByMove(RowStream(std::move(source))))));
   EXPECT_CALL(*conn, Commit(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_commit_params),
                       Return(CommitResult{*timestamp})));
@@ -431,8 +428,8 @@ TEST(ClientTest, CommitMutatorSuccess) {
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto mutator = [&client, &mutation](Transaction txn) -> StatusOr<Mutations> {
-    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : StreamOf<std::tuple<std::string>>(read)) {
+    auto rows = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    for (auto& row : StreamOf<std::tuple<std::string>>(rows)) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -468,18 +465,17 @@ TEST(ClientTest, CommitMutatorRollback) {
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
-  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
-                      Return(ByMove(std::move(result_set)))));
+                      Return(ByMove(RowStream(std::move(source))))));
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto mutator = [&client, &mutation](Transaction txn) -> StatusOr<Mutations> {
-    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read) {
+    auto rows = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    for (auto& row : rows) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -515,19 +511,18 @@ TEST(ClientTest, CommitMutatorRollbackError) {
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
-  QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
       .WillOnce(DoAll(SaveArg<0>(&actual_read_params),
-                      Return(ByMove(std::move(result_set)))));
+                      Return(ByMove(RowStream(std::move(source))))));
   EXPECT_CALL(*conn, Rollback(_))
       .WillOnce(Return(Status(StatusCode::kInternal, "oops")));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto mutator = [&client, &mutation](Transaction txn) -> StatusOr<Mutations> {
-    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read) {
+    auto rows = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    for (auto& row : rows) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -562,16 +557,16 @@ TEST(ClientTest, CommitMutatorException) {
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
   EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
-  QueryResult result_set(std::move(source));
 
-  EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
+  EXPECT_CALL(*conn, Read(_))
+      .WillOnce(Return(ByMove(RowStream(std::move(source)))));
   EXPECT_CALL(*conn, Rollback(_)).WillOnce(Return(Status()));
 
   Client client(conn);
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto mutator = [&client, &mutation](Transaction txn) -> StatusOr<Mutations> {
-    auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read) {
+    auto rows = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
+    for (auto& row : rows) {
       if (!row) throw "Read() error";
     }
     return Mutations{mutation};

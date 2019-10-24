@@ -40,10 +40,10 @@ inline namespace SPANNER_CLIENT_NS {
  */
 class MockConnection : public spanner::Connection {
  public:
-  MOCK_METHOD1(Read, spanner::QueryResult(ReadParams));
+  MOCK_METHOD1(Read, spanner::RowStream(ReadParams));
   MOCK_METHOD1(PartitionRead, StatusOr<std::vector<spanner::ReadPartition>>(
                                   PartitionReadParams));
-  MOCK_METHOD1(ExecuteQuery, spanner::QueryResult(ExecuteSqlParams));
+  MOCK_METHOD1(ExecuteQuery, spanner::RowStream(ExecuteSqlParams));
   MOCK_METHOD1(ExecuteDml, StatusOr<spanner::DmlResult>(ExecuteSqlParams));
   MOCK_METHOD1(ProfileQuery, spanner::ProfileQueryResult(ExecuteSqlParams));
   MOCK_METHOD1(ProfileDml,

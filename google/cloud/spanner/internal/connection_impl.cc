@@ -113,7 +113,7 @@ ConnectionImpl::ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
       backoff_policy_(std::move(backoff_policy)),
       session_pool_(this) {}
 
-QueryResult ConnectionImpl::Read(ReadParams params) {
+RowStream ConnectionImpl::Read(ReadParams params) {
   return internal::Visit(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
@@ -133,7 +133,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
       });
 }
 
-QueryResult ConnectionImpl::ExecuteQuery(ExecuteSqlParams params) {
+RowStream ConnectionImpl::ExecuteQuery(ExecuteSqlParams params) {
   return internal::Visit(std::move(params.transaction),
                          [this, &params](SessionHolder& session,
                                          spanner_proto::TransactionSelector& s,
@@ -282,13 +282,13 @@ class DmlResultSetSource : public internal::ResultSourceInterface {
   spanner_proto::ResultSet result_set_;
 };
 
-QueryResult ConnectionImpl::ReadImpl(SessionHolder& session,
-                                     spanner_proto::TransactionSelector& s,
-                                     ReadParams params) {
+RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
+                                   spanner_proto::TransactionSelector& s,
+                                   ReadParams params) {
   if (!session) {
     auto session_or = AllocateSession();
     if (!session_or) {
-      return QueryResult(
+      return RowStream(
           google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
               std::move(session_or).status()));
     }
@@ -324,14 +324,14 @@ QueryResult ConnectionImpl::ReadImpl(SessionHolder& session,
       backoff_policy_->clone());
   auto reader = PartialResultSetSource::Create(std::move(rpc));
   if (!reader.ok()) {
-    return QueryResult(
+    return RowStream(
         google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
             std::move(reader).status()));
   }
   if (s.has_begin()) {
     auto metadata = (*reader)->Metadata();
     if (!metadata || metadata->transaction().id().empty()) {
-      return QueryResult(
+      return RowStream(
           google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
               Status(StatusCode::kInternal,
                      "Begin transaction requested but no transaction returned "
@@ -339,7 +339,7 @@ QueryResult ConnectionImpl::ReadImpl(SessionHolder& session,
     }
     s.set_id(metadata->transaction().id());
   }
-  return QueryResult(*std::move(reader));
+  return RowStream(*std::move(reader));
 }
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
@@ -479,11 +479,11 @@ ResultType ConnectionImpl::CommonQueryImpl(
   return std::move(*ret_val);
 }
 
-QueryResult ConnectionImpl::ExecuteQueryImpl(
+RowStream ConnectionImpl::ExecuteQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteSqlParams params) {
-  return CommonQueryImpl<QueryResult>(session, s, seqno, std::move(params),
-                                      spanner_proto::ExecuteSqlRequest::NORMAL);
+  return CommonQueryImpl<RowStream>(session, s, seqno, std::move(params),
+                                    spanner_proto::ExecuteSqlRequest::NORMAL);
 }
 
 ProfileQueryResult ConnectionImpl::ProfileQueryImpl(

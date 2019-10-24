@@ -80,8 +80,8 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
   //! [mock-execute-query]
   EXPECT_CALL(*conn, ExecuteQuery(_))
       .WillOnce([&source](spanner::Connection::ExecuteSqlParams const&)
-                    -> spanner::QueryResult {
-        return spanner::QueryResult(std::move(source));
+                    -> spanner::RowStream {
+        return spanner::RowStream(std::move(source));
       });
   //! [mock-execute-query]
 
@@ -92,14 +92,14 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
 
   // Make the request and verify the expected results:
   //! [client-call]
-  auto reader = client.ExecuteQuery(
+  auto rows = client.ExecuteQuery(
       spanner::SqlStatement("SELECT Id, Greeting FROM Greetings"));
   //! [client-call]
 
   //! [expected-results]
   int count = 0;
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto row : spanner::StreamOf<RowType>(reader)) {
+  for (auto row : spanner::StreamOf<RowType>(rows)) {
     ASSERT_TRUE(row);
     auto expected_id = ++count;
     EXPECT_EQ(expected_id, std::get<0>(*row));

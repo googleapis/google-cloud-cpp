@@ -35,9 +35,9 @@ And then verify the results meet your expectations:
 
 @snippet mock_execute_query.cc expected-results
 
-All of this depends on creating a `google::cloud::spanner::QueryResult`
-that simulates the stream of results you want. To do so, you need to mock a
-source that streams `google::cloud::spanner::Values`:
+All of this depends on creating a `google::cloud::spanner::RowStream` that
+simulates the stream of results you want. To do so, you need to mock a source
+that streams `google::cloud::spanner::Row`s:
 
 @snippet mock_execute_query.cc create-streaming-source
 

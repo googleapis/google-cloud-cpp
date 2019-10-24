@@ -65,7 +65,7 @@ optional<spanner::ExecutionPlan> GetExecutionPlan(
 }
 }  // namespace
 
-optional<Timestamp> QueryResult::ReadTimestamp() const {
+optional<Timestamp> RowStream::ReadTimestamp() const {
   return GetReadTimestamp(source_);
 }
 

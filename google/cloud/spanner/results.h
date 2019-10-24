@@ -48,36 +48,36 @@ class ResultSourceInterface {
 }  // namespace internal
 
 /**
- * Represents the result of a read operation using `spanner::Client::Read()` or
+ * Represents the stream of `Rows` returned from `spanner::Client::Read()` or
  * `spanner::Client::ExecuteQuery()`.
  *
- * A `QueryResult` object is itself a range defined by the [Input
- * Iterators][input-iterator] returned from `begin()` and `end(). Callers may
- * directly iterate a `QueryResult` instance, which will return a sequence of
- * `StatusOr<Row>` objects.
+ * A `RowStream` object is a range defined by the [Input
+ * Iterators][input-iterator] returned from its `begin()` and `end()` members.
+ * Callers may directly iterate a `RowStream` instance, which will return a
+ * sequence of `StatusOr<Row>` objects.
  *
- * For convenience, callers may wrap the `QueryResult` instance in a
+ * For convenience, callers may wrap a `RowStream` instance in a
  * `StreamOf<std::tuple<...>>` object, which will automatically parse each
  * `Row` into a `std::tuple` with the specified types.
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
-class QueryResult {
+class RowStream {
  public:
-  QueryResult() = default;
-  explicit QueryResult(std::unique_ptr<internal::ResultSourceInterface> source)
+  RowStream() = default;
+  explicit RowStream(std::unique_ptr<internal::ResultSourceInterface> source)
       : source_(std::move(source)) {}
 
   // This class is movable but not copyable.
-  QueryResult(QueryResult&&) = default;
-  QueryResult& operator=(QueryResult&&) = default;
+  RowStream(RowStream&&) = default;
+  RowStream& operator=(RowStream&&) = default;
 
-  /// Returns a `RowStreamIterator` defining the beginning of this result set.
+  /// Returns a `RowStreamIterator` defining the beginning of this range.
   RowStreamIterator begin() {
     return RowStreamIterator([this]() mutable { return source_->NextRow(); });
   }
 
-  /// Returns a `RowStreamIterator` defining the end of this result set.
+  /// Returns a `RowStreamIterator` defining the end of this range.
   RowStreamIterator end() { return {}; }
 
   /**

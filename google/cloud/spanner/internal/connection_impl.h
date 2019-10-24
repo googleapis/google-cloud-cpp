@@ -67,10 +67,10 @@ class ConnectionImpl : public Connection,
                        public SessionManager,
                        public std::enable_shared_from_this<ConnectionImpl> {
  public:
-  QueryResult Read(ReadParams) override;
+  RowStream Read(ReadParams) override;
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) override;
-  QueryResult ExecuteQuery(ExecuteSqlParams) override;
+  RowStream ExecuteQuery(ExecuteSqlParams) override;
   StatusOr<DmlResult> ExecuteDml(ExecuteSqlParams) override;
   ProfileQueryResult ProfileQuery(ExecuteSqlParams) override;
   StatusOr<ProfileDmlResult> ProfileDml(ExecuteSqlParams) override;
@@ -92,17 +92,17 @@ class ConnectionImpl : public Connection,
                  std::unique_ptr<RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy);
 
-  QueryResult ReadImpl(SessionHolder& session,
-                       google::spanner::v1::TransactionSelector& s,
-                       ReadParams params);
+  RowStream ReadImpl(SessionHolder& session,
+                     google::spanner::v1::TransactionSelector& s,
+                     ReadParams params);
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
       ReadParams const& params, PartitionOptions partition_options);
 
-  QueryResult ExecuteQueryImpl(SessionHolder& session,
-                               google::spanner::v1::TransactionSelector& s,
-                               std::int64_t seqno, ExecuteSqlParams params);
+  RowStream ExecuteQueryImpl(SessionHolder& session,
+                             google::spanner::v1::TransactionSelector& s,
+                             std::int64_t seqno, ExecuteSqlParams params);
 
   StatusOr<DmlResult> ExecuteDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,

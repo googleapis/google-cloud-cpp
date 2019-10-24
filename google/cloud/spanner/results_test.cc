@@ -40,30 +40,30 @@ using ::testing::Eq;
 using ::testing::Return;
 using ::testing::UnorderedPointwise;
 
-TEST(QueryResult, IterateNoRows) {
+TEST(RowStream, IterateNoRows) {
   auto mock_source = make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow()).WillOnce(Return(Row()));
 
-  QueryResult result_set(std::move(mock_source));
+  RowStream rows(std::move(mock_source));
   int num_rows = 0;
-  for (auto const& row : result_set) {
+  for (auto const& row : rows) {
     static_cast<void>(row);
     ++num_rows;
   }
   EXPECT_EQ(num_rows, 0);
 }
 
-TEST(QueryResult, IterateOverRows) {
+TEST(RowStream, IterateOverRows) {
   auto mock_source = make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow())
       .WillOnce(Return(MakeTestRow(5, true, "foo")))
       .WillOnce(Return(MakeTestRow(10, false, "bar")))
       .WillOnce(Return(Row()));
 
-  QueryResult result_set(std::move(mock_source));
+  RowStream rows(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row :
-       StreamOf<std::tuple<std::int64_t, bool, std::string>>(result_set)) {
+       StreamOf<std::tuple<std::int64_t, bool, std::string>>(rows)) {
     EXPECT_TRUE(row.ok());
     switch (num_rows++) {
       case 0:
@@ -86,17 +86,17 @@ TEST(QueryResult, IterateOverRows) {
   EXPECT_EQ(num_rows, 2);
 }
 
-TEST(QueryResult, IterateError) {
+TEST(RowStream, IterateError) {
   auto mock_source = make_unique<MockResultSetSource>();
   EXPECT_CALL(*mock_source, NextRow())
       .WillOnce(Return(MakeTestRow(5, true, "foo")))
       .WillOnce(Return(Status(StatusCode::kUnknown, "oops")));
 
-  QueryResult result_set(std::move(mock_source));
+  RowStream rows(std::move(mock_source));
 
   int num_rows = 0;
   for (auto const& row :
-       StreamOf<std::tuple<std::int64_t, bool, std::string>>(result_set)) {
+       StreamOf<std::tuple<std::int64_t, bool, std::string>>(rows)) {
     switch (num_rows++) {
       case 0:
         EXPECT_TRUE(row.ok());
@@ -119,27 +119,27 @@ TEST(QueryResult, IterateError) {
   EXPECT_EQ(num_rows, 2);
 }
 
-TEST(QueryResult, TimestampNoTransaction) {
+TEST(RowStream, TimestampNoTransaction) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata no_transaction;
   EXPECT_CALL(*mock_source, Metadata()).WillOnce(Return(no_transaction));
 
-  QueryResult result_set(std::move(mock_source));
-  EXPECT_FALSE(result_set.ReadTimestamp().has_value());
+  RowStream rows(std::move(mock_source));
+  EXPECT_FALSE(rows.ReadTimestamp().has_value());
 }
 
-TEST(QueryResult, TimestampNotPresent) {
+TEST(RowStream, TimestampNotPresent) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_no_timestamp;
   transaction_no_timestamp.mutable_transaction()->set_id("dummy");
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_no_timestamp));
 
-  QueryResult result_set(std::move(mock_source));
-  EXPECT_FALSE(result_set.ReadTimestamp().has_value());
+  RowStream rows(std::move(mock_source));
+  EXPECT_FALSE(rows.ReadTimestamp().has_value());
 }
 
-TEST(QueryResult, TimestampPresent) {
+TEST(RowStream, TimestampPresent) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
@@ -149,8 +149,8 @@ TEST(QueryResult, TimestampPresent) {
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 
-  QueryResult result_set(std::move(mock_source));
-  EXPECT_EQ(*result_set.ReadTimestamp(), timestamp);
+  RowStream rows(std::move(mock_source));
+  EXPECT_EQ(*rows.ReadTimestamp(), timestamp);
 }
 
 TEST(ProfileQueryResult, TimestampPresent) {
@@ -163,8 +163,8 @@ TEST(ProfileQueryResult, TimestampPresent) {
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 
-  ProfileQueryResult result_set(std::move(mock_source));
-  EXPECT_EQ(*result_set.ReadTimestamp(), timestamp);
+  ProfileQueryResult rows(std::move(mock_source));
+  EXPECT_EQ(*rows.ReadTimestamp(), timestamp);
 }
 
 TEST(ProfileQueryResult, ExecutionStats) {
