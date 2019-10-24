@@ -239,9 +239,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -345,9 +345,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -511,9 +511,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -644,9 +644,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -801,9 +801,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -1003,9 +1003,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -1144,9 +1144,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
@@ -1298,9 +1298,9 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-tar -xf v0.13.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.13.0
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
+tar -xf v0.15.0.tar.gz
+cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
 Compile without the tests because we are testing google-cloud-cpp, not the base
 libraries
 cmake -H. -Bcmake-out \
