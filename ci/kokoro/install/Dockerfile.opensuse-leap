@@ -26,6 +26,15 @@ RUN zypper refresh && \
         libcurl-devel libopenssl-devel make tar wget
 # ```
 
+# The following steps will install libraries and tools in `/usr/local`. CentOS
+# does not search for shared libraries in these directories by default, there
+# are multiple ways to solve this problem, the following steps are one solution:
+
+# ```bash
+RUN (echo "/usr/local/lib" ; "/usr/local/lib64") | \
+    tee /etc/ld.so.conf.d/usrlocal.conf
+# ```
+
 # #### crc32c
 
 # There is no openSUSE package for this library. To install it, use:
@@ -64,6 +73,16 @@ RUN cmake \
         -H. -Bcmake-out
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
+# ```
+
+# The following steps will install libraries and tools in `/usr/local`.
+# By default openSUSE/Leap does not search for shared libraries in these
+# directories, there are multiple ways to solve this problem, the following
+# steps are one solution:
+
+# ```bash
+RUN (echo "/usr/local/lib" ; "/usr/local/lib64") | \
+    tee /etc/ld.so.conf.d/usrlocal.conf
 # ```
 
 # #### c-ares
@@ -108,7 +127,6 @@ RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
 ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 ENV PATH=/usr/local/bin:${PATH}
 RUN make -j ${NCPU:-4}
 RUN make install
@@ -163,7 +181,7 @@ WORKDIR /var/tmp/build/google-cloud-cpp-common-0.15.0
 RUN cmake -H. -Bcmake-out \
     -DBUILD_TESTING=OFF \
     -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
-RUN cmake --build cmake-out -- -j $(nproc)
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 RUN cmake --build cmake-out --target install
 RUN ldconfig
 # ```
