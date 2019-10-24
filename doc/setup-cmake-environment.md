@@ -48,7 +48,7 @@ every time the version of the dependencies is changed, and it is not done
 automatically. But once installed you can use them for any build.
 
 
-Configure the super-build to install in `$HOME/local-spanner`. We recommend that
+Configure the super-build to install in `$HOME/local-cpp`. We recommend that
 you use Ninja for this build because it is substantially faster than Make in
 this case. Note that if Ninja is not installed in your workstation you may need
 to remove the `-GNinja` flag:
@@ -65,7 +65,7 @@ cmake --build cmake-out/si --target project-dependencies -- -j $(nproc)
 ```
 
 Now you can use these dependencies multiple times. To use them, add the
-`$HOME/local-spanner` directory to `CMAKE_PREFIX_PATH` when you configure the
+`$HOME/local-cpp` directory to `CMAKE_PREFIX_PATH` when you configure the
 project:
 
 ```console
