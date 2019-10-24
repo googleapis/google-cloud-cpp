@@ -172,12 +172,33 @@ if (Protobuf_FOUND)
     endif ()
 endif ()
 
-if (protobuf_DEBUG)
-    message(
-        STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-               "ProtobufWithTargets_FOUND = ${ProtobufWithTargets_FOUND}"
-               " ProtobufWithTargets_VERSION = ${ProtobufWithTargets_VERSION}")
-endif ()
+# Even when using a config file Protobuf does not automatically add the
+# -DPROTOBUF_USE_DLLS flag. This flag is required to successfully link the
+# Protobuf library, so we add it manually.
+function (google_cloud_cpp_fixup_protobuf_targets)
+    function (do_fixup target)
+        set_property(
+            TARGET ${target}
+            APPEND
+            PROPERTY INTERFACE_COMPILE_DEFINITIONS "-DPROTOBUF_USE_DLLS")
+    endfunction ()
+    function (fixup_library target)
+        # Detecting if a library is shared is not trivial, let's try some
+        # obvious ways first:
+        if (MSVC AND NOT VCPKG_TARGET_TRIPLET MATCHES "-static$")
+            do_fixup(${target})
+            return()
+        endif ()
+        get_target_property(library_type ${target} TYPE)
+        if ("${library_type}" STREQUAL "SHARED_LIBRARY")
+            do_fixup(${target})
+            return()
+        endif ()
+    endfunction ()
+    fixup_library(protobuf::libprotobuf)
+    fixup_library(protobuf::libprotobuf-lite)
+endfunction ()
+google_cloud_cpp_fixup_protobuf_targets()
 
 if (protobuf_DEBUG)
     message(
