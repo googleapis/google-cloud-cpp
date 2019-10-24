@@ -95,9 +95,9 @@ RUN ldconfig
 # - When using CMake, only the version compiled with the same CMAKE_BUILD_TYPE
 #   as the dependent (gRPC or google-cloud-cpp) works.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
-RUN tar -xf v3.6.1.tar.gz
-WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
+RUN wget -q https://github.com/google/protobuf/archive/v3.9.1.tar.gz
+RUN tar -xf v3.9.1.tar.gz
+WORKDIR /var/tmp/build/protobuf-3.9.1/cmake
 RUN for build_type in "Debug" "Release"; do \
     cmake \
         -DCMAKE_BUILD_TYPE="${build_type}" \
@@ -130,10 +130,10 @@ RUN ldconfig
 # Install gRPC. Note that we use the system's zlib and ssl libraries.
 # For similar reasons to c-ares (see above), we need two install steps.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
-RUN tar -xf v1.19.1.tar.gz
+RUN wget -q https://github.com/grpc/grpc/archive/v1.24.3.tar.gz
+RUN tar -xf v1.24.3.tar.gz
 RUN ls -l
-WORKDIR /var/tmp/build/grpc-1.19.1
+WORKDIR /var/tmp/build/grpc-1.24.3
 RUN ls -l
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
