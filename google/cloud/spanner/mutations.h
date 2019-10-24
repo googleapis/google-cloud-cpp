@@ -88,7 +88,7 @@ class Mutation {
 
 /**
  * An ordered sequence of mutations to pass to `Client::Commit()` or return
- * from the `Client::RunTransaction()` functor.
+ * from the `Client::Commit()` mutator.
  */
 using Mutations = std::vector<Mutation>;
 

@@ -822,7 +822,7 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                             {"MarketingBudget"});
     for (auto row : spanner::StreamOf<std::tuple<std::int64_t>>(read)) {
       // Return the error (as opposed to throwing an exception) because
-      // RunTransaction() only retries on StatusCode::kAborted.
+      // Commit() only retries on StatusCode::kAborted.
       if (!row) return std::move(row).status();
       // We expect at most one result from the `Read()` request. Return
       // the first one.
@@ -833,10 +833,8 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                              "," + std::to_string(album_id) + ")");
   };
 
-  auto commit = spanner::RunTransaction(
-      std::move(client), {},
-      [&get_current_budget](spanner::Client const& client,
-                            spanner::Transaction const& txn)
+  auto commit = client.Commit(
+      [&client, &get_current_budget](spanner::Transaction const& txn)
           -> google::cloud::StatusOr<spanner::Mutations> {
         auto b1 = get_current_budget(client, txn, 1, 1);
         if (!b1) return std::move(b1).status();
@@ -861,10 +859,8 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
 void DmlStandardInsert(google::cloud::spanner::Client client) {
   using google::cloud::StatusOr;
   namespace spanner = google::cloud::spanner;
-  auto commit_result = spanner::RunTransaction(
-      std::move(client), spanner::Transaction::ReadWriteOptions{},
-      [](spanner::Client client,
-         spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+  auto commit_result = client.Commit(
+      [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
         auto insert = client.ExecuteDml(
             std::move(txn),
             spanner::SqlStatement(
@@ -885,10 +881,8 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
 void DmlStandardUpdate(google::cloud::spanner::Client client) {
   using google::cloud::StatusOr;
   namespace spanner = google::cloud::spanner;
-  auto commit_result = spanner::RunTransaction(
-      std::move(client), spanner::Transaction::ReadWriteOptions{},
-      [](spanner::Client client,
-         spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+  auto commit_result = client.Commit(
+      [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
         auto update = client.ExecuteDml(
             std::move(txn),
             spanner::SqlStatement(
@@ -909,17 +903,14 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
 void DmlStandardDelete(google::cloud::spanner::Client client) {
   using google::cloud::StatusOr;
   namespace spanner = google::cloud::spanner;
-  auto commit_result = spanner::RunTransaction(
-      std::move(client), spanner::Transaction::ReadWriteOptions{},
-      [](spanner::Client client,
-         spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
-        auto dele = client.ExecuteDml(
-            std::move(txn),
-            spanner::SqlStatement(
-                "DELETE FROM Singers WHERE FirstName = 'Alice'"));
-        if (!dele) return dele.status();
-        return spanner::Mutations{};
-      });
+  auto commit_result = client.Commit([&client](spanner::Transaction txn)
+                                         -> StatusOr<spanner::Mutations> {
+    auto dele = client.ExecuteDml(
+        std::move(txn),
+        spanner::SqlStatement("DELETE FROM Singers WHERE FirstName = 'Alice'"));
+    if (!dele) return dele.status();
+    return spanner::Mutations{};
+  });
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }

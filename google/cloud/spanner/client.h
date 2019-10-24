@@ -394,7 +394,7 @@ class Client {
    *
    * As with all read-write transactions, the results will not be visible
    * outside of the transaction until it is committed. For that reason, it is
-   * advisable to run this method with `RunTransaction`.
+   * advisable to run this method from a `Commit` mutator.
    *
    * @warning A returned status of OK from this function does not imply that
    *     all the statements were executed successfully. For that, you need to
@@ -413,13 +413,54 @@ class Client {
   /**
    * Commits a read-write transaction.
    *
-   * The commit might return an `ABORTED` error. This can occur at any time;
-   * commonly, the cause is conflicts with concurrent transactions. However, it
-   * can also happen for a variety of other reasons. If `Commit` returns
-   * `ABORTED`, the caller should re-attempt the transaction from the beginning,
-   * re-using the same session.
+   * Calls the @p mutator in the context of a new read-write transaction.
+   * The @p mutator can execute read/write operations using the transaction,
+   * and returns any additional `Mutations` to commit.
    *
-   * @warning It is an error to call `Commit` with a read-only `transaction`.
+   * If the @p mutator returns `StatusCode::kAborted` or the transaction commit
+   * results in an abort, then that transaction is rolled back and the process
+   * repeats (subject to @p rerun_policy and @p backoff_policy), by building a
+   * new transaction and re-running the @p mutator.  The lock priority of the
+   * operation increases after each aborted transaction, meaning that the next
+   * attempt has a slightly better chance of success.
+   *
+   * If the @p mutator and the commit succeed, the `CommitResult` is returned.
+   * Otherwise the error returned by the @p mutator or the commit is returned.
+   *
+   * @param mutator the function called to create mutations
+   * @param rerun_policy controls for how long (or how many times) the mutator
+   *     will be rerun after the transaction aborts.
+   * @param backoff_policy controls how long `Commit` waits between reruns.
+   */
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy);
+
+  /**
+   * Commits a read-write transaction.
+   *
+   * Same as above, but uses the default rerun and backoff policies.
+   *
+   * @param mutator the function called to create mutations
+   */
+  StatusOr<CommitResult> Commit(
+      std::function<StatusOr<Mutations>(Transaction)> const& mutator);
+
+  /**
+   * Commits a read-write transaction.
+   *
+   * The commit might return a `kAborted` error. This can occur at any time;
+   * commonly, the cause is conflicts with concurrent transactions. However,
+   * it can also happen for a variety of other reasons. If `Commit` returns
+   * `kAborted`, the caller may try to reapply the mutations within a new
+   * read-write transaction (which should use the same session to ensure an
+   * increase it lock priority).
+   *
+   * @note Prefer the previous `Commit` overloads if you want to simply reapply
+   *     mutations after a `kAborted` error.
+   *
+   * @warning It is an error to call `Commit` with a read-only transaction.
    *
    * @param transaction The transaction to commit.
    * @param mutations The mutations to be executed when this transaction
@@ -439,7 +480,7 @@ class Client {
    * that includes  one or more `Read`, `ExecuteQuery`, or `ExecuteDml` requests
    * and ultimately decides not to commit.
    *
-   * @warning It is an error to call `Rollback` with a read-only `transaction`.
+   * @warning It is an error to call `Rollback` with a read-only transaction.
    *
    * @param transaction The transaction to roll back.
    *
@@ -485,66 +526,6 @@ class Client {
  */
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& options = ConnectionOptions());
-
-namespace internal {
-/**
- * Execute a function in the context of a read-write transaction, with
- * automatic retries if the transaction commit results in an abort.
- *
- * The caller-provided function will be passed the `Client` argument and a
- * newly created read-write `Transaction`. It should use these objects to
- * issue any `Read()`s, `ExecuteQuery()`s, `ExecuteDml()`s, etc., and return the
- * `Mutation`s to commit, or an error (which causes the transaction to be rolled
- * back).
- *
- * The lock priority of the transaction increases after each prior aborted
- * transaction, meaning that the next attempt has a slightly better chance
- * of success than before.
- *
- * @param client how to contact Cloud Spanner
- * @param opts options for the transaction created by this function
- * @param f the function to call in the transaction.
- * @param retry_policy controls for how long (or how many times) will the
- *     function retry the operation when there is a retryable failure.
- * @param backoff_policy controls how long does the function wait between
- *     retries.
- */
-StatusOr<CommitResult> RunTransactionWithPolicies(
-    Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<StatusOr<Mutations>(Client, Transaction)> const& f,
-    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy);
-
-/// The default rerun policy for RunTransaction()
-std::unique_ptr<TransactionRerunPolicy> DefaultRunTransactionRerunPolicy();
-
-/// The default backoff policy for RunTransaction()
-std::unique_ptr<BackoffPolicy> DefaultRunTransactionBackoffPolicy();
-
-}  // namespace internal
-
-/**
- * Execute a function in the context of a read-write transaction, with
- * automatic retries if the transaction commit results in an abort.
- *
- * The caller-provided function will be passed the `Client` argument and a
- * newly created read-write `Transaction`. It should use these objects to
- * issue any `Read()`s, `ExecuteQuery()`s, `ExecuteDml()`s, etc., and return
- * the `Mutation`s to commit, or an error (which causes the transaction to be
- * rolled back).
- *
- * The lock priority of the transaction increases after each prior aborted
- * transaction, meaning that the next attempt has a slightly better chance
- * of success than before.
- */
-inline StatusOr<CommitResult> RunTransaction(
-    Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<StatusOr<Mutations>(Client, Transaction)> f) {
-  return internal::RunTransactionWithPolicies(
-      std::move(client), opts, std::move(f),
-      internal::DefaultRunTransactionRerunPolicy(),
-      internal::DefaultRunTransactionBackoffPolicy());
-}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

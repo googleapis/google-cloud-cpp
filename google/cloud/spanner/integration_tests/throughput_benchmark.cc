@@ -127,11 +127,9 @@ class InsertSingleRow : public Experiment {
           "Singers", {"SingerId", "FirstName", "LastName"}, key,
           make_string("fname:", key), make_string("lname:", key));
       auto start_txn = std::chrono::steady_clock::now();
-      auto result = RunTransaction(client, {},
-                                   [&m](cloud_spanner::Client const&,
-                                        cloud_spanner::Transaction const&) {
-                                     return cloud_spanner::Mutations{m};
-                                   });
+      auto result = client.Commit([&m](cloud_spanner::Transaction const&) {
+        return cloud_spanner::Mutations{m};
+      });
       samples.push_back(
           {Operation::kInsert, 1, ElapsedTime(start_txn), result.ok()});
 
@@ -185,12 +183,9 @@ class InsertMultipleRows : public Experiment {
       }
       auto start_txn = std::chrono::steady_clock::now();
       auto m = std::move(builder).Build();
-      auto result = cloud_spanner::RunTransaction(
-          client, {},
-          [&m](cloud_spanner::Client const&,
-               cloud_spanner::Transaction const&) {
-            return cloud_spanner::Mutations{m};
-          });
+      auto result = client.Commit([&m](cloud_spanner::Transaction const&) {
+        return cloud_spanner::Mutations{m};
+      });
       samples.push_back(
           {Operation::kInsert, row_count, ElapsedTime(start_txn), result.ok()});
 
@@ -206,7 +201,7 @@ class InsertMultipleRows : public Experiment {
 /// The work of a single thread in the 'InsertSingleRow' experiment.
 class SelectSingleRow : public Experiment {
  public:
-  void SetUpTask(Config const& config, cloud_spanner::Client const& client,
+  void SetUpTask(Config const& config, cloud_spanner::Client client,
                  int task_count, int task_id) {
     auto generator = google::cloud::internal::MakeDefaultPRNG();
     std::uniform_int_distribution<std::int64_t> random_key(0,
@@ -229,11 +224,9 @@ class SelectSingleRow : public Experiment {
       auto m = cloud_spanner::MakeInsertOrUpdateMutation(
           "Singers", {"SingerId", "FirstName", "LastName"}, key,
           make_string("fname:", key), make_string("lname:", key));
-      (void)RunTransaction(client, {},
-                           [&m](cloud_spanner::Client const&,
-                                cloud_spanner::Transaction const&) {
-                             return cloud_spanner::Mutations{m};
-                           });
+      (void)client.Commit([&m](cloud_spanner::Transaction const&) {
+        return cloud_spanner::Mutations{m};
+      });
     }
   }
 

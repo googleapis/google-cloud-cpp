@@ -85,10 +85,8 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
       auto action = static_cast<Action>(random_action(generator));
 
       if (action == kInsert) {
-        auto commit = spanner::RunTransaction(
-            client, {},
-            [key](Client const&,
-                  Transaction const&) -> StatusOr<spanner::Mutations> {
+        auto commit = client.Commit(
+            [key](Transaction const&) -> StatusOr<spanner::Mutations> {
               auto s = std::to_string(key);
               return Mutations{spanner::MakeInsertOrUpdateMutation(
                   "Singers", {"SingerId", "FirstName", "LastName"}, key,
@@ -154,10 +152,8 @@ TEST(ClientStressTest, UpsertAndRead) {
       auto action = static_cast<Action>(random_action(generator));
 
       if (action == kInsert) {
-        auto commit = spanner::RunTransaction(
-            client, {},
-            [key](Client const&,
-                  Transaction const&) -> StatusOr<spanner::Mutations> {
+        auto commit = client.Commit(
+            [key](Transaction const&) -> StatusOr<spanner::Mutations> {
               auto s = std::to_string(key);
               return Mutations{spanner::MakeInsertOrUpdateMutation(
                   "Singers", {"SingerId", "FirstName", "LastName"}, key,

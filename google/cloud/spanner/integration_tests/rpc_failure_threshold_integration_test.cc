@@ -124,9 +124,8 @@ Result RunExperiment(Database const& db, int iterations) {
   int const report = iterations / 5;
   for (int i = 0; i != iterations; ++i) {
     if (i % report == 0) std::cout << '.' << std::flush;
-    auto delete_status = RunTransaction(
-        client, Transaction::ReadWriteOptions{},
-        [&](Client client, Transaction const& txn) -> StatusOr<Mutations> {
+    auto delete_status =
+        client.Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
           auto status = client.ExecuteDml(
               txn, SqlStatement("DELETE FROM Singers WHERE true"));
           if (!status) return std::move(status).status();

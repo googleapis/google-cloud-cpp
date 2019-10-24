@@ -135,6 +135,74 @@ StatusOr<BatchDmlResult> Client::ExecuteBatchDml(
       {std::move(transaction), std::move(statements)});
 }
 
+StatusOr<CommitResult> Client::Commit(
+    std::function<StatusOr<Mutations>(Transaction)> const& mutator,
+    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
+  // The status-code discriminator of TransactionRerunPolicy.
+  using RerunnablePolicy = internal::SafeTransactionRerun;
+
+  for (int rerun = 0;; ++rerun) {
+    // TODO(#472): Make this transaction use the same session each time.
+    Transaction txn = MakeReadWriteTransaction();
+    StatusOr<Mutations> mutations;
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    try {
+#endif
+      mutations = mutator(txn);
+#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    } catch (...) {
+      auto rb_status = Rollback(txn);
+      if (!RerunnablePolicy::IsOk(rb_status)) {
+        GCP_LOG(WARNING) << "Rollback() failure in Client::Commit(): "
+                         << rb_status.message();
+      }
+      throw;
+    }
+#endif
+    auto status = mutations.status();
+    if (RerunnablePolicy::IsOk(status)) {
+      auto result = Commit(txn, *mutations);
+      status = result.status();
+      if (!RerunnablePolicy::IsTransientFailure(status)) {
+        return result;
+      }
+    } else {
+      if (!RerunnablePolicy::IsTransientFailure(status)) {
+        auto rb_status = Rollback(txn);
+        if (!RerunnablePolicy::IsOk(rb_status)) {
+          GCP_LOG(WARNING) << "Rollback() failure in Client::Commit(): "
+                           << rb_status.message();
+        }
+        return status;
+      }
+    }
+    // A transient failure (i.e., kAborted), so consider rerunning.
+    if (!rerun_policy->OnFailure(status)) {
+      return status;  // reruns exhausted
+    }
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+  }
+}
+
+StatusOr<CommitResult> Client::Commit(
+    std::function<StatusOr<Mutations>(Transaction)> const& mutator) {
+  auto const rerun_maximum_duration = std::chrono::minutes(10);
+  auto default_commit_rerun_policy =
+      LimitedTimeTransactionRerunPolicy(rerun_maximum_duration).clone();
+
+  auto const backoff_initial_delay = std::chrono::milliseconds(100);
+  auto const backoff_maximum_delay = std::chrono::minutes(5);
+  auto const backoff_scaling = 2.0;
+  auto default_commit_backoff_policy =
+      ExponentialBackoffPolicy(backoff_initial_delay, backoff_maximum_delay,
+                               backoff_scaling)
+          .clone();
+
+  return Commit(mutator, std::move(default_commit_rerun_policy),
+                std::move(default_commit_backoff_policy));
+}
+
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
                                       Mutations mutations) {
   return conn_->Commit({std::move(transaction), std::move(mutations)});
@@ -155,79 +223,6 @@ std::shared_ptr<Connection> MakeConnection(Database const& db,
   return internal::MakeConnection(db, std::move(stub));
 }
 
-namespace {
-
-StatusOr<CommitResult> RunTransactionImpl(
-    Client& client, Transaction::ReadWriteOptions const& opts,
-    std::function<StatusOr<Mutations>(Client, Transaction)> const& f) {
-  Transaction txn = MakeReadWriteTransaction(opts);
-  StatusOr<Mutations> mutations;
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  try {
-#endif
-    mutations = f(client, txn);
-#if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  } catch (...) {
-    auto status = client.Rollback(txn);
-    if (!status.ok()) {
-      GCP_LOG(WARNING) << "Rollback() failure in RunTransaction(): "
-                       << status.message();
-    }
-    throw;
-  }
-#endif
-  if (!mutations) {
-    auto status = client.Rollback(txn);
-    if (!status.ok()) {
-      GCP_LOG(WARNING) << "Rollback() failure in RunTransaction(): "
-                       << status.message();
-    }
-    return mutations.status();
-  }
-  return client.Commit(txn, *mutations);
-}
-
-}  // namespace
-
-namespace internal {
-
-StatusOr<CommitResult> RunTransactionWithPolicies(
-    Client client, Transaction::ReadWriteOptions const& opts,
-    std::function<StatusOr<Mutations>(Client, Transaction)> const& f,
-    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
-  Status last_status(
-      StatusCode::kFailedPrecondition,
-      "Retry policy should not be exhausted when retry loop starts");
-  char const* reason = "Too many failures in ";
-  while (!rerun_policy->IsExhausted()) {
-    auto result = RunTransactionImpl(client, opts, f);
-    if (result) return result;
-    last_status = std::move(result).status();
-    if (!rerun_policy->OnFailure(last_status)) {
-      if (internal::SafeTransactionRerun::IsPermanentFailure(last_status)) {
-        reason = "Permanent failure in ";
-      }
-      break;
-    }
-    std::this_thread::sleep_for(backoff_policy->OnCompletion());
-  }
-  return internal::RetryLoopError(reason, __func__, last_status);
-}
-
-std::unique_ptr<TransactionRerunPolicy> DefaultRunTransactionRerunPolicy() {
-  return LimitedTimeTransactionRerunPolicy(
-             /*maximum_duration=*/std::chrono::minutes(10))
-      .clone();
-}
-
-std::unique_ptr<BackoffPolicy> DefaultRunTransactionBackoffPolicy() {
-  return ExponentialBackoffPolicy(std::chrono::milliseconds(100),
-                                  std::chrono::minutes(5), 2.0)
-      .clone();
-}
-
-}  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
