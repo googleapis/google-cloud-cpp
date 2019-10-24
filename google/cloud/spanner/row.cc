@@ -27,13 +27,13 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 namespace internal {
-Row MakeRow(std::vector<Value> vector,
+Row MakeRow(std::vector<Value> values,
             std::shared_ptr<const std::vector<std::string>> columns) {
-  return Row(std::move(vector), std::move(columns));
+  return Row(std::move(values), std::move(columns));
 }
 }  // namespace internal
 
-Row MakeRow(std::vector<std::pair<std::string, Value>> pairs) {
+Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs) {
   auto values = std::vector<Value>{};
   auto columns = std::make_shared<std::vector<std::string>>();
   for (auto& p : pairs) {

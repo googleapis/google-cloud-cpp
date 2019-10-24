@@ -41,12 +41,12 @@ StatusOr<std::unique_ptr<ResultSourceInterface>> PartialResultSetSource::Create(
   return {std::move(source)};
 }
 
-StatusOr<optional<Value>> PartialResultSetSource::NextValue() {
+StatusOr<Row> PartialResultSetSource::NextRow() {
   if (finished_) {
-    return optional<Value>();
+    return Row();
   }
 
-  while (values_.empty()) {
+  while (buffer_.empty() || buffer_.size() < columns_->size()) {
     auto status = ReadFromStream();
     if (!status.ok()) {
       return status;
@@ -56,7 +56,10 @@ StatusOr<optional<Value>> PartialResultSetSource::NextValue() {
         return Status(StatusCode::kInternal,
                       "incomplete chunked_value at end of stream");
       }
-      return optional<Value>();
+      if (!buffer_.empty()) {
+        return Status(StatusCode::kInternal, "incomplete row at end of stream");
+      }
+      return Row();
     }
   }
 
@@ -66,11 +69,12 @@ StatusOr<optional<Value>> PartialResultSetSource::NextValue() {
                   "response metadata is missing row type information");
   }
 
-  auto t = fields.Get(field_index_).type();
-  field_index_ = (field_index_ + 1) % fields.size();
-  auto v = std::move(values_.front());
-  values_.pop_front();
-  return {FromProto(std::move(t), std::move(v))};
+  std::vector<Value> values;
+  for (auto const& field : fields) {
+    values.push_back(FromProto(field.type(), std::move(buffer_.front())));
+    buffer_.pop_front();
+  }
+  return internal::MakeRow(std::move(values), columns_);
 }
 
 PartialResultSetSource::~PartialResultSetSource() {
@@ -103,6 +107,12 @@ Status PartialResultSetSource::ReadFromStream() {
       GCP_LOG(WARNING) << "Unexpectedly received two sets of metadata";
     } else {
       metadata_ = std::move(*result_set->mutable_metadata());
+      // Copies the column names into a shared_ptr that will be shared with
+      // every Row object returned from NextRow().
+      columns_ = std::make_shared<std::vector<std::string>>();
+      for (auto const& field : metadata_->row_type().fields()) {
+        columns_->push_back(field.name());
+      }
     }
   }
 
@@ -159,9 +169,9 @@ Status PartialResultSetSource::ReadFromStream() {
     new_values.RemoveLast();
   }
 
-  // Moves all the remaining in new_values to values_
+  // Moves all the remaining in new_values to buffer_
   for (auto& value_proto : new_values) {
-    values_.push_back(std::move(value_proto));
+    buffer_.push_back(std::move(value_proto));
   }
 
   return {};  // OK

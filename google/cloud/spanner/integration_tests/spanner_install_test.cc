@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) try {
   auto reader =
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
 
-  for (auto&& row : reader.Rows<std::tuple<std::string>>()) {
+  for (auto&& row : spanner::StreamOf<std::tuple<std::string>>(reader)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << std::get<0>(*row) << "\n";
   }

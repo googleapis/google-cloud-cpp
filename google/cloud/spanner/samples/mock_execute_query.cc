@@ -59,14 +59,16 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
 
   // Setup the mock source to return some values:
   //! [simulate-streaming-results]
-  EXPECT_CALL(*source, NextValue())
-      .WillOnce(Return(google::cloud::optional<spanner::Value>(1)))
-      .WillOnce(Return(google::cloud::optional<spanner::Value>("Hello World")))
-      .WillOnce(Return(google::cloud::optional<spanner::Value>(2)))
-      .WillOnce(Return(google::cloud::optional<spanner::Value>("Hello World")))
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(
+          spanner::MakeTestRow({{"Id", spanner::Value(1)},
+                                {"Greeting", spanner::Value("Hello World")}})))
+      .WillOnce(Return(
+          spanner::MakeTestRow({{"Id", spanner::Value(2)},
+                                {"Greeting", spanner::Value("Hello World")}})))
       //! [simulate-streaming-results]
       //! [simulate-streaming-end]
-      .WillOnce(Return(google::cloud::optional<spanner::Value>()));
+      .WillOnce(Return(spanner::Row()));
   //! [simulate-streaming-end]
 
   // Create a mock for `spanner::Connection`:
@@ -97,7 +99,7 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
   //! [expected-results]
   int count = 0;
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto row : reader.Rows<RowType>()) {
+  for (auto row : spanner::StreamOf<RowType>(reader)) {
     ASSERT_TRUE(row);
     auto expected_id = ++count;
     EXPECT_EQ(expected_id, std::get<0>(*row));

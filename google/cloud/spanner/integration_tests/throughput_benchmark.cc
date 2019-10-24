@@ -270,7 +270,6 @@ class SelectSingleRow : public Experiment {
 
       auto key = random_key(generator);
       auto start_query = std::chrono::steady_clock::now();
-      using RowType = std::tuple<std::int64_t, std::string, std::string>;
       cloud_spanner::SqlStatement statement(
           R"sql(
         SELECT SingerId, FirstName, LastName
@@ -279,7 +278,7 @@ class SelectSingleRow : public Experiment {
          LIMIT 1)sql",
           {{"key", cloud_spanner::Value(key)}});
       auto reader = client.ExecuteQuery(statement);
-      for (auto& row : reader.Rows<RowType>()) {
+      for (auto& row : reader) {
         samples.push_back(
             {Operation::kSelect, 1, ElapsedTime(start_query), row.ok()});
         break;

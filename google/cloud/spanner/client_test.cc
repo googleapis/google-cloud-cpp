@@ -96,12 +96,10 @@ TEST(ClientTest, ReadSuccess) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
-      .WillOnce(Return(optional<Value>("Steve")))
-      .WillOnce(Return(optional<Value>(12)))
-      .WillOnce(Return(optional<Value>("Ann")))
-      .WillOnce(Return(optional<Value>(42)))
-      .WillOnce(Return(optional<Value>()));
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Steve", 12)))
+      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(Row()));
 
   QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, Read(_)).WillOnce(Return(ByMove(std::move(result_set))));
@@ -115,7 +113,7 @@ TEST(ClientTest, ReadSuccess) {
       RowType("Ann", 42),
   };
   int row_number = 0;
-  for (auto& row : result.Rows<RowType>()) {
+  for (auto& row : StreamOf<RowType>(result)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -140,9 +138,9 @@ TEST(ClientTest, ReadFailure) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
-      .WillOnce(Return(optional<Value>("Steve")))
-      .WillOnce(Return(optional<Value>("Ann")))
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Steve")))
+      .WillOnce(Return(MakeTestRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
   QueryResult result_set(std::move(source));
@@ -151,7 +149,7 @@ TEST(ClientTest, ReadFailure) {
   KeySet keys = KeySet::All();
   auto result = client.Read("table", std::move(keys), {"column1"});
 
-  auto rows = result.Rows<std::tuple<std::string>>();
+  auto rows = StreamOf<std::tuple<std::string>>(result);
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
@@ -188,12 +186,10 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
-      .WillOnce(Return(optional<Value>("Steve")))
-      .WillOnce(Return(optional<Value>(12)))
-      .WillOnce(Return(optional<Value>("Ann")))
-      .WillOnce(Return(optional<Value>(42)))
-      .WillOnce(Return(optional<Value>()));
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Steve", 12)))
+      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(Row()));
 
   QueryResult result_set(std::move(source));
   EXPECT_CALL(*conn, ExecuteQuery(_))
@@ -208,7 +204,7 @@ TEST(ClientTest, ExecuteQuerySuccess) {
       RowType("Ann", 42),
   };
   int row_number = 0;
-  for (auto& row : result.Rows<RowType>()) {
+  for (auto& row : StreamOf<RowType>(result)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -233,9 +229,9 @@ TEST(ClientTest, ExecuteQueryFailure) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
-      .WillOnce(Return(optional<Value>("Steve")))
-      .WillOnce(Return(optional<Value>("Ann")))
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Steve")))
+      .WillOnce(Return(MakeTestRow("Ann")))
       .WillOnce(Return(Status(StatusCode::kDeadlineExceeded, "deadline!")));
 
   QueryResult result_set(std::move(source));
@@ -245,7 +241,7 @@ TEST(ClientTest, ExecuteQueryFailure) {
   KeySet keys = KeySet::All();
   auto result = client.ExecuteQuery(SqlStatement("select * from table;"));
 
-  auto rows = result.Rows<std::tuple<std::string>>();
+  auto rows = StreamOf<std::tuple<std::string>>(result);
   auto iter = rows.begin();
   EXPECT_NE(iter, rows.end());
   EXPECT_STATUS_OK(*iter);
@@ -319,7 +315,7 @@ TEST(ClientTest, ExecutePartitionedDml_Success) {
   auto source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata metadata;
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue()).WillRepeatedly(Return(optional<Value>()));
+  EXPECT_CALL(*source, NextRow()).WillRepeatedly(Return(Row()));
 
   std::string const sql_statement = "UPDATE Singers SET MarketingBudget = 1000";
   auto conn = std::make_shared<MockConnection>();
@@ -420,9 +416,9 @@ TEST(ClientTest, RunTransactionCommit) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
-      .WillOnce(Return(optional<Value>("Bob")))
-      .WillOnce(Return(optional<Value>()));
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Bob")))
+      .WillOnce(Return(Row()));
   QueryResult result_set(std::move(source));
 
   EXPECT_CALL(*conn, Read(_))
@@ -435,7 +431,7 @@ TEST(ClientTest, RunTransactionCommit) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<std::tuple<std::string>>()) {
+    for (auto& row : StreamOf<std::tuple<std::string>>(read)) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -470,7 +466,7 @@ TEST(ClientTest, RunTransactionRollback) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
+  EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
   QueryResult result_set(std::move(source));
 
@@ -482,7 +478,7 @@ TEST(ClientTest, RunTransactionRollback) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<std::tuple<std::string>>()) {
+    for (auto& row : read) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -517,7 +513,7 @@ TEST(ClientTest, RunTransactionRollbackError) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
+  EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
   QueryResult result_set(std::move(source));
 
@@ -530,7 +526,7 @@ TEST(ClientTest, RunTransactionRollbackError) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<std::tuple<std::string>>()) {
+    for (auto& row : read) {
       if (!row) return row.status();
     }
     return Mutations{mutation};
@@ -564,7 +560,7 @@ TEST(ClientTest, RunTransactionException) {
       )pb",
       &metadata));
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
-  EXPECT_CALL(*source, NextValue())
+  EXPECT_CALL(*source, NextRow())
       .WillOnce(Return(Status(StatusCode::kInvalidArgument, "blah")));
   QueryResult result_set(std::move(source));
 
@@ -574,7 +570,7 @@ TEST(ClientTest, RunTransactionException) {
   auto mutation = MakeDeleteMutation("table", KeySet::All());
   auto f = [&mutation](Client client, Transaction txn) -> StatusOr<Mutations> {
     auto read = client.Read(std::move(txn), "T", KeySet::All(), {"C"});
-    for (auto& row : read.Rows<std::tuple<std::string>>()) {
+    for (auto& row : read) {
       if (!row) throw "Read() error";
     }
     return Mutations{mutation};

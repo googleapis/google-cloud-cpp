@@ -72,7 +72,7 @@ Row MakeRow(std::vector<Value>,
  * }
  * @endcode
  *
- * @note There is a helper function defined below named `MakeRow()` to make
+ * @note There is a helper function defined below named `MakeTestRow()` to make
  *     creating `Row` instances for testing easier.
  */
 class Row {
@@ -195,19 +195,37 @@ class Row {
 };
 
 /**
- * Creates a `Row` instance with the given column names and values.
+ * Creates a `Row` with the specified column names and values.
  *
- * This function is mostly convenient for creating `Row` instances for testing.
+ * This overload accepts a vector of pairs, allowing the caller to specify both
+ * the column names and the `Value` that goes in each column.
  *
- * @par Example
- *
- * @code
- * Row row = MakeRow({{"a", Value(1)}, {"b", Value("hi")}});
- * assert(row.size() == 2);
- * assert("hi" == *row.get<std::string>("b"));
- * @endcode
+ * This function is intended for application developers who are mocking the
+ * results of a `Client::ExecuteQuery` call.
  */
-Row MakeRow(std::vector<std::pair<std::string, Value>> pairs);
+Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs);
+
+/**
+ * Creates a `Row` with `Value`s created from the given arguments and with
+ * auto-generated column names.
+ *
+ * This overload accepts a variadic list of arguments that will be used to
+ * create the `Value`s in the row. The column names will be implicitly
+ * generated, the first column being "0", the second "1", and so on,
+ * corresponding to the argument's position.
+ *
+ * This function is intended for application developers who are mocking the
+ * results of a `Client::ExecuteQuery` call.
+ */
+template <typename... Ts>
+Row MakeTestRow(Ts&&... ts) {
+  auto columns = std::make_shared<std::vector<std::string>>();
+  for (std::size_t i = 0; i < sizeof...(ts); ++i) {
+    columns->emplace_back(std::to_string(i));
+  }
+  std::vector<Value> v{Value(std::forward<Ts>(ts))...};
+  return internal::MakeRow(std::move(v), std::move(columns));
+}
 
 /**
  * A `RowStreamIterator` is an [Input Iterator][input-iterator] that returns a
@@ -345,7 +363,7 @@ class TupleStreamIterator {
  private:
   void ParseTuple() {
     if (it_ == end_) return;
-    tup_ = *it_ ? (*it_)->template get<Tuple>() : it_->status();
+    tup_ = *it_ ? std::move(*it_)->template get<Tuple>() : it_->status();
   }
 
   value_type tup_;
@@ -389,14 +407,20 @@ class StreamOf {
    * Creates a `StreamOf<Tuple>` by wrapping the given @p range. The `RowRange`
    * must be a range defined by `RowStreamIterator` objects.
    *
+   * @note ownership of the @p range is not transferred, so it must outlive the
+   * `StreamOf`.
+   *
    * @tparam RowRange must be a range defined by `RowStreamIterator`s.
    */
   template <typename RowRange>
-  explicit StreamOf(RowRange const& range)
-      : begin_(std::begin(range), std::end(range)) {
+  explicit StreamOf(RowRange&& range)
+      : begin_(std::begin(std::forward<RowRange>(range)),
+               std::end(std::forward<RowRange>(range))) {
     using T = decltype(std::begin(range));
     static_assert(std::is_same<RowStreamIterator, T>::value,
                   "StreamOf must be given a RowStreamIterator range.");
+    static_assert(std::is_lvalue_reference<decltype(range)>::value,
+                  "range must be an lvalue since it must outlive StreamOf");
   }
 
   iterator begin() const { return begin_; }

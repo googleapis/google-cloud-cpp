@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RESULTS_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RESULTS_H_
 
-#include "google/cloud/spanner/row_parser.h"
+#include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/optional.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -40,18 +40,27 @@ namespace internal {
 class ResultSourceInterface {
  public:
   virtual ~ResultSourceInterface() = default;
-  // Returns OK Status with no Value to indicate end-of-stream.
-  virtual StatusOr<optional<Value>> NextValue() = 0;
+  // Returns OK Status with an empty Row to indicate end-of-stream.
+  virtual StatusOr<Row> NextRow() = 0;
   virtual optional<google::spanner::v1::ResultSetMetadata> Metadata() = 0;
   virtual optional<google::spanner::v1::ResultSetStats> Stats() const = 0;
 };
 }  // namespace internal
 
 /**
- * Represents the result of a read operation using `spanner::Client::Read()`.
+ * Represents the result of a read operation using `spanner::Client::Read()` or
+ * `spanner::Client::ExecuteQuery()`.
  *
- * Note that a `QueryResult` returns the data for the operation, as a
- * single-pass, input range returned by `Rows()`.
+ * A `QueryResult` object is itself a range defined by the [Input
+ * Iterators][input-iterator] returned from `begin()` and `end(). Callers may
+ * directly iterate a `QueryResult` instance, which will return a sequence of
+ * `StatusOr<Row>` objects.
+ *
+ * For convenience, callers may wrap the `QueryResult` instance in a
+ * `StreamOf<std::tuple<...>>` object, which will automatically parse each
+ * `Row` into a `std::tuple` with the specified types.
+ *
+ * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */
 class QueryResult {
  public:
@@ -63,26 +72,18 @@ class QueryResult {
   QueryResult(QueryResult&&) = default;
   QueryResult& operator=(QueryResult&&) = default;
 
-  /**
-   * Returns a `RowParser` which can be used to iterate the returned
-   * `std::tuple`s.
-   *
-   * Since there is a single result stream for each `QueryResult` instance,
-   * users should not use multiple `RowParser`s from the same `QueryResult` at
-   * the same time. Doing so is not thread safe, and may result in errors or
-   * data corruption.
-   */
-  template <typename RowType>
-  RowParser<RowType> Rows() {
-    return RowParser<RowType>(
-        [this]() mutable { return source_->NextValue(); });
+  /// Returns a `RowStreamIterator` defining the beginning of this result set.
+  RowStreamIterator begin() {
+    return RowStreamIterator([this]() mutable { return source_->NextRow(); });
   }
 
+  /// Returns a `RowStreamIterator` defining the end of this result set.
+  RowStreamIterator end() { return {}; }
+
   /**
-   * Retrieve the timestamp at which the read occurred.
+   * Retrieves the timestamp at which the read occurred.
    *
-   * Only available if a read-only transaction was used, and the timestamp
-   * was requested by setting `return_read_timestamp` true.
+   * @note Only available if a read-only transaction was used.
    */
   optional<Timestamp> ReadTimestamp() const;
 
@@ -98,7 +99,7 @@ class QueryResult {
  * `INSERT`, `UPDATE`, or `DELETE`.
  *
  * @note `ExecuteDmlResult` returns the number of rows modified, query plan
- * (if requested), and execution statistics (if requested).
+ *     (if requested), and execution statistics (if requested).
  */
 class DmlResult {
  public:
@@ -114,7 +115,7 @@ class DmlResult {
    * Returns the number of rows modified by the DML statement.
    *
    * @note Partitioned DML only provides a lower bound of the rows modified, all
-   * other DML statements provide an exact count.
+   *     other DML statements provide an exact count.
    */
   std::int64_t RowsModified() const;
 
@@ -133,26 +134,18 @@ class ProfileQueryResult {
   ProfileQueryResult(ProfileQueryResult&&) = default;
   ProfileQueryResult& operator=(ProfileQueryResult&&) = default;
 
-  /**
-   * Returns a `RowParser` which can be used to iterate the returned
-   * `std::tuple`s.
-   *
-   * Since there is a single result stream for each `ProfileQueryResult`
-   * instance, users should not use multiple `RowParser`s from the same
-   * `ProfileQueryResult` at the same time. Doing so is not thread safe, and may
-   * result in errors or data corruption.
-   */
-  template <typename RowType>
-  RowParser<RowType> Rows() {
-    return RowParser<RowType>(
-        [this]() mutable { return source_->NextValue(); });
+  /// Returns a `RowStreamIterator` defining the beginning of this result set.
+  RowStreamIterator begin() {
+    return RowStreamIterator([this]() mutable { return source_->NextRow(); });
   }
 
+  /// Returns a `RowStreamIterator` defining the end of this result set.
+  RowStreamIterator end() { return {}; }
+
   /**
-   * Retrieve the timestamp at which the read occurred.
+   * Retrieves the timestamp at which the read occurred.
    *
-   * Only available if a read-only transaction was used, and the timestamp
-   * was requested by setting `return_read_timestamp` true.
+   * @note Only available if a read-only transaction was used.
    */
   optional<Timestamp> ReadTimestamp() const;
 
@@ -161,7 +154,7 @@ class ProfileQueryResult {
    * execution.
    *
    * @note Only available when the statement is executed and all results have
-   * been read.
+   *     been read.
    */
   optional<std::unordered_map<std::string, std::string>> ExecutionStats() const;
 

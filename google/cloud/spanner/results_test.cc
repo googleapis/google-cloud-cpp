@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
@@ -41,11 +42,11 @@ using ::testing::UnorderedPointwise;
 
 TEST(QueryResult, IterateNoRows) {
   auto mock_source = make_unique<MockResultSetSource>();
-  EXPECT_CALL(*mock_source, NextValue()).WillOnce(Return(optional<Value>()));
+  EXPECT_CALL(*mock_source, NextRow()).WillOnce(Return(Row()));
 
   QueryResult result_set(std::move(mock_source));
   int num_rows = 0;
-  for (auto const& row : result_set.Rows<std::tuple<bool>>()) {
+  for (auto const& row : result_set) {
     static_cast<void>(row);
     ++num_rows;
   }
@@ -54,19 +55,15 @@ TEST(QueryResult, IterateNoRows) {
 
 TEST(QueryResult, IterateOverRows) {
   auto mock_source = make_unique<MockResultSetSource>();
-  EXPECT_CALL(*mock_source, NextValue())
-      .WillOnce(Return(optional<Value>(5)))
-      .WillOnce(Return(optional<Value>(true)))
-      .WillOnce(Return(optional<Value>("foo")))
-      .WillOnce(Return(optional<Value>(10)))
-      .WillOnce(Return(optional<Value>(false)))
-      .WillOnce(Return(optional<Value>("bar")))
-      .WillOnce(Return(optional<Value>()));
+  EXPECT_CALL(*mock_source, NextRow())
+      .WillOnce(Return(MakeTestRow(5, true, "foo")))
+      .WillOnce(Return(MakeTestRow(10, false, "bar")))
+      .WillOnce(Return(Row()));
 
   QueryResult result_set(std::move(mock_source));
   int num_rows = 0;
   for (auto const& row :
-       result_set.Rows<std::tuple<std::int64_t, bool, std::string>>()) {
+       StreamOf<std::tuple<std::int64_t, bool, std::string>>(result_set)) {
     EXPECT_TRUE(row.ok());
     switch (num_rows++) {
       case 0:
@@ -91,17 +88,15 @@ TEST(QueryResult, IterateOverRows) {
 
 TEST(QueryResult, IterateError) {
   auto mock_source = make_unique<MockResultSetSource>();
-  EXPECT_CALL(*mock_source, NextValue())
-      .WillOnce(Return(optional<Value>(5)))
-      .WillOnce(Return(optional<Value>(true)))
-      .WillOnce(Return(optional<Value>("foo")))
-      .WillOnce(Return(optional<Value>(10)))
+  EXPECT_CALL(*mock_source, NextRow())
+      .WillOnce(Return(MakeTestRow(5, true, "foo")))
       .WillOnce(Return(Status(StatusCode::kUnknown, "oops")));
 
   QueryResult result_set(std::move(mock_source));
+
   int num_rows = 0;
   for (auto const& row :
-       result_set.Rows<std::tuple<std::int64_t, bool, std::string>>()) {
+       StreamOf<std::tuple<std::int64_t, bool, std::string>>(result_set)) {
     switch (num_rows++) {
       case 0:
         EXPECT_TRUE(row.ok());

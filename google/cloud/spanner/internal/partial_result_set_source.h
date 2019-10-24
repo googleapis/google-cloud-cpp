@@ -46,7 +46,7 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
 
   ~PartialResultSetSource() override;
 
-  StatusOr<optional<Value>> NextValue() override;
+  StatusOr<Row> NextRow() override;
 
   optional<google::spanner::v1::ResultSetMetadata> Metadata() override {
     return metadata_;
@@ -66,9 +66,9 @@ class PartialResultSetSource : public internal::ResultSourceInterface {
   std::unique_ptr<PartialResultSetReader> reader_;
   optional<google::spanner::v1::ResultSetMetadata> metadata_;
   optional<google::spanner::v1::ResultSetStats> stats_;
-  std::deque<google::protobuf::Value> values_;
+  std::deque<google::protobuf::Value> buffer_;
   optional<google::protobuf::Value> chunk_;
-  int field_index_ = 0;
+  std::shared_ptr<std::vector<std::string>> columns_;
   bool finished_ = false;
 };
 
