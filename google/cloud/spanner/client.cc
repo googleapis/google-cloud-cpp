@@ -86,7 +86,7 @@ RowStream Client::ExecuteQuery(Transaction transaction,
 }
 
 RowStream Client::ExecuteQuery(QueryPartition const& partition) {
-  return conn_->ExecuteQuery(internal::MakeExecuteSqlParams(partition));
+  return conn_->ExecuteQuery(internal::MakeSqlParams(partition));
 }
 
 ProfileQueryResult Client::ProfileQuery(SqlStatement statement) {

@@ -60,8 +60,7 @@ QueryPartition MakeQueryPartition(std::string const& transaction_id,
                                   std::string const& session_id,
                                   std::string const& partition_token,
                                   SqlStatement const& sql_statement);
-Connection::ExecuteSqlParams MakeExecuteSqlParams(
-    QueryPartition const& query_partition);
+Connection::SqlParams MakeSqlParams(QueryPartition const& query_partition);
 }  // namespace internal
 
 /**
@@ -106,7 +105,7 @@ class QueryPartition {
   friend QueryPartition internal::MakeQueryPartition(
       std::string const& transaction_id, std::string const& session_id,
       std::string const& partition_token, SqlStatement const& sql_statement);
-  friend Connection::ExecuteSqlParams internal::MakeExecuteSqlParams(
+  friend Connection::SqlParams internal::MakeSqlParams(
       QueryPartition const& query_partition);
   friend StatusOr<std::string> SerializeQueryPartition(
       QueryPartition const& query_partition);

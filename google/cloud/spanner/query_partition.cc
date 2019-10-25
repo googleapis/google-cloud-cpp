@@ -96,8 +96,7 @@ QueryPartition MakeQueryPartition(std::string const& transaction_id,
                         sql_statement);
 }
 
-Connection::ExecuteSqlParams MakeExecuteSqlParams(
-    QueryPartition const& query_partition) {
+Connection::SqlParams MakeSqlParams(QueryPartition const& query_partition) {
   return {internal::MakeTransactionFromIds(query_partition.session_id(),
                                            query_partition.transaction_id()),
           query_partition.sql_statement(), query_partition.partition_token()};

@@ -79,7 +79,7 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
   // Setup the connection mock to return the results previously setup:
   //! [mock-execute-query]
   EXPECT_CALL(*conn, ExecuteQuery(_))
-      .WillOnce([&source](spanner::Connection::ExecuteSqlParams const&)
+      .WillOnce([&source](spanner::Connection::SqlParams const&)
                     -> spanner::RowStream {
         return spanner::RowStream(std::move(source));
       });
