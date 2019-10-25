@@ -17,7 +17,6 @@
 find_package(googleapis)
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
-find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 1)
@@ -206,6 +205,8 @@ create_bazel_config(bigtable_client)
 google_cloud_cpp_add_clang_tidy(bigtable_client)
 
 if (BUILD_TESTING)
+    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
     add_library(
         bigtable_client_testing
         testing/embedded_server_test_fixture.h
