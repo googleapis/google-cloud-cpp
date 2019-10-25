@@ -229,6 +229,17 @@ class Client {
    * or neither, in which case a single-use transaction with default options
    * is used.
    *
+   * `SELECT * ...` queries are supported, but there's no guarantee about the
+   * order, nor number, of returned columns. Therefore, the caller must look up
+   * the wanted values in each row by column name. When the desired column
+   * names are known in advance, it is better to list them explicitly in the
+   * query's SELECT statement, so that unnecessary values are not
+   * returned/ignored, and the column order is known. This enables more
+   * efficient and simpler code.
+   *
+   * @par Example
+   * @snippet samples.cc spanner-query-data-select-star
+   *
    * @param statement The SQL statement to execute.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no

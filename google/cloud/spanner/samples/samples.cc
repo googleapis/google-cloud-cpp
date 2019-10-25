@@ -959,6 +959,67 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
 }
 //! [END spanner_write_data_for_struct_queries]
 
+//! [START spanner_query_data]
+void QueryData(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  spanner::SqlStatement select("SELECT SingerId, LastName FROM Singers");
+  using RowType = std::tuple<std::int64_t, std::string>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row) << "\t";
+    std::cout << "LastName: " << std::get<1>(*row) << "\n";
+  }
+
+  std::cout << "Query completed for [spanner_query_data]\n";
+}
+//! [END spanner_query_data]
+
+//! [spanner-query-data-select-star]
+void QueryDataSelectStar(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  // With a "SELECT *" query, we don't know the order in which the columns will
+  // be returned (nor the number of columns). Therefore, we look up each value
+  // based on the column name rather than its position.
+  spanner::SqlStatement select_star("SELECT * FROM Singers");
+  auto rows = client.ExecuteQuery(std::move(select_star));
+  for (auto const& row : rows) {
+    if (!row) throw std::runtime_error(row.status().message());
+
+    if (auto singer_id = row->get<std::int64_t>("SingerId")) {
+      std::cout << "SingerId: " << *singer_id << "\t";
+    } else {
+      std::cerr << singer_id.status();
+    }
+
+    if (auto last_name = row->get<std::string>("LastName")) {
+      std::cout << "LastName: " << *last_name;
+    } else {
+      std::cerr << last_name.status();
+    }
+    std::cout << "\n";
+  }
+
+  // However, if we can avoid "SELECT *" and instead enumerate the exact
+  // columns we care about in the query, it's more efficient because unwanted
+  // values aren't returned, and we can use `StreamOf<std::tuple<...>>` to
+  // automatically parse each row into the specified `std::tuple`, thus
+  // removing error paths and simplifying the code.
+  spanner::SqlStatement select("SELECT SingerId, LastName FROM Singers");
+  using RowType = std::tuple<std::int64_t, std::string>;
+  rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row) << "\t";
+    std::cout << "LastName: " << std::get<1>(*row) << "\n";
+  }
+
+  std::cout << "Query completed for [spanner_query_data_select_star]\n";
+}
+//! [spanner-query-data-select-star]
+
 //! [START spanner_query_data_with_struct]
 void QueryDataWithStruct(google::cloud::spanner::Client client) {
   //! [spanner-sql-statement-params] [START spanner_create_struct_with_data]
@@ -1240,6 +1301,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("dml-partitioned-delete", &DmlPartitionedDelete),
       make_command_entry("write-data-for-struct-queries",
                          &WriteDataForStructQueries),
+      make_command_entry("query-data", &QueryData),
+      make_command_entry("query-data-select-star", &QueryDataSelectStar),
       make_command_entry("query-data-with-struct", &QueryDataWithStruct),
       make_command_entry("query-data-with-array-of-struct",
                          &QueryDataWithArrayOfStruct),
@@ -1424,6 +1487,12 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_write_data_for_struct_queries sample\n";
   WriteDataForStructQueries(client);
+
+  std::cout << "\nRunning spanner_query_data sample\n";
+  QueryData(client);
+
+  std::cout << "\nRunning spanner_query_data_select_star sample\n";
+  QueryDataSelectStar(client);
 
   std::cout << "\nRunning spanner_query_data_with_struct sample\n";
   QueryDataWithStruct(client);
