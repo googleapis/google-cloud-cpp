@@ -437,7 +437,7 @@ directories, there are multiple ways to solve this problem, the following
 steps are one solution:
 
 ```bash
-(echo "/usr/local/lib" ; "/usr/local/lib64") | \
+(echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
 sudo tee /etc/ld.so.conf.d/usrlocal.conf
 ```
 
