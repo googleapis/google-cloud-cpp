@@ -311,7 +311,7 @@ TEST(RowStreamIterator, RangeForLoop) {
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
-  for (auto row : range) {
+  for (auto const& row : range) {
     EXPECT_STATUS_OK(row);
     auto num = row->get<std::int64_t>("num");
     EXPECT_STATUS_OK(num);
@@ -450,7 +450,7 @@ TEST(StreamOf, RangeForLoop) {
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
-  for (auto row : StreamOf<RowType>(range)) {
+  for (auto const& row : StreamOf<RowType>(range)) {
     EXPECT_STATUS_OK(row);
     product *= std::get<0>(*row);
   }

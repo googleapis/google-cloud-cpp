@@ -66,7 +66,7 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
   std::vector<std::string> instance_config_names = [client,
                                                     project_id]() mutable {
     std::vector<std::string> names;
-    for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+    for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
       if (!instance_config) break;
       names.push_back(instance_config->name());
     }
@@ -161,7 +161,7 @@ void DeleteInstanceCommand(std::vector<std::string> const& argv) {
 void ListInstanceConfigs(google::cloud::spanner::InstanceAdminClient client,
                          std::string const& project_id) {
   int count = 0;
-  for (auto instance_config : client.ListInstanceConfigs(project_id)) {
+  for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
     if (!instance_config) {
       throw std::runtime_error(instance_config.status().message());
     }
@@ -214,7 +214,7 @@ void GetInstanceConfigCommand(std::vector<std::string> const& argv) {
 void ListInstances(google::cloud::spanner::InstanceAdminClient client,
                    std::string const& project_id) {
   int count = 0;
-  for (auto instance : client.ListInstances(project_id, "")) {
+  for (auto const& instance : client.ListInstances(project_id, "")) {
     if (!instance) throw std::runtime_error(instance.status().message());
     ++count;
     std::cout << "Instance [" << count << "]:\n"
@@ -505,7 +505,7 @@ void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
                    std::string const& instance_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   int count = 0;
-  for (auto database : client.ListDatabases(in)) {
+  for (auto const& database : client.ListDatabases(in)) {
     if (!database) throw std::runtime_error(database.status().message());
     std::cout << "Database " << database->name() << " full metadata:\n"
               << database->DebugString() << "\n";
@@ -672,7 +672,7 @@ void Quickstart(std::string const& project_id, std::string const& instance_id,
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
 
   using RowType = std::tuple<std::string>;
-  for (auto row : spanner::StreamOf<RowType>(reader)) {
+  for (auto const& row : spanner::StreamOf<RowType>(reader)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << std::get<0>(*row) << "\n";
   }
@@ -784,7 +784,7 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   // Read#1.
   auto rows1 = client.ExecuteQuery(read_only, select);
   std::cout << "Read 1 results\n";
-  for (auto row : spanner::StreamOf<RowType>(rows1)) {
+  for (auto const& row : spanner::StreamOf<RowType>(rows1)) {
     if (!row) {
       throw std::runtime_error(row.status().message());
     }
@@ -796,7 +796,7 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   // that Read #1 and Read #2 return the same data.
   auto rows2 = client.ExecuteQuery(read_only, select);
   std::cout << "Read 2 results\n";
-  for (auto row : spanner::StreamOf<RowType>(rows2)) {
+  for (auto const& row : spanner::StreamOf<RowType>(rows2)) {
     if (!row) {
       throw std::runtime_error(row.status().message());
     }
@@ -820,13 +820,13 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(singer_id, album_id));
     auto rows = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
-    for (auto row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+    for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
       // Return the error (as opposed to throwing an exception) because
       // Commit() only retries on StatusCode::kAborted.
       if (!row) return std::move(row).status();
       // We expect at most one result from the `Read()` request. Return
       // the first one.
-      return std::get<0>(*row);
+      return std::get<0>(*std::move(row));
     }
     // Throw an exception because this should terminate the transaction.
     throw std::runtime_error("Key not found (" + std::to_string(singer_id) +
@@ -970,7 +970,7 @@ void QueryDataWithStruct(google::cloud::spanner::Client client) {
       {{"name", spanner::Value(singer_info)}}));
   //! [spanner-sql-statement-params]
 
-  for (auto row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+  for (auto const& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row) << "\n";
   }
@@ -1004,7 +1004,7 @@ void QueryDataWithArrayOfStruct(google::cloud::spanner::Client client) {
       "    IN UNNEST(@names)",
       {{"names", spanner::Value(singer_info)}}));
 
-  for (auto row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+  for (auto const& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row) << "\n";
   }
@@ -1027,7 +1027,7 @@ void FieldAccessOnStructParameters(google::cloud::spanner::Client client) {
       "SELECT SingerId FROM Singers WHERE FirstName = @name.FirstName",
       {{"name", spanner::Value(name)}}));
 
-  for (auto row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+  for (auto const& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row) << "\n";
   }
@@ -1063,7 +1063,7 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
       {{"songinfo", spanner::Value(songinfo)}}));
 
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto row : spanner::StreamOf<RowType>(rows)) {
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row)
               << " SongName: " << std::get<1>(*row) << "\n";

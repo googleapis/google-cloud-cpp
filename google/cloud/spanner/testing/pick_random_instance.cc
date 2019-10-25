@@ -33,7 +33,7 @@ StatusOr<std::string> PickRandomInstance(
    * "test-instance-" here for isolation.
    */
   std::vector<std::string> instance_ids;
-  for (auto instance : client.ListInstances(project_id, "")) {
+  for (auto& instance : client.ListInstances(project_id, "")) {
     if (!instance) return std::move(instance).status();
     auto name = instance->name();
     std::string const sep = "/instances/";

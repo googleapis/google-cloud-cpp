@@ -382,7 +382,8 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
 
   auto conn = MakeTestConnection(mock);
   std::vector<std::string> actual_names;
-  for (auto instance_config : conn->ListInstanceConfigs({"test-project"})) {
+  for (auto const& instance_config :
+       conn->ListInstanceConfigs({"test-project"})) {
     ASSERT_STATUS_OK(instance_config);
     actual_names.push_back(instance_config->name());
   }
@@ -452,7 +453,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_Success) {
 
   auto conn = MakeTestConnection(mock);
   std::vector<std::string> actual_names;
-  for (auto instance :
+  for (auto const& instance :
        conn->ListInstances({"test-project", "labels.test-key:test-value"})) {
     ASSERT_STATUS_OK(instance);
     actual_names.push_back(instance->name());

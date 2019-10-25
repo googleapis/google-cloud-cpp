@@ -380,7 +380,7 @@ class TupleStreamIterator {
  * @code
  * auto row_range = ...
  * using RowType = std::tuple<std::int64_t, std::string, bool>;
- * for (auto row : StreamOf<RowType>(row_range)) {
+ * for (auto const& row : StreamOf<RowType>(row_range)) {
  *   if (!row) {
  *     // Handle error;
  *   }

@@ -99,7 +99,7 @@ TEST(MockSpannerClient, SuccessfulExecuteQuery) {
   //! [expected-results]
   int count = 0;
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto row : spanner::StreamOf<RowType>(rows)) {
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     ASSERT_TRUE(row);
     auto expected_id = ++count;
     EXPECT_EQ(expected_id, std::get<0>(*row));

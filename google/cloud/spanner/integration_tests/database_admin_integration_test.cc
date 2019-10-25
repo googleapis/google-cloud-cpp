@@ -60,7 +60,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   // which is nice.
   auto get_current_databases = [&client, in] {
     std::vector<std::string> names;
-    for (auto database : client.ListDatabases(in)) {
+    for (auto const& database : client.ListDatabases(in)) {
       EXPECT_STATUS_OK(database);
       if (!database) return names;
       names.push_back(database->name());

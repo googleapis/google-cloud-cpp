@@ -70,7 +70,7 @@ class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
     // Deletes leaked temporary instances.
     std::vector<std::string> instance_ids = [this]() mutable {
       std::vector<std::string> instance_ids;
-      for (auto instance : client_.ListInstances(project_id_, "")) {
+      for (auto const& instance : client_.ListInstances(project_id_, "")) {
         EXPECT_STATUS_OK(instance);
         if (!instance) break;
         auto name = instance->name();
@@ -116,7 +116,7 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
   std::vector<std::string> instance_names = [this]() mutable {
     std::vector<std::string> names;
-    for (auto instance : client_.ListInstances(project_id_, "")) {
+    for (auto const& instance : client_.ListInstances(project_id_, "")) {
       EXPECT_STATUS_OK(instance);
       if (!instance) break;
       names.push_back(instance->name());
@@ -145,7 +145,8 @@ TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   EXPECT_TRUE(std::regex_match(full_name, m, instance_name_regex_));
   std::vector<std::string> instance_config_names = [this]() mutable {
     std::vector<std::string> names;
-    for (auto instance_config : client_.ListInstanceConfigs(project_id_)) {
+    for (auto const& instance_config :
+         client_.ListInstanceConfigs(project_id_)) {
       EXPECT_STATUS_OK(instance_config);
       if (!instance_config) break;
       names.push_back(instance_config->name());
@@ -193,7 +194,8 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
 
   std::vector<std::string> instance_config_names = [this]() mutable {
     std::vector<std::string> names;
-    for (auto instance_config : client_.ListInstanceConfigs(project_id_)) {
+    for (auto const& instance_config :
+         client_.ListInstanceConfigs(project_id_)) {
       EXPECT_STATUS_OK(instance_config);
       if (!instance_config) break;
       names.push_back(instance_config->name());

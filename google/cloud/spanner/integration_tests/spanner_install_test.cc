@@ -51,7 +51,7 @@ int main(int argc, char* argv[]) try {
     spanner::InstanceAdminClient instance_admin{
         spanner::MakeInstanceAdminConnection()};
     std::vector<std::string> names;
-    for (auto instance : instance_admin.ListInstances(project_id, {})) {
+    for (auto const& instance : instance_admin.ListInstances(project_id, {})) {
       if (!instance) throw std::runtime_error("Error reading instance list");
       auto full_name = instance->name();
       names.push_back(full_name.substr(full_name.rfind('/') + 1));
@@ -110,7 +110,7 @@ int main(int argc, char* argv[]) try {
   auto reader =
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
 
-  for (auto&& row : spanner::StreamOf<std::tuple<std::string>>(reader)) {
+  for (auto const& row : spanner::StreamOf<std::tuple<std::string>>(reader)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << std::get<0>(*row) << "\n";
   }

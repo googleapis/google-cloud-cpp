@@ -102,7 +102,7 @@ TEST(ClientSqlStressTest, UpsertAndSelect) {
                          "   AND SingerId <= @max",
                          {{"min", spanner::Value(key)},
                           {"max", spanner::Value(key + size)}}));
-        for (auto row : rows) {
+        for (auto const& row : rows) {
           result.Update(row.status());
         }
       }
@@ -168,7 +168,7 @@ TEST(ClientStressTest, UpsertAndRead) {
 
         auto rows = client.Read("Singers", range,
                                 {"SingerId", "FirstName", "LastName"});
-        for (auto row : rows) {
+        for (auto const& row : rows) {
           result.Update(row.status());
         }
       }

@@ -377,7 +377,7 @@ TEST(DatabaseAdminClientTest, ListDatabases) {
 
   auto conn = CreateTestingConnection(std::move(mock));
   std::vector<std::string> actual_names;
-  for (auto database : conn->ListDatabases({in})) {
+  for (auto const& database : conn->ListDatabases({in})) {
     ASSERT_STATUS_OK(database);
     actual_names.push_back(database->name());
   }

@@ -257,7 +257,7 @@ TEST_F(ClientIntegrationTest, Commit) {
   std::vector<std::int64_t> ids;
   auto ks = KeySet().AddRange(MakeKeyBoundClosed(100), MakeKeyBoundOpen(200));
   auto rows = client_->Read("Singers", std::move(ks), {"SingerId"});
-  for (auto& row : StreamOf<RowType>(rows)) {
+  for (auto const& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     if (row) ids.push_back(std::get<0>(*row));
   }
@@ -547,7 +547,7 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
   ASSERT_STATUS_OK(read_partitions);
 
   std::vector<std::string> serialized_partitions;
-  for (auto& partition : *read_partitions) {
+  for (auto const& partition : *read_partitions) {
     auto serialized_partition = SerializeReadPartition(partition);
     ASSERT_STATUS_OK(serialized_partition);
     serialized_partitions.push_back(*serialized_partition);
@@ -555,7 +555,7 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
 
   std::vector<std::vector<Value>> actual_rows;
   int partition_number = 0;
-  for (auto& partition : serialized_partitions) {
+  for (auto const& partition : serialized_partitions) {
     int row_number = 0;
     auto deserialized_partition = DeserializeReadPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
@@ -588,7 +588,7 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
   ASSERT_STATUS_OK(query_partitions);
 
   std::vector<std::string> serialized_partitions;
-  for (auto& partition : *query_partitions) {
+  for (auto const& partition : *query_partitions) {
     auto serialized_partition = SerializeQueryPartition(partition);
     ASSERT_STATUS_OK(serialized_partition);
     serialized_partitions.push_back(*serialized_partition);
@@ -596,7 +596,7 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
 
   std::vector<std::vector<Value>> actual_rows;
   int partition_number = 0;
-  for (auto& partition : serialized_partitions) {
+  for (auto const& partition : serialized_partitions) {
     int row_number = 0;
     auto deserialized_partition = DeserializeQueryPartition(partition);
     ASSERT_STATUS_OK(deserialized_partition);
