@@ -66,7 +66,8 @@ generate_dockerfile() {
         "INSTALL_CRC32C_FROM_SOURCE" \
         "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
         "BUILD_AND_TEST_PROJECT_FRAGMENT" \
-    <"${PROJECT_ROOT}/ci/templates/kokoro/install/Dockerfile.${build}.in" \
+    <"${PROJECT_ROOT}/ci/templates/kokoro/install/Dockerfile.${build}.in" | \
+  sed -e "s/Copyright [0-9][0-9][0-9][0-9]/Copyright ${ORIGINAL_COPYRIGHT_YEAR[${build}]}/" \
     >"${target}"
 }
 
