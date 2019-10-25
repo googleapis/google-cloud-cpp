@@ -369,14 +369,13 @@ void CheckReadWithOptions(
       });
   ASSERT_STATUS_OK(commit);
 
-  auto reader =
-      client.Read(options_generator(*commit), "Singers", KeySet::All(),
-                  {"SingerId", "FirstName", "LastName"});
+  auto rows = client.Read(options_generator(*commit), "Singers", KeySet::All(),
+                          {"SingerId", "FirstName", "LastName"});
 
   std::vector<RowValues> actual_rows;
   int row_number = 0;
   for (auto& row :
-       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(reader)) {
+       StreamOf<std::tuple<std::int64_t, std::string, std::string>>(rows)) {
     SCOPED_TRACE("Reading row[" + std::to_string(row_number++) + "]");
     EXPECT_STATUS_OK(row);
     if (!row) break;

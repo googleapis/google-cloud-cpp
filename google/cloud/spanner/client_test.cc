@@ -105,7 +105,7 @@ TEST(ClientTest, ReadSuccess) {
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto result = client.Read("table", std::move(keys), {"column1", "column2"});
+  auto rows = client.Read("table", std::move(keys), {"column1", "column2"});
 
   using RowType = std::tuple<std::string, std::int64_t>;
   auto expected = std::vector<RowType>{
@@ -113,7 +113,7 @@ TEST(ClientTest, ReadSuccess) {
       RowType("Ann", 42),
   };
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(result)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -147,16 +147,16 @@ TEST(ClientTest, ReadFailure) {
       .WillOnce(Return(ByMove(RowStream(std::move(source)))));
 
   KeySet keys = KeySet::All();
-  auto result = client.Read("table", std::move(keys), {"column1"});
+  auto rows = client.Read("table", std::move(keys), {"column1"});
 
-  auto rows = StreamOf<std::tuple<std::string>>(result);
-  auto iter = rows.begin();
-  EXPECT_NE(iter, rows.end());
+  auto tups = StreamOf<std::tuple<std::string>>(rows);
+  auto iter = tups.begin();
+  EXPECT_NE(iter, tups.end());
   EXPECT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Steve");
 
   ++iter;
-  EXPECT_NE(iter, rows.end());
+  EXPECT_NE(iter, tups.end());
   EXPECT_STATUS_OK(*iter);
   EXPECT_EQ(std::get<0>(**iter), "Ann");
 

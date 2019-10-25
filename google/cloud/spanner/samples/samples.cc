@@ -668,11 +668,11 @@ void Quickstart(std::string const& project_id, std::string const& instance_id,
   spanner::Client client(spanner::MakeConnection(
       spanner::Database(project_id, instance_id, database_id)));
 
-  auto reader =
+  auto rows =
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
 
   using RowType = std::tuple<std::string>;
-  for (auto const& row : spanner::StreamOf<RowType>(reader)) {
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << std::get<0>(*row) << "\n";
   }

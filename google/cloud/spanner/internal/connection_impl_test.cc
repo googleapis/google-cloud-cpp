@@ -119,13 +119,13 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
             return Status(StatusCode::kPermissionDenied, "uh-oh in GetSession");
           }));
 
-  auto result =
+  auto rows =
       conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
                   "table",
                   KeySet::All(),
                   {"column1"},
                   ReadOptions()});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
   }
@@ -153,13 +153,13 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
   EXPECT_CALL(*mock, StreamingRead(_, _))
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
-  auto result =
+  auto rows =
       conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
                   "table",
                   KeySet::All(),
                   {"column1"},
                   ReadOptions()});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(),
                 HasSubstr("uh-oh in GrpcReader::Finish"));
@@ -215,7 +215,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
       .WillOnce(Return(ByMove(std::move(reader1))))
       .WillOnce(Return(ByMove(std::move(reader2))));
 
-  auto result =
+  auto rows =
       conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
                   "table",
                   KeySet::All(),
@@ -227,7 +227,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
       RowType(42, "Ann"),
   };
   int row_number = 0;
-  for (auto& row : StreamOf<RowType>(result)) {
+  for (auto& row : StreamOf<RowType>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(*row, expected[row_number]);
     ++row_number;
@@ -256,13 +256,13 @@ TEST(ConnectionImplTest, Read_PermanentFailure) {
   EXPECT_CALL(*mock, StreamingRead(_, _))
       .WillOnce(Return(ByMove(std::move(reader1))));
 
-  auto result =
+  auto rows =
       conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
                   "table",
                   KeySet::All(),
                   {"UserId", "UserName"},
                   ReadOptions()});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh"));
   }
@@ -293,13 +293,13 @@ TEST(ConnectionImplTest, Read_TooManyTransientFailures) {
             return reader;
           }));
 
-  auto result =
+  auto rows =
       conn->Read({MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
                   "table",
                   KeySet::All(),
                   {"UserId", "UserName"},
                   ReadOptions()});
-  for (auto& row : result) {
+  for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kUnavailable, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("try-again"));
   }
@@ -1989,35 +1989,32 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
 
   // Now do the actual reads and verify the results.
   Transaction txn1 = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  auto result =
+  auto rows =
       conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
-  for (auto& row : StreamOf<std::tuple<std::int64_t>>(result)) {
+  for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 0);
   }
 
   Transaction txn2 = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  result =
-      conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
+  rows = conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
-  for (auto& row : StreamOf<std::tuple<std::int64_t>>(result)) {
+  for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 1);
   }
 
-  result =
-      conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
+  rows = conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
-  for (auto& row : StreamOf<std::tuple<std::int64_t>>(result)) {
+  for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 2);
   }
 
-  result =
-      conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
+  rows = conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
-  for (auto& row : StreamOf<std::tuple<std::int64_t>>(result)) {
+  for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 3);
   }
