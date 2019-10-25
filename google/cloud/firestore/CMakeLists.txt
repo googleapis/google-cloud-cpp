@@ -15,7 +15,6 @@
 # ~~~
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
@@ -78,6 +77,8 @@ create_bazel_config(firestore_client)
 google_cloud_cpp_add_clang_tidy(firestore_client)
 
 if (BUILD_TESTING)
+    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
     # List the unit tests, then setup the targets and dependencies.
     set(firestore_client_unit_tests field_path_test.cc)
 

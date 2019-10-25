@@ -71,24 +71,6 @@ RUN cmake \
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 
-# #### googletest
-
-# We need a recent version of GoogleTest to compile the unit and integration
-# tests.
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-RUN tar -xf release-1.10.0.tar.gz
-WORKDIR /var/tmp/build/googletest-release-1.10.0
-RUN cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
-RUN ldconfig
-# ```
-
 # #### google-cloud-cpp-common
 
 WORKDIR /var/tmp/build
@@ -99,7 +81,7 @@ WORKDIR /var/tmp/build/google-cloud-cpp-common-0.13.0
 # libraries
 RUN cmake -H. -Bcmake-out \
     -DBUILD_TESTING=OFF \
-    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=OFF
 RUN cmake --build cmake-out -- -j $(nproc)
 RUN cmake --build cmake-out --target install
 RUN ldconfig

@@ -15,7 +15,6 @@
 # ~~~
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 1)
@@ -279,6 +278,8 @@ create_bazel_config(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
 
 if (BUILD_TESTING)
+    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
     add_library(
         storage_client_testing
         testing/canonical_errors.h
