@@ -382,6 +382,15 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
         libcurl-devel libopenssl-devel make tar wget
 ```
 
+The following steps will install libraries and tools in `/usr/local`. CentOS
+does not search for shared libraries in these directories by default, there
+are multiple ways to solve this problem, the following steps are one solution:
+
+```bash
+(echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
+sudo tee /etc/ld.so.conf.d/usrlocal.conf
+```
+
 #### crc32c
 
 There is no openSUSE package for this library. To install it, use:
@@ -420,6 +429,16 @@ cmake \
         -H. -Bcmake-out
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
 sudo ldconfig
+```
+
+The following steps will install libraries and tools in `/usr/local`.
+By default openSUSE/Leap does not search for shared libraries in these
+directories, there are multiple ways to solve this problem, the following
+steps are one solution:
+
+```bash
+(echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
+sudo tee /etc/ld.so.conf.d/usrlocal.conf
 ```
 
 #### c-ares
@@ -464,7 +483,6 @@ wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 tar -xf v1.19.1.tar.gz
 cd $HOME/Downloads/grpc-1.19.1
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 export PATH=/usr/local/bin:${PATH}
 make -j ${NCPU:-4}
 sudo make install
@@ -519,7 +537,7 @@ libraries
 cmake -H. -Bcmake-out \
     -DBUILD_TESTING=OFF \
     -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
-cmake --build cmake-out -- -j $(nproc)
+cmake --build cmake-out -- -j ${NCPU:-4}
 sudo cmake --build cmake-out --target install
 sudo ldconfig
 ```
@@ -1179,13 +1197,25 @@ distributed with CentOS (notably CMake) are too old to build
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
-rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-sudo yum install -y centos-release-scl
+sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum install -y centos-release-scl yum-utils
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
 sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
         make openssl-devel pkgconfig tar wget which zlib-devel
-ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
+```
+
+The following steps will install libraries and tools in `/usr/local`. By
+default CentOS-7 does not search for shared libraries in these directories,
+there are multiple ways to solve this problem, the following steps are one
+solution:
+
+```bash
+(echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
+sudo tee /etc/ld.so.conf.d/usrlocal.conf
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
+export PATH=/usr/local/bin:${PATH}
 ```
 
 #### crc32c
@@ -1194,17 +1224,17 @@ There is no CentOS package for this library. To install it use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
-tar -xf 1.0.6.tar.gz
-cd $HOME/Downloads/crc32c-1.0.6
-cmake \
+wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz && \
+    tar -xf 1.0.6.tar.gz && \
+    cd crc32c-1.0.6 && \
+    cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -Bcmake-out/crc32c
-sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU:-4}
+      -H. -Bcmake-out/crc32c && \
+sudo cmake --build cmake-out/crc32c --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1214,15 +1244,15 @@ Likewise, manually install protobuf:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
-tar -xf v3.6.1.tar.gz
-cd $HOME/Downloads/protobuf-3.6.1/cmake
-cmake \
+wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz && \
+    tar -xf v3.6.1.tar.gz && \
+    cd protobuf-3.6.1/cmake && \
+    cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+        -H. -Bcmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1233,11 +1263,13 @@ distributes c-ares-1.10. Manually install a newer version:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
-tar -xf cares-1_14_0.tar.gz
-cd $HOME/Downloads/c-ares-cares-1_14_0
-./buildconf && ./configure && make -j ${NCPU:-4}
-sudo make install
+wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
+    tar -xf cares-1_14_0.tar.gz && \
+    cd c-ares-cares-1_14_0 && \
+    ./buildconf && \
+    ./configure && \
+    make -j ${NCPU:-4} && \
+sudo make install && \
 sudo ldconfig
 ```
 
@@ -1247,14 +1279,11 @@ Can be manually installed using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
-tar -xf v1.19.1.tar.gz
-cd $HOME/Downloads/grpc-1.19.1
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
-export PATH=/usr/local/bin:${PATH}
-make -j ${NCPU:-4}
-sudo make install
+wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz && \
+    tar -xf v1.19.1.tar.gz && \
+    cd grpc-1.19.1 && \
+    make -j ${NCPU:-4} && \
+sudo make install && \
 sudo ldconfig
 ```
 
@@ -1264,13 +1293,14 @@ There is no CentOS package for this library. To install it, use:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.5.tar.gz
-tar -xf v0.1.5.tar.gz
-cd $HOME/Downloads/cpp-cmakefiles-0.1.5
-cmake \
-    -DBUILD_SHARED_LIBS=YES \
-    -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.5.tar.gz && \
+    tar -xf v0.1.5.tar.gz && \
+    cd cpp-cmakefiles-0.1.5 && \
+    cmake \
+      -DBUILD_SHARED_LIBS=YES \
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1281,14 +1311,15 @@ tests.
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-tar -xf release-1.10.0.tar.gz
-cd $HOME/Downloads/googletest-release-1.10.0
-cmake \
+wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
+    tar -xf release-1.10.0.tar.gz && \
+    cd googletest-release-1.10.0 && \
+    cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out
-sudo cmake --build cmake-out --target install -- -j ${NCPU:-4}
+      -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
 
@@ -1298,16 +1329,14 @@ We need to install the Google Cloud C++ common libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz
-tar -xf v0.15.0.tar.gz
-cd $HOME/Downloads/google-cloud-cpp-common-0.15.0
-Compile without the tests because we are testing google-cloud-cpp, not the base
-libraries
-cmake -H. -Bcmake-out \
-    -DBUILD_TESTING=OFF \
-    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
-cmake --build cmake-out -- -j $(nproc)
-sudo cmake --build cmake-out --target install
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz && \
+    tar -xf v0.15.0.tar.gz && \
+    cd google-cloud-cpp-common-0.15.0 && \
+    cmake -H. -Bcmake-out \
+      -DBUILD_TESTING=OFF \
+      -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install && \
 sudo ldconfig
 ```
 
