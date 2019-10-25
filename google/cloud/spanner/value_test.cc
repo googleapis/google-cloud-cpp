@@ -165,6 +165,107 @@ TEST(Value, BasicSemantics) {
   }
 }
 
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetString) {
+  using Type = std::string;
+  Type const data = std::string(128, 'x');
+  Value v(data);
+
+  auto s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ("", *s);
+}
+
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetOptoinalString) {
+  using Type = optional<std::string>;
+  Type const data = std::string(128, 'x');
+  Value v(data);
+
+  auto s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(*data, **s);
+
+  s = std::move(v).get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(*data, **s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ("", **s);
+}
+
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetVectorString) {
+  using Type = std::vector<std::string>;
+  Type const data(128, std::string(128, 'x'));
+  Value v(data);
+
+  auto s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(Type(data.size(), ""), *s);
+}
+
+// NOTE: This test relies on unspecified behavior about the moved-from state
+// of std::string. Specifically, this test relies on the fact that "large"
+// strings, when moved-from, end up empty. And we use this fact to verify that
+// spanner::Value::get<T>() correctly handles moves. If this test ever breaks
+// on some platform, we could probably delete this, unless we can think of a
+// better way to test move semantics.
+TEST(Value, RvalueGetStructString) {
+  using Type = std::tuple<std::pair<std::string, std::string>, std::string>;
+  Type data{std::make_pair("name", std::string(128, 'x')),
+            std::string(128, 'x')};
+  Value v(data);
+
+  auto s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  s = std::move(v).get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(data, *s);
+
+  // NOLINTNEXTLINE(bugprone-use-after-move)
+  s = v.get<Type>();
+  EXPECT_STATUS_OK(s);
+  EXPECT_EQ(Type({"name", ""}, ""), *s);
+}
+
 TEST(Value, DoubleNaN) {
   double const nan = std::nan("NaN");
   Value v{nan};

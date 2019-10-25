@@ -275,7 +275,7 @@ class Value {
    * @endcode
    */
   template <typename T>
-  StatusOr<T> get() const {
+  StatusOr<T> get() const& {
     // Ignores the name field because it is never set on the incoming `T`.
     if (!EqualTypeProtoIgnoringNames(type_, MakeTypeProto(T{})))
       return Status(StatusCode::kUnknown, "wrong type");
@@ -284,6 +284,19 @@ class Value {
       return Status(StatusCode::kUnknown, "null value");
     }
     return GetValue(T{}, value_, type_);
+  }
+
+  /// @copydoc get()
+  template <typename T>
+  StatusOr<T> get() && {
+    // Ignores the name field because it is never set on the incoming `T`.
+    if (!EqualTypeProtoIgnoringNames(type_, MakeTypeProto(T{})))
+      return Status(StatusCode::kUnknown, "wrong type");
+    if (value_.kind_case() == google::protobuf::Value::kNullValue) {
+      if (is_optional<T>::value) return T{};
+      return Status(StatusCode::kUnknown, "null value");
+    }
+    return GetValue(T{}, std::move(value_), type_);
   }
 
   /**
@@ -417,7 +430,7 @@ class Value {
   };
 
   // Tag-dispatch overloads to extract a C++ value from a `Value` protobuf. The
-  // first argument type is the tag, the first argument value is ignored.
+  // first argument type is the tag, its value is ignored.
   static StatusOr<bool> GetValue(bool, google::protobuf::Value const&,
                                  google::spanner::v1::Type const&);
   static StatusOr<std::int64_t> GetValue(std::int64_t,
@@ -428,48 +441,50 @@ class Value {
   static StatusOr<std::string> GetValue(std::string const&,
                                         google::protobuf::Value const&,
                                         google::spanner::v1::Type const&);
+  static StatusOr<std::string> GetValue(std::string const&,
+                                        google::protobuf::Value&&,
+                                        google::spanner::v1::Type const&);
   static StatusOr<Bytes> GetValue(Bytes const&, google::protobuf::Value const&,
                                   google::spanner::v1::Type const&);
   static StatusOr<Timestamp> GetValue(Timestamp, google::protobuf::Value const&,
                                       google::spanner::v1::Type const&);
   static StatusOr<Date> GetValue(Date, google::protobuf::Value const&,
                                  google::spanner::v1::Type const&);
-  template <typename T>
-  static StatusOr<optional<T>> GetValue(optional<T> const&,
-                                        google::protobuf::Value const& pv,
+  template <typename T, typename V>
+  static StatusOr<optional<T>> GetValue(optional<T> const&, V&& pv,
                                         google::spanner::v1::Type const& pt) {
     if (pv.kind_case() == google::protobuf::Value::kNullValue) {
       return optional<T>{};
     }
-    auto value = GetValue(T{}, pv, pt);
+    auto value = GetValue(T{}, std::forward<V>(pv), pt);
     if (!value) return std::move(value).status();
     return optional<T>{*std::move(value)};
   }
-  template <typename T>
+  template <typename T, typename V>
   static StatusOr<std::vector<T>> GetValue(
-      std::vector<T> const&, google::protobuf::Value const& pv,
-      google::spanner::v1::Type const& pt) {
+      std::vector<T> const&, V&& pv, google::spanner::v1::Type const& pt) {
     if (pv.kind_case() != google::protobuf::Value::kListValue) {
       return Status(StatusCode::kUnknown, "missing ARRAY");
     }
     std::vector<T> v;
-    for (auto const& e : pv.list_value().values()) {
-      auto value = GetValue(T{}, e, pt.array_element_type());
+    for (int i = 0; i < pv.list_value().values().size(); ++i) {
+      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      using ET = decltype(e);
+      auto value = GetValue(T{}, std::forward<ET>(e), pt.array_element_type());
       if (!value) return std::move(value).status();
       v.push_back(*std::move(value));
     }
     return v;
   }
-  template <typename... Ts>
+  template <typename V, typename... Ts>
   static StatusOr<std::tuple<Ts...>> GetValue(
-      std::tuple<Ts...> const&, google::protobuf::Value const& pv,
-      google::spanner::v1::Type const& pt) {
+      std::tuple<Ts...> const&, V&& pv, google::spanner::v1::Type const& pt) {
     if (pv.kind_case() != google::protobuf::Value::kListValue) {
       return Status(StatusCode::kUnknown, "missing STRUCT");
     }
     std::tuple<Ts...> tup;
     Status status;  // OK
-    ExtractTupleValues f{status, 0, pv.list_value(), pt};
+    ExtractTupleValues<V> f{status, 0, std::forward<V>(pv), pt};
     internal::ForEach(tup, f);
     if (!status.ok()) return status;
     return tup;
@@ -477,14 +492,17 @@ class Value {
 
   // A functor to be used with internal::ForEach (see below) to extract C++
   // types from a ListValue proto and store then in a tuple.
+  template <typename V>
   struct ExtractTupleValues {
     Status& status;
     int i;
-    google::protobuf::ListValue const& list_value;
+    V&& pv;
     google::spanner::v1::Type const& type;
     template <typename T>
     void operator()(T& t) {
-      auto value = GetValue(T{}, list_value.values(i), type);
+      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      using ET = decltype(e);
+      auto value = GetValue(T{}, std::forward<ET>(e), type);
       ++i;
       if (!value) {
         status = std::move(value).status();
@@ -495,7 +513,9 @@ class Value {
     template <typename T>
     void operator()(std::pair<std::string, T>& p) {
       p.first = type.struct_type().fields(i).name();
-      auto value = GetValue(T{}, list_value.values(i), type);
+      auto&& e = GetProtoListValueElement(std::forward<V>(pv), i);
+      using ET = decltype(e);
+      auto value = GetValue(T{}, std::forward<ET>(e), type);
       ++i;
       if (!value) {
         status = std::move(value).status();
@@ -504,6 +524,19 @@ class Value {
       }
     }
   };
+
+  // Protocol buffers are not friendly to generic programming, because they use
+  // different syntax and different names for mutable and non-mutable
+  // functions. To make GetValue(vector<T>, ...) (above) work, we need split
+  // the different protobuf syntaxes into overloaded functions.
+  static google::protobuf::Value const& GetProtoListValueElement(
+      google::protobuf::Value const& pv, int pos) {
+    return pv.list_value().values(pos);
+  }
+  static google::protobuf::Value&& GetProtoListValueElement(
+      google::protobuf::Value&& pv, int pos) {
+    return std::move(*pv.mutable_list_value()->mutable_values(pos));
+  }
 
   static bool EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,
                                           google::spanner::v1::Type const& b);

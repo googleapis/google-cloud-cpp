@@ -287,6 +287,15 @@ StatusOr<std::string> Value::GetValue(std::string const&,
   return pv.string_value();
 }
 
+StatusOr<std::string> Value::GetValue(std::string const&,
+                                      google::protobuf::Value&& pv,
+                                      google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing STRING");
+  }
+  return std::move(*pv.mutable_string_value());
+}
+
 StatusOr<Bytes> Value::GetValue(Bytes const&, google::protobuf::Value const& pv,
                                 google::spanner::v1::Type const&) {
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
