@@ -31,7 +31,7 @@ RUN zypper refresh && \
 # are multiple ways to solve this problem, the following steps are one solution:
 
 # ```bash
-RUN (echo "/usr/local/lib" ; "/usr/local/lib64") | \
+RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
     tee /etc/ld.so.conf.d/usrlocal.conf
 # ```
 
