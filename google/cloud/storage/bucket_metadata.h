@@ -133,8 +133,9 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 /**
  * Configure if only the IAM policies are used for access control.
  *
- * @warning this is a Beta feature of Google Cloud Storage, it is not subject
- *     to the deprecation policy and subject to change without notice.
+ * @warning Uniform Bucket Level Access is currently protected by an access list
+ * and available to all users. Please consult your support team if you intend to
+ * use thi feature.
  *
  * @see Before enabling Uniform Bucket Level Access please
  *     review the [feature documentation][bpo-link], as well as
