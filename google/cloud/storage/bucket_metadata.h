@@ -133,53 +133,55 @@ std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
 /**
  * Configure if only the IAM policies are used for access control.
  *
- * @warning this is a Beta feature of Google Cloud Storage, it is not subject
- *     to the deprecation policy and subject to change without notice.
+ * @warning Uniform Bucket Level Access is currently protected by an access list
+ *     and not available to all users. Please consult your support team if you
+ *     intend to use this feature.
  *
- * @see Before enabling Bucket Policy Only please review the
- *     [feature documentation][bpo-link], as well as
+ * @see Before enabling Uniform Bucket Level Access please
+ *     review the [feature documentation][bpo-link], as well as
  *     ["Should you use Bucket Policy Only?"][bpo-should-link].
  *
  * [bpo-link]: https://cloud.google.com/storage/docs/bucket-policy-only
  * [bpo-should-link]:
  * https://cloud.google.com/storage/docs/bucket-policy-only#should-you-use
  */
-struct BucketPolicyOnly {
+struct UniformBucketLevelAccess {
   bool enabled;
   std::chrono::system_clock::time_point locked_time;
 };
+using BucketPolicyOnly = UniformBucketLevelAccess;
 
 //@{
 /// @name Comparison operators For BucketOnlyPolicy.
-inline bool operator==(BucketPolicyOnly const& lhs,
-                       BucketPolicyOnly const& rhs) {
+inline bool operator==(UniformBucketLevelAccess const& lhs,
+                       UniformBucketLevelAccess const& rhs) {
   return std::tie(lhs.enabled, lhs.locked_time) ==
          std::tie(rhs.enabled, rhs.locked_time);
 }
 
-inline bool operator<(BucketPolicyOnly const& lhs,
-                      BucketPolicyOnly const& rhs) {
+inline bool operator<(UniformBucketLevelAccess const& lhs,
+                      UniformBucketLevelAccess const& rhs) {
   return std::tie(lhs.enabled, lhs.locked_time) <
          std::tie(rhs.enabled, rhs.locked_time);
 }
 
-inline bool operator!=(BucketPolicyOnly const& lhs,
-                       BucketPolicyOnly const& rhs) {
+inline bool operator!=(UniformBucketLevelAccess const& lhs,
+                       UniformBucketLevelAccess const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);
 }
 
-inline bool operator>(BucketPolicyOnly const& lhs,
-                      BucketPolicyOnly const& rhs) {
+inline bool operator>(UniformBucketLevelAccess const& lhs,
+                      UniformBucketLevelAccess const& rhs) {
   return std::rel_ops::operator>(lhs, rhs);
 }
 
-inline bool operator<=(BucketPolicyOnly const& lhs,
-                       BucketPolicyOnly const& rhs) {
+inline bool operator<=(UniformBucketLevelAccess const& lhs,
+                       UniformBucketLevelAccess const& rhs) {
   return std::rel_ops::operator<=(lhs, rhs);
 }
 
-inline bool operator>=(BucketPolicyOnly const& lhs,
-                       BucketPolicyOnly const& rhs) {
+inline bool operator>=(UniformBucketLevelAccess const& lhs,
+                       UniformBucketLevelAccess const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
 }
 //@}
@@ -205,18 +207,19 @@ std::ostream& operator<<(std::ostream& os, BucketPolicyOnly const& rhs);
  */
 struct BucketIamConfiguration {
   google::cloud::optional<BucketPolicyOnly> bucket_policy_only;
+  google::cloud::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
 };
 
 //@{
 /// @name Comparison operators for BucketIamConfiguration.
 inline bool operator==(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
-  return lhs.bucket_policy_only == rhs.bucket_policy_only;
+  return lhs.uniform_bucket_level_access == rhs.uniform_bucket_level_access;
 }
 
 inline bool operator<(BucketIamConfiguration const& lhs,
                       BucketIamConfiguration const& rhs) {
-  return lhs.bucket_policy_only < rhs.bucket_policy_only;
+  return lhs.uniform_bucket_level_access < rhs.uniform_bucket_level_access;
 }
 
 inline bool operator!=(BucketIamConfiguration const& lhs,

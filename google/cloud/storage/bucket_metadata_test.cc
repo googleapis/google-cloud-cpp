@@ -98,6 +98,10 @@ BucketMetadata CreateBucketMetadataForTest() {
       },
       "etag": "XYZ=",
       "iamConfiguration": {
+        "uniformBucketLevelAccess": {
+          "enabled": true,
+          "lockedTime": "2020-01-02T03:04:05Z"
+        },
         "bucketPolicyOnly": {
           "enabled": true,
           "lockedTime": "2020-01-02T03:04:05Z"
@@ -185,6 +189,13 @@ TEST(BucketMetadataTest, Parse) {
       actual.encryption().default_kms_key_name);
   EXPECT_EQ("XYZ=", actual.etag());
   ASSERT_TRUE(actual.has_iam_configuration());
+  ASSERT_TRUE(
+      actual.iam_configuration().uniform_bucket_level_access.has_value());
+  EXPECT_TRUE(actual.iam_configuration().uniform_bucket_level_access->enabled);
+  EXPECT_EQ(
+      "2020-01-02T03:04:05Z",
+      google::cloud::internal::FormatRfc3339(
+          actual.iam_configuration().uniform_bucket_level_access->locked_time));
   ASSERT_TRUE(actual.iam_configuration().bucket_policy_only.has_value());
   EXPECT_TRUE(actual.iam_configuration().bucket_policy_only->enabled);
   EXPECT_EQ("2020-01-02T03:04:05Z",
@@ -382,7 +393,8 @@ TEST(BucketMetadataTest, ToJsonString) {
   // iam_configuration()
   ASSERT_EQ(1U, actual.count("iamConfiguration"));
   internal::nl::json expected_iam_configuration{
-      {"bucketPolicyOnly", internal::nl::json{{"enabled", true}}}};
+      {"bucketPolicyOnly", internal::nl::json{{"enabled", true}}},
+      {"uniformBucketLevelAccess", internal::nl::json{{"enabled", true}}}};
   EXPECT_EQ(expected_iam_configuration, actual["iamConfiguration"]);
 
   // labels()
@@ -595,11 +607,26 @@ TEST(BucketMetadataTest, SetDefaultObjectAcl) {
 }
 
 /// @test Verify we can change the IAM Configuration in BucketMetadata.
-TEST(BucketMetadataTest, SetIamConfiguration) {
+TEST(BucketMetadataTest, SetIamConfiguration_BPO) {
   auto expected = CreateBucketMetadataForTest();
   auto copy = expected;
   BucketIamConfiguration new_configuration;
   new_configuration.bucket_policy_only = BucketPolicyOnly{
+      true, google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z")};
+  copy.set_iam_configuration(new_configuration);
+  ASSERT_TRUE(copy.has_iam_configuration());
+  EXPECT_EQ(new_configuration, copy.iam_configuration());
+  EXPECT_NE(expected, copy)
+      << "expected = " << expected.iam_configuration()
+      << "\n  actual=" << copy.iam_configuration() << "\n";
+}
+
+/// @test Verify we can change the IAM Configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetIamConfiguration_UBLA) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  BucketIamConfiguration new_configuration;
+  new_configuration.uniform_bucket_level_access = UniformBucketLevelAccess{
       true, google::cloud::internal::ParseRfc3339("2019-02-03T04:05:06Z")};
   copy.set_iam_configuration(new_configuration);
   ASSERT_TRUE(copy.has_iam_configuration());
