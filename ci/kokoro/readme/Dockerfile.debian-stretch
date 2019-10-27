@@ -1,0 +1,57 @@
+# Copyright 2018 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO_VERSION=9
+FROM debian:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
+
+# Please keep the formatting in these commands, it is optimized to cut & paste
+# into the README.md file.
+
+## [START INSTALL.md]
+
+# First install the development tools and libcurl.
+
+## [START README.md]
+
+# On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
+# against the same version or risk an inconsistent configuration of the library.
+# This is especially important for multi-threaded applications, as openssl-1.0.2
+# requires explicitly setting locking callbacks. Therefore, to use libcurl one
+# must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
+# Note that this removes libssl-dev if you have it installed already, and would
+# prevent you from compiling against openssl-1.1.0.
+
+# ```bash
+RUN apt update && \
+    apt install -y build-essential cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
+        pkg-config tar wget zlib1g-dev
+# ```
+
+FROM devtools AS readme
+ARG NCPU=4
+
+## [START IGNORED]
+# Verify that the tools above are enough to compile google-cloud-cpp when using
+# the super build.
+WORKDIR /home/build/super
+COPY . /home/build/super
+RUN cmake -Hsuper -Bcmake-out \
+        -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
+RUN cmake --build cmake-out -- -j ${NCPU}
+# The tests will already be run as part of the build, no need to run it again.
+## [END IGNORED]
+
+## [END README.md]
