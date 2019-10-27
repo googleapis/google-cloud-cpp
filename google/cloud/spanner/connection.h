@@ -45,8 +45,9 @@ class QueryPartition;
  * This interface defines pure-virtual methods for each of the user-facing
  * overload sets in `Client`. That is, all of `Client`'s `Read()` overloads
  * will forward to the one pure-virtual `Read()` method declared in this
- * interface. This allows users to inject custom behavior (e.g., with a Google
- * Mock object) in a `Client` object for use in their own tests.
+ * interface, and similar for `Client`'s other methods. This allows users to
+ * inject custom behavior (e.g., with a Google Mock object) in a `Client`
+ * object for use in their own tests.
  *
  * To create a concrete instance that connects you to a real Spanner database,
  * see `MakeConnection()`.
@@ -57,7 +58,7 @@ class Connection {
 
   //@{
   /**
-   * Define the arguments for each member function.
+   * Defines the arguments for each member function.
    *
    * Applications may define classes derived from `Connection`, for example,
    * because they want to mock the class. To avoid breaking all such derived
@@ -91,7 +92,7 @@ class Connection {
   };
 
   /// Wrap the arguments to `ExecuteQuery()`, `ExecuteDml()`, `ProfileQuery()`,
-  /// or `ProfileDml()`.
+  /// `ProfileDml()`, and `AnalyzeSql()`.
   struct SqlParams {
     Transaction transaction;
     SqlStatement statement;
@@ -104,7 +105,7 @@ class Connection {
           partition_token(std::move(partition_token)) {}
   };
 
-  /// Wrap the arguments to `ExecutePartitionedDmlParams()`.
+  /// Wrap the arguments to `ExecutePartitionedDml()`.
   struct ExecutePartitionedDmlParams {
     SqlStatement statement;
   };
@@ -133,44 +134,43 @@ class Connection {
   };
   //@}
 
-  /// Define the interface for a google.spanner.v1.Spanner.Read RPC
+  /// Defines the interface for `Client::Read()`
   virtual RowStream Read(ReadParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.PartitionRead RPC
+  /// Defines the interface for `Client::PartitionRead()`
   virtual StatusOr<std::vector<ReadPartition>> PartitionRead(
       PartitionReadParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
+  /// Defines the interface for `Client::ExecuteQuery()`
   virtual RowStream ExecuteQuery(SqlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
+  /// Defines the interface for `Client::ExecuteDml()`
   virtual StatusOr<DmlResult> ExecuteDml(SqlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
+  /// Defines the interface for `Client::ProfileQuery()`
   virtual ProfileQueryResult ProfileQuery(SqlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
+  /// Defines the interface for `Client::ProfileDml()`
   virtual StatusOr<ProfileDmlResult> ProfileDml(SqlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecuteSql RPC
+  /// Defines the interface for `Client::AnalyzeSql()`
   virtual StatusOr<ExecutionPlan> AnalyzeSql(SqlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecutePartitionedDml
-  /// RPC
+  /// Defines the interface for `Client::ExecutePartitionedDml()`
   virtual StatusOr<PartitionedDmlResult> ExecutePartitionedDml(
       ExecutePartitionedDmlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.PartitionQuery RPC
+  /// Defines the interface for `Client::PartitionQuery()`
   virtual StatusOr<std::vector<QueryPartition>> PartitionQuery(
       PartitionQueryParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.ExecuteBatchDml RPC
+  /// Defines the interface for `Client::ExecuteBatchDml()`
   virtual StatusOr<BatchDmlResult> ExecuteBatchDml(ExecuteBatchDmlParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.Commit RPC
+  /// Defines the interface for `Client::Commit()`
   virtual StatusOr<CommitResult> Commit(CommitParams) = 0;
 
-  /// Define the interface for a google.spanner.v1.Spanner.Rollback RPC
+  /// Defines the interface for `Client::Rollback()`
   virtual Status Rollback(RollbackParams) = 0;
 };
 
