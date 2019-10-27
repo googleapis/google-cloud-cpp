@@ -30,6 +30,16 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+/// Prepend a type to tuple's type list - unmatched case.
+template <typename TL, typename T>
+struct TupleTypePrepend {};
+
+/// Prepend a type to tuple's type list - std::tuple specialization
+template <typename T, typename... Args>
+struct TupleTypePrepend<std::tuple<Args...>, T> {
+  using Result = std::tuple<T, Args...>;
+};
+
 /**
  * A helper class to filter a single element from a tuple.
  *
@@ -81,13 +91,9 @@ template <template <class> class TPred, typename Head, typename... Tail>
 struct FilteredTupleReturnType<TPred, std::tuple<Head, Tail...>> {
   using Result = typename std::conditional<
       TPred<Head>::value,
-      typename google::cloud::internal::invoke_result<
-          decltype(std::tuple_cat<std::tuple<Head>,
-                                  typename FilteredTupleReturnType<
-                                      TPred, std::tuple<Tail...>>::Result>),
-          std::tuple<Head>,
-          typename FilteredTupleReturnType<TPred,
-                                           std::tuple<Tail...>>::Result>::type,
+      typename TupleTypePrepend<
+          typename FilteredTupleReturnType<TPred, std::tuple<Tail...>>::Result,
+          Head>::Result,
       typename FilteredTupleReturnType<TPred,
                                        std::tuple<Tail...>>::Result>::type;
 };
