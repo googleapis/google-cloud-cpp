@@ -59,7 +59,10 @@ struct TupleFilterItem {};
 template <typename T>
 struct TupleFilterItem<T, true> {
   using Result = std::tuple<T>;
-  Result operator()(T&& t) const { return Result(std::forward<T>(t)); }
+  template <typename U>
+  Result operator()(U&& t) const {
+    return Result(std::forward<U>(t));
+  }
 };
 
 /**
@@ -68,7 +71,7 @@ struct TupleFilterItem<T, true> {
 template <typename T>
 struct TupleFilterItem<T, false> {
   using Result = std::tuple<>;
-  Result operator()(T&&) const { return Result(); }
+  Result operator()(T const&) const { return Result(); }
 };
 
 /**
@@ -119,15 +122,16 @@ struct FilteredTupleReturnType<TPred, std::tuple<>> {
  *
  * @param tuple the tuple to filter elements from
  */
-template <template <class> class TPred, typename... Args>
+template <template <class> class TPred, template <class...> class Tuple,
+          typename... Args>
 typename FilteredTupleReturnType<TPred, std::tuple<Args...>>::Result
-StaticTupleFilter(std::tuple<Args...> t) {
+StaticTupleFilter(Tuple<Args...>&& t) {
   return std::tuple_cat(google::cloud::internal::apply(
       [](Args&&... args) {
         return std::tuple_cat(TupleFilterItem<Args, TPred<Args>::value>()(
             std::forward<Args>(args))...);
       },
-      std::forward<std::tuple<Args...>>(t)));
+      std::forward<Tuple<Args...>>(t)));
 }
 
 /**
