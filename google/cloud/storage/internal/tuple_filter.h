@@ -43,8 +43,8 @@ struct TupleTypePrepend<std::tuple<Args...>, T> {
 /**
  * A helper class to filter a single element from a tuple.
  *
- * Depending on whether to filter the element of not, appropriate tuple type is
- * generate and a "filtering" member function, which either returns an empty
+ * Depending on whether to filter the element or not, appropriate tuple type is
+ * generated and a "filtering" member function, which either returns an empty
  * tuple or a tuple containing the argument.
  *
  * @tparam T of the filtered element
