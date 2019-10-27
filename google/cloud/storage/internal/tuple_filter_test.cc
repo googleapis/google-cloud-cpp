@@ -82,6 +82,19 @@ TEST(TupleFilter, ByReference) {
   EXPECT_EQ(42, *res);
 }
 
+// Test that forwarding references works.
+TEST(TupleFilter, TupleByReference) {
+  std::unique_ptr<int> iptr = google::cloud::internal::make_unique<int>(42);
+  auto t = std::tie(iptr);
+  // This wouldn't work because get<0> returns a std::unique_ptr<int>&:
+  // auto res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(
+  //     std::tie(iptr)));
+  auto& res = std::get<0>(StaticTupleFilter<NotAmong<long>::TPred>(t));
+  // res is only an alias to iptr
+  EXPECT_EQ(&res, &iptr);
+  EXPECT_EQ(42, *res);
+}
+
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

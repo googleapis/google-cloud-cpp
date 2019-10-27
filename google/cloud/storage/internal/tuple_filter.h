@@ -111,6 +111,17 @@ struct FilteredTupleReturnType<TPred, std::tuple<>> {
   using Result = std::tuple<>;
 };
 
+/// A helper functor passed to `apply` to filter tuples.
+template <template <class> class TPred, typename Tuple>
+struct StaticTupleFilterImpl {
+  template <typename... Args>
+  typename FilteredTupleReturnType<TPred, Tuple>::Result operator()(
+      Args&&... args) {
+    return std::tuple_cat(TupleFilterItem<Args, TPred<Args>::value>()(
+        std::forward<Args>(args))...);
+  }
+};
+
 /**
  * Filter elements from a tuple based on their type.
  *
@@ -122,16 +133,13 @@ struct FilteredTupleReturnType<TPred, std::tuple<>> {
  *
  * @param tuple the tuple to filter elements from
  */
-template <template <class> class TPred, template <class...> class Tuple,
-          typename... Args>
-typename FilteredTupleReturnType<TPred, std::tuple<Args...>>::Result
-StaticTupleFilter(Tuple<Args...>&& t) {
+template <template <class> class TPred, class Tuple>
+typename FilteredTupleReturnType<TPred,
+                                 typename std::decay<Tuple>::type>::Result
+StaticTupleFilter(Tuple&& t) {
   return std::tuple_cat(google::cloud::internal::apply(
-      [](Args&&... args) {
-        return std::tuple_cat(TupleFilterItem<Args, TPred<Args>::value>()(
-            std::forward<Args>(args))...);
-      },
-      std::forward<Tuple<Args...>>(t)));
+      StaticTupleFilterImpl<TPred, typename std::decay<Tuple>::type>(),
+      std::forward<Tuple>(t)));
 }
 
 /**
