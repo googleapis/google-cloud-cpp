@@ -51,9 +51,16 @@ int main(int argc, char* argv[]) try {
     spanner::InstanceAdminClient instance_admin{
         spanner::MakeInstanceAdminConnection()};
     std::vector<std::string> names;
+    // All the test instances in the projects used for integration tests start
+    // with this prefix. The projects sometimes have other (often transient)
+    // instances that we should not use.
+    std::string const testing_prefix = "test-instance-";
+    std::string const substr = "/instances/" + testing_prefix;
     for (auto const& instance : instance_admin.ListInstances(project_id, {})) {
       if (!instance) throw std::runtime_error("Error reading instance list");
       auto full_name = instance->name();
+      // Skip non-testing instances.
+      if (full_name.find(substr) == std::string::npos) continue;
       names.push_back(full_name.substr(full_name.rfind('/') + 1));
     }
     if (names.empty()) throw std::runtime_error("No instances in the project");
