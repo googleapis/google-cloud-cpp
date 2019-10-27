@@ -78,6 +78,8 @@ class Mutation {
   friend void PrintTo(Mutation const& m, std::ostream* os);
 
  private:
+  google::spanner::v1::Mutation& proto() & { return m_; }
+
   template <typename Op>
   friend class internal::WriteMutationBuilder;
   friend class internal::DeleteMutationBuilder;
@@ -101,7 +103,7 @@ class WriteMutationBuilder {
  public:
   WriteMutationBuilder(std::string table_name,
                        std::vector<std::string> column_names) {
-    auto& field = Op::mutable_field(m_);
+    auto& field = Op::mutable_field(m_.proto());
     field.set_table(std::move(table_name));
     field.mutable_columns()->Reserve(static_cast<int>(column_names.size()));
     for (auto& name : column_names) {
@@ -109,24 +111,33 @@ class WriteMutationBuilder {
     }
   }
 
-  Mutation Build() const& { return Mutation(m_); }
-  Mutation Build() && { return Mutation(std::move(m_)); }
+  Mutation Build() const& { return m_; }
+  Mutation&& Build() && { return std::move(m_); }
 
-  WriteMutationBuilder& AddRow(std::vector<Value> values) {
-    auto& lv = *Op::mutable_field(m_).add_values();
+  WriteMutationBuilder& AddRow(std::vector<Value> values) & {
+    auto& lv = *Op::mutable_field(m_.proto()).add_values();
     for (auto& v : values) {
       std::tie(std::ignore, *lv.add_values()) = internal::ToProto(std::move(v));
     }
     return *this;
   }
 
+  WriteMutationBuilder&& AddRow(std::vector<Value> values) && {
+    return std::move(AddRow(std::move(values)));
+  }
+
   template <typename... Ts>
-  WriteMutationBuilder& EmplaceRow(Ts&&... values) {
+  WriteMutationBuilder& EmplaceRow(Ts&&... values) & {
     return AddRow({Value(std::forward<Ts>(values))...});
   }
 
+  template <typename... Ts>
+  WriteMutationBuilder&& EmplaceRow(Ts&&... values) && {
+    return std::move(EmplaceRow(std::forward<Ts>(values)...));
+  }
+
  private:
-  google::spanner::v1::Mutation m_;
+  Mutation m_;
 };
 
 struct InsertOp {
@@ -160,16 +171,16 @@ struct ReplaceOp {
 class DeleteMutationBuilder {
  public:
   DeleteMutationBuilder(std::string table_name, KeySet keys) {
-    auto& field = *m_.mutable_delete_();
+    auto& field = *m_.proto().mutable_delete_();
     field.set_table(std::move(table_name));
     *field.mutable_key_set() = internal::ToProto(std::move(keys));
   }
 
-  Mutation Build() const& { return Mutation(m_); }
-  Mutation Build() && { return Mutation(std::move(m_)); }
+  Mutation Build() const& { return m_; }
+  Mutation&& Build() && { return std::move(m_); }
 
  private:
-  google::spanner::v1::Mutation m_;
+  Mutation m_;
 };
 
 }  // namespace internal

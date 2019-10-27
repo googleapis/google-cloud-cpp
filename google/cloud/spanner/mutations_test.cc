@@ -22,6 +22,8 @@
 #include <sstream>
 #include <string>
 #include <tuple>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -314,6 +316,108 @@ TEST(MutationsTest, DeleteSimple) {
   EXPECT_NE(dele, empty);
 
   auto actual = std::move(dele).as_proto();
+  spanner_proto::Mutation expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        delete: {
+          table: "table-name"
+          key_set: { keys: { values { string_value: "key-to-delete" } } }
+        }
+      )pb",
+      &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
+TEST(MutationsTest, FluentInsertBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(std::declval<InsertMutationBuilder>()
+                                            .EmplaceRow()
+                                            .AddRow({})
+                                            .Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  std::string const data(128, 'x');
+  std::string blob = data;
+  Mutation m = InsertMutationBuilder("table-name", {"col_a"})
+                   .EmplaceRow(std::move(blob))
+                   .AddRow({Value(data)})
+                   .Build();
+  auto actual = std::move(m).as_proto();
+  EXPECT_EQ(2, actual.insert().values().size());
+  EXPECT_EQ(data, actual.insert().values(0).values(0).string_value());
+  EXPECT_EQ(data, actual.insert().values(1).values(0).string_value());
+}
+
+TEST(MutationsTest, FluentUpdateBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(std::declval<UpdateMutationBuilder>()
+                                            .EmplaceRow()
+                                            .AddRow({})
+                                            .Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  std::string const data(128, 'x');
+  std::string blob = data;
+  Mutation m = UpdateMutationBuilder("table-name", {"col_a"})
+                   .EmplaceRow(std::move(blob))
+                   .AddRow({Value(data)})
+                   .Build();
+  auto actual = std::move(m).as_proto();
+  EXPECT_EQ(2, actual.update().values().size());
+  EXPECT_EQ(data, actual.update().values(0).values(0).string_value());
+  EXPECT_EQ(data, actual.update().values(1).values(0).string_value());
+}
+
+TEST(MutationsTest, FluentInsertOrUpdateBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(
+          std::declval<InsertOrUpdateMutationBuilder>()
+              .EmplaceRow()
+              .AddRow({})
+              .Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  std::string const data(128, 'x');
+  std::string blob = data;
+  Mutation m = InsertOrUpdateMutationBuilder("table-name", {"col_a"})
+                   .EmplaceRow(std::move(blob))
+                   .AddRow({Value(data)})
+                   .Build();
+  auto actual = std::move(m).as_proto();
+  EXPECT_EQ(2, actual.insert_or_update().values().size());
+  EXPECT_EQ(data, actual.insert_or_update().values(0).values(0).string_value());
+  EXPECT_EQ(data, actual.insert_or_update().values(1).values(0).string_value());
+}
+
+TEST(MutationsTest, FluentReplaceBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(std::declval<ReplaceMutationBuilder>()
+                                            .EmplaceRow()
+                                            .AddRow({})
+                                            .Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  std::string const data(128, 'x');
+  std::string blob = data;
+  Mutation m = ReplaceMutationBuilder("table-name", {"col_a"})
+                   .EmplaceRow(std::move(blob))
+                   .AddRow({Value(data)})
+                   .Build();
+  auto actual = std::move(m).as_proto();
+  EXPECT_EQ(2, actual.replace().values().size());
+  EXPECT_EQ(data, actual.replace().values(0).values(0).string_value());
+  EXPECT_EQ(data, actual.replace().values(1).values(0).string_value());
+}
+
+TEST(MutationsTest, FluentDeleteBuilder) {
+  static_assert(
+      std::is_rvalue_reference<decltype(
+          std::declval<DeleteMutationBuilder>().Build())>::value,
+      "Build() should return an rvalue if called fluently on a temporary");
+
+  auto ks = KeySet().AddKey(MakeKey("key-to-delete"));
+  Mutation m = DeleteMutationBuilder("table-name", ks).Build();
+  auto actual = std::move(m).as_proto();
   spanner_proto::Mutation expected;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
