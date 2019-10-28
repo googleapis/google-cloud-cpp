@@ -61,7 +61,7 @@ TEST(Transaction, RegularSemantics) {
   Transaction f = MakeReadWriteTransaction();
   EXPECT_NE(e, f);
 
-  Transaction g = f;
+  Transaction g = f;  // NOLINT(performance-unnecessary-copy-initialization)
   EXPECT_EQ(g, f);
   EXPECT_NE(g, e);
 
@@ -69,7 +69,7 @@ TEST(Transaction, RegularSemantics) {
   Transaction i = internal::MakeSingleUseTransaction(strong);
   EXPECT_NE(h, i);
 
-  Transaction j = i;
+  Transaction j = i;  // NOLINT(performance-unnecessary-copy-initialization)
   EXPECT_EQ(j, i);
   EXPECT_NE(j, h);
 }
