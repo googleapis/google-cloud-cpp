@@ -57,6 +57,20 @@ TEST(ApplyTest, NoArgs) {
   EXPECT_EQ(42, i);
 }
 
+TEST(ApplyTest, TupleByReference) {
+  std::string s;
+  auto tuple = std::make_tuple("hello world");
+  auto res = ::google::cloud::internal::apply(
+      [&](std::string new_s) {
+        s = std::move(new_s);
+        return s.size();
+      },
+      tuple);
+  static_assert(std::is_same<decltype(res), std::size_t>::value, "");
+  EXPECT_EQ("hello world", s);
+  EXPECT_EQ(11, res);
+}
+
 }  // namespace internal
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
