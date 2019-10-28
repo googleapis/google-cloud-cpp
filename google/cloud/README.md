@@ -20,7 +20,11 @@ Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.16.x - TBD
+### v0.17.x - TBD
+
+### v0.16.x - 2019-10
+
+* fix: make `google::cloud::internal::apply` work for `std::tuple<>&`
 
 ### v0.15.x - 2019-10
 
