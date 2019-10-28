@@ -1,0 +1,56 @@
+# Copyright 2018 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ARG DISTRO_VERSION=7
+FROM centos:${DISTRO_VERSION} AS devtools
+ARG NCPU=4
+
+# Please keep the formatting in these commands, it is optimized to cut & paste
+# into the README.md file.
+
+## [START INSTALL.md]
+
+# First install the development tools and OpenSSL.
+
+## [START README.md]
+
+# The development tools distributed with CentOS (notably CMake) are too old to
+# build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+# [Software Collections](https://www.softwarecollections.org/).
+
+# ```bash
+RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+RUN yum install -y centos-release-scl
+RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
+RUN yum makecache && \
+    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
+        make openssl-devel pkgconfig tar wget which zlib-devel
+RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+# ```
+
+FROM devtools AS readme
+ARG NCPU=4
+
+## [START IGNORED]
+# Verify that the tools above are enough to compile google-cloud-cpp when using
+# the super build.
+WORKDIR /home/build/super
+COPY . /home/build/super
+RUN cmake -Hsuper -Bcmake-out \
+        -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
+RUN cmake --build cmake-out -- -j ${NCPU}
+# The tests will already be run as part of the build, no need to run it again.
+## [END IGNORED]
+
+## [END README.md]
