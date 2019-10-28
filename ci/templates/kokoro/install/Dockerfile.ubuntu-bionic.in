@@ -31,7 +31,7 @@ RUN apt update && \
 
 # #### Protobuf
 
-# We need to install a version of Protobuf, recent enough that it supports the
+# We need to install a version of Protobuf that is recent enough to support the
 # Google Cloud Platform proto files:
 
 # ```bash

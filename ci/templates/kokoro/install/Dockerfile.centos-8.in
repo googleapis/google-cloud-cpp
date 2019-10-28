@@ -29,9 +29,21 @@ RUN dnf makecache && \
         zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
+# The following steps will install libraries and tools in `/usr/local`. By
+# default CentOS-8 does not search for shared libraries in these directories,
+# there are multiple ways to solve this problem, the following steps are one
+# solution:
+
+# ```bash
+RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
+    tee /etc/ld.so.conf.d/usrlocal.conf
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
+ENV PATH=/usr/local/bin:${PATH}
+# ```
+
 # #### Protobuf
 
-# We need to install a version of Protobuf, recent enough that it supports the
+# We need to install a version of Protobuf that is recent enough to support the
 # Google Cloud Platform proto files:
 
 # ```bash
@@ -40,15 +52,8 @@ RUN dnf makecache && \
 
 # #### gRPC
 
-# To install gRPC we first need to configure pkg-config to find the version of
-# Protobuf we just installed in `/usr/local`:
-
-# ```bash
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
-# ```
-
-# Then we install it using:
+# We also need a version of gRPC that is recent enough to support the Google
+# Cloud Platform proto files. We manually install it using:
 
 # ```bash
 @INSTALL_GRPC_FROM_SOURCE@

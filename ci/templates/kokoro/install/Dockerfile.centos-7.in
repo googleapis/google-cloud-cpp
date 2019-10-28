@@ -27,7 +27,7 @@ ARG NCPU=4
 
 # ```bash
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install -y centos-release-scl
+RUN yum install -y centos-release-scl yum-utils
 RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
 RUN yum makecache && \
     yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
@@ -35,9 +35,21 @@ RUN yum makecache && \
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
+# The following steps will install libraries and tools in `/usr/local`. By
+# default CentOS-7 does not search for shared libraries in these directories,
+# there are multiple ways to solve this problem, the following steps are one
+# solution:
+
+# ```bash
+RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
+    tee /etc/ld.so.conf.d/usrlocal.conf
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
+ENV PATH=/usr/local/bin:${PATH}
+# ```
+
 # #### Protobuf
 
-# We need to install a version of Protobuf, recent enough that it supports the
+# We need to install a version of Protobuf that is recent enough to support the
 # Google Cloud Platform proto files:
 
 # ```bash
@@ -55,15 +67,8 @@ RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/cte
 
 # #### gRPC
 
-# To install gRPC we first need to configure pkg-config to find the version of
-# Protobuf we just installed in `/usr/local`:
-
-# ```bash
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
-# ```
-
-# Then we install it using:
+# We also need a version of gRPC that is recent enough to support the Google
+# Cloud Platform proto files. We manually install it using:
 
 # ```bash
 @INSTALL_GRPC_FROM_SOURCE@

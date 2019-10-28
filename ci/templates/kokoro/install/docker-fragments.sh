@@ -29,6 +29,7 @@ WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.5
 RUN cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 _EOF_
@@ -42,6 +43,7 @@ RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
       -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 _EOF_
@@ -57,8 +59,9 @@ RUN cmake \
       -DCRC32C_BUILD_TESTS=OFF \
       -DCRC32C_BUILD_BENCHMARKS=OFF \
       -DCRC32C_USE_GLOG=OFF \
-      -H. -Bcmake-out/crc32c
-RUN cmake --build cmake-out/crc32c --target install -- -j ${NCPU:-4}
+      -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
+RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 _EOF_
 
@@ -72,6 +75,7 @@ RUN cmake \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 _EOF_
@@ -104,6 +108,7 @@ WORKDIR /var/tmp/build/google-cloud-cpp-common-0.13.0
 RUN cmake -H. -Bcmake-out \
     -DBUILD_TESTING=OFF \
     -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 _EOF_
