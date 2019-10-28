@@ -417,18 +417,8 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_spanner_development)
 
-install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-    DESTINATION include/google/cloud/spanner
-    COMPONENT google_cloud_cpp_spanner_development
-    FILES_MATCHING
-    PATTERN "*.h")
-install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-    DESTINATION include/google/cloud/spanner
-    COMPONENT google_cloud_cpp_spanner_development
-    FILES_MATCHING
-    PATTERN "*.inc")
+google_cloud_cpp_install_headers("spanner_client"
+                                 "include/google/cloud/spanner")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_SPANNER_CONFIG_VERSION_MAJOR ${SPANNER_CLIENT_VERSION_MAJOR})
