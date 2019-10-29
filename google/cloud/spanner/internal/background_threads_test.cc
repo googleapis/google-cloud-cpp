@@ -79,20 +79,6 @@ TEST(AutomaticallyCreatedBackgroundThreads, IsActive) {
   EXPECT_EQ(std::future_status::ready, expired.wait_for(ms(100)));
 }
 
-/// @test Verify the background thread is not the thread the current thread.
-TEST(AutomaticallyCreatedBackgroundThreads, IsNotCurrentThread) {
-  AutomaticallyCreatedBackgroundThreads actual;
-
-  using ms = std::chrono::milliseconds;
-
-  future<std::thread::id> id = actual.cq().MakeRelativeTimer(ms(0)).then(
-      [](future<std::chrono::system_clock::time_point>) {
-        return std::this_thread::get_id();
-      });
-  EXPECT_EQ(std::future_status::ready, id.wait_for(ms(100)));
-  EXPECT_NE(std::this_thread::get_id(), id.get());
-}
-
 }  // namespace
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
