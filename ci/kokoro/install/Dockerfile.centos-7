@@ -162,9 +162,9 @@ WORKDIR /var/tmp/build
 ## Compile without the tests because we are testing google-cloud-cpp, not the
 ## common libraries, but we need the testing_utils because we use it in the
 ## google-cloud-cpp tests.
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.15.0.tar.gz && \
-    tar -xf v0.15.0.tar.gz && \
-    cd google-cloud-cpp-common-0.15.0 && \
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz && \
+    tar -xf v0.16.0.tar.gz && \
+    cd google-cloud-cpp-common-0.16.0 && \
     cmake -H. -Bcmake-out \
       -DBUILD_TESTING=OFF \
       -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
