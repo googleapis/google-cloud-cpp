@@ -87,6 +87,7 @@ def buckets_list():
         raise error_response.ErrorResponse(
             'Invalid or missing project id in `Buckets: list`')
     insert_magic_bucket(base_url)
+    #breakpoint()
     result = {'next_page_token': '', 'items': []}
     for name, b in testbench_utils.all_buckets():
         result['items'].append(b.metadata)

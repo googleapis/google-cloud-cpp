@@ -40,15 +40,15 @@ RUN dnf makecache && dnf install -y \
     openssl-devel \
     pkgconfig \
     protobuf-compiler \
-    python \
+    python38 \
     shtool \
     unzip \
     wget \
     which \
     zlib-devel
 
-RUN pip install --upgrade pip
-RUN pip install httpbin flask gevent gunicorn crc32c
+RUN python3.8 -m pip install --upgrade pip
+RUN python3.8 -m pip install httpbin flask gevent gunicorn crc32c
 
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
