@@ -42,23 +42,20 @@ function (google_cloud_cpp_gmock_library_import_location target lib)
     find_library(_library_release ${lib})
     find_library(_library_debug ${lib}d)
 
-    if ("${_library_debug}" MATCHES "-NOTFOUND"
-        AND "${_library_release}" MATCHES "-NOTFOUND")
+    if ("${_library_debug}" MATCHES "-NOTFOUND" AND "${_library_release}"
+                                                    MATCHES "-NOTFOUND")
         message(FATAL_ERROR "Cannot find library ${lib} for ${target}.")
-    elseif("${_library_debug}" MATCHES "-NOTFOUND")
-        set_target_properties(
-            ${target}
-            PROPERTIES IMPORTED_LOCATION "${_library_release}")
-    elseif("${_library_release}" MATCHES "-NOTFOUND")
-        set_target_properties(${target}
-                              PROPERTIES IMPORTED_LOCATION "${_library_debug}")
-    else()
-        set_target_properties(${target}
-                              PROPERTIES IMPORTED_LOCATION_DEBUG
-                                         "${_library_debug}")
-        set_target_properties(${target}
-                              PROPERTIES IMPORTED_LOCATION_RELEASE
-                                         "${_library_release}")
+    elseif ("${_library_debug}" MATCHES "-NOTFOUND")
+        set_target_properties(${target} PROPERTIES IMPORTED_LOCATION
+                                                   "${_library_release}")
+    elseif ("${_library_release}" MATCHES "-NOTFOUND")
+        set_target_properties(${target} PROPERTIES IMPORTED_LOCATION
+                                                   "${_library_debug}")
+    else ()
+        set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG
+                                                   "${_library_debug}")
+        set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_RELEASE
+                                                   "${_library_release}")
     endif ()
 endfunction ()
 
@@ -69,23 +66,24 @@ function (google_cloud_cpp_transfer_library_properties target source)
     if (NOT value)
         get_target_property(value ${source} IMPORTED_LOCATION_DEBUG)
         if (EXISTS "${value}")
-            set_target_properties(${target}
-                                  PROPERTIES IMPORTED_LOCATION ${value})
+            set_target_properties(${target} PROPERTIES IMPORTED_LOCATION
+                                                       ${value})
         endif ()
         get_target_property(value ${source} IMPORTED_LOCATION_RELEASE)
         if (EXISTS "${value}")
-            set_target_properties(${target}
-                                  PROPERTIES IMPORTED_LOCATION ${value})
+            set_target_properties(${target} PROPERTIES IMPORTED_LOCATION
+                                                       ${value})
         endif ()
     endif ()
-    foreach (property
-             IMPORTED_LOCATION_DEBUG
-             IMPORTED_LOCATION_RELEASE
-             IMPORTED_CONFIGURATIONS
-             INTERFACE_INCLUDE_DIRECTORIES
-             IMPORTED_LINK_INTERFACE_LIBRARIES
-             IMPORTED_LINK_INTERFACE_LIBRARIES_DEBUG
-             IMPORTED_LINK_INTERFACE_LIBRARIES_RELEASE)
+    foreach (
+        property
+        IMPORTED_LOCATION_DEBUG
+        IMPORTED_LOCATION_RELEASE
+        IMPORTED_CONFIGURATIONS
+        INTERFACE_INCLUDE_DIRECTORIES
+        IMPORTED_LINK_INTERFACE_LIBRARIES
+        IMPORTED_LINK_INTERFACE_LIBRARIES_DEBUG
+        IMPORTED_LINK_INTERFACE_LIBRARIES_RELEASE)
         get_target_property(value ${source} ${property})
         message("*** ${source} ${property} ${value}")
         if (value)
@@ -97,10 +95,10 @@ endfunction ()
 include(CTest)
 if (TARGET GTest::gmock)
     # GTest::gmock is already defined, do not define it again.
-elseif(NOT BUILD_TESTING AND NOT GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
+elseif (NOT BUILD_TESTING AND NOT GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # Tests are turned off via -DBUILD_TESTING, do not load the googletest or
     # googlemock dependency.
-else()
+else ()
     # Try to find the config package first. If that is not found
     find_package(GTest CONFIG QUIET)
     find_package(GMock CONFIG QUIET)
@@ -112,9 +110,10 @@ else()
         # The FindGTest module finds GTest by default, but does not search for
         # GMock, though they are usually installed together. Define the
         # GTest::gmock* targets manually.
-        find_path(GMOCK_INCLUDE_DIR gmock/gmock.h
-                  HINTS $ENV{GTEST_ROOT}/include ${GTEST_ROOT}/include
-                  DOC "The GoogleTest Mocking Library headers")
+        find_path(
+            GMOCK_INCLUDE_DIR gmock/gmock.h
+            HINTS $ENV{GTEST_ROOT}/include ${GTEST_ROOT}/include
+            DOC "The GoogleTest Mocking Library headers")
         if ("${GMOCK_INCLUDE_DIR}" MATCHES "-NOTFOUND")
             message(
                 FATAL_ERROR "Cannot find gmock headers ${GMOCK_INCLUDE_DIR}.")
@@ -123,20 +122,20 @@ else()
 
         add_library(GTest::gmock UNKNOWN IMPORTED)
         google_cloud_cpp_gmock_library_import_location(GTest::gmock gmock)
-        set_target_properties(GTest::gmock
-                              PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
-                                         "GTest::GTest;Threads::Threads"
-                                         INTERFACE_INCLUDE_DIRECTORIES
-                                         "${GMOCK_INCLUDE_DIRS}")
+        set_target_properties(
+            GTest::gmock
+            PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
+                       "GTest::GTest;Threads::Threads"
+                       INTERFACE_INCLUDE_DIRECTORIES "${GMOCK_INCLUDE_DIRS}")
 
         add_library(GTest::gmock_main UNKNOWN IMPORTED)
         google_cloud_cpp_gmock_library_import_location(GTest::gmock_main
                                                        gmock_main)
-        set_target_properties(GTest::gmock_main
-                              PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
-                                         "GTest::gmock;Threads::Threads"
-                                         INTERFACE_INCLUDE_DIRECTORIES
-                                         "${GMOCK_INCLUDE_DIRS}")
+        set_target_properties(
+            GTest::gmock_main
+            PROPERTIES IMPORTED_LINK_INTERFACE_LIBRARIES
+                       "GTest::gmock;Threads::Threads"
+                       INTERFACE_INCLUDE_DIRECTORIES "${GMOCK_INCLUDE_DIRS}")
     endif ()
 
     if (NOT TARGET GTest::gmock AND TARGET GMock::gmock)

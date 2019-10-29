@@ -92,10 +92,10 @@ function (_grpc_fix_grpc_cpp_plugin_target)
                      DOC "The gRPC C++ plugin for protoc")
         mark_as_advanced(_gRPC_CPP_PLUGIN_EXECUTABLE)
         if (_gRPC_CPP_PLUGIN_EXECUTABLE)
-            set_property(TARGET gRPC::grpc_cpp_plugin
-                         PROPERTY IMPORTED_LOCATION
-                                  ${_gRPC_CPP_PLUGIN_EXECUTABLE})
-        else()
+            set_property(
+                TARGET gRPC::grpc_cpp_plugin
+                PROPERTY IMPORTED_LOCATION ${_gRPC_CPP_PLUGIN_EXECUTABLE})
+        else ()
             set(gRPC_FOUND "grpc_cpp_plugin-NOTFOUND")
         endif ()
     endif ()
@@ -106,12 +106,14 @@ endfunction ()
 function (_grpc_fix_grpc_target_definitions)
     # Including gRPC headers without this definition results in a build error.
     if (WIN32)
-        set_property(TARGET gRPC::grpc
-                     APPEND
-                     PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
-        set_property(TARGET gRPC::grpc++
-                     APPEND
-                     PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
+        set_property(
+            TARGET gRPC::grpc
+            APPEND
+            PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
+        set_property(
+            TARGET gRPC::grpc++
+            APPEND
+            PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
     endif ()
 endfunction ()
 
@@ -140,7 +142,7 @@ function (_gRPC_find_library name filename)
     if (${name}_LIBRARY)
         # Use result recorded by a previous call.
         return()
-    else()
+    else ()
         find_library(${name}_LIBRARY_RELEASE NAMES ${filename})
         mark_as_advanced(${name}_LIBRARY_RELEASE)
 
@@ -155,10 +157,12 @@ function (_gRPC_find_library name filename)
                     "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
                     "${name} ${filename} RELEASE=${${name}_LIBRARY}"
                     " DEBUG=${${name}_LIBRARY_DEBUG} DEFAULT=${${name}_LIBRARY}"
-                )
+            )
         endif ()
 
-        set(${name}_LIBRARY "${${name}_LIBRARY}" PARENT_SCOPE)
+        set(${name}_LIBRARY
+            "${${name}_LIBRARY}"
+            PARENT_SCOPE)
     endif ()
 endfunction ()
 
@@ -171,7 +175,7 @@ if (_gRPC_USE_STATIC_LIBS)
     set(_gRPC_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
     if (WIN32)
         set(CMAKE_FIND_LIBRARY_SUFFIXES .lib .a ${CMAKE_FIND_LIBRARY_SUFFIXES})
-    else()
+    else ()
         set(CMAKE_FIND_LIBRARY_SUFFIXES .a)
     endif ()
 endif ()
@@ -196,87 +200,93 @@ endif ()
 if (_gRPC_grpc_LIBRARY)
     if (NOT TARGET gRPC::grpc)
         add_library(gRPC::grpc UNKNOWN IMPORTED)
-        set_target_properties(gRPC::grpc
-                              PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
-                                         "${_gRPC_INCLUDE_DIR}")
+        set_target_properties(
+            gRPC::grpc PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+                                  "${_gRPC_INCLUDE_DIR}")
         if (EXISTS "${_gRPC_grpc_LIBRARY}")
-            set_target_properties(gRPC::grpc
-                                  PROPERTIES IMPORTED_LOCATION
-                                             "${_gRPC_grpc_LIBRARY}")
+            set_target_properties(gRPC::grpc PROPERTIES IMPORTED_LOCATION
+                                                        "${_gRPC_grpc_LIBRARY}")
         endif ()
         if (EXISTS "${_gRPC_grpc_LIBRARY_RELEASE}")
-            set_property(TARGET gRPC::grpc
-                         APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-            set_target_properties(gRPC::grpc
-                                  PROPERTIES IMPORTED_LOCATION_RELEASE
-                                             "${_gRPC_grpc_LIBRARY_RELEASE}")
+            set_property(
+                TARGET gRPC::grpc
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+            set_target_properties(
+                gRPC::grpc PROPERTIES IMPORTED_LOCATION_RELEASE
+                                      "${_gRPC_grpc_LIBRARY_RELEASE}")
         endif ()
         if (EXISTS "${_gRPC_grpc_LIBRARY_DEBUG}")
-            set_property(TARGET gRPC::grpc
-                         APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-            set_target_properties(gRPC::grpc
-                                  PROPERTIES IMPORTED_LOCATION_DEBUG
-                                             "${_gRPC_grpc_LIBRARY_DEBUG}")
+            set_property(
+                TARGET gRPC::grpc
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+            set_target_properties(
+                gRPC::grpc PROPERTIES IMPORTED_LOCATION_DEBUG
+                                      "${_gRPC_grpc_LIBRARY_DEBUG}")
         endif ()
-        set_property(TARGET gRPC::grpc
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf
-                              Threads::Threads)
+        set_property(
+            TARGET gRPC::grpc
+            APPEND
+            PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf
+                     Threads::Threads)
     endif ()
 endif ()
 
 if (_gRPC_grpc++_LIBRARY)
     if (NOT TARGET gRPC::grpc++)
         add_library(gRPC::grpc++ UNKNOWN IMPORTED)
-        set_target_properties(gRPC::grpc++
-                              PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
-                                         "${_gRPC++_INCLUDE_DIR}")
+        set_target_properties(
+            gRPC::grpc++ PROPERTIES INTERFACE_INCLUDE_DIRECTORIES
+                                    "${_gRPC++_INCLUDE_DIR}")
         if (EXISTS "${_gRPC_grpc++_LIBRARY}")
-            set_target_properties(gRPC::grpc++
-                                  PROPERTIES IMPORTED_LOCATION
-                                             "${_gRPC_grpc++_LIBRARY}")
+            set_target_properties(
+                gRPC::grpc++ PROPERTIES IMPORTED_LOCATION
+                                        "${_gRPC_grpc++_LIBRARY}")
         endif ()
         if (EXISTS "${_gRPC_grpc++_LIBRARY_RELEASE}")
-            set_property(TARGET gRPC::grpc++
-                         APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
-            set_target_properties(gRPC::grpc++
-                                  PROPERTIES IMPORTED_LOCATION_RELEASE
-                                             "${_gRPC_grpc++_LIBRARY_RELEASE}")
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+            set_target_properties(
+                gRPC::grpc++ PROPERTIES IMPORTED_LOCATION_RELEASE
+                                        "${_gRPC_grpc++_LIBRARY_RELEASE}")
         endif ()
         if (EXISTS "${_gRPC_grpc++_LIBRARY_DEBUG}")
-            set_property(TARGET gRPC::grpc++
-                         APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
-            set_target_properties(gRPC::grpc++
-                                  PROPERTIES IMPORTED_LOCATION_DEBUG
-                                             "${_gRPC_grpc++_LIBRARY_DEBUG}")
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+            set_target_properties(
+                gRPC::grpc++ PROPERTIES IMPORTED_LOCATION_DEBUG
+                                        "${_gRPC_grpc++_LIBRARY_DEBUG}")
         endif ()
-        set_property(TARGET gRPC::grpc++
-                     APPEND
-                     PROPERTY INTERFACE_LINK_LIBRARIES
-                              gRPC::grpc
-                              protobuf::libprotobuf
-                              Threads::Threads)
+        set_property(
+            TARGET gRPC::grpc++
+            APPEND
+            PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc protobuf::libprotobuf
+                     Threads::Threads)
         if (CMAKE_VERSION VERSION_GREATER 3.8)
             # gRPC++ requires C++11, but only CMake-3.8 introduced a target
             # compiler feature to meet that requirement.
-            set_property(TARGET gRPC::grpc++
-                         APPEND
-                         PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
-        elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
+        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             # CMake 3.5 is still alive and kicking in some older distros, use
             # the compiler-specific versions in these cases.
-            set_property(TARGET gRPC::grpc++
-                         APPEND
-                         PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
-        elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-            set_property(TARGET gRPC::grpc++
-                         APPEND
-                         PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
-        else()
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
+        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
+        else ()
             message(
                 WARNING
                     "gRPC::grpc++ requires C++11, but this module"
@@ -294,7 +304,9 @@ if (_gRPC_USE_STATIC_LIBS)
     set(CMAKE_FIND_LIBRARY_PREFIXES "${_gRPC_ORIG_FIND_LIBRARY_PREFIXES}")
 endif ()
 
-file(WRITE "${CMAKE_BINARY_DIR}/get_gRPC_version.cc" [====[
+file(
+    WRITE "${CMAKE_BINARY_DIR}/get_gRPC_version.cc"
+    [====[
 #include <grpcpp/grpcpp.h>
 #include <iostream>
 int main() {
@@ -303,30 +315,32 @@ int main() {
 }
         ]====])
 
-try_run(_gRPC_GET_VERSION_STATUS
-        _gRPC_GET_VERSION_COMPILE_STATUS
-        "${CMAKE_BINARY_DIR}"
-        "${CMAKE_BINARY_DIR}/get_gRPC_version.cc"
-        LINK_LIBRARIES
-        gRPC::grpc++
-        gRPC::grpc
-        COMPILE_OUTPUT_VARIABLE _gRPC_GET_VERSION_COMPILE_OUTPUT
-        RUN_OUTPUT_VARIABLE gRPC_VERSION)
+try_run(
+    _gRPC_GET_VERSION_STATUS
+    _gRPC_GET_VERSION_COMPILE_STATUS
+    "${CMAKE_BINARY_DIR}"
+    "${CMAKE_BINARY_DIR}/get_gRPC_version.cc"
+    LINK_LIBRARIES
+    gRPC::grpc++
+    gRPC::grpc
+    COMPILE_OUTPUT_VARIABLE _gRPC_GET_VERSION_COMPILE_OUTPUT
+    RUN_OUTPUT_VARIABLE gRPC_VERSION)
 
 file(REMOVE "${CMAKE_BINARY_DIR}/get_gRPC_version.cc")
 
 _grpc_fix_grpc_cpp_plugin_target()
 
 if (gRPC_DEBUG)
-    foreach (_var
-             _gRPC_CPP_PLUGIN_EXECUTABLE
-             _gRPC_VERSION_RAW
-             _gRPC_GET_VERSION_STATUS
-             _gRPC_GET_VERSION_COMPILE_STATUS
-             _gRPC_GET_VERSION_COMPILE_OUTPUT
-             _gRPC_grpc_LIBRARY
-             _gRPC_grpc++_LIBRARY
-             _gRPC_INCLUDE_DIR)
+    foreach (
+        _var
+        _gRPC_CPP_PLUGIN_EXECUTABLE
+        _gRPC_VERSION_RAW
+        _gRPC_GET_VERSION_STATUS
+        _gRPC_GET_VERSION_COMPILE_STATUS
+        _gRPC_GET_VERSION_COMPILE_OUTPUT
+        _gRPC_grpc_LIBRARY
+        _gRPC_grpc++_LIBRARY
+        _gRPC_INCLUDE_DIR)
         message(
             STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
                    "${_var} = ${${_var}}")
@@ -335,9 +349,5 @@ if (gRPC_DEBUG)
 endif ()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(gRPC
-                                  REQUIRED_VARS
-                                  _gRPC_grpc_LIBRARY
-                                  _gRPC_INCLUDE_DIR
-                                  VERSION_VAR
-                                  gRPC_VERSION)
+find_package_handle_standard_args(gRPC REQUIRED_VARS _gRPC_grpc_LIBRARY
+                                  _gRPC_INCLUDE_DIR VERSION_VAR gRPC_VERSION)

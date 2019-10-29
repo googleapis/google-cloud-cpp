@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=7
-FROM centos:${DISTRO_VERSION} AS devtools
+ARG DISTRO_VERSION=bionic
+FROM ubuntu:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
 # Please keep the formatting in these commands, it is optimized to cut & paste
@@ -21,24 +21,18 @@ ARG NCPU=4
 
 ## [START INSTALL.md]
 
-# First install the development tools and OpenSSL. The development tools
-# distributed with CentOS (notably CMake) are too old to build
-# `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
-# [Software Collections](https://www.softwarecollections.org/).
+# Install the minimal development tools:
 
 # ```bash
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install -y centos-release-scl
-RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
-RUN yum makecache && \
-    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
-RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+RUN apt update && \
+    apt install -y build-essential cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+        pkg-config tar wget zlib1g-dev
 # ```
 
 # #### crc32c
 
-# There is no CentOS package for this library. To install it use:
+# There is no Ubuntu package for this library. To install it use:
 
 # ```bash
 WORKDIR /var/tmp/build
@@ -58,7 +52,9 @@ RUN ldconfig
 
 # #### Protobuf
 
-# Likewise, manually install protobuf:
+# While protobuf-3.0 is distributed with Ubuntu, the Google Cloud Plaform proto
+# files require more recent versions (circa 3.4.x). To manually install a more
+# recent version use:
 
 # ```bash
 WORKDIR /var/tmp/build
@@ -74,33 +70,16 @@ RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 # ```
 
-# #### c-ares
-
-# Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
-# distributes c-ares-1.10. Manually install a newer version:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz
-RUN tar -xf cares-1_14_0.tar.gz
-WORKDIR /var/tmp/build/c-ares-cares-1_14_0
-RUN ./buildconf && ./configure && make -j ${NCPU:-4}
-RUN make install
-RUN ldconfig
-# ```
-
 # #### gRPC
 
-# Can be manually installed using:
+# Likewise, Ubuntu has packages for grpc-1.3.x, but this version is too old for
+# the Google Cloud Platform APIs:
 
 # ```bash
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
 RUN tar -xf v1.19.1.tar.gz
 WORKDIR /var/tmp/build/grpc-1.19.1
-ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
-ENV LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
-ENV PATH=/usr/local/bin:${PATH}
 RUN make -j ${NCPU:-4}
 RUN make install
 RUN ldconfig
@@ -108,7 +87,7 @@ RUN ldconfig
 
 # #### googleapis
 
-# There is no CentOS package for this library. To install it, use:
+# There is no Ubuntu package for this library. To install it, use:
 
 # ```bash
 WORKDIR /var/tmp/build
@@ -129,9 +108,9 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-RUN tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-WORKDIR /var/tmp/build/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+RUN tar -xf release-1.10.0.tar.gz
+WORKDIR /var/tmp/build/googletest-release-1.10.0
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
@@ -146,9 +125,9 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-RUN tar -xf v0.13.0.tar.gz
-WORKDIR /var/tmp/build/google-cloud-cpp-common-0.13.0
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz
+RUN tar -xf v0.16.0.tar.gz
+WORKDIR /var/tmp/build/google-cloud-cpp-common-0.16.0
 # Compile without the tests because we are testing google-cloud-cpp, not the base
 # libraries
 RUN cmake -H. -Bcmake-out \
@@ -166,11 +145,11 @@ FROM devtools AS install
 # Finally we can install `google-cloud-cpp`.
 
 # ```bash
-WORKDIR /var/tmp/build/google-cloud-cpp
-COPY . /var/tmp/build/google-cloud-cpp
+WORKDIR /home/build/google-cloud-cpp
+COPY . /home/build/google-cloud-cpp
 RUN cmake -H. -Bcmake-out
 RUN cmake --build cmake-out -- -j ${NCPU:-4}
-WORKDIR /var/tmp/build/google-cloud-cpp/cmake-out
+WORKDIR /home/build/google-cloud-cpp/cmake-out
 RUN ctest --output-on-failure
 RUN cmake --build . --target install
 # ```
@@ -179,6 +158,7 @@ RUN cmake --build . --target install
 
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
 

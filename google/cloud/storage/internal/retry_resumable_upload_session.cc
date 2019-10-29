@@ -61,7 +61,9 @@ RetryResumableUploadSession::UploadGenericChunk(
   // TODO(#3036): change the APIs to avoid this extra copy.
   std::string const* buffer_to_use = &buffer;
   std::string truncated_buffer;
-  while (!retry_policy_->IsExhausted()) {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  while (!retry_policy->IsExhausted()) {
     std::uint64_t new_next_byte = session_->next_expected_byte();
     if (new_next_byte < next_byte) {
       std::stringstream os;
@@ -82,31 +84,33 @@ RetryResumableUploadSession::UploadGenericChunk(
     if (result.ok()) {
       if (is_final_chunk &&
           result->upload_state == ResumableUploadResponse::kDone) {
-        // If it's a final chunk and it succeded, return.
+        // If it's a final chunk and it was sent successfully, return.
         return result;
       }
-      if (next_expected_byte() - next_byte == buffer_to_use->size()) {
+      auto current_next_expected_byte = next_expected_byte();
+      if (current_next_expected_byte - next_byte == buffer_to_use->size()) {
         // Otherwise, return only if there were no failures and it wasn't a
         // short write.
         return result;
       }
       std::stringstream os;
       os << "Short write. Previous next_byte=" << next_byte
-         << ", current next_byte=" << next_expected_byte()
-         << ", inteded to write " << buffer_to_use->size();
+         << ", current next_byte=" << current_next_expected_byte
+         << ", intended to write=" << buffer_to_use->size()
+         << ", wrote=" << current_next_expected_byte - next_byte;
       last_status = Status(StatusCode::kUnavailable, os.str());
       // Don't reset the session on a short write nor wait according to the
       // backoff policy - we did get a response from the server after all.
       continue;
     }
     last_status = std::move(result).status();
-    if (!retry_policy_->OnFailure(last_status)) {
-      return ReturnError(std::move(last_status), *retry_policy_, __func__);
+    if (!retry_policy->OnFailure(last_status)) {
+      return ReturnError(std::move(last_status), *retry_policy, __func__);
     }
-    auto delay = backoff_policy_->OnCompletion();
+    auto delay = backoff_policy->OnCompletion();
     std::this_thread::sleep_for(delay);
 
-    result = ResetSession();
+    result = ResetSession(*retry_policy, *backoff_policy);
     if (!result.ok()) {
       return result;
     }
@@ -116,24 +120,31 @@ RetryResumableUploadSession::UploadGenericChunk(
   return Status(last_status.code(), os.str());
 }
 
-StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
+StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession(
+    RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
   Status last_status(StatusCode::kDeadlineExceeded,
                      "Retry policy exhausted before first attempt was made.");
-  while (!retry_policy_->IsExhausted()) {
+  while (!retry_policy.IsExhausted()) {
     auto result = session_->ResetSession();
     if (result.ok()) {
       return result;
     }
     last_status = std::move(result).status();
-    if (!retry_policy_->OnFailure(last_status)) {
-      return ReturnError(std::move(last_status), *retry_policy_, __func__);
+    if (!retry_policy.OnFailure(last_status)) {
+      return ReturnError(std::move(last_status), retry_policy, __func__);
     }
-    auto delay = backoff_policy_->OnCompletion();
+    auto delay = backoff_policy.OnCompletion();
     std::this_thread::sleep_for(delay);
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << __func__ << ": " << last_status;
   return Status(last_status.code(), os.str());
+}
+
+StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
+  auto retry_policy = retry_policy_->clone();
+  auto backoff_policy = backoff_policy_->clone();
+  return ResetSession(*retry_policy, *backoff_policy);
 }
 
 std::uint64_t RetryResumableUploadSession::next_expected_byte() const {

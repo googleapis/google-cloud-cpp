@@ -20,9 +20,8 @@
 # that file.
 set(JSON_URL
     "https://github.com/nlohmann/json/releases/download/v3.4.0/json.hpp")
-set(
-    JSON_SHA256 63da6d1f22b2a7bb9e4ff7d6b255cf691a161ff49532dcc45d398a53e295835f
-    )
+set(JSON_SHA256
+    63da6d1f22b2a7bb9e4ff7d6b255cf691a161ff49532dcc45d398a53e295835f)
 
 # Use a function to avoid filling up the global namespace with local variables.
 function (_download_json_hpp)
@@ -33,7 +32,7 @@ function (_download_json_hpp)
             message(
                 STATUS
                     "Will retry after ${sleep_seconds} seconds (attempt #${attempt})."
-                )
+            )
             execute_process(COMMAND "${CMAKE_COMMAND}" -E sleep
                                     "${sleep_seconds}")
         endif ()
@@ -53,9 +52,11 @@ function (_download_json_hpp)
 
     file(SHA256 "${DEST}/json.hpp" actual_json_hpp_sha256)
     if (NOT "${JSON_SHA256}" STREQUAL "${actual_json_hpp_sha256}")
-        message(FATAL_ERROR "Mismatch digest for downloaded json.hpp file."
-                            "\n  expected hash: [${JSON_SHA256}]"
-                            "\n    actual hash: [${actual_json_hpp_sha256}]")
+        message(
+            FATAL_ERROR
+                "Mismatch digest for downloaded json.hpp file."
+                "\n  expected hash: [${JSON_SHA256}]"
+                "\n    actual hash: [${actual_json_hpp_sha256}]")
     endif ()
     # Remove the definitions of `operator""_json()` and
     # `operator""_json_pointer`. I know it looks ugly to remove specific lines,

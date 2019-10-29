@@ -67,7 +67,7 @@ RUN chmod 755 /usr/bin/buildifier
 # "latest" version is updated, and we do not want the builds to break just
 # because some third party changed something.
 RUN pip install --upgrade pip
-RUN pip install numpy cmake_format==0.4.0
+RUN pip install cmake_format==0.6.0
 
 # Install Python packages used in the integration tests.
 RUN pip install flask httpbin gevent gunicorn crc32c
@@ -95,9 +95,9 @@ RUN ldconfig
 # - When using CMake, only the version compiled with the same CMAKE_BUILD_TYPE
 #   as the dependent (gRPC or google-cloud-cpp) works.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz
-RUN tar -xf v3.6.1.tar.gz
-WORKDIR /var/tmp/build/protobuf-3.6.1/cmake
+RUN wget -q https://github.com/google/protobuf/archive/v3.9.1.tar.gz
+RUN tar -xf v3.9.1.tar.gz
+WORKDIR /var/tmp/build/protobuf-3.9.1/cmake
 RUN for build_type in "Debug" "Release"; do \
     cmake \
         -DCMAKE_BUILD_TYPE="${build_type}" \
@@ -130,10 +130,10 @@ RUN ldconfig
 # Install gRPC. Note that we use the system's zlib and ssl libraries.
 # For similar reasons to c-ares (see above), we need two install steps.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz
-RUN tar -xf v1.19.1.tar.gz
+RUN wget -q https://github.com/grpc/grpc/archive/v1.24.3.tar.gz
+RUN tar -xf v1.24.3.tar.gz
 RUN ls -l
-WORKDIR /var/tmp/build/grpc-1.19.1
+WORKDIR /var/tmp/build/grpc-1.24.3
 RUN ls -l
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -161,9 +161,9 @@ RUN ldconfig
 
 # Install googletest.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-RUN tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-WORKDIR /var/tmp/build/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+RUN tar -xf release-1.10.0.tar.gz
+WORKDIR /var/tmp/build/googletest-release-1.10.0
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
@@ -173,9 +173,9 @@ RUN ldconfig
 
 # Download and compile google-cloud-cpp from source too:
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-RUN tar -xf v0.13.0.tar.gz
-WORKDIR /var/tmp/build/google-cloud-cpp-common-0.13.0
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz
+RUN tar -xf v0.16.0.tar.gz
+WORKDIR /var/tmp/build/google-cloud-cpp-common-0.16.0
 # Compile without the tests because we are testing google-cloud-cpp, not the
 # base libraries
 RUN cmake -H. -Bcmake-out \

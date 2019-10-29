@@ -15,7 +15,6 @@
 # ~~~
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
-find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
@@ -24,15 +23,13 @@ set(FIRESTORE_CLIENT_VERSION_PATCH 1)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
-set(
-    DOXYGEN_PROJECT_NUMBER
+set(DOXYGEN_PROJECT_NUMBER
     "${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}"
-    )
+)
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
-    "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
+                       "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
-    "*/google/cloud/firestore/README.md"
-    "*/google/cloud/firestore/internal/*"
+    "*/google/cloud/firestore/README.md" "*/google/cloud/firestore/internal/*"
     "*/google/cloud/firestore/*_test.cc")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 
@@ -56,13 +53,15 @@ include(CreateBazelConfig)
 
 # the client library
 add_library(firestore_client field_path.h field_path.cc)
-target_link_libraries(firestore_client
-                      PUBLIC google_cloud_cpp_common
-                      PRIVATE firestore_common_options)
-target_include_directories(firestore_client
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
+target_link_libraries(
+    firestore_client
+    PUBLIC google_cloud_cpp_common
+    PRIVATE firestore_common_options)
+target_include_directories(
+    firestore_client
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:include>)
 target_compile_options(firestore_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
@@ -78,6 +77,8 @@ create_bazel_config(firestore_client)
 google_cloud_cpp_add_clang_tidy(firestore_client)
 
 if (BUILD_TESTING)
+    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+
     # List the unit tests, then setup the targets and dependencies.
     set(firestore_client_unit_tests field_path_test.cc)
 
@@ -86,23 +87,18 @@ if (BUILD_TESTING)
                          "firestore_client_unit_tests")
 
     foreach (fname ${firestore_client_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE firestore_client
-                                      google_cloud_cpp_testing
-                                      google_cloud_cpp_common
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest
-                                      firestore_common_options)
+        target_link_libraries(
+            ${target}
+            PRIVATE firestore_client
+                    google_cloud_cpp_testing
+                    google_cloud_cpp_common
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    firestore_common_options)
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
@@ -112,24 +108,26 @@ endif ()
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS
-        EXPORT firestore-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(
+    TARGETS
+    EXPORT firestore-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # The exports can only be installed if all the dependencies are installed. CMake
 # needs to know where the submodules will be installed from,
 install(EXPORT firestore-targets
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")
 
-install(TARGETS firestore_client firestore_common_options
-        EXPORT firestore-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
-google_cloud_cpp_install_headers(
-    firestore_client include/google/cloud/firestore)
+install(
+    TARGETS firestore_client firestore_common_options
+    EXPORT firestore-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+google_cloud_cpp_install_headers(firestore_client
+                                 include/google/cloud/firestore)
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${FIRESTORE_CLIENT_VERSION_MAJOR})
@@ -143,8 +141,8 @@ set(GOOGLE_CLOUD_CPP_PC_LIBS "-lfirestore_client -lfirestore_protos")
 # Install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                "firestore_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc" DESTINATION
-              "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client.pc"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 # Install the CMake configuration files.
 configure_file("config.cmake.in" "firestore_client-config.cmake" @ONLY)
@@ -153,5 +151,4 @@ configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config.cmake"
           "${CMAKE_CURRENT_BINARY_DIR}/firestore_client-config-version.cmake"
-          DESTINATION
-          "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/firestore_client")

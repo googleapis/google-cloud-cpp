@@ -26,26 +26,37 @@ def google_cloud_cpp_deps():
     override the version of the dependencies they want to use.
     """
 
+    # Load rules_cc, used by googletest
+    if "rules_cc" not in native.existing_rules():
+        http_archive(
+            name = "rules_cc",
+            strip_prefix = "rules_cc-a508235df92e71d537fcbae0c7c952ea6957a912",
+            urls = [
+                "https://github.com/bazelbuild/rules_cc/archive/a508235df92e71d537fcbae0c7c952ea6957a912.tar.gz",
+            ],
+            sha256 = "d21d38c4b8e81eed8fa95ede48dd69aba01a3b938be6ac03d2b9dc61886a7183",
+        )
+
     # Load google-cloud-cpp-common.
     if "com_github_googleapis_google_cloud_cpp_common" not in native.existing_rules():
         http_archive(
             name = "com_github_googleapis_google_cloud_cpp_common",
-            strip_prefix = "google-cloud-cpp-common-0.13.0",
+            strip_prefix = "google-cloud-cpp-common-0.16.0",
             urls = [
-                "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz",
+                "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz",
             ],
-            sha256 = "ea7f8f64ee8a6964f8755d1024b908bf13170e505f54b57ffc72c0002d478b8c",
+            sha256 = "d53c12e901f2d76bd2bf8a1e57769bbe0fb96338eaaa3f2c57f92cba703bada8",
         )
 
-    # Load a newer version of google test than what gRPC does.
+    # Load a version of googletest that we know works.
     if "com_google_googletest" not in native.existing_rules():
         http_archive(
             name = "com_google_googletest",
-            strip_prefix = "googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb",
+            strip_prefix = "googletest-release-1.10.0",
             urls = [
-                "https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz",
+                "https://github.com/google/googletest/archive/release-1.10.0.tar.gz",
             ],
-            sha256 = "8d9aa381a6885fe480b7d0ce8ef747a0b8c6ee92f99d74ab07e3503434007cb0",
+            sha256 = "9dc9157a9a1551ec7a7e43daea9a694a0bb5fb8bec81235d8a1e6ef64c716dcb",
         )
 
     # Load the googleapis dependency.
@@ -65,12 +76,12 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.23.0",
+            strip_prefix = "grpc-1.24.3",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.23.0.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.23.0.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.24.3.tar.gz",
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.24.3.tar.gz",
             ],
-            sha256 = "f56ced18740895b943418fa29575a65cc2396ccfa3159fa40d318ef5f59471f9",
+            sha256 = "c84b3fa140fcd6cce79b3f9de6357c5733a0071e04ca4e65ba5f8d306f10f033",
         )
 
     # We need libcurl for the Google Cloud Storage client.

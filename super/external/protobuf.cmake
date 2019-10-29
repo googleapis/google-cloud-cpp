@@ -32,7 +32,7 @@ if (NOT TARGET protobuf_project)
     set_external_project_prefix_vars()
 
     include(ExternalProject)
-    externalproject_add(
+    ExternalProject_Add(
         protobuf_project
         DEPENDS zlib_project
         EXCLUDE_FROM_ALL ON
@@ -40,7 +40,8 @@ if (NOT TARGET protobuf_project)
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
         URL ${GOOGLE_CLOUD_CPP_PROTOBUF_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_PROTOBUF_SHA256}
-        LIST_SEPARATOR |
+                 LIST_SEPARATOR
+                 |
         CONFIGURE_COMMAND
             ${CMAKE_COMMAND}
             -G${CMAKE_GENERATOR}
@@ -54,18 +55,14 @@ if (NOT TARGET protobuf_project)
             -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
             # Protobuf installs using `CMAKE_INSTALL_LIBDIR`, as it should,
             # which expands to `lib` or `lib64`. But hard-codes RPATH to
-            # `$ORIGIN/../lib`, so change the default `LIBDIR` to something
-            # that works.
-            # https://github.com/protocolbuffers/protobuf/pull/6204
+            # `$ORIGIN/../lib`, so change the default `LIBDIR` to something that
+            # works. https://github.com/protocolbuffers/protobuf/pull/6204
             -DCMAKE_INSTALL_LIBDIR=lib
             -Dprotobuf_BUILD_TESTS=OFF
             -Dprotobuf_DEBUG_POSTFIX=
             -H<SOURCE_DIR>/cmake
             -B<BINARY_DIR>
-        BUILD_COMMAND ${CMAKE_COMMAND}
-                      --build
-                      <BINARY_DIR>
-                      ${PARALLEL}
+        BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON
         LOG_BUILD ON

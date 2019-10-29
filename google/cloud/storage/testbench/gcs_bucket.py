@@ -101,28 +101,30 @@ class GcsBucket(object):
                 metadata.pop(key, None)
         return metadata
 
-    def _adjust_bpo_patch(self, patch):
-        """Add missing fields (such as lockedTme) to a BucketPolicyOnly patch.
+    def _adjust_field_patch(self, patch, field):
+        """Add missing fields (such as lockedTme) to a UniformBucketLevelAccess
+        or BucketPolicyOnly patch.
 
         :param patch:dict a dictionary of metadata values.
+        :param field: one of 'uniformBucketLevelAccess' or 'bucketPolicyOnly' 
         """
-        bpo_was_enabled = False
+        field_was_enabled = False
         if self.metadata.get('iamConfiguration'):
-            bpo = self.metadata.get('iamConfiguration').get('bucketPolicyOnly')
-            if bpo:
-                bpo_was_enabled = bpo.get('enabled')
+            field_value = self.metadata.get('iamConfiguration').get(field)
+            if field_value:
+                field_was_enabled = field_value.get('enabled')
         config = patch.get('iamConfiguration')
         if config is not None:
-            if config.get('bucketPolicyOnly'):
-                bpo_enabled = config.get('bucketPolicyOnly').get('enabled')
-                if not bpo_was_enabled and bpo_enabled:
+            if config.get(field):
+                field_enabled = config.get(field).get('enabled')
+                if not field_was_enabled and field_enabled:
                     # Set the locked time (arbitrarily) to 7 days from now.
                     locked_time = time.gmtime(time.time() + 7 * 24 * 3600)
-                    bpo = {
+                    modified_field = {
                         'lockedTime': time.strftime('%Y-%m-%dT%H:%M:%SZ', locked_time),
-                        'enabled': bpo_enabled
+                        'enabled': field_enabled
                     }
-                    config['bucketPolicyOnly'] = bpo
+                    config[field] = modified_field
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
@@ -137,7 +139,8 @@ class GcsBucket(object):
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
             retention_policy['effectiveTime'] = timestamp
             metadata['retentionPolicy'] = retention_policy
-        self._adjust_bpo_patch(metadata)
+        self._adjust_field_patch(self.metadata, 'uniformBucketLevelAccess')
+        self._adjust_field_patch(self.metadata, 'bucketPolicyOnly')
         tmp = self.metadata.copy()
         metadata = GcsBucket._remove_non_writable_keys(metadata)
         tmp.update(metadata)
@@ -167,7 +170,8 @@ class GcsBucket(object):
             timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
             retention_policy['effectiveTime'] = timestamp
             patch['retentionPolicy'] = retention_policy
-        self._adjust_bpo_patch(patch)
+        self._adjust_field_patch(self.metadata, 'uniformBucketLevelAccess')
+        self._adjust_field_patch(self.metadata, 'bucketPolicyOnly')
         patched = testbench_utils.json_api_patch(self.metadata, patch, recurse_on={'labels'})
         self.metadata = patched
         self.increase_metageneration()

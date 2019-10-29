@@ -201,7 +201,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
       bucket_name, project_id,
       BucketMetadata().set_location("US").set_storage_class(
-          storage_class::MultiRegional()),
+          storage_class::Standard()),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
@@ -352,6 +352,40 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
 
   ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
   ASSERT_TRUE(patched->iam_configuration().bucket_policy_only)
+      << "patched=" << *patched;
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
+// @test Verify that we can set the iam_configuration() in a Bucket.
+TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
+  std::string project_id = flag_project_id;
+  std::string bucket_name = MakeRandomBucketName();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a Bucket, use the default settings for all fields. Fetch the full
+  // attributes of the bucket.
+  StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
+      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_STATUS_OK(insert_meta);
+  EXPECT_EQ(bucket_name, insert_meta->name());
+
+  // Patch the iam_configuration().
+  BucketMetadata desired_state = *insert_meta;
+  BucketIamConfiguration iam_configuration;
+  iam_configuration.uniform_bucket_level_access =
+      UniformBucketLevelAccess{true, {}};
+  desired_state.set_iam_configuration(std::move(iam_configuration));
+
+  StatusOr<BucketMetadata> patched =
+      client->PatchBucket(bucket_name, *insert_meta, desired_state);
+  ASSERT_STATUS_OK(patched);
+
+  ASSERT_TRUE(patched->has_iam_configuration()) << "patched=" << *patched;
+  ASSERT_TRUE(patched->iam_configuration().uniform_bucket_level_access)
       << "patched=" << *patched;
 
   auto status = client->DeleteBucket(bucket_name);

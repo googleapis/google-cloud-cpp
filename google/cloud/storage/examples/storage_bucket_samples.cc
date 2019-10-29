@@ -537,6 +537,104 @@ void GetBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
+void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
+                                    int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"enable-uniform-bucket-level-access <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [enable uniform bucket level access]
+  // [START storage_enable_uniform_bucket_level_access]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketIamConfiguration configuration;
+    configuration.uniform_bucket_level_access =
+        gcs::UniformBucketLevelAccess{true, {}};
+    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
+                         std::move(configuration)));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    std::cout << "Successfully enabled Uniform Bucket Level Access on bucket "
+              << updated_metadata->name() << "\n";
+  }
+  // [END storage_enable_uniform_bucket_level_access]
+  //! [enable uniform bucket level access]
+  (std::move(client), bucket_name);
+}
+
+void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
+                                     int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"disable-uniform-bucket-level-access <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [disable uniform bucket level access]
+  // [START storage_disable_uniform_bucket_level_access]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    gcs::BucketIamConfiguration configuration;
+    configuration.uniform_bucket_level_access =
+        gcs::UniformBucketLevelAccess{false, {}};
+    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
+                         std::move(configuration)));
+
+    if (!updated_metadata) {
+      throw std::runtime_error(updated_metadata.status().message());
+    }
+
+    std::cout << "Successfully disabled Uniform Bucket Level Access on bucket "
+              << updated_metadata->name() << "\n";
+  }
+  // [END storage_disable_uniform_bucket_level_access]
+  //! [disable uniform bucket level access]
+  (std::move(client), bucket_name);
+}
+
+void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
+                                 int& argc, char* argv[]) {
+  if (argc != 2) {
+    throw Usage{"get-uniform-bucket-level-access <bucket-name>"};
+  }
+  auto bucket_name = ConsumeArg(argc, argv);
+  //! [get uniform bucket level access]
+  // [START storage_get_uniform_bucket_level_access]
+  namespace gcs = google::cloud::storage;
+  using google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> bucket_metadata =
+        client.GetBucketMetadata(bucket_name);
+
+    if (!bucket_metadata) {
+      throw std::runtime_error(bucket_metadata.status().message());
+    }
+
+    if (bucket_metadata->has_iam_configuration() &&
+        bucket_metadata->iam_configuration()
+            .uniform_bucket_level_access.has_value()) {
+      gcs::UniformBucketLevelAccess uniform_bucket_level_access =
+          *bucket_metadata->iam_configuration().uniform_bucket_level_access;
+
+      std::cout << "Uniform Bucket Level Access is enabled for "
+                << bucket_metadata->name() << "\n";
+      std::cout << "Bucket will be locked on " << uniform_bucket_level_access
+                << "\n";
+    } else {
+      std::cout << "Uniform Bucket Level Access is not enabled for "
+                << bucket_metadata->name() << "\n";
+    }
+  }
+  // [END storage_get_uniform_bucket_level_access]
+  //! [get uniform bucket level access]
+  (std::move(client), bucket_name);
+}
+
 void AddBucketLabel(google::cloud::storage::Client client, int& argc,
                     char* argv[]) {
   if (argc != 4) {
@@ -1563,6 +1661,9 @@ int main(int argc, char* argv[]) try {
       {"enable-bucket-policy-only", &EnableBucketPolicyOnly},
       {"disable-bucket-policy-only", &DisableBucketPolicyOnly},
       {"get-bucket-policy-only", &GetBucketPolicyOnly},
+      {"enable-uniform-bucket-level-access", &EnableUniformBucketLevelAccess},
+      {"disable-uniform-bucket-level-access", &DisableUniformBucketLevelAccess},
+      {"get-uniform-bucket-level-access", &GetUniformBucketLevelAccess},
       {"add-bucket-label", &AddBucketLabel},
       {"get-bucket-labels", &GetBucketLabels},
       {"remove-bucket-label", &RemoveBucketLabel},

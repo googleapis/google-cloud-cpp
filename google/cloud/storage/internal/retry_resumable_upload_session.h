@@ -55,6 +55,11 @@ class RetryResumableUploadSession : public ResumableUploadSession {
   // Retry either UploadChunk or either UploadFinalChunk.
   StatusOr<ResumableUploadResponse> UploadGenericChunk(
       std::string const& buffer, optional<std::uint64_t> const& upload_size);
+
+  // Reset the current session using previously cloned policies.
+  StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,
+                                                 BackoffPolicy& backoff_policy);
+
   std::unique_ptr<ResumableUploadSession> session_;
   std::unique_ptr<RetryPolicy> retry_policy_;
   std::unique_ptr<BackoffPolicy> backoff_policy_;

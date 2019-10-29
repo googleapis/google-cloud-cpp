@@ -100,9 +100,7 @@ Status Table::Apply(SingleRowMutation mut) {
     // It is up to the policy to terminate this loop, it could run
     // forever, but that would be a bad policy (pun intended).
     if (!rpc_policy->OnFailure(status) || !is_idempotent) {
-      return grpc_utils::MakeStatusFromRpcError(
-          status.error_code(),
-          "Permanent (or too many transient) errors in Table::Apply()");
+      return grpc_utils::MakeStatusFromRpcError(status);
     }
     auto delay = backoff_policy->OnCompletion(status);
     std::this_thread::sleep_for(delay);

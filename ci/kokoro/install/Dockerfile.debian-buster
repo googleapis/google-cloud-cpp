@@ -105,9 +105,9 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-RUN tar -xf b6cd405286ed8635ece71c72f118e659f4ade3fb.tar.gz
-WORKDIR /var/tmp/build/googletest-b6cd405286ed8635ece71c72f118e659f4ade3fb
+RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
+RUN tar -xf release-1.10.0.tar.gz
+WORKDIR /var/tmp/build/googletest-release-1.10.0
 RUN cmake \
       -DCMAKE_BUILD_TYPE="Release" \
       -DBUILD_SHARED_LIBS=yes \
@@ -122,9 +122,9 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-RUN tar -xf v0.13.0.tar.gz
-WORKDIR /var/tmp/build/google-cloud-cpp-common-0.13.0
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz
+RUN tar -xf v0.16.0.tar.gz
+WORKDIR /var/tmp/build/google-cloud-cpp-common-0.16.0
 # Compile without the tests because we are testing google-cloud-cpp, not the base
 # libraries
 RUN cmake -H. -Bcmake-out \

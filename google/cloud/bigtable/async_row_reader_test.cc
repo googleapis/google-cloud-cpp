@@ -820,12 +820,12 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
 }
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-INSTANTIATE_TEST_CASE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
-                        Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
-                               CancelMode::OTHER_EXCEPT));
+INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
+                         Values(CancelMode::FALSE_VALUE, CancelMode::STD_EXCEPT,
+                                CancelMode::OTHER_EXCEPT));
 #else   // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-INSTANTIATE_TEST_CASE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
-                        Values(CancelMode::FALSE_VALUE));
+INSTANTIATE_TEST_SUITE_P(CancelMidStream, TableAsyncReadRowsCancelMidStreamTest,
+                         Values(CancelMode::FALSE_VALUE));
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 /// @test Like CancelMidStream but after the underlying stream has finished.
