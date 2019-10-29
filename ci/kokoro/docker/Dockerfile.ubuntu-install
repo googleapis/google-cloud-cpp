@@ -13,8 +13,8 @@
 # limitations under the License.
 
 ARG DISTRO_VERSION=18.04
-ARG NCPU=4
 FROM ubuntu:${DISTRO_VERSION}
+ARG NCPU=4
 
 RUN apt update && \
     apt install -y \

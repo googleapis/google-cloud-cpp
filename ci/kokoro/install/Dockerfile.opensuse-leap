@@ -187,6 +187,7 @@ RUN ldconfig
 # ```
 
 FROM devtools AS install
+ARG NCPU=4
 
 # #### google-cloud-cpp
 
