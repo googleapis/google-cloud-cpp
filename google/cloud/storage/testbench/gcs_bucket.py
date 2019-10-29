@@ -233,7 +233,7 @@ class GcsBucket(object):
         # Replace or insert the entry.
         indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed[entity] = entry
-        self.metadata['acl'] = indexed.values()
+        self.metadata['acl'] = list(indexed.values())
         return entry
 
     def delete_acl(self, entity):
@@ -246,7 +246,7 @@ class GcsBucket(object):
         entity = testbench_utils.canonical_entity_name(entity)
         indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
-        self.metadata['acl'] = indexed.values()
+        self.metadata['acl'] = list(indexed.values())
 
     def get_acl(self, entity):
         """Get a single BucketAccessControl entry from this bucket.
@@ -297,7 +297,7 @@ class GcsBucket(object):
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
         }
-        self.metadata['defaultObjectAcl'] = indexed.values()
+        self.metadata['defaultObjectAcl'] = list(indexed.values())
         return indexed[entity]
 
     def delete_default_object_acl(self, entity):
@@ -309,7 +309,7 @@ class GcsBucket(object):
         entity = testbench_utils.canonical_entity_name(entity)
         indexed = testbench_utils.index_acl(self.metadata.get('defaultObjectAcl', []))
         indexed.pop(entity)
-        self.metadata['defaultObjectAcl'] = indexed.values()
+        self.metadata['defaultObjectAcl'] = list(indexed.values())
 
     def get_default_object_acl(self, entity):
         """Get a single default ObjectAccessControl entry from this Bucket.

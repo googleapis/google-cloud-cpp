@@ -102,14 +102,15 @@ def filter_fields_from_response(fields, response):
     :return: the response formatted as a string.
     :rtype:str
     """
+
     if fields is None:
-        return json.dumps(list(response))
+        return json.dumps(list(response.values()))
     tmp = {}
     # TODO(#1037) - support full filter expressions
     for key in fields.split(','):
         if key in response:
             tmp[key] = response[key]
-    return json.dumps(tmp)
+    return json.dumps(list(tmp.values()))
 
 
 def filtered_response(request, response):
