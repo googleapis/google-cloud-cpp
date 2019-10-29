@@ -28,7 +28,6 @@ bigquery_client_hdrs = [
     "read_stream.h",
     "row.h",
     "row_set.h",
-    "testing/mock_bigquerystorage_stub.h",
     "version.h",
     "version_info.h",
 ]

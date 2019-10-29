@@ -38,17 +38,17 @@ function (google_cloud_cpp_bigquery_initialize_git_head var)
         if (GOOGLE_CLOUD_CPP_BIGQUERY_GIT_PROGRAM)
             # Run `git rev-parse --short HEAD` and capture the output in a
             # variable.
-            execute_process(COMMAND "${GOOGLE_CLOUD_CPP_BIGQUERY_GIT_PROGRAM}"
-                                    rev-parse --short HEAD
-                            OUTPUT_VARIABLE GIT_HEAD_LOG
-                            ERROR_VARIABLE GIT_HEAD_LOG)
-            string(REPLACE "\n"
-                           ""
-                           result
-                           "${GIT_HEAD_LOG}")
+            execute_process(
+                COMMAND "${GOOGLE_CLOUD_CPP_BIGQUERY_GIT_PROGRAM}" rev-parse
+                        --short HEAD
+                OUTPUT_VARIABLE GIT_HEAD_LOG
+                ERROR_VARIABLE GIT_HEAD_LOG)
+            string(REPLACE "\n" "" result "${GIT_HEAD_LOG}")
         endif ()
     endif ()
-    set(${var} "${result}" PARENT_SCOPE)
+    set(${var}
+        "${result}"
+        PARENT_SCOPE)
 endfunction ()
 
 # Capture the compiler version and the git revision into variables, then
@@ -83,42 +83,40 @@ string(TOUPPER "${CMAKE_BUILD_TYPE}" GOOGLE_CLOUD_CPP_BIGQUERY_BUILD_TYPE_UPPER)
 configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
-add_library(bigquery_client
-            ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
-            client.cc
-            client.h
-            connection.h
-            connection_options.cc
-            connection_options.h
-            internal/bigquerystorage_stub.cc
-            internal/bigquerystorage_stub.h
-            internal/connection_impl.cc
-            internal/connection_impl.h
-            internal/stream_reader.h
-            internal/streaming_read_result_source.cc
-            internal/streaming_read_result_source.h
-            read_result.h
-            read_stream.h
-            read_stream.cc
-            row.h
-            row_set.h
-            testing/mock_bigquerystorage_stub.h
-            version.cc
-            version.h
-            version_info.h
-	    )
-target_include_directories(bigquery_client
-                           PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                                  $<INSTALL_INTERFACE:include>)
-target_link_libraries(bigquery_client
-                      PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
-                      googleapis-c++::cloud_bigquery_protos)
-set_target_properties(bigquery_client
-                      PROPERTIES VERSION
-                                 "${BIGQUERY_CLIENT_VERSION}"
-                                 SOVERSION
-                                 "${BIGQUERY_CLIENT_VERSION_MAJOR}")
+add_library(
+    bigquery_client
+    ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+    client.cc
+    client.h
+    connection.h
+    connection_options.cc
+    connection_options.h
+    internal/bigquerystorage_stub.cc
+    internal/bigquerystorage_stub.h
+    internal/connection_impl.cc
+    internal/connection_impl.h
+    internal/stream_reader.h
+    internal/streaming_read_result_source.cc
+    internal/streaming_read_result_source.h
+    read_result.h
+    read_stream.h
+    read_stream.cc
+    row.h
+    row_set.h
+    version.cc
+    version.h
+    version_info.h)
+target_include_directories(
+    bigquery_client
+    PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:include>)
+target_link_libraries(
+    bigquery_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+                           googleapis-c++::cloud_bigquery_protos)
+set_target_properties(
+    bigquery_client PROPERTIES VERSION "${BIGQUERY_CLIENT_VERSION}" SOVERSION
+                               "${BIGQUERY_CLIENT_VERSION_MAJOR}")
 target_compile_options(bigquery_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_BIGQUERY_EXCEPTIONS_FLAG})
 
@@ -142,9 +140,22 @@ function (bigquery_client_define_tests)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
-    set(bigquery_client_unit_tests
-        internal/connection_impl_test.cc
-        )
+    add_library(bigquery_client_testing
+                ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_bigquerystorage_stub.h)
+    target_link_libraries(
+        bigquery_client_testing
+        PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing
+               GTest::gmock_main GTest::gmock GTest::gtest)
+    create_bazel_config(bigquery_client_testing)
+    target_include_directories(
+        bigquery_client_testing
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(bigquery_client_testing
+                           PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+
+    set(bigquery_client_unit_tests internal/connection_impl_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
@@ -156,21 +167,14 @@ function (bigquery_client_define_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${bigquery_client_unit_tests})
-        string(REPLACE "/"
-                       "_"
-                       target
-                       ${fname})
-        string(REPLACE ".cc"
-                       ""
-                       target
-                       ${target})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
-        target_link_libraries(${target}
-                              PRIVATE googleapis-c++::bigquery_client
-                                      google_cloud_cpp_testing
-                                      GTest::gmock_main
-                                      GTest::gmock
-                                      GTest::gtest)
+        target_link_libraries(
+            ${target}
+            PRIVATE bigquery_client_testing googleapis-c++::bigquery_client
+                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
@@ -207,40 +211,45 @@ install(EXPORT bigquery-targets
 
 # Install the libraries and headers in the locations determined by
 # GNUInstallDirs
-install(TARGETS bigquery_client
-        EXPORT bigquery-targets
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-                COMPONENT google_cloud_cpp_bigquery_runtime
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_bigquery_runtime
-                NAMELINK_SKIP
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_bigquery_development)
+install(
+    TARGETS bigquery_client
+    EXPORT bigquery-targets
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+            COMPONENT google_cloud_cpp_bigquery_runtime
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_bigquery_runtime
+            NAMELINK_SKIP
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_bigquery_development)
 # With CMake-3.12 and higher we could avoid this separate command (and the
 # duplication).
-install(TARGETS bigquery_client
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_bigquery_development
-                NAMELINK_ONLY
-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-                COMPONENT google_cloud_cpp_bigquery_development)
+install(
+    TARGETS bigquery_client
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_bigquery_development
+            NAMELINK_ONLY
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            COMPONENT google_cloud_cpp_bigquery_development)
 
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-        DESTINATION include/google/cloud/bigquery
-        COMPONENT google_cloud_cpp_bigquery_development
-        FILES_MATCHING
-        PATTERN "*.h")
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-        DESTINATION include/google/cloud/bigquery
-        COMPONENT google_cloud_cpp_bigquery_development
-        FILES_MATCHING
-        PATTERN "*.inc")
+install(
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
+    DESTINATION include/google/cloud/bigquery
+    COMPONENT google_cloud_cpp_bigquery_development
+    FILES_MATCHING
+    PATTERN "*.h")
+install(
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
+    DESTINATION include/google/cloud/bigquery
+    COMPONENT google_cloud_cpp_bigquery_development
+    FILES_MATCHING
+    PATTERN "*.inc")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_MAJOR ${BIGQUERY_CLIENT_VERSION_MAJOR})
 set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_MINOR ${BIGQUERY_CLIENT_VERSION_MINOR})
 set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_PATCH ${BIGQUERY_CLIENT_VERSION_PATCH})
-set(GOOGLE_CLOUD_BIGQUERY_PC_NAME "The Google Cloud BigQuery C++ Client Library")
+set(GOOGLE_CLOUD_BIGQUERY_PC_NAME
+    "The Google Cloud BigQuery C++ Client Library")
 set(GOOGLE_CLOUD_BIGQUERY_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud BigQuery.")
 set(GOOGLE_CLOUD_BIGQUERY_PC_REQUIRES
@@ -250,16 +259,18 @@ set(GOOGLE_CLOUD_BIGQUERY_PC_LIBS "-lbigquery_client")
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/bigquery/config.pc.in"
                "bigquery_client.pc" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client.pc"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-        COMPONENT google_cloud_cpp_bigquery_development)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client.pc"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
+    COMPONENT google_cloud_cpp_bigquery_development)
 
 # Create and install the CMake configuration files.
 configure_file("config.cmake.in" "bigquery_client-config.cmake" @ONLY)
 configure_file(
     "${PROJECT_SOURCE_DIR}/google/cloud/bigquery/config-version.cmake.in"
     "bigquery_client-config-version.cmake" @ONLY)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client-config.cmake"
-              "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client-config-version.cmake"
-        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigquery_client"
-        COMPONENT google_cloud_cpp_bigquery_development)
+install(
+    FILES "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client-config.cmake"
+          "${CMAKE_CURRENT_BINARY_DIR}/bigquery_client-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/bigquery_client"
+    COMPONENT google_cloud_cpp_bigquery_development)
