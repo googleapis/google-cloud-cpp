@@ -72,14 +72,17 @@ generate_dockerfile() {
 git -C "${DESTINATION_ROOT}" rm -fr --ignore-unmatch "ci/kokoro/readme"
 mkdir -p "${DESTINATION_ROOT}/ci/kokoro/readme"
 
-cp "${PROJECT_ROOT}/ci/templates/kokoro/readme/build.sh.in" \
-   "${DESTINATION_ROOT}/ci/kokoro/readme/build.sh"
+replace_fragments \
+    "WARNING_GENERATED_FILE_FRAGMENT" \
+    <"${PROJECT_ROOT}/ci/templates/kokoro/readme/build.sh.in" \
+    >"${DESTINATION_ROOT}/ci/kokoro/readme/build.sh"
 chmod 755 "${DESTINATION_ROOT}/ci/kokoro/readme/build.sh"
 git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/build.sh"
 
 replace_fragments \
-  < "${PROJECT_ROOT}/ci/templates/kokoro/readme/common.cfg.in" \
-  >"${DESTINATION_ROOT}/ci/kokoro/readme/common.cfg"
+    "WARNING_GENERATED_FILE_FRAGMENT" \
+    < "${PROJECT_ROOT}/ci/templates/kokoro/readme/common.cfg.in" \
+    >"${DESTINATION_ROOT}/ci/kokoro/readme/common.cfg"
 git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/common.cfg"
 
 for build in "${BUILD_NAMES[@]}"; do

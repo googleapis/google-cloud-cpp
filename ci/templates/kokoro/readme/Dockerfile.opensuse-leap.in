@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+@WARNING_GENERATED_FILE_FRAGMENT@
+
 ARG DISTRO_VERSION=latest
 FROM opensuse/leap:${DISTRO_VERSION} AS devtools
-ARG NCPU=4
 
 ## [START README.md]
 
@@ -27,7 +28,5 @@ RUN zypper refresh && \
 # ```
 
 ## [END README.md]
-
-FROM devtools AS readme
 
 @BUILD_PROJECT_CMAKE_SUPER_FRAGMENT@

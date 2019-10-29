@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+@WARNING_GENERATED_FILE_FRAGMENT@
+
 ARG DISTRO_VERSION=30
 FROM fedora:${DISTRO_VERSION} AS devtools
-ARG NCPU=4
-
-# Please keep the formatting below, it is used by `extract-readme.sh` and
-# `extract-install.md` to generate the contents of the top-level README.md and
-# INSTALL.md files.
 
 ## [START README.md]
 
@@ -31,7 +28,5 @@ RUN dnf makecache && \
 # ```
 
 ## [END README.md]
-
-FROM devtools AS readme
 
 @BUILD_PROJECT_CMAKE_SUPER_FRAGMENT@

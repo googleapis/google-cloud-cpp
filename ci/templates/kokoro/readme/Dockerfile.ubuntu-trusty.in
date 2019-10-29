@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+@WARNING_GENERATED_FILE_FRAGMENT@
+
 ARG DISTRO_VERSION=trusty
 FROM ubuntu:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
-
-# Please keep the formatting below, it is used by `extract-readme.sh` and
-# `extract-install.md` to generate the contents of the top-level README.md and
-# INSTALL.md files.
 
 ## [START README.md]
 
@@ -63,7 +61,5 @@ ENV PKG_CONFIG_PATH=/usr/local/ssl/lib/pkgconfig
 # ```
 
 ## [END README.md]
-
-FROM devtools AS readme
 
 @BUILD_PROJECT_CMAKE_SUPER_FRAGMENT@

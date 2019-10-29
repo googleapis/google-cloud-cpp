@@ -109,9 +109,12 @@ RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.
 _EOF_
 
 read_into_variable BUILD_PROJECT_CMAKE_SUPER_FRAGMENT <<'_EOF_'
+FROM devtools AS readme
+ARG NCPU=4
+
 WORKDIR /home/build/super
 COPY . /home/build/super
 RUN cmake -Hsuper -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j ${NCPU}
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
 _EOF_
