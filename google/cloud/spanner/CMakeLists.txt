@@ -225,6 +225,30 @@ add_library(googleapis-c++::spanner_client ALIAS spanner_client)
 include(CreateBazelConfig)
 create_bazel_config(spanner_client)
 
+# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
+# for these, a regular library would not work on macOS (where the library needs
+# at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
+# that they need absolute paths for their sources.
+add_library(spanner_client_mocks INTERFACE)
+target_sources(
+    spanner_client_mocks
+    INTERFACE
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+target_link_libraries(
+    spanner_client_mocks
+    INTERFACE googleapis-c++::spanner_client google_cloud_cpp_testing
+              GTest::gmock_main GTest::gmock GTest::gtest)
+create_bazel_config(spanner_client_mocks)
+target_include_directories(
+    spanner_client_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(spanner_client_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+
 # Define the tests in a function so we have a new scope for variable names.
 function (spanner_client_define_tests)
     # The tests require googletest to be installed. Force CMake to use the
@@ -234,31 +258,6 @@ function (spanner_client_define_tests)
     find_package(GTest CONFIG REQUIRED)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
-
-    # Create a header-only library for the mocks. We use a CMake `INTERFACE`
-    # library for these, a regular library would not work on macOS (where the
-    # library needs at least one .o file). Unfortunately INTERFACE libraries are
-    # a bit weird in that they need absolute paths for their sources.
-    add_library(spanner_client_mocks INTERFACE)
-    target_sources(
-        spanner_client_mocks
-        INTERFACE
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
-    target_link_libraries(
-        spanner_client_mocks
-        INTERFACE googleapis-c++::spanner_client google_cloud_cpp_testing
-                  GTest::gmock_main GTest::gmock GTest::gtest)
-    create_bazel_config(spanner_client_mocks)
-    target_include_directories(
-        spanner_client_mocks
-        INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
-                  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
-                  $<INSTALL_INTERFACE:include>)
-    target_compile_options(
-        spanner_client_mocks
-        INTERFACE ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
     add_library(
         spanner_client_testing
@@ -418,6 +417,8 @@ install(
             COMPONENT google_cloud_cpp_spanner_development)
 
 google_cloud_cpp_install_headers("spanner_client"
+                                 "include/google/cloud/spanner")
+google_cloud_cpp_install_headers("spanner_client_mocks"
                                  "include/google/cloud/spanner")
 
 # Setup global variables used in the following *.in files.
