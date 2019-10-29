@@ -104,13 +104,13 @@ def filter_fields_from_response(fields, response):
     """
 
     if fields is None:
-        return json.dumps(list(response.values()))
+        return json.dumps(response)
     tmp = {}
     # TODO(#1037) - support full filter expressions
     for key in fields.split(','):
         if key in response:
             tmp[key] = response[key]
-    return json.dumps(list(tmp.values()))
+    return json.dumps(tmp)
 
 
 def filtered_response(request, response):
