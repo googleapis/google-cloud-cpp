@@ -30,18 +30,8 @@ RUN apt update && \
         pkg-config tar wget zlib1g-dev
 # ```
 
-FROM devtools AS readme
-ARG NCPU=4
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile @GOOGLE_CLOUD_CPP_REPOSITORY@ when using
-# the super build.
-WORKDIR /home/build/super
-COPY . /home/build/super
-RUN cmake -Hsuper -Bcmake-out \
-        -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j ${NCPU}
-# The tests will already be run as part of the build, no need to run it again.
-## [END IGNORED]
-
 ## [END README.md]
+
+FROM devtools AS readme
+
+@BUILD_PROJECT_CMAKE_SUPER_FRAGMENT@

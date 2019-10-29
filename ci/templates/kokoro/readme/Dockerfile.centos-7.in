@@ -21,10 +21,10 @@ ARG NCPU=4
 
 ## [START README.md]
 
-# First install the development tools and OpenSSL.
-# The development tools distributed with CentOS (notably CMake) are too old to
-# build `@GOOGLE_CLOUD_CPP_REPOSITORY@`. In these instructions, we use `cmake3`
-# obtained from [Software Collections](https://www.softwarecollections.org/).
+# Install the development tools and OpenSSL. The development tools distributed
+# with CentOS (notably CMake) are too old to build the
+# `@GOOGLE_CLOUD_CPP_REPOSITORY@` project. We recommend you install cmake3 from
+# [Software Collections](https://www.softwarecollections.org/).
 
 # ```bash
 RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
@@ -36,18 +36,8 @@ RUN yum makecache && \
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
-FROM devtools AS readme
-ARG NCPU=4
-
-## [START IGNORED]
-# Verify that the tools above are enough to compile @GOOGLE_CLOUD_CPP_REPOSITORY@
-# when using the super build.
-WORKDIR /home/build/super
-COPY . /home/build/super
-RUN cmake -Hsuper -Bcmake-out \
-        -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j ${NCPU}
-# The tests will already be run as part of the build, no need to run it again.
-## [END IGNORED]
-
 ## [END README.md]
+
+FROM devtools AS readme
+
+@BUILD_PROJECT_CMAKE_SUPER_FRAGMENT@

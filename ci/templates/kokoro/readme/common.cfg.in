@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+@WARNING_GENERATED_FILE_FRAGMENT@
+
 build_file: "@GOOGLE_CLOUD_CPP_REPOSITORY@/ci/kokoro/readme/build.sh"
 timeout_mins: 120
 

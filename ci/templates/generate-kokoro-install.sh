@@ -44,10 +44,10 @@ BUILD_NAMES=(
 )
 readonly BUILD_NAMES
 
-# shellcheck source=../../ci/etc/kokoro/install/docker-fragments.sh
-source "${PROJECT_ROOT}/ci/templates/kokoro/install/docker-fragments-functions.sh"
-# shellcheck source=../../ci/etc/kokoro/install/docker-fragments.sh
-source "${PROJECT_ROOT}/ci/templates/kokoro/install/docker-fragments.sh"
+# shellcheck source=../../ci/etc/kokoro/docker-fragments.sh
+source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments-functions.sh"
+# shellcheck source=../ci/../etc/kokoro/docker-fragments.sh
+source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments.sh"
 # shellcheck source=../../ci/etc/kokoro/install/project-config.sh
 source "${DESTINATION_ROOT}/ci/etc/kokoro/install/project-config.sh"
 
@@ -75,8 +75,6 @@ generate_dockerfile() {
 git -C "${DESTINATION_ROOT}" rm -fr --ignore-unmatch "ci/kokoro/install"
 git -C "${DESTINATION_ROOT}" reset HEAD "ci/kokoro/install/common.cfg"
 git -C "${DESTINATION_ROOT}" checkout -- "ci/kokoro/install/common.cfg"
-
-mkdir -p "${DESTINATION_ROOT}/ci/kokoro/install"
 
 replace_fragments \
     "WARNING_GENERATED_FILE_FRAGMENT" \

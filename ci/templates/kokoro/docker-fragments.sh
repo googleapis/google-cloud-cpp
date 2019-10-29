@@ -112,3 +112,11 @@ RUN cmake --build cmake-out -- -j ${NCPU:-4}
 RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
 RUN ldconfig
 _EOF_
+
+read_into_variable BUILD_PROJECT_CMAKE_SUPER_FRAGMENT <<'_EOF_'
+WORKDIR /home/build/super
+COPY . /home/build/super
+RUN cmake -Hsuper -Bcmake-out \
+        -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
+RUN cmake --build cmake-out -- -j ${NCPU}
+_EOF_

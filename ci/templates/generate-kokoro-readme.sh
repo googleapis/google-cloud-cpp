@@ -44,28 +44,49 @@ BUILD_NAMES=(
 )
 readonly BUILD_NAMES
 
-# Remove all files, any files we want to preserve will be created again.
-git -C "${DESTINATION_ROOT}" rm -fr "ci/kokoro/readme" || true
+# shellcheck source=../../ci/etc/kokoro/docker-fragments.sh
+source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments-functions.sh"
+# shellcheck source=../../ci/etc/kokoro/docker-fragments.sh
+source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments.sh"
 
+generate_dockerfile() {
+  local -r build="$1"
+
+  target="${DESTINATION_ROOT}/ci/kokoro/readme/Dockerfile.${build}"
+  echo "Generating ${target}"
+  replace_fragments \
+        "WARNING_GENERATED_FILE_FRAGMENT" \
+        "INSTALL_PROTOBUF_FROM_SOURCE" \
+        "INSTALL_C_ARES_FROM_SOURCE" \
+        "INSTALL_GRPC_FROM_SOURCE" \
+        "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
+        "INSTALL_GOOGLETEST_FROM_SOURCE" \
+        "INSTALL_CRC32C_FROM_SOURCE" \
+        "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
+        "BUILD_PROJECT_CMAKE_SUPER_FRAGMENT" \
+    <"${PROJECT_ROOT}/ci/templates/kokoro/readme/Dockerfile.${build}.in" \
+    >"${target}"
+}
+
+# Remove all files, any files we want to preserve will be created again.
+git -C "${DESTINATION_ROOT}" rm -fr --ignore-unmatch "ci/kokoro/readme"
 mkdir -p "${DESTINATION_ROOT}/ci/kokoro/readme"
 
-cp "${PROJECT_ROOT}/ci/templates/kokoro/readme/build.sh" \
+cp "${PROJECT_ROOT}/ci/templates/kokoro/readme/build.sh.in" \
    "${DESTINATION_ROOT}/ci/kokoro/readme/build.sh"
+chmod 755 "${DESTINATION_ROOT}/ci/kokoro/readme/build.sh"
 git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/build.sh"
 
-sed -e "s/@GOOGLE_CLOUD_CPP_REPOSITORY@/${GOOGLE_CLOUD_CPP_REPOSITORY}/" \
-  "${PROJECT_ROOT}/ci/templates/kokoro/readme/common.cfg.in" \
+replace_fragments \
+  < "${PROJECT_ROOT}/ci/templates/kokoro/readme/common.cfg.in" \
   >"${DESTINATION_ROOT}/ci/kokoro/readme/common.cfg"
 git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/common.cfg"
 
 for build in "${BUILD_NAMES[@]}"; do
+  # We need these empty files because Kokoro does not work unless they exist.
   touch "${DESTINATION_ROOT}/ci/kokoro/readme/${build}.cfg"
-  git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/${build}.cfg"
   touch "${DESTINATION_ROOT}/ci/kokoro/readme/${build}-presubmit.cfg"
-  git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/${build}-presubmit.cfg"
-
-  sed -e "s/@GOOGLE_CLOUD_CPP_REPOSITORY@/${GOOGLE_CLOUD_CPP_REPOSITORY}/" \
-    "${PROJECT_ROOT}/ci/templates/kokoro/readme/Dockerfile.${build}.in" \
-    >"${DESTINATION_ROOT}/ci/kokoro/readme/Dockerfile.${build}"
-  git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme/Dockerfile.${build}"
+  generate_dockerfile "${build}"
 done
+
+git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme"
