@@ -187,8 +187,8 @@ TEST_F(ObjectIntegrationTest, PrefixOps) {
   ASSERT_STATUS_OK(deletion_status);
 
   for (auto&& o : client->ListObjects(bucket_name)) {
-    EXPECT_THAT(std::move(o).value().name(),
-                ::testing::Not(::testing::StartsWith(prefix)));
+    ASSERT_STATUS_OK(o);
+    EXPECT_THAT(o->name(), ::testing::Not(::testing::StartsWith(prefix)));
   }
 }
 
