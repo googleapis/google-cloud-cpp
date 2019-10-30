@@ -3112,7 +3112,7 @@ StatusOr<ObjectMetadata> CreateRandomPrefix(Client& client,
 
 namespace internal {
 
-// Just a wrapper to allow for using use in `google::cloud::internal::apply`.
+// Just a wrapper to allow for using in `google::cloud::internal::apply`.
 struct DeleteApplyHelper {
   template <typename... Options>
   Status operator()(Options... options) const {
@@ -3131,9 +3131,9 @@ struct DeleteApplyHelper {
  *
  * @param client the client on which to perform the operation.
  * @param bucket_name the name of the bucket that will contain the object.
- *     Maximum length is 1008 characters.
- * @param prefix the prefix of the objects to be deleted
+ * @param prefix the prefix of the objects to be deleted.
  * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `QuotaUser`, `UserIp`,
  *     `UserProject` and `Versions`.
  */
 template <typename... Options>
@@ -3146,9 +3146,11 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
 
   static_assert(
       std::tuple_size<decltype(
-              StaticTupleFilter<NotAmong<UserProject, Versions>::TPred>(
+              StaticTupleFilter<
+                  NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
                   all_options))>::value == 0,
-      "This functions accepts only options of type UserProject or Versions.");
+      "This functions accepts only options of type QuotaUser, UserIp, "
+      "UserProject or Versions.");
   for (auto const& object :
        client.ListObjects(bucket_name, Projection::NoAcl(), Prefix(prefix),
                           std::forward<Options>(options)...)) {
