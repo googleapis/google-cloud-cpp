@@ -73,6 +73,7 @@ storage_client_unit_tests = [
     "internal/sha256_hash_test.cc",
     "internal/sign_blob_requests_test.cc",
     "internal/signed_url_requests_test.cc",
+    "internal/tuple_filter_test.cc",
     "lifecycle_rule_test.cc",
     "list_buckets_reader_test.cc",
     "list_hmac_keys_reader_test.cc",

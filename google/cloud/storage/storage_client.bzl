@@ -74,6 +74,7 @@ storage_client_hdrs = [
     "internal/sha256_hash.h",
     "internal/sign_blob_requests.h",
     "internal/signed_url_requests.h",
+    "internal/tuple_filter.h",
     "lifecycle_rule.h",
     "list_buckets_reader.h",
     "list_hmac_keys_reader.h",
