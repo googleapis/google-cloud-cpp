@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,29 +18,23 @@
 #         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
 #
 
-ARG DISTRO_VERSION=7
+ARG DISTRO_VERSION=8
 FROM centos:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
 ## [START INSTALL.md]
 
-# First install the development tools and OpenSSL. The development tools
-# distributed with CentOS 7 (notably CMake) are too old to build
-# the project. In these instructions, we use `cmake3` obtained from
-# [Software Collections](https://www.softwarecollections.org/).
+# Install the minimal development tools, libcurl, OpenSSL, and the c-ares
+# library (required by gRPC):
 
 # ```bash
-RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-RUN yum install -y centos-release-scl yum-utils
-RUN yum-config-manager --enable rhel-server-rhscl-7-rpms
-RUN yum makecache && \
-    yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
-        make openssl-devel pkgconfig tar wget which zlib-devel
-RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+RUN dnf makecache && \
+    dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+        zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
-# default CentOS-7 does not search for shared libraries in these directories,
+# default CentOS-8 does not search for shared libraries in these directories,
 # there are multiple ways to solve this problem, the following steps are one
 # solution:
 
@@ -68,21 +62,6 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.9.1.tar.gz && \
         -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
-# #### c-ares
-
-# Recent versions of gRPC require c-ares >= 1.11, while CentOS-7
-# distributes c-ares-1.10. Manually install a newer version:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
-    tar -xf cares-1_14_0.tar.gz && \
-    cd c-ares-cares-1_14_0 && \
-    ./buildconf && ./configure && make -j ${NCPU:-4} && \
-    make install && \
     ldconfig
 # ```
 
