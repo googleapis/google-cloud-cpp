@@ -48,6 +48,8 @@ readonly BUILD_NAMES
 source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments-functions.sh"
 # shellcheck source=../../ci/etc/kokoro/docker-fragments.sh
 source "${PROJECT_ROOT}/ci/templates/kokoro/docker-fragments.sh"
+# shellcheck source=../../ci/etc/kokoro/readme/project-config.sh
+source "${DESTINATION_ROOT}/ci/etc/kokoro/readme/project-config.sh"
 
 generate_dockerfile() {
   local -r build="$1"
@@ -64,7 +66,8 @@ generate_dockerfile() {
         "INSTALL_CRC32C_FROM_SOURCE" \
         "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
         "BUILD_PROJECT_CMAKE_SUPER_FRAGMENT" \
-    <"${PROJECT_ROOT}/ci/templates/kokoro/readme/Dockerfile.${build}.in" \
+    <"${PROJECT_ROOT}/ci/templates/kokoro/readme/Dockerfile.${build}.in" | \
+  sed -e "s/Copyright [0-9][0-9][0-9][0-9]/Copyright ${ORIGINAL_COPYRIGHT_YEAR[${build}]}/" \
     >"${target}"
 }
 
