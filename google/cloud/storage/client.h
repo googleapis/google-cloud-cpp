@@ -25,6 +25,7 @@
 #include "google/cloud/storage/internal/policy_document_request.h"
 #include "google/cloud/storage/internal/retry_client.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
+#include "google/cloud/storage/internal/tuple_filter.h"
 #include "google/cloud/storage/list_buckets_reader.h"
 #include "google/cloud/storage/list_hmac_keys_reader.h"
 #include "google/cloud/storage/list_objects_reader.h"
@@ -3107,6 +3108,67 @@ StatusOr<ObjectMetadata> CreateRandomPrefix(Client& client,
   return client.InsertObject(bucket_name, object_name, std::string(),
                              IfGenerationMatch(0),
                              std::forward<Options>(options)...);
+}
+
+namespace internal {
+
+// Just a wrapper to allow for using in `google::cloud::internal::apply`.
+struct DeleteApplyHelper {
+  template <typename... Options>
+  Status operator()(Options... options) const {
+    return client.DeleteObject(bucket_name, object_name, std::move(options)...);
+  }
+
+  Client& client;
+  std::string const& bucket_name;
+  std::string const& object_name;
+};
+
+}  // namespace internal
+
+/**
+ * Delete objects whose names match a given prefix
+ *
+ * @param client the client on which to perform the operation.
+ * @param bucket_name the name of the bucket that will contain the object.
+ * @param prefix the prefix of the objects to be deleted.
+ * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `QuotaUser`, `UserIp`,
+ *     `UserProject` and `Versions`.
+ */
+template <typename... Options>
+Status DeleteByPrefix(Client& client, std::string const& bucket_name,
+                      std::string const& prefix, Options&&... options) {
+  using internal::NotAmong;
+  using internal::StaticTupleFilter;
+
+  auto all_options = std::tie(options...);
+
+  static_assert(
+      std::tuple_size<decltype(
+              StaticTupleFilter<
+                  NotAmong<QuotaUser, UserIp, UserProject, Versions>::TPred>(
+                  all_options))>::value == 0,
+      "This functions accepts only options of type QuotaUser, UserIp, "
+      "UserProject or Versions.");
+  for (auto const& object :
+       client.ListObjects(bucket_name, Projection::NoAcl(), Prefix(prefix),
+                          std::forward<Options>(options)...)) {
+    if (!object) {
+      return object.status();
+    }
+
+    auto deletion_status = google::cloud::internal::apply(
+        internal::DeleteApplyHelper{client, bucket_name, object->name()},
+        std::tuple_cat(
+            std::make_tuple(IfGenerationMatch(object->generation())),
+            StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
+
+    if (!deletion_status.ok()) {
+      return deletion_status;
+    }
+  }
+  return Status();
 }
 
 }  // namespace STORAGE_CLIENT_NS

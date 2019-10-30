@@ -166,6 +166,32 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(0, name_counter(object_name, current_list));
 }
 
+TEST_F(ObjectIntegrationTest, PrefixOps) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto prefix_md = CreateRandomPrefix(*client, bucket_name, "");
+  ASSERT_STATUS_OK(prefix_md);
+  std::string const& prefix = prefix_md->name();
+
+  std::set<std::string> common_prefix;
+  for (int i = 0; i != 10; ++i) {
+    auto random_file = CreateRandomPrefix(*client, bucket_name, prefix);
+    ASSERT_STATUS_OK(random_file);
+    ASSERT_TRUE(common_prefix.insert(random_file->name()).second);
+  }
+  auto deletion_status =
+      DeleteByPrefix(*client, bucket_name, prefix, Versions());
+  ASSERT_STATUS_OK(deletion_status);
+
+  for (auto&& o : client->ListObjects(bucket_name)) {
+    ASSERT_STATUS_OK(o);
+    EXPECT_THAT(o->name(), ::testing::Not(::testing::StartsWith(prefix)));
+  }
+}
+
 TEST_F(ObjectIntegrationTest, FullPatch) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
