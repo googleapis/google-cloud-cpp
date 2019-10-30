@@ -18,7 +18,7 @@ set -eu
 # This script is meant to source from ci/kokoro/docker/publish_refdocs.sh.
 
 upload_docs "google-cloud-bigtable" "${BUILD_OUTPUT}/google/cloud/bigtable/html" \
-  "cloud.tag" "${BRANCH}" "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
+  "bigtable.tag" "${BRANCH}" "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
 
 upload_docs "google-cloud-storage" "${BUILD_OUTPUT}/google/cloud/storage/html" \
-  "cloud.tag" "${BRANCH}" "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
+  "storage.tag" "${BRANCH}" "${CREDENTIALS_FILE}" "${STAGING_BUCKET}"
