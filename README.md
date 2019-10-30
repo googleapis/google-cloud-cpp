@@ -144,39 +144,34 @@ against the latest version of the SDK on each commit and PR.
 
 ### CentOS (7)
 
-[![Kokoro install centos status][kokoro-install-centos-shield]][kokoro-install-centos-link]
+[![Kokoro install centos-7 status][kokoro-install-centos-7-shield]][kokoro-install-centos-7-link]
 
-[kokoro-install-centos-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-centos.svg
-[kokoro-install-centos-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-centos-link.html
+[kokoro-install-centos-7-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-centos-7.svg
+[kokoro-install-centos-7-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-centos-7-link.html
 
-The development tools distributed with CentOS (notably CMake) are too old to
-build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+Install the development tools and OpenSSL. The development tools distributed
+with CentOS (notably CMake) are too old to build the
+`google-cloud-cpp` project. We recommend you install cmake3 from
 [Software Collections](https://www.softwarecollections.org/).
 
 ```bash
-rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 sudo yum install -y centos-release-scl
 sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
 sudo yum makecache && \
 sudo yum install -y automake cmake3 curl-devel gcc gcc-c++ git libtool \
         make openssl-devel pkgconfig tar wget which zlib-devel
-ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
+sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/bin/ctest
 ```
 
 ### Debian (Stretch)
 
-[![Kokoro install debian status][kokoro-install-debian-shield]][kokoro-install-debian-link]
+[![Kokoro install debian-stretch status][kokoro-install-debian-stretch-shield]][kokoro-install-debian-stretch-link]
 
-[kokoro-install-debian-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-debian.svg
-[kokoro-install-debian-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-debian-link.html
+[kokoro-install-debian-stretch-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-debian-stretch.svg
+[kokoro-install-debian-stretch-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-debian-stretch-link.html
 
-On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
-against the same version or risk an inconsistent configuration of the library.
-This is especially important for multi-threaded applications, as openssl-1.0.2
-requires explicitly setting locking callbacks. Therefore, to use libcurl one
-must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
-Note that this removes libssl-dev if you have it installed already, and would
-prevent you from compiling against openssl-1.1.0.
+First install the development tools.
 
 ```bash
 sudo apt update && \
@@ -192,6 +187,8 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 [kokoro-install-fedora-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-fedora.svg
 [kokoro-install-fedora-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-fedora-link.html
 
+Install the minimal development tools:
+
 ```bash
 sudo dnf makecache && \
 sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
@@ -200,10 +197,12 @@ sudo dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
 
 ### openSUSE (Tumbleweed)
 
-[![Kokoro install opensuse status][kokoro-install-opensuse-shield]][kokoro-install-opensuse-link]
+[![Kokoro install opensuse-tumbleweed status][kokoro-install-opensuse-tumbleweed-shield]][kokoro-install-opensuse-tumbleweed-link]
 
-[kokoro-install-opensuse-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse.svg
-[kokoro-install-opensuse-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-link.html
+[kokoro-install-opensuse-tumbleweed-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-tumbleweed.svg
+[kokoro-install-opensuse-tumbleweed-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-tumbleweed-link.html
+
+Install the minimal development tools:
 
 ```bash
 sudo zypper refresh && \
@@ -218,6 +217,8 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
 [kokoro-install-opensuse-leap-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-leap.svg
 [kokoro-install-opensuse-leap-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-opensuse-leap-link.html
 
+Install the minimal development tools:
+
 ```bash
 sudo zypper refresh && \
 sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
@@ -226,10 +227,12 @@ sudo zypper install --allow-downgrade -y cmake gcc gcc-c++ git gzip \
 
 ### Ubuntu (18.04 - Bionic Beaver)
 
-[![Kokoro install ubuntu status][kokoro-install-ubuntu-shield]][kokoro-install-ubuntu-link]
+[![Kokoro install ubuntu-bionic status][kokoro-install-ubuntu-bionic-shield]][kokoro-install-ubuntu-bionic-link]
 
-[kokoro-install-ubuntu-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu.svg
-[kokoro-install-ubuntu-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-link.html
+[kokoro-install-ubuntu-bionic-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-bionic.svg
+[kokoro-install-ubuntu-bionic-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-bionic-link.html
+
+Install the minimal development tools:
 
 ```bash
 sudo apt update && \
@@ -245,6 +248,8 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 [kokoro-install-ubuntu-xenial-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-xenial.svg
 [kokoro-install-ubuntu-xenial-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-xenial-link.html
 
+Install the minimal development tools:
+
 ```bash
 sudo apt update && \
 sudo apt install -y build-essential cmake git gcc g++ cmake \
@@ -258,6 +263,8 @@ sudo apt install -y build-essential cmake git gcc g++ cmake \
 
 [kokoro-install-ubuntu-trusty-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-trusty.svg
 [kokoro-install-ubuntu-trusty-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-install-ubuntu-trusty-link.html
+
+Install the minimal development tools.
 
 We use the `ubuntu-toolchain-r` PPA to get a modern version of CMake:
 

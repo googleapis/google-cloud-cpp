@@ -12,21 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# WARNING: This is an automatically generated file. Consider changing the
+#     sources instead. You can find the source templates and scripts at:
+#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#
+
 ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION} AS devtools
-ARG NCPU=4
-
-# Please keep the formatting in these commands, it is optimized to cut & paste
-# into the README.md file.
-
-## [START INSTALL.md]
-
-# First install the development tools and OpenSSL.
 
 ## [START README.md]
 
-# The development tools distributed with CentOS (notably CMake) are too old to
-# build `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+# Install the development tools and OpenSSL. The development tools distributed
+# with CentOS (notably CMake) are too old to build the
+# `google-cloud-cpp` project. We recommend you install cmake3 from
 # [Software Collections](https://www.softwarecollections.org/).
 
 # ```bash
@@ -39,18 +38,13 @@ RUN yum makecache && \
 RUN ln -sf /usr/bin/cmake3 /usr/bin/cmake && ln -sf /usr/bin/ctest3 /usr/bin/ctest
 # ```
 
+## [END README.md]
+
 FROM devtools AS readme
 ARG NCPU=4
 
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# the super build.
 WORKDIR /home/build/super
 COPY . /home/build/super
 RUN cmake -Hsuper -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j ${NCPU}
-# The tests will already be run as part of the build, no need to run it again.
-## [END IGNORED]
-
-## [END README.md]
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
