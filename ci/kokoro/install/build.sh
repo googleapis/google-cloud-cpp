@@ -71,11 +71,10 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
 fi
 gcloud auth configure-docker
 
-readonly DEV_IMAGE="gcr.io/${PROJECT_ID}/google-cloud-cpp/test-install-${DISTRO}"
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
 has_cache="false"
-if docker pull "${DEV_IMAGE}:latest"; then
+if docker pull "${INSTALL_IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
   has_cache="true"
 fi
@@ -90,13 +89,13 @@ devtools_flags=(
   "--target" "devtools"
   # Create the image with the same tag as the cache we are using, so we can
   # upload it.
-  "-t" "${DEV_IMAGE}:latest"
+  "-t" "${INSTALL_IMAGE}:latest"
   "--build-arg" "NCPU=${NCPU}"
   "-f" "ci/kokoro/install/Dockerfile.${DISTRO}"
 )
 
 if "${has_cache}"; then
-  devtools_flags+=("--cache-from=${DEV_IMAGE}:latest")
+  devtools_flags+=("--cache-from=${INSTALL_IMAGE}:latest")
 fi
 
 if [[ "${RUNNING_CI:-}" == "yes" ]] && \
@@ -113,13 +112,13 @@ if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   echo "Uploading updated base image for ${DISTRO} $(date)."
   # Do not stop the build on a failure to update the cache.
-  docker push "${DEV_IMAGE}:latest" || true
+  docker push "${INSTALL_IMAGE}:latest" || true
 fi
 
 echo "================================================================"
 echo "Run validation script for INSTALL instructions on ${DISTRO}."
 docker build \
-  "--cache-from=${DEV_IMAGE}:latest" \
+  "--cache-from=${INSTALL_IMAGE}:latest" \
   "--target=install" \
   "--build-arg" "NCPU=${NCPU}" \
   -f "ci/kokoro/install/Dockerfile.${DISTRO}" .

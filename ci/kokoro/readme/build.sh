@@ -71,11 +71,10 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
 fi
 gcloud auth configure-docker
 
-readonly DEV_IMAGE="gcr.io/${PROJECT_ID:-__invalid-project-id__}/google-cloud-cpp/test-readme-${DISTRO}"
 echo "================================================================"
 echo "Download existing image (if available) for ${DISTRO} $(date)."
 has_cache="false"
-if docker pull "${DEV_IMAGE}:latest"; then
+if docker pull "${README_IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
   has_cache="true"
 fi
@@ -90,7 +89,7 @@ devtools_flags=(
   "--target" "devtools"
   # Create the image with the same tag as the cache we are using, so we can
   # upload it.
-  "-t" "${DEV_IMAGE}:latest"
+  "-t" "${README_IMAGE}:latest"
   "--build-arg" "NCPU=${NCPU}"
   "-f" "ci/kokoro/readme/Dockerfile.${DISTRO}"
 )
@@ -113,13 +112,13 @@ if "${update_cache}" && [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
   echo "Uploading updated base image for ${DISTRO} $(date)."
   # Do not stop the build on a failure to update the cache.
-  docker push "${DEV_IMAGE}:latest" || true
+  docker push "${README_IMAGE}:latest" || true
 fi
 
 echo "================================================================"
 echo "Run validation script for README instructions on ${DISTRO}."
 docker build \
-  "--cache-from=${DEV_IMAGE}:latest" \
+  "--cache-from=${README_IMAGE}:latest" \
   "--target=readme" \
   "--build-arg" "NCPU=${NCPU}" \
   -f "ci/kokoro/readme/Dockerfile.${DISTRO}" .
