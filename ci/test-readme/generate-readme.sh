@@ -32,28 +32,28 @@ _EOF_
 readonly DOCKERFILES_DIR="${BINDIR}/../kokoro/readme"
 
 echo "### CentOS (7)"
-badge centos
-"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.centos"
+badge centos-7
+"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-7"
 
 echo "### Debian (Stretch)"
-badge debian
-"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.debian"
+badge debian-stretch
+"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-stretch"
 
 echo "### Fedora (30)"
 badge fedora
 "${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.fedora"
 
 echo "### openSUSE (Tumbleweed)"
-badge opensuse
-"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse"
+badge opensuse-tumbleweed
+"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-tumbleweed"
 
 echo "### openSUSE (Leap)"
 badge opensuse-leap
 "${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-leap"
 
 echo "### Ubuntu (18.04 - Bionic Beaver)"
-badge ubuntu
-"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu"
+badge ubuntu-bionic
+"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-bionic"
 
 echo "### Ubuntu (16.04 - Xenial Xerus)"
 badge ubuntu-xenial
