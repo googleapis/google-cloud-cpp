@@ -189,7 +189,7 @@ echo "### Fedora (30)"
 
 echo
 echo "### openSUSE (Tumbleweed)"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.opensuse-tumbleweed"
 
 echo
 echo "### openSUSE (Leap)"
@@ -197,7 +197,7 @@ echo "### openSUSE (Leap)"
 
 echo
 echo "### Ubuntu (18.04 - Bionic Beaver)"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-bionic"
 
 echo
 echo "### Ubuntu (16.04 - Xenial Xerus)"
@@ -209,8 +209,8 @@ echo "### Ubuntu (14.04 - Trusty Tahr)"
 
 echo
 echo "### Debian (Stretch)"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.debian-stretch"
 
 echo
 echo "### CentOS (7)"
-"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos"
+"${BINDIR}/extract-install.sh" "${DOCKERFILES_DIR}/Dockerfile.centos-7"
