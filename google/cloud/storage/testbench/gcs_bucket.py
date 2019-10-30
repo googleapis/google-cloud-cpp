@@ -29,6 +29,9 @@ class GcsBucket(object):
 
     def __init__(self, gcs_url, name):
         self.name = name
+        if type(self.name) is not bytes:
+            self.name = self.name.encode()
+        
         self.gcs_url = gcs_url
         self.metadata = {
             'metageneration': 0,
