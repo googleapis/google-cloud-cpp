@@ -101,10 +101,12 @@ RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz &
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
-    tar -xf release-1.10.0.tar.gz && \
-    cd googletest-release-1.10.0 && \
-    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz && \
+    tar -xf v0.16.0.tar.gz && \
+    cd google-cloud-cpp-common-0.16.0 && \
+    cmake -H. -Bcmake-out \
+        -DBUILD_TESTING=OFF \
+        -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -129,7 +131,7 @@ RUN cmake --build . --target install
 
 ## [END INSTALL.md]
 
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make

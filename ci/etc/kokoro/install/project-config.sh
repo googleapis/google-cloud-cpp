@@ -63,7 +63,7 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(replace_fragments \
 # all the Google Cloud C++ client libraries:
 
 # ```bash
-@INSTALL_GOOGLETEST_FROM_SOURCE@
+@INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE@
 # ```
 
 FROM devtools AS install
@@ -85,7 +85,7 @@ RUN cmake --build . --target install
 
 ## [END INSTALL.md]
 
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make
