@@ -46,7 +46,7 @@ int main(int argc, char* argv[]) try {
             << "\n";
 
   gcs::ObjectReadStream stream = client->ReadObject(bucket_name, object_name);
-  stream.exceptions(std::ios_base::badbit | std::ios_base::failbit);
+  stream.exceptions(std::ios_base::badbit);
 
   int count = 0;
   std::string line;
