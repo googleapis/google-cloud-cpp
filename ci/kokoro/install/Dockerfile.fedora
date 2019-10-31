@@ -140,13 +140,13 @@ RUN make
 
 WORKDIR /home/build/test-install-cmake-bigtable
 COPY ci/test-install/bigtable /home/build/test-install-cmake-bigtable
-RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
-RUN cmake --build cmake-out -- -j ${NCPU:-4}
+RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
+RUN cmake --build /i/bigtable -- -j ${NCPU:-4}
 
 WORKDIR /home/build/test-install-cmake-storage
 COPY ci/test-install/storage /home/build/test-install-cmake-storage
-RUN env -u PKG_CONFIG_PATH cmake -H. -Bcmake-out
-RUN cmake --build cmake-out -- -j ${NCPU:-4}
+RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage
+RUN cmake --build /i/storage -- -j ${NCPU:-4}
 
 WORKDIR /home/build/test-submodule
 COPY ci/test-install /home/build/test-submodule

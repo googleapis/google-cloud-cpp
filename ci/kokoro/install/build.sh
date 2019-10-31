@@ -117,9 +117,12 @@ fi
 
 echo "================================================================"
 echo "Run validation script for INSTALL instructions on ${DISTRO}."
-docker build \
+readonly INSTALL_RUN_IMAGE="${DOCKER_IMAGE_PREFIX}/ci-install-runtime-${DISTRO}"
+docker build -t "${INSTALL_RUN_IMAGE}" \
   "--cache-from=${INSTALL_IMAGE}:latest" \
   "--target=install" \
   "--build-arg" "NCPU=${NCPU}" \
   -f "ci/kokoro/install/Dockerfile.${DISTRO}" .
 echo "================================================================"
+
+source "${PROJECT_ROOT}/ci/etc/kokoro/install/run-installed-programs.sh"
