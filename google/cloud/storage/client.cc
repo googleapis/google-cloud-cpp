@@ -336,6 +336,36 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
       internal::Base64Encode(signed_blob->signed_blob)};
 }
 
+namespace internal {
+
+ScopedDeleter::ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun)
+    : delete_fun_(std::move(delete_fun)) {}
+
+ScopedDeleter::~ScopedDeleter() { ExecuteDelete(); }
+
+void ScopedDeleter::Add(ObjectMetadata object) {
+  object_list_.emplace_back(std::move(object));
+}
+
+Status ScopedDeleter::ExecuteDelete() {
+  std::vector<ObjectMetadata> object_list;
+  // make sure the dtor will not do this again
+  object_list.swap(object_list_);
+
+  for (auto& object : object_list) {
+    Status status = delete_fun_(std::move(object));
+    // Fail on first error. If the service is unavailable, every deletion
+    // would potentially keep retrying until the timeout passes - this would
+    // take way too much time and would be pointless.
+    if (!status.ok()) {
+      return status;
+    }
+  }
+  return Status();
+}
+
+}  // namespace internal
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

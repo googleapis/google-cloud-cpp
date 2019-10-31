@@ -3188,6 +3188,25 @@ struct ComposeApplyHelper {
   std::string destination_object_name;
 };
 
+// A helper to defer deletion of temporary GCS objects.
+class ScopedDeleter {
+ public:
+  // The actual deletion depends on local's types in a very non-trivial way,
+  // so we abstract this away by providing the function to delete one object.
+  ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun);
+  ~ScopedDeleter();
+
+  /// Defer object's deletion to this objects destruction (or ExecuteDelete())
+  void Add(ObjectMetadata object);
+
+  /// Execute all the deferred deletions now.
+  Status ExecuteDelete();
+
+ private:
+  std::function<Status(ObjectMetadata)> delete_fun_;
+  std::vector<ObjectMetadata> object_list_;
+};
+
 }  // namespace internal
 
 /**
@@ -3196,28 +3215,29 @@ struct ComposeApplyHelper {
  * Contrary to `Client::ComposeObject`, this function doesn't have a limit on
  * the number of source objects.
  *
- * Under the hood, it performs many `Client::ComposeObject` calls to create
- * intermediate, temporary files which are then further composed. Due to the
- * lack of atomicity of this series of operations, stray temporary files might
- * be left over in case of network problems, temporary service unavailability,
- * etc. In order to allow the user to easily control for such situations, the
- * user is expected to provide a unique @p prefix parameter, which will become
- * the prefix of all the temporary files created by this function. Once this
- * function finishes, the user may safely remove all files with the provided
- * prefix (e.g. via `DeleteByPrefixa`). The use of `CreateRandomPrefix` is
- * advised for selecting a random prefix.
+ * The implementation may need to perform multiple Client::ComposeObject calls
+ * to create intermediate, temporary objects which are then further composed.
+ * Due to the lack of atomicity of this series of operations, stray temporary
+ * objects might be left over if there are transient failuers. In order to allow
+ * the user to easily control for such situations, the user is expected to
+ * provide a unique @p prefix parameter, which will become the prefix of all the
+ * temporary objects created by this function. Once this function finishes, the
+ * user may safely remove all objects with the provided prefix (e.g. via
+ * DeleteByPrefix()). We recommend using CreateRandomPrefix() for selecting a
+ * random prefix within a bucket.
  *
- * @param client the client on which to perform the operation.
+ * @param client the client on which to perform the operations needed by this
+ *     function
  * @param bucket_name the name of the bucket used for source object and
  *     destination object.
  * @param source_objects objects used to compose `destination_object_name`.
  * @param destination_object_name the composed object name.
- * @param prefix prefix for temporary files created by this function; the user
+ * @param prefix prefix for temporary objects created by this function; the user
  *     should guarantee that there are no objects with this prefix (except for a
  *     marker, as created by `CreateRandomPrefix`)
  * @param ignore_cleanup_failures if the composition succeeds but cleanup of
- *     temporary files fails, depending on this parameter either a success will
- *     be returned (`true`) or the relevant cleanup error (`false`)
+ *     temporary objects fails, depending on this parameter either a success
+ *     will be returned (`true`) or the relevant cleanup error (`false`)
  * @param options a list of optional query parameters and/or request headers.
  *     Valid types for this operation include `DestinationPredefinedAcl`,
  *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`
@@ -3225,7 +3245,9 @@ struct ComposeApplyHelper {
  *     `WithObjectMetadata`.
  *
  * @par Idempotency
- * This operation is not idempotent.
+ * This operation is not idempotent. While each request performed by this
+ * function is retried based on the client policies, the operation itself stops
+ * on the first request that fails.
  *
  * @par Example
  * @snippet storage_object_samples.cc compose object from many
@@ -3247,7 +3269,7 @@ StatusOr<ObjectMetadata> ComposeMany(
     // prefix, so this might not be the best idea.
     return Status(StatusCode::kInvalidArgument,
                   "ComposeMany requires a non-empty prefix to create temporary "
-                  "files. Please check the documentation.");
+                  "objects. Please check the documentation.");
   }
 
   if (source_objects.empty()) {
@@ -3257,6 +3279,7 @@ StatusOr<ObjectMetadata> ComposeMany(
 
   auto all_options = std::tie(options...);
 
+  // TODO(#3247): this list of type should somehow be generated
   static_assert(
       std::tuple_size<decltype(
               StaticTupleFilter<NotAmong<
@@ -3268,41 +3291,7 @@ StatusOr<ObjectMetadata> ComposeMany(
       "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
       "QuotaUser, UserIp, UserProject or WithObjectMetadata.");
 
-  class ScopedDeleter {
-   public:
-    // The actual deletion depends on local's types in a very non-trivial way,
-    // so we abstract this away by providing the function to delete one object.
-    ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun)
-        : delete_fun_(std::move(delete_fun)) {}
-    ~ScopedDeleter() { ExecuteDelete(); }
-
-    void Add(ObjectMetadata object) {
-      object_list_.emplace_back(std::move(object));
-    }
-
-    Status ExecuteDelete() {
-      std::vector<ObjectMetadata> object_list;
-      // make sure the dtor will not do this again
-      object_list.swap(object_list_);
-
-      for (auto& object : object_list) {
-        Status status = delete_fun_(std::move(object));
-        // Fail on first error. If the service is unavailable, every deletion
-        // would potentially keep retrying until the timeout passes - this would
-        // take way too much time and would be pointless.
-        if (!status.ok()) {
-          return status;
-        }
-      }
-      return Status();
-    }
-
-   private:
-    std::function<Status(ObjectMetadata)> delete_fun_;
-    std::vector<ObjectMetadata> object_list_;
-  };
-
-  ScopedDeleter deleter([&](ObjectMetadata const& object) {
+  internal::ScopedDeleter deleter([&](ObjectMetadata const& object) {
     return google::cloud::internal::apply(
         internal::DeleteApplyHelper{client, bucket_name, object.name()},
         std::tuple_cat(
@@ -3310,9 +3299,9 @@ StatusOr<ObjectMetadata> ComposeMany(
             StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
   });
 
-  std::size_t num_tmp_files = 0;
-  auto tmpfile_name_gen = [&num_tmp_files, &prefix] {
-    return prefix + ".compose-tmp-" + std::to_string(num_tmp_files++);
+  std::size_t num_tmp_objects = 0;
+  auto tmpobject_name_gen = [&num_tmp_objects, &prefix] {
+    return prefix + ".compose-tmp-" + std::to_string(num_tmp_objects++);
   };
 
   for (;;) {
@@ -3337,11 +3326,12 @@ StatusOr<ObjectMetadata> ComposeMany(
                     internal::ComposeApplyHelper{
                         client, bucket_name, std::move(compose_range),
                         std::move(destination_object_name)},
-                    all_options)
+                    std::tuple_cat(std::make_tuple(IfGenerationMatch(0)),
+                                   all_options))
               : google::cloud::internal::apply(
                     internal::ComposeApplyHelper{client, bucket_name,
                                                  std::move(compose_range),
-                                                 tmpfile_name_gen()},
+                                                 tmpobject_name_gen()},
                     StaticTupleFilter<NotAmong<IfGenerationMatch,
                                                IfMetagenerationMatch>::TPred>(
                         all_options));
