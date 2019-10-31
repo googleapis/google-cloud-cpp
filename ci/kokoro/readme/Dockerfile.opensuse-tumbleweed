@@ -12,15 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# WARNING: This is an automatically generated file. Consider changing the
+#     sources instead. You can find the source templates and scripts at:
+#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#
+
 ARG DISTRO_VERSION=latest
 FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
-ARG NCPU=4
-
-## [START INSTALL.md]
-
-# Install the minimal development tools:
 
 ## [START README.md]
+
+# Install the minimal development tools:
 
 # ```bash
 RUN zypper refresh && \
@@ -28,18 +31,13 @@ RUN zypper refresh && \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 # ```
 
-FROM devtools AS README
+## [END README.md]
+
+FROM devtools AS readme
 ARG NCPU=4
 
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# the super build.
 WORKDIR /home/build/super
 COPY . /home/build/super
 RUN cmake -Hsuper -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j ${NCPU}
-# The tests will already be run as part of the build, no need to run it again.
-## [END IGNORED]
-
-## [END README.md]
+RUN cmake --build cmake-out -- -j ${NCPU:-4}

@@ -12,26 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ARG DISTRO_VERSION=9
+#
+# WARNING: This is an automatically generated file. Consider changing the
+#     sources instead. You can find the source templates and scripts at:
+#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#
+
+ARG DISTRO_VERSION=stretch
 FROM debian:${DISTRO_VERSION} AS devtools
-ARG NCPU=4
-
-# Please keep the formatting in these commands, it is optimized to cut & paste
-# into the README.md file.
-
-## [START INSTALL.md]
-
-# First install the development tools and libcurl.
 
 ## [START README.md]
 
-# On Debian Stretch, libcurl links against openssl-1.0.2, and one must link
-# against the same version or risk an inconsistent configuration of the library.
-# This is especially important for multi-threaded applications, as openssl-1.0.2
-# requires explicitly setting locking callbacks. Therefore, to use libcurl one
-# must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
-# Note that this removes libssl-dev if you have it installed already, and would
-# prevent you from compiling against openssl-1.1.0.
+# First install the development tools.
 
 # ```bash
 RUN apt update && \
@@ -40,18 +32,13 @@ RUN apt update && \
         pkg-config tar wget zlib1g-dev
 # ```
 
+## [END README.md]
+
 FROM devtools AS readme
 ARG NCPU=4
 
-## [START IGNORED]
-# Verify that the tools above are enough to compile google-cloud-cpp when using
-# the super build.
 WORKDIR /home/build/super
 COPY . /home/build/super
 RUN cmake -Hsuper -Bcmake-out \
         -DGOOGLE_CLOUD_CPP_EXTERNAL_PREFIX=$HOME/local
-RUN cmake --build cmake-out -- -j ${NCPU}
-# The tests will already be run as part of the build, no need to run it again.
-## [END IGNORED]
-
-## [END README.md]
+RUN cmake --build cmake-out -- -j ${NCPU:-4}
