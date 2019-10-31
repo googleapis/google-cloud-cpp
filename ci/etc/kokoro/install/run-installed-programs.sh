@@ -20,8 +20,8 @@ run_args=(
 
 echo "================================================================"
 echo "Run Bigtable test programs against installed libraries ${DISTRO}."
-docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" "/i/bigtable/bigtable_install_test"
+# docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" "/i/bigtable/bigtable_install_test"
 
 echo "Run Storage test programs against installed libraries ${DISTRO}."
-docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" "/i/storage/storage_install_test"
+# docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" "/i/storage/storage_install_test"
 echo "================================================================"
