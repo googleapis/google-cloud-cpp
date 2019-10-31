@@ -242,9 +242,3 @@ WORKDIR /home/build/test-install-cmake-storage
 COPY ci/test-install/storage /home/build/test-install-cmake-storage
 RUN cmake -H. -B/i/storage -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
 RUN cmake --build /i/storage -- -j ${NCPU:-4}
-
-WORKDIR /home/build/test-submodule
-COPY ci/test-install /home/build/test-submodule
-COPY . /home/build/test-submodule/submodule/google-cloud-cpp
-RUN cmake -Hsubmodule -Bcmake-out -DCMAKE_FIND_ROOT_PATH="/usr/local/curl;/usr/local/ssl"
-RUN cmake --build cmake-out -- -j ${NCPU:-4}

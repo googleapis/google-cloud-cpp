@@ -35,8 +35,8 @@ on the Cloud Bigtable site.
 
 #### Configure gRPC Root Certificates
 
-You may need to configure gRPC to accept the Google server certificates.
-gRPC expects to find a
+On some platforms (notably macOS and Windows) you may need to configure gRPC to
+accept the Google server certificates. gRPC expects to find a
 [PEM](https://en.wikipedia.org/wiki/Privacy-enhanced_Electronic_Mail) file
 with the list of trusted root certificates in `/usr/share/grpc/roots.pem`
 (or `${PREFIX}/share/grpc/roots.pem` if you installed gRPC with a different
@@ -44,11 +44,11 @@ with the list of trusted root certificates in `/usr/share/grpc/roots.pem`
 you need to set the `GRPC_DEFAULT_SSL_ROOTS_FILE_PATH` to the location of this
 file.
 
-The gRPC source, included as a submodule of `google-cloud-cpp`, contains
-a version of this file. If you want to use that version use:
+This file is included with the gRPC source. You can download it using:
 
 ```console
-$ GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$HOME/google-cloud-cpp/third_party/grpc/etc/roots.pem
+$ wget https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
+$ GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=$PWD/roots.pem
 $ export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH
 ```
 
