@@ -35,6 +35,7 @@ struct Config {
 
   std::string project_id;
   std::string instance_id;
+  std::string database_id;
 
   int samples = 2;
   std::chrono::seconds iteration_duration = std::chrono::seconds(5);
@@ -43,13 +44,16 @@ struct Config {
   int maximum_threads = 4;
   int minimum_clients = 1;
   int maximum_clients = 4;
-  std::int64_t table_size = 10 * 1000 * 1000;
+
+  std::int64_t table_size = 1000 * 1000L;
 };
+
+std::ostream& operator<<(std::ostream& os, Config const& config);
 
 struct SingleRowThroughputSample {
   int client_count;
   int thread_count;
-  int insert_count;
+  int event_count;
   std::chrono::microseconds elapsed;
 };
 
@@ -100,24 +104,7 @@ int main(int argc, char* argv[]) {
   cloud_spanner::Database database(
       config.project_id, config.instance_id,
       google::cloud::spanner_testing::RandomDatabaseName(generator));
-
-  std::cout << std::boolalpha << "# Experiment: Single Row Throughput"
-            << "\n# Project: " << config.project_id
-            << "\n# Instance: " << config.instance_id
-            << "\n# Database: " << database.database_id()
-            << "\n# Samples: " << config.samples
-            << "\n# Minimum Threads: " << config.minimum_threads
-            << "\n# Maximum Threads: " << config.maximum_threads
-            << "\n# Minimum Clients: " << config.minimum_clients
-            << "\n# Maximum Clients: " << config.maximum_clients
-            << "\n# Iteration Duration: " << config.iteration_duration.count()
-            << "s"
-            << "\n# Table Size: " << config.table_size
-            << "\n# Compiler: " << cloud_spanner::internal::CompilerId() << "-"
-            << cloud_spanner::internal::CompilerVersion()
-            << "\n# Build Flags: " << cloud_spanner::internal::BuildFlags()
-            << "\n"
-            << std::flush;
+  config.database_id = database.database_id();
 
   auto available = AvailableExperiments();
   auto e = available.find(config.experiment);
@@ -145,8 +132,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  std::cout << "ClientCount,ThreadCount,InsertCount,ElapsedTime\n"
-            << std::flush;
+  std::cout << "ClientCount,ThreadCount,EventCount,ElapsedTime\n" << std::flush;
 
   std::mutex cout_mu;
   auto cout_sink =
@@ -155,7 +141,7 @@ int main(int argc, char* argv[]) {
         std::unique_lock<std::mutex> lk(cout_mu);
         for (auto const& s : samples) {
           std::cout << std::boolalpha << s.client_count << ',' << s.thread_count
-                    << ',' << s.insert_count << ',' << s.elapsed.count() << '\n'
+                    << ',' << s.event_count << ',' << s.elapsed.count() << '\n'
                     << std::flush;
         }
       };
@@ -166,13 +152,32 @@ int main(int argc, char* argv[]) {
 
   auto drop = admin_client.DropDatabase(database);
   if (!drop.ok()) {
-    std::cerr << "Error dropping database: " << drop << "\n";
+    std::cerr << "# Error dropping database: " << drop << "\n";
   }
   std::cout << "# Experiment finished, database dropped\n";
   return 0;
 }
 
 namespace {
+
+std::ostream& operator<<(std::ostream& os, Config const& config) {
+  return os << std::boolalpha << "# Experiment: " << config.experiment
+            << "\n# Project: " << config.project_id
+            << "\n# Instance: " << config.instance_id
+            << "\n# Database: " << config.database_id
+            << "\n# Samples: " << config.samples
+            << "\n# Minimum Threads: " << config.minimum_threads
+            << "\n# Maximum Threads: " << config.maximum_threads
+            << "\n# Minimum Clients: " << config.minimum_clients
+            << "\n# Maximum Clients: " << config.maximum_clients
+            << "\n# Iteration Duration: " << config.iteration_duration.count()
+            << "s"
+            << "\n# Table Size: " << config.table_size
+            << "\n# Compiler: " << cloud_spanner::internal::CompilerId() << "-"
+            << cloud_spanner::internal::CompilerVersion()
+            << "\n# Build Flags: " << cloud_spanner::internal::BuildFlags()
+            << "\n";
+}
 
 using RandomKeyGenerator = std::function<std::int64_t()>;
 using ErrorSink = std::function<void(std::vector<google::cloud::Status>)>;
@@ -183,6 +188,7 @@ class InsertOrUpdateExperiment : public Experiment {
 
   void Run(Config const& config, cloud_spanner::Database const& database,
            SampleSink const& sink) override {
+    std::cout << config << std::flush;
     // Create enough clients for the worst case
     std::vector<cloud_spanner::Client> clients;
     std::cout << "# Creating clients " << std::flush;
@@ -276,16 +282,217 @@ class InsertOrUpdateExperiment : public Experiment {
   }
 };
 
+class ReadExperiment : public Experiment {
+ public:
+  ReadExperiment() : generator_(google::cloud::internal::MakeDefaultPRNG()) {}
+
+  void SetUpTask(Config const& config, cloud_spanner::Client client,
+                 int task_count, int task_id) {
+    std::string value = [this] {
+      std::lock_guard<std::mutex> lk(mu_);
+      return google::cloud::internal::Sample(
+          generator_, 1024, "#@$%^&*()-=+_0123456789[]{}|;:,./<>?");
+    }();
+
+    auto mutation = cloud_spanner::InsertOrUpdateMutationBuilder(
+        "KeyValue", {"Key", "Data"});
+    int current_mutations = 0;
+
+    auto maybe_flush = [&mutation, &current_mutations, &client,
+                        this](bool force) {
+      if (current_mutations == 0) {
+        return;
+      }
+      if (!force && current_mutations < 1000) {
+        return;
+      }
+      auto m = std::move(mutation).Build();
+      auto result = client.Commit([&m](cloud_spanner::Transaction const&) {
+        return cloud_spanner::Mutations{m};
+      });
+      if (!result) {
+        std::lock_guard<std::mutex> lk(mu_);
+        std::cerr << "# Error in Commit() " << result.status() << "\n";
+      }
+      mutation = cloud_spanner::InsertOrUpdateMutationBuilder("KeyValue",
+                                                              {"Key", "Data"});
+      current_mutations = 0;
+    };
+    auto force_flush = [&maybe_flush] { maybe_flush(true); };
+    auto flush_as_needed = [&maybe_flush] { maybe_flush(false); };
+
+    auto const report_period =
+        (std::max)(static_cast<std::int64_t>(2), config.table_size / 50);
+    for (std::int64_t key = 0; key != config.table_size; ++key) {
+      // Each thread does a fraction of the key space.
+      if (key % task_count != task_id) continue;
+      // Have one of the threads report progress about 50 times.
+      if (task_id == 0 && key % report_period == 0) {
+        std::cout << '.' << std::flush;
+      }
+      mutation.EmplaceRow(key, value);
+      current_mutations++;
+      flush_as_needed();
+    }
+    force_flush();
+  }
+
+  void SetUp(Config const& config,
+             cloud_spanner::Database const& database) override {
+    // We need to populate some data or all the requests to read will fail.
+    cloud_spanner::Client client(cloud_spanner::MakeConnection(database));
+    std::cout << "# Populating database " << std::flush;
+    int const task_count = 16;
+    std::vector<std::future<void>> tasks(task_count);
+    int task_id = 0;
+    for (auto& t : tasks) {
+      t = std::async(
+          std::launch::async,
+          [this, &config, &client](int tc, int ti) {
+            SetUpTask(config, client, tc, ti);
+          },
+          task_count, task_id++);
+    }
+    for (auto& t : tasks) {
+      t.get();
+    }
+    std::cout << " DONE\n";
+  }
+
+  void Run(Config const& config, cloud_spanner::Database const& database,
+           SampleSink const& sink) override {
+    std::cout << config << std::flush;
+    // Create enough clients for the worst case
+    std::vector<cloud_spanner::Client> clients;
+    std::cout << "# Creating clients " << std::flush;
+    for (int i = 0; i != config.maximum_clients; ++i) {
+      clients.emplace_back(cloud_spanner::Client(cloud_spanner::MakeConnection(
+          database, cloud_spanner::ConnectionOptions().set_channel_pool_domain(
+                        "task:" + std::to_string(i)))));
+      std::cout << '.' << std::flush;
+    }
+    std::cout << " DONE\n";
+
+    std::uniform_int_distribution<int> thread_count_gen(config.minimum_threads,
+                                                        config.maximum_threads);
+
+    for (int i = 0; i != config.samples; ++i) {
+      auto const thread_count = thread_count_gen(generator_);
+      // TODO(#1000) - avoid deadlocks with more than 100 threads per client
+      auto min_clients =
+          (std::max)(thread_count / 100 + 1, config.minimum_clients);
+      auto const client_count = std::uniform_int_distribution<std::size_t>(
+          min_clients, clients.size() - 1)(generator_);
+      std::vector<cloud_spanner::Client> iteration_clients(
+          clients.begin(), clients.begin() + client_count);
+      RunIteration(config, iteration_clients, thread_count, sink);
+    }
+  }
+
+  void RunIteration(Config const& config,
+                    std::vector<cloud_spanner::Client> const& clients,
+                    int thread_count, SampleSink const& sink) {
+    std::uniform_int_distribution<std::int64_t> random_key(0,
+                                                           config.table_size);
+    RandomKeyGenerator locked_random_key = [this, &random_key] {
+      std::lock_guard<std::mutex> lk(mu_);
+      return random_key(generator_);
+    };
+
+    std::mutex cerr_mu;
+    ErrorSink error_sink =
+        [&cerr_mu](std::vector<google::cloud::Status> const& errors) {
+          std::lock_guard<std::mutex> lk(cerr_mu);
+          for (auto const& e : errors) {
+            std::cerr << "# " << e << "\n";
+          }
+        };
+
+    std::vector<std::future<int>> tasks(thread_count);
+    auto start = std::chrono::steady_clock::now();
+    int task_id = 0;
+    for (auto& t : tasks) {
+      auto client = clients[task_id++ % clients.size()];
+      t = std::async(std::launch::async, &ReadExperiment::RunTask, this, config,
+                     client, locked_random_key, error_sink);
+    }
+    int total_count = 0;
+    for (auto& t : tasks) {
+      total_count += t.get();
+    }
+    auto elapsed = std::chrono::steady_clock::now() - start;
+
+    sink({SingleRowThroughputSample{
+        static_cast<int>(clients.size()), thread_count, total_count,
+        std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
+  }
+
+  int RunTask(Config const& config, cloud_spanner::Client client,
+              RandomKeyGenerator const& key_generator,
+              ErrorSink const& error_sink) {
+    int count = 0;
+    std::string value(1024, 'A');
+    std::vector<google::cloud::Status> errors;
+    for (auto start = std::chrono::steady_clock::now(),
+              deadline = start + config.iteration_duration;
+         start < deadline; start = std::chrono::steady_clock::now()) {
+      auto key = key_generator();
+      auto rows = client.Read(
+          "KeyValue",
+          cloud_spanner::KeySet().AddKey(cloud_spanner::MakeKey(key)),
+          {"Key", "Data"});
+      for (auto& row :
+           cloud_spanner::StreamOf<std::tuple<std::int64_t, std::string>>(
+               rows)) {
+        if (!row) {
+          errors.push_back(std::move(row).status());
+          break;
+        }
+        ++count;
+      }
+    }
+    error_sink(std::move(errors));
+    return count;
+  }
+
+ private:
+  std::mutex mu_;
+  google::cloud::internal::DefaultPRNG generator_;
+};
+
+class RunAllExperiment : public Experiment {
+ public:
+  void SetUp(Config const&, cloud_spanner::Database const&) override {}
+
+  void Run(Config const& cfg, cloud_spanner::Database const& database,
+           SampleSink const& sink) override {
+    // Smoke test all the experiments by running a very small version of each.
+    for (auto& kv : AvailableExperiments()) {
+      // Do not recurse, skip this experiment.
+      if (kv.first == "run-all") continue;
+      Config config = cfg;
+      config.table_size = 10;
+      config.samples = 2;
+      config.iteration_duration = std::chrono::seconds(1);
+      std::cout << "# Smoke test for experiment: " << kv.first << "\n";
+      kv.second->SetUp(config, database);
+      kv.second->Run(config, database, sink);
+    }
+  }
+};
+
 std::map<std::string, std::shared_ptr<Experiment>> AvailableExperiments() {
   return {
+      {"run-all", std::make_shared<RunAllExperiment>()},
       {"insert-or-update", std::make_shared<InsertOrUpdateExperiment>()},
+      {"read", std::make_shared<ReadExperiment>()},
   };
 }
 
 google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
   Config config;
 
-  config.experiment = "insert-or-update";
+  config.experiment = "run-all";
 
   config.project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
