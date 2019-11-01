@@ -3336,18 +3336,17 @@ StatusOr<ObjectMetadata> ComposeMany(
     std::vector<ObjectMetadata> objects;
     for (auto range_begin = source_objects.begin();
          range_begin != source_objects.end();) {
-      auto range_end = std::next(
-          range_begin, std::min<std::size_t>(
-                           std::distance(range_begin, source_objects.end()),
-                           max_num_objects));
-      std::vector<ComposeSourceObject> compose_range;
-      std::move(range_begin, range_end, std::back_inserter(compose_range));
+      std::size_t range_size = std::min<std::size_t>(
+          std::distance(range_begin, source_objects.end()), max_num_objects);
+      auto range_end = std::next(range_begin, range_size);
+      std::vector<ComposeSourceObject> compose_range(range_size);
+      std::move(range_begin, range_end, compose_range.begin());
 
-      bool const is_final_composition = range_begin == source_objects.begin() &&
-                                        range_end == source_objects.end();
+      bool const is_final_composition =
+          source_objects.size() <= max_num_objects;
       auto object = composer(std::move(compose_range), is_final_composition);
       if (!object) {
-        return object.status();
+        return std::move(object).status();
       }
       objects.push_back(*std::move(object));
       if (!is_final_composition) {
