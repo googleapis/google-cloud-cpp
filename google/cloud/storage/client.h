@@ -3304,10 +3304,36 @@ StatusOr<ObjectMetadata> ComposeMany(
     return prefix + ".compose-tmp-" + std::to_string(num_tmp_objects++);
   };
 
-  for (;;) {
-    // The next layer in the tree of joined objects.
-    std::vector<ComposeSourceObject> next_source_objects;
+  auto to_source_objects = [](std::vector<ObjectMetadata> objects) {
+    std::vector<ComposeSourceObject> sources(objects.size());
+    std::transform(objects.begin(), objects.end(), sources.begin(),
+                   [](ObjectMetadata m) {
+                     return ComposeSourceObject{m.name(), m.generation(), {}};
+                   });
+    return sources;
+  };
 
+  auto composer = [&](std::vector<ComposeSourceObject> compose_range,
+                      bool is_final) -> StatusOr<ObjectMetadata> {
+    if (is_final) {
+      return google::cloud::internal::apply(
+          internal::ComposeApplyHelper{client, bucket_name,
+                                       std::move(compose_range),
+                                       std::move(destination_object_name)},
+          std::tuple_cat(std::make_tuple(IfGenerationMatch(0)), all_options));
+    }
+    return google::cloud::internal::apply(
+        internal::ComposeApplyHelper{client, bucket_name,
+                                     std::move(compose_range),
+                                     tmpobject_name_gen()},
+        StaticTupleFilter<
+            NotAmong<IfGenerationMatch, IfMetagenerationMatch>::TPred>(
+            all_options));
+  };
+
+  auto reduce = [&](std::vector<ComposeSourceObject> source_objects)
+      -> StatusOr<std::vector<ObjectMetadata>> {
+    std::vector<ObjectMetadata> objects;
     for (auto range_begin = source_objects.begin();
          range_begin != source_objects.end();) {
       auto range_end = std::next(
@@ -3319,50 +3345,38 @@ StatusOr<ObjectMetadata> ComposeMany(
 
       bool const is_final_composition = range_begin == source_objects.begin() &&
                                         range_end == source_objects.end();
-
-      auto object =
-          is_final_composition
-              ? google::cloud::internal::apply(
-                    internal::ComposeApplyHelper{
-                        client, bucket_name, std::move(compose_range),
-                        std::move(destination_object_name)},
-                    std::tuple_cat(std::make_tuple(IfGenerationMatch(0)),
-                                   all_options))
-              : google::cloud::internal::apply(
-                    internal::ComposeApplyHelper{client, bucket_name,
-                                                 std::move(compose_range),
-                                                 tmpobject_name_gen()},
-                    StaticTupleFilter<NotAmong<IfGenerationMatch,
-                                               IfMetagenerationMatch>::TPred>(
-                        all_options));
+      auto object = composer(std::move(compose_range), is_final_composition);
       if (!object) {
-        // deleter will try to cleanup. Even if it fails, original error is
-        // returned.
         return object.status();
       }
-      if (is_final_composition) {
-        // Don't defer the deletions to `deleter`'s dtor because we might want
-        // to return the status to the user.
-        auto deletion_status = deleter.ExecuteDelete();
-        if (!deletion_status.ok() && !ignore_cleanup_failures) {
-          return deletion_status;
-        }
-        return object;
+      objects.push_back(*std::move(object));
+      if (!is_final_composition) {
+        deleter.Add(objects.back());
       }
-
-      next_source_objects.emplace_back(
-          ComposeSourceObject{object->name(), object->generation(), {}});
-      deleter.Add(*std::move(object));
-
       range_begin = range_end;
     }
+    return objects;
+  };
 
-    source_objects.swap(next_source_objects);
-  }
-  // we should never reach this
-  return Status(StatusCode::kInternal,
-                "Bug in ComposeMany. Please report it at "
-                "https://github.com/googleapis/google-cloud-cpp/issues/new");
+  StatusOr<ObjectMetadata> result;
+  do {
+    StatusOr<std::vector<ObjectMetadata>> objects = reduce(source_objects);
+    if (!objects) {
+      return objects.status();
+    }
+    if (objects->size() == 1) {
+      if (!ignore_cleanup_failures) {
+        auto delete_status = deleter.ExecuteDelete();
+        if (!delete_status.ok()) {
+          return delete_status;
+        }
+      }
+      result = std::move((*objects)[0]);
+      break;
+    }
+    source_objects = to_source_objects(*std::move(objects));
+  } while (source_objects.size() > 1);
+  return result;
 }
 
 }  // namespace STORAGE_CLIENT_NS
