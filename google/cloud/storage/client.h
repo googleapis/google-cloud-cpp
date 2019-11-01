@@ -3171,6 +3171,213 @@ Status DeleteByPrefix(Client& client, std::string const& bucket_name,
   return Status();
 }
 
+namespace internal {
+
+// Just a wrapper to allow for use in `google::cloud::internal::apply`.
+struct ComposeApplyHelper {
+  template <typename... Options>
+  StatusOr<ObjectMetadata> operator()(Options... options) const {
+    return client.ComposeObject(
+        std::move(bucket_name), std::move(source_objects),
+        std::move(destination_object_name), std::move(options)...);
+  }
+
+  Client& client;
+  std::string bucket_name;
+  std::vector<ComposeSourceObject> source_objects;
+  std::string destination_object_name;
+};
+
+// A helper to defer deletion of temporary GCS objects.
+class ScopedDeleter {
+ public:
+  // The actual deletion depends on local's types in a very non-trivial way,
+  // so we abstract this away by providing the function to delete one object.
+  ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun);
+  ~ScopedDeleter();
+
+  /// Defer object's deletion to this objects destruction (or ExecuteDelete())
+  void Add(ObjectMetadata object);
+
+  /// Execute all the deferred deletions now.
+  Status ExecuteDelete();
+
+ private:
+  std::function<Status(ObjectMetadata)> delete_fun_;
+  std::vector<ObjectMetadata> object_list_;
+};
+
+}  // namespace internal
+
+/**
+ * Compose existing objects into a new object in the same bucket.
+ *
+ * Contrary to `Client::ComposeObject`, this function doesn't have a limit on
+ * the number of source objects.
+ *
+ * The implementation may need to perform multiple Client::ComposeObject calls
+ * to create intermediate, temporary objects which are then further composed.
+ * Due to the lack of atomicity of this series of operations, stray temporary
+ * objects might be left over if there are transient failuers. In order to allow
+ * the user to easily control for such situations, the user is expected to
+ * provide a unique @p prefix parameter, which will become the prefix of all the
+ * temporary objects created by this function. Once this function finishes, the
+ * user may safely remove all objects with the provided prefix (e.g. via
+ * DeleteByPrefix()). We recommend using CreateRandomPrefix() for selecting a
+ * random prefix within a bucket.
+ *
+ * @param client the client on which to perform the operations needed by this
+ *     function
+ * @param bucket_name the name of the bucket used for source object and
+ *     destination object.
+ * @param source_objects objects used to compose `destination_object_name`.
+ * @param destination_object_name the composed object name.
+ * @param prefix prefix for temporary objects created by this function; the user
+ *     should guarantee that there are no objects with this prefix (except for a
+ *     marker, as created by `CreateRandomPrefix`)
+ * @param ignore_cleanup_failures if the composition succeeds but cleanup of
+ *     temporary objects fails, depending on this parameter either a success
+ *     will be returned (`true`) or the relevant cleanup error (`false`)
+ * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `DestinationPredefinedAcl`,
+ *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`
+ *     `KmsKeyName`, `QuotaUser`, `UserIp`, `UserProject` and
+ *     `WithObjectMetadata`.
+ *
+ * @par Idempotency
+ * This operation is not idempotent. While each request performed by this
+ * function is retried based on the client policies, the operation itself stops
+ * on the first request that fails.
+ *
+ * @par Example
+ * @snippet storage_object_samples.cc compose object from many
+ */
+template <typename... Options>
+StatusOr<ObjectMetadata> ComposeMany(
+    Client& client, std::string const& bucket_name,
+    std::vector<ComposeSourceObject> source_objects, std::string const& prefix,
+    std::string destination_object_name, bool ignore_cleanup_failures,
+    Options&&... options) {
+  using internal::Among;
+  using internal::NotAmong;
+  using internal::StaticTupleFilter;
+  std::size_t const max_num_objects = 32;
+
+  if (prefix.empty()) {
+    // In theory, nothing prevents us from using an empty prefix, but this is
+    // most likely a misuse. We recommend running `DeleteByPrefix` on this
+    // prefix, so this might not be the best idea.
+    return Status(StatusCode::kInvalidArgument,
+                  "ComposeMany requires a non-empty prefix to create temporary "
+                  "objects. Please check the documentation.");
+  }
+
+  if (source_objects.empty()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "ComposeMany requires at least one source object.");
+  }
+
+  auto all_options = std::tie(options...);
+
+  // TODO(#3247): this list of type should somehow be generated
+  static_assert(
+      std::tuple_size<decltype(
+              StaticTupleFilter<NotAmong<
+                  DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
+                  IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp,
+                  UserProject, WithObjectMetadata>::TPred>(
+                  all_options))>::value == 0,
+      "This functions accepts only options of type DestinationPredefinedAcl, "
+      "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
+      "QuotaUser, UserIp, UserProject or WithObjectMetadata.");
+
+  internal::ScopedDeleter deleter([&](ObjectMetadata const& object) {
+    return google::cloud::internal::apply(
+        internal::DeleteApplyHelper{client, bucket_name, object.name()},
+        std::tuple_cat(
+            std::make_tuple(IfGenerationMatch(object.generation())),
+            StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
+  });
+
+  std::size_t num_tmp_objects = 0;
+  auto tmpobject_name_gen = [&num_tmp_objects, &prefix] {
+    return prefix + ".compose-tmp-" + std::to_string(num_tmp_objects++);
+  };
+
+  auto to_source_objects = [](std::vector<ObjectMetadata> objects) {
+    std::vector<ComposeSourceObject> sources(objects.size());
+    std::transform(objects.begin(), objects.end(), sources.begin(),
+                   [](ObjectMetadata m) {
+                     return ComposeSourceObject{m.name(), m.generation(), {}};
+                   });
+    return sources;
+  };
+
+  auto composer = [&](std::vector<ComposeSourceObject> compose_range,
+                      bool is_final) -> StatusOr<ObjectMetadata> {
+    if (is_final) {
+      return google::cloud::internal::apply(
+          internal::ComposeApplyHelper{client, bucket_name,
+                                       std::move(compose_range),
+                                       std::move(destination_object_name)},
+          std::tuple_cat(std::make_tuple(IfGenerationMatch(0)), all_options));
+    }
+    return google::cloud::internal::apply(
+        internal::ComposeApplyHelper{client, bucket_name,
+                                     std::move(compose_range),
+                                     tmpobject_name_gen()},
+        StaticTupleFilter<
+            NotAmong<IfGenerationMatch, IfMetagenerationMatch>::TPred>(
+            all_options));
+  };
+
+  auto reduce = [&](std::vector<ComposeSourceObject> source_objects)
+      -> StatusOr<std::vector<ObjectMetadata>> {
+    std::vector<ObjectMetadata> objects;
+    for (auto range_begin = source_objects.begin();
+         range_begin != source_objects.end();) {
+      std::size_t range_size = std::min<std::size_t>(
+          std::distance(range_begin, source_objects.end()), max_num_objects);
+      auto range_end = std::next(range_begin, range_size);
+      std::vector<ComposeSourceObject> compose_range(range_size);
+      std::move(range_begin, range_end, compose_range.begin());
+
+      bool const is_final_composition =
+          source_objects.size() <= max_num_objects;
+      auto object = composer(std::move(compose_range), is_final_composition);
+      if (!object) {
+        return std::move(object).status();
+      }
+      objects.push_back(*std::move(object));
+      if (!is_final_composition) {
+        deleter.Add(objects.back());
+      }
+      range_begin = range_end;
+    }
+    return objects;
+  };
+
+  StatusOr<ObjectMetadata> result;
+  do {
+    StatusOr<std::vector<ObjectMetadata>> objects = reduce(source_objects);
+    if (!objects) {
+      return objects.status();
+    }
+    if (objects->size() == 1) {
+      if (!ignore_cleanup_failures) {
+        auto delete_status = deleter.ExecuteDelete();
+        if (!delete_status.ok()) {
+          return delete_status;
+        }
+      }
+      result = std::move((*objects)[0]);
+      break;
+    }
+    source_objects = to_source_objects(*std::move(objects));
+  } while (source_objects.size() > 1);
+  return result;
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

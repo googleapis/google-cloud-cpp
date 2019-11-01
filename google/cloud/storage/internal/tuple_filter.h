@@ -143,6 +143,18 @@ StaticTupleFilter(Tuple&& t) {
 }
 
 /**
+ * A factory of template predicates checking for presence on a type list
+ *
+ * @tparam Types the list of types which for which the predicate returns true.
+ */
+template <typename... Types>
+struct Among {
+  template <typename T>
+  using TPred = google::cloud::internal::disjunction<
+      std::is_same<typename std::decay<T>::type, Types>...>;
+};
+
+/**
  * A factory of template predicates checking for lack of presence on a type list
  *
  * @tparam Types the list of types which for which the predicate returns false.

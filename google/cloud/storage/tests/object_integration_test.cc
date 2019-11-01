@@ -996,6 +996,45 @@ TEST_F(ObjectIntegrationTest, DeleteAccessControlFailure) {
   ASSERT_FALSE(status.ok());
 }
 
+TEST_F(ObjectIntegrationTest, ComposeMany) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto prefix_md = CreateRandomPrefix(*client, bucket_name, "");
+  ASSERT_STATUS_OK(prefix_md);
+  std::string const& prefix = prefix_md->name();
+  std::string const dest_object_name = prefix + ".dest";
+
+  std::vector<ComposeSourceObject> source_objs;
+  std::string expected;
+  for (int i = 0; i != 100; ++i) {
+    std::string const object_name = prefix + ".src-" + std::to_string(i);
+    std::string content = std::to_string(i);
+    expected += content;
+    StatusOr<ObjectMetadata> insert_meta = client->InsertObject(
+        bucket_name, object_name, std::move(content), IfGenerationMatch(0));
+    ASSERT_STATUS_OK(insert_meta);
+    source_objs.emplace_back(ComposeSourceObject{
+        std::move(object_name), insert_meta->generation(), {}});
+  }
+
+  auto res = ComposeMany(*client, bucket_name, std::move(source_objs),
+                         prefix + ".tmp", dest_object_name, false);
+
+  ASSERT_STATUS_OK(res);
+  EXPECT_EQ(dest_object_name, res->name());
+
+  auto stream = client->ReadObject(bucket_name, dest_object_name);
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  auto deletion_status =
+      DeleteByPrefix(*client, bucket_name, prefix, Versions());
+  ASSERT_STATUS_OK(deletion_status);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
