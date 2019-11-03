@@ -18,21 +18,19 @@ load("//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 
-load("@com_github_googleapis_google_cloud_cpp_common//bazel:google_cloud_cpp_common_deps.bzl", "google_cloud_cpp_common_deps")
-
-google_cloud_cpp_common_deps()
-
+# Configure @com_google_googleapis to only compile C++ and gRPC libraries.
 load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
 
-# Configure @com_google_googleapis to only compile C++ and gRPC:
 switched_rules_by_language(
     name = "com_google_googleapis_imports",
     cc = True,  # C++ support is only "Partially implemented", roll our own.
     grpc = True,
 )
 
-# Have to manually call the corresponding function for gRPC:
-#   https://github.com/bazelbuild/bazel/issues/1550
+load("@com_github_googleapis_google_cloud_cpp_common//bazel:google_cloud_cpp_common_deps.bzl", "google_cloud_cpp_common_deps")
+
+google_cloud_cpp_common_deps()
+
 load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
 
 grpc_deps()
