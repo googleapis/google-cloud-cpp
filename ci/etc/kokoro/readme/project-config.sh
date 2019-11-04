@@ -25,6 +25,3 @@ declare -A ORIGINAL_COPYRIGHT_YEAR=(
   [ubuntu-xenial]=2018
   [ubuntu-bionic]=2018
 )
-
-declare -a FROZEN_FILES=()
-
