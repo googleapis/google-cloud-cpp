@@ -20,6 +20,11 @@ if [[ $# -ne 1 ]]; then
   exit 1
 fi
 
+if [[ "${BASH_VERSINFO[0]}" -lt 4 || "${BASH_VERSINFO[1]}" -lt 4 ]]; then
+  echo "This script requires BASH >= 4.4, found ${BASH_VERSION}"
+  exit 1
+fi
+
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   PROJECT_ROOT="$(cd "$(dirname "$0")/../.."; pwd)"
   readonly PROJECT_ROOT
@@ -53,8 +58,10 @@ source "${DESTINATION_ROOT}/ci/etc/kokoro/install/project-config.sh"
 
 generate_dockerfile() {
   local -r build="$1"
+  local -r path="kokoro/install/Dockerfile.${build}"
+  local -r target="${DESTINATION_ROOT}/ci/${path}"
+  local -r source="${PROJECT_ROOT}/ci/templates/${path}.in"
 
-  target="${DESTINATION_ROOT}/ci/kokoro/install/Dockerfile.${build}"
   echo "Generating ${target}"
   replace_fragments \
         "WARNING_GENERATED_FILE_FRAGMENT" \
@@ -66,7 +73,7 @@ generate_dockerfile() {
         "INSTALL_CRC32C_FROM_SOURCE" \
         "INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE" \
         "BUILD_AND_TEST_PROJECT_FRAGMENT" \
-    <"${PROJECT_ROOT}/ci/templates/kokoro/install/Dockerfile.${build}.in" | \
+    <"${source}" | \
   sed -e "s/Copyright [0-9][0-9][0-9][0-9]/Copyright ${ORIGINAL_COPYRIGHT_YEAR[${build}]}/" \
     >"${target}"
 }
@@ -87,6 +94,14 @@ for build in "${BUILD_NAMES[@]}"; do
   touch "${DESTINATION_ROOT}/ci/kokoro/install/${build}.cfg"
   touch "${DESTINATION_ROOT}/ci/kokoro/install/${build}-presubmit.cfg"
   generate_dockerfile "${build}"
+done
+
+# The project-config.sh file may specify a number of "frozen" files, that is,
+# files that are not modified by this script.
+for file in "${FROZEN_FILES[@]}"; do
+  echo "Restoring ... ${file}"
+  git -C "${DESTINATION_ROOT}" reset HEAD "${file}"
+  git -C "${DESTINATION_ROOT}" checkout -- "${file}"
 done
 
 git -C "${DESTINATION_ROOT}" add "ci/kokoro/install"

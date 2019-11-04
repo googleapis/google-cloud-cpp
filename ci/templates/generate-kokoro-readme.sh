@@ -20,6 +20,11 @@ if [[ $# -ne 1 ]]; then
   exit 1
 fi
 
+if [[ "${BASH_VERSINFO[0]}" -lt 4 || "${BASH_VERSINFO[1]}" -lt 4 ]]; then
+  echo "This script requires BASH >= 4.4, found ${BASH_VERSION}"
+  exit 1
+fi
+
 DESTINATION_ROOT="$1"
 readonly DESTINATION_ROOT
 
@@ -93,6 +98,14 @@ for build in "${BUILD_NAMES[@]}"; do
   touch "${DESTINATION_ROOT}/ci/kokoro/readme/${build}.cfg"
   touch "${DESTINATION_ROOT}/ci/kokoro/readme/${build}-presubmit.cfg"
   generate_dockerfile "${build}"
+done
+
+# The project-config.sh file may specify a number of "frozen" files, that is,
+# files that are not modified by this script.
+for file in "${FROZEN_FILES[@]}"; do
+  echo "Restoring ... ${file}"
+  git -C "${DESTINATION_ROOT}" reset HEAD "${file}"
+  git -C "${DESTINATION_ROOT}" checkout -- "${file}"
 done
 
 git -C "${DESTINATION_ROOT}" add "ci/kokoro/readme"
