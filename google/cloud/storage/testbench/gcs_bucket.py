@@ -151,7 +151,7 @@ class GcsBucket(object):
         tmp.update({
             'id': self.name,
             'kind': 'storage#bucket',
-            'selfLink': self.gcs_url + self.name,
+            'selfLink': self.gcs_url + self.name.decode(),
             'projectNumber': '123456789',
             'timeCreated': '2018-05-19T19:31:14Z',
             'updated': '2018-05-19T19:31:24Z',
@@ -222,7 +222,7 @@ class GcsBucket(object):
             'email': email,
             'entity': entity,
             'etag': self.metadata.get('etag', 'XYZ='),
-            'id': self.metadata.get('id', '') + '/' + entity,
+            'id': self.metadata.get('id', b'').decode() + '/' + entity,
             'kind': 'storage#bucketAccessControl',
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
@@ -299,7 +299,7 @@ class GcsBucket(object):
             'email': email,
             'entity': entity,
             'etag': self.metadata.get('etag', 'XYZ='),
-            'id': self.metadata.get('id', '') + '/' + entity,
+            'id': self.metadata.get('id', b'').decode() + '/' + entity,
             'kind': 'storage#objectAccessControl',
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
@@ -577,7 +577,7 @@ class GcsBucket(object):
         for precondition in ['ifGenerationMatch', 'ifGenerationNotMatch',
                              'ifMetagenerationMatch', 'ifMetagenerationNotMatch']:
             upload[precondition] = request.args.get(precondition)
-        upload_id = base64.b64encode(metadata.get('name'))
+        upload_id = base64.b64encode(metadata.get('name').encode())
         self.resumable_uploads[upload_id] = upload
         location = '%s?uploadType=resumable&upload_id=%s' % (
             upload_url, upload_id)
