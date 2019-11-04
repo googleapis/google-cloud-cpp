@@ -489,27 +489,26 @@ ctest --output-on-failure
 You will find compiled binaries in `cmake-out\` respective to their
 source directories.
 
-### Install
+### Installing `google-cloud-cpp` using CMake
 
-By default `google-cloud-cpp` downloads and compiles all its dependencies.
-The default configuration disables the `install` target, because the version of
-the dependencies downloaded by `google-cloud-cpp` may conflict with the versions
-already installed in your system, or with the versions you want to use for
-development.
+The default CMake builds for `google-cloud-cpp` assume that all the necessary
+dependencies are installed in your system. Installing the dependencies may be as
+simple as using the package manager for your platform, or may require manually
+downloading, compiling, and installing a number of additional libraries. The
+[INSTALL.md](INSTALL.md) file describes how to successfully install
+`google-cloud-cpp` on several platforms.
 
-To install `google-cloud-cpp` you must first install all its dependencies. Then
-you must configure `google-cloud-cpp` to find these dependencies, and install
-it.
+If installing all the dependencies is not an option for you, consider using a
+CMake [super build][super-build-link], an example of such can be found in the
+`super/` directory.
 
-Installing the dependencies themselves may be as simple as using the package
-manager for your platform, or may require manually downloading, compiling, and
-installing said dependencies.  The [INSTALL.md](INSTALL.md) file describes how
-to successfully install `google-cloud-cpp` on several platforms.
+Alternatively, you may be able to use `google-cloud-cpp` as a git submodule of
+your source, and then use CMake's [`add_subdirectory()`][add-subdirectory-link]
+command to compile the project as part of your build. However, this is **not**
+a configuration that we test routinely and/or we recommend for teams working on
+large projects.
 
-Alternatively, if you prefer to use `google-cloud-cpp` as a submodule, you can
-use the CMake command
-[`add_subdirectory()`](https://cmake.org/cmake/help/latest/command/add_subdirectory.html)
-to include `google-cloud-cpp` directly in your CMake project.
+[add-subdirectory-link]: https://cmake.org/cmake/help/latest/command/add_subdirectory.html
 
 ## Versioning
 
