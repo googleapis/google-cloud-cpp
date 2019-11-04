@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2019 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,26 +18,31 @@
 #         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
 #
 
-ARG DISTRO_VERSION=stretch
-FROM debian:${DISTRO_VERSION} AS devtools
+ARG DISTRO_VERSION=8
+FROM centos:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
 ## [START INSTALL.md]
 
-# First install the development tools and libcurl.
-# On Debian 9, libcurl links against openssl-1.0.2, and one must link
-# against the same version or risk an inconsistent configuration of the library.
-# This is especially important for multi-threaded applications, as openssl-1.0.2
-# requires explicitly setting locking callbacks. Therefore, to use libcurl one
-# must link against openssl-1.0.2. To do so, we need to install libssl1.0-dev.
-# Note that this removes libssl-dev if you have it installed already, and would
-# prevent you from compiling against openssl-1.1.0.
+# Install the minimal development tools, libcurl, OpenSSL, and the c-ares
+# library (required by gRPC):
 
 # ```bash
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
-        pkg-config tar wget zlib1g-dev
+RUN dnf makecache && \
+    dnf install -y cmake gcc-c++ git make openssl-devel pkgconfig \
+        zlib-devel libcurl-devel c-ares-devel tar wget which
+# ```
+
+# The following steps will install libraries and tools in `/usr/local`. By
+# default CentOS-8 does not search for shared libraries in these directories,
+# there are multiple ways to solve this problem, the following steps are one
+# solution:
+
+# ```bash
+RUN (echo "/usr/local/lib" ; echo "/usr/local/lib64") | \
+    tee /etc/ld.so.conf.d/usrlocal.conf
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
+ENV PATH=/usr/local/bin:${PATH}
 # ```
 
 # #### Protobuf
@@ -62,8 +67,8 @@ RUN wget -q https://github.com/google/protobuf/archive/v3.9.1.tar.gz && \
 
 # #### gRPC
 
-# To install gRPC we first need to configure pkg-config to find the version of
-# Protobuf we just installed in `/usr/local`:
+# We also need a version of gRPC that is recent enough to support the Google
+# Cloud Platform proto files. We manually install it using:
 
 # ```bash
 WORKDIR /var/tmp/build

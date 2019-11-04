@@ -12,13 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# WARNING: This is an automatically generated file. Consider changing the
+#     sources instead. You can find the source templates and scripts at:
+#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#
+
 ARG DISTRO_VERSION=latest
 FROM opensuse/tumbleweed:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
 ## [START INSTALL.md]
 
-# Install the minimal development tools:
+# Install the minimal development tools, libcurl and OpenSSL:
 
 # ```bash
 RUN zypper refresh && \
@@ -26,49 +32,49 @@ RUN zypper refresh && \
         libcurl-devel libopenssl-devel make tar wget zlib-devel
 # ```
 
-# openSUSE Tumbleweed provides packages for gRPC, libcurl, and protobuf, and the
-# versions of these packages are recent enough to support the Google Cloud
-# Platform proto files.
+# The versions of gRPC and Protobuf packaged with openSUSE/Tumbleweed are recent
+# enough to support the Google Cloud Platform proto files.
 
 # ```bash
 RUN zypper refresh && \
-    zypper install -y grpc-devel gzip libcurl-devel tar wget
+    zypper install -y grpc-devel
 # ```
 
 # #### crc32c
 
-# There is no openSUSE package for this library. To install it, use:
+# The project depends on the Crc32c library, we need to compile this from
+# source:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz
-RUN tar -xf 1.0.6.tar.gz
-WORKDIR /var/tmp/build/crc32c-1.0.6
-RUN cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DCRC32C_BUILD_TESTS=OFF \
-      -DCRC32C_BUILD_BENCHMARKS=OFF \
-      -DCRC32C_USE_GLOG=OFF \
-      -H. -Bcmake-out/crc32c
-RUN cmake --build cmake-out/crc32c --target install -- -j ${NCPU:-4}
-RUN ldconfig
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz && \
+    tar -xf 1.0.6.tar.gz && \
+    cd crc32c-1.0.6 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
 # ```
 
 # #### googleapis
 
-# There is no openSUSE package for this library. To install it, use:
+# We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.5.tar.gz
-RUN tar -xf v0.1.5.tar.gz
-WORKDIR /var/tmp/build/cpp-cmakefiles-0.1.5
-RUN cmake \
-    -DBUILD_SHARED_LIBS=YES \
-    -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
-RUN ldconfig
+RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.5.tar.gz && \
+    tar -xf v0.1.5.tar.gz && \
+    cd cpp-cmakefiles-0.1.5 && \
+    cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
 # ```
 
 # #### googletest
@@ -78,58 +84,56 @@ RUN ldconfig
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz
-RUN tar -xf release-1.10.0.tar.gz
-WORKDIR /var/tmp/build/googletest-release-1.10.0
-RUN cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out
-RUN cmake --build cmake-out --target install -- -j ${NCPU:-4}
-RUN ldconfig
+RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
+    tar -xf release-1.10.0.tar.gz && \
+    cd googletest-release-1.10.0 && \
+    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
 # ```
 
 # #### google-cloud-cpp-common
 
-# We need to install the Google Cloud C++ common libraries:
+# The project also depends on google-cloud-cpp-common, the libraries shared by
+# all the Google Cloud C++ client libraries:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz
-RUN tar -xf v0.16.0.tar.gz
-WORKDIR /var/tmp/build/google-cloud-cpp-common-0.16.0
-# Compile without the tests because we are testing google-cloud-cpp, not the base
-# libraries
-RUN cmake -H. -Bcmake-out \
-    -DBUILD_TESTING=OFF \
-    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN cmake --build cmake-out --target install
-RUN ldconfig
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz && \
+    tar -xf v0.16.0.tar.gz && \
+    cd google-cloud-cpp-common-0.16.0 && \
+    cmake -H. -Bcmake-out \
+        -DBUILD_TESTING=OFF \
+        -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
 # ```
 
 FROM devtools AS install
 ARG NCPU=4
 
-# #### google-cloud-cpp
+# #### Compile and install the main project
 
-# We can now compile and install `google-cloud-cpp`.
+# We can now compile, test, and install `google-cloud-cpp`.
 
 # ```bash
-WORKDIR /home/build/google-cloud-cpp
-COPY . /home/build/google-cloud-cpp
+WORKDIR /home/build/project
+COPY . /home/build/project
 RUN cmake -H. -Bcmake-out
-RUN cmake --build cmake-out -- -j ${NCPU:-4}
-WORKDIR /home/build/google-cloud-cpp/cmake-out
-RUN ctest --output-on-failure
+RUN cmake --build cmake-out -- -j "${NCPU:-4}"
+WORKDIR /home/build/project/cmake-out
+RUN ctest -LE integration-tests --output-on-failure
 RUN cmake --build . --target install
 # ```
 
 ## [END INSTALL.md]
 
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
+
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 COPY ci/test-install /home/build/test-install-plain-make
 RUN make
 

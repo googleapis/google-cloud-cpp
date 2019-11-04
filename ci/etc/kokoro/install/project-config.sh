@@ -26,6 +26,10 @@ declare -A ORIGINAL_COPYRIGHT_YEAR=(
   [ubuntu-bionic]=2018
 )
 
+declare -a FROZEN_FILES=(
+  "ci/kokoro/install/Dockerfile.ubuntu-trusty"
+)
+
 BUILD_AND_TEST_PROJECT_FRAGMENT=$(replace_fragments \
       "INSTALL_CRC32C_FROM_SOURCE" \
       "INSTALL_CPP_CMAKEFILES_FROM_SOURCE" \
@@ -63,7 +67,7 @@ BUILD_AND_TEST_PROJECT_FRAGMENT=$(replace_fragments \
 # all the Google Cloud C++ client libraries:
 
 # ```bash
-@INSTALL_GOOGLETEST_FROM_SOURCE@
+@INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE@
 # ```
 
 FROM devtools AS install

@@ -12,18 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+#
+# WARNING: This is an automatically generated file. Consider changing the
+#     sources instead. You can find the source templates and scripts at:
+#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#
+
 ARG DISTRO_VERSION=7
 FROM centos:${DISTRO_VERSION} AS devtools
 ARG NCPU=4
 
-# Please keep the formatting in these commands, it is optimized to cut & paste
-# into the README.md file.
-
 ## [START INSTALL.md]
 
 # First install the development tools and OpenSSL. The development tools
-# distributed with CentOS (notably CMake) are too old to build
-# `google-cloud-cpp`. In these instructions, we use `cmake3` obtained from
+# distributed with CentOS 7 (notably CMake) are too old to build
+# the project. In these instructions, we use `cmake3` obtained from
 # [Software Collections](https://www.softwarecollections.org/).
 
 # ```bash
@@ -48,40 +51,22 @@ ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/local/lib64/pkgconfig
 ENV PATH=/usr/local/bin:${PATH}
 # ```
 
-# #### crc32c
-
-# There is no CentOS package for this library. To install it use:
-
-# ```bash
-WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz && \
-    tar -xf 1.0.6.tar.gz && \
-    cd crc32c-1.0.6 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=yes \
-      -DCRC32C_BUILD_TESTS=OFF \
-      -DCRC32C_BUILD_BENCHMARKS=OFF \
-      -DCRC32C_USE_GLOG=OFF \
-      -H. -Bcmake-out/crc32c && \
-    cmake --build cmake-out/crc32c --target install -- -j ${NCPU:-4} && \
-    ldconfig
-# ```
-
 # #### Protobuf
 
-# Likewise, manually install protobuf:
+# We need to install a version of Protobuf that is recent enough to support the
+# Google Cloud Platform proto files:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.6.1.tar.gz && \
-    tar -xf v3.6.1.tar.gz && \
-    cd protobuf-3.6.1/cmake && \
+RUN wget -q https://github.com/google/protobuf/archive/v3.9.1.tar.gz && \
+    tar -xf v3.9.1.tar.gz && \
+    cd protobuf-3.9.1/cmake && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
         -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
@@ -96,39 +81,58 @@ WORKDIR /var/tmp/build
 RUN wget -q https://github.com/c-ares/c-ares/archive/cares-1_14_0.tar.gz && \
     tar -xf cares-1_14_0.tar.gz && \
     cd c-ares-cares-1_14_0 && \
-    ./buildconf && \
-    ./configure && \
-    make -j ${NCPU:-4} && \
+    ./buildconf && ./configure && make -j ${NCPU:-4} && \
     make install && \
     ldconfig
 # ```
 
 # #### gRPC
 
-# Can be manually installed using:
+# We also need a version of gRPC that is recent enough to support the Google
+# Cloud Platform proto files. We manually install it using:
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.19.1.tar.gz && \
-    tar -xf v1.19.1.tar.gz && \
-    cd grpc-1.19.1 && \
+RUN wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
+    tar -xf v1.23.1.tar.gz && \
+    cd grpc-1.23.1 && \
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig
 # ```
 
+# #### crc32c
+
+# The project depends on the Crc32c library, we need to compile this from
+# source:
+
+# ```bash
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz && \
+    tar -xf 1.0.6.tar.gz && \
+    cd crc32c-1.0.6 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=yes \
+        -DCRC32C_BUILD_TESTS=OFF \
+        -DCRC32C_BUILD_BENCHMARKS=OFF \
+        -DCRC32C_USE_GLOG=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
 # #### googleapis
 
-# There is no CentOS package for this library. To install it, use:
+# We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 # ```bash
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.1.5.tar.gz && \
     tar -xf v0.1.5.tar.gz && \
     cd cpp-cmakefiles-0.1.5 && \
-    cmake \
-      -DBUILD_SHARED_LIBS=YES \
-      -H. -Bcmake-out && \
+    cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -144,10 +148,7 @@ WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz && \
     tar -xf release-1.10.0.tar.gz && \
     cd googletest-release-1.10.0 && \
-    cmake \
-      -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_SHARED_LIBS=yes \
-      -H. -Bcmake-out && \
+    cmake -DCMAKE_BUILD_TYPE="Release" -DBUILD_SHARED_LIBS=yes -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -155,42 +156,42 @@ RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz &
 
 # #### google-cloud-cpp-common
 
-# We need to install the Google Cloud C++ common libraries:
+# The project also depends on google-cloud-cpp-common, the libraries shared by
+# all the Google Cloud C++ client libraries:
 
 # ```bash
 WORKDIR /var/tmp/build
-## Compile without the tests because we are testing google-cloud-cpp, not the
-## common libraries, but we need the testing_utils because we use it in the
-## google-cloud-cpp tests.
 RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz && \
     tar -xf v0.16.0.tar.gz && \
     cd google-cloud-cpp-common-0.16.0 && \
     cmake -H. -Bcmake-out \
-      -DBUILD_TESTING=OFF \
-      -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
+        -DBUILD_TESTING=OFF \
+        -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
-    cmake --build cmake-out --target install && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
 
 FROM devtools AS install
 ARG NCPU=4
 
-# #### google-cloud-cpp
+# #### Compile and install the main project
 
-# Finally we can install `google-cloud-cpp`.
+# We can now compile, test, and install `google-cloud-cpp`.
 
 # ```bash
-WORKDIR /var/tmp/build/google-cloud-cpp
-COPY . /var/tmp/build/google-cloud-cpp
+WORKDIR /home/build/project
+COPY . /home/build/project
 RUN cmake -H. -Bcmake-out
-RUN cmake --build cmake-out -- -j ${NCPU:-4}
-WORKDIR /var/tmp/build/google-cloud-cpp/cmake-out
-RUN ctest --output-on-failure
+RUN cmake --build cmake-out -- -j "${NCPU:-4}"
+WORKDIR /home/build/project/cmake-out
+RUN ctest -LE integration-tests --output-on-failure
 RUN cmake --build . --target install
 # ```
 
 ## [END INSTALL.md]
+
+ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
 
 # Verify that the installed files are actually usable
 WORKDIR /home/build/test-install-plain-make
