@@ -21,9 +21,7 @@
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include "google/cloud/internal/make_unique.h"
-#include <google/spanner/v1/spanner.pb.h>
 #include <limits>
-#include <memory>
 
 namespace google {
 namespace cloud {
@@ -111,7 +109,8 @@ ConnectionImpl::ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
       stub_(std::move(stub)),
       retry_policy_(std::move(retry_policy)),
       backoff_policy_(std::move(backoff_policy)),
-      session_pool_(this) {}
+      session_pool_(std::make_shared<SessionPool>(
+          db_, stub_, retry_policy_->clone(), backoff_policy_->clone())) {}
 
 RowStream ConnectionImpl::Read(ReadParams params) {
   return internal::Visit(
@@ -286,7 +285,7 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
                                    spanner_proto::TransactionSelector& s,
                                    ReadParams params) {
   if (!session) {
-    auto session_or = AllocateSession();
+    auto session_or = session_pool_->Allocate();
     if (!session_or) {
       return RowStream(
           google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
@@ -348,7 +347,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   if (!session) {
     // Since the session may be sent to other machines, it should not be
     // returned to the pool when the Transaction is destroyed.
-    auto session_or = AllocateSession(/*dissociate_from_pool=*/true);
+    auto session_or = session_pool_->Allocate(/*dissociate_from_pool=*/true);
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -401,7 +400,7 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
         google::spanner::v1 ::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
   if (!session) {
-    auto session_or = AllocateSession();
+    auto session_or = session_pool_->Allocate();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -560,7 +559,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   if (!session) {
     // Since the session may be sent to other machines, it should not be
     // returned to the pool when the Transaction is destroyed.
-    auto session_or = AllocateSession(/*dissociate_from_pool=*/true);
+    auto session_or = session_pool_->Allocate(/*dissociate_from_pool=*/true);
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -606,7 +605,7 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteBatchDmlParams params) {
   if (!session) {
-    auto session_or = AllocateSession();
+    auto session_or = session_pool_->Allocate();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -649,7 +648,7 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecutePartitionedDmlParams params) {
   if (!session) {
-    auto session_or = AllocateSession();
+    auto session_or = session_pool_->Allocate();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -703,7 +702,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     CommitParams params) {
   if (!session) {
-    auto session_or = AllocateSession();
+    auto session_or = session_pool_->Allocate();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -743,7 +742,7 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
 Status ConnectionImpl::RollbackImpl(SessionHolder& session,
                                     spanner_proto::TransactionSelector& s) {
   if (!session) {
-    auto session_or = AllocateSession();
+    auto session_or = session_pool_->Allocate();
     if (!session_or) {
       return std::move(session_or).status();
     }
@@ -769,55 +768,6 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
         return stub_->Rollback(context, request);
       },
       request, __func__);
-}
-
-StatusOr<SessionHolder> ConnectionImpl::AllocateSession(
-    bool dissociate_from_pool) {
-  auto session = session_pool_.Allocate(dissociate_from_pool);
-  if (!session.ok()) {
-    return std::move(session).status();
-  }
-
-  if (dissociate_from_pool) {
-    // Uses the default deleter; the Session is not returned to the pool.
-    return {*std::move(session)};
-  }
-
-  std::weak_ptr<ConnectionImpl> connection = shared_from_this();
-  return SessionHolder(session->release(), [connection](Session* session) {
-    auto shared_connection = connection.lock();
-    // If `connection` is still alive, release the `Session` to its pool;
-    // otherwise just delete the `Session`.
-    if (shared_connection) {
-      shared_connection->ReleaseSession(session);
-    } else {
-      delete session;
-    }
-  });
-}
-
-StatusOr<std::vector<std::unique_ptr<Session>>> ConnectionImpl::CreateSessions(
-    int num_sessions) {
-  spanner_proto::BatchCreateSessionsRequest request;
-  request.set_database(db_.FullName());
-  request.set_session_count(std::int32_t{num_sessions});
-  auto response = RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
-      [this](grpc::ClientContext& context,
-             spanner_proto::BatchCreateSessionsRequest const& request) {
-        return stub_->BatchCreateSessions(context, request);
-      },
-      request, __func__);
-  if (!response) {
-    return response.status();
-  }
-  std::vector<std::unique_ptr<Session>> sessions;
-  sessions.reserve(response->session_size());
-  for (auto& session : *response->mutable_session()) {
-    sessions.push_back(google::cloud::internal::make_unique<Session>(
-        std::move(*session.mutable_name())));
-  }
-  return {std::move(sessions)};
 }
 
 }  // namespace internal

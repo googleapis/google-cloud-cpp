@@ -15,14 +15,22 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_POOL_H_
 
+#include "google/cloud/spanner/backoff_policy.h"
+#include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
+#include <google/spanner/v1/spanner.pb.h>
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>
+#include <map>
 #include <memory>
 #include <mutex>
+#include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -87,36 +95,59 @@ struct SessionPoolOptions {
  * backends maintain a cache of sessions which is valid for 30 seconds, so
  * re-using Sessions as quickly as possible has performance advantages.
  */
-class SessionPool {
+class SessionPool : public std::enable_shared_from_this<SessionPool> {
  public:
   /**
    * Create a `SessionPool`.
-   * Uses `manager` to create, delete, and refresh sessions in the pool.
+   *
+   * The parameters allow the `SessionPool` to make remote calls needed to
+   * manage the pool, and to associate `Session`s with the stubs used to
+   * create them.
    */
-  SessionPool(SessionManager* manager,
+  SessionPool(Database db, std::shared_ptr<SpannerStub> stub,
+              std::unique_ptr<RetryPolicy> retry_policy,
+              std::unique_ptr<BackoffPolicy> backoff_policy,
               SessionPoolOptions options = SessionPoolOptions());
 
   /**
-   * Allocate a session from the pool, creating a new `Session` if necessary.
-   * If `dissociate_from_pool` is true, the caller does not intend to return
-   * this `Session` to the pool.
-   * @returns an error if session creation fails; always returns a non-null
-   * pointer on success.
+   * Allocate a `Session` from the pool, creating a new one if necessary.
+   *
+   * The returned `SessionHolder` will return the `Session` to this pool, unless
+   * `dissociate_from_pool` is true, in which case it is not returned to the
+   * pool.  This is used in partitioned operations, since we don't know when all
+   * parties are done using the session.
+   *
+   * @return a `SessionHolder` on success (which is guaranteed not to be
+   * `nullptr`), or an error.
    */
-  StatusOr<std::unique_ptr<Session>> Allocate(
-      bool dissociate_from_pool = false);
-
-  /// Release `session` back to the pool.
-  void Release(std::unique_ptr<Session> session);
+  StatusOr<SessionHolder> Allocate(bool dissociate_from_pool = false);
 
  private:
+  /**
+   * Release session back to the pool.
+   *
+   * Note the parameter type is a raw pointer because this method will be called
+   * from a `SessionHolder` (aka `unique_ptr`) Deleter, which only has a
+   * pointer.
+   */
+  void Release(Session* session);
+
+  StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
+      int num_sessions);
+
+  SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
+                                  bool dissociate_from_pool);
+
   std::mutex mu_;
   std::condition_variable cond_;
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
   bool create_in_progress_ = false;                 // GUARDED_BY(mu_)
 
-  SessionManager* manager_;
+  Database db_;
+  std::shared_ptr<SpannerStub> stub_;
+  std::unique_ptr<RetryPolicy const> retry_policy_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_;
   SessionPoolOptions options_;
 };
 
