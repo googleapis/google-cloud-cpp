@@ -16,7 +16,26 @@ production workloads.
 
 ## Release Notes
 
-### v0.3.x - TBD
+### v0.4.x - TBD
+
+### v0.3.x - 2019-11
+
+* **Breaking Changes**
+    * feat!: class templates removed from keys.h (#936)
+    * feat!: change result return types (#942)
+    * refactor!: replaced Row<...> with std::tuple<...> (#967)
+    * feat!: support for select-star queries (#976)
+    * feat!: replace RunTransaction() with Client::Commit(functor) (#975)
+    * chore!: renamed QueryResult to RowStream (#978)
+    * chore!: renamed ExecuteSqlParams to SqlParams (#986)
+    * cleanup: depend on google-cloud-cpp-common (#940)
+
+* feat: configurable strategy for background threads (#955)
+* feat: add Profile and Analyze methods (#961)
+* feat: adds efficient move to support to Value:get<string>() (#980)
+* feat: add efficient move support to mutation builder temporaries (#989)
+* bug: only install the required headers (#993)
+* bug: install the headers for mocking (#997)
 
 ### v0.2.x - 2019-10
 * **Breaking Changes**
