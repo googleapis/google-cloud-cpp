@@ -42,7 +42,17 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.4.x - TBD
+### v1.4.x - 2019-11
+
+* **Breaking Changes**
+    * The common libraries have been moved
+      to the [google-cloud-cpp-common repository][github-cpp-common].
+      While this may not be a technically breaking change (the API and ABI
+      remain unchanged, the include paths are the same), it will require
+      application developers to change their build scripts.
+      [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
+    * Submodule builds no longer supported.
+* bug: pass along error message in Table:Apply retry loop (#3208)
 
 ### v1.3.x - 2019-10
 
