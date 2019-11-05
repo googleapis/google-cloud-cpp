@@ -29,8 +29,8 @@ class GcsBucket(object):
 
     def __init__(self, gcs_url, name):
         self.name = name
-        if type(self.name) is not bytes:
-            self.name = self.name.encode()
+        if type(self.name) is bytes:
+            self.name = self.name.decode()
         
         self.gcs_url = gcs_url
         self.metadata = {
@@ -151,7 +151,7 @@ class GcsBucket(object):
         tmp.update({
             'id': self.name,
             'kind': 'storage#bucket',
-            'selfLink': self.gcs_url + self.name.decode(),
+            'selfLink': self.gcs_url + self.name,
             'projectNumber': '123456789',
             'timeCreated': '2018-05-19T19:31:14Z',
             'updated': '2018-05-19T19:31:24Z',
