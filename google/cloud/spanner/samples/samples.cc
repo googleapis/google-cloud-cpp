@@ -427,6 +427,36 @@ void CreateDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void AddIndex(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "add-index <project-id> <instance-id> <database-id>");
+  }
+  // [START spanner_create_index]
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& database_id) {
+    google::cloud::spanner::DatabaseAdminClient client;
+    google::cloud::spanner::Database database(project_id, instance_id,
+                                              database_id);
+    future<StatusOr<
+        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+        future = client.UpdateDatabase(
+            database,
+            {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"});
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+        result = future.get();
+    if (!result) {
+      throw std::runtime_error(result.status().message());
+    }
+    std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
+              << result->DebugString() << "\n";
+  }
+  // [END spanner_create_index]
+  (argv[0], argv[1], argv[2]);
+}
+
 //! [get-database]
 void GetDatabase(google::cloud::spanner::DatabaseAdminClient client,
                  std::string const& project_id, std::string const& instance_id,
@@ -1289,6 +1319,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"remove-database-reader", &RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
       {"create-database", &CreateDatabase},
+      {"add-index", &AddIndex},
       {"get-database", &GetDatabaseCommand},
       {"get-database-ddl", &GetDatabaseCommandDdl},
       {"add-column", &AddColumn},
@@ -1440,6 +1471,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_create_database sample\n";
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning spanner_create_index sample\n";
+  RunOneCommand({"", "add-index", project_id, instance_id, database_id});
 
   std::cout << "\nRunning spanner get-database sample\n";
   RunOneCommand({"", "get-database", project_id, instance_id, database_id});
