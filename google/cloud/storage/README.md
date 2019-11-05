@@ -44,6 +44,8 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
+### v1.7.x - TBD
+
 ### v1.6.x - 2019-11
 
 * **Breaking Changes**
@@ -54,10 +56,8 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
       application developers to change their build scripts.
       [github-cpp-common]: https://github.com/googleapis/google-cloud-cpp-common
     * Submodule builds no longer supported.
-* Issue (#3016) resolved:
-    * feat: implement `ComposeMany`
-    * feat: implement deleting objects by prefix.
-    * feat: implement tuple filtering.
+* feat: implement `ComposeMany` to efficiently compose more than 32 GCS objects
+* feat: implement a function to delete all the objects that match a given prefix
 * feat: support uniform bucket level access #3186
 * bug: use separate policy instances for each UploadChunk request #3213
 
