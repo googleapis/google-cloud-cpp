@@ -321,9 +321,9 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     return f;
   }
   std::shared_ptr<internal::InstanceAdminStub> stub_;
-  std::unique_ptr<RetryPolicy> retry_policy_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_;
-  std::unique_ptr<PollingPolicy> polling_policy_;
+  std::unique_ptr<RetryPolicy const> retry_policy_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_;
+  std::unique_ptr<PollingPolicy const> polling_policy_;
 };
 }  // namespace
 

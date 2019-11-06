@@ -157,8 +157,8 @@ class ConnectionImpl : public Connection {
 
   Database db_;
   std::shared_ptr<SpannerStub> stub_;
-  std::shared_ptr<RetryPolicy> retry_policy_;
-  std::shared_ptr<BackoffPolicy> backoff_policy_;
+  std::shared_ptr<RetryPolicy const> retry_policy_;
+  std::shared_ptr<BackoffPolicy const> backoff_policy_;
   std::shared_ptr<SessionPool> session_pool_;
 };
 
