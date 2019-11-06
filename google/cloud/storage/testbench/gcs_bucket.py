@@ -222,7 +222,7 @@ class GcsBucket(object):
             'email': email,
             'entity': entity,
             'etag': self.metadata.get('etag', 'XYZ='),
-            'id': self.metadata.get('id', b'').decode() + '/' + entity,
+            'id': self.metadata.get('id', '') + '/' + entity,
             'kind': 'storage#bucketAccessControl',
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
