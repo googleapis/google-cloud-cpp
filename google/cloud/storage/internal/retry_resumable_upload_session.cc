@@ -61,8 +61,8 @@ RetryResumableUploadSession::UploadGenericChunk(
   // TODO(#3036): change the APIs to avoid this extra copy.
   std::string const* buffer_to_use = &buffer;
   std::string truncated_buffer;
-  auto retry_policy = retry_policy_->clone();
-  auto backoff_policy = backoff_policy_->clone();
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
   while (!retry_policy->IsExhausted()) {
     std::uint64_t new_next_byte = session_->next_expected_byte();
     if (new_next_byte < next_byte) {
@@ -142,8 +142,8 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession(
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
-  auto retry_policy = retry_policy_->clone();
-  auto backoff_policy = backoff_policy_->clone();
+  auto retry_policy = retry_policy_prototype_->clone();
+  auto backoff_policy = backoff_policy_prototype_->clone();
   return ResetSession(*retry_policy, *backoff_policy);
 }
 

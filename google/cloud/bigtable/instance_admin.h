@@ -126,11 +126,11 @@ class InstanceAdmin {
   explicit InstanceAdmin(std::shared_ptr<InstanceAdminClient> client)
       : client_(std::move(client)),
         project_name_("projects/" + project_id()),
-        rpc_retry_policy_(
+        rpc_retry_policy_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableInstanceAdminLimits)),
-        rpc_backoff_policy_(
+        rpc_backoff_policy_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableInstanceAdminLimits)),
-        polling_policy_(
+        polling_policy_prototype_(
             DefaultPollingPolicy(internal::kBigtableInstanceAdminLimits)) {}
 
   /**
@@ -1148,22 +1148,22 @@ class InstanceAdmin {
       google::iam::v1::Policy proto);
 
   std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return polling_policy_->clone();
+    return polling_policy_prototype_->clone();
   }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return rpc_retry_policy_->clone();
+    return rpc_retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return rpc_backoff_policy_->clone();
+    return rpc_backoff_policy_prototype_->clone();
   }
 
   std::shared_ptr<InstanceAdminClient> client_;
   std::string project_name_;
-  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
-  std::shared_ptr<PollingPolicy> polling_policy_;
+  std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
+  std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
+  std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

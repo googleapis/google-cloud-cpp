@@ -30,7 +30,7 @@ std::unique_ptr<IdempotentMutationPolicy> SafeIdempotentMutationPolicy::clone()
 }
 
 bool SafeIdempotentMutationPolicy::is_idempotent(
-    google::bigtable::v2::Mutation const& m) {
+    google::bigtable::v2::Mutation const& m) const {
   if (!m.has_set_cell()) {
     return true;
   }
@@ -38,7 +38,7 @@ bool SafeIdempotentMutationPolicy::is_idempotent(
 }
 
 bool SafeIdempotentMutationPolicy::is_idempotent(
-    google::bigtable::v2::CheckAndMutateRowRequest const&) {
+    google::bigtable::v2::CheckAndMutateRowRequest const&) const {
   // TODO(#1715): this is overly conservative
   return false;
 }
@@ -50,12 +50,12 @@ std::unique_ptr<IdempotentMutationPolicy> AlwaysRetryMutationPolicy::clone()
 }
 
 bool AlwaysRetryMutationPolicy::is_idempotent(
-    google::bigtable::v2::Mutation const&) {
+    google::bigtable::v2::Mutation const&) const {
   return true;
 }
 
 bool AlwaysRetryMutationPolicy::is_idempotent(
-    google::bigtable::v2::CheckAndMutateRowRequest const&) {
+    google::bigtable::v2::CheckAndMutateRowRequest const&) const {
   return true;
 }
 

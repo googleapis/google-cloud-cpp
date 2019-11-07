@@ -136,12 +136,12 @@ class TableAdmin {
       : client_(std::move(client)),
         instance_id_(std::move(instance_id)),
         instance_name_(InstanceName()),
-        rpc_retry_policy_(
+        rpc_retry_policy_prototype_(
             DefaultRPCRetryPolicy(internal::kBigtableTableAdminLimits)),
-        rpc_backoff_policy_(
+        rpc_backoff_policy_prototype_(
             DefaultRPCBackoffPolicy(internal::kBigtableTableAdminLimits)),
         metadata_update_policy_(instance_name(), MetadataParamTypes::PARENT),
-        polling_policy_(
+        polling_policy_prototype_(
             DefaultPollingPolicy(internal::kBigtableTableAdminLimits)) {}
 
   /**
@@ -670,15 +670,17 @@ class TableAdmin {
  private:
   //@{
   /// @name Helper functions to implement constructors with changed policies.
-  void ChangePolicy(RPCRetryPolicy& policy) {
-    rpc_retry_policy_ = policy.clone();
+  void ChangePolicy(RPCRetryPolicy const& policy) {
+    rpc_retry_policy_prototype_ = policy.clone();
   }
 
-  void ChangePolicy(RPCBackoffPolicy& policy) {
-    rpc_backoff_policy_ = policy.clone();
+  void ChangePolicy(RPCBackoffPolicy const& policy) {
+    rpc_backoff_policy_prototype_ = policy.clone();
   }
 
-  void ChangePolicy(PollingPolicy& policy) { polling_policy_ = policy.clone(); }
+  void ChangePolicy(PollingPolicy const& policy) {
+    polling_policy_prototype_ = policy.clone();
+  }
 
   template <typename Policy, typename... Policies>
   void ChangePolicies(Policy&& policy, Policies&&... policies) {
@@ -689,11 +691,11 @@ class TableAdmin {
   //@}
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return rpc_retry_policy_->clone();
+    return rpc_retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return rpc_backoff_policy_->clone();
+    return rpc_backoff_policy_prototype_->clone();
   }
 
   MetadataUpdatePolicy clone_metadata_update_policy() {
@@ -701,7 +703,7 @@ class TableAdmin {
   }
 
   std::unique_ptr<PollingPolicy> clone_polling_policy() {
-    return polling_policy_->clone();
+    return polling_policy_prototype_->clone();
   }
 
   /// Compute the fully qualified instance name.
@@ -710,10 +712,10 @@ class TableAdmin {
   std::shared_ptr<AdminClient> client_;
   std::string instance_id_;
   std::string instance_name_;
-  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
+  std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   bigtable::MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<PollingPolicy> polling_policy_;
+  std::shared_ptr<PollingPolicy const> polling_policy_prototype_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

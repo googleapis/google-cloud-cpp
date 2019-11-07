@@ -212,13 +212,13 @@ class Table {
         app_profile_id_(std::move(app_profile_id)),
         table_name_(TableName(client_, table_id)),
         table_id_(table_id),
-        rpc_retry_policy_(
+        rpc_retry_policy_prototype_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
-        rpc_backoff_policy_(
+        rpc_backoff_policy_prototype_(
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
-        idempotent_mutation_policy_(
+        idempotent_mutation_policy_prototype_(
             bigtable::DefaultIdempotentMutationPolicy()) {}
 
   /**
@@ -788,11 +788,11 @@ class Table {
   }
 
   std::unique_ptr<RPCRetryPolicy> clone_rpc_retry_policy() {
-    return rpc_retry_policy_->clone();
+    return rpc_retry_policy_prototype_->clone();
   }
 
   std::unique_ptr<RPCBackoffPolicy> clone_rpc_backoff_policy() {
-    return rpc_backoff_policy_->clone();
+    return rpc_backoff_policy_prototype_->clone();
   }
 
   MetadataUpdatePolicy clone_metadata_update_policy() {
@@ -800,21 +800,21 @@ class Table {
   }
 
   std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
-    return idempotent_mutation_policy_->clone();
+    return idempotent_mutation_policy_prototype_->clone();
   }
 
   //@{
   /// @name Helper functions to implement constructors with changed policies.
-  void ChangePolicy(RPCRetryPolicy& policy) {
-    rpc_retry_policy_ = policy.clone();
+  void ChangePolicy(RPCRetryPolicy const& policy) {
+    rpc_retry_policy_prototype_ = policy.clone();
   }
 
-  void ChangePolicy(RPCBackoffPolicy& policy) {
-    rpc_backoff_policy_ = policy.clone();
+  void ChangePolicy(RPCBackoffPolicy const& policy) {
+    rpc_backoff_policy_prototype_ = policy.clone();
   }
 
-  void ChangePolicy(IdempotentMutationPolicy& policy) {
-    idempotent_mutation_policy_ = policy.clone();
+  void ChangePolicy(IdempotentMutationPolicy const& policy) {
+    idempotent_mutation_policy_prototype_ = policy.clone();
   }
 
   template <typename Policy, typename... Policies>
@@ -830,10 +830,11 @@ class Table {
   std::string app_profile_id_;
   std::string table_name_;
   std::string table_id_;
-  std::shared_ptr<RPCRetryPolicy> rpc_retry_policy_;
-  std::shared_ptr<RPCBackoffPolicy> rpc_backoff_policy_;
+  std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
+  std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
+  std::shared_ptr<IdempotentMutationPolicy const>
+      idempotent_mutation_policy_prototype_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

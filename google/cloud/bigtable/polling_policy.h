@@ -41,7 +41,7 @@ class PollingPolicy {
    *   return std::unique_ptr<PollingPolicy>(new Foo(*this));
    * @endcode
    */
-  virtual std::unique_ptr<PollingPolicy> clone() = 0;
+  virtual std::unique_ptr<PollingPolicy> clone() const = 0;
 
   virtual void Setup(grpc::ClientContext& context) = 0;
 
@@ -114,7 +114,7 @@ class GenericPollingPolicy : public PollingPolicy {
       : rpc_retry_policy_(std::move(retry)),
         rpc_backoff_policy_(std::move(backoff)) {}
 
-  std::unique_ptr<PollingPolicy> clone() override {
+  std::unique_ptr<PollingPolicy> clone() const override {
     return std::unique_ptr<PollingPolicy>(new GenericPollingPolicy(*this));
   }
 

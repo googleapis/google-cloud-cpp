@@ -38,8 +38,8 @@ class RetryResumableUploadSession : public ResumableUploadSession {
       std::unique_ptr<RetryPolicy> retry_policy,
       std::unique_ptr<BackoffPolicy> backoff_policy)
       : session_(std::move(session)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)) {}
+        retry_policy_prototype_(std::move(retry_policy)),
+        backoff_policy_prototype_(std::move(backoff_policy)) {}
 
   StatusOr<ResumableUploadResponse> UploadChunk(
       std::string const& buffer) override;
@@ -61,8 +61,8 @@ class RetryResumableUploadSession : public ResumableUploadSession {
                                                  BackoffPolicy& backoff_policy);
 
   std::unique_ptr<ResumableUploadSession> session_;
-  std::unique_ptr<RetryPolicy> retry_policy_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
 };
 
 }  // namespace internal

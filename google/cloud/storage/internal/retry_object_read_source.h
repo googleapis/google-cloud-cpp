@@ -52,8 +52,8 @@ class RetryObjectReadSource : public ObjectReadSource {
   ReadObjectRangeRequest request_;
   std::unique_ptr<ObjectReadSource> child_;
   optional<std::int64_t> generation_;
-  std::unique_ptr<RetryPolicy> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
+  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   OffsetDirection offset_direction_;
   std::int64_t current_offset_;
 };

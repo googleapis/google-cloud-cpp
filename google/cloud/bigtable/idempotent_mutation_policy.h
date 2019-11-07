@@ -35,10 +35,10 @@ class IdempotentMutationPolicy {
   virtual std::unique_ptr<IdempotentMutationPolicy> clone() const = 0;
 
   /// Return true if the mutation is idempotent.
-  virtual bool is_idempotent(google::bigtable::v2::Mutation const&) = 0;
+  virtual bool is_idempotent(google::bigtable::v2::Mutation const&) const = 0;
   /// Return true if a conditional mutation is idempotent
   virtual bool is_idempotent(
-      google::bigtable::v2::CheckAndMutateRowRequest const&) = 0;
+      google::bigtable::v2::CheckAndMutateRowRequest const&) const = 0;
 };
 
 /// Return an instance of the default IdempotentMutationPolicy.
@@ -56,9 +56,9 @@ class SafeIdempotentMutationPolicy : public IdempotentMutationPolicy {
   SafeIdempotentMutationPolicy() {}
 
   std::unique_ptr<IdempotentMutationPolicy> clone() const override;
-  bool is_idempotent(google::bigtable::v2::Mutation const&) override;
+  bool is_idempotent(google::bigtable::v2::Mutation const&) const override;
   bool is_idempotent(
-      google::bigtable::v2::CheckAndMutateRowRequest const&) override;
+      google::bigtable::v2::CheckAndMutateRowRequest const&) const override;
 };
 
 /**
@@ -76,9 +76,9 @@ class AlwaysRetryMutationPolicy : public IdempotentMutationPolicy {
   AlwaysRetryMutationPolicy() {}
 
   std::unique_ptr<IdempotentMutationPolicy> clone() const override;
-  bool is_idempotent(google::bigtable::v2::Mutation const&) override;
+  bool is_idempotent(google::bigtable::v2::Mutation const&) const override;
   bool is_idempotent(
-      google::bigtable::v2::CheckAndMutateRowRequest const&) override;
+      google::bigtable::v2::CheckAndMutateRowRequest const&) const override;
 };
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
