@@ -299,7 +299,7 @@ class GcsBucket(object):
             'email': email,
             'entity': entity,
             'etag': self.metadata.get('etag', 'XYZ='),
-            'id': self.metadata.get('id', b'').decode() + '/' + entity,
+            'id': self.metadata.get('id', '') + '/' + entity,
             'kind': 'storage#objectAccessControl',
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
@@ -577,7 +577,7 @@ class GcsBucket(object):
         for precondition in ['ifGenerationMatch', 'ifGenerationNotMatch',
                              'ifMetagenerationMatch', 'ifMetagenerationNotMatch']:
             upload[precondition] = request.args.get(precondition)
-        upload_id = base64.b64encode(metadata.get('name').encode())
+        upload_id = base64.b64encode(metadata.get('name').encode()).decode()
         self.resumable_uploads[upload_id] = upload
         location = '%s?uploadType=resumable&upload_id=%s' % (
             upload_url, upload_id)
@@ -598,6 +598,7 @@ class GcsBucket(object):
                 'Missing upload_id in resumable_upload_chunk', status_code=400)
         upload = self.resumable_uploads.get(upload_id)
         if upload is None:
+            import pdb; pdb.set_trace()
             raise error_response.ErrorResponse(
                 'Cannot find resumable upload %s' % upload_id, status_code=404)
         # Be gracious in what you accept, if the Content-Range header is not
@@ -647,7 +648,7 @@ class GcsBucket(object):
                         'Mismatched data range (%d) vs. content-length (%d)' % (
                             end - begin + 1, len(request.data)), status_code=400)
 
-        upload['media'] = upload.get('media', '') + request.data
+        upload['media'] = upload.get('media', '') + request.data.decode()
         next_byte = len(upload.get('media', ''))
         upload['next_byte'] = next_byte
         response_payload = ''

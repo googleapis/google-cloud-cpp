@@ -44,7 +44,10 @@ class GcsObjectVersion(object):
         self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
         now = time.gmtime(time.time())
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        if type(media) is not bytes:
+            media = media.encode('utf-8')
         self.media = media
+
         instructions = request.headers.get('x-goog-testbench-instructions')
         if instructions == 'inject-upload-data-error':
             self.media = testbench_utils.corrupt_media(media)
@@ -62,7 +65,7 @@ class GcsObjectVersion(object):
                 'entity': 'project-owners-123456789',
                 'entityId': '',
             },
-            'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()),
+            'md5Hash': base64.b64encode(hashlib.md5(self.media.decode().encode('utf-8')).digest()),
             'crc32c': base64.b64encode(struct.pack('>I', crc32c.crc32(self.media)))
         }
         if request.headers.get('content-type') is not None:
@@ -123,7 +126,7 @@ class GcsObjectVersion(object):
     def _validate_md5_hash(self):
         """Validate the md5Hash field against the stored media."""
         actual = self.metadata.get('md5Hash', '')
-        expected = base64.b64encode(hashlib.md5(self.media).digest())
+        expected = base64.b64encode(hashlib.md5(self.media.decode().encode('utf-8')).digest())
         if actual != expected:
             raise error_response.ErrorResponse(
                 'Mismatched MD5 hash expected=%s, actual=%s' % (expected,
@@ -582,15 +585,15 @@ class GcsObject(object):
         """
         headers = dict()
         index = 0
-        next_line = multipart_upload_part.find('\r\n', index)
+        next_line = multipart_upload_part.find(b'\r\n', index)
         while next_line != index:
             header_line = multipart_upload_part[index:next_line]
-            key, value = header_line.split(': ', 2)
+            key, value = header_line.split(b': ', 2)
             # This does not work for repeated headers, but we do not expect
             # those in the testbench.
-            headers[key.encode('ascii', 'ignore')] = value
+            headers[key] = value #.encode('ascii', 'ignore')] = value
             index = next_line + 2
-            next_line = multipart_upload_part.find('\r\n', index)
+            next_line = multipart_upload_part.find(b'\r\n', index)
         return headers, multipart_upload_part[next_line + 2:]
 
     def insert_multipart(self, gcs_url, request):
@@ -614,13 +617,13 @@ class GcsObject(object):
 
         marker = '--' + boundary + '\r\n'
         body = testbench_utils.extract_media(request)
-        parts = body.split(marker)
+        parts = body.split(marker.encode())
         # parts[0] is the empty string, `multipart` should start with the boundary
         # parts[1] is the JSON resource object part, with some headers
         resource_headers, resource_body = self._parse_part(parts[1])
         # parts[2] is the media, with some headers
         media_headers, media_body = self._parse_part(parts[2])
-        end = media_body.find('\r\n--' + boundary + '--\r\n')
+        end = media_body.find(b'\r\n--' + boundary.encode() + b'--\r\n')
         if end == -1:
             raise error_response.ErrorResponse(
                 'Missing end marker (--%s--) in media body' % boundary)

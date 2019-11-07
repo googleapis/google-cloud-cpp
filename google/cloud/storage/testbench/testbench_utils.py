@@ -103,8 +103,21 @@ def filter_fields_from_response(fields, response):
     :rtype:str
     """
 
+    # bytes can't be serialized in json. walk object and decode where required
+    for key in response:
+        response_type = type(response[key])
+        if response_type is bytes:
+            response[key] = response[key].decode()
+        elif response_type is dict_values:
+            response[key] = list(response[key])
+
+
     if fields is None:
-        return json.dumps(response)
+        try:
+            return json.dumps(response)
+        except Exception as e:
+            print(response)
+            raise
     tmp = {}
     # TODO(#1037) - support full filter expressions
     for key in fields.split(','):
