@@ -171,7 +171,7 @@ class RetryClient : public RawClient,
   }
 
   void Apply(IdempotencyPolicy const& policy) {
-    idempotency_policy_prototype_ = policy.clone();
+    idempotency_policy_ = policy.clone();
   }
 
   void ApplyPolicies() {}
@@ -185,7 +185,7 @@ class RetryClient : public RawClient,
   std::shared_ptr<RawClient> client_;
   std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
   std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::shared_ptr<IdempotencyPolicy const> idempotency_policy_prototype_;
+  std::shared_ptr<IdempotencyPolicy const> idempotency_policy_;
 };
 
 }  // namespace internal
