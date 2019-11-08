@@ -218,7 +218,7 @@ class Table {
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
         metadata_update_policy_(
             MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
-        idempotent_mutation_policy_prototype_(
+        idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()) {}
 
   /**
@@ -800,7 +800,7 @@ class Table {
   }
 
   std::unique_ptr<IdempotentMutationPolicy> clone_idempotent_mutation_policy() {
-    return idempotent_mutation_policy_prototype_->clone();
+    return idempotent_mutation_policy_->clone();
   }
 
   //@{
@@ -814,7 +814,7 @@ class Table {
   }
 
   void ChangePolicy(IdempotentMutationPolicy const& policy) {
-    idempotent_mutation_policy_prototype_ = policy.clone();
+    idempotent_mutation_policy_ = policy.clone();
   }
 
   template <typename Policy, typename... Policies>
@@ -833,8 +833,7 @@ class Table {
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
   MetadataUpdatePolicy metadata_update_policy_;
-  std::shared_ptr<IdempotentMutationPolicy const>
-      idempotent_mutation_policy_prototype_;
+  std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
 };
 
 }  // namespace BIGTABLE_CLIENT_NS

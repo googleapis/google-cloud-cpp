@@ -232,7 +232,7 @@ StatusOr<MutationBranch> Table::CheckAndMutateRow(
     *request.add_false_mutations() = std::move(m.op);
   }
   bool const is_idempotent =
-      idempotent_mutation_policy_prototype_->is_idempotent(request);
+      idempotent_mutation_policy_->is_idempotent(request);
   auto response = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       metadata_update_policy_, &DataClient::CheckAndMutateRow, request,
@@ -260,7 +260,7 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
     *request.add_false_mutations() = std::move(m.op);
   }
   bool const is_idempotent =
-      idempotent_mutation_policy_prototype_->is_idempotent(request);
+      idempotent_mutation_policy_->is_idempotent(request);
 
   auto client = client_;
   return internal::StartRetryAsyncUnaryRpc(
