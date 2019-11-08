@@ -446,12 +446,12 @@ void AddIndex(std::vector<std::string> const& argv) {
             database,
             {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"});
     StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-        result = future.get();
-    if (!result) {
-      throw std::runtime_error(result.status().message());
+        metadata = future.get();
+    if (!metadata) {
+      throw std::runtime_error(metadata.status().message());
     }
     std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
-              << result->DebugString() << "\n";
+              << metadata->DebugString() << "\n";
   }
   // [END spanner_create_index]
   (argv[0], argv[1], argv[2]);
@@ -526,6 +526,36 @@ void AddColumn(std::vector<std::string> const& argv) {
     std::cout << "Added MarketingBudget column\n";
   }
   //! [update-database] [END spanner_add_column]
+  (argv[0], argv[1], argv[2]);
+}
+
+void AddStoringIndex(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "add-storing-index <project-id> <instance-id> <database-id>");
+  }
+  // [START spanner_create_storing_index]
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& database_id) {
+    google::cloud::spanner::DatabaseAdminClient client;
+    google::cloud::spanner::Database database(project_id, instance_id,
+                                              database_id);
+    future<StatusOr<
+        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+        future = client.UpdateDatabase(database, {R"""(
+            CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
+                STORING (MarketingBudget))"""});
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+        metadata = future.get();
+    if (!metadata) {
+      throw std::runtime_error(metadata.status().message());
+    }
+    std::cout << "`AlbumsByAlbumTitle2` Index successfully added, new DDL:\n"
+              << metadata->DebugString() << "\n";
+  }
+  // [END spanner_create_storing_index]
   (argv[0], argv[1], argv[2]);
 }
 
@@ -1320,6 +1350,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
       {"create-database", &CreateDatabase},
       {"add-index", &AddIndex},
+      {"add-storing-index", &AddStoringIndex},
       {"get-database", &GetDatabaseCommand},
       {"get-database-ddl", &GetDatabaseCommandDdl},
       {"add-column", &AddColumn},
@@ -1486,6 +1517,10 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_add_column sample\n";
   RunOneCommand({"", "add-column", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning spanner_create_storing_index sample\n";
+  RunOneCommand(
+      {"", "add-storing-index", project_id, instance_id, database_id});
 
   std::cout << "\nRunning (database) get-iam-policy sample\n";
   RunOneCommand(
