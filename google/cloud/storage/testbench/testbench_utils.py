@@ -108,7 +108,8 @@ def filter_fields_from_response(fields, response):
         response_type = type(response[key])
         if response_type is bytes:
             response[key] = response[key].decode()
-        elif response_type is dict_values:
+        elif str(response_type) == "<class 'dict_values'>":
+            # TODO: replace with a type comparison, not str
             response[key] = list(response[key])
 
 
