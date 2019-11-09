@@ -38,11 +38,18 @@ def sign_blob(service_account):
     except TypeError:
         raise error_response.ErrorResponse(
             'payload must be base64-encoded', status_code=400)
-    blob = 'signed: ' + blob
+    blob = b'signed: ' + blob
     response = {
         'keyId': 'fake-key-id-123',
         'signedBlob': base64.b64encode(blob)
     }
+    for key in response:
+        response_type = type(response[key])
+        if response_type is bytes:
+            response[key] = response[key].decode()
+        elif str(response_type) == "<class 'dict_values'>":
+            # TODO: replace with a type comparison, not str
+            response[key] = list(response[key])
     return json.dumps(response)
 
 

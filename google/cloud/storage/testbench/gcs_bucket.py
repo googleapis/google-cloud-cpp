@@ -424,13 +424,13 @@ class GcsBucket(object):
                 members_by_role.setdefault(role, []).append(
                     entry.get('entity'))
         bindings = []
-        for k, v in members_by_role.iteritems():
+        for k, v in members_by_role.items():
             bindings.append({'role': k, 'members': v})
         policy = {
             'kind': 'storage#policy',
             'resourceId': 'projects/_/buckets/%s' % self.name,
             'bindings': bindings,
-            'etag': base64.b64encode(str(self.iam_version))
+            'etag': base64.b64encode(str(self.iam_version).encode())
         }
         return policy
 
@@ -452,7 +452,7 @@ class GcsBucket(object):
         :rtype: dict
         """
         self.check_preconditions(request)
-        current_etag = base64.b64encode(str(self.iam_version))
+        current_etag = base64.b64encode(str(self.iam_version).encode())
         if (request.headers.get('if-match') is not None
                 and current_etag != request.headers.get('if-match')):
             raise error_response.ErrorResponse(

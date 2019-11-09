@@ -221,7 +221,7 @@ def json_api_patch(original, patch, recurse_on=set({})):
     :rtype:dict
     """
     tmp = original.copy()
-    for key, value in patch.iteritems():
+    for key, value in patch.items():
         if value is None:
             tmp.pop(key, None)
         elif key not in recurse_on:
