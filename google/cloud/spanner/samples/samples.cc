@@ -25,6 +25,7 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include <chrono>
 #include <sstream>
 #include <tuple>
 #include <utility>
@@ -874,6 +875,28 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_only_transaction]
 
+//! [START spanner_read_stale_data]]
+void ReadStaleData(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto opts = spanner::Transaction::ReadOnlyOptions(std::chrono::seconds(15));
+  auto read_only = spanner::MakeReadOnlyTransaction(opts);
+
+  spanner::SqlStatement select(
+      "SELECT SingerId, AlbumId, AlbumTitle FROM Albums");
+  using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
+
+  auto rows = client.ExecuteQuery(read_only, select);
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << "SingerId: " << std::get<0>(*row)
+              << " AlbumId: " << std::get<1>(*row)
+              << " AlbumTitle: " << std::get<2>(*row) << "\n";
+  }
+}
+//! [END spanner_read_stale_data]
+
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1364,6 +1387,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("update-data", &UpdateData),
       make_command_entry("delete-data", &DeleteData),
       make_command_entry("read-only-transaction", &ReadOnlyTransaction),
+      make_command_entry("read-stale-data", &ReadStaleData),
       make_command_entry("read-write-transaction", &ReadWriteTransaction),
       make_command_entry("dml-standard-insert", &DmlStandardInsert),
       make_command_entry("dml-standard-update", &DmlStandardUpdate),
@@ -1547,6 +1571,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_read_only_transaction sample\n";
   ReadOnlyTransaction(client);
+
+  std::cout << "\nRunning spanner_stale_data sample\n";
+  ReadStaleData(client);
 
   std::cout << "\nRunning spanner_read_write_transaction sample\n";
   ReadWriteTransaction(client);
