@@ -34,8 +34,8 @@ SessionPool::SessionPool(Database db, std::shared_ptr<SpannerStub> stub,
                          SessionPoolOptions options)
     : db_(std::move(db)),
       stub_(std::move(stub)),
-      retry_policy_(std::move(retry_policy)),
-      backoff_policy_(std::move(backoff_policy)),
+      retry_policy_prototype_(std::move(retry_policy)),
+      backoff_policy_prototype_(std::move(backoff_policy)),
       options_(options) {
   // Ensure the options have sensible values.
   options_.min_sessions = (std::max)(options_.min_sessions, 0);
@@ -158,7 +158,8 @@ StatusOr<std::vector<std::unique_ptr<Session>>> SessionPool::CreateSessions(
   request.set_database(db_.FullName());
   request.set_session_count(std::int32_t{num_sessions});
   auto response = RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::BatchCreateSessionsRequest const& request) {
         return stub_->BatchCreateSessions(context, request);

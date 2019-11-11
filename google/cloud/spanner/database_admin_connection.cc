@@ -95,9 +95,9 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       std::unique_ptr<BackoffPolicy> backoff_policy,
       std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)),
-        polling_policy_(std::move(polling_policy)) {}
+        retry_policy_prototype_(std::move(retry_policy)),
+        backoff_policy_prototype_(std::move(backoff_policy)),
+        polling_policy_prototype_(std::move(polling_policy)) {}
 
   explicit DatabaseAdminConnectionImpl(
       std::shared_ptr<internal::DatabaseAdminStub> stub)
@@ -118,7 +118,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     }
 
     auto operation = RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), false,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        false,
         [this](grpc::ClientContext& context,
                gcsa::CreateDatabaseRequest const& request) {
           return stub_->CreateDatabase(context, request);
@@ -137,7 +138,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gcsa::GetDatabaseRequest request;
     request.set_name(p.database.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::GetDatabaseRequest const& request) {
           return stub_->GetDatabase(context, request);
@@ -150,7 +152,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     gcsa::GetDatabaseDdlRequest request;
     request.set_database(p.database.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::GetDatabaseDdlRequest const& request) {
           return stub_->GetDatabaseDdl(context, request);
@@ -167,7 +170,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       *request.add_statements() = std::move(s);
     }
     auto operation = RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), false,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        false,
         [this](grpc::ClientContext& context,
                gcsa::UpdateDatabaseDdlRequest const& request) {
           return stub_->UpdateDatabase(context, request);
@@ -185,7 +189,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     google::spanner::admin::database::v1::DropDatabaseRequest request;
     request.set_database(p.database.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::DropDatabaseRequest const& request) {
           return stub_->DropDatabase(context, request);
@@ -200,9 +205,10 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     auto stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<RetryPolicy const>(retry_policy_->clone());
-    auto backoff =
-        std::shared_ptr<BackoffPolicy const>(backoff_policy_->clone());
+    auto retry =
+        std::shared_ptr<RetryPolicy const>(retry_policy_prototype_->clone());
+    auto backoff = std::shared_ptr<BackoffPolicy const>(
+        backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
     return ListDatabaseRange(
@@ -230,7 +236,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     google::iam::v1::GetIamPolicyRequest request;
     request.set_resource(p.database.FullName());
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                google::iam::v1::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -245,7 +252,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
     *request.mutable_policy() = std::move(p.policy);
     bool is_idempotent = !request.policy().etag().empty();
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        is_idempotent,
         [this](grpc::ClientContext& context,
                google::iam::v1::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -261,7 +269,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
       request.add_permissions(std::move(permission));
     }
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                google::iam::v1::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -297,8 +306,8 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           stub.reset();
           promise.set_value(std::move(result));
         },
-        stub_, std::move(operation), polling_policy_->clone(), std::move(pr),
-        __func__);
+        stub_, std::move(operation), polling_policy_prototype_->clone(),
+        std::move(pr), __func__);
     t.detach();
 
     return f;
@@ -333,17 +342,17 @@ class DatabaseAdminConnectionImpl : public DatabaseAdminConnection {
           stub.reset();
           promise.set_value(std::move(result));
         },
-        stub_, std::move(operation), polling_policy_->clone(), std::move(pr),
-        __func__);
+        stub_, std::move(operation), polling_policy_prototype_->clone(),
+        std::move(pr), __func__);
     t.detach();
 
     return f;
   }
 
   std::shared_ptr<internal::DatabaseAdminStub> stub_;
-  std::unique_ptr<RetryPolicy const> retry_policy_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_;
-  std::unique_ptr<PollingPolicy const> polling_policy_;
+  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
 };
 }  // namespace
 

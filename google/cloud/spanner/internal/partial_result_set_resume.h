@@ -47,8 +47,8 @@ class PartialResultSetResume : public PartialResultSetReader {
                          std::unique_ptr<BackoffPolicy> backoff_policy)
       : factory_(std::move(factory)),
         is_idempotent_(is_idempotent),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)),
+        retry_policy_prototype_(std::move(retry_policy)),
+        backoff_policy_prototype_(std::move(backoff_policy)),
         child_(factory_(last_resume_token_)) {}
 
   ~PartialResultSetResume() override = default;
@@ -60,8 +60,8 @@ class PartialResultSetResume : public PartialResultSetReader {
  private:
   PartialResultSetReaderFactory factory_;
   Idempotency is_idempotent_;
-  std::unique_ptr<RetryPolicy> retry_policy_;
-  std::unique_ptr<BackoffPolicy> backoff_policy_;
+  std::unique_ptr<RetryPolicy> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy> backoff_policy_prototype_;
   std::string last_resume_token_;
   std::unique_ptr<PartialResultSetReader> child_;
   optional<Status> last_status_;

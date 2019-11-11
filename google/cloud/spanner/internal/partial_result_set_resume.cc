@@ -33,13 +33,13 @@ optional<google::spanner::v1::PartialResultSet> PartialResultSetResume::Read() {
     auto status = Finish();
     if (status.ok()) return {};
     if (is_idempotent_ == Idempotency::kNotIdempotent ||
-        !retry_policy_->OnFailure(status)) {
+        !retry_policy_prototype_->OnFailure(status)) {
       return {};
     }
-    std::this_thread::sleep_for(backoff_policy_->OnCompletion());
+    std::this_thread::sleep_for(backoff_policy_prototype_->OnCompletion());
     last_status_.reset();
     child_ = factory_(last_resume_token_);
-  } while (!retry_policy_->IsExhausted());
+  } while (!retry_policy_prototype_->IsExhausted());
   return {};
 }
 

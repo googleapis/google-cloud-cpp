@@ -146,8 +146,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   Database db_;
   std::shared_ptr<SpannerStub> stub_;
-  std::unique_ptr<RetryPolicy const> retry_policy_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_;
+  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   SessionPoolOptions options_;
 };
 

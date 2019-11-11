@@ -107,10 +107,11 @@ ConnectionImpl::ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
                                std::unique_ptr<BackoffPolicy> backoff_policy)
     : db_(std::move(db)),
       stub_(std::move(stub)),
-      retry_policy_(std::move(retry_policy)),
-      backoff_policy_(std::move(backoff_policy)),
+      retry_policy_prototype_(std::move(retry_policy)),
+      backoff_policy_prototype_(std::move(backoff_policy)),
       session_pool_(std::make_shared<SessionPool>(
-          db_, stub_, retry_policy_->clone(), backoff_policy_->clone())) {}
+          db_, stub_, retry_policy_prototype_->clone(),
+          backoff_policy_prototype_->clone())) {}
 
 RowStream ConnectionImpl::Read(ReadParams params) {
   return internal::Visit(
@@ -319,8 +320,8 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
         std::move(context), stub->StreamingRead(*context, request));
   };
   auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
-      std::move(factory), Idempotency::kIdempotent, retry_policy_->clone(),
-      backoff_policy_->clone());
+      std::move(factory), Idempotency::kIdempotent,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone());
   auto reader = PartialResultSetSource::Create(std::move(rpc));
   if (!reader.ok()) {
     return RowStream(
@@ -366,7 +367,8 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
   *request.mutable_partition_options() = std::move(partition_options);
 
   auto response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::PartitionReadRequest const& request) {
         return stub_->PartitionRead(context, request);
@@ -446,8 +448,8 @@ ResultType ConnectionImpl::CommonQueryImpl(
   // variables are a reference to avoid increasing refcounts twice, but the
   // capture is by value.
   auto const& stub = stub_;
-  auto const& retry_policy = retry_policy_;
-  auto const& backoff_policy = backoff_policy_;
+  auto const& retry_policy = retry_policy_prototype_;
+  auto const& backoff_policy = backoff_policy_prototype_;
 
   auto retry_resume_fn = [stub, retry_policy, backoff_policy](
                              spanner_proto::ExecuteSqlRequest& request) mutable
@@ -504,8 +506,8 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   // variables are a reference to avoid increasing refcounts twice, but the
   // capture is by value.
   auto const& stub = stub_;
-  auto const& retry_policy = retry_policy_;
-  auto const& backoff_policy = backoff_policy_;
+  auto const& retry_policy = retry_policy_prototype_;
+  auto const& backoff_policy = backoff_policy_prototype_;
 
   auto retry_resume_fn = [function_name, stub, retry_policy, backoff_policy](
                              spanner_proto::ExecuteSqlRequest& request) mutable
@@ -577,7 +579,8 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   *request.mutable_partition_options() = std::move(partition_options);
 
   auto response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::PartitionQueryRequest const& request) {
         return stub_->PartitionQuery(context, request);
@@ -621,7 +624,8 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
   }
 
   auto response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::ExecuteBatchDmlRequest const& request) {
         return stub_->ExecuteBatchDml(context, request);
@@ -660,7 +664,8 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
   *begin_request.mutable_options()->mutable_partitioned_dml() =
       spanner_proto::TransactionOptions_PartitionedDml();
   auto begin_response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::BeginTransactionRequest const& request) {
         return stub_->BeginTransaction(context, request);
@@ -681,7 +686,8 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
   auto response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::ExecuteSqlRequest const& request) {
         return stub_->ExecuteSql(context, request);
@@ -725,7 +731,8 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   }
 
   auto response = internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      is_idempotent,
       [this](grpc::ClientContext& context,
              spanner_proto::CommitRequest const& request) {
         return stub_->Commit(context, request);
@@ -762,7 +769,8 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
   request.set_session(session->session_name());
   request.set_transaction_id(s.id());
   return internal::RetryLoop(
-      retry_policy_->clone(), backoff_policy_->clone(), true,
+      retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+      true,
       [this](grpc::ClientContext& context,
              spanner_proto::RollbackRequest const& request) {
         return stub_->Rollback(context, request);

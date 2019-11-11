@@ -96,9 +96,9 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
                               std::unique_ptr<BackoffPolicy> backoff_policy,
                               std::unique_ptr<PollingPolicy> polling_policy)
       : stub_(std::move(stub)),
-        retry_policy_(std::move(retry_policy)),
-        backoff_policy_(std::move(backoff_policy)),
-        polling_policy_(std::move(polling_policy)) {}
+        retry_policy_prototype_(std::move(retry_policy)),
+        backoff_policy_prototype_(std::move(backoff_policy)),
+        polling_policy_prototype_(std::move(polling_policy)) {}
 
   explicit InstanceAdminConnectionImpl(
       std::shared_ptr<internal::InstanceAdminStub> stub)
@@ -113,7 +113,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     gcsa::GetInstanceRequest request;
     request.set_name(std::move(gip.instance_name));
     return internal::RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::GetInstanceRequest const& request) {
           return stub_->GetInstance(context, request);
@@ -124,7 +125,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   future<StatusOr<gcsa::Instance>> CreateInstance(
       CreateInstanceParams p) override {
     auto operation = RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), false,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        false,
         [this](grpc::ClientContext& context,
                gcsa::CreateInstanceRequest const& request) {
           return stub_->CreateInstance(context, request);
@@ -141,7 +143,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
   future<StatusOr<gcsa::Instance>> UpdateInstance(
       UpdateInstanceParams p) override {
     auto operation = RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::UpdateInstanceRequest const& request) {
           return stub_->UpdateInstance(context, request);
@@ -159,7 +162,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     gcsa::DeleteInstanceRequest request;
     request.set_name(std::move(p.instance_name));
     return internal::RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::DeleteInstanceRequest const& request) {
           return stub_->DeleteInstance(context, request);
@@ -172,7 +176,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     gcsa::GetInstanceConfigRequest request;
     request.set_name(std::move(p.instance_config_name));
     return internal::RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                gcsa::GetInstanceConfigRequest const& request) {
           return stub_->GetInstanceConfig(context, request);
@@ -188,8 +193,9 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     auto stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy>(backoff_policy_->clone());
+    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_prototype_->clone());
+    auto backoff =
+        std::shared_ptr<BackoffPolicy>(backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
     return ListInstanceConfigsRange(
@@ -220,8 +226,9 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     auto stub = stub_;
     // Because we do not have C++14 generalized lambda captures we cannot just
     // use the unique_ptr<> here, so convert to shared_ptr<> instead.
-    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_->clone());
-    auto backoff = std::shared_ptr<BackoffPolicy>(backoff_policy_->clone());
+    auto retry = std::shared_ptr<RetryPolicy>(retry_policy_prototype_->clone());
+    auto backoff =
+        std::shared_ptr<BackoffPolicy>(backoff_policy_prototype_->clone());
 
     char const* function_name = __func__;
     return ListInstancesRange(
@@ -248,7 +255,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     google::iam::v1::GetIamPolicyRequest request;
     request.set_resource(std::move(p.instance_name));
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                giam::GetIamPolicyRequest const& request) {
           return stub_->GetIamPolicy(context, request);
@@ -262,7 +270,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
     *request.mutable_policy() = std::move(p.policy);
     bool is_idempotent = !request.policy().etag().empty();
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), is_idempotent,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        is_idempotent,
         [this](grpc::ClientContext& context,
                giam::SetIamPolicyRequest const& request) {
           return stub_->SetIamPolicy(context, request);
@@ -278,7 +287,8 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
       request.add_permissions(std::move(permission));
     }
     return RetryLoop(
-        retry_policy_->clone(), backoff_policy_->clone(), true,
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
         [this](grpc::ClientContext& context,
                giam::TestIamPermissionsRequest const& request) {
           return stub_->TestIamPermissions(context, request);
@@ -314,16 +324,16 @@ class InstanceAdminConnectionImpl : public InstanceAdminConnection {
           stub.reset();
           promise.set_value(std::move(result));
         },
-        stub_, std::move(operation), polling_policy_->clone(), std::move(pr),
-        __func__);
+        stub_, std::move(operation), polling_policy_prototype_->clone(),
+        std::move(pr), __func__);
     t.detach();
 
     return f;
   }
   std::shared_ptr<internal::InstanceAdminStub> stub_;
-  std::unique_ptr<RetryPolicy const> retry_policy_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_;
-  std::unique_ptr<PollingPolicy const> polling_policy_;
+  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::unique_ptr<PollingPolicy const> polling_policy_prototype_;
 };
 }  // namespace
 
