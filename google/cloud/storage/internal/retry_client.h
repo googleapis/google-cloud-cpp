@@ -162,11 +162,15 @@ class RetryClient : public RawClient,
   std::shared_ptr<RawClient> client() const { return client_; }
 
  private:
-  void Apply(RetryPolicy& policy) { retry_policy_ = policy.clone(); }
+  void Apply(RetryPolicy const& policy) {
+    retry_policy_prototype_ = policy.clone();
+  }
 
-  void Apply(BackoffPolicy& policy) { backoff_policy_ = policy.clone(); }
+  void Apply(BackoffPolicy const& policy) {
+    backoff_policy_prototype_ = policy.clone();
+  }
 
-  void Apply(IdempotencyPolicy& policy) {
+  void Apply(IdempotencyPolicy const& policy) {
     idempotency_policy_ = policy.clone();
   }
 
@@ -179,9 +183,9 @@ class RetryClient : public RawClient,
   }
 
   std::shared_ptr<RawClient> client_;
-  std::shared_ptr<RetryPolicy> retry_policy_;
-  std::shared_ptr<BackoffPolicy> backoff_policy_;
-  std::shared_ptr<IdempotencyPolicy> idempotency_policy_;
+  std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::shared_ptr<IdempotencyPolicy const> idempotency_policy_;
 };
 
 }  // namespace internal
