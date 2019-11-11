@@ -250,6 +250,14 @@ class StatusOnlyResultSetSource : public internal::ResultSourceInterface {
   google::cloud::Status status_;
 };
 
+// Helper function to build and wrap a `StatusOnlyResultSetSource`.
+template <typename ResultType>
+ResultType MakeStatusOnlyResult(Status status) {
+  return ResultType(
+      google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
+          std::move(status)));
+}
+
 class DmlResultSetSource : public internal::ResultSourceInterface {
  public:
   static StatusOr<std::unique_ptr<ResultSourceInterface>> Create(
@@ -282,17 +290,28 @@ class DmlResultSetSource : public internal::ResultSourceInterface {
   spanner_proto::ResultSet result_set_;
 };
 
+/**
+ * Helper function that ensures `session` holds a valid `Session`, or returns
+ * an error if `session` is empty and no `Session` can be allocated.
+ */
+Status ConnectionImpl::PrepareSession(SessionHolder& session,
+                                      bool dissociate_from_pool) {
+  if (!session) {
+    auto session_or = session_pool_->Allocate(dissociate_from_pool);
+    if (!session_or) {
+      return std::move(session_or).status();
+    }
+    session = std::move(*session_or);
+  }
+  return Status();
+}
+
 RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
                                    spanner_proto::TransactionSelector& s,
                                    ReadParams params) {
-  if (!session) {
-    auto session_or = session_pool_->Allocate();
-    if (!session_or) {
-      return RowStream(
-          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-              std::move(session_or).status()));
-    }
-    session = std::move(*session_or);
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return MakeStatusOnlyResult<RowStream>(std::move(prepare_status));
   }
 
   spanner_proto::ReadRequest request;
@@ -324,18 +343,15 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone());
   auto reader = PartialResultSetSource::Create(std::move(rpc));
   if (!reader.ok()) {
-    return RowStream(
-        google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-            std::move(reader).status()));
+    return MakeStatusOnlyResult<RowStream>(std::move(reader).status());
   }
   if (s.has_begin()) {
     auto metadata = (*reader)->Metadata();
     if (!metadata || metadata->transaction().id().empty()) {
-      return RowStream(
-          google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-              Status(StatusCode::kInternal,
-                     "Begin transaction requested but no transaction returned "
-                     "(in Read).")));
+      return MakeStatusOnlyResult<RowStream>(
+          Status(StatusCode::kInternal,
+                 "Begin transaction requested but no transaction returned (in "
+                 "Read)."));
     }
     s.set_id(metadata->transaction().id());
   }
@@ -345,14 +361,11 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     ReadParams const& params, PartitionOptions const& partition_options) {
-  if (!session) {
-    // Since the session may be sent to other machines, it should not be
-    // returned to the pool when the Transaction is destroyed.
-    auto session_or = session_pool_->Allocate(/*dissociate_from_pool=*/true);
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
+  // Since the session may be sent to other machines, it should not be returned
+  // to the pool when the Transaction is destroyed.
+  auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
+  if (!prepare_status.ok()) {
+    return prepare_status;
   }
 
   spanner_proto::PartitionReadRequest request;
@@ -401,14 +414,6 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
     std::function<StatusOr<std::unique_ptr<ResultSourceInterface>>(
         google::spanner::v1 ::ExecuteSqlRequest& request)> const&
         retry_resume_fn) {
-  if (!session) {
-    auto session_or = session_pool_->Allocate();
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
-  }
-
   spanner_proto::ExecuteSqlRequest request;
   request.set_session(session->session_name());
   *request.mutable_transaction() = s;
@@ -443,6 +448,10 @@ ResultType ConnectionImpl::CommonQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return MakeStatusOnlyResult<ResultType>(std::move(prepare_status));
+  }
   // Capture a copy of of these member variables to ensure the `shared_ptr<>`
   // remains valid through the lifetime of the lambda. Note that the local
   // variables are a reference to avoid increasing refcounts twice, but the
@@ -473,9 +482,7 @@ ResultType ConnectionImpl::CommonQueryImpl(
       ExecuteSqlImpl<ResultType>(session, s, seqno, std::move(params),
                                  query_mode, std::move(retry_resume_fn));
   if (!ret_val) {
-    return ResultType(
-        google::cloud::internal::make_unique<StatusOnlyResultSetSource>(
-            std::move(ret_val).status()));
+    return MakeStatusOnlyResult<ResultType>(std::move(ret_val).status());
   }
   return std::move(*ret_val);
 }
@@ -501,6 +508,10 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
     std::int64_t seqno, SqlParams params,
     google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode) {
   auto function_name = __func__;
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return prepare_status;
+  }
   // Capture a copy of of these member variables to ensure the `shared_ptr<>`
   // remains valid through the lifetime of the lambda. Note that the local
   // variables are a reference to avoid increasing refcounts twice, but the
@@ -558,14 +569,11 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     SqlParams const& params, PartitionOptions const& partition_options) {
-  if (!session) {
-    // Since the session may be sent to other machines, it should not be
-    // returned to the pool when the Transaction is destroyed.
-    auto session_or = session_pool_->Allocate(/*dissociate_from_pool=*/true);
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
+  // Since the session may be sent to other machines, it should not be returned
+  // to the pool when the Transaction is destroyed.
+  auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
+  if (!prepare_status.ok()) {
+    return prepare_status;
   }
 
   spanner_proto::PartitionQueryRequest request;
@@ -607,12 +615,9 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
 StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecuteBatchDmlParams params) {
-  if (!session) {
-    auto session_or = session_pool_->Allocate();
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return prepare_status;
   }
 
   spanner_proto::ExecuteBatchDmlRequest request;
@@ -651,12 +656,9 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
 StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     std::int64_t seqno, ExecutePartitionedDmlParams params) {
-  if (!session) {
-    auto session_or = session_pool_->Allocate();
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return prepare_status;
   }
 
   spanner_proto::BeginTransactionRequest begin_request;
@@ -707,12 +709,9 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
 StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
     CommitParams params) {
-  if (!session) {
-    auto session_or = session_pool_->Allocate();
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return prepare_status;
   }
 
   spanner_proto::CommitRequest request;
@@ -748,12 +747,9 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
 
 Status ConnectionImpl::RollbackImpl(SessionHolder& session,
                                     spanner_proto::TransactionSelector& s) {
-  if (!session) {
-    auto session_or = session_pool_->Allocate();
-    if (!session_or) {
-      return std::move(session_or).status();
-    }
-    session = std::move(*session_or);
+  auto prepare_status = PrepareSession(session);
+  if (!prepare_status.ok()) {
+    return prepare_status;
   }
 
   if (s.has_single_use()) {

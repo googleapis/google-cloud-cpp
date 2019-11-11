@@ -88,6 +88,9 @@ class ConnectionImpl : public Connection {
                  std::unique_ptr<RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy);
 
+  Status PrepareSession(SessionHolder& session,
+                        bool dissociate_from_pool = false);
+
   RowStream ReadImpl(SessionHolder& session,
                      google::spanner::v1::TransactionSelector& s,
                      ReadParams params);
