@@ -428,6 +428,44 @@ void CreateDatabase(std::vector<std::string> const& argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void CreateTableWithTimestamp(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-table-with-timestamp <project-id> <instance-id> <database-id>");
+  }
+
+  // [START spanner_create_table_with_timestamp_column]
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& database_id) {
+    google::cloud::spanner::DatabaseAdminClient client;
+    google::cloud::spanner::Database database(project_id, instance_id,
+                                              database_id);
+    future<StatusOr<
+        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+        future = client.UpdateDatabase(database, {R"""(
+            CREATE TABLE Performances (
+                SingerId        INT64 NOT NULL,
+                VenueId         INT64 NOT NULL,
+                EventDate       Date,
+                Revenue         INT64,
+                LastUpdateTime  TIMESTAMP NOT NULL OPTIONS
+                    (allow_commit_timestamp=true)
+            ) PRIMARY KEY (SingerId, VenueId, EventDate),
+                INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""});
+    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+        metadata = future.get();
+    if (!metadata) {
+      throw std::runtime_error(metadata.status().message());
+    }
+    std::cout << "`Performances` table created, new DDL:\n"
+              << metadata->DebugString() << "\n";
+  }
+  // [END spanner_create_table_with_timestamp_column]
+  (argv[0], argv[1], argv[2]);
+}
+
 void AddIndex(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
@@ -1372,6 +1410,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"remove-database-reader", &RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
       {"create-database", &CreateDatabase},
+      {"create-table-with-timestamp", &CreateTableWithTimestamp},
       {"add-index", &AddIndex},
       {"add-storing-index", &AddStoringIndex},
       {"get-database", &GetDatabaseCommand},
@@ -1526,6 +1565,10 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_create_database sample\n";
   RunOneCommand({"", "create-database", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning spanner_create_table_with_timestamp_column sample\n";
+  RunOneCommand({"", "create-table-with-timestamp", project_id, instance_id,
+                 database_id});
 
   std::cout << "\nRunning spanner_create_index sample\n";
   RunOneCommand({"", "add-index", project_id, instance_id, database_id});
