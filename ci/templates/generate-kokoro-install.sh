@@ -20,7 +20,8 @@ if [[ $# -ne 1 ]]; then
   exit 1
 fi
 
-if [[ "${BASH_VERSINFO[0]}" -lt 4 || "${BASH_VERSINFO[1]}" -lt 4 ]]; then
+if [[ "${BASH_VERSINFO[0]}" -lt 4 ]] || \
+   [[ "${BASH_VERSINFO[0]}" -eq 4 && "${BASH_VERSINFO[1]}" -lt 4 ]]; then
   echo "This script requires BASH >= 4.4, found ${BASH_VERSION}"
   exit 1
 fi
@@ -43,7 +44,6 @@ BUILD_NAMES=(
   fedora
   opensuse-leap
   opensuse-tumbleweed
-  ubuntu-trusty
   ubuntu-xenial
   ubuntu-bionic
 )
