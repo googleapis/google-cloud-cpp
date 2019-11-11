@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/internal/connection_impl.h"
-#include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
-#include "google/cloud/bigquery/testing/mock_bigquerystorage_stub.h"
+#include "google/cloud/bigquery/internal/storage_stub.h"
+#include "google/cloud/bigquery/testing/mock_storage_stub.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/bigquery/storage/v1beta1/storage.pb.h>
@@ -43,7 +43,7 @@ using ::testing::Eq;
 using ::testing::IsTrue;
 
 TEST(ConnectionImplTest, ParallelReadTableFailure) {
-  auto mock = std::make_shared<bigquery_testing::MockBigQueryStorageStub>();
+  auto mock = std::make_shared<bigquery_testing::MockStorageStub>();
   auto conn = MakeConnection(mock);
 
   {
@@ -66,7 +66,7 @@ TEST(ConnectionImplTest, ParallelReadTableFailure) {
 }
 
 TEST(ConnectionImplTest, ParallelReadRpcFailure) {
-  auto mock = std::make_shared<bigquery_testing::MockBigQueryStorageStub>();
+  auto mock = std::make_shared<bigquery_testing::MockStorageStub>();
   auto conn = MakeConnection(mock);
   EXPECT_CALL(*mock, CreateReadSession(_))
       .WillOnce(
@@ -82,7 +82,7 @@ TEST(ConnectionImplTest, ParallelReadRpcFailure) {
 }
 
 TEST(ConnectionImplTest, ParallelReadRpcSuccess) {
-  auto mock = std::make_shared<bigquery_testing::MockBigQueryStorageStub>();
+  auto mock = std::make_shared<bigquery_testing::MockStorageStub>();
   auto conn = MakeConnection(mock);
   EXPECT_CALL(*mock, CreateReadSession(_))
       .WillOnce(testing::Invoke(

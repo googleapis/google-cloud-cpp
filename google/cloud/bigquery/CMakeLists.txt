@@ -91,8 +91,8 @@ add_library(
     connection.h
     connection_options.cc
     connection_options.h
-    internal/bigquerystorage_stub.cc
-    internal/bigquerystorage_stub.h
+    internal/storage_stub.cc
+    internal/storage_stub.h
     internal/connection_impl.cc
     internal/connection_impl.h
     internal/stream_reader.h
@@ -141,7 +141,7 @@ function (bigquery_client_define_tests)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     add_library(bigquery_client_testing
-                ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_bigquerystorage_stub.h)
+            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_storage_stub.h)
     target_link_libraries(
         bigquery_client_testing
         PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing

@@ -17,7 +17,7 @@
 """Automatically generated source lists for bigquery_client_testing - DO NOT EDIT."""
 
 bigquery_client_testing_hdrs = [
-    "testing/mock_bigquerystorage_stub.h",
+    "testing/mock_storage_stub.h",
 ]
 
 bigquery_client_testing_srcs = [

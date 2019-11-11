@@ -16,6 +16,7 @@
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/connection_impl.h"
+#include "google/cloud/bigquery/internal/storage_stub.h"
 #include "google/cloud/bigquery/version.h"
 #include <memory>
 
@@ -42,8 +43,8 @@ StatusOr<std::vector<ReadStream>> Client::ParallelRead(
 }
 
 std::shared_ptr<Connection> MakeConnection(ConnectionOptions const& options) {
-  std::shared_ptr<internal::BigQueryStorageStub> stub =
-      internal::MakeDefaultBigQueryStorageStub(options);
+  std::shared_ptr<internal::StorageStub> stub =
+      internal::MakeDefaultStorageStub(options);
   return internal::MakeConnection(std::move(stub));
 }
 

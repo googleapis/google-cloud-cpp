@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
-#define BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
+#ifndef BIGQUERY_INTERNAL_STORAGE_STUB_H_
+#define BIGQUERY_INTERNAL_STORAGE_STUB_H_
 
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
@@ -29,11 +29,11 @@ namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
 namespace internal {
 
-// BigQueryStorageStub is a thin stub layer over the BigQuery Storage API
+// StorageStub is a thin stub layer over the BigQuery Storage API
 // that hides the underlying transport stub, e.g., gRPC.
-class BigQueryStorageStub {
+class StorageStub {
  public:
-  virtual ~BigQueryStorageStub() = default;
+  virtual ~StorageStub() = default;
 
   // Sends a CreateReadSession RPC.
   virtual google::cloud::StatusOr<
@@ -48,10 +48,10 @@ class BigQueryStorageStub {
                request) = 0;
 
  protected:
-  BigQueryStorageStub() = default;
+  StorageStub() = default;
 };
 
-std::shared_ptr<BigQueryStorageStub> MakeDefaultBigQueryStorageStub(
+std::shared_ptr<StorageStub> MakeDefaultStorageStub(
     ConnectionOptions const& options);
 
 }  // namespace internal
@@ -60,4 +60,4 @@ std::shared_ptr<BigQueryStorageStub> MakeDefaultBigQueryStorageStub(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_INTERNAL_BIGQUERY_READ_STUB_H_
+#endif  // BIGQUERY_INTERNAL_STORAGE_STUB_H_

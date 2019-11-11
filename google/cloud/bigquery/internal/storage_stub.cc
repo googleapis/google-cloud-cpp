@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
+#include "google/cloud/bigquery/internal/storage_stub.h"
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
 #include "google/cloud/bigquery/internal/stream_reader.h"
@@ -68,9 +68,9 @@ class gRPCStreamReader : public StreamReader<T> {
   std::unique_ptr<grpc::ClientReaderInterface<T>> reader_;
 };
 
-class DefaultBigQueryStorageStub : public BigQueryStorageStub {
+class DefaultStorageStub : public StorageStub {
  public:
-  explicit DefaultBigQueryStorageStub(
+  explicit DefaultStorageStub(
       std::unique_ptr<bigquerystorage_proto::BigQueryStorage::StubInterface>
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
@@ -87,7 +87,7 @@ class DefaultBigQueryStorageStub : public BigQueryStorageStub {
 };
 
 google::cloud::StatusOr<bigquerystorage_proto::ReadSession>
-DefaultBigQueryStorageStub::CreateReadSession(
+DefaultStorageStub::CreateReadSession(
     bigquerystorage_proto::CreateReadSessionRequest const& request) {
   bigquerystorage_proto::ReadSession response;
   grpc::ClientContext client_context;
@@ -116,7 +116,7 @@ DefaultBigQueryStorageStub::CreateReadSession(
 }
 
 std::unique_ptr<StreamReader<bigquerystorage_proto::ReadRowsResponse>>
-DefaultBigQueryStorageStub::ReadRows(
+DefaultStorageStub::ReadRows(
     bigquerystorage_proto::ReadRowsRequest const& request) {
   // TODO(aryann): Replace this with `absl::make_unique`.
   auto client_context =
@@ -140,14 +140,14 @@ DefaultBigQueryStorageStub::ReadRows(
 
 }  // namespace
 
-std::shared_ptr<BigQueryStorageStub> MakeDefaultBigQueryStorageStub(
+std::shared_ptr<StorageStub> MakeDefaultStorageStub(
     ConnectionOptions const& options) {
   auto grpc_stub =
       bigquerystorage_proto::BigQueryStorage::NewStub(grpc::CreateCustomChannel(
           options.bigquerystorage_endpoint(), options.credentials(),
           options.CreateChannelArguments()));
 
-  return std::make_shared<DefaultBigQueryStorageStub>(std::move(grpc_stub));
+  return std::make_shared<DefaultStorageStub>(std::move(grpc_stub));
 }
 
 }  // namespace internal

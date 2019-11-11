@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigquery/internal/connection_impl.h"
-#include "google/cloud/bigquery/internal/bigquerystorage_stub.h"
+#include "google/cloud/bigquery/internal/storage_stub.h"
 #include "google/cloud/bigquery/internal/streaming_read_result_source.h"
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
@@ -54,7 +54,7 @@ std::istream& operator>>(std::istream& is, DelimitedBy<delimiter>& output) {
 }
 }  // namespace
 
-ConnectionImpl::ConnectionImpl(std::shared_ptr<BigQueryStorageStub> read_stub)
+ConnectionImpl::ConnectionImpl(std::shared_ptr<StorageStub> read_stub)
     : read_stub_(read_stub) {}
 
 ReadResult ConnectionImpl::Read(ReadStream const& read_stream) {
@@ -114,7 +114,7 @@ StatusOr<bigquerystorage_proto::ReadSession> ConnectionImpl::NewReadSession(
 }
 
 std::shared_ptr<ConnectionImpl> MakeConnection(
-    std::shared_ptr<BigQueryStorageStub> read_stub) {
+    std::shared_ptr<StorageStub> read_stub) {
   return std::shared_ptr<ConnectionImpl>(
       new ConnectionImpl(std::move(read_stub)));
 }
