@@ -21,14 +21,11 @@ declare -A ORIGINAL_COPYRIGHT_YEAR=(
   [fedora]=2018
   [opensuse-leap]=2019
   [opensuse-tumbleweed]=2018
-  [ubuntu-trusty]=2018
   [ubuntu-xenial]=2018
   [ubuntu-bionic]=2018
 )
 
-declare -a FROZEN_FILES=(
-  "ci/kokoro/install/Dockerfile.ubuntu-trusty"
-)
+declare -a FROZEN_FILES=()
 
 BUILD_AND_TEST_PROJECT_FRAGMENT=$(replace_fragments \
       "INSTALL_CRC32C_FROM_SOURCE" \

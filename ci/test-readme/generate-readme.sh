@@ -58,7 +58,3 @@ badge ubuntu-bionic
 echo "### Ubuntu (16.04 - Xenial Xerus)"
 badge ubuntu-xenial
 "${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-xenial"
-
-echo "### Ubuntu (14.04 - Trusty Tahr)"
-badge ubuntu-trusty
-"${BINDIR}/extract-readme.sh" "${DOCKERFILES_DIR}/Dockerfile.ubuntu-trusty"

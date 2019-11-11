@@ -21,7 +21,6 @@ declare -A ORIGINAL_COPYRIGHT_YEAR=(
   [fedora]=2018
   [opensuse-leap]=2019
   [opensuse-tumbleweed]=2018
-  [ubuntu-trusty]=2018
   [ubuntu-xenial]=2018
   [ubuntu-bionic]=2018
 )
