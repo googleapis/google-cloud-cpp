@@ -48,9 +48,6 @@ inline bool operator!=(ReadOptions const& lhs, ReadOptions const& rhs) {
   return !(lhs == rhs);
 }
 
-/// Options passed to `Client::PartitionRead` or `Client::PartitionQuery`
-using PartitionOptions = google::spanner::v1::PartitionOptions;
-
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

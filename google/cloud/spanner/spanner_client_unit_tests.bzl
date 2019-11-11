@@ -52,6 +52,7 @@ spanner_client_unit_tests = [
     "bytes_test.cc",
     "keys_test.cc",
     "mutations_test.cc",
+    "partition_options_test.cc",
     "read_options_test.cc",
     "read_partition_test.cc",
     "results_test.cc",

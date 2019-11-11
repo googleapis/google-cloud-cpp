@@ -94,7 +94,7 @@ class ConnectionImpl : public Connection {
 
   StatusOr<std::vector<ReadPartition>> PartitionReadImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      ReadParams const& params, PartitionOptions partition_options);
+      ReadParams const& params, PartitionOptions const& partition_options);
 
   RowStream ExecuteQueryImpl(SessionHolder& session,
                              google::spanner::v1::TransactionSelector& s,
@@ -122,7 +122,7 @@ class ConnectionImpl : public Connection {
 
   StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      SqlParams const& params, PartitionOptions partition_options);
+      SqlParams const& params, PartitionOptions const& partition_options);
 
   StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,

@@ -20,6 +20,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/partition_options.h"
 #include "google/cloud/spanner/partitioned_dml_result.h"
 #include "google/cloud/spanner/read_options.h"
 #include "google/cloud/spanner/results.h"

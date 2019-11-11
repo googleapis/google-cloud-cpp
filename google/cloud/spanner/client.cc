@@ -60,11 +60,11 @@ RowStream Client::Read(ReadPartition const& read_partition) {
 StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
     Transaction transaction, std::string table, KeySet keys,
     std::vector<std::string> columns, ReadOptions read_options,
-    PartitionOptions partition_options) {
+    PartitionOptions const& partition_options) {
   return conn_->PartitionRead(
       {{std::move(transaction), std::move(table), std::move(keys),
         std::move(columns), std::move(read_options)},
-       std::move(partition_options)});
+       partition_options});
 }
 
 RowStream Client::ExecuteQuery(SqlStatement statement) {
@@ -109,9 +109,9 @@ ProfileQueryResult Client::ProfileQuery(Transaction transaction,
 
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
     Transaction transaction, SqlStatement statement,
-    PartitionOptions partition_options) {
-  return conn_->PartitionQuery({{std::move(transaction), std::move(statement)},
-                                std::move(partition_options)});
+    PartitionOptions const& partition_options) {
+  return conn_->PartitionQuery(
+      {{std::move(transaction), std::move(statement)}, partition_options});
 }
 
 StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,

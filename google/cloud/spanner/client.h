@@ -23,7 +23,9 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
+#include "google/cloud/spanner/partition_options.h"
 #include "google/cloud/spanner/query_partition.h"
+#include "google/cloud/spanner/read_options.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -215,7 +217,7 @@ class Client {
   StatusOr<std::vector<ReadPartition>> PartitionRead(
       Transaction transaction, std::string table, KeySet keys,
       std::vector<std::string> columns, ReadOptions read_options = {},
-      PartitionOptions partition_options = {});
+      PartitionOptions const& partition_options = PartitionOptions{});
 
   //@{
   /**
@@ -345,7 +347,7 @@ class Client {
    */
   StatusOr<std::vector<QueryPartition>> PartitionQuery(
       Transaction transaction, SqlStatement statement,
-      PartitionOptions partition_options = {});
+      PartitionOptions const& partition_options = PartitionOptions{});
 
   /**
    * Executes a SQL DML statement.

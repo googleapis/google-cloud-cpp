@@ -129,7 +129,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionRead(
       [this, &params](SessionHolder& session,
                       spanner_proto::TransactionSelector& s, std::int64_t) {
         return PartitionReadImpl(session, s, params.read_params,
-                                 std::move(params.partition_options));
+                                 params.partition_options);
       });
 }
 
@@ -201,7 +201,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
       [this, &params](SessionHolder& session,
                       spanner_proto::TransactionSelector& s, std::int64_t) {
         return PartitionQueryImpl(session, s, params.sql_params,
-                                  std::move(params.partition_options));
+                                  params.partition_options);
       });
 }
 
@@ -344,7 +344,7 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
 
 StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
-    ReadParams const& params, PartitionOptions partition_options) {
+    ReadParams const& params, PartitionOptions const& partition_options) {
   if (!session) {
     // Since the session may be sent to other machines, it should not be
     // returned to the pool when the Transaction is destroyed.
@@ -364,7 +364,7 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
     *request.add_columns() = column;
   }
   *request.mutable_key_set() = internal::ToProto(params.keys);
-  *request.mutable_partition_options() = std::move(partition_options);
+  *request.mutable_partition_options() = internal::ToProto(partition_options);
 
   auto response = internal::RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
@@ -557,7 +557,7 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
-    SqlParams const& params, PartitionOptions partition_options) {
+    SqlParams const& params, PartitionOptions const& partition_options) {
   if (!session) {
     // Since the session may be sent to other machines, it should not be
     // returned to the pool when the Transaction is destroyed.
@@ -576,7 +576,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
-  *request.mutable_partition_options() = std::move(partition_options);
+  *request.mutable_partition_options() = internal::ToProto(partition_options);
 
   auto response = internal::RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),

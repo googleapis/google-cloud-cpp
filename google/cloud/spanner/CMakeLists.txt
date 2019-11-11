@@ -178,6 +178,8 @@ add_library(
     keys.h
     mutations.cc
     mutations.h
+    partition_options.cc
+    partition_options.h
     partitioned_dml_result.h
     polling_policy.h
     query_partition.cc
@@ -327,6 +329,7 @@ function (spanner_client_define_tests)
         bytes_test.cc
         keys_test.cc
         mutations_test.cc
+        partition_options_test.cc
         read_options_test.cc
         read_partition_test.cc
         results_test.cc
