@@ -37,7 +37,7 @@ RUN apt update && \
 
 # ```bash
 RUN apt update && \
-    apt install -y libgrpc++-dev libprotobuf-dev \
+    apt install -y libgrpc++-dev libprotobuf-dev libc-ares-dev \
         protobuf-compiler protobuf-compiler-grpc
 # ```
 
