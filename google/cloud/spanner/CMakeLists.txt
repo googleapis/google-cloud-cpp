@@ -383,6 +383,7 @@ if (BUILD_TESTING)
 endif (BUILD_TESTING)
 
 add_subdirectory(integration_tests)
+add_subdirectory(benchmarks)
 
 # Only compile the samples if we're building with exceptions enabled. They
 # require exceptions to keep them simple and idiomatic.

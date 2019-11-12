@@ -27,32 +27,13 @@ function (spanner_client_define_integration_tests)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
-    # Find out if the platform supports getrusage(). Note that the Bazel builds
-    # do not test for this, and therefore the feature is *not* used for any
-    # Bazel-based build.
-    include(CheckCXXSymbolExists)
-    check_cxx_symbol_exists(getrusage sys/resource.h
-                            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE)
-    check_cxx_symbol_exists(RUSAGE_THREAD sys/resource.h
-                            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD)
-    add_library(getrusage_flags INTERFACE)
-    target_compile_definitions(
-        getrusage_flags
-        INTERFACE
-        GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
-        GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
-    )
-
     set(spanner_client_integration_tests
         # cmake-format: sortable
         client_integration_test.cc
         database_admin_integration_test.cc
         client_stress_test.cc
         instance_admin_integration_test.cc
-        rpc_failure_threshold_integration_test.cc
-        single_row_throughput_benchmark.cc
-        single_row_cpu_benchmark.cc
-        throughput_benchmark.cc)
+        rpc_failure_threshold_integration_test.cc)
     set(spanner_client_install_tests spanner_install_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
@@ -71,12 +52,8 @@ function (spanner_client_define_integration_tests)
         add_executable(${target} ${fname})
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::spanner_client
-                    getrusage_flags
-                    spanner_client_testing
-                    google_cloud_cpp_testing
-                    GTest::gmock_main
-                    GTest::gmock
+            PRIVATE googleapis-c++::spanner_client spanner_client_testing
+                    google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                     GTest::gtest)
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
