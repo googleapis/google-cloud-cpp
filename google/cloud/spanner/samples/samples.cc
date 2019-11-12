@@ -389,62 +389,59 @@ void InstanceTestIamPermissionsCommand(std::vector<std::string> const& argv) {
   InstanceTestIamPermissions(std::move(client), argv[0], argv[1]);
 }
 
-void CreateDatabase(std::vector<std::string> const& argv) {
+//! [create-database] [START spanner_create_database]
+void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& database_id) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<StatusOr<google::spanner::admin::database::v1::Database>> f =
+      client.CreateDatabase(database, {R"""(
+          CREATE TABLE Singers (
+              SingerId   INT64 NOT NULL,
+              FirstName  STRING(1024),
+              LastName   STRING(1024),
+              SingerInfo BYTES(MAX)
+          ) PRIMARY KEY (SingerId))""",
+                                       R"""(
+          CREATE TABLE Albums (
+              SingerId     INT64 NOT NULL,
+              AlbumId      INT64 NOT NULL,
+              AlbumTitle   STRING(MAX)
+          ) PRIMARY KEY (SingerId, AlbumId),
+              INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""});
+  StatusOr<google::spanner::admin::database::v1::Database> db = f.get();
+  if (!db) {
+    throw std::runtime_error(db.status().message());
+  }
+  std::cout << "Created database [" << database << "]\n";
+}
+//! [create-database] [END spanner_create_database]
+
+void CreateDatabaseCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "create-database <project-id> <instance-id> <database-id>");
   }
-
-  //! [create-database] [START spanner_create_database]
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](std::string const& project_id, std::string const& instance_id,
-     std::string const& database_id) {
-    google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::spanner::Database database(project_id, instance_id,
-                                              database_id);
-    future<StatusOr<google::spanner::admin::database::v1::Database>> future =
-        client.CreateDatabase(database, {R"""(
-                        CREATE TABLE Singers (
-                                SingerId   INT64 NOT NULL,
-                                FirstName  STRING(1024),
-                                LastName   STRING(1024),
-                                SingerInfo BYTES(MAX)
-                        ) PRIMARY KEY (SingerId))""",
-                                         R"""(
-                        CREATE TABLE Albums (
-                                SingerId     INT64 NOT NULL,
-                                AlbumId      INT64 NOT NULL,
-                                AlbumTitle   STRING(MAX)
-                        ) PRIMARY KEY (SingerId, AlbumId),
-                        INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""});
-    StatusOr<google::spanner::admin::database::v1::Database> db = future.get();
-    if (!db) {
-      throw std::runtime_error(db.status().message());
-    }
-    std::cout << "Created database [" << database << "]\n";
-  }
-  //! [create-database] [END spanner_create_database]
-  (argv[0], argv[1], argv[2]);
+  google::cloud::spanner::DatabaseAdminClient client;
+  CreateDatabase(std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void CreateTableWithTimestamp(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "create-table-with-timestamp <project-id> <instance-id> <database-id>");
-  }
-
-  // [START spanner_create_table_with_timestamp_column]
+// [START spanner_create_table_with_timestamp_column]
+void CreateTableWithTimestamp(
+    google::cloud::spanner::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id) {
   using google::cloud::future;
   using google::cloud::StatusOr;
-  [](std::string const& project_id, std::string const& instance_id,
-     std::string const& database_id) {
-    google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::spanner::Database database(project_id, instance_id,
-                                              database_id);
-    future<StatusOr<
-        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-        future = client.UpdateDatabase(database, {R"""(
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(database, {R"""(
             CREATE TABLE Performances (
                 SingerId        INT64 NOT NULL,
                 VenueId         INT64 NOT NULL,
@@ -454,46 +451,54 @@ void CreateTableWithTimestamp(std::vector<std::string> const& argv) {
                     (allow_commit_timestamp=true)
             ) PRIMARY KEY (SingerId, VenueId, EventDate),
                 INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""});
-    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-        metadata = future.get();
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-    std::cout << "`Performances` table created, new DDL:\n"
-              << metadata->DebugString() << "\n";
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) {
+    throw std::runtime_error(metadata.status().message());
   }
-  // [END spanner_create_table_with_timestamp_column]
-  (argv[0], argv[1], argv[2]);
+  std::cout << "`Performances` table created, new DDL:\n"
+            << metadata->DebugString() << "\n";
+}
+// [END spanner_create_table_with_timestamp_column]
+
+void CreateTableWithTimestampCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-table-with-timestamp <project-id> <instance-id> <database-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  CreateTableWithTimestamp(std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void AddIndex(std::vector<std::string> const& argv) {
+// [START spanner_create_index]
+void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
+              std::string const& project_id, std::string const& instance_id,
+              std::string const& database_id) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(
+          database, {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) {
+    throw std::runtime_error(metadata.status().message());
+  }
+  std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
+            << metadata->DebugString() << "\n";
+}
+// [END spanner_create_index]
+
+void AddIndexCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "add-index <project-id> <instance-id> <database-id>");
   }
-  // [START spanner_create_index]
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](std::string const& project_id, std::string const& instance_id,
-     std::string const& database_id) {
-    google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::spanner::Database database(project_id, instance_id,
-                                              database_id);
-    future<StatusOr<
-        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-        future = client.UpdateDatabase(
-            database,
-            {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"});
-    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-        metadata = future.get();
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-    std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
-              << metadata->DebugString() << "\n";
-  }
-  // [END spanner_create_index]
-  (argv[0], argv[1], argv[2]);
+  google::cloud::spanner::DatabaseAdminClient client;
+  AddIndex(std::move(client), argv[0], argv[1], argv[2]);
 }
 
 //! [get-database]
@@ -530,7 +535,7 @@ void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [get-database-ddl]
 
-void GetDatabaseCommandDdl(std::vector<std::string> const& argv) {
+void GetDatabaseDdlCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "get-database-ddl <project-id> <instance-id> <database-id>");
@@ -539,63 +544,67 @@ void GetDatabaseCommandDdl(std::vector<std::string> const& argv) {
   GetDatabaseDdl(std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void AddColumn(std::vector<std::string> const& argv) {
+//! [update-database] [START spanner_add_column]
+void AddColumn(google::cloud::spanner::DatabaseAdminClient client,
+               std::string const& project_id, std::string const& instance_id,
+               std::string const& database_id) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(
+          database, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) {
+    throw std::runtime_error(metadata.status().message());
+  }
+  std::cout << "Added MarketingBudget column\n";
+}
+//! [update-database] [END spanner_add_column]
+
+void AddColumnCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "add-column <project-id> <instance-id> <database-id>");
   }
-
-  //! [update-database] [START spanner_add_column]
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](std::string const& project_id, std::string const& instance_id,
-     std::string const& database_id) {
-    google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::spanner::Database database(project_id, instance_id,
-                                              database_id);
-    future<StatusOr<
-        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-        future = client.UpdateDatabase(
-            database, {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"});
-    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-        metadata = future.get();
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-    std::cout << "Added MarketingBudget column\n";
-  }
-  //! [update-database] [END spanner_add_column]
-  (argv[0], argv[1], argv[2]);
+  google::cloud::spanner::DatabaseAdminClient client;
+  AddColumn(std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void AddStoringIndex(std::vector<std::string> const& argv) {
+// [START spanner_create_storing_index]
+void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
+                     std::string const& project_id,
+                     std::string const& instance_id,
+                     std::string const& database_id) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(database, {R"""(
+            CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
+                STORING (MarketingBudget))"""});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) {
+    throw std::runtime_error(metadata.status().message());
+  }
+  std::cout << "`AlbumsByAlbumTitle2` Index successfully added, new DDL:\n"
+            << metadata->DebugString() << "\n";
+}
+// [END spanner_create_storing_index]
+
+void AddStoringIndexCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "add-storing-index <project-id> <instance-id> <database-id>");
   }
-  // [START spanner_create_storing_index]
-  using google::cloud::future;
-  using google::cloud::StatusOr;
-  [](std::string const& project_id, std::string const& instance_id,
-     std::string const& database_id) {
-    google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::spanner::Database database(project_id, instance_id,
-                                              database_id);
-    future<StatusOr<
-        google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
-        future = client.UpdateDatabase(database, {R"""(
-            CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
-                STORING (MarketingBudget))"""});
-    StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
-        metadata = future.get();
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-    std::cout << "`AlbumsByAlbumTitle2` Index successfully added, new DDL:\n"
-              << metadata->DebugString() << "\n";
-  }
-  // [END spanner_create_storing_index]
-  (argv[0], argv[1], argv[2]);
+  google::cloud::spanner::DatabaseAdminClient client;
+  AddStoringIndex(std::move(client), argv[0], argv[1], argv[2]);
 }
 
 //! [list-databases]
@@ -625,26 +634,27 @@ void ListDatabasesCommand(std::vector<std::string> const& argv) {
   ListDatabases(std::move(client), argv[0], argv[1]);
 }
 
-void DropDatabase(std::vector<std::string> const& argv) {
+//! [drop-database] [START spanner_drop_database]
+void DropDatabase(google::cloud::spanner::DatabaseAdminClient client,
+                  std::string const& project_id, std::string const& instance_id,
+                  std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  google::cloud::Status status = client.DropDatabase(database);
+  if (!status.ok()) {
+    throw std::runtime_error(status.message());
+  }
+  std::cout << "Database " << database << " successfully dropped\n";
+}
+//! [drop-database] [END spanner_drop_database]
+
+void DropDatabaseCommand(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw std::runtime_error(
         "drop-database <project-id> <instance-id> <database-id>");
   }
-
-  //! [drop-database] [START spanner_drop_database]
-  [](std::string const& project_id, std::string const& instance_id,
-     std::string const& database_id) {
-    google::cloud::spanner::DatabaseAdminClient client;
-    google::cloud::spanner::Database database(project_id, instance_id,
-                                              database_id);
-    google::cloud::Status status = client.DropDatabase(database);
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-    std::cout << "Database " << database << " successfully dropped\n";
-  }
-  //! [drop-database] [END spanner_drop_database]
-  (argv[0], argv[1], argv[2]);
+  google::cloud::spanner::DatabaseAdminClient client;
+  DropDatabase(std::move(client), argv[0], argv[1], argv[2]);
 }
 
 //! [database-get-iam-policy]
@@ -1409,15 +1419,15 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-database-reader", &AddDatabaseReaderCommand},
       {"remove-database-reader", &RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
-      {"create-database", &CreateDatabase},
-      {"create-table-with-timestamp", &CreateTableWithTimestamp},
-      {"add-index", &AddIndex},
-      {"add-storing-index", &AddStoringIndex},
+      {"create-database", &CreateDatabaseCommand},
+      {"create-table-with-timestamp", &CreateTableWithTimestampCommand},
+      {"add-index", &AddIndexCommand},
+      {"add-storing-index", &AddStoringIndexCommand},
       {"get-database", &GetDatabaseCommand},
-      {"get-database-ddl", &GetDatabaseCommandDdl},
-      {"add-column", &AddColumn},
+      {"get-database-ddl", &GetDatabaseDdlCommand},
+      {"add-column", &AddColumnCommand},
       {"list-databases", &ListDatabasesCommand},
-      {"drop-database", &DropDatabase},
+      {"drop-database", &DropDatabaseCommand},
       {"database-get-iam-policy", &DatabaseGetIamPolicyCommand},
       {"add-database-reader-on-database", &AddDatabaseReaderOnDatabaseCommand},
       {"database-test-iam-permissions", &DatabaseTestIamPermissionsCommand},
@@ -1518,91 +1528,92 @@ void RunAll() {
   std::string instance_id = *std::move(random_instance);
   std::cout << "Running instance admin samples on " << instance_id << "\n";
 
+  google::cloud::spanner::InstanceAdminClient instance_admin_client(
+      google::cloud::spanner::MakeInstanceAdminConnection());
+
   std::cout << "\nRunning get-instance sample\n";
-  RunOneCommand({"", "get-instance", project_id, instance_id});
+  GetInstance(instance_admin_client, project_id, instance_id);
 
   std::cout << "\nRunning get-instance-config sample\n";
-  RunOneCommand(
-      {"", "get-instance-config", project_id, "regional-us-central1"});
+  GetInstanceConfig(instance_admin_client, project_id, "regional-us-central1");
 
   std::cout << "\nRunning list-instance-configs sample\n";
-  RunOneCommand({"", "list-instance-configs", project_id});
+  ListInstanceConfigs(instance_admin_client, project_id);
 
   std::cout << "\nRunning list-instances sample\n";
-  RunOneCommand({"", "list-instances", project_id});
+  ListInstances(instance_admin_client, project_id);
 
   std::cout << "\nRunning (instance) get-iam-policy sample\n";
-  RunOneCommand({"", "instance-get-iam-policy", project_id, instance_id});
+  InstanceGetIamPolicy(instance_admin_client, project_id, instance_id);
 
   if (run_slow_integration_tests == "yes") {
     std::string crud_instance_id =
         google::cloud::spanner_testing::RandomInstanceName(generator);
     std::cout << "\nRunning create-instance sample\n";
-    RunOneCommand(
-        {"", "create-instance", project_id, crud_instance_id, "Test Instance"});
-
+    CreateInstance(instance_admin_client, project_id, crud_instance_id,
+                   "Test Instance");
     std::cout << "\nRunning update-instance sample\n";
-    RunOneCommand(
-        {"", "update-instance", project_id, crud_instance_id, "New name"});
-
+    UpdateInstance(instance_admin_client, project_id, crud_instance_id,
+                   "New name");
     std::cout << "\nRunning (instance) add-database-reader sample\n";
-    RunOneCommand({"", "add-database-reader", project_id, crud_instance_id,
-                   "serviceAccount:" + test_iam_service_account});
+    AddDatabaseReader(instance_admin_client, project_id, crud_instance_id,
+                      "serviceAccount:" + test_iam_service_account);
     std::cout << "\nRunning (instance) remove-database-reader sample\n";
-    RunOneCommand({"", "remove-database-reader", project_id, crud_instance_id,
-                   "serviceAccount:" + test_iam_service_account});
+    RemoveDatabaseReader(instance_admin_client, project_id, crud_instance_id,
+                         "serviceAccount:" + test_iam_service_account);
     std::cout << "\nRunning delete-instance sample\n";
-    RunOneCommand({"", "delete-instance", project_id, crud_instance_id});
+    DeleteInstance(instance_admin_client, project_id, crud_instance_id);
   }
 
   std::cout << "\nRunning (instance) test-iam-permissions sample\n";
-  RunOneCommand({"", "instance-test-iam-permissions", project_id, instance_id});
+  InstanceTestIamPermissions(instance_admin_client, project_id, instance_id);
 
   std::string database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
   std::cout << "Running samples in database " << database_id << "\n";
 
+  google::cloud::spanner::DatabaseAdminClient database_admin_client;
   std::cout << "\nRunning spanner_create_database sample\n";
-  RunOneCommand({"", "create-database", project_id, instance_id, database_id});
+  CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
   std::cout << "\nRunning spanner_create_table_with_timestamp_column sample\n";
-  RunOneCommand({"", "create-table-with-timestamp", project_id, instance_id,
-                 database_id});
+  CreateTableWithTimestamp(database_admin_client, project_id, instance_id,
+                           database_id);
 
   std::cout << "\nRunning spanner_create_index sample\n";
-  RunOneCommand({"", "add-index", project_id, instance_id, database_id});
+  AddIndex(database_admin_client, project_id, instance_id, database_id);
 
   std::cout << "\nRunning spanner get-database sample\n";
-  RunOneCommand({"", "get-database", project_id, instance_id, database_id});
+  GetDatabase(database_admin_client, project_id, instance_id, database_id);
 
   std::cout << "\nRunning spanner get-database-ddl sample\n";
-  RunOneCommand({"", "get-database-ddl", project_id, instance_id, database_id});
+  GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
 
   std::cout << "\nList all databases\n";
-  RunOneCommand({"", "list-databases", project_id, instance_id});
+  ListDatabases(database_admin_client, project_id, instance_id);
 
   std::cout << "\nRunning spanner_add_column sample\n";
-  RunOneCommand({"", "add-column", project_id, instance_id, database_id});
+  AddColumn(database_admin_client, project_id, instance_id, database_id);
 
   std::cout << "\nRunning spanner_create_storing_index sample\n";
-  RunOneCommand(
-      {"", "add-storing-index", project_id, instance_id, database_id});
+  AddStoringIndex(database_admin_client, project_id, instance_id, database_id);
 
   std::cout << "\nRunning (database) get-iam-policy sample\n";
-  RunOneCommand(
-      {"", "database-get-iam-policy", project_id, instance_id, database_id});
+  DatabaseGetIamPolicy(database_admin_client, project_id, instance_id,
+                       database_id);
 
   std::cout << "\nRunning (database) add-database-reader sample\n";
-  RunOneCommand({"", "add-database-reader-on-database", project_id, instance_id,
-                 database_id, "serviceAccount:" + test_iam_service_account});
+  AddDatabaseReaderOnDatabase(database_admin_client, project_id, instance_id,
+                              database_id,
+                              "serviceAccount:" + test_iam_service_account);
 
   std::cout << "\nRunning (database) test-iam-permissions sample\n";
-  RunOneCommand({"", "database-test-iam-permissions", project_id, instance_id,
-                 database_id, "spanner.databases.read"});
+  DatabaseTestIamPermissions(database_admin_client, project_id, instance_id,
+                             database_id, "spanner.databases.read");
 
   std::cout << "\nRunning spanner_quickstart sample\n";
-  RunOneCommand({"", "quickstart", project_id, instance_id, database_id});
+  Quickstart(project_id, instance_id, database_id);
 
   auto client = MakeSampleClient(project_id, instance_id, database_id);
 
@@ -1667,7 +1678,7 @@ void RunAll() {
   DmlPartitionedDelete(client);
 
   std::cout << "\nRunning spanner_drop_database sample\n";
-  RunOneCommand({"", "drop-database", project_id, instance_id, database_id});
+  DropDatabase(database_admin_client, project_id, instance_id, database_id);
 }
 
 bool AutoRun() {
