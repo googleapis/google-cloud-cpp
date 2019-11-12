@@ -49,6 +49,13 @@ else
   exit 1
 fi
 
+echo "================================================================"
+echo "Load Google Container Registry configuration parameters $(date)."
+
+if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
+fi
+
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
@@ -60,13 +67,6 @@ cd "${PROJECT_ROOT}"
 
 echo "================================================================"
 echo "Building with ${NCPU} cores $(date) on ${PWD}."
-
-echo "================================================================"
-echo "Load Google Container Registry configuration parameters $(date)."
-
-if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
-  source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
-fi
 
 echo "================================================================"
 echo "Setup Google Container Registry access $(date)."
