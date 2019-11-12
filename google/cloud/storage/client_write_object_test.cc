@@ -70,31 +70,31 @@ TEST_F(WriteObjectTest, WriteObject) {
   auto expected = internal::ObjectMetadataParser::FromString(text).value();
 
   EXPECT_CALL(*mock, CreateResumableSession(_))
-      .WillOnce(
-          Invoke([&expected](internal::ResumableUploadRequest const& request) {
-            EXPECT_EQ("test-bucket-name", request.bucket_name());
-            EXPECT_EQ("test-object-name", request.object_name());
+      .WillOnce(Invoke([&expected](
+                           internal::ResumableUploadRequest const& request) {
+        EXPECT_EQ("test-bucket-name", request.bucket_name());
+        EXPECT_EQ("test-object-name", request.object_name());
 
-            auto mock = make_unique<testing::MockResumableUploadSession>();
-            using internal::ResumableUploadResponse;
-            EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
-            EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
-            EXPECT_CALL(*mock, UploadChunk(_))
-                .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
-                    "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
-            EXPECT_CALL(*mock, ResetSession())
-                .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                    "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
-            EXPECT_CALL(*mock, UploadFinalChunk(_, _))
-                .WillOnce(
-                    Return(StatusOr<ResumableUploadResponse>(TransientError())))
-                .WillOnce(Return(make_status_or(ResumableUploadResponse{
-                    "fake-url", 0, expected, ResumableUploadResponse::kDone})));
+        auto mock = make_unique<testing::MockResumableUploadSession>();
+        using internal::ResumableUploadResponse;
+        EXPECT_CALL(*mock, done()).WillRepeatedly(Return(false));
+        EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Return(0));
+        EXPECT_CALL(*mock, UploadChunk(_))
+            .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
+                "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
+        EXPECT_CALL(*mock, ResetSession())
+            .WillOnce(Return(make_status_or(ResumableUploadResponse{
+                "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
+        EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+            .WillOnce(
+                Return(StatusOr<ResumableUploadResponse>(TransientError())))
+            .WillOnce(Return(make_status_or(ResumableUploadResponse{
+                "fake-url", 0, expected, ResumableUploadResponse::kDone, {}})));
 
-            return make_status_or(
-                std::unique_ptr<internal ::ResumableUploadSession>(
-                    std::move(mock)));
-          }));
+        return make_status_or(
+            std::unique_ptr<internal ::ResumableUploadSession>(
+                std::move(mock)));
+      }));
 
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
   stream << "Hello World!";

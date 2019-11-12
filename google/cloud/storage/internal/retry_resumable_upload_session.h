@@ -58,7 +58,8 @@ class RetryResumableUploadSession : public ResumableUploadSession {
 
   // Reset the current session using previously cloned policies.
   StatusOr<ResumableUploadResponse> ResetSession(RetryPolicy& retry_policy,
-                                                 BackoffPolicy& backoff_policy);
+                                                 BackoffPolicy& backoff_policy,
+                                                 Status last_status);
 
   std::unique_ptr<ResumableUploadSession> session_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;

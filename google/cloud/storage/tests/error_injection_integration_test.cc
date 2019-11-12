@@ -217,16 +217,15 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
   os << buf.data();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.IsOpen());
-  EXPECT_EQ(StatusCode::kDeadlineExceeded, os.last_status().code());
+  EXPECT_EQ(StatusCode::kUnavailable, os.last_status().code());
 
   SymbolInterceptor::Instance().StopFailingSend();
   os.Close();
   EXPECT_FALSE(os.metadata());
   EXPECT_FALSE(os.metadata().ok());
-  EXPECT_EQ(StatusCode::kDeadlineExceeded, os.metadata().status().code());
-  EXPECT_THAT(
-      os.metadata().status().message(),
-      ::testing::HasSubstr("Retry policy exhausted before first attempt"));
+  EXPECT_EQ(StatusCode::kUnavailable, os.metadata().status().code());
+  EXPECT_THAT(os.metadata().status().message(),
+              ::testing::HasSubstr("Retry policy exhausted"));
 }
 
 TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {

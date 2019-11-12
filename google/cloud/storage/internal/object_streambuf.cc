@@ -240,7 +240,7 @@ ObjectWriteStreambuf::ObjectWriteStreambuf(
       max_buffer_size_(UploadChunkRequest::RoundUpToQuantum(max_buffer_size)),
       hash_validator_(std::move(hash_validator)),
       last_response_(ResumableUploadResponse{
-          {}, 0, {}, ResumableUploadResponse::kInProgress}) {
+          {}, 0, {}, ResumableUploadResponse::kInProgress, {}}) {
   current_ios_buffer_.resize(max_buffer_size_);
   auto pbeg = current_ios_buffer_.data();
   auto pend = pbeg + current_ios_buffer_.size();
