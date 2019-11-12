@@ -74,7 +74,7 @@ ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
 // NOLINTNEXTLINE(readability-identifier-naming)
 ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
   if (size == 0) {
-    connection_pool_size_ = BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
+    connection_pool_size_ = CalculateDefaultConnectionPoolSize();
     return *this;
   }
   connection_pool_size_ = size;
