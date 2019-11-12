@@ -46,7 +46,7 @@ function (spanner_client_define_benchmarks)
                          "spanner_client_benchmarks")
 
     # Generate a target for each benchmark.
-    foreach (fname ${spanner_client_integration_tests})
+    foreach (fname ${spanner_client_benchmarks})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
         target_link_libraries(
