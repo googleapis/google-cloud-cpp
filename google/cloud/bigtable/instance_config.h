@@ -30,15 +30,13 @@ inline namespace BIGTABLE_CLIENT_NS {
 class InstanceConfig {
  public:
   InstanceConfig(std::string instance_id, std::string display_name,
-                 std::vector<std::pair<std::string, ClusterConfig>> clusters) {
-    // TODO(#2589) - validate the `clusters` parameter.
+                 std::map<std::string, ClusterConfig> clusters) {
     proto_.set_instance_id(std::move(instance_id));
     proto_.mutable_instance()->set_display_name(std::move(display_name));
     for (auto& kv : clusters) {
       (*proto_.mutable_clusters())[kv.first] = std::move(kv.second).as_proto();
     }
   }
-
   //@{
   /// @name Convenient shorthands for the instance types.
   using InstanceType = google::bigtable::admin::v2::Instance::Type;
