@@ -1116,6 +1116,24 @@ void QueryData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_data]
 
+//! [START spanner_read_data]
+void ReadData(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  auto rows = client.Read("Albums", google::cloud::spanner::KeySet::All(),
+                          {"SingerId", "AlbumId", "AlbumTitle"});
+  using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row) << "\t";
+    std::cout << "AlbumId: " << std::get<1>(*row) << "\n";
+    std::cout << "AlbumTitle: " << std::get<2>(*row) << "\n";
+  }
+
+  std::cout << "Read completed for [spanner_read_data]\n";
+}
+//! [END spanner_read_data]
+
 //! [spanner-query-data-select-star]
 void QueryDataSelectStar(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1446,6 +1464,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("write-data-for-struct-queries",
                          &WriteDataForStructQueries),
       make_command_entry("query-data", &QueryData),
+      make_command_entry("read-data", &ReadData),
       make_command_entry("query-data-select-star", &QueryDataSelectStar),
       make_command_entry("query-data-with-struct", &QueryDataWithStruct),
       make_command_entry("query-data-with-array-of-struct",
@@ -1649,6 +1668,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_query_data sample\n";
   QueryData(client);
+
+  std::cout << "\nRunning spanner_read_data sample\n";
+  ReadData(client);
 
   std::cout << "\nRunning spanner_query_data_select_star sample\n";
   QueryDataSelectStar(client);
