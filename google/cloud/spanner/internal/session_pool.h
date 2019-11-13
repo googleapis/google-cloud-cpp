@@ -39,16 +39,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-// Interface used by the `SessionPool` to manage sessions.
-class SessionManager {
- public:
-  virtual ~SessionManager() = default;
-  // Create up to `num_sessions` sessions (note that fewer may be returned).
-  // `num_sessions` must be > 0 or an error is returned.
-  virtual StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
-      int num_sessions) = 0;
-};
-
 // What action to take if the session pool is exhausted.
 enum class ActionOnExhaustion { BLOCK, FAIL };
 
