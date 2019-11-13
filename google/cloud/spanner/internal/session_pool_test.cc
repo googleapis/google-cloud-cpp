@@ -84,6 +84,7 @@ TEST(SessionPool, Allocate) {
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
+  EXPECT_EQ(pool->GetStub(**session), mock);
 }
 
 TEST(SessionPool, CreateError) {
@@ -231,6 +232,15 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
 
   session->reset();
   t.join();
+}
+
+TEST(SessionPool, GetStubForStublessSession) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("project", "instance", "database");
+  auto pool = MakeSessionPool(db, mock);
+  // ensure we get a stub even if we didn't allocate from the pool.
+  auto session = MakeDissociatedSessionHolder("session_id");
+  EXPECT_EQ(pool->GetStub(*session), mock);
 }
 
 }  // namespace

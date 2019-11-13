@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_H_
 
+#include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
 #include <functional>
 #include <memory>
@@ -32,8 +33,8 @@ namespace internal {
  */
 class Session {
  public:
-  Session(std::string session_name) noexcept
-      : session_name_(std::move(session_name)) {}
+  Session(std::string session_name, std::shared_ptr<SpannerStub> stub) noexcept
+      : session_name_(std::move(session_name)), stub_(std::move(stub)) {}
 
   // Not copyable or moveable.
   Session(Session const&) = delete;
@@ -44,7 +45,11 @@ class Session {
   std::string const& session_name() const { return session_name_; }
 
  private:
-  std::string session_name_;
+  friend class SessionPool;  // for access to stub()
+  std::shared_ptr<SpannerStub> stub() const { return stub_; }
+
+  std::string const session_name_;
+  std::shared_ptr<SpannerStub> const stub_;
 };
 
 /**
@@ -60,11 +65,7 @@ using SessionHolder = std::unique_ptr<Session, std::function<void(Session*)>>;
  * like partitioned operations where the `Session` may be used on multiple
  * machines and should not be returned to the pool.
  */
-template <typename... Args>
-SessionHolder MakeDissociatedSessionHolder(Args&&... args) {
-  return SessionHolder(new Session(std::forward<Args>(args)...),
-                       std::default_delete<Session>());
-}
+SessionHolder MakeDissociatedSessionHolder(std::string session_name);
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

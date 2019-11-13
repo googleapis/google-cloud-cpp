@@ -141,6 +141,15 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
   }
 }
 
+std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
+  std::shared_ptr<SpannerStub> stub = session.stub();
+  if (stub) return stub;
+
+  // Sessions that were created for partitioned Reads/Queries do not have
+  // their own stub, so return one to use.
+  return stub_;
+}
+
 void SessionPool::Release(Session* session) {
   std::unique_lock<std::mutex> lk(mu_);
   bool notify = sessions_.empty();
@@ -172,7 +181,7 @@ StatusOr<std::vector<std::unique_ptr<Session>>> SessionPool::CreateSessions(
   sessions.reserve(response->session_size());
   for (auto& session : *response->mutable_session()) {
     sessions.push_back(google::cloud::internal::make_unique<Session>(
-        std::move(*session.mutable_name())));
+        std::move(*session.mutable_name()), stub_));
   }
   return {std::move(sessions)};
 }

@@ -159,7 +159,6 @@ class ConnectionImpl : public Connection {
       google::spanner::v1::ExecuteSqlRequest::QueryMode query_mode);
 
   Database db_;
-  std::shared_ptr<SpannerStub> stub_;
   std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
   std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<SessionPool> session_pool_;

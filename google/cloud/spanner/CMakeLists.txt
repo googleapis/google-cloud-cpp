@@ -162,6 +162,7 @@ add_library(
     internal/range_from_pagination.h
     internal/retry_loop.cc
     internal/retry_loop.h
+    internal/session.cc
     internal/session.h
     internal/session_pool.cc
     internal/session_pool.h

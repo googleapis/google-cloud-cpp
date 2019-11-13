@@ -110,6 +110,7 @@ spanner_client_srcs = [
     "internal/partial_result_set_resume.cc",
     "internal/partial_result_set_source.cc",
     "internal/retry_loop.cc",
+    "internal/session.cc",
     "internal/session_pool.cc",
     "internal/spanner_stub.cc",
     "internal/time.cc",
