@@ -146,26 +146,8 @@ TEST(ConnectionOptionsTest, CreateChannelArguments_WithChannelPool) {
               StartsWith(options.user_agent_prefix()));
 }
 
-TEST(ConnectionOptionsTest, DefaultBackgroundThreads) {
-  auto options = ConnectionOptions(grpc::InsecureChannelCredentials());
-  auto background = options.background_threads_factory()();
-
-  using ms = std::chrono::milliseconds;
-
-  // Verify the background thread is not this thread.
-  auto background_thread_id = background->cq().MakeRelativeTimer(ms(0)).then(
-      [](future<std::chrono::system_clock::time_point>) {
-        return std::this_thread::get_id();
-      });
-  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(100)));
-
-  auto actual = background_thread_id.get();
-  EXPECT_NE(std::this_thread::get_id(), actual);
-}
-
 TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
   grpc_utils::CompletionQueue cq;
-  std::thread t([&cq] { cq.Run(); });
 
   auto options = ConnectionOptions(grpc::InsecureChannelCredentials())
                      .DisableBackgroundThreads(cq);
@@ -173,15 +155,16 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
 
   using ms = std::chrono::milliseconds;
 
-  /// Verify the background thread is the thread provided above.
+  // Schedule some work, it cannot execute because there is no thread attached.
   auto background_thread_id = background->cq().MakeRelativeTimer(ms(0)).then(
       [](future<std::chrono::system_clock::time_point>) {
         return std::this_thread::get_id();
       });
-  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(100)));
+  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(1)));
 
-  auto actual = background_thread_id.get();
-  EXPECT_EQ(t.get_id(), actual);
+  // Verify we can create our own threads to drain the completion queue.
+  std::thread t([&cq] { cq.Run(); });
+  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(100)));
 
   cq.Shutdown();
   t.join();
