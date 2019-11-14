@@ -93,7 +93,7 @@ std::shared_ptr<Connection> MakeLimitedRetryConnection(
     Database const& db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
   return MakeConnection(
-      db, std::move(mock),
+      db, {std::move(mock)},
       LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
       ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
                                /*maximum_delay=*/std::chrono::microseconds(1),
@@ -114,7 +114,7 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -139,7 +139,7 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
@@ -174,7 +174,7 @@ TEST(ConnectionImplTest, ReadSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -314,7 +314,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -346,7 +346,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
 TEST(ConnectionImplTest, ExecuteQueryGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -368,7 +368,7 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -399,7 +399,7 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -459,7 +459,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -490,7 +490,7 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
 TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -509,7 +509,7 @@ TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
 TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -535,7 +535,7 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
 TEST(ConnectionImplTest, ExecuteDmlDelete_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -574,7 +574,7 @@ TEST(ConnectionImplTest, ExecuteDmlDelete_TooManyTransientFailures) {
 TEST(ConnectionImplTest, ProfileQuerySuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -658,7 +658,7 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
 TEST(ConnectionImplTest, ProfileQueryGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -680,7 +680,7 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -710,7 +710,7 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
 TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -729,7 +729,7 @@ TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
 TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -781,7 +781,7 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
 TEST(ConnectionImplTest, ProfileDmlDelete_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -837,7 +837,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -876,7 +876,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
 TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -895,7 +895,7 @@ TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
 TEST(ConnectionImplTest, AnalyzeSqlDelete_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -975,7 +975,7 @@ TEST(ConnectionImplTest, ExecuteBatchDmlSuccess) {
       SqlStatement("update ..."),
   };
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   auto txn = MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
   EXPECT_STATUS_OK(result);
@@ -1014,7 +1014,7 @@ TEST(ConnectionImplTest, ExecuteBatchDml_PartialFailure) {
       SqlStatement("update ..."),
   };
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   auto txn = MakeReadWriteTransaction();
   auto result = conn->ExecuteBatchDml({txn, request});
   EXPECT_STATUS_OK(result);
@@ -1080,7 +1080,7 @@ TEST(ConnectionImplTest, ExecuteBatchDml_TooManyTransientFailures) {
 TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -1116,7 +1116,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteSuccess) {
 TEST(ConnectionImplTest, ExecutePartitionedDmlGetSessionFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -1135,7 +1135,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlGetSessionFailure) {
 TEST(ConnectionImplTest, ExecutePartitionedDmlDelete_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -1197,7 +1197,7 @@ TEST(ConnectionImplTest,
      ExecutePartitionedDmlDelete_BeginTransactionPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(MakeSessionsResponse({"session-name"})));
@@ -1355,7 +1355,7 @@ TEST(ConnectionImplTest, CommitCommit_IdempotentTransientSuccess) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Invoke(
           [&db](grpc::ClientContext&,
@@ -1397,7 +1397,7 @@ TEST(ConnectionImplTest, CommitCommit_NonIdempotentTransientFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Invoke(
           [&db](grpc::ClientContext&,
@@ -1425,7 +1425,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Invoke(
           [&db](grpc::ClientContext&,
@@ -1469,7 +1469,7 @@ TEST(ConnectionImplTest, RollbackGetSessionFailure) {
           }));
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   auto txn = MakeReadWriteTransaction();
   auto rollback = conn->Rollback({txn});
   EXPECT_EQ(StatusCode::kPermissionDenied, rollback.code());
@@ -1491,7 +1491,7 @@ TEST(ConnectionImplTest, RollbackBeginTransaction) {
           }));
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   auto txn = MakeReadWriteTransaction();
   auto rollback = conn->Rollback({txn});
   EXPECT_STATUS_OK(rollback);
@@ -1512,7 +1512,7 @@ TEST(ConnectionImplTest, RollbackSingleUseTransaction) {
           }));
   EXPECT_CALL(*mock, Rollback(_, _)).Times(0);
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   auto txn = internal::MakeSingleUseTransaction(
       Transaction::SingleUseOptions{Transaction::ReadOnlyOptions{}});
   auto rollback = conn->Rollback({txn});
@@ -1620,7 +1620,7 @@ TEST(ConnectionImplTest, Rollback_Success) {
         return Status();
       }));
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   auto txn = MakeReadWriteTransaction();
   auto begin_transaction =
       [&transaction_id](SessionHolder&, spanner_proto::TransactionSelector& s,
@@ -1636,7 +1636,7 @@ TEST(ConnectionImplTest, Rollback_Success) {
 TEST(ConnectionImplTest, PartitionReadSuccess) {
   auto mock_spanner_stub = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock_spanner_stub);
+  auto conn = MakeConnection(db, {mock_spanner_stub});
   EXPECT_CALL(*mock_spanner_stub, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -1750,7 +1750,7 @@ TEST(ConnectionImplTest, PartitionRead_TooManyTransientFailures) {
 TEST(ConnectionImplTest, PartitionQuerySuccess) {
   auto mock_spanner_stub = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock_spanner_stub);
+  auto conn = MakeConnection(db, {mock_spanner_stub});
   EXPECT_CALL(*mock_spanner_stub, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,
@@ -1880,7 +1880,7 @@ TEST(ConnectionImplTest, MultipleThreads) {
             return Status();
           }));
 
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
 
   int const per_thread_iterations = 1000;
   auto const thread_count = []() -> unsigned {
@@ -1927,7 +1927,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock,
               BatchCreateSessions(_, BatchCreateSessionsRequestHasDatabase(db)))
       .WillOnce(Return(MakeSessionsResponse({"session-1"})))
@@ -2033,7 +2033,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
 
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
-  auto conn = MakeConnection(db, mock);
+  auto conn = MakeConnection(db, {mock});
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(::testing::Invoke(
           [&db](grpc::ClientContext&,

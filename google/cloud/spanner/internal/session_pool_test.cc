@@ -57,10 +57,10 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 }
 
 std::shared_ptr<SessionPool> MakeSessionPool(
-    Database db, std::shared_ptr<SpannerStub> stub,
+    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     SessionPoolOptions options = SessionPoolOptions()) {
   return std::make_shared<SessionPool>(
-      std::move(db), std::move(stub),
+      std::move(db), std::move(stubs),
       google::cloud::internal::make_unique<LimitedTimeRetryPolicy>(
           std::chrono::minutes(10)),
       google::cloud::internal::make_unique<ExponentialBackoffPolicy>(
@@ -80,7 +80,7 @@ TEST(SessionPool, Allocate) {
             return MakeSessionsResponse({"session1"});
           }));
 
-  auto pool = MakeSessionPool(db, mock);
+  auto pool = MakeSessionPool(db, {mock});
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -93,7 +93,7 @@ TEST(SessionPool, CreateError) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
 
-  auto pool = MakeSessionPool(db, mock);
+  auto pool = MakeSessionPool(db, {mock});
   auto session = pool->Allocate();
   EXPECT_EQ(session.status().code(), StatusCode::kInternal);
   EXPECT_THAT(session.status().message(), HasSubstr("some failure"));
@@ -105,7 +105,7 @@ TEST(SessionPool, ReuseSession) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
-  auto pool = MakeSessionPool(db, mock);
+  auto pool = MakeSessionPool(db, {mock});
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -123,7 +123,7 @@ TEST(SessionPool, Lifo) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
 
-  auto pool = MakeSessionPool(db, mock);
+  auto pool = MakeSessionPool(db, {mock});
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -155,7 +155,7 @@ TEST(SessionPool, MinSessionsEagerAllocation) {
 
   SessionPoolOptions options;
   options.min_sessions = min_sessions;
-  auto pool = MakeSessionPool(db, mock, options);
+  auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
 }
 
@@ -169,7 +169,7 @@ TEST(SessionPool, MinSessionsMultipleAllocations) {
 
   SessionPoolOptions options;
   options.min_sessions = min_sessions;
-  auto pool = MakeSessionPool(db, mock, options);
+  auto pool = MakeSessionPool(db, {mock}, options);
 
   // When we run out of sessions it will make this call.
   EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions + 1)))
@@ -195,7 +195,7 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
   SessionPoolOptions options;
   options.max_sessions = max_sessions;
   options.action_on_exhaustion = ActionOnExhaustion::FAIL;
-  auto pool = MakeSessionPool(db, mock, options);
+  auto pool = MakeSessionPool(db, {mock}, options);
   std::vector<SessionHolder> sessions;
   for (int i = 1; i <= 3; ++i) {
     auto session = pool->Allocate();
@@ -218,7 +218,7 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
   SessionPoolOptions options;
   options.max_sessions = max_sessions;
   options.action_on_exhaustion = ActionOnExhaustion::BLOCK;
-  auto pool = MakeSessionPool(db, mock, options);
+  auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "s1");
@@ -237,7 +237,7 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
 TEST(SessionPool, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
-  auto pool = MakeSessionPool(db, mock);
+  auto pool = MakeSessionPool(db, {mock});
   // ensure we get a stub even if we didn't allocate from the pool.
   auto session = MakeDissociatedSessionHolder("session_id");
   EXPECT_EQ(pool->GetStub(*session), mock);

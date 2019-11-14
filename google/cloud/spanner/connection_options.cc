@@ -35,6 +35,7 @@ ConnectionOptions::ConnectionOptions(
     std::shared_ptr<grpc::ChannelCredentials> credentials)
     : credentials_(std::move(credentials)),
       endpoint_("spanner.googleapis.com"),
+      num_channels_(1),
       user_agent_prefix_(internal::BaseUserAgentPrefix()),
       background_threads_factory_([] {
         return google::cloud::internal::make_unique<

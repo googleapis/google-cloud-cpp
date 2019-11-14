@@ -47,11 +47,11 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
 /**
  * Factory method to construct a `ConnectionImpl`.
  *
- * @note In tests we can use a mock stub and custom (or mock) policies.
+ * @note In tests we can use mock stubs and custom (or mock) policies.
  */
 class ConnectionImpl;
 std::shared_ptr<ConnectionImpl> MakeConnection(
-    Database db, std::shared_ptr<SpannerStub> stub,
+    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     std::unique_ptr<RetryPolicy> retry_policy = DefaultConnectionRetryPolicy(),
     std::unique_ptr<BackoffPolicy> backoff_policy =
         DefaultConnectionBackoffPolicy());
@@ -82,9 +82,9 @@ class ConnectionImpl : public Connection {
  private:
   // Only the factory method can construct instances of this class.
   friend std::shared_ptr<ConnectionImpl> MakeConnection(
-      Database, std::shared_ptr<SpannerStub>, std::unique_ptr<RetryPolicy>,
-      std::unique_ptr<BackoffPolicy>);
-  ConnectionImpl(Database db, std::shared_ptr<SpannerStub> stub,
+      Database, std::vector<std::shared_ptr<SpannerStub>>,
+      std::unique_ptr<RetryPolicy>, std::unique_ptr<BackoffPolicy>);
+  ConnectionImpl(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
                  std::unique_ptr<RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy);
 

@@ -27,7 +27,7 @@ namespace {
 using ::testing::AnyOf;
 
 TEST(SpannerStub, CreateDefaultStub) {
-  auto stub = CreateDefaultSpannerStub(ConnectionOptions());
+  auto stub = CreateDefaultSpannerStub(ConnectionOptions(), /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 }
 
@@ -39,7 +39,8 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
   auto stub = CreateDefaultSpannerStub(
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1")
-          .enable_tracing("rpc"));
+          .enable_tracing("rpc"),
+      /*channel_id=*/0);
   EXPECT_NE(stub, nullptr);
 
   grpc::ClientContext context;

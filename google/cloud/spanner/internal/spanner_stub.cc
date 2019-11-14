@@ -257,8 +257,11 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
 }  // namespace
 
 std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    ConnectionOptions const& options) {
+    ConnectionOptions const& options, int channel_id) {
   grpc::ChannelArguments channel_arguments = options.CreateChannelArguments();
+  // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
+  // its value here to allow compiling against older versions.
+  channel_arguments.SetInt("grpc.channel_id", channel_id);
 
   auto spanner_grpc_stub =
       spanner_proto::Spanner::NewStub(grpc::CreateCustomChannel(

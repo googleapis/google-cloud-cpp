@@ -48,6 +48,15 @@ TEST(ConnectionOptionsTest, AdminEndpoint) {
   EXPECT_EQ("invalid-endpoint", options.endpoint());
 }
 
+TEST(ConnectionOptionsTest, NumChannels) {
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  int num_channels = options.num_channels();
+  EXPECT_LT(0, num_channels);
+  num_channels *= 2;  // ensure we change it from the default value.
+  options.set_num_channels(num_channels);
+  EXPECT_EQ(num_channels, options.num_channels());
+}
+
 TEST(ConnectionOptionsTest, Tracing) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   options.enable_tracing("fake-component");

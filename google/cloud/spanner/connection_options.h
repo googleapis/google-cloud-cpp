@@ -76,6 +76,24 @@ class ConnectionOptions {
   std::string const& endpoint() const { return endpoint_; }
 
   /**
+   * The number of transport channels to create.
+   *
+   * Some transports limit the number of simultaneous calls in progress on a
+   * channel (for gRPC the limit is 100). Increasing the number of channels
+   * thus increases the number of operations that can be in progress in
+   * parallel.
+   *
+   * The default value is 1.  TODO(#307) increase this.
+   */
+  int num_channels() const { return num_channels_; }
+
+  /// Set the value for `num_channels()`.
+  ConnectionOptions& set_num_channels(int num_channels) {
+    num_channels_ = num_channels;
+    return *this;
+  }
+
+  /**
    * Return whether tracing is enabled for the given @p component.
    *
    * The Cloud Spanner C++ client can log interesting events to help library and
@@ -177,6 +195,7 @@ class ConnectionOptions {
  private:
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
+  int num_channels_;
   std::set<std::string> tracing_components_;
   std::string channel_pool_domain_;
 

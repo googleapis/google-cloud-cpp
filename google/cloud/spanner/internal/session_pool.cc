@@ -28,12 +28,13 @@ namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-SessionPool::SessionPool(Database db, std::shared_ptr<SpannerStub> stub,
+SessionPool::SessionPool(Database db,
+                         std::vector<std::shared_ptr<SpannerStub>> stubs,
                          std::unique_ptr<RetryPolicy> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy,
                          SessionPoolOptions options)
     : db_(std::move(db)),
-      stub_(std::move(stub)),
+      stub_(std::move(stubs[0])),  // TODO(#307): use all the stubs
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
       options_(options) {

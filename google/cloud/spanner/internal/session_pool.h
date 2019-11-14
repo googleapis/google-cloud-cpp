@@ -94,7 +94,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * manage the pool, and to associate `Session`s with the stubs used to
    * create them.
    */
-  SessionPool(Database db, std::shared_ptr<SpannerStub> stub,
+  SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
               std::unique_ptr<RetryPolicy> retry_policy,
               std::unique_ptr<BackoffPolicy> backoff_policy,
               SessionPoolOptions options = SessionPoolOptions());
