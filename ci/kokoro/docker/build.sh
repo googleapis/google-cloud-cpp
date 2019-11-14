@@ -104,6 +104,8 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
+  export BUILD_TYPE=Release
+  export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
   # Note that the integration tests are run by default. This is the opposite of
   # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
   export RUN_INTEGRATION_TESTS="no"
