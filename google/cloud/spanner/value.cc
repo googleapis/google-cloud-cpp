@@ -16,8 +16,6 @@
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/log.h"
-#include <google/protobuf/util/field_comparator.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <cerrno>
 #include <cmath>
 #include <cstdlib>
@@ -111,6 +109,39 @@ bool operator==(Value const& a, Value const& b) {
 
 void PrintTo(Value const& v, std::ostream* os) {
   *os << v.type_.ShortDebugString() << "; " << v.value_.ShortDebugString();
+}
+
+//
+// Value::TypeProtoIs
+//
+
+bool Value::TypeProtoIs(bool, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::BOOL;
+}
+
+bool Value::TypeProtoIs(std::int64_t, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::INT64;
+}
+
+bool Value::TypeProtoIs(double, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::FLOAT64;
+}
+
+bool Value::TypeProtoIs(Timestamp, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::TIMESTAMP;
+}
+
+bool Value::TypeProtoIs(Date, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::DATE;
+}
+
+bool Value::TypeProtoIs(std::string const&,
+                        google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::STRING;
+}
+
+bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::BYTES;
 }
 
 //
@@ -321,14 +352,6 @@ StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
     return Status(StatusCode::kUnknown, "missing DATE");
   }
   return internal::DateFromString(pv.string_value());
-}
-
-bool Value::EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,
-                                        google::spanner::v1::Type const& b) {
-  google::protobuf::util::MessageDifferencer diff;
-  auto const* field = google::spanner::v1::StructType::Field::descriptor();
-  diff.IgnoreField(field->FindFieldByName("name"));
-  return diff.Compare(a, b);
 }
 
 }  // namespace SPANNER_CLIENT_NS

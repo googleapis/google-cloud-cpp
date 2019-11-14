@@ -276,8 +276,7 @@ class Value {
    */
   template <typename T>
   StatusOr<T> get() const& {
-    // Ignores the name field because it is never set on the incoming `T`.
-    if (!EqualTypeProtoIgnoringNames(type_, MakeTypeProto(T{})))
+    if (!TypeProtoIs(T{}, type_))
       return Status(StatusCode::kUnknown, "wrong type");
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
       if (is_optional<T>::value) return T{};
@@ -289,8 +288,7 @@ class Value {
   /// @copydoc get()
   template <typename T>
   StatusOr<T> get() && {
-    // Ignores the name field because it is never set on the incoming `T`.
-    if (!EqualTypeProtoIgnoringNames(type_, MakeTypeProto(T{})))
+    if (!TypeProtoIs(T{}, type_))
       return Status(StatusCode::kUnknown, "wrong type");
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
       if (is_optional<T>::value) return T{};
@@ -320,6 +318,51 @@ class Value {
   struct is_vector : std::false_type {};
   template <typename... Ts>
   struct is_vector<std::vector<Ts...>> : std::true_type {};
+
+  // Tag-dispatch overloads to check if a C++ type matches the type specified
+  // by the given `Type` proto.
+  static bool TypeProtoIs(bool, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(std::int64_t, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(double, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(Timestamp, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(Date, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
+  template <typename T>
+  static bool TypeProtoIs(optional<T>, google::spanner::v1::Type const& type) {
+    return TypeProtoIs(T{}, type);
+  }
+  template <typename T>
+  static bool TypeProtoIs(std::vector<T> const&,
+                          google::spanner::v1::Type const& type) {
+    return type.code() == google::spanner::v1::TypeCode::ARRAY &&
+           TypeProtoIs(T{}, type.array_element_type());
+  }
+  template <typename... Ts>
+  static bool TypeProtoIs(std::tuple<Ts...> const& tup,
+                          google::spanner::v1::Type const& type) {
+    bool ok = type.code() == google::spanner::v1::TypeCode::STRUCT;
+    ok = ok && type.struct_type().fields().size() == sizeof...(Ts);
+    internal::ForEach(tup, IsStructTypeProto{ok, 0}, type.struct_type());
+    return ok;
+  }
+
+  // A functor to be used with internal::ForEach to check if a StructType proto
+  // matches the types in a std::tuple.
+  struct IsStructTypeProto {
+    bool& ok;
+    int field;
+    template <typename T>
+    void operator()(T const&, google::spanner::v1::StructType const& type) {
+      ok = ok && TypeProtoIs(T{}, type.fields(field).type());
+      ++field;
+    }
+    template <typename T>
+    void operator()(std::pair<std::string, T> const&,
+                    google::spanner::v1::StructType const& type) {
+      operator()(T{}, type);
+    }
+  };
 
   // Tag-dispatch overloads to convert a C++ type to a `Type` protobuf. The
   // argument type is the tag, the argument value is ignored.
@@ -359,8 +402,8 @@ class Value {
     return t;
   }
 
-  // A functor to be used with internal::ForEach (see below) to add type protos
-  // for all the elements of a tuple.
+  // A functor to be used with internal::ForEach to add type protos for all the
+  // elements of a tuple.
   struct AddStructTypes {
     template <typename T>
     void operator()(T const& t,
@@ -413,8 +456,8 @@ class Value {
     return v;
   }
 
-  // A functor to be used with internal::ForEach (see below) to add Value
-  // protos for all the elements of a tuple.
+  // A functor to be used with internal::ForEach to add Value protos for all
+  // the elements of a tuple.
   struct AddStructValues {
     template <typename T>
     void operator()(T& t, google::protobuf::ListValue& list_value) const {
@@ -490,8 +533,8 @@ class Value {
     return tup;
   }
 
-  // A functor to be used with internal::ForEach (see below) to extract C++
-  // types from a ListValue proto and store then in a tuple.
+  // A functor to be used with internal::ForEach to extract C++ types from a
+  // ListValue proto and store then in a tuple.
   template <typename V>
   struct ExtractTupleValues {
     Status& status;
@@ -537,9 +580,6 @@ class Value {
       google::protobuf::Value&& pv, int pos) {
     return std::move(*pv.mutable_list_value()->mutable_values(pos));
   }
-
-  static bool EqualTypeProtoIgnoringNames(google::spanner::v1::Type const& a,
-                                          google::spanner::v1::Type const& b);
 
   // A private templated constructor that is called by all the public
   // constructors to set the type_ and value_ members. The `PrivateConstructor`
