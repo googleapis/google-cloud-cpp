@@ -70,10 +70,13 @@ StatusOr<Row> PartialResultSetSource::NextRow() {
   }
 
   std::vector<Value> values;
+  values.reserve(fields.size());
+  auto iter = buffer_.begin();
   for (auto const& field : fields) {
-    values.push_back(FromProto(field.type(), std::move(buffer_.front())));
-    buffer_.pop_front();
+    values.push_back(FromProto(field.type(), std::move(*iter)));
+    ++iter;
   }
+  buffer_.erase(buffer_.begin(), iter);
   return internal::MakeRow(std::move(values), columns_);
 }
 
