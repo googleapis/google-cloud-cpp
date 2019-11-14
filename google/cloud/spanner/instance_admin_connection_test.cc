@@ -36,7 +36,12 @@ using ::testing::Return;
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = ::google::iam::v1;
 
-std::shared_ptr<InstanceAdminConnection> MakeTestConnection(
+// Create a `Connection` suitable for use in tests that continue retrying
+// until the retry policy is exhausted - attempting that with the default
+// policies would take too long (30 minutes).
+// Other tests can use this method or just call `MakeInstanceAdminConnection()`
+// directly.
+std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
     std::shared_ptr<spanner_testing::MockInstanceAdminStub> mock) {
   LimitedErrorCountRetryPolicy retry(/*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
@@ -78,7 +83,7 @@ TEST(InstanceAdminConnectionTest, GetInstance_Success) {
             return expected_instance;
           }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstance({expected_name});
   EXPECT_THAT(*actual, IsProtoEqual(expected_instance));
 }
@@ -88,7 +93,7 @@ TEST(InstanceAdminConnectionTest, GetInstance_PermanentFailure) {
   EXPECT_CALL(*mock, GetInstance(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstance({"test-name"});
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
@@ -98,7 +103,7 @@ TEST(InstanceAdminConnectionTest, GetInstance_TooManyTransients) {
   EXPECT_CALL(*mock, GetInstance(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstance({"test-name"});
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
@@ -139,7 +144,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
             return make_status_or(op);
           }));
 
-  auto conn = MakeTestConnection(std::move(mock));
+  auto conn = MakeLimitedRetryConnection(std::move(mock));
   Instance in("test-project", "test-instance");
   auto fut = conn->CreateInstance(
       {CreateInstanceRequestBuilder(in, "test-instance-config")
@@ -164,7 +169,7 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           }));
 
-  auto conn = MakeTestConnection(std::move(mock));
+  auto conn = MakeLimitedRetryConnection(std::move(mock));
   Instance in("test-project", "test-instance");
   auto fut = conn->CreateInstance(
       {CreateInstanceRequestBuilder(in, "test-instance-config")
@@ -205,7 +210,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
             return make_status_or(op);
           }));
 
-  auto conn = MakeTestConnection(std::move(mock));
+  auto conn = MakeLimitedRetryConnection(std::move(mock));
   gcsa::UpdateInstanceRequest req;
   req.mutable_instance()->set_name(expected_name);
   auto fut = conn->UpdateInstance({req});
@@ -226,7 +231,7 @@ TEST(InstanceAdminClientTest, UpdateInstance_PermanentFailure) {
                 Status(StatusCode::kPermissionDenied, "uh-oh"));
           }));
 
-  auto conn = MakeTestConnection(std::move(mock));
+  auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
@@ -243,7 +248,7 @@ TEST(InstanceAdminClientTest, UpdateInstance_TooManyTransients) {
             return StatusOr<google::longrunning::Operation>(
                 Status(StatusCode::kUnavailable, "try-again"));
           }));
-  auto conn = MakeTestConnection(std::move(mock));
+  auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
   auto instance = fut.get();
@@ -269,7 +274,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_Success) {
             return Status();
           }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({expected_name});
   ASSERT_STATUS_OK(status);
 }
@@ -279,7 +284,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_PermanentFailure) {
   EXPECT_CALL(*mock, DeleteInstance(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({"test-name"});
   EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
 }
@@ -289,7 +294,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_TooManyTransients) {
   EXPECT_CALL(*mock, DeleteInstance(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({"test-name"});
   EXPECT_EQ(StatusCode::kUnavailable, status.code());
 }
@@ -320,7 +325,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_Success) {
         return expected_instance_config;
       }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstanceConfig({expected_name});
   EXPECT_THAT(*actual, IsProtoEqual(expected_instance_config));
 }
@@ -330,7 +335,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_PermanentFailure) {
   EXPECT_CALL(*mock, GetInstanceConfig(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->GetInstanceConfig({"projects/test/instanceConfig/test-name"});
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
@@ -341,7 +346,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_TooManyTransients) {
   EXPECT_CALL(*mock, GetInstanceConfig(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->GetInstanceConfig({"projects/test/instanceConfig/test-name"});
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
@@ -380,7 +385,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
         return response;
       }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   std::vector<std::string> actual_names;
   for (auto const& instance_config :
        conn->ListInstanceConfigs({"test-project"})) {
@@ -395,7 +400,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_PermanentFailure) {
   EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto range = conn->ListInstanceConfigs({"test-project"});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -408,7 +413,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_TooManyTransients) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto range = conn->ListInstanceConfigs({"test-project"});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -451,7 +456,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_Success) {
             return response;
           }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   std::vector<std::string> actual_names;
   for (auto const& instance :
        conn->ListInstances({"test-project", "labels.test-key:test-value"})) {
@@ -466,7 +471,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_PermanentFailure) {
   EXPECT_CALL(*mock, ListInstances(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto range = conn->ListInstances({"test-project", ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -478,7 +483,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_TooManyTransients) {
   EXPECT_CALL(*mock, ListInstances(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto range = conn->ListInstances({"test-project", ""});
   auto begin = range.begin();
   ASSERT_NE(begin, range.end());
@@ -508,7 +513,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_Success) {
             return response;
           }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetIamPolicy({expected_name});
   ASSERT_STATUS_OK(actual);
   ASSERT_EQ(1, actual->bindings_size());
@@ -522,7 +527,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_PermanentFailure) {
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetIamPolicy({"test-instance-name"});
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
@@ -532,7 +537,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_TooManyTransients) {
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetIamPolicy({"test-instance-name"});
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
@@ -571,7 +576,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_Success) {
             return response;
           }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->SetIamPolicy({expected_name, expected_policy});
   ASSERT_STATUS_OK(actual);
   expected_policy.set_etag("response-etag");
@@ -583,7 +588,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_PermanentFailure) {
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->SetIamPolicy({"test-instance-name", {}});
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
@@ -595,7 +600,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_NonIdempotent) {
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   google::iam::v1::Policy policy;
   auto actual = conn->SetIamPolicy({"test-instance-name", policy});
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
@@ -607,7 +612,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_Idempotent) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   google::iam::v1::Policy policy;
   policy.set_etag("test-etag-value");
   auto actual = conn->SetIamPolicy({"test-instance-name", policy});
@@ -635,7 +640,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
             return response;
           }));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->TestIamPermissions(
       {expected_name, {"test.permission1", "test.permission2"}});
   ASSERT_STATUS_OK(actual);
@@ -648,7 +653,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_PermanentFailure) {
   EXPECT_CALL(*mock, TestIamPermissions(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->TestIamPermissions({"test-instance-name", {"test.permission"}});
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
@@ -660,7 +665,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_TooManyTransients) {
       .Times(AtLeast(2))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
 
-  auto conn = MakeTestConnection(mock);
+  auto conn = MakeLimitedRetryConnection(mock);
   auto actual =
       conn->TestIamPermissions({"test-instance-name", {"test.permission"}});
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
