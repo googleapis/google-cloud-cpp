@@ -25,6 +25,7 @@
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/optional.h"
 #include <chrono>
 #include <sstream>
 #include <tuple>
@@ -923,7 +924,7 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_only_transaction]
 
-//! [START spanner_read_stale_data]]
+//! [START spanner_read_stale_data]
 void ReadStaleData(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
   auto opts = spanner::Transaction::ReadOnlyOptions(std::chrono::seconds(15));
@@ -944,6 +945,33 @@ void ReadStaleData(google::cloud::spanner::Client client) {
   }
 }
 //! [END spanner_read_stale_data]
+
+//! [START spanner_read_data_with_storing_index]
+void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  spanner::ReadOptions read_options;
+  read_options.index_name = "AlbumsByAlbumTitle2";
+  auto rows =
+      client.Read("Albums", google::cloud::spanner::KeySet::All(),
+                  {"AlbumId", "AlbumTitle", "MarketingBudget"}, read_options);
+  using RowType = std::tuple<std::int64_t, std::string,
+                             google::cloud::optional<std::int64_t>>;
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
+    std::cout << "AlbumTitle: " << std::get<1>(*row) << "\n";
+    auto marketing_budget = std::get<2>(*row);
+    if (marketing_budget.has_value()) {
+      std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
+    } else {
+      std::cout << "MarketingBudget: NULL"
+                << "\n";
+    }
+  }
+  std::cout << "Read completed for [spanner_read_data_with_storing_index]\n";
+}
+//! [END spanner_read_data_with_storing_index]
 
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
@@ -1455,6 +1483,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("delete-data", &DeleteData),
       make_command_entry("read-only-transaction", &ReadOnlyTransaction),
       make_command_entry("read-stale-data", &ReadStaleData),
+      make_command_entry("read-data-with-storing-index",
+                         &ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", &ReadWriteTransaction),
       make_command_entry("dml-standard-insert", &DmlStandardInsert),
       make_command_entry("dml-standard-update", &DmlStandardUpdate),
@@ -1647,6 +1677,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_stale_data sample\n";
   ReadStaleData(client);
+
+  std::cout << "\nRunning spanner_read_data_with_storing_index sample\n";
+  ReadDataWithStoringIndex(client);
 
   std::cout << "\nRunning spanner_read_write_transaction sample\n";
   ReadWriteTransaction(client);
