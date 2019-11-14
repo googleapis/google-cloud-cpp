@@ -16,6 +16,7 @@
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include <iostream>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -23,7 +24,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
-    HttpResponse&& response) {
+    HttpResponse response) {
   ResumableUploadResponse result;
   if (response.status_code == 200 || response.status_code == 201) {
     result.upload_state = kDone;
@@ -43,22 +44,36 @@ StatusOr<ResumableUploadResponse> ResumableUploadResponse::FromHttpResponse(
   if (response.headers.find("location") != response.headers.end()) {
     result.upload_session_url = response.headers.find("location")->second;
   }
-  if (response.headers.find("range") == response.headers.end()) {
+  auto r = response.headers.find("range");
+  if (r == response.headers.end()) {
+    std::ostringstream os;
+    os << __func__ << "() missing range header in resumable upload response"
+       << ", response=" << response;
+    result.annotations = std::move(os).str();
     return result;
   }
   // We expect a `Range:` header in the format described here:
   //    https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
   // that is the value should match `bytes=0-[0-9]+`:
-  std::string const& range = response.headers.find("range")->second;
+  std::string const& range = r->second;
 
   if (range.rfind("bytes=0-", 0) != 0) {
+    std::ostringstream os;
+    os << __func__ << "() cannot parse range: header in resumable upload"
+       << " response, header=" << range << ", response=" << response;
+    result.annotations = std::move(os).str();
     return result;
   }
   char const* buffer = range.data() + 8;
   char* endptr;
   auto last = std::strtoll(buffer, &endptr, 10);
-  if (*endptr == '\0' && 0 <= last) {
+  if (buffer != endptr && *endptr == '\0' && 0 <= last) {
     result.last_committed_byte = static_cast<std::uint64_t>(last);
+  } else {
+    std::ostringstream os;
+    os << __func__ << "() cannot parse range: header in resumable upload"
+       << " response, header=" << range << ", response=" << response;
+    result.annotations = std::move(os).str();
   }
 
   return result;
@@ -84,7 +99,8 @@ std::ostream& operator<<(std::ostream& os, ResumableUploadResponse const& r) {
   } else {
     os << "{}";
   }
-  return os << ", upload_state=" << r.upload_state << "}";
+  return os << ", upload_state=" << r.upload_state
+            << ", annotations=" << r.annotations << "}";
 }
 
 }  // namespace internal

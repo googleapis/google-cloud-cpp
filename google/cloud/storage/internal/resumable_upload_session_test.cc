@@ -43,6 +43,7 @@ TEST(ResumableUploadResponseTest, Base) {
   auto actual_str = os.str();
   EXPECT_THAT(actual_str, HasSubstr("upload_session_url=location-value"));
   EXPECT_THAT(actual_str, HasSubstr("last_committed_byte=2000"));
+  EXPECT_THAT(actual_str, HasSubstr("annotations="));
 }
 
 TEST(ResumableUploadResponseTest, NoLocation) {
@@ -52,6 +53,7 @@ TEST(ResumableUploadResponseTest, NoLocation) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(2000, actual.last_committed_byte);
+  EXPECT_EQ("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -65,6 +67,7 @@ TEST(ResumableUploadResponseTest, NoRange) {
   EXPECT_EQ("test-object-name", actual.payload->name());
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kDone, actual.upload_state);
 }
 
@@ -78,6 +81,7 @@ TEST(ResumableUploadResponseTest, MissingBytesInRange) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("location-value", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -88,6 +92,7 @@ TEST(ResumableUploadResponseTest, MissingRangeEnd) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -98,6 +103,7 @@ TEST(ResumableUploadResponseTest, InvalidRangeEnd) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -108,6 +114,7 @@ TEST(ResumableUploadResponseTest, InvalidRangeBegin) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -118,6 +125,7 @@ TEST(ResumableUploadResponseTest, UnexpectedRangeBegin) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 
@@ -128,6 +136,7 @@ TEST(ResumableUploadResponseTest, NegativeEnd) {
   EXPECT_FALSE(actual.payload.has_value());
   EXPECT_EQ("", actual.upload_session_url);
   EXPECT_EQ(0, actual.last_committed_byte);
+  EXPECT_NE("", actual.annotations);
   EXPECT_EQ(ResumableUploadResponse::kInProgress, actual.upload_state);
 }
 

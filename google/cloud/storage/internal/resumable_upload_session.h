@@ -87,12 +87,13 @@ class ResumableUploadSession {
 struct ResumableUploadResponse {
   enum UploadState { kInProgress, kDone };
   static StatusOr<ResumableUploadResponse> FromHttpResponse(
-      HttpResponse&& response);
+      HttpResponse response);
 
   std::string upload_session_url;
   std::uint64_t last_committed_byte;
   optional<google::cloud::storage::ObjectMetadata> payload;
   UploadState upload_state;
+  std::string annotations;
 };
 
 bool operator==(ResumableUploadResponse const& lhs,

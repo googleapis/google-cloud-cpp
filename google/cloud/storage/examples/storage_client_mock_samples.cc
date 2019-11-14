@@ -133,29 +133,36 @@ void MockWriteObject(int& argc, char* argv[]) {
   using ::testing::_;
   using ::testing::Return;
   EXPECT_CALL(*mock, CreateResumableSession(_))
-      .WillOnce(testing::Invoke([&expected_metadata](
-                                    gcs::internal::ResumableUploadRequest const&
-                                        request) {
-        std::cout << "Writing to bucket : " << request.bucket_name()
-                  << std::endl;
-        auto* mock_result = new gcs::testing::MockResumableUploadSession;
-        using gcs::internal::ResumableUploadResponse;
-        EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
-        EXPECT_CALL(*mock_result, next_expected_byte())
-            .WillRepeatedly(Return(0));
-        EXPECT_CALL(*mock_result, UploadChunk(_))
-            .WillRepeatedly(
-                Return(google::cloud::make_status_or(ResumableUploadResponse{
-                    "fake-url", 0, {}, ResumableUploadResponse::kInProgress})));
-        EXPECT_CALL(*mock_result, UploadFinalChunk(_, _))
-            .WillRepeatedly(Return(google::cloud::make_status_or(
-                ResumableUploadResponse{"fake-url", 0, expected_metadata,
-                                        ResumableUploadResponse::kDone})));
+      .WillOnce(testing::Invoke(
+          [&expected_metadata](
+              gcs::internal::ResumableUploadRequest const& request) {
+            std::cout << "Writing to bucket : " << request.bucket_name()
+                      << std::endl;
+            auto* mock_result = new gcs::testing::MockResumableUploadSession;
+            using gcs::internal::ResumableUploadResponse;
+            EXPECT_CALL(*mock_result, done()).WillRepeatedly(Return(false));
+            EXPECT_CALL(*mock_result, next_expected_byte())
+                .WillRepeatedly(Return(0));
+            EXPECT_CALL(*mock_result, UploadChunk(_))
+                .WillRepeatedly(Return(
+                    google::cloud::make_status_or(ResumableUploadResponse{
+                        "fake-url",
+                        0,
+                        {},
+                        ResumableUploadResponse::kInProgress,
+                        {}})));
+            EXPECT_CALL(*mock_result, UploadFinalChunk(_, _))
+                .WillRepeatedly(Return(google::cloud::make_status_or(
+                    ResumableUploadResponse{"fake-url",
+                                            0,
+                                            expected_metadata,
+                                            ResumableUploadResponse::kDone,
+                                            {}})));
 
-        std::unique_ptr<gcs::internal::ResumableUploadSession> result(
-            mock_result);
-        return google::cloud::make_status_or(std::move(result));
-      }));
+            std::unique_ptr<gcs::internal::ResumableUploadSession> result(
+                mock_result);
+            return google::cloud::make_status_or(std::move(result));
+          }));
 
   auto stream = client.WriteObject(bucket_name, object_name);
   stream << "Hello World!";

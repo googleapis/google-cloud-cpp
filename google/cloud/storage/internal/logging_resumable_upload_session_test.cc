@@ -140,7 +140,7 @@ TEST_F(LoggingResumableUploadSessionTest, LastResponseOk) {
       testing::MockResumableUploadSession>();
 
   const StatusOr<ResumableUploadResponse> last_response(ResumableUploadResponse{
-      "upload url", 1, {}, ResumableUploadResponse::kInProgress});
+      "upload url", 1, {}, ResumableUploadResponse::kInProgress, {}});
   EXPECT_CALL(*mock, last_response()).WillOnce(ReturnRef(last_response));
 
   LoggingResumableUploadSession session(std::move(mock));

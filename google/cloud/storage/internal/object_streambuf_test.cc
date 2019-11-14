@@ -53,7 +53,7 @@ TEST(ObjectWriteStreambufTest, EmptyStream) {
         EXPECT_TRUE(p.empty());
         EXPECT_EQ(0, s);
         return make_status_or(ResumableUploadResponse{
-            "{}", 0, {}, ResumableUploadResponse::kInProgress});
+            "{}", 0, {}, ResumableUploadResponse::kInProgress, {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
@@ -85,7 +85,8 @@ TEST(ObjectWriteStreambufTest, SmallStream) {
             ResumableUploadResponse{"{}",
                                     last_committed_byte,
                                     {},
-                                    ResumableUploadResponse::kInProgress});
+                                    ResumableUploadResponse::kInProgress,
+                                    {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(0));
 
@@ -115,7 +116,7 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
     EXPECT_EQ(payload, p);
     auto last_committed_byte = payload.size() - 1;
     return make_status_or(ResumableUploadResponse{
-        "", last_committed_byte, {}, ResumableUploadResponse::kInProgress});
+        "", last_committed_byte, {}, ResumableUploadResponse::kInProgress, {}});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -128,7 +129,8 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
             ResumableUploadResponse{"{}",
                                     last_committed_byte,
                                     {},
-                                    ResumableUploadResponse::kInProgress});
+                                    ResumableUploadResponse::kInProgress,
+                                    {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
@@ -158,14 +160,16 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
             ResumableUploadResponse{"",
                                     payload_1.size() - 1,
                                     {},
-                                    ResumableUploadResponse::kInProgress})));
+                                    ResumableUploadResponse::kInProgress,
+                                    {}})));
     EXPECT_CALL(
         *mock, UploadFinalChunk(payload_2, payload_1.size() + payload_2.size()))
         .WillOnce(Return(make_status_or(
             ResumableUploadResponse{"{}",
                                     payload_1.size() + payload_2.size() - 1,
                                     {},
-                                    ResumableUploadResponse::kInProgress})));
+                                    ResumableUploadResponse::kInProgress,
+                                    {}})));
   }
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(3 * quantum));
 
@@ -196,7 +200,7 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
     auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
     EXPECT_EQ(expected, p);
     return make_status_or(ResumableUploadResponse{
-        "", quantum - 1, {}, ResumableUploadResponse::kInProgress});
+        "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -210,7 +214,8 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
             ResumableUploadResponse{"{}",
                                     last_committed_byte,
                                     {},
-                                    ResumableUploadResponse::kInProgress});
+                                    ResumableUploadResponse::kInProgress,
+                                    {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
@@ -239,7 +244,7 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
     auto expected = payload;
     EXPECT_EQ(expected, p);
     return make_status_or(ResumableUploadResponse{
-        "", quantum - 1, {}, ResumableUploadResponse::kInProgress});
+        "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -252,7 +257,8 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
             ResumableUploadResponse{"{}",
                                     last_committed_byte,
                                     {},
-                                    ResumableUploadResponse::kInProgress});
+                                    ResumableUploadResponse::kInProgress,
+                                    {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
@@ -286,7 +292,7 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
     auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
     EXPECT_EQ(expected, p);
     return make_status_or(ResumableUploadResponse{
-        "", quantum - 1, {}, ResumableUploadResponse::kInProgress});
+        "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   }));
   EXPECT_CALL(*mock, UploadFinalChunk(_, _))
       .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
@@ -300,7 +306,8 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
             ResumableUploadResponse{"{}",
                                     last_committed_byte,
                                     {},
-                                    ResumableUploadResponse::kInProgress});
+                                    ResumableUploadResponse::kInProgress,
+                                    {}});
       }));
   EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
 
@@ -323,7 +330,7 @@ TEST(ObjectWriteStreambufTest, CreatedForFinalizedUpload) {
       testing::MockResumableUploadSession>();
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(true));
   auto last_upload_response = make_status_or(ResumableUploadResponse{
-      "url-for-test", 0, {}, ResumableUploadResponse::kDone});
+      "url-for-test", 0, {}, ResumableUploadResponse::kDone, {}});
   EXPECT_CALL(*mock, last_response).WillOnce(ReturnRef(last_upload_response));
 
   ObjectWriteStreambuf streambuf(

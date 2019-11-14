@@ -67,10 +67,20 @@ RetryResumableUploadSession::UploadGenericChunk(
     std::uint64_t new_next_byte = session_->next_expected_byte();
     if (new_next_byte < next_byte) {
       std::stringstream os;
-      os << func << ": server has not confirmed bytes which we no longer hold ("
-         << new_next_byte << "-" << next_byte
-         << "). This is most likely a bug in the GCS client. Please report it "
-            "at https://github.com/googleapis/google-cloud-cpp/issues/new";
+      os << func << ": server previously confirmed " << next_byte
+         << " bytes as committed, but the current response only reports "
+         << new_next_byte << " bytes as committed."
+         << " This is most likely a bug in the GCS client library, possibly"
+         << " related to parsing the server response."
+         << " Please report it at"
+         << " https://github.com/googleapis/google-cloud-cpp/issues/new"
+         << "    Include as much information as you can including this message";
+      auto const& last_response = session_->last_response();
+      if (!last_response) {
+        os << ", last_response.status=" << last_response.status();
+      } else {
+        os << ", last_response.value=" << last_response.value();
+      }
       return Status(StatusCode::kInternal, os.str());
     }
     if (new_next_byte > next_byte) {
@@ -110,10 +120,12 @@ RetryResumableUploadSession::UploadGenericChunk(
     auto delay = backoff_policy->OnCompletion();
     std::this_thread::sleep_for(delay);
 
-    result = ResetSession(*retry_policy, *backoff_policy);
+    result =
+        ResetSession(*retry_policy, *backoff_policy, std::move(last_status));
     if (!result.ok()) {
       return result;
     }
+    last_status = Status();
   }
   std::ostringstream os;
   os << "Retry policy exhausted in " << func << ": " << last_status;
@@ -121,9 +133,8 @@ RetryResumableUploadSession::UploadGenericChunk(
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession(
-    RetryPolicy& retry_policy, BackoffPolicy& backoff_policy) {
-  Status last_status(StatusCode::kDeadlineExceeded,
-                     "Retry policy exhausted before first attempt was made.");
+    RetryPolicy& retry_policy, BackoffPolicy& backoff_policy,
+    Status last_status) {
   while (!retry_policy.IsExhausted()) {
     auto result = session_->ResetSession();
     if (result.ok()) {
@@ -142,9 +153,11 @@ StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession(
 }
 
 StatusOr<ResumableUploadResponse> RetryResumableUploadSession::ResetSession() {
+  Status last_status(StatusCode::kDeadlineExceeded,
+                     "Retry policy exhausted before first attempt was made.");
   auto retry_policy = retry_policy_prototype_->clone();
   auto backoff_policy = backoff_policy_prototype_->clone();
-  return ResetSession(*retry_policy, *backoff_policy);
+  return ResetSession(*retry_policy, *backoff_policy, std::move(last_status));
 }
 
 std::uint64_t RetryResumableUploadSession::next_expected_byte() const {
