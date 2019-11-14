@@ -37,7 +37,7 @@ function (spanner_client_define_benchmarks)
 
     set(spanner_client_benchmarks
         # cmake-format: sortable
-        single_row_throughput_benchmark.cc single_row_cpu_benchmark.cc
+        single_row_throughput_benchmark.cc multiple_rows_cpu_benchmark.cc
         throughput_benchmark.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

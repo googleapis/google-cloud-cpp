@@ -18,6 +18,6 @@
 
 spanner_client_benchmarks = [
     "single_row_throughput_benchmark.cc",
-    "single_row_cpu_benchmark.cc",
+    "multiple_rows_cpu_benchmark.cc",
     "throughput_benchmark.cc",
 ]
