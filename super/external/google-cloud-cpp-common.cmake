@@ -14,7 +14,6 @@
 # limitations under the License.
 # ~~~
 
-include(ExternalProject)
 include(ExternalProjectHelper)
 include(external/grpc)
 include(external/googleapis)
@@ -29,13 +28,12 @@ if (NOT TARGET google-cloud-cpp-common-project)
     set(GOOGLE_CLOUD_CPP_SHA256
         "d53c12e901f2d76bd2bf8a1e57769bbe0fb96338eaaa3f2c57f92cba703bada8")
 
-    set_external_project_prefix_vars()
-
     set_external_project_build_parallel_level(PARALLEL)
+    set_external_project_vars()
 
     ExternalProject_Add(
         google-cloud-cpp-common-project
-        DEPENDS googleapis_project googletest_project grpc_project
+        DEPENDS googleapis-project googletest-project grpc-project
         EXCLUDE_FROM_ALL ON
         PREFIX "${CMAKE_BINARY_DIR}/external/google-cloud-cpp-common"
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
@@ -43,14 +41,20 @@ if (NOT TARGET google-cloud-cpp-common-project)
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_SHA256}
                  LIST_SEPARATOR
                  |
-        CMAKE_ARGS -DBUILD_TESTING=OFF
-                   -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
-                   -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
-                   -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
-                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+        CONFIGURE_COMMAND
+            ${CMAKE_COMMAND}
+            -G${CMAKE_GENERATOR}
+            ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CMAKE_FLAGS}
+            -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
+            -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+            -DBUILD_TESTING=OFF
+            -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
+            -H<SOURCE_DIR>
+            -B<BINARY_DIR>
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
-        LOG_CONFIGURE OFF
-        LOG_BUILD OFF
-        LOG_INSTALL OFF)
+        LOG_CONFIGURE ON
+        LOG_BUILD ON
+        LOG_INSTALL ON)
 endif ()

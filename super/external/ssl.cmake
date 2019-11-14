@@ -14,13 +14,13 @@
 # limitations under the License.
 # ~~~
 
-if (NOT TARGET ssl_project)
+if (NOT TARGET ssl-project)
     # For OpenSSL we don't really support external projects. OpenSSL build
     # system is notoriously finicky. Use vcpkg on Windows, or install OpenSSL
     # using your operating system packages instead.
     #
     # This file is here to simplify the definition of external projects, such as
     # curl and gRPC, that depend on a SSL library.
-    add_custom_target(ssl_project)
     find_package(OpenSSL REQUIRED)
+    add_custom_target(ssl-project)
 endif ()
