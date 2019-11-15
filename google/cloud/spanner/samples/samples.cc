@@ -1162,6 +1162,53 @@ void QueryData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_data]
 
+//! [START spanner_dml_getting_started_insert]
+void DmlGettingStartedInsert(google::cloud::spanner::Client client) {
+  using google::cloud::StatusOr;
+  namespace spanner = google::cloud::spanner;
+
+  auto commit_result = client.Commit(
+      [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+        auto insert = client.ExecuteDml(
+            std::move(txn),
+            spanner::SqlStatement(
+                "INSERT INTO Singers (SingerId, FirstName, LastName) VALUES"
+                " (12, 'Melissa', 'Garcia'),"
+                " (13, 'Russell', 'Morales'),"
+                " (14, 'Jacqueline', 'Long'),"
+                " (15, 'Dylan', 'Shaw')",
+                {}));
+        if (!insert) return insert.status();
+        return spanner::Mutations{};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Insert was successful [spanner_dml_getting_started_insert]\n";
+}
+//! [END spanner_dml_getting_started_insert]
+
+//! [START spanner_query_with_parameter]
+void QueryWithParameter(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  spanner::SqlStatement select(
+      "SELECT SingerId, FirstName, LastName FROM Singers"
+      " WHERE LastName = @name",
+      {{"name", spanner::Value("Garcia")}});
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row) << "\t";
+    std::cout << "FirstName: " << std::get<1>(*row) << "\t";
+    std::cout << "LastName: " << std::get<2>(*row) << "\n";
+  }
+
+  std::cout << "Query completed for [spanner_query_with_parameter]\n";
+}
+//! [END spanner_query_with_parameter]
+
 //! [START spanner_read_data]
 void ReadData(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1513,6 +1560,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("write-data-for-struct-queries",
                          &WriteDataForStructQueries),
       make_command_entry("query-data", &QueryData),
+      make_command_entry("getting-started-insert", &DmlGettingStartedInsert),
+      make_command_entry("query-with-parameter", &QueryWithParameter),
       make_command_entry("read-data", &ReadData),
       make_command_entry("query-data-select-star", &QueryDataSelectStar),
       make_command_entry("query-data-with-struct", &QueryDataWithStruct),
@@ -1723,6 +1772,12 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_query_data sample\n";
   QueryData(client);
+
+  std::cout << "\nRunning spanner_dml_getting_started_insert sample\n";
+  DmlGettingStartedInsert(client);
+
+  std::cout << "\nRunning spanner_query_with_parameter sample\n";
+  QueryWithParameter(client);
 
   std::cout << "\nRunning spanner_read_data sample\n";
   ReadData(client);
