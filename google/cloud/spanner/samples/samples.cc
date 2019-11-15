@@ -946,6 +946,24 @@ void ReadStaleData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_stale_data]
 
+//! [START spanner_read_data_with_index]
+void ReadDataWithIndex(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  spanner::ReadOptions read_options;
+  read_options.index_name = "AlbumsByAlbumTitle";
+  auto rows = client.Read("Albums", google::cloud::spanner::KeySet::All(),
+                          {"AlbumId", "AlbumTitle"}, read_options);
+  using RowType = std::tuple<std::int64_t, std::string>;
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
+    std::cout << "AlbumTitle: " << std::get<1>(*row) << "\n";
+  }
+  std::cout << "Read completed for [spanner_read_data_with_index]\n";
+}
+//! [END spanner_read_data_with_index]
+
 //! [START spanner_read_data_with_storing_index]
 void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1483,6 +1501,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("delete-data", &DeleteData),
       make_command_entry("read-only-transaction", &ReadOnlyTransaction),
       make_command_entry("read-stale-data", &ReadStaleData),
+      make_command_entry("read-data-with-index", &ReadDataWithIndex),
       make_command_entry("read-data-with-storing-index",
                          &ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", &ReadWriteTransaction),
@@ -1677,6 +1696,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_stale_data sample\n";
   ReadStaleData(client);
+
+  std::cout << "\nRunning spanner_read_data_with_index sample\n";
+  ReadDataWithIndex(client);
 
   std::cout << "\nRunning spanner_read_data_with_storing_index sample\n";
   ReadDataWithStoringIndex(client);
