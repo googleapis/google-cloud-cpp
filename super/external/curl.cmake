@@ -55,7 +55,6 @@ if (NOT TARGET curl-project)
             -DHTTP_ONLY=ON
             -DCMAKE_ENABLE_OPENSSL=ON
             -DENABLE_ARES=ON
-            -DCURL_STATICLIB=$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>
             -DCMAKE_DEBUG_POSTFIX=
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
