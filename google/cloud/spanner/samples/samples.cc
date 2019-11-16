@@ -990,6 +990,35 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_data_with_new_column]
 
+//! [START spanner_query_data_with_index]
+void QueryUsingIndex(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  spanner::SqlStatement select(
+      "SELECT AlbumId, AlbumTitle, MarketingBudget"
+      " FROM Albums@{FORCE_INDEX=AlbumsByAlbumTitle}"
+      " WHERE AlbumTitle >= @start_title AND AlbumTitle < @end_title",
+      {{"start_title", spanner::Value("Aardvark")},
+       {"end_title", spanner::Value("Goo")}});
+  using RowType = std::tuple<std::int64_t, std::string,
+                             google::cloud::optional<std::int64_t>>;
+  auto rows = client.ExecuteQuery(std::move(select));
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
+    std::cout << "AlbumTitle: " << std::get<1>(*row) << "\t";
+    auto marketing_budget = std::get<2>(*row);
+    if (marketing_budget) {
+      std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
+    } else {
+      std::cout << "MarketingBudget: NULL"
+                << "\n";
+    }
+  }
+  std::cout << "Read completed for [spanner_query_data_with_index]\n";
+}
+//! [END spanner_query_data_with_index]
+
 //! [START spanner_read_data_with_storing_index]
 void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1576,6 +1605,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("read-stale-data", &ReadStaleData),
       make_command_entry("read-data-with-index", &ReadDataWithIndex),
       make_command_entry("query-new-column", &QueryNewColumn),
+      make_command_entry("query-data-with-index", &QueryUsingIndex),
       make_command_entry("read-data-with-storing-index",
                          &ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", &ReadWriteTransaction),
@@ -1778,6 +1808,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_query_data_with_new_column sample\n";
   QueryNewColumn(client);
+
+  std::cout << "\nRunning spanner_query_data_with_index sample\n";
+  QueryUsingIndex(client);
 
   std::cout << "\nRunning spanner_read_data_with_storing_index sample\n";
   ReadDataWithStoringIndex(client);
