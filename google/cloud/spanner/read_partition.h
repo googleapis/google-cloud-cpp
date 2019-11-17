@@ -31,27 +31,43 @@ inline namespace SPANNER_CLIENT_NS {
 class ReadPartition;
 
 /**
- * Serializes an instance of `ReadPartition` for transmission to another
- * process.
+ * Serializes an instance of `ReadPartition` to a string of bytes.
+ *
+ * The serialized string of bytes is suitable for writing to disk or
+ * transmission to another process.
+ *
+ * @note The serialized string may contain NUL and other non-printable
+ *     characters. Therefore, callers should avoid [formatted IO][formatted-io]
+ *     functions that may incorrectly reformat the string data.
  *
  * @param read_partition - instance to be serialized.
  *
  * @par Example
  * @snippet samples.cc serialize-read-partition
+ *
+ * [formatted-io]:
+ * https://en.cppreference.com/w/cpp/string/basic_string/operator_ltltgtgt
  */
 StatusOr<std::string> SerializeReadPartition(
     ReadPartition const& read_partition);
 
 /**
- * Deserializes the provided string into a `ReadPartition`, if able.
+ * Deserializes the provided string into a `ReadPartition`.
  *
- * Returned `Status` should be checked to determine if deserialization was
- * successful.
+ * The @p serialized_read_partition argument must be a string that was
+ * previously returned by a call to `SerializeReadPartition()`.
+ *
+ * @note The serialized string may contain NUL and other non-printable
+ *     characters. Therefore, callers should avoid [formatted IO][formatted-io]
+ *     functions that may incorrectly reformat the string data.
  *
  * @param serialized_read_partition - string representation to be deserialized.
  *
  * @par Example
  * @snippet samples.cc deserialize-read-partition
+ *
+ * [formatted-io]:
+ * https://en.cppreference.com/w/cpp/string/basic_string/operator_ltltgtgt
  */
 StatusOr<ReadPartition> DeserializeReadPartition(
     std::string const& serialized_read_partition);

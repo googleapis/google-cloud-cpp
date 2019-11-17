@@ -1471,7 +1471,7 @@ void ExampleStatusOr(google::cloud::spanner::Client client) {
 
 class RemoteConnectionFake {
  public:
-  void Send(std::string const& serialized_partition) {
+  void SendBinaryStringData(std::string const& serialized_partition) {
     serialized_partition_in_transit_ = serialized_partition;
   }
   std::string Receive() { return serialized_partition_in_transit_; }
@@ -1484,7 +1484,10 @@ class RemoteConnectionFake {
     if (!serialized_partition) {
       throw std::runtime_error(serialized_partition.status().message());
     }
-    Send(*serialized_partition);
+    std::string const& bytes = *serialized_partition;
+    // `bytes` contains the serialized data, which may contain NULs and other
+    // non-printable characters.
+    SendBinaryStringData(bytes);
     //! [serialize-read-partition]
   }
 
@@ -1497,7 +1500,10 @@ class RemoteConnectionFake {
     if (!serialized_partition) {
       throw std::runtime_error(serialized_partition.status().message());
     }
-    Send(*serialized_partition);
+    std::string const& bytes = *serialized_partition;
+    // `bytes` contains the serialized data, which may contain NULs and other
+    // non-printable characters.
+    SendBinaryStringData(bytes);
     //! [serialize-query-partition]
   }
   //! [deserialize-read-partition]
