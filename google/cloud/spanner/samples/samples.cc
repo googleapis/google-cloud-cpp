@@ -1439,6 +1439,36 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
 }
 //! [END spanner_field_access_on_nested_struct]
 
+void ExampleStatusOr(google::cloud::spanner::Client client) {
+  //! [example-status-or]
+  namespace spanner = google::cloud::spanner;
+  [](spanner::Client client) {
+    auto rows = client.Read("Albums", spanner::KeySet::All(), {"AlbumTitle"});
+    // The actual type of `row` is google::cloud::StatusOr<spanner::Row>, but
+    // we expect it'll most often be declared with auto like this.
+    for (auto const& row : rows) {
+      // Use `row` like a smart pointer; check it before dereferencing
+      if (!row) {
+        // `row` doesn't contain a value, so `.status()` will contain error info
+        std::cerr << row.status();
+        break;
+      }
+
+      // The actual type of `song` is google::cloud::StatusOr<std::string>, but
+      // again we expect it'll be commonly declared with auto as we show here.
+      auto song = row->get<std::string>("AlbumTitle");
+
+      // Instead of checking then dereferencing `song` as we did with `row`
+      // above, here we demonstrate use of the `.value()` member, which will
+      // return a reference to the contained `T` if it exists, otherwise it
+      // will throw an exception (or terminate if compiled without exceptions).
+      std::cout << "SongName: " << song.value() << "\n";
+    }
+  }
+  //! [example-status-or]
+  (std::move(client));
+}
+
 class RemoteConnectionFake {
  public:
   void Send(std::string const& serialized_partition) {
@@ -1629,8 +1659,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("field-access-on-nested-struct",
                          &FieldAccessOnNestedStruct),
       make_command_entry("partition-read", &PartitionRead),
-      make_command_entry("partition-query", &PartitionQuery)
-
+      make_command_entry("partition-query", &PartitionQuery),
+      make_command_entry("example-status-or", &ExampleStatusOr),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -1865,6 +1895,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_partition_query sample\n";
   PartitionQuery(client);
+
+  std::cout << "\nRunning example-status-or sample\n";
+  ExampleStatusOr(client);
 
   std::cout << "\nRunning spanner_dml_partitioned_update sample\n";
   DmlPartitionedUpdate(client);
