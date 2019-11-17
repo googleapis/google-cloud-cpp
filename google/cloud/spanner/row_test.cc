@@ -486,6 +486,36 @@ TEST(StreamOf, IterationError) {
   EXPECT_EQ(it, end);
 }
 
+TEST(GetCurrentRow, BasicEmpty) {
+  std::vector<Row> rows;
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  auto row = GetCurrentRow(range);
+  EXPECT_FALSE(row.ok());
+  EXPECT_EQ(row.status().code(), StatusCode::kResourceExhausted);
+}
+
+TEST(GetCurrentRow, BasicNotEmpty) {
+  std::vector<Row> rows;
+  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  auto row = GetCurrentRow(range);
+  EXPECT_STATUS_OK(row);
+  EXPECT_EQ(1, *row->get<std::int64_t>(0));
+}
+
+TEST(GetCurrentRow, TupleStreamNotEmpty) {
+  std::vector<Row> rows;
+  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+
+  auto row_range = RowRange(MakeRowStreamIteratorSource(rows));
+  auto tup_range = StreamOf<std::tuple<std::int64_t>>(row_range);
+
+  auto row = GetCurrentRow(tup_range);
+  EXPECT_STATUS_OK(row);
+  EXPECT_EQ(1, std::get<0>(*row));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

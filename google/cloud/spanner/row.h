@@ -431,6 +431,21 @@ class StreamOf {
   iterator end_;
 };
 
+/**
+ * Returns the current row from the given range, if any.
+ *
+ * If there are no rows left, an error `Status` is returned. This is a
+ * convenience function that can be useful if the caller knows there will be
+ * only a single row returned.
+ */
+template <typename RowRange>
+auto GetCurrentRow(RowRange&& range) -> typename std::decay<
+    decltype(*std::forward<RowRange>(range).begin())>::type {
+  auto it = std::forward<RowRange>(range).begin();
+  if (it != std::forward<RowRange>(range).end()) return *it;
+  return Status(StatusCode::kResourceExhausted, "No more rows");
+}
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

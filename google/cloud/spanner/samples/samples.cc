@@ -1001,14 +1001,13 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(singer_id, album_id));
     auto rows = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
-    for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-      // Return the error (as opposed to throwing an exception) because
-      // Commit() only retries on StatusCode::kAborted.
-      if (!row) return std::move(row).status();
-      // We expect at most one result from the `Read()` request. Return
-      // the first one.
-      return std::get<0>(*std::move(row));
-    }
+    // We expect at most one result from the `Read()` request. Return
+    // the first one.
+    auto row = GetCurrentRow(spanner::StreamOf<std::tuple<std::int64_t>>(rows));
+    // Return the error (as opposed to throwing an exception) because
+    // Commit() only retries on StatusCode::kAborted.
+    if (!row) return std::move(row).status();
+    return std::get<0>(*std::move(row));
     // Throw an exception because this should terminate the transaction.
     throw std::runtime_error("Key not found (" + std::to_string(singer_id) +
                              "," + std::to_string(album_id) + ")");
