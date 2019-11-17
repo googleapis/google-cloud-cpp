@@ -1080,6 +1080,28 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
 }
 //! [END spanner_dml_standard_update]
 
+// [START spanner_dml_standard_update_with_timestamp]
+void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
+  using google::cloud::StatusOr;
+  namespace spanner = google::cloud::spanner;
+  auto commit_result = client.Commit(
+      [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+        auto update = client.ExecuteDml(
+            std::move(txn),
+            spanner::SqlStatement(
+                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP() "
+                "WHERE SingerId = 1"));
+        if (!update) return update.status();
+        return spanner::Mutations{};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Update was successful "
+            << "[spanner_dml_standard_update_with_timestamp]\n";
+}
+// [END spanner_dml_standard_update_with_timestamp]
+
 //! [START spanner_dml_standard_delete]
 void DmlStandardDelete(google::cloud::spanner::Client client) {
   using google::cloud::StatusOr;
@@ -1640,6 +1662,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("read-write-transaction", &ReadWriteTransaction),
       make_command_entry("dml-standard-insert", &DmlStandardInsert),
       make_command_entry("dml-standard-update", &DmlStandardUpdate),
+      make_command_entry("dml-standard-update-with-timestamp",
+                         &DmlStandardUpdateWithTimestamp),
       make_command_entry("dml-standard-delete", &DmlStandardDelete),
       make_command_entry("dml-partitioned-update", &DmlPartitionedUpdate),
       make_command_entry("dml-partitioned-delete", &DmlPartitionedDelete),
@@ -1857,6 +1881,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_dml_standard_update sample\n";
   DmlStandardUpdate(client);
+
+  std::cout << "\nRunning spanner_dml_standard_update_with_timestamp sample\n";
+  DmlStandardUpdateWithTimestamp(client);
 
   std::cout << "\nRunning spanner_dml_standard_delete sample\n";
   DmlStandardDelete(client);
