@@ -93,7 +93,7 @@ class RowStream {
 
 /**
  * Represents the result of a data modifying operation using
- * `spanner::Client::ExecuteDML()`.
+ * `spanner::Client::ExecuteDml()`.
  *
  * This class encapsulates the result of a Cloud Spanner DML operation, i.e.,
  * `INSERT`, `UPDATE`, or `DELETE`.
