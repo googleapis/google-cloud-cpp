@@ -422,15 +422,6 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [create-database] [END spanner_create_database]
 
-void CreateDatabaseCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "create-database <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  CreateDatabase(std::move(client), argv[0], argv[1], argv[2]);
-}
-
 // [START spanner_create_table_with_timestamp_column]
 void CreateTableWithTimestamp(
     google::cloud::spanner::DatabaseAdminClient client,
@@ -462,15 +453,6 @@ void CreateTableWithTimestamp(
 }
 // [END spanner_create_table_with_timestamp_column]
 
-void CreateTableWithTimestampCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "create-table-with-timestamp <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  CreateTableWithTimestamp(std::move(client), argv[0], argv[1], argv[2]);
-}
-
 // [START spanner_create_index]
 void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
               std::string const& project_id, std::string const& instance_id,
@@ -493,15 +475,6 @@ void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
 }
 // [END spanner_create_index]
 
-void AddIndexCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "add-index <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  AddIndex(std::move(client), argv[0], argv[1], argv[2]);
-}
-
 //! [get-database]
 void GetDatabase(google::cloud::spanner::DatabaseAdminClient client,
                  std::string const& project_id, std::string const& instance_id,
@@ -513,15 +486,6 @@ void GetDatabase(google::cloud::spanner::DatabaseAdminClient client,
   std::cout << "Database metadata is:\n" << database->DebugString() << "\n";
 }
 //! [get-database]
-
-void GetDatabaseCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "get-database <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  GetDatabase(std::move(client), argv[0], argv[1], argv[2]);
-}
 
 //! [get-database-ddl]
 void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
@@ -535,15 +499,6 @@ void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
   std::cout << "Database metadata is:\n" << database->DebugString() << "\n";
 }
 //! [get-database-ddl]
-
-void GetDatabaseDdlCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "get-database-ddl <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  GetDatabaseDdl(std::move(client), argv[0], argv[1], argv[2]);
-}
 
 //! [update-database] [START spanner_add_column]
 void AddColumn(google::cloud::spanner::DatabaseAdminClient client,
@@ -565,15 +520,6 @@ void AddColumn(google::cloud::spanner::DatabaseAdminClient client,
   std::cout << "Added MarketingBudget column\n";
 }
 //! [update-database] [END spanner_add_column]
-
-void AddColumnCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "add-column <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  AddColumn(std::move(client), argv[0], argv[1], argv[2]);
-}
 
 // [START spanner_add_timestamp_column]
 void AddTimestampColumn(google::cloud::spanner::DatabaseAdminClient client,
@@ -598,15 +544,6 @@ void AddTimestampColumn(google::cloud::spanner::DatabaseAdminClient client,
 }
 // [END spanner_add_timestamp_column]
 
-void AddTimestampColumnCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "add-timestamp-column <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  AddTimestampColumn(std::move(client), argv[0], argv[1], argv[2]);
-}
-
 // [START spanner_create_storing_index]
 void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
@@ -630,15 +567,6 @@ void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
             << metadata->DebugString() << "\n";
 }
 // [END spanner_create_storing_index]
-
-void AddStoringIndexCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "add-storing-index <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  AddStoringIndex(std::move(client), argv[0], argv[1], argv[2]);
-}
 
 //! [list-databases]
 void ListDatabases(google::cloud::spanner::DatabaseAdminClient client,
@@ -681,15 +609,6 @@ void DropDatabase(google::cloud::spanner::DatabaseAdminClient client,
 }
 //! [drop-database] [END spanner_drop_database]
 
-void DropDatabaseCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "drop-database <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  DropDatabase(std::move(client), argv[0], argv[1], argv[2]);
-}
-
 //! [database-get-iam-policy]
 void DatabaseGetIamPolicy(google::cloud::spanner::DatabaseAdminClient client,
                           std::string const& project_id,
@@ -704,15 +623,6 @@ void DatabaseGetIamPolicy(google::cloud::spanner::DatabaseAdminClient client,
             << actual->DebugString() << "\n";
 }
 //! [database-get-iam-policy]
-
-void DatabaseGetIamPolicyCommand(std::vector<std::string> const& argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "database-get-iam-policy <project-id> <instance-id> <database-id>");
-  }
-  google::cloud::spanner::DatabaseAdminClient client;
-  DatabaseGetIamPolicy(std::move(client), argv[0], argv[1], argv[2]);
-}
 
 //! [add-database-reader-on-database]
 void AddDatabaseReaderOnDatabase(
@@ -1653,14 +1563,36 @@ int RunOneCommand(std::vector<std::string> argv) {
   using SampleFunction = void (*)(google::cloud::spanner::Client);
 
   using CommandMap = std::map<std::string, CommandType>;
-  auto make_command_entry = [](char const* sample_name, SampleFunction sample) {
-    auto make_command = [](char const* sample_name, SampleFunction sample) {
+  auto make_command_entry = [](std::string const& sample_name,
+                               SampleFunction sample) {
+    auto make_command = [](std::string const& sample_name,
+                           SampleFunction sample) {
       return [sample_name, sample](std::vector<std::string> const& argv) {
         if (argv.size() != 3) {
-          throw std::runtime_error(std::string(sample_name) +
+          throw std::runtime_error(sample_name +
                                    " <project-id> <instance-id> <database-id>");
         }
         sample(MakeSampleClient(argv[0], argv[1], argv[2]));
+      };
+    };
+    return CommandMap::value_type(sample_name,
+                                  make_command(sample_name, sample));
+  };
+
+  using DatabaseAdminSampleFunction =
+      void (*)(google::cloud::spanner::DatabaseAdminClient, std::string const&,
+               std::string const&, std::string const&);
+  auto make_database_command_entry = [](std::string const& sample_name,
+                                        DatabaseAdminSampleFunction sample) {
+    auto make_command = [](std::string const& sample_name,
+                           DatabaseAdminSampleFunction sample) {
+      return [sample_name, sample](std::vector<std::string> const& argv) {
+        if (argv.size() != 3) {
+          throw std::runtime_error(sample_name +
+                                   " <project-id> <instance-id> <database-id>");
+        }
+        google::cloud::spanner::DatabaseAdminClient client;
+        sample(client, argv[0], argv[1], argv[2]);
       };
     };
     return CommandMap::value_type(sample_name,
@@ -1679,17 +1611,19 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-database-reader", &AddDatabaseReaderCommand},
       {"remove-database-reader", &RemoveDatabaseReaderCommand},
       {"instance-test-iam-permissions", &InstanceTestIamPermissionsCommand},
-      {"create-database", &CreateDatabaseCommand},
-      {"create-table-with-timestamp", &CreateTableWithTimestampCommand},
-      {"add-index", &AddIndexCommand},
-      {"add-storing-index", &AddStoringIndexCommand},
-      {"get-database", &GetDatabaseCommand},
-      {"get-database-ddl", &GetDatabaseDdlCommand},
-      {"add-column", &AddColumnCommand},
-      {"add-timestamp-column", &AddTimestampColumnCommand},
+      make_database_command_entry("create-database", &CreateDatabase),
+      make_database_command_entry("create-table-with-timestamp",
+                                  &CreateTableWithTimestamp),
+      make_database_command_entry("add-index", &AddIndex),
+      make_database_command_entry("add-storing-index", &AddStoringIndex),
+      make_database_command_entry("get-database", &GetDatabase),
+      make_database_command_entry("get-database-ddl", &GetDatabaseDdl),
+      make_database_command_entry("add-column", &AddColumn),
+      make_database_command_entry("add-timestamp-column", &AddTimestampColumn),
       {"list-databases", &ListDatabasesCommand},
-      {"drop-database", &DropDatabaseCommand},
-      {"database-get-iam-policy", &DatabaseGetIamPolicyCommand},
+      make_database_command_entry("drop-database", &DropDatabase),
+      make_database_command_entry("database-get-iam-policy",
+                                  &DatabaseGetIamPolicy),
       {"add-database-reader-on-database", &AddDatabaseReaderOnDatabaseCommand},
       {"database-test-iam-permissions", &DatabaseTestIamPermissionsCommand},
       {"quickstart", &QuickstartCommand},
