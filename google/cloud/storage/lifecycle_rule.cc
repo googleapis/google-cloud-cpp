@@ -54,10 +54,6 @@ LifecycleRuleAction LifecycleRule::SetStorageClassDurableReducedAvailability() {
   return SetStorageClass(storage_class::DurableReducedAvailability());
 }
 
-LifecycleRuleAction LifecycleRule::SetStorageClassArchive() {
-  return SetStorageClass(storage_class::Archive());
-}
-
 LifecycleRuleAction LifecycleRule::SetStorageClass(std::string storage_class) {
   return LifecycleRuleAction{"SetStorageClass", std::move(storage_class)};
 }

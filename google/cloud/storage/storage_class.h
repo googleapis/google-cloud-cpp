@@ -53,11 +53,6 @@ inline char const* DurableReducedAvailability() {
   return kStorageClass;
 }
 
-inline char const* Archive() {
-  static constexpr char kStorageClass[] = "ARCHIVE";
-  return kStorageClass;
-}
-
 }  // namespace storage_class
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
