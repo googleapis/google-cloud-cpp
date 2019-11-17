@@ -575,6 +575,38 @@ void AddColumnCommand(std::vector<std::string> const& argv) {
   AddColumn(std::move(client), argv[0], argv[1], argv[2]);
 }
 
+// [START spanner_add_timestamp_column]
+void AddTimestampColumn(google::cloud::spanner::DatabaseAdminClient client,
+                        std::string const& project_id,
+                        std::string const& instance_id,
+                        std::string const& database_id) {
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  future<
+      StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>>
+      f = client.UpdateDatabase(
+          database, {"ALTER TABLE Albums ADD COLUMN LastUpdateTime TIMESTAMP "
+                     "OPTIONS (allow_commit_timestamp=true)"});
+  StatusOr<google::spanner::admin::database::v1::UpdateDatabaseDdlMetadata>
+      metadata = f.get();
+  if (!metadata) {
+    throw std::runtime_error(metadata.status().message());
+  }
+  std::cout << "Added LastUpdateTime column\n";
+}
+// [END spanner_add_timestamp_column]
+
+void AddTimestampColumnCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "add-timestamp-column <project-id> <instance-id> <database-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  AddTimestampColumn(std::move(client), argv[0], argv[1], argv[2]);
+}
+
 // [START spanner_create_storing_index]
 void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
@@ -1654,6 +1686,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"get-database", &GetDatabaseCommand},
       {"get-database-ddl", &GetDatabaseDdlCommand},
       {"add-column", &AddColumnCommand},
+      {"add-timestamp-column", &AddTimestampColumnCommand},
       {"list-databases", &ListDatabasesCommand},
       {"drop-database", &DropDatabaseCommand},
       {"database-get-iam-policy", &DatabaseGetIamPolicyCommand},
@@ -1832,6 +1865,10 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_add_column sample\n";
   AddColumn(database_admin_client, project_id, instance_id, database_id);
+
+  std::cout << "\nRunning spanner_add_timestamp_column sample\n";
+  AddTimestampColumn(database_admin_client, project_id, instance_id,
+                     database_id);
 
   std::cout << "\nRunning spanner_create_storing_index sample\n";
   AddStoringIndex(database_admin_client, project_id, instance_id, database_id);
