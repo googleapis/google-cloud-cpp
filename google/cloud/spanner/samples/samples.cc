@@ -1130,6 +1130,38 @@ void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
 }
 // [END spanner_dml_standard_update_with_timestamp]
 
+//! [START spanner_dml_write_then_read]
+void DmlWriteThenRead(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  using google::cloud::StatusOr;
+
+  auto commit_result = client.Commit(
+      [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+        auto insert = client.ExecuteDml(
+            txn, spanner::SqlStatement(
+                     "INSERT INTO Singers (SingerId, FirstName, LastName)"
+                     "  VALUES (11, 'Timothy', 'Campbell')",
+                     {}));
+        if (!insert) return insert.status();
+        // Read newly inserted record.
+        spanner::SqlStatement select(
+            "SELECT FirstName, LastName FROM Singers where SingerId = 11");
+        using RowType = std::tuple<std::string, std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(select));
+        for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+          if (!row) return row.status();
+          std::cout << "FirstName: " << std::get<0>(*row) << "\t";
+          std::cout << "LastName: " << std::get<1>(*row) << "\n";
+        }
+        return spanner::Mutations{};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Write then read suceeded [spanner_dml_write_then_read]\n";
+}
+//! [END spanner_dml_write_then_read]
+
 //! [START spanner_dml_standard_delete]
 void DmlStandardDelete(google::cloud::spanner::Client client) {
   using google::cloud::StatusOr;
@@ -1693,6 +1725,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("dml-standard-update", &DmlStandardUpdate),
       make_command_entry("dml-standard-update-with-timestamp",
                          &DmlStandardUpdateWithTimestamp),
+      make_command_entry("dml-write-then-read", &DmlWriteThenRead),
       make_command_entry("dml-standard-delete", &DmlStandardDelete),
       make_command_entry("dml-partitioned-update", &DmlPartitionedUpdate),
       make_command_entry("dml-partitioned-delete", &DmlPartitionedDelete),
@@ -1916,6 +1949,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_dml_standard_update_with_timestamp sample\n";
   DmlStandardUpdateWithTimestamp(client);
+
+  std::cout << "\nRunning spanner_dml_write_then_read sample\n";
+  DmlWriteThenRead(client);
 
   std::cout << "\nRunning spanner_dml_standard_delete sample\n";
   DmlStandardDelete(client);
