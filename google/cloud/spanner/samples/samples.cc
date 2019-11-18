@@ -888,6 +888,35 @@ void ReadStaleData(google::cloud::spanner::Client client) {
 }
 //! [END spanner_read_stale_data]
 
+//! [START spanner_batch_client]
+void UsePartitionQuery(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+  auto txn = spanner::MakeReadOnlyTransaction();
+
+  spanner::SqlStatement select(
+      "SELECT SingerId, FirstName, LastName FROM Singers");
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+
+  auto partitions = client.PartitionQuery(std::move(txn), select, {});
+  if (!partitions) {
+    throw std::runtime_error(partitions.status().message());
+  }
+  int number_of_rows = 0;
+  for (auto const& partition : *partitions) {
+    auto rows = client.ExecuteQuery(partition);
+    for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+      if (!row) {
+        throw std::runtime_error(row.status().message());
+      }
+      number_of_rows++;
+    }
+  }
+  std::cout << "Number of partitions: " << partitions->size() << "\n"
+            << "Number of rows: " << number_of_rows << "\n";
+  std::cout << "Read completed for [spanner_batch_client]\n";
+}
+//! [END spanner_batch_client]
+
 //! [START spanner_read_data_with_index]
 void ReadDataWithIndex(google::cloud::spanner::Client client) {
   namespace spanner = google::cloud::spanner;
@@ -1653,6 +1682,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("delete-data", &DeleteData),
       make_command_entry("read-only-transaction", &ReadOnlyTransaction),
       make_command_entry("read-stale-data", &ReadStaleData),
+      make_command_entry("use-partition-query", &UsePartitionQuery),
       make_command_entry("read-data-with-index", &ReadDataWithIndex),
       make_command_entry("query-new-column", &QueryNewColumn),
       make_command_entry("query-data-with-index", &QueryUsingIndex),
@@ -1859,6 +1889,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_stale_data sample\n";
   ReadStaleData(client);
+
+  std::cout << "\nRunning spanner_batch_client sample\n";
+  UsePartitionQuery(client);
 
   std::cout << "\nRunning spanner_read_data_with_index sample\n";
   ReadDataWithIndex(client);
