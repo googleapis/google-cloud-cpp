@@ -74,9 +74,9 @@ RUN ldconfig
 # #### google-cloud-cpp-common
 
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.13.0.tar.gz
-RUN tar -xf v0.13.0.tar.gz
-WORKDIR /var/tmp/build/google-cloud-cpp-common-0.13.0
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.16.0.tar.gz
+RUN tar -xf v0.16.0.tar.gz
+WORKDIR /var/tmp/build/google-cloud-cpp-common-0.16.0
 # Compile without the tests because we are testing google-cloud-cpp, not the base
 # libraries
 RUN cmake -H. -Bcmake-out \
