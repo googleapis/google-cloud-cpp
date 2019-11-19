@@ -165,6 +165,7 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
 
   // Cannot use Commit in this test because we want to call Rollback
   // explicitly. This means we need to retry ABORTED calls ourselves.
+  Transaction txn = MakeReadWriteTransaction();
   for (auto start = std::chrono::steady_clock::now(),
             deadline = start + std::chrono::minutes(1);
        start < deadline; start = std::chrono::steady_clock::now()) {
@@ -172,7 +173,10 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
       return !s && s.status().code() == StatusCode::kAborted;
     };
 
-    Transaction txn = MakeReadWriteTransaction();
+    // Share lock priority with the previous loop so that we have a slightly
+    // better chance of avoiding StatusCode::kAborted from ExecuteDml().
+    txn = MakeReadWriteTransaction(std::move(txn));
+
     auto insert1 = client_->ExecuteDml(
         txn, SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                           "VALUES (@id, @fname, @lname)",

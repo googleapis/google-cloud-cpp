@@ -658,6 +658,118 @@ TEST(ClientTest, CommitMutatorPermanentFailure) {
   EXPECT_EQ(1, commit_attempts);  // no reruns
 }
 
+MATCHER(DoesNotHaveSession, "not bound to a session") {
+  return internal::Visit(
+      arg, [&](internal::SessionHolder& session,
+               google::spanner::v1::TransactionSelector&, std::int64_t) {
+        if (session) {
+          *result_listener << "has session " << session->session_name();
+          return false;
+        }
+        return true;
+      });
+}
+
+MATCHER_P(HasSession, name, "bound to expected session") {
+  return internal::Visit(
+      arg, [&](internal::SessionHolder& session,
+               google::spanner::v1::TransactionSelector&, std::int64_t) {
+        if (!session) {
+          *result_listener << "has no session but expected " << name;
+          return false;
+        }
+        if (session->session_name() != name) {
+          *result_listener << "has session " << session->session_name()
+                           << " but expected " << name;
+          return false;
+        }
+        return true;
+      });
+}
+
+MATCHER(HasBegin, "not bound to a transaction-id") {
+  return internal::Visit(
+      arg, [&](internal::SessionHolder&,
+               google::spanner::v1::TransactionSelector& s, std::int64_t) {
+        if (!s.has_begin()) {
+          if (s.has_single_use()) {
+            *result_listener << "is single-use";
+          } else {
+            *result_listener << "has transaction-id " << s.id();
+          }
+          return false;
+        }
+        return true;
+      });
+}
+
+bool SetSessionName(Transaction const& txn, std::string name) {
+  return internal::Visit(
+      txn, [&name](internal::SessionHolder& session,
+                   google::spanner::v1::TransactionSelector&, std::int64_t) {
+        session = internal::MakeDissociatedSessionHolder(std::move(name));
+        return true;
+      });
+}
+
+bool SetTransactionId(Transaction const& txn, std::string id) {
+  return internal::Visit(
+      txn, [&id](internal::SessionHolder&,
+                 google::spanner::v1::TransactionSelector& s, std::int64_t) {
+        s.set_id(std::move(id));
+        return true;
+      });
+}
+
+TEST(ClientTest, CommitMutatorSessionAffinity) {
+  int const num_aborts = 10;  // how many aborts before success
+
+  // After assigning a session during the first aborted transaction, we
+  // should see the same session in a new transaction on every rerun.
+  std::string const session_name = "CommitMutatorLockPriority.Session";
+
+  auto timestamp = internal::TimestampFromString("2019-11-11T20:05:36.345Z");
+  ASSERT_STATUS_OK(timestamp);
+
+  auto conn = std::make_shared<MockConnection>();
+  // Eventually the Commit() will succeed.
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce(Invoke(
+          [&session_name, &timestamp](Connection::CommitParams const& cp) {
+            EXPECT_THAT(cp.transaction, HasSession(session_name));
+            EXPECT_THAT(cp.transaction, HasBegin());
+            SetTransactionId(cp.transaction, "last-transaction-id");
+            return CommitResult{*timestamp};
+          }));
+  // But only after some aborts, the first of which sets the session.
+  EXPECT_CALL(*conn, Commit(_))
+      .Times(num_aborts)
+      .WillOnce(Invoke([&session_name](Connection::CommitParams const& cp) {
+        EXPECT_THAT(cp.transaction, DoesNotHaveSession());
+        EXPECT_THAT(cp.transaction, HasBegin());
+        SetSessionName(cp.transaction, session_name);
+        SetTransactionId(cp.transaction, "first-transaction-id");
+        return Status(StatusCode::kAborted, "Aborted transaction");
+      }))
+      .WillRepeatedly(
+          Invoke([&session_name](Connection::CommitParams const& cp) {
+            EXPECT_THAT(cp.transaction, HasSession(session_name));
+            EXPECT_THAT(cp.transaction, HasBegin());
+            SetTransactionId(cp.transaction, "mid-transaction-id");
+            return Status(StatusCode::kAborted, "Aborted transaction");
+          }))
+      .RetiresOnSaturation();
+
+  Client client(conn);
+  auto const zero_duration = std::chrono::microseconds(0);
+  auto result = client.Commit(
+      [](Transaction const&) { return Mutations{}; },
+      LimitedErrorCountTransactionRerunPolicy(num_aborts).clone(),
+      ExponentialBackoffPolicy(zero_duration, zero_duration, 2).clone());
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

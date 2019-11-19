@@ -17,7 +17,6 @@
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
-#include <functional>
 #include <memory>
 #include <string>
 #include <utility>
@@ -53,11 +52,11 @@ class Session {
 };
 
 /**
- * A `SessionHolder` is a unique_ptr with a custom deleter that normally
+ * A `SessionHolder` is a shared_ptr with a custom deleter that normally
  * returns the `Session` to the pool it came from (although in some cases it
  * just deletes the `Session` - see `MakeDissociatedSessionHolder`)
  */
-using SessionHolder = std::unique_ptr<Session, std::function<void(Session*)>>;
+using SessionHolder = std::shared_ptr<Session>;
 
 /**
  * Returns a `SessionHolder` for a new `Session` that is not associated with

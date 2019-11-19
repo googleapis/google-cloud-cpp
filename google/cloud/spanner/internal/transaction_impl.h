@@ -44,6 +44,10 @@ class TransactionImpl {
   TransactionImpl(google::spanner::v1::TransactionSelector selector)
       : TransactionImpl(/*session=*/{}, std::move(selector)) {}
 
+  TransactionImpl(TransactionImpl const& impl,
+                  google::spanner::v1::TransactionSelector selector)
+      : TransactionImpl(impl.session_, std::move(selector)) {}
+
   TransactionImpl(SessionHolder session,
                   google::spanner::v1::TransactionSelector selector)
       : session_(std::move(session)),

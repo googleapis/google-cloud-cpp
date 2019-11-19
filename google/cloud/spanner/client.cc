@@ -142,9 +142,8 @@ StatusOr<CommitResult> Client::Commit(
   // The status-code discriminator of TransactionRerunPolicy.
   using RerunnablePolicy = internal::SafeTransactionRerun;
 
+  Transaction txn = MakeReadWriteTransaction();
   for (int rerun = 0;; ++rerun) {
-    // TODO(#472): Make this transaction use the same session each time.
-    Transaction txn = MakeReadWriteTransaction();
     StatusOr<Mutations> mutations;
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
@@ -182,6 +181,9 @@ StatusOr<CommitResult> Client::Commit(
       return status;  // reruns exhausted
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
+    // Create a new transaction for the next loop, but share lock priority
+    // so that we have a slightly better chance of avoiding another abort.
+    txn = MakeReadWriteTransaction(std::move(txn));
   }
 }
 

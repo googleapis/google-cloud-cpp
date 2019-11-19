@@ -87,6 +87,13 @@ Transaction::Transaction(ReadWriteOptions opts) {
   impl_ = std::make_shared<internal::TransactionImpl>(std::move(selector));
 }
 
+Transaction::Transaction(Transaction const& txn, ReadWriteOptions opts) {
+  google::spanner::v1::TransactionSelector selector;
+  *selector.mutable_begin() = MakeOpts(std::move(opts.rw_opts_));
+  impl_ = std::make_shared<internal::TransactionImpl>(*txn.impl_,
+                                                      std::move(selector));
+}
+
 Transaction::Transaction(SingleUseOptions opts) {
   google::spanner::v1::TransactionSelector selector;
   *selector.mutable_single_use() = MakeOpts(std::move(opts.ro_opts_));
@@ -111,6 +118,7 @@ Transaction MakeTransactionFromIds(std::string session_id,
 }
 
 }  // namespace internal
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
