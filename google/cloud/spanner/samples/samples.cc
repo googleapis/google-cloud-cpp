@@ -953,8 +953,7 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
     if (marketing_budget) {
       std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
     } else {
-      std::cout << "MarketingBudget: NULL"
-                << "\n";
+      std::cout << "MarketingBudget: NULL\n";
     }
   }
   std::cout << "Read completed for [spanner_read_data_with_new_column]\n";
@@ -982,8 +981,7 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
     if (marketing_budget) {
       std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
     } else {
-      std::cout << "MarketingBudget: NULL"
-                << "\n";
+      std::cout << "MarketingBudget: NULL\n";
     }
   }
   std::cout << "Read completed for [spanner_query_data_with_index]\n";
@@ -1009,8 +1007,7 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
     if (marketing_budget) {
       std::cout << "MarketingBudget: " << marketing_budget.value() << "\n";
     } else {
-      std::cout << "MarketingBudget: NULL"
-                << "\n";
+      std::cout << "MarketingBudget: NULL\n";
     }
   }
   std::cout << "Read completed for [spanner_read_data_with_storing_index]\n";
@@ -1030,9 +1027,10 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(singer_id, album_id));
     auto rows = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
+    using RowType = std::tuple<std::int64_t>;
     // We expect at most one result from the `Read()` request. Return
     // the first one.
-    auto row = GetCurrentRow(spanner::StreamOf<std::tuple<std::int64_t>>(rows));
+    auto row = spanner::GetCurrentRow(spanner::StreamOf<RowType>(rows));
     // Return the error (as opposed to throwing an exception) because
     // Commit() only retries on StatusCode::kAborted.
     if (!row) return std::move(row).status();
@@ -1292,6 +1290,61 @@ void DmlGettingStartedInsert(google::cloud::spanner::Client client) {
   std::cout << "Insert was successful [spanner_dml_getting_started_insert]\n";
 }
 //! [END spanner_dml_getting_started_insert]
+
+//! [START spanner_dml_getting_started_update]
+void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
+  using google::cloud::StatusOr;
+  namespace spanner = google::cloud::spanner;
+
+  // A helper to read the budget for the given album and singer.
+  auto get_budget = [&](spanner::Transaction txn, std::int64_t album_id,
+                        std::int64_t singer_id) -> StatusOr<std::int64_t> {
+    auto key = spanner::KeySet().AddKey(spanner::MakeKey(album_id, singer_id));
+    auto rows = client.Read(std::move(txn), "Albums", key, {"MarketingBudget"});
+    using RowType = std::tuple<google::cloud::optional<std::int64_t>>;
+    auto row = spanner::GetCurrentRow(spanner::StreamOf<RowType>(rows));
+    if (!row) return row.status();
+    auto const budget = std::get<0>(*row);
+    return budget ? *budget : 0;
+  };
+
+  // A helper to update the budget for the given album and singer.
+  auto update_budget = [&](spanner::Transaction txn, std::int64_t album_id,
+                           std::int64_t singer_id, std::int64_t budget) {
+    auto sql = spanner::SqlStatement(
+        "UPDATE Albums SET MarketingBudget = @AlbumBudget "
+        "WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
+        {{"AlbumBudget", spanner::Value(budget)},
+         {"AlbumId", spanner::Value(album_id)},
+         {"SingerId", spanner::Value(singer_id)}});
+    return client.ExecuteDml(std::move(txn), std::move(sql));
+  };
+
+  auto const transfer_amount = 20000;
+  auto commit_result = client.Commit(
+      [&](spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
+        auto budget1 = get_budget(txn, 1, 1);
+        if (!budget1) return budget1.status();
+        if (*budget1 < transfer_amount) {
+          return google::cloud::Status(
+              google::cloud::StatusCode::kUnknown,
+              "cannot transfer " + std::to_string(transfer_amount) +
+                  " from budget of " + std::to_string(*budget1));
+        }
+        auto budget2 = get_budget(txn, 2, 2);
+        if (!budget2) return budget2.status();
+        auto update = update_budget(txn, 1, 1, *budget1 - transfer_amount);
+        if (!update) return update.status();
+        update = update_budget(txn, 2, 2, *budget2 + transfer_amount);
+        if (!update) return update.status();
+        return spanner::Mutations{};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Update was successful [spanner_dml_getting_started_update]\n";
+}
+//! [END spanner_dml_getting_started_update]
 
 //! [START spanner_query_with_parameter]
 void QueryWithParameter(google::cloud::spanner::Client client) {
@@ -1734,6 +1787,7 @@ int RunOneCommand(std::vector<std::string> argv) {
                          &WriteDataForStructQueries),
       make_command_entry("query-data", &QueryData),
       make_command_entry("getting-started-insert", &DmlGettingStartedInsert),
+      make_command_entry("getting-started-update", &DmlGettingStartedUpdate),
       make_command_entry("query-with-parameter", &QueryWithParameter),
       make_command_entry("read-data", &ReadData),
       make_command_entry("query-data-select-star", &QueryDataSelectStar),
@@ -1953,12 +2007,6 @@ void RunAll() {
   std::cout << "\nRunning spanner_dml_write_then_read sample\n";
   DmlWriteThenRead(client);
 
-  std::cout << "\nRunning spanner_dml_standard_delete sample\n";
-  DmlStandardDelete(client);
-
-  std::cout << "\nRunning spanner_delete_data sample\n";
-  DeleteData(client);
-
   std::cout << "\nRunning spanner_write_data_for_struct_queries sample\n";
   WriteDataForStructQueries(client);
 
@@ -1967,6 +2015,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_dml_getting_started_insert sample\n";
   DmlGettingStartedInsert(client);
+
+  std::cout << "\nRunning spanner_dml_getting_started_update sample\n";
+  DmlGettingStartedUpdate(client);
 
   std::cout << "\nRunning spanner_query_with_parameter sample\n";
   QueryWithParameter(client);
@@ -2006,6 +2057,12 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_dml_structs sample\n";
   DmlStructs(client);
+
+  std::cout << "\nRunning spanner_dml_standard_delete sample\n";
+  DmlStandardDelete(client);
+
+  std::cout << "\nRunning spanner_delete_data sample\n";
+  DeleteData(client);
 
   std::cout << "\nRunning spanner_drop_database sample\n";
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
