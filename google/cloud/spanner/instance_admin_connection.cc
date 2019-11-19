@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/polling_loop.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -24,68 +25,27 @@ inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::instance::v1;
 namespace giam = google::iam::v1;
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT \
-  std::chrono::minutes(30)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF \
-  std::chrono::seconds(1)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF \
-  std::chrono::minutes(5)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING 2.0
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT \
-  std::chrono::minutes(30)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF \
-  std::chrono::seconds(10)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF \
-  std::chrono::minutes(5)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
-#define GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING 2.0
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING
-
 namespace {
 
 std::unique_ptr<RetryPolicy> DefaultInstanceAdminRetryPolicy() {
   return google::cloud::spanner::LimitedTimeRetryPolicy(
-             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_RETRY_TIMEOUT)
+             std::chrono::minutes(30))
       .clone();
 }
 
 std::unique_ptr<BackoffPolicy> DefaultInstanceAdminBackoffPolicy() {
+  auto constexpr kBackoffScaling = 2.0;
   return google::cloud::spanner::ExponentialBackoffPolicy(
-             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_INITIAL_BACKOFF,
-             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_MAXIMUM_BACKOFF,
-             GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_BACKOFF_SCALING)
+             std::chrono::seconds(1), std::chrono::minutes(5), kBackoffScaling)
       .clone();
 }
 
 std::unique_ptr<PollingPolicy> DefaultInstanceAdminPollingPolicy() {
+  auto constexpr kBackoffScaling = 2.0;
   return GenericPollingPolicy<>(
-             LimitedTimeRetryPolicy(
-                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_TIMEOUT),
-             ExponentialBackoffPolicy(
-                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_INITIAL_BACKOFF,
-                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_MAXIMUM_BACKOFF,
-                 GOOGLE_CLOUD_CPP_SPANNER_ADMIN_DEFAULT_POLLING_BACKOFF_SCALING))
+             LimitedTimeRetryPolicy(std::chrono::minutes(30)),
+             ExponentialBackoffPolicy(std::chrono::seconds(10),
+                                      std::chrono::minutes(5), kBackoffScaling))
       .clone();
 }
 

@@ -62,34 +62,17 @@ class DefaultPartialResultSetReader : public PartialResultSetReader {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT
-#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT std::chrono::minutes(10)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF
-#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF \
-  std::chrono::milliseconds(100)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF
-#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF std::chrono::minutes(1)
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF
-
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING
-#define GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING 2.0
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING
-
 std::unique_ptr<RetryPolicy> DefaultConnectionRetryPolicy() {
   return google::cloud::spanner::LimitedTimeRetryPolicy(
-             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_RETRY_TIMEOUT)
+             std::chrono::minutes(10))
       .clone();
 }
 
 std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
+  auto constexpr kBackoffScaling = 2.0;
   return google::cloud::spanner::ExponentialBackoffPolicy(
-             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_INITIAL_BACKOFF,
-             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_MAXIMUM_BACKOFF,
-             GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_BACKOFF_SCALING)
+             std::chrono::milliseconds(100), std::chrono::minutes(1),
+             kBackoffScaling)
       .clone();
 }
 
