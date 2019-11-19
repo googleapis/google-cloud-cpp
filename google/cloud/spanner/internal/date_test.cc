@@ -24,6 +24,9 @@ namespace {
 
 TEST(Date, DateToString) {
   EXPECT_EQ("2019-06-21", DateToString(Date(2019, 6, 21)));
+  EXPECT_EQ("1066-10-14", DateToString(Date(1066, 10, 14)));
+  EXPECT_EQ("0865-03-21", DateToString(Date(865, 3, 21)));
+  EXPECT_EQ("0014-08-19", DateToString(Date(14, 8, 19)));
 }
 
 TEST(Date, DateFromString) {

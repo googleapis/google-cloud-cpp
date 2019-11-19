@@ -44,11 +44,17 @@ void DatabaseEnvironment::SetUp() {
   std::cout << "Creating database and table " << std::flush;
   spanner::DatabaseAdminClient admin_client;
   auto database_future =
-      admin_client.CreateDatabase(*db_, {R"""(CREATE TABLE Singers (
+      admin_client.CreateDatabase(*db_, {R"sql(CREATE TABLE Singers (
                                 SingerId   INT64 NOT NULL,
                                 FirstName  STRING(1024),
                                 LastName   STRING(1024)
-                             ) PRIMARY KEY (SingerId))"""});
+                             ) PRIMARY KEY (SingerId))sql",
+                                         R"sql(CREATE TABLE DataTypes (
+    Id STRING(256) NOT NULL,
+    BoolValue BOOL,
+    DateValue DATE,
+    StringValue STRING(1024),
+  ) PRIMARY KEY (Id))sql"});
   int i = 0;
   int const timeout = 120;
   while (++i < timeout) {
