@@ -83,7 +83,7 @@ class ConnectionOptions {
    * thus increases the number of operations that can be in progress in
    * parallel.
    *
-   * The default value is 1.  TODO(#307) increase this.
+   * The default value is 4.
    */
   int num_channels() const { return num_channels_; }
 

@@ -92,7 +92,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    *
    * The parameters allow the `SessionPool` to make remote calls needed to
    * manage the pool, and to associate `Session`s with the stubs used to
-   * create them.
+   * create them. `stubs` must not be empty.
    */
   SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
               std::unique_ptr<RetryPolicy> retry_policy,
@@ -118,6 +118,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
 
  private:
+  struct ChannelInfo {
+    explicit ChannelInfo(std::shared_ptr<SpannerStub> stub_param)
+        : stub(std::move(stub_param)) {}
+    std::shared_ptr<SpannerStub> const stub;
+    int session_count = 0;
+  };
+
   /**
    * Release session back to the pool.
    *
@@ -127,11 +134,18 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    */
   void Release(Session* session);
 
-  StatusOr<std::vector<std::unique_ptr<Session>>> CreateSessions(
-      int num_sessions);
+  Status CreateSessions(std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
+                        int num_sessions);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
                                   bool dissociate_from_pool);
+
+  void UpdateNextChannelForCreateSessions();  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+
+  Database const db_;
+  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
+  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  SessionPoolOptions const options_;
 
   std::mutex mu_;
   std::condition_variable cond_;
@@ -139,11 +153,14 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
   bool create_in_progress_ = false;                 // GUARDED_BY(mu_)
 
-  Database db_;
-  std::shared_ptr<SpannerStub> stub_;
-  std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
-  std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  SessionPoolOptions options_;
+  // `channels_` is guaranteed to be non-empty and will not be resized after
+  // the constructor runs (so the iterators are guaranteed to always be valid).
+  // TODO(#566) replace `vector` with `absl::FixedArray` when available.
+  std::vector<ChannelInfo> channels_;  // GUARDED_BY(mu_)
+  std::vector<ChannelInfo>::iterator
+      next_channel_for_create_sessions_;  // GUARDED_BY(mu_)
+  std::vector<ChannelInfo>::iterator
+      next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
 
 }  // namespace internal

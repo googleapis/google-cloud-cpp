@@ -37,6 +37,7 @@ using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 namespace spanner_proto = ::google::spanner::v1;
 
@@ -175,12 +176,15 @@ TEST(SessionPool, MinSessionsMultipleAllocations) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, SessionCountIs(min_sessions + 1)))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s7", "s6", "s5", "s4"}))));
   std::vector<SessionHolder> sessions;
+  std::vector<std::string> session_names;
   for (int i = 1; i <= 7; ++i) {
     auto session = pool->Allocate();
     ASSERT_STATUS_OK(session);
-    EXPECT_EQ((*session)->session_name(), "s" + std::to_string(i));
+    session_names.push_back((*session)->session_name());
     sessions.push_back(*std::move(session));
   }
+  EXPECT_THAT(session_names,
+              UnorderedElementsAre("s1", "s2", "s3", "s4", "s5", "s6", "s7"));
 }
 
 TEST(SessionPool, MaxSessionsFailOnExhaustion) {
@@ -197,12 +201,14 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
   options.action_on_exhaustion = ActionOnExhaustion::FAIL;
   auto pool = MakeSessionPool(db, {mock}, options);
   std::vector<SessionHolder> sessions;
+  std::vector<std::string> session_names;
   for (int i = 1; i <= 3; ++i) {
     auto session = pool->Allocate();
     ASSERT_STATUS_OK(session);
-    EXPECT_EQ((*session)->session_name(), "s" + std::to_string(i));
+    session_names.push_back((*session)->session_name());
     sessions.push_back(*std::move(session));
   }
+  EXPECT_THAT(session_names, UnorderedElementsAre("s1", "s2", "s3"));
   auto session = pool->Allocate();
   EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
   EXPECT_EQ(session.status().message(), "session pool exhausted");
@@ -232,6 +238,66 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
 
   session->reset();
   t.join();
+}
+
+TEST(SessionPool, MultipleChannels) {
+  auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("project", "instance", "database");
+  EXPECT_CALL(*mock1, BatchCreateSessions(_, _))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s2"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s3"}))));
+  EXPECT_CALL(*mock2, BatchCreateSessions(_, _))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s2"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s3"}))));
+
+  auto pool = MakeSessionPool(db, {mock1, mock2});
+  std::vector<SessionHolder> sessions;
+  std::vector<std::string> session_names;
+  for (int i = 1; i <= 6; ++i) {
+    auto session = pool->Allocate();
+    ASSERT_STATUS_OK(session);
+    session_names.push_back((*session)->session_name());
+    sessions.push_back(*std::move(session));
+  }
+  EXPECT_THAT(session_names, UnorderedElementsAre("c1s1", "c1s2", "c1s3",
+                                                  "c2s1", "c2s2", "c2s3"));
+}
+
+TEST(SessionPool, MultipleChannelsPreAllocation) {
+  auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto mock3 = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("project", "instance", "database");
+  EXPECT_CALL(*mock1, BatchCreateSessions(_, _))
+      .WillOnce(Return(
+          ByMove(MakeSessionsResponse({"c1s1", "c1s2", "c1s3", "c1s4"}))));
+  EXPECT_CALL(*mock2, BatchCreateSessions(_, _))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1", "c2s2", "c2s3"}))));
+  EXPECT_CALL(*mock3, BatchCreateSessions(_, _))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
+
+  SessionPoolOptions options;
+  options.min_sessions = 10;
+  options.max_sessions = 10;
+  options.action_on_exhaustion = ActionOnExhaustion::FAIL;
+  auto pool = MakeSessionPool(db, {mock1, mock2, mock3}, options);
+  std::vector<SessionHolder> sessions;
+  std::vector<std::string> session_names;
+  for (int i = 1; i <= 10; ++i) {
+    auto session = pool->Allocate();
+    ASSERT_STATUS_OK(session);
+    session_names.push_back((*session)->session_name());
+    sessions.push_back(*std::move(session));
+  }
+  EXPECT_THAT(session_names,
+              UnorderedElementsAre("c1s1", "c1s2", "c1s3", "c1s4", "c2s1",
+                                   "c2s2", "c2s3", "c3s1", "c3s2", "c3s3"));
+  auto session = pool->Allocate();
+  EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
+  EXPECT_EQ(session.status().message(), "session pool exhausted");
 }
 
 TEST(SessionPool, GetStubForStublessSession) {
