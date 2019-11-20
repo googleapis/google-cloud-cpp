@@ -74,6 +74,7 @@ google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
   setup_data.table_size = kDefaultTableSize;
   setup_data.test_duration = std::chrono::seconds(kDefaultTestDuration * 60);
   setup_data.use_embedded_server = false;
+  setup_data.parallel_requests = 10;
 
   auto usage = [argv](char const* msg) -> google::cloud::Status {
     std::string const cmd = argv[0];
@@ -134,6 +135,12 @@ google::cloud::StatusOr<BenchmarkSetup> MakeBenchmarkSetup(
   std::transform(value.begin(), value.end(), value.begin(),
                  [](char x) { return std::tolower(x); });
   setup_data.use_embedded_server = value == "true";
+
+  if (argc == 1) {
+    return BenchmarkSetup{setup_data};
+  }
+
+  setup_data.parallel_requests = std::stoi(shift());
   return BenchmarkSetup{setup_data};
 }
 

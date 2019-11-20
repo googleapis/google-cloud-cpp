@@ -39,6 +39,8 @@ struct BenchmarkSetupData {
   long table_size;
   std::chrono::seconds test_duration;
   bool use_embedded_server;
+
+  int parallel_requests;
 };
 
 /**
@@ -67,6 +69,8 @@ class BenchmarkSetup {
     return setup_data_.test_duration;
   }
   bool use_embedded_server() const { return setup_data_.use_embedded_server; }
+
+  int parallel_requests() const { return setup_data_.parallel_requests; }
 
  private:
   BenchmarkSetupData setup_data_;
