@@ -85,11 +85,6 @@ namespace {
 namespace bigtable = google::cloud::bigtable;
 using namespace bigtable::benchmarks;
 
-struct AsyncBenchmarkResult {
-  BenchmarkResult async_results;
-  BenchmarkResult sync_results;
-};
-
 /// Run an iteration of the test.
 google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
     bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
@@ -169,7 +164,11 @@ int main(int argc, char* argv[]) {
   AsyncBenchmark async_benchmark(benchmark, setup->app_profile_id(),
                                  setup->table_id());
   // Start the benchmark threads.
-  auto sync_start = std::chrono::steady_clock::now();
+  auto test_start = std::chrono::steady_clock::now();
+  auto elapsed = [test_start] {
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - test_start);
+  };
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   for (int i = 0; i != setup->thread_count(); ++i) {
     std::cout << '=' << std::flush;
@@ -180,17 +179,9 @@ int main(int argc, char* argv[]) {
   }
 
   // Wait for the threads and combine all the results.
-  AsyncBenchmarkResult combined{};
-
-  auto elapsed = [](std::chrono::steady_clock::time_point start) {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::steady_clock::now() - start);
-  };
-  auto async_start = std::chrono::steady_clock::now();
-  combined.async_results =
+  auto async_results =
       async_benchmark.Run(setup->test_duration(),
                           setup->thread_count() * setup->parallel_requests());
-  combined.async_results.elapsed = elapsed(async_start);
 
   int count = 0;
   auto append_ops = [](BenchmarkResult& d, BenchmarkResult const& s) {
@@ -199,34 +190,34 @@ int main(int argc, char* argv[]) {
                         s.operations.end());
   };
 
+  BenchmarkResult sync_results;
   for (auto& future : tasks) {
     auto result = future.get();
     if (!result) {
       std::cerr << "Standard exception raised by task[" << count
                 << "]: " << result.status() << "\n";
     } else {
-      append_ops(combined.sync_results, *result);
+      append_ops(sync_results, *result);
     }
     ++count;
   }
-  combined.sync_results.elapsed = elapsed(sync_start);
-  std::cout << " DONE. Elapsed="
-            << FormatDuration(combined.sync_results.elapsed)
-            << ", Ops=" << combined.sync_results.operations.size()
-            << ", Rows=" << combined.sync_results.row_count << "\n";
+  sync_results.elapsed = elapsed();
+  async_results.elapsed = elapsed();
+  std::cout << " DONE. Elapsed=" << FormatDuration(sync_results.elapsed)
+            << ", Ops=" << sync_results.operations.size()
+            << ", Rows=" << sync_results.row_count << "\n";
 
   benchmark.PrintLatencyResult(std::cout, "perf", "AsyncReadRow()",
-                               combined.async_results);
-  benchmark.PrintLatencyResult(std::cout, "perf", "ReadRow()",
-                               combined.sync_results);
+                               async_results);
+  benchmark.PrintLatencyResult(std::cout, "perf", "ReadRow()", sync_results);
 
   std::cout << bigtable::benchmarks::Benchmark::ResultsCsvHeader() << "\n";
   benchmark.PrintResultCsv(std::cout, "perf", "BulkApply()", "Latency",
                            *populate_results);
   benchmark.PrintResultCsv(std::cout, "perf", "AsyncReadRow()", "Latency",
-                           combined.async_results);
+                           async_results);
   benchmark.PrintResultCsv(std::cout, "perf", "ReadRow()", "Latency",
-                           combined.sync_results);
+                           sync_results);
 
   benchmark.DeleteTable();
   cq.Shutdown();

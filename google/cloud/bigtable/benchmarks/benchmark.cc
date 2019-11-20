@@ -92,7 +92,7 @@ std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   bigtable::Table table(MakeDataClient(), setup_.app_profile_id(),
                         setup_.table_id());
-  std::cout << "Populating table " << setup_.table_id() << " " << std::flush;
+  std::cout << "# Populating table " << setup_.table_id() << " " << std::flush;
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();
   auto table_size = setup_.table_size();
