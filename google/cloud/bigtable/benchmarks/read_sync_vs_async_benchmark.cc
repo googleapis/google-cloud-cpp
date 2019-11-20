@@ -158,11 +158,11 @@ int main(int argc, char* argv[]) {
   // Start the threads running the latency test.
   std::cout << "# Running ReadRow/AsyncReadRow Throughput Benchmark "
             << std::flush;
-  auto test_start = std::chrono::steady_clock::now();
 
   AsyncBenchmark async_benchmark(benchmark, setup->app_profile_id(),
                                  setup->table_id());
   // Start the benchmark threads.
+  auto sync_start = std::chrono::steady_clock::now();
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   for (int i = 0; i != setup->thread_count(); ++i) {
     async_benchmark.ActivateCompletionQueue();
@@ -174,8 +174,14 @@ int main(int argc, char* argv[]) {
   // Wait for the threads and combine all the results.
   AsyncBenchmarkResult combined{};
 
+  auto elapsed = [](std::chrono::steady_clock::time_point start) {
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - start);
+  };
+  auto async_start = std::chrono::steady_clock::now();
   combined.async_results =
       async_benchmark.Run(setup->test_duration(), setup->parallel_requests());
+  combined.async_results.elapsed = elapsed(async_start);
 
   int count = 0;
   auto append_ops = [](BenchmarkResult& d, BenchmarkResult const& s) {
@@ -194,14 +200,11 @@ int main(int argc, char* argv[]) {
     }
     ++count;
   }
-  auto latency_test_elapsed =
-      std::chrono::duration_cast<std::chrono::milliseconds>(
-          std::chrono::steady_clock::now() - test_start);
-  combined.async_results.elapsed = latency_test_elapsed;
-  combined.sync_results.elapsed = latency_test_elapsed;
-  std::cout << " DONE. Elapsed=" << FormatDuration(latency_test_elapsed)
-            << ", Ops=" << combined.async_results.operations.size()
-            << ", Rows=" << combined.async_results.row_count << "\n";
+  combined.sync_results.elapsed = elapsed(sync_start);
+  std::cout << " DONE. Elapsed="
+            << FormatDuration(combined.sync_results.elapsed)
+            << ", Ops=" << combined.sync_results.operations.size()
+            << ", Rows=" << combined.sync_results.row_count << "\n";
 
   benchmark.PrintLatencyResult(std::cout, "perf", "AsyncReadRow()",
                                combined.async_results);
