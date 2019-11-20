@@ -54,14 +54,15 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
 
   CustomerSuppliedBackgroundThreads actual(cq);
 
-  // Verify the completion queue is shared, scheduling work in actual.cq() works
-  // if our thread is blocked in cq.Run().
-  std::thread t([&cq] { cq.Run(); });
   using ms = std::chrono::milliseconds;
-  future<std::thread::id> id = actual.cq().MakeRelativeTimer(ms(0)).then(
+  // Verify the completion queue is shared. Scheduling work in actual.cq() works
+  // once a thread is blocked in cq.Run(). Start that thread after scheduling
+  // the work to avoid flaky failures where the timer expires immediately.
+  future<std::thread::id> id = actual.cq().MakeRelativeTimer(ms(1)).then(
       [](future<std::chrono::system_clock::time_point>) {
         return std::this_thread::get_id();
       });
+  std::thread t([&cq] { cq.Run(); });
   EXPECT_EQ(std::future_status::ready, id.wait_for(ms(100)));
   EXPECT_EQ(t.get_id(), id.get());
 
