@@ -103,6 +103,13 @@ class AsyncBenchmark {
         table_(benchmark_.MakeDataClient(), app_profile_id, table_id),
         generator_(std::random_device{}()) {}
 
+  ~AsyncBenchmark() {
+    cq_.Shutdown();
+    for (auto& t : cq_threads_) {
+      t.join();
+    }
+  }
+
   void ActivateCompletionQueue();
   BenchmarkResult Run(std::chrono::seconds test_duration, int request_count);
 
@@ -181,7 +188,8 @@ int main(int argc, char* argv[]) {
   };
   auto async_start = std::chrono::steady_clock::now();
   combined.async_results =
-      async_benchmark.Run(setup->test_duration(), setup->parallel_requests());
+      async_benchmark.Run(setup->test_duration(),
+                          setup->thread_count() * setup->parallel_requests());
   combined.async_results.elapsed = elapsed(async_start);
 
   int count = 0;
