@@ -104,7 +104,8 @@ $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "protobuf:x64-windows-static", "c-ares:x64-windows-static",
               "grpc:x64-windows-static", "curl:x64-windows-static",
               "gtest:x64-windows-static", "crc32c:x64-windows-static"
-              "googleapis:x64-windows-static")
+              "googleapis:x64-windows-static",
+              "google-cloud-cpp-common:x64-windows-static")
 foreach ($pkg in $packages) {
     .\vcpkg.exe install $pkg
     if ($LastExitCode) {
