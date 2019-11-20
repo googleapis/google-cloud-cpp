@@ -1199,6 +1199,41 @@ void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
   std::cout << "Update was successful [spanner_dml_partitioned_update]\n";
 }
 //! [END spanner_dml_partitioned_update]
+
+//! [START spanner_dml_batch_update]
+void DmlBatchUpdate(google::cloud::spanner::Client client) {
+  namespace spanner = google::cloud::spanner;
+
+  auto commit_result =
+      client.Commit([&client](spanner::Transaction const& txn)
+                        -> google::cloud::StatusOr<spanner::Mutations> {
+        std::vector<spanner::SqlStatement> statements = {
+            spanner::SqlStatement("INSERT INTO Albums"
+                                  " (SingerId, AlbumId, AlbumTitle,"
+                                  " MarketingBudget)"
+                                  " VALUES (1, 3, 'Test Album Title', 10000)"),
+            spanner::SqlStatement("UPDATE Albums"
+                                  " SET MarketingBudget = MarketingBudget * 2"
+                                  " WHERE SingerId = 1 and AlbumId = 3")};
+        auto result = client.ExecuteBatchDml(txn, statements);
+        if (!result) return result.status();
+        for (std::size_t i = 0; i < result->stats.size(); ++i) {
+          std::cout << result->stats[i].row_count << " rows affected"
+                    << " for the statement " << (i + 1) << ".\n";
+        }
+        // Batch operations may have partial failures, in which case
+        // ExecuteBatchDml returns with success, but the application should
+        // verify that all statements completed successfully
+        if (!result->status.ok()) return result->status;
+        return spanner::Mutations{};
+      });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "Update was successful [spanner_dml_batch_update]\n";
+}
+//! [END spanner_dml_batch_update]
+
 //
 //! [START spanner_dml_structs]
 void DmlStructs(google::cloud::spanner::Client client) {
@@ -1781,6 +1816,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("dml-write-then-read", &DmlWriteThenRead),
       make_command_entry("dml-standard-delete", &DmlStandardDelete),
       make_command_entry("dml-partitioned-update", &DmlPartitionedUpdate),
+      make_command_entry("dml-batch-update", &DmlBatchUpdate),
       make_command_entry("dml-partitioned-delete", &DmlPartitionedDelete),
       make_command_entry("dml-structs", &DmlStructs),
       make_command_entry("write-data-for-struct-queries",
@@ -2006,6 +2042,9 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_dml_write_then_read sample\n";
   DmlWriteThenRead(client);
+
+  std::cout << "\nRunning spanner_dml_batch_update sample\n";
+  DmlBatchUpdate(client);
 
   std::cout << "\nRunning spanner_write_data_for_struct_queries sample\n";
   WriteDataForStructQueries(client);
