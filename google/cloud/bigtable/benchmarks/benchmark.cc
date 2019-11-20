@@ -157,6 +157,10 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
                                    std::string const& test_name,
                                    std::string const& operation,
                                    BenchmarkResult& result) const {
+  if (result.operations.empty()) {
+    os << "# Test=" << test_name << ", " << operation << " no results\n";
+    return;
+  }
   std::sort(result.operations.begin(), result.operations.end(),
             [](OperationResult const& lhs, OperationResult const& rhs) {
               return lhs.latency < rhs.latency;
@@ -187,6 +191,10 @@ void Benchmark::PrintResultCsv(std::ostream& os, std::string const& test_name,
                                std::string const& op_name,
                                std::string const& measurement,
                                BenchmarkResult& result) const {
+  if (result.operations.empty()) {
+    os << "# Test=" << test_name << ", " << op_name << " no results\n";
+    return;
+  }
   std::sort(result.operations.begin(), result.operations.end(),
             [](OperationResult const& lhs, OperationResult const& rhs) {
               return lhs.latency < rhs.latency;

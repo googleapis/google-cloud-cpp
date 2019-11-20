@@ -101,7 +101,7 @@ class AsyncBenchmark {
                  std::string const& app_profile_id, std::string const& table_id)
       : benchmark_(benchmark),
         table_(benchmark_.MakeDataClient(), app_profile_id, table_id),
-        generator_(google::cloud::internal::MakeDefaultPRNG()) {}
+        generator_(std::random_device{}()) {}
 
   void ActivateCompletionQueue();
   BenchmarkResult Run(std::chrono::seconds test_duration, int request_count);
@@ -165,6 +165,7 @@ int main(int argc, char* argv[]) {
   auto sync_start = std::chrono::steady_clock::now();
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   for (int i = 0; i != setup->thread_count(); ++i) {
+    std::cout << '=' << std::flush;
     async_benchmark.ActivateCompletionQueue();
     tasks.emplace_back(std::async(std::launch::async, RunSyncBenchmark,
                                   std::ref(benchmark), setup->app_profile_id(),
@@ -278,6 +279,7 @@ void AsyncBenchmark::OnReadRow(
   std::unique_lock<std::mutex> lk(mu_);
   outstanding_requests_--;
   results_.operations.push_back({row.status(), usecs});
+  ++results_.row_count;
   if (now < deadline_) {
     lk.unlock();
     RunOneAsyncReadRow();
@@ -307,7 +309,8 @@ google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
   bigtable::Table table(std::move(data_client), std::move(app_profile_id),
                         table_id);
 
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  // Don't eat all the entropy to generate random keys.
+  google::cloud::internal::DefaultPRNG generator(std::random_device{}());
 
   auto start = std::chrono::steady_clock::now();
   auto mark = start + test_duration / kBenchmarkProgressMarks;
@@ -316,9 +319,6 @@ google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
     auto row_key = benchmark.MakeRandomKey(generator);
 
     auto op_result = RunOneReadRow(table, row_key);
-    if (!op_result.status.ok()) {
-      return op_result.status;
-    }
     result.operations.emplace_back(op_result);
     ++result.row_count;
     if (now >= mark) {
