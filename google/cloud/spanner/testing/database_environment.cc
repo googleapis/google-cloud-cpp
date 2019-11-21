@@ -52,8 +52,12 @@ void DatabaseEnvironment::SetUp() {
                                          R"sql(CREATE TABLE DataTypes (
     Id STRING(256) NOT NULL,
     BoolValue BOOL,
-    DateValue DATE,
+    Int64Value INT64,
+    Float64Value FLOAT64,
     StringValue STRING(1024),
+    BytesValue BYTES(1024),
+    TimestampValue TIMESTAMP,
+    DateValue DATE
   ) PRIMARY KEY (Id))sql"});
   int i = 0;
   int const timeout = 120;
