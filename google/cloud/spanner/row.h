@@ -432,18 +432,30 @@ class StreamOf {
 };
 
 /**
- * Returns the current row from the given range, if any.
+ * Returns the only row from a range that contains exactly one row.
  *
- * If there are no rows left, an error `Status` is returned. This is a
- * convenience function that can be useful if the caller knows there will be
- * only a single row returned.
+ * An error is returned if the given range does not contain exactly one row.
+ * This is a convenience function that may be useful when the caller knows that
+ * a range should contain exactly one row, such as when `LIMIT 1` is used in an
+ * SQL query, or when a read is performed on a guaranteed unique key such that
+ * only a single row could possibly match. In cases where the caller does not
+ * know how many rows may be returned, they should instead consume the range in
+ * a loop.
+ *
+ * @warning Due to the fact that a `RowStreamIteartor` is an input iterator,
+ *     this function may consume the first element in the range, even in cases
+ *     where an error is returned. But again, this function should not be used
+ *     if @p range might contain multiple rows.
  */
 template <typename RowRange>
-auto GetCurrentRow(RowRange&& range) -> typename std::decay<
+auto GetSingularRow(RowRange&& range) -> typename std::decay<
     decltype(*std::forward<RowRange>(range).begin())>::type {
+  auto const e = std::forward<RowRange>(range).end();
   auto it = std::forward<RowRange>(range).begin();
-  if (it != std::forward<RowRange>(range).end()) return *it;
-  return Status(StatusCode::kResourceExhausted, "No more rows");
+  if (it == e) return Status(StatusCode::kInvalidArgument, "no rows");
+  auto row = std::move(*it);
+  if (++it != e) return Status(StatusCode::kInvalidArgument, "too many rows");
+  return row;
 }
 
 }  // namespace SPANNER_CLIENT_NS

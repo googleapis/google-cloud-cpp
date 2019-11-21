@@ -74,7 +74,7 @@ TEST_F(DataTypeIntegrationTest, ReadWriteDate) {
                               " WHERE Id = @id",
                               {{"id", Value("ReadWriteDate-1")}}));
 
-        auto row = GetCurrentRow(StreamOf<RowType>(reader));
+        auto row = GetSingularRow(StreamOf<RowType>(reader));
         if (!row) return std::move(row).status();
         read_back = *std::move(row);
         return Mutations{};

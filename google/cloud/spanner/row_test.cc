@@ -24,7 +24,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-namespace {
+using ::testing::HasSubstr;
 
 // Given a `vector<StatusOr<Row>>` creates a 'Row::Source' object. This is
 // helpeful for unit testing and letting the test inject a non-OK Status.
@@ -46,18 +46,15 @@ RowStreamIterator::Source MakeRowStreamIteratorSource(
 
 class RowRange {
  public:
-  explicit RowRange(RowStreamIterator::Source s) : begin_(std::move(s)) {}
+  explicit RowRange(RowStreamIterator::Source s) : s_(std::move(s)) {}
   // NOLINTNEXTLINE(readability-identifier-naming)
-  RowStreamIterator begin() const { return begin_; }
+  RowStreamIterator begin() { return RowStreamIterator(s_); }
   // NOLINTNEXTLINE(readability-identifier-naming)
-  RowStreamIterator end() const { return end_; }
+  RowStreamIterator end() { return RowStreamIterator(); }
 
  private:
-  RowStreamIterator begin_;
-  RowStreamIterator end_;
+  RowStreamIterator::Source s_;
 };
-
-}  // namespace
 
 TEST(Row, DefaultConstruct) {
   Row row;
@@ -486,34 +483,68 @@ TEST(StreamOf, IterationError) {
   EXPECT_EQ(it, end);
 }
 
-TEST(GetCurrentRow, BasicEmpty) {
+TEST(GetSingularRow, BasicEmpty) {
   std::vector<Row> rows;
   RowRange range(MakeRowStreamIteratorSource(rows));
-  auto row = GetCurrentRow(range);
+  auto row = GetSingularRow(range);
   EXPECT_FALSE(row.ok());
-  EXPECT_EQ(row.status().code(), StatusCode::kResourceExhausted);
+  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(row.status().message(), HasSubstr("no rows"));
 }
 
-TEST(GetCurrentRow, BasicNotEmpty) {
+TEST(GetSingularRow, TupleStreamEmpty) {
+  std::vector<Row> rows;
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
+  EXPECT_FALSE(row.ok());
+  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(row.status().message(), HasSubstr("no rows"));
+}
+
+TEST(GetSingularRow, BasicSingleRow) {
   std::vector<Row> rows;
   rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
-  auto row = GetCurrentRow(range);
+  auto row = GetSingularRow(range);
   EXPECT_STATUS_OK(row);
   EXPECT_EQ(1, *row->get<std::int64_t>(0));
 }
 
-TEST(GetCurrentRow, TupleStreamNotEmpty) {
+TEST(GetSingularRow, TupleStreamSingleRow) {
   std::vector<Row> rows;
   rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
 
   auto row_range = RowRange(MakeRowStreamIteratorSource(rows));
   auto tup_range = StreamOf<std::tuple<std::int64_t>>(row_range);
 
-  auto row = GetCurrentRow(tup_range);
+  auto row = GetSingularRow(tup_range);
   EXPECT_STATUS_OK(row);
   EXPECT_EQ(1, std::get<0>(*row));
+}
+
+TEST(GetSingularRow, BasicTooManyRows) {
+  std::vector<Row> rows;
+  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  auto row = GetSingularRow(range);
+  EXPECT_FALSE(row.ok());
+  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(row.status().message(), HasSubstr("too many rows"));
+}
+
+TEST(GetSingularRow, TupleStreamTooManyRows) {
+  std::vector<Row> rows;
+  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+
+  RowRange range(MakeRowStreamIteratorSource(rows));
+  auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));
+  EXPECT_FALSE(row.ok());
+  EXPECT_EQ(row.status().code(), StatusCode::kInvalidArgument);
+  EXPECT_THAT(row.status().message(), HasSubstr("too many rows"));
 }
 
 }  // namespace

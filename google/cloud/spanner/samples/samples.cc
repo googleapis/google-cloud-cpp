@@ -1028,9 +1028,7 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
     auto rows = client.Read(std::move(txn), "Albums", std::move(key),
                             {"MarketingBudget"});
     using RowType = std::tuple<std::int64_t>;
-    // We expect at most one result from the `Read()` request. Return
-    // the first one.
-    auto row = spanner::GetCurrentRow(spanner::StreamOf<RowType>(rows));
+    auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     // Return the error (as opposed to throwing an exception) because
     // Commit() only retries on StatusCode::kAborted.
     if (!row) return std::move(row).status();
@@ -1337,7 +1335,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
     auto key = spanner::KeySet().AddKey(spanner::MakeKey(album_id, singer_id));
     auto rows = client.Read(std::move(txn), "Albums", key, {"MarketingBudget"});
     using RowType = std::tuple<google::cloud::optional<std::int64_t>>;
-    auto row = spanner::GetCurrentRow(spanner::StreamOf<RowType>(rows));
+    auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
     if (!row) return row.status();
     auto const budget = std::get<0>(*row);
     return budget ? *budget : 0;
