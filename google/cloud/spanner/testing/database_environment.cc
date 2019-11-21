@@ -57,7 +57,14 @@ void DatabaseEnvironment::SetUp() {
     StringValue STRING(1024),
     BytesValue BYTES(1024),
     TimestampValue TIMESTAMP,
-    DateValue DATE
+    DateValue DATE,
+    ArrayBoolValue ARRAY<BOOL>,
+    ArrayInt64Value ARRAY<INT64>,
+    ArrayFloat64Value ARRAY<FLOAT64>,
+    ArrayStringValue ARRAY<STRING(1024)>,
+    ArrayBytesValue ARRAY<BYTES(1024)>,
+    ArrayTimestampValue ARRAY<TIMESTAMP>,
+    ArrayDateValue ARRAY<DATE>
   ) PRIMARY KEY (Id))sql"});
   int i = 0;
   int const timeout = 120;

@@ -208,6 +208,93 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
+TEST_F(DataTypeIntegrationTest, WriteReadArrayBool) {
+  std::vector<std::vector<bool>> const data = {
+      std::vector<bool>{},
+      std::vector<bool>{true},
+      std::vector<bool>{false},
+      std::vector<bool>{true, false},
+      std::vector<bool>{false, true},
+  };
+  auto result = WriteReadData(*client_, data, "ArrayBoolValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayInt64) {
+  std::vector<std::vector<std::int64_t>> const data = {
+      std::vector<std::int64_t>{},
+      std::vector<std::int64_t>{-1},
+      std::vector<std::int64_t>{-1, 0, 1},
+  };
+  auto result = WriteReadData(*client_, data, "ArrayInt64Value");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayFloat64) {
+  std::vector<std::vector<double>> const data = {
+      std::vector<double>{},
+      std::vector<double>{-0.5},
+      std::vector<double>{-0.5, 0.5, 1.5},
+  };
+  auto result = WriteReadData(*client_, data, "ArrayFloat64Value");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayString) {
+  std::vector<std::vector<std::string>> const data = {
+      std::vector<std::string>{},
+      std::vector<std::string>{""},
+      std::vector<std::string>{"", "foo", "bar"},
+  };
+  auto result = WriteReadData(*client_, data, "ArrayStringValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayBytes) {
+  std::vector<std::vector<Bytes>> const data = {
+      std::vector<Bytes>{},
+      std::vector<Bytes>{Bytes("")},
+      std::vector<Bytes>{Bytes(""), Bytes("foo"), Bytes("bar")},
+  };
+  auto result = WriteReadData(*client_, data, "ArrayBytesValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
+  std::vector<std::vector<Timestamp>> const data = {
+      std::vector<Timestamp>{},
+      std::vector<Timestamp>{Timestamp(std::chrono::seconds(-1))},
+      std::vector<Timestamp>{
+          Timestamp(std::chrono::seconds(-1)),
+          Timestamp(),
+          Timestamp(std::chrono::seconds(1)),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayTimestampValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
+  std::vector<std::vector<Date>> const data = {
+      std::vector<Date>{},
+      std::vector<Date>{Date()},
+      std::vector<Date>{
+          Date(1, 1, 1),
+          Date(),
+          Date(9999, 12, 31),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayDateValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
