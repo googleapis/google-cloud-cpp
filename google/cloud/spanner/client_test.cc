@@ -46,7 +46,6 @@ using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::SaveArg;
 
@@ -589,12 +588,12 @@ TEST(ClientTest, CommitMutatorRerunTransientFailures) {
 
   auto conn = std::make_shared<MockConnection>();
   EXPECT_CALL(*conn, Commit(_))
-      .WillOnce(Invoke([](Connection::CommitParams const&) {
+      .WillOnce([](Connection::CommitParams const&) {
         return Status(StatusCode::kAborted, "Aborted transaction");
-      }))
-      .WillOnce(Invoke([&timestamp](Connection::CommitParams const&) {
+      })
+      .WillOnce([&timestamp](Connection::CommitParams const&) {
         return CommitResult{*timestamp};
-      }));
+      });
 
   auto mutator = [](Transaction const&) -> StatusOr<Mutations> {
     return Mutations{MakeDeleteMutation("table", KeySet::All())};
@@ -612,11 +611,10 @@ TEST(ClientTest, CommitMutatorTooManyFailures) {
 
   auto conn = std::make_shared<MockConnection>();
   EXPECT_CALL(*conn, Commit(_))
-      .WillRepeatedly(
-          Invoke([&commit_attempts](Connection::CommitParams const&) {
-            ++commit_attempts;
-            return Status(StatusCode::kAborted, "Aborted transaction");
-          }));
+      .WillRepeatedly([&commit_attempts](Connection::CommitParams const&) {
+        ++commit_attempts;
+        return Status(StatusCode::kAborted, "Aborted transaction");
+      });
 
   auto mutator = [](Transaction const&) -> StatusOr<Mutations> {
     return Mutations{MakeDeleteMutation("table", KeySet::All())};
@@ -642,10 +640,10 @@ TEST(ClientTest, CommitMutatorPermanentFailure) {
 
   auto conn = std::make_shared<MockConnection>();
   EXPECT_CALL(*conn, Commit(_))
-      .WillOnce(Invoke([&commit_attempts](Connection::CommitParams const&) {
+      .WillOnce([&commit_attempts](Connection::CommitParams const&) {
         ++commit_attempts;
         return Status(StatusCode::kPermissionDenied, "uh-oh");
-      }));
+      });
 
   auto mutator = [](Transaction const&) -> StatusOr<Mutations> {
     return Mutations{MakeDeleteMutation("table", KeySet::All())};
@@ -734,30 +732,29 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
   auto conn = std::make_shared<MockConnection>();
   // Eventually the Commit() will succeed.
   EXPECT_CALL(*conn, Commit(_))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&session_name, &timestamp](Connection::CommitParams const& cp) {
             EXPECT_THAT(cp.transaction, HasSession(session_name));
             EXPECT_THAT(cp.transaction, HasBegin());
             SetTransactionId(cp.transaction, "last-transaction-id");
             return CommitResult{*timestamp};
-          }));
+          });
   // But only after some aborts, the first of which sets the session.
   EXPECT_CALL(*conn, Commit(_))
       .Times(num_aborts)
-      .WillOnce(Invoke([&session_name](Connection::CommitParams const& cp) {
+      .WillOnce([&session_name](Connection::CommitParams const& cp) {
         EXPECT_THAT(cp.transaction, DoesNotHaveSession());
         EXPECT_THAT(cp.transaction, HasBegin());
         SetSessionName(cp.transaction, session_name);
         SetTransactionId(cp.transaction, "first-transaction-id");
         return Status(StatusCode::kAborted, "Aborted transaction");
-      }))
-      .WillRepeatedly(
-          Invoke([&session_name](Connection::CommitParams const& cp) {
-            EXPECT_THAT(cp.transaction, HasSession(session_name));
-            EXPECT_THAT(cp.transaction, HasBegin());
-            SetTransactionId(cp.transaction, "mid-transaction-id");
-            return Status(StatusCode::kAborted, "Aborted transaction");
-          }))
+      })
+      .WillRepeatedly([&session_name](Connection::CommitParams const& cp) {
+        EXPECT_THAT(cp.transaction, HasSession(session_name));
+        EXPECT_THAT(cp.transaction, HasBegin());
+        SetTransactionId(cp.transaction, "mid-transaction-id");
+        return Status(StatusCode::kAborted, "Aborted transaction");
+      })
       .RetiresOnSaturation();
 
   Client client(conn);

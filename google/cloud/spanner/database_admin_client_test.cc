@@ -26,7 +26,6 @@ namespace {
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
 using ::testing::_;
 using ::testing::ElementsAre;
-using ::testing::Invoke;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 /// @test Verify DatabaseAdminClient uses CreateDatabase() correctly.
@@ -36,7 +35,7 @@ TEST(DatabaseAdminClientTest, CreateDatabase) {
   Database dbase("test-project", "test-instance", "test-db");
 
   EXPECT_CALL(*mock, CreateDatabase(_))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&dbase](DatabaseAdminConnection::CreateDatabaseParams const& p) {
             EXPECT_EQ(p.database, dbase);
             EXPECT_THAT(p.extra_statements, ElementsAre("-- NOT SQL for test"));
@@ -44,7 +43,7 @@ TEST(DatabaseAdminClientTest, CreateDatabase) {
             database.set_name(dbase.FullName());
             database.set_state(gcsa::Database::CREATING);
             return make_ready_future(make_status_or(database));
-          }));
+          });
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.CreateDatabase(dbase, {"-- NOT SQL for test"});
@@ -62,14 +61,13 @@ TEST(DatabaseAdminClientTest, GetDatabase) {
   Database dbase("test-project", "test-instance", "test-db");
 
   EXPECT_CALL(*mock, GetDatabase(_))
-      .WillOnce(
-          Invoke([&dbase](DatabaseAdminConnection::GetDatabaseParams const& p) {
-            EXPECT_EQ(dbase, p.database);
-            gcsa::Database response;
-            response.set_name(p.database.FullName());
-            response.set_state(gcsa::Database::READY);
-            return response;
-          }));
+      .WillOnce([&dbase](DatabaseAdminConnection::GetDatabaseParams const& p) {
+        EXPECT_EQ(dbase, p.database);
+        gcsa::Database response;
+        response.set_name(p.database.FullName());
+        response.set_state(gcsa::Database::READY);
+        return response;
+      });
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetDatabase(dbase);
@@ -85,14 +83,13 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdl) {
                                "test-database");
 
   EXPECT_CALL(*mock, GetDatabaseDdl(_))
-      .WillOnce(
-          Invoke([&expected_name](
-                     DatabaseAdminConnection::GetDatabaseDdlParams const& p) {
-            EXPECT_EQ(expected_name, p.database);
-            gcsa::GetDatabaseDdlResponse response;
-            response.add_statements("CREATE DATABASE test-database");
-            return response;
-          }));
+      .WillOnce([&expected_name](
+                    DatabaseAdminConnection::GetDatabaseDdlParams const& p) {
+        EXPECT_EQ(expected_name, p.database);
+        gcsa::GetDatabaseDdlResponse response;
+        response.add_statements("CREATE DATABASE test-database");
+        return response;
+      });
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetDatabaseDdl(expected_name);
@@ -108,14 +105,14 @@ TEST(DatabaseAdminClientTest, UpdateDatabase) {
   Database dbase("test-project", "test-instance", "test-db");
 
   EXPECT_CALL(*mock, UpdateDatabase(_))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&dbase](DatabaseAdminConnection::UpdateDatabaseParams const& p) {
             EXPECT_EQ(p.database, dbase);
             EXPECT_THAT(p.statements, ElementsAre("-- test only: NOT SQL"));
             gcsa::UpdateDatabaseDdlMetadata metadata;
             metadata.add_statements("-- test only: NOT SQL");
             return make_ready_future(make_status_or(metadata));
-          }));
+          });
 
   DatabaseAdminClient client(std::move(mock));
   auto fut = client.UpdateDatabase(dbase, {"-- test only: NOT SQL"});
@@ -159,16 +156,15 @@ TEST(DatabaseAdminClientTest, GetIamPolicy) {
   std::string const expected_role = "roles/spanner.databaseReader";
   std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, GetIamPolicy(_))
-      .WillOnce(
-          Invoke([&expected_db, &expected_role, &expected_member](
-                     DatabaseAdminConnection::GetIamPolicyParams const& p) {
-            EXPECT_EQ(expected_db, p.database);
-            google::iam::v1::Policy response;
-            auto& binding = *response.add_bindings();
-            binding.set_role(expected_role);
-            *binding.add_members() = expected_member;
-            return response;
-          }));
+      .WillOnce([&expected_db, &expected_role, &expected_member](
+                    DatabaseAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_EQ(expected_db, p.database);
+        google::iam::v1::Policy response;
+        auto& binding = *response.add_bindings();
+        binding.set_role(expected_role);
+        *binding.add_members() = expected_member;
+        return response;
+      });
 
   DatabaseAdminClient client(std::move(mock));
   auto response = client.GetIamPolicy(expected_db);
@@ -184,11 +180,11 @@ TEST(DatabaseAdminClientTest, SetIamPolicy) {
   auto mock = std::make_shared<MockDatabaseAdminConnection>();
   Database const expected_db("test-project", "test-instance", "test-database");
   EXPECT_CALL(*mock, SetIamPolicy(_))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected_db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
             EXPECT_EQ(expected_db, p.database);
             return p.policy;
-          }));
+          });
   DatabaseAdminClient client(std::move(mock));
   auto response = client.SetIamPolicy(expected_db, {});
   EXPECT_STATUS_OK(response);
@@ -200,7 +196,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissions) {
   Database const expected_db("test-project", "test-instance", "test-database");
   std::string expected_permission = "spanner.databases.read";
   EXPECT_CALL(*mock, TestIamPermissions(_))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected_db, &expected_permission](
               DatabaseAdminConnection::TestIamPermissionsParams const& p) {
             EXPECT_EQ(expected_db, p.database);
@@ -209,7 +205,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissions) {
             google::iam::v1::TestIamPermissionsResponse response;
             response.add_permissions(expected_permission);
             return response;
-          }));
+          });
   DatabaseAdminClient client(std::move(mock));
   auto response = client.TestIamPermissions(expected_db, {expected_permission});
   EXPECT_STATUS_OK(response);

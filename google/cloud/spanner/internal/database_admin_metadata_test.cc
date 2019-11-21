@@ -27,7 +27,6 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-using ::testing::Invoke;
 namespace gcsa = google::spanner::admin::database::v1;
 
 class DatabaseAdminMetadataTest : public ::testing::Test {
@@ -50,15 +49,15 @@ class DatabaseAdminMetadataTest : public ::testing::Test {
 
 TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
   EXPECT_CALL(*mock_, CreateDatabase(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::CreateDatabaseRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::CreateDatabaseRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.database.v1.DatabaseAdmin."
             "CreateDatabase",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -72,15 +71,15 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
 
 TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, UpdateDatabase(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::UpdateDatabaseDdlRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::UpdateDatabaseDdlRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.database.v1.DatabaseAdmin."
             "UpdateDatabaseDdl",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -95,15 +94,15 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
 
 TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
   EXPECT_CALL(*mock_, DropDatabase(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::DropDatabaseRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::DropDatabaseRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.database.v1.DatabaseAdmin."
             "DropDatabase",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -118,15 +117,15 @@ TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
 
 TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
   EXPECT_CALL(*mock_, ListDatabases(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::ListDatabasesRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::ListDatabasesRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.database.v1.DatabaseAdmin."
             "ListDatabases",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -140,15 +139,15 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
 
 TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              google::iam::v1::GetIamPolicyRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.database.v1.DatabaseAdmin."
             "GetIamPolicy",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -163,15 +162,15 @@ TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
 
 TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              google::iam::v1::SetIamPolicyRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.database.v1.DatabaseAdmin."
             "SetIamPolicy",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -192,16 +191,15 @@ TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
 
 TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
-      .WillOnce(
-          Invoke([this](grpc::ClientContext& context,
-                        google::iam::v1::TestIamPermissionsRequest const&) {
-            EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-                context,
-                "google.spanner.admin.database.v1.DatabaseAdmin."
-                "TestIamPermissions",
-                expected_api_client_header_));
-            return TransientError();
-          }));
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::TestIamPermissionsRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.database.v1.DatabaseAdmin."
+            "TestIamPermissions",
+            expected_api_client_header_));
+        return TransientError();
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -216,13 +214,13 @@ TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
 
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              google::longrunning::GetOperationRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::longrunning::GetOperationRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.longrunning.Operations.GetOperation",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;

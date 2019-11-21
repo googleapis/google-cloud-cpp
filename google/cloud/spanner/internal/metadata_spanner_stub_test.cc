@@ -27,7 +27,6 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-using ::testing::Invoke;
 namespace spanner_proto = google::spanner::v1;
 
 // This ugly macro and the supporting template member function refactor most
@@ -63,12 +62,12 @@ class MetadataSpannerStubTest : public ::testing::Test {
                      std::string const& rpc_name,
                      MemberFunction member_function) {
     call.WillOnce(
-        Invoke([this, rpc_name](grpc::ClientContext& context, Request const&) {
+        [this, rpc_name](grpc::ClientContext& context, Request const&) {
           EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
               context, "google.spanner.v1.Spanner." + rpc_name,
               expected_api_client_header_));
           return TransientError();
-        }));
+        });
 
     MetadataSpannerStub stub(mock_);
     grpc::ClientContext context;
@@ -88,13 +87,13 @@ class MetadataSpannerStubTest : public ::testing::Test {
 
 TEST_F(MetadataSpannerStubTest, CreateSession) {
   EXPECT_CALL(*mock_, CreateSession(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              spanner_proto::CreateSessionRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::CreateSessionRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.CreateSession",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;
@@ -109,14 +108,13 @@ TEST_F(MetadataSpannerStubTest, CreateSession) {
 
 TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
   EXPECT_CALL(*mock_, BatchCreateSessions(_, _))
-      .WillOnce(
-          Invoke([this](grpc::ClientContext& context,
-                        spanner_proto::BatchCreateSessionsRequest const&) {
-            EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-                context, "google.spanner.v1.Spanner.BatchCreateSessions",
-                expected_api_client_header_));
-            return TransientError();
-          }));
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::BatchCreateSessionsRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context, "google.spanner.v1.Spanner.BatchCreateSessions",
+            expected_api_client_header_));
+        return TransientError();
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;
@@ -132,13 +130,13 @@ TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
 
 TEST_F(MetadataSpannerStubTest, GetSession) {
   EXPECT_CALL(*mock_, GetSession(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              spanner_proto::GetSessionRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::GetSessionRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.GetSession",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;
@@ -154,13 +152,13 @@ TEST_F(MetadataSpannerStubTest, GetSession) {
 
 TEST_F(MetadataSpannerStubTest, ListSessions) {
   EXPECT_CALL(*mock_, ListSessions(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              spanner_proto::ListSessionsRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::ListSessionsRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.ListSessions",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;
@@ -175,13 +173,13 @@ TEST_F(MetadataSpannerStubTest, ListSessions) {
 
 TEST_F(MetadataSpannerStubTest, DeleteSession) {
   EXPECT_CALL(*mock_, DeleteSession(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              spanner_proto::DeleteSessionRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::DeleteSessionRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.DeleteSession",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;
@@ -201,14 +199,14 @@ TEST_F(MetadataSpannerStubTest, ExecuteSql) {
 
 TEST_F(MetadataSpannerStubTest, ExecuteStreamingSql) {
   EXPECT_CALL(*mock_, ExecuteStreamingSql(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              spanner_proto::ExecuteSqlRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::ExecuteSqlRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.ExecuteStreamingSql",
             expected_api_client_header_));
         return std::unique_ptr<
             grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
-      }));
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;
@@ -232,14 +230,14 @@ TEST_F(MetadataSpannerStubTest, Read) {
 
 TEST_F(MetadataSpannerStubTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              spanner_proto::ReadRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       spanner_proto::ReadRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context, "google.spanner.v1.Spanner.StreamingRead",
             expected_api_client_header_));
         return std::unique_ptr<
             grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>{};
-      }));
+      });
 
   MetadataSpannerStub stub(mock_);
   grpc::ClientContext context;

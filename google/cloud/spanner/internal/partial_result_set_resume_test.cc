@@ -38,7 +38,6 @@ using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 
 using ReadReturn = optional<spanner_proto::PartialResultSet>;
@@ -86,15 +85,15 @@ TEST(PartialResultSetResume, Success) {
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
-      .WillOnce(Invoke([&response](std::string const& token) {
+      .WillOnce([&response](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read())
-            .WillOnce(Invoke([&response] { return ReadReturn(response); }))
+            .WillOnce([&response] { return ReadReturn(response); })
             .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
         return mock;
-      }));
+      });
 
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
@@ -137,33 +136,33 @@ TEST(PartialResultSetResume, SuccessWithRestart) {
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
-      .WillOnce(Invoke([&r0](std::string const& token) {
+      .WillOnce([&r0](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read())
-            .WillOnce(Invoke([&r0] { return ReadReturn(r0); }))
+            .WillOnce([&r0] { return ReadReturn(r0); })
             .WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-0")));
         return mock;
-      }))
-      .WillOnce(Invoke([&r1](std::string const& token) {
+      })
+      .WillOnce([&r1](std::string const& token) {
         EXPECT_EQ("test-token-0", token);
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read())
-            .WillOnce(Invoke([&r1] { return ReadReturn(r1); }))
+            .WillOnce([&r1] { return ReadReturn(r1); })
             .WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-1")));
         return mock;
-      }))
-      .WillOnce(Invoke([](std::string const& token) {
+      })
+      .WillOnce([](std::string const& token) {
         EXPECT_EQ("test-token-1", token);
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish()).WillOnce(Return(Status()));
         return mock;
-      }));
+      });
 
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
@@ -201,24 +200,24 @@ TEST(PartialResultSetResume, PermanentError) {
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
-      .WillOnce(Invoke([&r0](std::string const& token) {
+      .WillOnce([&r0](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read())
-            .WillOnce(Invoke([&r0] { return ReadReturn(r0); }))
+            .WillOnce([&r0] { return ReadReturn(r0); })
             .WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-0")));
         return mock;
-      }))
-      .WillOnce(Invoke([](std::string const& token) {
+      })
+      .WillOnce([](std::string const& token) {
         EXPECT_EQ("test-token-0", token);
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh-1")));
         return mock;
-      }));
+      });
 
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
@@ -254,16 +253,16 @@ TEST(PartialResultSetResume, TransientNonIdempotent) {
 
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
-      .WillOnce(Invoke([&r0](std::string const& token) {
+      .WillOnce([&r0](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read())
-            .WillOnce(Invoke([&r0] { return ReadReturn(r0); }))
+            .WillOnce([&r0] { return ReadReturn(r0); })
             .WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-0")));
         return mock;
-      }));
+      });
 
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);
@@ -283,14 +282,14 @@ TEST(PartialResultSetResume, TooManyTransients) {
   MockFactory mock_factory;
   EXPECT_CALL(mock_factory, MakeReader(_))
       .Times(AtLeast(2))
-      .WillRepeatedly(Invoke([](std::string const& token) {
+      .WillRepeatedly([](std::string const& token) {
         EXPECT_TRUE(token.empty());
         auto mock = make_unique<MockReader>();
         EXPECT_CALL(*mock, Read()).WillOnce(Return(ReadReturn{}));
         EXPECT_CALL(*mock, Finish())
             .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again-N")));
         return mock;
-      }));
+      });
 
   auto factory = [&mock_factory](std::string const& token) {
     return mock_factory.MakeReader(token);

@@ -30,7 +30,6 @@ using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
-using ::testing::Invoke;
 using ::testing::Return;
 
 namespace gcsa = ::google::spanner::admin::instance::v1;
@@ -70,18 +69,17 @@ TEST(InstanceAdminConnectionTest, GetInstance_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstance(_, _))
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::GetInstanceRequest const& request) {
+        EXPECT_EQ(expected_name, request.name());
+        return Status(StatusCode::kUnavailable, "try-again");
+      })
       .WillOnce(
-          Invoke([&expected_name](grpc::ClientContext&,
-                                  gcsa::GetInstanceRequest const& request) {
-            EXPECT_EQ(expected_name, request.name());
-            return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(Invoke(
           [&expected_name, &expected_instance](
               grpc::ClientContext&, gcsa::GetInstanceRequest const& request) {
             EXPECT_EQ(expected_name, request.name());
             return expected_instance;
-          }));
+          });
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstance({expected_name});
@@ -114,8 +112,8 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
       "projects/test-project/instances/test-instance";
 
   EXPECT_CALL(*mock, CreateInstance(_, _))
-      .WillOnce(Invoke([&expected_name](grpc::ClientContext&,
-                                        gcsa::CreateInstanceRequest const& r) {
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::CreateInstanceRequest const& r) {
         EXPECT_EQ("test-instance", r.instance_id());
         EXPECT_EQ("projects/test-project", r.parent());
         auto const& instance = r.instance();
@@ -129,9 +127,9 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
         op.set_name("test-operation-name");
         op.set_done(false);
         return make_status_or(op);
-      }));
+      });
   EXPECT_CALL(*mock, GetOperation(_, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            google::longrunning::GetOperationRequest const& r) {
             EXPECT_EQ("test-operation-name", r.name());
@@ -142,7 +140,7 @@ TEST(InstanceAdminClientTest, CreateInstanceSuccess) {
             instance.set_name(expected_name);
             op.mutable_response()->PackFrom(instance);
             return make_status_or(op);
-          }));
+          });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   Instance in("test-project", "test-instance");
@@ -163,11 +161,10 @@ TEST(InstanceAdminClientTest, CreateInstanceError) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
   EXPECT_CALL(*mock, CreateInstance(_, _))
-      .WillOnce(
-          Invoke([](grpc::ClientContext&, gcsa::CreateInstanceRequest const&) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          }));
+      .WillOnce([](grpc::ClientContext&, gcsa::CreateInstanceRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   Instance in("test-project", "test-instance");
@@ -188,16 +185,16 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
 
   EXPECT_CALL(*mock, UpdateInstance(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce(Invoke([&expected_name](grpc::ClientContext&,
-                                        gcsa::UpdateInstanceRequest const& r) {
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::UpdateInstanceRequest const& r) {
         EXPECT_EQ(expected_name, r.instance().name());
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
         return make_status_or(op);
-      }));
+      });
   EXPECT_CALL(*mock, GetOperation(_, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            google::longrunning::GetOperationRequest const& r) {
             EXPECT_EQ("test-operation-name", r.name());
@@ -208,7 +205,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
             instance.set_name(expected_name);
             op.mutable_response()->PackFrom(instance);
             return make_status_or(op);
-          }));
+          });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   gcsa::UpdateInstanceRequest req;
@@ -225,11 +222,10 @@ TEST(InstanceAdminClientTest, UpdateInstance_PermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
   EXPECT_CALL(*mock, UpdateInstance(_, _))
-      .WillOnce(
-          Invoke([](grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) {
-            return StatusOr<google::longrunning::Operation>(
-                Status(StatusCode::kPermissionDenied, "uh-oh"));
-          }));
+      .WillOnce([](grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
 
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
@@ -244,10 +240,10 @@ TEST(InstanceAdminClientTest, UpdateInstance_TooManyTransients) {
   EXPECT_CALL(*mock, UpdateInstance(_, _))
       .Times(AtLeast(2))
       .WillRepeatedly(
-          Invoke([](grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) {
+          [](grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) {
             return StatusOr<google::longrunning::Operation>(
                 Status(StatusCode::kUnavailable, "try-again"));
-          }));
+          });
   auto conn = MakeLimitedRetryConnection(std::move(mock));
   auto fut = conn->UpdateInstance({gcsa::UpdateInstanceRequest()});
   EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
@@ -261,18 +257,16 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, DeleteInstance(_, _))
-      .WillOnce(
-          Invoke([&expected_name](grpc::ClientContext&,
-                                  gcsa::DeleteInstanceRequest const& request) {
-            EXPECT_EQ(expected_name, request.name());
-            return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(
-          Invoke([&expected_name](grpc::ClientContext&,
-                                  gcsa::DeleteInstanceRequest const& request) {
-            EXPECT_EQ(expected_name, request.name());
-            return Status();
-          }));
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::DeleteInstanceRequest const& request) {
+        EXPECT_EQ(expected_name, request.name());
+        return Status(StatusCode::kUnavailable, "try-again");
+      })
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::DeleteInstanceRequest const& request) {
+        EXPECT_EQ(expected_name, request.name());
+        return Status();
+      });
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto status = conn->DeleteInstance({expected_name});
@@ -312,18 +306,18 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstanceConfig(_, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            gcsa::GetInstanceConfigRequest const& request) {
             EXPECT_EQ(expected_name, request.name());
             return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(Invoke([&expected_name, &expected_instance_config](
-                           grpc::ClientContext&,
-                           gcsa::GetInstanceConfigRequest const& request) {
+          })
+      .WillOnce([&expected_name, &expected_instance_config](
+                    grpc::ClientContext&,
+                    gcsa::GetInstanceConfigRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
         return expected_instance_config;
-      }));
+      });
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetInstanceConfig({expected_name});
@@ -357,14 +351,14 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
-      .WillOnce(Invoke([&](grpc::ClientContext&,
-                           gcsa::ListInstanceConfigsRequest const& request) {
+      .WillOnce([&](grpc::ClientContext&,
+                    gcsa::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
         return Status(StatusCode::kUnavailable, "try-again");
-      }))
-      .WillOnce(Invoke([&](grpc::ClientContext&,
-                           gcsa::ListInstanceConfigsRequest const& request) {
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    gcsa::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
 
@@ -373,9 +367,9 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
         response.add_instance_configs()->set_name("c1");
         response.add_instance_configs()->set_name("c2");
         return response;
-      }))
-      .WillOnce(Invoke([&](grpc::ClientContext&,
-                           gcsa::ListInstanceConfigsRequest const& request) {
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    gcsa::ListInstanceConfigsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("p1", request.page_token());
 
@@ -383,7 +377,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
         response.clear_next_page_token();
         response.add_instance_configs()->set_name("c3");
         return response;
-      }));
+      });
 
   auto conn = MakeLimitedRetryConnection(mock);
   std::vector<std::string> actual_names;
@@ -425,14 +419,14 @@ TEST(InstanceAdminConnectionTest, ListInstances_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstances(_, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&](grpc::ClientContext&, gcsa::ListInstancesRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("labels.test-key:test-value", request.filter());
             EXPECT_TRUE(request.page_token().empty());
             return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(Invoke(
+          })
+      .WillOnce(
           [&](grpc::ClientContext&, gcsa::ListInstancesRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("labels.test-key:test-value", request.filter());
@@ -443,8 +437,8 @@ TEST(InstanceAdminConnectionTest, ListInstances_Success) {
             response.add_instances()->set_name("i1");
             response.add_instances()->set_name("i2");
             return response;
-          }))
-      .WillOnce(Invoke(
+          })
+      .WillOnce(
           [&](grpc::ClientContext&, gcsa::ListInstancesRequest const& request) {
             EXPECT_EQ(expected_parent, request.parent());
             EXPECT_EQ("labels.test-key:test-value", request.filter());
@@ -454,7 +448,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_Success) {
             response.clear_next_page_token();
             response.add_instances()->set_name("i3");
             return response;
-          }));
+          });
 
   auto conn = MakeLimitedRetryConnection(mock);
   std::vector<std::string> actual_names;
@@ -496,22 +490,20 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
-      .WillOnce(
-          Invoke([&expected_name](grpc::ClientContext&,
-                                  giam::GetIamPolicyRequest const& request) {
-            EXPECT_EQ(expected_name, request.resource());
-            return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(
-          Invoke([&expected_name](grpc::ClientContext&,
-                                  giam::GetIamPolicyRequest const& request) {
-            EXPECT_EQ(expected_name, request.resource());
-            giam::Policy response;
-            auto& binding = *response.add_bindings();
-            binding.set_role("roles/spanner.databaseReader");
-            binding.add_members("user:test-account@example.com");
-            return response;
-          }));
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 giam::GetIamPolicyRequest const& request) {
+        EXPECT_EQ(expected_name, request.resource());
+        return Status(StatusCode::kUnavailable, "try-again");
+      })
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 giam::GetIamPolicyRequest const& request) {
+        EXPECT_EQ(expected_name, request.resource());
+        giam::Policy response;
+        auto& binding = *response.add_bindings();
+        binding.set_role("roles/spanner.databaseReader");
+        binding.add_members("user:test-account@example.com");
+        return response;
+      });
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->GetIamPolicy({expected_name});
@@ -560,13 +552,12 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 giam::SetIamPolicyRequest const& request) {
+        EXPECT_EQ(expected_name, request.resource());
+        return Status(StatusCode::kUnavailable, "try-again");
+      })
       .WillOnce(
-          Invoke([&expected_name](grpc::ClientContext&,
-                                  giam::SetIamPolicyRequest const& request) {
-            EXPECT_EQ(expected_name, request.resource());
-            return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(Invoke(
           [&expected_name, &expected_policy](
               grpc::ClientContext&, giam::SetIamPolicyRequest const& request) {
             EXPECT_EQ(expected_name, request.resource());
@@ -574,7 +565,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_Success) {
             giam::Policy response = expected_policy;
             response.set_etag("response-etag");
             return response;
-          }));
+          });
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->SetIamPolicy({expected_name, expected_policy});
@@ -625,20 +616,20 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions(_, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            giam::TestIamPermissionsRequest const& request) {
             EXPECT_EQ(expected_name, request.resource());
             return Status(StatusCode::kUnavailable, "try-again");
-          }))
-      .WillOnce(Invoke(
+          })
+      .WillOnce(
           [&expected_name](grpc::ClientContext&,
                            giam::TestIamPermissionsRequest const& request) {
             EXPECT_EQ(expected_name, request.resource());
             giam::TestIamPermissionsResponse response;
             response.add_permissions("test.permission2");
             return response;
-          }));
+          });
 
   auto conn = MakeLimitedRetryConnection(mock);
   auto actual = conn->TestIamPermissions(

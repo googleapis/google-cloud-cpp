@@ -27,7 +27,6 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-using ::testing::Invoke;
 namespace gcsa = google::spanner::admin::instance::v1;
 
 class InstanceAdminMetadataTest : public ::testing::Test {
@@ -50,15 +49,15 @@ class InstanceAdminMetadataTest : public ::testing::Test {
 
 TEST_F(InstanceAdminMetadataTest, GetInstance) {
   EXPECT_CALL(*mock_, GetInstance(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::GetInstanceRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::GetInstanceRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "GetInstance",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -72,15 +71,15 @@ TEST_F(InstanceAdminMetadataTest, GetInstance) {
 
 TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
   EXPECT_CALL(*mock_, GetInstanceConfig(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::GetInstanceConfigRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::GetInstanceConfigRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "GetInstanceConfig",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -94,15 +93,15 @@ TEST_F(InstanceAdminMetadataTest, GetInstanceConfig) {
 
 TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
   EXPECT_CALL(*mock_, ListInstanceConfigs(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::ListInstanceConfigsRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::ListInstanceConfigsRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "ListInstanceConfigs",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -114,15 +113,15 @@ TEST_F(InstanceAdminMetadataTest, ListInstanceConfigs) {
 
 TEST_F(InstanceAdminMetadataTest, CreateInstance) {
   EXPECT_CALL(*mock_, CreateInstance(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::CreateInstanceRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::CreateInstanceRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "CreateInstance",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -135,15 +134,15 @@ TEST_F(InstanceAdminMetadataTest, CreateInstance) {
 
 TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
   EXPECT_CALL(*mock_, UpdateInstance(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::UpdateInstanceRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::UpdateInstanceRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "UpdateInstance",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -156,15 +155,15 @@ TEST_F(InstanceAdminMetadataTest, UpdateInstance) {
 
 TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
   EXPECT_CALL(*mock_, DeleteInstance(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::DeleteInstanceRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::DeleteInstanceRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "DeleteInstance",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -176,15 +175,15 @@ TEST_F(InstanceAdminMetadataTest, DeleteInstance) {
 
 TEST_F(InstanceAdminMetadataTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              gcsa::ListInstancesRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       gcsa::ListInstancesRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "ListInstances",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -196,15 +195,15 @@ TEST_F(InstanceAdminMetadataTest, ListInstances) {
 
 TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              google::iam::v1::GetIamPolicyRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::GetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "GetIamPolicy",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -217,15 +216,15 @@ TEST_F(InstanceAdminMetadataTest, GetIamPolicy) {
 
 TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _))
-      .WillOnce(Invoke([this](grpc::ClientContext& context,
-                              google::iam::v1::SetIamPolicyRequest const&) {
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::SetIamPolicyRequest const&) {
         EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
             context,
             "google.spanner.admin.instance.v1.InstanceAdmin."
             "SetIamPolicy",
             expected_api_client_header_));
         return TransientError();
-      }));
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -237,16 +236,15 @@ TEST_F(InstanceAdminMetadataTest, SetIamPolicy) {
 
 TEST_F(InstanceAdminMetadataTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
-      .WillOnce(
-          Invoke([this](grpc::ClientContext& context,
-                        google::iam::v1::TestIamPermissionsRequest const&) {
-            EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
-                context,
-                "google.spanner.admin.instance.v1.InstanceAdmin."
-                "TestIamPermissions",
-                expected_api_client_header_));
-            return TransientError();
-          }));
+      .WillOnce([this](grpc::ClientContext& context,
+                       google::iam::v1::TestIamPermissionsRequest const&) {
+        EXPECT_STATUS_OK(spanner_testing::IsContextMDValid(
+            context,
+            "google.spanner.admin.instance.v1.InstanceAdmin."
+            "TestIamPermissions",
+            expected_api_client_header_));
+        return TransientError();
+      });
 
   InstanceAdminMetadata stub(mock_);
   grpc::ClientContext context;

@@ -35,7 +35,6 @@ namespace {
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
-using ::testing::Invoke;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
@@ -73,13 +72,13 @@ TEST(SessionPool, Allocate) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
-      .WillOnce(Invoke(
+      .WillOnce(
           [&db](grpc::ClientContext&,
                 spanner_proto::BatchCreateSessionsRequest const& request) {
             EXPECT_EQ(db.FullName(), request.database());
             EXPECT_EQ(1, request.session_count());
             return MakeSessionsResponse({"session1"});
-          }));
+          });
 
   auto pool = MakeSessionPool(db, {mock});
   auto session = pool->Allocate();
