@@ -32,15 +32,14 @@ namespace spanner_proto = ::google::spanner::v1;
 namespace {
 
 // Ensure the options have sensible values.
-SessionPoolOptions SanitizeOptions(SessionPoolOptions options) {
+SessionPoolOptions SanitizeOptions(SessionPoolOptions options,
+                                   int num_channels) {
   options.min_sessions = (std::max)(options.min_sessions, 0);
-  options.max_sessions = (std::max)(options.max_sessions, options.min_sessions);
-  options.max_sessions = (std::max)(options.max_sessions, 1);
+  options.max_sessions_per_channel =
+      (std::max)(options.max_sessions_per_channel, 1);
+  options.min_sessions = (std::min)(
+      options.min_sessions, options.max_sessions_per_channel * num_channels);
   options.max_idle_sessions = (std::max)(options.max_idle_sessions, 0);
-  options.write_sessions_fraction =
-      (std::max)(options.write_sessions_fraction, 0.0);
-  options.write_sessions_fraction =
-      (std::min)(options.write_sessions_fraction, 1.0);
   return options;
 }
 
@@ -54,7 +53,9 @@ SessionPool::SessionPool(Database db,
     : db_(std::move(db)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
-      options_(SanitizeOptions(options)) {
+      options_(SanitizeOptions(options, static_cast<int>(stubs.size()))),
+      max_pool_size_(options_.max_sessions_per_channel *
+                     static_cast<int>(stubs.size())) {
   if (stubs.empty()) {
     google::cloud::internal::ThrowInvalidArgument(
         "SessionPool requires a non-empty set of stubs");
@@ -106,12 +107,12 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 
     // If the pool is at its max size, fail or wait until someone returns a
     // session to the pool then try again.
-    if (total_sessions_ >= options_.max_sessions) {
+    if (total_sessions_ >= max_pool_size_) {
       if (options_.action_on_exhaustion == ActionOnExhaustion::FAIL) {
         return Status(StatusCode::kResourceExhausted, "session pool exhausted");
       }
       cond_.wait(lk, [this] {
-        return !sessions_.empty() || total_sessions_ < options_.max_sessions;
+        return !sessions_.empty() || total_sessions_ < max_pool_size_;
       });
       continue;
     }
@@ -129,10 +130,11 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     }
 
     // Add `min_sessions` to the pool (plus the one we're going to return),
-    // subject to the `max_sessions` cap.
-    int sessions_to_create = (std::min)(
-        options_.min_sessions + 1, options_.max_sessions - total_sessions_);
+    // subject to the `max_sessions_per_channel` cap.
     ChannelInfo& channel = *next_channel_for_create_sessions_;
+    int sessions_to_create =
+        (std::min)(options_.min_sessions + 1,
+                   options_.max_sessions_per_channel - channel.session_count);
     auto create_status = CreateSessions(lk, channel, sessions_to_create);
     if (!create_status.ok()) {
       return create_status;
@@ -178,7 +180,7 @@ Status SessionPool::CreateSessions(std::unique_lock<std::mutex>& lk,
   spanner_proto::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
   request.set_session_count(std::int32_t{num_sessions});
-  const auto& stub = channel.stub;
+  auto const& stub = channel.stub;
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,

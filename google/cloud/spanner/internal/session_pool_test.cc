@@ -148,7 +148,7 @@ TEST(SessionPool, Lifo) {
 }
 
 TEST(SessionPool, MinSessionsEagerAllocation) {
-  const int min_sessions = 3;
+  int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
@@ -161,7 +161,7 @@ TEST(SessionPool, MinSessionsEagerAllocation) {
 }
 
 TEST(SessionPool, MinSessionsMultipleAllocations) {
-  const int min_sessions = 3;
+  int const min_sessions = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
   // The constructor will make this call.
@@ -188,7 +188,7 @@ TEST(SessionPool, MinSessionsMultipleAllocations) {
 }
 
 TEST(SessionPool, MaxSessionsFailOnExhaustion) {
-  const int max_sessions = 3;
+  int const max_sessions_per_channel = 3;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
@@ -197,7 +197,7 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
 
   SessionPoolOptions options;
-  options.max_sessions = max_sessions;
+  options.max_sessions_per_channel = max_sessions_per_channel;
   options.action_on_exhaustion = ActionOnExhaustion::FAIL;
   auto pool = MakeSessionPool(db, {mock}, options);
   std::vector<SessionHolder> sessions;
@@ -215,14 +215,14 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
 }
 
 TEST(SessionPool, MaxSessionsBlockUntilRelease) {
-  const int max_sessions = 1;
+  int const max_sessions_per_channel = 1;
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
 
   SessionPoolOptions options;
-  options.max_sessions = max_sessions;
+  options.max_sessions_per_channel = max_sessions_per_channel;
   options.action_on_exhaustion = ActionOnExhaustion::BLOCK;
   auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
@@ -272,29 +272,30 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   auto mock3 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
   EXPECT_CALL(*mock1, BatchCreateSessions(_, _))
-      .WillOnce(Return(
-          ByMove(MakeSessionsResponse({"c1s1", "c1s2", "c1s3", "c1s4"}))));
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"c1s1", "c1s2", "c1s3"}))));
   EXPECT_CALL(*mock2, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s1", "c2s2", "c2s3"}))));
   EXPECT_CALL(*mock3, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c3s1", "c3s2", "c3s3"}))));
 
   SessionPoolOptions options;
-  options.min_sessions = 10;
-  options.max_sessions = 10;
+  // note that min_sessions will effectively be reduced to 9
+  // (max_sessions_per_channel * num_channels).
+  options.min_sessions = 20;
+  options.max_sessions_per_channel = 3;
   options.action_on_exhaustion = ActionOnExhaustion::FAIL;
   auto pool = MakeSessionPool(db, {mock1, mock2, mock3}, options);
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
-  for (int i = 1; i <= 10; ++i) {
+  for (int i = 1; i <= 9; ++i) {
     auto session = pool->Allocate();
     ASSERT_STATUS_OK(session);
     session_names.push_back((*session)->session_name());
     sessions.push_back(*std::move(session));
   }
   EXPECT_THAT(session_names,
-              UnorderedElementsAre("c1s1", "c1s2", "c1s3", "c1s4", "c2s1",
-                                   "c2s2", "c2s3", "c3s1", "c3s2", "c3s3"));
+              UnorderedElementsAre("c1s1", "c1s2", "c1s3", "c2s1", "c2s2",
+                                   "c2s3", "c3s1", "c3s2", "c3s3"));
   auto session = pool->Allocate();
   EXPECT_EQ(session.status().code(), StatusCode::kResourceExhausted);
   EXPECT_EQ(session.status().message(), "session pool exhausted");

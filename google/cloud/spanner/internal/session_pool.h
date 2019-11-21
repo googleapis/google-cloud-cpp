@@ -45,22 +45,17 @@ enum class ActionOnExhaustion { BLOCK, FAIL };
 struct SessionPoolOptions {
   // The minimum number of sessions to keep in the pool.
   // Values <= 0 are treated as 0.
+  // This value will be reduced if it exceeds the overall limit on the number
+  // of sessions (`max_sessions_per_channel` * number of channels).
   int min_sessions = 0;
 
-  // The maximum number of sessions to create. This should be the number
-  // of channels * 100.
+  // The maximum number of sessions to create on each channel.
   // Values <= 1 are treated as 1.
-  // If this is less than `min_sessions`, it will be set to `min_sessions`.
-  int max_sessions = 100;  // Channel Count * 100
+  int max_sessions_per_channel = 100;
 
   // The maximum number of sessions that can be in the pool in an idle state.
   // Values <= 0 are treated as 0.
   int max_idle_sessions = 0;
-
-  // The fraction of sessions to prepare for write in advance.
-  // This fraction represents observed cloud spanner usage as of May 2019.
-  // Values <= 0.0 are treated as 0.0; values >= 1.0 are treated as 1.0.
-  double write_sessions_fraction = 0.25;
 
   // Decide whether to block or fail on pool exhaustion.
   ActionOnExhaustion action_on_exhaustion = ActionOnExhaustion::BLOCK;
@@ -146,6 +141,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   SessionPoolOptions const options_;
+  int const max_pool_size_;
 
   std::mutex mu_;
   std::condition_variable cond_;
