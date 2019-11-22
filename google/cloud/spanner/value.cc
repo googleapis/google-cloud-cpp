@@ -232,9 +232,9 @@ google::protobuf::Value Value::MakeValueProto(std::string s) {
   return v;
 }
 
-google::protobuf::Value Value::MakeValueProto(Bytes const& bytes) {
+google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
   google::protobuf::Value v;
-  v.set_string_value(internal::BytesToBase64(bytes));
+  v.set_string_value(internal::BytesToBase64(std::move(bytes)));
   return v;
 }
 

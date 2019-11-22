@@ -32,7 +32,7 @@ class Bytes;  // defined below
 // Internal forward declarations to befriend.
 namespace internal {
 StatusOr<Bytes> BytesFromBase64(std::string input);
-std::string BytesToBase64(Bytes const& b);
+std::string BytesToBase64(Bytes b);
 }  // namespace internal
 
 /**
@@ -79,7 +79,7 @@ class Bytes {
 
  private:
   friend StatusOr<Bytes> internal::BytesFromBase64(std::string input);
-  friend std::string internal::BytesToBase64(Bytes const& b);
+  friend std::string internal::BytesToBase64(Bytes b);
 
   struct Encoder {
     Encoder(std::string& rep) : rep_(rep), len_(0) {}

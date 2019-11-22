@@ -428,7 +428,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(std::int64_t i);
   static google::protobuf::Value MakeValueProto(double d);
   static google::protobuf::Value MakeValueProto(std::string s);
-  static google::protobuf::Value MakeValueProto(Bytes const& b);
+  static google::protobuf::Value MakeValueProto(Bytes b);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
   static google::protobuf::Value MakeValueProto(Date d);
   static google::protobuf::Value MakeValueProto(int i);

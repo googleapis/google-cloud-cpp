@@ -148,7 +148,7 @@ StatusOr<Bytes> BytesFromBase64(std::string input) {
 }
 
 // Conversion to a base64-encoded US-ASCII `std::string`.
-std::string BytesToBase64(Bytes const& b) { return b.base64_rep_; }
+std::string BytesToBase64(Bytes b) { return std::move(b.base64_rep_); }
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
