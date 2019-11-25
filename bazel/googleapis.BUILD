@@ -13,7 +13,6 @@
 # limitations under the License.
 
 package(default_visibility = ["//visibility:public"])
-
 licenses(["notice"])  # Apache 2.0
 
 # This build file overlays on top of the BUILD files for the googleapis repo,
