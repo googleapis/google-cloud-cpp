@@ -92,7 +92,7 @@ std::shared_ptr<bigtable::DataClient> Benchmark::MakeDataClient() {
 google::cloud::StatusOr<BenchmarkResult> Benchmark::PopulateTable() {
   bigtable::Table table(MakeDataClient(), setup_.app_profile_id(),
                         setup_.table_id());
-  std::cout << "Populating table " << setup_.table_id() << " " << std::flush;
+  std::cout << "# Populating table " << setup_.table_id() << " " << std::flush;
   std::vector<std::future<google::cloud::StatusOr<BenchmarkResult>>> tasks;
   auto upload_start = std::chrono::steady_clock::now();
   auto table_size = setup_.table_size();
@@ -157,6 +157,10 @@ void Benchmark::PrintLatencyResult(std::ostream& os,
                                    std::string const& test_name,
                                    std::string const& operation,
                                    BenchmarkResult& result) const {
+  if (result.operations.empty()) {
+    os << "# Test=" << test_name << ", " << operation << " no results\n";
+    return;
+  }
   std::sort(result.operations.begin(), result.operations.end(),
             [](OperationResult const& lhs, OperationResult const& rhs) {
               return lhs.latency < rhs.latency;
@@ -187,6 +191,10 @@ void Benchmark::PrintResultCsv(std::ostream& os, std::string const& test_name,
                                std::string const& op_name,
                                std::string const& measurement,
                                BenchmarkResult& result) const {
+  if (result.operations.empty()) {
+    os << "# Test=" << test_name << ", " << op_name << " no results\n";
+    return;
+  }
   std::sort(result.operations.begin(), result.operations.end(),
             [](OperationResult const& lhs, OperationResult const& rhs) {
               return lhs.latency < rhs.latency;

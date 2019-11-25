@@ -94,6 +94,19 @@ target_link_libraries(
             gRPC::grpc
             protobuf::libprotobuf)
 
+# A benchmark for ReadRow() comparing sync vs. async throughput.
+add_executable(read_sync_vs_async_benchmark read_sync_vs_async_benchmark.cc)
+target_link_libraries(
+    read_sync_vs_async_benchmark
+    PRIVATE bigtable_benchmark_common
+            bigtable_client
+            bigtable_protos
+            bigtable_common_options
+            google_cloud_cpp_grpc_utils
+            gRPC::grpc++
+            gRPC::grpc
+            protobuf::libprotobuf)
+
 # A benchmark to measure performance of long running programs.
 add_executable(endurance_benchmark endurance_benchmark.cc)
 target_link_libraries(

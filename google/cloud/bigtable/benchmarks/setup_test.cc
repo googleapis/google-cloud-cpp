@@ -27,7 +27,8 @@ char arg4[] = "4";
 char arg5[] = "300";
 char arg6[] = "10000";
 char arg7[] = "True";
-char arg8[] = "Unused";
+char arg8[] = "20";
+char arg9[] = "Unused";
 }  // anonymous namespace
 
 TEST(BenchmarksSetup, Basic) {
@@ -66,7 +67,7 @@ TEST(BenchmarksSetup, Different) {
 }
 
 TEST(BenchmarkSetup, Parse) {
-  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8};
+  char* argv[] = {arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9};
   int argc = sizeof(argv) / sizeof(argv[0]);
   auto setup = MakeBenchmarkSetup("pre", argc, argv);
   ASSERT_STATUS_OK(setup);
@@ -81,6 +82,7 @@ TEST(BenchmarkSetup, Parse) {
   EXPECT_EQ(4, setup->thread_count());
   EXPECT_EQ(300, setup->test_duration().count());
   EXPECT_EQ(10000, setup->table_size());
+  EXPECT_EQ(20, setup->parallel_requests());
   EXPECT_TRUE(setup->use_embedded_server());
 }
 
