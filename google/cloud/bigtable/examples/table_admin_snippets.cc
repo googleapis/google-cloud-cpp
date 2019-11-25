@@ -15,6 +15,12 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
+//=======
+//#include <google/protobuf/text_format.h>
+//#include <google/protobuf/util/time_util.h>
+//#include <deque>
+//#include <list>
+//>>>>>>> 520a818e7... feat: add CreateBackup and AsyncCreateBackup
 #include <sstream>
 
 namespace {
@@ -159,6 +165,195 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin,
   }
   //! [modify table]
   (std::move(admin), argv.at(0));
+}
+
+void CreateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
+                  char* argv[]) {
+  if (argc != 5) {
+    throw Usage{
+        "create-backup <project-id> <instance-id> <table-id> <cluster-id> "
+        "<backup-id> <expire_time>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const backup_id = ConsumeArg(argc, argv);
+  std::string const expire_time_string = ConsumeArg(argc, argv);
+
+  //! [create backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string table_id, std::string cluster_id,
+     std::string backup_id, std::string expire_time_string) {
+    google::protobuf::Timestamp expire_time;
+    if (!google::protobuf::util::TimeUtil::FromString(expire_time_string,
+                                                      &expire_time)) {
+      throw std::runtime_error("Unable to parse expire_time:" +
+                               expire_time_string);
+    }
+    StatusOr<google::bigtable::admin::v2::Backup> backup =
+        admin.CreateBackup(cbt::TableAdmin::CreateBackupParams(
+            std::move(cluster_id), std::move(backup_id), std::move(table_id),
+            std::move(expire_time)));
+    if (!backup) {
+      throw std::runtime_error(backup.status().message());
+    }
+    std::cout << "Backup successfully created: " << backup->DebugString()
+              << "\n";
+  }
+  //! [create backup]
+  (std::move(admin), std::move(table_id), std::move(cluster_id),
+   std::move(backup_id), std::move(expire_time_string));
+}
+
+void ListBackups(google::cloud::bigtable::TableAdmin admin, int argc,
+                 char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "list-backups <project-id> <instance-id> <cluster-id> <filter> "
+        "<order_by>"};
+  }
+
+  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const filter = ConsumeArg(argc, argv);
+  std::string const order_by = ConsumeArg(argc, argv);
+
+  //! [list backups]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string cluster_id, std::string filter,
+     std::string order_by) {
+    cbt::TableAdmin::ListBackupsParams list_backups_params;
+    list_backups_params.set_cluster(std::move(cluster_id));
+    list_backups_params.set_filter(std::move(filter));
+    list_backups_params.set_order_by(std::move(order_by));
+    StatusOr<std::vector<google::bigtable::admin::v2::Backup>> backups =
+        admin.ListBackups(std::move(list_backups_params));
+
+    if (!backups) {
+      throw std::runtime_error(backups.status().message());
+    }
+    for (auto const& backup : *backups) {
+      std::cout << backup.name() << "\n";
+    }
+  }
+  //! [list backups]
+  (std::move(admin), std::move(cluster_id), std::move(filter),
+   std::move(order_by));
+}
+
+void GetBackup(google::cloud::bigtable::TableAdmin admin, int argc,
+               char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "get-table <project-id> <instance-id> <cluster-id> <backup-id>"};
+  }
+  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const backup_id = ConsumeArg(argc, argv);
+
+  //! [get backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string cluster_id, std::string backup_id) {
+    StatusOr<google::bigtable::admin::v2::Backup> backup =
+        admin.GetBackup(std::move(cluster_id), std::move(backup_id));
+    if (!backup) {
+      throw std::runtime_error(backup.status().message());
+    }
+    std::cout << backup->name() << " details=\n"
+              << backup->DebugString() << "\n";
+  }
+  //! [get backup]
+  (std::move(admin), std::move(cluster_id), std::move(backup_id));
+}
+
+void DeleteBackup(google::cloud::bigtable::TableAdmin admin, int argc,
+                  char* argv[]) {
+  if (argc != 3) {
+    throw Usage{
+        "delete-table <project-id> <instance-id> <cluster-id> <table-id>"};
+  }
+  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const backup_id = ConsumeArg(argc, argv);
+
+  //! [delete backup]
+  namespace cbt = google::cloud::bigtable;
+  [](cbt::TableAdmin admin, std::string cluster_id, std::string backup_id) {
+    google::cloud::Status status =
+        admin.DeleteBackup(std::move(cluster_id), std::move(backup_id));
+    if (!status.ok()) {
+      throw std::runtime_error(status.message());
+    }
+    std::cout << "Backup successfully deleted\n";
+  }
+  //! [delete backup]
+  (std::move(admin), std::move(cluster_id), std::move(backup_id));
+}
+
+void UpdateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
+                  char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "get-table <project-id> <instance-id> <cluster-id> <backup-id> "
+        "<expire-time>"};
+  }
+  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const backup_id = ConsumeArg(argc, argv);
+  std::string const expire_time_string = ConsumeArg(argc, argv);
+  //! [update backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string cluster_id, std::string backup_id,
+     std::string expire_time_string) {
+    google::protobuf::Timestamp expire_time;
+    if (!google::protobuf::util::TimeUtil::FromString(expire_time_string,
+                                                      &expire_time)) {
+      throw std::runtime_error("Unable to parse expire_time:" +
+                               expire_time_string);
+    }
+
+    StatusOr<google::bigtable::admin::v2::Backup> backup =
+        admin.UpdateBackup(cbt::TableAdmin::UpdateBackupParams(
+            std::move(cluster_id), std::move(backup_id),
+            std::move(expire_time)));
+    if (!backup) {
+      throw std::runtime_error(backup.status().message());
+    }
+    std::cout << backup->name() << " details=\n"
+              << backup->DebugString() << "\n";
+  }
+  //! [update backup]
+  (std::move(admin), std::move(cluster_id), std::move(backup_id),
+   std::move(expire_time_string));
+}
+
+void RestoreTable(google::cloud::bigtable::TableAdmin admin, int argc,
+                  char* argv[]) {
+  if (argc != 4) {
+    throw Usage{
+        "create-backup <project-id> <instance-id> <table-id> <cluster-id> "
+        "<backup-id>"};
+  }
+  std::string const table_id = ConsumeArg(argc, argv);
+  std::string const cluster_id = ConsumeArg(argc, argv);
+  std::string const backup_id = ConsumeArg(argc, argv);
+
+  //! [restore table]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string table_id, std::string cluster_id,
+     std::string backup_id) {
+    StatusOr<google::bigtable::admin::v2::Table> table =
+        admin.RestoreTable(cbt::TableAdmin::RestoreTableParams(
+            std::move(table_id), std::move(cluster_id), std::move(backup_id)));
+    if (!table) {
+      throw std::runtime_error(table.status().message());
+    }
+    std::cout << "Table successfully restored: " << table->DebugString()
+              << "\n";
+  }
+  //! [restore table]
+  (std::move(admin), std::move(table_id), std::move(cluster_id),
+   std::move(backup_id));
 }
 
 void CreateMaxAgeFamily(google::cloud::bigtable::TableAdmin admin,

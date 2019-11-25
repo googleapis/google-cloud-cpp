@@ -45,6 +45,7 @@ class MetadataParamTypes final {
   static MetadataParamTypes const TABLE_NAME;
   static MetadataParamTypes const APP_PROFILE_NAME;
   static MetadataParamTypes const INSTANCE_NAME;
+  static MetadataParamTypes const BACKUP_NAME;
 
   std::string const& type() const { return type_; }
 

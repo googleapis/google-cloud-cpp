@@ -17,6 +17,7 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/version.h"
+#include <google/bigtable/admin/v2/backup.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
 #include <string>
@@ -106,11 +107,34 @@ class AdminClient {
   AsyncGetTable(grpc::ClientContext* context,
                 google::bigtable::admin::v2::GetTableRequest const& request,
                 grpc::CompletionQueue* cq) = 0;
-
   virtual grpc::Status DeleteTable(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
       google::protobuf::Empty* response) = 0;
+  virtual grpc::Status CreateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      google::longrunning::Operation* response) = 0;
+  virtual grpc::Status GetBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetBackupRequest const& request,
+      google::bigtable::admin::v2::Backup* response) = 0;
+  virtual grpc::Status UpdateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      google::bigtable::admin::v2::Backup* response) = 0;
+  virtual grpc::Status DeleteBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      google::protobuf::Empty* response) = 0;
+  virtual grpc::Status ListBackups(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      google::bigtable::admin::v2::ListBackupsResponse* response) = 0;
+  virtual grpc::Status RestoreTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      google::longrunning::Operation* response) = 0;
   virtual grpc::Status ModifyColumnFamilies(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
@@ -165,6 +189,48 @@ class AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
       grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncCreateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Backup>>
+  AsyncGetBackup(grpc::ClientContext* context,
+                 google::bigtable::admin::v2::GetBackupRequest const& request,
+                 grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Backup>>
+  AsyncUpdateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDeleteBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListBackupsResponse>>
+  AsyncListBackups(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+
+  virtual std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncRestoreTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      grpc::CompletionQueue* cq) = 0;
+
   virtual std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>
   AsyncModifyColumnFamilies(

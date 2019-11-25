@@ -77,6 +77,102 @@ InProcessAdminClient::AsyncDeleteTable(
   return Stub()->AsyncDeleteTable(context, request, cq);
 }
 
+grpc::Status InProcessAdminClient::CreateBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::CreateBackupRequest const& request,
+    google::longrunning::Operation* response) {
+  return Stub()->CreateBackup(context, request, response);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+InProcessAdminClient::AsyncCreateBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::CreateBackupRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncCreateBackup(context, request, cq);
+}
+
+grpc::Status InProcessAdminClient::GetBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::GetBackupRequest const& request,
+    google::bigtable::admin::v2::Backup* response) {
+  return Stub()->GetBackup(context, request, response);
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Backup>>
+InProcessAdminClient::AsyncGetBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::GetBackupRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncGetBackup(context, request, cq);
+}
+
+grpc::Status InProcessAdminClient::UpdateBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::UpdateBackupRequest const& request,
+    google::bigtable::admin::v2::Backup* response) {
+  return Stub()->UpdateBackup(context, request, response);
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::Backup>>
+InProcessAdminClient::AsyncUpdateBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::UpdateBackupRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncUpdateBackup(context, request, cq);
+}
+
+grpc::Status InProcessAdminClient::DeleteBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::DeleteBackupRequest const& request,
+    google::protobuf::Empty* response) {
+  return Stub()->DeleteBackup(context, request, response);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+InProcessAdminClient::AsyncDeleteBackup(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::DeleteBackupRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncDeleteBackup(context, request, cq);
+}
+
+grpc::Status InProcessAdminClient::ListBackups(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::ListBackupsRequest const& request,
+    google::bigtable::admin::v2::ListBackupsResponse* response) {
+  return Stub()->ListBackups(context, request, response);
+}
+
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    google::bigtable::admin::v2::ListBackupsResponse>>
+InProcessAdminClient::AsyncListBackups(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::ListBackupsRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncListBackups(context, request, cq);
+}
+
+grpc::Status InProcessAdminClient::RestoreTable(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::RestoreTableRequest const& request,
+    google::longrunning::Operation* response) {
+  return Stub()->RestoreTable(context, request, response);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+InProcessAdminClient::AsyncRestoreTable(
+    grpc::ClientContext* context,
+    google::bigtable::admin::v2::RestoreTableRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return Stub()->AsyncRestoreTable(context, request, cq);
+}
+
 grpc::Status InProcessAdminClient::ModifyColumnFamilies(
     grpc::ClientContext* context,
     btadmin::ModifyColumnFamiliesRequest const& request,

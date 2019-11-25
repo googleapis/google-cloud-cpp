@@ -174,5 +174,5 @@ COPY . /var/tmp/ci
 WORKDIR /var/tmp/downloads
 RUN /var/tmp/ci/install-cloud-sdk.sh
 
-# Install Bazel because some of the builds need it.
+# Install Bazel because some of the builds needs it.
 RUN /var/tmp/ci/install-bazel.sh
