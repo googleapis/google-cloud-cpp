@@ -26,6 +26,17 @@ def google_cloud_cpp_deps():
     override the version of the dependencies they want to use.
     """
 
+    # Load rules_proto
+    if "rules_proto" not in native.existing_rules():
+        http_archive(
+            name = "rules_proto",
+            strip_prefix = "rules_proto-d7666ec475c1f8d4a6803cbc0a0b6b4374360868",
+            urls = [
+                "https://github.com/bazelbuild/rules_proto/archive/d7666ec475c1f8d4a6803cbc0a0b6b4374360868.tar.gz",
+            ],
+            #            sha256 = "d21d38c4b8e81eed8fa95ede48dd69aba01a3b938be6ac03d2b9dc61886a7183",
+        )
+
     # Load rules_cc, used by googletest
     if "rules_cc" not in native.existing_rules():
         http_archive(

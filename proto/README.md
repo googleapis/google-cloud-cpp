@@ -1,0 +1,1 @@
+This directory contains protos currently only available in the googleapis-private repo on github. This is a temporary location and should be removed once the updated protos are published in googleapis.

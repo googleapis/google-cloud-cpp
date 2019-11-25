@@ -83,6 +83,65 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::DeleteTableRequest const& request,
       grpc::CompletionQueue* cq) override;
+  grpc::Status CreateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      google::longrunning::Operation* response) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncCreateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::CreateBackupRequest const& request,
+      grpc::CompletionQueue* cq) override;
+  grpc::Status GetBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::GetBackupRequest const& request,
+      google::bigtable::admin::v2::Backup* response) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Backup>>
+  AsyncGetBackup(grpc::ClientContext* context,
+                 google::bigtable::admin::v2::GetBackupRequest const& request,
+                 grpc::CompletionQueue* cq) override;
+  grpc::Status UpdateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      google::bigtable::admin::v2::Backup* response) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::Backup>>
+  AsyncUpdateBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::UpdateBackupRequest const& request,
+      grpc::CompletionQueue* cq) override;
+  grpc::Status DeleteBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      google::protobuf::Empty* response) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDeleteBackup(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::DeleteBackupRequest const& request,
+      grpc::CompletionQueue* cq) override;
+  grpc::Status ListBackups(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      google::bigtable::admin::v2::ListBackupsResponse* response) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::bigtable::admin::v2::ListBackupsResponse>>
+  AsyncListBackups(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::ListBackupsRequest const& request,
+      grpc::CompletionQueue* cq) override;
+  grpc::Status RestoreTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      google::longrunning::Operation* response) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::longrunning::Operation>>
+  AsyncRestoreTable(
+      grpc::ClientContext* context,
+      google::bigtable::admin::v2::RestoreTableRequest const& request,
+      grpc::CompletionQueue* cq) override;
   grpc::Status ModifyColumnFamilies(
       grpc::ClientContext* context,
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request,
