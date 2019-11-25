@@ -65,6 +65,9 @@ struct Config {
 
   std::int64_t table_size = 1000 * 1000L;
   std::int64_t query_size = 1000;
+
+  bool use_only_clients = false;
+  bool use_only_stubs = false;
 };
 
 std::ostream& operator<<(std::ostream& os, Config const& config);
@@ -201,6 +204,8 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "s"
             << "\n# Table Size: " << config.table_size
             << "\n# Query Size: " << config.query_size
+            << "\n# Use Only Stubs: " << config.use_only_stubs
+            << "\n# Use Only Clients: " << config.use_only_clients
             << "\n# Compiler: " << cs::internal::CompilerId() << "-"
             << cs::internal::CompilerVersion()
             << "\n# Build Flags: " << cs::internal::BuildFlags() << "\n";
@@ -336,8 +341,8 @@ class ExperimentImpl {
   explicit ExperimentImpl(google::cloud::internal::DefaultPRNG const& generator)
       : generator_(generator) {}
 
-  Status FillTable(Config const& config, cs::Database const& database,
-                   std::string const& table_name) {
+  Status CreateTable(Config const&, cs::Database const& database,
+                     std::string const& table_name) {
     std::string statement = "CREATE TABLE " + table_name;
     statement += " (Key INT64 NOT NULL,\n";
     for (int i = 0; i != 10; ++i) {
@@ -359,6 +364,13 @@ class ExperimentImpl {
       std::cerr << "Error creating table: " << db.status() << "\n";
       return std::move(db).status();
     }
+    return {};
+  }
+
+  Status FillTable(Config const& config, cs::Database const& database,
+                   std::string const& table_name) {
+    auto status = CreateTable(config, database, table_name);
+    if (!status.ok()) return status;
 
     // We need to populate some data or all the requests to read will fail.
     cs::Client client(cs::MakeConnection(database));
@@ -399,6 +411,36 @@ class ExperimentImpl {
     auto end = begin + config.query_size - 1;
     return cs::KeySet().AddRange(cs::MakeKeyBoundClosed(cs::Value(begin)),
                                  cs::MakeKeyBoundClosed(cs::Value(end)));
+  }
+
+  bool UseStub(Config const& config) {
+    if (config.use_only_clients) {
+      return false;
+    }
+    if (config.use_only_stubs) {
+      return true;
+    }
+    std::lock_guard<std::mutex> lk(mu_);
+    return std::uniform_int_distribution<int>(0, 1)(generator_) == 1;
+  }
+
+  int ThreadCount(Config const& config) {
+    std::lock_guard<std::mutex> lk(mu_);
+    return std::uniform_int_distribution<int>(
+        config.minimum_threads, config.maximum_threads)(generator_);
+  }
+
+  int ClientCount(Config const& config, int thread_count) {
+    // TODO(#1000) - avoid deadlocks with more than 100 threads per client
+    auto const min_clients =
+        (std::max<int>)(thread_count / 100 + 1, config.minimum_clients);
+    auto const max_clients = config.maximum_clients;
+    if (min_clients <= max_clients) {
+      return min_clients;
+    }
+    std::lock_guard<std::mutex> lk(mu_);
+    return std::uniform_int_distribution<int>(min_clients,
+                                              max_clients - 1)(generator_);
   }
 
   /// Get a snapshot of the random bit generator
@@ -532,30 +574,13 @@ class ReadExperiment : public Experiment {
     }
     std::cout << " DONE\n";
 
-    std::uniform_int_distribution<int> use_stubs_gen(0, 1);
-    std::uniform_int_distribution<int> thread_count_gen(config.minimum_threads,
-                                                        config.maximum_threads);
-
-    // Get a snapshot of the generator, to be used in this thread only.
-    auto generator = impl_.Generator();
-
     // Capture some overall getrusage() statistics as comments.
     SimpleTimer overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
-      auto const use_stubs = use_stubs_gen(generator) == 1;
-      auto const thread_count = thread_count_gen(generator);
-      // TODO(#1000) - avoid deadlocks with more than 100 threads per client
-      auto const min_clients = (std::max<std::size_t>)(thread_count / 100 + 1,
-                                                       config.minimum_clients);
-      auto const max_clients = clients.size();
-      auto const client_count = [min_clients, max_clients, &generator] {
-        if (min_clients <= max_clients) {
-          return min_clients;
-        }
-        return std::uniform_int_distribution<std::size_t>(
-            min_clients, max_clients - 1)(generator);
-      }();
+      auto const use_stubs = impl_.UseStub(config);
+      auto const thread_count = impl_.ThreadCount(config);
+      auto const client_count = impl_.ClientCount(config, thread_count);
       if (use_stubs) {
         std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
             stubs.begin(), stubs.begin() + client_count);
@@ -773,28 +798,13 @@ class UpdateExperiment : public Experiment {
     }
     std::cout << " DONE\n";
 
-    std::uniform_int_distribution<int> use_stubs_gen(0, 1);
-    std::uniform_int_distribution<int> thread_count_gen(config.minimum_threads,
-                                                        config.maximum_threads);
-
-    auto generator = impl_.Generator();
     // Capture some overall getrusage() statistics as comments.
     SimpleTimer overall;
     overall.Start();
     for (int i = 0; i != config.samples; ++i) {
-      auto const use_stubs = use_stubs_gen(generator) == 1;
-      auto const thread_count = thread_count_gen(generator);
-      // TODO(#1000) - avoid deadlocks with more than 100 threads per client
-      auto const min_clients = (std::max<std::size_t>)(thread_count / 100 + 1,
-                                                       config.minimum_clients);
-      auto const max_clients = clients.size();
-      auto const client_count = [min_clients, max_clients, &generator] {
-        if (min_clients <= max_clients) {
-          return min_clients;
-        }
-        return std::uniform_int_distribution<std::size_t>(
-            min_clients, max_clients - 1)(generator);
-      }();
+      auto const use_stubs = impl_.UseStub(config);
+      auto const thread_count = impl_.ThreadCount(config);
+      auto const client_count = impl_.ClientCount(config, thread_count);
       if (use_stubs) {
         std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
             stubs.begin(), stubs.begin() + client_count);
@@ -1023,12 +1033,14 @@ class RunAllExperiment : public Experiment {
 
   Status Run(Config const& cfg, cs::Database const& database) override {
     // Smoke test all the experiments by running a very small version of each.
+
+    std::vector<std::future<google::cloud::Status>> tasks;
     for (auto& kv : AvailableExperiments()) {
       // Do not recurse, skip this experiment.
       if (kv.first == "run-all") continue;
       Config config = cfg;
       config.experiment = kv.first;
-      config.samples = 2;
+      config.samples = 1;
       config.iteration_duration = std::chrono::seconds(1);
       config.minimum_threads = 1;
       config.maximum_threads = 1;
@@ -1036,21 +1048,46 @@ class RunAllExperiment : public Experiment {
       config.maximum_clients = 1;
       config.table_size = 10;
       config.query_size = 1;
-      std::cout << "# Smoke test for experiment: " << kv.first << "\n";
-      std::cout << config << "\n" << std::flush;
+
       auto experiment = kv.second(generator_);
-      auto status = experiment->SetUp(config, database);
-      if (!status.ok()) {
-        std::cout << "# ERROR in SetUp: " << status << "\n";
-        continue;
-      }
-      experiment->Run(config, database);
-      experiment->TearDown(config, database);
+
+      tasks.push_back(std::async(
+          std::launch::async,
+          [](Config config, cs::Database const& database, std::mutex& mu,
+             std::unique_ptr<Experiment> experiment) {
+            {
+              std::lock_guard<std::mutex> lk(mu);
+              std::cout << "# Smoke test for experiment\n";
+              std::cout << config << "\n" << std::flush;
+            }
+            auto status = experiment->SetUp(config, database);
+            if (!status.ok()) {
+              std::lock_guard<std::mutex> lk(mu);
+              std::cout << "# ERROR in SetUp: " << status << "\n";
+              return status;
+            }
+            config.use_only_clients = true;
+            experiment->Run(config, database);
+            config.use_only_stubs = true;
+            experiment->Run(config, database);
+            experiment->TearDown(config, database);
+            return google::cloud::Status();
+          },
+          config, database, std::ref(mu_), std::move(experiment)));
     }
-    return {};
+
+    Status status;
+    for (auto& task : tasks) {
+      auto s = task.get();
+      if (!s.ok()) {
+        status = std::move(s);
+      }
+    }
+    return status;
   }
 
  private:
+  std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;
 };
 
@@ -1144,6 +1181,10 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
        [](Config& c, std::string const& v) { c.table_size = std::stol(v); }},
       {"--query-size=",
        [](Config& c, std::string const& v) { c.query_size = std::stol(v); }},
+      {"--use-only-stubs",
+       [](Config& c, std::string const&) { c.use_only_stubs = true; }},
+      {"--use-only-clients",
+       [](Config& c, std::string const&) { c.use_only_clients = true; }},
   };
 
   auto invalid_argument = [](std::string msg) {
@@ -1224,6 +1265,13 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
        << " than the query size (" << config.query_size << ")";
     return invalid_argument(os.str());
   }
+
+  if (config.use_only_stubs && config.use_only_clients) {
+    std::ostringstream os;
+    os << "Only one of --use-only-stubs or --use-only-clients can be set";
+    return invalid_argument(os.str());
+  }
+
   return config;
 }
 
