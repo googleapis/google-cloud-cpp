@@ -14,6 +14,7 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
@@ -1004,6 +1005,62 @@ TEST_F(ObjectIntegrationTest, ComposeMany) {
 
   auto deletion_status = client->DeleteObject(
       bucket_name, dest_object_name, IfGenerationMatch(res->generation()));
+  ASSERT_STATUS_OK(deletion_status);
+}
+
+TEST_F(ObjectIntegrationTest, ParallelUpload) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto prefix_md = CreateRandomPrefix(*client, bucket_name, "");
+  ASSERT_STATUS_OK(prefix_md);
+  std::string const& prefix = prefix_md->name();
+  std::string const dest_object_name = prefix + ".dest";
+
+  std::vector<std::thread> threads;
+  std::string expected;
+
+  auto upload_state =
+      PrepareParallelUpload(*client, bucket_name, dest_object_name, 100, prefix,
+                            IfGenerationMatch(0));
+  ASSERT_STATUS_OK(upload_state);
+  for (int i = 0; i != 100; ++i) {
+    expected += std::to_string(i);
+    threads.emplace_back([i, &upload_state] {
+      auto stream = std::move(upload_state->shards[i]);
+      stream << i;
+      stream.Close();
+    });
+  }
+  for (auto& thread : threads) {
+    thread.join();
+  }
+
+  auto res = upload_state->WaitForCompletion();
+  ASSERT_STATUS_OK(res);
+
+  auto stream = client->ReadObject(bucket_name, dest_object_name,
+                                   IfGenerationMatch(res->generation()));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(expected, actual);
+
+  EXPECT_STATUS_OK(upload_state->EagerCleanup());
+
+  std::vector<ObjectMetadata> objects;
+  for (auto& object : client->ListObjects(bucket_name)) {
+    ASSERT_STATUS_OK(object);
+    if (object->name().substr(0, prefix.size()) == prefix &&
+        object->name() != prefix) {
+      objects.emplace_back(*std::move(object));
+    }
+  }
+  ASSERT_EQ(1U, objects.size());
+  ASSERT_EQ(prefix + ".dest", objects[0].name());
+
+  auto deletion_status =
+      DeleteByPrefix(*client, bucket_name, prefix, Versions());
   ASSERT_STATUS_OK(deletion_status);
 }
 

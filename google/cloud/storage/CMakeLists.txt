@@ -209,6 +209,8 @@ add_library(
     object_rewriter.cc
     object_stream.h
     object_stream.cc
+    parallel_upload.h
+    parallel_upload.cc
     policy_document.h
     policy_document.cc
     override_default_project.h
@@ -380,6 +382,7 @@ if (BUILD_TESTING)
         object_metadata_test.cc
         object_stream_test.cc
         object_test.cc
+        parallel_uploads_test.cc
         policy_document_test.cc
         notification_metadata_test.cc
         retry_policy_test.cc
