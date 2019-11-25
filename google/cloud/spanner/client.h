@@ -540,6 +540,20 @@ class Client {
 std::shared_ptr<Connection> MakeConnection(
     Database const& db, ConnectionOptions const& options = ConnectionOptions());
 
+/**
+ * @copydoc MakeConnection(Database const&, ConnectionOptions const&)
+ *
+ * @param retry_policy override the default `RetryPolicy`, controls for how long
+ *     does the returned `Connection` object retry requests on transient
+ *     failures.
+ * @param backoff_policy override the default `BackoffPolicy`, controls for how
+ *     long does the `Connection` object waits before retrying a failed request.
+ */
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& options,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy);
+
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

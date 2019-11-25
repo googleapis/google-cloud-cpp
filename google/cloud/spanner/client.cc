@@ -221,13 +221,22 @@ StatusOr<PartitionedDmlResult> Client::ExecutePartitionedDml(
 
 std::shared_ptr<Connection> MakeConnection(Database const& db,
                                            ConnectionOptions const& options) {
+  return MakeConnection(db, options, internal::DefaultConnectionRetryPolicy(),
+                        internal::DefaultConnectionBackoffPolicy());
+}
+
+std::shared_ptr<Connection> MakeConnection(
+    Database const& db, ConnectionOptions const& options,
+    std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
   std::vector<std::shared_ptr<internal::SpannerStub>> stubs;
   int num_channels = std::min(options.num_channels(), 1);
   stubs.reserve(num_channels);
   for (int channel_id = 0; channel_id < num_channels; ++channel_id) {
     stubs.push_back(internal::CreateDefaultSpannerStub(options, channel_id));
   }
-  return internal::MakeConnection(db, std::move(stubs));
+  return internal::MakeConnection(db, std::move(stubs), std::move(retry_policy),
+                                  std::move(backoff_policy));
 }
 
 }  // namespace SPANNER_CLIENT_NS

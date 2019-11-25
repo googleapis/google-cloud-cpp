@@ -223,6 +223,8 @@ The default policies are to continue retrying for up to 15 minutes, and to
 use truncated (at 5 minutes) exponential backoff, doubling the maximum backoff
 period between retries.
 
+@snippet samples.cc custom-retry-policy
+
 @see [LimitedTimeRetryPolicy](@ref google::cloud::spanner::v0::LimitedTimeRetryPolicy)
    and [LimitedErrorCountRetryPolicy](@ref google::cloud::spanner::v0::LimitedErrorCountRetryPolicy)
    for alternative retry policies.

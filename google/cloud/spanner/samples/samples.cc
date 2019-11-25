@@ -1605,6 +1605,44 @@ void ExampleStatusOr(google::cloud::spanner::Client client) {
   (std::move(client));
 }
 
+void CustomRetryPolicy(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "custom-retry-policy <project-id> <instance-id> <database-id>");
+  }
+  //! [custom-retry-policy]
+  namespace spanner = google::cloud::spanner;
+  [](std::string const& project_id, std::string const& instance_id,
+     std::string const& database_id) {
+    auto client = spanner::Client(spanner::MakeConnection(
+        spanner::Database(project_id, instance_id, database_id),
+        spanner::ConnectionOptions{},
+        // Retry for at most 25 minutes.
+        spanner::LimitedTimeRetryPolicy(
+            /*maximum_duration=*/std::chrono::minutes(25))
+            .clone(),
+        // Use an truncated exponential backoff with jitter to wait between
+        // retries:
+        //   https://en.wikipedia.org/wiki/Exponential_backoff
+        //   https://cloud.google.com/storage/docs/exponential-backoff
+        spanner::ExponentialBackoffPolicy(
+            /*initial_delay=*/std::chrono::seconds(2),
+            /*maximum_delay=*/std::chrono::minutes(10),
+            /*scaling=*/1.5)
+            .clone()));
+
+    auto rows =
+        client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
+
+    for (auto const& row : spanner::StreamOf<std::tuple<std::string>>(rows)) {
+      if (!row) throw std::runtime_error(row.status().message());
+      std::cout << std::get<0>(*row) << "\n";
+    }
+  }
+  //! [custom-retry-policy]
+  (argv[0], argv[1], argv[2]);
+}
+
 class RemoteConnectionFake {
  public:
   void SendBinaryStringData(std::string const& serialized_partition) {
@@ -1835,6 +1873,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("partition-read", &PartitionRead),
       make_command_entry("partition-query", &PartitionQuery),
       make_command_entry("example-status-or", &ExampleStatusOr),
+      {"custom-retry-policy", &CustomRetryPolicy},
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -2085,6 +2124,10 @@ void RunAll() {
 
   std::cout << "\nRunning example-status-or sample\n";
   ExampleStatusOr(client);
+
+  std::cout << "\nRunning custom-retry-policy sample\n";
+  RunOneCommand(
+      {"", "custom-retry-policy", project_id, instance_id, database_id});
 
   std::cout << "\nRunning spanner_dml_partitioned_update sample\n";
   DmlPartitionedUpdate(client);
