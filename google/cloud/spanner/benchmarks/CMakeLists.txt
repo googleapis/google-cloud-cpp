@@ -35,22 +35,45 @@ function (spanner_client_define_benchmarks)
         GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
     )
 
-    set(spanner_client_benchmarks
+    add_library(spanner_client_benchmarks benchmarks_config.cc
+                                          benchmarks_config.h)
+    target_link_libraries(
+        spanner_client_benchmarks
+        PUBLIC getrusage_flags
+               spanner_client_mocks
+               googleapis-c++::spanner_client
+               google_cloud_cpp_testing
+               GTest::gmock_main
+               GTest::gmock
+               GTest::gtest)
+    create_bazel_config(spanner_client_benchmarks)
+
+    target_include_directories(
+        spanner_client_benchmarks
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(spanner_client_benchmarks
+                           PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+
+    set(spanner_client_benchmark_programs
         # cmake-format: sortable
-        single_row_throughput_benchmark.cc multiple_rows_cpu_benchmark.cc)
+        benchmarks_config_test.cc multiple_rows_cpu_benchmark.cc
+        single_row_throughput_benchmark.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
-    export_list_to_bazel("spanner_client_benchmarks.bzl"
-                         "spanner_client_benchmarks")
+    export_list_to_bazel("spanner_client_benchmark_programs.bzl"
+                         "spanner_client_benchmark_programs")
 
     # Generate a target for each benchmark.
-    foreach (fname ${spanner_client_benchmarks})
+    foreach (fname ${spanner_client_benchmark_programs})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
         target_link_libraries(
             ${target}
-            PRIVATE googleapis-c++::spanner_client
+            PRIVATE spanner_client_benchmarks
+                    googleapis-c++::spanner_client
                     getrusage_flags
                     spanner_client_testing
                     google_cloud_cpp_testing
@@ -71,11 +94,6 @@ function (spanner_client_define_benchmarks)
         # label them as tests.
         set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     endforeach ()
-
-    if (NOT GOOGLE_CLOUD_CPP_SPANNER_ENABLE_CXX_EXCEPTIONS)
-        return()
-    endif ()
-
 endfunction ()
 
 # Only define the benchmarks if testing is enabled. Package maintainers may not

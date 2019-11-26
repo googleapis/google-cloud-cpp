@@ -16,13 +16,13 @@ package(default_visibility = ["//visibility:public"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
+load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks_hdrs", "spanner_client_benchmarks_srcs")
+load(":spanner_client_benchmark_programs.bzl", "spanner_client_benchmark_programs")
 
-[cc_test(
-    name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
-    timeout = "long",
-    srcs = [test],
-    tags = ["integration-tests"],
+cc_library(
+    name = "spanner_client_benchmarks",
+    srcs = spanner_client_benchmarks_srcs,
+    hdrs = spanner_client_benchmarks_hdrs,
     deps = [
         "//google/cloud/spanner:spanner_client",
         "//google/cloud/spanner:spanner_client_mocks",
@@ -31,4 +31,20 @@ load(":spanner_client_benchmarks.bzl", "spanner_client_benchmarks")
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
-) for test in spanner_client_benchmarks]
+)
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
+    srcs = [test],
+    tags = ["integration-tests"],
+    deps = [
+        ":spanner_client_benchmarks",
+        "//google/cloud/spanner:spanner_client",
+        "//google/cloud/spanner:spanner_client_mocks",
+        "//google/cloud/spanner:spanner_client_testing",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_google_googletest//:gtest",
+    ],
+) for test in spanner_client_benchmark_programs]

@@ -12,16 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/benchmarks/benchmarks_config.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/spanner/internal/build_info.h"
-#include "google/cloud/spanner/internal/compiler_info.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include <google/spanner/v1/result_set.pb.h>
 #include <algorithm>
 #include <future>
 #include <numeric>
@@ -29,14 +28,8 @@
 #include <sstream>
 #include <thread>
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-#include <google/spanner/v1/result_set.pb.h>
 #include <sys/resource.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-
-namespace {
-
-using google::cloud::Status;
-namespace cs = google::cloud::spanner;
 
 /**
  * @file
@@ -49,29 +42,11 @@ namespace cs = google::cloud::spanner;
  * with some initial data) can be very high.
  */
 
-struct Config {
-  std::string experiment;
+namespace {
 
-  std::string project_id;
-  std::string instance_id;
-  std::string database_id;
-
-  int samples = 2;
-  std::chrono::seconds iteration_duration = std::chrono::seconds(5);
-
-  int minimum_threads = 1;
-  int maximum_threads = 1;
-  int minimum_clients = 1;
-  int maximum_clients = 1;
-
-  std::int64_t table_size = 1000 * 1000L;
-  std::int64_t query_size = 1000;
-
-  bool use_only_clients = false;
-  bool use_only_stubs = false;
-};
-
-std::ostream& operator<<(std::ostream& os, Config const& config);
+using google::cloud::Status;
+namespace cs = google::cloud::spanner;
+using ::google::cloud::spanner_benchmarks::Config;
 
 struct RowCpuSample {
   int client_count;
@@ -104,15 +79,13 @@ using ExperimentFactory = std::function<std::unique_ptr<Experiment>(
 
 std::map<std::string, ExperimentFactory> AvailableExperiments();
 
-google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args);
-
 }  // namespace
 
 int main(int argc, char* argv[]) {
   Config config;
   {
     std::vector<std::string> args{argv, argv + argc};
-    auto c = ParseArgs(args);
+    auto c = google::cloud::spanner_benchmarks::ParseArgs(args);
     if (!c) {
       std::cerr << "Error parsing command-line arguments: " << c.status()
                 << "\n";
@@ -190,29 +163,6 @@ int main(int argc, char* argv[]) {
 }
 
 namespace {
-
-std::ostream& operator<<(std::ostream& os, Config const& config) {
-  return os << std::boolalpha << "# Experiment: " << config.experiment
-            << "\n# Project: " << config.project_id
-            << "\n# Instance: " << config.instance_id
-            << "\n# Database: " << config.database_id
-            << "\n# Samples: " << config.samples
-            << "\n# Minimum Threads: " << config.minimum_threads
-            << "\n# Maximum Threads: " << config.maximum_threads
-            << "\n# Minimum Clients: " << config.minimum_clients
-            << "\n# Maximum Clients: " << config.maximum_clients
-            << "\n# Iteration Duration: " << config.iteration_duration.count()
-            << "s"
-            << "\n# Table Size: " << config.table_size
-            << "\n# Query Size: " << config.query_size
-            << "\n# Use Only Stubs: " << config.use_only_stubs
-            << "\n# Use Only Clients: " << config.use_only_clients
-            << "\n# Compiler: " << cs::internal::CompilerId() << "-"
-            << cs::internal::CompilerVersion()
-            << "\n# Build Flags: " << cs::internal::BuildFlags() << "\n";
-}
-
-bool SupportPerThreadUsage();
 
 class SimpleTimer {
  public:
@@ -1659,150 +1609,6 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
   };
 }
 
-google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
-  Config config;
-
-  config.experiment = "run-all";
-
-  config.project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  config.instance_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
-          .value_or("");
-
-  struct Flag {
-    std::string flag_name;
-    std::function<void(Config&, std::string)> parser;
-  };
-
-  // NOLINTNEXTLINE(modernize-avoid-c-arrays)
-  Flag flags[] = {
-      {"--experiment=",
-       [](Config& c, std::string v) { c.experiment = std::move(v); }},
-      {"--project=",
-       [](Config& c, std::string v) { c.project_id = std::move(v); }},
-      {"--instance=",
-       [](Config& c, std::string v) { c.instance_id = std::move(v); }},
-      {"--samples=",
-       [](Config& c, std::string const& v) { c.samples = std::stoi(v); }},
-      {"--iteration-duration=",
-       [](Config& c, std::string const& v) {
-         c.iteration_duration = std::chrono::seconds(std::stoi(v));
-       }},
-      {"--minimum-threads=",
-       [](Config& c, std::string const& v) {
-         c.minimum_threads = std::stoi(v);
-       }},
-      {"--maximum-threads=",
-       [](Config& c, std::string const& v) {
-         c.maximum_threads = std::stoi(v);
-       }},
-      {"--minimum-clients=",
-       [](Config& c, std::string const& v) {
-         c.minimum_clients = std::stoi(v);
-       }},
-      {"--maximum-clients=",
-       [](Config& c, std::string const& v) {
-         c.maximum_clients = std::stoi(v);
-       }},
-      {"--table-size=",
-       [](Config& c, std::string const& v) { c.table_size = std::stol(v); }},
-      {"--query-size=",
-       [](Config& c, std::string const& v) { c.query_size = std::stol(v); }},
-      {"--use-only-stubs",
-       [](Config& c, std::string const&) { c.use_only_stubs = true; }},
-      {"--use-only-clients",
-       [](Config& c, std::string const&) { c.use_only_clients = true; }},
-  };
-
-  auto invalid_argument = [](std::string msg) {
-    return google::cloud::Status(google::cloud::StatusCode::kInvalidArgument,
-                                 std::move(msg));
-  };
-
-  for (auto i = std::next(args.begin()); i != args.end(); ++i) {
-    std::string const& arg = *i;
-    bool found = false;
-    for (auto const& flag : flags) {
-      if (arg.rfind(flag.flag_name, 0) != 0) continue;
-      found = true;
-      flag.parser(config, arg.substr(flag.flag_name.size()));
-
-      break;
-    }
-    if (!found && arg.rfind("--", 0) == 0) {
-      return invalid_argument("Unexpected command-line flag " + arg);
-    }
-  }
-
-  if (config.experiment.empty()) {
-    return invalid_argument("Missing value for --experiment flag");
-  }
-
-  if (config.project_id.empty()) {
-    return invalid_argument(
-        "The project id is not set, provide a value in the --project flag,"
-        " or set the GOOGLE_CLOUD_PROJECT environment variable");
-  }
-
-  if (config.minimum_threads <= 0) {
-    std::ostringstream os;
-    os << "The minimum number of threads (" << config.minimum_threads << ")"
-       << " must be greater than zero";
-    return invalid_argument(os.str());
-  }
-  if (config.maximum_threads < config.minimum_threads) {
-    std::ostringstream os;
-    os << "The maximum number of threads (" << config.maximum_threads << ")"
-       << " must be greater or equal than the minimum number of threads ("
-       << config.minimum_threads << ")";
-    return invalid_argument(os.str());
-  }
-
-  if (!SupportPerThreadUsage() && config.maximum_threads > 1) {
-    std::ostringstream os;
-    os << "Your platform does not support per-thread getrusage() data."
-       << " The benchmark cannot run with more than one thread, and you"
-       << " set maximum threads to " << config.maximum_threads;
-    return invalid_argument(os.str());
-  }
-
-  if (config.minimum_clients <= 0) {
-    std::ostringstream os;
-    os << "The minimum number of clients (" << config.minimum_clients << ")"
-       << " must be greater than zero";
-    return invalid_argument(os.str());
-  }
-  if (config.maximum_clients < config.minimum_clients) {
-    std::ostringstream os;
-    os << "The maximum number of clients (" << config.maximum_clients << ")"
-       << " must be greater or equal than the minimum number of clients ("
-       << config.minimum_clients << ")";
-    return invalid_argument(os.str());
-  }
-
-  if (config.query_size <= 0) {
-    std::ostringstream os;
-    os << "The query size (" << config.query_size << ") should be > 0";
-    return invalid_argument(os.str());
-  }
-
-  if (config.table_size < config.query_size) {
-    std::ostringstream os;
-    os << "The table size (" << config.table_size << ") should be greater"
-       << " than the query size (" << config.query_size << ")";
-    return invalid_argument(os.str());
-  }
-
-  if (config.use_only_stubs && config.use_only_clients) {
-    std::ostringstream os;
-    os << "Only one of --use-only-stubs or --use-only-clients can be set";
-    return invalid_argument(os.str());
-  }
-
-  return config;
-}
-
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 namespace {
 int RUsageWho() {
@@ -1875,14 +1681,6 @@ void SimpleTimer::Stop() {
      << "# involuntary context switches =" << now.ru_nivcsw << "\n";
   annotations_ = std::move(os).str();
 #endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-}
-
-bool SupportPerThreadUsage() {
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  return true;
-#else
-  return false;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
 }  // namespace
