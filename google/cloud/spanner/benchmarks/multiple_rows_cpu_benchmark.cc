@@ -68,6 +68,7 @@ class Experiment {
  public:
   virtual ~Experiment() = default;
 
+  virtual std::string AdditionalDdlStatement() = 0;
   virtual Status SetUp(Config const& config, cs::Database const& database) = 0;
   virtual Status TearDown(Config const& config,
                           cs::Database const& database) = 0;
@@ -123,7 +124,17 @@ int main(int argc, char* argv[]) {
   std::cout << config << std::flush;
 
   cs::DatabaseAdminClient admin_client;
-  auto created = admin_client.CreateDatabase(database, {});
+  std::vector<std::string> additional_statements = [&available, generator] {
+    std::vector<std::string> statements;
+    for (auto const& kv : available) {
+      auto experiment = kv.second(generator);
+      auto s = experiment->AdditionalDdlStatement();
+      if (s.empty()) continue;
+      statements.push_back(std::move(s));
+    }
+    return statements;
+  }();
+  auto created = admin_client.CreateDatabase(database, additional_statements);
   std::cout << "# Waiting for database creation to complete " << std::flush;
   for (;;) {
     auto status = created.wait_for(std::chrono::seconds(1));
@@ -294,8 +305,7 @@ class ExperimentImpl {
 
   static int constexpr kColumnCount = 10;
 
-  Status CreateTable(Config const&, cs::Database const& database,
-                     std::string const& table_name) {
+  std::string CreateTableStatement(std::string const& table_name) {
     std::string statement = "CREATE TABLE " + table_name;
     statement += " (Key INT64 NOT NULL,\n";
     for (int i = 0; i != kColumnCount; ++i) {
@@ -303,28 +313,11 @@ class ExperimentImpl {
           "Data" + std::to_string(i) + " " + Traits::SpannerDataType() + ",\n";
     }
     statement += ") PRIMARY KEY (Key)";
-    cs::DatabaseAdminClient admin_client;
-    auto created = admin_client.UpdateDatabase(database, {statement});
-    std::cout << "# Waiting for table creation to complete " << std::flush;
-    for (;;) {
-      auto status = created.wait_for(std::chrono::seconds(1));
-      if (status == std::future_status::ready) break;
-      std::cout << '.' << std::flush;
-    }
-    std::cout << " DONE\n";
-    auto db = created.get();
-    if (!db) {
-      std::cerr << "Error creating table: " << db.status() << "\n";
-      return std::move(db).status();
-    }
-    return {};
+    return statement;
   }
 
   Status FillTable(Config const& config, cs::Database const& database,
                    std::string const& table_name) {
-    auto status = CreateTable(config, database, table_name);
-    if (!status.ok()) return status;
-
     // We need to populate some data or all the requests to read will fail.
     cs::Client client(cs::MakeConnection(database));
     std::cout << "# Populating database " << std::flush;
@@ -424,6 +417,24 @@ class ExperimentImpl {
     std::cout << "# " << s << std::endl;
   }
 
+  std::pair<std::vector<cs::Client>,
+            std::vector<std::shared_ptr<cs::internal::SpannerStub>>>
+  CreateClientsAndStubs(Config const& config, cs::Database const& database) {
+    std::vector<cs::Client> clients;
+    std::vector<std::shared_ptr<cs::internal::SpannerStub>> stubs;
+    std::cout << "# Creating clients and stubs " << std::flush;
+    for (int i = 0; i != config.maximum_clients; ++i) {
+      auto options = cs::ConnectionOptions().set_channel_pool_domain(
+          "task:" + std::to_string(i));
+      clients.emplace_back(cs::Client(cs::MakeConnection(database, options)));
+      stubs.emplace_back(
+          cs::internal::CreateDefaultSpannerStub(options, /*channel_id=*/0));
+      std::cout << '.' << std::flush;
+    }
+    std::cout << " DONE\n";
+    return {clients, stubs};
+  }
+
  private:
   Status FillTableTask(Config const& config, cs::Client client,
                        std::string const& table_name, int task_count,
@@ -446,7 +457,7 @@ class ExperimentImpl {
     auto mutation = cs::InsertOrUpdateMutationBuilder(table_name, column_names);
     int current_mutations = 0;
 
-    auto maybe_flush = [&, this](bool force) -> Status {
+    auto maybe_flush = [&](bool force) -> Status {
       if (current_mutations == 0) {
         return {};
       }
@@ -458,7 +469,7 @@ class ExperimentImpl {
           [&m](cs::Transaction const&) { return cs::Mutations{m}; });
       if (!result) {
         std::lock_guard<std::mutex> lk(mu_);
-        std::cerr << "# Error in Commit() " << result.status() << "\n";
+        std::cout << "# Error in Commit() " << result.status() << "\n";
         return std::move(result).status();
       }
       mutation = cs::InsertOrUpdateMutationBuilder(table_name, column_names);
@@ -475,6 +486,7 @@ class ExperimentImpl {
       if (key % task_count != task_id) continue;
       // Have one of the threads report progress about 50 times.
       if (task_id == 0 && key % report_period == 0) {
+        std::lock_guard<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
       mutation.EmplaceRow(key, value0, value1, value2, value3, value4, value5,
@@ -510,6 +522,10 @@ class ReadExperiment : public Experiment {
       : impl_(generator),
         table_name_("ReadExperiment_" + Traits::TableSuffix()) {}
 
+  std::string AdditionalDdlStatement() override {
+    return impl_.CreateTableStatement(table_name_);
+  }
+
   Status SetUp(Config const& config, cs::Database const& database) override {
     return impl_.FillTable(config, database, table_name_);
   }
@@ -520,16 +536,7 @@ class ReadExperiment : public Experiment {
     // Create enough clients and stubs for the worst case
     std::vector<cs::Client> clients;
     std::vector<std::shared_ptr<cs::internal::SpannerStub>> stubs;
-    std::cout << "# Creating clients and stubs " << std::flush;
-    for (int i = 0; i != config.maximum_clients; ++i) {
-      auto options = cs::ConnectionOptions().set_channel_pool_domain(
-          "task:" + std::to_string(i));
-      clients.emplace_back(cs::Client(cs::MakeConnection(database, options)));
-      stubs.emplace_back(
-          cs::internal::CreateDefaultSpannerStub(options, /*channel_id=*/0));
-      std::cout << '.' << std::flush;
-    }
-    std::cout << " DONE\n";
+    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     SimpleTimer overall;
@@ -593,7 +600,7 @@ class ReadExperiment : public Experiment {
     if (!session) {
       std::ostringstream os;
       os << "SESSION ERROR = " << session.status();
-      impl_.LogError(os.str());
+      impl_.LogError(std::move(os).str());
       return {};
     }
 
@@ -733,6 +740,10 @@ class SelectExperiment : public Experiment {
       : impl_(generator),
         table_name_("SelectExperiment_" + Traits::TableSuffix()) {}
 
+  std::string AdditionalDdlStatement() override {
+    return impl_.CreateTableStatement(table_name_);
+  }
+
   Status SetUp(Config const& config, cs::Database const& database) override {
     return impl_.FillTable(config, database, table_name_);
   }
@@ -740,19 +751,9 @@ class SelectExperiment : public Experiment {
   Status TearDown(Config const&, cs::Database const&) override { return {}; }
 
   Status Run(Config const& config, cs::Database const& database) override {
-    // Create enough clients and stubs for the worst case
     std::vector<cs::Client> clients;
     std::vector<std::shared_ptr<cs::internal::SpannerStub>> stubs;
-    std::cout << "# Creating clients and stubs " << std::flush;
-    for (int i = 0; i != config.maximum_clients; ++i) {
-      auto options = cs::ConnectionOptions().set_channel_pool_domain(
-          "task:" + std::to_string(i));
-      clients.emplace_back(cs::Client(cs::MakeConnection(database, options)));
-      stubs.emplace_back(
-          cs::internal::CreateDefaultSpannerStub(options, /*channel_id=*/0));
-      std::cout << '.' << std::flush;
-    }
-    std::cout << " DONE\n";
+    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     SimpleTimer overall;
@@ -816,7 +817,7 @@ class SelectExperiment : public Experiment {
     if (!session) {
       std::ostringstream os;
       os << "SESSION ERROR = " << session.status();
-      impl_.LogError(os.str());
+      impl_.LogError(std::move(os).str());
       return {};
     }
 
@@ -973,6 +974,10 @@ class UpdateExperiment : public Experiment {
       : impl_(generator),
         table_name_("UpdateExperiment_" + Traits::TableSuffix()) {}
 
+  std::string AdditionalDdlStatement() override {
+    return impl_.CreateTableStatement(table_name_);
+  }
+
   Status SetUp(Config const& config, cs::Database const& database) override {
     return impl_.FillTable(config, database, table_name_);
   }
@@ -980,19 +985,9 @@ class UpdateExperiment : public Experiment {
   Status TearDown(Config const&, cs::Database const&) override { return {}; }
 
   Status Run(Config const& config, cs::Database const& database) override {
-    // Create enough clients and stubs for the worst case
     std::vector<cs::Client> clients;
     std::vector<std::shared_ptr<cs::internal::SpannerStub>> stubs;
-    std::cout << "# Creating clients and stubs " << std::flush;
-    for (int i = 0; i != config.maximum_clients; ++i) {
-      auto options = cs::ConnectionOptions().set_channel_pool_domain(
-          "task:" + std::to_string(i));
-      clients.emplace_back(cs::Client(cs::MakeConnection(database, options)));
-      stubs.emplace_back(
-          cs::internal::CreateDefaultSpannerStub(options, /*channel_id=*/0));
-      std::cout << '.' << std::flush;
-    }
-    std::cout << " DONE\n";
+    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     // Capture some overall getrusage() statistics as comments.
     SimpleTimer overall;
@@ -1058,7 +1053,7 @@ class UpdateExperiment : public Experiment {
     if (!session) {
       std::ostringstream os;
       os << "SESSION ERROR = " << session.status();
-      impl_.LogError(os.str());
+      impl_.LogError(std::move(os).str());
       return {};
     }
 
@@ -1240,26 +1235,18 @@ class MutationExperiment : public Experiment {
       : impl_(generator),
         table_name_("MutationExperiment_" + Traits::TableSuffix()) {}
 
-  Status SetUp(Config const& config, cs::Database const& database) override {
-    return impl_.CreateTable(config, database, table_name_);
+  std::string AdditionalDdlStatement() override {
+    return impl_.CreateTableStatement(table_name_);
   }
+
+  Status SetUp(Config const&, cs::Database const&) override { return {}; }
 
   Status TearDown(Config const&, cs::Database const&) override { return {}; }
 
   Status Run(Config const& config, cs::Database const& database) override {
-    // Create enough clients and stubs for the worst case
     std::vector<cs::Client> clients;
     std::vector<std::shared_ptr<cs::internal::SpannerStub>> stubs;
-    std::cout << "# Creating clients and stubs " << std::flush;
-    for (int i = 0; i != config.maximum_clients; ++i) {
-      auto options = cs::ConnectionOptions().set_channel_pool_domain(
-          "task:" + std::to_string(i));
-      clients.emplace_back(cs::Client(cs::MakeConnection(database, options)));
-      stubs.emplace_back(
-          cs::internal::CreateDefaultSpannerStub(options, /*channel_id=*/0));
-      std::cout << '.' << std::flush;
-    }
-    std::cout << " DONE\n";
+    std::tie(clients, stubs) = impl_.CreateClientsAndStubs(config, database);
 
     random_keys_.resize(config.table_size);
     std::iota(random_keys_.begin(), random_keys_.end(), 0);
@@ -1332,7 +1319,7 @@ class MutationExperiment : public Experiment {
     if (!session) {
       std::ostringstream os;
       os << "SESSION ERROR = " << session.status();
-      impl_.LogError(os.str());
+      impl_.LogError(std::move(os).str());
       return {};
     }
 
@@ -1473,13 +1460,15 @@ class RunAllExperiment : public Experiment {
  public:
   explicit RunAllExperiment(google::cloud::internal::DefaultPRNG generator)
       : generator_(generator) {}
+
+  std::string AdditionalDdlStatement() override { return {}; }
   Status SetUp(Config const&, cs::Database const&) override { return {}; }
   Status TearDown(Config const&, cs::Database const&) override { return {}; }
 
-  Status Run(Config const& cfg, cs::Database const& /*database*/) override {
+  Status Run(Config const& cfg, cs::Database const& database) override {
     // Smoke test all the experiments by running a very small version of each.
 
-    std::vector<std::future<google::cloud::Status>> tasks;
+    Status last_error;
     for (auto& kv : AvailableExperiments()) {
       // Do not recurse, skip this experiment.
       if (kv.first == "run-all") continue;
@@ -1496,42 +1485,22 @@ class RunAllExperiment : public Experiment {
 
       auto experiment = kv.second(generator_);
 
-      // TODO(#1119) - tests disabled until we can stay within admin op quota
-#if 0
-      tasks.push_back(std::async(
-          std::launch::async,
-          [](Config config, cs::Database const& database,
-             std::mutex& mu, std::unique_ptr<Experiment> experiment) {
-            {
-              std::lock_guard<std::mutex> lk(mu);
-              std::cout << "# Smoke test for experiment\n";
-              std::cout << config << "\n" << std::flush;
-            }
-            auto status = experiment->SetUp(config, database);
-            if (!status.ok()) {
-              std::lock_guard<std::mutex> lk(mu);
-              std::cout << "# ERROR in SetUp: " << status << "\n";
-              return status;
-            }
-            config.use_only_clients = true;
-            experiment->Run(config, database);
-            config.use_only_stubs = true;
-            experiment->Run(config, database);
-            experiment->TearDown(config, database);
-            return google::cloud::Status();
-          },
-          config, database, std::ref(mu_), std::move(experiment)));
-#endif
+      std::cout << "# Smoke test for experiment\n";
+      std::cout << config << "\n" << std::flush;
+      auto status = experiment->SetUp(config, database);
+      if (!status.ok()) {
+        std::cout << "# ERROR in SetUp: " << status << "\n";
+        last_error = status;
+        continue;
+      }
+      config.use_only_clients = true;
+      experiment->Run(config, database);
+      config.use_only_stubs = true;
+      experiment->Run(config, database);
+      experiment->TearDown(config, database);
     }
 
-    Status status;
-    for (auto& task : tasks) {
-      auto s = task.get();
-      if (!s.ok()) {
-        status = std::move(s);
-      }
-    }
-    return status;
+    return last_error;
   }
 
  private:
