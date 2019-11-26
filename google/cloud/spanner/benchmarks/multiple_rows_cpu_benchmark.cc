@@ -342,11 +342,13 @@ class ExperimentImpl {
   explicit ExperimentImpl(google::cloud::internal::DefaultPRNG const& generator)
       : generator_(generator) {}
 
+  static int constexpr kColumnCount = 10;
+
   Status CreateTable(Config const&, cs::Database const& database,
                      std::string const& table_name) {
     std::string statement = "CREATE TABLE " + table_name;
     statement += " (Key INT64 NOT NULL,\n";
-    for (int i = 0; i != 10; ++i) {
+    for (int i = 0; i != kColumnCount; ++i) {
       statement +=
           "Data" + std::to_string(i) + " " + Traits::SpannerDataType() + ",\n";
     }
@@ -405,10 +407,14 @@ class ExperimentImpl {
         0, config.table_size - 1)(generator_);
   }
 
-  cs::KeySet RandomKeySet(Config const& config) {
+  std::int64_t RandomKeySetBegin(Config const& config) {
     std::lock_guard<std::mutex> lk(mu_);
-    auto begin = std::uniform_int_distribution<std::int64_t>(
+    return std::uniform_int_distribution<std::int64_t>(
         0, config.table_size - config.query_size)(generator_);
+  }
+
+  cs::KeySet RandomKeySet(Config const& config) {
+    auto begin = RandomKeySetBegin(config);
     auto end = begin + config.query_size - 1;
     return cs::KeySet().AddRange(cs::MakeKeyBoundClosed(cs::Value(begin)),
                                  cs::MakeKeyBoundClosed(cs::Value(end)));
@@ -752,6 +758,245 @@ class ReadExperiment : public Experiment {
                                      timer.cpu_time(), std::move(status)});
     }
     return samples;
+  }
+
+  ExperimentImpl<Traits> impl_;
+  std::string table_name_;
+};
+
+/**
+ * Run an experiment to measure the CPU overhead of the client over raw gRPC.
+ *
+ * This experiments creates and populates a table with `config.table_size` rows,
+ * each row containing an integer key and 10 columns of the types defined by
+ * `Traits`. Then the experiment performs `config.samples` iterations of:
+ *   - Randomly pick if it will do the work using the client library or raw
+ *     gRPC
+ *   - Then for `config.iteration_duration` seconds SELECT random ranges of
+ *     `config.query_size` rows
+ *   - Measure the CPU time required by the previous step
+ */
+template <typename Traits>
+class SelectExperiment : public Experiment {
+ public:
+  explicit SelectExperiment(google::cloud::internal::DefaultPRNG generator)
+      : impl_(generator),
+        table_name_("SelectExperiment_" + Traits::TableSuffix()) {}
+
+  Status SetUp(Config const& config, cs::Database const& database) override {
+    return impl_.FillTable(config, database, table_name_);
+  }
+
+  Status TearDown(Config const&, cs::Database const&) override { return {}; }
+
+  Status Run(Config const& config, cs::Database const& database) override {
+    // Create enough clients and stubs for the worst case
+    std::vector<cs::Client> clients;
+    std::vector<std::shared_ptr<cs::internal::SpannerStub>> stubs;
+    std::cout << "# Creating clients and stubs " << std::flush;
+    for (int i = 0; i != config.maximum_clients; ++i) {
+      auto options = cs::ConnectionOptions().set_channel_pool_domain(
+          "task:" + std::to_string(i));
+      clients.emplace_back(cs::Client(cs::MakeConnection(database, options)));
+      stubs.emplace_back(
+          cs::internal::CreateDefaultSpannerStub(options, /*channel_id=*/0));
+      std::cout << '.' << std::flush;
+    }
+    std::cout << " DONE\n";
+
+    // Capture some overall getrusage() statistics as comments.
+    SimpleTimer overall;
+    overall.Start();
+    for (int i = 0; i != config.samples; ++i) {
+      auto const use_stubs = impl_.UseStub(config);
+      auto const thread_count = impl_.ThreadCount(config);
+      auto const client_count = impl_.ClientCount(config, thread_count);
+      if (use_stubs) {
+        std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
+            stubs.begin(), stubs.begin() + client_count);
+        RunIterationViaStubs(config, iteration_stubs, thread_count);
+        continue;
+      }
+      std::vector<cs::Client> iteration_clients(clients.begin(),
+                                                clients.begin() + client_count);
+      RunIterationViaClients(config, iteration_clients, thread_count);
+    }
+    overall.Stop();
+    std::cout << overall.annotations();
+    return {};
+  }
+
+ private:
+  void RunIterationViaStubs(
+      Config const& config,
+      std::vector<std::shared_ptr<cs::internal::SpannerStub>> const& stubs,
+      int thread_count) {
+    std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
+    int task_id = 0;
+    for (auto& t : tasks) {
+      auto client = stubs[task_id++ % stubs.size()];
+      t = std::async(std::launch::async, &SelectExperiment::ViaStub, this,
+                     config, thread_count, static_cast<int>(stubs.size()),
+                     cs::Database(config.project_id, config.instance_id,
+                                  config.database_id),
+                     client);
+    }
+    for (auto& t : tasks) {
+      impl_.DumpSamples(t.get());
+    }
+  }
+
+  std::vector<RowCpuSample> ViaStub(
+      Config const& config, int thread_count, int client_count,
+      cs::Database const& database,
+      std::shared_ptr<cs::internal::SpannerStub> const& stub) {
+    auto session = [&]() -> google::cloud::StatusOr<std::string> {
+      Status last_status;
+      for (int i = 0; i != ExperimentImpl<Traits>::kColumnCount; ++i) {
+        grpc::ClientContext context;
+        google::spanner::v1::CreateSessionRequest request{};
+        request.set_database(database.FullName());
+        auto response = stub->CreateSession(context, request);
+        if (response) return response->name();
+        last_status = response.status();
+      }
+      return last_status;
+    }();
+
+    if (!session) {
+      std::ostringstream os;
+      os << "SESSION ERROR = " << session.status();
+      impl_.LogError(os.str());
+      return {};
+    }
+
+    std::vector<RowCpuSample> samples;
+    // We expect about 50 reads per second per thread. Use that to estimate
+    // the size of the vector.
+    samples.reserve(config.iteration_duration.count() * 50);
+    auto const statement = CreateStatement();
+    for (auto start = std::chrono::steady_clock::now(),
+              deadline = start + config.iteration_duration;
+         start < deadline; start = std::chrono::steady_clock::now()) {
+      auto key = impl_.RandomKeySetBegin(config);
+
+      SimpleTimer timer;
+      timer.Start();
+
+      google::spanner::v1::ExecuteSqlRequest request{};
+      request.set_session(*session);
+      request.mutable_transaction()
+          ->mutable_single_use()
+          ->mutable_read_only()
+          ->Clear();
+      request.set_sql(statement);
+      auto begin_type_value = cs::internal::ToProto(cs::Value(key));
+      (*request.mutable_param_types())["begin"] =
+          std::move(begin_type_value.first);
+      (*request.mutable_params()->mutable_fields())["begin"] =
+          std::move(begin_type_value.second);
+      auto end_type_value =
+          cs::internal::ToProto(cs::Value(key + config.query_size));
+      (*request.mutable_param_types())["end"] = std::move(end_type_value.first);
+      (*request.mutable_params()->mutable_fields())["end"] =
+          std::move(end_type_value.second);
+
+      int row_count = 0;
+      google::spanner::v1::PartialResultSet result;
+      std::vector<google::protobuf::Value> row;
+      grpc::ClientContext context;
+      auto stream = stub->ExecuteStreamingSql(context, request);
+      for (bool success = stream->Read(&result); success;
+           success = stream->Read(&result)) {
+        if (result.chunked_value()) {
+          // We do not handle chunked values in the benchmark.
+          continue;
+        }
+        row.resize(ExperimentImpl<Traits>::kColumnCount);
+        std::size_t index = 0;
+        for (auto& value : *result.mutable_values()) {
+          row[index] = std::move(value);
+          if (++index == ExperimentImpl<Traits>::kColumnCount) {
+            ++row_count;
+            index = 0;
+          }
+        }
+      }
+      auto final = stream->Finish();
+      timer.Stop();
+      samples.push_back(RowCpuSample{
+          thread_count, client_count, true, row_count, timer.elapsed_time(),
+          timer.cpu_time(),
+          google::cloud::grpc_utils::MakeStatusFromRpcError(final)});
+    }
+    return samples;
+  }
+
+  void RunIterationViaClients(Config const& config,
+                              std::vector<cs::Client> const& clients,
+                              int thread_count) {
+    std::vector<std::future<std::vector<RowCpuSample>>> tasks(thread_count);
+    int task_id = 0;
+    for (auto& t : tasks) {
+      auto client = clients[task_id++ % clients.size()];
+      t = std::async(std::launch::async, &SelectExperiment::ViaClients, this,
+                     config, thread_count, static_cast<int>(clients.size()),
+                     client);
+    }
+    for (auto& t : tasks) {
+      impl_.DumpSamples(t.get());
+    }
+  }
+
+  std::vector<RowCpuSample> ViaClients(Config const& config, int thread_count,
+                                       int client_count, cs::Client client) {
+    auto const statement = CreateStatement();
+
+    using T = typename Traits::native_type;
+    using RowType = std::tuple<T, T, T, T, T, T, T, T, T, T>;
+    std::vector<RowCpuSample> samples;
+    // We expect about 50 reads per second per thread, so allocate enough
+    // memory to start.
+    samples.reserve(config.iteration_duration.count() * 50);
+    for (auto start = std::chrono::steady_clock::now(),
+              deadline = start + config.iteration_duration;
+         start < deadline; start = std::chrono::steady_clock::now()) {
+      auto key = impl_.RandomKeySetBegin(config);
+
+      SimpleTimer timer;
+      timer.Start();
+      auto rows = client.ExecuteQuery(cs::SqlStatement(
+          statement, {{"begin", cs::Value(key)},
+                      {"end", cs::Value(key + config.query_size)}}));
+      int row_count = 0;
+      Status status;
+      for (auto& row : cs::StreamOf<RowType>(rows)) {
+        if (!row) {
+          status = std::move(row).status();
+          break;
+        }
+        ++row_count;
+      }
+      timer.Stop();
+      samples.push_back(RowCpuSample{thread_count, client_count, false,
+                                     row_count, timer.elapsed_time(),
+                                     timer.cpu_time(), std::move(status)});
+    }
+    return samples;
+  }
+
+  std::string CreateStatement() const {
+    std::string sql = "SELECT";
+    char const* sep = " ";
+    for (int i = 0; i != ExperimentImpl<Traits>::kColumnCount; ++i) {
+      sql += sep;
+      sql += "Data" + std::to_string(i);
+      sep = ", ";
+    }
+    sql += " FROM ";
+    sql += table_name_;
+    sql += " WHERE Key >= @begin AND Key < @end";
+    return sql;
   }
 
   ExperimentImpl<Traits> impl_;
@@ -1353,6 +1598,14 @@ ExperimentFactory MakeReadFactory() {
 }
 
 template <typename Trait>
+ExperimentFactory MakeSelectFactory() {
+  using G = google::cloud::internal::DefaultPRNG;
+  return [](G g) {
+    return google::cloud::internal::make_unique<SelectExperiment<Trait>>(g);
+  };
+}
+
+template <typename Trait>
 ExperimentFactory MakeUpdateFactory() {
   using G = google::cloud::internal::DefaultPRNG;
   return [](G g) {
@@ -1382,6 +1635,13 @@ std::map<std::string, ExperimentFactory> AvailableExperiments() {
       {"read-int64", MakeReadFactory<Int64Traits>()},
       {"read-string", MakeReadFactory<StringTraits>()},
       {"read-timestamp", MakeReadFactory<TimestampTraits>()},
+      {"select-bool", MakeSelectFactory<BoolTraits>()},
+      {"select-bytes", MakeSelectFactory<BytesTraits>()},
+      {"select-date", MakeSelectFactory<DateTraits>()},
+      {"select-float64", MakeSelectFactory<Float64Traits>()},
+      {"select-int64", MakeSelectFactory<Int64Traits>()},
+      {"select-string", MakeSelectFactory<StringTraits>()},
+      {"select-timestamp", MakeSelectFactory<TimestampTraits>()},
       {"update-bool", MakeUpdateFactory<BoolTraits>()},
       {"update-bytes", MakeUpdateFactory<BytesTraits>()},
       {"update-date", MakeUpdateFactory<DateTraits>()},
