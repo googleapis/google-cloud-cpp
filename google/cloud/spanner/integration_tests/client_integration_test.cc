@@ -778,6 +778,63 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
   ASSERT_EQ(batch_result->stats[1].row_count, 1);
 }
 
+TEST_F(ClientIntegrationTest, AnalyzeSql) {
+  auto txn = MakeReadOnlyTransaction();
+  auto sql = SqlStatement(
+      "SELECT * FROM Singers  "
+      "WHERE FirstName = 'Foo1' OR FirstName = 'Foo3'");
+
+  // This returns a ExecutionPlan without executing the query.
+  auto plan = client_->AnalyzeSql(std::move(txn), std::move(sql));
+  ASSERT_STATUS_OK(plan);
+  EXPECT_GT(plan->plan_nodes_size(), 0);
+}
+
+TEST_F(ClientIntegrationTest, ProfileQuery) {
+  auto txn = MakeReadOnlyTransaction();
+  auto sql = SqlStatement("SELECT * FROM Singers");
+
+  auto rows = client_->ProfileQuery(std::move(txn), std::move(sql));
+  // Consume all the rows to make the profile info available.
+  for (auto const& row : rows) {
+    ASSERT_STATUS_OK(row);
+  }
+
+  auto stats = rows.ExecutionStats();
+  EXPECT_TRUE(stats);
+  EXPECT_GT(stats->size(), 0);
+
+  auto plan = rows.ExecutionPlan();
+  EXPECT_TRUE(plan);
+  EXPECT_GT(plan->plan_nodes_size(), 0);
+}
+
+TEST_F(ClientIntegrationTest, ProfileDml) {
+  auto& client = *client_;
+  ProfileDmlResult profile_result;
+  auto commit_result = client_->Commit(
+      [&client, &profile_result](Transaction txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(
+            "INSERT INTO Singers (SingerId, FirstName, LastName) "
+            "VALUES(1, 'Foo1', 'Bar1')");
+        auto dml_profile = client.ProfileDml(std::move(txn), std::move(sql));
+        if (!dml_profile) return dml_profile.status();
+        profile_result = std::move(*dml_profile);
+        return Mutations{};
+      });
+  ASSERT_STATUS_OK(commit_result);
+
+  EXPECT_EQ(1, profile_result.RowsModified());
+
+  auto stats = profile_result.ExecutionStats();
+  EXPECT_TRUE(stats);
+  EXPECT_GT(stats->size(), 0);
+
+  auto plan = profile_result.ExecutionPlan();
+  EXPECT_TRUE(plan);
+  EXPECT_GT(plan->plan_nodes_size(), 0);
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
