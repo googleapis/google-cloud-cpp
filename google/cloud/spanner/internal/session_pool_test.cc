@@ -46,6 +46,12 @@ MATCHER_P(SessionCountIs, session_count,
   return arg.session_count() == session_count;
 }
 
+// Matches a BatchCreateSessionsRequest with the specified `labels`.
+MATCHER_P(LabelsAre, labels, "BatchCreateSessionsRequest has expected labels") {
+  auto const& arg_labels = arg.session_template().labels();
+  return labels_type(arg_labels.begin(), arg_labels.end()) == labels;
+}
+
 // Create a response with the given `sessions`
 spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
     std::vector<std::string> sessions) {
@@ -58,14 +64,13 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options = SessionPoolOptions()) {
+    SessionPoolOptions options) {
   return std::make_shared<SessionPool>(
-      std::move(db), std::move(stubs),
+      std::move(db), std::move(stubs), std::move(options),
       google::cloud::internal::make_unique<LimitedTimeRetryPolicy>(
           std::chrono::minutes(10)),
       google::cloud::internal::make_unique<ExponentialBackoffPolicy>(
-          std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0),
-      options);
+          std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0));
 }
 
 TEST(SessionPool, Allocate) {
@@ -80,7 +85,7 @@ TEST(SessionPool, Allocate) {
             return MakeSessionsResponse({"session1"});
           });
 
-  auto pool = MakeSessionPool(db, {mock});
+  auto pool = MakeSessionPool(db, {mock}, {});
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -93,7 +98,7 @@ TEST(SessionPool, CreateError) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(Status(StatusCode::kInternal, "some failure"))));
 
-  auto pool = MakeSessionPool(db, {mock});
+  auto pool = MakeSessionPool(db, {mock}, {});
   auto session = pool->Allocate();
   EXPECT_EQ(session.status().code(), StatusCode::kInternal);
   EXPECT_THAT(session.status().message(), HasSubstr("some failure"));
@@ -105,7 +110,7 @@ TEST(SessionPool, ReuseSession) {
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
-  auto pool = MakeSessionPool(db, {mock});
+  auto pool = MakeSessionPool(db, {mock}, {});
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -123,7 +128,7 @@ TEST(SessionPool, Lifo) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session2"}))));
 
-  auto pool = MakeSessionPool(db, {mock});
+  auto pool = MakeSessionPool(db, {mock}, {});
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
   EXPECT_EQ((*session)->session_name(), "session1");
@@ -239,6 +244,22 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
   t.join();
 }
 
+TEST(SessionPool, Labels) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("project", "instance", "database");
+  std::map<std::string, std::string> labels = {
+      {"k1", "v1"}, {"k2", "v2"}, {"k3", "v3"}};
+  EXPECT_CALL(*mock, BatchCreateSessions(_, LabelsAre(labels)))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
+
+  SessionPoolOptions options;
+  options.labels = labels;
+  auto pool = MakeSessionPool(db, {mock}, options);
+  auto session = pool->Allocate();
+  ASSERT_STATUS_OK(session);
+  EXPECT_EQ((*session)->session_name(), "session1");
+}
+
 TEST(SessionPool, MultipleChannels) {
   auto mock1 = std::make_shared<spanner_testing::MockSpannerStub>();
   auto mock2 = std::make_shared<spanner_testing::MockSpannerStub>();
@@ -252,7 +273,7 @@ TEST(SessionPool, MultipleChannels) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s2"}))))
       .WillOnce(Return(ByMove(MakeSessionsResponse({"c2s3"}))));
 
-  auto pool = MakeSessionPool(db, {mock1, mock2});
+  auto pool = MakeSessionPool(db, {mock1, mock2}, {});
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
   for (int i = 1; i <= 6; ++i) {
@@ -303,7 +324,7 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
 TEST(SessionPool, GetStubForStublessSession) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");
-  auto pool = MakeSessionPool(db, {mock});
+  auto pool = MakeSessionPool(db, {mock}, {});
   // ensure we get a stub even if we didn't allocate from the pool.
   auto session = MakeDissociatedSessionHolder("session_id");
   EXPECT_EQ(pool->GetStub(*session), mock);

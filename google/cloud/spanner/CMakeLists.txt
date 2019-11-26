@@ -193,6 +193,7 @@ add_library(
     retry_policy.h
     row.cc
     row.h
+    session_pool_options.h
     sql_statement.cc
     sql_statement.h
     timestamp.h

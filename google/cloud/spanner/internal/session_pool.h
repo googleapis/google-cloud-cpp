@@ -20,10 +20,10 @@
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
-#include <chrono>
 #include <condition_variable>
 #include <cstddef>
 #include <map>
@@ -38,34 +38,6 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
-
-// What action to take if the session pool is exhausted.
-enum class ActionOnExhaustion { BLOCK, FAIL };
-
-struct SessionPoolOptions {
-  // The minimum number of sessions to keep in the pool.
-  // Values <= 0 are treated as 0.
-  // This value will be reduced if it exceeds the overall limit on the number
-  // of sessions (`max_sessions_per_channel` * number of channels).
-  int min_sessions = 0;
-
-  // The maximum number of sessions to create on each channel.
-  // Values <= 1 are treated as 1.
-  int max_sessions_per_channel = 100;
-
-  // The maximum number of sessions that can be in the pool in an idle state.
-  // Values <= 0 are treated as 0.
-  int max_idle_sessions = 0;
-
-  // Decide whether to block or fail on pool exhaustion.
-  ActionOnExhaustion action_on_exhaustion = ActionOnExhaustion::BLOCK;
-
-  // This is the interval at which we refresh sessions so they don't get
-  // collected by the backend GC. The GC collects objects older than 60
-  // minutes, so any duration below that (less some slack to allow the calls
-  // to be made to refresh the sessions) should suffice.
-  std::chrono::minutes keep_alive_interval = std::chrono::minutes(55);
-};
 
 /**
  * Maintains a pool of `Session` objects.
@@ -90,9 +62,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * create them. `stubs` must not be empty.
    */
   SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+              SessionPoolOptions options,
               std::unique_ptr<RetryPolicy> retry_policy,
-              std::unique_ptr<BackoffPolicy> backoff_policy,
-              SessionPoolOptions options = SessionPoolOptions());
+              std::unique_ptr<BackoffPolicy> backoff_policy);
 
   /**
    * Allocate a `Session` from the pool, creating a new one if necessary.
@@ -130,6 +102,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   void Release(Session* session);
 
   Status CreateSessions(std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
+                        std::map<std::string, std::string> const& labels,
                         int num_sessions);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
@@ -138,9 +111,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   void UpdateNextChannelForCreateSessions();  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
   Database const db_;
+  SessionPoolOptions const options_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  SessionPoolOptions const options_;
   int const max_pool_size_;
 
   std::mutex mu_;

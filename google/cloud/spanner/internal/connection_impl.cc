@@ -78,22 +78,25 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
 
 std::shared_ptr<ConnectionImpl> MakeConnection(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
-  return std::shared_ptr<ConnectionImpl>(
-      new ConnectionImpl(std::move(db), std::move(stubs),
-                         std::move(retry_policy), std::move(backoff_policy)));
+  return std::shared_ptr<ConnectionImpl>(new ConnectionImpl(
+      std::move(db), std::move(stubs), std::move(session_pool_options),
+      std::move(retry_policy), std::move(backoff_policy)));
 }
 
 ConnectionImpl::ConnectionImpl(Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
+                               SessionPoolOptions session_pool_options,
                                std::unique_ptr<RetryPolicy> retry_policy,
                                std::unique_ptr<BackoffPolicy> backoff_policy)
     : db_(std::move(db)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
       session_pool_(std::make_shared<SessionPool>(
-          db_, std::move(stubs), retry_policy_prototype_->clone(),
+          db_, std::move(stubs), std::move(session_pool_options),
+          retry_policy_prototype_->clone(),
           backoff_policy_prototype_->clone())) {}
 
 RowStream ConnectionImpl::Read(ReadParams params) {

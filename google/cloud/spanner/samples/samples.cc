@@ -1616,7 +1616,7 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
      std::string const& database_id) {
     auto client = spanner::Client(spanner::MakeConnection(
         spanner::Database(project_id, instance_id, database_id),
-        spanner::ConnectionOptions{},
+        spanner::ConnectionOptions{}, spanner::SessionPoolOptions{},
         // Retry for at most 25 minutes.
         spanner::LimitedTimeRetryPolicy(
             /*maximum_duration=*/std::chrono::minutes(25))

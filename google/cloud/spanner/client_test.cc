@@ -389,6 +389,9 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
 
   conn = MakeConnection(db, ConnectionOptions());
   EXPECT_NE(conn, nullptr);
+
+  conn = MakeConnection(db, ConnectionOptions(), SessionPoolOptions());
+  EXPECT_NE(conn, nullptr);
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {

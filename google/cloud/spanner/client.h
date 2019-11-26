@@ -29,6 +29,7 @@
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/sql_statement.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/optional.h"
@@ -534,23 +535,28 @@ class Client {
  * @see `Connection`
  *
  * @param db See `Database`.
- * @param options (optional) configure the `Connection` created by this
- *     function.
+ * @param connection_options (optional) configure the `Connection` created by
+ *     this function.
+ * @param session_pool_options (optional) configure the `SessionPool` created
+ *     by the `Connection`.
  */
 std::shared_ptr<Connection> MakeConnection(
-    Database const& db, ConnectionOptions const& options = ConnectionOptions());
+    Database const& db,
+    ConnectionOptions const& connection_options = ConnectionOptions(),
+    SessionPoolOptions session_pool_options = SessionPoolOptions());
 
 /**
- * @copydoc MakeConnection(Database const&, ConnectionOptions const&)
+ * @copydoc MakeConnection(Database const&, ConnectionOptions const&, SessionPoolOptions)
  *
- * @param retry_policy override the default `RetryPolicy`, controls for how long
- *     does the returned `Connection` object retry requests on transient
+ * @param retry_policy override the default `RetryPolicy`, controls how long
+ *     the returned `Connection` object retries requests on transient
  *     failures.
- * @param backoff_policy override the default `BackoffPolicy`, controls for how
- *     long does the `Connection` object waits before retrying a failed request.
+ * @param backoff_policy override the default `BackoffPolicy`, controls how
+ *     long the `Connection` object waits before retrying a failed request.
  */
 std::shared_ptr<Connection> MakeConnection(
-    Database const& db, ConnectionOptions const& options,
+    Database const& db, ConnectionOptions const& connection_options,
+    SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy);
 

@@ -47,13 +47,14 @@ SessionPoolOptions SanitizeOptions(SessionPoolOptions options,
 
 SessionPool::SessionPool(Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
+                         SessionPoolOptions options,
                          std::unique_ptr<RetryPolicy> retry_policy,
-                         std::unique_ptr<BackoffPolicy> backoff_policy,
-                         SessionPoolOptions options)
+                         std::unique_ptr<BackoffPolicy> backoff_policy)
     : db_(std::move(db)),
+      options_(
+          SanitizeOptions(std::move(options), static_cast<int>(stubs.size()))),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
-      options_(SanitizeOptions(options, static_cast<int>(stubs.size()))),
       max_pool_size_(options_.max_sessions_per_channel *
                      static_cast<int>(stubs.size())) {
   if (stubs.empty()) {
@@ -88,7 +89,7 @@ SessionPool::SessionPool(Database db,
     }
     // Just ignore failures; we'll try again when the caller requests a
     // session, and we'll be in a position to return an error at that time.
-    (void)CreateSessions(lk, channel, num_sessions);
+    (void)CreateSessions(lk, channel, options_.labels, num_sessions);
   }
 }
 
@@ -135,7 +136,8 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     int sessions_to_create =
         (std::min)(options_.min_sessions + 1,
                    options_.max_sessions_per_channel - channel.session_count);
-    auto create_status = CreateSessions(lk, channel, sessions_to_create);
+    auto create_status =
+        CreateSessions(lk, channel, options_.labels, sessions_to_create);
     if (!create_status.ok()) {
       return create_status;
     }
@@ -173,12 +175,15 @@ void SessionPool::Release(Session* session) {
 //
 // Requires `lk` has locked `mu_` prior to this call. `lk` will be dropped
 // while the RPC is in progress and then reacquired.
-Status SessionPool::CreateSessions(std::unique_lock<std::mutex>& lk,
-                                   ChannelInfo& channel, int num_sessions) {
+Status SessionPool::CreateSessions(
+    std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
+    std::map<std::string, std::string> const& labels, int num_sessions) {
   create_in_progress_ = true;
   lk.unlock();
   spanner_proto::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
+  request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
+                                                               labels.end());
   request.set_session_count(std::int32_t{num_sessions});
   auto const& stub = channel.stub;
   auto response = RetryLoop(
