@@ -368,6 +368,10 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
 
   auto chunk_count = actual_size / UploadChunkRequest::kChunkSizeQuantum;
   auto chunk_size = chunk_count * UploadChunkRequest::kChunkSizeQuantum;
+  // GCS upload returns an updated range header that sets the next expected
+  // byte. Check to make sure it remains consistent with the bytes stored in the
+  // buffer.
+  auto expected_next_byte = upload_session_->next_expected_byte() + chunk_size;
 
   hash_validator_->Update(pbase(), chunk_size);
   StatusOr<ResumableUploadResponse> result;
@@ -376,9 +380,27 @@ StatusOr<ResumableUploadResponse> ObjectWriteStreambuf::Flush() {
   if (!last_response_) {
     return last_response_;
   }
-  std::copy(pbase() + chunk_size, epptr(), pbase());
+  auto actual_next_byte = upload_session_->next_expected_byte();
+  auto bytes_uploaded = static_cast<int64_t>(chunk_size);
+  if (actual_next_byte < expected_next_byte) {
+    bytes_uploaded -= expected_next_byte - actual_next_byte;
+    if (bytes_uploaded < 0) {
+      std::ostringstream error_message;
+      error_message << "Could not continue upload stream. GCS requested byte "
+                    << actual_next_byte << " which has already been uploaded.";
+      return Status(StatusCode::kAborted, error_message.str());
+    }
+  } else if (actual_next_byte > expected_next_byte) {
+    std::ostringstream error_message;
+    error_message << "Could not continue upload stream. "
+                  << "GCS requested unexpected byte. (expected: "
+                  << expected_next_byte << ", actual: " << actual_next_byte
+                  << ")";
+    return Status(StatusCode::kAborted, error_message.str());
+  }
+  std::copy(pbase() + bytes_uploaded, epptr(), pbase());
   setp(pbase(), epptr());
-  pbump(static_cast<int>(actual_size - chunk_size));
+  pbump(static_cast<int>(actual_size - bytes_uploaded));
   return last_response_;
 }
 
