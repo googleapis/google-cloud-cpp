@@ -44,7 +44,10 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.7.x - TBD
+### v1.8.x - TBD
+
+### v1.7.x - 2019-12
+* bug: fix error messages in resumable sessions (#3263)
 
 ### v1.6.x - 2019-11
 

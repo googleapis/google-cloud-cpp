@@ -42,7 +42,12 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.5.x - TBD
+### v1.6.x - TBD
+
+### v1.5.x - 2019-12
+* feat: implement Bigtable sync vs. async benchmark (#3276)
+* fix: detect duplicate cluster ids in `bigtable::InstanceConfig` (#3262)
+* bug: use `CalculateDefaultConnectionPoolSize` in `set_connection_pool_size` (#3261)
 
 ### v1.4.x - 2019-11
 
