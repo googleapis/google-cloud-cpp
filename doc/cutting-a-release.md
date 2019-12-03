@@ -21,18 +21,16 @@ these commands should be useful in identifying important changes:
 
 ```bash
 # Summarize the output of this into google/cloud/bigtable/README.md
-git log upstream/master -- google/cloud/bigtable
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
+    upstream/master -- google/cloud/bigtable
 ```
 
 ```bash
 # Summarize the output of this into google/cloud/storage/README.md
-git log upstream/master -- google/cloud/storage
-```
-
-Do not forget to update `google/cloud/README.md` too:
-
-```bash
-git log upstream/master -- google/cloud ":(exclude)google/cloud/storage" ":(exclude)google/cloud/bigtable"
+git log --no-merges --format="format:* %s" \
+    $(git describe --tags --abbrev=0 upstream/master)..HEAD \
+    upstream/master -- google/cloud/storage
 ```
 
 It is not recommended that you create the release branch before this PR is
