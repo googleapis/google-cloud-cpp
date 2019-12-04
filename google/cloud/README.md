@@ -20,7 +20,11 @@ Documentation for the common utilities is available [online][doxygen-link].
 
 ## Release Notes
 
-### v0.17.x - TBD
+### v0.18.x - TBD
+
+### v0.17.x - 2019-12
+
+* Cleanup and documentation changes only
 
 ### v0.16.x - 2019-10
 
