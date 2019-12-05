@@ -28,17 +28,31 @@ namespace internal {
 
 /**
  * Format the date/time information from `tm` into a string according to
- * format string `fmt`.
+ * format string `fmt` (as defined by `std::put_time()`).
  */
 std::string FormatTime(char const* fmt, std::tm const& tm);
 
 /**
- * Parse the date/time string `s` according to format string `fmt`, storing
- * the result in the std::tm addressed by `tm`. Returns std::string::npos if
- * the format string could not be matched. Otherwise returns the position of
- * the first character not consumed (s.size() if the entire string matched).
+ * Like `FormatTime("%Y-%m-%dT%H:%M:%S", tm)` but optimized for the fixed
+ * format, and produces a 4-char `tm.tm_year` rendering when possible (unlike
+ * the "%Y" format specifier).
+ */
+std::string FormatTime(std::tm const& tm);
+
+/**
+ * Parse the date/time string `s` according to format string `fmt` (as defined
+ * by `std::get_time()`), storing the result in the std::tm addressed by
+ * `tm`. Returns std::string::npos if the format string could not be matched.
+ * Otherwise returns the position of the first character not consumed (s.size()
+ * if the entire string matched).
  */
 std::size_t ParseTime(char const* fmt, std::string const& s, std::tm* tm);
+
+/**
+ * Like `ParseTime("%Y-%m-%dT%H:%M:%S", s, tm)` but optimized for the fixed
+ * format.
+ */
+std::size_t ParseTime(std::string const& s, std::tm* tm);
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

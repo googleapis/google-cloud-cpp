@@ -14,7 +14,9 @@
 
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/internal/time_format.h"
+#include <array>
 #include <chrono>
+#include <cstdlib>
 #include <cstring>
 #include <ctime>
 #include <iomanip>
@@ -52,8 +54,7 @@ std::chrono::nanoseconds FromProto(google::protobuf::Duration const& proto) {
 
 namespace {
 
-// RFC3339 "date-time" prefix (no "time-secfrac" or "time-offset").
-constexpr auto kTimeFormat = "%Y-%m-%dT%H:%M:%S";
+constexpr auto kDigits = "0123456789";
 
 // Split a Timestamp into a seconds-since-epoch and a (>=0) subsecond.
 std::pair<std::chrono::seconds, Timestamp::duration> SplitTime(Timestamp ts) {
@@ -157,10 +158,10 @@ Timestamp FromProto(google::protobuf::Timestamp const& proto) {
 
 // TODO(#145): Reconcile this implementation with FormatRfc3339() in
 // google/cloud/internal/format_time_point.h in google-cloud-cpp.
-std::string TimestampToString(Timestamp ts) {
+std::string TimestampToString(Timestamp ts, std::chrono::minutes utc_offset) {
   std::ostringstream output;
   auto p = SplitTime(ts);
-  output << FormatTime(kTimeFormat, ZTime(p.first));
+  output << FormatTime(ZTime(p.first + utc_offset));
 
   if (auto ss = p.second.count()) {
     int width = 0;
@@ -176,7 +177,13 @@ std::string TimestampToString(Timestamp ts) {
     output << '.' << std::setfill('0') << std::setw(width) << ss;
   }
 
-  output << 'Z';
+  if (auto const minutes = utc_offset.count()) {
+    output << std::setfill('0') << std::internal << std::showpos
+           << std::setw(1 + 2) << (minutes / 60) << ':' << std::noshowpos
+           << std::setw(2) << std::abs(minutes % 60);
+  } else {
+    output << 'Z';
+  }
   return output.str();
 }
 
@@ -185,43 +192,92 @@ std::string TimestampToString(Timestamp ts) {
 StatusOr<Timestamp> TimestampFromString(std::string const& s) {
   std::tm tm;
   auto const len = s.size();
-  auto pos = ParseTime(kTimeFormat, s, &tm);
-  if (pos == std::string::npos || pos == len) {
+
+  // Parse full-date "T" time-hour ":" time-minute ":" time-second.
+  auto pos = ParseTime(s, &tm);
+  if (pos == std::string::npos) {
     return Status(StatusCode::kInvalidArgument,
                   s + ": Failed to match RFC3339 date-time");
   }
 
+  // Parse time-secfrac.
   Timestamp::duration ss(0);
-  if (s[pos] == '.') {
+  if (pos != len && s[pos] == '.') {
     Timestamp::duration::rep v = 0;
     auto scale = Timestamp::duration::period::den;
-    auto fpos = pos + 1;  // start of fractional part
+    auto fpos = pos + 1;  // start of fractional digits
     while (++pos != len) {
-      static constexpr auto kDigits = "0123456789";
       char const* dp = std::strchr(kDigits, s[pos]);
       if (dp == nullptr || *dp == '\0') break;  // non-digit
       if (scale == 1) continue;                 // drop insignificant digits
       scale /= 10;
       v *= 10;
-      v += dp - kDigits;
+      v += static_cast<Timestamp::duration::rep>(dp - kDigits);
     }
     if (pos == fpos) {
       return Status(StatusCode::kInvalidArgument,
                     s + ": RFC3339 time-secfrac must include a digit");
     }
-    ss = Timestamp::duration(v * scale);
+    ss = scale * Timestamp::duration(v);
   }
 
-  if (pos == len || s[pos] != 'Z') {
-    return Status(StatusCode::kInvalidArgument,
-                  s + ": Missing RFC3339 time-offset 'Z'");
+  // Parse time-offset.
+  std::chrono::minutes utc_offset = std::chrono::minutes::zero();
+  bool offset_error = (pos == len);
+  if (!offset_error) {
+    switch (s[pos]) {
+      case 'Z':  // Zulu time
+      case 'z': {
+        ++pos;
+        break;
+      }
+      case '+':  // [-+]HH:MM
+      case '-': {
+        // Parse colon-separated hours, minutes, but not (yet) seconds.
+        std::array<std::chrono::minutes::rep, 2> fields = {{0, 0}};
+        auto it = fields.begin();
+        auto min_it = it + 1;  // how far we must reach for success (minutes)
+        int const sign = (s[pos] == '-') ? -1 : 1;
+        auto ipos = pos + 1;  // start of integer digits
+        while (++pos != len) {
+          if (s[pos] == ':') {
+            if (++it == fields.end()) break;  // too many fields
+            if (pos == ipos) break;           // missing digit
+            ipos = pos + 1;
+          } else {
+            char const* dp = std::strchr(kDigits, s[pos]);
+            if (dp == nullptr || *dp == '\0') break;  // non-digit
+            *it *= 10;
+            *it += static_cast<std::chrono::minutes::rep>(dp - kDigits);
+            if (*it >= 100) break;  // avoid overflow using overall bound
+          }
+        }
+        if (pos == ipos || it < min_it || fields[0] >= 24 || fields[1] >= 60) {
+          // Missing digit, not enough fields, or a field out of range.
+          offset_error = true;
+        } else {
+          utc_offset += std::chrono::hours(fields[0]);
+          utc_offset += std::chrono::minutes(fields[1]);
+          utc_offset *= sign;
+        }
+        break;
+      }
+      default: {
+        offset_error = true;
+        break;
+      }
+    }
   }
-  if (++pos != len) {
+  if (offset_error) {
+    return Status(StatusCode::kInvalidArgument,
+                  s + ": Failed to match RFC3339 time-offset");
+  }
+
+  if (pos != len) {
     return Status(StatusCode::kInvalidArgument,
                   s + ": Extra data after RFC3339 date-time");
   }
-
-  return CombineTime(TimeZ(tm), ss);
+  return CombineTime(TimeZ(tm) + utc_offset, ss);
 }
 
 }  // namespace internal

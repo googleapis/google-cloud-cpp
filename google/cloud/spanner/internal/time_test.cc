@@ -262,6 +262,16 @@ TEST(Time, TimestampToString) {
   EXPECT_EQ("2019-06-21T16:52:22Z", TimestampToString(ts));
 }
 
+TEST(Time, TimestampToStringOffset) {
+  Timestamp ts = FromTimeT(1546398245);
+  auto utc_offset = std::chrono::minutes::zero();
+  EXPECT_EQ("2019-01-02T03:04:05Z", TimestampToString(ts, utc_offset));
+  utc_offset = -std::chrono::minutes(1 * 60 + 2);
+  EXPECT_EQ("2019-01-02T02:02:05-01:02", TimestampToString(ts, utc_offset));
+  utc_offset = std::chrono::minutes(1 * 60 + 2);
+  EXPECT_EQ("2019-01-02T04:06:05+01:02", TimestampToString(ts, utc_offset));
+}
+
 TEST(Time, TimestampToStringLimit) {
   Timestamp ts = FromTimeT(-9223372036L);
   EXPECT_EQ("1677-09-21T00:12:44Z", TimestampToString(ts));
@@ -311,6 +321,24 @@ TEST(Time, TimestampFromString) {
   EXPECT_EQ(ts, TimestampFromString("2019-06-21T16:52:22Z").value());
 }
 
+TEST(Time, TimestampFromStringOffset) {
+  Timestamp ts = FromTimeT(1546398245);
+  EXPECT_EQ(ts + std::chrono::minutes::zero(),
+            TimestampFromString("2019-01-02T03:04:05+00:00").value());
+  EXPECT_EQ(ts + std::chrono::hours(1) + std::chrono::minutes(2),
+            TimestampFromString("2019-01-02T03:04:05+01:02").value());
+  EXPECT_EQ(ts - std::chrono::hours(1) - std::chrono::minutes(2),
+            TimestampFromString("2019-01-02T03:04:05-01:02").value());
+}
+
+TEST(Time, TimestampFromStringLimit) {
+  Timestamp ts = FromTimeT(-9223372036L);
+  EXPECT_EQ(ts, TimestampFromString("1677-09-21T00:12:44Z").value());
+
+  ts = FromTimeT(9223372036L) + std::chrono::nanoseconds(854775807);
+  EXPECT_EQ(ts, TimestampFromString("2262-04-11T23:47:16.854775807Z").value());
+}
+
 TEST(Time, TimestampFromStringFailure) {
   EXPECT_FALSE(TimestampFromString(""));
   EXPECT_FALSE(TimestampFromString("garbage in"));
@@ -318,6 +346,15 @@ TEST(Time, TimestampFromStringFailure) {
   EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22.9"));
   EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22.Z"));
   EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22ZX"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:-22Z"));
+
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22+0:"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22+:0"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22+0:-0"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22x00:00"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22+ab:cd"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22-24:60"));
+  EXPECT_FALSE(TimestampFromString("2019-06-21T16:52:22+00:00:00"));
 }
 
 }  // namespace

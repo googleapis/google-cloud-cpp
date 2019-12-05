@@ -51,13 +51,17 @@ Timestamp FromProto(google::protobuf::Timestamp const& proto);
 
 /**
  * Convert a google::cloud::spanner::Timestamp to an RFC3339 "date-time".
+ *
+ * If @p utc_offset is non-zero, render the timestamp with a "[-+]HH:MM" UTC
+ * offset. Otherwise use a "Z" to specify Zulu time (+00:00).
  */
-std::string TimestampToString(Timestamp ts);
+std::string TimestampToString(Timestamp ts, std::chrono::minutes utc_offset =
+                                                std::chrono::minutes::zero());
 
 /**
  * Convert an RFC3339 "date-time" to a google::cloud::spanner::Timestamp.
  *
- * Returns a a non-OK Status if the input cannot be parsed.
+ * Returns a non-OK Status if the input cannot be parsed.
  */
 StatusOr<Timestamp> TimestampFromString(std::string const& s);
 
