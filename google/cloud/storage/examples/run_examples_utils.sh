@@ -366,7 +366,6 @@ run_all_object_examples() {
   local composed_object_name="composed-object-${RANDOM}-${RANDOM}.txt"
   local copied_object_name="copied-object-${RANDOM}-${RANDOM}.txt"
   local multipart_object_name="multipart-object-${RANDOM}-${RANDOM}.txt"
-  local parallel_upload_object_name="parallel-upload-${RANDOM}-${RANDOM}.txt"
 
   run_example ./storage_object_samples insert-object \
       "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
@@ -421,9 +420,6 @@ run_all_object_examples() {
       "text/plain" "a-string-to-serve-as-object-media"
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${multipart_object_name}"
-
-  run_example ./storage_object_samples parallel-upload \
-      "${bucket_name}" "${parallel_upload_object_name}"
 
   local encrypted_object_name="enc-obj-${RANDOM}-${RANDOM}.txt"
   local encrypted_composed_object_name="composed-enc-obj-${RANDOM}-${RANDOM}.txt"
@@ -515,6 +511,16 @@ _EOF_
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples parallel-upload-file \
+      "${upload_file_name}" "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples download-file \
+      "${bucket_name}" "${object_name}" "${download_file_name}"
+  diff "${upload_file_name}" "${download_file_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+
 }
 
 ################################################

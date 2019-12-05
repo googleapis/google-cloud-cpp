@@ -741,18 +741,20 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
   (std::move(client), file_name, bucket_name, object_name);
 }
 
-void ParallelUpload(google::cloud::storage::Client client, int& argc,
-                    char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"parallel-upload <bucket-name> <object-name>"};
+void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"upload-file <file-name> <bucket-name> <object-name>"};
   }
+  auto file_name = ConsumeArg(argc, argv);
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
 
-  //! [parallel upload]
+  //! [upload file] [START storage_upload_file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+  [](gcs::Client client, std::string file_name, std::string bucket_name,
+     std::string object_name) {
     // Pick a unique random prefix for the temporary objects created by the
     // parallel upload.
     auto prefix_md = gcs::CreateRandomPrefix(client, bucket_name, "");
@@ -761,53 +763,54 @@ void ParallelUpload(google::cloud::storage::Client client, int& argc,
     }
     std::string const& prefix = prefix_md->name();
 
-    std::size_t num_streams = 100;
-    auto upload_state = gcs::PrepareParallelUpload(
-        client, bucket_name, object_name, num_streams, prefix,
-        gcs::IfGenerationMatch(0));
+    // The `MinStreamSize` is here only for demonstration purposes only. Usually
+    // this should not be set (a sane default is used) or specified to a much
+    // higher value (several MB).
+    auto shards =
+        gcs::ParallelUploadFile(client, file_name, bucket_name, object_name,
+                                prefix, gcs::MinStreamSize(4));
 
-    if (!upload_state) {
-      throw std::runtime_error(upload_state.status().message());
+    if (!shards) {
+      throw std::runtime_error(shards.status().message());
     }
 
     std::vector<std::thread> threads;
-    for (std::size_t i = 0; i != num_streams; ++i) {
-      threads.emplace_back([i, &upload_state] {
-        auto stream = std::move(upload_state->shards[i]);
-        stream << "Content of shard #" << i << "\n";
-        stream.Close();
+    for (auto& shard : *shards) {
+      threads.emplace_back([&shard] {
+        // We can safely ignore the status - if something fails we'll know
+        // when obtaining final metadata.
+        shard.Upload();
       });
     }
     for (auto& thread : threads) {
       thread.join();
     }
 
-    auto object_metadata = upload_state->WaitForCompletion();
+    auto object_metadata = (*shards)[0].WaitForCompletion().get();
     if (!object_metadata) {
       throw std::runtime_error(object_metadata.status().message());
     }
 
     // This step is not mandatory - the destructor will try to cleanup and
     // silently ignore potential errors.
-    auto cleanup_status = upload_state->EagerCleanup();
+    auto cleanup_status = (*shards)[0].EagerCleanup();
     if (!cleanup_status.ok()) {
       throw std::runtime_error(object_metadata.status().message());
     }
 
-    // The prefix marker has still not been deleted. We might delete everything
-    // with this prefix, should EagerCleanup() fail on some files. It is the
-    // user's obligation to ensure that there are not unrelated objects with
-    // this prefix.
-    auto deletion_status =
-        DeleteByPrefix(client, bucket_name, prefix, gcs::Versions());
+    // The prefix marker has still not been deleted.
+    auto deletion_status = client.DeleteObject(bucket_name, prefix);
+    if (!deletion_status.ok()) {
+      throw std::runtime_error(deletion_status.message());
+    }
 
-    std::cout << "Uploaded object " << object_metadata->name() << " in bucket "
-              << object_metadata->bucket() << " via " << num_streams
-              << " streams."
+    std::cout << "Uploaded " << file_name << " to object "
+              << object_metadata->name() << " in bucket "
+              << object_metadata->bucket()
               << "\nFull metadata: " << *object_metadata << "\n";
   }
-  //! [parallel upload]
-  (std::move(client), bucket_name, object_name);
+  //! [upload file] [END storage_upload_file]
+  (std::move(client), file_name, bucket_name, object_name);
 }
 
 void DownloadFile(google::cloud::storage::Client client, int& argc,
@@ -1876,7 +1879,7 @@ int main(int argc, char* argv[]) try {
       {"resume-resumable-upload", &ResumeResumableUpload},
       {"upload-file", &UploadFile},
       {"upload-file-resumable", &UploadFileResumable},
-      {"parallel-upload", &ParallelUpload},
+      {"parallel-upload-file", &ParallelUploadFile},
       {"download-file", &DownloadFile},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},

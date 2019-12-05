@@ -292,7 +292,9 @@ if (BUILD_TESTING)
         testing/mock_http_request.cc
         testing/retry_tests.h
         testing/storage_integration_test.h
-        testing/storage_integration_test.cc)
+        testing/storage_integration_test.cc
+        testing/temp_file.h
+        testing/temp_file.cc)
     target_link_libraries(
         storage_client_testing
         PUBLIC storage_client nlohmann_json GTest::gmock_main GTest::gmock

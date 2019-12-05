@@ -33,7 +33,7 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
         state_(std::move(state)),
         stream_idx_(stream_idx) {}
 
-  StatusOr<internal::ResumableUploadResponse> Close() override {
+  StatusOr<ResumableUploadResponse> Close() override {
     auto res = this->ObjectWriteStreambuf::Close();
     state_->StreamFinished(stream_idx_, res);
     return res;
@@ -44,20 +44,17 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
   std::size_t stream_idx_;
 };
 
-}  // namespace internal
-
 NonResumableParallelUploadState::Impl::Impl(
-    std::unique_ptr<internal::ScopedDeleter> deleter, Composer composer)
+    std::unique_ptr<ScopedDeleter> deleter, Composer composer)
     : deleter_(std::move(deleter)),
       composer_(std::move(composer)),
       finished_{},
       num_unfinished_streams_{} {}
 
-NonResumableParallelUploadState::Impl::~Impl() { WaitForCompletion(); }
+NonResumableParallelUploadState::Impl::~Impl() { WaitForCompletion().wait(); }
 
 StatusOr<ObjectWriteStream> NonResumableParallelUploadState::Impl::CreateStream(
-    internal::RawClient& raw_client,
-    internal::ResumableUploadRequest const& request) {
+    RawClient& raw_client, ResumableUploadRequest const& request) {
   auto session = raw_client.CreateResumableSession(request);
   std::unique_lock<std::mutex> lk(mu_);
   if (!session) {
@@ -65,11 +62,11 @@ StatusOr<ObjectWriteStream> NonResumableParallelUploadState::Impl::CreateStream(
     res_ = session.status();
     return std::move(session).status();
   }
-  return ObjectWriteStream(google::cloud::internal::make_unique<
-                           internal::ParallelObjectWriteStreambuf>(
-      shared_from_this(), num_unfinished_streams_++, *std::move(session),
-      raw_client.client_options().upload_buffer_size(),
-      internal::CreateHashValidator(request)));
+  return ObjectWriteStream(
+      google::cloud::internal::make_unique<ParallelObjectWriteStreambuf>(
+          shared_from_this(), num_unfinished_streams_++, *std::move(session),
+          raw_client.client_options().upload_buffer_size(),
+          CreateHashValidator(request)));
 }
 
 Status NonResumableParallelUploadState::Impl::EagerCleanup() {
@@ -87,9 +84,17 @@ Status NonResumableParallelUploadState::Impl::EagerCleanup() {
   return cleanup_status_;
 }
 
+void NonResumableParallelUploadState::Impl::Fail(Status status) {
+  std::unique_lock<std::mutex> lk(mu_);
+  assert(!status.ok());
+  if (!res_) {
+    // Preserve the first error.
+    res_ = std::move(status);
+  }
+}
+
 void NonResumableParallelUploadState::Impl::StreamFinished(
-    std::size_t stream_idx,
-    StatusOr<internal::ResumableUploadResponse> const& response) {
+    std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
   std::unique_lock<std::mutex> lk(mu_);
 
   --num_unfinished_streams_;
@@ -112,19 +117,73 @@ void NonResumableParallelUploadState::Impl::StreamFinished(
   if (!res_) {
     // only execute ComposeMany if all the streams succeeded.
     lk.unlock();
-    res_ = composer_(std::move(to_compose_));
+    auto res = composer_(std::move(to_compose_));
     lk.lock();
+    res_ = std::move(res);
   }
   // All done, wake up whomever is waiting.
   finished_ = true;
-  cv_.notify_all();
+  auto promises_to_satisfy = std::move(res_promises_);
+  lk.unlock();
+  for (auto& promise : promises_to_satisfy) {
+    promise.set_value(*res_);
+  }
 }
 
-StatusOr<ObjectMetadata>
+future<StatusOr<ObjectMetadata>>
 NonResumableParallelUploadState::Impl::WaitForCompletion() const {
   std::unique_lock<std::mutex> lk(mu_);
-  cv_.wait(lk, [this] { return finished_; });
-  return *res_;
+
+  if (finished_) {
+    return make_ready_future(*res_);
+  }
+  res_promises_.emplace_back();
+  auto res = res_promises_.back().get_future();
+  return res;
+}
+
+}  // namespace internal
+
+ParallelUploadFileShard::~ParallelUploadFileShard() {
+  // If the object wasn't moved-from (i.e. `state != nullptr`) and
+  // `left_to_upload_ > 0` it means that the object is being destroyed without
+  // actually uploading the file. We should make sure we don't create the
+  // destination object and instead fail the whole operation.
+  if (state_ != nullptr && left_to_upload_ > 0) {
+    state_->Fail(Status(StatusCode::kCancelled,
+                        "Shard destroyed before calling "
+                        "ParallelUploadFileShard::Upload()."));
+  }
+}
+
+Status ParallelUploadFileShard::Upload() {
+  std::unique_ptr<char[]> buf(new char[upload_buffer_size_]);
+  while (left_to_upload_ > 0) {
+    std::size_t const to_copy =
+        std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_);
+    istream_.read(buf.get(), to_copy);
+    if (!istream_.good()) {
+      std::stringstream os;
+      os << __func__ << "("
+         << ", " << file_name_ << "): cannot read from file source";
+      Status status(StatusCode::kInternal, std::move(os).str());
+      state_->Fail(status);
+      ostream_.Close();
+      return status;
+    }
+    ostream_.write(buf.get(), to_copy);
+    if (!ostream_.good()) {
+      return Status(StatusCode::kInternal,
+                    "Writing to output stream failed, look into whole parallel "
+                    "upload status for more information");
+    }
+    left_to_upload_ -= to_copy;
+  }
+  ostream_.Close();
+  if (ostream_.metadata()) {
+    return Status();
+  }
+  return ostream_.metadata().status();
 }
 
 }  // namespace STORAGE_CLIENT_NS

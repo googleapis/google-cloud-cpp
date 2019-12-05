@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_PARALLEL_UPLOAD_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_PARALLEL_UPLOAD_H_
 
+#include "google/cloud/future.h"
+#include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/client.h"
@@ -24,8 +26,10 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>
+#include <fstream>
 #include <functional>
 #include <mutex>
+#include <sstream>
 #include <tuple>
 #include <utility>
 
@@ -54,8 +58,7 @@ struct ComposeManyApplyHelper {
 
 class SetOptionsApplyHelper {
  public:
-  SetOptionsApplyHelper(internal::ResumableUploadRequest& request)
-      : request(request) {}
+  SetOptionsApplyHelper(ResumableUploadRequest& request) : request(request) {}
 
   template <typename... Options>
   void operator()(Options... options) const {
@@ -63,27 +66,24 @@ class SetOptionsApplyHelper {
   }
 
  private:
-  internal::ResumableUploadRequest& request;
+  ResumableUploadRequest& request;
 };
-
-}  // namespace internal
 
 /**
  * The state controlling uploading a GCS object via multiple parallel streams.
  *
- * The user is expected to obtain this state via `PrepareParallelUpload()` and
- * then write the data to streams available to the user in the `shards` member.
- * Once the writing is done, the user should close or destroy the streams.
+ * To use this class obtain the state via `PrepareParallelUpload` and then write
+ * the data to the streams available in the `shards` member. Once writing is
+ * done, close or destroy the streams.
  *
- * Data written to shards will be joined into the destination object after all
- * streams are `Close`d or destroyed.
+ * When all the streams are `Close`d or destroyed, this class will join the
+ * them (via `ComposeMany`) into the destination object and set the value in
+ * `future`s returned by `WaitForCompletion`.
  *
- * Once the data is uploaded, the `WaitForCompletion*` functions will return the
- * metadata of the destination object. They may be called multiple times.
- *
- * Temporary files are created in the process. They are attempted to be removed
- * in the destructor, but if they fail, they fail silently. In order to
- * proactively cleanup these files, one can call `EagerCleanup()`.
+ * Parallel upload will create temporary files. Upon completion of the whole
+ * operation, this class will attempt to remove them in its destructor, but if
+ * they fail, they fail silently. In order to proactively cleanup these files,
+ * one can call `EagerCleanup()`.
  */
 class NonResumableParallelUploadState {
  public:
@@ -94,57 +94,26 @@ class NonResumableParallelUploadState {
       std::string const& prefix, Options&&... options);
 
   /**
-   * Poll the operation for completion.
+   * Asynchronously wait for completion of the whole upload operation.
    *
-   * The function blocks until all the streams have been `Close`d or destroyed.
-   *
-   * @return the destination object metadata
+   * @return the returned future will have a value set to the destination object
+   *     metadata when all the streams are `Close`d or destroyed.
    */
-  StatusOr<ObjectMetadata> WaitForCompletion() const {
+  future<StatusOr<ObjectMetadata>> WaitForCompletion() const {
     return impl_->WaitForCompletion();
-  }
-
-  /**
-   * Poll the operation for completion.
-   *
-   * The function blocks until all the streams have been `Close`d or destroyed,
-   * but no longer than `rel_time`.
-   *
-   * @param rel_time timeout duration
-   * @return the destination object metadata or empty `optional` in case of
-   *     timeout
-   */
-  template <class Rep, class Period>
-  optional<StatusOr<ObjectMetadata>> WaitForCompletionFor(
-      const std::chrono::duration<Rep, Period>& rel_time) const {
-    return WaitForCompletionUntil(std::chrono::steady_clock::now() + rel_time);
-  }
-
-  /**
-   * Poll the operation for completion.
-   *
-   * The function blocks until all the streams have been `Close`d or destroyed,
-   * but no longer than until `timeout_time`.
-   *
-   * @param timeout_time time point when the function times out
-   * @return the destination object metadata or empty `optional` in case of
-   *     timeout
-   */
-  template <class Clock, class Duration>
-  optional<StatusOr<ObjectMetadata>> WaitForCompletionUntil(
-      const std::chrono::time_point<Clock, Duration>& timeout_time) const {
-    return impl_->WaitForCompletionUntil(timeout_time);
   }
 
   /**
    * Cleanup all the temporary files
    *
    * The destruction of this object will perform cleanup of all the temporary
-   * files used in the process of the paralell upload. If the cleanup fails, it
+   * files used in the process of the parallel upload. If the cleanup fails, it
    * will fail silently not to crash the program.
    *
    * If you want to control the status of the cleanup, use this member function
    * to do it eagerly, before destruction.
+   *
+   * @return the status of the cleanup.
    */
   Status EagerCleanup() { return impl_->EagerCleanup(); }
 
@@ -159,53 +128,53 @@ class NonResumableParallelUploadState {
    */
   std::vector<ObjectWriteStream> shards;
 
+  /**
+   * Fail the whole operation.
+   *
+   * If called before all streams are closed or destroyed, calling this
+   * operation will prevent composing the streams into the final destination
+   * object and return a failure via `WaitForCompletion()`.
+   *
+   * @param status the status to fail the operation with.
+   */
+  void Fail(Status status) { return impl_->Fail(std::move(status)); }
+
  private:
+  // Type-erased function object to execute ComposeMany with most arguments
+  // bound.
   using Composer =
       std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>;
 
   // The `ObjectWriteStream`s have to hold references to the state of
   // the parallel upload so that they can update it when finished and trigger
-  // shards composition hence `NonResumableParallelUploadState` has to be
+  // shards composition, hence `NonResumableParallelUploadState` has to be
   // destroyed after the `ObjectWriteStream`s.
   // `NonResumableParallelUploadState` and `ObjectWriteStream`s are passed
   // around by values, so we don't control their lifetime. In order to
   // circumvent it, we move the state to something held by a `shared_ptr`.
   class Impl : public std::enable_shared_from_this<Impl> {
    public:
-    // Type-erased function object to execute ComposeMany with most arguments
-    // bound.
-    Impl(std::unique_ptr<internal::ScopedDeleter> deleter, Composer composer);
+    Impl(std::unique_ptr<ScopedDeleter> deleter, Composer composer);
     ~Impl();
 
     StatusOr<ObjectWriteStream> CreateStream(
-        internal::RawClient& raw_client,
-        internal::ResumableUploadRequest const& request);
+        RawClient& raw_client, ResumableUploadRequest const& request);
 
-    void StreamFinished(
-        std::size_t stream_idx,
-        StatusOr<internal::ResumableUploadResponse> const& response);
+    void StreamFinished(std::size_t stream_idx,
+                        StatusOr<ResumableUploadResponse> const& response);
 
-    // Poll for the operation to complete.
-    template <class Clock, class Duration>
-    optional<StatusOr<ObjectMetadata>> WaitForCompletionUntil(
-        const std::chrono::time_point<Clock, Duration>& timeout_time) const {
-      std::unique_lock<std::mutex> lk(mu_);
-      if (!cv_.wait_until(lk, timeout_time, [this] { return finished_; })) {
-        return optional<StatusOr<ObjectMetadata>>();
-      }
-
-      return *res_;
-    }
-
-    StatusOr<ObjectMetadata> WaitForCompletion() const;
+    future<StatusOr<ObjectMetadata>> WaitForCompletion() const;
 
     Status EagerCleanup();
 
+    void Fail(Status status);
+
    private:
     mutable std::mutex mu_;
-    mutable std::condition_variable cv_;
+    // Promises made via `WaitForCompletion()`
+    mutable std::vector<promise<StatusOr<ObjectMetadata>>> res_promises_;
     // Type-erased object for deleting temporary objects.
-    std::unique_ptr<internal::ScopedDeleter> deleter_;
+    std::unique_ptr<ScopedDeleter> deleter_;
     // Type-erased function object to execute ComposeMany with most arguments
     // bound.
     std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>
@@ -225,14 +194,14 @@ class NonResumableParallelUploadState {
 
   std::shared_ptr<Impl> impl_;
 
-  friend class internal::ParallelObjectWriteStreambuf;
+  friend class ParallelObjectWriteStreambuf;
 };
 
 /**
- * Prapre a parallel upload state.
+ * Prepare a parallel upload state.
  *
- * The returned `NonResumableParallelUploadState` will contained streams to
- * which data can be uploaded in parallel.
+ * The returned `NonResumableParallelUploadState` will contain streams to which
+ * data can be uploaded in parallel.
  *
  * @param client the client on which to perform the operation.
  * @param bucket_name the name of the bucket that will contain the object.
@@ -250,15 +219,11 @@ class NonResumableParallelUploadState {
  * This operation is not idempotent. While each request performed by this
  * function is retried based on the client policies, the operation itself stops
  * on the first request that fails.
- *
- * @par Example
- * @snippet storage_object_samples.cc parallel upload
  */
-template <
-    typename... Options,
-    typename std::enable_if<internal::NotAmong<Options...>::template TPred<
-                                UseResumableUploadSession>::value,
-                            int>::type enable_if_not_resumable = 0>
+template <typename... Options,
+          typename std::enable_if<NotAmong<Options...>::template TPred<
+                                      UseResumableUploadSession>::value,
+                                  int>::type enable_if_not_resumable = 0>
 StatusOr<NonResumableParallelUploadState> PrepareParallelUpload(
     Client client, std::string const& bucket_name,
     std::string const& object_name, std::size_t num_shards,
@@ -276,19 +241,16 @@ NonResumableParallelUploadState::Create(Client client,
                                         std::size_t num_shards,
                                         std::string const& prefix,
                                         Options&&... options) {
-  using internal::Among;
   using internal::StaticTupleFilter;
-
   auto all_options = std::make_tuple(std::forward<Options>(options)...);
   auto delete_options =
       StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
           all_options);
-  auto deleter = google::cloud::internal::make_unique<internal::ScopedDeleter>(
+  auto deleter = google::cloud::internal::make_unique<ScopedDeleter>(
       [client, bucket_name,
        delete_options](ObjectMetadata const& object) mutable {
         return google::cloud::internal::apply(
-            internal::DeleteApplyHelper{client, std::move(bucket_name),
-                                        object.name()},
+            DeleteApplyHelper{client, std::move(bucket_name), object.name()},
             std::tuple_cat(
                 std::make_tuple(IfGenerationMatch(object.generation())),
                 std::move(delete_options)));
@@ -301,9 +263,9 @@ NonResumableParallelUploadState::Create(Client client,
   auto composer = [client, bucket_name, object_name, compose_options,
                    prefix](std::vector<ComposeSourceObject> sources) mutable {
     return google::cloud::internal::apply(
-        internal::ComposeManyApplyHelper{
-            client, std::move(bucket_name), std::move(sources),
-            prefix + ".compose_many", std::move(object_name)},
+        ComposeManyApplyHelper{client, std::move(bucket_name),
+                               std::move(sources), prefix + ".compose_many",
+                               std::move(object_name)},
         std::move(compose_options));
   };
 
@@ -317,9 +279,9 @@ NonResumableParallelUploadState::Create(Client client,
             WithObjectMetadata>::TPred>(std::move(all_options));
   auto& raw_client = *client.raw_client_;
   for (std::size_t i = 0; i < num_shards; ++i) {
-    internal::ResumableUploadRequest request(
+    ResumableUploadRequest request(
         bucket_name, prefix + ".upload_shard_" + std::to_string(i));
-    google::cloud::internal::apply(internal::SetOptionsApplyHelper(request),
+    google::cloud::internal::apply(SetOptionsApplyHelper(request),
                                    upload_options);
     auto stream = internal_state->CreateStream(raw_client, request);
     if (!stream) {
@@ -329,6 +291,266 @@ NonResumableParallelUploadState::Create(Client client,
   }
   return NonResumableParallelUploadState(std::move(internal_state),
                                          std::move(streams));
+}
+
+/**
+ * Return an empty option if Tuple contains an element of type T, otherwise
+ *     return the value of the first element of type T
+ */
+template <typename T, typename Tuple, typename Enable = void>
+struct ExtractFirstOccurenceOfTypeImpl {
+  optional<T> operator()(Tuple const& /*tuple*/) { return optional<T>(); }
+};
+
+template <typename T, typename... Options>
+struct ExtractFirstOccurenceOfTypeImpl<
+    T, std::tuple<Options...>,
+    typename std::enable_if<
+        Among<typename std::decay<Options>::type...>::template TPred<
+            typename std::decay<T>::type>::value>::type> {
+  optional<T> operator()(std::tuple<Options...> const& tuple) {
+    return std::get<0>(StaticTupleFilter<Among<T>::template TPred>(tuple));
+  }
+};
+
+template <typename T, typename Tuple>
+optional<T> ExtractFirstOccurenceOfType(Tuple const& tuple) {
+  return ExtractFirstOccurenceOfTypeImpl<T, Tuple>()(tuple);
+}
+
+struct PrepareParallelUploadApplyHelper {
+  template <typename... Options>
+  StatusOr<NonResumableParallelUploadState> operator()(Options&&... options) {
+    return NonResumableParallelUploadState::Create(
+        std::move(client), bucket_name, object_name, num_shards, prefix,
+        std::forward<Options>(options)...);
+  }
+
+  Client client;
+  std::string bucket_name;
+  std::string object_name;
+  std::size_t num_shards;
+  std::string prefix;
+};
+
+}  // namespace internal
+
+/**
+ * A class representing an individual shard of the parallel upload.
+ *
+ * In order to perform a parallel upload of a file, you should call
+ * `ParallelUploadFile()` and it will return a vector of objects of this class.
+ * You should execute the `Upload()` member function on them in parallel to
+ * execute the upload.
+ *
+ * You can then obtain the status of the whole upload via `WaitForCompletion()`.
+ */
+class ParallelUploadFileShard {
+ public:
+  ParallelUploadFileShard(ParallelUploadFileShard const&) = delete;
+  ParallelUploadFileShard& operator=(ParallelUploadFileShard const&) = delete;
+  ParallelUploadFileShard(ParallelUploadFileShard&&) = default;
+  ~ParallelUploadFileShard();
+
+  /**
+   * Perform the upload of this shard.
+   *
+   * This function will block and return
+   */
+  Status Upload();
+
+  /**
+   * Asynchronously wait for completion of the whole upload operation.
+   *
+   * @return the returned future will have a value set to the destination object
+   *     metadata when `Upload()` is called on all shards returned from
+   *     `ParallelUploadFile()`.
+   */
+  future<StatusOr<ObjectMetadata>> WaitForCompletion() {
+    return state_->WaitForCompletion();
+  }
+
+  /**
+   * Cleanup all the temporary files
+   *
+   * The destruction of the last of these objects tied to a parallel upload will
+   * cleanup of all the temporary files used in the process of that parallel
+   * upload. If the cleanup fails, it will fail silently not to crash the
+   * program.
+   *
+   * If you want to control the status of the cleanup, use this member function
+   * to do it eagerly, before destruction.
+   *
+   * It is enough to call it on one of the objects, but it is not invalid to
+   * call it on all objects.
+   */
+  Status EagerCleanup() { return state_->EagerCleanup(); }
+
+ private:
+  ParallelUploadFileShard(
+      std::shared_ptr<internal::NonResumableParallelUploadState> state,
+      std::ifstream&& istream, ObjectWriteStream&& ostream,
+      std::uintmax_t left_to_upload, std::size_t upload_buffer_size,
+      std::string file_name)
+      : state_(std::move(state)),
+        istream_(std::move(istream)),
+        ostream_(std::move(ostream)),
+        left_to_upload_(left_to_upload),
+        upload_buffer_size_(upload_buffer_size),
+        file_name_(std::move(file_name)) {}
+
+  std::shared_ptr<internal::NonResumableParallelUploadState> state_;
+  std::ifstream istream_;
+  ObjectWriteStream ostream_;
+  std::uintmax_t left_to_upload_;
+  std::size_t upload_buffer_size_;
+  std::string file_name_;
+
+  template <typename... Options>
+  friend StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
+      Client client, std::string file_name, std::string bucket_name,
+      std::string object_name, std::string prefix, Options&&... options);
+};
+
+/**
+ * A parameter type indicating the maximum #streams to `ParallelUploadFile`.
+ */
+class MaxStreams {
+ public:
+  MaxStreams(std::size_t value) : value_(value) {}
+  std::size_t value() { return value_; }
+
+ private:
+  std::size_t value_;
+};
+
+/**
+ * A parameter type indicating the minimum stream size to `ParallelUploadFile`.
+ *
+ * If `ParallelUploadFile`, receives this option it will attempt to make sure
+ * that every shard is at least this long. This might not apply to the last
+ * shard because it will be the remainder of the division of the file.
+ */
+class MinStreamSize {
+ public:
+  MinStreamSize(std::uintmax_t value) : value_(value) {}
+  std::uintmax_t value() { return value_; }
+
+ private:
+  std::uintmax_t value_;
+};
+
+/**
+ * Prepare a parallel upload of a given file.
+ *
+ * The returned opaque objects reflect computed shards of the given file. Each
+ * of them has an `Upload()` member function which will perform the upload of
+ * that shard. You should parallelize running this function on them according to
+ * your needs. You can affect how many shards will be created by using the
+ * `MaxStreams` and `MinStreamSize` options.
+ *
+ * Any of the returned objects can be used for obtaining the metadata of the
+ * resulting object.
+ *
+ * @param client the client on which to perform the operation.
+ * @param file_name the path to the file to be uploaded
+ * @param bucket_name the name of the bucket that will contain the object.
+ * @param object_name the uploaded object name.
+ * @param prefix the prefix with which temporary objects will be created.
+ * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `DestinationPredefinedAcl`,
+ *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`,
+ *     `KmsKeyName`, `MaxStreams, `MinStreamSize`, `QuotaUser`, `UserIp`,
+ * `UserProject`, `WithObjectMetadata`.
+ *
+ * @return the state of the parallel upload
+ *
+ * @par Idempotency
+ * This operation is not idempotent. While each request performed by this
+ * function is retried based on the client policies, the operation itself stops
+ * on the first request that fails.
+ */
+template <typename... Options>
+StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
+    Client client, std::string file_name, std::string bucket_name,
+    std::string object_name, std::string prefix, Options&&... options) {
+  auto div_ceil = [](std::uintmax_t dividend, std::size_t divisor) {
+    return (dividend + divisor - 1) / divisor;
+  };
+
+  std::error_code size_err;
+  auto file_size = google::cloud::internal::file_size(file_name, size_err);
+  if (size_err) {
+    return Status(StatusCode::kNotFound, size_err.message());
+  }
+
+  auto max_streams_arg =
+      internal::ExtractFirstOccurenceOfType<MaxStreams>(std::tie(options...));
+  std::size_t const max_streams =
+      max_streams_arg ? max_streams_arg->value() : 64;
+  auto min_stream_size_arg =
+      internal::ExtractFirstOccurenceOfType<MinStreamSize>(
+          std::tie(options...));
+  std::uintmax_t const min_stream_size = std::max<std::uintmax_t>(
+      1, min_stream_size_arg ? min_stream_size_arg->value() : (2ULL << 20));
+  std::size_t const wanted_num_streams = std::max<std::size_t>(
+      1, std::min(max_streams, div_ceil(file_size, min_stream_size)));
+  std::uintmax_t const stream_size =
+      std::max<std::uintmax_t>(1, div_ceil(file_size, wanted_num_streams));
+  // Due to rounding errors this number might potentially be less than
+  // wanted_num_streams (though I was too lazy to check exactly when).
+  std::size_t const num_streams =
+      std::max<std::size_t>(1U, div_ceil(file_size, stream_size));
+
+  // First open the file to not leave any trash behind when the source file
+  // doesn't exist.
+  std::vector<std::ifstream> input_streams;
+  for (std::size_t i = 0; i < num_streams; ++i) {
+    std::ifstream is(file_name, std::ios::binary);
+    if (!is.good()) {
+      std::stringstream os;
+      os << __func__ << "(" << file_name << "): cannot open upload file source";
+      return Status(StatusCode::kNotFound, std::move(os).str());
+    }
+    is.seekg(stream_size * i);
+    if (!is.good()) {
+      std::stringstream os;
+      os << __func__ << "(" << file_name
+         << "): file changed size during upload?";
+      return Status(StatusCode::kNotFound, std::move(os).str());
+    }
+    input_streams.emplace_back(std::move(is));
+  }
+  auto upload_buffer_size =
+      client.raw_client()->client_options().upload_buffer_size();
+
+  // Create the upload state.
+  auto upload_options = internal::StaticTupleFilter<
+      internal::NotAmong<MaxStreams, MinStreamSize>::TPred>(
+      std::tie(options...));
+  auto state = google::cloud::internal::apply(
+      internal::PrepareParallelUploadApplyHelper{
+          std::move(client), std::move(bucket_name), std::move(object_name),
+          num_streams, std::move(prefix)},
+      std::move(upload_options));
+  if (!state) {
+    return state.status();
+  }
+  auto shared_state =
+      std::make_shared<internal::NonResumableParallelUploadState>(
+          *std::move(state));
+  std::vector<ParallelUploadFileShard> res;
+
+  // Everything ready - we've got the shared state and the files open, let's
+  // prepare the returned objects.
+  for (std::size_t i = 0; i < num_streams; ++i) {
+    std::uintmax_t size = std::min(file_size - stream_size * i, stream_size);
+    res.emplace_back(
+        ParallelUploadFileShard(shared_state, std::move(input_streams[i]),
+                                std::move(shared_state->shards[i]), size,
+                                upload_buffer_size, file_name));
+  }
+  return res;
 }
 
 }  // namespace STORAGE_CLIENT_NS

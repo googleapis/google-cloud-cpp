@@ -16,6 +16,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/expect_exception.h"
@@ -1020,33 +1021,34 @@ TEST_F(ObjectIntegrationTest, ParallelUpload) {
   std::string const dest_object_name = prefix + ".dest";
 
   std::vector<std::thread> threads;
-  std::string expected;
 
-  auto upload_state =
-      PrepareParallelUpload(*client, bucket_name, dest_object_name, 100, prefix,
-                            IfGenerationMatch(0));
-  ASSERT_STATUS_OK(upload_state);
-  for (int i = 0; i != 100; ++i) {
-    expected += std::to_string(i);
-    threads.emplace_back([i, &upload_state] {
-      auto stream = std::move(upload_state->shards[i]);
-      stream << i;
-      stream.Close();
+  testing::TempFile temp_file(LoremIpsum());
+
+  auto shards = ParallelUploadFile(*client, temp_file.name(), bucket_name,
+                                   dest_object_name, prefix, MinStreamSize(0),
+                                   IfGenerationMatch(0));
+  ASSERT_STATUS_OK(shards);
+  for (auto& shard : *shards) {
+    threads.emplace_back([&shard] {
+      // We can safely ignore the status - if something fails we'll know
+      // when obtaining final metadata.
+      shard.Upload();
     });
   }
   for (auto& thread : threads) {
     thread.join();
   }
 
-  auto res = upload_state->WaitForCompletion();
-  ASSERT_STATUS_OK(res);
+  auto object_metadata = (*shards)[0].WaitForCompletion().get();
+  ASSERT_STATUS_OK(object_metadata);
 
-  auto stream = client->ReadObject(bucket_name, dest_object_name,
-                                   IfGenerationMatch(res->generation()));
+  auto stream =
+      client->ReadObject(bucket_name, dest_object_name,
+                         IfGenerationMatch(object_metadata->generation()));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
+  EXPECT_EQ(LoremIpsum(), actual);
 
-  EXPECT_STATUS_OK(upload_state->EagerCleanup());
+  EXPECT_STATUS_OK((*shards)[0].EagerCleanup());
 
   std::vector<ObjectMetadata> objects;
   for (auto& object : client->ListObjects(bucket_name)) {

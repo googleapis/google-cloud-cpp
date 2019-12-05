@@ -43,6 +43,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+class NonResumableParallelUploadState;
+}  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
  *
@@ -3046,7 +3049,7 @@ class Client {
 
   std::shared_ptr<internal::RawClient> raw_client_;
 
-  friend class NonResumableParallelUploadState;
+  friend class internal::NonResumableParallelUploadState;
 };
 
 /**
