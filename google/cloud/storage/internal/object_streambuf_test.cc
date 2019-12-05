@@ -33,6 +33,7 @@ using ::testing::_;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
 using ::testing::Invoke;
+using ::testing::InvokeWithoutArgs;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::SizeIs;
@@ -110,11 +111,13 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
   std::string const payload(quantum, '*');
 
   int count = 0;
+  size_t next_byte = 0;
   EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
     EXPECT_EQ(payload, p);
     auto last_committed_byte = payload.size() - 1;
+    next_byte = last_committed_byte + 1;
     return make_status_or(ResumableUploadResponse{
         "", last_committed_byte, {}, ResumableUploadResponse::kInProgress, {}});
   }));
@@ -132,7 +135,9 @@ TEST(ObjectWriteStreambufTest, EmptyTrailer) {
                                     ResumableUploadResponse::kInProgress,
                                     {}});
       }));
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), quantum,
@@ -152,16 +157,18 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
   auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
   std::string const payload_1(3 * quantum, '*');
   std::string const payload_2("trailer");
-
+  size_t next_byte = 0;
   {
     InSequence seq;
-    EXPECT_CALL(*mock, UploadChunk(_))
-        .WillOnce(Return(make_status_or(
-            ResumableUploadResponse{"",
-                                    payload_1.size() - 1,
-                                    {},
-                                    ResumableUploadResponse::kInProgress,
-                                    {}})));
+    EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(InvokeWithoutArgs([&]() {
+      next_byte = payload_1.size();
+      return make_status_or(
+          ResumableUploadResponse{"",
+                                  payload_1.size() - 1,
+                                  {},
+                                  ResumableUploadResponse::kInProgress,
+                                  {}});
+    }));
     EXPECT_CALL(
         *mock, UploadFinalChunk(payload_2, payload_1.size() + payload_2.size()))
         .WillOnce(Return(make_status_or(
@@ -171,7 +178,9 @@ TEST(ObjectWriteStreambufTest, FlushAfterLargePayload) {
                                     ResumableUploadResponse::kInProgress,
                                     {}})));
   }
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(3 * quantum));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), 3 * quantum,
@@ -194,11 +203,13 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
   std::string const payload_2(quantum, '*');
 
   int count = 0;
+  size_t next_byte = 0;
   EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
     auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
     EXPECT_EQ(expected, p);
+    next_byte += p.size();
     return make_status_or(ResumableUploadResponse{
         "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   }));
@@ -217,7 +228,9 @@ TEST(ObjectWriteStreambufTest, FlushAfterFullQuantum) {
                                     ResumableUploadResponse::kInProgress,
                                     {}});
       }));
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), quantum,
@@ -238,11 +251,13 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   std::string const payload(quantum, '*');
 
   int count = 0;
+  size_t next_byte = 0;
   EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
     auto expected = payload;
     EXPECT_EQ(expected, p);
+    next_byte += p.size();
     return make_status_or(ResumableUploadResponse{
         "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   }));
@@ -260,7 +275,9 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
                                     ResumableUploadResponse::kInProgress,
                                     {}});
       }));
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
   EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
 
   ObjectWriteStreambuf streambuf(
@@ -272,6 +289,118 @@ TEST(ObjectWriteStreambufTest, OverflowFlushAtFullQuantum) {
   }
   auto response = streambuf.Close();
   EXPECT_STATUS_OK(response);
+}
+
+/// @test verify that bytes not accepted by GCS will be re-uploaded next Flush.
+TEST(ObjectWriteStreambufTest, SomeBytesNotAccepted) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = std::string(quantum, '*') + "abcde";
+
+  size_t next_byte = 0;
+  uint64_t const bytes_uploaded_first_try = quantum - 1;
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    auto expected = payload.substr(0, quantum);
+    EXPECT_EQ(expected, p);
+    next_byte += bytes_uploaded_first_try;
+    return make_status_or(
+        ResumableUploadResponse{"",
+                                bytes_uploaded_first_try - 1,
+                                {},
+                                ResumableUploadResponse::kInProgress,
+                                {}});
+  }));
+  EXPECT_CALL(*mock, UploadFinalChunk(_, _))
+      .WillOnce(Invoke([&](std::string const& p, std::uint64_t s) {
+        EXPECT_EQ(p, payload.substr(bytes_uploaded_first_try));
+        EXPECT_EQ(payload.size(), s);
+        auto last_committed_byte = payload.size() - 1;
+        return make_status_or(
+            ResumableUploadResponse{"{}",
+                                    last_committed_byte,
+                                    {},
+                                    ResumableUploadResponse::kInProgress,
+                                    {}});
+      }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
+
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+
+  std::ostream output(&streambuf);
+  output << payload;
+  auto response = streambuf.Close();
+  EXPECT_STATUS_OK(response);
+}
+
+/// @test verify that the upload steam transitions to a bad state if the next
+/// expected byte jumps.
+TEST(ObjectWriteStreambufTest, NextExpectedByteJumpsAhead) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = std::string(quantum * 2, '*');
+
+  size_t next_byte = 0;
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
+    next_byte += quantum * 2;
+    auto expected = payload.substr(0, quantum);
+    EXPECT_EQ(expected, p);
+    return make_status_or(ResumableUploadResponse{
+        "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
+  std::string id = "id";
+  EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(id));
+
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+  std::ostream output(&streambuf);
+  output << payload;
+  EXPECT_FALSE(output.good());
+  EXPECT_EQ(streambuf.last_status().code(), StatusCode::kAborted);
+}
+
+/// @test verify that the upload steam transitions to a bad state if the next
+/// expected byte decreases.
+TEST(ObjectWriteStreambufTest, NextExpectedByteDecreases) {
+  auto mock = google::cloud::internal::make_unique<
+      testing::MockResumableUploadSession>();
+
+  auto const quantum = UploadChunkRequest::kChunkSizeQuantum;
+  std::string const payload = std::string(quantum * 2, '*');
+
+  auto next_byte = quantum;
+  EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(InvokeWithoutArgs([&]() {
+    next_byte--;
+    return make_status_or(ResumableUploadResponse{
+        "", next_byte - 1, {}, ResumableUploadResponse::kInProgress, {}});
+  }));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
+  EXPECT_CALL(*mock, done).WillRepeatedly(Return(false));
+  std::string id = "id";
+  EXPECT_CALL(*mock, session_id).WillOnce(ReturnRef(id));
+
+  ObjectWriteStreambuf streambuf(
+      std::move(mock), quantum,
+      google::cloud::internal::make_unique<NullHashValidator>());
+  std::ostream output(&streambuf);
+  output << payload;
+  EXPECT_FALSE(output.good());
+  EXPECT_EQ(streambuf.last_status().code(), StatusCode::kAborted);
 }
 
 /// @test Verify that a stream flushes when mixing operations that add one
@@ -286,11 +415,13 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
   std::string const payload_2(quantum, '*');
 
   int count = 0;
+  size_t next_byte = 0;
   EXPECT_CALL(*mock, UploadChunk(_)).WillOnce(Invoke([&](std::string const& p) {
     ++count;
     EXPECT_EQ(1, count);
     auto expected = payload_1 + payload_2.substr(0, quantum - payload_1.size());
     EXPECT_EQ(expected, p);
+    next_byte += p.size();
     return make_status_or(ResumableUploadResponse{
         "", quantum - 1, {}, ResumableUploadResponse::kInProgress, {}});
   }));
@@ -309,7 +440,9 @@ TEST(ObjectWriteStreambufTest, MixPutcPutn) {
                                     ResumableUploadResponse::kInProgress,
                                     {}});
       }));
-  EXPECT_CALL(*mock, next_expected_byte()).WillOnce(Return(quantum));
+  EXPECT_CALL(*mock, next_expected_byte()).WillRepeatedly(Invoke([&]() {
+    return next_byte;
+  }));
 
   ObjectWriteStreambuf streambuf(
       std::move(mock), quantum,
