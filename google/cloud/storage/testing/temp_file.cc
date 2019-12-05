@@ -27,7 +27,7 @@ TempFile::TempFile(std::string const& content) {
   // This is obviously racy, but there is no portable way to create a
   // uniquely-named temporary file and know its name.
   char tmpfile_name[L_tmpnam];
-  std::tmpnam(tmpfile_name);
+  EXPECT_TRUE(std::tmpnam(tmpfile_name));
   std::ofstream f(tmpfile_name, std::ios::binary | std::ios::trunc);
   EXPECT_TRUE(f.good());
   f.write(content.data(), content.size());
