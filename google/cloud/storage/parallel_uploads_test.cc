@@ -697,9 +697,7 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
 
   EXPECT_STATUS_OK((*uploaders)[0].Upload());
   EXPECT_STATUS_OK((*uploaders)[2].Upload());
-  {
-    auto to_destroy = std::move((*uploaders)[1]);
-  }
+  { auto to_destroy = std::move((*uploaders)[1]); }
 
   auto res = (*uploaders)[0].WaitForCompletion().get();
   EXPECT_FALSE(res);
