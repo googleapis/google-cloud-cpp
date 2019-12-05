@@ -389,7 +389,7 @@ class ParallelUploadFileShard {
  private:
   ParallelUploadFileShard(
       std::shared_ptr<internal::NonResumableParallelUploadState> state,
-      std::ifstream&& istream, ObjectWriteStream&& ostream,
+      std::unique_ptr<std::ifstream> istream, ObjectWriteStream&& ostream,
       std::uintmax_t left_to_upload, std::size_t upload_buffer_size,
       std::string file_name)
       : state_(std::move(state)),
@@ -400,7 +400,7 @@ class ParallelUploadFileShard {
         file_name_(std::move(file_name)) {}
 
   std::shared_ptr<internal::NonResumableParallelUploadState> state_;
-  std::ifstream istream_;
+  std::unique_ptr<std::ifstream> istream_;
   ObjectWriteStream ostream_;
   std::uintmax_t left_to_upload_;
   std::size_t upload_buffer_size_;
@@ -504,16 +504,17 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
 
   // First open the file to not leave any trash behind when the source file
   // doesn't exist.
-  std::vector<std::ifstream> input_streams;
+  std::vector<std::unique_ptr<std::ifstream>> input_streams;
   for (std::size_t i = 0; i < num_streams; ++i) {
-    std::ifstream is(file_name, std::ios::binary);
-    if (!is.good()) {
+    auto is = google::cloud::internal::make_unique<std::ifstream>(
+        file_name, std::ios::binary);
+    if (!is->good()) {
       std::stringstream os;
       os << __func__ << "(" << file_name << "): cannot open upload file source";
       return Status(StatusCode::kNotFound, std::move(os).str());
     }
-    is.seekg(stream_size * i);
-    if (!is.good()) {
+    is->seekg(stream_size * i);
+    if (!is->good()) {
       std::stringstream os;
       os << __func__ << "(" << file_name
          << "): file changed size during upload?";

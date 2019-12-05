@@ -161,8 +161,8 @@ Status ParallelUploadFileShard::Upload() {
   while (left_to_upload_ > 0) {
     std::size_t const to_copy =
         std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_);
-    istream_.read(buf.get(), to_copy);
-    if (!istream_.good()) {
+    istream_->read(buf.get(), to_copy);
+    if (!istream_->good()) {
       std::stringstream os;
       os << __func__ << "("
          << ", " << file_name_ << "): cannot read from file source";
