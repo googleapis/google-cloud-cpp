@@ -338,6 +338,7 @@ function (spanner_client_define_tests)
         retry_policy_test.cc
         row_test.cc
         query_partition_test.cc
+        session_pool_options_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
         transaction_test.cc

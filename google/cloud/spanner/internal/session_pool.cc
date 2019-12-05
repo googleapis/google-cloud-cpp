@@ -29,33 +29,17 @@ namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
-namespace {
-
-// Ensure the options have sensible values.
-SessionPoolOptions SanitizeOptions(SessionPoolOptions options,
-                                   int num_channels) {
-  options.min_sessions = (std::max)(options.min_sessions, 0);
-  options.max_sessions_per_channel =
-      (std::max)(options.max_sessions_per_channel, 1);
-  options.min_sessions = (std::min)(
-      options.min_sessions, options.max_sessions_per_channel * num_channels);
-  options.max_idle_sessions = (std::max)(options.max_idle_sessions, 0);
-  return options;
-}
-
-}  // namespace
-
 SessionPool::SessionPool(Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
                          SessionPoolOptions options,
                          std::unique_ptr<RetryPolicy> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy)
     : db_(std::move(db)),
-      options_(
-          SanitizeOptions(std::move(options), static_cast<int>(stubs.size()))),
+      options_(std::move(
+          options.EnforceConstraints(static_cast<int>(stubs.size())))),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
-      max_pool_size_(options_.max_sessions_per_channel *
+      max_pool_size_(options_.max_sessions_per_channel() *
                      static_cast<int>(stubs.size())) {
   if (stubs.empty()) {
     google::cloud::internal::ThrowInvalidArgument(
@@ -70,17 +54,17 @@ SessionPool::SessionPool(Database db,
   next_dissociated_stub_channel_ = channels_.begin();
   next_channel_for_create_sessions_ = channels_.begin();
 
-  if (options_.min_sessions == 0) {
+  if (options_.min_sessions() == 0) {
     return;
   }
 
   // Eagerly initialize the pool with `min_sessions` sessions.
   std::unique_lock<std::mutex> lk(mu_);
   int num_channels = static_cast<int>(channels_.size());
-  int sessions_per_channel = options_.min_sessions / num_channels;
+  int sessions_per_channel = options_.min_sessions() / num_channels;
   // If the number of sessions doesn't divide evenly by the number of channels,
   // add one extra session to the first `extra_sessions` channels.
-  int extra_sessions = options_.min_sessions % num_channels;
+  int extra_sessions = options_.min_sessions() % num_channels;
   for (auto& channel : channels_) {
     int num_sessions = sessions_per_channel;
     if (extra_sessions > 0) {
@@ -89,7 +73,7 @@ SessionPool::SessionPool(Database db,
     }
     // Just ignore failures; we'll try again when the caller requests a
     // session, and we'll be in a position to return an error at that time.
-    (void)CreateSessions(lk, channel, options_.labels, num_sessions);
+    (void)CreateSessions(lk, channel, options_.labels(), num_sessions);
   }
 }
 
@@ -109,7 +93,7 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // If the pool is at its max size, fail or wait until someone returns a
     // session to the pool then try again.
     if (total_sessions_ >= max_pool_size_) {
-      if (options_.action_on_exhaustion == ActionOnExhaustion::FAIL) {
+      if (options_.action_on_exhaustion() == ActionOnExhaustion::FAIL) {
         return Status(StatusCode::kResourceExhausted, "session pool exhausted");
       }
       cond_.wait(lk, [this] {
@@ -134,10 +118,10 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
     // subject to the `max_sessions_per_channel` cap.
     ChannelInfo& channel = *next_channel_for_create_sessions_;
     int sessions_to_create =
-        (std::min)(options_.min_sessions + 1,
-                   options_.max_sessions_per_channel - channel.session_count);
+        (std::min)(options_.min_sessions() + 1,
+                   options_.max_sessions_per_channel() - channel.session_count);
     auto create_status =
-        CreateSessions(lk, channel, options_.labels, sessions_to_create);
+        CreateSessions(lk, channel, options_.labels(), sessions_to_create);
     if (!create_status.ok()) {
       return create_status;
     }

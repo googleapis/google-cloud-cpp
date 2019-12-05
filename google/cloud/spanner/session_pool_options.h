@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_SESSION_POOL_OPTIONS_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_SESSION_POOL_OPTIONS_H_
 
+#include "google/cloud/spanner/version.h"
+#include <algorithm>
 #include <chrono>
 #include <map>
 #include <string>
@@ -27,35 +29,114 @@ inline namespace SPANNER_CLIENT_NS {
 // What action to take if the session pool is exhausted.
 enum class ActionOnExhaustion { BLOCK, FAIL };
 
-struct SessionPoolOptions {
-  // The minimum number of sessions to keep in the pool.
-  // Values <= 0 are treated as 0.
-  // This value will be reduced if it exceeds the overall limit on the number
-  // of sessions (`max_sessions_per_channel` * number of channels).
-  int min_sessions = 0;
+class SessionPoolOptions {
+ public:
+  /**
+   * Enforce the stated constraints on the option values, altering them if
+   * necessary. This can't be done in the setters, since we don't yet know
+   * the number of channels, and it would also constrain the order in which
+   * the fields must be set.
+   *
+   * @p num_channels the number of RPC channels in use by the pool.
+   */
+  SessionPoolOptions& EnforceConstraints(int num_channels) {
+    min_sessions_ = (std::max)(min_sessions_, 0);
+    max_sessions_per_channel_ = (std::max)(max_sessions_per_channel_, 1);
+    min_sessions_ =
+        (std::min)(min_sessions_, max_sessions_per_channel_ * num_channels);
+    max_idle_sessions_ = (std::max)(max_idle_sessions_, 0);
+    return *this;
+  }
 
-  // The maximum number of sessions to create on each channel.
-  // Values <= 1 are treated as 1.
-  int max_sessions_per_channel = 100;
+  /**
+   * Set the minimum number of sessions to keep in the pool.
+   * Values <= 0 are treated as 0.
+   * This value will effectively be reduced if it exceeds the overall limit on
+   * the number of sessions (`max_sessions_per_channel` * number of channels).
+   */
+  SessionPoolOptions& set_min_sessions(int count) {
+    min_sessions_ = count;
+    return *this;
+  }
 
-  // The maximum number of sessions that can be in the pool in an idle state.
-  // Values <= 0 are treated as 0.
-  int max_idle_sessions = 0;
+  /// Return the minimum number of sessions to keep in the pool.
+  int min_sessions() const { return min_sessions_; }
 
-  // Decide whether to block or fail on pool exhaustion.
-  ActionOnExhaustion action_on_exhaustion = ActionOnExhaustion::BLOCK;
+  /**
+   * Set the maximum number of sessions to create on each channel.
+   * Values <= 1 are treated as 1.
+   */
+  SessionPoolOptions& set_max_sessions_per_channel(int count) {
+    max_sessions_per_channel_ = count;
+    return *this;
+  }
 
-  // This is the interval at which we refresh sessions so they don't get
-  // collected by the backend GC. The GC collects objects older than 60
-  // minutes, so any duration below that (less some slack to allow the calls
-  // to be made to refresh the sessions) should suffice.
-  std::chrono::minutes keep_alive_interval = std::chrono::minutes(55);
+  /// Return the minimum number of sessions to keep in the pool.
+  int max_sessions_per_channel() const { return max_sessions_per_channel_; }
 
-  // The labels used when creating sessions within the pool.
-  //  * Label keys must match `[a-z]([-a-z0-9]{0,61}[a-z0-9])?`.
-  //  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
-  //  * The maximum number of labels is 64.
-  std::map<std::string, std::string> labels;
+  /**
+   * Set the maximum number of sessions to keep in the pool in an idle state.
+   * Values <= 0 are treated as 0.
+   */
+  SessionPoolOptions& set_max_idle_sessions(int count) {
+    max_idle_sessions_ = count;
+    return *this;
+  }
+
+  /// Return the maximum number of idle sessions to keep in the pool.
+  int max_idle_sessions() const { return max_idle_sessions_; }
+
+  /// Set whether to block or fail on pool exhaustion.
+  SessionPoolOptions& set_action_on_exhaustion(ActionOnExhaustion action) {
+    action_on_exhaustion_ = action;
+    return *this;
+  }
+
+  /**
+   * Return the action to take (BLOCK or FAIL) when attempting to allocate a
+   * session when the pool is exhausted.
+   */
+  ActionOnExhaustion action_on_exhaustion() const {
+    return action_on_exhaustion_;
+  }
+
+  /*
+   * Set the interval at which we refresh sessions so they don't get
+   * collected by the backend GC. The GC collects objects older than 60
+   * minutes, so any duration below that (less some slack to allow the calls
+   * to be made to refresh the sessions) should suffice.
+   */
+  SessionPoolOptions& set_keep_alive_interval(std::chrono::minutes minutes) {
+    keep_alive_interval_ = minutes;
+    return *this;
+  }
+
+  /// Return the interval at which we refresh sessions to prevent GC.
+  std::chrono::minutes keep_alive_interval() const {
+    return keep_alive_interval_;
+  }
+
+  /**
+   * Set the labels used when creating sessions within the pool.
+   *  * Label keys must match `[a-z]([-a-z0-9]{0,61}[a-z0-9])?`.
+   *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
+   *  * The maximum number of labels is 64.
+   */
+  SessionPoolOptions& set_labels(std::map<std::string, std::string> labels) {
+    labels_ = std::move(labels);
+    return *this;
+  }
+
+  /// Return the labels used when creating sessions within the pool.
+  std::map<std::string, std::string> const& labels() const { return labels_; }
+
+ private:
+  int min_sessions_ = 0;
+  int max_sessions_per_channel_ = 100;
+  int max_idle_sessions_ = 0;
+  ActionOnExhaustion action_on_exhaustion_ = ActionOnExhaustion::BLOCK;
+  std::chrono::minutes keep_alive_interval_ = std::chrono::minutes(55);
+  std::map<std::string, std::string> labels_;
 };
 
 }  // namespace SPANNER_CLIENT_NS

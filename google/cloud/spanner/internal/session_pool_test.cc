@@ -159,7 +159,7 @@ TEST(SessionPool, MinSessionsEagerAllocation) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
 
   SessionPoolOptions options;
-  options.min_sessions = min_sessions;
+  options.set_min_sessions(min_sessions);
   auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
 }
@@ -173,7 +173,7 @@ TEST(SessionPool, MinSessionsMultipleAllocations) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3", "s2", "s1"}))));
 
   SessionPoolOptions options;
-  options.min_sessions = min_sessions;
+  options.set_min_sessions(min_sessions);
   auto pool = MakeSessionPool(db, {mock}, options);
 
   // When we run out of sessions it will make this call.
@@ -201,8 +201,8 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s3"}))));
 
   SessionPoolOptions options;
-  options.max_sessions_per_channel = max_sessions_per_channel;
-  options.action_on_exhaustion = ActionOnExhaustion::FAIL;
+  options.set_max_sessions_per_channel(max_sessions_per_channel)
+      .set_action_on_exhaustion(ActionOnExhaustion::FAIL);
   auto pool = MakeSessionPool(db, {mock}, options);
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
@@ -226,8 +226,8 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))));
 
   SessionPoolOptions options;
-  options.max_sessions_per_channel = max_sessions_per_channel;
-  options.action_on_exhaustion = ActionOnExhaustion::BLOCK;
+  options.set_max_sessions_per_channel(max_sessions_per_channel)
+      .set_action_on_exhaustion(ActionOnExhaustion::BLOCK);
   auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
@@ -253,7 +253,7 @@ TEST(SessionPool, Labels) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"session1"}))));
 
   SessionPoolOptions options;
-  options.labels = labels;
+  options.set_labels(std::move(labels));
   auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
@@ -301,9 +301,9 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   SessionPoolOptions options;
   // note that min_sessions will effectively be reduced to 9
   // (max_sessions_per_channel * num_channels).
-  options.min_sessions = 20;
-  options.max_sessions_per_channel = 3;
-  options.action_on_exhaustion = ActionOnExhaustion::FAIL;
+  options.set_min_sessions(20)
+      .set_max_sessions_per_channel(3)
+      .set_action_on_exhaustion(ActionOnExhaustion::FAIL);
   auto pool = MakeSessionPool(db, {mock1, mock2, mock3}, options);
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
