@@ -47,6 +47,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 ### v1.8.x - TBD
 
 ### v1.7.x - 2019-12
+* fix: add logic to ObjectWriteStreambuf for handling jumps in upload ranges to fix #3280 (#3283)
 * bug: fix error messages in resumable sessions (#3263)
 
 ### v1.6.x - 2019-11
