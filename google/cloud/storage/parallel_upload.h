@@ -470,6 +470,9 @@ class MinStreamSize {
  * This operation is not idempotent. While each request performed by this
  * function is retried based on the client policies, the operation itself stops
  * on the first request that fails.
+ *
+ * @par Example
+ * @snippet storage_object_samples.cc parallel upload file
  */
 template <typename... Options>
 StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(

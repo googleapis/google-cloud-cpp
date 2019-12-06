@@ -750,7 +750,7 @@ void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
   auto bucket_name = ConsumeArg(argc, argv);
   auto object_name = ConsumeArg(argc, argv);
 
-  //! [upload file] [START storage_upload_file]
+  //! [parallel upload file]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string file_name, std::string bucket_name,
@@ -809,7 +809,7 @@ void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
               << object_metadata->bucket()
               << "\nFull metadata: " << *object_metadata << "\n";
   }
-  //! [upload file] [END storage_upload_file]
+  //! [parallel upload file]
   (std::move(client), file_name, bucket_name, object_name);
 }
 
