@@ -552,7 +552,9 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
                                 std::move(shared_state->shards[i]), size,
                                 upload_buffer_size, file_name));
   }
-  return res;
+  // The extra std::move() is required to workaround a gcc-4.9 and gcc-4.8 bug,
+  // which tries to copy the result otherwise.
+  return std::move(res);
 }
 
 }  // namespace STORAGE_CLIENT_NS
