@@ -413,7 +413,8 @@ class ParallelUploadFileShard {
 };
 
 /**
- * A parameter type indicating the maximum #streams to `ParallelUploadFile`.
+ * A parameter type indicating the maximum  number of streams to
+ * `ParallelUploadFile`.
  */
 class MaxStreams {
  public:
@@ -503,7 +504,7 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
       std::max<std::size_t>(1U, div_ceil(file_size, stream_size));
 
   // First open the file to not leave any trash behind when the source file
-  // doesn't exist.
+  // doesn't exist. libcxx<5 are buggy and don't have a move ctor for ifstream.
   std::vector<std::unique_ptr<std::ifstream>> input_streams;
   for (std::size_t i = 0; i < num_streams; ++i) {
     auto is = google::cloud::internal::make_unique<std::ifstream>(
