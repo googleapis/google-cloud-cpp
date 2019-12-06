@@ -40,7 +40,7 @@ bool SupportPerThreadUsage() {
 }  // namespace
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
-  return os << std::boolalpha << "# Experiment: " << config.experiment
+  return os << "# Experiment: " << config.experiment
             << "\n# Project: " << config.project_id
             << "\n# Instance: " << config.instance_id
             << "\n# Database: " << config.database_id

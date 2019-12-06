@@ -59,9 +59,9 @@ struct RowCpuSample {
 };
 
 std::ostream& operator<<(std::ostream& os, RowCpuSample const& s) {
-  return os << std::boolalpha << s.client_count << ',' << s.thread_count << ','
-            << s.using_stub << ',' << s.row_count << ',' << s.elapsed.count()
-            << ',' << s.cpu_time.count() << ',' << s.status.code();
+  return os << s.client_count << ',' << s.thread_count << ',' << s.using_stub
+            << ',' << s.row_count << ',' << s.elapsed.count() << ','
+            << s.cpu_time.count() << ',' << s.status.code();
 }
 
 class Experiment {
@@ -83,6 +83,9 @@ std::map<std::string, ExperimentFactory> AvailableExperiments();
 }  // namespace
 
 int main(int argc, char* argv[]) {
+  // Set any "sticky" I/O format flags before we fork threads.
+  std::cout.setf(std::ios::boolalpha);
+
   Config config;
   {
     std::vector<std::string> args{argv, argv + argc};

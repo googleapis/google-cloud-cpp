@@ -56,6 +56,9 @@ std::map<std::string, std::shared_ptr<Experiment>> AvailableExperiments();
 }  // namespace
 
 int main(int argc, char* argv[]) {
+  // Set any "sticky" I/O format flags before we fork threads.
+  std::cout.setf(std::ios::boolalpha);
+
   Config config;
   {
     std::vector<std::string> args{argv, argv + argc};
@@ -119,8 +122,8 @@ int main(int argc, char* argv[]) {
           std::vector<SingleRowThroughputSample> const& samples) mutable {
         std::unique_lock<std::mutex> lk(cout_mu);
         for (auto const& s : samples) {
-          std::cout << std::boolalpha << s.client_count << ',' << s.thread_count
-                    << ',' << s.event_count << ',' << s.elapsed.count() << '\n'
+          std::cout << s.client_count << ',' << s.thread_count << ','
+                    << s.event_count << ',' << s.elapsed.count() << '\n'
                     << std::flush;
         }
       };
