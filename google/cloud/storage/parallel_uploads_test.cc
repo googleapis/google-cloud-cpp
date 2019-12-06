@@ -564,6 +564,11 @@ TEST_F(ParallelUploadTest, UnreadableFile) {
   // The expectations need to be reversed.
   testing::TempFile temp_file("whatever");
   ASSERT_EQ(0, ::chmod(temp_file.name().c_str(), 0));
+  if (std::ifstream(temp_file.name()).good()) {
+    // On some versions of the standard library it succeeds. We're trying to
+    // test the scenario when it fails, so ignore this test otherwise.
+    return;
+  }
   auto uploaders = ParallelUploadFile(*client, temp_file.name(), kBucketName,
                                       kDestObjectName, kPrefix,
                                       MinStreamSize(100), MaxStreams(200));
