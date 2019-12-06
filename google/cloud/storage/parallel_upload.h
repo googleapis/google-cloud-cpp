@@ -557,6 +557,7 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
   }
   // The extra std::move() is required to workaround a gcc-4.9 and gcc-4.8 bug,
   // which tries to copy the result otherwise.
+  // NOLINTNEXTLINE
   return std::move(res);
 }
 
