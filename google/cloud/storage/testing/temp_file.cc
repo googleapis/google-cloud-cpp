@@ -14,7 +14,7 @@
 
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include <gtest/gtest.h>
+#include <cassert>
 #include <cstdio>
 #include <fstream>
 
@@ -27,11 +27,11 @@ TempFile::TempFile(std::string const& content) {
   // This is obviously racy, but there is no portable way to create a
   // uniquely-named temporary file and know its name.
   char tmpfile_name[L_tmpnam];
-  EXPECT_TRUE(std::tmpnam(tmpfile_name));
+  assert(std::tmpnam(tmpfile_name));
   std::ofstream f(tmpfile_name, std::ios::binary | std::ios::trunc);
-  EXPECT_TRUE(f.good());
+  assert(f.good());
   f.write(content.data(), content.size());
-  EXPECT_TRUE(f.good());
+  assert(f.good());
 
   name_ = tmpfile_name;
 }
