@@ -763,12 +763,8 @@ void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
     }
     std::string const& prefix = prefix_md->name();
 
-    // The `MinStreamSize` is here only for demonstration purposes only. Usually
-    // this should not be set (a sane default is used) or specified to a much
-    // higher value (several MB).
-    auto shards =
-        gcs::ParallelUploadFile(client, file_name, bucket_name, object_name,
-                                prefix, gcs::MinStreamSize(4));
+    auto shards = gcs::ParallelUploadFile(client, file_name, bucket_name,
+                                          object_name, prefix);
 
     if (!shards) {
       throw std::runtime_error(shards.status().message());

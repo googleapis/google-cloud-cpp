@@ -86,23 +86,24 @@ ObjectMetadata MockObject(std::string const& object_name, int generation) {
 class ExpectedDeletions {
  public:
   ExpectedDeletions(std::map<std::pair<std::string, int>, Status> expectations)
-      : impl_(std::move(expectations)) {}
+      : deletions_(std::move(expectations)) {}
 
   ~ExpectedDeletions() {
     std::lock_guard<std::mutex> lk(mu_);
     std::stringstream unsatisfied_stream;
-    for (auto kv : impl_) {
+    for (auto kv : deletions_) {
       unsatisfied_stream << " object_name=" << kv.first.first
                          << " gen=" << kv.first.second;
     }
-    EXPECT_TRUE(impl_.empty()) << "Some expected deletions were not performed:"
-                               << unsatisfied_stream.str();
+    EXPECT_TRUE(deletions_.empty())
+        << "Some expected deletions were not performed:"
+        << unsatisfied_stream.str();
   }
 
   StatusOr<internal::EmptyResponse> operator()(
       internal::DeleteObjectRequest const& r) {
     EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
-    auto if_gen_match = (r.GetOption<IfGenerationMatch>());
+    auto if_gen_match = r.GetOption<IfGenerationMatch>();
     auto status = RemoveExpectation(r.object_name(), if_gen_match.value());
     EXPECT_EQ(kBucketName, r.bucket_name());
     if (status.ok()) {
@@ -114,19 +115,19 @@ class ExpectedDeletions {
  private:
   Status RemoveExpectation(std::string const& object_name, int generation) {
     std::lock_guard<std::mutex> lk(mu_);
-    auto it = impl_.find(std::make_pair(object_name, generation));
-    if (it == impl_.end()) {
+    auto it = deletions_.find(std::make_pair(object_name, generation));
+    if (it == deletions_.end()) {
       EXPECT_TRUE(false);
       return Status(StatusCode::kFailedPrecondition,
                     "Unexpected deletion. object=" + object_name +
                         " generation=" + std::to_string(generation));
     }
     auto res = std::move(it->second);
-    impl_.erase(it);
+    deletions_.erase(it);
     return res;
   }
   std::mutex mu_;
-  std::map<std::pair<std::string, int>, Status> impl_;
+  std::map<std::pair<std::string, int>, Status> deletions_;
 };
 
 class ParallelUploadTest : public ::testing::Test {

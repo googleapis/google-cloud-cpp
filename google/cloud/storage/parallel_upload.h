@@ -29,7 +29,6 @@
 #include <fstream>
 #include <functional>
 #include <mutex>
-#include <sstream>
 #include <tuple>
 #include <utility>
 
@@ -299,7 +298,7 @@ NonResumableParallelUploadState::Create(Client client,
  */
 template <typename T, typename Tuple, typename Enable = void>
 struct ExtractFirstOccurenceOfTypeImpl {
-  optional<T> operator()(Tuple const& /*tuple*/) { return optional<T>(); }
+  optional<T> operator()(Tuple const&) { return optional<T>(); }
 };
 
 template <typename T, typename... Options>
@@ -350,6 +349,7 @@ class ParallelUploadFileShard {
   ParallelUploadFileShard(ParallelUploadFileShard const&) = delete;
   ParallelUploadFileShard& operator=(ParallelUploadFileShard const&) = delete;
   ParallelUploadFileShard(ParallelUploadFileShard&&) = default;
+  ParallelUploadFileShard& operator=(ParallelUploadFileShard&&) = default;
   ~ParallelUploadFileShard();
 
   /**
@@ -419,7 +419,7 @@ class ParallelUploadFileShard {
 class MaxStreams {
  public:
   MaxStreams(std::size_t value) : value_(value) {}
-  std::size_t value() { return value_; }
+  std::size_t value() const { return value_; }
 
  private:
   std::size_t value_;
@@ -435,7 +435,7 @@ class MaxStreams {
 class MinStreamSize {
  public:
   MinStreamSize(std::uintmax_t value) : value_(value) {}
-  std::uintmax_t value() { return value_; }
+  std::uintmax_t value() const { return value_; }
 
  private:
   std::uintmax_t value_;
@@ -464,7 +464,7 @@ class MinStreamSize {
  *     `KmsKeyName`, `MaxStreams, `MinStreamSize`, `QuotaUser`, `UserIp`,
  * `UserProject`, `WithObjectMetadata`.
  *
- * @return the state of the parallel upload
+ * @return the shards of the input file to be uploaded in parallel
  *
  * @par Idempotency
  * This operation is not idempotent. While each request performed by this
@@ -495,16 +495,20 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
   auto min_stream_size_arg =
       internal::ExtractFirstOccurenceOfType<MinStreamSize>(
           std::tie(options...));
-  std::uintmax_t const min_stream_size = std::max<std::uintmax_t>(
-      1, min_stream_size_arg ? min_stream_size_arg->value() : (2ULL << 20));
-  std::size_t const wanted_num_streams = std::max<std::size_t>(
-      1, std::min(max_streams, div_ceil(file_size, min_stream_size)));
+  std::uintmax_t const min_stream_size =
+      (std::max<std::uintmax_t>)(1, min_stream_size_arg
+                                        ? min_stream_size_arg->value()
+                                        : (2ULL << 20));
+  std::size_t const wanted_num_streams =
+      (std::max<std::size_t>)(1,
+                              (std::min)(max_streams,
+                                         div_ceil(file_size, min_stream_size)));
   std::uintmax_t const stream_size =
-      std::max<std::uintmax_t>(1, div_ceil(file_size, wanted_num_streams));
+      (std::max<std::uintmax_t>)(1, div_ceil(file_size, wanted_num_streams));
   // Due to rounding errors this number might potentially be less than
   // wanted_num_streams (though I was too lazy to check exactly when).
   std::size_t const num_streams =
-      std::max<std::size_t>(1U, div_ceil(file_size, stream_size));
+      (std::max<std::size_t>)(1U, div_ceil(file_size, stream_size));
 
   // First open the file to not leave any trash behind when the source file
   // doesn't exist. libcxx<5 are buggy and don't have a move ctor for ifstream.
@@ -513,16 +517,15 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
     auto is = google::cloud::internal::make_unique<std::ifstream>(
         file_name, std::ios::binary);
     if (!is->good()) {
-      std::stringstream os;
-      os << __func__ << "(" << file_name << "): cannot open upload file source";
-      return Status(StatusCode::kNotFound, std::move(os).str());
+      return Status(StatusCode::kNotFound,
+                    std::string(__func__) + "(" + file_name +
+                        "): cannot open upload file source");
     }
     is->seekg(stream_size * i);
     if (!is->good()) {
-      std::stringstream os;
-      os << __func__ << "(" << file_name
-         << "): file changed size during upload?";
-      return Status(StatusCode::kNotFound, std::move(os).str());
+      return Status(StatusCode::kNotFound,
+                    std::string(__func__) + "(" + file_name +
+                        "): file changed size during upload?");
     }
     input_streams.emplace_back(std::move(is));
   }
@@ -549,16 +552,20 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
   // Everything ready - we've got the shared state and the files open, let's
   // prepare the returned objects.
   for (std::size_t i = 0; i < num_streams; ++i) {
-    std::uintmax_t size = std::min(file_size - stream_size * i, stream_size);
+    std::uintmax_t size = (std::min)(file_size - stream_size * i, stream_size);
     res.emplace_back(
         ParallelUploadFileShard(shared_state, std::move(input_streams[i]),
                                 std::move(shared_state->shards[i]), size,
                                 upload_buffer_size, file_name));
   }
+#if !defined(__clang__) && \
+    (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 9))
   // The extra std::move() is required to workaround a gcc-4.9 and gcc-4.8 bug,
   // which tries to copy the result otherwise.
-  // NOLINTNEXTLINE
   return std::move(res);
+#else
+  return res;
+#endif
 }
 
 }  // namespace STORAGE_CLIENT_NS

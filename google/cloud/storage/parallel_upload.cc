@@ -163,10 +163,9 @@ Status ParallelUploadFileShard::Upload() {
         std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_);
     istream_->read(buf.get(), to_copy);
     if (!istream_->good()) {
-      std::stringstream os;
-      os << __func__ << "("
-         << ", " << file_name_ << "): cannot read from file source";
-      Status status(StatusCode::kInternal, std::move(os).str());
+      Status status(StatusCode::kInternal,
+                    std::string(__func__) + "(" + file_name_ +
+                        "): cannot read from file source");
       state_->Fail(status);
       ostream_.Close();
       return status;
