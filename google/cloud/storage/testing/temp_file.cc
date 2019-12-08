@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/terminate_handler.h"
 #include <cassert>
 #include <cstdio>
 #include <fstream>
@@ -27,7 +28,9 @@ TempFile::TempFile(std::string const& content) {
   // This is obviously racy, but there is no portable way to create a
   // uniquely-named temporary file and know its name.
   char tmpfile_name[L_tmpnam];
-  assert(std::tmpnam(tmpfile_name));
+  if (!std::tmpnam(tmpfile_name)) {
+    Terminate("Failed to create a temporary file name");
+  }
   std::ofstream f(tmpfile_name, std::ios::binary | std::ios::trunc);
   assert(f.good());
   f.write(content.data(), content.size());
