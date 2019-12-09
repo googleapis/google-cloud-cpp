@@ -20,7 +20,7 @@ find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(BIGTABLE_CLIENT_VERSION_MAJOR 1)
-set(BIGTABLE_CLIENT_VERSION_MINOR 5)
+set(BIGTABLE_CLIENT_VERSION_MINOR 6)
 set(BIGTABLE_CLIENT_VERSION_PATCH 0)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
