@@ -744,7 +744,7 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
 void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
                         char* argv[]) {
   if (argc != 4) {
-    throw Usage{"upload-file <file-name> <bucket-name> <object-name>"};
+    throw Usage{"parallel-upload-file <file-name> <bucket-name> <object-name>"};
   }
   auto file_name = ConsumeArg(argc, argv);
   auto bucket_name = ConsumeArg(argc, argv);
@@ -787,8 +787,8 @@ void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
       throw std::runtime_error(object_metadata.status().message());
     }
 
-    // This step is not mandatory - the destructor will try to cleanup and
-    // silently ignore potential errors.
+    // This step is not mandatory, though highly recommended. The destructor
+    // will try to cleanup, but it will silently ignore potential errors.
     auto cleanup_status = (*shards)[0].EagerCleanup();
     if (!cleanup_status.ok()) {
       throw std::runtime_error(object_metadata.status().message());

@@ -41,6 +41,8 @@ namespace internal {
 class ParallelObjectWriteStreambuf;
 
 struct ComposeManyApplyHelper {
+  // TODO(#3285): change `options` to a forwarding reference once lvalues are
+  //     accepted
   template <typename... Options>
   StatusOr<ObjectMetadata> operator()(Options... options) const {
     return ComposeMany(client, bucket_name, std::move(source_objects), prefix,
@@ -125,7 +127,7 @@ class NonResumableParallelUploadState {
    *
    * It is safe to destroy or `std::move()` these streams.
    */
-  std::vector<ObjectWriteStream> shards;
+  std::vector<ObjectWriteStream>& shards() { return shards_; }
 
   /**
    * Fail the whole operation.
@@ -141,8 +143,8 @@ class NonResumableParallelUploadState {
  private:
   // Type-erased function object to execute ComposeMany with most arguments
   // bound.
-  using Composer =
-      std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>;
+  using Composer = std::function<StatusOr<ObjectMetadata>(
+      std::vector<ComposeSourceObject> const&)>;
 
   // The `ObjectWriteStream`s have to hold references to the state of
   // the parallel upload so that they can update it when finished and trigger
@@ -189,9 +191,10 @@ class NonResumableParallelUploadState {
 
   NonResumableParallelUploadState(std::shared_ptr<Impl> state,
                                   std::vector<ObjectWriteStream> shards)
-      : shards(std::move(shards)), impl_(std::move(state)) {}
+      : impl_(std::move(state)), shards_(std::move(shards)) {}
 
   std::shared_ptr<Impl> impl_;
+  std::vector<ObjectWriteStream> shards_;
 
   friend class ParallelObjectWriteStreambuf;
 };
@@ -259,8 +262,8 @@ NonResumableParallelUploadState::Create(Client client,
       Among<DestinationPredefinedAcl, EncryptionKey, IfGenerationMatch,
             IfMetagenerationMatch, KmsKeyName, QuotaUser, UserIp, UserProject,
             WithObjectMetadata>::TPred>(all_options);
-  auto composer = [client, bucket_name, object_name, compose_options,
-                   prefix](std::vector<ComposeSourceObject> sources) mutable {
+  auto composer = [client, bucket_name, object_name, compose_options, prefix](
+                      std::vector<ComposeSourceObject> const& sources) mutable {
     return google::cloud::internal::apply(
         ComposeManyApplyHelper{client, std::move(bucket_name),
                                std::move(sources), prefix + ".compose_many",
@@ -555,7 +558,7 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
     std::uintmax_t size = (std::min)(file_size - stream_size * i, stream_size);
     res.emplace_back(
         ParallelUploadFileShard(shared_state, std::move(input_streams[i]),
-                                std::move(shared_state->shards[i]), size,
+                                std::move(shared_state->shards()[i]), size,
                                 upload_buffer_size, file_name));
   }
 #if !defined(__clang__) && \

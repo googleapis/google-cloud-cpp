@@ -105,11 +105,11 @@ void NonResumableParallelUploadState::Impl::StreamFinished(
       res_ = response.status();
     }
   } else {
-    ObjectMetadata metadata = *response->payload;
+    ObjectMetadata const& metadata = *response->payload;
     to_compose_.resize(std::max(to_compose_.size(), stream_idx + 1));
     to_compose_[stream_idx] =
         ComposeSourceObject{metadata.name(), metadata.generation(), {}};
-    deleter_->Add(std::move(metadata));
+    deleter_->Add(metadata);
   }
   if (num_unfinished_streams_ > 0) {
     return;
@@ -117,7 +117,7 @@ void NonResumableParallelUploadState::Impl::StreamFinished(
   if (!res_) {
     // only execute ComposeMany if all the streams succeeded.
     lk.unlock();
-    auto res = composer_(std::move(to_compose_));
+    auto res = composer_(to_compose_);
     lk.lock();
     res_ = std::move(res);
   }

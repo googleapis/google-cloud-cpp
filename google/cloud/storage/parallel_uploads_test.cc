@@ -302,7 +302,7 @@ TEST_F(ParallelUploadTest, Success) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
   EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
 
-  state->shards.clear();
+  state->shards().clear();
   auto res = res_future.get();
   EXPECT_STATUS_OK(res);
 
@@ -353,7 +353,7 @@ TEST_F(ParallelUploadTest, CleanupFailsEager) {
   EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
   EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
 
-  state->shards.clear();
+  state->shards().clear();
   auto res = state->WaitForCompletion().get();
   EXPECT_STATUS_OK(res);
 
@@ -406,7 +406,7 @@ TEST_F(ParallelUploadTest, BrokenStream) {
                                      num_shards, kPrefix);
   EXPECT_STATUS_OK(state);
 
-  state->shards.clear();
+  state->shards().clear();
   auto res = state->WaitForCompletion().get();
   EXPECT_FALSE(res);
   EXPECT_EQ(PermanentError().code(), res.status().code());
