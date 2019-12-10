@@ -49,6 +49,7 @@ storage_client_unit_tests = [
     "internal/curl_wrappers_enable_sigpipe_handler_test.cc",
     "internal/default_object_acl_requests_test.cc",
     "internal/generate_message_boundary_test.cc",
+    "internal/generic_request_test.cc",
     "internal/hash_validator_test.cc",
     "internal/hmac_key_requests_test.cc",
     "internal/http_response_test.cc",
