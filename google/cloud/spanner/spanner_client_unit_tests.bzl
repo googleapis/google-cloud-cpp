@@ -45,6 +45,7 @@ spanner_client_unit_tests = [
     "internal/retry_loop_test.cc",
     "internal/session_pool_test.cc",
     "internal/spanner_stub_test.cc",
+    "internal/status_utils_test.cc",
     "internal/time_format_test.cc",
     "internal/time_test.cc",
     "internal/transaction_impl_test.cc",
