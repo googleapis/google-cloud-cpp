@@ -64,10 +64,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/9c9f778aedde02f9826d2ae5d0f9c96409ba0f25.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/19c4589a3cb44b3679f7b3fba88365b3d055d5f8.tar.gz",
             ],
-            strip_prefix = "googleapis-9c9f778aedde02f9826d2ae5d0f9c96409ba0f25",
-            sha256 = "13af135d8cc9b81b47d6fbfc258fe790a151956d06e01fd16671aa49fe536ab1",
+            strip_prefix = "googleapis-19c4589a3cb44b3679f7b3fba88365b3d055d5f8",
+            sha256 = "ef455e46cfb967962aef30248f1a2a69bc78b041e89b04644e24e7844f0215c4",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
@@ -76,12 +76,12 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.24.3",
+            strip_prefix = "grpc-1.25.0",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.24.3.tar.gz",
-                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.24.3.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.25.0.tar.gz",
+                "https://mirror.bazel.build/github.com/grpc/grpc/archive/v1.25.0.tar.gz",
             ],
-            sha256 = "c84b3fa140fcd6cce79b3f9de6357c5733a0071e04ca4e65ba5f8d306f10f033",
+            sha256 = "ffbe61269160ea745e487f79b0fd06b6edd3d50c6d9123f053b5634737cf2f69",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which

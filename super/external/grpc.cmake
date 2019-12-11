@@ -23,9 +23,9 @@ if (NOT TARGET grpc-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_GRPC_URL
-        "https://github.com/grpc/grpc/archive/v1.24.3.tar.gz")
+        "https://github.com/grpc/grpc/archive/v1.25.0.tar.gz")
     set(GOOGLE_CLOUD_CPP_GRPC_SHA256
-        "c84b3fa140fcd6cce79b3f9de6357c5733a0071e04ca4e65ba5f8d306f10f033")
+        "ffbe61269160ea745e487f79b0fd06b6edd3d50c6d9123f053b5634737cf2f69")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()

@@ -30,7 +30,7 @@ cc_library(
 
 cc_proto_library(
     name = "bigtableadmin_cc_proto",
-    deps = ["//google/bigtable/admin/v2:bigtableadmin_proto"],
+    deps = ["//google/bigtable/admin/v2:admin_proto"],
 )
 
 cc_proto_library(
@@ -41,7 +41,7 @@ cc_proto_library(
 cc_grpc_library(
     name = "bigtableadmin_cc_grpc",
     srcs = [
-        "//google/bigtable/admin/v2:bigtableadmin_proto",
+        "//google/bigtable/admin/v2:admin_proto",
     ],
     grpc_only = True,
     use_external = True,
