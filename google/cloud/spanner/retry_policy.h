@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_RETRY_POLICY_H_
 
+#include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
@@ -27,15 +28,12 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 /// Define the gRPC status code semantics for retrying requests.
 struct SafeGrpcRetry {
-  static inline bool IsTransientFailure(google::cloud::StatusCode code) {
-    return code == StatusCode::kUnavailable ||
-           code == StatusCode::kResourceExhausted;
-  }
   static inline bool IsOk(google::cloud::Status const& status) {
     return status.ok();
   }
   static inline bool IsTransientFailure(google::cloud::Status const& status) {
-    return IsTransientFailure(status.code());
+    return status.code() == StatusCode::kUnavailable ||
+           status.code() == StatusCode::kResourceExhausted;
   }
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);
@@ -44,14 +42,11 @@ struct SafeGrpcRetry {
 
 /// Define the gRPC status code semantics for rerunning transactions.
 struct SafeTransactionRerun {
-  static inline bool IsTransientFailure(google::cloud::StatusCode code) {
-    return code == StatusCode::kAborted;
-  }
   static inline bool IsOk(google::cloud::Status const& status) {
     return status.ok();
   }
   static inline bool IsTransientFailure(google::cloud::Status const& status) {
-    return IsTransientFailure(status.code());
+    return status.code() == StatusCode::kAborted || IsSessionNotFound(status);
   }
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);

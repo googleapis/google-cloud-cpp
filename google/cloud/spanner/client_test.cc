@@ -770,6 +770,59 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
   EXPECT_EQ(*timestamp, result->commit_timestamp);
 }
 
+TEST(ClientTest, CommitMutatorSessionNotFound) {
+  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  ASSERT_STATUS_OK(timestamp);
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce([&timestamp](Connection::CommitParams const& cp) {
+        EXPECT_THAT(cp.transaction, HasSession("session-3"));
+        return CommitResult{*timestamp};
+      });
+
+  int n = 0;
+  auto mutator = [&n](Transaction const& txn) -> StatusOr<Mutations> {
+    EXPECT_THAT(txn, DoesNotHaveSession());
+    SetSessionName(txn, "session-" + std::to_string(++n));
+    if (n < 3) return Status(StatusCode::kNotFound, "Session not found");
+    return Mutations{};
+  };
+
+  Client client(conn);
+  auto result = client.Commit(mutator);
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
+TEST(ClientTest, CommitSessionNotFound) {
+  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  ASSERT_STATUS_OK(timestamp);
+
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce([](Connection::CommitParams const& cp) {
+        EXPECT_THAT(cp.transaction, HasSession("session-1"));
+        return Status(StatusCode::kNotFound, "Session not found");
+      })
+      .WillOnce([&timestamp](Connection::CommitParams const& cp) {
+        EXPECT_THAT(cp.transaction, HasSession("session-2"));
+        return CommitResult{*timestamp};
+      });
+
+  int n = 0;
+  auto mutator = [&n](Transaction const& txn) -> StatusOr<Mutations> {
+    EXPECT_THAT(txn, DoesNotHaveSession());
+    SetSessionName(txn, "session-" + std::to_string(++n));
+    return Mutations{};
+  };
+
+  Client client(conn);
+  auto result = client.Commit(mutator);
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

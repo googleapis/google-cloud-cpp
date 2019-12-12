@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/version.h"
+#include <atomic>
 #include <memory>
 #include <string>
 #include <utility>
@@ -29,11 +30,15 @@ namespace internal {
 
 /**
  * A class that represents a Session.
+ *
+ * This class is thread-safe.
  */
 class Session {
  public:
   Session(std::string session_name, std::shared_ptr<SpannerStub> stub) noexcept
-      : session_name_(std::move(session_name)), stub_(std::move(stub)) {}
+      : session_name_(std::move(session_name)),
+        stub_(std::move(stub)),
+        is_bad_(false) {}
 
   // Not copyable or moveable.
   Session(Session const&) = delete;
@@ -43,12 +48,17 @@ class Session {
 
   std::string const& session_name() const { return session_name_; }
 
+  // Note: the "bad" state only transitions from false to true.
+  void set_bad() { is_bad_.store(true, std::memory_order_relaxed); }
+  bool is_bad() const { return is_bad_.load(std::memory_order_relaxed); }
+
  private:
   friend class SessionPool;  // for access to stub()
   std::shared_ptr<SpannerStub> stub() const { return stub_; }
 
   std::string const session_name_;
   std::shared_ptr<SpannerStub> const stub_;
+  std::atomic<bool> is_bad_;
 };
 
 /**
