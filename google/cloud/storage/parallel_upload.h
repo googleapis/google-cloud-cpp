@@ -41,13 +41,11 @@ namespace internal {
 class ParallelObjectWriteStreambuf;
 
 struct ComposeManyApplyHelper {
-  // TODO(#3285): change `options` to a forwarding reference once lvalues are
-  //     accepted
   template <typename... Options>
-  StatusOr<ObjectMetadata> operator()(Options... options) const {
+  StatusOr<ObjectMetadata> operator()(Options&&... options) const {
     return ComposeMany(client, bucket_name, std::move(source_objects), prefix,
                        std::move(destination_object_name), true,
-                       std::move(options)...);
+                       std::forward<Options>(options)...);
   }
 
   Client& client;
@@ -62,8 +60,8 @@ class SetOptionsApplyHelper {
   SetOptionsApplyHelper(ResumableUploadRequest& request) : request(request) {}
 
   template <typename... Options>
-  void operator()(Options... options) const {
-    request.set_multiple_options(std::move(options)...);
+  void operator()(Options&&... options) const {
+    request.set_multiple_options(std::forward<Options>(options)...);
   }
 
  private:
