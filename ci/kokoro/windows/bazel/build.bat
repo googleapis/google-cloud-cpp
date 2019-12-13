@@ -27,7 +27,7 @@ bazel version
 echo "Compiling and running unit tests."
 echo %date% %time%
 bazel --output_user_root=C:\b test --test_output=errors --verbose_failures=true ^
-    --keep_going -- //google/cloud/...:all
+    --keep_going --copt=-DNOMINMAX -- //google/cloud/...:all
 
 @rem Preserve the exit code of the test for later use because we want to
 @rem delete the files in the %KOKORO_ARTIFACTS_DIR% on test failure too.
