@@ -26,6 +26,7 @@ cc_library(
         "@com_github_grpc_grpc//:grpc++",
         "//google/rpc:status_cc_proto"
     ],
+    copts = ["-DNOMINMAX"],
 )
 
 cc_proto_library(
@@ -76,4 +77,6 @@ cc_library(
         ":bigtableadmin_cc_proto",
         "//google/rpc:error_details_cc_proto"
     ],
+    copts = ["-DNOMINMAX"],
+
 )
