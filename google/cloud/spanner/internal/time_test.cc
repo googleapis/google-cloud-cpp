@@ -77,54 +77,6 @@ TEST(Duration, ToProto) {
   EXPECT_EQ(234567890, d.nanos());
 }
 
-TEST(Duration, FromProto) {
-  google::protobuf::Duration d;
-
-  d.set_seconds(-1);
-  d.set_nanos(-234567890);
-  EXPECT_EQ(std::chrono::nanoseconds(-1234567890), FromProto(d));
-
-  d.set_seconds(-1);
-  d.set_nanos(-1);
-  EXPECT_EQ(std::chrono::nanoseconds(-1000000001), FromProto(d));
-
-  d.set_seconds(-1);
-  d.set_nanos(0);
-  EXPECT_EQ(std::chrono::nanoseconds(-1000000000), FromProto(d));
-
-  d.set_seconds(0);
-  d.set_nanos(-999999999);
-  EXPECT_EQ(std::chrono::nanoseconds(-999999999), FromProto(d));
-
-  d.set_seconds(0);
-  d.set_nanos(-1);
-  EXPECT_EQ(std::chrono::nanoseconds(-1), FromProto(d));
-
-  d.set_seconds(0);
-  d.set_nanos(0);
-  EXPECT_EQ(std::chrono::nanoseconds(0), FromProto(d));
-
-  d.set_seconds(0);
-  d.set_nanos(1);
-  EXPECT_EQ(std::chrono::nanoseconds(1), FromProto(d));
-
-  d.set_seconds(0);
-  d.set_nanos(999999999);
-  EXPECT_EQ(std::chrono::nanoseconds(999999999), FromProto(d));
-
-  d.set_seconds(1);
-  d.set_nanos(0);
-  EXPECT_EQ(std::chrono::nanoseconds(1000000000), FromProto(d));
-
-  d.set_seconds(1);
-  d.set_nanos(1);
-  EXPECT_EQ(std::chrono::nanoseconds(1000000001), FromProto(d));
-
-  d.set_seconds(1);
-  d.set_nanos(234567890);
-  EXPECT_EQ(std::chrono::nanoseconds(1234567890), FromProto(d));
-}
-
 TEST(Time, ToProto) {
   google::protobuf::Timestamp ts;
 

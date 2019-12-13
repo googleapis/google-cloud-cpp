@@ -43,11 +43,6 @@ google::protobuf::Duration ToProto(std::chrono::nanoseconds ns) {
   return proto;
 }
 
-std::chrono::nanoseconds FromProto(google::protobuf::Duration const& proto) {
-  return std::chrono::seconds(proto.seconds()) +
-         std::chrono::nanoseconds(proto.nanos());
-}
-
 //
 // Timestamp
 //

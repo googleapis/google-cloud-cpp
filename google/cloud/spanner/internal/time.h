@@ -35,11 +35,6 @@ namespace internal {
 google::protobuf::Duration ToProto(std::chrono::nanoseconds ns);
 
 /**
- * Convert a google::protobuf::Duration to a std::chrono::nanoseconds.
- */
-std::chrono::nanoseconds FromProto(google::protobuf::Duration const& proto);
-
-/**
  * Convert a google::cloud::spanner::Timestamp to a google::protobuf::Timestamp.
  */
 google::protobuf::Timestamp ToProto(Timestamp ts);
