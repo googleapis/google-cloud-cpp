@@ -92,6 +92,44 @@ TEST(SessionPool, Allocate) {
   EXPECT_EQ(pool->GetStub(**session), mock);
 }
 
+TEST(SessionPool, ReleaseBadSession) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = Database("project", "instance", "database");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            EXPECT_EQ(1, request.session_count());
+            return MakeSessionsResponse({"session1"});
+          })
+      .WillOnce(
+          [&db](grpc::ClientContext&,
+                spanner_proto::BatchCreateSessionsRequest const& request) {
+            EXPECT_EQ(db.FullName(), request.database());
+            EXPECT_EQ(1, request.session_count());
+            return MakeSessionsResponse({"session2"});
+          });
+
+  auto pool = MakeSessionPool(db, {mock}, {});
+  {
+    auto session = pool->Allocate();
+    ASSERT_STATUS_OK(session);
+    EXPECT_EQ((*session)->session_name(), "session1");
+  }
+  {
+    auto session = pool->Allocate();
+    ASSERT_STATUS_OK(session);
+    EXPECT_EQ((*session)->session_name(), "session1");
+    (*session)->set_bad();  // Marking session1 as bad
+  }
+  {
+    auto session = pool->Allocate();
+    ASSERT_STATUS_OK(session);
+    EXPECT_EQ((*session)->session_name(), "session2");  // Got a new session
+  }
+}
+
 TEST(SessionPool, CreateError) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("project", "instance", "database");

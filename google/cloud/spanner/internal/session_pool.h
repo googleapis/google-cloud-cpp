@@ -92,14 +92,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     int session_count = 0;
   };
 
-  /**
-   * Release session back to the pool.
-   *
-   * Note the parameter type is a raw pointer because this method will be called
-   * from a `SessionHolder` (aka `unique_ptr`) Deleter, which only has a
-   * pointer.
-   */
-  void Release(Session* session);
+  // Release session back to the pool.
+  void Release(std::unique_ptr<Session> session);
 
   Status CreateSessions(std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
                         std::map<std::string, std::string> const& labels,

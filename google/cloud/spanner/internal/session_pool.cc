@@ -144,10 +144,16 @@ std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
   return stub;
 }
 
-void SessionPool::Release(Session* session) {
+void SessionPool::Release(std::unique_ptr<Session> session) {
   std::unique_lock<std::mutex> lk(mu_);
+  if (session->is_bad()) {
+    // Once we have support for background processing, we may want to signal
+    // that to replenish this bad session.
+    --total_sessions_;
+    return;
+  }
   bool notify = sessions_.empty();
-  sessions_.emplace_back(session);
+  sessions_.push_back(std::move(session));
   // If sessions_ was empty, wake up someone who was waiting for a session.
   if (notify) {
     lk.unlock();
@@ -217,14 +223,11 @@ SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
     return {std::move(session)};
   }
   std::weak_ptr<SessionPool> pool = shared_from_this();
-  return SessionHolder(session.release(), [pool](Session* session) {
-    auto shared_pool = pool.lock();
-    // If `pool` is still alive, release the `Session` to it; otherwise just
-    // delete the `Session`.
-    if (shared_pool) {
-      shared_pool->Release(session);
-    } else {
-      delete session;
+  return SessionHolder(session.release(), [pool](Session* s) {
+    std::unique_ptr<Session> session(s);
+    // If `pool` is still alive, release the `Session` to it.
+    if (auto shared_pool = pool.lock()) {
+      shared_pool->Release(std::move(session));
     }
   });
 }
