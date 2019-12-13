@@ -328,7 +328,9 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone());
   auto reader = PartialResultSetSource::Create(std::move(rpc));
   if (!reader.ok()) {
-    return MakeStatusOnlyResult<RowStream>(std::move(reader).status());
+    auto status = std::move(reader).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return MakeStatusOnlyResult<RowStream>(std::move(status));
   }
   if (s.has_begin()) {
     auto metadata = (*reader)->Metadata();
@@ -374,7 +376,9 @@ StatusOr<std::vector<ReadPartition>> ConnectionImpl::PartitionReadImpl(
       },
       request, __func__);
   if (!response.ok()) {
-    return std::move(response).status();
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
   }
 
   if (s.has_begin()) {
@@ -463,13 +467,15 @@ ResultType ConnectionImpl::CommonQueryImpl(
     return PartialResultSetSource::Create(std::move(rpc));
   };
 
-  StatusOr<ResultType> ret_val =
+  StatusOr<ResultType> response =
       ExecuteSqlImpl<ResultType>(session, s, seqno, std::move(params),
                                  query_mode, std::move(retry_resume_fn));
-  if (!ret_val) {
-    return MakeStatusOnlyResult<ResultType>(std::move(ret_val).status());
+  if (!response) {
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return MakeStatusOnlyResult<ResultType>(std::move(status));
   }
-  return std::move(*ret_val);
+  return std::move(*response);
 }
 
 RowStream ConnectionImpl::ExecuteQueryImpl(
@@ -504,8 +510,9 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
   auto const& retry_policy = retry_policy_prototype_;
   auto const& backoff_policy = backoff_policy_prototype_;
 
-  auto retry_resume_fn = [function_name, stub, retry_policy, backoff_policy](
-                             spanner_proto::ExecuteSqlRequest& request) mutable
+  auto retry_resume_fn =
+      [function_name, stub, retry_policy, backoff_policy,
+       session](spanner_proto::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
     StatusOr<spanner_proto::ResultSet> response = internal::RetryLoop(
         retry_policy->clone(), backoff_policy->clone(), true,
@@ -515,7 +522,9 @@ StatusOr<ResultType> ConnectionImpl::CommonDmlImpl(
         },
         request, function_name);
     if (!response) {
-      return std::move(response).status();
+      auto status = std::move(response).status();
+      if (internal::IsSessionNotFound(status)) session->set_bad();
+      return status;
     }
     return DmlResultSetSource::Create(std::move(*response));
   };
@@ -580,7 +589,9 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
       },
       request, __func__);
   if (!response.ok()) {
-    return std::move(response).status();
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
   }
 
   if (s.has_begin()) {
@@ -623,7 +634,9 @@ StatusOr<BatchDmlResult> ConnectionImpl::ExecuteBatchDmlImpl(
       },
       request, __func__);
   if (!response) {
-    return std::move(response).status();
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
   }
 
   if (response->result_sets_size() > 0 && s.has_begin()) {
@@ -661,7 +674,9 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
       },
       begin_request, __func__);
   if (!begin_response) {
-    return std::move(begin_response).status();
+    auto status = std::move(begin_response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
   }
   s.set_id(begin_response->id());
 
@@ -683,7 +698,9 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDmlImpl(
       },
       request, __func__);
   if (!response) {
-    return std::move(response).status();
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
   }
   PartitionedDmlResult result{0};
   if (response->has_stats()) {
@@ -726,7 +743,9 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
       },
       request, __func__);
   if (!response) {
-    return std::move(response).status();
+    auto status = std::move(response).status();
+    if (internal::IsSessionNotFound(status)) session->set_bad();
+    return status;
   }
   CommitResult r;
   r.commit_timestamp = internal::FromProto(response->commit_timestamp());
@@ -753,7 +772,7 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
   request.set_session(session->session_name());
   request.set_transaction_id(s.id());
   auto stub = session_pool_->GetStub(*session);
-  return internal::RetryLoop(
+  auto status = internal::RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
       [&stub](grpc::ClientContext& context,
@@ -761,6 +780,8 @@ Status ConnectionImpl::RollbackImpl(SessionHolder& session,
         return stub->Rollback(context, request);
       },
       request, __func__);
+  if (internal::IsSessionNotFound(status)) session->set_bad();
+  return status;
 }
 
 }  // namespace internal
