@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
+#include "google/cloud/spanner/internal/status_utils.h"
 #include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
@@ -723,20 +724,33 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
   for (auto&& m : params.mutations) {
     *request.add_mutations() = std::move(m).as_proto();
   }
-  bool is_idempotent = false;
-  if (s.has_single_use()) {
-    *request.mutable_single_use_transaction() = s.single_use();
-  } else if (s.has_begin()) {
-    *request.mutable_single_use_transaction() = s.begin();
-  } else {
-    request.set_transaction_id(s.id());
-    is_idempotent = true;
+
+  if (s.selector_case() != spanner_proto::TransactionSelector::kId) {
+    spanner_proto::BeginTransactionRequest begin;
+    begin.set_session(session->session_name());
+    *begin.mutable_options() = s.has_begin() ? s.begin() : s.single_use();
+    auto stub = session_pool_->GetStub(*session);
+    auto response = internal::RetryLoop(
+        retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
+        true,
+        [&stub](grpc::ClientContext& context,
+                spanner_proto::BeginTransactionRequest const& request) {
+          return stub->BeginTransaction(context, request);
+        },
+        begin, __func__);
+    if (!response) {
+      auto status = std::move(response).status();
+      if (internal::IsSessionNotFound(status)) session->set_bad();
+      return status;
+    }
+    s.set_id(response->id());
   }
+  request.set_transaction_id(s.id());
 
   auto stub = session_pool_->GetStub(*session);
   auto response = internal::RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
-      is_idempotent,
+      true,
       [&stub](grpc::ClientContext& context,
               spanner_proto::CommitRequest const& request) {
         return stub->Commit(context, request);
