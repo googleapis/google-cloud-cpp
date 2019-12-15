@@ -109,7 +109,7 @@ TEST(ConnectionOptionsTest, UserAgentPrefix) {
             options.user_agent_prefix());
 }
 
-TEST(ConnectionOptionsTest, CreateChannelArguments_Default) {
+TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
 
   auto actual = options.CreateChannelArguments();
@@ -126,7 +126,7 @@ TEST(ConnectionOptionsTest, CreateChannelArguments_Default) {
               StartsWith(options.user_agent_prefix()));
 }
 
-TEST(ConnectionOptionsTest, CreateChannelArguments_WithChannelPool) {
+TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   options.set_channel_pool_domain("testing-pool");
   options.add_user_agent_prefix("test-prefix/1.2.3");

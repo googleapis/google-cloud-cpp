@@ -319,7 +319,7 @@ TEST(PollingLoopTest, FailureMissingMetadataAndError) {
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
 
-TEST(PollingLoopTest, FailureInvalidContents_Response) {
+TEST(PollingLoopTest, FailureInvalidContentsResponse) {
   google::protobuf::Empty contents;
   google::longrunning::Operation operation;
   operation.set_name("test-operation");
@@ -338,7 +338,7 @@ TEST(PollingLoopTest, FailureInvalidContents_Response) {
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
 
-TEST(PollingLoopTest, FailureInvalidContents_Metadata) {
+TEST(PollingLoopTest, FailureInvalidContentsMetadata) {
   google::protobuf::Empty contents;
   google::longrunning::Operation operation;
   operation.set_name("test-operation");

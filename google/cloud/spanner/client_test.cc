@@ -308,7 +308,7 @@ TEST(ClientTest, ExecuteBatchDmlError) {
   EXPECT_EQ(actual->stats.size(), 1);
 }
 
-TEST(ClientTest, ExecutePartitionedDml_Success) {
+TEST(ClientTest, ExecutePartitionedDmlSuccess) {
   auto source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata metadata;
   EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));

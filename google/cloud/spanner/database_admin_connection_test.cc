@@ -100,7 +100,7 @@ TEST(DatabaseAdminClientTest, HandleCreateDatabaseError) {
 }
 
 /// @test Verify that the successful case works.
-TEST(DatabaseAdminClientTest, GetDatabase_Success) {
+TEST(DatabaseAdminClientTest, GetDatabaseSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -125,7 +125,7 @@ TEST(DatabaseAdminClientTest, GetDatabase_Success) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(DatabaseAdminClientTest, GetDatabase_PermanentError) {
+TEST(DatabaseAdminClientTest, GetDatabasePermanentError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetDatabase(_, _))
@@ -138,7 +138,7 @@ TEST(DatabaseAdminClientTest, GetDatabase_PermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported corrrectly.
-TEST(DatabaseAdminClientTest, GetDatabase_TooManyTransients) {
+TEST(DatabaseAdminClientTest, GetDatabaseTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetDatabase(_, _))
@@ -152,7 +152,7 @@ TEST(DatabaseAdminClientTest, GetDatabase_TooManyTransients) {
 }
 
 /// @test Verify that the successful case works.
-TEST(DatabaseAdminClientTest, GetDatabaseDdl_Success) {
+TEST(DatabaseAdminClientTest, GetDatabaseDdlSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -176,7 +176,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdl_Success) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(DatabaseAdminClientTest, GetDatabaseDdl_PermanentError) {
+TEST(DatabaseAdminClientTest, GetDatabaseDdlPermanentError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetDatabaseDdl(_, _))
@@ -189,7 +189,7 @@ TEST(DatabaseAdminClientTest, GetDatabaseDdl_PermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported corrrectly.
-TEST(DatabaseAdminClientTest, GetDatabaseDdl_TooManyTransients) {
+TEST(DatabaseAdminClientTest, GetDatabaseDdlTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetDatabaseDdl(_, _))
@@ -242,7 +242,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabaseSuccess) {
 
 /// @test Verify that a permanent error in UpdateDatabase is immediately
 /// reported.
-TEST(DatabaseAdminClientTest, UpdateDatabase_ErrorInPoll) {
+TEST(DatabaseAdminClientTest, UpdateDatabaseErrorInPoll) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
@@ -262,7 +262,7 @@ TEST(DatabaseAdminClientTest, UpdateDatabase_ErrorInPoll) {
 }
 
 /// @test Verify that errors in the polling loop are reported.
-TEST(DatabaseAdminClientTest, CreateDatabase_ErrorInPoll) {
+TEST(DatabaseAdminClientTest, CreateDatabaseErrorInPoll) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, CreateDatabase(_, _))
@@ -291,7 +291,7 @@ TEST(DatabaseAdminClientTest, CreateDatabase_ErrorInPoll) {
 }
 
 /// @test Verify that errors in the polling loop are reported.
-TEST(DatabaseAdminClientTest, UpdateDatabase_GetOperationError) {
+TEST(DatabaseAdminClientTest, UpdateDatabaseGetOperationError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, UpdateDatabase(_, _))
@@ -406,7 +406,7 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
 }
 
 /// @test Verify that the successful case works.
-TEST(DatabaseAdminClientTest, GetIamPolicy_Success) {
+TEST(DatabaseAdminClientTest, GetIamPolicySuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -437,7 +437,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy_Success) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(DatabaseAdminClientTest, GetIamPolicy_PermanentError) {
+TEST(DatabaseAdminClientTest, GetIamPolicyPermanentError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
@@ -450,7 +450,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy_PermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported corrrectly.
-TEST(DatabaseAdminClientTest, GetIamPolicy_TooManyTransients) {
+TEST(DatabaseAdminClientTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
@@ -464,7 +464,7 @@ TEST(DatabaseAdminClientTest, GetIamPolicy_TooManyTransients) {
 }
 
 /// @test Verify that the successful case works.
-TEST(DatabaseAdminClientTest, SetIamPolicy_Success) {
+TEST(DatabaseAdminClientTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
   google::iam::v1::Policy expected_policy;
@@ -507,7 +507,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicy_Success) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(DatabaseAdminClientTest, SetIamPolicy_PermanentError) {
+TEST(DatabaseAdminClientTest, SetIamPolicyPermanentError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
@@ -521,7 +521,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicy_PermanentError) {
 
 /// @test Verify that request without the Etag field should fail with the first
 /// transient error.
-TEST(DatabaseAdminClientTest, SetIamPolicy_NonIdempotent) {
+TEST(DatabaseAdminClientTest, SetIamPolicyNonIdempotent) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
@@ -536,7 +536,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicy_NonIdempotent) {
 
 /// @test Verify that request with the Etag field is retried for transient
 /// errors.
-TEST(DatabaseAdminClientTest, SetIamPolicy_Idempotent) {
+TEST(DatabaseAdminClientTest, SetIamPolicyIdempotent) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
@@ -552,7 +552,7 @@ TEST(DatabaseAdminClientTest, SetIamPolicy_Idempotent) {
 }
 
 /// @test Verify that the successful case works.
-TEST(DatabaseAdminClientTest, TestIamPermissions_Success) {
+TEST(DatabaseAdminClientTest, TestIamPermissionsSuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   std::string const expected_name =
       "projects/test-project/instances/test-instance/databases/test-database";
@@ -581,7 +581,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissions_Success) {
 }
 
 /// @test Verify that permanent errors are reported immediately.
-TEST(DatabaseAdminClientTest, TestIamPermissions_PermanentError) {
+TEST(DatabaseAdminClientTest, TestIamPermissionsPermanentError) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, TestIamPermissions(_, _))
@@ -594,7 +594,7 @@ TEST(DatabaseAdminClientTest, TestIamPermissions_PermanentError) {
 }
 
 /// @test Verify that too many transients errors are reported corrrectly.
-TEST(DatabaseAdminClientTest, TestIamPermissions_TooManyTransients) {
+TEST(DatabaseAdminClientTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
 
   EXPECT_CALL(*mock, TestIamPermissions(_, _))

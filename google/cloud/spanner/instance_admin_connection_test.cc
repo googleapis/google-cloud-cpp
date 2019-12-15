@@ -52,7 +52,7 @@ std::shared_ptr<InstanceAdminConnection> MakeLimitedRetryConnection(
       std::move(mock), retry.clone(), backoff.clone(), polling.clone());
 }
 
-TEST(InstanceAdminConnectionTest, GetInstance_Success) {
+TEST(InstanceAdminConnectionTest, GetInstanceSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
@@ -86,7 +86,7 @@ TEST(InstanceAdminConnectionTest, GetInstance_Success) {
   EXPECT_THAT(*actual, IsProtoEqual(expected_instance));
 }
 
-TEST(InstanceAdminConnectionTest, GetInstance_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, GetInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstance(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -96,7 +96,7 @@ TEST(InstanceAdminConnectionTest, GetInstance_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, GetInstance_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, GetInstanceTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstance(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -218,7 +218,7 @@ TEST(InstanceAdminClientTest, UpdateInstanceSuccess) {
   EXPECT_EQ(expected_name, instance->name());
 }
 
-TEST(InstanceAdminClientTest, UpdateInstance_PermanentFailure) {
+TEST(InstanceAdminClientTest, UpdateInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
   EXPECT_CALL(*mock, UpdateInstance(_, _))
@@ -234,7 +234,7 @@ TEST(InstanceAdminClientTest, UpdateInstance_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, instance.status().code());
 }
 
-TEST(InstanceAdminClientTest, UpdateInstance_TooManyTransients) {
+TEST(InstanceAdminClientTest, UpdateInstanceTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
 
   EXPECT_CALL(*mock, UpdateInstance(_, _))
@@ -251,7 +251,7 @@ TEST(InstanceAdminClientTest, UpdateInstance_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, instance.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, DeleteInstance_Success) {
+TEST(InstanceAdminConnectionTest, DeleteInstanceSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
@@ -273,7 +273,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_Success) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST(InstanceAdminConnectionTest, DeleteInstance_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, DeleteInstancePermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, DeleteInstance(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -283,7 +283,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
 }
 
-TEST(InstanceAdminConnectionTest, DeleteInstance_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, DeleteInstanceTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, DeleteInstance(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -293,7 +293,7 @@ TEST(InstanceAdminConnectionTest, DeleteInstance_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, status.code());
 }
 
-TEST(InstanceAdminConnectionTest, GetInstanceConfig_Success) {
+TEST(InstanceAdminConnectionTest, GetInstanceConfigSuccess) {
   std::string const expected_name =
       "projects/test-project/instanceConfigs/test-instance-config";
   gcsa::InstanceConfig expected_instance_config;
@@ -324,7 +324,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_Success) {
   EXPECT_THAT(*actual, IsProtoEqual(expected_instance_config));
 }
 
-TEST(InstanceAdminConnectionTest, GetInstanceConfig_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, GetInstanceConfigPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstanceConfig(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -335,7 +335,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, GetInstanceConfig_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, GetInstanceConfigTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetInstanceConfig(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -346,7 +346,7 @@ TEST(InstanceAdminConnectionTest, GetInstanceConfig_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
+TEST(InstanceAdminConnectionTest, ListInstanceConfigsSuccess) {
   std::string const expected_parent = "projects/test-project";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
@@ -389,7 +389,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_Success) {
   EXPECT_THAT(actual_names, ::testing::ElementsAre("c1", "c2", "c3"));
 }
 
-TEST(InstanceAdminConnectionTest, ListInstanceConfigs_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, ListInstanceConfigsPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -401,7 +401,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-TEST(InstanceAdminConnectionTest, ListInstanceConfigs_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, ListInstanceConfigsTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstanceConfigs(_, _))
       .Times(AtLeast(2))
@@ -414,7 +414,7 @@ TEST(InstanceAdminConnectionTest, ListInstanceConfigs_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-TEST(InstanceAdminConnectionTest, ListInstances_Success) {
+TEST(InstanceAdminConnectionTest, ListInstancesSuccess) {
   std::string const expected_parent = "projects/test-project";
 
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
@@ -460,7 +460,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_Success) {
   EXPECT_THAT(actual_names, ::testing::ElementsAre("i1", "i2", "i3"));
 }
 
-TEST(InstanceAdminConnectionTest, ListInstances_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, ListInstancesPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstances(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -472,7 +472,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
-TEST(InstanceAdminConnectionTest, ListInstances_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, ListInstancesTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, ListInstances(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -484,7 +484,7 @@ TEST(InstanceAdminConnectionTest, ListInstances_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
-TEST(InstanceAdminConnectionTest, GetIamPolicy_Success) {
+TEST(InstanceAdminConnectionTest, GetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
@@ -514,7 +514,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_Success) {
   ASSERT_EQ("user:test-account@example.com", actual->bindings(0).members(0));
 }
 
-TEST(InstanceAdminConnectionTest, GetIamPolicy_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, GetIamPolicyPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -524,7 +524,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, GetIamPolicy_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, GetIamPolicyTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, GetIamPolicy(_, _))
       .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
@@ -534,7 +534,7 @@ TEST(InstanceAdminConnectionTest, GetIamPolicy_TooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, SetIamPolicy_Success) {
+TEST(InstanceAdminConnectionTest, SetIamPolicySuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
@@ -574,7 +574,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_Success) {
   EXPECT_THAT(*actual, IsProtoEqual(expected_policy));
 }
 
-TEST(InstanceAdminConnectionTest, SetIamPolicy_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, SetIamPolicyPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -584,7 +584,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, SetIamPolicy_NonIdempotent) {
+TEST(InstanceAdminConnectionTest, SetIamPolicyNonIdempotent) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   // If the Etag field is not set, then the RPC is not idempotent and should
   // fail on the first transient error.
@@ -597,7 +597,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_NonIdempotent) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, SetIamPolicy_Idempotent) {
+TEST(InstanceAdminConnectionTest, SetIamPolicyIdempotent) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, SetIamPolicy(_, _))
       .Times(AtLeast(2))
@@ -610,7 +610,7 @@ TEST(InstanceAdminConnectionTest, SetIamPolicy_Idempotent) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
+TEST(InstanceAdminConnectionTest, TestIamPermissionsSuccess) {
   std::string const expected_name =
       "projects/test-project/instances/test-instance";
 
@@ -639,7 +639,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_Success) {
   ASSERT_EQ("test.permission2", actual->permissions(0));
 }
 
-TEST(InstanceAdminConnectionTest, TestIamPermissions_PermanentFailure) {
+TEST(InstanceAdminConnectionTest, TestIamPermissionsPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions(_, _))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
@@ -650,7 +650,7 @@ TEST(InstanceAdminConnectionTest, TestIamPermissions_PermanentFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
 }
 
-TEST(InstanceAdminConnectionTest, TestIamPermissions_TooManyTransients) {
+TEST(InstanceAdminConnectionTest, TestIamPermissionsTooManyTransients) {
   auto mock = std::make_shared<spanner_testing::MockInstanceAdminStub>();
   EXPECT_CALL(*mock, TestIamPermissions(_, _))
       .Times(AtLeast(2))
