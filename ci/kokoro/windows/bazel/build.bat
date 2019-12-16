@@ -21,6 +21,10 @@ if not exist "C:\b\" mkdir C:\b
 
 call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
+echo "BAZEL_SH"
+echo %BAZEL_SH%
+%BAZEL_SH% --version
+
 echo %date% %time%
 bazel version
 
