@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/results.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
@@ -40,6 +41,7 @@ namespace spanner_proto = ::google::spanner::v1;
 using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_mocks::MockConnection;
 using ::google::cloud::spanner_mocks::MockResultSetSource;
+using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::ByMove;
@@ -821,6 +823,142 @@ TEST(ClientTest, CommitSessionNotFound) {
   auto result = client.Commit(mutator);
   EXPECT_STATUS_OK(result);
   EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
+TEST(ClientTest, ProfileQuerySuccess) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+          fields: {
+            name: "Id",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  google::spanner::v1::ResultSetStats stats;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        query_plan: { plan_nodes: { display_name: "test-node" } }
+        query_stats {
+          fields {
+            key: "elapsed_time"
+            value { string_value: "42 secs" }
+          }
+        }
+      )pb",
+      &stats));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(Row()));
+  EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
+
+  EXPECT_CALL(*conn, ProfileQuery(_))
+      .WillOnce(Return(ByMove(ProfileQueryResult(std::move(source)))));
+
+  KeySet keys = KeySet::All();
+  auto rows = client.ProfileQuery(SqlStatement("select * from table;"));
+
+  using RowType = std::tuple<std::string, std::int64_t>;
+  auto expected = std::vector<RowType>{
+      RowType("Ann", 42),
+  };
+  int row_number = 0;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+  auto actual_plan = rows.ExecutionPlan();
+  ASSERT_TRUE(actual_plan);
+  EXPECT_THAT(*actual_plan, IsProtoEqual(stats.query_plan()));
+
+  auto actual_stats = rows.ExecutionStats();
+  ASSERT_TRUE(actual_stats);
+  std::unordered_map<std::string, std::string> expected_stats{
+      {"elapsed_time", "42 secs"}};
+  EXPECT_EQ(expected_stats, *actual_stats);
+}
+
+TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
+  auto conn = std::make_shared<MockConnection>();
+  Client client(conn);
+
+  auto source = make_unique<MockResultSetSource>();
+  spanner_proto::ResultSetMetadata metadata;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        row_type: {
+          fields: {
+            name: "Name",
+            type: { code: INT64 }
+          }
+          fields: {
+            name: "Id",
+            type: { code: INT64 }
+          }
+        }
+      )pb",
+      &metadata));
+  google::spanner::v1::ResultSetStats stats;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        query_plan: { plan_nodes: { display_name: "test-node" } }
+        query_stats {
+          fields {
+            key: "elapsed_time"
+            value { string_value: "42 secs" }
+          }
+        }
+      )pb",
+      &stats));
+  EXPECT_CALL(*source, Metadata()).WillRepeatedly(Return(metadata));
+  EXPECT_CALL(*source, NextRow())
+      .WillOnce(Return(MakeTestRow("Ann", 42)))
+      .WillOnce(Return(Row()));
+  EXPECT_CALL(*source, Stats()).WillRepeatedly(Return(stats));
+
+  EXPECT_CALL(*conn, ProfileQuery(_))
+      .WillOnce(Return(ByMove(ProfileQueryResult(std::move(source)))));
+
+  KeySet keys = KeySet::All();
+  auto rows = client.ProfileQuery(
+      Transaction::SingleUseOptions(
+          /*max_staleness=*/std::chrono::nanoseconds(std::chrono::minutes(5))),
+      SqlStatement("select * from table;"));
+
+  using RowType = std::tuple<std::string, std::int64_t>;
+  auto expected = std::vector<RowType>{
+      RowType("Ann", 42),
+  };
+  int row_number = 0;
+  for (auto& row : StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+
+  auto actual_plan = rows.ExecutionPlan();
+  ASSERT_TRUE(actual_plan);
+  EXPECT_THAT(*actual_plan, IsProtoEqual(stats.query_plan()));
+
+  auto actual_stats = rows.ExecutionStats();
+  ASSERT_TRUE(actual_stats);
+  std::unordered_map<std::string, std::string> expected_stats{
+      {"elapsed_time", "42 secs"}};
+  EXPECT_EQ(expected_stats, *actual_stats);
 }
 
 }  // namespace
