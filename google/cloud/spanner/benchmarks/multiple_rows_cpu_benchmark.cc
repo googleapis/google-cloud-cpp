@@ -1497,7 +1497,9 @@ class RunAllExperiment : public Experiment {
         continue;
       }
       config.use_only_clients = true;
+      config.use_only_stubs = false;
       experiment->Run(config, database);
+      config.use_only_clients = false;
       config.use_only_stubs = true;
       experiment->Run(config, database);
       experiment->TearDown(config, database);
