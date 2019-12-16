@@ -55,16 +55,21 @@ namespace internal {
 class SessionPool : public std::enable_shared_from_this<SessionPool> {
  public:
   /**
-   * Create a `SessionPool`.
+   * Construct a `SessionPool`.
    *
-   * The parameters allow the `SessionPool` to make remote calls needed to
-   * manage the pool, and to associate `Session`s with the stubs used to
-   * create them. `stubs` must not be empty.
+   * @warning callers should use the `MakeSessionPool()` factory method rather
+   * than calling the constructor and `Initialize()` directly.
    */
   SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
               SessionPoolOptions options,
               std::unique_ptr<RetryPolicy> retry_policy,
               std::unique_ptr<BackoffPolicy> backoff_policy);
+  /**
+   * If using the factory method is not possible, call `Initialize()` exactly
+   * once, immediately after constructing the pool. This is necessary because
+   * we are unable to call shared_from_this() in the constructor.
+   */
+  void Initialize();
 
   /**
    * Allocate a `Session` from the pool, creating a new one if necessary.
@@ -125,6 +130,18 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::vector<ChannelInfo>::iterator
       next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
+
+/**
+ * Create a `SessionPool`.
+ *
+ * The parameters allow the `SessionPool` to make remote calls needed to manage
+ * the pool, and to associate `Session`s with the stubs used to create them.
+ * `stubs` must not be empty.
+ */
+std::shared_ptr<SessionPool> MakeSessionPool(
+    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    SessionPoolOptions options, std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy);
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

@@ -95,10 +95,10 @@ ConnectionImpl::ConnectionImpl(Database db,
     : db_(std::move(db)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
-      session_pool_(std::make_shared<SessionPool>(
-          db_, std::move(stubs), std::move(session_pool_options),
-          retry_policy_prototype_->clone(),
-          backoff_policy_prototype_->clone())) {}
+      session_pool_(MakeSessionPool(db_, std::move(stubs),
+                                    std::move(session_pool_options),
+                                    retry_policy_prototype_->clone(),
+                                    backoff_policy_prototype_->clone())) {}
 
 RowStream ConnectionImpl::Read(ReadParams params) {
   return internal::Visit(

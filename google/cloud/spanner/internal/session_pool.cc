@@ -29,6 +29,17 @@ namespace internal {
 
 namespace spanner_proto = ::google::spanner::v1;
 
+std::shared_ptr<SessionPool> MakeSessionPool(
+    Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    SessionPoolOptions options, std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
+  auto pool = std::make_shared<SessionPool>(
+      std::move(db), std::move(stubs), std::move(options),
+      std::move(retry_policy), std::move(backoff_policy));
+  pool->Initialize();
+  return pool;
+}
+
 SessionPool::SessionPool(Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
                          SessionPoolOptions options,
@@ -53,27 +64,30 @@ SessionPool::SessionPool(Database db,
   // `channels_` is never resized after this point.
   next_dissociated_stub_channel_ = channels_.begin();
   next_channel_for_create_sessions_ = channels_.begin();
+}
 
-  if (options_.min_sessions() == 0) {
-    return;
-  }
-
+void SessionPool::Initialize() {
   // Eagerly initialize the pool with `min_sessions` sessions.
-  std::unique_lock<std::mutex> lk(mu_);
-  int num_channels = static_cast<int>(channels_.size());
-  int sessions_per_channel = options_.min_sessions() / num_channels;
-  // If the number of sessions doesn't divide evenly by the number of channels,
-  // add one extra session to the first `extra_sessions` channels.
-  int extra_sessions = options_.min_sessions() % num_channels;
-  for (auto& channel : channels_) {
-    int num_sessions = sessions_per_channel;
-    if (extra_sessions > 0) {
-      ++num_sessions;
-      --extra_sessions;
+  // TODO(#307) this was moved to `Initialize` in preparation of using
+  // `shared_from_this()` in the process of creating sessions, which cannot
+  // be done in the constructor.
+  if (options_.min_sessions() > 0) {
+    std::unique_lock<std::mutex> lk(mu_);
+    int num_channels = static_cast<int>(channels_.size());
+    int sessions_per_channel = options_.min_sessions() / num_channels;
+    // If the number of sessions doesn't divide evenly by the number of
+    // channels, add one extra session to the first `extra_sessions` channels.
+    int extra_sessions = options_.min_sessions() % num_channels;
+    for (auto& channel : channels_) {
+      int num_sessions = sessions_per_channel;
+      if (extra_sessions > 0) {
+        ++num_sessions;
+        --extra_sessions;
+      }
+      // Just ignore failures; we'll try again when the caller requests a
+      // session, and we'll be in a position to return an error at that time.
+      (void)CreateSessions(lk, channel, options_.labels(), num_sessions);
     }
-    // Just ignore failures; we'll try again when the caller requests a
-    // session, and we'll be in a position to return an error at that time.
-    (void)CreateSessions(lk, channel, options_.labels(), num_sessions);
   }
 }
 
