@@ -612,6 +612,30 @@ class Filter {
   }
 
   /**
+   * Return a filter that interleaves the results of a range of filters.
+   *
+   * Similar to #Interleave(), except this function accepts a pair of
+   * Iterators.
+   *
+   * @param begin the begin iterator of the range.
+   * @param end the end iterator of the range.
+   */
+  template <typename Iterator>
+  static Filter InterleaveFromRange(Iterator begin, Iterator end) {
+    static_assert(
+        std::is_convertible<typename std::iterator_traits<Iterator>::value_type,
+                            Filter>::value,
+        "The value type of the Iterator arguments passed to"
+        " InterleaveFromRange(...) must be convertible to Filter");
+    Filter tmp;
+    auto& interleave = *tmp.filter_.mutable_interleave();
+    for (auto it = begin; it != end; ++it) {
+      *interleave.add_filters() = it->as_proto();
+    }
+    return tmp;
+  }
+
+  /**
    * Return a filter that outputs all cells ignoring intermediate filters.
    *
    * Please read the documentation in the

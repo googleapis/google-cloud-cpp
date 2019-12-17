@@ -534,6 +534,37 @@ TEST_F(FilterIntegrationTest, Interleave) {
   CheckEqualUnordered(expected, actual);
 }
 
+TEST_F(FilterIntegrationTest, InterleaveFromRange) {
+  auto table = GetTable();
+  std::string const prefix = "interleave-prefix";
+  std::vector<bigtable::Cell> created{
+      {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
+      {prefix + "/bcd0", "family2", "c1", 2000, "v2000"},
+      {prefix + "/abc1", "family3", "c2", 3000, "v3000"},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, "v5000"},
+      {prefix + "/hij1", "family3", "c5", 6000, "v6000"},
+  };
+  CreateCells(table, created);
+  std::vector<bigtable::Cell> expected{
+      {prefix + "/bcd0", "family2", "c1", 2000, ""},
+      {prefix + "/abc1", "family3", "c2", 3000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, ""},
+      {prefix + "/fgh0", "family1", "c3", 4000, "v4000"},
+      {prefix + "/hij0", "family2", "c4", 4000, ""},
+  };
+
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{
+      F::Chain(F::ValueRangeClosed("v2000", "v5000"),
+               F::StripValueTransformer()),
+      F::ColumnRangeClosed("family1", "c2", "c3")};
+  auto actual =
+      ReadRows(table, F::InterleaveFromRange(filter_collection.begin(),
+                                             filter_collection.end()));
+  CheckEqualUnordered(expected, actual);
+}
+
 namespace {
 
 void FilterIntegrationTest::CreateComplexRows(bigtable::Table& table,
