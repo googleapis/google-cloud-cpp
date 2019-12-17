@@ -614,8 +614,8 @@ class Filter {
   /**
    * Return a filter that interleaves the results of a range of filters.
    *
-   * Similar to #google::cloud::bigtable::v1::Filter::Interleave(), except this
-   * function accepts a pair of Iterators.
+   * Similar to #Interleave(), except this function accepts a pair of
+   * Iterators.
    *
    * @param begin the begin iterator of the range.
    * @param end the end iterator of the range.

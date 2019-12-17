@@ -289,7 +289,7 @@ TEST(FiltersTest, InterleaveOneArg) {
 }
 
 /// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
-TEST(FiltersTest, InterleaveFromRangeMultipleArgs) {
+TEST(FiltersTest, InterleaveFromRangeMany) {
   using F = bigtable::Filter;
   std::vector<F> filter_collection{F::FamilyRegex("fam"), F::ColumnRegex("col"),
                                    F::CellsRowOffset(2), F::Latest(1)};
@@ -306,7 +306,7 @@ TEST(FiltersTest, InterleaveFromRangeMultipleArgs) {
 }
 
 /// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
-TEST(FiltersTest, InterleaveFromRangeNoArgs) {
+TEST(FiltersTest, InterleaveFromRangeEmpty) {
   using F = bigtable::Filter;
   std::vector<F> filter_collection{};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
@@ -318,7 +318,7 @@ TEST(FiltersTest, InterleaveFromRangeNoArgs) {
 }
 
 /// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
-TEST(FiltersTest, InterleaveFromRangeOneArg) {
+TEST(FiltersTest, InterleaveFromRangeSingle) {
   using F = bigtable::Filter;
   std::vector<F> filter_collection{F::Latest(2)};
   auto filter = F::InterleaveFromRange(filter_collection.begin(),
