@@ -288,6 +288,48 @@ TEST(FiltersTest, InterleaveOneArg) {
   EXPECT_EQ(2, interleave.filters(0).cells_per_column_limit_filter());
 }
 
+/// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
+TEST(FiltersTest, InterleaveFromRangeMultipleArgs) {
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{F::FamilyRegex("fam"), F::ColumnRegex("col"),
+                                   F::CellsRowOffset(2), F::Latest(1)};
+  auto filter = F::InterleaveFromRange(filter_collection.begin(),
+                                       filter_collection.end());
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_interleave());
+  auto const& interleave = proto.interleave();
+  ASSERT_EQ(4, interleave.filters_size());
+  EXPECT_EQ("fam", interleave.filters(0).family_name_regex_filter());
+  EXPECT_EQ("col", interleave.filters(1).column_qualifier_regex_filter());
+  EXPECT_EQ(2, interleave.filters(2).cells_per_row_offset_filter());
+  EXPECT_EQ(1, interleave.filters(3).cells_per_column_limit_filter());
+}
+
+/// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
+TEST(FiltersTest, InterleaveFromRangeNoArgs) {
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{};
+  auto filter = F::InterleaveFromRange(filter_collection.begin(),
+                                       filter_collection.end());
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_interleave());
+  auto const& interleave = proto.interleave();
+  ASSERT_EQ(0, interleave.filters_size());
+}
+
+/// @test Verify that `bigtable::Filter::InterleaveFromRange` works as expected.
+TEST(FiltersTest, InterleaveFromRangeOneArg) {
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{F::Latest(2)};
+  auto filter = F::InterleaveFromRange(filter_collection.begin(),
+                                       filter_collection.end());
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_interleave());
+  auto const& interleave = proto.interleave();
+  ASSERT_EQ(1, interleave.filters_size());
+  EXPECT_EQ(2, interleave.filters(0).cells_per_column_limit_filter());
+}
+
 /// @test Verify that `bigtable::Filter::Sink` works as expected.
 TEST(FiltersTest, Sink) {
   auto filter = bigtable::Filter::Sink();
