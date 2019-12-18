@@ -1116,17 +1116,15 @@ void ComposeObjectFromMany(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name,
      std::string destination_object_name,
      std::vector<gcs::ComposeSourceObject> compose_objects) {
-    StatusOr<gcs::ObjectMetadata> prefix_md =
-        gcs::CreateRandomPrefix(client, bucket_name, ".tmpfiles");
-    if (!prefix_md) {
-      throw std::runtime_error(prefix_md.status().message());
-    }
-    std::string const prefix = prefix_md->name();
+    std::string prefix = gcs::CreateRandomPrefixName(".tmpfiles");
     StatusOr<gcs::ObjectMetadata> composed_object =
         ComposeMany(client, bucket_name, compose_objects, prefix,
                     destination_object_name, false);
 
     if (!composed_object) {
+      // If this is an effect of some transient unavailability, stray temporary
+      // might be left over. You can use `DeleteByPrefix()` with `prefix` as
+      // argument to delete them.
       throw std::runtime_error(composed_object.status().message());
     }
 
