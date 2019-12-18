@@ -193,12 +193,14 @@ installing `google-cloud-cpp` itself:
 
 ```console
 > vcpkg.exe install google-cloud-cpp:x64-windows-static
+> vcpkg.exe install --recurse google-cloud-cpp-common[test]:x64-windows-static
 > vcpkg.exe integrate install
 ```
 
 Compile the code using:
 
 ```console
+> cd \Users\%USERNAME%\google-cloud-cpp
 > call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 > cmake -GNinja -H. -Bcmake-out
    -DCMAKE_BUILD_TYPE=Debug
