@@ -72,8 +72,8 @@ class SetOptionsApplyHelper {
  * The state controlling uploading a GCS object via multiple parallel streams.
  *
  * To use this class obtain the state via `PrepareParallelUpload` and then write
- * the data to the streams available in the `shards` member. Once writing is
- * done, close or destroy the streams.
+ * the data to the streams associated with each shard. Once writing is done,
+ * close or destroy the streams.
  *
  * When all the streams are `Close`d or destroyed, this class will join the
  * them (via `ComposeMany`) into the destination object and set the value in
@@ -269,6 +269,15 @@ NonResumableParallelUploadState::Create(Client client,
         std::move(compose_options));
   };
 
+  auto lock = internal::LockPrefix(client, bucket_name, prefix,
+                                   std::make_tuple(options...));
+  if (!lock) {
+    return Status(
+        lock.status().code(),
+        "Failed to lock prefix for ParallelUpload: " + lock.status().message());
+  }
+  deleter->Add(*lock);
+
   auto internal_state = std::make_shared<NonResumableParallelUploadState::Impl>(
       std::move(deleter), std::move(composer));
   std::vector<ObjectWriteStream> streams;
@@ -339,7 +348,7 @@ struct PrepareParallelUploadApplyHelper {
  * A class representing an individual shard of the parallel upload.
  *
  * In order to perform a parallel upload of a file, you should call
- * `ParallelUploadFile()` and it will return a vector of objects of this class.
+ * `CreateUploadShards()` and it will return a vector of objects of this class.
  * You should execute the `Upload()` member function on them in parallel to
  * execute the upload.
  *
@@ -365,7 +374,7 @@ class ParallelUploadFileShard {
    *
    * @return the returned future will have a value set to the destination object
    *     metadata when `Upload()` is called on all shards returned from
-   *     `ParallelUploadFile()`.
+   *     `CreateUploadShards()`.
    */
   future<StatusOr<ObjectMetadata>> WaitForCompletion() {
     return state_->WaitForCompletion();
@@ -408,14 +417,14 @@ class ParallelUploadFileShard {
   std::string file_name_;
 
   template <typename... Options>
-  friend StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
+  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
       Client client, std::string file_name, std::string bucket_name,
       std::string object_name, std::string prefix, Options&&... options);
 };
 
 /**
  * A parameter type indicating the maximum  number of streams to
- * `ParallelUploadFile`.
+ * `CreateUploadShards`.
  */
 class MaxStreams {
  public:
@@ -427,9 +436,9 @@ class MaxStreams {
 };
 
 /**
- * A parameter type indicating the minimum stream size to `ParallelUploadFile`.
+ * A parameter type indicating the minimum stream size to `CreateUploadShards`.
  *
- * If `ParallelUploadFile`, receives this option it will attempt to make sure
+ * If `CreateUploadShards`, receives this option it will attempt to make sure
  * that every shard is at least this long. This might not apply to the last
  * shard because it will be the remainder of the division of the file.
  */
@@ -476,12 +485,16 @@ class MinStreamSize {
  * @snippet storage_object_samples.cc parallel upload file
  */
 template <typename... Options>
-StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
+StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
     Client client, std::string file_name, std::string bucket_name,
     std::string object_name, std::string prefix, Options&&... options) {
   auto div_ceil = [](std::uintmax_t dividend, std::size_t divisor) {
     return (dividend + divisor - 1) / divisor;
   };
+  // These defaults were obtained by experiments summarized in
+  // https://github.com/googleapis/google-cloud-cpp/issues/2951#issuecomment-566237128
+  std::size_t const kDefaultMaxStreams = 64;
+  std::size_t const kDefaultMinStreamSize = 32 * 1024 * 1024;
 
   std::error_code size_err;
   auto file_size = google::cloud::internal::file_size(file_name, size_err);
@@ -492,14 +505,14 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
   auto max_streams_arg =
       internal::ExtractFirstOccurenceOfType<MaxStreams>(std::tie(options...));
   std::size_t const max_streams =
-      max_streams_arg ? max_streams_arg->value() : 64;
+      max_streams_arg ? max_streams_arg->value() : kDefaultMaxStreams;
   auto min_stream_size_arg =
       internal::ExtractFirstOccurenceOfType<MinStreamSize>(
           std::tie(options...));
   std::uintmax_t const min_stream_size =
       (std::max<std::uintmax_t>)(1, min_stream_size_arg
                                         ? min_stream_size_arg->value()
-                                        : (2ULL << 20));
+                                        : kDefaultMinStreamSize);
   std::size_t const wanted_num_streams =
       (std::max<std::size_t>)(1,
                               (std::min)(max_streams,
@@ -567,6 +580,39 @@ StatusOr<std::vector<ParallelUploadFileShard>> ParallelUploadFile(
 #else
   return res;
 #endif
+}
+
+template <typename... Options>
+StatusOr<ObjectMetadata> ParallelUploadFile(
+    Client client, std::string file_name, std::string bucket_name,
+    std::string object_name, std::string prefix, bool ignore_cleanup_failures,
+    Options&&... options) {
+  auto shards =
+      CreateUploadShards(std::move(client), std::move(file_name),
+                         std::move(bucket_name), std::move(object_name),
+                         std::move(prefix), std::forward<Options>(options)...);
+  if (!shards) {
+    return shards.status();
+  }
+
+  std::vector<std::thread> threads;
+  threads.reserve(shards->size());
+  for (auto& shard : *shards) {
+    threads.emplace_back([&shard] {
+      // We can safely ignore the status - if something fails we'll know
+      // when obtaining final metadata.
+      shard.Upload();
+    });
+  }
+  for (auto& thread : threads) {
+    thread.join();
+  }
+  auto res = (*shards)[0].WaitForCompletion().get();
+  auto cleanup_res = (*shards)[0].EagerCleanup();
+  if (!cleanup_res.ok() && !ignore_cleanup_failures) {
+    return cleanup_res;
+  }
+  return res;
 }
 
 }  // namespace STORAGE_CLIENT_NS

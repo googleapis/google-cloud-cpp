@@ -757,47 +757,12 @@ void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
      std::string object_name) {
     // Pick a unique random prefix for the temporary objects created by the
     // parallel upload.
-    auto prefix_md = gcs::CreateRandomPrefix(client, bucket_name, "");
-    if (!prefix_md) {
-      throw std::runtime_error(prefix_md.status().message());
-    }
-    std::string const& prefix = prefix_md->name();
+    auto prefix = gcs::CreateRandomPrefixName("");
 
-    auto shards = gcs::ParallelUploadFile(client, file_name, bucket_name,
-                                          object_name, prefix);
-
-    if (!shards) {
-      throw std::runtime_error(shards.status().message());
-    }
-
-    std::vector<std::thread> threads;
-    for (auto& shard : *shards) {
-      threads.emplace_back([&shard] {
-        // We can safely ignore the status - if something fails we'll know
-        // when obtaining final metadata.
-        shard.Upload();
-      });
-    }
-    for (auto& thread : threads) {
-      thread.join();
-    }
-
-    auto object_metadata = (*shards)[0].WaitForCompletion().get();
+    auto object_metadata = gcs::ParallelUploadFile(
+        client, file_name, bucket_name, object_name, prefix, false);
     if (!object_metadata) {
       throw std::runtime_error(object_metadata.status().message());
-    }
-
-    // This step is not mandatory, though highly recommended. The destructor
-    // will try to cleanup, but it will silently ignore potential errors.
-    auto cleanup_status = (*shards)[0].EagerCleanup();
-    if (!cleanup_status.ok()) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    // The prefix marker has still not been deleted.
-    auto deletion_status = client.DeleteObject(bucket_name, prefix);
-    if (!deletion_status.ok()) {
-      throw std::runtime_error(deletion_status.message());
     }
 
     std::cout << "Uploaded " << file_name << " to object "

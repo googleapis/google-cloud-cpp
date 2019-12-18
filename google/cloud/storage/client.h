@@ -3196,6 +3196,8 @@ class ScopedDeleter {
   // The actual deletion depends on local's types in a very non-trivial way,
   // so we abstract this away by providing the function to delete one object.
   ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun);
+  ScopedDeleter(ScopedDeleter const&) = delete;
+  ScopedDeleter& operator=(ScopedDeleter const&) = delete;
   ~ScopedDeleter();
 
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())

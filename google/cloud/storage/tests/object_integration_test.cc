@@ -1015,40 +1015,20 @@ TEST_F(ObjectIntegrationTest, ParallelUpload) {
 
   std::string bucket_name = flag_bucket_name;
 
-  auto prefix_md = CreateRandomPrefix(*client, bucket_name, "");
-  ASSERT_STATUS_OK(prefix_md);
-  std::string const& prefix = prefix_md->name();
+  auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
-
-  std::vector<std::thread> threads;
 
   testing::TempFile temp_file(LoremIpsum());
 
-  auto shards = ParallelUploadFile(*client, temp_file.name(), bucket_name,
-                                   dest_object_name, prefix, MinStreamSize(0),
-                                   IfGenerationMatch(0));
-  ASSERT_STATUS_OK(shards);
-  for (auto& shard : *shards) {
-    threads.emplace_back([&shard] {
-      // We can safely ignore the status - if something fails we'll know
-      // when obtaining final metadata.
-      shard.Upload();
-    });
-  }
-  for (auto& thread : threads) {
-    thread.join();
-  }
-
-  auto object_metadata = (*shards)[0].WaitForCompletion().get();
-  ASSERT_STATUS_OK(object_metadata);
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), bucket_name, dest_object_name, prefix, false,
+      MinStreamSize(0), IfGenerationMatch(0));
 
   auto stream =
       client->ReadObject(bucket_name, dest_object_name,
                          IfGenerationMatch(object_metadata->generation()));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(LoremIpsum(), actual);
-
-  EXPECT_STATUS_OK((*shards)[0].EagerCleanup());
 
   std::vector<ObjectMetadata> objects;
   for (auto& object : client->ListObjects(bucket_name)) {
@@ -1062,7 +1042,8 @@ TEST_F(ObjectIntegrationTest, ParallelUpload) {
   ASSERT_EQ(prefix + ".dest", objects[0].name());
 
   auto deletion_status =
-      DeleteByPrefix(*client, bucket_name, prefix, Versions());
+      client->DeleteObject(bucket_name, dest_object_name,
+                           IfGenerationMatch(object_metadata->generation()));
   ASSERT_STATUS_OK(deletion_status);
 }
 

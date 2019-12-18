@@ -47,6 +47,8 @@ using ::testing::ReturnRef;
 std::string const kBucketName = "test-bucket";
 std::string const kDestObjectName = "final-object";
 int const kDestGeneration = 123;
+int const kUploadMarkerGeneration = 234;
+int const kComposeMarkerGeneration = 345;
 std::string const kPrefix = "some-prefix";
 
 std::string ObjectId(std::string const& bucket, std::string const& object,
@@ -263,6 +265,26 @@ bool Unsatisfied(future<T> const& fut) {
   return std::future_status::timeout == fut.wait_for(1_ms);
 }
 
+auto expect_deletion = [](std::string const& name, int generation) {
+  return [name, generation](internal::DeleteObjectRequest const& r) {
+    EXPECT_EQ(kBucketName, r.bucket_name());
+    EXPECT_EQ(name, r.object_name());
+    EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
+    EXPECT_EQ(generation, r.GetOption<IfGenerationMatch>().value());
+    return make_status_or(internal::EmptyResponse{});
+  };
+};
+
+auto expect_new_object = [](std::string const& object_name, int generation) {
+  return [object_name,
+          generation](internal::InsertObjectMediaRequest const& request) {
+    EXPECT_EQ(kBucketName, request.bucket_name());
+    EXPECT_EQ(object_name, request.object_name());
+    EXPECT_EQ("", request.contents());
+    return make_status_or(MockObject(object_name, generation));
+  };
+};
+
 TEST_F(ParallelUploadTest, Success) {
   int const num_shards = 3;
   // The expectations need to be reversed.
@@ -270,6 +292,10 @@ TEST_F(ParallelUploadTest, Success) {
   ExpectCreateSession(kPrefix + ".upload_shard_1", 222);
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
   EXPECT_CALL(*raw_client_mock, ComposeObject(_))
       .WillOnce(Invoke(create_composition_check(
           {{kPrefix + ".upload_shard_0", 111},
@@ -281,6 +307,8 @@ TEST_F(ParallelUploadTest, Success) {
                                {{kPrefix + ".upload_shard_1", 222}, Status()},
                                {{kPrefix + ".upload_shard_2", 333}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
       }))
@@ -289,7 +317,8 @@ TEST_F(ParallelUploadTest, Success) {
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto state = PrepareParallelUpload(*client, kBucketName, kDestObjectName,
                                      num_shards, kPrefix);
@@ -316,11 +345,15 @@ TEST_F(ParallelUploadTest, OneStreamFailsUponCration) {
   ExpectCreateSessionFailure(kPrefix + ".upload_shard_1", PermanentError());
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto state = PrepareParallelUpload(*client, kBucketName, kDestObjectName,
                                      num_shards, kPrefix);
@@ -332,6 +365,11 @@ TEST_F(ParallelUploadTest, CleanupFailsEager) {
   int const num_shards = 1;
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+
   EXPECT_CALL(*raw_client_mock, ComposeObject(_))
       .WillOnce(Invoke(create_composition_check(
           {{kPrefix + ".upload_shard_0", 111}}, kDestObjectName,
@@ -340,6 +378,8 @@ TEST_F(ParallelUploadTest, CleanupFailsEager) {
   ExpectedDeletions deletions(
       {{{kPrefix + ".upload_shard_0", 111}, PermanentError()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
       }));
@@ -368,6 +408,11 @@ TEST_F(ParallelUploadTest, CleanupFailsInDtor) {
   int const num_shards = 1;
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+
   EXPECT_CALL(*raw_client_mock, ComposeObject(_))
       .WillOnce(Invoke(create_composition_check(
           {{kPrefix + ".upload_shard_0", 111}}, kDestObjectName,
@@ -376,6 +421,8 @@ TEST_F(ParallelUploadTest, CleanupFailsInDtor) {
   ExpectedDeletions deletions(
       {{{kPrefix + ".upload_shard_0", 111}, PermanentError()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
       }));
@@ -392,6 +439,9 @@ TEST_F(ParallelUploadTest, BrokenStream) {
   ExpectCreateFailingSession(kPrefix + ".upload_shard_1", PermanentError());
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
                                {{kPrefix + ".upload_shard_2", 333}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
@@ -400,7 +450,8 @@ TEST_F(ParallelUploadTest, BrokenStream) {
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto state = PrepareParallelUpload(*client, kBucketName, kDestObjectName,
                                      num_shards, kPrefix);
@@ -433,6 +484,10 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsNotReached) {
 
   testing::TempFile temp_file("abc");
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
   EXPECT_CALL(*raw_client_mock, ComposeObject(_))
       .WillOnce(Invoke(create_composition_check(
           {{kPrefix + ".upload_shard_0", 111},
@@ -444,6 +499,8 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsNotReached) {
                                {{kPrefix + ".upload_shard_1", 222}, Status()},
                                {{kPrefix + ".upload_shard_2", 333}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
       }))
@@ -452,10 +509,11 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsNotReached) {
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto uploaders =
-      ParallelUploadFile(*client, temp_file.name(), kBucketName,
+      CreateUploadShards(*client, temp_file.name(), kBucketName,
                          kDestObjectName, kPrefix, MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
@@ -480,6 +538,11 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsReached) {
 
   testing::TempFile temp_file("abc");
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+
   EXPECT_CALL(*raw_client_mock, ComposeObject(_))
       .WillOnce(Invoke(create_composition_check(
           {{kPrefix + ".upload_shard_0", 111},
@@ -489,14 +552,17 @@ TEST_F(ParallelUploadTest, FileSuccessWithMaxStreamsReached) {
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
                                {{kPrefix + ".upload_shard_1", 222}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
-  auto uploaders = ParallelUploadFile(*client, temp_file.name(), kBucketName,
+  auto uploaders = CreateUploadShards(*client, temp_file.name(), kBucketName,
                                       kDestObjectName, kPrefix,
                                       MinStreamSize(1), MaxStreams(2));
   EXPECT_STATUS_OK(uploaders);
@@ -521,6 +587,11 @@ TEST_F(ParallelUploadTest, FileSuccessWithEmptyFile) {
 
   testing::TempFile temp_file("");
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+
   EXPECT_CALL(*raw_client_mock, ComposeObject(_))
       .WillOnce(Invoke(create_composition_check(
           {{kPrefix + ".upload_shard_0", 111}}, kDestObjectName,
@@ -528,11 +599,14 @@ TEST_F(ParallelUploadTest, FileSuccessWithEmptyFile) {
 
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
-  auto uploaders = ParallelUploadFile(*client, temp_file.name(), kBucketName,
+  auto uploaders = CreateUploadShards(*client, temp_file.name(), kBucketName,
                                       kDestObjectName, kPrefix,
                                       MinStreamSize(100), MaxStreams(200));
   EXPECT_STATUS_OK(uploaders);
@@ -554,7 +628,7 @@ TEST_F(ParallelUploadTest, FileSuccessWithEmptyFile) {
 TEST_F(ParallelUploadTest, NonExistentFile) {
   // The expectations need to be reversed.
   auto uploaders =
-      ParallelUploadFile(*client, "nonexistent", kBucketName, kDestObjectName,
+      CreateUploadShards(*client, "nonexistent", kBucketName, kDestObjectName,
                          kPrefix, MinStreamSize(100), MaxStreams(200));
   EXPECT_FALSE(uploaders);
   EXPECT_EQ(StatusCode::kNotFound, uploaders.status().code());
@@ -570,7 +644,7 @@ TEST_F(ParallelUploadTest, UnreadableFile) {
     // test the scenario when it fails, so ignore this test otherwise.
     return;
   }
-  auto uploaders = ParallelUploadFile(*client, temp_file.name(), kBucketName,
+  auto uploaders = CreateUploadShards(*client, temp_file.name(), kBucketName,
                                       kDestObjectName, kPrefix,
                                       MinStreamSize(100), MaxStreams(200));
   EXPECT_FALSE(uploaders);
@@ -583,14 +657,18 @@ TEST_F(ParallelUploadTest, FileOneStreamFailsUponCration) {
   ExpectCreateSessionFailure(kPrefix + ".upload_shard_1", PermanentError());
   ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   testing::TempFile temp_file("whatever");
-  auto uploaders = ParallelUploadFile(*client, temp_file.name(), kBucketName,
+  auto uploaders = CreateUploadShards(*client, temp_file.name(), kBucketName,
                                       kDestObjectName, kPrefix,
                                       MinStreamSize(1), MaxStreams(2));
   EXPECT_FALSE(uploaders);
@@ -605,6 +683,9 @@ TEST_F(ParallelUploadTest, FileBrokenStream) {
 
   testing::TempFile temp_file("abc");
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
                                {{kPrefix + ".upload_shard_2", 333}, Status()}});
   EXPECT_CALL(*raw_client_mock, DeleteObject(_))
@@ -613,10 +694,11 @@ TEST_F(ParallelUploadTest, FileBrokenStream) {
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto uploaders =
-      ParallelUploadFile(*client, temp_file.name(), kBucketName,
+      CreateUploadShards(*client, temp_file.name(), kBucketName,
                          kDestObjectName, kPrefix, MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
@@ -638,6 +720,9 @@ TEST_F(ParallelUploadTest, FileFailsToReadAfterCreation) {
 
   testing::TempFile temp_file("abc");
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
                                {{kPrefix + ".upload_shard_1", 222}, Status()},
                                {{kPrefix + ".upload_shard_2", 333}, Status()}});
@@ -650,10 +735,11 @@ TEST_F(ParallelUploadTest, FileFailsToReadAfterCreation) {
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto uploaders =
-      ParallelUploadFile(*client, temp_file.name(), kBucketName,
+      CreateUploadShards(*client, temp_file.name(), kBucketName,
                          kDestObjectName, kPrefix, MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
@@ -682,6 +768,9 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
 
   testing::TempFile temp_file("abc");
 
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+
   ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
                                {{kPrefix + ".upload_shard_1", 222}, Status()},
                                {{kPrefix + ".upload_shard_2", 333}, Status()}});
@@ -694,10 +783,11 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
       }))
       .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
         return deletions(r);
-      }));
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
 
   auto uploaders =
-      ParallelUploadFile(*client, temp_file.name(), kBucketName,
+      CreateUploadShards(*client, temp_file.name(), kBucketName,
                          kDestObjectName, kPrefix, MinStreamSize(1));
   EXPECT_STATUS_OK(uploaders);
 
@@ -708,6 +798,116 @@ TEST_F(ParallelUploadTest, ShardDestroyedTooEarly) {
   auto res = (*uploaders)[0].WaitForCompletion().get();
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kCancelled, res.status().code());
+}
+
+TEST_F(ParallelUploadTest, FileSuccessBasic) {
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "c");
+  ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "b");
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "a");
+
+  testing::TempFile temp_file("abc");
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Invoke(create_composition_check(
+          {{kPrefix + ".upload_shard_0", 111},
+           {kPrefix + ".upload_shard_1", 222},
+           {kPrefix + ".upload_shard_2", 333}},
+          kDestObjectName, MockObject(kDestObjectName, kDestGeneration))));
+
+  ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
+                               {{kPrefix + ".upload_shard_1", 222}, Status()},
+                               {{kPrefix + ".upload_shard_2", 333}, Status()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
+
+  auto res =
+      ParallelUploadFile(*client, temp_file.name(), kBucketName,
+                         kDestObjectName, kPrefix, false, MinStreamSize(1));
+  EXPECT_STATUS_OK(res);
+  EXPECT_EQ(kDestObjectName, res->name());
+  EXPECT_EQ(kBucketName, res->bucket());
+}
+
+TEST_F(ParallelUploadTest, UploadNonExistentFile) {
+  auto res =
+      ParallelUploadFile(*client, "nonexistent", kBucketName, kDestObjectName,
+                         kPrefix, false, MinStreamSize(1));
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kNotFound, res.status().code());
+}
+
+TEST_F(ParallelUploadTest, CleanupFailureIsIgnored) {
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Invoke(create_composition_check(
+          {{kPrefix + ".upload_shard_0", 111}}, kDestObjectName,
+          MockObject(kDestObjectName, kDestGeneration))));
+
+  ExpectedDeletions deletions(
+      {{{kPrefix + ".upload_shard_0", 111}, PermanentError()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }));
+
+  testing::TempFile temp_file("abc");
+
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), kBucketName, kDestObjectName, kPrefix, true);
+  ASSERT_STATUS_OK(object_metadata);
+}
+
+TEST_F(ParallelUploadTest, CleanupFailureIsNotIgnored) {
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Invoke(create_composition_check(
+          {{kPrefix + ".upload_shard_0", 111}}, kDestObjectName,
+          MockObject(kDestObjectName, kDestGeneration))));
+
+  ExpectedDeletions deletions(
+      {{{kPrefix + ".upload_shard_0", 111}, PermanentError()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }));
+
+  testing::TempFile temp_file("abc");
+
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), kBucketName, kDestObjectName, kPrefix, false);
+  ASSERT_FALSE(object_metadata);
 }
 
 }  // namespace
