@@ -52,6 +52,7 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy();
 class ConnectionImpl;
 std::shared_ptr<ConnectionImpl> MakeConnection(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+    ConnectionOptions const& options = ConnectionOptions{},
     SessionPoolOptions session_pool_options = SessionPoolOptions{},
     std::unique_ptr<RetryPolicy> retry_policy = DefaultConnectionRetryPolicy(),
     std::unique_ptr<BackoffPolicy> backoff_policy =
@@ -83,9 +84,11 @@ class ConnectionImpl : public Connection {
  private:
   // Only the factory method can construct instances of this class.
   friend std::shared_ptr<ConnectionImpl> MakeConnection(
-      Database, std::vector<std::shared_ptr<SpannerStub>>, SessionPoolOptions,
+      Database, std::vector<std::shared_ptr<SpannerStub>>,
+      ConnectionOptions const&, SessionPoolOptions,
       std::unique_ptr<RetryPolicy>, std::unique_ptr<BackoffPolicy>);
   ConnectionImpl(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
+                 ConnectionOptions const& options,
                  SessionPoolOptions session_pool_options,
                  std::unique_ptr<RetryPolicy> retry_policy,
                  std::unique_ptr<BackoffPolicy> backoff_policy);
@@ -164,6 +167,7 @@ class ConnectionImpl : public Connection {
   std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
   std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<SessionPool> session_pool_;
+  bool rpc_stream_tracing_enabled_ = false;
 };
 
 }  // namespace internal

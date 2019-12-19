@@ -15,6 +15,7 @@
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/matchers.h"
+#include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -35,6 +36,7 @@ namespace spanner_proto = ::google::spanner::v1;
 
 using ::google::cloud::internal::make_unique;
 using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::spanner_testing::MockPartialResultSetReader;
 using ::google::protobuf::TextFormat;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -44,16 +46,9 @@ MATCHER_P(IsValidAndEquals, expected,
   return arg && *arg == expected;
 }
 
-class MockGrpcReader : public PartialResultSetReader {
- public:
-  MOCK_METHOD0(TryCancel, void());
-  MOCK_METHOD0(Read, optional<spanner_proto::PartialResultSet>());
-  MOCK_METHOD0(Finish, Status());
-};
-
 /// @test Verify the behavior when the initial `Read()` fails.
 TEST(PartialResultSetSourceTest, InitialReadFailure) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   EXPECT_CALL(*grpc_reader, Read())
       .WillOnce(Return(optional<spanner_proto::PartialResultSet>{}));
   Status finish_status(StatusCode::kInvalidArgument, "invalid");
@@ -69,7 +64,7 @@ TEST(PartialResultSetSourceTest, InitialReadFailure) {
  * failed `Read()`.
  */
 TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -101,7 +96,7 @@ TEST(PartialResultSetSourceTest, ReadSuccessThenFailure) {
 
 /// @test Verify the behavior when the first response does not contain metadata.
 TEST(PartialResultSetSourceTest, MissingMetadata) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   spanner_proto::PartialResultSet response;
   EXPECT_CALL(*grpc_reader, Read()).WillOnce(Return(response));
   EXPECT_CALL(*grpc_reader, Finish()).WillOnce(Return(Status()));
@@ -120,7 +115,7 @@ TEST(PartialResultSetSourceTest, MissingMetadata) {
  * type information.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(R"pb(metadata: {})pb", &response));
   EXPECT_CALL(*grpc_reader, Read())
@@ -139,7 +134,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeNoData) {
  * row type information.
  */
 TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(R"pb(
                                             metadata: {}
@@ -165,7 +160,7 @@ TEST(PartialResultSetSourceTest, MissingRowTypeWithData) {
  * All of the data is returned in a single Read() from the gRPC reader.
  */
 TEST(PartialResultSetSourceTest, SingleResponse) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   spanner_proto::PartialResultSet response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -269,7 +264,7 @@ TEST(PartialResultSetSourceTest, SingleResponse) {
  * reader returns data across multiple Read() calls.
  */
 TEST(PartialResultSetSourceTest, MultipleResponses) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 5> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -360,7 +355,7 @@ TEST(PartialResultSetSourceTest, MultipleResponses) {
  * @test Verify the behavior when a response with no values is received.
  */
 TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 3> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -404,7 +399,7 @@ TEST(PartialResultSetSourceTest, ResponseWithNoValues) {
  * of chunked and unchunked values.
  */
 TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 5> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -477,7 +472,7 @@ TEST(PartialResultSetSourceTest, ChunkedStringValueWellFormed) {
  * values in the response.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 2> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -517,7 +512,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoValue) {
  * with `chunked_value` set.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 2> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -557,7 +552,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetNoFollowingValue) {
  * @test Verify the behavior when `chunked_value` is set in the final response.
  */
 TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 2> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -599,7 +594,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueSetAtEndOfStream) {
  * chunked (float64/number).
  */
 TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 3> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(
@@ -646,7 +641,7 @@ TEST(PartialResultSetSourceTest, ChunkedValueMergeFailure) {
  * @test Verify the behavior when we get an incomplete Row.
  */
 TEST(PartialResultSetSourceTest, ErrorOnIncompleteRow) {
-  auto grpc_reader = make_unique<MockGrpcReader>();
+  auto grpc_reader = make_unique<MockPartialResultSetReader>();
   std::array<spanner_proto::PartialResultSet, 5> response;
   ASSERT_TRUE(TextFormat::ParseFromString(
       R"pb(

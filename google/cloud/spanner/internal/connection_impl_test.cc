@@ -119,7 +119,7 @@ std::shared_ptr<Connection> MakeLimitedRetryConnection(
     Database const& db,
     std::shared_ptr<spanner_testing::MockSpannerStub> mock) {
   return MakeConnection(
-      db, {std::move(mock)}, SessionPoolOptions{},
+      db, {std::move(mock)}, ConnectionOptions{}, SessionPoolOptions{},
       LimitedErrorCountRetryPolicy(/*maximum_failures=*/2).clone(),
       ExponentialBackoffPolicy(/*initial_delay=*/std::chrono::microseconds(1),
                                /*maximum_delay=*/std::chrono::microseconds(1),

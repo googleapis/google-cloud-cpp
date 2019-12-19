@@ -253,7 +253,7 @@ std::shared_ptr<Connection> MakeConnection(
         internal::CreateDefaultSpannerStub(connection_options, channel_id));
   }
   return internal::MakeConnection(
-      db, std::move(stubs), std::move(session_pool_options),
+      db, std::move(stubs), connection_options, std::move(session_pool_options),
       std::move(retry_policy), std::move(backoff_policy));
 }
 

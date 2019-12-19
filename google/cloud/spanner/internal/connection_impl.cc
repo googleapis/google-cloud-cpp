@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/connection_impl.h"
+#include "google/cloud/spanner/internal/logging_result_set_reader.h"
 #include "google/cloud/spanner/internal/partial_result_set_resume.h"
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
@@ -79,16 +80,17 @@ std::unique_ptr<BackoffPolicy> DefaultConnectionBackoffPolicy() {
 
 std::shared_ptr<ConnectionImpl> MakeConnection(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions session_pool_options,
+    ConnectionOptions const& options, SessionPoolOptions session_pool_options,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   return std::shared_ptr<ConnectionImpl>(new ConnectionImpl(
-      std::move(db), std::move(stubs), std::move(session_pool_options),
+      std::move(db), std::move(stubs), options, std::move(session_pool_options),
       std::move(retry_policy), std::move(backoff_policy)));
 }
 
 ConnectionImpl::ConnectionImpl(Database db,
                                std::vector<std::shared_ptr<SpannerStub>> stubs,
+                               ConnectionOptions const& options,
                                SessionPoolOptions session_pool_options,
                                std::unique_ptr<RetryPolicy> retry_policy,
                                std::unique_ptr<BackoffPolicy> backoff_policy)
@@ -98,7 +100,8 @@ ConnectionImpl::ConnectionImpl(Database db,
       session_pool_(MakeSessionPool(db_, std::move(stubs),
                                     std::move(session_pool_options),
                                     retry_policy_prototype_->clone(),
-                                    backoff_policy_prototype_->clone())) {}
+                                    backoff_policy_prototype_->clone())),
+      rpc_stream_tracing_enabled_(options.tracing_enabled("rpc-streams")) {}
 
 RowStream ConnectionImpl::Read(ReadParams params) {
   return internal::Visit(
@@ -318,11 +321,19 @@ RowStream ConnectionImpl::ReadImpl(SessionHolder& session,
   // Capture a copy of `stub` to ensure the `shared_ptr<>` remains valid through
   // the lifetime of the lambda.
   auto stub = session_pool_->GetStub(*session);
-  auto factory = [stub, request](std::string const& resume_token) mutable {
+  auto const tracing_enabled = rpc_stream_tracing_enabled_;
+  auto factory = [stub, request,
+                  tracing_enabled](std::string const& resume_token) mutable {
     request.set_resume_token(resume_token);
     auto context = google::cloud::internal::make_unique<grpc::ClientContext>();
-    return google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
-        std::move(context), stub->StreamingRead(*context, request));
+    std::unique_ptr<PartialResultSetReader> reader =
+        google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
+            std::move(context), stub->StreamingRead(*context, request));
+    if (tracing_enabled) {
+      reader = google::cloud::internal::make_unique<LoggingResultSetReader>(
+          std::move(reader));
+    }
+    return reader;
   };
   auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
       std::move(factory), Idempotency::kIdempotent,
@@ -449,17 +460,23 @@ ResultType ConnectionImpl::CommonQueryImpl(
   auto stub = session_pool_->GetStub(*session);
   auto const& retry_policy = retry_policy_prototype_;
   auto const& backoff_policy = backoff_policy_prototype_;
-
-  auto retry_resume_fn = [stub, retry_policy, backoff_policy](
+  auto const tracing_enabled = rpc_stream_tracing_enabled_;
+  auto retry_resume_fn = [stub, retry_policy, backoff_policy, tracing_enabled](
                              spanner_proto::ExecuteSqlRequest& request) mutable
       -> StatusOr<std::unique_ptr<ResultSourceInterface>> {
-    auto factory = [stub, request](std::string const& resume_token) mutable {
+    auto factory = [stub, request,
+                    tracing_enabled](std::string const& resume_token) mutable {
       request.set_resume_token(resume_token);
       auto context =
           google::cloud::internal::make_unique<grpc::ClientContext>();
-      return google::cloud::internal::make_unique<
-          DefaultPartialResultSetReader>(
-          std::move(context), stub->ExecuteStreamingSql(*context, request));
+      std::unique_ptr<PartialResultSetReader> reader =
+          google::cloud::internal::make_unique<DefaultPartialResultSetReader>(
+              std::move(context), stub->ExecuteStreamingSql(*context, request));
+      if (tracing_enabled) {
+        reader = google::cloud::internal::make_unique<LoggingResultSetReader>(
+            std::move(reader));
+      }
+      return reader;
     };
     auto rpc = google::cloud::internal::make_unique<PartialResultSetResume>(
         std::move(factory), Idempotency::kIdempotent, retry_policy->clone(),
