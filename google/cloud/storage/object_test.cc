@@ -424,39 +424,6 @@ TEST_F(ObjectTest, ReadObjectPermanentFailure) {
   EXPECT_THAT(status.message(), HasSubstr("ReadObject"));
 }
 
-TEST_F(ObjectTest, CreateRandomPrefix) {
-  std::string const prefix = "object_name_prefix";
-
-  EXPECT_CALL(*mock, InsertObjectMedia(_))
-      .WillOnce(Invoke([&](internal::InsertObjectMediaRequest const& request) {
-        EXPECT_EQ("test-bucket-name", request.bucket_name());
-
-        EXPECT_EQ(prefix.length() + 16, request.object_name().length());
-        EXPECT_EQ(prefix, request.object_name().substr(0, prefix.length()));
-        EXPECT_EQ("", request.contents());
-        EXPECT_TRUE(request.HasOption<UserProject>());
-        return make_status_or(
-            storage::internal::ObjectMetadataParser::FromString(
-                "{ \"name\": \"" + request.object_name() + "\"}")
-                .value());
-      }));
-
-  auto actual = CreateRandomPrefix(*client, "test-bucket-name", prefix,
-                                   UserProject("some_project"));
-  ASSERT_STATUS_OK(actual);
-  ASSERT_EQ(prefix.length() + 16, actual->name().length());
-  ASSERT_EQ(prefix, actual->name().substr(0, prefix.length()));
-}
-
-TEST_F(ObjectTest, CreateRandomPrefixPermanentFailure) {
-  testing::PermanentFailureStatusTest<ObjectMetadata>(
-      *client, EXPECT_CALL(*mock, InsertObjectMedia(_)),
-      [](Client& client) {
-        return CreateRandomPrefix(client, "bucket", "prefix").status();
-      },
-      "InsertObjectMedia");
-}
-
 ObjectMetadata CreateObject(int index) {
   std::string id = "object-" + std::to_string(index);
   std::string name = id;
@@ -598,17 +565,6 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
   EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
 }
 
-TEST_F(ObjectTest, ComposeManyNoPrefix) {
-  auto mock = std::make_shared<testing::MockClient>();
-  Client client(mock);
-
-  auto res = ComposeMany(client, "test-bucket",
-                         std::vector<ComposeSourceObject>{}, "", "dest", false);
-  EXPECT_FALSE(res);
-  EXPECT_EQ(StatusCode::kInvalidArgument, res.status().code());
-  EXPECT_THAT(res.status().message(), ::testing::HasSubstr("non-empty prefix"));
-}
-
 TEST_F(ObjectTest, ComposeManyNone) {
   auto mock = std::make_shared<testing::MockClient>();
   Client client(mock);
@@ -664,6 +620,19 @@ TEST_F(ObjectTest, ComposeManyOne) {
 
         return MockObject("test-bucket", "test-object", 42);
       }));
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        EXPECT_EQ("prefix", request.object_name());
+        EXPECT_EQ("", request.contents());
+        return make_status_or(MockObject("test-bucket", "prefix", 42));
+      }));
+  EXPECT_CALL(*mock, DeleteObject(_))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("prefix", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }));
   Client client(mock);
 
   auto status = ComposeMany(
@@ -691,6 +660,19 @@ TEST_F(ObjectTest, ComposeManyThree) {
         EXPECT_EQ("3", source_objects[2]["name"]);
 
         return MockObject("test-bucket", "test-object", 42);
+      }));
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        EXPECT_EQ("prefix", request.object_name());
+        EXPECT_EQ("", request.contents());
+        return make_status_or(MockObject("test-bucket", "prefix", 42));
+      }));
+  EXPECT_CALL(*mock, DeleteObject(_))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("prefix", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
       }));
   Client client(mock);
 
@@ -755,7 +737,19 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
 
         return MockObject(req.bucket_name(), req.object_name(), 42);
       }));
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        EXPECT_EQ("prefix", request.object_name());
+        EXPECT_EQ("", request.contents());
+        return make_status_or(MockObject("test-bucket", "prefix", 42));
+      }));
   EXPECT_CALL(*mock, DeleteObject(_))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("prefix.compose-tmp-1", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("prefix.compose-tmp-0", r.object_name());
@@ -763,7 +757,7 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
       }))
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
-        EXPECT_EQ("prefix.compose-tmp-1", r.object_name());
+        EXPECT_EQ("prefix", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       }));
 
@@ -793,11 +787,24 @@ TEST_F(ObjectTest, ComposeManyComposeFails) {
       .WillOnce(Return(
           StatusOr<ObjectMetadata>(Status(StatusCode::kPermissionDenied, ""))));
 
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        EXPECT_EQ("prefix", request.object_name());
+        EXPECT_EQ("", request.contents());
+        return make_status_or(MockObject("test-bucket", "prefix", 42));
+      }));
+
   // Cleanup is still expected
   EXPECT_CALL(*mock, DeleteObject(_))
       .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("prefix.compose-tmp-0", r.object_name());
+        return make_status_or(internal::EmptyResponse{});
+      }))
+      .WillOnce(Invoke([](internal::DeleteObjectRequest const& r) {
+        EXPECT_EQ("test-bucket", r.bucket_name());
+        EXPECT_EQ("prefix", r.object_name());
         return make_status_or(internal::EmptyResponse{});
       }));
 
@@ -831,6 +838,13 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsLoudly) {
   EXPECT_CALL(*mock, DeleteObject(_))
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        EXPECT_EQ("prefix", request.object_name());
+        EXPECT_EQ("", request.contents());
+        return make_status_or(MockObject("test-bucket", "prefix", 42));
+      }));
 
   Client client(mock);
 
@@ -863,6 +877,14 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
 
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Invoke([](internal::InsertObjectMediaRequest const& request) {
+        EXPECT_EQ("test-bucket", request.bucket_name());
+        EXPECT_EQ("prefix", request.object_name());
+        EXPECT_EQ("", request.contents());
+        return make_status_or(MockObject("test-bucket", "prefix", 42));
+      }));
+
   Client client(mock);
 
   std::vector<ComposeSourceObject> sources;
@@ -875,6 +897,21 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
       ComposeMany(client, "test-bucket", sources, "prefix", "dest", true);
   EXPECT_STATUS_OK(res);
   EXPECT_EQ("dest", res->name());
+}
+
+TEST_F(ObjectTest, ComposeManyLockingPrefixFails) {
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, InsertObjectMedia(_))
+      .WillOnce(Return(
+          Status(StatusCode::kFailedPrecondition, "Generation mismatch")));
+  Client client(mock);
+
+  auto res = ComposeMany(
+      client, "test-bucket",
+      std::vector<ComposeSourceObject>{ComposeSourceObject{"1", 42, {}}},
+      "prefix", "dest", false);
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kFailedPrecondition, res.status().code());
 }
 
 }  // namespace

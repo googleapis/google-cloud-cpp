@@ -336,6 +336,12 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
       internal::Base64Encode(signed_blob->signed_blob)};
 }
 
+std::string CreateRandomPrefixName(std::string const& prefix) {
+  auto rng = google::cloud::internal::MakeDefaultPRNG();
+  return prefix +
+         google::cloud::internal::Sample(rng, 16, "abcdefghijklmnopqrstuvwxyz");
+}
+
 namespace internal {
 
 ScopedDeleter::ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun)
@@ -352,8 +358,12 @@ Status ScopedDeleter::ExecuteDelete() {
   // make sure the dtor will not do this again
   object_list.swap(object_list_);
 
-  for (auto& object : object_list) {
-    Status status = delete_fun_(std::move(object));
+  // Perform deletion in reverse order. We rely on it in functions which create
+  // a "lock" object - it is created as the first file and should be removed as
+  // last.
+  for (auto object_it = object_list.rbegin(); object_it != object_list.rend();
+       ++object_it) {
+    Status status = delete_fun_(std::move(*object_it));
     // Fail on first error. If the service is unavailable, every deletion
     // would potentially keep retrying until the timeout passes - this would
     // take way too much time and would be pointless.

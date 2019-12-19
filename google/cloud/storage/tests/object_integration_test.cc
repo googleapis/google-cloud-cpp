@@ -166,32 +166,6 @@ TEST_F(ObjectIntegrationTest, BasicCRUD) {
   EXPECT_EQ(0, name_counter(object_name, current_list));
 }
 
-TEST_F(ObjectIntegrationTest, PrefixOps) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  std::string bucket_name = flag_bucket_name;
-
-  auto prefix_md = CreateRandomPrefix(*client, bucket_name, "");
-  ASSERT_STATUS_OK(prefix_md);
-  std::string const& prefix = prefix_md->name();
-
-  std::set<std::string> common_prefix;
-  for (int i = 0; i != 10; ++i) {
-    auto random_file = CreateRandomPrefix(*client, bucket_name, prefix);
-    ASSERT_STATUS_OK(random_file);
-    ASSERT_TRUE(common_prefix.insert(random_file->name()).second);
-  }
-  auto deletion_status =
-      DeleteByPrefix(*client, bucket_name, prefix, Versions());
-  ASSERT_STATUS_OK(deletion_status);
-
-  for (auto&& o : client->ListObjects(bucket_name)) {
-    ASSERT_STATUS_OK(o);
-    EXPECT_THAT(o->name(), ::testing::Not(::testing::StartsWith(prefix)));
-  }
-}
-
 TEST_F(ObjectIntegrationTest, FullPatch) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -1002,9 +976,7 @@ TEST_F(ObjectIntegrationTest, ComposeMany) {
 
   std::string bucket_name = flag_bucket_name;
 
-  auto prefix_md = CreateRandomPrefix(*client, bucket_name, "");
-  ASSERT_STATUS_OK(prefix_md);
-  std::string const& prefix = prefix_md->name();
+  auto prefix = CreateRandomPrefixName();
   std::string const dest_object_name = prefix + ".dest";
 
   std::vector<ComposeSourceObject> source_objs;
@@ -1020,8 +992,8 @@ TEST_F(ObjectIntegrationTest, ComposeMany) {
         std::move(object_name), insert_meta->generation(), {}});
   }
 
-  auto res = ComposeMany(*client, bucket_name, std::move(source_objs),
-                         prefix + ".tmp", dest_object_name, false);
+  auto res = ComposeMany(*client, bucket_name, std::move(source_objs), prefix,
+                         dest_object_name, false);
 
   ASSERT_STATUS_OK(res);
   EXPECT_EQ(dest_object_name, res->name());
@@ -1030,8 +1002,8 @@ TEST_F(ObjectIntegrationTest, ComposeMany) {
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(expected, actual);
 
-  auto deletion_status =
-      DeleteByPrefix(*client, bucket_name, prefix, Versions());
+  auto deletion_status = client->DeleteObject(
+      bucket_name, dest_object_name, IfGenerationMatch(res->generation()));
   ASSERT_STATUS_OK(deletion_status);
 }
 

@@ -3048,67 +3048,22 @@ class Client {
 };
 
 /**
- * Creates an object with a random name.
+ * Create a random prefix for object names.
  *
  * This is useful for operations which require a unique prefix for temporary
  * files.
  *
- * It atomically picks a name and creates the object to ensure that no other
- * invocation of this function conflicts with it.
+ * This is a helper function and it doesn't communicate with GCS, so there is a
+ * very small chance that names generated this way aren't unique. The chance
+ * should be small enough to fit any error budget.
  *
  * Given the same `prefix`, the randomly generated names will have the same
- * length, hence it is guaranteed that neither of them will be a prefix of the
- * other.
+ * length.
  *
- * @param client the client on which to perform the operation.
- * @param bucket_name the name of the bucket that will contain the object.
- *     Maximum length is 1008 characters.
  * @param prefix the prefix of the prefix to be created.
- * @param options a list of optional query parameters and/or request headers.
- *     Valid types for this operation include `EncryptionKey` `KmsKeyName`,
- *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
+ * @return the random prefix name
  */
-template <typename... Options>
-StatusOr<ObjectMetadata> CreateRandomPrefix(Client& client,
-                                            std::string const& bucket_name,
-                                            std::string const& prefix,
-                                            Options&&... options) {
-  // Make sure the user isn't using options which make little sense for an empty
-  // object or which would conflict with IfGenerationMatch(0).
-  using internal::ContainsType;
-  static_assert(
-      !ContainsType<ContentEncoding, typename std::decay<Options>::type...>() &&
-          !ContainsType<ContentType, typename std::decay<Options>::type...>() &&
-          !ContainsType<Crc32cChecksumValue,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<DisableCrc32cChecksum,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<DisableMD5Hash,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<MD5HashValue,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<IfGenerationMatch,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<IfGenerationNotMatch,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<IfMetagenerationMatch,
-                        typename std::decay<Options>::type...>() &&
-          !ContainsType<IfMetagenerationNotMatch,
-                        typename std::decay<Options>::type...>(),
-      "one of the options doesn't make sense for CreateRandomPrefix");
-
-  // Running this in a retry loop to eliminate collisions makes little sense.
-  // Instead of the retry loop, we might simply increase the number of random
-  // characters in the name to achieve the same probability as the retry loop
-  // would give us. If this is not satisfactory due to our rng limitations, we
-  // improve the rng (initialization).
-  auto rng = google::cloud::internal::MakeDefaultPRNG();
-  auto object_name = prefix + google::cloud::internal::Sample(
-                                  rng, 16, "abcdefghijklmnopqrstuvwxyz");
-  return client.InsertObject(bucket_name, object_name, std::string(),
-                             IfGenerationMatch(0),
-                             std::forward<Options>(options)...);
-}
+std::string CreateRandomPrefixName(std::string const& prefix = "");
 
 namespace internal {
 
@@ -3123,6 +3078,48 @@ struct DeleteApplyHelper {
   std::string const& bucket_name;
   std::string const& object_name;
 };
+
+// Just a wrapper to allow for using in `google::cloud::internal::apply`.
+struct InsertObjectApplyHelper {
+  template <typename... Options>
+  StatusOr<ObjectMetadata> operator()(Options... options) const {
+    return client.InsertObject(bucket_name, object_name, std::move(contents),
+                               std::move(options)...);
+  }
+
+  Client& client;
+  std::string const& bucket_name;
+  std::string const& object_name;
+  std::string contents;
+};
+
+/**
+ * Create a "marker" object to ensure that two tasks cannot share a prefix.
+ *
+ * @param client the client on which to perform the operation.
+ * @param bucket_name the name of the bucket that will contain the object.
+ * @param prefix the prefix of the objects to be deleted.
+ * @param options a list of optional query parameters and/or request headers.
+ *      Valid types for this operation include `EncryptionKey` `KmsKeyName`,
+ *     `PredefinedAcl`, `Projection`, `UserProject`, and `WithObjectMetadata`.
+ *     Contrary to the public API, invalid options will be silently ignored
+ *     for ease of use.
+ * @return the metadata of the marker
+ */
+template <typename... Options>
+StatusOr<ObjectMetadata> LockPrefix(Client& client,
+                                    std::string const& bucket_name,
+                                    std::string const& prefix,
+                                    Options&&... options) {
+  return google::cloud::internal::apply(
+      internal::InsertObjectApplyHelper{client, bucket_name, prefix, ""},
+      std::tuple_cat(
+          std::make_tuple(IfGenerationMatch(0)),
+          internal::StaticTupleFilter<
+              internal::Among<EncryptionKey, KmsKeyName, PredefinedAcl,
+                              Projection, UserProject>::TPred>(
+              std::forward_as_tuple(std::forward<Options>(options)...))));
+}
 
 }  // namespace internal
 
@@ -3223,8 +3220,8 @@ class ScopedDeleter {
  * provide a unique @p prefix parameter, which will become the prefix of all the
  * temporary objects created by this function. Once this function finishes, the
  * user may safely remove all objects with the provided prefix (e.g. via
- * DeleteByPrefix()). We recommend using CreateRandomPrefix() for selecting a
- * random prefix within a bucket.
+ * DeleteByPrefix()). We recommend using CreateRandomPrefixName() for selecting
+ * a random prefix within a bucket.
  *
  * @param client the client on which to perform the operations needed by this
  *     function
@@ -3232,9 +3229,9 @@ class ScopedDeleter {
  *     destination object.
  * @param source_objects objects used to compose `destination_object_name`.
  * @param destination_object_name the composed object name.
- * @param prefix prefix for temporary objects created by this function; the user
- *     should guarantee that there are no objects with this prefix (except for a
- *     marker, as created by `CreateRandomPrefix`)
+ * @param prefix prefix for temporary objects created by this function; there
+ *     should not be any objects with this prefix; in order to avoid race
+ *     conditions, this function will create an object with this name
  * @param ignore_cleanup_failures if the composition succeeds but cleanup of
  *     temporary objects fails, depending on this parameter either a success
  *     will be returned (`true`) or the relevant cleanup error (`false`)
@@ -3263,21 +3260,12 @@ StatusOr<ObjectMetadata> ComposeMany(
   using internal::StaticTupleFilter;
   std::size_t const max_num_objects = 32;
 
-  if (prefix.empty()) {
-    // In theory, nothing prevents us from using an empty prefix, but this is
-    // most likely a misuse. We recommend running `DeleteByPrefix` on this
-    // prefix, so this might not be the best idea.
-    return Status(StatusCode::kInvalidArgument,
-                  "ComposeMany requires a non-empty prefix to create temporary "
-                  "objects. Please check the documentation.");
-  }
-
   if (source_objects.empty()) {
     return Status(StatusCode::kInvalidArgument,
                   "ComposeMany requires at least one source object.");
   }
 
-  auto all_options = std::tie(options...);
+  auto all_options = std::make_tuple(options...);
 
   // TODO(#3247): this list of type should somehow be generated
   static_assert(
@@ -3298,6 +3286,15 @@ StatusOr<ObjectMetadata> ComposeMany(
             std::make_tuple(IfGenerationMatch(object.generation())),
             StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
   });
+
+  auto lock = internal::LockPrefix(client, bucket_name, prefix, "",
+                                   std::make_tuple(options...));
+  if (!lock) {
+    return Status(
+        lock.status().code(),
+        "Failed to lock prefix for ComposeMany: " + lock.status().message());
+  }
+  deleter.Add(*lock);
 
   std::size_t num_tmp_objects = 0;
   auto tmpobject_name_gen = [&num_tmp_objects, &prefix] {
