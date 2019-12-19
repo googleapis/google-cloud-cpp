@@ -442,6 +442,7 @@ void CheckExecuteQueryWithSingleUseOptions(
       [&expected_rows](Transaction const&) -> StatusOr<Mutations> {
         InsertMutationBuilder insert("Singers",
                                      {"SingerId", "FirstName", "LastName"});
+        expected_rows.clear();
         for (int i = 1; i != 10; ++i) {
           auto s = std::to_string(i);
           auto row = RowValues{Value(i), Value("test-fname-" + s),
