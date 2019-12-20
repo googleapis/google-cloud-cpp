@@ -117,6 +117,7 @@ add_library(
     database_admin_connection.h
     date.cc
     date.h
+    iam_updater.h
     instance.cc
     instance.h
     instance_admin_client.cc

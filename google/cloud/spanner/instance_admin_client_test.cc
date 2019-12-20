@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/mocks/mock_instance_admin_connection.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,7 +25,9 @@ namespace {
 
 using spanner_mocks::MockInstanceAdminConnection;
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 namespace gcsa = google::spanner::admin::instance::v1;
 
 TEST(InstanceAdminClientTest, CopyAndMove) {
@@ -156,9 +159,136 @@ TEST(InstanceAdminClientTest, SetIamPolicy) {
       });
 
   InstanceAdminClient client(mock);
-  auto actual =
-      client.SetIamPolicy(Instance("test-project", "test-instance"), {});
+  auto actual = client.SetIamPolicy(Instance("test-project", "test-instance"),
+                                    google::iam::v1::Policy{});
   EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminClientTest, SetIamPolicyOccGetFailure) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      });
+
+  InstanceAdminClient client(mock);
+  auto actual =
+      client.SetIamPolicy(Instance("test-project", "test-instance"),
+                          [](google::iam::v1::Policy const&) {
+                            return optional<google::iam::v1::Policy>{};
+                          });
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(InstanceAdminClientTest, SetIamPolicyOccNoUpdates) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag");
+        return r;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy(_)).Times(0);
+
+  InstanceAdminClient client(mock);
+  auto actual =
+      client.SetIamPolicy(Instance("test-project", "test-instance"),
+                          [](google::iam::v1::Policy const& p) {
+                            EXPECT_EQ("test-etag", p.etag());
+                            return optional<google::iam::v1::Policy>{};
+                          });
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("test-etag", actual->etag());
+}
+
+std::unique_ptr<TransactionRerunPolicy> RerunPolicyForTesting() {
+  return LimitedErrorCountTransactionRerunPolicy(/*maximum_failures=*/3)
+      .clone();
+}
+
+std::unique_ptr<BackoffPolicy> BackoffPolicyForTesting() {
+  return ExponentialBackoffPolicy(
+             /*initial_delay=*/std::chrono::microseconds(1),
+             /*maximum_delay=*/std::chrono::microseconds(1), /*scaling=*/2.0)
+      .clone();
+}
+
+TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAborted) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-1");
+        return r;
+      })
+      .WillOnce([](InstanceAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-2");
+        return r;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy(_))
+      .WillOnce([](InstanceAdminConnection::SetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        EXPECT_EQ("test-etag-1", p.policy.etag());
+        return Status(StatusCode::kAborted, "aborted");
+      })
+      .WillOnce([](InstanceAdminConnection::SetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        EXPECT_EQ("test-etag-2", p.policy.etag());
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-3");
+        return r;
+      });
+
+  InstanceAdminClient client(mock);
+  int counter = 0;
+  auto actual = client.SetIamPolicy(
+      Instance("test-project", "test-instance"),
+      [&counter](google::iam::v1::Policy p) {
+        EXPECT_EQ("test-etag-" + std::to_string(++counter), p.etag());
+        return p;
+      },
+      RerunPolicyForTesting(), BackoffPolicyForTesting());
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("test-etag-3", actual->etag());
+}
+
+TEST(InstanceAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
+  auto mock = std::make_shared<MockInstanceAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillRepeatedly([](InstanceAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-1");
+        return r;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy(_))
+      .Times(AtLeast(2))
+      .WillRepeatedly([](InstanceAdminConnection::SetIamPolicyParams const& p) {
+        EXPECT_THAT(p.instance_name, HasSubstr("test-project"));
+        EXPECT_THAT(p.instance_name, HasSubstr("test-instance"));
+        EXPECT_EQ("test-etag-1", p.policy.etag());
+        return Status(StatusCode::kAborted, "test-msg");
+      });
+
+  InstanceAdminClient client(mock);
+  auto actual = client.SetIamPolicy(
+      Instance("test-project", "test-instance"),
+      [](google::iam::v1::Policy p) { return p; }, RerunPolicyForTesting(),
+      BackoffPolicyForTesting());
+  EXPECT_EQ(StatusCode::kAborted, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-msg"));
 }
 
 TEST(InstanceAdminClientTest, TestIamPermissions) {

@@ -266,42 +266,40 @@ void AddDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
                        std::string const& instance_id,
                        std::string const& new_reader) {
   google::cloud::spanner::Instance in(project_id, instance_id);
+  auto result = client.SetIamPolicy(
+      in,
+      [&new_reader](google::iam::v1::Policy current)
+          -> google::cloud::optional<google::iam::v1::Policy> {
+        // Find (or create) the binding for "roles/spanner.databaseReader".
+        auto& binding = [&current]() -> google::iam::v1::Binding& {
+          auto role_pos = std::find_if(
+              current.mutable_bindings()->begin(),
+              current.mutable_bindings()->end(),
+              [](google::iam::v1::Binding const& b) {
+                return b.role() == "roles/spanner.databaseReader" &&
+                       !b.has_condition();
+              });
+          if (role_pos != current.mutable_bindings()->end()) {
+            return *role_pos;
+          }
+          auto& binding = *current.add_bindings();
+          binding.set_role("roles/spanner.databaseReader");
+          return binding;
+        }();
 
-  auto current = client.GetIamPolicy(in);
-  if (!current) throw std::runtime_error(current.status().message());
+        auto member_pos = std::find(binding.members().begin(),
+                                    binding.members().end(), new_reader);
+        if (member_pos != binding.members().end()) {
+          std::cout << "The entity " << new_reader
+                    << " is already a database reader:\n"
+                    << current.DebugString();
+          return {};
+        }
+        binding.add_members(new_reader);
+        return current;
+      });
 
-  // Find (or create) the binding for "roles/spanner.databaseReader".
-  auto& binding = [&current]() -> google::iam::v1::Binding& {
-    auto role_pos =
-        std::find_if(current->mutable_bindings()->begin(),
-                     current->mutable_bindings()->end(),
-                     [](google::iam::v1::Binding const& b) {
-                       return b.role() == "roles/spanner.databaseReader" &&
-                              !b.has_condition();
-                     });
-    if (role_pos != current->mutable_bindings()->end()) {
-      return *role_pos;
-    }
-    auto& binding = *current->add_bindings();
-    binding.set_role("roles/spanner.databaseReader");
-    return binding;
-  }();
-
-  auto member_pos =
-      std::find(binding.members().begin(), binding.members().end(), new_reader);
-  if (member_pos != binding.members().end()) {
-    std::cout << "The entity " << new_reader
-              << " is already a database reader:\n"
-              << current->DebugString();
-    return;
-  }
-  if (member_pos == binding.members().end()) {
-    binding.add_members(new_reader);
-  }
-
-  auto result = client.SetIamPolicy(in, *std::move(current));
   if (!result) throw std::runtime_error(result.status().message());
-
   std::cout << "Successfully added " << new_reader
             << " to the database reader role:\n"
             << result->DebugString() << "\n";
@@ -325,29 +323,33 @@ void RemoveDatabaseReader(google::cloud::spanner::InstanceAdminClient client,
                           std::string const& reader) {
   google::cloud::spanner::Instance in(project_id, instance_id);
 
-  auto current = client.GetIamPolicy(in);
-  if (!current) throw std::runtime_error(current.status().message());
+  auto result = client.SetIamPolicy(
+      in,
+      [&reader](google::iam::v1::Policy current)
+          -> google::cloud::optional<google::iam::v1::Policy> {
+        // Find the binding for "roles/spanner.databaseReader".
+        auto role_pos =
+            std::find_if(current.mutable_bindings()->begin(),
+                         current.mutable_bindings()->end(),
+                         [](google::iam::v1::Binding const& b) {
+                           return b.role() == "roles/spanner.databaseReader" &&
+                                  !b.has_condition();
+                         });
+        if (role_pos == current.mutable_bindings()->end()) {
+          std::cout << "Nothing to do as the roles/spanner.databaseReader role "
+                       "is empty\n";
+          return {};
+        }
+        role_pos->mutable_members()->erase(
+            std::remove(role_pos->mutable_members()->begin(),
+                        role_pos->mutable_members()->end(), reader),
+            role_pos->mutable_members()->end());
 
-  // Find the binding for "roles/spanner.databaseReader".
-  auto role_pos = std::find_if(
-      current->mutable_bindings()->begin(), current->mutable_bindings()->end(),
-      [](google::iam::v1::Binding const& b) {
-        return b.role() == "roles/spanner.databaseReader" && !b.has_condition();
+        return current;
       });
-  if (role_pos == current->mutable_bindings()->end()) {
-    std::cout
-        << "Nothing to do as the roles/spanner.databaseReader role is empty\n";
-    return;
-  }
-  role_pos->mutable_members()->erase(
-      std::remove(role_pos->mutable_members()->begin(),
-                  role_pos->mutable_members()->end(), reader),
-      role_pos->mutable_members()->end());
 
-  auto result = client.SetIamPolicy(in, *std::move(current));
   if (!result) throw std::runtime_error(result.status().message());
-
-  std::cout << "Successfully remove " << reader
+  std::cout << "Successfully removed " << reader
             << " from the database reader role:\n"
             << result->DebugString() << "\n";
 }
@@ -659,10 +661,8 @@ void AddDatabaseReaderOnDatabase(
               << current->DebugString();
     return;
   }
-  if (member_pos == binding.members().end()) {
-    binding.add_members(new_reader);
-  }
 
+  binding.add_members(new_reader);
   auto result = client.SetIamPolicy(database, *std::move(current));
   if (!result) throw std::runtime_error(result.status().message());
 

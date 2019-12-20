@@ -18,6 +18,7 @@
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_connection.h"
+#include "google/cloud/spanner/iam_updater.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
@@ -231,9 +232,6 @@ class DatabaseAdminClient {
    * Therefore, the underlying RPCs are only retried if the field is set, and
    * the function returns the first RPC error in any other case.
    *
-   * @par Example
-   * @snippet samples.cc add-database-reader-on-database
-   *
    * @see The [Cloud Spanner
    *     documentation](https://cloud.google.com/spanner/docs/iam) for a
    *     description of the roles and permissions supported by Cloud Spanner.
@@ -243,6 +241,50 @@ class DatabaseAdminClient {
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       Database db, google::iam::v1::Policy policy);
+
+  /**
+   * Updates the IAM policy for an instance using an optimistic concurrency
+   * control loop.
+   *
+   * This function repeatedly reads the current IAM policy in @p db, and then
+   * calls the @p updater with the this policy. The @p updater returns an empty
+   * optional if no changes are required, or it returns the new desired value
+   * for the IAM policy. This function then updates the policy.
+   *
+   * Updating an IAM policy can fail with retryable errors or can be aborted
+   * because there were simultaneous changes the to IAM policy. In these cases
+   * this function reruns the loop until it succeeds.
+   *
+   * The function returns the final IAM policy, or an error if the rerun policy
+   * for the underlying connection has expired.
+   *
+   * @par Idempotency
+   * This function always sets the `etag` field on the policy, so the underlying
+   * RPCs are retried automatically.
+   *
+   * @par Example
+   * @snippet samples.cc add-database-reader-on-database
+   *
+   * @param db the identifier for the database where you want to change the IAM
+   *     policy.
+   * @param updater a callback to modify the policy.  Return an unset optional
+   *     to indicate that no changes to the policy are needed.
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(Database const& db,
+                                                 IamUpdater const& updater);
+
+  /**
+   * @copydoc SetIamPolicy(Database const&,IamUpdater const&)
+   *
+   * @param rerun_policy controls for how long (or how many times) the updater
+   *     will be rerun after the IAM policy update aborts.
+   * @param backoff_policy controls how long `SetIamPolicy` waits between
+   *     reruns.
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      Database const& db, IamUpdater const& updater,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy);
 
   /**
    * Get the subset of the permissions the caller has on the given database.

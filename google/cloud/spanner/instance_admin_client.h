@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CLIENT_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INSTANCE_ADMIN_CLIENT_H_
 
+#include "google/cloud/spanner/iam_updater.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/instance_admin_connection.h"
 #include "google/cloud/status_or.h"
@@ -57,7 +58,6 @@ inline namespace SPANNER_CLIENT_NS {
  * [spanner-doc-link]:
  * https://cloud.google.com/spanner/docs/api-libraries-overview
  */
-
 class InstanceAdminClient {
  public:
   explicit InstanceAdminClient(std::shared_ptr<InstanceAdminConnection> conn)
@@ -234,6 +234,47 @@ class InstanceAdminClient {
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       Instance const& in, google::iam::v1::Policy policy);
+
+  /**
+   * Updates the IAM policy for an instance using an optimistic concurrency
+   * control loop.
+   *
+   * This function repeatedly reads the current IAM policy in @p in, and then
+   * calls the @p updater with the this policy. The @p updater returns an empty
+   * optional if no changes are required, or it returns the new desired value
+   * for the IAM policy. This function then updates the policy.
+   *
+   * Updating an IAM policy can fail with retryable errors or can be aborted
+   * because there were simultaneous changes the to IAM policy. In these cases
+   * this function reruns the loop until it succeeds.
+   *
+   * The function returns the final IAM policy, or an error if the rerun policy
+   * for the underlying connection has expired.
+   *
+   * @par Idempotency
+   * This function always sets the `etag` field on the policy, so the underlying
+   * RPCs are retried automatically.
+   *
+   * @param in the identifier for the instance where you want to change the IAM
+   *     policy.
+   * @param updater a callback to modify the policy.  Return an unset optional
+   *     to indicate that no changes to the policy are needed.
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(Instance const& in,
+                                                 IamUpdater const& updater);
+
+  /**
+   * @copydoc SetIamPolicy(Instance const&,IamUpdater const&)
+   *
+   * @param rerun_policy controls for how long (or how many times) the updater
+   *     will be rerun after the IAM policy update aborts.
+   * @param backoff_policy controls how long `SetIamPolicy` waits between
+   *     reruns.
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      Instance const& in, IamUpdater const& updater,
+      std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+      std::unique_ptr<BackoffPolicy> backoff_policy);
 
   /**
    * Get the subset of the permissions the caller has on the given instance.

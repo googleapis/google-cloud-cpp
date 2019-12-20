@@ -229,6 +229,12 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
     auto updated_policy = client_.SetIamPolicy(in, *actual_policy);
     ASSERT_STATUS_OK(updated_policy);
     EXPECT_FALSE(actual_policy->etag().empty());
+
+    // Repeat the test using the OCC API.
+    updated_policy =
+        client_.SetIamPolicy(in, [](google::iam::v1::Policy p) { return p; });
+    ASSERT_STATUS_OK(updated_policy);
+    EXPECT_FALSE(actual_policy->etag().empty());
   }
 
   auto actual = client_.TestIamPermissions(

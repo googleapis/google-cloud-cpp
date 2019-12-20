@@ -25,7 +25,9 @@ namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
 using ::testing::_;
+using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
 /// @test Verify DatabaseAdminClient uses CreateDatabase() correctly.
@@ -186,8 +188,128 @@ TEST(DatabaseAdminClientTest, SetIamPolicy) {
             return p.policy;
           });
   DatabaseAdminClient client(std::move(mock));
-  auto response = client.SetIamPolicy(expected_db, {});
+  auto response = client.SetIamPolicy(expected_db, google::iam::v1::Policy{});
   EXPECT_STATUS_OK(response);
+}
+
+TEST(DatabaseAdminClientTest, SetIamPolicyOccGetFailure) {
+  Database const db("test-project", "test-instance", "test-database");
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_EQ(db, p.database);
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      });
+
+  DatabaseAdminClient client(mock);
+  auto actual = client.SetIamPolicy(db, [](google::iam::v1::Policy const&) {
+    return optional<google::iam::v1::Policy>{};
+  });
+  EXPECT_EQ(StatusCode::kPermissionDenied, actual.status().code());
+}
+
+TEST(DatabaseAdminClientTest, SetIamPolicyOccNoUpdates) {
+  Database const db("test-project", "test-instance", "test-database");
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_EQ(db, p.database);
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag");
+        return r;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy(_)).Times(0);
+
+  DatabaseAdminClient client(mock);
+  auto actual = client.SetIamPolicy(db, [](google::iam::v1::Policy const& p) {
+    EXPECT_EQ("test-etag", p.etag());
+    return optional<google::iam::v1::Policy>{};
+  });
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("test-etag", actual->etag());
+}
+
+std::unique_ptr<TransactionRerunPolicy> RerunPolicyForTesting() {
+  return LimitedErrorCountTransactionRerunPolicy(/*maximum_failures=*/3)
+      .clone();
+}
+
+std::unique_ptr<BackoffPolicy> BackoffPolicyForTesting() {
+  return ExponentialBackoffPolicy(
+             /*initial_delay=*/std::chrono::microseconds(1),
+             /*maximum_delay=*/std::chrono::microseconds(1), /*scaling=*/2.0)
+      .clone();
+}
+
+TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAborted) {
+  Database const db("test-project", "test-instance", "test-database");
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_EQ(db, p.database);
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-1");
+        return r;
+      })
+      .WillOnce([&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
+        EXPECT_EQ(db, p.database);
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-2");
+        return r;
+      });
+  EXPECT_CALL(*mock, SetIamPolicy(_))
+      .WillOnce([&db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
+        EXPECT_EQ(db, p.database);
+        EXPECT_EQ("test-etag-1", p.policy.etag());
+        return Status(StatusCode::kAborted, "aborted");
+      })
+      .WillOnce([&db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
+        EXPECT_EQ(db, p.database);
+        EXPECT_EQ("test-etag-2", p.policy.etag());
+        google::iam::v1::Policy r;
+        r.set_etag("test-etag-3");
+        return r;
+      });
+
+  DatabaseAdminClient client(mock);
+  int counter = 0;
+  auto actual = client.SetIamPolicy(
+      db,
+      [&counter](google::iam::v1::Policy p) {
+        EXPECT_EQ("test-etag-" + std::to_string(++counter), p.etag());
+        return p;
+      },
+      RerunPolicyForTesting(), BackoffPolicyForTesting());
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ("test-etag-3", actual->etag());
+}
+
+TEST(DatabaseAdminClientTest, SetIamPolicyOccRetryAbortedTooManyFailures) {
+  Database const db("test-project", "test-instance", "test-database");
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  EXPECT_CALL(*mock, GetIamPolicy(_))
+      .WillRepeatedly(
+          [&db](DatabaseAdminConnection::GetIamPolicyParams const& p) {
+            EXPECT_EQ(db, p.database);
+            google::iam::v1::Policy r;
+            r.set_etag("test-etag-1");
+            return r;
+          });
+  EXPECT_CALL(*mock, SetIamPolicy(_))
+      .Times(AtLeast(2))
+      .WillRepeatedly(
+          [&db](DatabaseAdminConnection::SetIamPolicyParams const& p) {
+            EXPECT_EQ(db, p.database);
+            EXPECT_EQ("test-etag-1", p.policy.etag());
+            return Status(StatusCode::kAborted, "test-msg");
+          });
+
+  DatabaseAdminClient client(mock);
+  auto actual = client.SetIamPolicy(
+      db, [](google::iam::v1::Policy p) { return p; }, RerunPolicyForTesting(),
+      BackoffPolicyForTesting());
+  EXPECT_EQ(StatusCode::kAborted, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("test-msg"));
 }
 
 /// @test Verify DatabaseAdminClient uses TestIamPermissions() correctly.

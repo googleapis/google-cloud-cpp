@@ -64,6 +64,54 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
   return conn_->SetIamPolicy({std::move(db), std::move(policy)});
 }
 
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
+    Database const& db, IamUpdater const& updater) {
+  auto const rerun_maximum_duration = std::chrono::minutes(15);
+  auto default_rerun_policy =
+      LimitedTimeTransactionRerunPolicy(rerun_maximum_duration).clone();
+
+  auto const backoff_initial_delay = std::chrono::milliseconds(1000);
+  auto const backoff_maximum_delay = std::chrono::minutes(5);
+  auto const backoff_scaling = 2.0;
+  auto default_backoff_policy =
+      ExponentialBackoffPolicy(backoff_initial_delay, backoff_maximum_delay,
+                               backoff_scaling)
+          .clone();
+
+  return SetIamPolicy(db, updater, std::move(default_rerun_policy),
+                      std::move(default_backoff_policy));
+}
+
+StatusOr<google::iam::v1::Policy> DatabaseAdminClient::SetIamPolicy(
+    Database const& db, IamUpdater const& updater,
+    std::unique_ptr<TransactionRerunPolicy> rerun_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy) {
+  using RerunnablePolicy = internal::SafeTransactionRerun;
+
+  Status last_status;
+  do {
+    auto current_policy = GetIamPolicy(db);
+    if (!current_policy) {
+      last_status = std::move(current_policy).status();
+    } else {
+      auto etag = current_policy->etag();
+      auto desired = updater(*current_policy);
+      if (!desired.has_value()) {
+        return current_policy;
+      }
+      desired->set_etag(std::move(etag));
+      auto result = SetIamPolicy(db, *std::move(desired));
+      if (RerunnablePolicy::IsOk(result.status())) {
+        return result;
+      }
+      last_status = std::move(result).status();
+    }
+    if (!rerun_policy->OnFailure(last_status)) break;
+    std::this_thread::sleep_for(backoff_policy->OnCompletion());
+  } while (!rerun_policy->IsExhausted());
+  return last_status;
+}
+
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminClient::TestIamPermissions(Database db,
                                         std::vector<std::string> permissions) {
