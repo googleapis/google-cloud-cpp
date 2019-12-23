@@ -1135,8 +1135,8 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
     update.bindings().emplace_back(NativeIamBinding(
         "roles/storage.objectViewer", {"serviceAccount:" + service_account},
         NativeExpression(
-            "request.time < timestamp(\"2020-07-01T00:00:00.000Z\")",
-            "Expires_July_1_2020", "Expires on July 1, 2020")));
+            "request.time < timestamp(\"2019-07-01T00:00:00.000Z\")",
+            "Expires_July_1_2019", "Expires on July 1, 2019")));
     update.set_version(3);
   }
 
@@ -1146,7 +1146,6 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
 
   StatusOr<NativeIamPolicy> policy_with_condition =
       client->GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(3));
-  //		  client->GetNativeBucketIamPolicy(bucket_name);
   ASSERT_STATUS_OK(policy_with_condition);
   ASSERT_EQ(3, policy_with_condition->version());
 
