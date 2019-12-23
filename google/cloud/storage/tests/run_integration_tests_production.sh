@@ -50,7 +50,7 @@ echo "Running CurlClient::SignBlob integration tests."
 
 echo
 echo "Running GCS Bucket APIs integration tests."
-./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}"
+./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}" "${HMAC_SERVICE_ACCOUNT}"
 
 echo
 echo "Running GCS Object Checksum integration tests."
