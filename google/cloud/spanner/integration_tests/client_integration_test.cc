@@ -200,11 +200,16 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
 
     std::vector<RowType> returned_rows;
     int row_number = 0;
+    Status iteration_status;
     for (auto& row : StreamOf<RowType>(rows)) {
-      if (!row) break;
+      if (!row) {
+        iteration_status = std::move(row).status();
+        break;
+      }
       SCOPED_TRACE("Parsing row[" + std::to_string(row_number++) + "]");
       returned_rows.push_back(*std::move(row));
     }
+    if (iteration_status.code() == StatusCode::kAborted) continue;
     ASSERT_THAT(returned_rows, UnorderedElementsAre(
                                    RowType(1, "test-fname-1", "test-lname-1"),
                                    RowType(2, "test-fname-2", "test-lname-2"),
