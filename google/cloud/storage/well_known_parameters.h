@@ -531,11 +531,10 @@ struct Versions : public internal::WellKnownParameter<Versions, bool> {
  * Controls policy versions of iam policy.
  *
  * By default requests version 1 of the iam policy, set this to 3 (or higher) to
- * get iam policies with conditions
- * .
+ * get iam policies with conditions.
  *
  * @see https://cloud.google.com/iam/docs/policies#versions for more
- *     information on GCS iam policies and its  versioning.
+ *     information on GCS iam policies and its versioning.
  */
 struct RequestedPolicyVersion
     : public internal::WellKnownParameter<RequestedPolicyVersion,
