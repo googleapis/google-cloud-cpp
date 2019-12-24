@@ -48,6 +48,7 @@ class GcsBucket(object):
         self.notification_id = 1
         self.notifications = {}
         self.iam_version = 1
+        self.counter = 1
         self.iam_bindings = {}
         self.resumable_uploads = {}
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
@@ -427,7 +428,8 @@ class GcsBucket(object):
             'kind': 'storage#policy',
             'resourceId': 'projects/_/buckets/%s' % self.name,
             'bindings': bindings,
-            'etag': base64.b64encode(str(self.iam_version))
+            'etag': base64.b64encode(str(self.counter)),
+            'version':self.iam_version
         }
         return policy
 
@@ -449,7 +451,7 @@ class GcsBucket(object):
         :rtype: dict
         """
         self.check_preconditions(request)
-        current_etag = base64.b64encode(str(self.iam_version))
+        current_etag = base64.b64encode(str(self.counter))
         if (request.headers.get('if-match') is not None
                 and current_etag != request.headers.get('if-match')):
             raise error_response.ErrorResponse(
@@ -486,7 +488,11 @@ class GcsBucket(object):
                     new_acl.append(entry)
         self.metadata['acl'] = new_acl
         self.iam_bindings = new_iam_bindings
-        self.iam_version = self.iam_version + 1
+        if policy.get("version") is None:
+            self.iam_version = 1
+        else:
+            self.iam_version = policy.get("version")
+        self.counter = self.counter + 1
         return self.iam_policy_as_json()
 
     def test_iam_permissions(self, request):

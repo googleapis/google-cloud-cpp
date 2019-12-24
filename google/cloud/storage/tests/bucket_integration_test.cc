@@ -33,6 +33,7 @@ using ::testing::HasSubstr;
 char const* flag_project_id;
 char const* flag_bucket_name;
 char const* flag_topic_name;
+char const* flag_service_account;
 
 class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
@@ -1083,6 +1084,81 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
   auto status = client->DeleteDefaultObjectAcl(bucket_name, entity_name);
   EXPECT_FALSE(status.ok());
 }
+
+TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
+  std::string project_id = flag_project_id;
+  std::string service_account = flag_service_account;
+  std::string bucket_name = MakeRandomBucketName();
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  // Create a new bucket to run the test.
+  BucketMetadata original = BucketMetadata();
+  BucketIamConfiguration configuration;
+  configuration.uniform_bucket_level_access =
+      UniformBucketLevelAccess{true, {}};
+
+  original.set_iam_configuration(std::move(configuration));
+
+  auto meta = client->CreateBucketForProject(bucket_name, project_id, original);
+  ASSERT_STATUS_OK(meta);
+
+  StatusOr<NativeIamPolicy> policy =
+      client->GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(1));
+
+  ASSERT_STATUS_OK(policy);
+  ASSERT_EQ(1, policy->version());
+
+  auto const& bindings = policy->bindings();
+  // There must always be at least an OWNER for the Bucket.
+  auto owner_it = std::find_if(
+      bindings.begin(), bindings.end(), [](NativeIamBinding const& binding) {
+        return binding.role() == "roles/storage.legacyBucketOwner";
+      });
+  ASSERT_NE(bindings.end(), owner_it);
+
+  NativeIamPolicy update = *policy;
+  bool role_updated = false;
+  for (auto& binding : update.bindings()) {
+    if (binding.role() != "roles/storage.objectViewer") {
+      continue;
+    }
+    role_updated = true;
+
+    auto& members = binding.members();
+    if (std::find(members.begin(), members.end(), "allAuthenticatedUsers") ==
+        members.end()) {
+      members.emplace_back("serviceAccount:" + service_account);
+    }
+  }
+  if (!role_updated) {
+    update.bindings().emplace_back(NativeIamBinding(
+        "roles/storage.objectViewer", {"serviceAccount:" + service_account},
+        NativeExpression(
+            "request.time < timestamp(\"2019-07-01T00:00:00.000Z\")",
+            "Expires_July_1_2019", "Expires on July 1, 2019")));
+    update.set_version(3);
+  }
+
+  StatusOr<NativeIamPolicy> updated_policy =
+      client->SetNativeBucketIamPolicy(bucket_name, update);
+  ASSERT_STATUS_OK(updated_policy);
+
+  StatusOr<NativeIamPolicy> policy_with_condition =
+      client->GetNativeBucketIamPolicy(bucket_name, RequestedPolicyVersion(3));
+  ASSERT_STATUS_OK(policy_with_condition);
+  ASSERT_EQ(3, policy_with_condition->version());
+
+  std::vector<std::string> expected_permissions{
+      "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
+  StatusOr<std::vector<std::string>> actual_permissions =
+      client->TestBucketIamPermissions(bucket_name, expected_permissions);
+  ASSERT_STATUS_OK(actual_permissions);
+  EXPECT_THAT(*actual_permissions, ElementsAreArray(expected_permissions));
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
@@ -1093,17 +1169,18 @@ int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   // Make sure the arguments are valid.
-  if (argc != 4) {
+  if (argc != 5) {
     std::string const cmd = argv[0];
     auto last_slash = std::string(argv[0]).find_last_of('/');
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <bucket> <topic>\n";
+              << " <project> <bucket> <topic> <service-account>\n";
     return 1;
   }
 
   google::cloud::storage::flag_project_id = argv[1];
   google::cloud::storage::flag_bucket_name = argv[2];
   google::cloud::storage::flag_topic_name = argv[3];
+  google::cloud::storage::flag_service_account = argv[4];
 
   return RUN_ALL_TESTS();
 }

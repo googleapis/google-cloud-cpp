@@ -204,7 +204,8 @@ std::ostream& operator<<(std::ostream& os, PatchBucketRequest const& r);
  * Represents a request to the `Buckets: getIamPolicy` API.
  */
 class GetBucketIamPolicyRequest
-    : public GenericRequest<GetBucketIamPolicyRequest, UserProject> {
+    : public GenericRequest<GetBucketIamPolicyRequest, RequestedPolicyVersion,
+                            UserProject> {
  public:
   GetBucketIamPolicyRequest() = default;
   explicit GetBucketIamPolicyRequest(std::string bucket_name)

@@ -527,6 +527,25 @@ struct Versions : public internal::WellKnownParameter<Versions, bool> {
   static char const* well_known_parameter_name() { return "versions"; }
 };
 
+/**
+ * Controls the IAM policy version returned by IAM queries.
+ *
+ * By default requests version 1 of the IAM policy, set this to 3 (or higher) to
+ * get IAM policies with conditions.
+ *
+ * @see https://cloud.google.com/iam/docs/policies#versions for more
+ *     information on GCS iam policies and its versioning.
+ */
+struct RequestedPolicyVersion
+    : public internal::WellKnownParameter<RequestedPolicyVersion,
+                                          std::int64_t> {
+  using WellKnownParameter<RequestedPolicyVersion,
+                           std::int64_t>::WellKnownParameter;
+  static char const* well_known_parameter_name() {
+    return "optionsRequestedPolicyVersion";
+  }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
