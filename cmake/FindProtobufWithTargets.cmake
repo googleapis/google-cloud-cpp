@@ -87,11 +87,11 @@ find_package(protobuf CONFIG QUIET)
 
 if (protobuf_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
-                   "protobuf_FOUND = ${protobuf_FOUND}"
-                   " protobuf_VERSION = ${protobuf_VERSION}")
+                   "Protobuf_FOUND = ${Protobuf_FOUND}"
+                   " Protobuf_VERSION = ${Protobuf_VERSION}")
 endif ()
 
-if (NOT protobuf_FOUND)
+if (NOT Protobuf_FOUND)
     find_package(Protobuf QUIET)
 endif ()
 
