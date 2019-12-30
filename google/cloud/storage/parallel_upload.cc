@@ -160,8 +160,8 @@ Status ParallelUploadFileShard::Upload() {
   std::unique_ptr<char[]> buf(new char[upload_buffer_size_]);
 
   auto fail = [this](StatusCode error_code, std::string reason) {
-    Status status(error_code,
-                  std::string(__func__) + "(" + file_name_ + "): " + reason);
+    Status status(error_code, "ParallelUploadFileShard::Upload(" + file_name_ +
+                                  "): " + reason);
     state_->Fail(status);
     ostream_.Close();
     return status;
