@@ -365,16 +365,18 @@ class ParallelUploadFileShard {
   /**
    * Perform the upload of this shard.
    *
-   * This function will block and return
+   * This function will block until the shard is completed, or a permanent
+   *     failure is encountered, or the retry policy is exhausted.
    */
   Status Upload();
 
   /**
-   * Asynchronously wait for completion of the whole upload operation.
+   * Asynchronously wait for completion of the whole upload operation (not only
+   *     this shard).
    *
-   * @return the returned future will have a value set to the destination object
-   *     metadata when `Upload()` is called on all shards returned from
-   *     `CreateUploadShards()`.
+   * @return the returned future will become satisfied once the whole upload
+   *     operation finishes (i.e. `Upload()` completes on all shards); on
+   *     success, it will hold the destination object's metadata
    */
   future<StatusOr<ObjectMetadata>> WaitForCompletion() {
     return state_->WaitForCompletion();
@@ -399,22 +401,22 @@ class ParallelUploadFileShard {
  private:
   ParallelUploadFileShard(
       std::shared_ptr<internal::NonResumableParallelUploadState> state,
-      std::unique_ptr<std::ifstream> istream, ObjectWriteStream&& ostream,
-      std::uintmax_t left_to_upload, std::size_t upload_buffer_size,
-      std::string file_name)
+      ObjectWriteStream ostream, std::string file_name,
+      std::uintmax_t offset_in_file, std::uintmax_t bytes_to_upload,
+      std::size_t upload_buffer_size)
       : state_(std::move(state)),
-        istream_(std::move(istream)),
         ostream_(std::move(ostream)),
-        left_to_upload_(left_to_upload),
-        upload_buffer_size_(upload_buffer_size),
-        file_name_(std::move(file_name)) {}
+        file_name_(std::move(file_name)),
+        offset_in_file_(offset_in_file),
+        left_to_upload_(bytes_to_upload),
+        upload_buffer_size_(upload_buffer_size) {}
 
   std::shared_ptr<internal::NonResumableParallelUploadState> state_;
-  std::unique_ptr<std::ifstream> istream_;
   ObjectWriteStream ostream_;
+  std::string file_name_;
+  std::uintmax_t offset_in_file_;
   std::uintmax_t left_to_upload_;
   std::size_t upload_buffer_size_;
-  std::string file_name_;
 
   template <typename... Options>
   friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
@@ -493,8 +495,8 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
   };
   // These defaults were obtained by experiments summarized in
   // https://github.com/googleapis/google-cloud-cpp/issues/2951#issuecomment-566237128
-  std::size_t const kDefaultMaxStreams = 64;
-  std::size_t const kDefaultMinStreamSize = 32 * 1024 * 1024;
+  MaxStreams const kDefaultMaxStreams(64);
+  MinStreamSize const kDefaultMinStreamSize(32 * 1024 * 1024);
 
   std::error_code size_err;
   auto file_size = google::cloud::internal::file_size(file_name, size_err);
@@ -502,47 +504,29 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
     return Status(StatusCode::kNotFound, size_err.message());
   }
 
-  auto max_streams_arg =
-      internal::ExtractFirstOccurenceOfType<MaxStreams>(std::tie(options...));
-  std::size_t const max_streams =
-      max_streams_arg ? max_streams_arg->value() : kDefaultMaxStreams;
-  auto min_stream_size_arg =
-      internal::ExtractFirstOccurenceOfType<MinStreamSize>(
-          std::tie(options...));
+  auto const max_streams =
+      internal::ExtractFirstOccurenceOfType<MaxStreams>(std::tie(options...))
+          .value_or(kDefaultMaxStreams)
+          .value();
+
   std::uintmax_t const min_stream_size =
-      (std::max<std::uintmax_t>)(1, min_stream_size_arg
-                                        ? min_stream_size_arg->value()
-                                        : kDefaultMinStreamSize);
+      (std::max<std::uintmax_t>)(1, internal::ExtractFirstOccurenceOfType<
+                                        MinStreamSize>(std::tie(options...))
+                                        .value_or(kDefaultMinStreamSize)
+                                        .value());
+
   std::size_t const wanted_num_streams =
       (std::max<std::size_t>)(1,
                               (std::min)(max_streams,
                                          div_ceil(file_size, min_stream_size)));
+
   std::uintmax_t const stream_size =
       (std::max<std::uintmax_t>)(1, div_ceil(file_size, wanted_num_streams));
-  // Due to rounding errors this number might potentially be less than
-  // wanted_num_streams (though I was too lazy to check exactly when).
+
+  // This number might be less than wanted_num_streams.
   std::size_t const num_streams =
       (std::max<std::size_t>)(1U, div_ceil(file_size, stream_size));
 
-  // First open the file to not leave any trash behind when the source file
-  // doesn't exist. libcxx<5 are buggy and don't have a move ctor for ifstream.
-  std::vector<std::unique_ptr<std::ifstream>> input_streams;
-  for (std::size_t i = 0; i < num_streams; ++i) {
-    auto is = google::cloud::internal::make_unique<std::ifstream>(
-        file_name, std::ios::binary);
-    if (!is->good()) {
-      return Status(StatusCode::kNotFound,
-                    std::string(__func__) + "(" + file_name +
-                        "): cannot open upload file source");
-    }
-    is->seekg(stream_size * i);
-    if (!is->good()) {
-      return Status(StatusCode::kNotFound,
-                    std::string(__func__) + "(" + file_name +
-                        "): file changed size during upload?");
-    }
-    input_streams.emplace_back(std::move(is));
-  }
   auto upload_buffer_size =
       client.raw_client()->client_options().upload_buffer_size();
 
@@ -566,11 +550,11 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
   // Everything ready - we've got the shared state and the files open, let's
   // prepare the returned objects.
   for (std::size_t i = 0; i < num_streams; ++i) {
+    std::uintmax_t offset = stream_size * i;
     std::uintmax_t size = (std::min)(file_size - stream_size * i, stream_size);
-    res.emplace_back(
-        ParallelUploadFileShard(shared_state, std::move(input_streams[i]),
-                                std::move(shared_state->shards()[i]), size,
-                                upload_buffer_size, file_name));
+    res.emplace_back(ParallelUploadFileShard(
+        shared_state, std::move(shared_state->shards()[i]), file_name, offset,
+        size, upload_buffer_size));
   }
 #if !defined(__clang__) && \
     (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 9))

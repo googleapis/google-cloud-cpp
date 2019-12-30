@@ -644,11 +644,25 @@ TEST_F(ParallelUploadTest, UnreadableFile) {
     // test the scenario when it fails, so ignore this test otherwise.
     return;
   }
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
+  ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()}});
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix, kUploadMarkerGeneration)));
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke(expect_deletion(kPrefix, kUploadMarkerGeneration)));
   auto uploaders = CreateUploadShards(*client, temp_file.name(), kBucketName,
                                       kDestObjectName, kPrefix,
                                       MinStreamSize(100), MaxStreams(200));
-  EXPECT_FALSE(uploaders);
-  EXPECT_EQ(StatusCode::kNotFound, uploaders.status().code());
+  EXPECT_STATUS_OK(uploaders);
+  ASSERT_EQ(1U, uploaders->size());
+
+  EXPECT_EQ(StatusCode::kNotFound, (*uploaders)[0].Upload().code());
+  auto res = (*uploaders)[0].WaitForCompletion().get();
+  ASSERT_FALSE(res);
+  EXPECT_EQ(StatusCode::kNotFound, res.status().code());
 #endif  // __linux__
 }
 

@@ -158,17 +158,28 @@ ParallelUploadFileShard::~ParallelUploadFileShard() {
 
 Status ParallelUploadFileShard::Upload() {
   std::unique_ptr<char[]> buf(new char[upload_buffer_size_]);
+
+  auto fail = [this](StatusCode error_code, std::string reason) {
+    Status status(error_code,
+                  std::string(__func__) + "(" + file_name_ + "): " + reason);
+    state_->Fail(status);
+    ostream_.Close();
+    return status;
+  };
+  std::ifstream istream(file_name_, std::ios::binary);
+  if (!istream.good()) {
+    return fail(StatusCode::kNotFound, "cannot open upload file source");
+  }
+  istream.seekg(offset_in_file_);
+  if (!istream.good()) {
+    return fail(StatusCode::kInternal, "file changed size during upload?");
+  }
   while (left_to_upload_ > 0) {
     std::size_t const to_copy =
         std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_);
-    istream_->read(buf.get(), to_copy);
-    if (!istream_->good()) {
-      Status status(StatusCode::kInternal,
-                    std::string(__func__) + "(" + file_name_ +
-                        "): cannot read from file source");
-      state_->Fail(status);
-      ostream_.Close();
-      return status;
+    istream.read(buf.get(), to_copy);
+    if (!istream.good()) {
+      return fail(StatusCode::kInternal, "cannot read from file source");
     }
     ostream_.write(buf.get(), to_copy);
     if (!ostream_.good()) {
