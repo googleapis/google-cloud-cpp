@@ -142,8 +142,6 @@ NonResumableParallelUploadState::Impl::WaitForCompletion() const {
   return res;
 }
 
-}  // namespace internal
-
 ParallelUploadFileShard::~ParallelUploadFileShard() {
   // If the object wasn't moved-from (i.e. `state != nullptr`) and
   // `left_to_upload_ > 0` it means that the object is being destroyed without
@@ -196,6 +194,7 @@ Status ParallelUploadFileShard::Upload() {
   return ostream_.metadata().status();
 }
 
+}  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

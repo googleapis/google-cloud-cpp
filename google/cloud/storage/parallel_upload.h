@@ -36,6 +36,35 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+/**
+ * A parameter type indicating the maximum number of streams to
+ * `ParallelUploadFile`.
+ */
+class MaxStreams {
+ public:
+  MaxStreams(std::size_t value) : value_(value) {}
+  std::size_t value() const { return value_; }
+
+ private:
+  std::size_t value_;
+};
+
+/**
+ * A parameter type indicating the minimum stream size to `ParallelUploadFile`.
+ *
+ * If `ParallelUploadFile`, receives this option it will attempt to make sure
+ * that every shard is at least this long. This might not apply to the last
+ * shard because it will be the remainder of the division of the file.
+ */
+class MinStreamSize {
+ public:
+  MinStreamSize(std::uintmax_t value) : value_(value) {}
+  std::uintmax_t value() const { return value_; }
+
+ private:
+  std::uintmax_t value_;
+};
+
 namespace internal {
 
 class ParallelObjectWriteStreambuf;
@@ -342,8 +371,6 @@ struct PrepareParallelUploadApplyHelper {
   std::string prefix;
 };
 
-}  // namespace internal
-
 /**
  * A class representing an individual shard of the parallel upload.
  *
@@ -400,7 +427,7 @@ class ParallelUploadFileShard {
 
  private:
   ParallelUploadFileShard(
-      std::shared_ptr<internal::NonResumableParallelUploadState> state,
+      std::shared_ptr<NonResumableParallelUploadState> state,
       ObjectWriteStream ostream, std::string file_name,
       std::uintmax_t offset_in_file, std::uintmax_t bytes_to_upload,
       std::size_t upload_buffer_size)
@@ -411,7 +438,7 @@ class ParallelUploadFileShard {
         left_to_upload_(bytes_to_upload),
         upload_buffer_size_(upload_buffer_size) {}
 
-  std::shared_ptr<internal::NonResumableParallelUploadState> state_;
+  std::shared_ptr<NonResumableParallelUploadState> state_;
   ObjectWriteStream ostream_;
   std::string file_name_;
   std::uintmax_t offset_in_file_;
@@ -422,35 +449,6 @@ class ParallelUploadFileShard {
   friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
       Client client, std::string file_name, std::string bucket_name,
       std::string object_name, std::string prefix, Options&&... options);
-};
-
-/**
- * A parameter type indicating the maximum  number of streams to
- * `CreateUploadShards`.
- */
-class MaxStreams {
- public:
-  MaxStreams(std::size_t value) : value_(value) {}
-  std::size_t value() const { return value_; }
-
- private:
-  std::size_t value_;
-};
-
-/**
- * A parameter type indicating the minimum stream size to `CreateUploadShards`.
- *
- * If `CreateUploadShards`, receives this option it will attempt to make sure
- * that every shard is at least this long. This might not apply to the last
- * shard because it will be the remainder of the division of the file.
- */
-class MinStreamSize {
- public:
-  MinStreamSize(std::uintmax_t value) : value_(value) {}
-  std::uintmax_t value() const { return value_; }
-
- private:
-  std::uintmax_t value_;
 };
 
 /**
@@ -505,13 +503,13 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
   }
 
   auto const max_streams =
-      internal::ExtractFirstOccurenceOfType<MaxStreams>(std::tie(options...))
+      ExtractFirstOccurenceOfType<MaxStreams>(std::tie(options...))
           .value_or(kDefaultMaxStreams)
           .value();
 
   std::uintmax_t const min_stream_size =
-      (std::max<std::uintmax_t>)(1, internal::ExtractFirstOccurenceOfType<
-                                        MinStreamSize>(std::tie(options...))
+      (std::max<std::uintmax_t>)(1, ExtractFirstOccurenceOfType<MinStreamSize>(
+                                        std::tie(options...))
                                         .value_or(kDefaultMinStreamSize)
                                         .value());
 
@@ -531,11 +529,11 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
       client.raw_client()->client_options().upload_buffer_size();
 
   // Create the upload state.
-  auto upload_options = internal::StaticTupleFilter<
-      internal::NotAmong<MaxStreams, MinStreamSize>::TPred>(
-      std::tie(options...));
+  auto upload_options =
+      StaticTupleFilter<NotAmong<MaxStreams, MinStreamSize>::TPred>(
+          std::tie(options...));
   auto state = google::cloud::internal::apply(
-      internal::PrepareParallelUploadApplyHelper{
+      PrepareParallelUploadApplyHelper{
           std::move(client), std::move(bucket_name), std::move(object_name),
           num_streams, std::move(prefix)},
       std::move(upload_options));
@@ -543,8 +541,7 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
     return state.status();
   }
   auto shared_state =
-      std::make_shared<internal::NonResumableParallelUploadState>(
-          *std::move(state));
+      std::make_shared<NonResumableParallelUploadState>(*std::move(state));
   std::vector<ParallelUploadFileShard> res;
 
   // Everything ready - we've got the shared state and the files open, let's
@@ -566,15 +563,17 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
 #endif
 }
 
+}  // namespace internal
+
 template <typename... Options>
 StatusOr<ObjectMetadata> ParallelUploadFile(
     Client client, std::string file_name, std::string bucket_name,
     std::string object_name, std::string prefix, bool ignore_cleanup_failures,
     Options&&... options) {
-  auto shards =
-      CreateUploadShards(std::move(client), std::move(file_name),
-                         std::move(bucket_name), std::move(object_name),
-                         std::move(prefix), std::forward<Options>(options)...);
+  auto shards = internal::CreateUploadShards(
+      std::move(client), std::move(file_name), std::move(bucket_name),
+      std::move(object_name), std::move(prefix),
+      std::forward<Options>(options)...);
   if (!shards) {
     return shards.status();
   }
