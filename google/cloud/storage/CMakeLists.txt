@@ -209,6 +209,8 @@ add_library(
     object_rewriter.cc
     object_stream.h
     object_stream.cc
+    parallel_upload.h
+    parallel_upload.cc
     policy_document.h
     policy_document.cc
     override_default_project.h
@@ -290,7 +292,9 @@ if (BUILD_TESTING)
         testing/mock_http_request.cc
         testing/retry_tests.h
         testing/storage_integration_test.h
-        testing/storage_integration_test.cc)
+        testing/storage_integration_test.cc
+        testing/temp_file.h
+        testing/temp_file.cc)
     target_link_libraries(
         storage_client_testing
         PUBLIC storage_client nlohmann_json GTest::gmock_main GTest::gmock
@@ -380,6 +384,7 @@ if (BUILD_TESTING)
         object_metadata_test.cc
         object_stream_test.cc
         object_test.cc
+        parallel_uploads_test.cc
         policy_document_test.cc
         notification_metadata_test.cc
         retry_policy_test.cc

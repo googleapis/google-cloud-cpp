@@ -43,6 +43,9 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+namespace internal {
+class NonResumableParallelUploadState;
+}  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
  *
@@ -3045,6 +3048,8 @@ class Client {
       internal::PolicyDocumentRequest const& request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
+
+  friend class internal::NonResumableParallelUploadState;
 };
 
 /**
@@ -3075,8 +3080,8 @@ struct DeleteApplyHelper {
   }
 
   Client& client;
-  std::string const& bucket_name;
-  std::string const& object_name;
+  std::string bucket_name;
+  std::string object_name;
 };
 
 // Just a wrapper to allow for using in `google::cloud::internal::apply`.
@@ -3191,6 +3196,8 @@ class ScopedDeleter {
   // The actual deletion depends on local's types in a very non-trivial way,
   // so we abstract this away by providing the function to delete one object.
   ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun);
+  ScopedDeleter(ScopedDeleter const&) = delete;
+  ScopedDeleter& operator=(ScopedDeleter const&) = delete;
   ~ScopedDeleter();
 
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())
@@ -3284,7 +3291,8 @@ StatusOr<ObjectMetadata> ComposeMany(
         internal::DeleteApplyHelper{client, bucket_name, object.name()},
         std::tuple_cat(
             std::make_tuple(IfGenerationMatch(object.generation())),
-            StaticTupleFilter<NotAmong<Versions>::TPred>(all_options)));
+            StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
+                all_options)));
   });
 
   auto lock = internal::LockPrefix(client, bucket_name, prefix, "",

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <fstream>
 #include <functional>
@@ -21,6 +22,7 @@
 #include <map>
 #include <sstream>
 #include <string>
+#include <thread>
 
 namespace {
 struct Usage {
@@ -736,6 +738,39 @@ void UploadFileResumable(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata: " << *object_metadata << "\n";
   }
   //! [upload file resumable]
+  (std::move(client), file_name, bucket_name, object_name);
+}
+
+void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
+                        char* argv[]) {
+  if (argc != 4) {
+    throw Usage{"parallel-upload-file <file-name> <bucket-name> <object-name>"};
+  }
+  auto file_name = ConsumeArg(argc, argv);
+  auto bucket_name = ConsumeArg(argc, argv);
+  auto object_name = ConsumeArg(argc, argv);
+
+  //! [parallel upload file]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string file_name, std::string bucket_name,
+     std::string object_name) {
+    // Pick a unique random prefix for the temporary objects created by the
+    // parallel upload.
+    auto prefix = gcs::CreateRandomPrefixName("");
+
+    auto object_metadata = gcs::ParallelUploadFile(
+        client, file_name, bucket_name, object_name, prefix, false);
+    if (!object_metadata) {
+      throw std::runtime_error(object_metadata.status().message());
+    }
+
+    std::cout << "Uploaded " << file_name << " to object "
+              << object_metadata->name() << " in bucket "
+              << object_metadata->bucket()
+              << "\nFull metadata: " << *object_metadata << "\n";
+  }
+  //! [parallel upload file]
   (std::move(client), file_name, bucket_name, object_name);
 }
 
@@ -1805,6 +1840,7 @@ int main(int argc, char* argv[]) try {
       {"resume-resumable-upload", &ResumeResumableUpload},
       {"upload-file", &UploadFile},
       {"upload-file-resumable", &UploadFileResumable},
+      {"parallel-upload-file", &ParallelUploadFile},
       {"download-file", &DownloadFile},
       {"update-object-metadata", &UpdateObjectMetadata},
       {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},

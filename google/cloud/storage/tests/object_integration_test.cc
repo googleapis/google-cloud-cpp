@@ -14,7 +14,9 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/parallel_upload.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/expect_exception.h"
@@ -1004,6 +1006,44 @@ TEST_F(ObjectIntegrationTest, ComposeMany) {
 
   auto deletion_status = client->DeleteObject(
       bucket_name, dest_object_name, IfGenerationMatch(res->generation()));
+  ASSERT_STATUS_OK(deletion_status);
+}
+
+TEST_F(ObjectIntegrationTest, ParallelUpload) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto prefix = CreateRandomPrefixName();
+  std::string const dest_object_name = prefix + ".dest";
+
+  testing::TempFile temp_file(LoremIpsum());
+
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), bucket_name, dest_object_name, prefix, false,
+      MinStreamSize(0), IfGenerationMatch(0));
+
+  auto stream =
+      client->ReadObject(bucket_name, dest_object_name,
+                         IfGenerationMatch(object_metadata->generation()));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(LoremIpsum(), actual);
+
+  std::vector<ObjectMetadata> objects;
+  for (auto& object : client->ListObjects(bucket_name)) {
+    ASSERT_STATUS_OK(object);
+    if (object->name().substr(0, prefix.size()) == prefix &&
+        object->name() != prefix) {
+      objects.emplace_back(*std::move(object));
+    }
+  }
+  ASSERT_EQ(1U, objects.size());
+  ASSERT_EQ(prefix + ".dest", objects[0].name());
+
+  auto deletion_status =
+      client->DeleteObject(bucket_name, dest_object_name,
+                           IfGenerationMatch(object_metadata->generation()));
   ASSERT_STATUS_OK(deletion_status);
 }
 

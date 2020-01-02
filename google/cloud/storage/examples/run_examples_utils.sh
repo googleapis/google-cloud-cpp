@@ -511,6 +511,16 @@ _EOF_
 
   run_example ./storage_object_samples delete-object \
       "${bucket_name}" "${object_name}"
+
+  run_example ./storage_object_samples parallel-upload-file \
+      "${upload_file_name}" "${bucket_name}" "${object_name}"
+  run_example ./storage_object_samples download-file \
+      "${bucket_name}" "${object_name}" "${download_file_name}"
+  diff "${upload_file_name}" "${download_file_name}"
+
+  run_example ./storage_object_samples delete-object \
+      "${bucket_name}" "${object_name}"
+
 }
 
 ################################################

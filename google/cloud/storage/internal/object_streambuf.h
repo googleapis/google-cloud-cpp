@@ -105,7 +105,7 @@ class ObjectWriteStreambuf : public std::basic_streambuf<char> {
   ObjectWriteStreambuf(ObjectWriteStreambuf const&) = delete;
   ObjectWriteStreambuf& operator=(ObjectWriteStreambuf const&) = delete;
 
-  StatusOr<ResumableUploadResponse> Close();
+  virtual StatusOr<ResumableUploadResponse> Close();
   virtual bool IsOpen() const;
   virtual bool ValidateHash(ObjectMetadata const& meta);
 
