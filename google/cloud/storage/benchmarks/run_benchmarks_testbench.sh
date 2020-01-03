@@ -87,6 +87,19 @@ run_example ./storage_throughput_vs_cpu_benchmark \
       --maximum-chunk-size=32KiB \
       --duration=1s
 
+run_example_usage ./storage_parallel_uploads_benchmark \
+      --help --description
+run_example ./storage_parallel_uploads_benchmark \
+      "--project-id=${GOOGLE_CLOUD_PROJECT}" \
+      "--region=${FAKE_REGION}" \
+      --minimum-object-size=16KiB \
+      --maximum-object-size=32KiB \
+      --minimum-num-shards=1 \
+      --maximum-num-shards=4 \
+      --maximum-sample-count=1 \
+      --thread-count=1 \
+      --duration=1s
+
 if [[ "${EXIT_STATUS}" = "0" ]]; then
   TESTBENCH_DUMP_LOG=no
 fi
