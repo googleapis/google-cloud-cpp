@@ -572,6 +572,31 @@ class Filter {
   }
 
   /**
+   * Return a chain filter.
+   *
+   * The filter returned by this function acts like a pipeline.  The output
+   * row from each stage is passed on as input for the next stage.
+   *
+   * @tparam Iterator an InputIterator whose `value_type` is `Filter`.
+   * @param begin the start of the range.
+   * @param end the end of the range.
+   */
+  template <typename Iterator>
+  static Filter ChainFromRange(Iterator begin, Iterator end) {
+    static_assert(
+        std::is_convertible<typename std::iterator_traits<Iterator>::value_type,
+                            Filter>::value,
+        "The value type of the Iterator arguments passed to"
+        " InterleaveFromRange(...) must be convertible to Filter");
+    Filter tmp;
+    auto& chain = *tmp.filter_.mutable_chain();
+    for (auto it = begin; it != end; ++it) {
+      *chain.add_filters() = it->as_proto();
+    }
+    return tmp;
+  }
+
+  /**
    * Return a filter that interleaves the results of many other filters.
    *
    * This filter executes each stream in parallel and then merges the results by

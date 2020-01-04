@@ -252,6 +252,48 @@ TEST(FiltersTest, ChainOneArg) {
   EXPECT_EQ(2, chain.filters(0).cells_per_column_limit_filter());
 }
 
+/// @test Verify that `bigtable::Filter::ChainFromRange` works as expected.
+TEST(FiltersTest, ChainFromRangeMany) {
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{F::FamilyRegex("fam"), F::ColumnRegex("col"),
+                                   F::CellsRowOffset(2), F::Latest(1)};
+  auto filter =
+      F::ChainFromRange(filter_collection.begin(), filter_collection.end());
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_chain());
+  auto const& chain = proto.chain();
+  ASSERT_EQ(4, chain.filters_size());
+  EXPECT_EQ("fam", chain.filters(0).family_name_regex_filter());
+  EXPECT_EQ("col", chain.filters(1).column_qualifier_regex_filter());
+  EXPECT_EQ(2, chain.filters(2).cells_per_row_offset_filter());
+  EXPECT_EQ(1, chain.filters(3).cells_per_column_limit_filter());
+}
+
+/// @test Verify that `bigtable::Filter::ChainFromRange` works as expected.
+TEST(FiltersTest, ChainFromRangeEmpty) {
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{};
+  auto filter =
+      F::ChainFromRange(filter_collection.begin(), filter_collection.end());
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_chain());
+  auto const& chain = proto.chain();
+  ASSERT_EQ(0, chain.filters_size());
+}
+
+/// @test Verify that `bigtable::Filter::ChainFromRange` works as expected.
+TEST(FiltersTest, ChainFromRangeSingle) {
+  using F = bigtable::Filter;
+  std::vector<F> filter_collection{F::Latest(2)};
+  auto filter =
+      F::ChainFromRange(filter_collection.begin(), filter_collection.end());
+  auto proto = filter.as_proto();
+  ASSERT_TRUE(proto.has_chain());
+  auto const& Chain = proto.chain();
+  ASSERT_EQ(1, Chain.filters_size());
+  EXPECT_EQ(2, Chain.filters(0).cells_per_column_limit_filter());
+}
+
 /// @test Verify that `bigtable::Filter::Interleave` works as expected.
 TEST(FiltersTest, InterleaveMultipleArgs) {
   using F = bigtable::Filter;
