@@ -121,7 +121,7 @@ in a `cmd.exe` shell, running as the `Administrator`:
 
 Then you can install the dependencies in the same shell:
 ```console
-> choco install -y cmake git cmake.portable activeperl ninja golang yasm putty
+> choco install -y cmake git cmake.portable activeperl ninja golang yasm putty msys2 bazel
 > choco install -y visualstudio2017community visualstudio2017-workload-nativedesktop microsoft-build-tools
 ```
 
@@ -160,6 +160,19 @@ and do not forget to setup the `GIT_SSH` environment variable:
 > set GIT_SSH=plink
 ```
 
+### Clone `google-cloud-cpp`
+
+You may need to create a new key pair to connect to GitHub.  Search the web
+for how to do this.  Then you can clone the code:
+
+```console
+> cd \Users\%USERNAME%
+> git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
+> cd google-cloud-cpp
+```
+
+### Compile `google-cloud-cpp` using cmake and vcpkg
+
 ### Download and compile `vcpkg`
 
 The previous installation should create a
@@ -180,23 +193,14 @@ installing `google-cloud-cpp` itself:
 
 ```console
 > vcpkg.exe install google-cloud-cpp:x64-windows-static
+> vcpkg.exe install --recurse google-cloud-cpp-common[test]:x64-windows-static
 > vcpkg.exe integrate install
 ```
 
-### Clone and compile `google-cloud-cpp`
-
-You may need to create a new key pair to connect to GitHub.  Search the web
-for how to do this.  Then you can clone the code:
+Compile the code using:
 
 ```console
-> cd \Users\%USERNAME%
-> git clone git@github.com:<GITHUB-USERNAME_HERE>/google-cloud-cpp.git
-> cd google-cloud-cpp
-```
-
-And compile the code using:
-
-```console
+> cd \Users\%USERNAME%\google-cloud-cpp
 > call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 > cmake -GNinja -H. -Bcmake-out
    -DCMAKE_BUILD_TYPE=Debug
@@ -210,6 +214,24 @@ Run the tests using:
 ```console
 > cd cmake-out
 > ctest --output-on-failure
+```
+
+### Compile `google-cloud-cpp` using bazel
+
+Due to Windows command line length limits, create an abbreviated output directory:
+```console
+mkdir c:\b
+```
+
+Compile the code:
+```console
+cd \Users\%USERNAME%\google-cloud-cpp
+bazel --output_user_root="c:\b" build //google/cloud/...:all
+```
+
+Run all the tests:
+```console
+bazel --output_user_root="c:\b" test //google/cloud/...:all
 ```
 
 ## Appendix: Creating a Linux VM using Google Compute Engine
