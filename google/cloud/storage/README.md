@@ -44,7 +44,14 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.8.x - TBD
+### v1.9.x - TBD
+
+### v1.8.x - 2020-01
+
+* feat: implement non-resumable parallel uploads (#3279)
+* feat: support optionsRequestedPolicyVersion query parameter in GetBucketIamPolicy
+* feat: move creating prefix marker to ComposeMany (#3296)
+* fix: setting options in requests accepts crefs (#3287)
 
 ### v1.7.x - 2019-12
 * fix: add logic to ObjectWriteStreambuf for handling jumps in upload ranges to fix #3280 (#3283)
