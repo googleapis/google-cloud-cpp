@@ -24,7 +24,7 @@ export CMAKE_SOURCE_DIR="."
 
 in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 
-if [[ $# -eq 1 ]]; then
+if [[ $# -ge 1 ]]; then
   export BUILD_NAME="${1}"
 elif [[ -n "${BUILD_NAME:-}" ]]; then
   echo "Using BUILD_NAME=${BUILD_NAME} from environment."
@@ -288,8 +288,6 @@ export BRANCH
 echo "================================================================"
 echo "Detected the branch name: ${BRANCH} $(date)."
 
-echo "================================================================"
-echo "Running the full build inside docker $(date)."
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
 # user ID, if known.
@@ -417,6 +415,9 @@ docker_flags=(
     "--volume" "/v/cmake-out"
     "--volume" "/v/cmake-build-debug"
     "--volume" "${PWD}/${BUILD_OUTPUT}:/v/${BUILD_OUTPUT}"
+
+    # No need to preserve the container.
+    "--rm"
 )
 
 # When running on Travis the build gets a tty, and docker can produce nicer
@@ -426,9 +427,25 @@ if [[ -t 0 ]]; then
   docker_flags+=("-it")
 fi
 
+# If more than two arguments are given, arguments after the first one will
+# become the commands run in the container, otherwise run $in_docker_script with
+# appropriate arguments.
+echo "================================================================"
+if [[ $# -ge 2 ]]; then
+  echo "Running the given commands '" "${@:2}" "' in the container $(date)."
+  readonly commands=( "${@:2}" )
+else
+  echo "Running the full build inside docker $(date)."
+  readonly commands=(
+    "/v/${in_docker_script}"
+    "${CMAKE_SOURCE_DIR}"
+    "${BUILD_OUTPUT}"
+  )
+fi
+
 # Run the docker image with that giant collection of flags.
-sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" \
-    "/v/${in_docker_script}" "${CMAKE_SOURCE_DIR}" "${BUILD_OUTPUT}"
+sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
+
 exit_status=$?
 echo "Build finished with ${exit_status} exit status $(date)."
 echo "================================================================"
