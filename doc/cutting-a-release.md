@@ -34,7 +34,7 @@ git log --no-merges --format="format:* %s" \
 ```
 
 It is not recommended that you create the release branch before this PR is
-ready, but in some circumstances it might be needed, for example, if a large
+*merged*, but in some circumstances it might be needed, for example, if a large
 change that could destabilize the release is about to be merged, or if we want
 to create the release at an specific point in the revision history.
 
@@ -79,9 +79,6 @@ Create a new branch based on that tag and push the branch to the upstream reposi
 git checkout -b "${RELEASE}.x" "${RELEASE}.0"
 git push --set-upstream origin "${RELEASE}.x"
 ```
-
-This will start a CI build cycle. The builds *should* pass, as we normally keep
-`master` in a releasable state.
 
 **NOTE:** No code review or Pull Request is needed as part of this step.
 
