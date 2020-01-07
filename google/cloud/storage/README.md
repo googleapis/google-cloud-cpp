@@ -48,9 +48,12 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ### v1.8.x - 2020-01
 
-* feat: implement non-resumable parallel uploads (#3279)
+* **BREAKING CHANGE**
+  * feat: move creating prefix marker to ComposeMany (#3296)
+* feat: implement parallel uploads. For large files this can improve the upload
+  bandwidth by a factor of 20. Note that in this release such uploads cannot be
+  resumed after a program restart. (#3279)
 * feat: support optionsRequestedPolicyVersion query parameter in GetBucketIamPolicy
-* feat: move creating prefix marker to ComposeMany (#3296)
 * fix: setting options in requests accepts crefs (#3287)
 
 ### v1.7.x - 2019-12

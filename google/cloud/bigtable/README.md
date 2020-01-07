@@ -46,8 +46,7 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ### v1.6.x - 2020-01
 
-* feat: build Chain filter from a range (#3303)
-* feat: implement bigtable::Filter::InterleaveFromRange
+* feat: new functions to create Chain and Interleave filters from ranges of Filter objects
 
 ### v1.5.x - 2019-12
 * feat: implement Bigtable sync vs. async benchmark (#3276)
