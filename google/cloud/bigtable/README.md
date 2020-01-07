@@ -42,7 +42,11 @@ Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
 
 ## Release Notes
 
-### v1.6.x - TBD
+### v1.7.x - TBD
+
+### v1.6.x - 2020-01
+
+* feat: new functions to create Chain and Interleave filters from ranges of Filter objects
 
 ### v1.5.x - 2019-12
 * feat: implement Bigtable sync vs. async benchmark (#3276)
