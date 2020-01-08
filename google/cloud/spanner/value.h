@@ -26,7 +26,6 @@
 #include <google/protobuf/struct.pb.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <google/spanner/v1/type.pb.h>
-#include <chrono>
 #include <ostream>
 #include <string>
 #include <tuple>

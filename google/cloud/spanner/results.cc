@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/results.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/optional.h"
 #include <google/spanner/v1/result_set.pb.h>
 #include <memory>
@@ -31,7 +30,8 @@ optional<Timestamp> GetReadTimestamp(
   auto metadata = source->Metadata();
   if (metadata.has_value() && metadata->has_transaction() &&
       metadata->transaction().has_read_timestamp()) {
-    return internal::FromProto(metadata->transaction().read_timestamp());
+    return internal::TimestampFromProto(
+        metadata->transaction().read_timestamp());
   }
   return optional<Timestamp>();
 }

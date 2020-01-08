@@ -433,7 +433,7 @@ TEST_F(ClientIntegrationTest, Read_ExactStaleness_Timestamp) {
 TEST_F(ClientIntegrationTest, Read_ExactStaleness_Duration) {
   CheckReadWithOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
-        /*exact_staleness=*/Timestamp::duration(0)));
+        /*exact_staleness=*/std::chrono::nanoseconds(0)));
   });
 }
 
@@ -519,7 +519,7 @@ TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Timestamp) {
 TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Duration) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
-        /*exact_staleness=*/Timestamp::duration(0)));
+        /*exact_staleness=*/std::chrono::nanoseconds(0)));
   });
 }
 

@@ -15,13 +15,13 @@
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_environment.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -173,22 +173,22 @@ TEST_F(DataTypeIntegrationTest, WriteReadBytes) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadTimestamp) {
-  // TODO(#1098): `Timestamp` cannot represent these extreme values.
-  // auto min = internal::TimestampFromString("0001-01-01T00:00:00Z");
-  // auto max = internal::TimestampFromString("9999-12-31T23:59:59.999999999Z");
-
-  // ASSERT_STATUS_OK(min);
-  // ASSERT_STATUS_OK(max);
+  auto min = internal::TimestampFromRFC3339("0001-01-01T00:00:00Z");
+  ASSERT_STATUS_OK(min);
+  auto max = internal::TimestampFromRFC3339("9999-12-31T23:59:59.999999999Z");
+  ASSERT_STATUS_OK(max);
+  auto now = MakeTimestamp(std::chrono::system_clock::now());
+  ASSERT_STATUS_OK(now);
 
   std::vector<Timestamp> const data = {
-      // *min,  // TODO(#1098)
-      Timestamp(std::chrono::seconds(-1)),
-      Timestamp(std::chrono::nanoseconds(-1)),
-      Timestamp(std::chrono::seconds(0)),
-      Timestamp(std::chrono::nanoseconds(1)),
-      Timestamp(std::chrono::seconds(1)),
-      Timestamp(std::chrono::system_clock::now()),
-      // *max,  // TODO(#1098)
+      *min,
+      internal::TimestampFromCounts(-1, 0).value(),
+      internal::TimestampFromCounts(0, -1).value(),
+      internal::TimestampFromCounts(0, 0).value(),
+      internal::TimestampFromCounts(0, 1).value(),
+      internal::TimestampFromCounts(1, 0).value(),
+      *now,
+      *max,
   };
   auto result = WriteReadData(*client_, data, "TimestampValue");
   ASSERT_STATUS_OK(result);
@@ -268,11 +268,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayBytes) {
 TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
   std::vector<std::vector<Timestamp>> const data = {
       std::vector<Timestamp>{},
-      std::vector<Timestamp>{Timestamp(std::chrono::seconds(-1))},
+      std::vector<Timestamp>{internal::TimestampFromCounts(-1, 0).value()},
       std::vector<Timestamp>{
-          Timestamp(std::chrono::seconds(-1)),
-          Timestamp(),
-          Timestamp(std::chrono::seconds(1)),
+          internal::TimestampFromCounts(-1, 0).value(),
+          internal::TimestampFromCounts(0, 0).value(),
+          internal::TimestampFromCounts(1, 0).value(),
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");

@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/internal/date.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/log.h"
 #include <cerrno>
 #include <cmath>
@@ -240,7 +239,7 @@ google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
 
 google::protobuf::Value Value::MakeValueProto(Timestamp ts) {
   google::protobuf::Value v;
-  v.set_string_value(internal::TimestampToString(ts));
+  v.set_string_value(internal::TimestampToRFC3339(ts));
   return v;
 }
 
@@ -343,7 +342,7 @@ StatusOr<Timestamp> Value::GetValue(Timestamp,
   if (pv.kind_case() != google::protobuf::Value::kStringValue) {
     return Status(StatusCode::kUnknown, "missing TIMESTAMP");
   }
-  return internal::TimestampFromString(pv.string_value());
+  return internal::TimestampFromRFC3339(pv.string_value());
 }
 
 StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,

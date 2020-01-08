@@ -173,8 +173,6 @@ add_library(
     internal/spanner_stub.h
     internal/status_utils.cc
     internal/status_utils.h
-    internal/time.cc
-    internal/time.h
     internal/time_format.cc
     internal/time_format.h
     internal/transaction_impl.cc
@@ -202,6 +200,7 @@ add_library(
     sql_statement.cc
     sql_statement.h
     timestamp.h
+    timestamp.cc
     transaction.cc
     transaction.h
     update_instance_request_builder.h
@@ -333,7 +332,6 @@ function (spanner_client_define_tests)
         internal/spanner_stub_test.cc
         internal/status_utils_test.cc
         internal/time_format_test.cc
-        internal/time_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
         bytes_test.cc
@@ -349,6 +347,7 @@ function (spanner_client_define_tests)
         session_pool_options_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
+        timestamp_test.cc
         transaction_test.cc
         create_instance_request_builder_test.cc
         update_instance_request_builder_test.cc

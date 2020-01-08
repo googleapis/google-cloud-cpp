@@ -13,13 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/transaction_impl.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/transaction.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/port_platform.h"
 #include <gmock/gmock.h>
-#include <chrono>
 #include <ctime>
 #include <future>
 #include <mutex>
@@ -116,7 +114,7 @@ ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
     if (selector.begin().has_read_only() &&
         selector.begin().read_only().has_read_timestamp()) {
       auto const& proto = selector.begin().read_only().read_timestamp();
-      if (internal::FromProto(proto) == read_timestamp_ && seqno > 0) {
+      if (internal::TimestampFromProto(proto) == read_timestamp_ && seqno > 0) {
         std::unique_lock<std::mutex> lock(mu_);
         switch (mode_) {
           case Mode::kReadSucceeds:
@@ -166,8 +164,8 @@ ResultSet Client::Read(SessionHolder& session, TransactionSelector& selector,
 int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
                       std::string const& session_id,
                       std::string const& txn_id) {
-  Timestamp read_timestamp = std::chrono::time_point_cast<Timestamp::duration>(
-      std::chrono::system_clock::from_time_t(read_time));
+  Timestamp read_timestamp =
+      internal::TimestampFromCounts(read_time, 0).value();
   client->Reset(read_timestamp, session_id, txn_id);
 
   Transaction::ReadOnlyOptions opts(read_timestamp);

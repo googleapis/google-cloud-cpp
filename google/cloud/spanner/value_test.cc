@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/internal/date.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
@@ -131,12 +130,10 @@ TEST(Value, BasicSemantics) {
            2147483648LL,    // above max 32-bit int
            9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
-    auto tp = std::chrono::system_clock::from_time_t(t);
     for (auto nanos : {-1, 0, 1}) {
-      auto ts = std::chrono::time_point_cast<Timestamp::duration>(tp) +
-                std::chrono::nanoseconds(nanos);
+      auto ts = internal::TimestampFromCounts(t, nanos).value();
       SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
-                   internal::TimestampToString(ts));
+                   internal::TimestampToRFC3339(ts));
       TestBasicSemantics(ts);
       std::vector<Timestamp> v(5, ts);
       TestBasicSemantics(v);
@@ -590,15 +587,13 @@ TEST(Value, ProtoConversionTimestamp) {
            2147483648LL,    // above max 32-bit int
            9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
-    auto tp = std::chrono::system_clock::from_time_t(t);
     for (auto nanos : {-1, 0, 1}) {
-      auto ts = std::chrono::time_point_cast<Timestamp::duration>(tp) +
-                std::chrono::nanoseconds(nanos);
+      auto ts = internal::TimestampFromCounts(t, nanos).value();
       Value const v(ts);
       auto const p = internal::ToProto(v);
       EXPECT_EQ(v, internal::FromProto(p.first, p.second));
       EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, p.first.code());
-      EXPECT_EQ(internal::TimestampToString(ts), p.second.string_value());
+      EXPECT_EQ(internal::TimestampToRFC3339(ts), p.second.string_value());
     }
   }
 }

@@ -293,10 +293,9 @@ struct TimestampTraits {
   static std::string TableSuffix() { return "timestamp"; }
   static native_type MakeRandomValue(
       google::cloud::internal::DefaultPRNG& generator) {
-    using rep = cs::Timestamp::duration::rep;
-    return cs::Timestamp(
-        cs::Timestamp::duration(std::uniform_int_distribution<rep>(
-            0, std::numeric_limits<rep>::max())(generator)));
+    auto const nanos = std::uniform_int_distribution<std::int64_t>(
+        0, std::numeric_limits<std::int64_t>::max())(generator);
+    return cs::internal::TimestampFromCounts(0, nanos).value();
   }
 };
 

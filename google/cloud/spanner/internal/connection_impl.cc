@@ -18,7 +18,6 @@
 #include "google/cloud/spanner/internal/partial_result_set_source.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/status_utils.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_partition.h"
 #include "google/cloud/grpc_utils/grpc_error_delegate.h"
@@ -779,7 +778,8 @@ StatusOr<CommitResult> ConnectionImpl::CommitImpl(
     return status;
   }
   CommitResult r;
-  r.commit_timestamp = internal::FromProto(response->commit_timestamp());
+  r.commit_timestamp =
+      internal::TimestampFromProto(response->commit_timestamp());
   return r;
 }
 

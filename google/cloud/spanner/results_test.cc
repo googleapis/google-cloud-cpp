@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/results.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -143,9 +142,9 @@ TEST(RowStream, TimestampPresent) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
-  Timestamp timestamp = std::chrono::system_clock::now();
+  Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
-      internal::ToProto(timestamp);
+      internal::TimestampToProto(timestamp);
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 
@@ -157,9 +156,9 @@ TEST(ProfileQueryResult, TimestampPresent) {
   auto mock_source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata transaction_with_timestamp;
   transaction_with_timestamp.mutable_transaction()->set_id("dummy2");
-  Timestamp timestamp = std::chrono::system_clock::now();
+  Timestamp timestamp = MakeTimestamp(std::chrono::system_clock::now()).value();
   *transaction_with_timestamp.mutable_transaction()->mutable_read_timestamp() =
-      internal::ToProto(timestamp);
+      internal::TimestampToProto(timestamp);
   EXPECT_CALL(*mock_source, Metadata())
       .WillOnce(Return(transaction_with_timestamp));
 

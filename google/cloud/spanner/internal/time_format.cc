@@ -21,7 +21,9 @@
 #endif
 
 #include "google/cloud/spanner/internal/time_format.h"
+#include <algorithm>
 #include <array>
+#include <cstdint>
 #include <cstring>
 #include <limits>
 #if !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 5
@@ -41,6 +43,13 @@ namespace {
 
 constexpr auto kDigits = "0123456789";
 
+// Range of supported years (determined by tm_year and its -1900 bias).
+const std::intmax_t kYearMin = std::numeric_limits<int>::min() + 1900;
+const std::intmax_t kYearMax =
+    std::min<std::intmax_t>(std::numeric_limits<int>::max(),
+                            std::numeric_limits<std::intmax_t>::max() - 1900) +
+    1900;
+
 // Formats [0 .. 99] as %02d.
 inline char* Format02d(char* ep, int v) {
   *--ep = kDigits[v % 10];
@@ -50,15 +59,16 @@ inline char* Format02d(char* ep, int v) {
 
 // We eschew std::strtol() for reasons of over-generality (whitespace skip,
 // plus-sign parsing, locale-specific formats).
-char const* ParseInt(char const* dp, int min, int max, int* vp) {
-  int value = 0;
+template <typename T>
+char const* ParseInt(char const* dp, T min, T max, T* vp) {
+  T value = 0;
   bool neg = false;
   if (*dp == '-') {
     neg = true;
     ++dp;
   }
   char const* const bp = dp;
-  constexpr int kMin = std::numeric_limits<int>::min();
+  constexpr T kMin = std::numeric_limits<T>::min();
   while (char const* cp = std::strchr(kDigits, *dp)) {
     int d = static_cast<int>(cp - kDigits);
     if (d >= 10) break;  // non-digit
@@ -172,10 +182,9 @@ std::size_t ParseTime(char const* fmt, std::string const& s, std::tm* tm) {
 }
 
 std::size_t ParseTime(std::string const& s, std::tm* tm) {
-  constexpr auto kYearMin = std::numeric_limits<int>::min() + 1900;
-  constexpr auto kYearMax = std::numeric_limits<int>::max();
   std::tm tmp{};
-  char const* dp = ParseInt(s.c_str(), kYearMin, kYearMax, &tmp.tm_year);
+  std::intmax_t year;
+  char const* dp = ParseInt(s.c_str(), kYearMin, kYearMax, &year);
   if (dp != nullptr && *dp == '-') {
     dp = ParseInt(dp + 1, 1, 12, &tmp.tm_mon);
     if (dp != nullptr && *dp == '-') {
@@ -190,7 +199,7 @@ std::size_t ParseTime(std::string const& s, std::tm* tm) {
             // which we don't have, and can't predict.
             dp = ParseInt(dp + 1, 0, 60, &tmp.tm_sec);
             if (dp != nullptr) {
-              tmp.tm_year -= 1900;
+              tmp.tm_year = static_cast<int>(year - 1900);
               tmp.tm_mon -= 1;
               *tm = tmp;
               return dp - s.c_str();

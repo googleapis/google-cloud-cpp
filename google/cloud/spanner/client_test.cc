@@ -14,7 +14,6 @@
 
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/connection.h"
-#include "google/cloud/spanner/internal/time.h"
 #include "google/cloud/spanner/mocks/mock_spanner_connection.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/results.h"
@@ -334,7 +333,7 @@ TEST(ClientTest, ExecutePartitionedDmlSuccess) {
 TEST(ClientTest, CommitSuccess) {
   auto conn = std::make_shared<MockConnection>();
 
-  auto ts = Timestamp(std::chrono::seconds(123));
+  auto ts = internal::TimestampFromCounts(123, 0).value();
   CommitResult result;
   result.commit_timestamp = ts;
 
@@ -397,7 +396,7 @@ TEST(ClientTest, MakeConnectionOptionalArguments) {
 }
 
 TEST(ClientTest, CommitMutatorSuccess) {
-  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -588,7 +587,7 @@ TEST(ClientTest, CommitMutatorException) {
 #endif
 
 TEST(ClientTest, CommitMutatorRerunTransientFailures) {
-  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -731,7 +730,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
   // should see the same session in a new transaction on every rerun.
   std::string const session_name = "CommitMutatorLockPriority.Session";
 
-  auto timestamp = internal::TimestampFromString("2019-11-11T20:05:36.345Z");
+  auto timestamp = internal::TimestampFromRFC3339("2019-11-11T20:05:36.345Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -773,7 +772,7 @@ TEST(ClientTest, CommitMutatorSessionAffinity) {
 }
 
 TEST(ClientTest, CommitMutatorSessionNotFound) {
-  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
@@ -798,7 +797,7 @@ TEST(ClientTest, CommitMutatorSessionNotFound) {
 }
 
 TEST(ClientTest, CommitSessionNotFound) {
-  auto timestamp = internal::TimestampFromString("2019-08-14T21:16:21.123Z");
+  auto timestamp = internal::TimestampFromRFC3339("2019-08-14T21:16:21.123Z");
   ASSERT_STATUS_OK(timestamp);
 
   auto conn = std::make_shared<MockConnection>();
