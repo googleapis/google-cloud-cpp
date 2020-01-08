@@ -213,10 +213,8 @@ void FillTable(Config const& config, cloud_spanner::Database const& database,
 }
 
 int ClientCount(Config const& config,
-                google::cloud::internal::DefaultPRNG& generator,
-                int thread_count) {
-  // TODO(#1000) - avoid deadlocks with more than 100 threads per client
-  auto min_clients = (std::max)(thread_count / 100 + 1, config.minimum_clients);
+                google::cloud::internal::DefaultPRNG& generator) {
+  auto min_clients = config.minimum_clients;
   auto const max_clients = config.maximum_clients;
   if (min_clients <= max_clients) {
     return min_clients;
@@ -249,7 +247,7 @@ class InsertOrUpdateExperiment : public Experiment {
 
     for (int i = 0; i != config.samples; ++i) {
       auto const thread_count = thread_count_gen(generator);
-      auto const client_count = ClientCount(config, generator, thread_count);
+      auto const client_count = ClientCount(config, generator);
       std::vector<cloud_spanner::Client> iteration_clients(
           clients.begin(), clients.begin() + client_count);
       RunIteration(config, iteration_clients, thread_count, sink, generator);
@@ -354,7 +352,7 @@ class ReadExperiment : public Experiment {
 
     for (int i = 0; i != config.samples; ++i) {
       auto const thread_count = thread_count_gen(generator_);
-      auto const client_count = ClientCount(config, generator_, thread_count);
+      auto const client_count = ClientCount(config, generator_);
       std::vector<cloud_spanner::Client> iteration_clients(
           clients.begin(), clients.begin() + client_count);
       RunIteration(config, iteration_clients, thread_count, sink);
@@ -466,7 +464,7 @@ class UpdateDmlExperiment : public Experiment {
 
     for (int i = 0; i != config.samples; ++i) {
       auto const thread_count = thread_count_gen(generator);
-      auto const client_count = ClientCount(config, generator, thread_count);
+      auto const client_count = ClientCount(config, generator);
       std::vector<cloud_spanner::Client> iteration_clients(
           clients.begin(), clients.begin() + client_count);
       RunIteration(config, iteration_clients, thread_count, sink, generator);
@@ -581,7 +579,7 @@ class SelectExperiment : public Experiment {
 
     for (int i = 0; i != config.samples; ++i) {
       auto const thread_count = thread_count_gen(generator_);
-      auto const client_count = ClientCount(config, generator_, thread_count);
+      auto const client_count = ClientCount(config, generator_);
       std::vector<cloud_spanner::Client> iteration_clients(
           clients.begin(), clients.begin() + client_count);
       RunIteration(config, iteration_clients, thread_count, sink);

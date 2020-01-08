@@ -100,6 +100,15 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // Release session back to the pool.
   void Release(std::unique_ptr<Session> session);
 
+  // Called when a thread needs to wait for a `Session` to become available.
+  // @p specifies the condition to wait for.
+  template <typename Predicate>
+  void Wait(std::unique_lock<std::mutex>& lk, Predicate&& p) {
+    ++num_waiting_for_session_;
+    cond_.wait(lk, std::forward<Predicate>(p));
+    --num_waiting_for_session_;
+  }
+
   Status CreateSessions(std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
                         std::map<std::string, std::string> const& labels,
                         int num_sessions);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
@@ -120,6 +129,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
   bool create_in_progress_ = false;                 // GUARDED_BY(mu_)
+  int num_waiting_for_session_ = 0;                 // GUARDED_BY(mu_)
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
   // the constructor runs (so the iterators are guaranteed to always be valid).
