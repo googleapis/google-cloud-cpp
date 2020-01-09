@@ -26,11 +26,13 @@ powershell -exec bypass ci\kokoro\windows\bazel\install-dependencies.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
 echo %date% %time%
+where bazel.exe
 bazel version
+c:\ProgramData\chocolatey\bin\bazel.exe version
 
 echo "Compiling and running unit tests."
 echo %date% %time%
-bazel --output_user_root=C:\b test --test_output=errors --verbose_failures=true ^
+c:\ProgramData\chocolatey\bin\bazel.exe --output_user_root=C:\b test --test_output=errors --verbose_failures=true ^
     --keep_going -- //google/cloud/...:all
 
 @rem Preserve the exit code of the test for later use because we want to
