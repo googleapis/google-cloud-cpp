@@ -117,10 +117,16 @@ int main(int argc, char* argv[]) {
     config.instance_id = *std::move(instance);
   }
 
-  cs::Database database(
-      config.project_id, config.instance_id,
-      google::cloud::spanner_testing::RandomDatabaseName(generator));
-  config.database_id = database.database_id();
+  // If the user specified a database name on the command line, re-use it to
+  // reduce setup time when running the benchmark repeatedly. It's assumed that
+  // other flags related to database creation have not been changed across runs.
+  bool user_specified_database = !config.database_id.empty();
+  if (!user_specified_database) {
+    config.database_id =
+        google::cloud::spanner_testing::RandomDatabaseName(generator);
+  }
+  cs::Database database(config.project_id, config.instance_id,
+                        config.database_id);
 
   // Once the configuration is fully initialized and the database name set,
   // print everything out.
@@ -137,18 +143,27 @@ int main(int argc, char* argv[]) {
     }
     return statements;
   }();
-  auto created = admin_client.CreateDatabase(database, additional_statements);
+  auto create_future =
+      admin_client.CreateDatabase(database, additional_statements);
   std::cout << "# Waiting for database creation to complete " << std::flush;
   for (;;) {
-    auto status = created.wait_for(std::chrono::seconds(1));
+    auto status = create_future.wait_for(std::chrono::seconds(1));
     if (status == std::future_status::ready) break;
     std::cout << '.' << std::flush;
   }
   std::cout << " DONE\n";
-  auto db = created.get();
+
+  bool database_created = true;
+  auto db = create_future.get();
   if (!db) {
-    std::cerr << "Error creating database: " << db.status() << "\n";
-    return 1;
+    if (user_specified_database &&
+        db.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "# Re-using existing database\n";
+      database_created = false;
+    } else {
+      std::cerr << "Error creating database: " << db.status() << "\n";
+      return 1;
+    }
   }
 
   std::cout << "ClientCount,ThreadCount,UsingStub"
@@ -158,21 +173,32 @@ int main(int argc, char* argv[]) {
   int exit_status = EXIT_SUCCESS;
 
   auto experiment = e->second(generator);
-  auto status = experiment->SetUp(config, database);
-  if (!status.ok()) {
-    std::cout << "# Skipping experiment, SetUp() failed: " << status << "\n";
-    exit_status = EXIT_FAILURE;
-  } else {
-    status = experiment->Run(config, database);
-    if (!status.ok()) exit_status = EXIT_FAILURE;
-    (void)experiment->TearDown(config, database);
+  Status setup_status;
+  if (database_created) {
+    setup_status = experiment->SetUp(config, database);
+    if (!setup_status.ok()) {
+      std::cout << "# Skipping experiment, SetUp() failed: " << setup_status
+                << "\n";
+      exit_status = EXIT_FAILURE;
+    }
+  }
+  if (setup_status.ok()) {
+    auto run_status = experiment->Run(config, database);
+    if (!run_status.ok()) exit_status = EXIT_FAILURE;
+    if (database_created) {
+      (void)experiment->TearDown(config, database);
+    }
   }
 
-  auto drop = admin_client.DropDatabase(database);
-  if (!drop.ok()) {
-    std::cerr << "# Error dropping database: " << drop << "\n";
+  if (!user_specified_database) {
+    auto drop = admin_client.DropDatabase(database);
+    if (!drop.ok()) {
+      std::cerr << "# Error dropping database: " << drop << "\n";
+    }
   }
-  std::cout << "# Experiment finished, database dropped\n";
+  std::cout << "# Experiment finished, "
+            << (user_specified_database ? "user-specified database kept\n"
+                                        : "database dropped\n");
   return exit_status;
 }
 
@@ -1457,7 +1483,10 @@ class RunAllExperiment : public Experiment {
       : generator_(generator) {}
 
   std::string AdditionalDdlStatement() override { return {}; }
-  Status SetUp(Config const&, cs::Database const&) override { return {}; }
+  Status SetUp(Config const&, cs::Database const&) override {
+    setup_called_ = true;
+    return {};
+  }
   Status TearDown(Config const&, cs::Database const&) override { return {}; }
 
   Status Run(Config const& cfg, cs::Database const& database) override {
@@ -1482,11 +1511,14 @@ class RunAllExperiment : public Experiment {
 
       std::cout << "# Smoke test for experiment\n";
       std::cout << config << "\n" << std::flush;
-      auto status = experiment->SetUp(config, database);
-      if (!status.ok()) {
-        std::cout << "# ERROR in SetUp: " << status << "\n";
-        last_error = status;
-        continue;
+      if (setup_called_) {
+        // Only call SetUp() on each experiment if our own SetUp() was called.
+        auto status = experiment->SetUp(config, database);
+        if (!status.ok()) {
+          std::cout << "# ERROR in SetUp: " << status << "\n";
+          last_error = status;
+          continue;
+        }
       }
       config.use_only_clients = true;
       config.use_only_stubs = false;
@@ -1501,6 +1533,7 @@ class RunAllExperiment : public Experiment {
   }
 
  private:
+  bool setup_called_ = false;
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;
 };

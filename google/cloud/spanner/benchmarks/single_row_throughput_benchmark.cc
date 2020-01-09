@@ -83,10 +83,16 @@ int main(int argc, char* argv[]) {
     config.instance_id = *std::move(instance);
   }
 
-  cloud_spanner::Database database(
-      config.project_id, config.instance_id,
-      google::cloud::spanner_testing::RandomDatabaseName(generator));
-  config.database_id = database.database_id();
+  // If the user specified a database name on the command line, re-use it to
+  // reduce setup time when running the benchmark repeatedly. It's assumed that
+  // other flags related to database creation have not been changed across runs.
+  bool user_specified_database = !config.database_id.empty();
+  if (!user_specified_database) {
+    config.database_id =
+        google::cloud::spanner_testing::RandomDatabaseName(generator);
+  }
+  cloud_spanner::Database database(config.project_id, config.instance_id,
+                                   config.database_id);
 
   auto available = AvailableExperiments();
   auto e = available.find(config.experiment);
@@ -96,22 +102,30 @@ int main(int argc, char* argv[]) {
   }
 
   cloud_spanner::DatabaseAdminClient admin_client;
-  auto created =
+  auto create_future =
       admin_client.CreateDatabase(database, {R"sql(CREATE TABLE KeyValue (
                                 Key   INT64 NOT NULL,
                                 Data  STRING(1024),
                              ) PRIMARY KEY (Key))sql"});
   std::cout << "# Waiting for database creation to complete " << std::flush;
   for (;;) {
-    auto status = created.wait_for(std::chrono::seconds(1));
+    auto status = create_future.wait_for(std::chrono::seconds(1));
     if (status == std::future_status::ready) break;
     std::cout << '.' << std::flush;
   }
   std::cout << " DONE\n";
-  auto db = created.get();
+
+  bool database_created = true;
+  auto db = create_future.get();
   if (!db) {
-    std::cerr << "Error creating database: " << db.status() << "\n";
-    return 1;
+    if (user_specified_database &&
+        db.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "# Re-using existing database\n";
+      database_created = false;
+    } else {
+      std::cerr << "Error creating database: " << db.status() << "\n";
+      return 1;
+    }
   }
 
   std::cout << "ClientCount,ThreadCount,EventCount,ElapsedTime\n" << std::flush;
@@ -129,14 +143,20 @@ int main(int argc, char* argv[]) {
       };
 
   auto experiment = e->second;
-  experiment->SetUp(config, database);
+  if (database_created) {
+    experiment->SetUp(config, database);
+  }
   experiment->Run(config, database, cout_sink);
 
-  auto drop = admin_client.DropDatabase(database);
-  if (!drop.ok()) {
-    std::cerr << "# Error dropping database: " << drop << "\n";
+  if (!user_specified_database) {
+    auto drop = admin_client.DropDatabase(database);
+    if (!drop.ok()) {
+      std::cerr << "# Error dropping database: " << drop << "\n";
+    }
   }
-  std::cout << "# Experiment finished, database dropped\n";
+  std::cout << "# Experiment finished, "
+            << (user_specified_database ? "user-specified database kept\n"
+                                        : "database dropped\n");
   return 0;
 }
 
@@ -568,7 +588,6 @@ class SelectExperiment : public Experiment {
       std::cout << '.' << std::flush;
     }
     std::cout << " DONE\n";
-
     std::uniform_int_distribution<int> thread_count_gen(config.minimum_threads,
                                                         config.maximum_threads);
 
@@ -654,7 +673,9 @@ class SelectExperiment : public Experiment {
 
 class RunAllExperiment : public Experiment {
  public:
-  void SetUp(Config const&, cloud_spanner::Database const&) override {}
+  void SetUp(Config const&, cloud_spanner::Database const&) override {
+    setup_called_ = true;
+  }
 
   void Run(Config const& cfg, cloud_spanner::Database const& database,
            SampleSink const& sink) override {
@@ -668,10 +689,16 @@ class RunAllExperiment : public Experiment {
       config.iteration_duration = std::chrono::seconds(1);
       std::cout << "# Smoke test for experiment: " << kv.first << "\n";
       // TODO(#1119) - tests disabled until we can stay within admin op quota
-      kv.second->SetUp(config, database);
+      if (setup_called_) {
+        // Only call SetUp() on each experiment if our own SetUp() was called.
+        kv.second->SetUp(config, database);
+      }
       kv.second->Run(config, database, sink);
     }
   }
+
+ private:
+  bool setup_called_ = false;
 };
 
 std::map<std::string, std::shared_ptr<Experiment>> AvailableExperiments() {
