@@ -382,17 +382,10 @@ class ExperimentImpl {
         config.minimum_threads, config.maximum_threads)(generator_);
   }
 
-  int ClientCount(Config const& config, int thread_count) {
-    // TODO(#1000) - avoid deadlocks with more than 100 threads per client
-    auto const min_clients =
-        (std::max<int>)(thread_count / 100 + 1, config.minimum_clients);
-    auto const max_clients = config.maximum_clients;
-    if (min_clients <= max_clients) {
-      return min_clients;
-    }
+  int ClientCount(Config const& config) {
     std::lock_guard<std::mutex> lk(mu_);
-    return std::uniform_int_distribution<int>(min_clients,
-                                              max_clients - 1)(generator_);
+    return std::uniform_int_distribution<int>(
+        config.minimum_clients, config.maximum_clients)(generator_);
   }
 
   /// Get a snapshot of the random bit generator
@@ -546,7 +539,7 @@ class ReadExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config, thread_count);
+      auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
             stubs.begin(), stubs.begin() + client_count);
@@ -763,7 +756,7 @@ class SelectExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config, thread_count);
+      auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
             stubs.begin(), stubs.begin() + client_count);
@@ -997,7 +990,7 @@ class UpdateExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config, thread_count);
+      auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
             stubs.begin(), stubs.begin() + client_count);
@@ -1261,7 +1254,7 @@ class MutationExperiment : public Experiment {
     for (int i = 0; i != config.samples; ++i) {
       auto const use_stubs = impl_.UseStub(config);
       auto const thread_count = impl_.ThreadCount(config);
-      auto const client_count = impl_.ClientCount(config, thread_count);
+      auto const client_count = impl_.ClientCount(config);
       if (use_stubs) {
         std::vector<std::shared_ptr<cs::internal::SpannerStub>> iteration_stubs(
             stubs.begin(), stubs.begin() + client_count);

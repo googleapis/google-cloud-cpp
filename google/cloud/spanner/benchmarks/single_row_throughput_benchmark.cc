@@ -214,13 +214,8 @@ void FillTable(Config const& config, cloud_spanner::Database const& database,
 
 int ClientCount(Config const& config,
                 google::cloud::internal::DefaultPRNG& generator) {
-  auto min_clients = config.minimum_clients;
-  auto const max_clients = config.maximum_clients;
-  if (min_clients <= max_clients) {
-    return min_clients;
-  }
-  return std::uniform_int_distribution<int>(min_clients,
-                                            max_clients - 1)(generator);
+  return std::uniform_int_distribution<int>(config.minimum_clients,
+                                            config.maximum_clients)(generator);
 };
 
 class InsertOrUpdateExperiment : public Experiment {
