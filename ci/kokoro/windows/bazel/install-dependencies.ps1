@@ -25,7 +25,7 @@ Write-Host
 Write-Host "choco install"
 Get-Date -Format o
 
-choco install --force --no-progress -y bazel
+choco upgrade --no-progress -y bazel
 
 Write-Host
 Write-Host "Post choco install"
