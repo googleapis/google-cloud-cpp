@@ -15,6 +15,10 @@ REM limitations under the License.
 echo %date% %time%
 cd github\google-cloud-cpp
 
+echo %date% %time%
+powershell -exec bypass ci\kokoro\windows\bazel\install-dependencies.ps1
+if %errorlevel% neq 0 exit /b %errorlevel%
+
 echo "Create the bazel output directory."
 echo %date% %time%
 if not exist "C:\b\" mkdir C:\b
