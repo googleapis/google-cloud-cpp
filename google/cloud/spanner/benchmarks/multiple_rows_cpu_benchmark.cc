@@ -657,7 +657,7 @@ class ReadExperiment : public Experiment {
       auto final = stream->Finish();
       timer.Stop();
       samples.push_back(RowCpuSample{
-          thread_count, client_count, true, row_count, timer.elapsed_time(),
+          client_count, thread_count, true, row_count, timer.elapsed_time(),
           timer.cpu_time(),
           google::cloud::grpc_utils::MakeStatusFromRpcError(final)});
     }
@@ -712,7 +712,7 @@ class ReadExperiment : public Experiment {
         ++row_count;
       }
       timer.Stop();
-      samples.push_back(RowCpuSample{thread_count, client_count, false,
+      samples.push_back(RowCpuSample{client_count, thread_count, false,
                                      row_count, timer.elapsed_time(),
                                      timer.cpu_time(), std::move(status)});
     }
@@ -878,7 +878,7 @@ class SelectExperiment : public Experiment {
       auto final = stream->Finish();
       timer.Stop();
       samples.push_back(RowCpuSample{
-          thread_count, client_count, true, row_count, timer.elapsed_time(),
+          client_count, thread_count, true, row_count, timer.elapsed_time(),
           timer.cpu_time(),
           google::cloud::grpc_utils::MakeStatusFromRpcError(final)});
     }
@@ -931,7 +931,7 @@ class SelectExperiment : public Experiment {
         ++row_count;
       }
       timer.Stop();
-      samples.push_back(RowCpuSample{thread_count, client_count, false,
+      samples.push_back(RowCpuSample{client_count, thread_count, false,
                                      row_count, timer.elapsed_time(),
                                      timer.cpu_time(), std::move(status)});
     }
@@ -1125,7 +1125,7 @@ class UpdateExperiment : public Experiment {
       }
 
       timer.Stop();
-      samples.push_back(RowCpuSample{thread_count, client_count, true,
+      samples.push_back(RowCpuSample{client_count, thread_count, true,
                                      row_count, timer.elapsed_time(),
                                      timer.cpu_time(), status});
     }
@@ -1195,7 +1195,7 @@ class UpdateExperiment : public Experiment {
           });
       timer.Stop();
       samples.push_back(RowCpuSample{
-          thread_count, client_count, false, row_count, timer.elapsed_time(),
+          client_count, thread_count, false, row_count, timer.elapsed_time(),
           timer.cpu_time(), std::move(commit_result).status()});
     }
     return samples;
@@ -1376,7 +1376,7 @@ class MutationExperiment : public Experiment {
 
       timer.Stop();
       samples.push_back(RowCpuSample{
-          thread_count, client_count, true, commit_request.mutations_size(),
+          client_count, thread_count, true, commit_request.mutations_size(),
           timer.elapsed_time(), timer.cpu_time(), response.status()});
     }
     return samples;
@@ -1446,7 +1446,7 @@ class MutationExperiment : public Experiment {
           });
       timer.Stop();
       samples.push_back(RowCpuSample{
-          thread_count, client_count, false, row_count, timer.elapsed_time(),
+          client_count, thread_count, false, row_count, timer.elapsed_time(),
           timer.cpu_time(), std::move(commit_result).status()});
     }
     return samples;
