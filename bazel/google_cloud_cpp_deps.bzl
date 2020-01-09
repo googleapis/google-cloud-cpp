@@ -82,6 +82,14 @@ def google_cloud_cpp_deps():
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
+    if "io_opencensus_cpp" not in native.existing_rules():
+        http_archive(
+            name = "io_opencensus_cpp",
+            urls = ["https://github.com/census-instrumentation/opencensus-cpp/archive/3b7643c1a353d5164dc02a1fb1b19a641ee1a4f1.tar.gz"],
+            strip_prefix = "opencensus-cpp-3b7643c1a353d5164dc02a1fb1b19a641ee1a4f1",
+            #            sha256 = "90d6fafa8b1a2ea613bf662731d3086e1c2ed286f458a95c81744df2dbae41b1",
+        )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
     # This implicitly loads "com_google_protobuf", which we use.
     if "com_github_grpc_grpc" not in native.existing_rules():
