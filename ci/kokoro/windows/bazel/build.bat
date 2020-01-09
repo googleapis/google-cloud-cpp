@@ -25,9 +25,9 @@ echo %date% %time%
 powershell -exec bypass ci\kokoro\windows\bazel\install-dependencies.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
+@rem Use the bazel we just installed via chocolatey, in lieu of
+@rem c:\tools\bazel\bazel.exe from the loaded image.
 echo %date% %time%
-where bazel.exe
-bazel version
 c:\ProgramData\chocolatey\bin\bazel.exe version
 
 echo "Compiling and running unit tests."
