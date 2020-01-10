@@ -431,15 +431,23 @@ class Client {
    * The @p mutator can execute read/write operations using the transaction,
    * and returns any additional `Mutations` to commit.
    *
-   * If the @p mutator returns `StatusCode::kAborted` or the transaction commit
-   * results in an abort, then that transaction is rolled back and the process
-   * repeats (subject to @p rerun_policy and @p backoff_policy), by building a
-   * new transaction and re-running the @p mutator.  The lock priority of the
-   * operation increases after each aborted transaction, meaning that the next
-   * attempt has a slightly better chance of success.
+   * If the @p mutator succeeds and the transaction commits, then `Commit()`
+   * returns the `CommitResult`.
    *
-   * If the @p mutator and the commit succeed, the `CommitResult` is returned.
-   * Otherwise the error returned by the @p mutator or the commit is returned.
+   * If the @p mutator returns a non-rerunnable status (according to the
+   * @p rerun_policy), the transaction is rolled back and that status is
+   * returned. Similarly, if the transaction fails to commit with a non-
+   * rerunnable status, that status is returned.
+   *
+   * Otherwise the whole process repeats (subject to @p rerun_policy and
+   * @p backoff_policy), by building a new transaction and re-running the
+   * @p mutator.  The lock priority of the operation increases after each
+   * rerun, meaning that the next attempt has a slightly better chance of
+   * success.
+   *
+   * Note that the @p mutator should only return a rerunnable status when
+   * the transaction is no longer usable (e.g., it was aborted). Otherwise
+   * the transaction will be leaked.
    *
    * @param mutator the function called to create mutations
    * @param rerun_policy controls for how long (or how many times) the mutator
@@ -464,12 +472,13 @@ class Client {
   /**
    * Commits a read-write transaction.
    *
-   * The commit might return a `kAborted` error. This can occur at any time;
-   * commonly, the cause is conflicts with concurrent transactions. However,
+   * The commit might return a `kAborted` error. This can occur at any time.
+   * Commonly the cause is conflicts with concurrent transactions, however
    * it can also happen for a variety of other reasons. If `Commit` returns
    * `kAborted`, the caller may try to reapply the mutations within a new
-   * read-write transaction (which should use the same session to ensure an
-   * increase it lock priority).
+   * read-write transaction (which should share lock priority with the aborted
+   * transaction so that the new attempt has a slightly better chance of
+   * success).
    *
    * @note Prefer the previous `Commit` overloads if you want to simply reapply
    *     mutations after a `kAborted` error.
