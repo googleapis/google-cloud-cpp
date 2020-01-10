@@ -55,14 +55,10 @@ TEST(BenchmarkConfigTest, ParseNone) {
 TEST(BenchmarkConfigTest, ParseThreads) {
   auto config = ParseArgs({"placeholder", "--project=test-project",
                            "--minimum-threads=4", "--maximum-threads=16"});
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
   ASSERT_STATUS_OK(config);
 
   EXPECT_EQ(4, config->minimum_threads);
   EXPECT_EQ(16, config->maximum_threads);
-#else
-  EXPECT_EQ(StatusCode::kInvalidArgument, config.status().code());
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
 }
 
 TEST(BenchmarkConfigTest, InvalidFlag) {

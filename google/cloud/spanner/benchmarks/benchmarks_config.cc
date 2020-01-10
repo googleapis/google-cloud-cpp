@@ -18,9 +18,6 @@
 #include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <sstream>
-#if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
-#include <sys/resource.h>
-#endif  // GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 
 namespace google {
 namespace cloud {
@@ -28,16 +25,6 @@ namespace spanner_benchmarks {
 inline namespace SPANNER_CLIENT_NS {
 
 namespace cs = google::cloud::spanner;
-
-namespace {
-bool SupportPerThreadUsage() {
-#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-  return true;
-#else
-  return false;
-#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
-}
-}  // namespace
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
   return os << "# Experiment: " << config.experiment
@@ -160,14 +147,6 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
     os << "The maximum number of threads (" << config.maximum_threads << ")"
        << " must be greater or equal than the minimum number of threads ("
        << config.minimum_threads << ")";
-    return invalid_argument(os.str());
-  }
-
-  if (!SupportPerThreadUsage() && config.maximum_threads > 1) {
-    std::ostringstream os;
-    os << "Your platform does not support per-thread getrusage() data."
-       << " The benchmark cannot run with more than one thread, and you"
-       << " set maximum threads to " << config.maximum_threads;
     return invalid_argument(os.str());
   }
 

@@ -66,6 +66,16 @@ std::ostream& operator<<(std::ostream& os, RowCpuSample const& s) {
             << s.cpu_time.count() << ',' << s.status.code();
 }
 
+namespace {
+bool SupportPerThreadUsage() {
+#if GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+  return true;
+#else
+  return false;
+#endif  // GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD
+}
+}  // namespace
+
 class Experiment {
  public:
   virtual ~Experiment() = default;
@@ -98,6 +108,13 @@ int main(int argc, char* argv[]) {
       return 1;
     }
     config = *std::move(c);
+  }
+
+  if (!SupportPerThreadUsage() && config.maximum_threads > 1) {
+    std::cerr << "Your platform does not support per-thread getrusage() data."
+              << " The benchmark cannot run with more than one thread, and you"
+              << " set maximum threads to " << config.maximum_threads << "\n";
+    return 1;
   }
 
   auto available = AvailableExperiments();
