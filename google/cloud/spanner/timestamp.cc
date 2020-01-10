@@ -379,10 +379,6 @@ StatusOr<std::intmax_t> Timestamp::ToRatio(
 
 namespace internal {
 
-StatusOr<Timestamp> TimestampFromCounts(std::intmax_t sec, std::intmax_t nsec) {
-  return Timestamp::FromCounts(sec, nsec);
-}
-
 StatusOr<Timestamp> TimestampFromRFC3339(std::string const& s) {
   return Timestamp::FromRFC3339(s);
 }

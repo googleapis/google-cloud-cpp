@@ -17,6 +17,7 @@
 #include "google/cloud/optional.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
+#include <chrono>
 #include <cmath>
 #include <limits>
 #include <string>
@@ -28,6 +29,13 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+namespace {
+
+std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
+MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
+  return std::chrono::system_clock::from_time_t(sec) +
+         std::chrono::nanoseconds(nanos);
+}
 
 template <typename T>
 void TestBasicSemantics(T init) {
@@ -131,7 +139,7 @@ TEST(Value, BasicSemantics) {
            9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
     for (auto nanos : {-1, 0, 1}) {
-      auto ts = internal::TimestampFromCounts(t, nanos).value();
+      auto ts = MakeTimestamp(MakeTimePoint(t, nanos)).value();
       SCOPED_TRACE("Testing: google::cloud::spanner::Timestamp " +
                    internal::TimestampToRFC3339(ts));
       TestBasicSemantics(ts);
@@ -588,7 +596,7 @@ TEST(Value, ProtoConversionTimestamp) {
            9223372036LL     // near the limit of 64-bit/ns system_clock
        }) {
     for (auto nanos : {-1, 0, 1}) {
-      auto ts = internal::TimestampFromCounts(t, nanos).value();
+      auto ts = MakeTimestamp(MakeTimePoint(t, nanos)).value();
       Value const v(ts);
       auto const p = internal::ToProto(v);
       EXPECT_EQ(v, internal::FromProto(p.first, p.second));
@@ -845,6 +853,7 @@ TEST(Value, GetBadStruct) {
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
 }
 
+}  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud

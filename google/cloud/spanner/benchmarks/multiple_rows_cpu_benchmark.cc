@@ -22,7 +22,9 @@
 #include "google/cloud/internal/random.h"
 #include <google/spanner/v1/result_set.pb.h>
 #include <algorithm>
+#include <chrono>
 #include <future>
+#include <limits>
 #include <numeric>
 #include <random>
 #include <sstream>
@@ -319,9 +321,13 @@ struct TimestampTraits {
   static std::string TableSuffix() { return "timestamp"; }
   static native_type MakeRandomValue(
       google::cloud::internal::DefaultPRNG& generator) {
-    auto const nanos = std::uniform_int_distribution<std::int64_t>(
-        0, std::numeric_limits<std::int64_t>::max())(generator);
-    return cs::internal::TimestampFromCounts(0, nanos).value();
+    auto const tp =
+        std::chrono::system_clock::time_point{} +
+        std::chrono::nanoseconds(
+            std::uniform_int_distribution<std::chrono::nanoseconds::rep>(
+                0, std::numeric_limits<std::chrono::nanoseconds::rep>::max())(
+                generator));
+    return cs::MakeTimestamp(tp).value();
   }
 };
 

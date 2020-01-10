@@ -23,6 +23,7 @@
 #include <gmock/gmock.h>
 #include <array>
 #include <atomic>
+#include <chrono>
 #include <future>
 #include <string>
 #include <thread>
@@ -1348,21 +1349,23 @@ TEST(ConnectionImplTest, CommitBeginTransactionRetry) {
   EXPECT_CALL(*mock, BeginTransaction(_, _))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(txn));
+  auto const commit_timestamp =
+      MakeTimestamp(std::chrono::system_clock::from_time_t(123)).value();
   EXPECT_CALL(*mock, Commit(_, _))
-      .WillOnce([&txn](grpc::ClientContext&,
-                       spanner_proto::CommitRequest const& request) {
+      .WillOnce([&txn, commit_timestamp](
+                    grpc::ClientContext&,
+                    spanner_proto::CommitRequest const& request) {
         EXPECT_EQ("test-session-name", request.session());
         EXPECT_EQ(txn.id(), request.transaction_id());
         spanner_proto::CommitResponse response;
-        *response.mutable_commit_timestamp() = internal::TimestampToProto(
-            internal::TimestampFromCounts(123, 0).value());
+        *response.mutable_commit_timestamp() =
+            internal::TimestampToProto(commit_timestamp);
         return response;
       });
 
   auto commit = conn->Commit({MakeReadWriteTransaction(), {}});
   EXPECT_STATUS_OK(commit);
-  EXPECT_EQ(internal::TimestampFromCounts(123, 0).value(),
-            commit->commit_timestamp);
+  EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
 }
 
 TEST(ConnectionImplTest, CommitBeginTransactionSessionNotFound) {
@@ -1452,6 +1455,8 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
             EXPECT_EQ(db.FullName(), request.database());
             return MakeSessionsResponse({"test-session-name"});
           });
+  auto const commit_timestamp =
+      MakeTimestamp(std::chrono::system_clock::from_time_t(123)).value();
   EXPECT_CALL(*mock, Commit(_, _))
       .WillOnce([](grpc::ClientContext&,
                    spanner_proto::CommitRequest const& request) {
@@ -1459,15 +1464,16 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
         EXPECT_EQ("test-txn-id", request.transaction_id());
         return Status(StatusCode::kUnavailable, "try-again");
       })
-      .WillOnce([](grpc::ClientContext&,
-                   spanner_proto::CommitRequest const& request) {
-        EXPECT_EQ("test-session-name", request.session());
-        EXPECT_EQ("test-txn-id", request.transaction_id());
-        spanner_proto::CommitResponse response;
-        *response.mutable_commit_timestamp() = internal::TimestampToProto(
-            internal::TimestampFromCounts(123, 0).value());
-        return response;
-      });
+      .WillOnce(
+          [commit_timestamp](grpc::ClientContext&,
+                             spanner_proto::CommitRequest const& request) {
+            EXPECT_EQ("test-session-name", request.session());
+            EXPECT_EQ("test-txn-id", request.transaction_id());
+            spanner_proto::CommitResponse response;
+            *response.mutable_commit_timestamp() =
+                internal::TimestampToProto(commit_timestamp);
+            return response;
+          });
 
   // Set the id because that makes the commit idempotent.
   auto txn = MakeReadWriteTransaction();
@@ -1475,8 +1481,7 @@ TEST(ConnectionImplTest, CommitCommitIdempotentTransientSuccess) {
 
   auto commit = conn->Commit({txn, {}});
   EXPECT_STATUS_OK(commit);
-  EXPECT_EQ(internal::TimestampFromCounts(123, 0).value(),
-            commit->commit_timestamp);
+  EXPECT_EQ(commit_timestamp, commit->commit_timestamp);
 }
 
 TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
@@ -1498,7 +1503,7 @@ TEST(ConnectionImplTest, CommitSuccessWithTransactionId) {
         EXPECT_EQ("test-txn-id", request.transaction_id());
         spanner_proto::CommitResponse response;
         *response.mutable_commit_timestamp() = internal::TimestampToProto(
-            internal::TimestampFromCounts(123, 0).value());
+            MakeTimestamp(std::chrono::system_clock::from_time_t(123)).value());
         return response;
       });
 

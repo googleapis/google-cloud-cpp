@@ -41,7 +41,8 @@ using sys_time = std::chrono::time_point<std::chrono::system_clock, Duration>;
 /**
  * Construct a `Timestamp` from a `std::chrono::time_point` on the system
  * clock. May produce out-of-range errors, depending on the properties of
- * `Duration` and the `std::chrono::system_clock` epoch.
+ * `Duration` and the `std::chrono::system_clock` epoch. `Duration::rep` may
+ * not be wider than `std::intmax_t`.
  */
 template <typename Duration>
 StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
@@ -49,7 +50,6 @@ StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
 namespace internal {
 
 // Internal forward declarations to befriend.
-StatusOr<Timestamp> TimestampFromCounts(std::intmax_t sec, std::intmax_t nsec);
 StatusOr<Timestamp> TimestampFromRFC3339(std::string const&);
 std::string TimestampToRFC3339(Timestamp);
 Timestamp TimestampFromProto(protobuf::Timestamp const&);
@@ -115,7 +115,8 @@ class Timestamp {
    * `*this` cannot be represented as a `T`.
    *
    * Supported destination types are:
-   *   - `google::cloud::spanner::sys_time<Duration>`
+   *   - `google::cloud::spanner::sys_time<Duration>` (`Duration::rep` may
+   *      not be wider than `std::intmax_t`.)
    *
    * @par Example
    *
@@ -134,8 +135,6 @@ class Timestamp {
   template <typename Duration>
   friend StatusOr<Timestamp> MakeTimestamp(sys_time<Duration> const&);
 
-  friend StatusOr<Timestamp> internal::TimestampFromCounts(std::intmax_t sec,
-                                                           std::intmax_t nsec);
   friend StatusOr<Timestamp> internal::TimestampFromRFC3339(std::string const&);
   friend std::string internal::TimestampToRFC3339(Timestamp);
   friend Timestamp internal::TimestampFromProto(protobuf::Timestamp const&);
@@ -158,8 +157,7 @@ class Timestamp {
   static Timestamp FromProto(protobuf::Timestamp const&);
   protobuf::Timestamp ToProto() const;
 
-  // Helpers for `std::chrono::time_point` conversions. For now we do not
-  // allow for `Duration::rep` being wider than `std::intmax_t`.
+  // Helpers for `std::chrono::time_point` conversions.
   template <typename Duration>
   static sys_time<Duration> UnixEpoch() {
     return std::chrono::time_point_cast<Duration>(

@@ -17,6 +17,7 @@
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_environment.h"
+#include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
@@ -30,6 +31,12 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::testing::UnorderedElementsAreArray;
+
+std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
+MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
+  return std::chrono::system_clock::from_time_t(sec) +
+         std::chrono::nanoseconds(nanos);
+}
 
 // A helper function used in the test fixtures below. This function writes the
 // given data to the DataTypes table, then it reads all the data back and
@@ -182,11 +189,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadTimestamp) {
 
   std::vector<Timestamp> const data = {
       *min,
-      internal::TimestampFromCounts(-1, 0).value(),
-      internal::TimestampFromCounts(0, -1).value(),
-      internal::TimestampFromCounts(0, 0).value(),
-      internal::TimestampFromCounts(0, 1).value(),
-      internal::TimestampFromCounts(1, 0).value(),
+      MakeTimestamp(MakeTimePoint(-1, 0)).value(),
+      MakeTimestamp(MakeTimePoint(0, -1)).value(),
+      MakeTimestamp(MakeTimePoint(0, 0)).value(),
+      MakeTimestamp(MakeTimePoint(0, 1)).value(),
+      MakeTimestamp(MakeTimePoint(1, 0)).value(),
       *now,
       *max,
   };
@@ -268,11 +275,11 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayBytes) {
 TEST_F(DataTypeIntegrationTest, WriteReadArrayTimestamp) {
   std::vector<std::vector<Timestamp>> const data = {
       std::vector<Timestamp>{},
-      std::vector<Timestamp>{internal::TimestampFromCounts(-1, 0).value()},
+      std::vector<Timestamp>{MakeTimestamp(MakeTimePoint(-1, 0)).value()},
       std::vector<Timestamp>{
-          internal::TimestampFromCounts(-1, 0).value(),
-          internal::TimestampFromCounts(0, 0).value(),
-          internal::TimestampFromCounts(1, 0).value(),
+          MakeTimestamp(MakeTimePoint(-1, 0)).value(),
+          MakeTimestamp(MakeTimePoint(0, 0)).value(),
+          MakeTimestamp(MakeTimePoint(1, 0)).value(),
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayTimestampValue");

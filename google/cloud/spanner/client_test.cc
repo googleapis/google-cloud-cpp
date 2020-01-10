@@ -333,7 +333,7 @@ TEST(ClientTest, ExecutePartitionedDmlSuccess) {
 TEST(ClientTest, CommitSuccess) {
   auto conn = std::make_shared<MockConnection>();
 
-  auto ts = internal::TimestampFromCounts(123, 0).value();
+  auto ts = MakeTimestamp(std::chrono::system_clock::from_time_t(123)).value();
   CommitResult result;
   result.commit_timestamp = ts;
 

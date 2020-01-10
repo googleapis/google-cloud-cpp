@@ -18,6 +18,7 @@
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/port_platform.h"
 #include <gmock/gmock.h>
+#include <chrono>
 #include <ctime>
 #include <future>
 #include <mutex>
@@ -165,7 +166,7 @@ int MultiThreadedRead(int n_threads, Client* client, std::time_t read_time,
                       std::string const& session_id,
                       std::string const& txn_id) {
   Timestamp read_timestamp =
-      internal::TimestampFromCounts(read_time, 0).value();
+      MakeTimestamp(std::chrono::system_clock::from_time_t(read_time)).value();
   client->Reset(read_timestamp, session_id, txn_id);
 
   Transaction::ReadOnlyOptions opts(read_timestamp);
