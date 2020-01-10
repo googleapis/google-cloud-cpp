@@ -234,13 +234,15 @@ TEST(Timestamp, FromProto) {
   EXPECT_EQ(internal::TimestampFromCounts(1576030524, 611422667).value(),
             internal::TimestampFromProto(proto));
 
-  proto.set_seconds(std::numeric_limits<std::int64_t>::min());
+  proto.set_seconds(-62135596800);
   proto.set_nanos(0);
-  EXPECT_EQ(Timestamp::Min(), internal::TimestampFromProto(proto));
+  EXPECT_EQ(internal::TimestampFromCounts(-62135596800, 0).value(),
+            internal::TimestampFromProto(proto));
 
-  proto.set_seconds(std::numeric_limits<std::int64_t>::max());
+  proto.set_seconds(253402300799);
   proto.set_nanos(999999999);
-  EXPECT_EQ(Timestamp::Max(), internal::TimestampFromProto(proto));
+  EXPECT_EQ(internal::TimestampFromCounts(253402300799, 999999999).value(),
+            internal::TimestampFromProto(proto));
 }
 
 TEST(Timestamp, ToProto) {
@@ -254,12 +256,14 @@ TEST(Timestamp, ToProto) {
   EXPECT_EQ(1576030524, proto.seconds());
   EXPECT_EQ(611422667, proto.nanos());
 
-  proto = internal::TimestampToProto(Timestamp::Min());
-  EXPECT_EQ(std::numeric_limits<std::int64_t>::min(), proto.seconds());
+  proto = internal::TimestampToProto(
+      internal::TimestampFromCounts(-62135596800, 0).value());
+  EXPECT_EQ(-62135596800, proto.seconds());
   EXPECT_EQ(0, proto.nanos());
 
-  proto = internal::TimestampToProto(Timestamp::Max());
-  EXPECT_EQ(std::numeric_limits<std::int64_t>::max(), proto.seconds());
+  proto = internal::TimestampToProto(
+      internal::TimestampFromCounts(253402300799, 999999999).value());
+  EXPECT_EQ(253402300799, proto.seconds());
   EXPECT_EQ(999999999, proto.nanos());
 }
 
@@ -354,8 +358,8 @@ TEST(Timestamp, ToChrono) {
   auto const tp5 = epoch + std::chrono::hours(2123456789 / 60 / 60);
   EXPECT_EQ(tp5, ts_pos.get<sys_time<std::chrono::hours>>().value());
 
-  auto const ts_big_pos = Timestamp::Max();
-  auto const tp_big_pos = ts_big_pos.get<sys_time<std::chrono::milliseconds>>();
+  auto const ts_big_pos = internal::TimestampFromCounts(20000000000, 0).value();
+  auto const tp_big_pos = ts_big_pos.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_FALSE(tp_big_pos.ok());
   EXPECT_THAT(tp_big_pos.status().message(), HasSubstr("positive overflow"));
 
@@ -380,8 +384,9 @@ TEST(Timestamp, ToChrono) {
   auto const tp10 = epoch - std::chrono::hours(2123456789 / 60 / 60);
   EXPECT_EQ(tp10, ts_neg.get<sys_time<std::chrono::hours>>().value());
 
-  auto const ts_big_neg = Timestamp::Min();
-  auto const tp_big_neg = ts_big_neg.get<sys_time<std::chrono::milliseconds>>();
+  auto const ts_big_neg =
+      internal::TimestampFromCounts(-20000000000, 0).value();
+  auto const tp_big_neg = ts_big_neg.get<sys_time<std::chrono::nanoseconds>>();
   EXPECT_FALSE(tp_big_neg.ok());
   EXPECT_THAT(tp_big_neg.status().message(), HasSubstr("negative overflow"));
 }

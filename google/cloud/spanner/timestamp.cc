@@ -264,8 +264,12 @@ Timestamp Timestamp::FromProto(protobuf::Timestamp const& proto) {
   auto ts = FromCounts(proto.seconds(), proto.nanos());
   if (!ts) {
     // If the proto cannot be normalized (proto.nanos() would need to be
-    // outside its documented [0..999999999] range), then we saturate.
-    return proto.seconds() >= 0 ? Max() : Min();
+    // outside its documented [0..999999999] range and have the same sign
+    // as proto.seconds()), then we saturate.
+    return proto.seconds() >= 0
+               ? Timestamp{std::numeric_limits<std::int64_t>::max(),
+                           kNanosPerSecond - 1}
+               : Timestamp{std::numeric_limits<std::int64_t>::min(), 0};
   }
   return *ts;
 }
@@ -299,14 +303,6 @@ StatusOr<Timestamp> Timestamp::FromCounts(std::intmax_t sec,
     }
   }
   return Timestamp(static_cast<std::int64_t>(sec + carry), nanos);
-}
-
-Timestamp Timestamp::Min() {
-  return {std::numeric_limits<std::int64_t>::min(), 0};
-}
-
-Timestamp Timestamp::Max() {
-  return {std::numeric_limits<std::int64_t>::max(), kNanosPerSecond - 1};
 }
 
 // (count * numerator/denominator) seconds => [sec, nsec]

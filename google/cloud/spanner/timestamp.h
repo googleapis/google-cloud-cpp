@@ -83,12 +83,6 @@ class Timestamp {
   Timestamp& operator=(Timestamp const&) = default;
   ///@}
 
-  /// @name Factory functions for special `Timestamp` values.
-  ///@{
-  static Timestamp Min();
-  static Timestamp Max();
-  ///@}
-
   /// @name Relational operators
   ///@{
   friend bool operator==(Timestamp const& a, Timestamp const& b) {
