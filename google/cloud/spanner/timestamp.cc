@@ -209,6 +209,9 @@ StatusOr<Timestamp> Timestamp::FromRFC3339(std::string const& s) {
 
   std::intmax_t const sec = TimeZ(tm);
   constexpr auto kDestType = "UTC offset";
+  // Note: These overflow conditions are unreachable when tm.tm_year is only
+  // 32 bits (as is typically the case) as the max/min possible `sec` value
+  // plus/minus the max/min possible `utc_offset_secs` cannot oveflow 64 bits.
   if (utc_offset_secs >= 0) {
     if (sec > std::numeric_limits<std::intmax_t>::max() - utc_offset_secs) {
       return PositiveOverflow(kDestType);
@@ -328,8 +331,13 @@ StatusOr<Timestamp> Timestamp::FromRatio(std::intmax_t const count,
   sec *= numerator;
 
   auto sscount = count - sec * denominator / numerator;
-  auto nsec = sscount * kNanosPerSecond / denominator * numerator;
-  return FromCounts(sec, nsec);
+  if (denominator > kNanosPerSecond) {
+    auto const divider = denominator / kNanosPerSecond;
+    if (sscount < 0) sscount -= divider - 1;  // floor
+    return FromCounts(sec, sscount / divider * numerator);
+  }
+  auto const multiplier = kNanosPerSecond / denominator;
+  return FromCounts(sec, sscount * multiplier * numerator);
 }
 
 // [sec, nsec] => bounded (count * numerator/denominator) seconds.
@@ -356,15 +364,10 @@ StatusOr<std::intmax_t> Timestamp::ToRatio(
   count *= denominator;
 
   auto ncount = nsec_ / numerator;
-  if (denominator <= kNanosPerSecond) {
+  if (denominator < kNanosPerSecond) {
     ncount /= kNanosPerSecond / denominator;
   } else {
-    auto const multiplier = denominator / kNanosPerSecond;
-    if (ncount > std::numeric_limits<std::intmax_t>::max() / multiplier) {
-      // Might be premature to declare overflow on an intermediate value.
-      return PositiveOverflow(kDestType);
-    }
-    ncount *= multiplier;
+    ncount *= denominator / kNanosPerSecond;
   }
 
   if (count > std::numeric_limits<std::intmax_t>::max() - ncount) {

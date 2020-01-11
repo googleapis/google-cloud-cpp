@@ -16,6 +16,8 @@
 #include <google/protobuf/timestamp.pb.h>
 #include <gmock/gmock.h>
 #include <cstdint>
+#include <limits>
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -24,6 +26,16 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::testing::HasSubstr;
+
+// Note: You can validate the std::time_t/string conversions using date(1).
+//   $ date --utc +%Y-%m-%dT%H:%M:%SZ --date=@1561135942
+//   2019-06-21T16:52:22Z
+//   $ date +%s --date=2019-06-21T16:52:22Z
+//   1561135942
+
+// Assumes the system_clock epoch is hour-aligned with the Unix epoch.
+auto const kUnixEpoch = std::chrono::time_point_cast<std::chrono::hours>(
+    std::chrono::system_clock::from_time_t(0));
 
 google::protobuf::Timestamp MakeProtoTimestamp(std::int64_t seconds,
                                                std::int32_t nanos) {
@@ -85,12 +97,13 @@ TEST(Timestamp, RelationalOperators) {
       internal::TimestampFromProto(MakeProtoTimestamp(1576030524, 611422667)));
 }
 
+TEST(Timestamp, OutputStreaming) {
+  std::ostringstream os;
+  os << internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 123456789));
+  EXPECT_EQ("2019-06-21T16:52:22.123456789Z", os.str());
+}
+
 TEST(Timestamp, FromRFC3339) {
-  // Note: You can validate std::time_t/string conversions using date(1).
-  //   $ date --utc +%Y-%m-%dT%H:%M:%SZ --date=@1561135942
-  //   2019-06-21T16:52:22Z
-  //   $ date +%s --date=2019-06-21T16:52:22Z
-  //   1561135942
   EXPECT_EQ(internal::TimestampFromProto(MakeProtoTimestamp(1561135942, 0)),
             internal::TimestampFromRFC3339("2019-06-21T16:52:22Z").value());
   EXPECT_EQ(
@@ -290,7 +303,7 @@ TEST(Timestamp, ToRFC3339Limit) {
 }
 
 TEST(Timestamp, FromProto) {
-  google::protobuf::Timestamp proto = MakeProtoTimestamp(0, 0);
+  auto proto = MakeProtoTimestamp(0, 0);
   EXPECT_EQ("1970-01-01T00:00:00Z",
             internal::TimestampToRFC3339(internal::TimestampFromProto(proto)));
 
@@ -305,6 +318,33 @@ TEST(Timestamp, FromProto) {
   proto = MakeProtoTimestamp(253402300799, 999999999);
   EXPECT_EQ("9999-12-31T23:59:59.999999999Z",
             internal::TimestampToRFC3339(internal::TimestampFromProto(proto)));
+}
+
+TEST(Timestamp, FromProtoLimit) {
+  // Least, normalized protobuf::Timestamp (but beyond documented range).
+  auto proto = internal::TimestampToProto(internal::TimestampFromProto(
+      MakeProtoTimestamp(std::numeric_limits<std::int64_t>::min(), 0)));
+  EXPECT_EQ(std::numeric_limits<std::int64_t>::min(), proto.seconds());
+  EXPECT_EQ(0, proto.nanos());
+
+  // Trying to go one nanosecond earlier still produces the least-normalized.
+  proto = internal::TimestampToProto(internal::TimestampFromProto(
+      MakeProtoTimestamp(std::numeric_limits<std::int64_t>::min(), 0 - 1)));
+  EXPECT_EQ(std::numeric_limits<std::int64_t>::min(), proto.seconds());
+  EXPECT_EQ(0, proto.nanos());
+
+  // Largest, normalized protobuf::Timestamp (but beyond documented range).
+  proto = internal::TimestampToProto(internal::TimestampFromProto(
+      MakeProtoTimestamp(std::numeric_limits<std::int64_t>::max(), 999999999)));
+  EXPECT_EQ(std::numeric_limits<std::int64_t>::max(), proto.seconds());
+  EXPECT_EQ(999999999, proto.nanos());
+
+  // Trying to go one nanosecond later still produces the largest-normalized.
+  proto = internal::TimestampToProto(
+      internal::TimestampFromProto(MakeProtoTimestamp(
+          std::numeric_limits<std::int64_t>::max(), 999999999 + 1)));
+  EXPECT_EQ(std::numeric_limits<std::int64_t>::max(), proto.seconds());
+  EXPECT_EQ(999999999, proto.nanos());
 }
 
 TEST(Timestamp, ToProto) {
@@ -330,138 +370,179 @@ TEST(Timestamp, ToProto) {
 }
 
 TEST(Timestamp, FromChrono) {  // i.e., MakeTimestamp(sys_time<Duration>)
-  // A chrono duration that can hold values beyond the range of Timestamp.
-  using big_minutes = std::chrono::duration<std::int64_t, std::ratio<60>>;
-
-  // Assumes the system_clock epoch is hour-aligned with the Unix epoch.
-  auto const unix_epoch = std::chrono::time_point_cast<std::chrono::hours>(
-      std::chrono::system_clock::from_time_t(0));
-
-  auto const tp1 = unix_epoch + std::chrono::seconds(2123456789) +
+  auto const tp1 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(2123456789, 123456789)),
       MakeTimestamp(tp1).value());
 
-  auto const tp2 = unix_epoch + std::chrono::seconds(2123456789) +
+  auto const tp2 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(2123456789, 123456000)),
       MakeTimestamp(tp2).value());
 
-  auto const tp3 = unix_epoch + std::chrono::seconds(2123456789) +
+  auto const tp3 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::milliseconds(123);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(2123456789, 123000000)),
       MakeTimestamp(tp3).value());
 
-  auto const tp4 = unix_epoch + std::chrono::minutes(2123456789);
+  auto const tp4 = kUnixEpoch + std::chrono::minutes(2123456789);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(2123456789LL * 60, 0)),
       MakeTimestamp(tp4).value());
 
-  auto const tp5 = unix_epoch + std::chrono::hours(2123456789);
+  auto const tp5 = kUnixEpoch + std::chrono::hours(2123456789);
   EXPECT_EQ(internal::TimestampFromProto(
                 MakeProtoTimestamp(2123456789LL * 60 * 60, 0)),
             MakeTimestamp(tp5).value());
 
-  auto const tp_big_pos = unix_epoch + big_minutes(153722867280912931LL);
-  auto const ts_big_pos = MakeTimestamp(tp_big_pos);
-  EXPECT_FALSE(ts_big_pos.ok());
-  EXPECT_THAT(ts_big_pos.status().message(), HasSubstr("positive overflow"));
-
-  auto const tp6 = unix_epoch - std::chrono::seconds(2123456789) +
+  auto const tp6 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123456789)),
       MakeTimestamp(tp6).value());
 
-  auto const tp7 = unix_epoch - std::chrono::seconds(2123456789) +
+  auto const tp7 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123456000)),
       MakeTimestamp(tp7).value());
 
-  auto const tp8 = unix_epoch - std::chrono::seconds(2123456789) +
+  auto const tp8 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::milliseconds(123);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123000000)),
       MakeTimestamp(tp8).value());
 
-  auto const tp9 = unix_epoch - std::chrono::minutes(2123456789);
+  auto const tp9 = kUnixEpoch - std::chrono::minutes(2123456789);
   EXPECT_EQ(
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789LL * 60, 0)),
       MakeTimestamp(tp9).value());
 
-  auto const tp10 = unix_epoch - std::chrono::hours(2123456789);
+  auto const tp10 = kUnixEpoch - std::chrono::hours(2123456789);
   EXPECT_EQ(internal::TimestampFromProto(
                 MakeProtoTimestamp(-2123456789LL * 60 * 60, 0)),
             MakeTimestamp(tp10).value());
 
-  auto const tp_big_neg = unix_epoch - big_minutes(153722867280912931LL);
-  auto const ts_big_neg = MakeTimestamp(tp_big_neg);
-  EXPECT_FALSE(ts_big_neg.ok());
-  EXPECT_THAT(ts_big_neg.status().message(), HasSubstr("negative overflow"));
+  // A chrono duration that can hold values beyond the resolution of Timestamp.
+  using picoseconds = std::chrono::duration<std::int64_t, std::pico>;
+
+  auto const tp11 =
+      kUnixEpoch + std::chrono::seconds(123) + picoseconds(123456789);
+  EXPECT_EQ(internal::TimestampFromProto(MakeProtoTimestamp(123, 123456)),
+            MakeTimestamp(tp11).value());
+
+  auto const tp12 =
+      kUnixEpoch - std::chrono::seconds(123) + picoseconds(123456789);
+  EXPECT_EQ(internal::TimestampFromProto(MakeProtoTimestamp(-123, 123456)),
+            MakeTimestamp(tp12).value());
+}
+
+TEST(Timestamp, FromChronoOverflow) {
+  // A chrono duration that can hold values beyond the range of Timestamp.
+  using big_minutes = std::chrono::duration<std::int64_t, std::ratio<60>>;
+
+  auto const tp1 = kUnixEpoch + big_minutes(153722867280912931);
+  auto const ts1 = MakeTimestamp(tp1);
+  EXPECT_FALSE(ts1.ok());
+  EXPECT_THAT(ts1.status().message(), HasSubstr("positive overflow"));
+
+  auto const tp2 = kUnixEpoch - big_minutes(153722867280912931);
+  auto const ts2 = MakeTimestamp(tp2);
+  EXPECT_FALSE(ts2.ok());
+  EXPECT_THAT(ts2.status().message(), HasSubstr("negative overflow"));
 }
 
 TEST(Timestamp, ToChrono) {  // i.e., Timestamp::get<sys_time<Duration>>()
-  // Assumes the system_clock epoch is hour-aligned with the Unix epoch.
-  auto const epoch = std::chrono::time_point_cast<std::chrono::seconds>(
-      std::chrono::system_clock::from_time_t(0));
-
   auto const ts_pos =
       internal::TimestampFromProto(MakeProtoTimestamp(2123456789, 123456789));
 
-  auto const tp1 = epoch + std::chrono::seconds(2123456789) +
+  auto const tp1 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
   EXPECT_EQ(tp1, ts_pos.get<sys_time<std::chrono::nanoseconds>>().value());
 
-  auto const tp2 = epoch + std::chrono::seconds(2123456789) +
+  auto const tp2 = kUnixEpoch + std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
   EXPECT_EQ(tp2, ts_pos.get<sys_time<std::chrono::microseconds>>().value());
 
-  auto const tp3 =
-      epoch + std::chrono::seconds(2123456789) + std::chrono::milliseconds(123);
+  auto const tp3 = kUnixEpoch + std::chrono::seconds(2123456789) +
+                   std::chrono::milliseconds(123);
   EXPECT_EQ(tp3, ts_pos.get<sys_time<std::chrono::milliseconds>>().value());
 
-  auto const tp4 = epoch + std::chrono::seconds(2123456789);
+  auto const tp4 = kUnixEpoch + std::chrono::seconds(2123456789);
   EXPECT_EQ(tp4, ts_pos.get<sys_time<std::chrono::seconds>>().value());
 
-  auto const tp5 = epoch + std::chrono::hours(2123456789 / 60 / 60);
+  auto const tp5 = kUnixEpoch + std::chrono::hours(2123456789 / 60 / 60);
   EXPECT_EQ(tp5, ts_pos.get<sys_time<std::chrono::hours>>().value());
-
-  auto const ts_big_pos =
-      internal::TimestampFromProto(MakeProtoTimestamp(20000000000, 0));
-  auto const tp_big_pos = ts_big_pos.get<sys_time<std::chrono::nanoseconds>>();
-  EXPECT_FALSE(tp_big_pos.ok());
-  EXPECT_THAT(tp_big_pos.status().message(), HasSubstr("positive overflow"));
 
   auto const ts_neg =
       internal::TimestampFromProto(MakeProtoTimestamp(-2123456789, 123456789));
 
-  auto const tp6 = epoch - std::chrono::seconds(2123456789) +
+  auto const tp6 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::nanoseconds(123456789);
   EXPECT_EQ(tp6, ts_neg.get<sys_time<std::chrono::nanoseconds>>().value());
 
-  auto const tp7 = epoch - std::chrono::seconds(2123456789) +
+  auto const tp7 = kUnixEpoch - std::chrono::seconds(2123456789) +
                    std::chrono::microseconds(123456);
   EXPECT_EQ(tp7, ts_neg.get<sys_time<std::chrono::microseconds>>().value());
 
-  auto const tp8 =
-      epoch - std::chrono::seconds(2123456789) + std::chrono::milliseconds(123);
+  auto const tp8 = kUnixEpoch - std::chrono::seconds(2123456789) +
+                   std::chrono::milliseconds(123);
   EXPECT_EQ(tp8, ts_neg.get<sys_time<std::chrono::milliseconds>>().value());
 
-  auto const tp9 = epoch - std::chrono::seconds(2123456789);
+  auto const tp9 = kUnixEpoch - std::chrono::seconds(2123456789);
   EXPECT_EQ(tp9, ts_neg.get<sys_time<std::chrono::seconds>>().value());
 
-  auto const tp10 = epoch - std::chrono::hours(2123456789 / 60 / 60);
+  auto const tp10 = kUnixEpoch - std::chrono::hours(2123456789 / 60 / 60);
   EXPECT_EQ(tp10, ts_neg.get<sys_time<std::chrono::hours>>().value());
 
-  auto const ts_big_neg =
+  // The limit of a 64-bit count of nanoseconds (assuming the system_clock
+  // epoch is the Unix epoch).
+  auto const ts11 =
+      internal::TimestampFromProto(MakeProtoTimestamp(9223372036, 854775807));
+  auto const tp11 = kUnixEpoch + std::chrono::seconds(9223372036) +
+                    std::chrono::nanoseconds(854775807);
+  EXPECT_EQ(tp11, ts11.get<sys_time<std::chrono::nanoseconds>>().value());
+
+  // A chrono duration that can hold values beyond the resolution of Timestamp.
+  using picoseconds = std::chrono::duration<std::int64_t, std::pico>;
+
+  auto const ts12 =
+      internal::TimestampFromProto(MakeProtoTimestamp(123, 123456));
+  auto const tp12 =
+      kUnixEpoch + std::chrono::seconds(123) + picoseconds(123456000);
+  EXPECT_EQ(tp12, ts12.get<sys_time<picoseconds>>().value());
+
+  auto const ts13 =
+      internal::TimestampFromProto(MakeProtoTimestamp(-123, 123456));
+  auto const tp13 =
+      kUnixEpoch - std::chrono::seconds(123) + picoseconds(123456000);
+  EXPECT_EQ(tp13, ts13.get<sys_time<picoseconds>>().value());
+}
+
+TEST(Timestamp, ToChronoOverflow) {
+  auto const ts1 =
+      internal::TimestampFromProto(MakeProtoTimestamp(20000000000, 0));
+  auto const tp1 = ts1.get<sys_time<std::chrono::nanoseconds>>();
+  EXPECT_FALSE(tp1.ok());
+  EXPECT_THAT(tp1.status().message(), HasSubstr("positive overflow"));
+
+  auto const ts2 =
       internal::TimestampFromProto(MakeProtoTimestamp(-20000000000, 0));
-  auto const tp_big_neg = ts_big_neg.get<sys_time<std::chrono::nanoseconds>>();
-  EXPECT_FALSE(tp_big_neg.ok());
-  EXPECT_THAT(tp_big_neg.status().message(), HasSubstr("negative overflow"));
+  auto const tp2 = ts2.get<sys_time<std::chrono::nanoseconds>>();
+  EXPECT_FALSE(tp2.ok());
+  EXPECT_THAT(tp2.status().message(), HasSubstr("negative overflow"));
+
+  // One beyond the limit of a 64-bit count of nanoseconds (assuming the
+  // system_clock epoch is the Unix epoch). This overflow is detected in a
+  // different code path to the "positive overflow" above.
+  auto const ts3 =
+      internal::TimestampFromProto(MakeProtoTimestamp(9223372036, 854775808));
+  auto const tp3 = ts3.get<sys_time<std::chrono::nanoseconds>>();
+  EXPECT_FALSE(tp3.ok());
+  EXPECT_THAT(tp3.status().message(), HasSubstr("positive overflow"));
 }
 
 }  // namespace
