@@ -64,20 +64,20 @@ struct Options {
   std::string bucket_prefix = "cloud-cpp-testing-";
   std::string region;
   long object_count = 100;
-  unsigned int thread_count = 1;
+  long thread_count = 1;
   long sample_count = 1000;
   std::int64_t chunk_size = 12 * gcs_bm::kMiB;
   long chunk_count = 20;
 };
 
 template <typename T>
-class bounded_queue {
+class BoundedQueue {
  public:
-  bounded_queue() : bounded_queue(512, 1024) {}
-  explicit bounded_queue(std::size_t lwm, std::size_t hwm)
+  BoundedQueue() : BoundedQueue(512, 1024) {}
+  explicit BoundedQueue(std::size_t lwm, std::size_t hwm)
       : lwm_(lwm), hwm_(hwm), is_shutdown_(false) {}
 
-  void shutdown() {
+  void Shutdown() {
     std::unique_lock<std::mutex> lk(mu_);
     is_shutdown_ = true;
     lk.unlock();
@@ -85,9 +85,9 @@ class bounded_queue {
     cv_write_.notify_all();
   }
 
-  google::cloud::optional<T> pop() {
+  google::cloud::optional<T> Pop() {
     std::unique_lock<std::mutex> lk(mu_);
-    cv_read_.wait(lk, [this]() { return is_shutdown_ or not empty(); });
+    cv_read_.wait(lk, [this]() { return is_shutdown_ || !empty(); });
     if (empty()) return {};
     auto next = std::move(buffer_.front());
     buffer_.pop_front();
@@ -97,9 +97,9 @@ class bounded_queue {
     return next;
   }
 
-  void push(T data) {
+  void Push(T data) {
     std::unique_lock<std::mutex> lk(mu_);
-    cv_write_.wait(lk, [this]() { return is_shutdown_ or not above_hwm(); });
+    cv_write_.wait(lk, [this]() { return is_shutdown_ || below_hwm(); });
     if (is_shutdown_) return;
     buffer_.push_back(std::move(data));
     cv_read_.notify_all();
@@ -107,7 +107,7 @@ class bounded_queue {
 
  private:
   bool empty() const { return buffer_.empty(); }
-  bool above_hwm() const { return buffer_.size() >= hwm_; }
+  bool below_hwm() const { return buffer_.size() <= hwm_; }
   bool below_lwm() const { return buffer_.size() <= lwm_; }
 
   std::size_t const lwm_;
@@ -126,7 +126,7 @@ struct WorkItem {
   std::int64_t end;
 };
 
-using WorkItemQueue = bounded_queue<WorkItem>;
+using WorkItemQueue = BoundedQueue<WorkItem>;
 
 struct IterationResult {
   std::size_t bytes;
@@ -224,11 +224,11 @@ int main(int argc, char* argv[]) {
   for (long i = 0; i != options->sample_count; ++i) {
     auto const object = object_generator(generator);
     auto const chunk = chunk_generator(generator);
-    work_queue.push({bucket_name, object_names.at(object),
+    work_queue.Push({bucket_name, object_names.at(object),
                      chunk * options->chunk_size,
                      (chunk + 1) * options->chunk_size});
   }
-  work_queue.shutdown();
+  work_queue.Shutdown();
   for (auto& w : workers) {
     auto results = w.get();
     PrintResult(results);
@@ -342,7 +342,7 @@ TestResult WorkerThread(WorkItemQueue& work_queue) {
   if (!client) return {};
   TestResult result;
   std::vector<char> buffer;
-  for (auto w = work_queue.pop(); w.has_value(); w = work_queue.pop()) {
+  for (auto w = work_queue.Pop(); w.has_value(); w = work_queue.Pop()) {
     auto const start = std::chrono::steady_clock::now();
     auto const begin = w->begin;
     auto const end = w->end;

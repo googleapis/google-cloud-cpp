@@ -53,6 +53,15 @@ run_example ./storage_latency_benchmark \
       --object-count=10 \
       "${FAKE_REGION}"
 
+run_example_usage ./storage_shard_throughput_benchmark \
+    --help --description
+run_example ./storage_shard_throughput_benchmark \
+      "--project-id=${GOOGLE_CLOUD_PROJECT}" \
+      "--region=${FAKE_REGION}" \
+      --object-count=1 \
+      --chunk-count=1 \
+      --sample-count=2
+
 run_example ./storage_throughput_benchmark \
       --duration=1 \
       --object-count=8 \
@@ -75,15 +84,6 @@ run_example ./storage_throughput_vs_cpu_benchmark \
       --minimum-chunk-size=16KiB \
       --maximum-chunk-size=32KiB \
       --duration=1s
-
-run_example_usage ./storage_shard_throughput_benchmark \
-    --help --description
-run_example ./storage_shard_throughput_benchmark \
-      "--project-id=${GOOGLE_CLOUD_PROJECT}" \
-      "--region=${FAKE_REGION}" \
-      --object-count=1 \
-      --chunk-count=1 \
-      --sample-count=2
 
 
 if [[ "${EXIT_STATUS}" = "0" ]]; then
