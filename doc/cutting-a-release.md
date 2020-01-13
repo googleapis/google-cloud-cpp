@@ -38,74 +38,53 @@ It is not recommended that you create the release branch before this PR is
 change that could destabilize the release is about to be merged, or if we want
 to create the release at an specific point in the revision history.
 
-## Create the release branch
+## Creating the release
 
-To find the next release number, look at the existing branch names on the
-`upstream` repo and select the next available "v.0.N" version number.
+We next need to create the release tag, the release branch, and create the
+release in the GitHub UI. These steps are handled automatically for us by the
+`./release/release.sh` script that lives in the
+[googleapis/google-cloud-cpp-common](https://github.com/googleapis/google-cloud-cpp-common/blob/master/release/release.sh)
+repo. The following steps assume you have that script in your path or that
+you're specifying the full path to that script.
 
-```bash
-git remote show upstream
-```
+*No PR is needed for this step.*
 
-Throughout this document we will use this variable to represent the release
-name:
-
-```bash
-# Use the actual release prefix (e.g. v0.5) not just `N`.
-export RELEASE="v0.N"
-```
-
-
-If you decide to cut&paste the commands below, make sure that variable has the
-actual release value, e.g. `v0.5` or `v0.7`, and not the generic `N`.
-
-Clone the main repository to create the tags and branch:
+First run the following command -- which will *NOT* make any changes to any
+repos -- and verify that the output and *version numbers* look correct.
 
 ```bash
-git clone git@github.com:googleapis/google-cloud-cpp.git releases
-cd releases
+$ release.sh googleapis/google-cloud-cpp
 ```
 
-Create a tag for the new release.
+If the output from the previous command looks OK, rerun the command with the
+`-f` flag, which will make the changes and push them to the remote repo.
 
 ```bash
-git tag "${RELEASE}.0"
-git push origin "${RELEASE}.0"
+$ release.sh -f googleapis/google-cloud-cpp
 ```
 
-Create a new branch based on that tag and push the branch to the upstream repository:
+**NOTE:** This script can be run from any directory. It operates only on the
+specified repo.
 
-```bash
-git checkout -b "${RELEASE}.x" "${RELEASE}.0"
-git push --set-upstream origin "${RELEASE}.x"
-```
+## Add the release notes to the GitHub release
 
-**NOTE:** No code review or Pull Request is needed as part of this step.
-
-## Create pre-release for review.
-
-Create a pre-release using
-[GitHub](https://github.com/googleapis/google-cloud-cpp/releases/new).
-Use the tag that you just created ("${RELEASE}.0").
-Make sure to check the `pre-release` checkbox.
-
-Copy the relevant release notes into the description of the release.
+The `release.sh` script that was run in the previous step should have created a
+new "pre-release" at
+https://github.com/googleapis/google-cloud-cpp-common/releases. Add the release
+notes to the Release.
 
 After you create the release, capture the SHA256 checksums of the
 tarball and zip files, and edit the notes to include them. These
 commands might be handy:
 
 ```bash
-TAG="${RELEASE}.0" # change this to the actual tag
+TAG="<release-tag>" # change this to the actual tag, e.g., "v0.5.0"
 wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
 wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
 ```
 
-You can publish this release once the notes are updated.
-
-### Ask your colleagues to review the release notes.
-
-Edit the notes as needed.
+Ask your colleagues to review the release notes. There should be few/no edits
+needed at this point since the release notes were already reviewed in step 1.
 
 ### Publish the release
 
