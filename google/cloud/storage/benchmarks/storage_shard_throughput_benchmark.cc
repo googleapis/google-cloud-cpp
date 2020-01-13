@@ -63,11 +63,12 @@ struct Options {
   std::string project_id;
   std::string bucket_prefix = "cloud-cpp-testing-";
   std::string region;
-  long object_count = 100;
-  long thread_count = 1;
-  long sample_count = 1000;
+  int object_count = 100;
+  int thread_count = 1;
+  int iteration_size = 100;
+  int iteration_count = 100;
   std::int64_t chunk_size = 12 * gcs_bm::kMiB;
-  long chunk_count = 20;
+  int chunk_count = 20;
 };
 
 template <typename T>
@@ -129,18 +130,19 @@ struct WorkItem {
 using WorkItemQueue = BoundedQueue<WorkItem>;
 
 struct IterationResult {
-  std::size_t bytes;
-  std::chrono::milliseconds elapsed;
+  std::int64_t bytes;
+  std::chrono::microseconds elapsed;
 };
 using TestResult = std::vector<IterationResult>;
-
-void PrintResult(TestResult const& result);
 
 std::vector<std::string> CreateAllObjects(
     gcs::Client client, google::cloud::internal::DefaultPRNG& gen,
     std::string const& bucket_name, Options const& options);
 
-TestResult WorkerThread(WorkItemQueue& work_queue);
+IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
+                                Options const& options,
+                                std::string const& bucket_name,
+                                std::vector<std::string> const& object_names);
 
 void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
                       Options const& options,
@@ -198,51 +200,36 @@ int main(int argc, char* argv[]) {
             << "\n# Region: " << options->region
             << "\n# Object Count: " << options->object_count
             << "\n# Thread Count: " << options->thread_count
-            << "\n# Sample Count: " << options->sample_count
+            << "\n# Iteration Size: " << options->iteration_size
+            << "\n# Iteration Count: " << options->iteration_count
             << "\n# Chunk Size: " << options->chunk_size
             << "\n# Chunk Size (MiB): " << options->chunk_size / gcs_bm::kMiB
             << "\n# Chunk Count: " << options->chunk_count
             << "\n# Build info: " << notes << std::endl;
 
-  std::vector<std::string> object_names =
+  std::vector<std::string> const object_names =
       CreateAllObjects(client, generator, bucket_name, *options);
 
-  WorkItemQueue work_queue;
-  std::vector<std::future<TestResult>> workers;
-  std::generate_n(std::back_inserter(workers), options->thread_count,
-                  [&work_queue] {
-                    return std::async(std::launch::async, WorkerThread,
-                                      std::ref(work_queue));
-                  });
-
-  std::uniform_int_distribution<std::size_t> object_generator(
-      0, object_names.size() - 1);
-  std::uniform_int_distribution<std::int64_t> chunk_generator(
-      0, options->chunk_count - 1);
-
-  auto const download_start = std::chrono::steady_clock::now();
-  for (long i = 0; i != options->sample_count; ++i) {
-    auto const object = object_generator(generator);
-    auto const chunk = chunk_generator(generator);
-    work_queue.Push({bucket_name, object_names.at(object),
-                     chunk * options->chunk_size,
-                     (chunk + 1) * options->chunk_size});
+  std::int64_t total_bytes = 0;
+  std::chrono::microseconds total_elapsed(0);
+  for (long i = 0; i != options->iteration_count; ++i) {
+    auto const r =
+        RunOneIteration(generator, *options, bucket_name, object_names);
+    std::cout << r.bytes << ',' << r.elapsed.count() << '\n';
+    total_bytes += r.bytes;
+    using std::chrono::microseconds;
+    total_elapsed += std::chrono::duration_cast<microseconds>(r.elapsed);
   }
-  work_queue.Shutdown();
-  for (auto& w : workers) {
-    auto results = w.get();
-    PrintResult(results);
-  }
-  auto const download_elapsed =
-      std::chrono::steady_clock::now() - download_start;
-  auto const download_elapsed_ms =
-      std::chrono::duration_cast<std::chrono::milliseconds>(download_elapsed);
+
+  auto const total_elapsed_ms =
+      std::chrono::duration_cast<std::chrono::milliseconds>(total_elapsed);
   auto const downloaded_MiB =
-      options->chunk_size * options->sample_count / gcs_bm::kMiB;
-  std::cout << "# Elapsed Time (ms): " << download_elapsed_ms.count() << "\n";
+      options->chunk_size * options->iteration_size / gcs_bm::kMiB;
+  std::cout << "# Total Elapsed Time (ms): " << total_elapsed_ms.count()
+            << "\n";
   std::cout << "# Downloaded Data (MiB): " << downloaded_MiB << "\n";
   std::cout << "# Effective Bandwidth (MiB/s): "
-            << downloaded_MiB * 1000.0 / download_elapsed_ms.count() << "\n";
+            << downloaded_MiB * 1000000.0 / total_elapsed.count() << "\n";
 
   DeleteAllObjects(client, bucket_name, *options, object_names);
 
@@ -258,37 +245,22 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-void PrintResult(TestResult const& result) {
-  for (auto const& r : result) {
-    std::cout << r.bytes << "," << r.elapsed.count() << "\n";
-  }
-}
-
-void WriteCommon(gcs::Client client, std::string const& bucket_name,
-                 std::string const& object_name, std::string const& data_chunk,
-                 Options const& options) {
-  using std::chrono::milliseconds;
-
-  auto stream = client.WriteObject(bucket_name, object_name, gcs::Fields(""));
-  for (std::int64_t count = 0; count != options.chunk_count; ++count) {
-    stream.write(data_chunk.data(), data_chunk.size());
-  }
-
-  stream.Close();
-  if (!stream.metadata()) {
-    std::cerr << "Error writing: " << object_name << "\n";
-  }
-}
-
 void CreateGroup(gcs::Client client, std::string const& bucket_name,
                  Options const& options, std::vector<std::string> group) {
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data =
+  std::string const random_data =
       gcs_bm::MakeRandomData(generator, options.chunk_size);
   for (auto const& object_name : group) {
-    WriteCommon(client, bucket_name, object_name, random_data, options);
+    auto stream = client.WriteObject(bucket_name, object_name, gcs::Fields(""));
+    for (std::int64_t count = 0; count != options.chunk_count; ++count) {
+      stream.write(random_data.data(), random_data.size());
+    }
+    stream.Close();
+    if (!stream.metadata()) {
+      std::cerr << "Error writing: " << object_name << "\n";
+    }
   }
 }
 
@@ -299,7 +271,7 @@ std::vector<std::string> CreateAllObjects(
   using std::chrono::milliseconds;
 
   std::size_t const max_group_size =
-      std::max(options.object_count / options.thread_count, 1L);
+      std::max(options.object_count / options.thread_count, 1);
   std::cout << "# Creating test objects [" << max_group_size << "]\n";
 
   // Generate the list of object names.
@@ -337,13 +309,11 @@ std::vector<std::string> CreateAllObjects(
   return object_names;
 }
 
-TestResult WorkerThread(WorkItemQueue& work_queue) {
+void WorkerThread(WorkItemQueue& work_queue) {
   auto client = gcs::Client::CreateDefaultClient();
-  if (!client) return {};
-  TestResult result;
+  if (!client) return;
   std::vector<char> buffer;
   for (auto w = work_queue.Pop(); w.has_value(); w = work_queue.Pop()) {
-    auto const start = std::chrono::steady_clock::now();
     auto const begin = w->begin;
     auto const end = w->end;
     auto stream =
@@ -351,12 +321,40 @@ TestResult WorkerThread(WorkItemQueue& work_queue) {
     buffer.resize(w->end - w->begin);
     stream.read(buffer.data(), buffer.size());
     stream.Close();
-    auto const elapsed = std::chrono::steady_clock::now() - start;
-    result.push_back(
-        {static_cast<std::size_t>(stream.gcount()),
-         std::chrono::duration_cast<std::chrono::milliseconds>(elapsed)});
   }
-  return result;
+}
+
+IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
+                                Options const& options,
+                                std::string const& bucket_name,
+                                std::vector<std::string> const& object_names) {
+  WorkItemQueue work_queue;
+  std::vector<std::future<void>> workers;
+  std::generate_n(std::back_inserter(workers), options.thread_count,
+                  [&work_queue] {
+                    return std::async(std::launch::async, WorkerThread,
+                                      std::ref(work_queue));
+                  });
+
+  std::uniform_int_distribution<std::size_t> object_generator(
+      0, object_names.size() - 1);
+  std::uniform_int_distribution<std::int64_t> chunk_generator(
+      0, options.chunk_count - 1);
+
+  auto const download_start = std::chrono::steady_clock::now();
+  std::int64_t total_bytes = 0;
+  for (long i = 0; i != options.iteration_size; ++i) {
+    auto const object = object_generator(generator);
+    auto const chunk = chunk_generator(generator);
+    work_queue.Push({bucket_name, object_names.at(object),
+                     chunk * options.chunk_size,
+                     (chunk + 1) * options.chunk_size});
+    total_bytes += options.chunk_size;
+  }
+  work_queue.Shutdown();
+  auto const elapsed = std::chrono::steady_clock::now() - download_start;
+  return {total_bytes,
+          std::chrono::duration_cast<std::chrono::microseconds>(elapsed)};
 }
 
 google::cloud::Status DeleteGroup(gcs::Client client,
@@ -379,7 +377,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
   using std::chrono::milliseconds;
 
   auto const max_group_size =
-      std::max(options.object_count / options.thread_count, 1L);
+      std::max(options.object_count / options.thread_count, 1);
 
   std::cout << "# Deleting test objects [" << max_group_size << "]\n";
   auto start = std::chrono::steady_clock::now();
@@ -429,15 +427,21 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        [&options](std::string const& val) { options.region = val; }},
       {"--object-count", "set the number of objects created by the benchmark",
        [&options](std::string const& val) {
-         options.object_count = std::stol(val);
+         options.object_count = std::stoi(val);
        }},
       {"--thread-count", "set the number of threads in the benchmark",
        [&options](std::string const& val) {
          options.thread_count = std::stoi(val);
        }},
-      {"--sample-count", "set the number of samples captured by the benchmark",
+      {"--iteration-size",
+       "set the number of chunk downloaded in each iteration",
        [&options](std::string const& val) {
-         options.sample_count = std::stol(val);
+         options.iteration_size = std::stoi(val);
+       }},
+      {"--iteration-count",
+       "set the number of samples captured by the benchmark",
+       [&options](std::string const& val) {
+         options.iteration_count = std::stoi(val);
        }},
       {"--chunk-size", "size of the chunks used in the benchmark",
        [&options](std::string const& val) {
@@ -445,7 +449,7 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        }},
       {"--chunk-count", "the number of chunks in each object",
        [&options](std::string const& val) {
-         options.chunk_count = std::stol(val);
+         options.chunk_count = std::stoi(val);
        }},
   };
   auto usage = gcs_bm::BuildUsage(desc, argv[0]);

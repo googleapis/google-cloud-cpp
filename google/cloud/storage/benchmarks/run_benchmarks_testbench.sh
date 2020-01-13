@@ -59,8 +59,10 @@ run_example ./storage_shard_throughput_benchmark \
       "--project-id=${GOOGLE_CLOUD_PROJECT}" \
       "--region=${FAKE_REGION}" \
       --object-count=1 \
+      --chunk-size=1MiB \
       --chunk-count=1 \
-      --sample-count=2
+      --iteration-size=2 \
+      --iteration-count=2
 
 run_example ./storage_throughput_benchmark \
       --duration=1 \
