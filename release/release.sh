@@ -13,7 +13,7 @@
 #
 #   # Shows commands AND PUSHES changes when -f is specified
 #   $ release.sh -f googleapis/google-cloud-cpp-spanner
-# 
+#
 # This script creates a "release" on github by doing the following:
 #   1. Computes the next version to use
 #   2. Creates and pushes the tag w/ the new version
@@ -29,7 +29,7 @@
 set -eu
 
 # Extracts all the documentation at the top of this file as the usage text.
-readonly USAGE="$(sed -n '3,/^$/s/^# \?//p' $0)"
+readonly USAGE="$(sed -n '3,/^$/s/^# \?//p' "$0")"
 
 FORCE_FLAG="no"
 while getopts "fh" opt "$@"; do
@@ -55,17 +55,19 @@ fi
 
 readonly PROJECT="$1"
 readonly CLONE_URL="git@github.com:${PROJECT}.git"
-readonly TMP_DIR="$(mktemp -d /tmp/${PROJECT//\//-}-release.XXXXXXXX)"
+readonly TMP_DIR="$(mktemp -d "/tmp/${PROJECT//\//-}-release.XXXXXXXX")"
 readonly REPO_DIR="${TMP_DIR}/repo"
 
 function banner() {
-  local color=$(tput bold; tput setaf 4; tput rev)
-  local reset=$(tput sgr0)
-  echo "${color}$@${reset}"
+  local color
+  color=$(tput bold; tput setaf 4; tput rev)
+  local reset
+  reset=$(tput sgr0)
+  echo "${color}$*${reset}"
 }
 
 function run() {
-  echo "# $@" | paste -d' ' -s -
+  echo "# $*" | paste -d' ' -s -
   if [[ "${FORCE_FLAG}" == "yes" ]]; then
     "$@"
   fi
