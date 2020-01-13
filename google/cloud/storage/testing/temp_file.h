@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_TEMP_FILE_H_
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_TEMP_FILE_H_
 
+#include <fstream>
 #include <string>
 
 namespace google {
@@ -32,9 +33,11 @@ class TempFile {
   ~TempFile();
 
   std::string name() { return name_; }
+  std::ofstream& impl() { return impl_; }
 
  private:
   std::string name_;
+  std::ofstream impl_;
 };
 
 }  // namespace testing

@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef __linux__
-
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
@@ -21,13 +19,11 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/parallel_upload.h"
+#include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/terminate_handler.h"
-#include <cstdlib>
-#include <fcntl.h>
 #include <future>
 #include <iomanip>
 #include <sstream>
-#include <unistd.h>
 
 namespace {
 namespace gcs = google::cloud::storage;
@@ -56,8 +52,8 @@ account.
 After creating this bucket the program creates a number of threads, configurable
 via the command line, to obtain more samples in parallel. Configure this value
 with a small enough number of threads such that you do not saturate the CPU or
-memory. Each thread creates a separate copy of the `storage::Client` object, and
-repeats this loop until a prescribed *time* has elapsed:
+memory. Each thread creates a separate copy of the `storage::Client` object
+repeats this loop:
 
 - Select a random size, between two values configured in the command line of the
   object to upload.
@@ -83,10 +79,12 @@ performance data. The bucket is deleted after the program terminates.
 using google::cloud::Status;
 using google::cloud::StatusCode;
 using google::cloud::StatusOr;
+using google::cloud::storage::testing::TempFile;
 
 struct Options {
   std::string project_id;
   std::string region;
+  std::string object_prefix = "parallel_upload_bm.";
   std::chrono::seconds duration =
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
@@ -98,108 +96,23 @@ struct Options {
   long maximum_sample_count = std::numeric_limits<long>::max();
 };
 
-class ScopedFd {
- public:
-  ScopedFd(int fd) : fd_(fd) {}
-  ~ScopedFd() {
-    if (fd_ >= 0) {
-      close(fd_);
+Status GenerateFileContent(TempFile& file,
+                           google::cloud::internal::DefaultPRNG& generator,
+                           std::uintmax_t size_left) {
+  std::size_t const kSingleBufSize = 4 * 1024 * 1024;
+  std::string random_data = gcs_bm::MakeRandomData(generator, kSingleBufSize);
+  while (size_left > 0) {
+    std::size_t const to_write =
+        std::min<std::uintmax_t>(size_left, random_data.size());
+    size_left -= to_write;
+    file.impl().write(random_data.c_str(), to_write);
+    if (!file.impl().good()) {
+      return Status(StatusCode::kInternal,
+                    "Failed to write to file " + file.name());
     }
   }
-
-  int operator*() { return fd_; }
-
- private:
-  int fd_;
-};
-
-int MksTemp(std::string& name, std::string const& templ) {
-  std::vector<char> buf(templ.begin(), templ.end());
-  buf.emplace_back(0);
-  int res = mkstemp(buf.data());
-  name = std::string(buf.data());
-  return res;
+  return Status();
 }
-
-class TempMemFile {
- public:
-  explicit TempMemFile()
-      : name_(),
-        out_fd_(MksTemp(name_, "/dev/shm/parallel_uploads_bm.XXXXXX")) {
-    if (*out_fd_ < 0) {
-      google::cloud::Terminate(("creating a temporary file failed with " +
-                                std::to_string(errno) + ": " +
-                                std::strerror(errno))
-                                   .c_str());
-    }
-  }
-
-  Status Fill(std::uintmax_t file_size) {
-    int res = ftruncate(*out_fd_, 0);
-    if (res < 0) {
-      return Status(StatusCode::kInternal,
-                    "Truncating " + name_ + " failed with " +
-                        std::to_string(errno) + ": " + std::strerror(errno));
-    }
-    res = lseek(*out_fd_, 0, SEEK_SET);
-    if (res < 0) {
-      return Status(StatusCode::kInternal,
-                    "Seeking to the beginning of " + name_ + " failed with " +
-                        std::to_string(errno) + ": " + std::strerror(errno));
-    }
-    ScopedFd in_fd(open("/dev/urandom", O_RDONLY));
-    if (*in_fd < 0) {
-      return Status(StatusCode::kInternal, "opening /dev/urandom failed with " +
-                                               std::to_string(errno) + ": " +
-                                               std::strerror(errno));
-    }
-
-    std::size_t buf_size = gcs_bm::kMiB;
-    std::vector<char> buf(buf_size);
-    while (file_size > 0) {
-      std::size_t to_copy = std::min<std::uintmax_t>(buf_size, file_size);
-      ssize_t num_read = TEMP_FAILURE_RETRY(read(*in_fd, buf.data(), to_copy));
-      if (num_read < 0) {
-        return Status(StatusCode::kInternal,
-                      "Reading from /dev/urandom failed with " +
-                          std::to_string(errno) + ": " + std::strerror(errno));
-      }
-      if (num_read == 0) {
-        return Status(StatusCode::kInternal, "EOF from /dev/urandom");
-      }
-      std::size_t off_in_buf = 0;
-      file_size -= num_read;
-      while (num_read > 0) {
-        ssize_t written = TEMP_FAILURE_RETRY(
-            write(*out_fd_, buf.data() + off_in_buf, num_read));
-        if (written < 0) {
-          return Status(StatusCode::kInternal, "Writing to " + name_ +
-                                                   " failed with " +
-                                                   std::to_string(errno) +
-                                                   ": " + std::strerror(errno));
-        }
-        if (written == 0) {
-          return Status(StatusCode::kInternal, "EOF when writing to " + name_);
-        }
-        off_in_buf += written;
-        num_read -= written;
-      }
-    }
-    return Status();
-  }
-
-  TempMemFile(TempMemFile const&) = delete;
-  TempMemFile& operator=(TempMemFile const&) = delete;
-  TempMemFile& operator=(TempMemFile&&) = delete;
-
-  ~TempMemFile() { std::remove(name_.c_str()); }
-
-  std::string name() { return name_; }
-
- private:
-  std::string name_;
-  ScopedFd out_fd_;
-};
 
 Status PerformUpload(gcs::Client& client, std::string const& file_name,
                      std::string const& bucket_name, std::string const& prefix,
@@ -222,12 +135,12 @@ Status PerformUpload(gcs::Client& client, std::string const& file_name,
 }
 
 StatusOr<std::chrono::milliseconds> TimeSingleUpload(
-    gcs::Client& client, std::string const& bucket_name, std::size_t num_shards,
+    gcs::Client& client, std::string global_prefix,
+    std::string const& bucket_name, std::size_t num_shards,
     std::string const& file_name) {
   using std::chrono::milliseconds;
 
-  std::string const& prefix =
-      gcs::CreateRandomPrefixName("parallel_upload_bm.");
+  std::string const& prefix = gcs::CreateRandomPrefixName(global_prefix);
 
   auto start = std::chrono::steady_clock::now();
   auto status =
@@ -250,6 +163,8 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        [&wants_description](std::string const&) { wants_description = true; }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
+      {"--bject-prefix", "use the given prefix for created objects",
+       [&options](std::string const& val) { options.object_prefix = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
       {"--thread-count", "set the number of threads in the benchmark",
@@ -410,7 +325,6 @@ int main(int argc, char* argv[]) {
   std::mutex cout_mutex;
   for (int i = 0; i != options->thread_count; ++i) {
     threads.emplace_back([&iteration_count, &cout_mutex, options, bucket_name] {
-      TempMemFile file;
       google::cloud::internal::DefaultPRNG generator =
           google::cloud::internal::MakeDefaultPRNG();
 
@@ -438,15 +352,16 @@ int main(int argc, char* argv[]) {
            start = std::chrono::steady_clock::now(), ++iteration_count) {
         auto const file_size = size_generator(generator);
         auto const num_shards = num_shards_generator(generator);
-        Status status = file.Fill(file_size);
+        TempFile file("");
+        Status status = GenerateFileContent(file, generator, file_size);
         if (!status.ok()) {
           std::lock_guard<std::mutex> lk(cout_mutex);
           std::cout << "# Could not prepare file to upload, size=" << file_size
                     << ", status=" << status << "\n";
           return;
         }
-        auto time =
-            TimeSingleUpload(client, bucket_name, num_shards, file.name());
+        auto time = TimeSingleUpload(client, options->object_prefix, bucket_name,
+                                     num_shards, file.name());
         if (!time) {
           std::lock_guard<std::mutex> lk(cout_mutex);
           std::cout << "# Could not create upload sample file, status="
@@ -473,12 +388,5 @@ int main(int argc, char* argv[]) {
     std::cerr << "# Error deleting bucket, status=" << status << "\n";
     return 1;
   }
-
   return 0;
 }
-#else   // __linux__
-int main() {
-  std::cerr << "This benchmark only runs on Linux\n";
-  return 1;
-}
-#endif  // __linux__
