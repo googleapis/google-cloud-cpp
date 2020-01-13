@@ -70,7 +70,7 @@ specified repo.
 
 The `release.sh` script that was run in the previous step should have created a
 new "pre-release" at
-https://github.com/googleapis/google-cloud-cpp-common/releases. Add the release
+https://github.com/googleapis/google-cloud-cpp/releases. Add the release
 notes to the Release.
 
 After you create the release, capture the SHA256 checksums of the
