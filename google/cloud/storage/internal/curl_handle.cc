@@ -218,7 +218,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
   // Map the CURLE* errors using the documentation on:
   //   https://curl.haxx.se/libcurl/c/libcurl-errors.html
-  // the error codes are listed in the same order as shown on that page, so
+  // The error codes are listed in the same order as shown on that page, so
   // one can quickly find out how an error code is handled. All the error codes
   // are listed, but those that do not appear in old libcurl versions are
   // commented out and handled by the `default:` case.
