@@ -226,26 +226,36 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_NOT_BUILT_IN:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_COULDNT_RESOLVE_PROXY:
     case CURLE_COULDNT_RESOLVE_HOST:
     case CURLE_COULDNT_CONNECT:
-    case CURLE_WEIRD_SERVER_REPLY:
       code = StatusCode::kUnavailable;
       break;
+
+#if LIBCURL_VERSION_NUM >= 0x075100
+    case CURLE_WEIRD_SERVER_REPLY:
+      code = StatusCode::kUnknown;
+      break;
+#endif  // CURL >= 7.51.0
+
     case CURLE_REMOTE_ACCESS_DENIED:
       code = StatusCode::kPermissionDenied;
       break;
+
     case CURLE_FTP_ACCEPT_FAILED:
     case CURLE_FTP_WEIRD_PASS_REPLY:
     case CURLE_FTP_WEIRD_227_FORMAT:
     case CURLE_FTP_CANT_GET_HOST:
-    case CURLE_HTTP2:
+    // case CURLE_HTTP2:  unavailable in old versions of libcurl
     case CURLE_FTP_COULDNT_SET_TYPE:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_PARTIAL_FILE:
       code = StatusCode::kUnavailable;
       break;
+
     case CURLE_FTP_COULDNT_RETR_FILE:
     case CURLE_QUOTE_ERROR:
     case CURLE_WRITE_ERROR:
@@ -254,37 +264,46 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_OUT_OF_MEMORY:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_OPERATION_TIMEDOUT:
       code = StatusCode::kDeadlineExceeded;
       break;
+
     case CURLE_FTP_PORT_FAILED:
     case CURLE_FTP_COULDNT_USE_REST:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_RANGE_ERROR:
       // This is defined as "the server does not *support or *accept* range
       // requests", so it means something stronger than "your range value is
       // not valid".
       code = StatusCode::kUnimplemented;
       break;
+
     case CURLE_HTTP_POST_ERROR:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_SSL_CONNECT_ERROR:
       code = StatusCode::kUnavailable;
       break;
+
     case CURLE_BAD_DOWNLOAD_RESUME:
       code = StatusCode::kInvalidArgument;
       break;
+
     case CURLE_FILE_COULDNT_READ_FILE:
     case CURLE_LDAP_CANNOT_BIND:
     case CURLE_LDAP_SEARCH_FAILED:
     case CURLE_FUNCTION_NOT_FOUND:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_ABORTED_BY_CALLBACK:
       code = StatusCode::kAborted;
       break;
+
     case CURLE_BAD_FUNCTION_ARGUMENT:
     case CURLE_INTERFACE_FAILED:
     case CURLE_TOO_MANY_REDIRECTS:
@@ -292,16 +311,20 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_TELNET_OPTION_SYNTAX:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_GOT_NOTHING:
       code = StatusCode::kUnavailable;
       break;
+
     case CURLE_SSL_ENGINE_NOTFOUND:
       code = StatusCode::kUnknown;
       break;
+
     case CURLE_RECV_ERROR:
     case CURLE_SEND_ERROR:
       code = StatusCode::kUnavailable;
       break;
+
     case CURLE_SSL_CERTPROBLEM:
     case CURLE_SSL_CIPHER:
     case CURLE_PEER_FAILED_VERIFICATION:
@@ -331,7 +354,6 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
 
     case CURLE_SSH:
     case CURLE_SSL_SHUTDOWN_FAILED:
-
     case CURLE_AGAIN:
       // Only returned by curl_easy_{recv,send}, but should not with the
       // configuration we use for libcurl. And the recovery action is to call
