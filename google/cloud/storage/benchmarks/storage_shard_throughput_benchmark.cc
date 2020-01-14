@@ -210,26 +210,19 @@ int main(int argc, char* argv[]) {
   std::vector<std::string> const object_names =
       CreateAllObjects(client, generator, bucket_name, *options);
 
-  std::int64_t total_bytes = 0;
-  std::chrono::microseconds total_elapsed(0);
+  double MiBs_sum = 0.0;
   for (long i = 0; i != options->iteration_count; ++i) {
     auto const r =
         RunOneIteration(generator, *options, bucket_name, object_names);
-    std::cout << r.bytes << ',' << r.elapsed.count() << '\n';
-    total_bytes += r.bytes;
-    using std::chrono::microseconds;
-    total_elapsed += std::chrono::duration_cast<microseconds>(r.elapsed);
+    std::cout << r.bytes << ',' << r.elapsed.count() << std::endl;
+    auto const MiB = r.bytes / gcs_bm::kMiB;
+    auto const MiBs =
+        MiB * (1.0 * decltype(r.elapsed)::period::den) / r.elapsed.count();
+    MiBs_sum += MiBs;
   }
 
-  auto const total_elapsed_ms =
-      std::chrono::duration_cast<std::chrono::milliseconds>(total_elapsed);
-  auto const downloaded_MiB =
-      options->chunk_size * options->iteration_size / gcs_bm::kMiB;
-  std::cout << "# Total Elapsed Time (ms): " << total_elapsed_ms.count()
-            << "\n";
-  std::cout << "# Downloaded Data (MiB): " << downloaded_MiB << "\n";
-  std::cout << "# Effective Bandwidth (MiB/s): "
-            << downloaded_MiB * 1000000.0 / total_elapsed.count() << "\n";
+  auto const MiBs_avg = MiBs_sum / options->iteration_count;
+  std::cout << "# Average Bandwidth (MiB/s): " << MiBs_avg << "\n";
 
   DeleteAllObjects(client, bucket_name, *options, object_names);
 
@@ -352,6 +345,9 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
     total_bytes += options.chunk_size;
   }
   work_queue.Shutdown();
+  for (auto& t : workers) {
+    t.get();
+  }
   auto const elapsed = std::chrono::steady_clock::now() - download_start;
   return {total_bytes,
           std::chrono::duration_cast<std::chrono::microseconds>(elapsed)};
