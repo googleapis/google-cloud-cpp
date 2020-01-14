@@ -39,8 +39,8 @@ via the command-line.
 After creating this bucket the program creates a number of objects, all the
 objects have the same contents, but the contents are generated at random.
 
-The size of the objects can be configured in the command-line, but they are
-typically 250MiB is size. The objects are constructed by writing N identical
+The size of the objects can be configured in the command-line, by default they
+are 240MiB in size. The objects are constructed by writing N identical
 chunks, the size of these chunks is configured in the command-line.
 
 Once the object creation phase is completed, the program starts T worker
@@ -55,7 +55,7 @@ threads to finish, and reports the effective download throughput.
 Then the program removes all the objects in the bucket and reports the time
 taken to delete each one.
 
-A helper script in this directory can generate pretty graphs from the outut of
+A helper script in this directory can generate pretty graphs from the output of
 this program.
 )""";
 
@@ -290,7 +290,6 @@ std::vector<std::string> CreateAllObjects(
   if (!group.empty()) {
     tasks.emplace_back(std::async(std::launch::async, &CreateGroup, client,
                                   bucket_name, options, std::move(group)));
-    group = {};  // after a move, must assign to guarantee it is valid.
   }
   // Wait for the threads to finish.
   for (auto& t : tasks) {
@@ -321,6 +320,9 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
                                 Options const& options,
                                 std::string const& bucket_name,
                                 std::vector<std::string> const& object_names) {
+  using std::chrono::duration_cast;
+  using std::chrono::microseconds;
+
   WorkItemQueue work_queue;
   std::vector<std::future<void>> workers;
   std::generate_n(std::back_inserter(workers), options.thread_count,
@@ -349,8 +351,7 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
     t.get();
   }
   auto const elapsed = std::chrono::steady_clock::now() - download_start;
-  return {total_bytes,
-          std::chrono::duration_cast<std::chrono::microseconds>(elapsed)};
+  return {total_bytes, duration_cast<microseconds>(elapsed)};
 }
 
 google::cloud::Status DeleteGroup(gcs::Client client,

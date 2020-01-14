@@ -87,7 +87,6 @@ run_example ./storage_throughput_vs_cpu_benchmark \
       --maximum-chunk-size=32KiB \
       --duration=1s
 
-
 if [[ "${EXIT_STATUS}" = "0" ]]; then
   TESTBENCH_DUMP_LOG=no
 fi
