@@ -218,6 +218,10 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   os << where << "() - CURL error [" << e << "]=" << curl_easy_strerror(e);
   // Map the CURLE* errors using the documentation on:
   //   https://curl.haxx.se/libcurl/c/libcurl-errors.html
+  // the error codes are listed in the same order as shown on that page, so
+  // one can quickly find out how an error code is handled. All the error codes
+  // are listed, but those that do not appear in old libcurl versions are
+  // commented out and handled by the `default:` case.
   StatusCode code;
   switch (e) {
     case CURLE_UNSUPPORTED_PROTOCOL:
@@ -233,12 +237,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       code = StatusCode::kUnavailable;
       break;
 
-#if LIBCURL_VERSION_NUM >= 0x075100
-    case CURLE_WEIRD_SERVER_REPLY:
-      code = StatusCode::kUnknown;
-      break;
-#endif  // CURL >= 7.51.0
-
+    // missing in some older libcurl versions:   CURLE_WEIRD_SERVER_REPLY
     case CURLE_REMOTE_ACCESS_DENIED:
       code = StatusCode::kPermissionDenied;
       break;
@@ -247,7 +246,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
     case CURLE_FTP_WEIRD_PASS_REPLY:
     case CURLE_FTP_WEIRD_227_FORMAT:
     case CURLE_FTP_CANT_GET_HOST:
-    // case CURLE_HTTP2:  unavailable in old versions of libcurl
+    // missing in some older libcurl versions:   CURLE_HTTP2
     case CURLE_FTP_COULDNT_SET_TYPE:
       code = StatusCode::kUnknown;
       break;
@@ -354,10 +353,18 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
 
     case CURLE_SSH:
     case CURLE_SSL_SHUTDOWN_FAILED:
+      code = StatusCode::kUnknown;
+      break;
+
     case CURLE_AGAIN:
-      // Only returned by curl_easy_{recv,send}, but should not with the
-      // configuration we use for libcurl. And the recovery action is to call
-      // curl_easy_{recv,send} again, but it is too late to do that here.
+      // This looks like a good candidate for kUnavailable, but it is only
+      // returned by curl_easy_{recv,send}, and should not with the
+      // configuration we use for libcurl, and the recovery action is to call
+      // curl_easy_{recv,send} again, which is not how this return value is used
+      // (we restart the whole transfer).
+      code = StatusCode::kUnknown;
+      break;
+
     case CURLE_SSL_CRL_BADFILE:
     case CURLE_SSL_ISSUER_ERROR:
     case CURLE_FTP_PRET_FAILED:
@@ -368,19 +375,20 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       code = StatusCode::kUnknown;
       break;
 
-    /*case CURLE_HTTP_RETURNED_ERROR:*/
-    /*case CURLE_NO_CONNECTION_AVAILABLE:*/
-    /*case CURLE_SSL_PINNEDPUBKEYNOTMATCH:*/
-    /*case CURLE_SSL_INVALIDCERTSTATUS:*/
-    /*case CURLE_HTTP2_STREAM:*/
-    /*case CURLE_RECURSIVE_API_CALL:*/
-    /*case CURLE_AUTH_ERROR:*/
-    /*case CURLE_HTTP3:*/
-    /*case CURLE_QUIC_CONNECT_ERROR:*/
+    // missing in some older libcurl versions:   CURLE_HTTP_RETURNED_ERROR
+    // missing in some older libcurl versions:   CURLE_NO_CONNECTION_AVAILABLE
+    // missing in some older libcurl versions:   CURLE_SSL_PINNEDPUBKEYNOTMATCH
+    // missing in some older libcurl versions:   CURLE_SSL_INVALIDCERTSTATUS
+    // missing in some older libcurl versions:   CURLE_HTTP2_STREAM
+    // missing in some older libcurl versions:   CURLE_RECURSIVE_API_CALL
+    // missing in some older libcurl versions:   CURLE_AUTH_ERROR
+    // missing in some older libcurl versions:   CURLE_HTTP3
+    // missing in some older libcurl versions:   CURLE_QUIC_CONNECT_ERROR
     default:
-      // There are about 100 error codes, some are explicitly marked as
-      // obsolete, some are not available in all libcurl versions. Use this
-      // `default:` case to treat all such errors as `kUnknown`.
+      // As described above, there are about 100 error codes, some are
+      // explicitly marked as obsolete, some are not available in all libcurl
+      // versions. Use this `default:` case to treat all such errors as
+      // `kUnknown`.
       code = StatusCode::kUnknown;
       break;
   }
