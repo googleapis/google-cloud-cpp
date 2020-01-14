@@ -45,13 +45,14 @@ TEST(CurlHandleTest, AsStatus) {
       {CURLE_REMOTE_FILE_NOT_FOUND, StatusCode::kNotFound},
       {CURLE_FAILED_INIT, StatusCode::kUnknown},
       {CURLE_FTP_PORT_FAILED, StatusCode::kUnknown},
+      {CURLE_GOT_NOTHING, StatusCode::kUnavailable},
       {CURLE_AGAIN, StatusCode::kUnknown},
   };
 
   for (auto const& codes : expected_codes) {
     auto const expected = Status(codes.expected, "ignored");
     auto const actual = CurlHandle::AsStatus(codes.curl, "in-test");
-    EXPECT_EQ(expected.code(), actual.code());
+    EXPECT_EQ(expected.code(), actual.code()) << "CURL code=" << codes.curl;
     if (!actual.ok()) {
       EXPECT_THAT(actual.message(), HasSubstr("in-test"));
       EXPECT_THAT(actual.message(), HasSubstr(curl_easy_strerror(codes.curl)));
