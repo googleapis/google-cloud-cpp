@@ -19,8 +19,8 @@
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/parallel_upload.h"
-#include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/terminate_handler.h"
+#include <cstdio>
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -79,7 +79,6 @@ performance data. The bucket is deleted after the program terminates.
 using google::cloud::Status;
 using google::cloud::StatusCode;
 using google::cloud::StatusOr;
-using google::cloud::storage::testing::TempFile;
 
 struct Options {
   std::string project_id;
@@ -97,22 +96,31 @@ struct Options {
   long maximum_sample_count = std::numeric_limits<long>::max();
 };
 
-Status GenerateFileContent(TempFile& file,
-                           google::cloud::internal::DefaultPRNG& generator,
-                           std::uintmax_t size_left) {
+StatusOr<std::string> CreateTempFile(
+    google::cloud::internal::DefaultPRNG& generator, std::uintmax_t size_left) {
   std::size_t const kSingleBufSize = 4 * 1024 * 1024;
+  auto const file_name = gcs_bm::MakeRandomFileName(generator);
+
   std::string random_data = gcs_bm::MakeRandomData(generator, kSingleBufSize);
+
+  std::ofstream file(file_name, std::ios::binary | std::ios::trunc);
+  if (!file.good()) {
+    return Status(
+        StatusCode::kInternal,
+        "Failed to create a temporary file (file_name=" + file_name + ")");
+  }
   while (size_left > 0) {
     std::size_t const to_write =
         std::min<std::uintmax_t>(size_left, random_data.size());
     size_left -= to_write;
-    file.impl().write(random_data.c_str(), to_write);
-    if (!file.impl().good()) {
+    file.write(random_data.c_str(), to_write);
+    if (!file.good()) {
+      std::remove(file_name.c_str());
       return Status(StatusCode::kInternal,
-                    "Failed to write to file " + file.name());
+                    "Failed to write to file " + file_name);
     }
   }
-  return Status();
+  return file_name;
 }
 
 Status PerformUpload(gcs::Client& client, std::string const& file_name,
@@ -355,16 +363,16 @@ int main(int argc, char* argv[]) {
            start = std::chrono::steady_clock::now(), ++iteration_count) {
         auto const file_size = size_generator(generator);
         auto const num_shards = num_shards_generator(generator);
-        TempFile file("");
-        Status status = GenerateFileContent(file, generator, file_size);
-        if (!status.ok()) {
+        auto file_name = CreateTempFile(generator, file_size);
+        if (!file_name) {
           std::lock_guard<std::mutex> lk(cout_mutex);
           std::cout << "# Could not prepare file to upload, size=" << file_size
-                    << ", status=" << status << "\n";
+                    << ", status=" << file_name.status() << "\n";
           return;
         }
         auto time = TimeSingleUpload(client, options->object_prefix,
-                                     bucket_name, num_shards, file.name());
+                                     bucket_name, num_shards, *file_name);
+        std::remove(file_name->c_str());
         if (!time) {
           std::lock_guard<std::mutex> lk(cout_mutex);
           std::cout << "# Could not create upload sample file, status="

@@ -49,7 +49,6 @@ foreach (fname ${storage_benchmark_programs})
         ${target}
         PRIVATE storage_benchmarks
                 storage_client
-                storage_client_testing
                 google_cloud_cpp_common
                 CURL::libcurl
                 Threads::Threads

@@ -31,12 +31,10 @@ TempFile::TempFile(std::string const& content) {
   if (!std::tmpnam(tmpfile_name)) {
     Terminate("Failed to create a temporary file name");
   }
-  impl_.open(tmpfile_name, std::ios::binary | std::ios::trunc);
-  assert(impl_.good());
-  impl_.write(content.data(), content.size());
-  assert(impl_.good());
-  impl_.flush();
-  assert(impl_.good());
+  std::ofstream f(tmpfile_name, std::ios::binary | std::ios::trunc);
+  assert(f.good());
+  f.write(content.data(), content.size());
+  assert(f.good());
 
   name_ = tmpfile_name;
 }
