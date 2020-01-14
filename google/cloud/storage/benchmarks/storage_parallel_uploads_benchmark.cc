@@ -84,6 +84,7 @@ using google::cloud::storage::testing::TempFile;
 struct Options {
   std::string project_id;
   std::string region;
+  std::string bucket_prefix = "parallel_upload_bm.";
   std::string object_prefix = "parallel_upload_bm.";
   std::chrono::seconds duration =
       std::chrono::seconds(std::chrono::minutes(15));
@@ -163,7 +164,9 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        [&wants_description](std::string const&) { wants_description = true; }},
       {"--project-id", "use the given project id for the benchmark",
        [&options](std::string const& val) { options.project_id = val; }},
-      {"--bject-prefix", "use the given prefix for created objects",
+      {"--bucket-prefix", "use the given prefix for created temporary bucket",
+       [&options](std::string const& val) { options.bucket_prefix = val; }},
+      {"--object-prefix", "use the given prefix for created objects",
        [&options](std::string const& val) { options.object_prefix = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
@@ -283,7 +286,7 @@ int main(int argc, char* argv[]) {
       google::cloud::internal::MakeDefaultPRNG();
 
   auto bucket_name =
-      gcs_bm::MakeRandomBucketName(generator, "bm-parallel_uploads-");
+      gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
   auto meta =
       client
           .CreateBucket(bucket_name,
@@ -360,8 +363,8 @@ int main(int argc, char* argv[]) {
                     << ", status=" << status << "\n";
           return;
         }
-        auto time = TimeSingleUpload(client, options->object_prefix, bucket_name,
-                                     num_shards, file.name());
+        auto time = TimeSingleUpload(client, options->object_prefix,
+                                     bucket_name, num_shards, file.name());
         if (!time) {
           std::lock_guard<std::mutex> lk(cout_mutex);
           std::cout << "# Could not create upload sample file, status="

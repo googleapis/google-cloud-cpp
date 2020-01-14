@@ -45,6 +45,7 @@ load(":storage_benchmark_programs.bzl", "storage_benchmark_programs")
         ":storage_benchmarks",
         "//google/cloud/storage:nlohmann_json",
         "//google/cloud/storage:storage_client",
+        "//google/cloud/storage:storage_client_testing",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
