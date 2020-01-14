@@ -19,6 +19,7 @@
 storage_benchmark_programs = [
     "storage_file_transfer_benchmark.cc",
     "storage_latency_benchmark.cc",
+    "storage_shard_throughput_benchmark.cc",
     "storage_throughput_benchmark.cc",
     "storage_throughput_vs_cpu_benchmark.cc",
 ]

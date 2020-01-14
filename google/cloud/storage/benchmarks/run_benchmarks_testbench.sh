@@ -53,6 +53,17 @@ run_example ./storage_latency_benchmark \
       --object-count=10 \
       "${FAKE_REGION}"
 
+run_example_usage ./storage_shard_throughput_benchmark \
+    --help --description
+run_example ./storage_shard_throughput_benchmark \
+      "--project-id=${GOOGLE_CLOUD_PROJECT}" \
+      "--region=${FAKE_REGION}" \
+      --object-count=1 \
+      --chunk-size=1MiB \
+      --chunk-count=1 \
+      --iteration-size=2 \
+      --iteration-count=2
+
 run_example ./storage_throughput_benchmark \
       --duration=1 \
       --object-count=8 \
