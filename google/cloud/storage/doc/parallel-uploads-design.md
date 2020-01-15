@@ -62,6 +62,7 @@ eventual deletion of the temporary files.
   the stray files from parallel uploads
 
 ### 4. Use a separate bucket for temporary objects
+[option4-ref]: #4-use-a-separate-bucket-for-temporary-objects
 We might let the user have a separate bucket for the temporary objects with an
 aggressive retention policy. The destination object would be rewritten to the
 desired bucket at the end of the whole operation
@@ -78,6 +79,7 @@ desired bucket at the end of the whole operation
   "primary" buckets or pay more
 
 ### 5. Let the user control the naming of the temporary files
+[option5-ref]: #5-let-the-user-control-the-naming-of-the-temporary-files
 We might ask the user to provide a prefix, which will be prepended to all
 temporary files created by the operation.
 #### Pros
@@ -100,7 +102,8 @@ separate object(s) in GCS (log) and clean them up whenever the log indicates so.
 * the implementation would be pretty complex, considering concurrency and GCS
   API
 
-### 7. Hybrid of [4.](#4-use-a-separate-bucket-for-temporary-objects) and [5.](#5-let-the-user-control-the-naming-of-the-temporary-files)
+### 7. Hybrid of [4.][option4-ref] and [5.][option5-ref]
+[option7-ref]: #7-hybrid-of-4-and-5
 We might ask the user to provide both a bucket and a prefix for the temporary
 files, giving them the choice of using a bucket with lifecycle policies for the
 temporaries at the cost of a (single; final) rewrite if the bucket names do not
@@ -115,9 +118,8 @@ match.
 * the user might be surprised by the extra cost of rewriting the data
 
 ### Decision
-We went with the prefix-approach
-([5.](#5-let-the-user-control-the-naming-of-the-temporary-files)), but we should
-probably extend it to the hybrid approach ([7.](#7-hybrid-of-4-and-5))
+We went with the prefix-approach ([5.][option5-ref]), but we should probably
+extend it to the hybrid approach ([7.][option7-ref])
 
 ## Detailed design
 Depending on the user’s needs, they can choose one of the two options:
