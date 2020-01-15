@@ -42,6 +42,7 @@ namespace {
 using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
+using ::testing::UnorderedElementsAre;
 
 // Initialized in main() below.
 char const* flag_project_id;
@@ -311,6 +312,52 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
     EXPECT_EQ(3, std::count(actual.begin(), actual.end(), name))
         << "Expected to find 3 copies of " << name << " in the object list:\n"
         << produce_joined_list();
+  }
+}
+
+TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
+  if (UsingTestbench()) return;
+
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_prefix = MakeRandomObjectName();
+  client
+      ->InsertObject(bucket_name, object_prefix + "/foo", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name, object_prefix + "/foo/bar", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name, object_prefix + "/foo/baz", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name, object_prefix + "/qux/quux", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+  client
+      ->InsertObject(bucket_name, object_prefix + "/something", LoremIpsum(),
+                     storage::IfGenerationMatch(0))
+      .value();
+
+  ListObjectsReader reader = client->ListObjects(
+      bucket_name, Prefix(object_prefix + "/"), Delimiter("/"));
+  std::vector<std::string> actual;
+  for (auto it = reader.begin(); it != reader.end(); ++it) {
+    auto const& meta = it->value();
+    EXPECT_EQ(bucket_name, meta.bucket());
+    actual.push_back(meta.name());
+  }
+  EXPECT_THAT(actual, UnorderedElementsAre(object_prefix + "/foo",
+                                           object_prefix + "/something"));
+  reader = client->ListObjects(bucket_name, Prefix(object_prefix));
+  for (auto& meta : reader) {
+    ASSERT_STATUS_OK(meta);
+    client->DeleteObject(bucket_name, meta->name());
   }
 }
 

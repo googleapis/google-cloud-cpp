@@ -432,6 +432,21 @@ struct Prefix : public internal::WellKnownParameter<Prefix, std::string> {
 };
 
 /**
+ * Returns results in a directory-like mode.
+ *
+ * Used in `Client::ListObjects` to return only those objects that do **not**
+ * contain the delimiter, unless said delimiter appears in the `Prefix`
+ * parameter (if any).
+ *
+ * @see https://cloud.google.com/storage/docs/json_api/v1/objects/list for more
+ *   information.
+ */
+struct Delimiter : public internal::WellKnownParameter<Delimiter, std::string> {
+  using WellKnownParameter<Delimiter, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "delimiter"; }
+};
+
+/**
  * Controls what metadata fields are included in the response.
  *
  * For those operations that return the metadata of an Object or Bucket, this
