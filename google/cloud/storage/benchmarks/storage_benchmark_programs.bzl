@@ -22,4 +22,5 @@ storage_benchmark_programs = [
     "storage_shard_throughput_benchmark.cc",
     "storage_throughput_benchmark.cc",
     "storage_throughput_vs_cpu_benchmark.cc",
+    "storage_parallel_uploads_benchmark.cc",
 ]
