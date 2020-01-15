@@ -432,6 +432,14 @@ struct Prefix : public internal::WellKnownParameter<Prefix, std::string> {
 };
 
 /**
+ *
+ */
+struct Delimiter : public internal::WellKnownParameter<Delimiter, std::string> {
+  using WellKnownParameter<Delimiter, std::string>::WellKnownParameter;
+  static char const* well_known_parameter_name() { return "delimiter"; }
+};
+
+/**
  * Controls what metadata fields are included in the response.
  *
  * For those operations that return the metadata of an Object or Bucket, this

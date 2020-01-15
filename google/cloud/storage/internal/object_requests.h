@@ -54,8 +54,8 @@ internal::nl::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
  * Represents a request to the `Objects: list` API.
  */
 class ListObjectsRequest
-    : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Projection,
-                            UserProject, Versions> {
+    : public GenericRequest<ListObjectsRequest, MaxResults, Prefix, Delimiter,
+                            Projection, UserProject, Versions> {
  public:
   ListObjectsRequest() = default;
   explicit ListObjectsRequest(std::string bucket_name)
