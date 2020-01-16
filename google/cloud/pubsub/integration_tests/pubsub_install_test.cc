@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/version.h"
-#include <functional>
+#include "google/cloud/internal/getenv.h"
+#include <iostream>
+#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 1) {
@@ -37,6 +39,5 @@ int main(int argc, char* argv[]) try {
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  drop_database();
   return 1;
 }
