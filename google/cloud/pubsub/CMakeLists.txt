@@ -222,12 +222,12 @@ install(
   COMPONENT google_cloud_cpp_pubsub_development)
 
 # Create and install the CMake configuration files.
-configure_file("config.cmake.in" "pubsub_client-config.cmake" @ONLY)
+configure_file("config.cmake.in" "googleapis_cpp_pubsub_client-config.cmake" @ONLY)
 configure_file(
   "${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config-version.cmake.in"
-  "pubsub_client-config-version.cmake" @ONLY)
+  "googleapis_cpp_pubsub_client-config-version.cmake" @ONLY)
 install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/pubsub_client-config-version.cmake"
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/pubsub_client"
+  FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_pubsub_client-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_pubsub_client-config-version.cmake"
+  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/googleapis_cpp_pubsub_client"
   COMPONENT google_cloud_cpp_pubsub_development)
