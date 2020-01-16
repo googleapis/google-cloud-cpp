@@ -18,6 +18,7 @@
 
 googleapis_cpp_pubsub_client_hdrs = [
     "version.h",
+    "internal/build_info.h",
     "version_info.h",
 ]
 
