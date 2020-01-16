@@ -32,6 +32,12 @@ readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"
 
 echo "================================================================"
+echo "Fetching dependencies $(date)"
+echo "================================================================"
+(cd ci/test-install ; "${PROJECT_ROOT}/ci/retry-command.sh" \
+    "${BAZEL_BIN}" fetch -- //...:all)
+
+echo "================================================================"
 echo "Compile the project in ci/test-install $(date)."
 echo "================================================================"
 (cd ci/test-install ; "${BAZEL_BIN}" build \

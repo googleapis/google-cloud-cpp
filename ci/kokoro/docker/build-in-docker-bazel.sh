@@ -51,6 +51,12 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
 fi
 
 echo "================================================================"
+echo "Fetching dependencies $(date)"
+echo "================================================================"
+"${PROJECT_ROOT}/ci/retry-command.sh" \
+    "${BAZEL_BIN}" fetch -- //google/cloud/...:all
+
+echo "================================================================"
 echo "Compiling and running unit tests $(date)"
 echo "================================================================"
 "${BAZEL_BIN}" test \
