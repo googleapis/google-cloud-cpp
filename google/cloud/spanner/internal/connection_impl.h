@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -168,6 +169,7 @@ class ConnectionImpl : public Connection {
   std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
   std::shared_ptr<SessionPool> session_pool_;
   bool rpc_stream_tracing_enabled_ = false;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace internal

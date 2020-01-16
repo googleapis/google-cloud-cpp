@@ -16,19 +16,24 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_DATABASE_ADMIN_LOGGING_H_
 
 #include "google/cloud/spanner/internal/database_admin_stub.h"
+#include "google/cloud/spanner/tracing_options.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+
 /**
  * Implements the logging Decorator for DatabaseAdminStub.
  */
 class DatabaseAdminLogging : public DatabaseAdminStub {
  public:
-  explicit DatabaseAdminLogging(std::shared_ptr<DatabaseAdminStub> child)
-      : child_(std::move(child)) {}
+  explicit DatabaseAdminLogging(std::shared_ptr<DatabaseAdminStub> child,
+                                TracingOptions tracing_options)
+      : child_(std::move(child)),
+        tracing_options_(std::move(tracing_options)) {}
 
   ~DatabaseAdminLogging() override = default;
 
@@ -89,6 +94,7 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
 
  private:
   std::shared_ptr<DatabaseAdminStub> child_;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace internal

@@ -17,7 +17,6 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/protobuf/struct.pb.h>
-#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>

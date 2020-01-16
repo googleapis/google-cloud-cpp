@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_LOGGING_SPANNER_STUB_H_
 
 #include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/tracing_options.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -28,8 +30,10 @@ namespace internal {
  */
 class LoggingSpannerStub : public SpannerStub {
  public:
-  explicit LoggingSpannerStub(std::shared_ptr<SpannerStub> child)
-      : child_(std::move(child)) {}
+  explicit LoggingSpannerStub(std::shared_ptr<SpannerStub> child,
+                              TracingOptions tracing_options)
+      : child_(std::move(child)),
+        tracing_options_(std::move(tracing_options)) {}
   ~LoggingSpannerStub() override = default;
 
   StatusOr<google::spanner::v1::Session> CreateSession(
@@ -83,6 +87,7 @@ class LoggingSpannerStub : public SpannerStub {
 
  private:
   std::shared_ptr<SpannerStub> child_;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace internal

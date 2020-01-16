@@ -273,7 +273,8 @@ std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
 
   if (options.tracing_enabled("rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    return std::make_shared<LoggingSpannerStub>(std::move(stub));
+    return std::make_shared<LoggingSpannerStub>(std::move(stub),
+                                                options.tracing_options());
   }
   return stub;
 }

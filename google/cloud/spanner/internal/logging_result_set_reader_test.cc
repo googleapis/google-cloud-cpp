@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/logging_result_set_reader.h"
 #include "google/cloud/spanner/testing/mock_partial_result_set_reader.h"
+#include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -62,7 +63,7 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
   auto mock = google::cloud::internal::make_unique<
       spanner_testing::MockPartialResultSetReader>();
   EXPECT_CALL(*mock, TryCancel()).Times(1);
-  LoggingResultSetReader reader(std::move(mock));
+  LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   reader.TryCancel();
 
   HasLogLineWith("TryCancel");
@@ -80,7 +81,7 @@ TEST_F(LoggingResultSetReaderTest, Read) {
       .WillOnce([] {
         return google::cloud::optional<spanner_proto::PartialResultSet>{};
       });
-  LoggingResultSetReader reader(std::move(mock));
+  LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   auto result = reader.Read();
   ASSERT_TRUE(result.has_value());
   EXPECT_EQ("test-token", result->resume_token());
@@ -103,7 +104,7 @@ TEST_F(LoggingResultSetReaderTest, Finish) {
   EXPECT_CALL(*mock, Finish()).WillOnce([expected_status] {
     return expected_status;
   });
-  LoggingResultSetReader reader(std::move(mock));
+  LoggingResultSetReader reader(std::move(mock), TracingOptions{});
   auto status = reader.Finish();
   EXPECT_EQ(expected_status, status);
 

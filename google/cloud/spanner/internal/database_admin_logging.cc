@@ -30,7 +30,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateDatabase(
              gcsa::CreateDatabaseRequest const& request) {
         return child_->CreateDatabase(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::Database> DatabaseAdminLogging::GetDatabase(
@@ -40,7 +40,7 @@ StatusOr<gcsa::Database> DatabaseAdminLogging::GetDatabase(
              gcsa::GetDatabaseRequest const& request) {
         return child_->GetDatabase(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminLogging::GetDatabaseDdl(
@@ -50,7 +50,7 @@ StatusOr<gcsa::GetDatabaseDdlResponse> DatabaseAdminLogging::GetDatabaseDdl(
              gcsa::GetDatabaseDdlRequest const& request) {
         return child_->GetDatabaseDdl(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
@@ -62,7 +62,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::UpdateDatabase(
              gcsa::UpdateDatabaseDdlRequest const& request) {
         return child_->UpdateDatabase(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 Status DatabaseAdminLogging::DropDatabase(
@@ -73,7 +73,7 @@ Status DatabaseAdminLogging::DropDatabase(
              gcsa::DropDatabaseRequest const& request) {
         return child_->DropDatabase(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::spanner::admin::database::v1::ListDatabasesResponse>
@@ -84,7 +84,7 @@ DatabaseAdminLogging::ListDatabases(
       [this](grpc::ClientContext& context,
              google::spanner::admin::database::v1::ListDatabasesRequest const&
                  request) { return child_->ListDatabases(context, request); },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::GetIamPolicy(
@@ -95,7 +95,7 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::GetIamPolicy(
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::SetIamPolicy(
@@ -106,7 +106,7 @@ StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::SetIamPolicy(
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -118,7 +118,7 @@ DatabaseAdminLogging::TestIamPermissions(
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
@@ -129,7 +129,7 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 }  // namespace internal

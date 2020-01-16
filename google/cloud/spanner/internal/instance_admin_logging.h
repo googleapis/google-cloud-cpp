@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_INSTANCE_ADMIN_LOGGING_H_
 
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
+#include "google/cloud/spanner/tracing_options.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -30,8 +32,10 @@ namespace gcsa = google::spanner::admin::instance::v1;
  */
 class InstanceAdminLogging : public InstanceAdminStub {
  public:
-  explicit InstanceAdminLogging(std::shared_ptr<InstanceAdminStub> child)
-      : child_(std::move(child)) {}
+  explicit InstanceAdminLogging(std::shared_ptr<InstanceAdminStub> child,
+                                TracingOptions tracing_options)
+      : child_(std::move(child)),
+        tracing_options_(std::move(tracing_options)) {}
 
   ~InstanceAdminLogging() override = default;
 
@@ -81,6 +85,7 @@ class InstanceAdminLogging : public InstanceAdminStub {
   //@}
  private:
   std::shared_ptr<InstanceAdminStub> child_;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace internal

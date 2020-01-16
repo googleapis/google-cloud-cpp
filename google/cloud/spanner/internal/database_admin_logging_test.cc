@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/database_admin_logging.h"
 #include "google/cloud/spanner/testing/mock_database_admin_stub.h"
+#include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
@@ -67,7 +68,7 @@ class DatabaseAdminLoggingTest : public ::testing::Test {
 TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   EXPECT_CALL(*mock_, CreateDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto status = stub.CreateDatabase(context, gcsa::CreateDatabaseRequest{});
@@ -80,7 +81,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
 TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
   EXPECT_CALL(*mock_, GetDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.GetDatabase(context, gcsa::GetDatabaseRequest{});
@@ -93,7 +94,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
 TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
   EXPECT_CALL(*mock_, GetDatabaseDdl(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.GetDatabaseDdl(context, gcsa::GetDatabaseDdlRequest{});
@@ -106,7 +107,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, UpdateDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto status = stub.UpdateDatabase(context, gcsa::UpdateDatabaseDdlRequest{});
@@ -119,7 +120,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
 TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
   EXPECT_CALL(*mock_, DropDatabase(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto status = stub.DropDatabase(context, gcsa::DropDatabaseRequest{});
@@ -132,7 +133,7 @@ TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
 TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
   EXPECT_CALL(*mock_, ListDatabases(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.ListDatabases(context, gcsa::ListDatabasesRequest{});
@@ -145,7 +146,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
 TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response =
@@ -159,7 +160,7 @@ TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
 TEST_F(DatabaseAdminLoggingTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response =
@@ -174,7 +175,7 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
       .WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.TestIamPermissions(
@@ -188,7 +189,7 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
 
-  DatabaseAdminLogging stub(mock_);
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto status =

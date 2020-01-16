@@ -147,6 +147,7 @@ add_library(
     internal/instance_admin_metadata.h
     internal/instance_admin_stub.cc
     internal/instance_admin_stub.h
+    internal/log_wrapper.cc
     internal/log_wrapper.h
     internal/logging_result_set_reader.cc
     internal/logging_result_set_reader.h
@@ -201,6 +202,8 @@ add_library(
     sql_statement.h
     timestamp.h
     timestamp.cc
+    tracing_options.cc
+    tracing_options.h
     transaction.cc
     transaction.h
     update_instance_request_builder.h
@@ -320,10 +323,11 @@ function (spanner_client_define_tests)
         internal/database_admin_metadata_test.cc
         internal/instance_admin_logging_test.cc
         internal/instance_admin_metadata_test.cc
+        internal/log_wrapper_test.cc
         internal/logging_result_set_reader_test.cc
         internal/logging_spanner_stub_test.cc
-        internal/metadata_spanner_stub_test.cc
         internal/merge_chunk_test.cc
+        internal/metadata_spanner_stub_test.cc
         internal/partial_result_set_source_test.cc
         internal/partial_result_set_resume_test.cc
         internal/polling_loop_test.cc
@@ -348,6 +352,7 @@ function (spanner_client_define_tests)
         spanner_version_test.cc
         sql_statement_test.cc
         timestamp_test.cc
+        tracing_options_test.cc
         transaction_test.cc
         create_instance_request_builder_test.cc
         update_instance_request_builder_test.cc

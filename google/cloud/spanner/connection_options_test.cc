@@ -85,6 +85,20 @@ TEST(ConnectionOptionsTest, DefaultTracingSet) {
   EXPECT_TRUE(options.tracing_enabled("baz"));
 }
 
+TEST(ConnectionOptionsTest, TracingOptions) {
+  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
+
+  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+                                  ",single_line_mode=off"
+                                  ",use_short_repeated_primitives=off"
+                                  ",truncate_string_field_longer_than=32");
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  TracingOptions tracing_options = options.tracing_options();
+  EXPECT_FALSE(tracing_options.single_line_mode());
+  EXPECT_FALSE(tracing_options.use_short_repeated_primitives());
+  EXPECT_EQ(32, tracing_options.truncate_string_field_longer_than());
+}
+
 TEST(ConnectionOptionsTest, ChannelPoolName) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_TRUE(options.channel_pool_domain().empty());

@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/internal/instance_admin_logging.h"
 #include "google/cloud/spanner/testing/mock_instance_admin_stub.h"
+#include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
@@ -67,7 +68,7 @@ class InstanceAdminLoggingTest : public ::testing::Test {
 TEST_F(InstanceAdminLoggingTest, GetInstance) {
   EXPECT_CALL(*mock_, GetInstance(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.GetInstance(context, gcsa::GetInstanceRequest{});
@@ -80,7 +81,7 @@ TEST_F(InstanceAdminLoggingTest, GetInstance) {
 TEST_F(InstanceAdminLoggingTest, CreateInstance) {
   EXPECT_CALL(*mock_, CreateInstance(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.CreateInstance(context, gcsa::CreateInstanceRequest{});
@@ -93,7 +94,7 @@ TEST_F(InstanceAdminLoggingTest, CreateInstance) {
 TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
   EXPECT_CALL(*mock_, UpdateInstance(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.UpdateInstance(context, gcsa::UpdateInstanceRequest{});
@@ -106,7 +107,7 @@ TEST_F(InstanceAdminLoggingTest, UpdateInstance) {
 TEST_F(InstanceAdminLoggingTest, DeleteInstance) {
   EXPECT_CALL(*mock_, DeleteInstance(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto status = stub.DeleteInstance(context, gcsa::DeleteInstanceRequest{});
@@ -120,7 +121,7 @@ TEST_F(InstanceAdminLoggingTest, GetInstanceConfig) {
   EXPECT_CALL(*mock_, GetInstanceConfig(_, _))
       .WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response =
@@ -135,7 +136,7 @@ TEST_F(InstanceAdminLoggingTest, ListInstanceConfigs) {
   EXPECT_CALL(*mock_, ListInstanceConfigs(_, _))
       .WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response =
@@ -149,7 +150,7 @@ TEST_F(InstanceAdminLoggingTest, ListInstanceConfigs) {
 TEST_F(InstanceAdminLoggingTest, ListInstances) {
   EXPECT_CALL(*mock_, ListInstances(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.ListInstances(context, gcsa::ListInstancesRequest{});
@@ -162,7 +163,7 @@ TEST_F(InstanceAdminLoggingTest, ListInstances) {
 TEST_F(InstanceAdminLoggingTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response =
@@ -176,7 +177,7 @@ TEST_F(InstanceAdminLoggingTest, GetIamPolicy) {
 TEST_F(InstanceAdminLoggingTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response =
@@ -191,7 +192,7 @@ TEST_F(InstanceAdminLoggingTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions(_, _))
       .WillOnce(Return(TransientError()));
 
-  InstanceAdminLogging stub(mock_);
+  InstanceAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
   auto response = stub.TestIamPermissions(

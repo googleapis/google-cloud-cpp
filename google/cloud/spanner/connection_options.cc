@@ -51,6 +51,12 @@ ConnectionOptions::ConnectionOptions(
     }
   }
 
+  auto tracing_options =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
+  if (tracing_options.has_value()) {
+    tracing_options_.SetOptions(*tracing_options);
+  }
+
   if (google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
           .has_value()) {
     google::cloud::LogSink::EnableStdClog();

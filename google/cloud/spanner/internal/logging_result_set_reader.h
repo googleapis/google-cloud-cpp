@@ -16,6 +16,8 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_LOGGING_RESULT_SET_READER_H_
 
 #include "google/cloud/spanner/internal/partial_result_set_reader.h"
+#include "google/cloud/spanner/tracing_options.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -25,8 +27,9 @@ namespace internal {
 
 class LoggingResultSetReader : public PartialResultSetReader {
  public:
-  explicit LoggingResultSetReader(std::unique_ptr<PartialResultSetReader> impl)
-      : impl_(std::move(impl)) {}
+  explicit LoggingResultSetReader(std::unique_ptr<PartialResultSetReader> impl,
+                                  TracingOptions tracing_options)
+      : impl_(std::move(impl)), tracing_options_(std::move(tracing_options)) {}
   ~LoggingResultSetReader() override = default;
 
   void TryCancel() override;
@@ -35,6 +38,7 @@ class LoggingResultSetReader : public PartialResultSetReader {
 
  private:
   std::unique_ptr<PartialResultSetReader> impl_;
+  TracingOptions tracing_options_;
 };
 
 }  // namespace internal

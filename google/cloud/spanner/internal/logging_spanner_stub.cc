@@ -14,8 +14,6 @@
 
 #include "google/cloud/spanner/internal/logging_spanner_stub.h"
 #include "google/cloud/spanner/internal/log_wrapper.h"
-#include "google/cloud/internal/invoke_result.h"
-#include "google/cloud/log.h"
 
 namespace google {
 namespace cloud {
@@ -33,7 +31,7 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::CreateSession(
              spanner_proto::CreateSessionRequest const& request) {
         return child_->CreateSession(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::BatchCreateSessionsResponse>
@@ -45,7 +43,7 @@ LoggingSpannerStub::BatchCreateSessions(
              spanner_proto::BatchCreateSessionsRequest const& request) {
         return child_->BatchCreateSessions(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
@@ -56,7 +54,7 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
              spanner_proto::GetSessionRequest const& request) {
         return child_->GetSession(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ListSessionsResponse> LoggingSpannerStub::ListSessions(
@@ -67,7 +65,7 @@ StatusOr<spanner_proto::ListSessionsResponse> LoggingSpannerStub::ListSessions(
              spanner_proto::ListSessionsRequest const& request) {
         return child_->ListSessions(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 Status LoggingSpannerStub::DeleteSession(
@@ -78,7 +76,7 @@ Status LoggingSpannerStub::DeleteSession(
              spanner_proto::DeleteSessionRequest const& request) {
         return child_->DeleteSession(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(
@@ -89,7 +87,7 @@ StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(
              spanner_proto::ExecuteSqlRequest const& request) {
         return child_->ExecuteSql(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
@@ -101,7 +99,7 @@ LoggingSpannerStub::ExecuteStreamingSql(
              spanner_proto::ExecuteSqlRequest const& request) {
         return child_->ExecuteStreamingSql(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ExecuteBatchDmlResponse>
@@ -113,7 +111,7 @@ LoggingSpannerStub::ExecuteBatchDml(
              spanner_proto::ExecuteBatchDmlRequest const& request) {
         return child_->ExecuteBatchDml(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::Read(
@@ -124,7 +122,7 @@ StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::Read(
              spanner_proto::ReadRequest const& request) {
         return child_->Read(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
@@ -135,7 +133,7 @@ LoggingSpannerStub::StreamingRead(grpc::ClientContext& client_context,
              spanner_proto::ReadRequest const& request) {
         return child_->StreamingRead(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::Transaction> LoggingSpannerStub::BeginTransaction(
@@ -146,7 +144,7 @@ StatusOr<spanner_proto::Transaction> LoggingSpannerStub::BeginTransaction(
              spanner_proto::BeginTransactionRequest const& request) {
         return child_->BeginTransaction(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::CommitResponse> LoggingSpannerStub::Commit(
@@ -157,7 +155,7 @@ StatusOr<spanner_proto::CommitResponse> LoggingSpannerStub::Commit(
              spanner_proto::CommitRequest const& request) {
         return child_->Commit(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 Status LoggingSpannerStub::Rollback(
@@ -168,7 +166,7 @@ Status LoggingSpannerStub::Rollback(
              spanner_proto::RollbackRequest const& request) {
         return child_->Rollback(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionQuery(
@@ -179,7 +177,7 @@ StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionQuery(
              spanner_proto::PartitionQueryRequest const& request) {
         return child_->PartitionQuery(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionRead(
@@ -190,7 +188,7 @@ StatusOr<spanner_proto::PartitionResponse> LoggingSpannerStub::PartitionRead(
              spanner_proto::PartitionReadRequest const& request) {
         return child_->PartitionRead(context, request);
       },
-      client_context, request, __func__);
+      client_context, request, __func__, tracing_options_);
 }
 
 }  // namespace internal

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/logging_result_set_reader.h"
 #include "google/cloud/spanner/internal/log_wrapper.h"
+#include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {
@@ -21,29 +21,16 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-void LoggingResultSetReader::TryCancel() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  impl_->TryCancel();
-  GCP_LOG(DEBUG) << __func__ << "() >> (void)";
-}
-
-optional<google::spanner::v1::PartialResultSet> LoggingResultSetReader::Read() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  auto result = impl_->Read();
-  if (!result) {
-    GCP_LOG(DEBUG) << __func__ << "() >> (optional-with-no-value)";
-  } else {
-    GCP_LOG(DEBUG) << __func__ << "() >> "
-                   << DebugString(*result, tracing_options_);
-  }
-  return result;
-}
-
-Status LoggingResultSetReader::Finish() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  auto status = impl_->Finish();
-  GCP_LOG(DEBUG) << __func__ << "() >> " << status;
-  return status;
+std::string DebugString(google::protobuf::Message const& m,
+                        TracingOptions const& options) {
+  std::string str;
+  google::protobuf::TextFormat::Printer p;
+  p.SetSingleLineMode(options.single_line_mode());
+  p.SetUseShortRepeatedPrimitives(options.use_short_repeated_primitives());
+  p.SetTruncateStringFieldLongerThan(
+      options.truncate_string_field_longer_than());
+  p.PrintToString(m, &str);
+  return str;
 }
 
 }  // namespace internal

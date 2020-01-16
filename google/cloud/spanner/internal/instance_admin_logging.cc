@@ -30,7 +30,7 @@ StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
              gcsa::GetInstanceRequest const& request) {
         return child_->GetInstance(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::Operation> InstanceAdminLogging::CreateInstance(
@@ -40,7 +40,7 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::CreateInstance(
              gcsa::CreateInstanceRequest const& request) {
         return child_->CreateInstance(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::Operation> InstanceAdminLogging::UpdateInstance(
@@ -50,7 +50,7 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::UpdateInstance(
              gcsa::UpdateInstanceRequest const& request) {
         return child_->UpdateInstance(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 Status InstanceAdminLogging::DeleteInstance(
@@ -60,7 +60,7 @@ Status InstanceAdminLogging::DeleteInstance(
              gcsa::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::InstanceConfig> InstanceAdminLogging::GetInstanceConfig(
@@ -71,7 +71,7 @@ StatusOr<gcsa::InstanceConfig> InstanceAdminLogging::GetInstanceConfig(
              gcsa::GetInstanceConfigRequest const& request) {
         return child_->GetInstanceConfig(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::ListInstanceConfigsResponse>
@@ -83,7 +83,7 @@ InstanceAdminLogging::ListInstanceConfigs(
              gcsa::ListInstanceConfigsRequest const& request) {
         return child_->ListInstanceConfigs(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<gcsa::ListInstancesResponse> InstanceAdminLogging::ListInstances(
@@ -93,7 +93,7 @@ StatusOr<gcsa::ListInstancesResponse> InstanceAdminLogging::ListInstances(
              gcsa::ListInstancesRequest const& request) {
         return child_->ListInstances(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminLogging::GetIamPolicy(
@@ -104,7 +104,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdminLogging::GetIamPolicy(
              google::iam::v1::GetIamPolicyRequest const& request) {
         return child_->GetIamPolicy(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminLogging::SetIamPolicy(
@@ -115,7 +115,7 @@ StatusOr<google::iam::v1::Policy> InstanceAdminLogging::SetIamPolicy(
              google::iam::v1::SetIamPolicyRequest const& request) {
         return child_->SetIamPolicy(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
@@ -127,7 +127,7 @@ InstanceAdminLogging::TestIamPermissions(
              google::iam::v1::TestIamPermissionsRequest const& request) {
         return child_->TestIamPermissions(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
@@ -138,7 +138,7 @@ StatusOr<google::longrunning::Operation> InstanceAdminLogging::GetOperation(
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, request);
       },
-      context, request, __func__);
+      context, request, __func__, tracing_options_);
 }
 
 }  // namespace internal
