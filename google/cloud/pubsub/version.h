@@ -19,7 +19,7 @@
 #include "google/cloud/version.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_PUBSUB_NS                    \
+#define GOOGLE_CLOUD_CPP_PUBSUB_NS                                     \
   GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR, \
                          GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MINOR)
 
@@ -45,17 +45,23 @@ inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 /**
  * The Cloud pubsub C++ Client major version.
  */
-int constexpr VersionMajor() { return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR; }
+int constexpr VersionMajor() {
+  return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MAJOR;
+}
 
 /**
  * The Cloud pubsub C++ Client minor version.
  */
-int constexpr VersionMinor() { return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MINOR; }
+int constexpr VersionMinor() {
+  return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_MINOR;
+}
 
 /**
  * The Cloud pubsub C++ Client patch version.
  */
-int constexpr VersionPatch() { return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_PATCH; }
+int constexpr VersionPatch() {
+  return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_PATCH;
+}
 
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr Version() {
