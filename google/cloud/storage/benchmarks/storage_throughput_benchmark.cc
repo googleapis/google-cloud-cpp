@@ -63,9 +63,6 @@ A helper script in this directory can generate pretty graphs from the outut of
 this program.
 )""";
 
-constexpr auto kChunkSize = 1 * gcs_bm::kMiB;
-constexpr auto kThroughputReportInterval = 4 * gcs_bm::kMiB;
-
 struct Options {
   std::string project_id;
   std::string region;
@@ -73,19 +70,23 @@ struct Options {
   long object_count = 1000;
   int thread_count = 1;
   std::int64_t object_size = 250 * gcs_bm::kMiB;
+  std::int64_t chunk_size = 32 * gcs_bm::kMiB;
   bool enable_connection_pool = true;
   bool enable_xml_api = true;
 };
 
-enum OpType { OP_READ, OP_WRITE, OP_CREATE, OP_DELETE, OP_LAST };
+enum OpType { OP_READ, OP_WRITE, OP_CREATE, OP_LAST };
+enum ApiName { API_JSON, API_XML, API_LAST };
 struct IterationResult {
   OpType op;
+  ApiName api;
   std::size_t bytes;
   std::chrono::milliseconds elapsed;
 };
 using TestResult = std::vector<IterationResult>;
 
 char const* ToString(OpType type);
+char const* ToString(ApiName api);
 void PrintResult(TestResult const& result);
 
 std::vector<std::string> CreateAllObjects(
@@ -157,7 +158,7 @@ int main(int argc, char* argv[]) {
             << "\n# Thread Count: " << options->thread_count
             << "\n# Enable connection pool: " << options->enable_connection_pool
             << "\n# Enable XML API: " << options->enable_xml_api
-            << "\n# Build info: " << notes << "\n";
+            << "\n# Build info: " << notes << std::endl;
 
   std::vector<std::string> object_names =
       CreateAllObjects(client, generator, bucket_name, *options);
@@ -176,45 +177,42 @@ int main(int argc, char* argv[]) {
 
 namespace {
 char const* ToString(OpType type) {
-  static char const* kOpTypeNames[] = {"READ", "WRITE", "CREATE", "DELETE",
-                                       "LAST"};
+  static char const* kOpTypeNames[] = {"READ", "WRITE", "CREATE", "LAST"};
   static_assert(OP_LAST + 1 == (sizeof(kOpTypeNames) / sizeof(kOpTypeNames[0])),
                 "Mismatched size for OpType names array");
   return kOpTypeNames[type];
 }
 
+char const* ToString(ApiName api) {
+  static char const* kApiNames[] = {"JSON", "XML", "API_LAST"};
+  static_assert(API_LAST + 1 == (sizeof(kApiNames) / sizeof(kApiNames[0])),
+                "Mismatched size for OpType names array");
+  return kApiNames[api];
+}
+
 void PrintResult(TestResult const& result) {
   for (auto const& r : result) {
-    std::cout << ToString(r.op) << "," << r.bytes << "," << r.elapsed.count()
-              << "\n";
+    std::cout << ToString(r.op) << ',' << ToString(r.api) << ',' << r.bytes
+              << ',' << r.elapsed.count() << "\n";
   }
 }
 
 TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
                        std::string const& object_name,
                        std::string const& data_chunk, Options const& options,
-                       OpType op_type = OP_WRITE) {
+                       OpType op_type, ApiName api) {
   using std::chrono::milliseconds;
   auto start = std::chrono::steady_clock::now();
 
   TestResult result;
-  result.reserve(options.object_size / kThroughputReportInterval);
-  gcs::ObjectWriteStream stream;
-  if (options.enable_xml_api) {
-    stream = client.WriteObject(bucket_name, object_name, gcs::Fields(""));
-  } else {
-    stream = client.WriteObject(bucket_name, object_name);
-  }
-  auto next_report = kThroughputReportInterval;
-  for (std::int64_t size = 0; size < options.object_size; size += kChunkSize) {
+
+  gcs::ObjectWriteStream stream =
+      client.WriteObject(bucket_name, object_name,
+                         api == API_JSON ? gcs::Fields{} : gcs::Fields{""});
+  for (std::int64_t size = 0; size < options.object_size;
+       size += data_chunk.size()) {
     stream.write(data_chunk.data(), data_chunk.size());
-    if (size > next_report) {
-      auto elapsed = std::chrono::steady_clock::now() - start;
-      result.emplace_back(
-          IterationResult{op_type, static_cast<std::size_t>(size),
-                          std::chrono::duration_cast<milliseconds>(elapsed)});
-      next_report += kThroughputReportInterval;
-    }
+    if (stream.bad()) break;
   }
 
   stream.Close();
@@ -226,12 +224,12 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
     std::cerr << status.status().message() << "\n";
     auto elapsed = std::chrono::steady_clock::now() - start;
     result.emplace_back(IterationResult{
-        op_type, 0, std::chrono::duration_cast<milliseconds>(elapsed)});
+        op_type, api, 0, std::chrono::duration_cast<milliseconds>(elapsed)});
   } else {
     auto elapsed = std::chrono::steady_clock::now() - start;
-    result.emplace_back(
-        IterationResult{op_type, static_cast<std::size_t>(options.object_size),
-                        std::chrono::duration_cast<milliseconds>(elapsed)});
+    result.emplace_back(IterationResult{
+        op_type, api, static_cast<std::size_t>(options.object_size),
+        std::chrono::duration_cast<milliseconds>(elapsed)});
   }
   return result;
 }
@@ -240,50 +238,52 @@ TestResult CreateOnce(gcs::Client client, std::string const& bucket_name,
                       std::string const& object_name,
                       std::string const& data_chunk, Options const& options) {
   return WriteCommon(client, bucket_name, object_name, data_chunk, options,
-                     OP_CREATE);
+                     OP_CREATE, API_XML);
 }
 
 TestResult WriteOnce(gcs::Client client, std::string const& bucket_name,
                      std::string const& object_name,
-                     std::string const& data_chunk, Options const& options) {
+                     std::string const& data_chunk, Options const& options,
+                     ApiName api) {
   return WriteCommon(client, bucket_name, object_name, data_chunk, options,
-                     OP_WRITE);
+                     OP_WRITE, api);
 }
 
 TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
-                    std::string const& object_name, Options const& options) {
+                    std::string const& object_name, Options const& options,
+                    ApiName api) {
   using std::chrono::milliseconds;
   auto start = std::chrono::steady_clock::now();
   TestResult result;
-  result.reserve(options.object_size / kThroughputReportInterval);
 
-  gcs::ObjectReadStream stream;
-  if (options.enable_xml_api) {
-    stream = client.ReadObject(bucket_name, object_name);
-  } else {
-    stream = client.ReadObject(bucket_name, object_name,
-                               gcs::IfGenerationNotMatch(0));
-  }
+  gcs::ObjectReadStream stream =
+      client.ReadObject(bucket_name, object_name,
+                        api == API_JSON ? gcs::IfGenerationNotMatch{0}
+                                        : gcs::IfGenerationNotMatch{});
   std::size_t total_size = 0;
-  auto next_report = kThroughputReportInterval;
-  char buf[4096];
-  while (stream.read(buf, sizeof(buf))) {
+  std::vector<char> buffer(options.chunk_size);
+  while (stream.read(buffer.data(), buffer.size())) {
     if (stream.gcount() == 0) {
       continue;
     }
     total_size += stream.gcount();
-    if (total_size > static_cast<std::size_t>(next_report)) {
-      auto elapsed = std::chrono::steady_clock::now() - start;
-      result.emplace_back(
-          IterationResult{OP_READ, total_size,
-                          std::chrono::duration_cast<milliseconds>(elapsed)});
-      next_report += kThroughputReportInterval;
-    }
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
-  result.emplace_back(IterationResult{
-      OP_READ, total_size, std::chrono::duration_cast<milliseconds>(elapsed)});
+  result.emplace_back(
+      IterationResult{OP_READ, api, total_size,
+                      std::chrono::duration_cast<milliseconds>(elapsed)});
   return result;
+}
+
+std::string CreateChunk(google::cloud::internal::DefaultPRNG& generator,
+                        std::size_t desired_size) {
+  std::string const random_data =
+      gcs_bm::MakeRandomData(generator, gcs_bm::kMiB);
+  std::string chunk;
+  while (chunk.size() < desired_size) {
+    chunk.append(random_data);
+  }
+  return chunk;
 }
 
 TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
@@ -291,11 +291,10 @@ TestResult CreateGroup(gcs::Client client, std::string const& bucket_name,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, kChunkSize);
+  auto const chunk = CreateChunk(generator, options.chunk_size);
   TestResult result;
   for (auto const& object_name : group) {
-    auto tmp =
-        CreateOnce(client, bucket_name, object_name, random_data, options);
+    auto tmp = CreateOnce(client, bucket_name, object_name, chunk, options);
     result.insert(result.end(), tmp.begin(), tmp.end());
   }
   return result;
@@ -309,7 +308,8 @@ std::vector<std::string> CreateAllObjects(
 
   std::size_t const max_group_size =
       std::max(options.object_count / options.thread_count, 1L);
-  std::cout << "# Creating test objects [" << max_group_size << "]\n";
+  std::cout << "# Creating test objects [" << max_group_size << "]"
+            << std::endl;
 
   // Generate the list of object names.
   std::vector<std::string> object_names;
@@ -352,23 +352,28 @@ TestResult RunTestThread(gcs::Client client, std::string const& bucket_name,
   google::cloud::internal::DefaultPRNG generator =
       google::cloud::internal::MakeDefaultPRNG();
 
-  std::string random_data = gcs_bm::MakeRandomData(generator, kChunkSize);
+  auto const chunk = CreateChunk(generator, options.chunk_size);
 
   std::uniform_int_distribution<std::size_t> object_number_gen(
       0, object_names.size() - 1);
   std::uniform_int_distribution<int> action_gen(0, 99);
+  std::uniform_int_distribution<int> api_gen(0, 1);
+  if (!options.enable_xml_api) {
+    api_gen = std::uniform_int_distribution<int>(0, 0);
+  }
 
   TestResult result;
   result.reserve(static_cast<std::size_t>(options.duration.count()));
   auto deadline = std::chrono::system_clock::now() + options.duration;
   while (std::chrono::system_clock::now() < deadline) {
     auto const& object_name = object_names.at(object_number_gen(generator));
+    auto const api = api_gen(generator) == 0 ? API_JSON : API_XML;
     if (action_gen(generator) < 50) {
       TestResult tmp =
-          WriteOnce(client, bucket_name, object_name, random_data, options);
+          WriteOnce(client, bucket_name, object_name, chunk, options, api);
       result.insert(result.end(), tmp.begin(), tmp.end());
     } else {
-      TestResult tmp = ReadOnce(client, bucket_name, object_name, options);
+      TestResult tmp = ReadOnce(client, bucket_name, object_name, options, api);
       result.insert(result.end(), tmp.begin(), tmp.end());
     }
   }
@@ -389,22 +394,15 @@ void RunTest(gcs::Client client, std::string const& bucket_name,
   }
 }
 
-google::cloud::StatusOr<TestResult> DeleteGroup(
-    gcs::Client client, std::vector<gcs::ObjectMetadata> group) {
-  TestResult result;
+google::cloud::Status DeleteGroup(gcs::Client client,
+                                  std::vector<gcs::ObjectMetadata> group) {
+  google::cloud::Status last_error;
   for (auto const& o : group) {
-    auto start = std::chrono::steady_clock::now();
     auto status = client.DeleteObject(o.bucket(), o.name(),
                                       gcs::Generation(o.generation()));
-    if (!status.ok()) {
-      return status;
-    }
-    auto elapsed = std::chrono::steady_clock::now() - start;
-    using std::chrono::milliseconds;
-    auto ms = std::chrono::duration_cast<milliseconds>(elapsed);
-    result.emplace_back(IterationResult{OP_DELETE, 0, ms});
+    if (!status.ok()) last_error = std::move(status);
   }
-  return result;
+  return last_error;
 }
 
 void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
@@ -417,7 +415,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
 
   std::cout << "# Deleting test objects [" << max_group_size << "]\n";
   auto start = std::chrono::steady_clock::now();
-  std::vector<std::future<google::cloud::StatusOr<TestResult>>> tasks;
+  std::vector<std::future<google::cloud::Status>> tasks;
   std::vector<gcs::ObjectMetadata> group;
   for (auto&& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
     group.emplace_back(std::move(o).value());
@@ -433,12 +431,10 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
   }
   int count = 0;
   for (auto& t : tasks) {
-    auto future = t.get();
-    if (!future) {
+    auto status = t.get();
+    if (!status.ok()) {
       std::cerr << "Standard exception raised by task[" << count
-                << "]: " << future.status() << "\n";
-    } else {
-      PrintResult(*future);
+                << "]: " << status << "\n";
     }
     ++count;
   }
@@ -469,6 +465,10 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
       {"--object-size", "size of the objects created by the benchmark",
        [&options](std::string const& val) {
          options.object_size = gcs_bm::ParseSize(val);
+       }},
+      {"--chunk-size", "size of the chunk used for transfers",
+       [&options](std::string const& val) {
+         options.chunk_size = gcs_bm::ParseSize(val);
        }},
       {"--thread-count", "set the number of threads in the benchmark",
        [&options](std::string const& val) {
