@@ -453,6 +453,9 @@ class Client {
    * @param rerun_policy controls for how long (or how many times) the mutator
    *     will be rerun after the transaction aborts.
    * @param backoff_policy controls how long `Commit` waits between reruns.
+   *
+   * @throw Rethrows any exception thrown by @p `mutator` (after rolling back
+   *     the transaction).
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
