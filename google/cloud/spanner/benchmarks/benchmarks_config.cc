@@ -34,8 +34,8 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "\n# Samples: " << config.samples
             << "\n# Minimum Threads: " << config.minimum_threads
             << "\n# Maximum Threads: " << config.maximum_threads
-            << "\n# Minimum Clients: " << config.minimum_clients
-            << "\n# Maximum Clients: " << config.maximum_clients
+            << "\n# Minimum Clients/Channels: " << config.minimum_clients
+            << "\n# Maximum Clients/Channels: " << config.maximum_clients
             << "\n# Iteration Duration: " << config.iteration_duration.count()
             << "s"
             << "\n# Table Size: " << config.table_size
@@ -87,11 +87,20 @@ google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {
        [](Config& c, std::string const& v) {
          c.maximum_threads = std::stoi(v);
        }},
+      // TODO(#1193) keep the `channels` flags and remove the `clients` aliases.
       {"--minimum-clients=",
        [](Config& c, std::string const& v) {
          c.minimum_clients = std::stoi(v);
        }},
+      {"--minimum-channels=",
+       [](Config& c, std::string const& v) {
+         c.minimum_clients = std::stoi(v);
+       }},
       {"--maximum-clients=",
+       [](Config& c, std::string const& v) {
+         c.maximum_clients = std::stoi(v);
+       }},
+      {"--maximum-channels=",
        [](Config& c, std::string const& v) {
          c.maximum_clients = std::stoi(v);
        }},
