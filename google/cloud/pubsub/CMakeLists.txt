@@ -16,6 +16,7 @@
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
+find_package(googleapis CONFIG REQUIRED)
 
 include(EnableClangTidy)
 include(EnableWerror)
@@ -90,10 +91,8 @@ target_include_directories(
          $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}> $<INSTALL_INTERFACE:include>)
 target_link_libraries(
   googleapis_cpp_pubsub_client
-  PUBLIC google_cloud_cpp_grpc_utils
-         google_cloud_cpp_common
-         # TODO(#...) - add the protos googleapis-c++::pubsub
-)
+  PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
+         googleapis-c++::pubsub_protos)
 set_target_properties(
   googleapis_cpp_pubsub_client
   PROPERTIES VERSION "${PUBSUB_CLIENT_VERSION}" SOVERSION
@@ -222,12 +221,14 @@ install(
   COMPONENT google_cloud_cpp_pubsub_development)
 
 # Create and install the CMake configuration files.
-configure_file("config.cmake.in" "googleapis_cpp_pubsub_client-config.cmake" @ONLY)
+configure_file("config.cmake.in" "googleapis_cpp_pubsub_client-config.cmake"
+               @ONLY)
 configure_file(
   "${PROJECT_SOURCE_DIR}/google/cloud/pubsub/config-version.cmake.in"
   "googleapis_cpp_pubsub_client-config-version.cmake" @ONLY)
 install(
-  FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_pubsub_client-config.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_pubsub_client-config-version.cmake"
+  FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_pubsub_client-config.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/googleapis_cpp_pubsub_client-config-version.cmake"
   DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/googleapis_cpp_pubsub_client"
   COMPONENT google_cloud_cpp_pubsub_development)

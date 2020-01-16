@@ -14,6 +14,8 @@
 
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
+#include <google/pubsub/v1/pubsub.grpc.pb.h>
+#include <grpcpp/grpcpp.h>
 #include <iostream>
 #include <stdexcept>
 
@@ -32,6 +34,10 @@ int main(int argc, char* argv[]) try {
         "The GOOGLE_CLOUD_PROJECT environment variable should be set to a "
         "non-empty value");
   }
+
+  auto creds = grpc::InsecureChannelCredentials();
+  auto channel = grpc::CreateChannel("localhost:12345", creds);
+  auto stub = google::pubsub::v1::Publisher::NewStub(channel);
 
   // TODO(#...) - this is just a "does this link" test for now.
   std::cout << google::cloud::pubsub::VersionString() << "\n";
