@@ -983,7 +983,7 @@ class Client {
    * @param options a list of optional query parameters and/or request headers.
    *     Valid types for this operation include
    *     `IfMetagenerationMatch`, `IfMetagenerationNotMatch`, `UserProject`,
-   *     `Projection`, `Prefix`, and `Versions`.
+   *     `Projection`, `Prefix`, `Delimiter`, and `Versions`.
    *
    * @par Idempotency
    * This is a read-only operation and is always idempotent.
@@ -2657,7 +2657,7 @@ class Client {
    *     requests that only affect a bucket.
    * @param options a list of optional parameters for the signed URL, this
    *     include: `ExpirationTime`, `MD5HashValue`, `ContentType`,
-   *     `SigningAccount`, `SigningAccountDeletegates`,
+   *     `SigningAccount`, `SigningAccountDelegates`,
    *     `AddExtensionHeaderOption`, `AddQueryParameterOption`, and
    *     `AddSubResourceOption`. Note that only the last `AddSubResourceOption`
    *     option has any effect.
@@ -2720,7 +2720,7 @@ class Client {
    *     requests that only affect a bucket.
    * @param options a list of optional parameters for the signed URL, this
    *     include: `SignedUrlTimestamp`, `SignedUrlDuration`, `MD5HashValue`,
-   *     `ContentType`, `SigningAccount`, `SigningAccountDeletegates`,
+   *     `ContentType`, `SigningAccount`, `SigningAccountDelegates`,
    *     `AddExtensionHeaderOption`, `AddQueryParameterOption`, and
    *     `AddSubResourceOption`. Note that only the last `AddSubResourceOption`
    *     option has any effect.
