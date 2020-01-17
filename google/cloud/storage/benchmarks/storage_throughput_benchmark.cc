@@ -190,7 +190,7 @@ char const* ToString(OpType type) {
 
 char const* ToString(ApiName api) {
   switch (api) {
-    case ApiName ::API_JSON:
+    case ApiName::API_JSON:
       return "JSON";
     case ApiName::API_XML:
       return "XML";
