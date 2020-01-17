@@ -75,8 +75,8 @@ struct Options {
   bool enable_xml_api = true;
 };
 
-enum OpType { OP_READ, OP_WRITE, OP_CREATE, OP_LAST };
-enum ApiName { API_JSON, API_XML, API_LAST };
+enum class OpType { OP_READ, OP_WRITE, OP_CREATE };
+enum class ApiName { API_JSON, API_XML };
 struct IterationResult {
   OpType op;
   ApiName api;
@@ -177,17 +177,25 @@ int main(int argc, char* argv[]) {
 
 namespace {
 char const* ToString(OpType type) {
-  static char const* kOpTypeNames[] = {"READ", "WRITE", "CREATE", "LAST"};
-  static_assert(OP_LAST + 1 == (sizeof(kOpTypeNames) / sizeof(kOpTypeNames[0])),
-                "Mismatched size for OpType names array");
-  return kOpTypeNames[type];
+  switch (type) {
+    case OpType::OP_CREATE:
+      return "CREATE";
+    case OpType::OP_READ:
+      return "READ";
+    case OpType::OP_WRITE:
+      return "WRITE";
+  }
+  return "";
 }
 
 char const* ToString(ApiName api) {
-  static char const* kApiNames[] = {"JSON", "XML", "API_LAST"};
-  static_assert(API_LAST + 1 == (sizeof(kApiNames) / sizeof(kApiNames[0])),
-                "Mismatched size for OpType names array");
-  return kApiNames[api];
+  switch (api) {
+    case ApiName ::API_JSON:
+      return "JSON";
+    case ApiName::API_XML:
+      return "XML";
+  }
+  return "";
 }
 
 void PrintResult(TestResult const& result) {
@@ -206,9 +214,9 @@ TestResult WriteCommon(gcs::Client client, std::string const& bucket_name,
 
   TestResult result;
 
-  gcs::ObjectWriteStream stream =
-      client.WriteObject(bucket_name, object_name,
-                         api == API_JSON ? gcs::Fields{} : gcs::Fields{""});
+  gcs::ObjectWriteStream stream = client.WriteObject(
+      bucket_name, object_name,
+      api == ApiName::API_JSON ? gcs::Fields{} : gcs::Fields{""});
   for (std::int64_t size = 0; size < options.object_size;
        size += data_chunk.size()) {
     stream.write(data_chunk.data(), data_chunk.size());
@@ -238,7 +246,7 @@ TestResult CreateOnce(gcs::Client client, std::string const& bucket_name,
                       std::string const& object_name,
                       std::string const& data_chunk, Options const& options) {
   return WriteCommon(client, bucket_name, object_name, data_chunk, options,
-                     OP_CREATE, API_XML);
+                     OpType::OP_CREATE, ApiName::API_XML);
 }
 
 TestResult WriteOnce(gcs::Client client, std::string const& bucket_name,
@@ -246,7 +254,7 @@ TestResult WriteOnce(gcs::Client client, std::string const& bucket_name,
                      std::string const& data_chunk, Options const& options,
                      ApiName api) {
   return WriteCommon(client, bucket_name, object_name, data_chunk, options,
-                     OP_WRITE, api);
+                     OpType::OP_WRITE, api);
 }
 
 TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
@@ -258,8 +266,8 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
 
   gcs::ObjectReadStream stream =
       client.ReadObject(bucket_name, object_name,
-                        api == API_JSON ? gcs::IfGenerationNotMatch{0}
-                                        : gcs::IfGenerationNotMatch{});
+                        api == ApiName::API_JSON ? gcs::IfGenerationNotMatch{0}
+                                                 : gcs::IfGenerationNotMatch{});
   std::size_t total_size = 0;
   std::vector<char> buffer(options.chunk_size);
   while (stream.read(buffer.data(), buffer.size())) {
@@ -270,7 +278,7 @@ TestResult ReadOnce(gcs::Client client, std::string const& bucket_name,
   }
   auto elapsed = std::chrono::steady_clock::now() - start;
   result.emplace_back(
-      IterationResult{OP_READ, api, total_size,
+      IterationResult{OpType::OP_READ, api, total_size,
                       std::chrono::duration_cast<milliseconds>(elapsed)});
   return result;
 }
@@ -280,9 +288,11 @@ std::string CreateChunk(google::cloud::internal::DefaultPRNG& generator,
   std::string const random_data =
       gcs_bm::MakeRandomData(generator, gcs_bm::kMiB);
   std::string chunk;
+  chunk.reserve(desired_size);
   while (chunk.size() < desired_size) {
     chunk.append(random_data);
   }
+  chunk.resize(desired_size);
   return chunk;
 }
 
@@ -367,7 +377,8 @@ TestResult RunTestThread(gcs::Client client, std::string const& bucket_name,
   auto deadline = std::chrono::system_clock::now() + options.duration;
   while (std::chrono::system_clock::now() < deadline) {
     auto const& object_name = object_names.at(object_number_gen(generator));
-    auto const api = api_gen(generator) == 0 ? API_JSON : API_XML;
+    auto const api =
+        api_gen(generator) == 0 ? ApiName::API_JSON : ApiName::API_XML;
     if (action_gen(generator) < 50) {
       TestResult tmp =
           WriteOnce(client, bucket_name, object_name, chunk, options, api);
