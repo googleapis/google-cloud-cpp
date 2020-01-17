@@ -17,7 +17,7 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
-#include "google/cloud/storage/testing/random.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include <chrono>
 #include <functional>
 #include <string>

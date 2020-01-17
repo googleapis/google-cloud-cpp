@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/temp_file.h"
-#include "google/cloud/storage/testing/random.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/terminate_handler.h"
 #include <cassert>
