@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/testing/temp_file.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/terminate_handler.h"
 #include <cassert>
@@ -27,16 +28,14 @@ namespace testing {
 TempFile::TempFile(std::string const& content) {
   // This is obviously racy, but there is no portable way to create a
   // uniquely-named temporary file and know its name.
-  char tmpfile_name[L_tmpnam];
-  if (!std::tmpnam(tmpfile_name)) {
-    Terminate("Failed to create a temporary file name");
-  }
-  std::ofstream f(tmpfile_name, std::ios::binary | std::ios::trunc);
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  auto name = MakeRandomFileName(generator);
+  std::ofstream f(name, std::ios::binary | std::ios::trunc);
   assert(f.good());
   f.write(content.data(), content.size());
   assert(f.good());
 
-  name_ = tmpfile_name;
+  name_ = name;
 }
 
 TempFile::~TempFile() {

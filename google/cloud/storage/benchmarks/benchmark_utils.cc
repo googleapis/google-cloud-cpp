@@ -20,58 +20,6 @@
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
-                                 std::string const& prefix) {
-  // The total length of this bucket name must be <= 63 characters,
-  static std::size_t const kMaxBucketNameLength = 63;
-  std::size_t const max_random_characters =
-      kMaxBucketNameLength - prefix.size();
-  return prefix + google::cloud::internal::Sample(
-                      gen, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
-}
-
-std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen) {
-  return google::cloud::internal::Sample(gen, 128,
-                                         "abcdefghijklmnopqrstuvwxyz"
-                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                         "0123456789");
-}
-
-std::string MakeRandomFileName(google::cloud::internal::DefaultPRNG& gen) {
-  return google::cloud::internal::Sample(gen, 28,
-                                         "abcdefghijklmnopqrstuvwxyz"
-                                         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                         "0123456789") +
-         ".txt";
-}
-
-std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
-                           std::size_t desired_size) {
-  std::string result;
-  result.reserve(desired_size);
-
-  // Create lines of 128 characters to start with, we can fill the remaining
-  // characters at the end.
-  constexpr int kLineSize = 128;
-  auto gen_random_line = [&gen](std::size_t count) {
-    return google::cloud::internal::Sample(gen, static_cast<int>(count - 1),
-                                           "abcdefghijklmnopqrstuvwxyz"
-                                           "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                           "012456789"
-                                           " - _ : /") +
-           "\n";
-  };
-  while (result.size() + kLineSize < desired_size) {
-    result += gen_random_line(kLineSize);
-  }
-  if (result.size() < desired_size) {
-    result += gen_random_line(desired_size - result.size());
-  }
-
-  return result;
-}
-
 bool EndsWith(std::string const& val, std::string const& suffix) {
   auto pos = val.rfind(suffix);
   if (pos == std::string::npos) {

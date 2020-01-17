@@ -291,6 +291,8 @@ if (BUILD_TESTING)
         testing/mock_http_request.h
         testing/mock_http_request.cc
         testing/retry_tests.h
+        testing/random_names.h
+        testing/random_names.cc
         testing/storage_integration_test.h
         testing/storage_integration_test.cc
         testing/temp_file.h

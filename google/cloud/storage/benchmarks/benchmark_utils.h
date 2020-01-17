@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/storage/testing/random_names.h"
 #include <chrono>
 #include <functional>
 #include <string>
@@ -27,25 +28,10 @@
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
-/**
- * Create a random bucket name.
- *
- * Most benchmarks need to create a bucket to storage their data. Using a random
- * bucket name makes it possible to run different instances of the benchmark
- * without interacting with previous or concurrent instances.
- */
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
-                                 std::string const& prefix);
-
-/// Create a random object name.
-std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen);
-
-/// Create a random local filename.
-std::string MakeRandomFileName(google::cloud::internal::DefaultPRNG& gen);
-
-/// Create a random chunk of data of a prescribed size.
-std::string MakeRandomData(google::cloud::internal::DefaultPRNG& gen,
-                           std::size_t desired_size);
+using ::google::cloud::storage::testing::MakeRandomBucketName;
+using ::google::cloud::storage::testing::MakeRandomData;
+using ::google::cloud::storage::testing::MakeRandomFileName;
+using ::google::cloud::storage::testing::MakeRandomObjectName;
 
 constexpr std::int64_t kKiB = 1024;
 constexpr std::int64_t kMiB = 1024 * kKiB;
