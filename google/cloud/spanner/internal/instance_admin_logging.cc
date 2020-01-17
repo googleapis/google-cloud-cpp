@@ -21,7 +21,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace gcsa = google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance::v1;
 
 StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
     grpc::ClientContext& context, gcsa::GetInstanceRequest const& request) {

@@ -27,7 +27,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
-using google::cloud::spanner_testing::IsProtoEqual;
+using ::google::cloud::spanner_testing::IsProtoEqual;
 
 //
 // MakeProtoValue() is an overloaded helper function for creating

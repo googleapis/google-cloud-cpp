@@ -77,15 +77,15 @@ inline namespace SPANNER_CLIENT_NS {
  * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
  *
  * @code
- * namespace cs = ::google::cloud::spanner;
+ * namespace spanner = ::google::cloud::spanner;
  *
- * auto db = cs::Database("my_project", "my_instance", "my_db_id"));
- * auto conn = cs::MakeConnection(db);
- * auto client = cs::Client(conn);
+ * auto db = spanner::Database("my_project", "my_instance", "my_db_id"));
+ * auto conn = spanner::MakeConnection(db);
+ * auto client = spanner::Client(conn);
  *
  * auto rows = client.Read(...);
  * using RowType = std::tuple<std::int64_t, std::string>;
- * for (auto const& row : cs::StreamOf<RowType>(rows)) {
+ * for (auto const& row : spanner::StreamOf<RowType>(rows)) {
  *   // ...
  * }
  * @endcode

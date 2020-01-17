@@ -57,9 +57,9 @@ inline namespace SPANNER_CLIENT_NS {
  * [`StatusOr<T>` documentation](#google::cloud::v0::StatusOr) for more details.
  *
  * @code
- * namespace cs = google::cloud::spanner;
- * using google::cloud::StatusOr;
- * cs::DatabaseAdminClient client = ...;
+ * namespace spanner = ::google::cloud::spanner;
+ * using ::google::cloud::StatusOr;
+ * spanner::DatabaseAdminClient client = ...;
  * StatusOr<google::spanner::admin::database::v1::Database> db =
  *     client.CreateDatabase(...).get();
  *
@@ -80,11 +80,11 @@ inline namespace SPANNER_CLIENT_NS {
  * operation completes:
  *
  * @code
- * namespace cs = google::cloud::spanner;
- * cs::DatabaseAdminClient client = ...;
+ * namespace spanner = ::google::cloud::spanner;
+ * spanner::DatabaseAdminClient client = ...;
  * // Make example less verbose.
- * using google::cloud::future;
- * using google::cloud::StatusOr;
+ * using ::google::cloud::future;
+ * using ::google::cloud::StatusOr;
  * using std::chrono::chrono_literals; // C++14
  *
  * auto database = client.CreateDatabase(...);

@@ -23,7 +23,7 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace gcsa = ::google::spanner::admin::instance::v1;
-namespace giam = google::iam::v1;
+namespace giam = ::google::iam::v1;
 
 namespace {
 

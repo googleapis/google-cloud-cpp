@@ -28,7 +28,7 @@
 
 namespace {
 
-namespace cloud_spanner = google::cloud::spanner;
+namespace spanner = ::google::cloud::spanner;
 using ::google::cloud::spanner_benchmarks::Config;
 
 struct SingleRowThroughputSample {
@@ -45,9 +45,8 @@ class Experiment {
   virtual ~Experiment() = default;
 
   virtual void SetUp(Config const& config,
-                     cloud_spanner::Database const& database) = 0;
-  virtual void Run(Config const& config,
-                   cloud_spanner::Database const& database,
+                     spanner::Database const& database) = 0;
+  virtual void Run(Config const& config, spanner::Database const& database,
                    SampleSink const& sink) = 0;
 };
 
@@ -91,8 +90,8 @@ int main(int argc, char* argv[]) {
     config.database_id =
         google::cloud::spanner_testing::RandomDatabaseName(generator);
   }
-  cloud_spanner::Database database(config.project_id, config.instance_id,
-                                   config.database_id);
+  spanner::Database database(config.project_id, config.instance_id,
+                             config.database_id);
   auto available = AvailableExperiments();
   auto e = available.find(config.experiment);
   if (e == available.end()) {
@@ -100,7 +99,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  cloud_spanner::DatabaseAdminClient admin_client;
+  spanner::DatabaseAdminClient admin_client;
   auto create_future =
       admin_client.CreateDatabase(database, {R"sql(CREATE TABLE KeyValue (
                                 Key   INT64 NOT NULL,
@@ -165,11 +164,10 @@ namespace {
 using RandomKeyGenerator = std::function<std::int64_t()>;
 using ErrorSink = std::function<void(std::vector<google::cloud::Status>)>;
 
-void FillTableTask(Config const& config, cloud_spanner::Client client,
-                   std::mutex& mu, std::string const& value, int task_count,
-                   int task_id) {
+void FillTableTask(Config const& config, spanner::Client client, std::mutex& mu,
+                   std::string const& value, int task_count, int task_id) {
   auto mutation =
-      cloud_spanner::InsertOrUpdateMutationBuilder("KeyValue", {"Key", "Data"});
+      spanner::InsertOrUpdateMutationBuilder("KeyValue", {"Key", "Data"});
   int current_mutations = 0;
 
   auto maybe_flush = [&mutation, &current_mutations, &client, &mu](bool force) {
@@ -180,15 +178,14 @@ void FillTableTask(Config const& config, cloud_spanner::Client client,
       return;
     }
     auto m = std::move(mutation).Build();
-    auto result = client.Commit([&m](cloud_spanner::Transaction const&) {
-      return cloud_spanner::Mutations{m};
-    });
+    auto result = client.Commit(
+        [&m](spanner::Transaction const&) { return spanner::Mutations{m}; });
     if (!result) {
       std::lock_guard<std::mutex> lk(mu);
       std::cerr << "# Error in Commit() " << result.status() << "\n";
     }
-    mutation = cloud_spanner::InsertOrUpdateMutationBuilder("KeyValue",
-                                                            {"Key", "Data"});
+    mutation =
+        spanner::InsertOrUpdateMutationBuilder("KeyValue", {"Key", "Data"});
     current_mutations = 0;
   };
   auto force_flush = [&maybe_flush] { maybe_flush(true); };
@@ -210,10 +207,10 @@ void FillTableTask(Config const& config, cloud_spanner::Client client,
   force_flush();
 }
 
-void FillTable(Config const& config, cloud_spanner::Database const& database,
+void FillTable(Config const& config, spanner::Database const& database,
                std::mutex& mu, std::string const& value) {
   // We need to populate some data or all the requests to read will fail.
-  cloud_spanner::Client client(cloud_spanner::MakeConnection(database));
+  spanner::Client client(spanner::MakeConnection(database));
   std::cout << "# Populating database " << std::flush;
   int const task_count = 16;
   std::vector<std::future<void>> tasks(task_count);
@@ -232,28 +229,26 @@ void FillTable(Config const& config, cloud_spanner::Database const& database,
   std::cout << " DONE\n";
 }
 
-cloud_spanner::Client MakeClient(Config const& config, int num_channels,
-                                 cloud_spanner::Database const& database) {
+spanner::Client MakeClient(Config const& config, int num_channels,
+                           spanner::Database const& database) {
   std::cout << "# Creating 1 client using shared connection with "
             << num_channels << " channels\n"
             << std::flush;
 
-  auto connection = cloud_spanner::MakeConnection(
-      database,
-      cloud_spanner::ConnectionOptions().set_num_channels(num_channels),
+  auto connection = spanner::MakeConnection(
+      database, spanner::ConnectionOptions().set_num_channels(num_channels),
       // This pre-creates all the Sessions we will need (one per thread).
-      cloud_spanner::SessionPoolOptions().set_min_sessions(
-          config.maximum_threads));
-  return cloud_spanner::Client(std::move(connection));
+      spanner::SessionPoolOptions().set_min_sessions(config.maximum_threads));
+  return spanner::Client(std::move(connection));
 }
 
 class InsertOrUpdateExperiment : public Experiment {
  public:
   InsertOrUpdateExperiment() : generator_(std::random_device{}()) {}
 
-  void SetUp(Config const&, cloud_spanner::Database const&) override {}
+  void SetUp(Config const&, spanner::Database const&) override {}
 
-  void Run(Config const& config, cloud_spanner::Database const& database,
+  void Run(Config const& config, spanner::Database const& database,
            SampleSink const& sink) override {
     std::cout << config << std::flush;
 
@@ -270,7 +265,7 @@ class InsertOrUpdateExperiment : public Experiment {
     }
   }
 
-  void RunIteration(Config const& config, cloud_spanner::Client const& client,
+  void RunIteration(Config const& config, spanner::Client const& client,
                     int channel_count, int thread_count,
                     SampleSink const& sink) {
     std::uniform_int_distribution<std::int64_t> random_key(0,
@@ -306,7 +301,7 @@ class InsertOrUpdateExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, cloud_spanner::Client client,
+  int RunTask(Config const& config, spanner::Client client,
               RandomKeyGenerator const& key_generator,
               ErrorSink const& error_sink) {
     int count = 0;
@@ -316,11 +311,10 @@ class InsertOrUpdateExperiment : public Experiment {
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = key_generator();
-      auto m = cloud_spanner::MakeInsertOrUpdateMutation(
-          "KeyValue", {"Key", "Data"}, key, value);
-      auto result = client.Commit([&m](cloud_spanner::Transaction const&) {
-        return cloud_spanner::Mutations{m};
-      });
+      auto m = spanner::MakeInsertOrUpdateMutation("KeyValue", {"Key", "Data"},
+                                                   key, value);
+      auto result = client.Commit(
+          [&m](spanner::Transaction const&) { return spanner::Mutations{m}; });
       if (!result) {
         errors.push_back(std::move(result).status());
       }
@@ -339,8 +333,7 @@ class ReadExperiment : public Experiment {
  public:
   ReadExperiment() : generator_(std::random_device{}()) {}
 
-  void SetUp(Config const& config,
-             cloud_spanner::Database const& database) override {
+  void SetUp(Config const& config, spanner::Database const& database) override {
     std::string value = [this] {
       std::lock_guard<std::mutex> lk(mu_);
       return google::cloud::internal::Sample(
@@ -349,7 +342,7 @@ class ReadExperiment : public Experiment {
     FillTable(config, database, mu_, value);
   }
 
-  void Run(Config const& config, cloud_spanner::Database const& database,
+  void Run(Config const& config, spanner::Database const& database,
            SampleSink const& sink) override {
     std::cout << config << std::flush;
 
@@ -366,7 +359,7 @@ class ReadExperiment : public Experiment {
     }
   }
 
-  void RunIteration(Config const& config, cloud_spanner::Client const& client,
+  void RunIteration(Config const& config, spanner::Client const& client,
                     int channel_count, int thread_count,
                     SampleSink const& sink) {
     std::uniform_int_distribution<std::int64_t> random_key(0,
@@ -402,7 +395,7 @@ class ReadExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, cloud_spanner::Client client,
+  int RunTask(Config const& config, spanner::Client client,
               RandomKeyGenerator const& key_generator,
               ErrorSink const& error_sink) {
     int count = 0;
@@ -412,13 +405,11 @@ class ReadExperiment : public Experiment {
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = key_generator();
-      auto rows = client.Read(
-          "KeyValue",
-          cloud_spanner::KeySet().AddKey(cloud_spanner::MakeKey(key)),
-          {"Key", "Data"});
+      auto rows = client.Read("KeyValue",
+                              spanner::KeySet().AddKey(spanner::MakeKey(key)),
+                              {"Key", "Data"});
       for (auto& row :
-           cloud_spanner::StreamOf<std::tuple<std::int64_t, std::string>>(
-               rows)) {
+           spanner::StreamOf<std::tuple<std::int64_t, std::string>>(rows)) {
         if (!row) {
           errors.push_back(std::move(row).status());
           break;
@@ -439,8 +430,7 @@ class UpdateDmlExperiment : public Experiment {
  public:
   UpdateDmlExperiment() : generator_(std::random_device{}()) {}
 
-  void SetUp(Config const& config,
-             cloud_spanner::Database const& database) override {
+  void SetUp(Config const& config, spanner::Database const& database) override {
     std::string value = [this] {
       std::lock_guard<std::mutex> lk(mu_);
       return google::cloud::internal::Sample(
@@ -449,7 +439,7 @@ class UpdateDmlExperiment : public Experiment {
     FillTable(config, database, mu_, value);
   }
 
-  void Run(Config const& config, cloud_spanner::Database const& database,
+  void Run(Config const& config, spanner::Database const& database,
            SampleSink const& sink) override {
     std::cout << config << std::flush;
 
@@ -466,7 +456,7 @@ class UpdateDmlExperiment : public Experiment {
     }
   }
 
-  void RunIteration(Config const& config, cloud_spanner::Client const& client,
+  void RunIteration(Config const& config, spanner::Client const& client,
                     int channel_count, int thread_count,
                     SampleSink const& sink) {
     std::uniform_int_distribution<std::int64_t> random_key(0,
@@ -502,7 +492,7 @@ class UpdateDmlExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, cloud_spanner::Client client,
+  int RunTask(Config const& config, spanner::Client client,
               RandomKeyGenerator const& key_generator,
               ErrorSink const& error_sink) {
     int count = 0;
@@ -512,16 +502,16 @@ class UpdateDmlExperiment : public Experiment {
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = key_generator();
-      auto result = client.Commit(
-          [&client, key, &value](cloud_spanner::Transaction const& txn)
-              -> google::cloud::StatusOr<cloud_spanner::Mutations> {
+      auto result =
+          client.Commit([&client, key, &value](spanner::Transaction const& txn)
+                            -> google::cloud::StatusOr<spanner::Mutations> {
             auto result = client.ExecuteDml(
-                txn, cloud_spanner::SqlStatement(
+                txn, spanner::SqlStatement(
                          "UPDATE KeyValue SET Data = @data WHERE Key = @key",
-                         {{"key", cloud_spanner::Value(key)},
-                          {"data", cloud_spanner::Value(value)}}));
+                         {{"key", spanner::Value(key)},
+                          {"data", spanner::Value(value)}}));
             if (!result) return std::move(result).status();
-            return cloud_spanner::Mutations{};
+            return spanner::Mutations{};
           });
       if (!result) {
         errors.push_back(std::move(result).status());
@@ -541,8 +531,7 @@ class SelectExperiment : public Experiment {
  public:
   SelectExperiment() : generator_(std::random_device{}()) {}
 
-  void SetUp(Config const& config,
-             cloud_spanner::Database const& database) override {
+  void SetUp(Config const& config, spanner::Database const& database) override {
     std::string value = [this] {
       std::lock_guard<std::mutex> lk(mu_);
       return google::cloud::internal::Sample(
@@ -551,7 +540,7 @@ class SelectExperiment : public Experiment {
     FillTable(config, database, mu_, value);
   }
 
-  void Run(Config const& config, cloud_spanner::Database const& database,
+  void Run(Config const& config, spanner::Database const& database,
            SampleSink const& sink) override {
     std::cout << config << std::flush;
 
@@ -568,7 +557,7 @@ class SelectExperiment : public Experiment {
     }
   }
 
-  void RunIteration(Config const& config, cloud_spanner::Client const& client,
+  void RunIteration(Config const& config, spanner::Client const& client,
                     int channel_count, int thread_count,
                     SampleSink const& sink) {
     std::uniform_int_distribution<std::int64_t> random_key(0,
@@ -604,7 +593,7 @@ class SelectExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, cloud_spanner::Client client,
+  int RunTask(Config const& config, spanner::Client client,
               RandomKeyGenerator const& key_generator,
               ErrorSink const& error_sink) {
     int count = 0;
@@ -615,12 +604,11 @@ class SelectExperiment : public Experiment {
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = key_generator();
       auto rows = client.ExecuteQuery(
-          cloud_spanner::SqlStatement("SELECT Key, Data FROM KeyValue"
-                                      " WHERE Key = @key",
-                                      {{"key", cloud_spanner::Value(key)}}));
+          spanner::SqlStatement("SELECT Key, Data FROM KeyValue"
+                                " WHERE Key = @key",
+                                {{"key", spanner::Value(key)}}));
       for (auto& row :
-           cloud_spanner::StreamOf<std::tuple<std::int64_t, std::string>>(
-               rows)) {
+           spanner::StreamOf<std::tuple<std::int64_t, std::string>>(rows)) {
         if (!row) {
           errors.push_back(std::move(row).status());
           break;
@@ -639,11 +627,11 @@ class SelectExperiment : public Experiment {
 
 class RunAllExperiment : public Experiment {
  public:
-  void SetUp(Config const&, cloud_spanner::Database const&) override {
+  void SetUp(Config const&, spanner::Database const&) override {
     setup_called_ = true;
   }
 
-  void Run(Config const& cfg, cloud_spanner::Database const& database,
+  void Run(Config const& cfg, spanner::Database const& database,
            SampleSink const& sink) override {
     // Smoke test all the experiments by running a very small version of each.
     for (auto& kv : AvailableExperiments()) {

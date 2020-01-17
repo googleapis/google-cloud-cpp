@@ -61,8 +61,8 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& display_name) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Instance in(project_id, instance_id);
 
   std::vector<std::string> instance_config_names = [client,
@@ -110,8 +110,8 @@ void UpdateInstance(google::cloud::spanner::InstanceAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& new_display_name) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Instance in(project_id, instance_id);
 
   auto f = client.UpdateInstance(
@@ -397,8 +397,8 @@ void CreateDatabase(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& database_id) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   future<StatusOr<google::spanner::admin::database::v1::Database>> f =
@@ -429,8 +429,8 @@ void CreateTableWithTimestamp(
     google::cloud::spanner::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   future<
@@ -459,8 +459,8 @@ void CreateTableWithTimestamp(
 void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
               std::string const& project_id, std::string const& instance_id,
               std::string const& database_id) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   future<
@@ -481,7 +481,7 @@ void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
 void GetDatabase(google::cloud::spanner::DatabaseAdminClient client,
                  std::string const& project_id, std::string const& instance_id,
                  std::string const& database_id) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto database = client.GetDatabase(
       spanner::Database(project_id, instance_id, database_id));
   if (!database) throw std::runtime_error(database.status().message());
@@ -494,7 +494,7 @@ void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
                     std::string const& project_id,
                     std::string const& instance_id,
                     std::string const& database_id) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto database = client.GetDatabaseDdl(
       spanner::Database(project_id, instance_id, database_id));
   if (!database) throw std::runtime_error(database.status().message());
@@ -506,8 +506,8 @@ void GetDatabaseDdl(google::cloud::spanner::DatabaseAdminClient client,
 void AddColumn(google::cloud::spanner::DatabaseAdminClient client,
                std::string const& project_id, std::string const& instance_id,
                std::string const& database_id) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   future<
@@ -528,8 +528,8 @@ void AddTimestampColumn(google::cloud::spanner::DatabaseAdminClient client,
                         std::string const& project_id,
                         std::string const& instance_id,
                         std::string const& database_id) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   future<
@@ -551,8 +551,8 @@ void AddStoringIndex(google::cloud::spanner::DatabaseAdminClient client,
                      std::string const& project_id,
                      std::string const& instance_id,
                      std::string const& database_id) {
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   future<
@@ -715,7 +715,7 @@ void DatabaseTestIamPermissionsCommand(std::vector<std::string> const& argv) {
 //! [quickstart] [START spanner_quickstart]
 void Quickstart(std::string const& project_id, std::string const& instance_id,
                 std::string const& database_id) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::Client client(spanner::MakeConnection(
       spanner::Database(project_id, instance_id, database_id)));
@@ -742,15 +742,15 @@ void QuickstartCommand(std::vector<std::string> const& argv) {
 google::cloud::spanner::Client MakeSampleClient(
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   return spanner::Client(spanner::MakeConnection(
       spanner::Database(project_id, instance_id, database_id)));
 }
 
 //! [START spanner_insert_data]
 void InsertData(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
-  using google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
   auto insert_singers = spanner::InsertMutationBuilder(
                             "Singers", {"SingerId", "FirstName", "LastName"})
                             .EmplaceRow(1, "Marc", "Richards")
@@ -782,8 +782,8 @@ void InsertData(google::cloud::spanner::Client client) {
 
 //! [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
-  using google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
   auto commit_result = client.Commit([](spanner::Transaction const&) {
     return spanner::Mutations{
         spanner::UpdateMutationBuilder(
@@ -801,8 +801,8 @@ void UpdateData(google::cloud::spanner::Client client) {
 
 //! [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
-  using google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
 
   // Delete each of the albums by individual key, then delete all the singers
   // using a key range.
@@ -833,7 +833,7 @@ void DeleteData(google::cloud::spanner::Client client) {
 
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto read_only = spanner::MakeReadOnlyTransaction();
 
   spanner::SqlStatement select(
@@ -868,7 +868,7 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
 
 //! [START spanner_read_stale_data]
 void ReadStaleData(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto opts = spanner::Transaction::ReadOnlyOptions(std::chrono::seconds(15));
   auto read_only = spanner::MakeReadOnlyTransaction(opts);
 
@@ -890,7 +890,7 @@ void ReadStaleData(google::cloud::spanner::Client client) {
 
 //! [START spanner_batch_client]
 void UsePartitionQuery(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto txn = spanner::MakeReadOnlyTransaction();
 
   spanner::SqlStatement select(
@@ -919,7 +919,7 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
 
 //! [START spanner_read_data_with_index]
 void ReadDataWithIndex(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::ReadOptions read_options;
   read_options.index_name = "AlbumsByAlbumTitle";
@@ -937,7 +937,7 @@ void ReadDataWithIndex(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_data_with_new_column]
 void QueryNewColumn(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::SqlStatement select(
       "SELECT SingerId, AlbumId, MarketingBudget FROM Albums");
@@ -962,7 +962,7 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_data_with_index]
 void QueryUsingIndex(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::SqlStatement select(
       "SELECT AlbumId, AlbumTitle, MarketingBudget"
@@ -990,7 +990,7 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
 
 //! [START spanner_read_data_with_storing_index]
 void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::ReadOptions read_options;
   read_options.index_name = "AlbumsByAlbumTitle2";
@@ -1016,8 +1016,8 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
 
 //! [START spanner_read_write_transaction]
 void ReadWriteTransaction(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
-  using google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
 
   // A helper to read a single album MarketingBudget.
   auto get_current_budget =
@@ -1062,8 +1062,8 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_standard_insert]
 void DmlStandardInsert(google::cloud::spanner::Client client) {
-  using google::cloud::StatusOr;
-  namespace spanner = google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit(
       [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
         auto insert = client.ExecuteDml(
@@ -1084,8 +1084,8 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_standard_update]
 void DmlStandardUpdate(google::cloud::spanner::Client client) {
-  using google::cloud::StatusOr;
-  namespace spanner = google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit(
       [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
         auto update = client.ExecuteDml(
@@ -1106,8 +1106,8 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
 
 // [START spanner_dml_standard_update_with_timestamp]
 void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
-  using google::cloud::StatusOr;
-  namespace spanner = google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit(
       [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
         auto update = client.ExecuteDml(
@@ -1128,8 +1128,8 @@ void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_write_then_read]
 void DmlWriteThenRead(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
-  using google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
 
   auto commit_result = client.Commit(
       [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
@@ -1160,8 +1160,8 @@ void DmlWriteThenRead(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_standard_delete]
 void DmlStandardDelete(google::cloud::spanner::Client client) {
-  using google::cloud::StatusOr;
-  namespace spanner = google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit([&client](spanner::Transaction txn)
                                          -> StatusOr<spanner::Mutations> {
     auto dele = client.ExecuteDml(
@@ -1179,7 +1179,7 @@ void DmlStandardDelete(google::cloud::spanner::Client client) {
 
 //! [execute-sql-partitioned] [START spanner_dml_partitioned_delete]
 void DmlPartitionedDelete(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("DELETE FROM Singers WHERE SingerId > 10"));
   if (!result) throw std::runtime_error(result.status().message());
@@ -1189,7 +1189,7 @@ void DmlPartitionedDelete(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_partitioned_update]
 void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("UPDATE Albums SET MarketingBudget = 100000"
                             " WHERE SingerId > 1"));
@@ -1200,7 +1200,7 @@ void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_batch_update]
 void DmlBatchUpdate(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   auto commit_result =
       client.Commit([&client](spanner::Transaction const& txn)
@@ -1235,7 +1235,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
 //
 //! [START spanner_dml_structs]
 void DmlStructs(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   std::int64_t rows_modified = 0;
   auto commit_result =
       client.Commit([&client, &rows_modified](spanner::Transaction const& txn)
@@ -1261,8 +1261,8 @@ void DmlStructs(google::cloud::spanner::Client client) {
 
 //! [START spanner_write_data_for_struct_queries]
 void WriteDataForStructQueries(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
-  using google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
   auto commit_result = client.Commit([](spanner::Transaction const&) {
     return spanner::Mutations{
         spanner::InsertMutationBuilder("Singers",
@@ -1283,7 +1283,7 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_data]
 void QueryData(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::SqlStatement select("SELECT SingerId, LastName FROM Singers");
   using RowType = std::tuple<std::int64_t, std::string>;
@@ -1300,8 +1300,8 @@ void QueryData(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_getting_started_insert]
 void DmlGettingStartedInsert(google::cloud::spanner::Client client) {
-  using google::cloud::StatusOr;
-  namespace spanner = google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
 
   auto commit_result = client.Commit(
       [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
@@ -1326,8 +1326,8 @@ void DmlGettingStartedInsert(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_getting_started_update]
 void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
-  using google::cloud::StatusOr;
-  namespace spanner = google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
 
   // A helper to read the budget for the given album and singer.
   auto get_budget = [&](spanner::Transaction txn, std::int64_t album_id,
@@ -1381,7 +1381,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_with_parameter]
 void QueryWithParameter(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   spanner::SqlStatement select(
       "SELECT SingerId, FirstName, LastName FROM Singers"
@@ -1402,7 +1402,7 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
 
 //! [START spanner_read_data]
 void ReadData(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   auto rows = client.Read("Albums", google::cloud::spanner::KeySet::All(),
                           {"SingerId", "AlbumId", "AlbumTitle"});
@@ -1420,7 +1420,7 @@ void ReadData(google::cloud::spanner::Client client) {
 
 //! [spanner-query-data-select-star]
 void QueryDataSelectStar(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   // With a "SELECT *" query, we don't know the order in which the columns will
   // be returned (nor the number of columns). Therefore, we look up each value
@@ -1465,7 +1465,7 @@ void QueryDataSelectStar(google::cloud::spanner::Client client) {
 //! [START spanner_query_data_with_struct]
 void QueryDataWithStruct(google::cloud::spanner::Client client) {
   //! [spanner-sql-statement-params] [START spanner_create_struct_with_data]
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   auto singer_info = std::make_tuple("Elena", "Campbell");
   //! [END spanner_create_struct_with_data]
   auto rows = client.ExecuteQuery(spanner::SqlStatement(
@@ -1483,7 +1483,7 @@ void QueryDataWithStruct(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_data_with_array_of_struct]
 void QueryDataWithArrayOfStruct(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   // [START spanner_create_array_of_struct_with_data]
   // Cloud Spanner STRUCT<> types with named fields are represented by
   // std::tuple<std::pair<std::string, T>...>, create an alias to make it easier
@@ -1518,7 +1518,7 @@ void QueryDataWithArrayOfStruct(google::cloud::spanner::Client client) {
 
 //! [START spanner_field_access_on_struct_parameters]
 void FieldAccessOnStructParameters(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   // Cloud Spanner STRUCT<> with named fields is represented as
   // tuple<pair<string, T>...>. Create a type alias for this example:
@@ -1541,7 +1541,7 @@ void FieldAccessOnStructParameters(google::cloud::spanner::Client client) {
 
 //! [START spanner_field_access_on_nested_struct]
 void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
 
   // Cloud Spanner STRUCT<> with named fields is represented as
   // tuple<pair<string, T>...>. Create a type alias for this example:
@@ -1577,7 +1577,7 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
 
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   [](spanner::Client client) {
     auto rows = client.Read("Albums", spanner::KeySet::All(), {"AlbumTitle"});
     // The actual type of `row` is google::cloud::StatusOr<spanner::Row>, but
@@ -1611,7 +1611,7 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
         "custom-retry-policy <project-id> <instance-id> <database-id>");
   }
   //! [custom-retry-policy]
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
     auto client = spanner::Client(spanner::MakeConnection(
@@ -1652,7 +1652,7 @@ class RemoteConnectionFake {
   void SendPartitionToRemoteMachine(
       google::cloud::spanner::ReadPartition const& partition) {
     //! [serialize-read-partition]
-    namespace spanner = google::cloud::spanner;
+    namespace spanner = ::google::cloud::spanner;
     google::cloud::StatusOr<std::string> serialized_partition =
         spanner::SerializeReadPartition(partition);
     if (!serialized_partition) {
@@ -1668,7 +1668,7 @@ class RemoteConnectionFake {
   void SendPartitionToRemoteMachine(
       google::cloud::spanner::QueryPartition const& partition) {
     //! [serialize-query-partition]
-    namespace spanner = google::cloud::spanner;
+    namespace spanner = ::google::cloud::spanner;
     google::cloud::StatusOr<std::string> serialized_partition =
         spanner::SerializeQueryPartition(partition);
     if (!serialized_partition) {
@@ -1705,7 +1705,7 @@ class RemoteConnectionFake {
 void ProcessRow(google::cloud::spanner::Row const&) {}
 
 void PartitionRead(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   RemoteConnectionFake remote_connection;
   //! [key-set-builder]
   auto key_set = spanner::KeySet().AddRange(spanner::MakeKeyBoundClosed(1),
@@ -1736,7 +1736,7 @@ void PartitionRead(google::cloud::spanner::Client client) {
 }
 
 void PartitionQuery(google::cloud::spanner::Client client) {
-  namespace spanner = google::cloud::spanner;
+  namespace spanner = ::google::cloud::spanner;
   RemoteConnectionFake remote_connection;
   //! [partition-query]
   spanner::Transaction ro_transaction = spanner::MakeReadOnlyTransaction();

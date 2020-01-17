@@ -24,7 +24,7 @@ namespace cloud {
 namespace spanner_benchmarks {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace cs = google::cloud::spanner;
+namespace spanner = ::google::cloud::spanner;
 
 std::ostream& operator<<(std::ostream& os, Config const& config) {
   return os << "# Experiment: " << config.experiment
@@ -42,9 +42,9 @@ std::ostream& operator<<(std::ostream& os, Config const& config) {
             << "\n# Query Size: " << config.query_size
             << "\n# Use Only Stubs: " << config.use_only_stubs
             << "\n# Use Only Clients: " << config.use_only_clients
-            << "\n# Compiler: " << cs::internal::CompilerId() << "-"
-            << cs::internal::CompilerVersion()
-            << "\n# Build Flags: " << cs::internal::BuildFlags() << "\n";
+            << "\n# Compiler: " << spanner::internal::CompilerId() << "-"
+            << spanner::internal::CompilerVersion()
+            << "\n# Build Flags: " << spanner::internal::BuildFlags() << "\n";
 }
 
 google::cloud::StatusOr<Config> ParseArgs(std::vector<std::string> args) {

@@ -34,7 +34,7 @@ inline namespace SPANNER_CLIENT_NS {
  * [Query Plan
  * proto](https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/query_plan.proto)
  */
-using ExecutionPlan = google::spanner::v1::QueryPlan;
+using ExecutionPlan = ::google::spanner::v1::QueryPlan;
 
 namespace internal {
 class ResultSourceInterface {

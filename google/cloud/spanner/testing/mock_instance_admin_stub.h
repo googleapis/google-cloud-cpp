@@ -23,7 +23,7 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace gcsa = google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance::v1;
 
 class MockInstanceAdminStub
     : public google::cloud::spanner::internal::InstanceAdminStub {

@@ -28,7 +28,7 @@ using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
-namespace gcsa = google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance::v1;
 
 TEST(InstanceAdminClientTest, CopyAndMove) {
   auto conn1 = std::make_shared<MockInstanceAdminConnection>();

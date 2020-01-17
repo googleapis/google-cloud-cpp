@@ -27,7 +27,7 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-namespace spanner_proto = google::spanner::v1;
+namespace spanner_proto = ::google::spanner::v1;
 
 // This ugly macro and the supporting template member function refactor most
 // of this test to one-liners.

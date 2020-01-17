@@ -29,7 +29,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::Return;
-namespace spanner_proto = google::spanner::v1;
+namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingSpannerStubTest : public ::testing::Test {
  protected:

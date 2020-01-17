@@ -32,7 +32,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
 template <typename Functor>
-using VisitInvokeResult = google::cloud::internal::invoke_result_t<
+using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
     Functor, SessionHolder&, google::spanner::v1::TransactionSelector&,
     std::int64_t>;
 

@@ -26,7 +26,7 @@ namespace {
 //! [helper-aliases]
 using ::testing::_;
 using ::testing::Return;
-namespace spanner = google::cloud::spanner;
+namespace spanner = ::google::cloud::spanner;
 //! [helper-aliases]
 
 TEST(MockSpannerClient, SuccessfulExecuteQuery) {

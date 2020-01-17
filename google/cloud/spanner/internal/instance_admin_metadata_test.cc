@@ -27,7 +27,7 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-namespace gcsa = google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance::v1;
 
 class InstanceAdminMetadataTest : public ::testing::Test {
  protected:

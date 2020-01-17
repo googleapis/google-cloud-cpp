@@ -29,7 +29,7 @@ namespace {
 
 using ::testing::_;
 using ::testing::Return;
-namespace gcsa = google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance::v1;
 
 class InstanceAdminLoggingTest : public ::testing::Test {
  protected:

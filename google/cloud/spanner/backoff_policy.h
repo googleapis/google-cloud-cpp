@@ -24,7 +24,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 /// The base class for spanner's backoff policies.
-using BackoffPolicy = google::cloud::internal::BackoffPolicy;
+using BackoffPolicy = ::google::cloud::internal::BackoffPolicy;
 
 /// A truncated exponential backoff policy with randomized periods.
 using ExponentialBackoffPolicy =

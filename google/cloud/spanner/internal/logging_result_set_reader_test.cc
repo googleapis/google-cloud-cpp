@@ -28,7 +28,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
-namespace spanner_proto = google::spanner::v1;
+namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingResultSetReaderTest : public ::testing::Test {
  protected:

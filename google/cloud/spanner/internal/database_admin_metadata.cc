@@ -21,7 +21,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace gcsa = google::spanner::admin::database::v1;
+namespace gcsa = ::google::spanner::admin::database::v1;
 
 DatabaseAdminMetadata::DatabaseAdminMetadata(
     std::shared_ptr<DatabaseAdminStub> child)

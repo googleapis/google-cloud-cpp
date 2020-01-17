@@ -21,7 +21,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace gcsa = google::spanner::admin::instance::v1;
+namespace gcsa = ::google::spanner::admin::instance::v1;
 
 InstanceAdminMetadata::InstanceAdminMetadata(
     std::shared_ptr<InstanceAdminStub> child)

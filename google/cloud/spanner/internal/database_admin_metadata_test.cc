@@ -27,7 +27,7 @@ namespace internal {
 namespace {
 
 using ::testing::_;
-namespace gcsa = google::spanner::admin::database::v1;
+namespace gcsa = ::google::spanner::admin::database::v1;
 
 class DatabaseAdminMetadataTest : public ::testing::Test {
  protected:

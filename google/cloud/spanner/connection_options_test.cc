@@ -24,7 +24,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using google::cloud::testing_util::EnvironmentVariableRestore;
+using ::google::cloud::testing_util::EnvironmentVariableRestore;
 using ::testing::HasSubstr;
 using ::testing::StartsWith;
 

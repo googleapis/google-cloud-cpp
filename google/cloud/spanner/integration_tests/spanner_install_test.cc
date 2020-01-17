@@ -20,7 +20,7 @@
 #include "google/cloud/internal/random.h"
 #include <functional>
 
-namespace spanner = google::cloud::spanner;
+namespace spanner = ::google::cloud::spanner;
 
 std::function<void()> drop_database = [] {};
 
@@ -76,8 +76,8 @@ int main(int argc, char* argv[]) try {
   spanner::Database const database(project_id, instance_id, database_id);
   std::cout << "Will run the test in database: " << database.FullName() << "\n";
 
-  using google::cloud::future;
-  using google::cloud::StatusOr;
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
 
   std::cout << "Creating database [" << database_id << "] " << std::flush;
   future<StatusOr<google::spanner::admin::database::v1::Database>>
