@@ -117,7 +117,6 @@ banner "Creating and pushing branch ${NEW_BRANCH}"
 run git checkout -b "${NEW_BRANCH}" "${NEW_TAG}"
 run git push --set-upstream origin "${NEW_BRANCH}"
 
-# Maybe todo: generate the tarball/zipball sha256 sums and add them to the body.
 # Maybe todo: extract the release notes from the README.md file and stick them
 #             in the release body.
 banner "Creating release"
