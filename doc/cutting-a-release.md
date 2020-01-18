@@ -73,16 +73,6 @@ new "pre-release" at
 https://github.com/googleapis/google-cloud-cpp/releases. Add the release
 notes to the Release.
 
-After you create the release, capture the SHA256 checksums of the
-tarball and zip files, and edit the notes to include them. These
-commands might be handy:
-
-```bash
-TAG="<release-tag>" # change this to the actual tag, e.g., "v0.5.0"
-wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.tar.gz" | sha256sum
-wget -q -O - "https://github.com/googleapis/google-cloud-cpp/archive/${TAG}.zip" | sha256sum
-```
-
 Ask your colleagues to review the release notes. There should be few/no edits
 needed at this point since the release notes were already reviewed in step 1.
 
