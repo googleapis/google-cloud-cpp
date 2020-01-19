@@ -246,6 +246,9 @@ class CompletionQueueImpl {
   /// Terminate the event loop.
   void Shutdown();
 
+  /// Cancel all existing operations.
+  void CancelAll();
+
   /// Create a new alarm object.
   virtual std::unique_ptr<grpc::Alarm> CreateAlarm() const;
 
@@ -281,8 +284,8 @@ class CompletionQueueImpl {
 
  private:
   grpc::CompletionQueue cq_;
-  std::atomic<bool> shutdown_;
   mutable std::mutex mu_;
+  bool shutdown_;
   std::unordered_map<std::intptr_t, std::shared_ptr<AsyncGrpcOperation>>
       pending_ops_;
 };

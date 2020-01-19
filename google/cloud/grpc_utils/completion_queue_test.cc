@@ -66,6 +66,44 @@ TEST(CompletionQueueTest, MockSmokeTest) {
   cq.Shutdown();
 }
 
+TEST(CompletionQueueTest, ShutdownWithPending) {
+  using ms = std::chrono::milliseconds;
+
+  future<void> timer;
+  {
+    CompletionQueue cq;
+    std::thread runner([&cq] { cq.Run(); });
+    timer = cq.MakeRelativeTimer(ms(20)).then(
+        [](future<std::chrono::system_clock::time_point>) {});
+    EXPECT_EQ(std::future_status::timeout, timer.wait_for(ms(0)));
+    cq.Shutdown();
+    EXPECT_EQ(std::future_status::timeout, timer.wait_for(ms(0)));
+    runner.join();
+  }
+  EXPECT_EQ(std::future_status::ready, timer.wait_for(ms(0)));
+}
+
+TEST(CompletionQueueTest, CanCancelAllEvents) {
+  using ms = std::chrono::milliseconds;
+
+  CompletionQueue cq;
+  promise<void> done;
+  std::thread runner([&cq, &done] {
+    cq.Run();
+    done.set_value();
+  });
+  cq.MakeRelativeTimer(ms(20000));
+  cq.MakeRelativeTimer(ms(20000));
+  cq.MakeRelativeTimer(ms(20000));
+  auto f = done.get_future();
+  EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(1)));
+  cq.Shutdown();
+  EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(1)));
+  cq.CancelAll();
+  EXPECT_EQ(std::future_status::ready, f.wait_for(ms(100)));
+  runner.join();
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
 }  // namespace grpc_utils

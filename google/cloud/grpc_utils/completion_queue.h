@@ -45,6 +45,9 @@ class CompletionQueue {
   /// Terminate the completion queue event loop.
   void Shutdown();
 
+  /// Cancel all pending operations.
+  void CancelAll();
+
   /**
    * Create a timer that fires at @p deadline.
    *

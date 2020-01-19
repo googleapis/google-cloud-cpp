@@ -80,6 +80,8 @@ void CompletionQueue::Run() { impl_->Run(*this); }
 
 void CompletionQueue::Shutdown() { impl_->Shutdown(); }
 
+void CompletionQueue::CancelAll() { impl_->CancelAll(); }
+
 google::cloud::future<std::chrono::system_clock::time_point>
 CompletionQueue::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {

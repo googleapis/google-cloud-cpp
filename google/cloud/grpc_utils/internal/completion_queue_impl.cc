@@ -27,17 +27,16 @@ namespace grpc_utils {
 inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
 namespace internal {
 void CompletionQueueImpl::Run(CompletionQueue& cq) {
-  while (!shutdown_.load()) {
-    void* tag;
-    bool ok;
-    auto deadline = std::chrono::system_clock::now() + kLoopTimeout;
-    auto status = cq_.AsyncNext(&tag, &ok, deadline);
-    if (status == grpc::CompletionQueue::SHUTDOWN) {
-      break;
-    }
-    if (status == grpc::CompletionQueue::TIMEOUT) {
-      continue;
-    }
+  void* tag;
+  bool ok;
+  auto deadline = [] {
+    return std::chrono::system_clock::now() + kLoopTimeout;
+  };
+
+  for (auto status = cq_.AsyncNext(&tag, &ok, deadline());
+       status != grpc::CompletionQueue::SHUTDOWN;
+       status = cq_.AsyncNext(&tag, &ok, deadline())) {
+    if (status == grpc::CompletionQueue::TIMEOUT) continue;
     if (status != grpc::CompletionQueue::GOT_EVENT) {
       google::cloud::internal::ThrowRuntimeError(
           "unexpected status from AsyncNext()");
@@ -46,12 +45,31 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
     if (op->Notify(cq, ok)) {
       ForgetOperation(tag);
     }
+    std::unique_lock<std::mutex> lk(mu_);
+    if (shutdown_ && pending_ops_.empty()) break;
   }
 }
 
 void CompletionQueueImpl::Shutdown() {
-  shutdown_.store(true);
+  {
+    std::lock_guard<std::mutex> lk(mu_);
+    shutdown_ = true;
+  }
   cq_.Shutdown();
+}
+
+void CompletionQueueImpl::CancelAll() {
+  // Cancel all operations. We need to make a copy of the operations because
+  // canceling them may trigger a recursive call that needs the lock. And we
+  // need the lock because canceling might trigger calls that invalidate the
+  // iterators.
+  auto pending = [this] {
+    std::unique_lock<std::mutex> lk(mu_);
+    return pending_ops_;
+  }();
+  for (auto& kv : pending) {
+    kv.second->Cancel();
+  }
 }
 
 std::unique_ptr<grpc::Alarm> CompletionQueueImpl::CreateAlarm() const {
@@ -131,10 +149,10 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, bool ok) {
   grpc::CompletionQueue::NextStatus status;
   do {
     void* tag;
-    bool ok;
+    bool async_next_ok;
     auto deadline =
         std::chrono::system_clock::now() + std::chrono::milliseconds(1);
-    status = cq_.AsyncNext(&tag, &ok, deadline);
+    status = cq_.AsyncNext(&tag, &async_next_ok, deadline);
   } while (status == grpc::CompletionQueue::GOT_EVENT);
 }
 
