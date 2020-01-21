@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) try {
   auto channel = grpc::CreateChannel("localhost:12345", creds);
   auto stub = google::pubsub::v1::Publisher::NewStub(channel);
 
-  // TODO(#...) - this is just a "does this link" test for now.
+  // TODO(#4) - this is just a "does this link" test for now.
   std::cout << google::cloud::pubsub::VersionString() << "\n";
 
   return 0;
