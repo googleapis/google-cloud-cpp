@@ -200,7 +200,8 @@ TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminNoEnv) {
   google::cloud::internal::UnsetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
 
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultInstanceAdminEndpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com",
+            internal::DefaultInstanceAdminEndpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminDirectPathNoEffect) {
@@ -209,7 +210,8 @@ TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminDirectPathNoEffect) {
   google::cloud::internal::SetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
                                   "bigtable");
 
-  EXPECT_EQ("bigtableadmin.googleapis.com", internal::DefaultInstanceAdminEndpoint());
+  EXPECT_EQ("bigtableadmin.googleapis.com",
+            internal::DefaultInstanceAdminEndpoint());
 }
 
 TEST_F(ClientOptionsDefaultEndpointTest, InstanceAdminEmulatorOverrides) {
