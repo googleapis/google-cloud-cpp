@@ -26,6 +26,9 @@ namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
 namespace internal {
 struct InstanceAdminTraits;
+std::string DefaultDataEndpoint();
+std::string DefaultAdminEndpoint();
+std::string DefaultInstanceAdminEndpoint();
 }  // namespace internal
 
 /**

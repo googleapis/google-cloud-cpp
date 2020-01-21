@@ -15,6 +15,7 @@
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/getenv.h"
+#include <sstream>
 #include <thread>
 
 namespace {
@@ -31,6 +32,38 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+namespace internal {
+
+std::string DefaultDataEndpoint() {
+  auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  if (emulator.has_value()) return *std::move(emulator);
+  auto direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH");
+  if (direct_path.has_value()) {
+    std::istringstream is(*std::move(direct_path));
+    std::string token;
+    while (std::getline(is, token, ',')) {
+      if (token == "bigtable") return "directpath-bigtable.googleapis.com";
+    }
+  }
+  return "bigtable.googleapis.com";
+}
+
+std::string DefaultAdminEndpoint() {
+  auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
+  if (emulator.has_value()) return *std::move(emulator);
+  return "bigtableadmin.googleapis.com";
+}
+
+std::string DefaultInstanceAdminEndpoint() {
+  auto emulator =
+      google::cloud::internal::GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
+  if (emulator.has_value()) return *std::move(emulator);
+  return DefaultAdminEndpoint();
+}
+
+}  // namespace internal
+
 inline std::size_t CalculateDefaultConnectionPoolSize() {
   // For batter resource utilization and greater throughput, it is recommended
   // to calculate the default pool size based on cores(CPU) available. However,
@@ -58,6 +91,9 @@ ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
 }
 
 ClientOptions::ClientOptions() : ClientOptions(BigtableDefaultCredentials()) {
+  data_endpoint_ = internal::DefaultDataEndpoint();
+  admin_endpoint_ = internal::DefaultAdminEndpoint();
+  instance_admin_endpoint_ = internal::DefaultInstanceAdminEndpoint();
   auto emulator = google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST");
   if (emulator.has_value()) {
     data_endpoint_ = *emulator;
