@@ -83,8 +83,8 @@ using google::cloud::StatusOr;
 struct Options {
   std::string project_id;
   std::string region;
-  std::string bucket_prefix = "parallel_upload_bm.";
-  std::string object_prefix = "parallel_upload_bm.";
+  std::string bucket_prefix = "parallel-upload-bm-";
+  std::string object_prefix = "parallel-upload-bm-";
   std::chrono::seconds duration =
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
