@@ -85,6 +85,7 @@ struct Options {
   std::string region;
   std::string bucket_prefix = "parallel-upload-bm-";
   std::string object_prefix = "parallel-upload-bm-";
+  std::string directory = "/tmp/";
   std::chrono::seconds duration =
       std::chrono::seconds(std::chrono::minutes(15));
   int thread_count = 1;
@@ -97,9 +98,11 @@ struct Options {
 };
 
 StatusOr<std::string> CreateTempFile(
+    std::string const& directory,
     google::cloud::internal::DefaultPRNG& generator, std::uintmax_t size_left) {
   std::size_t const kSingleBufSize = 4 * 1024 * 1024;
-  auto const file_name = gcs_bm::MakeRandomFileName(generator);
+  auto const file_name = directory + (directory.empty() ? "" : "/") +
+                         gcs_bm::MakeRandomFileName(generator);
 
   std::string random_data = gcs_bm::MakeRandomData(generator, kSingleBufSize);
 
@@ -176,6 +179,8 @@ google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
        [&options](std::string const& val) { options.bucket_prefix = val; }},
       {"--object-prefix", "use the given prefix for created objects",
        [&options](std::string const& val) { options.object_prefix = val; }},
+      {"--directory", "use the given directory for files to be uploaded",
+       [&options](std::string const& val) { options.directory = val; }},
       {"--region", "use the given region for the benchmark",
        [&options](std::string const& val) { options.region = val; }},
       {"--thread-count", "set the number of threads in the benchmark",
@@ -295,6 +300,7 @@ int main(int argc, char* argv[]) {
 
   auto bucket_name =
       gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
+  std::cout << "bucket name: " << bucket_name << std::endl;
   auto meta =
       client
           .CreateBucket(bucket_name,
@@ -363,7 +369,8 @@ int main(int argc, char* argv[]) {
            start = std::chrono::steady_clock::now(), ++iteration_count) {
         auto const file_size = size_generator(generator);
         auto const num_shards = num_shards_generator(generator);
-        auto file_name = CreateTempFile(generator, file_size);
+        auto file_name =
+            CreateTempFile(options->directory, generator, file_size);
         if (!file_name) {
           std::lock_guard<std::mutex> lk(cout_mutex);
           std::cout << "# Could not prepare file to upload, size=" << file_size
