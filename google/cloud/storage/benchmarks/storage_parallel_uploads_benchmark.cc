@@ -300,7 +300,6 @@ int main(int argc, char* argv[]) {
 
   auto bucket_name =
       gcs_bm::MakeRandomBucketName(generator, options->bucket_prefix);
-  std::cout << "bucket name: " << bucket_name << std::endl;
   auto meta =
       client
           .CreateBucket(bucket_name,
@@ -333,9 +332,7 @@ int main(int argc, char* argv[]) {
             << "\n# Min Number of Shards: " << options->minimum_num_shards
             << "\n# Max Number of Shards: " << options->maximum_num_shards
             << "\n# Build info: " << notes
-            << "\n# file_sz;num_shards;total_ms\n";
-  // Make this immediately visible in the console, helps with debugging.
-  std::cout << std::flush;
+            << "\nFileSize,ShardCount,UploadTimeMs\n";
 
   std::vector<std::thread> threads;
   std::atomic<int> iteration_count(0);
@@ -387,8 +384,8 @@ int main(int argc, char* argv[]) {
           return;
         }
         std::lock_guard<std::mutex> lk(cout_mutex);
-        std::cout << file_size << ";" << num_shards << ";" << time->count()
-                  << "\n";
+        std::cout << file_size << ',' << num_shards << ',' << time->count()
+                  << '\n';
       }
     });
   };
