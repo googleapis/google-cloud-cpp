@@ -32,8 +32,8 @@ namespace gcsa = ::google::spanner::admin::instance::v1;
  */
 class InstanceAdminLogging : public InstanceAdminStub {
  public:
-  explicit InstanceAdminLogging(std::shared_ptr<InstanceAdminStub> child,
-                                TracingOptions tracing_options)
+  InstanceAdminLogging(std::shared_ptr<InstanceAdminStub> child,
+                       TracingOptions tracing_options)
       : child_(std::move(child)),
         tracing_options_(std::move(tracing_options)) {}
 

@@ -30,8 +30,8 @@ namespace internal {
  */
 class DatabaseAdminLogging : public DatabaseAdminStub {
  public:
-  explicit DatabaseAdminLogging(std::shared_ptr<DatabaseAdminStub> child,
-                                TracingOptions tracing_options)
+  DatabaseAdminLogging(std::shared_ptr<DatabaseAdminStub> child,
+                       TracingOptions tracing_options)
       : child_(std::move(child)),
         tracing_options_(std::move(tracing_options)) {}
 

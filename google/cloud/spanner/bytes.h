@@ -44,7 +44,7 @@ std::string BytesToBase64(Bytes b);
 class Bytes {
  public:
   /// An empty sequence.
-  Bytes() {}
+  Bytes() = default;
 
   /// Construction from a sequence of octets.
   ///@{
@@ -82,7 +82,7 @@ class Bytes {
   friend std::string internal::BytesToBase64(Bytes b);
 
   struct Encoder {
-    Encoder(std::string& rep) : rep_(rep), len_(0) {}
+    explicit Encoder(std::string& rep) : rep_(rep), len_(0) {}
     void Flush();
     void FlushAndPad();
 
@@ -135,7 +135,7 @@ class Bytes {
       std::array<value_type, 1 + 3> buf_;
     };
 
-    Decoder(std::string const& rep) : rep_(rep) {}
+    explicit Decoder(std::string const& rep) : rep_(rep) {}
     iterator begin() { return iterator(rep_.begin(), rep_.end()); }
     iterator end() { return iterator(rep_.end(), rep_.end()); }
 

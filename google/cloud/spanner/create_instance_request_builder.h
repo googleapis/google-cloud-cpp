@@ -49,8 +49,7 @@ class CreateInstanceRequestBuilder {
    * Constructor requires Instance and Cloud Spanner instance config name. It
    * sets node_count = 1, and display_name = instance_id as the default values.
    */
-  explicit CreateInstanceRequestBuilder(Instance const& in,
-                                        std::string config) {
+  CreateInstanceRequestBuilder(Instance const& in, std::string config) {
     request_.set_parent("projects/" + in.project_id());
     request_.set_instance_id(in.instance_id());
     request_.mutable_instance()->set_name(in.FullName());

@@ -128,9 +128,8 @@ class QueryPartition {
   friend StatusOr<QueryPartition> DeserializeQueryPartition(
       std::string const& serialized_query_partition);
 
-  explicit QueryPartition(std::string transaction_id, std::string session_id,
-                          std::string partition_token,
-                          SqlStatement sql_statement);
+  QueryPartition(std::string transaction_id, std::string session_id,
+                 std::string partition_token, SqlStatement sql_statement);
 
   // Accessor methods for use by friends.
   std::string const& partition_token() const { return partition_token_; }

@@ -54,8 +54,8 @@ class Mutation {
    */
   Mutation() = default;
 
-  Mutation(Mutation&&) noexcept = default;
-  Mutation& operator=(Mutation&&) noexcept = default;
+  Mutation(Mutation&&) = default;
+  Mutation& operator=(Mutation&&) = default;
   Mutation(Mutation const&) = default;
   Mutation& operator=(Mutation const&) = default;
 

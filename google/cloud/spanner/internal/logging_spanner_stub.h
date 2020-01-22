@@ -30,8 +30,8 @@ namespace internal {
  */
 class LoggingSpannerStub : public SpannerStub {
  public:
-  explicit LoggingSpannerStub(std::shared_ptr<SpannerStub> child,
-                              TracingOptions tracing_options)
+  LoggingSpannerStub(std::shared_ptr<SpannerStub> child,
+                     TracingOptions tracing_options)
       : child_(std::move(child)),
         tracing_options_(std::move(tracing_options)) {}
   ~LoggingSpannerStub() override = default;

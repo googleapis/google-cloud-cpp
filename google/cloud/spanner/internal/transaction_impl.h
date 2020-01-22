@@ -41,7 +41,7 @@ using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
  */
 class TransactionImpl {
  public:
-  TransactionImpl(google::spanner::v1::TransactionSelector selector)
+  explicit TransactionImpl(google::spanner::v1::TransactionSelector selector)
       : TransactionImpl(/*session=*/{}, std::move(selector)) {}
 
   TransactionImpl(TransactionImpl const& impl,

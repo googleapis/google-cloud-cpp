@@ -35,7 +35,7 @@ namespace internal {
  */
 class Session {
  public:
-  Session(std::string session_name, std::shared_ptr<SpannerStub> stub) noexcept
+  Session(std::string session_name, std::shared_ptr<SpannerStub> stub)
       : session_name_(std::move(session_name)),
         stub_(std::move(stub)),
         is_bad_(false) {}

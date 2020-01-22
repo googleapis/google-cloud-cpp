@@ -98,7 +98,7 @@ class PaginationIterator {
     return std::rel_ops::operator!=(lhs, rhs);
   }
 
-  explicit PaginationIterator(Range* owner, value_type value)
+  PaginationIterator(Range* owner, value_type value)
       : owner_(owner), value_(std::move(value)) {}
 
   Range* owner_;
@@ -108,10 +108,9 @@ class PaginationIterator {
 template <typename T, typename Request, typename Response>
 class PaginationRange {
  public:
-  explicit PaginationRange(
-      Request request,
-      std::function<StatusOr<Response>(Request const& r)> loader,
-      std::function<std::vector<T>(Response r)> get_items)
+  PaginationRange(Request request,
+                  std::function<StatusOr<Response>(Request const& r)> loader,
+                  std::function<std::vector<T>(Response r)> get_items)
       : request_(std::move(request)),
         next_page_loader_(std::move(loader)),
         get_items_(std::move(get_items)),

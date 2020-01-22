@@ -27,8 +27,8 @@ namespace internal {
 
 class LoggingResultSetReader : public PartialResultSetReader {
  public:
-  explicit LoggingResultSetReader(std::unique_ptr<PartialResultSetReader> impl,
-                                  TracingOptions tracing_options)
+  LoggingResultSetReader(std::unique_ptr<PartialResultSetReader> impl,
+                         TracingOptions tracing_options)
       : impl_(std::move(impl)), tracing_options_(std::move(tracing_options)) {}
   ~LoggingResultSetReader() override = default;
 

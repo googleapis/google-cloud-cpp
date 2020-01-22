@@ -187,8 +187,8 @@ class Row {
    * @note columns must not be nullptr
    * @note columns.size() must equal values.size()
    */
-  explicit Row(std::vector<Value> values,
-               std::shared_ptr<const std::vector<std::string>> columns);
+  Row(std::vector<Value> values,
+      std::shared_ptr<const std::vector<std::string>> columns);
 
   std::vector<Value> values_;
   std::shared_ptr<const std::vector<std::string>> columns_;

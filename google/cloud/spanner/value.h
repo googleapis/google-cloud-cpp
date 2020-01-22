@@ -588,10 +588,10 @@ class Value {
   // this constructor matched their arguments best.
   struct PrivateConstructor {};
   template <typename T>
-  explicit Value(PrivateConstructor, T&& t)
+  Value(PrivateConstructor, T&& t)
       : type_(MakeTypeProto(t)), value_(MakeValueProto(std::forward<T>(t))) {}
 
-  explicit Value(google::spanner::v1::Type t, google::protobuf::Value v)
+  Value(google::spanner::v1::Type t, google::protobuf::Value v)
       : type_(std::move(t)), value_(std::move(v)) {}
 
   friend Value internal::FromProto(google::spanner::v1::Type,
