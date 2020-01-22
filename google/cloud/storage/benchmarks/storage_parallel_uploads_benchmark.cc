@@ -317,25 +317,22 @@ int main(int argc, char* argv[]) {
                       google::cloud::internal::compiler_flags();
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
-  std::cout
-      << "# Start time: "
-      << google::cloud::internal::FormatRfc3339(
-             std::chrono::system_clock::now())
-      << "\n# Region: " << options->region
-      << "\n# Duration: " << options->duration.count() << "s"
-      << "\n# Thread Count: " << options->thread_count
-      << "\n# Min Object Size: " << options->minimum_object_size
-      << "\n# Max Object Size: " << options->maximum_object_size
-      << "\n# Min Object Size (MiB): "
-      << options->minimum_object_size / gcs_bm::kMiB
-      << "\n# Max Object Size (MiB): "
-      << options->maximum_object_size / gcs_bm::kMiB
-      << "\n# Min Number of Shards: " << options->minimum_num_shards
-      << "\n# Max Number of Shards: " << options->maximum_num_shards
-      << "\n# Build info: " << notes
-      << "\nFileSize,ShardCount,UploadTimeMs"
-      // Make this immediately visible in the console, helps with debugging.
-      << std::endl;
+  std::cout << "# Start time: "
+            << google::cloud::internal::FormatRfc3339(
+                   std::chrono::system_clock::now())
+            << "\n# Region: " << options->region
+            << "\n# Duration: " << options->duration.count() << "s"
+            << "\n# Thread Count: " << options->thread_count
+            << "\n# Min Object Size: " << options->minimum_object_size
+            << "\n# Max Object Size: " << options->maximum_object_size
+            << "\n# Min Object Size (MiB): "
+            << options->minimum_object_size / gcs_bm::kMiB
+            << "\n# Max Object Size (MiB): "
+            << options->maximum_object_size / gcs_bm::kMiB
+            << "\n# Min Number of Shards: " << options->minimum_num_shards
+            << "\n# Max Number of Shards: " << options->maximum_num_shards
+            << "\n# Build info: " << notes
+            << "\nFileSize,ShardCount,UploadTimeMs\n";
 
   std::vector<std::thread> threads;
   std::atomic<int> iteration_count(0);
@@ -388,7 +385,7 @@ int main(int argc, char* argv[]) {
         }
         std::lock_guard<std::mutex> lk(cout_mutex);
         std::cout << file_size << ',' << num_shards << ',' << time->count()
-                  << std::endl;
+                  << '\n';
       }
     });
   };
