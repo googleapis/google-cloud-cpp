@@ -893,3 +893,21 @@ run_hello_app_profile_example() {
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_app_profile
 }
+
+run_all_grpc_credentials_examples() {
+  local project_id=$1
+  shift 1
+
+  local -r ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
+
+  run_example ./bigtable_grpc_credentials test-access-token \
+      "${project_id}" "${ACCESS_TOKEN}"
+  run_example ./bigtable_grpc_credentials test-jwt-access-token \
+      "${project_id}" "${TEST_KEY_FILE_JSON}"
+  run_example ./bigtable_grpc_credentials test-gce-credentials \
+      "${project_id}"
+
+  # Verify that calling without a command produces the right exit status and
+  # some kind of Usage message.
+  run_example_usage ./bigtable_grpc_credentials
+}
