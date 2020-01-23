@@ -252,6 +252,40 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
   EXPECT_STATUS_OK(status);
 }
 
+TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteChunkMultiple) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+  auto object_name = MakeRandomObjectName();
+
+  auto const MiB = 1024 * 1024L;
+  auto const chunk_size = 2 * MiB;
+  auto const chunk = MakeRandomData(chunk_size);
+
+  for (auto const desired_size : {2 * MiB, 3 * MiB, 4 * MiB}) {
+    SCOPED_TRACE("Testing with desired_size = " + std::to_string(desired_size));
+    auto os =
+        client->WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+    auto offset = 0L;
+    while (offset < desired_size) {
+      auto const n = (std::min)(desired_size - offset, chunk_size);
+      os.write(chunk.data(), n);
+      ASSERT_FALSE(os.bad());
+      offset += n;
+    }
+
+    // This operation should fail because the object already exists.
+    os.Close();
+    EXPECT_FALSE(os.bad());
+    EXPECT_STATUS_OK(os.metadata());
+    EXPECT_EQ(desired_size, os.metadata()->size());
+
+    auto status = client->DeleteObject(bucket_name, object_name);
+    EXPECT_STATUS_OK(status);
+  }
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
