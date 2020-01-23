@@ -130,7 +130,7 @@ Status AsStatus(HttpResponse const& http_response) {
 }
 
 std::ostream& operator<<(std::ostream& os, HttpResponse const& rhs) {
-  os << "status_code=" << rhs.status_code << ", {";
+  os << "status_code=" << rhs.status_code << ", headers={";
   char const* sep = "";
   for (auto const& kv : rhs.headers) {
     os << sep << kv.first << ": " << kv.second;

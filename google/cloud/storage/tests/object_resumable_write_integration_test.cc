@@ -252,6 +252,116 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
   EXPECT_STATUS_OK(status);
 }
 
+TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
+  auto const MiB = 1024 * 1024L;
+  auto const chunk_size = 2 * MiB;
+
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+  Client client(options->SetUploadBufferSize(chunk_size));
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto const chunk = MakeRandomData(chunk_size);
+
+  for (auto const desired_size : {2 * MiB, 3 * MiB, 4 * MiB}) {
+    auto object_name = MakeRandomObjectName();
+    SCOPED_TRACE("Testing with desired_size = " + std::to_string(desired_size) +
+                 ", name=" + object_name);
+    auto os = client.WriteObject(
+        bucket_name, object_name, IfGenerationMatch(0),
+        CustomHeader("X-Upload-Content-Length", std::to_string(desired_size)));
+    auto offset = 0L;
+    while (offset < desired_size) {
+      auto const n = (std::min)(desired_size - offset, chunk_size);
+      os.write(chunk.data(), n);
+      ASSERT_FALSE(os.bad());
+      offset += n;
+    }
+
+    // This operation should fail because the object already exists.
+    os.Close();
+    EXPECT_FALSE(os.bad());
+    EXPECT_STATUS_OK(os.metadata());
+    EXPECT_EQ(desired_size, os.metadata()->size());
+
+    auto status = client.DeleteObject(bucket_name, object_name);
+    EXPECT_STATUS_OK(status);
+  }
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
+  auto const quantum = 256 * 1024L;
+  auto const chunk_size = 2 * quantum;
+
+  auto options = ClientOptions::CreateDefaultClientOptions();
+  ASSERT_STATUS_OK(options);
+  Client client(options->SetUploadBufferSize(chunk_size));
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto const chunk = MakeRandomData(chunk_size);
+
+  std::uniform_int_distribution<long> size_gen(quantum, 5 * quantum);
+  for (int i = 0; i != 10; ++i) {
+    auto object_name = MakeRandomObjectName();
+    auto const desired_size = size_gen(generator_);
+    SCOPED_TRACE("Testing with desired_size = " + std::to_string(desired_size) +
+                 ", name=" + object_name);
+    auto os = client.WriteObject(
+        bucket_name, object_name, IfGenerationMatch(0),
+        CustomHeader("X-Upload-Content-Length", std::to_string(desired_size)));
+    auto offset = 0L;
+    while (offset < desired_size) {
+      auto const n = (std::min)(desired_size - offset, chunk_size);
+      os.write(chunk.data(), n);
+      ASSERT_FALSE(os.bad());
+      offset += n;
+    }
+
+    // This operation should fail because the object already exists.
+    os.Close();
+    EXPECT_FALSE(os.bad());
+    EXPECT_STATUS_OK(os.metadata());
+    EXPECT_EQ(desired_size, os.metadata()->size());
+
+    auto status = client.DeleteObject(bucket_name, object_name);
+    EXPECT_STATUS_OK(status);
+  }
+}
+
+TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
+  if (UsingTestbench()) return;
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto const chunk_size = 256 * 1024L;
+  auto const chunk = MakeRandomData(chunk_size);
+
+  auto object_name = MakeRandomObjectName();
+  auto const desired_size = 5 * chunk_size;
+  // Use an invalid value in the X-Upload-Content-Length header, the library
+  // should return an error.
+  auto os = client->WriteObject(
+      bucket_name, object_name, IfGenerationMatch(0),
+      CustomHeader("X-Upload-Content-Length", std::to_string(3 * chunk_size)));
+  auto offset = 0L;
+  while (offset < desired_size) {
+    auto const n = (std::min)(desired_size - offset, chunk_size);
+    os.write(chunk.data(), n);
+    ASSERT_FALSE(os.bad());
+    offset += n;
+  }
+
+  // This operation should fail because the object already exists.
+  os.Close();
+  EXPECT_TRUE(os.bad());
+  EXPECT_FALSE(os.metadata().ok());
+  // No need to delete the object, it is not created.
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

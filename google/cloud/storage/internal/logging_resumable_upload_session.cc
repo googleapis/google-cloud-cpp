@@ -24,12 +24,12 @@ namespace internal {
 
 StatusOr<ResumableUploadResponse> LoggingResumableUploadSession::UploadChunk(
     std::string const& buffer) {
-  GCP_LOG(INFO) << __func__ << "(), buffer.size=" << buffer.size();
+  GCP_LOG(INFO) << __func__ << "() << {buffer.size=" << buffer.size() << "}";
   auto response = session_->UploadChunk(buffer);
   if (response.ok()) {
-    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {
-    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
   }
   return response;
 }
@@ -41,47 +41,47 @@ LoggingResumableUploadSession::UploadFinalChunk(std::string const& buffer,
                 << ", buffer.size=" << buffer.size();
   auto response = session_->UploadFinalChunk(buffer, upload_size);
   if (response.ok()) {
-    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {
-    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
   }
   return response;
 }
 
 StatusOr<ResumableUploadResponse>
 LoggingResumableUploadSession::ResetSession() {
-  GCP_LOG(INFO) << __func__ << " << ()";
+  GCP_LOG(INFO) << __func__ << "() << {}";
   auto response = session_->ResetSession();
   if (response.ok()) {
-    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {
-    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
   }
   return response;
 }
 
 std::uint64_t LoggingResumableUploadSession::next_expected_byte() const {
-  GCP_LOG(INFO) << __func__ << " << ()";
+  GCP_LOG(INFO) << __func__ << "() << {}";
   auto response = session_->next_expected_byte();
-  GCP_LOG(INFO) << __func__ << " >> " << response;
+  GCP_LOG(INFO) << __func__ << "() >> " << response;
   return response;
 }
 
 std::string const& LoggingResumableUploadSession::session_id() const {
-  GCP_LOG(INFO) << __func__ << " << ()";
+  GCP_LOG(INFO) << __func__ << "() << {}";
   auto const& response = session_->session_id();
-  GCP_LOG(INFO) << __func__ << " >> " << response;
+  GCP_LOG(INFO) << __func__ << "() >> " << response;
   return response;
 }
 
 StatusOr<ResumableUploadResponse> const&
 LoggingResumableUploadSession::last_response() const {
-  GCP_LOG(INFO) << __func__ << " << ()";
+  GCP_LOG(INFO) << __func__ << "() << {}}";
   auto const& response = session_->last_response();
   if (response.ok()) {
-    GCP_LOG(INFO) << __func__ << " >> payload={" << response.value() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
   } else {
-    GCP_LOG(INFO) << __func__ << " >> status={" << response.status() << "}";
+    GCP_LOG(INFO) << __func__ << "() >> status={" << response.status() << "}";
   }
   return response;
 }
