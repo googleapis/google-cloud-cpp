@@ -24,7 +24,7 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadChunk(
     std::string const& buffer) {
   UploadChunkRequest request(session_id_, next_expected_, buffer);
   auto result = client_->UploadChunk(request);
-  Update(result);
+  Update(result, buffer.size());
   return result;
 }
 
@@ -32,14 +32,14 @@ StatusOr<ResumableUploadResponse> CurlResumableUploadSession::UploadFinalChunk(
     std::string const& buffer, std::uint64_t upload_size) {
   UploadChunkRequest request(session_id_, next_expected_, buffer, upload_size);
   auto result = client_->UploadChunk(request);
-  Update(result);
+  Update(result, buffer.size());
   return result;
 }
 
 StatusOr<ResumableUploadResponse> CurlResumableUploadSession::ResetSession() {
   QueryResumableUploadRequest request(session_id_);
   auto result = client_->QueryResumableUpload(request);
-  Update(result);
+  Update(result, 0);
   return result;
 }
 
@@ -48,16 +48,23 @@ std::uint64_t CurlResumableUploadSession::next_expected_byte() const {
 }
 
 void CurlResumableUploadSession::Update(
-    StatusOr<ResumableUploadResponse> const& result) {
+    StatusOr<ResumableUploadResponse> const& result, std::size_t chunk_size) {
   last_response_ = result;
   if (!result.ok()) {
     return;
   }
   done_ = result->upload_state == ResumableUploadResponse::kDone;
-  if (result->last_committed_byte == 0) {
-    next_expected_ = 0;
-  } else {
+  if (done_) {
+    // Sometimes (e.g. when the user sets the X-Upload-Content-Length header)
+    // the upload completes but does *not* include a `last_committed_byte`
+    // value. In this case we update the next expected byte using the chunk
+    // size, as we know the upload was successful.
+    next_expected_ += chunk_size;
+  } else if (result->last_committed_byte != 0) {
     next_expected_ = result->last_committed_byte + 1;
+  } else {
+    // Nothing has been committed on the server side yet, keep resending.
+    next_expected_ = 0;
   }
   if (!result->upload_session_url.empty()) {
     session_id_ = result->upload_session_url;
