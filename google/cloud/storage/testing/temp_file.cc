@@ -14,9 +14,7 @@
 
 #include "google/cloud/storage/testing/temp_file.h"
 #include "google/cloud/storage/testing/random_names.h"
-#include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/terminate_handler.h"
-#include <cassert>
+#include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
 
@@ -28,8 +26,8 @@ namespace testing {
 TempFile::TempFile(std::string const& content) {
   // This is obviously racy, but there is no portable way to create a
   // uniquely-named temporary file and know its name.
-  auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto name = MakeRandomFileName(generator);
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto name = ::testing::TempDir() + MakeRandomFileName(generator);
   std::ofstream f(name, std::ios::binary | std::ios::trunc);
   assert(f.good());
   f.write(content.data(), content.size());
