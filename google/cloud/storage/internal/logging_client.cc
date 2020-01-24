@@ -205,7 +205,20 @@ LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
   auto result = MakeCallNoResponseLogging(
       *client_, &RawClient::CreateResumableSession, request, __func__);
   if (!result.ok()) {
+    GCP_LOG(INFO) << __func__ << "() >> status={" << result.status() << "}";
     return std::move(result).status();
+  }
+  GCP_LOG(INFO) << __func__ << "() >> payload={session.session_id="
+                << result.value()->session_id()
+                << ", session.next_expected_byte="
+                << result.value()->next_expected_byte()
+                << ", done=" << result.value()->done() << "}";
+  if (result.value()->last_response()) {
+    GCP_LOG(INFO) << __func__ << "() >> payload={session.last_response="
+                  << *result.value()->last_response() << "}";
+  } else {
+    GCP_LOG(INFO) << __func__ << "() >> payload={session.last_response.status="
+                  << result.value()->last_response().status() << "}";
   }
   return std::unique_ptr<ResumableUploadSession>(
       google::cloud::internal::make_unique<LoggingResumableUploadSession>(
