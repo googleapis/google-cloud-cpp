@@ -29,6 +29,7 @@ namespace {
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::_;
 using ::testing::Return;
+using ::testing::ReturnRef;
 
 class ObservableRetryPolicy : public LimitedErrorCountRetryPolicy {
  public:
@@ -82,6 +83,8 @@ class ClientTest : public ::testing::Test {
 int ObservableBackoffPolicy::on_completion_call_count;
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 ObservableRetryPolicy(3)};
 
@@ -99,6 +102,8 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
 
 TEST_F(ClientTest, OverrideBackoffPolicy) {
   using ms = std::chrono::milliseconds;
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 ObservableBackoffPolicy(ms(20), ms(100), 2.0)};
 
@@ -114,6 +119,8 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
 
 TEST_F(ClientTest, OverrideBothPolicies) {
   using ms = std::chrono::milliseconds;
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   Client client{std::shared_ptr<internal::RawClient>(mock),
                 ObservableBackoffPolicy(ms(20), ms(100), 2.0),
                 ObservableRetryPolicy(3)};
@@ -132,7 +139,24 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 TEST_F(ClientTest, DefaultDecorators) {
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
-  Client tested(oauth2::CreateAnonymousCredentials());
+  ClientOptions options(oauth2::CreateAnonymousCredentials());
+  Client tested(options);
+
+  EXPECT_TRUE(tested.raw_client() != nullptr);
+  auto retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());
+  ASSERT_TRUE(retry != nullptr);
+
+  auto curl = dynamic_cast<internal::CurlClient*>(retry->client().get());
+  ASSERT_TRUE(curl != nullptr);
+}
+
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, LoggingDecorators) {
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  ClientOptions options(oauth2::CreateAnonymousCredentials());
+  options.set_enable_raw_client_tracing(true);
+  Client tested(options);
 
   EXPECT_TRUE(tested.raw_client() != nullptr);
   auto retry = dynamic_cast<internal::RetryClient*>(tested.raw_client().get());

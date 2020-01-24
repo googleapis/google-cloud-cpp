@@ -443,6 +443,8 @@ TEST_F(ObjectTest, DeleteByPrefix) {
   // Pretend ListObjects returns object-1, object-2, object-3.
 
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, ListObjects(_))
       .WillOnce(Invoke([](internal::ListObjectsRequest const& req)
                            -> StatusOr<internal::ListObjectsResponse> {
@@ -485,6 +487,8 @@ TEST_F(ObjectTest, DeleteByPrefixNoOptions) {
   // Pretend ListObjects returns object-1, object-2, object-3.
 
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, ListObjects(_))
       .WillOnce(Invoke([](internal::ListObjectsRequest const& req)
                            -> StatusOr<internal::ListObjectsResponse> {
@@ -523,6 +527,8 @@ TEST_F(ObjectTest, DeleteByPrefixListFailure) {
   // Pretend ListObjects returns object-1, object-2, object-3.
 
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, ListObjects(_))
       .WillOnce(Return(StatusOr<internal::ListObjectsResponse>(
           Status(StatusCode::kPermissionDenied, ""))));
@@ -538,6 +544,8 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
   // Pretend ListObjects returns object-1, object-2, object-3.
 
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, ListObjects(_))
       .WillOnce(Invoke([](internal::ListObjectsRequest const& req)
                            -> StatusOr<internal::ListObjectsResponse> {
@@ -567,6 +575,8 @@ TEST_F(ObjectTest, DeleteByPrefixDeleteFailure) {
 
 TEST_F(ObjectTest, ComposeManyNone) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   Client client(mock);
 
   auto res =
@@ -607,6 +617,8 @@ ObjectMetadata MockObject(std::string const& bucket_name,
 
 TEST_F(ObjectTest, ComposeManyOne) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, ComposeObject(_))
       .WillOnce(Invoke([](internal::ComposeObjectRequest const& req)
                            -> StatusOr<ObjectMetadata> {
@@ -644,6 +656,8 @@ TEST_F(ObjectTest, ComposeManyOne) {
 
 TEST_F(ObjectTest, ComposeManyThree) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
   EXPECT_CALL(*mock, ComposeObject(_))
       .WillOnce(Invoke([](internal::ComposeObjectRequest const& req)
                            -> StatusOr<ObjectMetadata> {
@@ -687,6 +701,8 @@ TEST_F(ObjectTest, ComposeManyThree) {
 
 TEST_F(ObjectTest, ComposeManyThreeLayers) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
 
   // Test 63 sources.
 
@@ -778,6 +794,8 @@ TEST_F(ObjectTest, ComposeManyThreeLayers) {
 
 TEST_F(ObjectTest, ComposeManyComposeFails) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
 
   // Test 63 sources - second composition fails.
 
@@ -824,6 +842,8 @@ TEST_F(ObjectTest, ComposeManyComposeFails) {
 
 TEST_F(ObjectTest, ComposeManyCleanupFailsLoudly) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
 
   // Test 63 sources - second composition fails.
 
@@ -862,6 +882,8 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsLoudly) {
 
 TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
 
   // Test 63 sources - second composition fails.
 
@@ -901,6 +923,9 @@ TEST_F(ObjectTest, ComposeManyCleanupFailsSilently) {
 
 TEST_F(ObjectTest, ComposeManyLockingPrefixFails) {
   auto mock = std::make_shared<testing::MockClient>();
+  auto const mock_options = ClientOptions(oauth2::CreateAnonymousCredentials());
+  EXPECT_CALL(*mock, client_options()).WillRepeatedly(ReturnRef(mock_options));
+
   EXPECT_CALL(*mock, InsertObjectMedia(_))
       .WillOnce(Return(
           Status(StatusCode::kFailedPrecondition, "Generation mismatch")));
