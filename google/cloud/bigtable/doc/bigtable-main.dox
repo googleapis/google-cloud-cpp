@@ -185,7 +185,7 @@ bigtable_install_test: bigtable_install_test.cc
 
 - @ref bigtable-samples-data-client "Advanced Reading and Writing Example"
 
-- @ref bigtable-samples-grpc-credentials "Examples for using various gRPC Credential Classes with GCP Bigtable C++ client"
+- @ref bigtable-samples-grpc-credentials "Examples for using various gRPC Credential Classes with Cloud Bigtable C++ client"
 
 [read-more-about-gcp-bigtable]: https://cloud.google.com/bigtable/docs/ 'Read more about GCP Bigtable'
 [read-instances-clusters]: https://cloud.google.com/bigtable/docs/instances-clusters-nodes 'Instances and Clusters'
