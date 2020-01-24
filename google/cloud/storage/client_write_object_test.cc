@@ -149,7 +149,6 @@ TEST_F(WriteObjectTest, WriteObjectPermanentSessionFailurePropagates) {
   EXPECT_CALL(*mock, CreateResumableSession(_)).WillOnce(Invoke(returner));
   EXPECT_CALL(*mock_session, UploadChunk(_))
       .WillRepeatedly(Return(PermanentError()));
-  EXPECT_CALL(*mock_session, next_expected_byte()).WillRepeatedly(Return(0));
   EXPECT_CALL(*mock_session, done()).WillRepeatedly(Return(false));
   EXPECT_CALL(*mock_session, session_id()).WillRepeatedly(ReturnRef(empty));
   auto stream = client->WriteObject("test-bucket-name", "test-object-name");
