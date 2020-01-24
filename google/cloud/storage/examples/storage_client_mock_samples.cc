@@ -19,11 +19,9 @@
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include <gmock/gmock.h>
-#include <fstream>
 #include <functional>
 #include <iostream>
 #include <map>
-#include <sstream>
 #include <string>
 
 namespace {
@@ -68,10 +66,10 @@ void MockReadObject(int& argc, char* argv[]) {
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  gcs::Client client(mock);
-
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
+
+  gcs::Client client(mock);
 
   std::string text = "this is a mock http response";
   using ::testing::_;
@@ -123,10 +121,10 @@ void MockWriteObject(int& argc, char* argv[]) {
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  gcs::Client client(mock);
-
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
+
+  gcs::Client client(mock);
 
   gcs::ObjectMetadata expected_metadata;
 
@@ -183,10 +181,10 @@ void MockReadObjectFailure(int& argc, char* argv[]) {
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  gcs::Client client(mock);
-
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
+
+  gcs::Client client(mock);
 
   std::string text = "this is a mock http response";
   using ::testing::_;
@@ -249,10 +247,10 @@ void MockWriteObjectFailure(int& argc, char* argv[]) {
 
   std::shared_ptr<gcs::testing::MockClient> mock =
       std::make_shared<gcs::testing::MockClient>();
-  gcs::Client client(mock);
-
   EXPECT_CALL(*mock, client_options())
       .WillRepeatedly(testing::ReturnRef(client_options));
+
+  gcs::Client client(mock);
 
   using ::testing::_;
   using ::testing::Return;
