@@ -266,7 +266,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
 
   for (auto const desired_size : {2 * MiB, 3 * MiB, 4 * MiB}) {
     auto object_name = MakeRandomObjectName();
-    SCOPED_TRACE("Testing with desired_size = " + std::to_string(desired_size) +
+    SCOPED_TRACE("Testing with desired_size=" + std::to_string(desired_size) +
                  ", name=" + object_name);
     auto os = client.WriteObject(
         bucket_name, object_name, IfGenerationMatch(0),
@@ -279,7 +279,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLength) {
       offset += n;
     }
 
-    // This operation should fail because the object already exists.
     os.Close();
     EXPECT_FALSE(os.bad());
     EXPECT_STATUS_OK(os.metadata());
@@ -306,7 +305,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
   for (int i = 0; i != 10; ++i) {
     auto object_name = MakeRandomObjectName();
     auto const desired_size = size_gen(generator_);
-    SCOPED_TRACE("Testing with desired_size = " + std::to_string(desired_size) +
+    SCOPED_TRACE("Testing with desired_size=" + std::to_string(desired_size) +
                  ", name=" + object_name);
     auto os = client.WriteObject(
         bucket_name, object_name, IfGenerationMatch(0),
@@ -319,7 +318,6 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
       offset += n;
     }
 
-    // This operation should fail because the object already exists.
     os.Close();
     EXPECT_FALSE(os.bad());
     EXPECT_STATUS_OK(os.metadata());
@@ -355,11 +353,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
     offset += n;
   }
 
-  // This operation should fail because the object already exists.
+  // This operation should fail because the x-upload-content-length header does
+  // not match the amount of data sent in the upload.
   os.Close();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());
-  // No need to delete the object, it is not created.
+  // No need to delete the object, as it is never created.
 }
 
 }  // anonymous namespace

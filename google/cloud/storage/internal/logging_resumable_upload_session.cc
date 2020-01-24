@@ -76,7 +76,7 @@ std::string const& LoggingResumableUploadSession::session_id() const {
 
 StatusOr<ResumableUploadResponse> const&
 LoggingResumableUploadSession::last_response() const {
-  GCP_LOG(INFO) << __func__ << "() << {}}";
+  GCP_LOG(INFO) << __func__ << "() << {}";
   auto const& response = session_->last_response();
   if (response.ok()) {
     GCP_LOG(INFO) << __func__ << "() >> payload={" << response.value() << "}";
