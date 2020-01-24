@@ -92,9 +92,11 @@ RetryResumableUploadSession::UploadGenericChunk(
                       ? session_->UploadFinalChunk(*buffer_to_use, *upload_size)
                       : session_->UploadChunk(*buffer_to_use);
     if (result.ok()) {
-      if (is_final_chunk &&
-          result->upload_state == ResumableUploadResponse::kDone) {
-        // If it's a final chunk and it was sent successfully, return.
+      if (result->upload_state == ResumableUploadResponse::kDone) {
+        // The upload was completed. This can happen even if
+        // `is_final_chunk == false`, for example, if the application includes
+        // the X-Upload-Content-Length` header, which allows the server to
+        // detect a completed upload "early".
         return result;
       }
       auto current_next_expected_byte = next_expected_byte();

@@ -52,7 +52,8 @@ class CurlResumableUploadSession : public ResumableUploadSession {
   }
 
  private:
-  void Update(StatusOr<ResumableUploadResponse> const& result);
+  void Update(StatusOr<ResumableUploadResponse> const& result,
+              std::size_t chunk_size);
 
   std::shared_ptr<CurlClient> client_;
   std::string session_id_;
