@@ -25,7 +25,6 @@
 #include <grpcpp/alarm.h>
 #include <grpcpp/support/async_stream.h>
 #include <grpcpp/support/async_unary_call.h>
-#include <atomic>
 #include <string>
 #include <unordered_map>
 
@@ -285,9 +284,9 @@ class CompletionQueueImpl {
  private:
   grpc::CompletionQueue cq_;
   mutable std::mutex mu_;
-  bool shutdown_;
+  bool shutdown_;  // GUARDED_BY(mu_)
   std::unordered_map<std::intptr_t, std::shared_ptr<AsyncGrpcOperation>>
-      pending_ops_;
+      pending_ops_;  // GUARDED_BY(mu_)
 };
 
 }  // namespace internal

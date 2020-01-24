@@ -45,8 +45,6 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
     if (op->Notify(cq, ok)) {
       ForgetOperation(tag);
     }
-    std::unique_lock<std::mutex> lk(mu_);
-    if (shutdown_ && pending_ops_.empty()) break;
   }
 }
 
