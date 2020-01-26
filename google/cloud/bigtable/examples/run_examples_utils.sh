@@ -898,12 +898,12 @@ run_all_grpc_credentials_examples() {
   local project_id=$1
   shift 1
 
-  local -r ACCESS_TOKEN="$(${HOME}/google-cloud-sdk/bin/gcloud auth application-default print-access-token)"
+  local -r ACCESS_TOKEN="$(/usr/local/google-cloud-sdk/bin/gcloud auth application-default print-access-token)"
 
   run_example ./bigtable_grpc_credentials test-access-token \
       "${project_id}" "${ACCESS_TOKEN}"
   run_example ./bigtable_grpc_credentials test-jwt-access-token \
-      "${project_id}" "${TEST_KEY_FILE_JSON:-$GOOGLE_APPLICATION_CREDENTIALS}"
+      "${project_id}" "${SERVICE_ACCOUNT}"
   run_example ./bigtable_grpc_credentials test-gce-credentials \
       "${project_id}"
 
