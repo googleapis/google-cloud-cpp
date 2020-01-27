@@ -62,7 +62,7 @@ TEST(CompletionQueueTest, MockSmokeTest) {
           future<StatusOr<std::chrono::system_clock::time_point>>) {
         wait_for_sleep.set_value();
       });
-  mock->SimulateCompletion(cq, true);
+  mock->SimulateCompletion(/*ok=*/true);
 
   auto f = wait_for_sleep.get_future();
   EXPECT_EQ(std::future_status::ready, f.wait_for(ms(0)));

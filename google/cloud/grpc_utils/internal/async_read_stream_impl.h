@@ -146,7 +146,7 @@ class AsyncReadStreamImpl
 
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
-      bool Notify(CompletionQueue&, bool ok) override {
+      bool Notify(bool ok) override {
         control_->OnStart(ok);
         return true;
       }
@@ -186,7 +186,7 @@ class AsyncReadStreamImpl
 
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
-      bool Notify(CompletionQueue&, bool ok) override {
+      bool Notify(bool ok) override {
         control_->OnRead(ok, std::move(response));
         return true;
       }
@@ -234,7 +234,7 @@ class AsyncReadStreamImpl
 
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
-      bool Notify(CompletionQueue&, bool ok) override {
+      bool Notify(bool ok) override {
         control_->OnFinish(ok, grpc_utils::MakeStatusFromRpcError(status));
         return true;
       }
@@ -269,7 +269,7 @@ class AsyncReadStreamImpl
 
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
-      bool Notify(CompletionQueue&, bool ok) override {
+      bool Notify(bool ok) override {
         control_->OnDiscard(ok, std::move(response));
         return true;
       }

@@ -62,7 +62,7 @@ class AsyncGrpcOperation : public AsyncOperation {
    * @return Whether the operation is completed (e.g. in case of streaming
    *   response, it would return true only after the stream is finished).
    */
-  virtual bool Notify(CompletionQueue& cq, bool ok) = 0;
+  virtual bool Notify(bool ok) = 0;
 };
 
 /**
@@ -103,7 +103,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
   void Cancel() override { context_->TryCancel(); }
 
  private:
-  bool Notify(CompletionQueue&, bool ok) override {
+  bool Notify(bool ok) override {
     if (!ok) {
       // This would mean a bug in gRPC. The documentation states that Finish()
       // always returns `true` for unary RPCs.
@@ -234,13 +234,8 @@ class CompletionQueueImpl {
   CompletionQueueImpl() : cq_(), shutdown_(false) {}
   virtual ~CompletionQueueImpl() = default;
 
-  /**
-   * Run the event loop until Shutdown() is called.
-   *
-   * @param cq the completion queue wrapping this implementation class, used to
-   *   notify any asynchronous operation that completes.
-   */
-  void Run(CompletionQueue& cq);
+  /// Run the event loop until Shutdown() is called.
+  void Run();
 
   /// Terminate the event loop.
   void Shutdown();
@@ -265,11 +260,11 @@ class CompletionQueueImpl {
   void ForgetOperation(void* tag);
 
   /// Simulate a completed operation, provided only to support unit tests.
-  void SimulateCompletion(CompletionQueue& cq, AsyncOperation* op, bool ok);
+  void SimulateCompletion(AsyncOperation* op, bool ok);
 
   /// Simulate completion of all pending operations, provided only to support
   /// unit tests.
-  void SimulateCompletion(CompletionQueue& cq, bool ok);
+  void SimulateCompletion(bool ok);
 
   bool empty() const {
     std::unique_lock<std::mutex> lk(mu_);

@@ -61,7 +61,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
  private:
-  bool Notify(CompletionQueue&, bool ok) override {
+  bool Notify(bool ok) override {
     if (!ok) {
       promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
     } else {
@@ -80,7 +80,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
 
 CompletionQueue::CompletionQueue() : impl_(new internal::CompletionQueueImpl) {}
 
-void CompletionQueue::Run() { impl_->Run(*this); }
+void CompletionQueue::Run() { impl_->Run(); }
 
 void CompletionQueue::Shutdown() { impl_->Shutdown(); }
 

@@ -26,7 +26,7 @@ namespace cloud {
 namespace grpc_utils {
 inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
 namespace internal {
-void CompletionQueueImpl::Run(CompletionQueue& cq) {
+void CompletionQueueImpl::Run() {
   void* tag;
   bool ok;
   auto deadline = [] {
@@ -42,7 +42,7 @@ void CompletionQueueImpl::Run(CompletionQueue& cq) {
           "unexpected status from AsyncNext()");
     }
     auto op = FindOperation(tag);
-    if (op->Notify(cq, ok)) {
+    if (op->Notify(ok)) {
       ForgetOperation(tag);
     }
   }
@@ -116,16 +116,15 @@ void CompletionQueueImpl::ForgetOperation(void* tag) {
 // `CompletionQueueImpl`, wrap it in a `CompletionQueue` and call this function
 // to simulate the operation lifecycle. Note that the unit test must simulate
 // the operation results separately.
-void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq,
-                                             AsyncOperation* op, bool ok) {
+void CompletionQueueImpl::SimulateCompletion(AsyncOperation* op, bool ok) {
   auto internal_op = FindOperation(op);
   internal_op->Cancel();
-  if (internal_op->Notify(cq, ok)) {
+  if (internal_op->Notify(ok)) {
     ForgetOperation(op);
   }
 }
 
-void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, bool ok) {
+void CompletionQueueImpl::SimulateCompletion(bool ok) {
   // Make a copy to avoid race conditions or iterator invalidation.
   std::vector<void*> tags;
   {
@@ -138,7 +137,7 @@ void CompletionQueueImpl::SimulateCompletion(CompletionQueue& cq, bool ok) {
   for (void* tag : tags) {
     auto internal_op = FindOperation(tag);
     internal_op->Cancel();
-    if (internal_op->Notify(cq, ok)) {
+    if (internal_op->Notify(ok)) {
       ForgetOperation(tag);
     }
   }
