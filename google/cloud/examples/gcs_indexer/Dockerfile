@@ -116,7 +116,6 @@ RUN cmake -S/v/source -B/v/binary -GNinja \
 
 RUN cmake --build /v/binary
 RUN strip /v/binary/pubsub_handler
-RUN strip /v/binary/admin_handler
 
 FROM base AS with-certs
 RUN apk update && \
@@ -133,17 +132,9 @@ CMD "/r/pubsub_handler" \
     "--instance=${SPANNER_INSTANCE}" \
     "--database=${SPANNER_DATABASE}"
 
-FROM with-certs AS admin-handler
-WORKDIR /r
-COPY --from=build /v/binary/admin_handler /r
-
-CMD "/r/admin_handler" \
-    "--project=${SPANNER_PROJECT}" \
-    "--instance=${SPANNER_INSTANCE}" \
-    "--database=${SPANNER_DATABASE}"
-
 FROM with-certs AS tools
 WORKDIR /r
+COPY --from=build /v/binary/create_database /r
 COPY --from=build /v/binary/generate_randomly_named_objects /r
 COPY --from=build /v/binary/refresh_bucket /r
 
