@@ -30,11 +30,8 @@ find_package(Boost 1.66 REQUIRED COMPONENTS program_options)
 # correct dependencies (OpenSSL::Crypto, c-cares, etc) for gRPC::grpc.
 # Explicitly listing these dependencies avoids the undefined symbols problems.
 add_executable(cloud_run_hello cloud_run_hello.cc)
-target_link_libraries(
-    cloud_run_hello
-    PRIVATE Boost::headers
-            Boost::program_options)
+target_link_libraries(cloud_run_hello PRIVATE Boost::headers
+                                              Boost::program_options)
 
 include(GNUInstallDirs)
-install(TARGETS cloud_run_hello
-        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS cloud_run_hello RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})

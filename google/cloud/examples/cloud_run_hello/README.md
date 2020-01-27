@@ -23,7 +23,7 @@ export GOOGLE_CLOUD_PROJECT=...
 
 This script will enable the necessary APIs, build the docker image used by
 Cloud Run using Cloud Build, create a service account for the Cloud Run
-deployment, 
+deployment,
 Run the program to bootstrap the indexer, this will create the Cloud Spanner
 instance and databases to store the data, the Cloud Run deployments to run the
 indexer, two service accounts to run the Cloud Run deployments, and a Cloud

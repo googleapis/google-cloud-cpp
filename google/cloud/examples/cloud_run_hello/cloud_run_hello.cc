@@ -76,7 +76,7 @@ class http_handler {
   be::http::response<be::http::string_body> internal_error(
       be::http::request<Body, Fields> const& request, std::string_view text) {
     be::http::response<be::http::string_body> res{
-      be::http::status::internal_server_error, request.version()};
+        be::http::status::internal_server_error, request.version()};
     res.set(be::http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(be::http::field::content_type, "text/plain");
     res.keep_alive(request.keep_alive());
@@ -283,9 +283,8 @@ int main(int argc, char* argv[]) try {
     ioc.stop();
   });
 
-  auto acc = std::make_shared<acceptor>(
-      ioc, tcp::endpoint{address, port},
-      std::make_shared<http_handler>());
+  auto acc = std::make_shared<acceptor>(ioc, tcp::endpoint{address, port},
+                                        std::make_shared<http_handler>());
   acc->start();
 
   std::vector<std::thread> v(threads - 1);
