@@ -21,17 +21,16 @@ if [[ -z "${GOOGLE_CLOUD_PROJECT:-}" ]]; then
   exit 1
 fi
 
-GOOGLE_CLOUD_PROJECT="${GOOGLE_CLOUD_PROJECT:-}"
-readonly GOOGLE_CLOUD_PROJECT
-GOOGLE_CLOUD_REGION="${REGION:-us-central1}"
-readonly GOOGLE_CLOUD_REGION
-GOOGLE_CLOUD_SPANNER_INSTANCE="${GOOGLE_CLOUD_SPANNER_INSTANCE:-gcs-index}"
-readonly GOOGLE_CLOUD_SPANNER_INSTANCE
-GOOGLE_CLOUD_SPANNER_DATABASE="${GOOGLE_CLOUD_SPANNER_DATABASE:-gcs-index-db}"
-readonly GOOGLE_CLOUD_SPANNER_DATABASE
+readonly GOOGLE_CLOUD_PROJECT="${GOOGLE_CLOUD_PROJECT:-}"
+readonly GOOGLE_CLOUD_REGION="${REGION:-us-central1}"
+readonly GOOGLE_CLOUD_SPANNER_INSTANCE="${GOOGLE_CLOUD_SPANNER_INSTANCE:-gcs-index}"
+readonly GOOGLE_CLOUD_SPANNER_DATABASE="${GOOGLE_CLOUD_SPANNER_DATABASE:-gcs-index-db}"
 
 # Enable (if they are not enabled already) the services will we will need
+gcloud components install kubectl || /bin/true
 gcloud services enable spanner.googleapis.com \
+    "--project=${GOOGLE_CLOUD_PROJECT}"
+gcloud services enable container.googleapis.com \
     "--project=${GOOGLE_CLOUD_PROJECT}"
 gcloud services enable cloudbuild.googleapis.com \
     "--project=${GOOGLE_CLOUD_PROJECT}"
@@ -55,49 +54,14 @@ gcloud builds submit \
     "--substitutions=SHORT_SHA=$(git rev-parse --short HEAD)" \
     "--config=cloudbuild.yaml"
 
-# Create a service account for the Admin Deployment
-gcloud iam service-accounts create gcs-index-admin \
-  "--project=${GOOGLE_CLOUD_PROJECT}" \
-  --description="Perform administrative updates to the GCS metadata index"
-
-# Save the full name in a variable
-ADMIN_SA="gcs-index-admin@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
-
-# Gran ADMIN_SA permissions to create database and instances in the
-gcloud spanner instances add-iam-policy-binding \
-  "${GOOGLE_CLOUD_SPANNER_INSTANCE}" \
-  "--project=${GOOGLE_CLOUD_PROJECT}" \
-  "--member=serviceAccount:${ADMIN_SA}" \
-  "--role=roles/spanner.databaseAdmin"
-gcloud projects add-iam-policy-binding \
-  "${GOOGLE_CLOUD_PROJECT}" \
-  "--member=serviceAccount:${ADMIN_SA}" \
-  "--role=roles/storage.objectViewer"
-
-# Create the Admin Deployment
-gcloud beta run deploy gcs-index-admin-handler \
-  "--project=${GOOGLE_CLOUD_PROJECT}" \
-  "--service-account=${ADMIN_SA}" \
-  "--set-env-vars=SPANNER_PROJECT=${GOOGLE_CLOUD_PROJECT},SPANNER_INSTANCE=${GOOGLE_CLOUD_SPANNER_INSTANCE},SPANNER_DATABASE=${GOOGLE_CLOUD_SPANNER_DATABASE},GOOGLE_RUNNING_ON_GCE_CHECK_OVERRIDE=1" \
-  "--image=gcr.io/${GOOGLE_CLOUD_PROJECT}/gcs-indexer-admin-handler:latest" \
-  "--region=${GOOGLE_CLOUD_REGION}" \
-  "--platform=managed" \
-  "--no-allow-unauthenticated"
-
-# Capture the service URL:
-ADMIN_SERVICE_URL=$(gcloud beta run  services list \
-    "--project=${GOOGLE_CLOUD_PROJECT}"\
-    "--platform=managed" \
-    '--format=csv[no-heading](URL)' \
-    "--filter=SERVICE:gcs-index-admin-handler")
-
-# Verify you have access to the service:
-curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
-  "${ADMIN_SERVICE_URL}"
-
-# Post a request to create the database and table:
-curl -X POST -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
-  "${ADMIN_SERVICE_URL}/create"
+# Create the database
+docker pull "gcr.io/${GOOGLE_CLOUD_PROJECT}/gcs-indexer-tools:latest"
+docker run "--volume=$PWD:/d" --rm -it \
+    "gcr.io/${GOOGLE_CLOUD_PROJECT}/gcs-indexer-tools:latest" \
+     cp /r/create_database /r/refresh_bucket /d
+./create_database "--project=${GOOGLE_CLOUD_PROJECT}" \
+        "--instance=${GOOGLE_CLOUD_SPANNER_INSTANCE}" \
+        "--database=${GOOGLE_CLOUD_SPANNER_DATABASE}"
 
 # To verify the database was created:
 # gcloud spanner databases list
@@ -139,48 +103,50 @@ curl -X POST -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
 
 # Create a service account that will update the index
 
-gcloud iam service-accounts create gcs-index-updater \
-  "--project=${GOOGLE_CLOUD_PROJECT}" \
-  --description="Perform updates to the GCS metadata index"
-
-UPDATE_SA="gcs-index-updater@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+readonly UPDATE_SA="gcs-index-updater@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+if gcloud iam service-accounts describe ${UPDATE_SA} "--project=${GOOGLE_CLOUD_PROJECT}" >/dev/null; then
+  echo "The gcs-index-updater service account already exists"
+else
+  gcloud iam service-accounts create gcs-index-updater \
+      "--project=${GOOGLE_CLOUD_PROJECT}" \
+      --description="Perform updates to the GCS metadata index"
+fi
 
 # Grant this service account permission to just update the table (but not create
 # other tables or databases)
 gcloud spanner instances add-iam-policy-binding \
-  "${GOOGLE_CLOUD_SPANNER_INSTANCE}" \
-  "--project=${GOOGLE_CLOUD_PROJECT}" \
-  "--member=serviceAccount:${UPDATE_SA}" \
-  "--role=roles/spanner.databaseUser"
+    "${GOOGLE_CLOUD_SPANNER_INSTANCE}" \
+    "--project=${GOOGLE_CLOUD_PROJECT}" \
+    "--member=serviceAccount:${UPDATE_SA}" \
+    "--role=roles/spanner.databaseUser"
 
 # Create the Cloud Run deployment to update the index
 
 gcloud beta run deploy gcs-index-pubsub-handler \
-  "--project=${GOOGLE_CLOUD_PROJECT}" \
-  "--service-account=${UPDATE_SA}" \
-  --set-env-vars=SPANNER_PROJECT=${GOOGLE_CLOUD_PROJECT},SPANNER_INSTANCE=${GOOGLE_CLOUD_SPANNER_INSTANCE},SPANNER_DATABASE=${GOOGLE_CLOUD_SPANNER_DATABASE} \
-  "--image=gcr.io/${GOOGLE_CLOUD_PROJECT}/gcs-indexer-pubsub-handler:latest" \
-  "--region=us-central1" \
-  "--platform=managed" \
-  "--no-allow-unauthenticated"
+    "--project=${GOOGLE_CLOUD_PROJECT}" \
+    "--service-account=${UPDATE_SA}" \
+    "--set-env-vars=SPANNER_PROJECT=${GOOGLE_CLOUD_PROJECT},SPANNER_INSTANCE=${GOOGLE_CLOUD_SPANNER_INSTANCE},SPANNER_DATABASE=${GOOGLE_CLOUD_SPANNER_DATABASE}" \
+    "--image=gcr.io/${GOOGLE_CLOUD_PROJECT}/gcs-indexer-pubsub-handler:latest" \
+    "--region=us-central1" \
+    "--platform=managed" \
+    "--no-allow-unauthenticated"
 
 # Capture the service URL:
-
 SERVICE_URL=$(gcloud beta run services list \
     "--project=${GOOGLE_CLOUD_PROJECT}" \
     "--platform=managed" \
     '--format=csv[no-heading](URL)' \
     "--filter=SERVICE:pubsub-handler")
+readonly SERVICE_URL
 
 # Create the Cloud Pub/Sub topic and configuration
-
 gcloud pubsub topics create gcs-index-updates \
-  "--project=${GOOGLE_CLOUD_PROJECT}"
+    "--project=${GOOGLE_CLOUD_PROJECT}"
 
 # Grant the Cloud Pub/Sub service account permissions to invoke Cloud Run
-
 PROJECT_NUMBER=$(gcloud projects describe ${GOOGLE_CLOUD_PROJECT} \
     --format='csv[no-heading](projectNumber)')
+readonly PROJECT_NUMBER
 gcloud projects add-iam-policy-binding ${GOOGLE_CLOUD_PROJECT} \
     "--member=serviceAccount:service-${PROJECT_NUMBER}@gcp-sa-pubsub.iam.gserviceaccount.com" \
     "--role=roles/iam.serviceAccountTokenCreator"
@@ -191,11 +157,10 @@ gcloud beta run services add-iam-policy-binding gcs-index-pubsub-handler \
     "--project=${GOOGLE_CLOUD_PROJECT}" \
     "--region=us-central1" \
     "--platform=managed" \
-    --member=serviceAccount:cloud-run-pubsub-invoker@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com \
-    --role=roles/run.invoker
+    "--member=serviceAccount:cloud-run-pubsub-invoker@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com" \
+    "--role=roles/run.invoker"
 
 # Configure Cloud Pub/Sub to push updates to our Cloud Run Deployment
-
 gcloud beta pubsub subscriptions create gcs-updates-run-subscription \
     "--project=${GOOGLE_CLOUD_PROJECT}" \
     "--topic=gcs-index-updates" \

@@ -26,26 +26,19 @@ if [[ -z "${GOOGLE_CLOUD_PROJECT:-}" ]]; then
   exit 1
 fi
 
-BUCKET_NAME="$1"
-readonly BUCKET_NAME
-GOOGLE_CLOUD_PROJECT="${GOOGLE_CLOUD_PROJECT:-}"
-readonly GOOGLE_CLOUD_PROJECT
-GOOGLE_CLOUD_REGION="${REGION:-us-central1}"
-readonly GOOGLE_CLOUD_REGION
-GOOGLE_CLOUD_SPANNER_INSTANCE="${GOOGLE_CLOUD_SPANNER_INSTANCE:-gcs-index}"
-readonly GOOGLE_CLOUD_SPANNER_INSTANCE
-GOOGLE_CLOUD_SPANNER_DATABASE="${GOOGLE_CLOUD_SPANNER_DATABASE:-gcs-index-db}"
-readonly GOOGLE_CLOUD_SPANNER_DATABASE
-
-# Refresh the index for an existing Bucket
-
-ADMIN_SERVICE_URL=$(gcloud beta run  services list \
-    "--project=${GOOGLE_CLOUD_PROJECT}"\
-    "--platform=managed" \
-    '--format=csv[no-heading](URL)' \
-    "--filter=SERVICE:gcs-index-admin-handler")
+readonly BUCKET_NAME="$1"
+readonly GOOGLE_CLOUD_PROJECT="${GOOGLE_CLOUD_PROJECT:-}"
+readonly GOOGLE_CLOUD_SPANNER_INSTANCE="${GOOGLE_CLOUD_SPANNER_INSTANCE:-gcs-index}"
+readonly GOOGLE_CLOUD_SPANNER_DATABASE="${GOOGLE_CLOUD_SPANNER_DATABASE:-gcs-index-db}"
 
 # Configure GCS to push updates to Cloud Pub/Sub
 gsutil notification create -f json -t gcs-index-updates "gs://${BUCKET_NAME}"
+
+# Refresh the database with the current bucket contents
+./refresh_bucket \
+    "--project=${GOOGLE_CLOUD_PROJECT}" \
+    "--instance=${GOOGLE_CLOUD_SPANNER_INSTANCE}" \
+    "--database=${GOOGLE_CLOUD_SPANNER_DATABASE}" \
+    "${BUCKET_NAME}"
 
 exit 0
