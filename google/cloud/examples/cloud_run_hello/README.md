@@ -1,4 +1,7 @@
-# HOWTO: Deploy the GCS metadata indexer
+# Cloud Run for C++
+
+This repository contains an example showing how to deploy C++ applications in
+Google Cloud Run.
 
 ## Prerequisites
 
@@ -10,14 +13,17 @@ gcloud components install docker-credential-gcr
 gcloud auth configure-docker
 ```
 
-## Bootstrap the Indexer
+## Start the Cloud Run Deployment
 
-Pick the project to run the service and the spanner instance.
+Pick the project to run the Cloud Run Deployment.
 
 ```bash
 export GOOGLE_CLOUD_PROJECT=...
 ```
 
+This script will enable the necessary APIs, build the docker image used by
+Cloud Run using Cloud Build, create a service account for the Cloud Run
+deployment, 
 Run the program to bootstrap the indexer, this will create the Cloud Spanner
 instance and databases to store the data, the Cloud Run deployments to run the
 indexer, two service accounts to run the Cloud Run deployments, and a Cloud
@@ -28,15 +34,7 @@ permissions so Cloud Pub/Sub can push these updates to Cloud Run.
 ./bootstrap-gcs-indexer.sh
 ```
 
-## Index an existing Bucket
+# Send a HTTP GET request to the server.
+curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
+  "${SERVICE_URL}"
 
-Then connect the program to one of the buckets in this project. This will
-configure the bucket to publish any metadata updates to the topic created above,
-and start a program to index the existing metadata in the bucket.
-
-```bash
-./index-bucket my-bucket-name
-```
-
-Note that this program is not ready to scale to very large numbers of metadata
-entries.

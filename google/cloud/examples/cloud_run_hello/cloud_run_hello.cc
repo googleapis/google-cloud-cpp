@@ -12,21 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "gcs_indexer_constants.h"
-#include <google/cloud/spanner/client.h>
-#include <google/cloud/spanner/database_admin_client.h>
-#include <google/cloud/spanner/timestamp.h>
-#include <boost/archive/iterators/binary_from_base64.hpp>
-#include <boost/archive/iterators/transform_width.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/signal_set.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
-#include <boost/program_options.hpp>
-#include <boost/property_tree/json_parser.hpp>
-#include <boost/property_tree/ptree.hpp>
 #include <future>
 #include <iostream>
 #include <memory>
@@ -48,10 +39,6 @@ inline constexpr auto request_timeout = std::chrono::seconds(30);
 using row_type = std::tuple<std::string, std::string, std::string, bool,
                             spanner::Timestamp, spanner::Timestamp>;
 using primary_key = std::tuple<std::string, std::string, std::string>;
-inline constexpr std::string_view event_finalize = "OBJECT_FINALIZE";
-inline constexpr std::string_view event_update = "OBJECT_METADATA_UPDATE";
-inline constexpr std::string_view event_delete = "OBJECT_DELETE";
-inline constexpr std::string_view event_archive = "OBJECT_ARCHIVE";
 
 // Report a failure
 void report_error(be::error_code ec, char const* what) {
@@ -69,143 +56,12 @@ void report_error(be::error_code ec, char const* what) {
  */
 class http_handler {
  public:
-  explicit http_handler(spanner::Client client, spanner::Database database)
-      : client_(std::move(client)), database_(std::move(database)) {}
-
-  /**
-   * Handle a Google Cloud Storage Pub/Sub notification.
-   */
-  template <typename Body, typename Fields>
-  be::http::response<be::http::string_body> handle_gcs_notification(
-      be::http::request<Body, Fields> request) {
-    if (request[be::http::field::content_type] != "application/json") {
-      return bad_request(request, "invalid content-type for GCS notification");
-    }
-
-    std::function<void(std::string const& prefix, pt::ptree const& tree)>
-        dump_tree;
-
-    dump_tree = [&](std::string const& prefix, pt::ptree const& tree) {
-      for (auto& [k, v] : tree) {
-        auto p = prefix;
-        p += ".";
-        p += k;
-        std::cout << p << ":  " << v.data() << "\n";
-        auto sub_tree = tree.get_child(k, pt::ptree{});
-        dump_tree(p, sub_tree);
-      }
-    };
-
-    pt::ptree body = [&request] {
-      std::istringstream is(request.body());
-      pt::ptree tree;
-      pt::json_parser::read_json(is, tree);
-      return tree;
-    }();
-    // dump_tree("   body", body);
-
-    pt::ptree payload = [&body] {
-      std::string raw = body.get<std::string>("message.data", "");
-      namespace bai = boost::archive::iterators;
-      using binary_t =
-          bai::transform_width<bai::binary_from_base64<std::string::iterator>,
-                               8, 6>;
-      // Pad the raw string if needed.
-      raw.append((4 - raw.size() % 4) % 4, '=');
-      std::string data{binary_t(raw.begin()), binary_t(raw.end())};
-      // Boost.Property does not like characters after the closing brace.
-      data = data.substr(0, data.rfind('}') + 1);
-      std::istringstream is(data);
-      pt::ptree tree;
-      pt::json_parser::read_json(is, tree);
-      return tree;
-    }();
-    // dump_tree("   payload", payload);
-
-    auto const& attributes = body.get_child("message.attributes");
-
-    auto event_type = attributes.get<std::string>("eventType");
-    auto payload_format = attributes.get<std::string>("payloadFormat");
-    auto bucket = attributes.get<std::string>("bucketId");
-    auto object = attributes.get<std::string>("objectId");
-    auto generation = attributes.get<std::string>("objectGeneration");
-
-    std::cout << "event_type=" << event_type
-              << ", payload_format=" << payload_format << ", path=gs://"
-              << bucket << "/" << object << "/" << generation << std::endl;
-
-    // Acknowledge the notification, that frees up the Pub/Sub resources.
-    be::http::response<be::http::string_body> success{
-        be::http::status::no_content, request.version()};
-    success.set(be::http::field::server, BOOST_BEAST_VERSION_STRING);
-    success.set(be::http::field::content_type, "application/json");
-    success.keep_alive(request.keep_alive());
-    success.prepare_payload();
-
-    if (event_type == event_update) {
-      return success;
-    }
-
-    if (event_type == event_delete) {
-      auto mutation = spanner::MakeDeleteMutation(
-          std::string(table_name), spanner::KeySet().AddKey(spanner::MakeKey(
-                                       bucket, object, generation)));
-      client_
-          .Commit(
-              [m = std::move(mutation)](auto) { return spanner::Mutations{m}; })
-          .value();
-      return success;
-    }
-
-    auto columns = [] {
-      return std::vector<std::string>{std::begin(column_names),
-                                      std::end(column_names)};
-    };
-
-    if (event_type == event_archive || event_type == event_finalize) {
-      bool is_archived = event_type == event_archive;
-
-      auto update = spanner::MakeInsertOrUpdateMutation(
-          std::string(table_name), columns(), bucket, object, generation,
-          payload.get<std::string>("metaGeneration", ""), is_archived,
-          payload.get<std::int64_t>("size", 0),
-          payload.get<std::string>("contentType", ""),
-          spanner::internal::TimestampFromRFC3339(
-              payload.get<std::string>("timeCreated"))
-              .value(),
-          spanner::internal::TimestampFromRFC3339(
-              payload.get<std::string>("updated"))
-              .value(),
-          payload.get<std::string>("storageClass", ""),
-          spanner::internal::TimestampFromRFC3339(
-              payload.get<std::string>("timeStorageClassUpdated"))
-              .value(),
-          payload.get<std::string>("md5Hash", ""),
-          payload.get<std::string>("crc32c", ""),
-          spanner::MakeTimestamp(std::chrono::system_clock::now()).value());
-      client_
-          .Commit(
-              [m = std::move(update)](auto) { return spanner::Mutations{m}; })
-          .value();
-      return success;
-    }
-
-    return bad_request(request, "unknown event type");
-  }
+  explicit http_handler() {}
 
   template <typename Body, typename Fields>
   be::http::response<be::http::string_body> handle_request(
       be::http::request<Body, Fields> request) try {
-    if (request.method() == be::http::verb::post && request.target() == "/") {
-      return handle_gcs_notification(std::move(request));
-    }
-
-    if (request.method() != be::http::verb::get) {
-      return bad_request(request, "Unknown HTTP-method");
-    }
-
-    // Respond to GET request, mostly useful for debugging.
-    // TODO(...) - return an error, this is just for debugging.
+    // Respond to any request with a "Hello World" message.
     be::http::response<be::http::string_body> res{be::http::status::ok,
                                                   request.version()};
     res.set(be::http::field::server, BOOST_BEAST_VERSION_STRING);
@@ -223,9 +79,8 @@ class http_handler {
 
  private:
   template <typename Body, typename Fields>
-  be::http::response<be::http::string_body> error_response(
-      be::http::request<Body, Fields> const& request, be::http::status status,
-      std::string_view text) {
+  be::http::response<be::http::string_body> internal_error(
+      be::http::request<Body, Fields> const& request, std::string_view text) {
     be::http::response<be::http::string_body> res{status, request.version()};
     res.set(be::http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(be::http::field::content_type, "text/plain");
@@ -233,19 +88,6 @@ class http_handler {
     res.body() = std::string(text);
     res.prepare_payload();
     return res;
-  }
-
-  template <typename Body, typename Fields>
-  be::http::response<be::http::string_body> bad_request(
-      be::http::request<Body, Fields> const& request, std::string_view text) {
-    return error_response(request, be::http::status::bad_request, text);
-  }
-
-  template <typename Body, typename Fields>
-  be::http::response<be::http::string_body> internal_error(
-      be::http::request<Body, Fields> const& request, std::string_view text) {
-    return error_response(request, be::http::status::internal_server_error,
-                          text);
   }
 
   spanner::Client client_;
@@ -421,17 +263,7 @@ int main(int argc, char* argv[]) try {
       ("port", po::value<std::uint16_t>(&port), "set listening port")
       //
       ("threads", po::value<int>()->default_value(default_threads),
-       "set the number of I/O threads")
-      //
-      ("project",
-       po::value<std::string>()->default_value(get_env("GOOGLE_CLOUD_PROJECT")),
-       "set the Google Cloud Platform project id")
-      //
-      ("instance", po::value<std::string>()->required(),
-       "set the Cloud Spanner instance id")
-      //
-      ("database", po::value<std::string>()->required(),
-       "set the Cloud Spanner database id");
+       "set the number of I/O threads");
 
   po::variables_map vm;
   po::store(po::parse_command_line(argc, argv, desc), vm);
@@ -441,24 +273,12 @@ int main(int argc, char* argv[]) try {
     std::cout << desc << "\n";
     return 0;
   }
-  for (auto arg : {"project", "instance", "database"}) {
-    if (vm.count(arg) != 1 || vm[arg].as<std::string>().empty()) {
-      std::cout << "The --" << arg
-                << " option must be set to a non-empty value\n"
-                << desc << "\n";
-      return 1;
-    }
-  }
 
   auto address = asio::ip::make_address(vm["address"].as<std::string>());
   auto threads = vm["threads"].as<int>();
-  spanner::Database database(vm["project"].as<std::string>(),
-                             vm["instance"].as<std::string>(),
-                             vm["database"].as<std::string>());
 
   std::cout << "Listening on " << address << ":" << port << " using " << threads
             << " threads\n"
-            << "Will update object index in database: " << database
             << std::endl;
 
   asio::io_context ioc{threads};
@@ -471,11 +291,9 @@ int main(int argc, char* argv[]) try {
     ioc.stop();
   });
 
-  spanner::Client client(spanner::MakeConnection(database));
-
   auto acc = std::make_shared<acceptor>(
       ioc, tcp::endpoint{address, port},
-      std::make_shared<http_handler>(std::move(client), std::move(database)));
+      std::make_shared<http_handler>());
   acc->start();
 
   std::vector<std::thread> v(threads - 1);

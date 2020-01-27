@@ -19,15 +19,15 @@ steps:
     entrypoint: bash
     args:
       - '-c'
-      - 'docker pull gcr.io/${PROJECT_ID}/gcs-indexer-devtools || exit 0'
+      - 'docker pull gcr.io/${PROJECT_ID}/cloud-run-hello-devtools || exit 0'
   # Then create the `cloud-run-devtools` stage, using (if available) the
   # image we just pulled as a cache. When there are no changes to the
   # Dockerfile this caching can save 30 minutes or more.
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build',
            '--target', 'devtools',
-           '-t', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools',
+           '-t', 'gcr.io/${PROJECT_ID}/cloud-run-hello-devtools',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/cloud-run-hello-devtools',
            '-f', 'Dockerfile',
            '.']
     timeout: 3600s
@@ -35,54 +35,42 @@ steps:
   # subsequent steps fail, the build will restart from this point when we
   # retry.
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools:latest']
+    args: ['push', 'gcr.io/${PROJECT_ID}/cloud-run-hello-devtools:latest']
 
-  # Build the `build` stage, so we can reuse that in the next steps.
+  # Create the main image.
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build',
-           '-t', 'gcr.io/${PROJECT_ID}/gcs-indexer-build',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools',
-           '--target', 'build',
-           '-f', 'Dockerfile',
-           '.']
-
-  # Repeat the process to build the pubsub-handler stage.
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build',
-           '-t', 'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-build',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools',
-           '--target', 'pubsub-handler',
+           '-t', 'gcr.io/${PROJECT_ID}/cloud-run-hello',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/cloud-run-hello-devtools',
+           '--target', 'cloud-run-hello',
            '-f', 'Dockerfile',
            '.']
     timeout: 3600s
   - name: 'gcr.io/cloud-builders/docker'
     args: ['tag',
-           'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler:latest',
-           'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler:${SHORT_SHA}']
+           'gcr.io/${PROJECT_ID}/cloud-run-hello-pubsub-handler:latest',
+           'gcr.io/${PROJECT_ID}/cloud-run-hello-pubsub-handler:${SHORT_SHA}']
     timeout: 3600s
 
   # Repeat the process to build the tools stage.
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build',
-           '-t', 'gcr.io/${PROJECT_ID}/gcs-indexer-tools',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-build',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools',
+           '-t', 'gcr.io/${PROJECT_ID}/cloud-run-hello-tools',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/cloud-run-hello-build',
+           '--cache-from', 'gcr.io/${PROJECT_ID}/cloud-run-hello-devtools',
            '--target', 'tools',
            '-f', 'Dockerfile',
            '.']
     timeout: 3600s
   - name: 'gcr.io/cloud-builders/docker'
     args: ['tag',
-           'gcr.io/${PROJECT_ID}/gcs-indexer-tools:latest',
-           'gcr.io/${PROJECT_ID}/gcs-indexer-tools:${SHORT_SHA}']
+           'gcr.io/${PROJECT_ID}/cloud-run-hello-tools:latest',
+           'gcr.io/${PROJECT_ID}/cloud-run-hello-tools:${SHORT_SHA}']
     timeout: 3600s
 
 options:
   machineType: 'N1_HIGHCPU_8'
 timeout: 7200s
 images:
-  - 'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler'
-  - 'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler:${SHORT_SHA}'
-  - 'gcr.io/${PROJECT_ID}/gcs-indexer-tools'
-  - 'gcr.io/${PROJECT_ID}/gcs-indexer-tools:${SHORT_SHA}'
+  - 'gcr.io/${PROJECT_ID}/cloud-run-hello'
+  - 'gcr.io/${PROJECT_ID}/cloud-run-hello:${SHORT_SHA}'
