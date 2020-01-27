@@ -46,10 +46,6 @@ int main(int argc, char* argv[]) try {
   po::options_description options("Create a GCS indexing database");
   options.add_options()("help", "produce help message")
       //
-      ("bucket", po::value<std::vector<std::string>>()->required(),
-       "the bucket to refresh, use [BUCKET_NAME]/[PREFIX] to upload only a"
-       " prefix")
-      //
       ("project",
        po::value<std::string>()->default_value(get_env("GOOGLE_CLOUD_PROJECT")),
        "set the Google Cloud Platform project id")
@@ -62,20 +58,7 @@ int main(int argc, char* argv[]) try {
       //
       ("worker-threads",
        po::value<unsigned int>()->default_value(default_thread_count(16)),
-       "the number of threads uploading data to Cloud Spanner")
-      //
-      ("reader-threads",
-       po::value<unsigned int>()->default_value(default_thread_count(4)),
-       "the number of threads reading data from Google Cloud Storage")
-      //
-      ("discard-input", po::value<bool>()->default_value(false),
-       "discard all data read from GCS, used for testing")
-      //
-      ("discard-output", po::value<bool>()->default_value(false),
-       "discard data before sending it to Cloud Spanner, used for testing")
-      //
-      ("max-objects-per-mutation",
-       po::value<int>()->default_value(default_max_objects_per_mutation));
+       "the number of threads uploading data to Cloud Spanner");
 
   po::variables_map vm;
   po::store(po::command_line_parser(argc, argv)
@@ -96,11 +79,6 @@ int main(int argc, char* argv[]) try {
                 << options << "\n";
       return 1;
     }
-  }
-  if (vm.count("bucket") == 0) {
-    std::cout << "You must specific at least one bucket to refresh\n"
-              << options << "\n";
-    return 1;
   }
   spanner::Database const database(vm["project"].as<std::string>(),
                                    vm["instance"].as<std::string>(),
