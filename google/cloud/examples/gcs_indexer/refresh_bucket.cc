@@ -311,7 +311,8 @@ int main(int argc, char* argv[]) try {
   object_metadata_queue object_queue;
   work_item_queue work_queue;
 
-  std::cout << "Starting worker threads [" << worker_thread_count << "]" << std::endl;
+  std::cout << "Starting worker threads [" << worker_thread_count << "]"
+            << std::endl;
   std::vector<std::future<void>> workers;
   std::generate_n(std::back_inserter(workers), worker_thread_count,
                   [&database, start, &object_queue,
@@ -321,7 +322,8 @@ int main(int argc, char* argv[]) try {
                                       discard_output);
                   });
 
-  std::cout << "Starting reader threads [" << reader_thread_count << "]" << std::endl;
+  std::cout << "Starting reader threads [" << reader_thread_count << "]"
+            << std::endl;
   std::vector<std::future<void>> readers;
   std::generate_n(std::back_inserter(readers), reader_thread_count,
                   [&work_queue, &object_queue, max_objects_per_mutation,

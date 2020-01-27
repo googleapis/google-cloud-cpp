@@ -76,19 +76,18 @@ int main(int argc, char* argv[]) try {
                                    vm["instance"].as<std::string>(),
                                    vm["database"].as<std::string>());
 
-  auto spanner_client = spanner::Client(spanner::MakeConnection(
-      std::move(database)));
+  auto spanner_client =
+      spanner::Client(spanner::MakeConnection(std::move(database)));
 
   for (auto const& bucket : vm["bucket"].as<std::vector<std::string>>()) {
-      std::cout << "Deleting data for bucket=<" << bucket << ">" << std::endl;
-      auto result = spanner_client.ExecutePartitionedDml(spanner::SqlStatement(
-          "DELETE FROM " + std::string(table_name) + " WHERE bucket = @bucket",
-          {{"bucket", spanner::Value(bucket)}}
-      ));
-      if (not result) {
-          std::cerr << "Error deleting index for bucket=<" << bucket << ">: "
-          << result.status() << "\n";
-      }
+    std::cout << "Deleting data for bucket=<" << bucket << ">" << std::endl;
+    auto result = spanner_client.ExecutePartitionedDml(spanner::SqlStatement(
+        "DELETE FROM " + std::string(table_name) + " WHERE bucket = @bucket",
+        {{"bucket", spanner::Value(bucket)}}));
+    if (not result) {
+      std::cerr << "Error deleting index for bucket=<" << bucket
+                << ">: " << result.status() << "\n";
+    }
   }
 
   return 0;

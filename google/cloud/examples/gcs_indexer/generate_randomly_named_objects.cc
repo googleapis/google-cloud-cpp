@@ -87,8 +87,7 @@ std::vector<std::future<void>> launch_workers(std::string const& bucket,
         std::ostringstream os;
         os << "Prefix: " << prefix << "\nUse Hash Prefix: " << std::boolalpha
            << use_hash_prefix << "\nHashed Name: " << hashed
-           << "\nObject Index: " << i << "\nTask Id: " << task
-           << "\n";
+           << "\nObject Index: " << i << "\nTask Id: " << task << "\n";
         client.InsertObject(bucket, std::move(hashed), std::move(os).str())
             .value();
         ++total_object_count;
