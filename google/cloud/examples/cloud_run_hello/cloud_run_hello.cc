@@ -18,6 +18,7 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/http.hpp>
 #include <boost/beast/version.hpp>
+#include <boost/program_options.hpp>
 #include <future>
 #include <iostream>
 #include <memory>
@@ -27,18 +28,11 @@
 namespace be = boost::beast;
 namespace asio = boost::asio;
 namespace po = boost::program_options;
-namespace pt = boost::property_tree;
-namespace spanner = google::cloud::spanner;
 using tcp = boost::asio::ip::tcp;
 
-inline constexpr int max_mutations = 1000;
 inline constexpr std::uint64_t KiB = 1024;
 inline constexpr auto request_body_size_limit = 32 * KiB;
 inline constexpr auto request_timeout = std::chrono::seconds(30);
-
-using row_type = std::tuple<std::string, std::string, std::string, bool,
-                            spanner::Timestamp, spanner::Timestamp>;
-using primary_key = std::tuple<std::string, std::string, std::string>;
 
 // Report a failure
 void report_error(be::error_code ec, char const* what) {
@@ -81,7 +75,8 @@ class http_handler {
   template <typename Body, typename Fields>
   be::http::response<be::http::string_body> internal_error(
       be::http::request<Body, Fields> const& request, std::string_view text) {
-    be::http::response<be::http::string_body> res{status, request.version()};
+    be::http::response<be::http::string_body> res{
+      be::http::status::internal_server_error, request.version()};
     res.set(be::http::field::server, BOOST_BEAST_VERSION_STRING);
     res.set(be::http::field::content_type, "text/plain");
     res.keep_alive(request.keep_alive());
@@ -89,9 +84,6 @@ class http_handler {
     res.prepare_payload();
     return res;
   }
-
-  spanner::Client client_;
-  spanner::Database database_;
 };
 
 /**

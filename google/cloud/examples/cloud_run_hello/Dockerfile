@@ -53,12 +53,6 @@ WORKDIR /v/source
 RUN cmake -S/v/source -B/v/binary -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
     -DBoost_USE_STATIC_LIBS=ON \
-    -D_gRPC_USE_STATIC_LIBS=ON \
-    -DProtobuf_USE_STATIC_LIBS=ON \
-    -DOPENSSL_USE_STATIC_LIBS=ON \
-    -DOPENSSL_CRYPTO_LIBRARY=/usr/lib/libcrypto.a \
-    -DOPENSSL_SSL_LIBRARY=/usr/lib/libssl.a \
-    -DZLIB_LIBRARY=/lib/libz.a \
     -DEXTRA_LIBRARY="/usr/lib/libnghttp2.a;/usr/lib/libcares.a" \
     -DCMAKE_EXE_LINKER_FLAGS="-static"
 

@@ -31,7 +31,8 @@ Pub/Sub topic to receive GCS metadata updates. It will also setup the IAM
 permissions so Cloud Pub/Sub can push these updates to Cloud Run.
 
 ```bash
-./bootstrap-gcs-indexer.sh
+cd google/cloud/examples/cloud_run_hello
+./bootstrap-cloud-run-hello.sh
 ```
 
 # Send a HTTP GET request to the server.

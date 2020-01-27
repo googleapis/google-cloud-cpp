@@ -24,12 +24,7 @@ project(Docker-Run-C++ CXX C)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(spanner_client REQUIRED)
-find_package(storage_client REQUIRED)
-find_package(CURL REQUIRED)
 find_package(Boost 1.66 REQUIRED COMPONENTS program_options)
-find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
 set(EXTRA_LIBRARY
     ""
     CACHE
@@ -46,12 +41,8 @@ mark_as_advanced(EXTRA_LIBRARY)
 add_executable(cloud_run_hello cloud_run_hello.cc)
 target_link_libraries(
     cloud_run_hello
-    PRIVATE spanner_client
-            Boost::headers
-            Boost::program_options
-            OpenSSL::Crypto
-            OpenSSL::SSL
-            ZLIB::ZLIB)
+    PRIVATE Boost::headers
+            Boost::program_options)
 
 include(GNUInstallDirs)
 install(TARGETS cloud_run_hello
