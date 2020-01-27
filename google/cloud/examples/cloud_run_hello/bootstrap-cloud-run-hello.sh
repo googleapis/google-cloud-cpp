@@ -16,8 +16,7 @@
 set -eu
 
 if [[ -z "${GOOGLE_CLOUD_PROJECT:-}" ]]; then
-  echo "You must set GOOGLE_CLOUD_PROJECT to the project id hosting the GCS" \
-      "metadata indexer"
+  echo "You must set GOOGLE_CLOUD_PROJECT to the project id hosting Cloud Run C++ Hello World"
   exit 1
 fi
 
@@ -40,9 +39,9 @@ gcloud builds submit \
 
 # Create a service account that will update the index
 readonly SA_ID="cloud-run-hello"
-readonly SA_NAME="${SA_NAME}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+readonly SA_NAME="${SA_ID}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 if gcloud iam service-accounts describe "${SA_NAME}" \
-     "--project=${GOOGLE_CLOUD_PROJECT}" >/dev/null; then
+     "--project=${GOOGLE_CLOUD_PROJECT}" >/dev/null 2>&1; then
   echo "The ${SA_ID} service account already exists"
 else
   gcloud iam service-accounts create "${SA_ID}" \
@@ -53,18 +52,10 @@ fi
 # Create the Cloud Run deployment to update the index
 gcloud beta run deploy cloud-run-hello \
     "--project=${GOOGLE_CLOUD_PROJECT}" \
-    "--service-account=${UPDATE_SA}" \
+    "--service-account=${SA_NAME}" \
     "--image=gcr.io/${GOOGLE_CLOUD_PROJECT}/cloud-run-hello:latest" \
     "--region=${GOOGLE_CLOUD_REGION}" \
     "--platform=managed" \
     "--no-allow-unauthenticated"
-
-# Capture the service URL.
-SERVICE_URL=$(gcloud beta run services list \
-    "--project=${GOOGLE_CLOUD_PROJECT}" \
-    "--platform=managed" \
-    '--format=csv[no-heading](URL)' \
-    "--filter=SERVICE:pubsub-handler")
-readonly SERVICE_URL
 
 exit 0

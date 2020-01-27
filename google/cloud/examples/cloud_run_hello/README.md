@@ -35,7 +35,21 @@ cd google/cloud/examples/cloud_run_hello
 ./bootstrap-cloud-run-hello.sh
 ```
 
-# Send a HTTP GET request to the server.
+## Send a HTTP GET request to the server.
+
+First capture the URL for the Cloud Run service:
+
+```bash
+SERVICE_URL=$(gcloud beta run services list \
+    "--project=${GOOGLE_CLOUD_PROJECT}" \
+    "--platform=managed" \
+    '--format=csv[no-heading](URL)' \
+    "--filter=SERVICE:pubsub-handler")
+```
+
+Then send a request using `curl`:
+
+```bash
 curl -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
   "${SERVICE_URL}"
-
+```
