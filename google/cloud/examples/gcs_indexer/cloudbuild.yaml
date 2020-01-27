@@ -62,22 +62,6 @@ steps:
            'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler:${SHORT_SHA}']
     timeout: 3600s
 
-  # Repeat the process to build the admin-handler stage.
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build',
-           '-t', 'gcr.io/${PROJECT_ID}/gcs-indexer-admin-handler',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-build',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/gcs-indexer-devtools',
-           '--target', 'admin-handler',
-           '-f', 'Dockerfile',
-           '.']
-    timeout: 3600s
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag',
-           'gcr.io/${PROJECT_ID}/gcs-indexer-admin-handler:latest',
-           'gcr.io/${PROJECT_ID}/gcs-indexer-admin-handler:${SHORT_SHA}']
-    timeout: 3600s
-
   # Repeat the process to build the tools stage.
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build',
@@ -98,8 +82,6 @@ options:
   machineType: 'N1_HIGHCPU_8'
 timeout: 7200s
 images:
-  - 'gcr.io/${PROJECT_ID}/gcs-indexer-admin-handler'
-  - 'gcr.io/${PROJECT_ID}/gcs-indexer-admin-handler:${SHORT_SHA}'
   - 'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler'
   - 'gcr.io/${PROJECT_ID}/gcs-indexer-pubsub-handler:${SHORT_SHA}'
   - 'gcr.io/${PROJECT_ID}/gcs-indexer-tools'
