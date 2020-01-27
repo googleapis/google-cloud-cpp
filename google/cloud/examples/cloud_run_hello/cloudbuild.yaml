@@ -48,28 +48,10 @@ steps:
     timeout: 3600s
   - name: 'gcr.io/cloud-builders/docker'
     args: ['tag',
-           'gcr.io/${PROJECT_ID}/cloud-run-hello-pubsub-handler:latest',
-           'gcr.io/${PROJECT_ID}/cloud-run-hello-pubsub-handler:${SHORT_SHA}']
+           'gcr.io/${PROJECT_ID}/cloud-run-hello:latest',
+           'gcr.io/${PROJECT_ID}/cloud-run-hello:${SHORT_SHA}']
     timeout: 3600s
 
-  # Repeat the process to build the tools stage.
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build',
-           '-t', 'gcr.io/${PROJECT_ID}/cloud-run-hello-tools',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/cloud-run-hello-build',
-           '--cache-from', 'gcr.io/${PROJECT_ID}/cloud-run-hello-devtools',
-           '--target', 'tools',
-           '-f', 'Dockerfile',
-           '.']
-    timeout: 3600s
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['tag',
-           'gcr.io/${PROJECT_ID}/cloud-run-hello-tools:latest',
-           'gcr.io/${PROJECT_ID}/cloud-run-hello-tools:${SHORT_SHA}']
-    timeout: 3600s
-
-options:
-  machineType: 'N1_HIGHCPU_8'
 timeout: 7200s
 images:
   - 'gcr.io/${PROJECT_ID}/cloud-run-hello'

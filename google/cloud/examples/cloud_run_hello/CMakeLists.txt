@@ -25,15 +25,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Boost 1.66 REQUIRED COMPONENTS program_options)
-set(EXTRA_LIBRARY
-    ""
-    CACHE
-        FILEPATH
-        "Additional libraries.
-        Several CMake modules (but not CONFIGs!) do not link the dependencies
-        when using static libraries. This flag can be used to add additional
-        from the command line (or a Dockerfile).")
-mark_as_advanced(EXTRA_LIBRARY)
 
 # When using static libraries the FindgRPC.cmake module does not define the
 # correct dependencies (OpenSSL::Crypto, c-cares, etc) for gRPC::grpc.

@@ -53,7 +53,6 @@ WORKDIR /v/source
 RUN cmake -S/v/source -B/v/binary -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
     -DBoost_USE_STATIC_LIBS=ON \
-    -DEXTRA_LIBRARY="/usr/lib/libnghttp2.a;/usr/lib/libcares.a" \
     -DCMAKE_EXE_LINKER_FLAGS="-static"
 
 RUN cmake --build /v/binary
