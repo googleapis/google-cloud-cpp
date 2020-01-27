@@ -14,6 +14,7 @@
 
 #include "google/cloud/grpc_utils/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gtest/gtest.h>
 #include <chrono>
 #include <memory>
@@ -38,7 +39,8 @@ TEST(CompletionQueueTest, TimerSmokeTest) {
   using ms = std::chrono::milliseconds;
   promise<void> wait_for_sleep;
   cq.MakeRelativeTimer(ms(2))
-      .then([&wait_for_sleep](future<std::chrono::system_clock::time_point>) {
+      .then([&wait_for_sleep](
+                future<StatusOr<std::chrono::system_clock::time_point>>) {
         wait_for_sleep.set_value();
       })
       .get();
@@ -56,7 +58,8 @@ TEST(CompletionQueueTest, MockSmokeTest) {
   using ms = std::chrono::milliseconds;
   promise<void> wait_for_sleep;
   cq.MakeRelativeTimer(ms(20000)).then(
-      [&wait_for_sleep](future<std::chrono::system_clock::time_point>) {
+      [&wait_for_sleep](
+          future<StatusOr<std::chrono::system_clock::time_point>>) {
         wait_for_sleep.set_value();
       });
   mock->SimulateCompletion(cq, true);
@@ -74,7 +77,10 @@ TEST(CompletionQueueTest, ShutdownWithPending) {
     CompletionQueue cq;
     std::thread runner([&cq] { cq.Run(); });
     timer = cq.MakeRelativeTimer(ms(20)).then(
-        [](future<std::chrono::system_clock::time_point>) {});
+        [](future<StatusOr<std::chrono::system_clock::time_point>> result) {
+          // Timer still runs to completion after `Shutdown`.
+          EXPECT_STATUS_OK(result.get().status());
+        });
     EXPECT_EQ(std::future_status::timeout, timer.wait_for(ms(0)));
     cq.Shutdown();
     EXPECT_EQ(std::future_status::timeout, timer.wait_for(ms(0)));
@@ -92,9 +98,13 @@ TEST(CompletionQueueTest, CanCancelAllEvents) {
     cq.Run();
     done.set_value();
   });
-  cq.MakeRelativeTimer(ms(20000));
-  cq.MakeRelativeTimer(ms(20000));
-  cq.MakeRelativeTimer(ms(20000));
+  for (int i = 0; i < 3; ++i) {
+    cq.MakeRelativeTimer(ms(20000)).then(
+        [](future<StatusOr<std::chrono::system_clock::time_point>> result) {
+          // Cancelled timers return CANCELLED status.
+          EXPECT_EQ(StatusCode::kCancelled, result.get().status().code());
+        });
+  }
   auto f = done.get_future();
   EXPECT_EQ(std::future_status::timeout, f.wait_for(ms(1)));
   cq.Shutdown();

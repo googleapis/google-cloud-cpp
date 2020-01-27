@@ -54,8 +54,10 @@ class CompletionQueue {
    * @param deadline when should the timer expire.
    *
    * @return a future that becomes satisfied after @p deadline.
+   *     The result of the future is the time at which it expired, or an error
+   *     Status if the timer did not run to expiration (e.g. it was cancelled).
    */
-  google::cloud::future<std::chrono::system_clock::time_point>
+  google::cloud::future<StatusOr<std::chrono::system_clock::time_point>>
   MakeDeadlineTimer(std::chrono::system_clock::time_point deadline);
 
   /**
@@ -75,9 +77,11 @@ class CompletionQueue {
    * @param duration when should the timer expire relative to the current time.
    *
    * @return a future that becomes satisfied after @p duration time has elapsed.
+   *     The result of the future is the time at which it expired, or an error
+   *     Status if the timer did not run to expiration (e.g. it was cancelled).
    */
   template <typename Rep, typename Period>
-  future<std::chrono::system_clock::time_point> MakeRelativeTimer(
+  future<StatusOr<std::chrono::system_clock::time_point>> MakeRelativeTimer(
       std::chrono::duration<Rep, Period> duration) {
     return MakeDeadlineTimer(std::chrono::system_clock::now() + duration);
   }
@@ -175,7 +179,10 @@ class CompletionQueue {
                 internal::CheckRunAsyncCallback<Functor>::value, int>::type = 0>
   void RunAsync(Functor&& functor) {
     MakeRelativeTimer(std::chrono::seconds(0))
-        .then([this, functor](future<std::chrono::system_clock::time_point>) {
+        .then([this, functor](
+                  future<StatusOr<std::chrono::system_clock::time_point>>) {
+          // We intentionally ignore the status here; the functor is always
+          // called, even after a call to `CancelAll`.
           CompletionQueue cq(impl_);
           functor(cq);
         });

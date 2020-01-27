@@ -41,7 +41,7 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
       : alarm_(std::move(alarm)) {}
 
-  future<std::chrono::system_clock::time_point> GetFuture() {
+  future<StatusOr<std::chrono::system_clock::time_point>> GetFuture() {
     return promise_.get_future();
   }
 
@@ -61,12 +61,16 @@ class AsyncTimerFuture : public internal::AsyncGrpcOperation {
   }
 
  private:
-  bool Notify(CompletionQueue&, bool) override {
-    promise_.set_value(deadline_);
+  bool Notify(CompletionQueue&, bool ok) override {
+    if (!ok) {
+      promise_.set_value(Status(StatusCode::kCancelled, "timer canceled"));
+    } else {
+      promise_.set_value(deadline_);
+    }
     return true;
   }
 
-  promise<std::chrono::system_clock::time_point> promise_;
+  promise<StatusOr<std::chrono::system_clock::time_point>> promise_;
   std::chrono::system_clock::time_point deadline_;
   /// Holds the underlying handle. It might be a nullptr in tests.
   std::unique_ptr<grpc::Alarm> alarm_;
@@ -82,7 +86,7 @@ void CompletionQueue::Shutdown() { impl_->Shutdown(); }
 
 void CompletionQueue::CancelAll() { impl_->CancelAll(); }
 
-google::cloud::future<std::chrono::system_clock::time_point>
+google::cloud::future<StatusOr<std::chrono::system_clock::time_point>>
 CompletionQueue::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto op = std::make_shared<AsyncTimerFuture>(impl_->CreateAlarm());
