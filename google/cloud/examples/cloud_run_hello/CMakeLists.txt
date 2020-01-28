@@ -17,7 +17,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Define the project name and where to report bugs.
-set(PACKAGE_BUGREPORT "https://github.com/coryan/docker-grpc-cpp/issues")
+set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(Docker-Run-C++ CXX C)
 
 # Configure the Compiler options, we will be using C++17 features.

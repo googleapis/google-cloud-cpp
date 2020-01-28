@@ -23,12 +23,7 @@ export GOOGLE_CLOUD_PROJECT=...
 
 This script will enable the necessary APIs, build the docker image used by
 Cloud Run using Cloud Build, create a service account for the Cloud Run
-deployment,
-Run the program to bootstrap the indexer, this will create the Cloud Spanner
-instance and databases to store the data, the Cloud Run deployments to run the
-indexer, two service accounts to run the Cloud Run deployments, and a Cloud
-Pub/Sub topic to receive GCS metadata updates. It will also setup the IAM
-permissions so Cloud Pub/Sub can push these updates to Cloud Run.
+deployment.
 
 ```bash
 cd google/cloud/examples/cloud_run_hello
@@ -44,7 +39,7 @@ SERVICE_URL=$(gcloud beta run services list \
     "--project=${GOOGLE_CLOUD_PROJECT}" \
     "--platform=managed" \
     '--format=csv[no-heading](URL)' \
-    "--filter=SERVICE:pubsub-handler")
+    "--filter=SERVICE:cloud-run-hello")
 ```
 
 Then send a request using `curl`:
