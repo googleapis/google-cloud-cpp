@@ -138,7 +138,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession> {
   }
 
   void OnWrite(bool need_eof, be::error_code ec,
-                std::size_t /*bytes_transferred*/) {
+               std::size_t /*bytes_transferred*/) {
     if (ec) return ReportError(ec, "on_write");
     if (need_eof) Close();
     // Read the next request.

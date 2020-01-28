@@ -9,6 +9,7 @@ Install the command-line tools:
 
 ```bash
 gcloud components install beta
+gcloud components install kubectl
 gcloud components install docker-credential-gcr
 gcloud auth configure-docker
 ```
@@ -21,9 +22,9 @@ Pick the project to run the Cloud Run Deployment.
 export GOOGLE_CLOUD_PROJECT=...
 ```
 
-This script will enable the necessary APIs, build the docker image used by
-Cloud Run using Cloud Build, create a service account for the Cloud Run
-deployment.
+This script will enable the necessary APIs, build a Docker image using Cloud
+Build, create a service account for the Cloud Run deployment, and then create
+a Cloud Run deployment using the Docker image referenced earlier.
 
 ```bash
 cd google/cloud/examples/cloud_run_hello
