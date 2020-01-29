@@ -55,7 +55,7 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
   ClientOptionsDefaultEndpointTest()
       : bigtable_emulator_host_("BIGTABLE_EMULATOR_HOST"),
         bigtable_instance_admin_emulator_host_(
-            "BIGTABLE_INSTANCE_EMULATOR_HOST"),
+            "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST_"),
         google_cloud_enable_direct_path_("GOOGLE_CLOUD_ENABLE_DIRECT_PATH") {}
 
  protected:
