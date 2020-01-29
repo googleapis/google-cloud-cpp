@@ -455,6 +455,30 @@ void CreateTableWithTimestamp(
 }
 // [END spanner_create_table_with_timestamp_column]
 
+// [START spanner_insert_data_with_timestamp_column]
+void InsertDataWithTimestamp(
+    google::cloud::spanner::DatabaseAdminClient,  // NOLINT
+    std::string const&, std::string const&, std::string const&) {
+  // TODO(#1217)
+}
+// [END spanner_insert_data_with_timestamp_column]
+
+// [START spanner_update_data_with_timestamp_column]
+void UpdateDataWithTimestamp(
+    google::cloud::spanner::DatabaseAdminClient,  // NOLINT
+    std::string const&, std::string const&, std::string const&) {
+  // TODO(#1218)
+}
+// [END spanner_update_data_with_timestamp_column]
+
+// [START spanner_query_data_with_timestamp_column]
+void QueryDataWithTimestamp(
+    google::cloud::spanner::DatabaseAdminClient,  // NOLINT
+    std::string const&, std::string const&, std::string const&) {
+  // TODO(#1219)
+}
+// [END spanner_query_data_with_timestamp_column]
+
 // [START spanner_create_index]
 void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
               std::string const& project_id, std::string const& instance_id,
@@ -1825,6 +1849,12 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("create-database", &CreateDatabase),
       make_database_command_entry("create-table-with-timestamp",
                                   &CreateTableWithTimestamp),
+      make_database_command_entry("insert-data-with-timestamp",
+                                  &InsertDataWithTimestamp),
+      make_database_command_entry("update-data-with-timestamp",
+                                  &UpdateDataWithTimestamp),
+      make_database_command_entry("query-data-with-timestamp",
+                                  &QueryDataWithTimestamp),
       make_database_command_entry("add-index", &AddIndex),
       make_database_command_entry("add-storing-index", &AddStoringIndex),
       make_database_command_entry("get-database", &GetDatabase),
@@ -2002,6 +2032,18 @@ void RunAll() {
   std::cout << "\nRunning spanner_create_table_with_timestamp_column sample\n";
   CreateTableWithTimestamp(database_admin_client, project_id, instance_id,
                            database_id);
+
+  std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample\n";
+  InsertDataWithTimestamp(database_admin_client, project_id, instance_id,
+                          database_id);
+
+  std::cout << "\nRunning spanner_update_data_with_timestamp_column sample\n";
+  UpdateDataWithTimestamp(database_admin_client, project_id, instance_id,
+                          database_id);
+
+  std::cout << "\nRunning spanner_query_data_with_timestamp_column sample\n";
+  QueryDataWithTimestamp(database_admin_client, project_id, instance_id,
+                         database_id);
 
   std::cout << "\nRunning spanner_create_index sample\n";
   AddIndex(database_admin_client, project_id, instance_id, database_id);
