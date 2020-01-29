@@ -120,6 +120,7 @@ if (BUILD_TESTING)
             PRIVATE google_cloud_cpp_grpc_utils
                     google_cloud_cpp_testing
                     google_cloud_cpp_common
+                    googleapis-c++::bigtable_protos
                     GTest::gmock_main
                     GTest::gmock
                     GTest::gtest
