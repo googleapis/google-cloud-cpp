@@ -390,15 +390,47 @@ function (spanner_client_define_tests)
     endforeach ()
 endfunction ()
 
-# Only define the tests if testing is enabled. Package maintainers may not want
-# to build all the tests everytime they create a new package or when the package
-# is installed from source.
+# Define the benchmarks in a function so we have a new scope for variable names.
+function (spanner_client_define_benchmarks)
+    find_package(benchmark CONFIG REQUIRED)
+
+    set(spanner_client_benchmarks
+        # cmake-format: sortable
+        bytes_benchmark.cc internal/date_benchmark.cc
+        internal/time_format_benchmark.cc)
+
+    # Export the list of benchmarks to a .bzl file so we do not need to maintain
+    # the list in two places.
+    export_list_to_bazel("spanner_client_benchmarks.bzl"
+                         "spanner_client_benchmarks")
+
+    # Create a custom target so we can say "build all the benchmarks"
+    add_custom_target(spanner-client-benchmarks)
+
+    # Generate a target for each benchmark.
+    foreach (fname ${spanner_client_benchmarks})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client
+                                                benchmark::benchmark_main)
+        google_cloud_cpp_add_clang_tidy(${target})
+        google_cloud_cpp_add_common_options(${target})
+
+        add_dependencies(spanner-client-benchmarks ${target})
+    endforeach ()
+endfunction ()
+
+# Only define the tests/benchmarks if testing is enabled. Package maintainers
+# may not want to build all the tests everytime they create a new package or
+# when the package is installed from source.
 if (BUILD_TESTING)
     spanner_client_define_tests()
+    spanner_client_define_benchmarks()
 endif (BUILD_TESTING)
 
 add_subdirectory(integration_tests)
-add_subdirectory(benchmarks)
+add_subdirectory(benchmarks) # macro benchmarks
 
 # Only compile the samples if we're building with exceptions enabled. They
 # require exceptions to keep them simple and idiomatic.
