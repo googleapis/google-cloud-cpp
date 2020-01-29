@@ -1464,9 +1464,14 @@ void QueryDataSelectStar(google::cloud::spanner::Client client) {
 
 //! [START spanner_query_data_with_struct]
 void QueryDataWithStruct(google::cloud::spanner::Client client) {
-  //! [spanner-sql-statement-params] [START spanner_create_struct_with_data]
   namespace spanner = ::google::cloud::spanner;
-  auto singer_info = std::make_tuple("Elena", "Campbell");
+  //! [spanner-sql-statement-params] [START spanner_create_struct_with_data]
+  //! [START spanner_create_user_defined_struct]
+  // Cloud Spanner STRUCT<> types are represented by std::tuple<...>. The
+  // following represents a STRUCT<> with two unnamed STRING fields.
+  using NameType = std::tuple<std::string, std::string>;
+  //! [END spanner_create_user_defined_struct]
+  auto singer_info = NameType{"Elena", "Campbell"};
   //! [END spanner_create_struct_with_data]
   auto rows = client.ExecuteQuery(spanner::SqlStatement(
       "SELECT SingerId FROM Singers WHERE (FirstName, LastName) = @name",
