@@ -43,6 +43,21 @@ RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz &
     ldconfig
 _EOF_
 
+read_into_variable INSTALL_GOOGLE_BENCHMARK_FROM_SOURCE <<'_EOF_'
+WORKDIR /var/tmp/build
+RUN wget -q https://github.com/google/benchmark/archive/v1.5.0.tar.gz && \
+    tar -xf v1.5.0.tar.gz && \
+    cd benchmark-1.5.0 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE="Release" \
+        -DBUILD_SHARED_LIBS=yes \
+        -DBENCHMARK_ENABLE_TESTING=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+_EOF_
+
 read_into_variable INSTALL_CRC32C_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz && \
