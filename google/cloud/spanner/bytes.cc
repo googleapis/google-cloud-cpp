@@ -84,7 +84,7 @@ void Bytes::Encoder::FlushAndPad() {
   }
 }
 
-void Bytes::Decoder::iterator::Fill() {
+void Bytes::Decoder::Iterator::Fill() {
   if (pos_ != end_) {
     unsigned char p0 = *pos_++;
     unsigned char p1 = *pos_++;

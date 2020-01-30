@@ -226,7 +226,7 @@ class Value {
    */
   template <typename T>
   explicit Value(std::vector<T> v) : Value(PrivateConstructor{}, std::move(v)) {
-    static_assert(!is_vector<typename std::decay<T>::type>::value,
+    static_assert(!IsVector<typename std::decay<T>::type>::value,
                   "vector of vector not allowed. See value.h documentation.");
   }
 
@@ -278,7 +278,7 @@ class Value {
     if (!TypeProtoIs(T{}, type_))
       return Status(StatusCode::kUnknown, "wrong type");
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
-      if (is_optional<T>::value) return T{};
+      if (IsOptional<T>::value) return T{};
       return Status(StatusCode::kUnknown, "null value");
     }
     return GetValue(T{}, value_, type_);
@@ -290,7 +290,7 @@ class Value {
     if (!TypeProtoIs(T{}, type_))
       return Status(StatusCode::kUnknown, "wrong type");
     if (value_.kind_case() == google::protobuf::Value::kNullValue) {
-      if (is_optional<T>::value) return T{};
+      if (IsOptional<T>::value) return T{};
       return Status(StatusCode::kUnknown, "null value");
     }
     return GetValue(T{}, std::move(value_), type_);
@@ -308,15 +308,15 @@ class Value {
  private:
   // Metafunction that returns true if `T` is an optional<U>
   template <typename T>
-  struct is_optional : std::false_type {};
+  struct IsOptional : std::false_type {};
   template <typename T>
-  struct is_optional<optional<T>> : std::true_type {};
+  struct IsOptional<optional<T>> : std::true_type {};
 
   // Metafunction that returns true if `T` is a std::vector<U>
   template <typename T>
-  struct is_vector : std::false_type {};
+  struct IsVector : std::false_type {};
   template <typename... Ts>
-  struct is_vector<std::vector<Ts...>> : std::true_type {};
+  struct IsVector<std::vector<Ts...>> : std::true_type {};
 
   // Tag-dispatch overloads to check if a C++ type matches the type specified
   // by the given `Type` proto.

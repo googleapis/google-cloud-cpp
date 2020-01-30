@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_IAM_UPDATER_H_
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_IAM_UPDATER_H_
 
+#include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
 #include <google/iam/v1/policy.pb.h>
 #include <functional>

@@ -163,12 +163,12 @@ class Timestamp {
     return std::chrono::time_point_cast<Duration>(
         sys_time<Duration>::clock::from_time_t(0));
   }
-  static StatusOr<Timestamp> FromRatio(std::intmax_t const count,
-                                       std::intmax_t const numerator,
-                                       std::intmax_t const denominator);
+  static StatusOr<Timestamp> FromRatio(std::intmax_t count,
+                                       std::intmax_t numerator,
+                                       std::intmax_t denominator);
   StatusOr<std::intmax_t> ToRatio(std::intmax_t min, std::intmax_t max,
-                                  std::intmax_t const numerator,
-                                  std::intmax_t const denominator) const;
+                                  std::intmax_t numerator,
+                                  std::intmax_t denominator) const;
 
   // Conversion to a `std::chrono::time_point` on the system clock. May
   // produce out-of-range errors, depending on the properties of `Duration`

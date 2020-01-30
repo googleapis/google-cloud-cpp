@@ -72,11 +72,11 @@ class Transaction {
     ReadOnlyOptions();
 
     // Exact Staleness: Executes all reads at `read_timestamp`.
-    ReadOnlyOptions(Timestamp read_timestamp);
+    explicit ReadOnlyOptions(Timestamp read_timestamp);
 
     // Exact Staleness: Executes all reads at a timestamp `exact_staleness`
     // old. The actual timestamp is chosen soon after the reads are started.
-    ReadOnlyOptions(std::chrono::nanoseconds exact_staleness);
+    explicit ReadOnlyOptions(std::chrono::nanoseconds exact_staleness);
 
    private:
     friend Transaction;
@@ -109,15 +109,16 @@ class Transaction {
   class SingleUseOptions {
    public:
     // Strong or Exact Staleness: See ReadOnlyOptions.
-    SingleUseOptions(ReadOnlyOptions opts);  // implicitly convertible
+    // NOLINTNEXTLINE(google-explicit-constructor)
+    SingleUseOptions(ReadOnlyOptions opts);
 
     // Bounded Staleness: Executes all reads at a timestamp that is not
     // before `min_read_timestamp`.
-    SingleUseOptions(Timestamp min_read_timestamp);
+    explicit SingleUseOptions(Timestamp min_read_timestamp);
 
     // Bounded Staleness: Executes all reads at a timestamp that is not
     // before `NOW - max_staleness`.
-    SingleUseOptions(std::chrono::nanoseconds max_staleness);
+    explicit SingleUseOptions(std::chrono::nanoseconds max_staleness);
 
    private:
     friend Transaction;

@@ -92,7 +92,7 @@ class Bytes {
   };
 
   struct Decoder {
-    class iterator {
+    class Iterator {
      public:
       using iterator_category = std::input_iterator_tag;
       using value_type = unsigned char;
@@ -100,7 +100,7 @@ class Bytes {
       using pointer = value_type*;
       using reference = value_type&;
 
-      iterator(std::string::const_iterator begin,
+      Iterator(std::string::const_iterator begin,
                std::string::const_iterator end)
           : pos_(begin), end_(end), len_(0) {
         Fill();
@@ -111,20 +111,20 @@ class Bytes {
       reference operator*() { return buf_[len_]; }
       pointer operator->() { return &buf_[len_]; }
 
-      iterator& operator++() {
+      Iterator& operator++() {
         if (--len_ == 0) Fill();
         return *this;
       }
-      iterator operator++(int) {
+      Iterator operator++(int) {
         auto const old = *this;
         operator++();
         return old;
       }
 
-      friend bool operator==(iterator const& a, iterator const& b) {
+      friend bool operator==(Iterator const& a, Iterator const& b) {
         return a.pos_ == b.pos_ && a.len_ == b.len_;
       }
-      friend bool operator!=(iterator const& a, iterator const& b) {
+      friend bool operator!=(Iterator const& a, Iterator const& b) {
         return !(a == b);
       }
 
@@ -136,8 +136,8 @@ class Bytes {
     };
 
     explicit Decoder(std::string const& rep) : rep_(rep) {}
-    iterator begin() { return iterator(rep_.begin(), rep_.end()); }
-    iterator end() { return iterator(rep_.end(), rep_.end()); }
+    Iterator begin() { return Iterator(rep_.begin(), rep_.end()); }
+    Iterator end() { return Iterator(rep_.end(), rep_.end()); }
 
     std::string const& rep_;  // encoded
   };

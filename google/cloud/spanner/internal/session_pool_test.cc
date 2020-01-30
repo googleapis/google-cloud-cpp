@@ -240,7 +240,7 @@ TEST(SessionPool, MaxSessionsFailOnExhaustion) {
 
   SessionPoolOptions options;
   options.set_max_sessions_per_channel(max_sessions_per_channel)
-      .set_action_on_exhaustion(ActionOnExhaustion::FAIL);
+      .set_action_on_exhaustion(ActionOnExhaustion::kFail);
   auto pool = MakeSessionPool(db, {mock}, options);
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;
@@ -265,7 +265,7 @@ TEST(SessionPool, MaxSessionsBlockUntilRelease) {
 
   SessionPoolOptions options;
   options.set_max_sessions_per_channel(max_sessions_per_channel)
-      .set_action_on_exhaustion(ActionOnExhaustion::BLOCK);
+      .set_action_on_exhaustion(ActionOnExhaustion::kBlock);
   auto pool = MakeSessionPool(db, {mock}, options);
   auto session = pool->Allocate();
   ASSERT_STATUS_OK(session);
@@ -341,7 +341,7 @@ TEST(SessionPool, MultipleChannelsPreAllocation) {
   // (max_sessions_per_channel * num_channels).
   options.set_min_sessions(20)
       .set_max_sessions_per_channel(3)
-      .set_action_on_exhaustion(ActionOnExhaustion::FAIL);
+      .set_action_on_exhaustion(ActionOnExhaustion::kFail);
   auto pool = MakeSessionPool(db, {mock1, mock2, mock3}, options);
   std::vector<SessionHolder> sessions;
   std::vector<std::string> session_names;

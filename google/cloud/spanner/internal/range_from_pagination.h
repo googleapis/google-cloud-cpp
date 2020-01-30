@@ -52,7 +52,7 @@ class PaginationIterator {
     return *this;
   }
 
-  PaginationIterator const operator++(int) {
+  PaginationIterator operator++(int) {
     PaginationIterator tmp(*this);
     operator++();
     return tmp;
@@ -147,12 +147,12 @@ class PaginationRange {
    *   status. If the stream is exhausted, it returns the `.end()` iterator.
    */
   iterator GetNext() {
-    static Status const past_the_end_error(
+    static Status const kPastTheEndError(
         StatusCode::kFailedPrecondition,
         "Cannot iterating past the end of ListObjectReader");
     if (current_page_.end() == current_) {
       if (on_last_page_) {
-        return iterator(nullptr, past_the_end_error);
+        return iterator(nullptr, kPastTheEndError);
       }
       request_.set_page_token(std::move(next_page_token_));
       auto response = next_page_loader_(request_);
@@ -170,7 +170,7 @@ class PaginationRange {
         on_last_page_ = true;
       }
       if (current_page_.end() == current_) {
-        return iterator(nullptr, past_the_end_error);
+        return iterator(nullptr, kPastTheEndError);
       }
     }
     return iterator(this, std::move(*current_++));

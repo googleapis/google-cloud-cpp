@@ -27,7 +27,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 // What action to take if the session pool is exhausted.
-enum class ActionOnExhaustion { BLOCK, FAIL };
+enum class ActionOnExhaustion { kBlock, kFail };
 
 class SessionPoolOptions {
  public:
@@ -93,7 +93,7 @@ class SessionPoolOptions {
   }
 
   /**
-   * Return the action to take (BLOCK or FAIL) when attempting to allocate a
+   * Return the action to take (kBlock or kFail) when attempting to allocate a
    * session when the pool is exhausted.
    */
   ActionOnExhaustion action_on_exhaustion() const {
@@ -134,7 +134,7 @@ class SessionPoolOptions {
   int min_sessions_ = 0;
   int max_sessions_per_channel_ = 100;
   int max_idle_sessions_ = 0;
-  ActionOnExhaustion action_on_exhaustion_ = ActionOnExhaustion::BLOCK;
+  ActionOnExhaustion action_on_exhaustion_ = ActionOnExhaustion::kBlock;
   std::chrono::minutes keep_alive_interval_ = std::chrono::minutes(55);
   std::map<std::string, std::string> labels_;
 };
