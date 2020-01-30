@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H
 
 #include "google/cloud/version.h"
 #include <chrono>
@@ -45,4 +45,4 @@ std::chrono::system_clock::time_point ParseRfc3339(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_PARSE_RFC3339_H

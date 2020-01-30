@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H
 
 #include "google/cloud/version.h"
 #include <chrono>
@@ -53,4 +53,4 @@ std::string FormatV4SignedUrlScope(std::chrono::system_clock::time_point tp);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FORMAT_TIME_POINT_H

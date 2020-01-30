@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H
 
 #include "google/cloud/version.h"
 #include <iostream>
@@ -103,4 +103,4 @@ class RuntimeStatusError : public std::runtime_error {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_COMPLETION_QUEUE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_COMPLETION_QUEUE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_COMPLETION_QUEUE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_COMPLETION_QUEUE_H
 
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_utils/internal/async_read_stream_impl.h"
@@ -197,4 +197,4 @@ class CompletionQueue {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_COMPLETION_QUEUE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_COMPLETION_QUEUE_H

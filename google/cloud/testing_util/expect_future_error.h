@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXPECT_FUTURE_ERROR_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXPECT_FUTURE_ERROR_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXPECT_FUTURE_ERROR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXPECT_FUTURE_ERROR_H
 
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -53,4 +53,4 @@ void ExpectFutureError(Functor functor, std::future_errc code) {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXPECT_FUTURE_ERROR_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXPECT_FUTURE_ERROR_H

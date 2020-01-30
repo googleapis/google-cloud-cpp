@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H
 
 #include "google/cloud/iam_binding.h"
 #include "google/cloud/version.h"
@@ -185,4 +185,4 @@ std::ostream& operator<<(std::ostream& os, IamBindings const& rhs);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_IAM_BINDINGS_H

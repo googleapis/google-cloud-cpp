@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H
 
 #include "google/cloud/grpc_utils/internal/completion_queue_impl.h"
 #include "google/cloud/grpc_utils/version.h"
@@ -339,4 +339,4 @@ MakeAsyncReadStreamImpl(OnReadHandler&& on_read, OnFinishHandler&& on_finish) {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H

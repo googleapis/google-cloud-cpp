@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H
 
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status.h"
@@ -357,4 +357,4 @@ StatusOr<T> make_status_or(T rhs) {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STATUS_OR_H

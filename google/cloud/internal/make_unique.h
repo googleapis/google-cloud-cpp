@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H
 
 #include "google/cloud/version.h"
 #include <memory>
@@ -48,4 +48,4 @@ std::unique_ptr<T> make_unique(Args&&... a) {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_MAKE_UNIQUE_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H
 
 #include "google/cloud/optional.h"
 #include <string>
@@ -36,4 +36,4 @@ optional<std::string> GetEnv(char const* variable);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_GETENV_H

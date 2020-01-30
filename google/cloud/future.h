@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H
 
 #include "google/cloud/internal/future_then_impl.h"
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H

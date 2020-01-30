@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TUPLE_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TUPLE_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TUPLE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TUPLE_H
 
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/utility.h"
@@ -70,4 +70,4 @@ typename ApplyRes<F, typename std::decay<Tuple>::type>::type apply(F&& f,
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TUPLE_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TUPLE_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FILESYSTEM_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FILESYSTEM_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FILESYSTEM_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FILESYSTEM_H
 
 #include "google/cloud/version.h"
 #include <cinttypes>
@@ -171,4 +171,4 @@ std::uintmax_t file_size(std::string const& path, std::error_code& ec) noexcept;
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FILESYSTEM_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_FILESYSTEM_H

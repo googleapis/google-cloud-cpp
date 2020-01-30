@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UTILITY_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UTILITY_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UTILITY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UTILITY_H
 
 #include "google/cloud/version.h"
 #include <type_traits>
@@ -94,4 +94,4 @@ using make_index_sequence = make_integer_sequence<size_t, N>;
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UTILITY_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_UTILITY_H

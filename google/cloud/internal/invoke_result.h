@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H
 
 #include "google/cloud/version.h"
 #include <type_traits>
@@ -209,4 +209,4 @@ struct is_invocable : public is_invocable_impl<void, F, ArgTypes...> {};
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H

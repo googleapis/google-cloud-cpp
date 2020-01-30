@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H
 
 #include "google/cloud/log.h"
 #include <vector>
@@ -40,4 +40,4 @@ class CaptureLogLinesBackend : public LogBackend {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CAPTURE_LOG_LINES_BACKEND_H

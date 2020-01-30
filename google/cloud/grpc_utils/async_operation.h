@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H
 
 #include "google/cloud/grpc_utils/version.h"
 #include <grpcpp/grpcpp.h>
@@ -61,4 +61,4 @@ class AsyncOperation {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H
