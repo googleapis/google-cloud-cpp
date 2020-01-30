@@ -455,30 +455,6 @@ void CreateTableWithTimestamp(
 }
 // [END spanner_create_table_with_timestamp_column]
 
-// [START spanner_insert_data_with_timestamp_column]
-void InsertDataWithTimestamp(
-    google::cloud::spanner::DatabaseAdminClient,  // NOLINT
-    std::string const&, std::string const&, std::string const&) {
-  // TODO(#1217)
-}
-// [END spanner_insert_data_with_timestamp_column]
-
-// [START spanner_update_data_with_timestamp_column]
-void UpdateDataWithTimestamp(
-    google::cloud::spanner::DatabaseAdminClient,  // NOLINT
-    std::string const&, std::string const&, std::string const&) {
-  // TODO(#1218)
-}
-// [END spanner_update_data_with_timestamp_column]
-
-// [START spanner_query_data_with_timestamp_column]
-void QueryDataWithTimestamp(
-    google::cloud::spanner::DatabaseAdminClient,  // NOLINT
-    std::string const&, std::string const&, std::string const&) {
-  // TODO(#1219)
-}
-// [END spanner_query_data_with_timestamp_column]
-
 // [START spanner_create_index]
 void AddIndex(google::cloud::spanner::DatabaseAdminClient client,
               std::string const& project_id, std::string const& instance_id,
@@ -854,6 +830,87 @@ void DeleteData(google::cloud::spanner::Client client) {
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
 //! [END spanner_update_data]
+
+// [START spanner_insert_data_with_timestamp_column]
+void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  auto commit_result = client.Commit([](spanner::Transaction const&) {
+    return spanner::Mutations{
+        spanner::InsertOrUpdateMutationBuilder(
+            "Performances",
+            {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
+            .EmplaceRow(1, 4, spanner::Date(2017, 10, 5), 11000,
+                        spanner::CommitTimestamp{})
+            .EmplaceRow(1, 19, spanner::Date(2017, 11, 2), 15000,
+                        spanner::CommitTimestamp{})
+            .EmplaceRow(2, 42, spanner::Date(2017, 12, 23), 7000,
+                        spanner::CommitTimestamp{})
+            .Build()};
+  });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout
+      << "Update was successful [spanner_insert_data_with_timestamp_column]\n";
+}
+// [END spanner_insert_data_with_timestamp_column]
+
+// [START spanner_update_data_with_timestamp_column]
+void UpdateDataWithTimestamp(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  using ::google::cloud::StatusOr;
+  auto commit_result = client.Commit([](spanner::Transaction const&) {
+    return spanner::Mutations{
+        spanner::UpdateMutationBuilder(
+            "Albums",
+            {"SingerId", "AlbumId", "MarketingBudget", "LastUpdateTime"})
+            .EmplaceRow(1, 1, 1000000, spanner::CommitTimestamp{})
+            .EmplaceRow(2, 2, 750000, spanner::CommitTimestamp{})
+            .Build()};
+  });
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout
+      << "Update was successful [spanner_update_data_with_timestamp_column]\n";
+}
+// [END spanner_update_data_with_timestamp_column]
+
+// [START spanner_query_data_with_timestamp_column]
+void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  spanner::SqlStatement select(
+      "SELECT SingerId, AlbumId, MarketingBudget, LastUpdateTime"
+      "  FROM Albums"
+      " ORDER BY LastUpdateTime DESC");
+  using RowType = std::tuple<std::int64_t, std::int64_t,
+                             google::cloud::optional<std::int64_t>,
+                             google::cloud::optional<spanner::Timestamp>>;
+
+  auto rows = client.ExecuteQuery(select);
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) {
+      throw std::runtime_error(row.status().message());
+    }
+    std::cout << std::get<0>(*row) << " " << std::get<1>(*row);
+    auto marketing_budget = std::get<2>(*row);
+    if (!marketing_budget) {
+      std::cout << " NULL";
+    } else {
+      std::cout << ' ' << *marketing_budget;
+    }
+    auto last_update_time = std::get<3>(*row);
+    if (!last_update_time) {
+      std::cout << " NULL";
+    } else {
+      std::cout << ' ' << *last_update_time;
+    }
+    std::cout << "\n";
+  }
+}
+// [END spanner_query_data_with_timestamp_column]
 
 //! [START spanner_read_only_transaction]
 void ReadOnlyTransaction(google::cloud::spanner::Client client) {
@@ -1849,12 +1906,6 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("create-database", &CreateDatabase),
       make_database_command_entry("create-table-with-timestamp",
                                   &CreateTableWithTimestamp),
-      make_database_command_entry("insert-data-with-timestamp",
-                                  &InsertDataWithTimestamp),
-      make_database_command_entry("update-data-with-timestamp",
-                                  &UpdateDataWithTimestamp),
-      make_database_command_entry("query-data-with-timestamp",
-                                  &QueryDataWithTimestamp),
       make_database_command_entry("add-index", &AddIndex),
       make_database_command_entry("add-storing-index", &AddStoringIndex),
       make_database_command_entry("get-database", &GetDatabase),
@@ -1871,6 +1922,11 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("insert-data", &InsertData),
       make_command_entry("update-data", &UpdateData),
       make_command_entry("delete-data", &DeleteData),
+      make_command_entry("insert-data-with-timestamp",
+                         &InsertDataWithTimestamp),
+      make_command_entry("update-data-with-timestamp",
+                         &UpdateDataWithTimestamp),
+      make_command_entry("query-data-with-timestamp", &QueryDataWithTimestamp),
       make_command_entry("read-only-transaction", &ReadOnlyTransaction),
       make_command_entry("read-stale-data", &ReadStaleData),
       make_command_entry("use-partition-query", &UsePartitionQuery),
@@ -2033,18 +2089,6 @@ void RunAll() {
   CreateTableWithTimestamp(database_admin_client, project_id, instance_id,
                            database_id);
 
-  std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample\n";
-  InsertDataWithTimestamp(database_admin_client, project_id, instance_id,
-                          database_id);
-
-  std::cout << "\nRunning spanner_update_data_with_timestamp_column sample\n";
-  UpdateDataWithTimestamp(database_admin_client, project_id, instance_id,
-                          database_id);
-
-  std::cout << "\nRunning spanner_query_data_with_timestamp_column sample\n";
-  QueryDataWithTimestamp(database_admin_client, project_id, instance_id,
-                         database_id);
-
   std::cout << "\nRunning spanner_create_index sample\n";
   AddIndex(database_admin_client, project_id, instance_id, database_id);
 
@@ -2090,6 +2134,15 @@ void RunAll() {
 
   std::cout << "\nRunning spanner_update_data sample\n";
   UpdateData(client);
+
+  std::cout << "\nRunning spanner_insert_data_with_timestamp_column sample\n";
+  InsertDataWithTimestamp(client);
+
+  std::cout << "\nRunning spanner_update_data_with_timestamp_column sample\n";
+  UpdateDataWithTimestamp(client);
+
+  std::cout << "\nRunning spanner_query_data_with_timestamp_column sample\n";
+  QueryDataWithTimestamp(client);
 
   std::cout << "\nRunning spanner_read_only_transaction sample\n";
   ReadOnlyTransaction(client);
