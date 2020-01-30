@@ -118,6 +118,11 @@ export TEST_KEY_FILE_JSON="${KOKORO_GFILE_DIR}/service-account.json"
 export TEST_KEY_FILE_P12="${KOKORO_GFILE_DIR}/service-account.p12"
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 
+gcloud auth activate-service-account --key-file \
+    "${KOKORO_GFILE_DIR}/service-account.json"
+
+export ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
+
 echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
@@ -130,6 +135,8 @@ if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
      "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_admin_integration_tests_production.sh")
   (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
      "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
+  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+     "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_grpc_credential_examples_production.sh")
 fi
 
 echo
@@ -150,8 +157,6 @@ HMAC_SERVICE_ACCOUNT_NAME="hmac-sa-$(date +%s)-${RANDOM}"
 HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
 export HMAC_SERVICE_ACCOUNT
 
-gcloud auth activate-service-account --key-file \
-    "${KOKORO_GFILE_DIR}/service-account.json"
 gcloud iam service-accounts create "--project=${PROJECT_ID}" \
     "${HMAC_SERVICE_ACCOUNT_NAME}"
 gcloud projects add-iam-policy-binding "${PROJECT_ID}" \

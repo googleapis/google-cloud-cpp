@@ -60,7 +60,4 @@ run_all_instance_admin_examples "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}"
 echo "${COLOR_YELLOW}run_all_instance_admin_async_examples${COLOR_RESET}"
 run_all_instance_admin_async_examples "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}"
 
-echo "${COLOR_YELLOW}run_all_grpc_credentials_examples${COLOR_RESET}"
-run_all_grpc_credentials_examples "${PROJECT_ID}"
-
 exit_example_runner
