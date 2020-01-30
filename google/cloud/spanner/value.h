@@ -72,6 +72,12 @@ std::pair<google::spanner::v1::Type, google::protobuf::Value> ToProto(Value v);
  * Value is a regular C++ value type with support for copy, move, equality,
  * etc. A default-constructed Value represents an empty value with no type.
  *
+ * @note There is also a C++ type of `CommitTimestamp` that corresponds to a
+ *     Cloud Spanner TIMESTAMP object for setting the commit timestamp on a
+ *     column with the `allow_commit_timestamp` set to `true` in the schema.
+ *
+ * @see https://cloud.google.com/spanner/docs/commit-timestamp
+ *
  * Callers may create instances by passing any of the supported values (shown
  * in the table above) to the constructor. "Null" values are created using the
  * `MakeNullValue<T>()` factory function or by passing an empty `optional<T>`
@@ -180,6 +186,9 @@ class Value {
   explicit Value(Bytes v) : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Timestamp v) : Value(PrivateConstructor{}, std::move(v)) {}
+  /// @copydoc Value(bool)
+  explicit Value(CommitTimestamp v)
+      : Value(PrivateConstructor{}, std::move(v)) {}
   /// @copydoc Value(bool)
   explicit Value(Date v) : Value(PrivateConstructor{}, std::move(v)) {}
 
@@ -324,6 +333,7 @@ class Value {
   static bool TypeProtoIs(std::int64_t, google::spanner::v1::Type const&);
   static bool TypeProtoIs(double, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Timestamp, google::spanner::v1::Type const&);
+  static bool TypeProtoIs(CommitTimestamp, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Date, google::spanner::v1::Type const&);
   static bool TypeProtoIs(std::string const&, google::spanner::v1::Type const&);
   static bool TypeProtoIs(Bytes const&, google::spanner::v1::Type const&);
@@ -371,6 +381,7 @@ class Value {
   static google::spanner::v1::Type MakeTypeProto(std::string const&);
   static google::spanner::v1::Type MakeTypeProto(Bytes const&);
   static google::spanner::v1::Type MakeTypeProto(Timestamp);
+  static google::spanner::v1::Type MakeTypeProto(CommitTimestamp);
   static google::spanner::v1::Type MakeTypeProto(Date);
   static google::spanner::v1::Type MakeTypeProto(int);
   static google::spanner::v1::Type MakeTypeProto(char const*);
@@ -429,6 +440,7 @@ class Value {
   static google::protobuf::Value MakeValueProto(std::string s);
   static google::protobuf::Value MakeValueProto(Bytes b);
   static google::protobuf::Value MakeValueProto(Timestamp ts);
+  static google::protobuf::Value MakeValueProto(CommitTimestamp ts);
   static google::protobuf::Value MakeValueProto(Date d);
   static google::protobuf::Value MakeValueProto(int i);
   static google::protobuf::Value MakeValueProto(char const* s);
@@ -490,6 +502,9 @@ class Value {
                                   google::spanner::v1::Type const&);
   static StatusOr<Timestamp> GetValue(Timestamp, google::protobuf::Value const&,
                                       google::spanner::v1::Type const&);
+  static StatusOr<CommitTimestamp> GetValue(CommitTimestamp,
+                                            google::protobuf::Value const&,
+                                            google::spanner::v1::Type const&);
   static StatusOr<Date> GetValue(Date, google::protobuf::Value const&,
                                  google::spanner::v1::Type const&);
   template <typename T, typename V>

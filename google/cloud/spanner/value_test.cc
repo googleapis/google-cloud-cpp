@@ -14,8 +14,10 @@
 
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/internal/date.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <chrono>
 #include <cmath>
@@ -30,6 +32,8 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
+
+using ::google::cloud::spanner_testing::IsProtoEqual;
 
 std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
 MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
@@ -168,6 +172,14 @@ TEST(Value, BasicSemantics) {
     v.resize(10);
     TestBasicSemantics(v);
   }
+
+  // No for-loop because there's only one value of CommitTimestamp
+  auto const x = CommitTimestamp{};
+  TestBasicSemantics(x);
+  TestBasicSemantics(std::vector<CommitTimestamp>(5, x));
+  std::vector<optional<CommitTimestamp>> v(5, x);
+  v.resize(10);
+  TestBasicSemantics(v);
 }
 
 // NOTE: This test relies on unspecified behavior about the moved-from state
@@ -787,6 +799,24 @@ TEST(Value, GetBadTimestamp) {
   EXPECT_FALSE(v.get<Timestamp>().ok());
 }
 
+TEST(Value, GetBadCommitTimestamp) {
+  Value v(CommitTimestamp{});
+  ClearProtoKind(v);
+  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+
+  SetProtoKind(v, true);
+  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+
+  SetProtoKind(v, 0.0);
+  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+
+  SetProtoKind(v, "blah");
+  EXPECT_FALSE(v.get<CommitTimestamp>().ok());
+}
+
 TEST(Value, GetBadDate) {
   Value v(Date{});
   ClearProtoKind(v);
@@ -851,6 +881,27 @@ TEST(Value, GetBadStruct) {
 
   SetProtoKind(v, "blah");
   EXPECT_FALSE(v.get<std::tuple<bool>>().ok());
+}
+
+TEST(Value, CommitTimestamp) {
+  auto const v = Value(CommitTimestamp{});
+  auto tv = internal::ToProto(v);
+  EXPECT_EQ(google::spanner::v1::TIMESTAMP, tv.first.code());
+
+  google::protobuf::Value pv;
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
+      R"pb(
+        string_value: "spanner.commit_timestamp()"
+      )pb",
+      &pv));
+  EXPECT_THAT(tv.second, IsProtoEqual(pv));
+
+  auto good = v.get<CommitTimestamp>();
+  EXPECT_STATUS_OK(good);
+  EXPECT_EQ(CommitTimestamp{}, *good);
+
+  auto bad = v.get<Timestamp>();
+  EXPECT_FALSE(bad.ok());
 }
 
 }  // namespace

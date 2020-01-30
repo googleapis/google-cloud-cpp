@@ -130,6 +130,11 @@ bool Value::TypeProtoIs(Timestamp, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::TIMESTAMP;
 }
 
+bool Value::TypeProtoIs(CommitTimestamp,
+                        google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::TIMESTAMP;
+}
+
 bool Value::TypeProtoIs(Date, google::spanner::v1::Type const& type) {
   return type.code() == google::spanner::v1::TypeCode::DATE;
 }
@@ -178,6 +183,12 @@ google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
 }
 
 google::spanner::v1::Type Value::MakeTypeProto(Timestamp) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::TIMESTAMP);
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(CommitTimestamp) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::TIMESTAMP);
   return t;
@@ -240,6 +251,12 @@ google::protobuf::Value Value::MakeValueProto(Bytes bytes) {
 google::protobuf::Value Value::MakeValueProto(Timestamp ts) {
   google::protobuf::Value v;
   v.set_string_value(internal::TimestampToRFC3339(ts));
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(CommitTimestamp) {
+  google::protobuf::Value v;
+  v.set_string_value("spanner.commit_timestamp()");
   return v;
 }
 
@@ -343,6 +360,16 @@ StatusOr<Timestamp> Value::GetValue(Timestamp,
     return Status(StatusCode::kUnknown, "missing TIMESTAMP");
   }
   return internal::TimestampFromRFC3339(pv.string_value());
+}
+
+StatusOr<CommitTimestamp> Value::GetValue(CommitTimestamp,
+                                          google::protobuf::Value const& pv,
+                                          google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue ||
+      pv.string_value() != "spanner.commit_timestamp()") {
+    return Status(StatusCode::kUnknown, "invalid commit_timestamp");
+  }
+  return CommitTimestamp{};
 }
 
 StatusOr<Date> Value::GetValue(Date, google::protobuf::Value const& pv,
