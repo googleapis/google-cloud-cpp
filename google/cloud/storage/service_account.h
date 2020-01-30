@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/version.h"
@@ -76,4 +76,4 @@ std::ostream& operator<<(std::ostream& os, ServiceAccount const& rhs);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_SERVICE_ACCOUNT_H

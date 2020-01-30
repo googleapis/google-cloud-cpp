@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H
 
 #include "google/cloud/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
@@ -174,4 +174,4 @@ google::iam::v1::Binding IamBinding(std::string role, InputIt begin,
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H

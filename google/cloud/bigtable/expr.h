@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H
 
 #include "google/cloud/version.h"
 #include <google/type/expr.pb.h>
@@ -48,4 +48,4 @@ std::ostream& operator<<(std::ostream& stream, google::type::Expr const&);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H

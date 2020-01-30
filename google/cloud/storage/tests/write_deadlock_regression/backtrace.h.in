@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef WRITE_DEADLOCK_REGRESSION_BACKTRACE_H_
-#define WRITE_DEADLOCK_REGRESSION_BACKTRACE_H_
+#ifndef WRITE_DEADLOCK_REGRESSION_BACKTRACE_H
+#define WRITE_DEADLOCK_REGRESSION_BACKTRACE_H
 
 #cmakedefine01 Backtrace_FOUND
 #if Backtrace_FOUND
 # include <${Backtrace_HEADER}>
 #endif
 
-#endif  // WRITE_DEADLOCK_REGRESSION_BACKTRACE_H_
+#endif  // WRITE_DEADLOCK_REGRESSION_BACKTRACE_H

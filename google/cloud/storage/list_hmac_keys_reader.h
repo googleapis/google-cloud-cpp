@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/hmac_key_requests.h"
@@ -40,4 +40,4 @@ using ListHmacKeysIterator = ListHmacKeysReader::iterator;
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H
