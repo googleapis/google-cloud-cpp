@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BACKGROUND_THREADS_IMPL_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BACKGROUND_THREADS_IMPL_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BACKGROUND_THREADS_IMPL_H
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BACKGROUND_THREADS_IMPL_H
 
 #include "google/cloud/spanner/background_threads.h"
 #include "google/cloud/grpc_utils/completion_queue.h"
@@ -58,4 +58,4 @@ class AutomaticallyCreatedBackgroundThreads : public BackgroundThreads {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BACKGROUND_THREADS_IMPL_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_BACKGROUND_THREADS_IMPL_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_RANDOM_DATABASE_NAME_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_RANDOM_DATABASE_NAME_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_RANDOM_DATABASE_NAME_H
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_RANDOM_DATABASE_NAME_H
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
@@ -32,4 +32,4 @@ std::string RandomDatabaseName(google::cloud::internal::DefaultPRNG& generator);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_RANDOM_DATABASE_NAME_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_RANDOM_DATABASE_NAME_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
@@ -45,4 +45,4 @@ class DatabaseEnvironment : public ::testing::Environment {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_DATABASE_ENVIRONMENT_H

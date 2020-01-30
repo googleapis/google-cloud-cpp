@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H_
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H_
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/database.h"
@@ -204,4 +204,4 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H_
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H
