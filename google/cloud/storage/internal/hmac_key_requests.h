@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HMAC_KEY_REQUESTS_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HMAC_KEY_REQUESTS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HMAC_KEY_REQUESTS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HMAC_KEY_REQUESTS_H
 
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/generic_request.h"
@@ -186,4 +186,4 @@ std::ostream& operator<<(std::ostream& os, UpdateHmacKeyRequest const& r);
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HMAC_KEY_REQUESTS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HMAC_KEY_REQUESTS_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H_
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H
 
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/storage/version.h"
@@ -71,4 +71,4 @@ std::string GenerateMessageBoundary(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H

@@ -27,14 +27,12 @@ END {
 BEGINFILE {
     # The guard must begin with the name of the project.
     guard_prefix="GOOGLE_CLOUD_CPP_"
-    # The guard must end with "_"
-    guard_suffix="_"
     # The guard name is the filename (including path from the root of the
     # project), with "/" and "." characters replaced with "_", and all
     # characters converted to uppercase:
     guard_body=toupper(FILENAME)
     gsub("[/\\.]", "_", guard_body)
-    guard=toupper(guard_prefix guard_body guard_suffix)
+    guard=toupper(guard_prefix guard_body)
     matches=0
 }
 
@@ -49,19 +47,19 @@ ENDFILE {
 # Check only lines that start with #ifndef, #define, or #endif.
 /^#ifndef / {
     # Ignore lines that do not look like guards at all.
-    if ($0 !~ "_H_$") { next; }
+    if ($0 !~ "_H$") { next; }
     if (index($0, guard) == 9) {
         matches++;
     } else {
         printf("%s:\n", FILENAME)
-        printf("expected: #ifndef %s\n", FILENAME, guard)
+        printf("expected: #ifndef %s\n", guard)
         printf("   found: %s\n", $0);
     }
 }
 
 /^#define / {
     # Ignore lines that do not look like guards at all.
-    if ($0 !~ "_H_$") { next; }
+    if ($0 !~ "_H$") { next; }
     if (index($0, guard) == 9) {
       matches++;
     } else {
@@ -73,7 +71,7 @@ ENDFILE {
 
 /^#endif / {
     # Ignore lines that do not look like guards at all.
-    if ($0 !~ "_H_$") { next; }
+    if ($0 !~ "_H$") { next; }
     if (index($0, "// " guard) == 9) {
         matches++;
     } else {
