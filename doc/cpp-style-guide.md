@@ -57,6 +57,12 @@ string const & str;  // BAD
 
 [link to GSG's section on pointer and reference expressions](https://google.github.io/styleguide/cppguide.html#Pointer_and_Reference_Expressions)
 
+## Enumerator Names
+
+Enumerators (for both scoped and unscoped enums) should be named like: `ENUM_NAME`.
+
+[link to GSG's section on enumerator names](https://google.github.io/styleguide/cppguide.html#Enumerator_Names)
+
 ## Order of Includes
 
 Order includes from local to global to minimize implicit dependencies between
