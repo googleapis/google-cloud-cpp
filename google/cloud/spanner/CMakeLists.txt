@@ -396,8 +396,11 @@ function (spanner_client_define_benchmarks)
 
     set(spanner_client_benchmarks
         # cmake-format: sortable
-        bytes_benchmark.cc internal/date_benchmark.cc
-        internal/time_format_benchmark.cc)
+        bytes_benchmark.cc
+        internal/date_benchmark.cc
+        internal/merge_chunk_benchmark.cc
+        internal/time_format_benchmark.cc
+        row_benchmark.cc)
 
     # Export the list of benchmarks to a .bzl file so we do not need to maintain
     # the list in two places.

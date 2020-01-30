@@ -19,5 +19,7 @@
 spanner_client_benchmarks = [
     "bytes_benchmark.cc",
     "internal/date_benchmark.cc",
+    "internal/merge_chunk_benchmark.cc",
     "internal/time_format_benchmark.cc",
+    "row_benchmark.cc",
 ]
