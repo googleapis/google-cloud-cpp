@@ -118,10 +118,13 @@ export TEST_KEY_FILE_JSON="${KOKORO_GFILE_DIR}/service-account.json"
 export TEST_KEY_FILE_P12="${KOKORO_GFILE_DIR}/service-account.p12"
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 
+# Activate the account so we can create a token using `gcloud`, note that this account
+# is also used further down.
 gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/service-account.json"
 
-export ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
+ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
+export ACCESS_TOKEN
 
 echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
