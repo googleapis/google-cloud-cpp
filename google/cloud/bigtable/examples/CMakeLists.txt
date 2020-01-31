@@ -61,3 +61,7 @@ target_link_libraries(data_snippets bigtable_client bigtable_common_options)
 add_executable(data_async_snippets data_async_snippets.cc)
 target_link_libraries(data_async_snippets bigtable_client
                       bigtable_common_options)
+
+add_executable(bigtable_grpc_credentials bigtable_grpc_credentials.cc)
+target_link_libraries(bigtable_grpc_credentials bigtable_client
+                      bigtable_common_options)

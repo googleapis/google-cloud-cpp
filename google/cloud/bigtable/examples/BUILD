@@ -81,3 +81,9 @@ cc_binary(
     srcs = ["data_async_snippets.cc"],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
+
+cc_binary(
+    name = "bigtable_grpc_credentials",
+    srcs = ["bigtable_grpc_credentials.cc"],
+    deps = ["//google/cloud/bigtable:bigtable_client"],
+)
