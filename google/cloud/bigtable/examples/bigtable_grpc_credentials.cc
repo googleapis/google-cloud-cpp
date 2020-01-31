@@ -15,9 +15,8 @@
 //! [all code]
 
 #include "google/cloud/bigtable/table_admin.h"
-#include <gmock/gmock.h>
 #include <fstream>
-#include <iostream>
+#include <sstream>
 
 namespace {
 struct Usage {
