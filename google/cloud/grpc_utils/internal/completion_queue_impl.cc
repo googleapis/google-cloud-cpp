@@ -78,6 +78,11 @@ void* CompletionQueueImpl::RegisterOperation(
     std::shared_ptr<AsyncGrpcOperation> op) {
   void* tag = op.get();
   std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    lk.unlock();
+    op->Notify(/*ok=*/false);
+    return nullptr;
+  }
   auto ins =
       pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag), std::move(op));
   // After this point we no longer need the lock, so release it.

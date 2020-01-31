@@ -54,8 +54,6 @@ class AsyncGrpcOperation : public AsyncOperation {
    * Derived classes wrap the callbacks provided by the application and invoke
    * the callback when this virtual member function is called.
    *
-   * @param cq the completion queue sending the notification, this is useful in
-   *   case the callback needs to retry the operation.
    * @param ok opaque parameter returned by grpc::CompletionQueue.  The
    *   semantics defined by gRPC depend on the type of operation, therefore the
    *   operation needs to interpret this parameter based on those semantics.
@@ -105,10 +103,10 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
  private:
   bool Notify(bool ok) override {
     if (!ok) {
-      // This would mean a bug in gRPC. The documentation states that Finish()
-      // always returns `true` for unary RPCs.
+      // `Finish()` always returns `true` for unary RPCs, so the only time we
+      // get `!ok` is after `Shutdown()` was called; treat that as "cancelled".
       promise_.set_value(::google::cloud::Status(
-          google::cloud::StatusCode::kUnknown, "Finish() returned false"));
+          google::cloud::StatusCode::kCancelled, "call cancelled"));
       return true;
     }
     if (!status_.ok()) {

@@ -116,7 +116,9 @@ class CompletionQueue {
     auto op =
         std::make_shared<internal::AsyncUnaryRpcFuture<Request, Response>>();
     void* tag = impl_->RegisterOperation(op);
-    op->Start(async_call, std::move(context), request, &impl_->cq(), tag);
+    if (tag != nullptr) {
+      op->Start(async_call, std::move(context), request, &impl_->cq(), tag);
+    }
     return op->GetFuture();
   }
 

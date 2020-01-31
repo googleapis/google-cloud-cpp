@@ -155,10 +155,16 @@ class AsyncReadStreamImpl
 
     context_ = std::move(context);
     cq_ = std::move(cq);
-    reader_ = async_call(context_.get(), request, &cq_->cq());
     auto callback = std::make_shared<NotifyStart>(this->shared_from_this());
     void* tag = cq_->RegisterOperation(std::move(callback));
-    reader_->StartCall(tag);
+    // @note If `tag == nullptr` the `CompletionQueue` has been `Shutdown()`.
+    //     We leave `reader_` null in this case; other methods must make the
+    //     same `tag != nullptr` check prior to accessing `reader_`.  This is
+    //     safe since `Shutdown()` cannot be undone.
+    if (tag != nullptr) {
+      reader_ = async_call(context_.get(), request, &cq_->cq());
+      reader_->StartCall(tag);
+    }
   }
 
   /// Cancel the current streaming read RPC.
@@ -196,7 +202,9 @@ class AsyncReadStreamImpl
     auto callback = std::make_shared<NotifyRead>(this->shared_from_this());
     auto response = &callback->response;
     void* tag = cq_->RegisterOperation(std::move(callback));
-    reader_->Read(response, tag);
+    if (tag != nullptr) {
+      reader_->Read(response, tag);
+    }
   }
 
   /// Handle the result of a `Read()` call.
@@ -244,11 +252,16 @@ class AsyncReadStreamImpl
     auto callback = std::make_shared<NotifyFinish>(this->shared_from_this());
     auto status = &callback->status;
     void* tag = cq_->RegisterOperation(std::move(callback));
-    reader_->Finish(status, tag);
+    if (tag != nullptr) {
+      reader_->Finish(status, tag);
+    }
   }
 
   /// Handle the result of a Finish() request.
-  void OnFinish(bool, Status status) { on_finish_(std::move(status)); }
+  void OnFinish(bool ok, Status status) {
+    on_finish_(ok ? std::move(status)
+                  : Status(StatusCode::kCancelled, "call cancelled"));
+  }
 
   /**
    * Discard all the messages until OnRead() receives a failure.
@@ -279,7 +292,9 @@ class AsyncReadStreamImpl
     auto callback = std::make_shared<NotifyDiscard>(this->shared_from_this());
     auto response = &callback->response;
     void* tag = cq_->RegisterOperation(std::move(callback));
-    reader_->Read(response, tag);
+    if (tag != nullptr) {
+      reader_->Read(response, tag);
+    }
   }
 
   /// Handle the result of a Discard() call.
