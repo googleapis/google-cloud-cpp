@@ -22,7 +22,7 @@ load(":spanner_client_integration_samples.bzl", "spanner_client_integration_samp
 load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 
 [cc_test(
-    name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
     tags = ["integration-tests"],
@@ -36,7 +36,7 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 ) for test in spanner_client_integration_samples]
 
 [cc_test(
-    name = "spanner_client_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
         "//google/cloud/spanner:spanner_client",
