@@ -14,8 +14,7 @@
 
 //! [all code]
 
-#include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/instance_admin_client.h"
+#include "google/cloud/bigtable/table_admin.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #include <iostream>
@@ -47,10 +46,11 @@ void PrintUsage(int, char* argv[], std::string const& msg) {
 }
 
 void AccessToken(int argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"test-access-token: <project-id> <access-token>"};
+  if (argc != 4) {
+    throw Usage{"test-access-token: <project-id> <instance-id> <access-token>"};
   }
   std::string project_id = ConsumeArg(argc, argv);
+  std::string instance_id = ConsumeArg(argc, argv);
   std::string access_token = ConsumeArg(argc, argv);
 
   // Create a namespace alias to make the code easier to read.
@@ -58,33 +58,35 @@ void AccessToken(int argc, char* argv[]) {
   using google::cloud::StatusOr;
 
   //! [test access token]
-  [](std::string project_id, std::string access_token) {
+  [](std::string project_id, std::string instance_id,
+     std::string access_token) {
     auto call_credentials = grpc::AccessTokenCredentials(access_token);
     auto channel_credentials =
         grpc::SslCredentials(grpc::SslCredentialsOptions());
     auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
                                                          call_credentials);
-    auto instance_admin_client(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            project_id, google::cloud::bigtable::ClientOptions(credentials)));
-    google::cloud::bigtable::InstanceAdmin instance_admin(
-        instance_admin_client);
 
-    StatusOr<cbt::InstanceList> instances = instance_admin.ListInstances();
-    if (!instances) {
-      throw std::runtime_error(instances.status().message());
+    cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(
+                              project_id, cbt::ClientOptions(credentials)),
+                          instance_id);
+
+    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
+    if (!tables) {
+      throw std::runtime_error(tables.status().message());
     }
   }
   //! [test access token]
-  (std::move(project_id), std::move(access_token));
+  (std::move(project_id), std::move(instance_id), std::move(access_token));
 }
 
 void JWTAccessToken(int argc, char* argv[]) {
-  if (argc != 3) {
+  if (argc != 4) {
     throw Usage{
-        "test-jwt-access-token: <project-id> <service_account_file_json>"};
+        "test-jwt-access-token: <project-id> <instance-id> "
+        "<service_account_file_json>"};
   }
   std::string project_id = ConsumeArg(argc, argv);
+  std::string instance_id = ConsumeArg(argc, argv);
   std::string service_account_file_json = ConsumeArg(argc, argv);
 
   // Create a namespace alias to make the code easier to read.
@@ -92,7 +94,8 @@ void JWTAccessToken(int argc, char* argv[]) {
   using google::cloud::StatusOr;
 
   //! [test jwt access token]
-  [](std::string project_id, std::string service_account_file_json) {
+  [](std::string project_id, std::string instance_id,
+     std::string service_account_file_json) {
     std::ifstream stream(service_account_file_json);
     if (!stream.is_open()) {
       std::ostringstream os;
@@ -108,51 +111,49 @@ void JWTAccessToken(int argc, char* argv[]) {
         grpc::SslCredentials(grpc::SslCredentialsOptions());
     auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
                                                          call_credentials);
-    auto instance_admin_client(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            project_id, google::cloud::bigtable::ClientOptions(credentials)));
-    google::cloud::bigtable::InstanceAdmin instance_admin(
-        instance_admin_client);
+    cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(
+                              project_id, cbt::ClientOptions(credentials)),
+                          instance_id);
 
-    StatusOr<cbt::InstanceList> instances = instance_admin.ListInstances();
-    if (!instances) {
-      throw std::runtime_error(instances.status().message());
+    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
+    if (!tables) {
+      throw std::runtime_error(tables.status().message());
     }
   }
   //! [test jwt access token]
-  (std::move(project_id), std::move(service_account_file_json));
+  (std::move(project_id), std::move(instance_id),
+   std::move(service_account_file_json));
 }
 
 void GCECredentials(int argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"test-gce-credentials: <project-id>"};
+  if (argc != 3) {
+    throw Usage{"test-gce-credentials: <project-id> <instance-id>"};
   }
   std::string project_id = ConsumeArg(argc, argv);
+  std::string instance_id = ConsumeArg(argc, argv);
 
   // Create a namespace alias to make the code easier to read.
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
 
   //! [test gce credentials]
-  [](std::string project_id) {
+  [](std::string project_id, std::string instance_id) {
     auto call_credentials = grpc::GoogleComputeEngineCredentials();
     auto channel_credentials =
         grpc::SslCredentials(grpc::SslCredentialsOptions());
     auto credentials = grpc::CompositeChannelCredentials(channel_credentials,
                                                          call_credentials);
-    auto instance_admin_client(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            project_id, google::cloud::bigtable::ClientOptions(credentials)));
-    google::cloud::bigtable::InstanceAdmin instance_admin(
-        instance_admin_client);
+    cbt::TableAdmin admin(cbt::CreateDefaultAdminClient(
+                              project_id, cbt::ClientOptions(credentials)),
+                          instance_id);
 
-    StatusOr<cbt::InstanceList> instances = instance_admin.ListInstances();
-    if (!instances) {
-      throw std::runtime_error(instances.status().message());
+    auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
+    if (!tables) {
+      throw std::runtime_error(tables.status().message());
     }
   }
   //! [test gce credentials]
-  (std::move(project_id));
+  (std::move(project_id), std::move(instance_id));
 }
 
 }  // anonymous namespace
@@ -183,7 +184,7 @@ int main(int argc, char* argv[]) try {
     }
   }
 
-  if (argc < 3) {
+  if (argc < 4) {
     PrintUsage(argc, argv, "Missing command and/or project-id");
     return 1;
   }

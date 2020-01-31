@@ -138,8 +138,6 @@ if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
      "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_admin_integration_tests_production.sh")
   (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
      "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
-  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
-     "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_grpc_credential_examples_production.sh")
 fi
 
 echo
@@ -150,6 +148,8 @@ echo "================================================================"
    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
 (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
+(cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+   "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_grpc_credential_examples_production.sh")
 
 echo
 echo "================================================================"

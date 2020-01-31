@@ -28,6 +28,6 @@ source "${BINDIR}/../../../../ci/colors.sh"
 #
 
 echo "${COLOR_YELLOW}run_all_grpc_credentials_examples${COLOR_RESET}"
-run_all_grpc_credentials_examples "${PROJECT_ID}"
+run_all_grpc_credentials_examples "${PROJECT_ID}" "${INSTANCE_ID}"
 
 exit_example_runner

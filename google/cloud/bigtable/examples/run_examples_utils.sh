@@ -896,12 +896,13 @@ run_hello_app_profile_example() {
 
 run_all_grpc_credentials_examples() {
   local project_id=$1
-  shift 1
+  local instance_id=$2
+  shift 2
 
   run_example ./bigtable_grpc_credentials test-access-token \
-      "${project_id}" "${ACCESS_TOKEN:-}"
+      "${project_id}" "${instance_id}" "${ACCESS_TOKEN:-}"
   run_example ./bigtable_grpc_credentials test-jwt-access-token \
-      "${project_id}" "${GOOGLE_APPLICATION_CREDENTIALS:-}"
+      "${project_id}" "${instance_id}" "${GOOGLE_APPLICATION_CREDENTIALS:-}"
 
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
