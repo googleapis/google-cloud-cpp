@@ -28,6 +28,7 @@ replace_fragments() {
 
   local sed_args=()
   for fragment in "${fragment_names[@]}"; do
+    # shellcheck disable=SC2016
     sed_args+=("-e" "s,@${fragment}@,$(/bin/echo -n "${!fragment}" |
         # Note the use of \003 ("End of Text") as the magic character to
         # represent newlines. This must match the invert `tr` call below. It
