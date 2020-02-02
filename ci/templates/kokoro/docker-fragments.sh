@@ -102,9 +102,9 @@ _EOF_
 
 read_into_variable INSTALL_GRPC_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
-    tar -xf v1.23.1.tar.gz && \
-    cd grpc-1.23.1 && \
+RUN wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
     make -j ${NCPU:-4} && \
     make install && \
     ldconfig
