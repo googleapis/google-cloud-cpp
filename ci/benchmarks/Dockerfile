@@ -38,9 +38,9 @@ RUN ldconfig
 # #### Protobuf
 
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.7.1.tar.gz
-RUN tar -xf v3.7.1.tar.gz
-WORKDIR /var/tmp/build/protobuf-3.7.1/cmake
+RUN wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz
+RUN tar -xf v3.11.3.tar.gz
+WORKDIR /var/tmp/build/protobuf-3.11.3/cmake
 RUN cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \

@@ -71,8 +71,18 @@ def google_cloud_cpp_deps():
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
+    # Load protobuf.
+    if "com_google_protobuf" not in native.existing_rules():
+        http_archive(
+            name = "com_google_protobuf",
+            strip_prefix = "protobuf-3.11.3",
+            urls = [
+                "https://github.com/google/protobuf/archive/v3.11.3.tar.gz",
+            ],
+            sha256 = "cf754718b0aa945b00550ed7962ddc167167bd922b842199eeb6505e6f344852",
+        )
+
     # Load gRPC and its dependencies, using a similar pattern to this function.
-    # This implicitly loads "com_google_protobuf", which we use.
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",

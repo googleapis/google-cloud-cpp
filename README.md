@@ -119,7 +119,7 @@ of these tools we test with are:
 | Tool       | Minimum Version |
 | ---------- | --------------- |
 | CMake      | 3.5 |
-| Bazel      | 0.24.0 |
+| Bazel      | 1.0.0 |
 
 #### Libraries
 
@@ -127,10 +127,11 @@ The libraries also depend on gRPC, libcurl, and the dependencies of those
 libraries. The Google Cloud C++ Client libraries are tested with the following
 versions of these dependencies:
 
-| Library | Minimum version | Notes |
-| ------- | --------------- | ----- |
-| gRPC    | v1.16.x | |
-| libcurl | 7.47.0  | 7.64.0 has known problems for multi-threaded applications |
+| Library  | Minimum version | Notes |
+| -------- | --------------- | ----- |
+| protobuf | 3.11.3  | Some proto files generate invalid code with protobuf <= 3.11.2 on Windows |
+| gRPC     | v1.26.x | |
+| libcurl  | 7.47.0  | 7.64.0 has known problems for multi-threaded applications |
 
 #### Tests
 

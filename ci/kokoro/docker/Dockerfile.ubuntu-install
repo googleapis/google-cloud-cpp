@@ -95,9 +95,9 @@ RUN ldconfig
 # - When using CMake, only the version compiled with the same CMAKE_BUILD_TYPE
 #   as the dependent (gRPC or google-cloud-cpp) works.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/protobuf/archive/v3.9.1.tar.gz
-RUN tar -xf v3.9.1.tar.gz
-WORKDIR /var/tmp/build/protobuf-3.9.1/cmake
+RUN wget -q https://github.com/google/protobuf/archive/v3.11.3.tar.gz
+RUN tar -xf v3.11.3.tar.gz
+WORKDIR /var/tmp/build/protobuf-3.11.3/cmake
 RUN for build_type in "Debug" "Release"; do \
     cmake \
         -DCMAKE_BUILD_TYPE="${build_type}" \
