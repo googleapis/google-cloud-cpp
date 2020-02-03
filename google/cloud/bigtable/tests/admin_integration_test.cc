@@ -406,9 +406,9 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
                                << " This is unexpected, as the backup ids are"
                                << " generated at random.";
   // create backup
-  google::protobuf::Timestamp expire_time;
-  EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
-      "2029-12-31T00:00:00.000-05:00", &expire_time));
+  google::protobuf::Timestamp expire_time =
+          google::protobuf::util::TimeUtil::GetCurrentTime() +
+          google::protobuf::util::TimeUtil::HoursToDuration(4);
 
   auto created_backup = table_admin_->CreateBackup({backup_cluster_id, backup_id, table_id, expire_time});
   EXPECT_STATUS_OK(created_backup);
