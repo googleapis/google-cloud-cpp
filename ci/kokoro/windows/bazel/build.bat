@@ -15,6 +15,7 @@
 @echo %date% %time%
 @echo "Install Bazel using Chocolatey"
 choco install --no-progress -y bazel --version 2.0.0
+refreshenv
 
 @echo %date% %time%
 @cd github\google-cloud-cpp
