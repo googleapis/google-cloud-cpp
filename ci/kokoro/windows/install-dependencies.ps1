@@ -30,7 +30,7 @@ choco install --no-progress -y cmake
 choco install --no-progress -y cmake.portable
 
 # Ignore errors
-choco install --no-progress -y ninja
+choco install --no-progress -y ninja bazel
 
 Write-Host
 Write-Host "Post choco install"
