@@ -55,6 +55,9 @@ class TableTestEnvironment : public ::testing::Environment {
   /// Return a random table id.
   static std::string RandomTableId();
 
+  /// Return a random backup id.
+  static std::string RandomBackupId();
+
   /// Return a random instance id.
   static std::string RandomInstanceId();
 
@@ -131,6 +134,15 @@ class TableIntegrationTest : public ::testing::Test {
    * the tests, we run each test with a randomly selected table name.
    */
   static std::string RandomTableId();
+
+  /**
+   * Generate a random backup id.
+   *
+   * We want to run multiple copies of the integration tests on the same Cloud
+   * Bigtable instance.  To avoid conflicts and minimize coordination between
+   * the tests, we run each test with a randomly selected backup name.
+   */
+  std::string RandomBackupId();
 
   /// Some tests cannot run on the emulator.
   static bool UsingCloudBigtableEmulator() {

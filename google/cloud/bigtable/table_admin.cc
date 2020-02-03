@@ -17,7 +17,7 @@
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/async_retry_unary_rpc_and_poll.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
-#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/grpc_utils/grpc_error_delegate.h"
 #include <google/protobuf/duration.pb.h>
 #include <sstream>
 
@@ -61,7 +61,7 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
       &AdminClient::CreateTable, request, "CreateTable", status);
 
   if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -133,7 +133,7 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
         &AdminClient::ListTables, request, "TableAdmin", status, true);
 
     if (!status.ok()) {
-      return MakeStatusFromRpcError(status);
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
 
     for (auto& x : *response.mutable_tables()) {
@@ -184,7 +184,7 @@ StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
       metadata_update_policy, &AdminClient::GetTable, request, "GetTable",
       status, true);
   if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return result;
@@ -204,7 +204,7 @@ Status TableAdmin::DeleteTable(std::string const& table_id) {
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DeleteTable, request, "DeleteTable", status);
 
-  return MakeStatusFromRpcError(status);
+  return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
 }
 
 future<Status> TableAdmin::AsyncDeleteTable(CompletionQueue& cq,
@@ -293,7 +293,7 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::GetBackup(
       metadata_update_policy, &AdminClient::GetBackup, request, "GetBackup",
       status, true);
   if (!status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return result;
@@ -344,7 +344,7 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::UpdateBackup(
       metadata_update_policy, &AdminClient::UpdateBackup, std::move(request),
       "UpdateBackup", status, true);
   if (!status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return result;
@@ -386,7 +386,7 @@ Status TableAdmin::DeleteBackup(std::string cluster_id, std::string backup_id) {
       metadata_update_policy, &AdminClient::DeleteBackup, request,
       "DeleteBackup", status, true);
   if (!status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return {};
@@ -452,7 +452,7 @@ TableAdmin::ListBackups(ListBackupsParams params) {
         &AdminClient::ListBackups, request, "TableAdmin", status, true);
 
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
     }
 
     for (auto& x : *response.mutable_backups()) {
@@ -544,7 +544,7 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
       status);
 
   if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
   return result;
 }
@@ -584,7 +584,7 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DropRowRange, request, "DropRowByPrefix", status);
 
-  return MakeStatusFromRpcError(status);
+  return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
 }
 
 future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
@@ -708,7 +708,7 @@ Status TableAdmin::DropAllRows(std::string const& table_id) {
       *client_, clone_rpc_retry_policy(), metadata_update_policy,
       &AdminClient::DropRowRange, request, "DropAllRows", status);
 
-  return MakeStatusFromRpcError(status);
+  return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
 }
 
 future<Status> TableAdmin::AsyncDropAllRows(CompletionQueue& cq,
@@ -749,7 +749,7 @@ StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
       "GenerateConsistencyToken", status, true);
 
   if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
   return std::move(*response.mutable_consistency_token());
 }
@@ -799,7 +799,7 @@ StatusOr<Consistency> TableAdmin::CheckConsistency(
       "CheckConsistency", status, true);
 
   if (!status.ok()) {
-    return MakeStatusFromRpcError(status);
+    return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
   }
 
   return response.consistent() ? Consistency::kConsistent
@@ -835,7 +835,6 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
 
         return result->consistent() ? Consistency::kConsistent
                                     : Consistency::kInconsistent;
-        ;
       });
 }
 
