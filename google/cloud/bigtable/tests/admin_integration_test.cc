@@ -408,7 +408,7 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   // create backup
   google::protobuf::Timestamp expire_time =
           google::protobuf::util::TimeUtil::GetCurrentTime() +
-          google::protobuf::util::TimeUtil::HoursToDuration(4);
+          google::protobuf::util::TimeUtil::HoursToDuration(12);
 
   auto created_backup = table_admin_->CreateBackup({backup_cluster_id, backup_id, table_id, expire_time});
   EXPECT_STATUS_OK(created_backup);
