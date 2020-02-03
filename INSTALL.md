@@ -434,9 +434,9 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
-    tar -xf v1.23.1.tar.gz && \
-    cd grpc-1.23.1 && \
+wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -565,9 +565,9 @@ Cloud Platform proto files. We install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
-    tar -xf v1.23.1.tar.gz && \
-    cd grpc-1.23.1 && \
+wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -711,9 +711,9 @@ Cloud Platform proto files. We can install gRPC from source using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
-    tar -xf v1.23.1.tar.gz && \
-    cd grpc-1.23.1 && \
+wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -849,9 +849,9 @@ Protobuf we just installed in `/usr/local`:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
-    tar -xf v1.23.1.tar.gz && \
-    cd grpc-1.23.1 && \
+wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig
@@ -1013,9 +1013,9 @@ Cloud Platform proto files. We manually install it using:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/grpc/grpc/archive/v1.23.1.tar.gz && \
-    tar -xf v1.23.1.tar.gz && \
-    cd grpc-1.23.1 && \
+wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz && \
+    cd grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b && \
     make -j ${NCPU:-4} && \
 sudo make install && \
 sudo ldconfig

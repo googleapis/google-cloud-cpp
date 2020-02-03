@@ -52,9 +52,9 @@ RUN ldconfig
 # #### gRPC
 
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/grpc/grpc/archive/v1.21.0.tar.gz
-RUN tar -xf v1.21.0.tar.gz
-WORKDIR /var/tmp/build/grpc-1.21.0
+RUN wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz
+RUN tar -xf 78ace4cd5dfcc1f2eced44d22d752f103f377e7b.tar.gz
+WORKDIR /var/tmp/build/grpc-78ace4cd5dfcc1f2eced44d22d752f103f377e7b
 RUN make -j $(nproc)
 RUN make install
 RUN ldconfig
