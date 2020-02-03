@@ -27,12 +27,15 @@ call refreshenv.cmd
 call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 @echo %date% %time%
-bazel version
+C:\ProgramData\chocolatey\bin\bazel version
 
 @echo "Compiling and running unit tests."
 @echo %date% %time%
-bazel --output_user_root=C:\b test --test_output=errors --verbose_failures=true ^
-    --keep_going -- //google/cloud/...:all
+C:\ProgramData\chocolatey\bin\bazel --output_user_root=C:\b test ^
+    --test_output=errors ^
+    --verbose_failures=true ^
+    --keep_going ^
+    -- //google/cloud/...:all
 
 @rem Preserve the exit code of the test for later use because we want to
 @rem delete the files in the %KOKORO_ARTIFACTS_DIR% on test failure too.
