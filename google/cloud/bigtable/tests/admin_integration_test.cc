@@ -20,6 +20,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include "google/cloud/testing_util/init_google_mock.h"
+#include <google/protobuf/util/time_util.h>
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>
@@ -32,6 +33,7 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
  protected:
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
   std::string service_account_;
+  std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
 
   void SetUp() {
     if (google::cloud::internal::GetEnv(
@@ -51,6 +53,12 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
             bigtable::ClientOptions());
     table_admin_ = google::cloud::internal::make_unique<bigtable::TableAdmin>(
         admin_client, bigtable::testing::TableTestEnvironment::instance_id());
+    auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
+        bigtable::testing::TableTestEnvironment::project_id(),
+        bigtable::ClientOptions());
+    instance_admin_ =
+        google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
+            instance_admin_client);
   }
 
   void TearDown() {}
@@ -65,6 +73,19 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
                                });
     return static_cast<int>(count);
   }
+
+  int CountMatchingBackups(std::string const& cluster_id,
+          std::string const& backup_id,
+                          std::vector<btadmin::Backup> const& backups) {
+    std::string backup_name =
+        table_admin_->instance_name() + "/clusters/" + cluster_id + "/backups/" + backup_id;
+    auto count = std::count_if(backups.begin(), backups.end(),
+                               [&backup_name](btadmin::Backup const& t) {
+                                 return backup_name == t.name();
+                               });
+    return static_cast<int>(count);
+  }
+
 };
 }  // namespace
 
@@ -323,7 +344,28 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 TEST_F(AdminIntegrationTest, SetGetTestIamAPIsTest) {
   // TODO(#151) - remove workarounds for emulator bugs(s)
   if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
+      "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
+  auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_policy);
+  ASSERT_STATUS_OK(initial_policy);
+
+  auto fetched_policy = table_admin_->GetIamPolicy(table_id);
+  ASSERT_STATUS_OK(fetched_policy);
+
+  EXPECT_EQ(initial_policy->version(), fetched_policy->version());
+  EXPECT_EQ(initial_policy->etag(), fetched_policy->etag());
+
+  auto permission_set = table_admin_->TestIamPermissions(
+      table_id, {"bigtable.tables.get", "bigtable.tables.readRows"});
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2, permission_set->size());
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
+}
+
+/// @test Verify that `bigtable::TableAdmin` Backup CRUD operations work as expected.
+TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
 
@@ -344,25 +386,141 @@ TEST_F(AdminIntegrationTest, SetGetTestIamAPIsTest) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
-      "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
+  auto clusters_list = instance_admin_->ListClusters();
+  ASSERT_STATUS_OK(clusters_list);
+  std::string const backup_cluster_full_name = clusters_list->clusters.begin()->name();
+  std::string const backup_cluster_id = backup_cluster_full_name.substr(
+          backup_cluster_full_name.rfind("/") + 1, backup_cluster_full_name.size() -
+          backup_cluster_full_name.rfind("/"));
+  std::string const backup_id = RandomBackupId();
+  std::string const backup_full_name = backup_cluster_full_name + "/backups/" + backup_id;
 
-  auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_policy);
-  ASSERT_STATUS_OK(initial_policy);
+  // list backups to verify new backup id does not already exist
+  auto previous_backup_list =
+      table_admin_->ListBackups({});
+  ASSERT_STATUS_OK(previous_backup_list);
+  auto previous_backup_count = CountMatchingBackups(backup_cluster_id, backup_id,
+          *previous_backup_list);
+  ASSERT_EQ(0, previous_backup_count) << "Backup (" << backup_id << ") already exists."
+                               << " This is unexpected, as the backup ids are"
+                               << " generated at random.";
+  // create backup
+  google::protobuf::Timestamp const expire_time =
+          google::protobuf::util::TimeUtil::GetCurrentTime() +
+          google::protobuf::util::TimeUtil::HoursToDuration(12);
+  auto created_backup = table_admin_->CreateBackup(
+          {backup_cluster_id, backup_id, table_id, expire_time});
+  ASSERT_STATUS_OK(created_backup);
+  EXPECT_EQ(created_backup->name(), backup_full_name);
 
-  auto fetched_policy = table_admin_->GetIamPolicy(table_id);
-  ASSERT_STATUS_OK(fetched_policy);
+  // get backup to verify create
+  auto get_backup = table_admin_->GetBackup(backup_cluster_id, backup_id);
+  ASSERT_STATUS_OK(get_backup);
+  EXPECT_EQ(get_backup->name(), backup_full_name);
 
-  EXPECT_EQ(initial_policy->version(), fetched_policy->version());
-  EXPECT_EQ(initial_policy->etag(), fetched_policy->etag());
+  // update backup
+  google::protobuf::Timestamp const updated_expire_time = expire_time +
+          google::protobuf::util::TimeUtil::HoursToDuration(12);
+  auto updated_backup =
+          table_admin_->UpdateBackup({backup_cluster_id, backup_id, updated_expire_time});
 
-  auto permission_set = table_admin_->TestIamPermissions(
-      table_id, {"bigtable.tables.get", "bigtable.tables.readRows"});
-  ASSERT_STATUS_OK(permission_set);
+  // get backup to verify update
+  auto get_updated_backup = table_admin_->GetBackup(backup_cluster_id, backup_id);
+  ASSERT_STATUS_OK(get_updated_backup);
+  EXPECT_EQ(get_updated_backup->name(), backup_full_name);
+  EXPECT_EQ(get_updated_backup->expire_time(), updated_expire_time);
 
-  EXPECT_EQ(2, permission_set->size());
+  // delete backup
+  EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_cluster_id, backup_id));
+
+  // list backup to verify delete
+  auto post_delete_backup_list =
+      table_admin_->ListBackups({});
+  ASSERT_STATUS_OK(previous_backup_list);
+  auto post_delete_backup_count = CountMatchingBackups(backup_cluster_id, table_id,
+          *post_delete_backup_list);
+  ASSERT_EQ(0, post_delete_backup_count) << "Backup (" << backup_id << ") still exists.";
+
+  // delete table
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
+  // List to verify it is no longer there
+  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(current_table_list);
+  auto table_count = CountMatchingTables(table_id, *current_table_list);
+  EXPECT_EQ(0, table_count);
+}
+
+/// @test Verify that `bigtable::TableAdmin` Backup and Restore work as expected.
+TEST_F(AdminIntegrationTest, RestoreTableFromBackup) {
+  using GC = bigtable::GcRule;
+  std::string const table_id = RandomTableId();
+
+  // verify new table id in current table list
+  auto previous_table_list =
+      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(previous_table_list);
+  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
+  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
+                               << " This is unexpected, as the table ids are"
+                               << " generated at random.";
+  // create table config
+  bigtable::TableConfig table_config(
+      {{"fam", GC::MaxNumVersions(5)},
+       {"foo", GC::MaxAge(std::chrono::hours(24))}},
+      {"a1000", "a2000", "b3000", "m5000"});
+
+  // create table
+  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+
+  auto clusters_list = instance_admin_->ListClusters();
+  ASSERT_STATUS_OK(clusters_list);
+  std::string const backup_cluster_full_name = clusters_list->clusters.begin()->name();
+  std::string const backup_cluster_id = backup_cluster_full_name.substr(
+          backup_cluster_full_name.rfind("/") + 1, backup_cluster_full_name.size() -
+          backup_cluster_full_name.rfind("/"));
+  std::string const backup_id = RandomBackupId();
+  std::string const backup_full_name = backup_cluster_full_name + "/backups/" + backup_id;
+
+  // list backups to verify new backup id does not already exist
+  auto previous_backup_list =
+      table_admin_->ListBackups({});
+  ASSERT_STATUS_OK(previous_backup_list);
+  auto previous_backup_count = CountMatchingBackups(backup_cluster_id, backup_id,
+          *previous_backup_list);
+  ASSERT_EQ(0, previous_backup_count) << "Backup (" << backup_id << ") already exists."
+                               << " This is unexpected, as the backup ids are"
+                               << " generated at random.";
+  // create backup
+  google::protobuf::Timestamp const expire_time =
+          google::protobuf::util::TimeUtil::GetCurrentTime() +
+          google::protobuf::util::TimeUtil::HoursToDuration(12);
+  auto created_backup = table_admin_->CreateBackup(
+          {backup_cluster_id, backup_id, table_id, expire_time});
+  ASSERT_STATUS_OK(created_backup);
+  EXPECT_EQ(created_backup->name(), backup_full_name);
+
+  // delete table
+  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
+  // List to verify it is no longer there
+  auto current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(current_table_list);
+  auto table_count = CountMatchingTables(table_id, *current_table_list);
+  EXPECT_EQ(0, table_count);
+
+  // restore table
+  auto restore_result = table_admin_->RestoreTable({table_id, backup_cluster_id, backup_id});
+  EXPECT_STATUS_OK(restore_result);
+  current_table_list = table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(current_table_list);
+  table_count = CountMatchingTables(table_id, *current_table_list);
+  EXPECT_EQ(1, table_count);
+
+  // delete backup
+  EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_cluster_id, backup_id));
+  // delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
 }
+
 // Test Cases Finished
 
 int main(int argc, char* argv[]) {
