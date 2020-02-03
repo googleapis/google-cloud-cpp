@@ -372,10 +372,12 @@ class TupleStreamIterator {
 };
 
 /**
- * A `StreamOf<Tuple>` defines a range that parses `Tuple` objects from the
+ * A `TupleStream<Tuple>` defines a range that parses `Tuple` objects from the
  * given range of `RowStreamIterator`s.
  *
- * Users will typically use this class in a range-for loop as follows:
+ * Users create instances using the `StreamOf<T>(range)` non-member factory
+ * function (defined below). The following is a typical usage of this class in
+ * a range-for loop.
  *
  * @code
  * auto row_range = ...
@@ -397,39 +399,44 @@ class TupleStreamIterator {
  * @tparam Tuple the std::tuple<...> to parse each `Row` into.
  */
 template <typename Tuple>
-class StreamOf {
+class TupleStream {
  public:
   using iterator = TupleStreamIterator<Tuple>;
   static_assert(internal::IsTuple<Tuple>::value,
-                "StreamOf<T> requires a std::tuple parameter");
-
-  /**
-   * Creates a `StreamOf<Tuple>` by wrapping the given @p range. The `RowRange`
-   * must be a range defined by `RowStreamIterator` objects.
-   *
-   * @note ownership of the @p range is not transferred, so it must outlive the
-   * `StreamOf`.
-   *
-   * @tparam RowRange must be a range defined by `RowStreamIterator`s.
-   */
-  template <typename RowRange>
-  explicit StreamOf(RowRange&& range)
-      : begin_(std::begin(std::forward<RowRange>(range)),
-               std::end(std::forward<RowRange>(range))) {
-    using T = decltype(std::begin(range));
-    static_assert(std::is_same<RowStreamIterator, T>::value,
-                  "StreamOf must be given a RowStreamIterator range.");
-    static_assert(std::is_lvalue_reference<decltype(range)>::value,
-                  "range must be an lvalue since it must outlive StreamOf");
-  }
+                "TupleStream<T> requires a std::tuple parameter");
 
   iterator begin() const { return begin_; }
   iterator end() const { return end_; }
 
  private:
+  template <typename T, typename RowRange>
+  friend TupleStream<T> StreamOf(RowRange&& range);
+
+  template <typename It>
+  explicit TupleStream(It&& start, It&& end)
+      : begin_(std::forward<It>(start), std::forward<It>(end)) {}
+
   iterator begin_;
   iterator end_;
 };
+
+/**
+ * A factory that creates a `TupleStream<Tuple>` by wrapping the given @p
+ * range. The `RowRange` must be a range defined by `RowStreamIterator`
+ * objects.
+ *
+ * @note ownership of the @p range is not transferred, so it must outlive the
+ *     returned `TupleStream`.
+ *
+ * @tparam RowRange must be a range defined by `RowStreamIterator`s.
+ */
+template <typename Tuple, typename RowRange>
+TupleStream<Tuple> StreamOf(RowRange&& range) {
+  static_assert(std::is_lvalue_reference<decltype(range)>::value,
+                "range must be an lvalue since it must outlive StreamOf");
+  return TupleStream<Tuple>(std::begin(std::forward<RowRange>(range)),
+                            std::end(std::forward<RowRange>(range)));
+}
 
 /**
  * Returns the only row from a range that contains exactly one row.

@@ -403,7 +403,7 @@ TEST(TupleStreamIterator, Error) {
   EXPECT_EQ(it, end);
 }
 
-TEST(StreamOf, Basics) {
+TEST(TupleStream, Basics) {
   std::vector<Row> rows;
   rows.emplace_back(MakeTestRow(1, "foo", true));
   rows.emplace_back(MakeTestRow(2, "bar", true));
@@ -438,7 +438,7 @@ TEST(StreamOf, Basics) {
   EXPECT_EQ(it, end);
 }
 
-TEST(StreamOf, RangeForLoop) {
+TEST(TupleStream, RangeForLoop) {
   std::vector<Row> rows;
   rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
   rows.emplace_back(MakeTestRow({{"num", Value(3)}}));
@@ -454,7 +454,7 @@ TEST(StreamOf, RangeForLoop) {
   EXPECT_EQ(product, 30);
 }
 
-TEST(StreamOf, IterationError) {
+TEST(TupleStream, IterationError) {
   std::vector<StatusOr<Row>> rows;
   rows.emplace_back(MakeTestRow(1, "foo", true));
   rows.emplace_back(Status(StatusCode::kUnknown, "some error"));
@@ -463,7 +463,7 @@ TEST(StreamOf, IterationError) {
   RowRange range(MakeRowStreamIteratorSource(rows));
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
-  StreamOf<RowType> stream(range);
+  auto stream = StreamOf<RowType>(range);
 
   auto end = stream.end();
   auto it = stream.begin();
