@@ -385,7 +385,6 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
 
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
-  bigtable::Table table(data_client_, table_id);
 
   auto clusters_list = instance_admin_->ListClusters();
   ASSERT_STATUS_OK((clusters_list));
@@ -393,14 +392,14 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
           backup_cluster_full_name.rfind("/") + 1, backup_cluster_full_name.size() -
           backup_cluster_full_name.rfind("/"));
-
   std::string const backup_id = RandomBackupId();
   std::string const backup_full_name = backup_cluster_full_name + "/backups/" + backup_id;
+
   // list backups to verify new backup id does not already exist
   auto previous_backup_list =
       table_admin_->ListBackups({});
   ASSERT_STATUS_OK(previous_backup_list);
-  auto previous_backup_count = CountMatchingBackups(backup_cluster_id, table_id,
+  auto previous_backup_count = CountMatchingBackups(backup_cluster_id, backup_id,
           *previous_backup_list);
   ASSERT_EQ(0, previous_backup_count) << "Backup (" << backup_id << ") already exists."
                                << " This is unexpected, as the backup ids are"
@@ -422,7 +421,8 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   // update backup
   google::protobuf::Timestamp const updated_expire_time = expire_time +
           google::protobuf::util::TimeUtil::HoursToDuration(12);
-  auto updated_backup = table_admin_->UpdateBackup({backup_cluster_id, backup_id, updated_expire_time});
+  auto updated_backup =
+          table_admin_->UpdateBackup({backup_cluster_id, backup_id, updated_expire_time});
 
   // get backup to verify update
   auto get_updated_backup = table_admin_->GetBackup(backup_cluster_id, backup_id);
@@ -450,9 +450,8 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   EXPECT_EQ(0, table_count);
 }
 
-
 // Test Cases Finished
-
+#if 0
   // verify new table id in current table list
   auto previous_table_list =
       table_admin_->ListTables(btadmin::Table::NAME_ONLY);
@@ -533,7 +532,7 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   auto table_count = CountMatchingTables(table_id, *current_table_list);
   EXPECT_EQ(0, table_count);
 }
-
+#endif
 /// @test Verify that `bigtable::TableAdmin` Backup and Restore work as expected.
 TEST_F(AdminIntegrationTest, RestoreTableFromBackup) {
   using GC = bigtable::GcRule;
