@@ -136,7 +136,7 @@ class PollAsyncOpFuture {
       return;
     }
     self->cq_.MakeRelativeTimer(self->polling_policy_->WaitPeriod())
-        .then([self](future<std::chrono::system_clock::time_point>) {
+        .then([self](future<StatusOr<std::chrono::system_clock::time_point>>) {
           StartIteration(self);
         });
   }

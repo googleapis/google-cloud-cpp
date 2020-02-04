@@ -142,7 +142,8 @@ class RetryAsyncUnaryRpcFuture {
     }
     cq.MakeRelativeTimer(
           self->rpc_backoff_policy_->OnCompletion(result.status()))
-        .then([self, cq](future<std::chrono::system_clock::time_point>) {
+        .then([self,
+               cq](future<StatusOr<std::chrono::system_clock::time_point>>) {
           self->StartIteration(self, cq);
         });
   }

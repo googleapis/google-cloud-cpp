@@ -373,9 +373,10 @@ TableAdmin::AsyncWaitForConsistency(CompletionQueue& cq,
         return;
       }
       cq_.MakeRelativeTimer(polling_policy_->WaitPeriod())
-          .then([self](future<std::chrono::system_clock::time_point>) {
-            self->StartIteration();
-          });
+          .then(
+              [self](future<StatusOr<std::chrono::system_clock::time_point>>) {
+                self->StartIteration();
+              });
     }
 
     CompletionQueue cq_;

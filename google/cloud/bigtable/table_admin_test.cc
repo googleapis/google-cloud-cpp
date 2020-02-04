@@ -699,27 +699,27 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
   // Simulate the completions for each event.
 
   // AsyncCheckConsistency() -> TRANSIENT
-  cq_impl->SimulateCompletion(cq, true);
+  cq_impl->SimulateCompletion(true);
   future_status = result.wait_for(0_ms);
   EXPECT_EQ(std::future_status::timeout, future_status);
 
   // timer
-  cq_impl->SimulateCompletion(cq, true);
+  cq_impl->SimulateCompletion(true);
   future_status = result.wait_for(0_ms);
   EXPECT_EQ(std::future_status::timeout, future_status);
 
   // AsyncCheckConsistency() -> !consistent
-  cq_impl->SimulateCompletion(cq, true);
+  cq_impl->SimulateCompletion(true);
   future_status = result.wait_for(0_ms);
   EXPECT_EQ(std::future_status::timeout, future_status);
 
   // timer
-  cq_impl->SimulateCompletion(cq, true);
+  cq_impl->SimulateCompletion(true);
   future_status = result.wait_for(0_ms);
   EXPECT_EQ(std::future_status::timeout, future_status);
 
   // AsyncCheckConsistency() -> consistent
-  cq_impl->SimulateCompletion(cq, true);
+  cq_impl->SimulateCompletion(true);
   future_status = result.wait_for(0_ms);
   EXPECT_EQ(std::future_status::ready, future_status);
 
@@ -774,7 +774,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
   // The future is not ready yet.
   auto future_status = result.wait_for(0_ms);
   EXPECT_EQ(std::future_status::timeout, future_status);
-  cq_impl->SimulateCompletion(cq, true);
+  cq_impl->SimulateCompletion(true);
 
   // The future becomes ready on the first request that completes with a
   // permanent error.
@@ -805,7 +805,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
   void FinishTest(
       google::cloud::future<google::cloud::StatusOr<ResultType>> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
     EXPECT_FALSE(res);
@@ -815,7 +815,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 
   void FinishTest(google::cloud::future<google::cloud::Status> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
     EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());

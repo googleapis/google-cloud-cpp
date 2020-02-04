@@ -726,7 +726,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicy) {
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   auto policy = user_future_.get();
   ASSERT_STATUS_OK(policy);
   EXPECT_EQ(3, policy->version);
@@ -750,7 +750,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetIamPolicyUnrecoverableError) {
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto policy = user_future_.get();
   ASSERT_FALSE(policy);
@@ -777,7 +777,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicy) {
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   auto policy = user_native_future_.get();
   ASSERT_STATUS_OK(policy);
   EXPECT_EQ(3, policy->version());
@@ -801,7 +801,7 @@ TEST_F(AsyncGetIamPolicyTest, AsyncGetNativeIamPolicyUnrecoverableError) {
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto policy = user_native_future_.get();
   ASSERT_FALSE(policy);
@@ -1097,7 +1097,7 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteCluster) {
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   auto status = user_future_.get();
   ASSERT_STATUS_OK(status);
 }
@@ -1118,7 +1118,7 @@ TEST_F(AsyncDeleteClusterTest, AsyncDeleteClusterUnrecoverableError) {
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto status = user_future_.get();
   ASSERT_EQ(google::cloud::StatusCode::kPermissionDenied, status.code());
@@ -1205,7 +1205,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicy) {
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   auto policy = user_future_.get();
   ASSERT_STATUS_OK(policy);
 
@@ -1230,7 +1230,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetIamPolicyUnrecoverableError) {
   Start();
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto policy = user_future_.get();
   ASSERT_FALSE(policy);
@@ -1261,7 +1261,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicy) {
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   auto policy = user_native_future_.get();
   ASSERT_STATUS_OK(policy);
 
@@ -1286,7 +1286,7 @@ TEST_F(AsyncSetIamPolicyTest, AsyncSetNativeIamPolicyUnrecoverableError) {
   StartNative();
   EXPECT_EQ(std::future_status::timeout, user_native_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto policy = user_native_future_.get();
   ASSERT_FALSE(policy);
@@ -1360,7 +1360,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissions) {
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   auto permission_set = user_future_.get();
   ASSERT_STATUS_OK(permission_set);
   EXPECT_EQ(2, permission_set->size());
@@ -1383,7 +1383,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
   Start({"reader", "writer", "owner"});
   EXPECT_EQ(std::future_status::timeout, user_future_.wait_for(1_ms));
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto permission_set = user_future_.get();
   ASSERT_FALSE(permission_set);
@@ -1407,7 +1407,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
   template <typename ResultType>
   void FinishTest(ResultType res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
     EXPECT_FALSE(res);
@@ -1454,7 +1454,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteAppProfile) {
   auto res_future = instance_admin_->AsyncDeleteAppProfile(cq_, "the-instance",
                                                            "the-profile");
   EXPECT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(0U, cq_impl_->size());
   auto res = res_future.get();
   EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());
@@ -1473,7 +1473,7 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteInstance) {
           "google.bigtable.admin.v2.BigtableInstanceAdmin.DeleteInstance")));
   auto res_future = instance_admin_->AsyncDeleteInstance("the-instance", cq_);
   EXPECT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(0U, cq_impl_->size());
   auto res = res_future.get();
   EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());

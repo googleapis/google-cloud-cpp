@@ -200,7 +200,7 @@ TEST_F(AsyncMultipageFutureTest, ImmediateSuccess) {
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto clusters = clusters_future.get();
   ASSERT_STATUS_OK(clusters);
@@ -214,11 +214,11 @@ TEST_F(AsyncMultipageFutureTest, NoDelayBetweenSuccesses) {
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto clusters = clusters_future.get();
   ASSERT_STATUS_OK(clusters);
@@ -241,27 +241,27 @@ TEST_F(AsyncMultipageFutureTest, DelayGrowsOnFailures) {
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(1, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // the timer
+  cq_impl_->SimulateCompletion(true);  // the timer
   EXPECT_EQ(1, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(2, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // the timer
+  cq_impl_->SimulateCompletion(true);  // the timer
   EXPECT_EQ(2, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto clusters = clusters_future.get();
   ASSERT_STATUS_OK(clusters);
@@ -282,32 +282,32 @@ TEST_F(AsyncMultipageFutureTest, SucessResetsBackoffPolicy) {
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(1, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // the timer
+  cq_impl_->SimulateCompletion(true);  // the timer
   EXPECT_EQ(1, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(0, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(1, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // the timer
+  cq_impl_->SimulateCompletion(true);  // the timer
   EXPECT_EQ(1, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
   EXPECT_EQ(0, shared_backoff_policy_mock_->NumCallsFromLastClone());
 
   auto clusters = clusters_future.get();
@@ -326,15 +326,15 @@ TEST_F(AsyncMultipageFutureTest, TransientErrorsAreRetried) {
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // the timer
+  cq_impl_->SimulateCompletion(true);  // the timer
 
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto clusters = clusters_future.get();
   ASSERT_STATUS_OK(clusters);
@@ -349,7 +349,7 @@ TEST_F(AsyncMultipageFutureTest, PermanentErrorsAreNotRetried) {
   future<StatusOr<std::vector<std::string>>> clusters_future = StartOp();
   EXPECT_EQ(clusters_future.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto clusters = clusters_future.get();
   ASSERT_FALSE(clusters);

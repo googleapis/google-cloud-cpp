@@ -176,12 +176,12 @@ TEST_F(TableAsyncReadRowsTest, SingleRow) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   auto row = row_futures_[0].get();
 
   // Check that we're not asking for data unless someone is waiting for it.
@@ -189,10 +189,10 @@ TEST_F(TableAsyncReadRowsTest, SingleRow) {
   promises_from_user_cb_[0].set_value(true);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -228,19 +228,19 @@ TEST_F(TableAsyncReadRowsTest, SingleRowInstantFinish) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   auto row = row_futures_[0].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -289,12 +289,12 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   row_futures_[0].get();
 
   // Check that we're not asking for data unless someone is waiting for it.
@@ -302,14 +302,14 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunks) {
   promises_from_user_cb_[0].set_value(true);
 
   EXPECT_TRUE(Unsatisfied(row_futures_[1]));
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   row_futures_[1].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -359,23 +359,23 @@ TEST_F(TableAsyncReadRowsTest, MultipleChunksImmediatelySatisfied) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   row_futures_[0].get();
 
   EXPECT_TRUE(Unsatisfied(row_futures_[1]));
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   row_futures_[1].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -422,20 +422,20 @@ TEST_F(TableAsyncReadRowsTest, ResponseInMultipleChunks) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   row_futures_[0].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -470,14 +470,14 @@ TEST_F(TableAsyncReadRowsTest, ParserEofFailsOnUnfinishedRow) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   ASSERT_FALSE(stream_status_future_.get().ok());
 }
@@ -520,17 +520,17 @@ TEST_F(TableAsyncReadRowsTest, ParserEofDoesntFailsOnUnfinishedRowIfRowLimit) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   row_futures_[0].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -550,13 +550,13 @@ TEST_F(TableAsyncReadRowsTest, PermanentFailure) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_EQ(StatusCode::kPermissionDenied, stream_status.code());
@@ -626,32 +626,32 @@ TEST_F(TableAsyncReadRowsTest, TransientErrorIsRetried) {
   ReadRows();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   row_futures_[0].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream with failure
+  cq_impl_->SimulateCompletion(false);  // Finish stream with failure
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish timer
+  cq_impl_->SimulateCompletion(true);  // Finish timer
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(row_futures_[1]));
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   row_futures_[1].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -696,14 +696,14 @@ TEST_F(TableAsyncReadRowsTest, ParserFailure) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish dummy Read()
+  cq_impl_->SimulateCompletion(false);  // Finish dummy Read()
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   row_futures_[0].get();
 
@@ -760,12 +760,12 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
   row_futures_[0].get();
 
   // Check that we're not asking for data unless someone is waiting for it.
@@ -794,10 +794,10 @@ TEST_P(TableAsyncReadRowsCancelMidStreamTest, CancelMidStream) {
   }
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_EQ(StatusCode::kCancelled, stream_status.code());
@@ -875,19 +875,19 @@ TEST_F(TableAsyncReadRowsTest, CancelAfterStreamFinish) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
   ASSERT_EQ(0U, cq_impl_->size());
 
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
@@ -943,12 +943,12 @@ TEST_F(TableAsyncReadRowsTest, DeepStack) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_futures_[0]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   for (int i = 0; i < 100; ++i) {
     row_futures_[i].get();
@@ -956,14 +956,14 @@ TEST_F(TableAsyncReadRowsTest, DeepStack) {
   ASSERT_TRUE(Unsatisfied(row_futures_[100]));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // RunAsync
+  cq_impl_->SimulateCompletion(true);  // RunAsync
   row_futures_[100].get();
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(stream_status_future_));
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto stream_status = stream_status_future_.get();
   ASSERT_STATUS_OK(stream_status);
@@ -996,20 +996,20 @@ TEST_F(TableAsyncReadRowsTest, ReadRowSuccess) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   EXPECT_TRUE(Unsatisfied(row_future));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Return data
+  cq_impl_->SimulateCompletion(true);  // Return data
 
   // We return data only after the whole stream is finished.
   ASSERT_TRUE(Unsatisfied(row_future));
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto row = row_future.get();
   ASSERT_STATUS_OK(row);
@@ -1031,14 +1031,14 @@ TEST_F(TableAsyncReadRowsTest, ReadRowNotFound) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(row_future));
 
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto row = row_future.get();
   ASSERT_STATUS_OK(row);
@@ -1058,14 +1058,14 @@ TEST_F(TableAsyncReadRowsTest, ReadRowError) {
   EXPECT_TRUE(reader_started_[0]);
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Start()
+  cq_impl_->SimulateCompletion(true);  // Finish Start()
 
   ASSERT_EQ(1U, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, false);  // Finish stream
+  cq_impl_->SimulateCompletion(false);  // Finish stream
   ASSERT_EQ(1U, cq_impl_->size());
   EXPECT_TRUE(Unsatisfied(row_future));
 
-  cq_impl_->SimulateCompletion(cq_, true);  // Finish Finish()
+  cq_impl_->SimulateCompletion(true);  // Finish Finish()
 
   auto row = row_future.get();
   ASSERT_FALSE(row);

@@ -121,7 +121,7 @@ class AsyncRetryMultiPageFuture {
     self->cq_
         .MakeRelativeTimer(
             self->rpc_backoff_policy_->OnCompletion(result.status()))
-        .then([self](future<std::chrono::system_clock::time_point>) {
+        .then([self](future<StatusOr<std::chrono::system_clock::time_point>>) {
           self->StartIteration(self);
         });
   }
