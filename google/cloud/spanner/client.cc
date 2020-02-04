@@ -194,7 +194,7 @@ StatusOr<CommitResult> Client::Commit(
     } else {
       // Create a new transaction for the next loop, but reuse the session
       // so that we have a slightly better chance of avoiding another abort.
-      txn = MakeReadWriteTransaction(std::move(txn));
+      txn = MakeReadWriteTransaction(txn);
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
   }

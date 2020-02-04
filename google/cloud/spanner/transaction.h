@@ -205,7 +205,7 @@ inline Transaction MakeReadWriteTransaction(
  * success.
  */
 inline Transaction MakeReadWriteTransaction(
-    Transaction txn, Transaction::ReadWriteOptions opts = {}) {
+    Transaction const& txn, Transaction::ReadWriteOptions opts = {}) {
   return Transaction(txn, std::move(opts));
 }
 
@@ -219,6 +219,7 @@ Transaction MakeSingleUseTransaction(T&& opts) {
 }
 
 template <typename Functor>
+// NOLINTNEXTLINE(performance-unnecessary-value-param)
 VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
   return txn.impl_->Visit(std::forward<Functor>(f));
 }
