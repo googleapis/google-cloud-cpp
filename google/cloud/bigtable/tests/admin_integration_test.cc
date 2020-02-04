@@ -396,70 +396,41 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
                                << " This is unexpected, as the backup ids are"
                                << " generated at random.";
   // create backup
-  google::protobuf::Timestamp expire_time =
+  google::protobuf::Timestamp const expire_time =
           google::protobuf::util::TimeUtil::GetCurrentTime() +
           google::protobuf::util::TimeUtil::HoursToDuration(12);
 
   auto created_backup = table_admin_->CreateBackup({backup_cluster_id, backup_id, table_id, expire_time});
-  EXPECT_STATUS_OK(created_backup);
+  ASSERT_STATUS_OK(created_backup);
   EXPECT_EQ(created_backup->name(), backup_full_name);
 
   // get backup to verify create
   auto get_backup = table_admin_->GetBackup(backup_cluster_id, backup_id);
-  EXPECT_STATUS_OK(get_backup);
+  ASSERT_STATUS_OK(get_backup);
   EXPECT_EQ(get_backup->name(), backup_full_name);
 
   // update backup
+  google::protobuf::Timestamp const updated_expire_time = expire_time +
+          google::protobuf::util::TimeUtil::HoursToDuration(12);
+  auto updated_backup = table_admin_->UpdateBackup({backup_cluster_id, backup_id, updated_expire_time});
 
   // get backup to verify update
+  auto get_updated_backup = table_admin_->GetBackup(backup_cluster_id, backup_id);
+  ASSERT_STATUS_OK(get_updated_backup);
+  EXPECT_EQ(get_updated_backup->name(), backup_full_name);
+  EXPECT_EQ(get_updated_backup->expire_time(), updated_expire_time);
 
   // delete backup
   EXPECT_STATUS_OK(table_admin_->DeleteBackup(backup_cluster_id, backup_id));
 
   // list backup to verify delete
+  auto post_delete_backup_list =
+      table_admin_->ListBackups({});
+  ASSERT_STATUS_OK(previous_backup_list);
+  auto post_delete_backup_count = CountMatchingBackups(backup_cluster_id, table_id,
+          *post_delete_backup_list);
+  ASSERT_EQ(0, post_delete_backup_count) << "Backup (" << backup_id << ") still exists.";
 
-#if 0
-  // verify new table was created
-  auto table_result = table_admin_->GetTable(table_id);
-  ASSERT_STATUS_OK(table_result);
-  EXPECT_EQ(table.table_name(), table_result->name())
-      << "Mismatched names for GetTable(" << table_id
-      << "): " << table.table_name() << " != " << table_result->name();
-
-  // get table
-  auto table_detailed = table_admin_->GetTable(table_id, btadmin::Table::FULL);
-  ASSERT_STATUS_OK(table_detailed);
-  auto count_matching_families = [](btadmin::Table const& table,
-                                    std::string const& name) {
-    int count = 0;
-    for (auto const& kv : table.column_families()) {
-      if (kv.first == name) {
-        ++count;
-      }
-    }
-    return count;
-  };
-  EXPECT_EQ(1, count_matching_families(*table_detailed, "fam"));
-  EXPECT_EQ(1, count_matching_families(*table_detailed, "foo"));
-
-  // update table
-  std::vector<bigtable::ColumnFamilyModification> column_modification_list = {
-      bigtable::ColumnFamilyModification::Create(
-          "newfam", GC::Intersection(GC::MaxAge(std::chrono::hours(7 * 24)),
-                                     GC::MaxNumVersions(1))),
-      bigtable::ColumnFamilyModification::Update("fam", GC::MaxNumVersions(2)),
-      bigtable::ColumnFamilyModification::Drop("foo")};
-
-  auto table_modified =
-      table_admin_->ModifyColumnFamilies(table_id, column_modification_list);
-  ASSERT_STATUS_OK(table_modified);
-  EXPECT_EQ(1, count_matching_families(*table_modified, "fam"));
-  EXPECT_EQ(0, count_matching_families(*table_modified, "foo"));
-  EXPECT_EQ(1, count_matching_families(*table_modified, "newfam"));
-  auto const& gc = table_modified->column_families().at("newfam").gc_rule();
-  EXPECT_TRUE(gc.has_intersection());
-  EXPECT_EQ(2, gc.intersection().rules_size());
-#endif
   // delete table
   EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
   // List to verify it is no longer there
