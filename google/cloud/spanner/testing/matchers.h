@@ -28,7 +28,7 @@ namespace cloud {
 namespace spanner_testing {
 inline namespace SPANNER_CLIENT_NS {
 
-MATCHER_P(IsProtoEqual, value, "") {
+MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
   std::string delta;
   google::protobuf::util::MessageDifferencer differencer;
   differencer.ReportDifferencesToString(&delta);

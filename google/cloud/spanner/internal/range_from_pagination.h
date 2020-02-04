@@ -114,7 +114,6 @@ class PaginationRange {
       : request_(std::move(request)),
         next_page_loader_(std::move(loader)),
         get_items_(std::move(get_items)),
-        next_page_token_(),
         on_last_page_(false) {
     current_ = current_page_.begin();
   }
