@@ -94,8 +94,8 @@ target_compile_options(google_cloud_cpp_grpc_utils
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
     google_cloud_cpp_grpc_utils
-    PROPERTIES VERSION ${GRPC_UTILS_VERSION} SOVERSION
-               ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
+    PROPERTIES VERSION ${GRPC_UTILS_VERSION}
+               SOVERSION ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
@@ -103,8 +103,9 @@ google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
 
 if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
-    set(google_cloud_cpp_grpc_utils_unit_tests completion_queue_test.cc
-                                               grpc_error_delegate_test.cc)
+    set(google_cloud_cpp_grpc_utils_unit_tests
+        # cmake-format: sort
+        completion_queue_test.cc grpc_error_delegate_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
@@ -139,8 +140,8 @@ option(GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS
 mark_as_advanced(GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
 if (GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
     target_compile_definitions(
-        google_cloud_cpp_grpc_utils_force_sanitizer_failures_test PRIVATE
-        -DGOOGLE_CLOUD_CPP_GRPC_UTILS_FORCE_STATIC_ANALYZER_ERRORS)
+        google_cloud_cpp_grpc_utils_force_sanitizer_failures_test
+        PRIVATE -DGOOGLE_CLOUD_CPP_GRPC_UTILS_FORCE_STATIC_ANALYZER_ERRORS)
 endif ()
 
 # Install the libraries and headers in the locations determined by

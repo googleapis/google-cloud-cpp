@@ -195,8 +195,8 @@ endif ()
 
 set_target_properties(
     google_cloud_cpp_common
-    PROPERTIES VERSION ${GOOGLE_CLOUD_CPP_VERSION} SOVERSION
-               ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+    PROPERTIES VERSION ${GOOGLE_CLOUD_CPP_VERSION}
+               SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 
 include(CreateBazelConfig)
 create_bazel_config(google_cloud_cpp_common)
@@ -206,6 +206,7 @@ add_subdirectory(testing_util)
 
 if (BUILD_TESTING)
     set(google_cloud_cpp_common_unit_tests
+        # cmake-format: sort
         future_generic_test.cc
         future_generic_then_test.cc
         future_void_test.cc
@@ -214,6 +215,7 @@ if (BUILD_TESTING)
         internal/backoff_policy_test.cc
         internal/big_endian_test.cc
         internal/compiler_info_test.cc
+        internal/env_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
@@ -224,7 +226,6 @@ if (BUILD_TESTING)
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
         internal/utility_test.cc
-        internal/env_test.cc
         log_test.cc
         optional_test.cc
         status_or_test.cc
