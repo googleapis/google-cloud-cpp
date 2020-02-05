@@ -98,8 +98,7 @@ class RowStream {
  * This class encapsulates the result of a Cloud Spanner DML operation, i.e.,
  * `INSERT`, `UPDATE`, or `DELETE`.
  *
- * @note `ExecuteDmlResult` returns the number of rows modified, query plan
- *     (if requested), and execution statistics (if requested).
+ * @note `ExecuteDmlResult` returns the number of rows modified.
  */
 class DmlResult {
  public:
@@ -123,6 +122,21 @@ class DmlResult {
   std::unique_ptr<internal::ResultSourceInterface> source_;
 };
 
+/**
+ * Represents the stream of `Rows` and profile stats returned from
+ * `spanner::Client::ProfileQuery()`.
+ *
+ * A `RowStream` object is a range defined by the [Input
+ * Iterators][input-iterator] returned from its `begin()` and `end()` members.
+ * Callers may directly iterate a `RowStream` instance, which will return a
+ * sequence of `StatusOr<Row>` objects.
+ *
+ * For convenience, callers may wrap a `RowStream` instance in a
+ * `StreamOf<std::tuple<...>>` object, which will automatically parse each
+ * `Row` into a `std::tuple` with the specified types.
+ *
+ * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+ */
 class ProfileQueryResult {
  public:
   ProfileQueryResult() = default;
@@ -167,6 +181,16 @@ class ProfileQueryResult {
   std::unique_ptr<internal::ResultSourceInterface> source_;
 };
 
+/**
+ * Represents the result and profile stats of a data modifying operation using
+ * `spanner::Client::ProfileDml()`.
+ *
+ * This class encapsulates the result of a Cloud Spanner DML operation, i.e.,
+ * `INSERT`, `UPDATE`, or `DELETE`.
+ *
+ * @note `ProfileDmlResult` returns the number of rows modified, execution
+ *     statistics, and query plan.
+ */
 class ProfileDmlResult {
  public:
   ProfileDmlResult() = default;
