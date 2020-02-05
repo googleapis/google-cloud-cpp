@@ -131,7 +131,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
   void FinishTest(
       google::cloud::future<google::cloud::StatusOr<ResultType>> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
     EXPECT_FALSE(res);
@@ -141,7 +141,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
 
   void FinishTest(google::cloud::future<google::cloud::Status> res_future) {
     EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     EXPECT_EQ(0U, cq_impl_->size());
     auto res = res_future.get();
     EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());

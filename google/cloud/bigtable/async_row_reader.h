@@ -309,8 +309,14 @@ class AsyncRowReader : public std::enable_shared_from_this<
     }
     auto self = this->shared_from_this();
     cq_.MakeRelativeTimer(rpc_backoff_policy_->OnCompletion(status_))
-        .then([self](future<std::chrono::system_clock::time_point>) {
-          self->MakeRequest();
+        .then([self](future<StatusOr<std::chrono::system_clock::time_point>>
+                         result) {
+          if (auto tp = result.get()) {
+            self->MakeRequest();
+          } else {
+            self->whole_op_finished_ = true;
+            self->TryGiveRowToUser();
+          }
         });
   }
 

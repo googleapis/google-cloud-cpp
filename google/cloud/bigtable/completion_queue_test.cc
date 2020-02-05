@@ -43,7 +43,7 @@ TEST(CompletionQueueTest, LifeCycleFuture) {
 
   promise<bool> promise;
   cq.MakeRelativeTimer(2_ms).then(
-      [&promise](future<std::chrono::system_clock::time_point>) {
+      [&promise](future<StatusOr<std::chrono::system_clock::time_point>>) {
         promise.set_value(true);
       });
 
@@ -120,7 +120,7 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFuture) {
       request, std::move(context));
 
   EXPECT_EQ(1, impl->size());
-  impl->SimulateCompletion(cq, true);
+  impl->SimulateCompletion(true);
   EXPECT_TRUE(impl->empty());
 
   ASSERT_EQ(std::future_status::ready, future.wait_for(0_ms));
@@ -168,7 +168,7 @@ TEST(CompletionQueueTest, AsyncRpcSimpleFutureFailure) {
       request, std::move(context));
 
   EXPECT_EQ(1, impl->size());
-  impl->SimulateCompletion(cq, true);
+  impl->SimulateCompletion(true);
   EXPECT_TRUE(impl->empty());
 
   ASSERT_EQ(std::future_status::ready, future.wait_for(0_ms));

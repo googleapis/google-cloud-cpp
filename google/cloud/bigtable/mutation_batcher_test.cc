@@ -186,30 +186,30 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
   }
 
   void FinishSingleItemStream() {
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     // state == PROCESSING
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     // state == PROCESSING, 1 read
-    cq_impl_->SimulateCompletion(cq_, false);
+    cq_impl_->SimulateCompletion(false);
     // state == FINISHING
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
   }
 
   void OpenStream() {
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
     // state == PROCESSING
   }
 
-  void ReadPiece() { cq_impl_->SimulateCompletion(cq_, true); }
+  void ReadPiece() { cq_impl_->SimulateCompletion(true); }
 
   void FinishStream() {
     // state == PROCESSING
-    cq_impl_->SimulateCompletion(cq_, false);
+    cq_impl_->SimulateCompletion(false);
     // state == FINISHING
-    cq_impl_->SimulateCompletion(cq_, true);
+    cq_impl_->SimulateCompletion(true);
   }
 
-  void FinishTimer() { cq_impl_->SimulateCompletion(cq_, true); }
+  void FinishTimer() { cq_impl_->SimulateCompletion(true); }
 
   std::shared_ptr<MutationState> Apply(SingleRowMutation mut) {
     auto res = std::make_shared<MutationState>();

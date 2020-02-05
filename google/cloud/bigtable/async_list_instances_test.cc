@@ -124,7 +124,7 @@ TEST_F(AsyncListInstancesTest, Simple) {
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto res = user_future_.get();
   EXPECT_STATUS_OK(res);
@@ -187,15 +187,15 @@ TEST_F(AsyncListInstancesTest, MultipleInstancesAndLocations) {
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto res = user_future_.get();
   EXPECT_STATUS_OK(res);
@@ -268,19 +268,19 @@ TEST_F(AsyncListInstancesTest, FailuresAreRetried) {
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);  // the timer
+  cq_impl_->SimulateCompletion(true);  // the timer
 
   EXPECT_EQ(user_future_.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(1, cq_impl_->size());
-  cq_impl_->SimulateCompletion(cq_, true);
+  cq_impl_->SimulateCompletion(true);
 
   auto res = user_future_.get();
   EXPECT_STATUS_OK(res);
