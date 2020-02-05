@@ -457,7 +457,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
 
 /// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work as
 /// expected.
-TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackupTest) {
+TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -479,7 +479,9 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackupTest) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  auto clusters_list = instance_admin_->ListClusters();
+
+  auto clusters_list =
+      instance_admin_->ListClusters(table_admin_->instance_id());
   ASSERT_STATUS_OK(clusters_list);
   std::string const backup_cluster_full_name =
           clusters_list->clusters.begin()->name();
@@ -580,7 +582,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  auto clusters_list = instance_admin_->ListClusters();
+  auto clusters_list =
+      instance_admin_->ListClusters(table_admin_->instance_id());
   ASSERT_STATUS_OK(clusters_list);
   std::string const backup_cluster_full_name =
           clusters_list->clusters.begin()->name();
