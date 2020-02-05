@@ -384,7 +384,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
 
 /// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work as
 /// expected.
-TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackupTest) {
+TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
