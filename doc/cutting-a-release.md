@@ -97,9 +97,6 @@ uploaded documentation will generally be live in an hour at the following URLs:
 * https://googleapis.dev/cpp/google-cloud-storage/latest/
 * https://googleapis.dev/cpp/google-cloud-common/latest/
 
-You are now finished with this "releases" clone of the repo that we created in
-the instructions above. You may now remove this directory.
-
 ## Bump the version numbers in `master`
 
 Working in your fork of `gooogle-cloud-cpp`: bump the version numbers to the
