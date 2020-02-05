@@ -180,7 +180,7 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
 
   // Schedule some work, it cannot execute because there is no thread attached.
   auto background_thread_id = background->cq().MakeRelativeTimer(ms(0)).then(
-      [](future<std::chrono::system_clock::time_point>) {
+      [](future<StatusOr<std::chrono::system_clock::time_point>>) {
         return std::this_thread::get_id();
       });
   EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(1)));

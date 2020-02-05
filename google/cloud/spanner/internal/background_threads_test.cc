@@ -59,7 +59,7 @@ TEST(CustomerSuppliedBackgroundThreads, SharesCompletionQueue) {
   // once a thread is blocked in cq.Run(). Start that thread after scheduling
   // the work to avoid flaky failures where the timer expires immediately.
   future<std::thread::id> id = actual.cq().MakeRelativeTimer(ms(1)).then(
-      [](future<std::chrono::system_clock::time_point>) {
+      [](future<StatusOr<std::chrono::system_clock::time_point>>) {
         return std::this_thread::get_id();
       });
   std::thread t([&cq] { cq.Run(); });
