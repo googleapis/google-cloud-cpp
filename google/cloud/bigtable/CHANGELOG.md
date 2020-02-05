@@ -1,6 +1,11 @@
 # Changelog
 
-## v1.7.x - TBD
+## v1.8.x - TBD
+
+## v1.7.x - 2020-02
+
+* docs: add examples of different credential classes for bigtable
+* feat: use Bigtable direct path if configured (#3338)
 
 ## v1.6.x - 2020-01
 

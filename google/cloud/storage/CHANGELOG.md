@@ -1,6 +1,27 @@
 # Changelog
 
-## v1.9.x - TBD
+## v1.10.x - TBD
+
+## v1.9.x - 2020-02
+
+**BREAKING CHANGE**
+* fix!: insert logging layer only if requested (#3349)
+
+**Other Changes:**
+* fix: handle completed uploads in UploadChunk (#3348)
+* fix: use ::testing::TempDir for test files (#3345)
+* fix: remove debug log from benchmark output (#3341)
+* test: allow specifying dir in parallel upload BM (#3339)
+* feat: generate plots for parallel upload benchmark (#3336)
+* doc: some fixes for storage client docs (#3332)
+* feat: improve storage_throughput_benchmark (#3330)
+* cleanup: remove tmpnam (#3325)
+* test: don't build benchmarks without tests (#3322)
+* feat: implement Delimiter option for ListObjects (#3320)
+* docs: document parallel uploads design (#3321)
+* test: implement a benchmark for parallel uploads (#3302)
+* fix: handle CURLE_GOT_NOTHING as retryable (#3316)
+* feat: benchmark reading many small chunks (#3313)
 
 ## v1.8.x - 2020-01
 
