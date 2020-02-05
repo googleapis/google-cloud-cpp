@@ -219,6 +219,9 @@ Transaction MakeSingleUseTransaction(T&& opts) {
 }
 
 template <typename Functor>
+// Pass `txn` by value, despite being used only once. This avoids the
+// possibility of `txn` being destroyed by `f` before `Visit()` can
+// return. Therefore, ...
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
   return txn.impl_->Visit(std::forward<Functor>(f));
