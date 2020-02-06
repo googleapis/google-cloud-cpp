@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include <google/protobuf/text_format.h>
 
 namespace google {
 namespace cloud {
-namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 google::cloud::StatusCode MapStatusCode(grpc::StatusCode const& code) {
   switch (code) {
@@ -84,7 +83,6 @@ google::cloud::Status MakeStatusFromRpcError(
   return Status(code, status.message());
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
-}  // namespace grpc_utils
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

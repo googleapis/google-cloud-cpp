@@ -15,48 +15,17 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_ASYNC_OPERATION_H
 
-#include "google/cloud/grpc_utils/version.h"
-#include <grpcpp/grpcpp.h>
-#include <chrono>
+#include "google/cloud/async_operation.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
 namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
-class CompletionQueue;
+inline namespace GOOGLE_CLOUD_CPP_NS {
+/// Use a type alias to maintain API backwards compatibility.
+using AsyncOperation = ::google::cloud::AsyncOperation;
 
-namespace internal {
-class CompletionQueueImpl;
-}  // namespace internal
-class CompletionQueue;
-
-/**
- * The result of an async timer operation.
- *
- * Callbacks for async timers will receive an object of this class.
- */
-struct AsyncTimerResult {
-  std::chrono::system_clock::time_point deadline;
-  bool cancelled;
-};
-
-/**
- * Represents a pending asynchronous operation.
- *
- * It can either be a simple RPC, or a more complex operation involving
- * potentially many RPCs, sleeping and processing.
- */
-class AsyncOperation {
- public:
-  virtual ~AsyncOperation() = default;
-
-  /**
-   * Requests that the operation be canceled.
-   */
-  virtual void Cancel() = 0;
-};
-
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

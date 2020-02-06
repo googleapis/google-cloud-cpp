@@ -12,10 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include <gtest/gtest.h>
 
-using namespace google::cloud::grpc_utils;
+namespace google {
+namespace cloud {
+inline namespace GOOGLE_CLOUD_CPP_NS {
+namespace {
 
 TEST(MakeStatusFromRpcError, AllCodes) {
   using google::cloud::StatusCode;
@@ -102,3 +105,8 @@ TEST(MakeStatusFromRpcError, ProtoInvalidCode) {
     EXPECT_EQ(expected, actual);
   }
 }
+
+}  // namespace
+}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace cloud
+}  // namespace google

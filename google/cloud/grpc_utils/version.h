@@ -15,13 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_VERSION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_VERSION_H
 
-#include "google/cloud/grpc_utils/version_info.h"
 #include "google/cloud/version.h"
 #include <string>
-
-#define GOOGLE_CLOUD_CPP_GRPC_UTILS_NS                              \
-  GOOGLE_CLOUD_CPP_VEVAL(GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR, \
-                         GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR)
 
 namespace google {
 namespace cloud {
@@ -29,55 +24,13 @@ namespace cloud {
  * Contains all the Cloud C++ gRPC Utilities APIs.
  */
 namespace grpc_utils {
-/**
- * The inlined, versioned namespace for the Cloud C++ gRPC Utilities APIs.
- *
- * Applications may need to link multiple versions of the Cloud C++ gRPC
- * Utilities for example, if they link a library that uses an older version of
- * the client than they do.  This namespace is inlined, so applications can use
- * `grpc_utils::Foo` in their source, but the symbols are versioned, i.e., the
- * symbol becomes `grpc_utils::v1::Foo`.
- *
- * Note that, consistent with the semver.org guidelines, the v0 version makes
- * no guarantees with respect to backwards compatibility.
- */
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
-/**
- * The Cloud C++ gRPC Utilities major version.
- *
- * @see https://semver.org/spec/v2.0.0.html for details.
- */
-int constexpr version_major() {
-  return GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR;
-}
-
-/**
- * The Cloud C++ gRPC Utilities minor version.
- *
- * @see https://semver.org/spec/v2.0.0.html for details.
- */
-int constexpr version_minor() {
-  return GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MINOR;
-}
-
-/**
- * The Cloud C++ gRPC Utilities patch version.
- *
- * @see https://semver.org/spec/v2.0.0.html for details.
- */
-int constexpr version_patch() {
-  return GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_PATCH;
-}
-
-/// A single integer representing the Major/Minor/Patch version.
-int constexpr version() {
-  return 100 * (100 * version_major() + version_minor()) + version_patch();
-}
-
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
-std::string version_string();
-
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
+inline namespace GOOGLE_CLOUD_CPP_NS {
+using ::google::cloud::version;
+using ::google::cloud::version_major;
+using ::google::cloud::version_minor;
+using ::google::cloud::version_patch;
+using ::google::cloud::version_string;
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

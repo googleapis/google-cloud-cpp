@@ -12,18 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_STREAM_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_STREAM_IMPL_H
 
-#include "google/cloud/grpc_utils/internal/completion_queue_impl.h"
-#include "google/cloud/grpc_utils/version.h"
+#include "google/cloud/internal/completion_queue_impl.h"
+#include "google/cloud/version.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
+class CompletionQueueImpl;
+
 /**
  * A meta function to extract the `ResponseType` from an AsyncStreamingReadCall
  * return type.
@@ -243,7 +244,7 @@ class AsyncReadStreamImpl
      private:
       void Cancel() override {}  // LCOV_EXCL_LINE
       bool Notify(bool ok) override {
-        control_->OnFinish(ok, grpc_utils::MakeStatusFromRpcError(status));
+        control_->OnFinish(ok, MakeStatusFromRpcError(status));
         return true;
       }
       std::shared_ptr<AsyncReadStreamImpl> control_;
@@ -349,9 +350,8 @@ MakeAsyncReadStreamImpl(OnReadHandler&& on_read, OnFinishHandler&& on_finish) {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
-}  // namespace grpc_utils
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_ASYNC_READ_STREAM_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_READ_STREAM_IMPL_H

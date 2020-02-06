@@ -307,6 +307,143 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common")
 
 if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
-    add_subdirectory(grpc_utils)
+    find_package(googleapis)
+
+    # the library
+    add_library(
+        google_cloud_cpp_grpc_utils
+        async_operation.h
+        completion_queue.cc
+        completion_queue.h
+        grpc_error_delegate.cc
+        grpc_error_delegate.h
+        grpc_utils/async_operation.h
+        grpc_utils/completion_queue.h
+        grpc_utils/grpc_error_delegate.h
+        grpc_utils/version.h
+        internal/async_read_stream_impl.h
+        internal/completion_queue_impl.cc
+        internal/completion_queue_impl.h)
+    target_link_libraries(
+        google_cloud_cpp_grpc_utils
+        PUBLIC googleapis-c++::rpc_status_protos google_cloud_cpp_common
+               gRPC::grpc++ gRPC::grpc
+        PRIVATE google_cloud_cpp_common_options)
+    target_include_directories(
+        google_cloud_cpp_grpc_utils
+        PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+               $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+               $<INSTALL_INTERFACE:include>)
+    target_compile_options(google_cloud_cpp_grpc_utils
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+    set_target_properties(
+        google_cloud_cpp_grpc_utils
+        PROPERTIES VERSION ${GRPC_UTILS_VERSION}
+                   SOVERSION ${GOOGLE_CLOUD_CPP_GRPC_UTILS_VERSION_MAJOR})
+
+    include(CreateBazelConfig)
+    create_bazel_config(google_cloud_cpp_grpc_utils YEAR 2019)
+    google_cloud_cpp_add_clang_tidy(google_cloud_cpp_grpc_utils)
+
+    if (BUILD_TESTING)
+        # List the unit tests, then setup the targets and dependencies.
+        set(google_cloud_cpp_grpc_utils_unit_tests
+            # cmake-format: sort
+            completion_queue_test.cc grpc_error_delegate_test.cc)
+
+        # Export the list of unit tests so the Bazel BUILD file can pick it up.
+        export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
+                             "google_cloud_cpp_grpc_utils_unit_tests" YEAR 2019)
+
+        foreach (fname ${google_cloud_cpp_grpc_utils_unit_tests})
+            string(REPLACE "/" "_" target ${fname})
+            string(REPLACE ".cc" "" target ${target})
+            add_executable(${target} ${fname})
+            target_link_libraries(
+                ${target}
+                PRIVATE google_cloud_cpp_grpc_utils
+                        google_cloud_cpp_testing
+                        google_cloud_cpp_common
+                        googleapis-c++::bigtable_protos
+                        GTest::gmock_main
+                        GTest::gmock
+                        GTest::gtest
+                        gRPC::grpc++
+                        gRPC::grpc
+                        google_cloud_cpp_common_options)
+            if (MSVC)
+                target_compile_options(${target} PRIVATE "/bigobj")
+            endif ()
+            add_test(NAME ${target} COMMAND ${target})
+        endforeach ()
+    endif ()
+
+    # Install the libraries and headers in the locations determined by
+    # GNUInstallDirs
+    install(
+        TARGETS
+        EXPORT grpc_utils-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+    # Export the CMake targets to make it easy to create configuration files.
+    install(
+        EXPORT grpc_utils-targets
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
+
+    install(
+        TARGETS google_cloud_cpp_grpc_utils
+        EXPORT grpc_utils-targets
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                COMPONENT google_cloud_cpp_runtime
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_runtime
+                NAMELINK_SKIP
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+    # With CMake-3.12 and higher we could avoid this separate command (and the
+    # duplication).
+    install(
+        TARGETS google_cloud_cpp_grpc_utils
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development
+                NAMELINK_ONLY
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                COMPONENT google_cloud_cpp_development)
+
+    google_cloud_cpp_install_headers(google_cloud_cpp_grpc_utils
+                                     include/google/cloud)
+
+    # Setup global variables used in the following *.in files.
+    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
+    set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
+    set(GOOGLE_CLOUD_CPP_PC_NAME
+        "gRPC Utilities for the Google Cloud C++ Client Library")
+    set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
+        "Provides gRPC Utilities for the Google Cloud C++ Client Library.")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_grpc_utils")
+
+    # Create and install the pkg-config files.
+    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+                   "google_cloud_cpp_grpc_utils.pc" @ONLY)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
+    # Create and install the CMake configuration files.
+    configure_file("grpc_utils/config.cmake.in"
+                   "google_cloud_cpp_grpc_utils-config.cmake" @ONLY)
+    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config-version.cmake.in"
+                   "google_cloud_cpp_grpc_utils-config-version.cmake" @ONLY)
+    install(
+        FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_grpc_utils-config-version.cmake"
+            "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
+            "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_grpc_utils")
+
     add_subdirectory(samples)
 endif ()

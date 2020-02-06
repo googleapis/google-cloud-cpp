@@ -12,13 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/grpc_utils/completion_queue.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {
-namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 /**
  * Wrap a gRPC timer into an `AsyncOperation`.
@@ -97,7 +96,6 @@ CompletionQueue::MakeDeadlineTimer(
   return op->GetFuture();
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
-}  // namespace grpc_utils
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

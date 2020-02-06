@@ -60,3 +60,32 @@ load(
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_common_unit_tests]
+
+load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_grpc_utils",
+    srcs = google_cloud_cpp_grpc_utils_srcs,
+    hdrs = google_cloud_cpp_grpc_utils_hdrs,
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googleapis//:grpc_utils_protos",
+    ],
+)
+
+load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
+
+[cc_test(
+    name = "google_cloud_cpp_grpc_utils_" + test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_grpc_utils",
+        "//google/cloud:google_cloud_cpp_common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_github_grpc_grpc//:grpc++",
+        "@com_google_googleapis//:bigtable_protos",
+        "@com_google_googleapis//:grpc_utils_protos",
+        "@com_google_googletest//:gtest",
+    ],
+) for test in google_cloud_cpp_grpc_utils_unit_tests]

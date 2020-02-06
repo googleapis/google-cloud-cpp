@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/grpc_utils/internal/completion_queue_impl.h"
+#include "google/cloud/internal/completion_queue_impl.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/throw_delegate.h"
 
@@ -23,8 +23,7 @@ constexpr std::chrono::milliseconds kLoopTimeout(50);
 
 namespace google {
 namespace cloud {
-namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 void CompletionQueueImpl::Run() {
   void* tag;
@@ -159,7 +158,6 @@ void CompletionQueueImpl::SimulateCompletion(bool ok) {
 }
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
-}  // namespace grpc_utils
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google

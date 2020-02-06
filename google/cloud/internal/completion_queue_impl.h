@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_COMPLETION_QUEUE_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_COMPLETION_QUEUE_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMPLETION_QUEUE_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMPLETION_QUEUE_IMPL_H
 
+#include "google/cloud/async_operation.h"
 #include "google/cloud/future.h"
-#include "google/cloud/grpc_utils/async_operation.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
-#include "google/cloud/grpc_utils/version.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/version.h"
 #include <grpcpp/alarm.h>
 #include <grpcpp/support/async_stream.h>
 #include <grpcpp/support/async_unary_call.h>
@@ -30,10 +30,10 @@
 
 namespace google {
 namespace cloud {
-namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 class CompletionQueue;
 namespace internal {
+class CompletionQueueImpl;
 
 /**
  * Represents an AsyncOperation which gRPC understands.
@@ -47,7 +47,7 @@ namespace internal {
  */
 class AsyncGrpcOperation : public AsyncOperation {
  private:
-  friend class internal::CompletionQueueImpl;
+  friend class CompletionQueueImpl;
   /**
    * Notifies the application that the operation completed.
    *
@@ -111,7 +111,7 @@ class AsyncUnaryRpcFuture : public AsyncGrpcOperation {
     }
     if (!status_.ok()) {
       // Convert the error to a `google::cloud::Status` and satisfy the future.
-      promise_.set_value(grpc_utils::MakeStatusFromRpcError(status_));
+      promise_.set_value(MakeStatusFromRpcError(status_));
       return true;
     }
     // Success, use `response_` to satisfy the future.
@@ -283,9 +283,8 @@ class CompletionQueueImpl {
 };
 
 }  // namespace internal
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
-}  // namespace grpc_utils
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_INTERNAL_COMPLETION_QUEUE_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_COMPLETION_QUEUE_IMPL_H

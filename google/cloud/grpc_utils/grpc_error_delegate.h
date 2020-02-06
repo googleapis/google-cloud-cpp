@@ -15,36 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_GRPC_ERROR_DELEGATE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_GRPC_UTILS_GRPC_ERROR_DELEGATE_H
 
-#include "google/cloud/grpc_utils/version.h"
-#include "google/cloud/status.h"
-#include <google/rpc/status.pb.h>
-#include <grpcpp/grpcpp.h>
+#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
 namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
-/**
- * Creates a google::cloud::Status from a grpc::Status.
- */
-google::cloud::Status MakeStatusFromRpcError(grpc::Status const& status);
-
-/**
- * Creates a google::cloud::Status from a grpc::StatusCode and description.
- */
-google::cloud::Status MakeStatusFromRpcError(grpc::StatusCode code,
-                                             std::string what);
-
-/**
- * Creates a `google::cloud::Status` from a `google:rpc::Status` proto.
- *
- * Some gRPC services return the `google::rpc::Status` proto for errors. The
- * libraries in `google-cloud-cpp` represent these errors using a
- * `google::cloud::Status`.
- */
-google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& status);
-
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
+inline namespace GOOGLE_CLOUD_CPP_NS {
+using ::google::cloud::MakeStatusFromRpcError;
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace grpc_utils
 }  // namespace cloud
 }  // namespace google

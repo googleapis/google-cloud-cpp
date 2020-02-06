@@ -24,8 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace grpc_utils {
-inline namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS {
+inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
 class MockCompletionQueue : public internal::CompletionQueueImpl {
@@ -365,7 +364,6 @@ TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_GRPC_UTILS_NS
-}  // namespace grpc_utils
+}  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
 }  // namespace google
