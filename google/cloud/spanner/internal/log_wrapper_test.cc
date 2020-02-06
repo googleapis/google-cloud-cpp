@@ -55,7 +55,7 @@ TEST(LogWrapper, DefaultOptions) {
   // clang-format off
   EXPECT_EQ(R"pb(insert { )pb"
             R"pb(table: "Singers" )pb"
-	    R"pb(columns: "SingerId" )pb"
+            R"pb(columns: "SingerId" )pb"
             R"pb(columns: "FirstName" )pb"
             R"pb(columns: "LastName" )pb"
             R"pb(values { values { string_value: "1" } )pb"
@@ -117,7 +117,7 @@ TEST(LogWrapper, Truncate) {
   // clang-format off
   EXPECT_EQ(R"pb(insert { )pb"
             R"pb(table: "Singers" )pb"
-	    R"pb(columns: "SingerId" )pb"
+            R"pb(columns: "SingerId" )pb"
             R"pb(columns: "FirstNam...<truncated>..." )pb"
             R"pb(columns: "LastName" )pb"
             R"pb(values { values { string_value: "1" } )pb"
