@@ -17,11 +17,15 @@
 """Automatically generated source lists for googleapis_cpp_pubsub_client - DO NOT EDIT."""
 
 googleapis_cpp_pubsub_client_hdrs = [
-    "version.h",
     "internal/build_info.h",
+    "internal/compiler_info.h",
+    "internal/user_agent_prefix.h",
     "version_info.h",
+    "version.h",
 ]
 
 googleapis_cpp_pubsub_client_srcs = [
+    "internal/compiler_info.cc",
+    "internal/user_agent_prefix.cc",
     "version.cc",
 ]

@@ -82,9 +82,16 @@ configure_file(internal/build_info.cc.in internal/build_info.cc)
 
 configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
-  googleapis_cpp_pubsub_client # cmake-format: sortable
-  ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc version.cc version.h
-  internal/build_info.h version_info.h)
+  googleapis_cpp_pubsub_client # cmake-format: sort
+  ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+  internal/build_info.h
+  internal/compiler_info.cc
+  internal/compiler_info.h
+  internal/user_agent_prefix.cc
+  internal/user_agent_prefix.h
+  version_info.h
+  version.cc
+  version.h)
 target_include_directories(
   googleapis_cpp_pubsub_client
   PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -120,8 +127,10 @@ function(google_cloud_cpp_pubsub_client_define_tests)
 
   find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
-  set(googleapis_cpp_pubsub_client_unit_tests # cmake-format: sortable
-                                              internal/build_info_test.cc)
+  set(googleapis_cpp_pubsub_client_unit_tests
+      # cmake-format: sort
+      internal/build_info_test.cc internal/compiler_info_test.cc
+      internal/user_agent_prefix_test.cc)
 
   # Export the list of unit tests to a .bzl file so we do not need to maintain
   # the list in two places.
