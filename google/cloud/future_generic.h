@@ -76,6 +76,7 @@ class future final : private internal::future_base<T> {
     return tmp->get();
   }
 
+  using internal::future_base<T>::cancel;
   using internal::future_base<T>::is_ready;
   using internal::future_base<T>::valid;
   using internal::future_base<T>::wait;
@@ -132,7 +133,8 @@ template <typename T>
 class promise final : private internal::promise_base<T> {
  public:
   /// Creates a promise with an unsatisfied shared state.
-  promise() = default;
+  promise(std::function<void()> cancellation_callback = [] {})
+      : internal::promise_base<T>(cancellation_callback) {}
 
   /// Constructs a new promise and transfer any shared state from @p rhs.
   promise(promise&&) noexcept = default;

@@ -123,6 +123,11 @@ class future_base {
     return shared_state_->is_ready();
   }
 
+  /**
+   * Cancel the future by invoking cancel() on the shared state.
+   */
+  bool cancel() { return shared_state_->cancel(); }
+
  protected:
   /// Shorthand to refer to the shared state type.
   using shared_state_type = internal::future_shared_state<T>;
@@ -144,7 +149,9 @@ class future_base {
 template <typename T>
 class promise_base {
  public:
-  promise_base() : shared_state_(std::make_shared<shared_state_type>()) {}
+  explicit promise_base(std::function<void()> cancellation_callback)
+      : shared_state_(
+            std::make_shared<shared_state_type>(cancellation_callback)) {}
   promise_base(promise_base&&) noexcept = default;
 
   ~promise_base() {

@@ -644,6 +644,36 @@ TEST(FutureTestVoid, conform_30_6_6_25_3) {
 // raise too. We do not need to test for that, exceptions are always propagated,
 // this is just giving implementors freedom.
 
+/// @test Verify the behavior around cancellation.
+TEST(FutureTestVoid, cancellation_without_satisfaction) {
+  bool cancelled = false;
+  promise<void> p0([&cancelled] { cancelled = true; });
+  auto f0 = p0.get_future();
+  ASSERT_TRUE(f0.cancel());
+  ASSERT_TRUE(cancelled);
+}
+
+/// @test Verify the case for cancel then satisfy.
+TEST(FutureTestVoid, cancellation_and_satisfaction) {
+  bool cancelled = false;
+  promise<void> p0([&cancelled] { cancelled = true; });
+  auto f0 = p0.get_future();
+  ASSERT_TRUE(f0.cancel());
+  p0.set_value();
+  ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
+  ASSERT_TRUE(cancelled);
+}
+
+/// @test Verify the cancellation fails on satisfied promise.
+TEST(FutureTestVoid, cancellation_after_satisfaction) {
+  bool cancelled = false;
+  promise<void> p0([&cancelled] { cancelled = true; });
+  auto f0 = p0.get_future();
+  p0.set_value();
+  ASSERT_FALSE(f0.cancel());
+  ASSERT_FALSE(cancelled);
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud
