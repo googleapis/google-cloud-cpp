@@ -169,6 +169,8 @@ add_library(
     status_or.h
     terminate_handler.cc
     terminate_handler.h
+    tracing_options.h
+    tracing_options.cc
     version.cc
     version.h)
 target_link_libraries(
@@ -230,7 +232,8 @@ if (BUILD_TESTING)
         optional_test.cc
         status_or_test.cc
         status_test.cc
-        terminate_handler_test.cc)
+        terminate_handler_test.cc
+        tracing_options_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"

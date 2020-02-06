@@ -54,6 +54,7 @@ google_cloud_cpp_common_hdrs = [
     "status.h",
     "status_or.h",
     "terminate_handler.h",
+    "tracing_options.h",
     "version.h",
 ]
 
@@ -73,5 +74,6 @@ google_cloud_cpp_common_srcs = [
     "log.cc",
     "status.cc",
     "terminate_handler.cc",
+    "tracing_options.cc",
     "version.cc",
 ]
