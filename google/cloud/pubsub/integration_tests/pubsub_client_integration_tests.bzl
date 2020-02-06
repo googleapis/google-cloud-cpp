@@ -17,4 +17,5 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 pubsub_client_integration_tests = [
+    "publisher_admin_integration_test.cc",
 ]

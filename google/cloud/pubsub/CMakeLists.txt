@@ -84,9 +84,13 @@ configure_file(version_info.h.in ${CMAKE_CURRENT_SOURCE_DIR}/version_info.h)
 add_library(
   googleapis_cpp_pubsub_client # cmake-format: sort
   ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
+  connection_options.cc
+  connection_options.h
   internal/build_info.h
   internal/compiler_info.cc
   internal/compiler_info.h
+  internal/publisher_stub.cc
+  internal/publisher_stub.h
   internal/user_agent_prefix.cc
   internal/user_agent_prefix.h
   version_info.h

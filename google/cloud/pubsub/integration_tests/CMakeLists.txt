@@ -28,7 +28,7 @@ function(google_cloud_cpp_pubsub_define_integration_tests)
   find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
   set(pubsub_client_integration_tests # cmake-format: sortable
-  )
+                                      publisher_admin_integration_test.cc)
   set(pubsub_client_install_tests pubsub_install_test.cc)
 
   # Export the list of unit tests to a .bzl file so we do not need to maintain
@@ -46,10 +46,8 @@ function(google_cloud_cpp_pubsub_define_integration_tests)
     google_cloud_cpp_test_name_to_target(target "${fname}")
     add_executable(${target} ${fname})
     target_link_libraries(
-      ${target}
-      PRIVATE googleapis-c++::pubsub_client pubsub_client_testing
-              google_cloud_cpp_testing GTest::gmock_main GTest::gmock
-              GTest::gtest)
+      ${target} PRIVATE googleapis-c++::pubsub_client google_cloud_cpp_testing
+                        GTest::gmock_main GTest::gmock GTest::gtest)
     google_cloud_cpp_add_clang_tidy(${target})
     google_cloud_cpp_add_common_options(${target})
 
