@@ -64,10 +64,10 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/9c9f778aedde02f9826d2ae5d0f9c96409ba0f25.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/19c4589a3cb44b3679f7b3fba88365b3d055d5f8.tar.gz",
             ],
-            strip_prefix = "googleapis-9c9f778aedde02f9826d2ae5d0f9c96409ba0f25",
-            sha256 = "13af135d8cc9b81b47d6fbfc258fe790a151956d06e01fd16671aa49fe536ab1",
+            strip_prefix = "googleapis-19c4589a3cb44b3679f7b3fba88365b3d055d5f8",
+            sha256 = "ef455e46cfb967962aef30248f1a2a69bc78b041e89b04644e24e7844f0215c4",
             build_file = "@com_github_googleapis_google_cloud_cpp//bazel:googleapis.BUILD",
         )
 
@@ -80,6 +80,17 @@ def google_cloud_cpp_deps():
                 "https://github.com/google/protobuf/archive/v3.11.3.tar.gz",
             ],
             sha256 = "cf754718b0aa945b00550ed7962ddc167167bd922b842199eeb6505e6f344852",
+        )
+
+    # Load opencensus.
+    if "io_opencensus_cpp" not in native.existing_rules():
+        http_archive(
+            name = "io_opencensus_cpp",
+            urls = [
+                "https://github.com/census-instrumentation/opencensus-cpp/archive/c900c4d723ef596f357b0e695e68e2fa725eec90.tar.gz",
+            ],
+            strip_prefix = "opencensus-cpp-c900c4d723ef596f357b0e695e68e2fa725eec90",
+            sha256 = "040753b92d0ea57e2e9ffe7fc51f4c954cfb352204dc967c04ae6100842d6f45",
         )
 
     # Load gRPC and its dependencies, using a similar pattern to this function.
