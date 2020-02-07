@@ -35,6 +35,9 @@ CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
 
 # A target using the Cloud Bigtable C++ client library.
 bigtable_install_test: bigtable/bigtable_install_test.cc
+	echo $(PKG_CONFIG_PATH)
+	ls -l $(PKG_CONFIG_PATH)
+	pkg-config $(CBT_DEPS) --libs-only-l
 	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
 
 
