@@ -22,8 +22,8 @@ googleapis_cpp_pubsub_client_hdrs = [
     "internal/compiler_info.h",
     "internal/publisher_stub.h",
     "internal/user_agent_prefix.h",
-    "version_info.h",
     "version.h",
+    "version_info.h",
 ]
 
 googleapis_cpp_pubsub_client_srcs = [
