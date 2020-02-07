@@ -204,7 +204,7 @@ class future_shared_state_base {
     continuation_ = std::move(c);
   }
 
-  std::function<void()> extract_cancellation_callback() {
+  std::function<void()> release_cancellation_callback() {
     return std::move(cancellation_callback_);
   }
 
@@ -349,8 +349,8 @@ class future_shared_state final : private future_shared_state_base {
 
   using future_shared_state_base::abandon;
   using future_shared_state_base::cancel;
-  using future_shared_state_base::extract_cancellation_callback;
   using future_shared_state_base::is_ready;
+  using future_shared_state_base::release_cancellation_callback;
   using future_shared_state_base::set_continuation;
   using future_shared_state_base::set_exception;
   using future_shared_state_base::wait;
@@ -478,8 +478,8 @@ class future_shared_state<void> final : private future_shared_state_base {
 
   using future_shared_state_base::abandon;
   using future_shared_state_base::cancel;
-  using future_shared_state_base::extract_cancellation_callback;
   using future_shared_state_base::is_ready;
+  using future_shared_state_base::release_cancellation_callback;
   using future_shared_state_base::set_continuation;
   using future_shared_state_base::set_exception;
   using future_shared_state_base::wait;
@@ -673,7 +673,7 @@ struct continuation : public continuation_base {
       : functor(std::move(f)),
         input(std::move(s)),
         output(std::make_shared<future_shared_state<result_t>>(
-            input.lock()->extract_cancellation_callback())) {}
+            input.lock()->release_cancellation_callback())) {}
 
   continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s,
                std::shared_ptr<output_shared_state_t> o)
@@ -729,7 +729,7 @@ struct unwrapping_continuation : public continuation_base {
         input(std::move(s)),
         intermediate(),
         output(std::make_shared<output_shared_state_t>(
-            input.lock()->extract_cancellation_callback())) {}
+            input.lock()->release_cancellation_callback())) {}
 
   void execute() override {
     auto tmp = input.lock();
