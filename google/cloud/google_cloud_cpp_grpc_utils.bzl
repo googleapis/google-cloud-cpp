@@ -18,6 +18,7 @@
 
 google_cloud_cpp_grpc_utils_hdrs = [
     "async_operation.h",
+    "background_threads.h",
     "completion_queue.h",
     "grpc_error_delegate.h",
     "grpc_utils/async_operation.h",
@@ -25,11 +26,13 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "grpc_utils/grpc_error_delegate.h",
     "grpc_utils/version.h",
     "internal/async_read_stream_impl.h",
+    "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [
     "completion_queue.cc",
     "grpc_error_delegate.cc",
+    "internal/background_threads_impl.cc",
     "internal/completion_queue_impl.cc",
 ]

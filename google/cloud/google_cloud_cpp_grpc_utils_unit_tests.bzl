@@ -19,4 +19,5 @@
 google_cloud_cpp_grpc_utils_unit_tests = [
     "completion_queue_test.cc",
     "grpc_error_delegate_test.cc",
+    "internal/background_threads_impl_test.cc",
 ]

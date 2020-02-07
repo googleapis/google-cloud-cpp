@@ -316,6 +316,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
     add_library(
         google_cloud_cpp_grpc_utils
         async_operation.h
+        background_threads.h
         completion_queue.cc
         completion_queue.h
         grpc_error_delegate.cc
@@ -325,6 +326,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         grpc_utils/grpc_error_delegate.h
         grpc_utils/version.h
         internal/async_read_stream_impl.h
+        internal/background_threads_impl.cc
+        internal/background_threads_impl.h
         internal/completion_queue_impl.cc
         internal/completion_queue_impl.h)
     target_link_libraries(
@@ -352,7 +355,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         # List the unit tests, then setup the targets and dependencies.
         set(google_cloud_cpp_grpc_utils_unit_tests
             # cmake-format: sort
-            completion_queue_test.cc grpc_error_delegate_test.cc)
+            completion_queue_test.cc grpc_error_delegate_test.cc
+            internal/background_threads_impl_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
         export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"
