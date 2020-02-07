@@ -330,7 +330,7 @@ TEST(CompletionQueueTest, RunAsync) {
   runner.join();
 }
 
-// Sets up a timer that reschedules itself and verfies we can shut down
+// Sets up a timer that reschedules itself and verifies we can shut down
 // cleanly whether we call `CancelAll()` on the queue first or not.
 namespace {
 void RunAndReschedule(CompletionQueue& cq, bool ok) {
@@ -359,6 +359,35 @@ TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
   RunAndReschedule(cq, /*ok=*/true);
 
   cq.CancelAll();
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(CompletionQueueTest, CancelTimerSimple) {
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  using ms = std::chrono::milliseconds;
+  auto fut = cq.MakeRelativeTimer(ms(20000));
+  fut.cancel();
+  auto tp = fut.get();
+  EXPECT_FALSE(tp.ok()) << ", status=" << tp.status();
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(CompletionQueueTest, CancelTimerContinuation) {
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  using ms = std::chrono::milliseconds;
+  auto fut = cq.MakeRelativeTimer(ms(20000)).then(
+      [](future<StatusOr<std::chrono::system_clock::time_point>> f) {
+        return f.get().status();
+      });
+  fut.cancel();
+  auto status = fut.get();
+  EXPECT_FALSE(status.ok()) << ", status=" << status;
   cq.Shutdown();
   t.join();
 }

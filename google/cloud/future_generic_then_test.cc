@@ -175,6 +175,18 @@ TEST(FutureTestInt, ThenByCopy) {
   EXPECT_FALSE(next.valid());
 }
 
+/// @test Verify the behavior around cancellation.
+TEST(FutureTestInt, CancelThroughContinuation) {
+  bool cancelled = false;
+  promise<int> p0([&cancelled] { cancelled = true; });
+  auto f0 = p0.get_future();
+  auto f1 = f0.then([](future<int> f) { return f.get() * 2; });
+  EXPECT_TRUE(f1.cancel());
+  EXPECT_TRUE(cancelled);
+  p0.set_value(42);
+  EXPECT_EQ(84, f1.get());
+}
+
 // The following tests reference the technical specification:
 //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
 // The test names match the section and paragraph from the TS.

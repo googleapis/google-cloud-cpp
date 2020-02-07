@@ -54,9 +54,9 @@ typename internal::then_helper<F, T>::future_t future<T>::then_impl(
       typename internal::then_helper<F, T>::functor_result_t;
   using future_t = typename internal::then_helper<F, T>::future_t;
 
-  // The `shared_state_type` (aka `future_shared_state<T>`) is be written
+  // The `shared_state_type` (aka `future_shared_state<T>`) is written
   // without any reference to the `future<T>` class, otherwise there would
-  // be cycling dependencies between the two classes. We must adapt the
+  // be cyclic dependencies between the two classes. We must adapt the
   // provided functor, which takes a `future<T>` parameter to take a
   // `shared_ptr<shared_state_type` parameter so it can be consumed by the
   // underlying class. Because we need to support C++11, we use a local class

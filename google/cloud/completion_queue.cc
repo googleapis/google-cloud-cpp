@@ -38,7 +38,8 @@ namespace {
 class AsyncTimerFuture : public internal::AsyncGrpcOperation {
  public:
   explicit AsyncTimerFuture(std::unique_ptr<grpc::Alarm> alarm)
-      : alarm_(std::move(alarm)) {}
+      : promise_(/*cancellation_callback=*/[this] { Cancel(); }),
+        alarm_(std::move(alarm)) {}
 
   future<StatusOr<std::chrono::system_clock::time_point>> GetFuture() {
     return promise_.get_future();

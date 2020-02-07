@@ -166,6 +166,18 @@ TEST(FutureTestVoid, ThenByCopy) {
 //   http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0159r0.html
 // The test names match the section and paragraph from the TS.
 
+/// @test Verify the behavior around cancellation.
+TEST(FutureTestVoid, CancelThroughContinuation) {
+  bool cancelled = false;
+  promise<void> p0([&cancelled] { cancelled = true; });
+  auto f0 = p0.get_future();
+  auto f1 = f0.then([](future<void>) { return 7; });
+  EXPECT_TRUE(f1.cancel());
+  EXPECT_TRUE(cancelled);
+  p0.set_value();
+  EXPECT_EQ(7, f1.get());
+}
+
 /// @test Verify conformance with section 2.3 of the Concurrency TS.
 TEST(FutureTestVoid, conform_2_3_2_a) {
   // future<void> should have an unwrapping constructor.

@@ -69,11 +69,11 @@ class continuation_base {
 class future_shared_state_base {
  public:
   future_shared_state_base() : future_shared_state_base([] {}) {}
-  future_shared_state_base(std::function<void()> cancellation_callback)
+  explicit future_shared_state_base(std::function<void()> cancellation_callback)
       : mu_(),
         cv_(),
         current_state_(state::not_ready),
-        cancellation_callback_(cancellation_callback) {}
+        cancellation_callback_(std::move(cancellation_callback)) {}
   /// Return true if the shared state has a value or an exception.
   bool is_ready() const {
     std::unique_lock<std::mutex> lk(mu_);
@@ -204,6 +204,10 @@ class future_shared_state_base {
     continuation_ = std::move(c);
   }
 
+  std::function<void()> extract_cancellation_callback() {
+    return std::move(cancellation_callback_);
+  }
+
   // Try to cancel the task by invoking the cancellation_callback.
   bool cancel() {
     if (!cancellable()) {
@@ -330,8 +334,8 @@ template <typename T>
 class future_shared_state final : private future_shared_state_base {
  public:
   future_shared_state() : future_shared_state_base(), buffer_() {}
-  future_shared_state(std::function<void()> cancellation_callback)
-      : future_shared_state_base(cancellation_callback), buffer_() {}
+  explicit future_shared_state(std::function<void()> cancellation_callback)
+      : future_shared_state_base(std::move(cancellation_callback)), buffer_() {}
   ~future_shared_state() {
     if (current_state_ == state::has_value) {
       // Recall that state::has_value is a terminal state, once a value is
@@ -345,6 +349,7 @@ class future_shared_state final : private future_shared_state_base {
 
   using future_shared_state_base::abandon;
   using future_shared_state_base::cancel;
+  using future_shared_state_base::extract_cancellation_callback;
   using future_shared_state_base::is_ready;
   using future_shared_state_base::set_continuation;
   using future_shared_state_base::set_exception;
@@ -468,11 +473,12 @@ template <>
 class future_shared_state<void> final : private future_shared_state_base {
  public:
   future_shared_state() : future_shared_state_base() {}
-  future_shared_state(std::function<void()> cancellation_callback)
-      : future_shared_state_base(cancellation_callback) {}
+  explicit future_shared_state(std::function<void()> cancellation_callback)
+      : future_shared_state_base(std::move(cancellation_callback)) {}
 
   using future_shared_state_base::abandon;
   using future_shared_state_base::cancel;
+  using future_shared_state_base::extract_cancellation_callback;
   using future_shared_state_base::is_ready;
   using future_shared_state_base::set_continuation;
   using future_shared_state_base::set_exception;
@@ -666,7 +672,8 @@ struct continuation : public continuation_base {
   continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s)
       : functor(std::move(f)),
         input(std::move(s)),
-        output(std::make_shared<future_shared_state<result_t>>()) {}
+        output(std::make_shared<future_shared_state<result_t>>(
+            input.lock()->extract_cancellation_callback())) {}
 
   continuation(Functor&& f, std::shared_ptr<input_shared_state_t> s,
                std::shared_ptr<output_shared_state_t> o)
@@ -721,7 +728,8 @@ struct unwrapping_continuation : public continuation_base {
       : functor(std::move(f)),
         input(std::move(s)),
         intermediate(),
-        output(std::make_shared<output_shared_state_t>()) {}
+        output(std::make_shared<output_shared_state_t>(
+            input.lock()->extract_cancellation_callback())) {}
 
   void execute() override {
     auto tmp = input.lock();
