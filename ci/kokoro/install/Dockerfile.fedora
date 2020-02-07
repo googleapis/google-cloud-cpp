@@ -42,13 +42,6 @@ RUN dnf makecache && \
         libcurl-devel protobuf-compiler tar wget zlib-devel
 # ```
 
-# The following steps will install libraries and tools in `/usr/local`. By
-# default pkg-config does not search in these directories.
-
-# ```bash
-ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig
-# ```
-
 # #### crc32c
 
 # The project depends on the Crc32c library, we need to compile this from
