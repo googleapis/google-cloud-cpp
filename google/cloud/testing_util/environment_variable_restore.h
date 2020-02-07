@@ -38,6 +38,8 @@ class EnvironmentVariableRestore {
     SetUp();
   }
 
+  ~EnvironmentVariableRestore() { TearDown(); }
+
   void SetUp();
   void TearDown();
 

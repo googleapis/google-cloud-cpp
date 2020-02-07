@@ -319,6 +319,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         background_threads.h
         completion_queue.cc
         completion_queue.h
+        connection_options.cc
+        connection_options.h
         grpc_error_delegate.cc
         grpc_error_delegate.h
         grpc_utils/async_operation.h
@@ -355,7 +357,9 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         # List the unit tests, then setup the targets and dependencies.
         set(google_cloud_cpp_grpc_utils_unit_tests
             # cmake-format: sort
-            completion_queue_test.cc grpc_error_delegate_test.cc
+            completion_queue_test.cc
+            connection_options_test.cc
+            grpc_error_delegate_test.cc
             internal/background_threads_impl_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
