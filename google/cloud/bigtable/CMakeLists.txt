@@ -412,7 +412,8 @@ set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Bigtable C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Bigtable.")
 set(GOOGLE_CLOUD_CPP_PC_REQUIRES
-    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis")
+    "google_cloud_cpp_grpc_utils google_cloud_cpp_common googleapis_cpp_bigtable_protos"
+)
 set(GOOGLE_CLOUD_CPP_PC_LIBS "-lbigtable_client")
 
 # Create and install the pkg-config files.
