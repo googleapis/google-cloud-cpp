@@ -110,9 +110,9 @@ and install the library, for example:
 # Change the version and SHA256 hash as needed.
 http_archive(
     name = "com_github_googleapis_google_cloud_cpp_spanner",
-    url = "https://github.com/googleapis/google-cloud-cpp-spanner/archive/e2e73b6b044233a51d00090f1f09cd1b7b3af76b.tar.gz",
-    strip_prefix = "google-cloud-cpp-spanner-e2e73b6b044233a51d00090f1f09cd1b7b3af76b",
-    sha256 = "f1b4f3a35b89545d904a9484f38b984cd21f1d8c2e50f9ab21f3ba988cfe11e2",
+    sha256 = "1dbca07e3f268ffab4461a1d98b16201adda4688866a1929ac71c22c46e4fe74",
+    strip_prefix = "google-cloud-cpp-spanner-0.6.0",
+    url = "https://github.com/googleapis/google-cloud-cpp-spanner/archive/v0.6.0.tar.gz",
 )
 @endcode
 
