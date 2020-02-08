@@ -63,9 +63,14 @@ int constexpr VersionPatch() {
   return GOOGLE_CLOUD_CPP_PUBSUB_CLIENT_VERSION_PATCH;
 }
 
+constexpr int kMaxPatchVersions = 100;
+constexpr int kMaxMinorVersions = 100;
+
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr Version() {
-  return 100 * (100 * VersionMajor() + VersionMinor()) + VersionPatch();
+  return kMaxPatchVersions *
+             (kMaxMinorVersions * VersionMajor() + VersionMinor()) +
+         VersionPatch();
 }
 
 /// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.

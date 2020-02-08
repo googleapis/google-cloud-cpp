@@ -27,7 +27,9 @@ namespace {
 
 std::string RandomTopic(google::cloud::internal::DefaultPRNG& generator,
                         std::string const& prefix = "cloud-cpp-testing-") {
-  return prefix + google::cloud::internal::Sample(generator, 32,
+  constexpr int kMaxRandomTopicSuffixLength = 32;
+  return prefix + google::cloud::internal::Sample(generator,
+                                                  kMaxRandomTopicSuffixLength,
                                                   "abcdefghijklmnopqrstuvwxyz");
 }
 

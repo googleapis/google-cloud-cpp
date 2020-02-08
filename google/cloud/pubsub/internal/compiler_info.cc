@@ -84,14 +84,18 @@ std::string CompilerFeatures() {
 }
 
 std::string LanguageVersion() {
+  constexpr auto kMagicVersionCxx98 = 199711L;
+  constexpr auto kMagicVersionCxx11 = 201103L;
+  constexpr auto kMagicVersionCxx14 = 201402L;
+  constexpr auto kMagicVersionCxx17 = 201703L;
   switch (__cplusplus) {
-    case 199711L:
+    case kMagicVersionCxx98:
       return "1998";
-    case 201103L:
+    case kMagicVersionCxx11:
       return "2011";
-    case 201402L:
+    case kMagicVersionCxx14:
       return "2014";
-    case 201703L:
+    case kMagicVersionCxx17:
       return "2017";
     default:
       return "unknown";
