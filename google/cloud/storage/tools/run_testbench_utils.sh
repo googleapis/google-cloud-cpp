@@ -21,6 +21,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 TESTBENCH_PID=0
 TESTBENCH_DUMP_LOG=yes
+set -x
 
 ################################################
 # Terminate the Google Cloud Storage test bench
@@ -95,6 +96,7 @@ start_testbench() {
 
   if [[ -z "${testbench_port}" ]]; then
     echo "Cannot find listening port for testbench." >&2
+    cat testbench.log
     exit 1
   fi
 
@@ -114,6 +116,7 @@ start_testbench() {
 
   if [ "${connected}" = "no" ]; then
     echo "Cannot connect to testbench; aborting test." >&2
+    cat testbench.log
     exit 1
   else
     echo "Successfully connected to testbench [${TESTBENCH_PID}]"
