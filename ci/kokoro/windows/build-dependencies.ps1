@@ -107,7 +107,7 @@ $packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
               "googleapis:x64-windows-static",
               "google-cloud-cpp-common[test]:x64-windows-static")
 foreach ($pkg in $packages) {
-    .\vcpkg.exe install $pkg
+    .\vcpkg.exe install --recurse $pkg
     if ($LastExitCode) {
         throw "vcpkg install $pkg failed with exit code $LastExitCode"
     }
