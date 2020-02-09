@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/publisher_stub.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 
 namespace google {
 namespace cloud {
@@ -34,7 +34,7 @@ class DefaultPublisherStub : public PublisherStub {
     google::pubsub::v1::Topic response;
     auto status = grpc_stub_->CreateTopic(&context, request, &response);
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -46,7 +46,7 @@ class DefaultPublisherStub : public PublisherStub {
     google::protobuf::Empty response;
     auto status = grpc_stub_->DeleteTopic(&context, request, &response);
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return MakeStatusFromRpcError(status);
     }
     return {};
   }
