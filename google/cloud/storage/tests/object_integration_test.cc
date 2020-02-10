@@ -1094,6 +1094,49 @@ TEST_F(ObjectIntegrationTest, ParallelUpload) {
   ASSERT_STATUS_OK(deletion_status);
 }
 
+TEST_F(ObjectIntegrationTest, ResumableParallelUpload) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto prefix = CreateRandomPrefixName();
+  std::string const dest_object_name = prefix + ".dest";
+
+  std::string resumable_session_id;
+  {
+    auto state =
+        PrepareParallelUpload(*client, bucket_name, dest_object_name, 2, prefix,
+                              UseResumableUploadSession(""));
+    ASSERT_STATUS_OK(state);
+    resumable_session_id = state->resumable_session_id();
+    state->shards()[0] << "1";
+    std::move(state->shards()[0]).Suspend();
+    state->shards()[1] << "34";
+    state->shards().clear();
+  }
+  std::int64_t res_gen;
+  {
+    auto state =
+        PrepareParallelUpload(*client, bucket_name, dest_object_name, 2, prefix,
+                              UseResumableUploadSession(resumable_session_id));
+    ASSERT_STATUS_OK(state);
+    ASSERT_EQ(0, state->shards()[0].next_expected_byte());
+    state->shards()[0] << "12";
+    state->shards().clear();
+    auto res = state->WaitForCompletion().get();
+    ASSERT_STATUS_OK(res);
+    res_gen = res->generation();
+  }
+  auto stream = client->ReadObject(bucket_name, dest_object_name,
+                                   IfGenerationMatch(res_gen));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ("1234", actual);
+  auto deletion_status = client->DeleteObject(bucket_name, dest_object_name,
+                                              IfGenerationMatch(res_gen));
+  ASSERT_STATUS_OK(deletion_status);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

@@ -32,6 +32,10 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
         state_(std::move(state)),
         stream_idx_(stream_idx) {}
 
+  ~ParallelObjectWriteStreambuf() override {
+    state_->StreamDestroyed(stream_idx_);
+  }
+
   StatusOr<ResumableUploadResponse> Close() override {
     auto res = this->ObjectWriteStreambuf::Close();
     state_->StreamFinished(stream_idx_, res);
@@ -44,18 +48,22 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
 };
 
 ParallelUploadStateImpl::ParallelUploadStateImpl(
-    std::string destination_object_name, std::shared_ptr<ScopedDeleter> deleter,
+    bool cleanup_on_failures, std::string destination_object_name,
+    std::int64_t expected_generation, std::shared_ptr<ScopedDeleter> deleter,
     Composer composer)
     : deleter_(std::move(deleter)),
       composer_(std::move(composer)),
       destination_object_name_(std::move(destination_object_name)),
+      expected_generation_(expected_generation),
       finished_{},
-      num_unfinished_streams_{} {}
+      num_unfinished_streams_{} {
+  if (!cleanup_on_failures) {
+    deleter_->Enable(false);
+  }
+}
 
 ParallelUploadStateImpl::~ParallelUploadStateImpl() {
-  std::cout << "Trying to destroy impl" << std::endl;
   WaitForCompletion().wait();
-  std::cout << "Destroyed impl" << std::endl;
 }
 
 StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
@@ -67,9 +75,14 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
     res_ = session.status();
     return std::move(session).status();
   }
+
+  streams_.emplace_back(
+      StreamInfo{request.object_name(), (*session)->session_id(), {}, false});
+  auto idx = num_unfinished_streams_++;
+  lk.unlock();
   return ObjectWriteStream(
       google::cloud::internal::make_unique<ParallelObjectWriteStreambuf>(
-          shared_from_this(), num_unfinished_streams_++, *std::move(session),
+          shared_from_this(), idx, *std::move(session),
           raw_client.client_options().upload_buffer_size(),
           CreateHashValidator(request)));
 }
@@ -190,34 +203,39 @@ void ParallelUploadStateImpl::Fail(Status status) {
     // Preserve the first error.
     res_ = std::move(status);
   }
+  if (num_unfinished_streams_ == 0) {
+    AllStreamsFinished(lk);
+  }
 }
 
-void ParallelUploadStateImpl::StreamFinished(
-    std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
+ParallelUploadPersistentState ParallelUploadStateImpl::ToPersistentState()
+    const {
   std::unique_lock<std::mutex> lk(mu_);
 
-  --num_unfinished_streams_;
-  if (!response) {
-    // The upload failed, we don't event need to clean this up.
-    if (!res_) {
-      // Preserve the first error.
-      res_ = response.status();
-    }
-  } else {
-    ObjectMetadata const& metadata = *response->payload;
-    to_compose_.resize(std::max(to_compose_.size(), stream_idx + 1));
-    to_compose_[stream_idx] =
-        ComposeSourceObject{metadata.name(), metadata.generation(), {}};
-    deleter_->Add(metadata);
+  std::vector<ParallelUploadPersistentState::Stream> streams;
+  for (auto const& stream : streams_) {
+    streams.emplace_back(ParallelUploadPersistentState::Stream{
+        stream.object_name, stream.resumable_session_id});
   }
-  if (num_unfinished_streams_ > 0) {
-    return;
-  }
+
+  return ParallelUploadPersistentState{
+      destination_object_name_, expected_generation_, std::move(streams)};
+}
+
+void ParallelUploadStateImpl::AllStreamsFinished(
+    std::unique_lock<std::mutex>& lk) {
   if (!res_) {
+    std::vector<ComposeSourceObject> to_compose;
+    std::transform(
+        streams_.begin(), streams_.end(), std::back_inserter(to_compose),
+        [](StreamInfo const& stream) { return *stream.composition_arg; });
     // only execute ComposeMany if all the streams succeeded.
     lk.unlock();
-    auto res = composer_(to_compose_);
+    auto res = composer_(to_compose);
     lk.lock();
+    if (res) {
+      deleter_->Enable(true);
+    }
     res_ = std::move(res);
   }
   // All done, wake up whomever is waiting.
@@ -226,6 +244,50 @@ void ParallelUploadStateImpl::StreamFinished(
   lk.unlock();
   for (auto& promise : promises_to_satisfy) {
     promise.set_value(*res_);
+  }
+}
+
+void ParallelUploadStateImpl::StreamFinished(
+    std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (streams_[stream_idx].finished) {
+    return;
+  }
+
+  --num_unfinished_streams_;
+  streams_[stream_idx].finished = true;
+  if (!response) {
+    // The upload failed, we don't event need to clean this up.
+    if (!res_) {
+      // Preserve the first error.
+      res_ = response.status();
+    }
+  } else {
+    ObjectMetadata const& metadata = *response->payload;
+    deleter_->Add(metadata);
+    streams_[stream_idx].composition_arg =
+        ComposeSourceObject{metadata.name(), metadata.generation(), {}};
+  }
+  if (num_unfinished_streams_ > 0) {
+    return;
+  }
+  AllStreamsFinished(lk);
+}
+
+void ParallelUploadStateImpl::StreamDestroyed(std::size_t stream_idx) {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (!streams_[stream_idx].finished) {
+    --num_unfinished_streams_;
+    streams_[stream_idx].finished = true;
+    // A stream which was not `Close`d is being destroyed. This means that
+    // it had been `Suspend`ed, hence this parallel upload will never finish.
+    if (!res_) {
+      // Preserve the first error.
+      res_ = Status(StatusCode::kCancelled, "A stream has been suspended.");
+    }
+    if (num_unfinished_streams_ == 0) {
+      AllStreamsFinished(lk);
+    }
   }
 }
 
@@ -291,6 +353,35 @@ Status ParallelUploadFileShard::Upload() {
     return Status();
   }
   return ostream_.metadata().status();
+}
+
+StatusOr<std::pair<std::string, std::int64_t>> ParseResumableSessionId(
+    std::string const& session_id) {
+  auto starts_with = [](std::string const& s, std::string const& prefix) {
+    return s.substr(0, prefix.size()) == prefix;
+  };
+  Status invalid(StatusCode::kInternal,
+                 "Not a valid parallel upload session ID");
+
+  if (!starts_with(session_id, kSessionIdPrefix)) {
+    return invalid;
+  }
+  std::string const object_and_gen =
+      session_id.substr(std::string(kSessionIdPrefix).size());
+  auto sep_pos = object_and_gen.find(':');
+  if (sep_pos == std::string::npos) {
+    return invalid;
+  }
+  std::string const object = object_and_gen.substr(0, sep_pos);
+  std::string const generation_str = object_and_gen.substr(sep_pos + 1);
+
+  char* endptr;
+  std::int64_t const generation =
+      std::strtoll(generation_str.c_str(), &endptr, 10);
+  if (generation_str.c_str() == endptr || *endptr != '\0') {
+    return invalid;
+  }
+  return std::make_pair(object, generation);
 }
 
 }  // namespace internal

@@ -99,7 +99,9 @@ struct ParallelUploadPersistentState {
 class ParallelUploadStateImpl
     : public std::enable_shared_from_this<ParallelUploadStateImpl> {
  public:
-  ParallelUploadStateImpl(std::string destination_object_name,
+  ParallelUploadStateImpl(bool cleanup_on_failures,
+                          std::string destination_object_name,
+                          std::int64_t expected_generation,
                           std::shared_ptr<ScopedDeleter> deleter,
                           Composer composer);
   ~ParallelUploadStateImpl();
@@ -107,8 +109,11 @@ class ParallelUploadStateImpl
   StatusOr<ObjectWriteStream> CreateStream(
       RawClient& raw_client, ResumableUploadRequest const& request);
 
+  void AllStreamsFinished(std::unique_lock<std::mutex>& lk);
   void StreamFinished(std::size_t stream_idx,
                       StatusOr<ResumableUploadResponse> const& response);
+
+  void StreamDestroyed(std::size_t stream_idx);
 
   future<StatusOr<ObjectMetadata>> WaitForCompletion() const;
 
@@ -116,7 +121,16 @@ class ParallelUploadStateImpl
 
   void Fail(Status status);
 
+  ParallelUploadPersistentState ToPersistentState() const;
+
  private:
+  struct StreamInfo {
+    std::string object_name;
+    std::string resumable_session_id;
+    optional<ComposeSourceObject> composition_arg;
+    bool finished;
+  };
+
   mutable std::mutex mu_;
   // Promises made via `WaitForCompletion()`
   mutable std::vector<promise<StatusOr<ObjectMetadata>>> res_promises_;
@@ -127,14 +141,17 @@ class ParallelUploadStateImpl
   std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>
       composer_;
   std::string destination_object_name_;
+  std::int64_t expected_generation_;
   // Set when all streams are closed and composed but before cleanup.
   bool finished_;
   // Tracks how many streams are still written to.
   std::size_t num_unfinished_streams_;
-  std::vector<ComposeSourceObject> to_compose_;
+  std::vector<StreamInfo> streams_;
   google::cloud::optional<StatusOr<ObjectMetadata>> res_;
   Status cleanup_status_;
 };
+
+static char const* kSessionIdPrefix = "ParUpl:";
 
 struct ComposeManyApplyHelper {
   template <typename... Options>
@@ -162,6 +179,30 @@ class SetOptionsApplyHelper {
 
  private:
   ResumableUploadRequest& request;
+};
+
+struct ReadObjectApplyHelper {
+  template <typename... Options>
+  ObjectReadStream operator()(Options&&... options) const {
+    return client.ReadObject(bucket_name, object_name,
+                             std::forward<Options>(options)...);
+  }
+
+  Client& client;
+  std::string const& bucket_name;
+  std::string const& object_name;
+};
+
+struct GetObjectMetadataApplyHelper {
+  template <typename... Options>
+  StatusOr<ObjectMetadata> operator()(Options... options) const {
+    return client.GetObjectMetadata(bucket_name, object_name,
+                                    std::move(options)...);
+  }
+
+  Client& client;
+  std::string bucket_name;
+  std::string object_name;
 };
 
 /**
@@ -331,6 +372,128 @@ class NonResumableParallelUploadState {
 };
 
 /**
+ * The state controlling uploading a GCS object via multiple parallel streams,
+ * allowing for resuming.
+ *
+ * To use this class obtain the state via `PrepareParallelUpload` (with
+ * `UseResumableUploadSession` option) and then write the data to the streams
+ * associated with each shard. Once writing is done, close or destroy the
+ * streams.
+ *
+ * When all the streams are `Close`d or destroyed, this class will join the
+ * them (via `ComposeMany`) into the destination object and set the value in
+ * `future`s returned by `WaitForCompletion`.
+ *
+ * Parallel upload will create temporary files. Upon successful completion of
+ * the whole operation, this class will attempt to remove them in its
+ * destructor, but if they fail, they fail silently. In order to proactively
+ * cleanup these files, one can call `EagerCleanup()`.
+ *
+ * In oder to resume an interrupted upload, provide `UseResumableUploadSession`
+ * to `PrepareParallelUpload` with value set to what `resumable_session_id()`
+ * returns.
+ */
+class ResumableParallelUploadState {
+ public:
+  template <typename... Options>
+  static StatusOr<ResumableParallelUploadState> CreateNew(
+      Client client, std::string const& bucket_name,
+      std::string const& object_name, std::size_t num_shards,
+      std::string const& prefix, std::tuple<Options...> const& options);
+
+  template <typename... Options>
+  static StatusOr<ResumableParallelUploadState> Resume(
+      Client client, std::string const& bucket_name,
+      std::string const& object_name, std::size_t num_shards,
+      std::string const& prefix, std::string const& resumable_session_id,
+      std::tuple<Options...> options);
+
+  /**
+   * Retrieve the resumable session id.
+   *
+   * This value, if passed via `UseResumableUploadSession` option indicates that
+   * an upload should be a continuation of the one which this object represents.
+   */
+  std::string resumable_session_id() { return resumable_session_id_; }
+
+  /**
+   * Asynchronously wait for completion of the whole upload operation.
+   *
+   * @return the returned future will have a value set to the destination object
+   *     metadata when all the streams are `Close`d or destroyed.
+   */
+  future<StatusOr<ObjectMetadata>> WaitForCompletion() const {
+    return impl_->WaitForCompletion();
+  }
+
+  /**
+   * Cleanup all the temporary files
+   *
+   * The destruction of this object will perform cleanup of all the temporary
+   * files used in the process of the parallel upload. If the cleanup fails, it
+   * will fail silently not to crash the program.
+   *
+   * If you want to control the status of the cleanup, use this member function
+   * to do it eagerly, before destruction.
+   *
+   * @return the status of the cleanup.
+   */
+  Status EagerCleanup() { return impl_->EagerCleanup(); }
+
+  /**
+   * The streams to write to.
+   *
+   * When the streams are `Close`d, they will be concatenated into the
+   * destination object in the same order as they appeared in this vector upon
+   * this object's creation.
+   *
+   * It is safe to destroy or `std::move()` these streams.
+   */
+  std::vector<ObjectWriteStream>& shards() { return shards_; }
+
+  /**
+   * Fail the whole operation.
+   *
+   * If called before all streams are closed or destroyed, calling this
+   * operation will prevent composing the streams into the final destination
+   * object and return a failure via `WaitForCompletion()`.
+   *
+   * @param status the status to fail the operation with.
+   */
+  void Fail(Status status) { return impl_->Fail(std::move(status)); }
+
+ private:
+  template <typename... Options>
+  static std::shared_ptr<ScopedDeleter> CreateDeleter(
+      Client client, std::string const& bucket_name,
+      std::tuple<Options...> const& options);
+
+  template <typename... Options>
+  static Composer CreateComposer(Client client, std::string const& bucket_name,
+                                 std::string const& object_name,
+                                 std::int64_t expected_generation,
+                                 std::string const& prefix,
+                                 std::tuple<Options...> const& options);
+
+  ResumableParallelUploadState(std::string resumable_session_id,
+                               std::shared_ptr<ParallelUploadStateImpl> state,
+                               std::vector<ObjectWriteStream> shards)
+      : resumable_session_id_(std::move(resumable_session_id)),
+        impl_(std::move(state)),
+        shards_(std::move(shards)) {}
+
+  std::string resumable_session_id_;
+  std::shared_ptr<ParallelUploadStateImpl> impl_;
+  std::vector<ObjectWriteStream> shards_;
+
+  friend class ResumableParallelObjectWriteStreambuf;
+  template <typename... Options>
+  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
+      Client client, std::string file_name, std::string bucket_name,
+      std::string object_name, std::string prefix, Options&&... options);
+};
+
+/**
  * Prepare a parallel upload state.
  *
  * The returned `NonResumableParallelUploadState` will contain streams to which
@@ -366,6 +529,35 @@ StatusOr<NonResumableParallelUploadState> PrepareParallelUpload(
       std::forward<Options>(options)...);
 }
 
+template <typename... Options,
+          typename std::enable_if<Among<Options...>::template TPred<
+                                      UseResumableUploadSession>::value,
+                                  int>::type enable_if_resumable = 0>
+StatusOr<ResumableParallelUploadState> PrepareParallelUpload(
+    Client client, std::string const& bucket_name,
+    std::string const& object_name, std::size_t num_shards,
+    std::string const& prefix, Options&&... options) {
+  auto resumable_args =
+      StaticTupleFilter<Among<UseResumableUploadSession>::TPred>(
+          std::tie(options...));
+  static_assert(std::tuple_size<decltype(resumable_args)>::value == 1,
+                "The should be exacly one UseResumableUploadSession argument");
+  std::string resumable_session_id = std::get<0>(resumable_args).value();
+
+  auto forwarded_args =
+      StaticTupleFilter<NotAmong<UseResumableUploadSession>::TPred>(
+          std::forward_as_tuple(std::forward<Options>(options)...));
+
+  if (resumable_session_id.empty()) {
+    return ResumableParallelUploadState::CreateNew(
+        std::move(client), bucket_name, object_name, num_shards, prefix,
+        std::move(forwarded_args));
+  }
+  return ResumableParallelUploadState::Resume(
+      std::move(client), bucket_name, object_name, num_shards, prefix,
+      resumable_session_id, std::move(forwarded_args));
+}
+
 template <typename... Options>
 StatusOr<NonResumableParallelUploadState>
 NonResumableParallelUploadState::Create(Client client,
@@ -379,7 +571,7 @@ NonResumableParallelUploadState::Create(Client client,
   auto delete_options =
       StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
           all_options);
-  auto deleter = google::cloud::internal::make_unique<ScopedDeleter>(
+  auto deleter = std::make_shared<ScopedDeleter>(
       [client, bucket_name, delete_options](std::string const& object_name,
                                             std::int64_t generation) mutable {
         return google::cloud::internal::apply(
@@ -411,7 +603,7 @@ NonResumableParallelUploadState::Create(Client client,
   deleter->Add(*lock);
 
   auto internal_state = std::make_shared<ParallelUploadStateImpl>(
-      object_name, std::move(deleter), std::move(composer));
+      true, object_name, 0, std::move(deleter), std::move(composer));
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<
@@ -432,6 +624,215 @@ NonResumableParallelUploadState::Create(Client client,
   }
   return NonResumableParallelUploadState(std::move(internal_state),
                                          std::move(streams));
+}
+
+template <typename... Options>
+std::shared_ptr<ScopedDeleter> ResumableParallelUploadState::CreateDeleter(
+    Client client, std::string const& bucket_name,
+    std::tuple<Options...> const& options) {
+  using internal::StaticTupleFilter;
+  auto delete_options =
+      StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(options);
+  return std::make_shared<ScopedDeleter>(
+      [client, bucket_name, delete_options](std::string const& object_name,
+                                            std::int64_t generation) mutable {
+        return google::cloud::internal::apply(
+            DeleteApplyHelper{client, std::move(bucket_name), object_name},
+            std::tuple_cat(std::make_tuple(IfGenerationMatch(generation)),
+                           std::move(delete_options)));
+      });
+}
+
+template <typename... Options>
+Composer ResumableParallelUploadState::CreateComposer(
+    Client client, std::string const& bucket_name,
+    std::string const& object_name, std::int64_t expected_generation,
+    std::string const& prefix, std::tuple<Options...> const& options) {
+  auto compose_options = std::tuple_cat(
+      StaticTupleFilter<
+          Among<DestinationPredefinedAcl, EncryptionKey, KmsKeyName, QuotaUser,
+                UserIp, UserProject, WithObjectMetadata>::TPred>(options),
+      std::make_tuple(IfGenerationMatch(expected_generation)));
+  auto get_metadata_options = StaticTupleFilter<
+      Among<DestinationPredefinedAcl, EncryptionKey, KmsKeyName, QuotaUser,
+            UserIp, UserProject, WithObjectMetadata>::TPred>(options);
+  auto composer =
+      [client, bucket_name, object_name, compose_options, get_metadata_options,
+       prefix](std::vector<ComposeSourceObject> const& sources) mutable
+      -> StatusOr<ObjectMetadata> {
+    auto res = google::cloud::internal::apply(
+        ComposeManyApplyHelper{client, bucket_name, std::move(sources),
+                               prefix + ".compose_many", object_name},
+        std::move(compose_options));
+    if (res) {
+      return res;
+    }
+    if (res.status().code() != StatusCode::kFailedPrecondition) {
+      return res.status();
+    }
+    // This means that the object already exists and it is not the object, which
+    // existed upon start of parallel upload. For simplicity, we assume that
+    // it's a result of a previously interrupted ComposeMany invocation.
+    return google::cloud::internal::apply(
+        GetObjectMetadataApplyHelper{client, std::move(bucket_name),
+                                     std::move(object_name)},
+        std::move(get_metadata_options));
+  };
+  return Composer(std::move(composer));
+}
+
+template <typename... Options>
+StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::CreateNew(
+    Client client, std::string const& bucket_name,
+    std::string const& object_name, std::size_t num_shards,
+    std::string const& prefix, std::tuple<Options...> const& options) {
+  using internal::StaticTupleFilter;
+
+  auto get_object_meta_options = StaticTupleFilter<
+      Among<IfGenerationMatch, IfGenerationNotMatch, IfMetagenerationMatch,
+            IfMetagenerationNotMatch, UserProject>::TPred>(options);
+  auto object_meta = google::cloud::internal::apply(
+      GetObjectMetadataApplyHelper{client, bucket_name, object_name},
+      std::move(get_object_meta_options));
+  if (!object_meta && object_meta.status().code() != StatusCode::kNotFound) {
+    return object_meta.status();
+  }
+  std::int64_t expected_generation =
+      object_meta ? object_meta->generation() : 0;
+
+  auto deleter = CreateDeleter(client, bucket_name, options);
+  auto composer = CreateComposer(client, bucket_name, object_name,
+                                 expected_generation, prefix, options);
+  auto internal_state = std::make_shared<ParallelUploadStateImpl>(
+      false, object_name, expected_generation, deleter, std::move(composer));
+
+  std::vector<ObjectWriteStream> streams;
+
+  auto upload_options = std::tuple_cat(
+      StaticTupleFilter<
+          Among<ContentEncoding, ContentType, DisableCrc32cChecksum,
+                DisableMD5Hash, EncryptionKey, KmsKeyName, PredefinedAcl,
+                UserProject, WithObjectMetadata>::TPred>(std::move(options)),
+      std::make_tuple(UseResumableUploadSession("")));
+  auto& raw_client = *client.raw_client_;
+  for (std::size_t i = 0; i < num_shards; ++i) {
+    ResumableUploadRequest request(
+        bucket_name, prefix + ".upload_shard_" + std::to_string(i));
+    google::cloud::internal::apply(SetOptionsApplyHelper(request),
+                                   upload_options);
+    auto stream = internal_state->CreateStream(raw_client, request);
+    if (!stream) {
+      return stream.status();
+    }
+    streams.emplace_back(*std::move(stream));
+  }
+
+  auto state_object_name = prefix + ".upload_state";
+  auto insert_options = std::tuple_cat(
+      std::make_tuple(IfGenerationMatch(0)),
+      StaticTupleFilter<
+          Among<PredefinedAcl, EncryptionKey, KmsKeyName, QuotaUser, UserIp,
+                UserProject, WithObjectMetadata>::TPred>(options));
+  auto state_object = google::cloud::internal::apply(
+      InsertObjectApplyHelper{client, bucket_name, state_object_name,
+                              internal_state->ToPersistentState().ToString()},
+      std::move(insert_options));
+  if (!state_object) {
+    internal_state->Fail(state_object.status());
+    return std::move(state_object).status();
+  }
+  std::string resumable_session_id = kSessionIdPrefix + state_object_name +
+                                     ":" +
+                                     std::to_string(state_object->generation());
+  deleter->Add(std::move(*state_object));
+  return ResumableParallelUploadState(std::move(resumable_session_id),
+                                      std::move(internal_state),
+                                      std::move(streams));
+}
+
+StatusOr<std::pair<std::string, std::int64_t>> ParseResumableSessionId(
+    std::string const& session_id);
+
+template <typename... Options>
+StatusOr<ResumableParallelUploadState> ResumableParallelUploadState::Resume(
+    Client client, std::string const& bucket_name,
+    std::string const& object_name, std::size_t num_shards,
+    std::string const& prefix, std::string const& resumable_session_id,
+    std::tuple<Options...> options) {
+  using internal::StaticTupleFilter;
+
+  auto state_and_gen = ParseResumableSessionId(resumable_session_id);
+  if (!state_and_gen) {
+    return state_and_gen.status();
+  }
+
+  auto read_options = std::tuple_cat(
+      StaticTupleFilter<Among<DisableCrc32cChecksum, DisableMD5Hash,
+                              EncryptionKey, Generation, UserProject>::TPred>(
+          std::move(options)),
+      std::make_tuple(IfGenerationMatch(state_and_gen->second)));
+
+  auto state_stream = google::cloud::internal::apply(
+      ReadObjectApplyHelper{client, bucket_name, state_and_gen->first},
+      std::move(read_options));
+  std::string state_string(std::istreambuf_iterator<char>{state_stream}, {});
+  state_stream.Close();
+
+  auto persistent_state =
+      ParallelUploadPersistentState::FromString(state_string);
+  if (!persistent_state) {
+    return persistent_state.status();
+  }
+
+  if (persistent_state->destination_object_name != object_name) {
+    return Status(StatusCode::kInternal,
+                  "Specified resumable session ID is doesn't match the "
+                  "destination object name (" +
+                      object_name + " vs " +
+                      persistent_state->destination_object_name + ")");
+  }
+  if (persistent_state->streams.size() != num_shards) {
+    return Status(StatusCode::kInternal,
+                  "Specified resumable session ID is doesn't match the "
+                  "previously specified number of shards (" +
+                      std::to_string(num_shards) + " vs " +
+                      std::to_string(persistent_state->streams.size()) + ")");
+  }
+
+  auto deleter = CreateDeleter(client, bucket_name, options);
+  deleter->Add(state_and_gen->first, state_and_gen->second);
+  auto composer =
+      CreateComposer(client, bucket_name, object_name,
+                     persistent_state->expected_generation, prefix, options);
+  auto internal_state = std::make_shared<ParallelUploadStateImpl>(
+      false, object_name, persistent_state->expected_generation, deleter,
+      std::move(composer));
+  std::vector<ObjectWriteStream> streams;
+
+  auto upload_options = StaticTupleFilter<
+      Among<ContentEncoding, ContentType, DisableCrc32cChecksum, DisableMD5Hash,
+            EncryptionKey, KmsKeyName, PredefinedAcl, UserProject,
+            WithObjectMetadata>::TPred>(std::move(options));
+  auto& raw_client = *client.raw_client_;
+  for (auto& stream_desc : persistent_state->streams) {
+    ResumableUploadRequest request(bucket_name,
+                                   std::move(stream_desc.object_name));
+    google::cloud::internal::apply(
+        SetOptionsApplyHelper(request),
+        std::tuple_cat(upload_options,
+                       std::make_tuple(UseResumableUploadSession(
+                           std::move(stream_desc.resumable_session_id)))));
+    auto stream = internal_state->CreateStream(raw_client, request);
+    if (!stream) {
+      internal_state->Fail(stream.status());
+      return stream.status();
+    }
+    streams.emplace_back(*std::move(stream));
+  }
+
+  return ResumableParallelUploadState(std::move(resumable_session_id),
+                                      std::move(internal_state),
+                                      std::move(streams));
 }
 
 /**

@@ -197,33 +197,76 @@ it the state object.
 State object is a simple GCS object. It is supposed to reflect
 `ResumableParallelUploadState` - a stateful counterpart of
 `NonResumableParallelUploadState`. It holds a JSON with the following keys:
-* `state`: a string with either `InProgress` or `Finished`
-* `status_code`: an integer with the status code (only meaningful after the
-  whole upload is finished)
-* `prefix`: the prefix this operation was initiated with
-* `dest_name`: a string with the destination object name
-* `status_message`: the message accompanying the above code
+* `destination`: the name of the uploaded object
+* `expected_generation`: the generation of the target object name by the time
+  the operation starts (0 if it doesn't exist)
 * `streams`: an array of objects, which contain:
   * `name`: the name of the object underlying this stream
-  * `resumable_id`: the resumable session ID of the object if it has not been
-    not fully uploaded yet
-  * `generation_id`: the generation ID of the object if it has been fully
-    uploaded
+  * `resumable_session_id`: the resumable session ID of the object if it has not
+    been not fully uploaded yet
 
-This object is updated every time it changes using optimistic locking (via
-`IfGenerationMatch`).
+This object is created only during the initialization.
 
 #### Faking resumable session ID
 Parallel uploads are a concept built on top of the regular GCS API, hence GCS
 does not have any concept of resuming them. In order to allow for that we create
 our own resumable session IDs, which are essentially the name of the state
-object.
+object. More precisely it a concatenation of:
+* "ParUpl:" fixed string
+* state object name
+* ":"
+* decimal representation of the state object generation
 
 #### Control flow
-The resumable version of `ParallelUploadFile()` works in a very similar way,
-except:
-* state changes yield writing to GCS
+The resumable version of `ParallelUploadFile()` has two versions - intiating the
+upload and resuming.
+
+Initiating the upload works just like the stateless version, except:
+* the generation of the destination object is obtained (via
+  `GetObjectMetadata`)
+* instead of the lock file, the state object is created and the streams are
+  created _before_ the state object
+
+Resuming the upload also works like the stateless version, except:
+* instead of creating the lock file, the state object is read and parsed
 * `ObjectWriteStreams` are created with the resumable session IDs obtained from
   the state file
 * the offsets in the file are accordingly adjusted to account for the already
   uploaded data
+
+#### Resuming the final composition
+
+Object composition is not idempotent (if `IfGenerationMatch` or similar options
+are given). This makes it hard to tell on resume, whether the destination object
+is the result of the previous `ParallelUpload` or was it created by a separate
+process. Imagine the following scenario:
+* the user starts the parallel upload
+* the user successfully uploads all the shards
+* the final `Compose` call succeeds, but before the user gets to know this, the
+  process crashes
+* the user tries to resume, so the client library quickly realizes that all the
+  shards are uploaded, and that there already is a destination object
+
+At this point, the client library cannot know if the object was created by the
+previous incarnation of this process (in which case it should only return its
+metadata) or by an unrelated process (in which case it should fail the whole
+operation).
+
+The following options were considered as means of addressing this issue:
+1. Ignore the situation (if the user specified an `IfGeneration*` option, it
+   will yield a failure, otherwise it will create a new version of the object)
+2. Always succeed (if there already is an object of that name - return its
+   metadata)
+3. Use the checksum (perhaps also length and other metadata) to verify if this
+   is the resulting object or some other
+4. Create the object under a different name, add a unique, random tag, store it
+   in the persistent state, rewrite the object to its destination name, store
+   its generation in the persistent state and remove the extra tag at the end
+
+A decision was made to go with option (2.). In order to make it a bit better, at
+the beginning of the operation, the generation of the destination object is
+obtained (if it exists) with all the `IfGeneration` options the user specified.
+This generation number is then used passed to the final composition in a
+`IfGenerationMatch`. If the final composition fails with a `kFailedPrecondition`
+status, we assume that the composition had already succeeded in the past and
+return that object's metadata as the upload's result.
