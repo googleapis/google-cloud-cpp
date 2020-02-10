@@ -33,7 +33,7 @@ class PublisherConnectionImpl : public PublisherConnection {
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams p) override {
     google::pubsub::v1::Topic request;
-    request.set_name("projects/" + p.project_id + "/topics/" + p.topic_id);
+    request.set_name(p.topic.FullName());
     for (auto& kv : p.labels) {
       (*request.mutable_labels())[kv.first] = std::move(kv.second);
     }
@@ -48,7 +48,7 @@ class PublisherConnectionImpl : public PublisherConnection {
 
   Status DeleteTopic(DeleteTopicParams p) override {
     google::pubsub::v1::DeleteTopicRequest request;
-    request.set_topic("projects/" + p.project_id + "/topics/" + p.topic_id);
+    request.set_topic(p.topic.FullName());
     grpc::ClientContext context;
     return stub_->DeleteTopic(context, request);
   }

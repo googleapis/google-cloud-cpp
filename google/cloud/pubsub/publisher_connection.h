@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_PUBLISHER_CONNECTION_H
 
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/topic.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <memory>
@@ -53,8 +54,7 @@ class PublisherConnection {
    */
   /// Wrap the arguments for `CreateTopic()`
   struct CreateTopicParams {
-    std::string project_id;
-    std::string topic_id;
+    Topic topic;
     std::map<std::string, std::string> labels;
     std::vector<std::string> allowed_persistent_regions;
     std::string kms_key_name;
@@ -62,8 +62,7 @@ class PublisherConnection {
 
   /// Wrap the arguments for `DeleteTopic()`
   struct DeleteTopicParams {
-    std::string project_id;
-    std::string topic_id;
+    Topic topic;
   };
   //@}
 

@@ -25,8 +25,8 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
-std::string RandomTopic(google::cloud::internal::DefaultPRNG& generator,
-                        std::string const& prefix = "cloud-cpp-testing-") {
+std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
+                          std::string const& prefix = "cloud-cpp-testing-") {
   constexpr int kMaxRandomTopicSuffixLength = 32;
   return prefix + google::cloud::internal::Sample(generator,
                                                   kMaxRandomTopicSuffixLength,
@@ -39,17 +39,17 @@ TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
   ASSERT_FALSE(project_id.empty());
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
-  auto topic_id = RandomTopic(generator);
+  Topic topic(project_id, RandomTopicId(generator));
 
   auto publisher = MakePublisherConnection(ConnectionOptions{});
   auto create_response =
-      publisher->CreateTopic({project_id, topic_id,
+      publisher->CreateTopic({topic,
                               /*.labels*/ {},
                               /*.allowed_persistent_regions*/ {},
                               /*.kms_key_name*/ {}});
   ASSERT_STATUS_OK(create_response);
 
-  auto delete_response = publisher->DeleteTopic({project_id, topic_id});
+  auto delete_response = publisher->DeleteTopic({std::move(topic)});
   ASSERT_STATUS_OK(delete_response);
 }
 
@@ -59,7 +59,7 @@ TEST(PublisherAdminIntegrationTest, CreateFailure) {
           .set_endpoint("localhost:1");
   auto publisher = MakePublisherConnection(ConnectionOptions{});
   auto create_response = publisher->CreateTopic(
-      {"invalid-project", "invalid-topic",
+      {Topic("invalid-project", "invalid-topic"),
        /*.labels*/ {{"my-label", "my-value"}},
        /*.allowed_persistent_regions*/ {"us-central1", "us-west1"},
        /*.kms_key_name*/ {}});
@@ -72,7 +72,7 @@ TEST(PublisherAdminIntegrationTest, DeleteFailure) {
           .set_endpoint("localhost:1");
   auto publisher = MakePublisherConnection(ConnectionOptions{});
   auto delete_response =
-      publisher->DeleteTopic({"invalid-project", "invalid-topic"});
+      publisher->DeleteTopic({Topic("invalid-project", "invalid-topic")});
   ASSERT_FALSE(delete_response.ok());
 }
 

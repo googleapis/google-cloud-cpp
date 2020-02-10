@@ -98,6 +98,8 @@ add_library(
     internal/user_agent_prefix.h
     publisher_connection.cc
     publisher_connection.h
+    topic.cc
+    topic.h
     version.cc
     version.h
     version_info.h)
@@ -140,7 +142,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
     set(googleapis_cpp_pubsub_client_unit_tests
         # cmake-format: sort
         internal/build_info_test.cc internal/compiler_info_test.cc
-        internal/user_agent_prefix_test.cc)
+        internal/user_agent_prefix_test.cc topic_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
