@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/publisher_stub.h"
+#include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -41,22 +41,15 @@ TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto topic_id = RandomTopic(generator);
 
-  auto publisher =
-      pubsub_internal::CreateDefaultPublisherStub(ConnectionOptions{}, 0);
-  auto create_response = [&publisher, &topic_id, &project_id] {
-    google::pubsub::v1::Topic request;
-    request.set_name("projects/" + project_id + "/topics/" + topic_id);
-    grpc::ClientContext context;
-    return publisher->CreateTopic(context, request);
-  }();
+  auto publisher = MakePublisherConnection(ConnectionOptions{});
+  auto create_response =
+      publisher->CreateTopic({project_id, topic_id,
+                              /*.labels*/ {},
+                              /*.allowed_persistent_regions*/ {},
+                              /*.kms_key_name*/ {}});
   ASSERT_STATUS_OK(create_response);
 
-  auto delete_response = [&publisher, &topic_id, &project_id] {
-    google::pubsub::v1::DeleteTopicRequest request;
-    request.set_topic("projects/" + project_id + "/topics/" + topic_id);
-    grpc::ClientContext context;
-    return publisher->DeleteTopic(context, request);
-  }();
+  auto delete_response = publisher->DeleteTopic({project_id, topic_id});
   ASSERT_STATUS_OK(delete_response);
 }
 
@@ -64,13 +57,12 @@ TEST(PublisherAdminIntegrationTest, CreateFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher =
-      pubsub_internal::CreateDefaultPublisherStub(ConnectionOptions{}, 0);
-  auto create_response = [&publisher] {
-    google::pubsub::v1::Topic request;
-    grpc::ClientContext context;
-    return publisher->CreateTopic(context, request);
-  }();
+  auto publisher = MakePublisherConnection(ConnectionOptions{});
+  auto create_response = publisher->CreateTopic(
+      {"invalid-project", "invalid-topic",
+       /*.labels*/ {{"my-label", "my-value"}},
+       /*.allowed_persistent_regions*/ {"us-central1", "us-west1"},
+       /*.kms_key_name*/ {}});
   ASSERT_FALSE(create_response);
 }
 
@@ -78,13 +70,9 @@ TEST(PublisherAdminIntegrationTest, DeleteFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher =
-      pubsub_internal::CreateDefaultPublisherStub(ConnectionOptions{}, 0);
-  auto delete_response = [&publisher] {
-    google::pubsub::v1::DeleteTopicRequest request;
-    grpc::ClientContext context;
-    return publisher->DeleteTopic(context, request);
-  }();
+  auto publisher = MakePublisherConnection(ConnectionOptions{});
+  auto delete_response =
+      publisher->DeleteTopic({"invalid-project", "invalid-topic"});
   ASSERT_FALSE(delete_response.ok());
 }
 
