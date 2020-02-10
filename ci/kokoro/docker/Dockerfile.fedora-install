@@ -48,7 +48,8 @@ RUN dnf makecache && dnf install -y \
     zlib-devel
 
 RUN pip install --upgrade pip
-RUN pip install httpbin flask gevent gunicorn crc32c
+RUN pip install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
+    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
 
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz

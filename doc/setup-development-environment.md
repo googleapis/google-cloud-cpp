@@ -53,7 +53,8 @@ pip install cmake_format==0.6.0
 Install the Python modules used in the integration tests:
 
 ```console
-pip install flask httpbin gevent gunicorn crc32c --user
+pip install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
+    gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
 ```
 
 Add the pip directory to your PATH:

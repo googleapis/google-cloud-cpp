@@ -29,7 +29,7 @@ import testbench_utils
 import time
 import sys
 from werkzeug import serving
-from werkzeug import wsgi
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 
 @httpbin.app.errorhandler(error_response.ErrorResponse)
@@ -830,7 +830,7 @@ def xmlapi_put_object(bucket_name, object_name):
 (IAM_HANDLER_PATH, iam_app) = gcs_iam.get_iam_app()
 
 
-application = wsgi.DispatcherMiddleware(
+application = DispatcherMiddleware(
     root, {
         '/httpbin': httpbin.app,
         GCS_HANDLER_PATH: gcs,
