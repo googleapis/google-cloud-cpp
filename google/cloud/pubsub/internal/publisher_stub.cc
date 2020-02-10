@@ -57,10 +57,12 @@ class DefaultPublisherStub : public PublisherStub {
 
 std::shared_ptr<PublisherStub> CreateDefaultPublisherStub(
     pubsub::ConnectionOptions const& options, int channel_id) {
-  grpc::ChannelArguments channel_arguments;
+  auto channel_arguments = options.CreateChannelArguments();
   // Newer versions of gRPC include a macro (`GRPC_ARG_CHANNEL_ID`) but use
   // its value here to allow compiling against older versions.
   channel_arguments.SetInt("grpc.channel_id", channel_id);
+  auto channel = grpc::CreateCustomChannel(
+      options.endpoint(), options.credentials(), channel_arguments);
 
   auto grpc_stub =
       google::pubsub::v1::Publisher::NewStub(grpc::CreateCustomChannel(

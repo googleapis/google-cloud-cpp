@@ -13,16 +13,26 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/connection_options.h"
+#include "google/cloud/pubsub/internal/user_agent_prefix.h"
+#include <thread>
 
 namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
-ConnectionOptions::ConnectionOptions(
-    std::shared_ptr<grpc::ChannelCredentials> credentials)
-    : endpoint_("pubsub.googleapis.com"),
-      credentials_(std::move(credentials)) {}
+std::string ConnectionOptionsTraits::default_endpoint() {
+  return "pubsub.googleapis.com";
+}
+
+std::string ConnectionOptionsTraits::user_agent_prefix() {
+  return pubsub_internal::UserAgentPrefix();
+}
+
+int ConnectionOptionsTraits::default_num_channels() {
+  auto const ncores = std::thread::hardware_concurrency();
+  return ncores == 0 ? 4 : static_cast<int>(ncores * 4);
+}
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub
