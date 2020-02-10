@@ -331,7 +331,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         internal/background_threads_impl.cc
         internal/background_threads_impl.h
         internal/completion_queue_impl.cc
-        internal/completion_queue_impl.h)
+        internal/completion_queue_impl.h
+        internal/pagination_range.h)
     target_link_libraries(
         google_cloud_cpp_grpc_utils
         PUBLIC googleapis-c++::rpc_status_protos google_cloud_cpp_common
@@ -360,7 +361,8 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc
-            internal/background_threads_impl_test.cc)
+            internal/background_threads_impl_test.cc
+            internal/pagination_range_test.cc)
 
         # Export the list of unit tests so the Bazel BUILD file can pick it up.
         export_list_to_bazel("google_cloud_cpp_grpc_utils_unit_tests.bzl"

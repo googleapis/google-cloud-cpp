@@ -29,6 +29,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "internal/async_read_stream_impl.h",
     "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
+    "internal/pagination_range.h",
 ]
 
 google_cloud_cpp_grpc_utils_srcs = [
