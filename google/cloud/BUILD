@@ -66,7 +66,12 @@ load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "go
 cc_library(
     name = "google_cloud_cpp_grpc_utils",
     srcs = google_cloud_cpp_grpc_utils_srcs,
-    hdrs = google_cloud_cpp_grpc_utils_hdrs,
+    # TODO(#171) - remove the filtering comprehension.
+    hdrs = [
+        header
+        for header in google_cloud_cpp_grpc_utils_hdrs
+        if not "grpc_utils/" in header
+    ],
     deps = [
         "//google/cloud:google_cloud_cpp_common",
         "@com_github_grpc_grpc//:grpc++",

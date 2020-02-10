@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/grpc_utils/completion_queue.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
