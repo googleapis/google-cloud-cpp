@@ -69,6 +69,58 @@ namespace internal {
 
 class ParallelObjectWriteStreambuf;
 
+// Type-erased function object to execute ComposeMany with most arguments
+// bound.
+using Composer = std::function<StatusOr<ObjectMetadata>(
+    std::vector<ComposeSourceObject> const&)>;
+
+// The `ObjectWriteStream`s have to hold references to the state of
+// the parallel upload so that they can update it when finished and trigger
+// shards composition, hence `ResumableParallelUploadState` has to be
+// destroyed after the `ObjectWriteStream`s.
+// `ResumableParallelUploadState` and `ObjectWriteStream`s are passed
+// around by values, so we don't control their lifetime. In order to
+// circumvent it, we move the state to something held by a `shared_ptr`.
+class ParallelUploadStateImpl
+    : public std::enable_shared_from_this<ParallelUploadStateImpl> {
+ public:
+  ParallelUploadStateImpl(std::string destination_object_name,
+                          std::shared_ptr<ScopedDeleter> deleter,
+                          Composer composer);
+  ~ParallelUploadStateImpl();
+
+  StatusOr<ObjectWriteStream> CreateStream(
+      RawClient& raw_client, ResumableUploadRequest const& request);
+
+  void StreamFinished(std::size_t stream_idx,
+                      StatusOr<ResumableUploadResponse> const& response);
+
+  future<StatusOr<ObjectMetadata>> WaitForCompletion() const;
+
+  Status EagerCleanup();
+
+  void Fail(Status status);
+
+ private:
+  mutable std::mutex mu_;
+  // Promises made via `WaitForCompletion()`
+  mutable std::vector<promise<StatusOr<ObjectMetadata>>> res_promises_;
+  // Type-erased object for deleting temporary objects.
+  std::shared_ptr<ScopedDeleter> deleter_;
+  // Type-erased function object to execute ComposeMany with most arguments
+  // bound.
+  std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>
+      composer_;
+  std::string destination_object_name_;
+  // Set when all streams are closed and composed but before cleanup.
+  bool finished_;
+  // Tracks how many streams are still written to.
+  std::size_t num_unfinished_streams_;
+  std::vector<ComposeSourceObject> to_compose_;
+  google::cloud::optional<StatusOr<ObjectMetadata>> res_;
+  Status cleanup_status_;
+};
+
 struct ComposeManyApplyHelper {
   template <typename... Options>
   StatusOr<ObjectMetadata> operator()(Options&&... options) const {
@@ -168,62 +220,15 @@ class NonResumableParallelUploadState {
   void Fail(Status status) { return impl_->Fail(std::move(status)); }
 
  private:
-  // Type-erased function object to execute ComposeMany with most arguments
-  // bound.
-  using Composer = std::function<StatusOr<ObjectMetadata>(
-      std::vector<ComposeSourceObject> const&)>;
-
-  // The `ObjectWriteStream`s have to hold references to the state of
-  // the parallel upload so that they can update it when finished and trigger
-  // shards composition, hence `NonResumableParallelUploadState` has to be
-  // destroyed after the `ObjectWriteStream`s.
-  // `NonResumableParallelUploadState` and `ObjectWriteStream`s are passed
-  // around by values, so we don't control their lifetime. In order to
-  // circumvent it, we move the state to something held by a `shared_ptr`.
-  class Impl : public std::enable_shared_from_this<Impl> {
-   public:
-    Impl(std::unique_ptr<ScopedDeleter> deleter, Composer composer);
-    ~Impl();
-
-    StatusOr<ObjectWriteStream> CreateStream(
-        RawClient& raw_client, ResumableUploadRequest const& request);
-
-    void StreamFinished(std::size_t stream_idx,
-                        StatusOr<ResumableUploadResponse> const& response);
-
-    future<StatusOr<ObjectMetadata>> WaitForCompletion() const;
-
-    Status EagerCleanup();
-
-    void Fail(Status status);
-
-   private:
-    mutable std::mutex mu_;
-    // Promises made via `WaitForCompletion()`
-    mutable std::vector<promise<StatusOr<ObjectMetadata>>> res_promises_;
-    // Type-erased object for deleting temporary objects.
-    std::unique_ptr<ScopedDeleter> deleter_;
-    // Type-erased function object to execute ComposeMany with most arguments
-    // bound.
-    std::function<StatusOr<ObjectMetadata>(std::vector<ComposeSourceObject>)>
-        composer_;
-    // Set when all streams are closed and composed but before cleanup.
-    bool finished_;
-    // Tracks how many streams are still written to.
-    std::size_t num_unfinished_streams_;
-    std::vector<ComposeSourceObject> to_compose_;
-    google::cloud::optional<StatusOr<ObjectMetadata>> res_;
-    Status cleanup_status_;
-  };
-
-  NonResumableParallelUploadState(std::shared_ptr<Impl> state,
-                                  std::vector<ObjectWriteStream> shards)
+  NonResumableParallelUploadState(
+      std::shared_ptr<ParallelUploadStateImpl> state,
+      std::vector<ObjectWriteStream> shards)
       : impl_(std::move(state)), shards_(std::move(shards)) {}
 
-  std::shared_ptr<Impl> impl_;
+  std::shared_ptr<ParallelUploadStateImpl> impl_;
   std::vector<ObjectWriteStream> shards_;
 
-  friend class ParallelObjectWriteStreambuf;
+  friend class NonResumableParallelObjectWriteStreambuf;
 };
 
 /**
@@ -306,8 +311,8 @@ NonResumableParallelUploadState::Create(Client client,
   }
   deleter->Add(*lock);
 
-  auto internal_state = std::make_shared<NonResumableParallelUploadState::Impl>(
-      std::move(deleter), std::move(composer));
+  auto internal_state = std::make_shared<ParallelUploadStateImpl>(
+      object_name, std::move(deleter), std::move(composer));
   std::vector<ObjectWriteStream> streams;
 
   auto upload_options = StaticTupleFilter<

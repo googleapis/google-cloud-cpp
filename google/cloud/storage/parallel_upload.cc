@@ -23,8 +23,7 @@ namespace internal {
 class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
  public:
   ParallelObjectWriteStreambuf(
-      std::shared_ptr<NonResumableParallelUploadState::Impl> state,
-      std::size_t stream_idx,
+      std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
       std::unique_ptr<ResumableUploadSession> upload_session,
       std::size_t max_buffer_size,
       std::unique_ptr<HashValidator> hash_validator)
@@ -40,20 +39,26 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
   }
 
  private:
-  std::shared_ptr<NonResumableParallelUploadState::Impl> state_;
+  std::shared_ptr<ParallelUploadStateImpl> state_;
   std::size_t stream_idx_;
 };
 
-NonResumableParallelUploadState::Impl::Impl(
-    std::unique_ptr<ScopedDeleter> deleter, Composer composer)
+ParallelUploadStateImpl::ParallelUploadStateImpl(
+    std::string destination_object_name, std::shared_ptr<ScopedDeleter> deleter,
+    Composer composer)
     : deleter_(std::move(deleter)),
       composer_(std::move(composer)),
+      destination_object_name_(std::move(destination_object_name)),
       finished_{},
       num_unfinished_streams_{} {}
 
-NonResumableParallelUploadState::Impl::~Impl() { WaitForCompletion().wait(); }
+ParallelUploadStateImpl::~ParallelUploadStateImpl() {
+  std::cout << "Trying to destroy impl" << std::endl;
+  WaitForCompletion().wait();
+  std::cout << "Destroyed impl" << std::endl;
+}
 
-StatusOr<ObjectWriteStream> NonResumableParallelUploadState::Impl::CreateStream(
+StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
     RawClient& raw_client, ResumableUploadRequest const& request) {
   auto session = raw_client.CreateResumableSession(request);
   std::unique_lock<std::mutex> lk(mu_);
@@ -69,7 +74,7 @@ StatusOr<ObjectWriteStream> NonResumableParallelUploadState::Impl::CreateStream(
           CreateHashValidator(request)));
 }
 
-Status NonResumableParallelUploadState::Impl::EagerCleanup() {
+Status ParallelUploadStateImpl::EagerCleanup() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!finished_) {
     return Status(StatusCode::kFailedPrecondition,
@@ -84,7 +89,7 @@ Status NonResumableParallelUploadState::Impl::EagerCleanup() {
   return cleanup_status_;
 }
 
-void NonResumableParallelUploadState::Impl::Fail(Status status) {
+void ParallelUploadStateImpl::Fail(Status status) {
   std::unique_lock<std::mutex> lk(mu_);
   assert(!status.ok());
   if (!res_) {
@@ -93,7 +98,7 @@ void NonResumableParallelUploadState::Impl::Fail(Status status) {
   }
 }
 
-void NonResumableParallelUploadState::Impl::StreamFinished(
+void ParallelUploadStateImpl::StreamFinished(
     std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
   std::unique_lock<std::mutex> lk(mu_);
 
@@ -130,8 +135,8 @@ void NonResumableParallelUploadState::Impl::StreamFinished(
   }
 }
 
-future<StatusOr<ObjectMetadata>>
-NonResumableParallelUploadState::Impl::WaitForCompletion() const {
+future<StatusOr<ObjectMetadata>> ParallelUploadStateImpl::WaitForCompletion()
+    const {
   std::unique_lock<std::mutex> lk(mu_);
 
   if (finished_) {
