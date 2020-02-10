@@ -3197,7 +3197,7 @@ class ScopedDeleter {
  public:
   // The actual deletion depends on local's types in a very non-trivial way,
   // so we abstract this away by providing the function to delete one object.
-  ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun);
+  ScopedDeleter(std::function<Status(std::string, std::int64_t)> delete_fun);
   ScopedDeleter(ScopedDeleter const&) = delete;
   ScopedDeleter& operator=(ScopedDeleter const&) = delete;
   ~ScopedDeleter();
@@ -3205,12 +3205,15 @@ class ScopedDeleter {
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())
   void Add(ObjectMetadata object);
 
+  /// Defer object's deletion to this objects destruction (or ExecuteDelete())
+  void Add(std::string object_name, std::int64_t generation);
+
   /// Execute all the deferred deletions now.
   Status ExecuteDelete();
 
  private:
-  std::function<Status(ObjectMetadata)> delete_fun_;
-  std::vector<ObjectMetadata> object_list_;
+  std::function<Status(std::string, std::int64_t)> delete_fun_;
+  std::vector<std::pair<std::string, std::int64_t>> object_list_;
 };
 
 }  // namespace internal
@@ -3288,14 +3291,15 @@ StatusOr<ObjectMetadata> ComposeMany(
       "EncryptionKey, IfGenerationMatch, IfMetagenerationMatch, KmsKeyName, "
       "QuotaUser, UserIp, UserProject or WithObjectMetadata.");
 
-  internal::ScopedDeleter deleter([&](ObjectMetadata const& object) {
-    return google::cloud::internal::apply(
-        internal::DeleteApplyHelper{client, bucket_name, object.name()},
-        std::tuple_cat(
-            std::make_tuple(IfGenerationMatch(object.generation())),
-            StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
-                all_options)));
-  });
+  internal::ScopedDeleter deleter(
+      [&](std::string const& object_name, std::int64_t generation) {
+        return google::cloud::internal::apply(
+            internal::DeleteApplyHelper{client, bucket_name, object_name},
+            std::tuple_cat(
+                std::make_tuple(IfGenerationMatch(generation)),
+                StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
+                    all_options)));
+      });
 
   auto lock = internal::LockPrefix(client, bucket_name, prefix, "",
                                    std::make_tuple(options...));

@@ -344,17 +344,23 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
 
 namespace internal {
 
-ScopedDeleter::ScopedDeleter(std::function<Status(ObjectMetadata)> delete_fun)
+ScopedDeleter::ScopedDeleter(
+    std::function<Status(std::string, std::int64_t)> delete_fun)
     : delete_fun_(std::move(delete_fun)) {}
 
 ScopedDeleter::~ScopedDeleter() { ExecuteDelete(); }
 
 void ScopedDeleter::Add(ObjectMetadata object) {
-  object_list_.emplace_back(std::move(object));
+  auto generation = object.generation();
+  Add(std::move(object).name(), generation);
+}
+
+void ScopedDeleter::Add(std::string object_name, std::int64_t generation) {
+  object_list_.emplace_back(std::move(object_name), generation);
 }
 
 Status ScopedDeleter::ExecuteDelete() {
-  std::vector<ObjectMetadata> object_list;
+  std::vector<std::pair<std::string, std::int64_t>> object_list;
   // make sure the dtor will not do this again
   object_list.swap(object_list_);
 
@@ -363,7 +369,7 @@ Status ScopedDeleter::ExecuteDelete() {
   // last.
   for (auto object_it = object_list.rbegin(); object_it != object_list.rend();
        ++object_it) {
-    Status status = delete_fun_(std::move(*object_it));
+    Status status = delete_fun_(std::move(object_it->first), object_it->second);
     // Fail on first error. If the service is unavailable, every deletion
     // would potentially keep retrying until the timeout passes - this would
     // take way too much time and would be pointless.
