@@ -55,7 +55,7 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
   ClientOptionsDefaultEndpointTest()
       : bigtable_emulator_host_("BIGTABLE_EMULATOR_HOST"),
         bigtable_instance_admin_emulator_host_(
-            "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST_"),
+            "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST"),
         google_cloud_enable_direct_path_("GOOGLE_CLOUD_ENABLE_DIRECT_PATH") {}
 
  protected:
@@ -69,6 +69,7 @@ class ClientOptionsDefaultEndpointTest : public ::testing::Test {
   void TearDown() override {
     bigtable_emulator_host_.TearDown();
     bigtable_instance_admin_emulator_host_.TearDown();
+    google_cloud_enable_direct_path_.TearDown();
   }
 
   std::string GetInstanceAdminEndpoint(ClientOptions const& options) {
