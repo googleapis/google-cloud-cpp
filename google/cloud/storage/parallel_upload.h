@@ -276,13 +276,12 @@ NonResumableParallelUploadState::Create(Client client,
       StaticTupleFilter<Among<QuotaUser, UserProject, UserIp>::TPred>(
           all_options);
   auto deleter = google::cloud::internal::make_unique<ScopedDeleter>(
-      [client, bucket_name,
-       delete_options](ObjectMetadata const& object) mutable {
+      [client, bucket_name, delete_options](std::string const& object_name,
+                                            std::int64_t generation) mutable {
         return google::cloud::internal::apply(
-            DeleteApplyHelper{client, std::move(bucket_name), object.name()},
-            std::tuple_cat(
-                std::make_tuple(IfGenerationMatch(object.generation())),
-                std::move(delete_options)));
+            DeleteApplyHelper{client, std::move(bucket_name), object_name},
+            std::tuple_cat(std::make_tuple(IfGenerationMatch(generation)),
+                           std::move(delete_options)));
       });
 
   auto compose_options = StaticTupleFilter<
