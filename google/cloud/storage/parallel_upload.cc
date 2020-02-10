@@ -74,6 +74,98 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
           CreateHashValidator(request)));
 }
 
+std::string ParallelUploadPersistentState::ToString() const {
+  auto json_streams = internal::nl::json::array();
+  for (auto const& stream : streams) {
+    json_streams.emplace_back(internal::nl::json{
+        {"name", stream.object_name},
+        {"resumable_session_id", stream.resumable_session_id}});
+  }
+  return internal::nl::json{{"streams", json_streams},
+                            {"expected_generation", expected_generation},
+                            {"destination", destination_object_name}}
+      .dump();
+}
+
+StatusOr<ParallelUploadPersistentState>
+ParallelUploadPersistentState::FromString(std::string const& json_rep) {
+  ParallelUploadPersistentState res;
+
+  auto json = internal::nl::json::parse(json_rep, nullptr, false);
+  if (json.is_discarded()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state is not a valid JSON.");
+  }
+  if (!json.is_object()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state is not a JSON object.");
+  }
+  if (json.count("destination") != 1) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state doesn't contain a 'destination'.");
+  }
+  auto& destination_json = json["destination"];
+  if (!destination_json.is_string()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state's 'destination' is not a string.");
+  }
+  res.destination_object_name = destination_json;
+  if (json.count("expected_generation") != 1) {
+    return Status(
+        StatusCode::kInternal,
+        "Parallel upload state doesn't contain a 'expected_generation'.");
+  }
+  auto& expected_generation_json = json["expected_generation"];
+  if (!expected_generation_json.is_number()) {
+    return Status(
+        StatusCode::kInternal,
+        "Parallel upload state's 'expected_generation' is not a number.");
+  }
+  res.expected_generation = expected_generation_json;
+  if (json.count("streams") != 1) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state doesn't contain 'streams'.");
+  }
+  auto& streams_json = json["streams"];
+  if (!streams_json.is_array()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state's 'streams' is not an array.");
+  }
+  for (auto& stream_json : streams_json) {
+    if (!stream_json.is_object()) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload state's 'stream' is not an object.");
+    }
+    if (stream_json.count("name") != 1) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload state's stream doesn't contain a 'name'.");
+    }
+    auto object_name_json = stream_json["name"];
+    if (!object_name_json.is_string()) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload state's stream 'name' is not a string.");
+    }
+    if (stream_json.count("resumable_session_id") != 1) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload state's stream doesn't contain a "
+                    "'resumable_session_id'.");
+    }
+    auto resumable_session_id_json = stream_json["resumable_session_id"];
+    if (!resumable_session_id_json.is_string()) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload state's stream 'resumable_session_id' is "
+                    "not a string.");
+    }
+    res.streams.emplace_back(ParallelUploadPersistentState::Stream{
+        object_name_json, resumable_session_id_json});
+  }
+  if (res.streams.empty()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload state's stream doesn't contain any streams");
+  }
+  return res;
+}
+
 Status ParallelUploadStateImpl::EagerCleanup() {
   std::unique_lock<std::mutex> lk(mu_);
   if (!finished_) {
