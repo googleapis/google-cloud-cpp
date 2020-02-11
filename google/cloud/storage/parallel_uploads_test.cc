@@ -924,6 +924,142 @@ TEST_F(ParallelUploadTest, CleanupFailureIsNotIgnored) {
   ASSERT_FALSE(object_metadata);
 }
 
+TEST(ParallelUploadPersistentState, NotJson) {
+  auto res = ParallelUploadPersistentState::FromString("blah");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), HasSubstr("not a valid JSON"));
+}
+
+TEST(ParallelUploadPersistentState, RootNotOject) {
+  auto res = ParallelUploadPersistentState::FromString("\"blah\"");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), HasSubstr("not a JSON object"));
+}
+
+TEST(ParallelUploadPersistentState, NoDestination) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"a", "b"}}.dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("doesn't contain a 'destination'"));
+}
+
+TEST(ParallelUploadPersistentState, DestinationNotAString) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", 2}}.dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("'destination' is not a string"));
+}
+
+TEST(ParallelUploadPersistentState, NoGeneration) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", "b"}}.dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("doesn't contain a 'expected_generation'"));
+}
+
+TEST(ParallelUploadPersistentState, GenerationNotAString) {
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"}, {"expected_generation", "blah"}}
+                                                           .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("'expected_generation' is not a number"));
+}
+
+TEST(ParallelUploadPersistentState, NoStreams) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", "dest"}, {"expected_generation", 1}}
+          .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain 'streams'"));
+}
+
+TEST(ParallelUploadPersistentState, StreamsNotArray) {
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"}, {"expected_generation", 1}, {"streams", 5}}
+                                                           .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), HasSubstr("is not an array"));
+}
+
+TEST(ParallelUploadPersistentState, StreamNotObject) {
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"}, {"expected_generation", 1}, {"streams", {5}}}
+                                                           .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), HasSubstr("'stream' is not an object"));
+}
+
+TEST(ParallelUploadPersistentState, StreamHasNoName) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", "dest"},
+                         {"expected_generation", 1},
+                         {"streams", {internal::nl::json::object()}}}
+          .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("stream doesn't contain a 'name'"));
+}
+
+TEST(ParallelUploadPersistentState, StreamNameNotString) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", "dest"},
+                         {"expected_generation", 1},
+                         {"streams", {{{"name", 1}}}}}
+          .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("stream 'name' is not a string"));
+}
+
+TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", "dest"},
+                         {"expected_generation", 1},
+                         {"streams", {{{"name", "abc"}}}}}
+          .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("stream doesn't contain a 'resumable_session_id'"));
+}
+
+TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", {{{"name", "abc"}, {"resumable_session_id", 123}}}}}
+                                                           .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(),
+              HasSubstr("'resumable_session_id' is not a string"));
+}
+
+TEST(ParallelUploadPersistentState, StreamsEmpty) {
+  auto res = ParallelUploadPersistentState::FromString(
+      internal::nl::json{{"destination", "dest"},
+                         {"expected_generation", 1},
+                         {"streams", internal::nl::json::array()}}
+          .dump());
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain any streams"));
+}
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

@@ -74,6 +74,21 @@ class ParallelObjectWriteStreambuf;
 using Composer = std::function<StatusOr<ObjectMetadata>(
     std::vector<ComposeSourceObject> const&)>;
 
+struct ParallelUploadPersistentState {
+  struct Stream {
+    std::string object_name;
+    std::string resumable_session_id;
+  };
+
+  std::string ToString() const;
+  static StatusOr<ParallelUploadPersistentState> FromString(
+      std::string const& json_rep);
+
+  std::string destination_object_name;
+  std::int64_t expected_generation;
+  std::vector<Stream> streams;
+};
+
 // The `ObjectWriteStream`s have to hold references to the state of
 // the parallel upload so that they can update it when finished and trigger
 // shards composition, hence `ResumableParallelUploadState` has to be
