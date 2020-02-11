@@ -127,6 +127,30 @@ TEST(Topic, SetKmsKeyName) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(Topic, MoveProto) {
+  auto builder = CreateTopicBuilder(Topic("test-project", "test-topic"))
+                     .add_label("key0", "label0")
+                     .add_label("key1", "label1")
+                     .add_allowed_persistence_region("us-central1")
+                     .add_allowed_persistence_region("us-west1")
+                     .set_kms_key_name("projects/.../test-only-string");
+  auto const actual = std::move(builder).as_proto();
+  google::pubsub::v1::Topic expected;
+  ASSERT_TRUE(TextFormat::ParseFromString(
+      R"pb(
+        name: "projects/test-project/topics/test-topic"
+        labels: { key: "key1" value: "label1" }
+        labels: { key: "key0" value: "label0" }
+        message_storage_policy {
+          allowed_persistence_regions: "us-central1"
+          allowed_persistence_regions: "us-west1"
+        }
+        kms_key_name: "projects/.../test-only-string"
+      )pb",
+      &expected));
+  EXPECT_THAT(actual, IsProtoEqual(expected));
+}
+
 }  // namespace
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
 }  // namespace pubsub

@@ -97,6 +97,8 @@ add_library(
     internal/publisher_stub.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
+    publisher_client.cc
+    publisher_client.h
     publisher_connection.cc
     publisher_connection.h
     topic.cc

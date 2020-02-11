@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/create_topic_builder.h"
-#include "google/cloud/pubsub/publisher_connection.h"
+#include "google/cloud/pubsub/publisher_client.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -42,12 +41,12 @@ TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   Topic topic(project_id, RandomTopicId(generator));
 
-  auto publisher = MakePublisherConnection(ConnectionOptions{});
-  auto create_response =
-      publisher->CreateTopic({CreateTopicBuilder(topic).as_proto()});
+  auto publisher =
+      PublisherClient(MakePublisherConnection(ConnectionOptions{}));
+  auto create_response = publisher.CreateTopic(CreateTopicBuilder(topic));
   ASSERT_STATUS_OK(create_response);
 
-  auto delete_response = publisher->DeleteTopic({std::move(topic)});
+  auto delete_response = publisher.DeleteTopic(std::move(topic));
   ASSERT_STATUS_OK(delete_response);
 }
 
@@ -55,10 +54,9 @@ TEST(PublisherAdminIntegrationTest, CreateFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher = MakePublisherConnection(ConnectionOptions{});
-  auto create_response = publisher->CreateTopic(
-      {CreateTopicBuilder(Topic("invalid-project", "invalid-topic"))
-           .as_proto()});
+  auto publisher = PublisherClient(MakePublisherConnection(connection_options));
+  auto create_response = publisher.CreateTopic(
+      CreateTopicBuilder(Topic("invalid-project", "invalid-topic")));
   ASSERT_FALSE(create_response);
 }
 
@@ -66,9 +64,9 @@ TEST(PublisherAdminIntegrationTest, DeleteFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto publisher = MakePublisherConnection(ConnectionOptions{});
+  auto publisher = PublisherClient(MakePublisherConnection(connection_options));
   auto delete_response =
-      publisher->DeleteTopic({Topic("invalid-project", "invalid-topic")});
+      publisher.DeleteTopic(Topic("invalid-project", "invalid-topic"));
   ASSERT_FALSE(delete_response.ok());
 }
 
