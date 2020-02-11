@@ -32,18 +32,8 @@ class PublisherConnectionImpl : public PublisherConnection {
 
   StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams p) override {
-    google::pubsub::v1::Topic request;
-    request.set_name(p.topic.FullName());
-    for (auto& kv : p.labels) {
-      (*request.mutable_labels())[kv.first] = std::move(kv.second);
-    }
-    for (auto& r : p.allowed_persistent_regions) {
-      request.mutable_message_storage_policy()->add_allowed_persistence_regions(
-          std::move(r));
-    }
-    *request.mutable_kms_key_name() = std::move(p.kms_key_name);
     grpc::ClientContext context;
-    return stub_->CreateTopic(context, request);
+    return stub_->CreateTopic(context, p.topic);
   }
 
   Status DeleteTopic(DeleteTopicParams p) override {

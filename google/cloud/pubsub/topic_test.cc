@@ -20,7 +20,6 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
-
 namespace {
 
 TEST(Topic, Basics) {

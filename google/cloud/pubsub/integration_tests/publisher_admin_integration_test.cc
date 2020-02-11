@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/pubsub/create_topic_builder.h"
 #include "google/cloud/pubsub/publisher_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
@@ -43,10 +44,7 @@ TEST(PublisherAdminIntegrationTest, PublisherCRUD) {
 
   auto publisher = MakePublisherConnection(ConnectionOptions{});
   auto create_response =
-      publisher->CreateTopic({topic,
-                              /*.labels*/ {},
-                              /*.allowed_persistent_regions*/ {},
-                              /*.kms_key_name*/ {}});
+      publisher->CreateTopic({CreateTopicBuilder(topic).as_proto()});
   ASSERT_STATUS_OK(create_response);
 
   auto delete_response = publisher->DeleteTopic({std::move(topic)});
@@ -59,10 +57,8 @@ TEST(PublisherAdminIntegrationTest, CreateFailure) {
           .set_endpoint("localhost:1");
   auto publisher = MakePublisherConnection(ConnectionOptions{});
   auto create_response = publisher->CreateTopic(
-      {Topic("invalid-project", "invalid-topic"),
-       /*.labels*/ {{"my-label", "my-value"}},
-       /*.allowed_persistent_regions*/ {"us-central1", "us-west1"},
-       /*.kms_key_name*/ {}});
+      {CreateTopicBuilder(Topic("invalid-project", "invalid-topic"))
+           .as_proto()});
   ASSERT_FALSE(create_response);
 }
 

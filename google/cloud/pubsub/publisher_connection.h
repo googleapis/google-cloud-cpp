@@ -54,10 +54,7 @@ class PublisherConnection {
    */
   /// Wrap the arguments for `CreateTopic()`
   struct CreateTopicParams {
-    Topic topic;
-    std::map<std::string, std::string> labels;
-    std::vector<std::string> allowed_persistent_regions;
-    std::string kms_key_name;
+    google::pubsub::v1::Topic topic;
   };
 
   /// Wrap the arguments for `DeleteTopic()`

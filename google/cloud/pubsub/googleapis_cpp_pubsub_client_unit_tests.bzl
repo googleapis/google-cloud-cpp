@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 googleapis_cpp_pubsub_client_unit_tests = [
+    "create_topic_builder_test.cc",
     "internal/build_info_test.cc",
     "internal/compiler_info_test.cc",
     "internal/user_agent_prefix_test.cc",
