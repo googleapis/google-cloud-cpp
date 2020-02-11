@@ -17,6 +17,8 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
+$project_root = (Get-Item -Path ".\" -Verbose).FullName
+
 # First check the required environment variables.
 if (-not (Test-Path env:CONFIG)) {
     throw "Aborting build because the CONFIG environment variable is not set."
@@ -38,18 +40,18 @@ if (-not (Test-Path env:BUILD_CACHE)) {
 # build.
 Write-Host "Obtaining vcpkg repository."
 Get-Date -Format o
-cd ..
+Set-Location ..
 if (Test-Path vcpkg\.git) {
-    cd vcpkg
+    Set-Location vcpkg
     git pull
 } elseif (Test-Path vcpkg\installed) {
-    move vcpkg vcpkg-tmp
+    Move-Item vcpkg vcpkg-tmp
     git clone https://github.com/Microsoft/vcpkg
-    move vcpkg-tmp\installed vcpkg
-    cd vcpkg
+    Move-Item vcpkg-tmp\installed vcpkg
+    Set-Location vcpkg
 } else {
     git clone https://github.com/Microsoft/vcpkg
-    cd vcpkg
+    Set-Location vcpkg
 }
 if ($LastExitCode) {
     throw "vcpkg git setup failed with exit code $LastExitCode"
@@ -90,23 +92,27 @@ if ($LastExitCode) {
     throw "vcpkg integrate failed with exit code $LastExitCode"
 }
 
-# Remove old versions of the packages.
+$vcpkg_flags=@(
+    "--triplet", "x64-windows-static",
+    "--overlay-ports=${project_root}/ci/kokoro/windows/vcpkg-ports")
+
+    # Remove old versions of the packages.
 Write-Host "Cleanup old vcpkg package versions."
 Get-Date -Format o
-.\vcpkg.exe remove --outdated --recurse
+.\vcpkg.exe remove ${vcpkg_flags} --outdated --recurse
 if ($LastExitCode) {
     throw "vcpkg remove --outdated failed with exit code $LastExitCode"
 }
 
 Write-Host "Building vcpkg package versions."
 Get-Date -Format o
-$packages = @("zlib:x64-windows-static", "openssl:x64-windows-static",
-              "protobuf:x64-windows-static", "c-ares:x64-windows-static",
-              "grpc:x64-windows-static", "curl:x64-windows-static",
-              "gtest:x64-windows-static", "crc32c:x64-windows-static"
-              "googleapis:x64-windows-static")
+$packages = @("zlib", "openssl",
+              "protobuf", "c-ares",
+              "grpc", "curl",
+              "gtest", "crc32c"
+              "googleapis", "google-cloud-cpp-common")
 foreach ($pkg in $packages) {
-    .\vcpkg.exe install $pkg
+    .\vcpkg.exe install ${vcpkg_flags} ${pkg}
     if ($LastExitCode) {
         throw "vcpkg install $pkg failed with exit code $LastExitCode"
     }
