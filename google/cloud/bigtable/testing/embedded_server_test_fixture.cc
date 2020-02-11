@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/testing/embedded_server_test_fixture.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/build_info.h"
 #include <thread>
 

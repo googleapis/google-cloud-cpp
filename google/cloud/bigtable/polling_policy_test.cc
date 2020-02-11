@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/polling_policy.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/check_predicate_becomes_false.h"
 #include "google/cloud/testing_util/chrono_literals.h"
@@ -75,8 +75,8 @@ TEST(GenericPollingPolicy, OnNonRetryable) {
   GenericPollingPolicy<> tested(retry, backoff);
   EXPECT_FALSE(
       static_cast<PollingPolicy&>(tested).OnFailure(CreatePermanentError()));
-  EXPECT_FALSE(tested.OnFailure(
-      grpc_utils::MakeStatusFromRpcError(CreatePermanentError())));
+  EXPECT_FALSE(
+      tested.OnFailure(MakeStatusFromRpcError(CreatePermanentError())));
 }
 
 /// @test Verify that IsPermanentError works.

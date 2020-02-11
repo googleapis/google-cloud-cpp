@@ -115,7 +115,7 @@ class AsyncBenchmark {
 
   std::mutex mu_;
   std::condition_variable cv_;
-  google::cloud::grpc_utils::CompletionQueue cq_;
+  google::cloud::CompletionQueue cq_;
   std::vector<std::thread> cq_threads_;
   bigtable::benchmarks::Benchmark& benchmark_;
   bigtable::Table table_;
@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
   benchmark.PrintThroughputResult(std::cout, "perf", "Upload",
                                   *populate_results);
 
-  google::cloud::grpc_utils::CompletionQueue cq;
+  google::cloud::CompletionQueue cq;
   std::vector<std::thread> cq_threads;
 
   auto data_client = benchmark.MakeDataClient();

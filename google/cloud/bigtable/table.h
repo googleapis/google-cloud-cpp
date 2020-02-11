@@ -29,7 +29,7 @@
 #include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/disjunction.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"

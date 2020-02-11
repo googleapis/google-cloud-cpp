@@ -18,7 +18,7 @@
 #include "google/cloud/bigtable/internal/conjunction.h"
 #include "google/cloud/bigtable/row_key.h"
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/big_endian.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
@@ -387,8 +387,7 @@ class FailedMutation {
       : status_(std::move(status)), original_index_(index) {}
 
   FailedMutation(google::rpc::Status const& status, int index)
-      : status_(grpc_utils::MakeStatusFromRpcError(status)),
-        original_index_(index) {}
+      : status_(MakeStatusFromRpcError(status)), original_index_(index) {}
 
   FailedMutation(FailedMutation&&) = default;
   FailedMutation& operator=(FailedMutation&&) = default;

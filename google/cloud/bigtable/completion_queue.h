@@ -16,13 +16,13 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_COMPLETION_QUEUE_H
 
 #include "google/cloud/bigtable/version.h"
-#include "google/cloud/grpc_utils/completion_queue.h"
+#include "google/cloud/completion_queue.h"
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
-using ::google::cloud::grpc_utils::CompletionQueue;
+using ::google::cloud::CompletionQueue;
 
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
