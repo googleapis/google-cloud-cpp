@@ -219,11 +219,11 @@ class ParallelUploadFileShard {
   Status EagerCleanup() { return state_->EagerCleanup(); }
 
  private:
-  ParallelUploadFileShard(
-      std::shared_ptr<NonResumableParallelUploadState> state,
-      ObjectWriteStream ostream, std::string file_name,
-      std::uintmax_t offset_in_file, std::uintmax_t bytes_to_upload,
-      std::size_t upload_buffer_size)
+  ParallelUploadFileShard(std::shared_ptr<ParallelUploadStateImpl> state,
+                          ObjectWriteStream ostream, std::string file_name,
+                          std::uintmax_t offset_in_file,
+                          std::uintmax_t bytes_to_upload,
+                          std::size_t upload_buffer_size)
       : state_(std::move(state)),
         ostream_(std::move(ostream)),
         file_name_(std::move(file_name)),
@@ -231,7 +231,7 @@ class ParallelUploadFileShard {
         left_to_upload_(bytes_to_upload),
         upload_buffer_size_(upload_buffer_size) {}
 
-  std::shared_ptr<NonResumableParallelUploadState> state_;
+  std::shared_ptr<ParallelUploadStateImpl> state_;
   ObjectWriteStream ostream_;
   std::string file_name_;
   std::uintmax_t offset_in_file_;
@@ -324,6 +324,10 @@ class NonResumableParallelUploadState {
   std::vector<ObjectWriteStream> shards_;
 
   friend class NonResumableParallelObjectWriteStreambuf;
+  template <typename... Options>
+  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
+      Client client, std::string file_name, std::string bucket_name,
+      std::string object_name, std::string prefix, Options&&... options);
 };
 
 /**
@@ -569,8 +573,8 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
     std::uintmax_t offset = stream_size * i;
     std::uintmax_t size = (std::min)(file_size - stream_size * i, stream_size);
     res.emplace_back(ParallelUploadFileShard(
-        shared_state, std::move(shared_state->shards()[i]), file_name, offset,
-        size, upload_buffer_size));
+        shared_state->impl_, std::move(shared_state->shards()[i]), file_name,
+        offset, size, upload_buffer_size));
   }
 #if !defined(__clang__) && \
     (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 9))
