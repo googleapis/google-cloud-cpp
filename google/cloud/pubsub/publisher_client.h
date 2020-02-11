@@ -74,7 +74,7 @@ class PublisherClient {
    * This is not an idempotent operation and therefore it is never retried.
    *
    * @par Example
-   * TODO(#5) - snippet samples.cc create-topic
+   * @snippet samples.cc create-topic
    *
    * @param builder the configuration for the new topic.
    */
@@ -89,7 +89,7 @@ class PublisherClient {
    * This is not an idempotent operation and therefore it is never retried.
    *
    * @par Example
-   * TODO(#5) - snippet samples.cc delete-topic
+   * @snippet samples.cc delete-topic
    *
    * @param topic the name of the topic to be deleted.
    */

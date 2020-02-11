@@ -1,0 +1,161 @@
+// Copyright 2019 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+#include "google/cloud/pubsub/publisher_client.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
+#include "google/cloud/optional.h"
+#include <sstream>
+#include <tuple>
+#include <utility>
+
+namespace {
+std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
+                          std::string const& prefix = "cloud-cpp-samples-") {
+  constexpr int kMaxRandomTopicSuffixLength = 32;
+  return prefix + google::cloud::internal::Sample(generator,
+                                                  kMaxRandomTopicSuffixLength,
+                                                  "abcdefghijklmnopqrstuvwxyz");
+}
+
+//! [create-topic]
+void CreateTopic(google::cloud::pubsub::PublisherClient client,
+                 std::string project_id, std::string topic_id) {
+  namespace pubsub = google::cloud::pubsub;
+  auto topic = client.CreateTopic(pubsub::CreateTopicBuilder(
+      pubsub::Topic(std::move(project_id), std::move(topic_id))));
+  if (!topic) throw std::runtime_error(topic.status().message());
+
+  std::cout << "The topic was successfully created: " << topic->DebugString()
+            << "\n";
+}
+//! [create-topic]
+
+void CreateTopicCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("create-topic <project-id> <topic-id>");
+  }
+  google::cloud::pubsub::PublisherClient client(
+      google::cloud::pubsub::MakePublisherConnection());
+  CreateTopic(std::move(client), argv[0], argv[1]);
+}
+
+//! [delete-topic]
+void DeleteTopic(google::cloud::pubsub::PublisherClient client,
+                 std::string project_id, std::string topic_id) {
+  namespace pubsub = google::cloud::pubsub;
+  auto status = client.DeleteTopic(
+      pubsub::Topic(std::move(project_id), std::move(topic_id)));
+  if (!status.ok()) throw std::runtime_error(status.message());
+
+  std::cout << "The topic was successfully deleted\n";
+}
+//! [delete-topic]
+
+void DeleteTopicCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("delete-topic <project-id> <topic-id>");
+  }
+  google::cloud::pubsub::PublisherClient client(
+      google::cloud::pubsub::MakePublisherConnection());
+  DeleteTopic(std::move(client), argv[0], argv[1]);
+}
+
+int RunOneCommand(std::vector<std::string> argv) {
+  using CommandType = std::function<void(std::vector<std::string> const&)>;
+  using CommandMap = std::map<std::string, CommandType>;
+
+  CommandMap commands = {
+      {"create-topic", CreateTopicCommand},
+      {"delete-topic", DeleteTopicCommand},
+  };
+
+  static std::string usage_msg = [&argv, &commands] {
+    auto last_slash = std::string(argv[0]).find_last_of("/\\");
+    auto program = argv[0].substr(last_slash + 1);
+    std::string usage;
+    usage += "Usage: ";
+    usage += program;
+    usage += " <command> [arguments]\n\n";
+    usage += "Commands:\n";
+    for (auto&& kv : commands) {
+      try {
+        kv.second({});
+      } catch (std::exception const& ex) {
+        usage += "    ";
+        usage += ex.what();
+        usage += "\n";
+      }
+    }
+    return usage;
+  }();
+
+  if (argv.size() < 2) {
+    std::cerr << "Missing command argument\n" << usage_msg << "\n";
+    return 1;
+  }
+  std::string command_name = argv[1];
+  argv.erase(argv.begin());  // remove the program name from the list.
+  argv.erase(argv.begin());  // remove the command name from the list.
+
+  auto command = commands.find(command_name);
+  if (commands.end() == command) {
+    std::cerr << "Unknown command " << command_name << "\n"
+              << usage_msg << "\n";
+    return 1;
+  }
+
+  // Run the command.
+  command->second(argv);
+  return 0;
+}
+
+void RunAll() {
+  auto run_slow_integration_tests =
+      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+          .value_or("");
+  auto project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  if (project_id.empty()) {
+    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
+  }
+
+  auto generator = google::cloud::internal::MakeDefaultPRNG();
+  auto topic_id = RandomTopicId(generator);
+
+  std::cout << "\nRunning create-topic sample\n";
+  RunOneCommand({"", "create-topic", project_id, topic_id});
+
+  std::cout << "\nRunning delete-topic sample\n";
+  RunOneCommand({"", "delete-topic", project_id, topic_id});
+}
+
+bool AutoRun() {
+  return google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+             .value_or("") == "yes";
+}
+
+}  // namespace
+
+int main(int ac, char* av[]) try {
+  if (AutoRun()) {
+    RunAll();
+    return 0;
+  }
+
+  return RunOneCommand({av, av + ac});
+} catch (std::exception const& ex) {
+  std::cerr << "Standard exception caught: " << ex.what() << "\n";
+  return 1;
+}
