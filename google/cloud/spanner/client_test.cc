@@ -401,7 +401,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
 
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // dummy
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
   Connection::CommitParams actual_commit_params{txn, {}};
 
   auto source = make_unique<MockResultSetSource>();
@@ -451,7 +451,7 @@ TEST(ClientTest, CommitMutatorSuccess) {
 TEST(ClientTest, CommitMutatorRollback) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // dummy
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
   auto source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata metadata;
@@ -497,7 +497,7 @@ TEST(ClientTest, CommitMutatorRollback) {
 TEST(ClientTest, CommitMutatorRollbackError) {
   auto conn = std::make_shared<MockConnection>();
   Transaction txn = MakeReadWriteTransaction();  // dummy
-  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}};
+  Connection::ReadParams actual_read_params{txn, {}, {}, {}, {}, {}};
 
   auto source = make_unique<MockResultSetSource>();
   spanner_proto::ResultSetMetadata metadata;

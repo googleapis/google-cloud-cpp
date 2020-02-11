@@ -154,7 +154,8 @@ TEST(ConnectionImplTest, ReadGetSessionFailure) {
                   "table",
                   KeySet::All(),
                   {"column1"},
-                  ReadOptions()});
+                  ReadOptions(),
+                  {}});
   for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
@@ -188,7 +189,8 @@ TEST(ConnectionImplTest, ReadStreamingReadFailure) {
                   "table",
                   KeySet::All(),
                   {"column1"},
-                  ReadOptions()});
+                  ReadOptions(),
+                  {}});
   for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(),
@@ -250,7 +252,8 @@ TEST(ConnectionImplTest, ReadSuccess) {
                   "table",
                   KeySet::All(),
                   {"UserId", "UserName"},
-                  ReadOptions()});
+                  ReadOptions(),
+                  {}});
   using RowType = std::tuple<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
@@ -291,7 +294,8 @@ TEST(ConnectionImplTest, ReadPermanentFailure) {
                   "table",
                   KeySet::All(),
                   {"UserId", "UserName"},
-                  ReadOptions()});
+                  ReadOptions(),
+                  {}});
   for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh"));
@@ -328,7 +332,8 @@ TEST(ConnectionImplTest, ReadTooManyTransientFailures) {
                   "table",
                   KeySet::All(),
                   {"UserId", "UserName"},
-                  ReadOptions()});
+                  ReadOptions(),
+                  {}});
   for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kUnavailable, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("try-again"));
@@ -362,7 +367,7 @@ TEST(ConnectionImplTest, ReadImplicitBeginTransaction) {
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
-      {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
+      {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions(), {}});
   for (auto& row : rows) {
     EXPECT_STATUS_OK(row);
   }
@@ -383,7 +388,8 @@ TEST(ConnectionImplTest, ExecuteQueryGetSessionFailure) {
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
   for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
@@ -413,7 +419,8 @@ TEST(ConnectionImplTest, ExecuteQueryStreamingReadFailure) {
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
   for (auto& row : rows) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(),
@@ -465,7 +472,8 @@ TEST(ConnectionImplTest, ExecuteQueryReadSuccess) {
 
   auto rows = conn->ExecuteQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
   using RowType = std::tuple<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
@@ -506,7 +514,8 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
       .WillOnce(Return(ByMove(std::move(grpc_reader))));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  auto rows = conn->ExecuteQuery({txn, SqlStatement("select * from table")});
+  auto rows =
+      conn->ExecuteQuery({txn, SqlStatement("select * from table"), {}});
   for (auto& row : rows) {
     EXPECT_STATUS_OK(row);
   }
@@ -526,7 +535,8 @@ TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {
           });
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ExecuteDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ExecuteDml({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
@@ -552,7 +562,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ExecuteDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ExecuteDml({txn, SqlStatement("delete * from table"), {}});
 
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->RowsModified(), 42);
@@ -571,7 +582,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeletePermanentFailure) {
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteDml")));
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ExecuteDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ExecuteDml({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in ExecuteDml"));
@@ -591,7 +603,8 @@ TEST(ConnectionImplTest, ExecuteDmlDeleteTooManyTransientFailures) {
           Return(Status(StatusCode::kUnavailable, "try-again in ExecuteDml")));
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ExecuteDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ExecuteDml({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));
@@ -649,7 +662,8 @@ TEST(ConnectionImplTest, ProfileQuerySuccess) {
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
   using RowType = std::tuple<std::int64_t, std::string>;
   auto expected = std::vector<RowType>{
       RowType(12, "Steve"),
@@ -695,7 +709,8 @@ TEST(ConnectionImplTest, ProfileQueryGetSessionFailure) {
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
   for (auto& row : result) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(), HasSubstr("uh-oh in GetSession"));
@@ -725,7 +740,8 @@ TEST(ConnectionImplTest, ProfileQueryStreamingReadFailure) {
 
   auto result = conn->ProfileQuery(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
   for (auto& row : result) {
     EXPECT_EQ(StatusCode::kPermissionDenied, row.status().code());
     EXPECT_THAT(row.status().message(),
@@ -746,7 +762,8 @@ TEST(ConnectionImplTest, ProfileDmlGetSessionFailure) {
           });
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ProfileDml({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
@@ -781,7 +798,8 @@ TEST(ConnectionImplTest, ProfileDmlDeleteSuccess) {
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce(Return(response));
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ProfileDml({txn, SqlStatement("delete * from table"), {}});
 
   ASSERT_STATUS_OK(result);
   EXPECT_EQ(result->RowsModified(), 42);
@@ -825,7 +843,8 @@ TEST(ConnectionImplTest, ProfileDmlDeletePermanentFailure) {
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteDml")));
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ProfileDml({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in ExecuteDml"));
@@ -853,7 +872,8 @@ TEST(ConnectionImplTest, ProfileDmlDeleteTooManyTransientFailures) {
           Return(Status(StatusCode::kUnavailable, "try-again in ExecuteDml")));
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->ProfileDml({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->ProfileDml({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));
@@ -886,7 +906,8 @@ TEST(ConnectionImplTest, AnalyzeSqlSuccess) {
 
   auto result = conn->AnalyzeSql(
       {MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       SqlStatement("select * from table")});
+       SqlStatement("select * from table"),
+       {}});
 
   google::spanner::v1::QueryPlan expected_plan;
   ASSERT_TRUE(TextFormat::ParseFromString(
@@ -912,7 +933,8 @@ TEST(ConnectionImplTest, AnalyzeSqlGetSessionFailure) {
           });
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->AnalyzeSql({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->AnalyzeSql({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in GetSession"));
@@ -939,7 +961,8 @@ TEST(ConnectionImplTest, AnalyzeSqlDeletePermanentFailure) {
           Return(Status(StatusCode::kPermissionDenied, "uh-oh in ExecuteDml")));
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->AnalyzeSql({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->AnalyzeSql({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh in ExecuteDml"));
@@ -967,7 +990,8 @@ TEST(ConnectionImplTest, AnalyzeSqlDeleteTooManyTransientFailures) {
           Return(Status(StatusCode::kUnavailable, "try-again in ExecuteDml")));
 
   Transaction txn = MakeReadWriteTransaction(Transaction::ReadWriteOptions());
-  auto result = conn->AnalyzeSql({txn, SqlStatement("delete * from table")});
+  auto result =
+      conn->AnalyzeSql({txn, SqlStatement("delete * from table"), {}});
 
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("try-again in ExecuteDml"));
@@ -1711,9 +1735,10 @@ TEST(ConnectionImplTest, PartitionReadSuccess) {
       .WillOnce(Return(partition_response));
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  StatusOr<std::vector<ReadPartition>> result = conn->PartitionRead(
-      {{txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()},
-       PartitionOptions()});
+  StatusOr<std::vector<ReadPartition>> result = conn->PartitionRead({
+      {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions(), {}},
+      PartitionOptions(),
+  });
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "CAFEDEAD"));
 
@@ -1749,7 +1774,8 @@ TEST(ConnectionImplTest, PartitionReadPermanentFailure) {
         "table",
         KeySet::All(),
         {"UserId", "UserName"},
-        ReadOptions()},
+        ReadOptions(),
+        {}},
        PartitionOptions()});
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("uh-oh"));
@@ -1776,7 +1802,8 @@ TEST(ConnectionImplTest, PartitionReadTooManyTransientFailures) {
         "table",
         KeySet::All(),
         {"UserId", "UserName"},
-        ReadOptions()},
+        ReadOptions(),
+        {}},
        PartitionOptions()});
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr("try-again"));
@@ -1823,7 +1850,9 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
 
   SqlStatement sql_statement("select * from table");
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
-      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()), sql_statement},
+      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
+        sql_statement,
+        {}},
        PartitionOptions()});
   ASSERT_STATUS_OK(result);
 
@@ -1855,7 +1884,8 @@ TEST(ConnectionImplTest, PartitionQueryPermanentFailure) {
 
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
       {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
-        SqlStatement("select * from table")},
+        SqlStatement("select * from table"),
+        {}},
        PartitionOptions()});
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr(failed_status.message()));
@@ -1881,7 +1911,8 @@ TEST(ConnectionImplTest, PartitionQueryTooManyTransientFailures) {
 
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
       {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
-        SqlStatement("select * from table")},
+        SqlStatement("select * from table"),
+        {}},
        PartitionOptions()});
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr(failed_status.message()));
@@ -2023,7 +2054,7 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   // Now do the actual reads and verify the results.
   Transaction txn1 = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows =
-      conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
+      conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions(), {}});
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
   for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
@@ -2031,21 +2062,24 @@ TEST(ConnectionImplTest, TransactionSessionBinding) {
   }
 
   Transaction txn2 = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
-  rows = conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
+  rows =
+      conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions(), {}});
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
   for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 1);
   }
 
-  rows = conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions()});
+  rows =
+      conn->Read({txn1, "table", KeySet::All(), {"Number"}, ReadOptions(), {}});
   EXPECT_THAT(txn1, HasSessionAndTransactionId("session-1", "ABCDEF01"));
   for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
     EXPECT_EQ(std::get<0>(*row), 2);
   }
 
-  rows = conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions()});
+  rows =
+      conn->Read({txn2, "table", KeySet::All(), {"Number"}, ReadOptions(), {}});
   EXPECT_THAT(txn2, HasSessionAndTransactionId("session-2", "ABCDEF02"));
   for (auto& row : StreamOf<std::tuple<std::int64_t>>(rows)) {
     EXPECT_STATUS_OK(row);
@@ -2083,7 +2117,7 @@ TEST(ConnectionImplTest, TransactionOutlivesConnection) {
 
   Transaction txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
   auto rows = conn->Read(
-      {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions()});
+      {txn, "table", KeySet::All(), {"UserId", "UserName"}, ReadOptions(), {}});
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "ABCDEF00"));
 
   // `conn` is the only reference to the `ConnectionImpl`, so dropping it will
@@ -2110,7 +2144,7 @@ TEST(ConnectionImplTest, ReadSessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto params = Connection::ReadParams(txn, {}, {}, {}, {});
+  auto params = Connection::ReadParams{txn, {}, {}, {}, {}, {}};
   auto response = GetSingularRow(conn->Read(std::move(params)));
   EXPECT_FALSE(response.ok());
   auto status = response.status();
@@ -2135,7 +2169,7 @@ TEST(ConnectionImplTest, PartitionReadSessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto params = Connection::ReadParams(txn, {}, {}, {}, {});
+  auto params = Connection::ReadParams{txn, {}, {}, {}, {}, {}};
   auto response = conn->PartitionRead({params, {}});
   EXPECT_FALSE(response.ok());
   auto status = response.status();
@@ -2161,7 +2195,7 @@ TEST(ConnectionImplTest, ExecuteQuerySessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto response = GetSingularRow(conn->ExecuteQuery({txn, SqlStatement()}));
+  auto response = GetSingularRow(conn->ExecuteQuery({txn, SqlStatement(), {}}));
   EXPECT_FALSE(response.ok());
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
@@ -2186,7 +2220,7 @@ TEST(ConnectionImplTest, ProfileQuerySessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto response = GetSingularRow(conn->ProfileQuery({txn, SqlStatement()}));
+  auto response = GetSingularRow(conn->ProfileQuery({txn, SqlStatement(), {}}));
   EXPECT_FALSE(response.ok());
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
@@ -2210,7 +2244,7 @@ TEST(ConnectionImplTest, ExecuteDmlSessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto response = conn->ExecuteDml({txn, SqlStatement()});
+  auto response = conn->ExecuteDml({txn, SqlStatement(), {}});
   EXPECT_FALSE(response.ok());
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
@@ -2234,7 +2268,7 @@ TEST(ConnectionImplTest, ProfileDmlSessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto response = conn->ProfileDml({txn, SqlStatement()});
+  auto response = conn->ProfileDml({txn, SqlStatement(), {}});
   EXPECT_FALSE(response.ok());
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
@@ -2258,7 +2292,7 @@ TEST(ConnectionImplTest, AnalyzeSqlSessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto response = conn->AnalyzeSql({txn, SqlStatement()});
+  auto response = conn->AnalyzeSql({txn, SqlStatement(), {}});
   EXPECT_FALSE(response.ok());
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;
@@ -2282,7 +2316,7 @@ TEST(ConnectionImplTest, PartitionQuerySessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto sql_params = Connection::SqlParams(txn, SqlStatement());
+  auto sql_params = Connection::SqlParams{txn, SqlStatement(), {}};
   auto response = conn->PartitionQuery({sql_params, {}});
   EXPECT_FALSE(response.ok());
   auto status = response.status();

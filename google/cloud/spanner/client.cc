@@ -34,8 +34,11 @@ RowStream Client::Read(std::string table, KeySet keys,
                        ReadOptions read_options) {
   return conn_->Read(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       std::move(table), std::move(keys), std::move(columns),
-       std::move(read_options)});
+       std::move(table),
+       std::move(keys),
+       std::move(columns),
+       std::move(read_options),
+       {}});
 }
 
 RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
@@ -44,15 +47,22 @@ RowStream Client::Read(Transaction::SingleUseOptions transaction_options,
                        ReadOptions read_options) {
   return conn_->Read(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
-       std::move(table), std::move(keys), std::move(columns),
-       std::move(read_options)});
+       std::move(table),
+       std::move(keys),
+       std::move(columns),
+       std::move(read_options),
+       {}});
 }
 
 RowStream Client::Read(Transaction transaction, std::string table, KeySet keys,
                        std::vector<std::string> columns,
                        ReadOptions read_options) {
-  return conn_->Read({std::move(transaction), std::move(table), std::move(keys),
-                      std::move(columns), std::move(read_options)});
+  return conn_->Read({std::move(transaction),
+                      std::move(table),
+                      std::move(keys),
+                      std::move(columns),
+                      std::move(read_options),
+                      {}});
 }
 
 RowStream Client::Read(ReadPartition const& read_partition) {
@@ -63,28 +73,34 @@ StatusOr<std::vector<ReadPartition>> Client::PartitionRead(
     Transaction transaction, std::string table, KeySet keys,
     std::vector<std::string> columns, ReadOptions read_options,
     PartitionOptions const& partition_options) {
-  return conn_->PartitionRead(
-      {{std::move(transaction), std::move(table), std::move(keys),
-        std::move(columns), std::move(read_options)},
-       partition_options});
+  return conn_->PartitionRead({{std::move(transaction),
+                                std::move(table),
+                                std::move(keys),
+                                std::move(columns),
+                                std::move(read_options),
+                                {}},
+                               partition_options});
 }
 
 RowStream Client::ExecuteQuery(SqlStatement statement) {
   return conn_->ExecuteQuery(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       std::move(statement)});
+       std::move(statement),
+       {}});
 }
 
 RowStream Client::ExecuteQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement) {
   return conn_->ExecuteQuery(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
-       std::move(statement)});
+       std::move(statement),
+       {}});
 }
 
 RowStream Client::ExecuteQuery(Transaction transaction,
                                SqlStatement statement) {
-  return conn_->ExecuteQuery({std::move(transaction), std::move(statement)});
+  return conn_->ExecuteQuery(
+      {std::move(transaction), std::move(statement), {}});
 }
 
 RowStream Client::ExecuteQuery(QueryPartition const& partition) {
@@ -94,41 +110,44 @@ RowStream Client::ExecuteQuery(QueryPartition const& partition) {
 ProfileQueryResult Client::ProfileQuery(SqlStatement statement) {
   return conn_->ProfileQuery(
       {internal::MakeSingleUseTransaction(Transaction::ReadOnlyOptions()),
-       std::move(statement)});
+       std::move(statement),
+       {}});
 }
 
 ProfileQueryResult Client::ProfileQuery(
     Transaction::SingleUseOptions transaction_options, SqlStatement statement) {
   return conn_->ProfileQuery(
       {internal::MakeSingleUseTransaction(std::move(transaction_options)),
-       std::move(statement)});
+       std::move(statement),
+       {}});
 }
 
 ProfileQueryResult Client::ProfileQuery(Transaction transaction,
                                         SqlStatement statement) {
-  return conn_->ProfileQuery({std::move(transaction), std::move(statement)});
+  return conn_->ProfileQuery(
+      {std::move(transaction), std::move(statement), {}});
 }
 
 StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
     Transaction transaction, SqlStatement statement,
     PartitionOptions const& partition_options) {
   return conn_->PartitionQuery(
-      {{std::move(transaction), std::move(statement)}, partition_options});
+      {{std::move(transaction), std::move(statement), {}}, partition_options});
 }
 
 StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,
                                        SqlStatement statement) {
-  return conn_->ExecuteDml({std::move(transaction), std::move(statement)});
+  return conn_->ExecuteDml({std::move(transaction), std::move(statement), {}});
 }
 
 StatusOr<ProfileDmlResult> Client::ProfileDml(Transaction transaction,
                                               SqlStatement statement) {
-  return conn_->ProfileDml({std::move(transaction), std::move(statement)});
+  return conn_->ProfileDml({std::move(transaction), std::move(statement), {}});
 }
 
 StatusOr<ExecutionPlan> Client::AnalyzeSql(Transaction transaction,
                                            SqlStatement statement) {
-  return conn_->AnalyzeSql({std::move(transaction), std::move(statement)});
+  return conn_->AnalyzeSql({std::move(transaction), std::move(statement), {}});
 }
 
 StatusOr<BatchDmlResult> Client::ExecuteBatchDml(

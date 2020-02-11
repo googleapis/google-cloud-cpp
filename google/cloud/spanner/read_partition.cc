@@ -81,12 +81,14 @@ ReadPartition MakeReadPartition(std::string transaction_id,
 }
 
 Connection::ReadParams MakeReadParams(ReadPartition const& read_partition) {
-  return Connection::ReadParams(
+  return Connection::ReadParams{
       MakeTransactionFromIds(read_partition.SessionId(),
                              read_partition.TransactionId()),
-      read_partition.TableName(), FromProto(read_partition.KeySet()),
-      read_partition.ColumnNames(), read_partition.ReadOptions(),
-      read_partition.PartitionToken());
+      read_partition.TableName(),
+      FromProto(read_partition.KeySet()),
+      read_partition.ColumnNames(),
+      read_partition.ReadOptions(),
+      read_partition.PartitionToken()};
 }
 
 }  // namespace internal

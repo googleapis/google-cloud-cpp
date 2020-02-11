@@ -74,16 +74,6 @@ class Connection {
     std::vector<std::string> columns;
     ReadOptions read_options;
     google::cloud::optional<std::string> partition_token;
-
-    ReadParams(Transaction transaction, std::string table, KeySet keys,
-               std::vector<std::string> columns, ReadOptions read_options,
-               google::cloud::optional<std::string> partition_token = {})
-        : transaction(std::move(transaction)),
-          table(std::move(table)),
-          keys(std::move(keys)),
-          columns(std::move(columns)),
-          read_options(std::move(read_options)),
-          partition_token(std::move(partition_token)) {}
   };
 
   /// Wrap the arguments to `PartitionRead()`.
@@ -98,12 +88,6 @@ class Connection {
     Transaction transaction;
     SqlStatement statement;
     google::cloud::optional<std::string> partition_token;
-
-    SqlParams(Transaction transaction, SqlStatement statement,
-              google::cloud::optional<std::string> partition_token = {})
-        : transaction(std::move(transaction)),
-          statement(std::move(statement)),
-          partition_token(std::move(partition_token)) {}
   };
 
   /// Wrap the arguments to `ExecutePartitionedDml()`.
