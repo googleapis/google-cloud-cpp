@@ -31,8 +31,14 @@ class ClientOptionsTest : public ::testing::Test {
         endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
 
  protected:
-  void SetUp() override { enable_tracing_.SetUp(); }
-  void TearDown() override { enable_tracing_.TearDown(); }
+  void SetUp() override {
+    enable_tracing_.SetUp();
+    endpoint_.SetUp();
+  }
+  void TearDown() override {
+    enable_tracing_.TearDown();
+    endpoint_.TearDown();
+  }
 
  protected:
   testing_util::EnvironmentVariableRestore enable_tracing_;
@@ -120,10 +126,8 @@ TEST_F(ClientOptionsTest, SetProjectId) {
   EXPECT_EQ("test-project-id", options.project_id());
 }
 
-TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+TEST_F(ClientOptionsTest, SetDownloadBufferSize) {
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_size = client_options.download_buffer_size();
   EXPECT_NE(0U, default_size);
   client_options.SetDownloadBufferSize(1024);
@@ -133,9 +137,7 @@ TEST_F(ClientOptionsTest, SetdownloadBufferSize) {
 }
 
 TEST_F(ClientOptionsTest, SetUploadBufferSize) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_size = client_options.upload_buffer_size();
   EXPECT_NE(0U, default_size);
   client_options.SetUploadBufferSize(1024);
@@ -154,9 +156,7 @@ TEST_F(ClientOptionsTest, UserAgentPrefix) {
 }
 
 TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_size = client_options.maximum_simple_upload_size();
   EXPECT_NE(0U, default_size);
   client_options.set_maximum_simple_upload_size(1024);
@@ -166,9 +166,7 @@ TEST_F(ClientOptionsTest, SetMaximumSimpleUploadSize) {
 }
 
 TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_value = client_options.enable_ssl_locking_callbacks();
   EXPECT_TRUE(default_value);
   client_options.set_enable_ssl_locking_callbacks(false);
@@ -178,9 +176,7 @@ TEST_F(ClientOptionsTest, SetEnableLockingCallbacks) {
 }
 
 TEST_F(ClientOptionsTest, SetMaximumSocketRecvSize) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_value = client_options.maximum_socket_recv_size();
   EXPECT_EQ(0, default_value);
   client_options.set_maximum_socket_recv_size(16 * 1024);
@@ -188,9 +184,7 @@ TEST_F(ClientOptionsTest, SetMaximumSocketRecvSize) {
 }
 
 TEST_F(ClientOptionsTest, SetMaximumSocketSendSize) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_value = client_options.maximum_socket_send_size();
   EXPECT_EQ(0, default_value);
   client_options.set_maximum_socket_send_size(16 * 1024);
@@ -198,9 +192,7 @@ TEST_F(ClientOptionsTest, SetMaximumSocketSendSize) {
 }
 
 TEST_F(ClientOptionsTest, SetMaximumDownloadStall) {
-  auto opts = ClientOptions::CreateDefaultClientOptions();
-  ASSERT_STATUS_OK(opts);
-  ClientOptions client_options = *opts;
+  ClientOptions client_options(oauth2::CreateAnonymousCredentials());
   auto default_value = client_options.download_stall_timeout();
   EXPECT_NE(0, default_value.count());
   client_options.set_download_stall_timeout(std::chrono::seconds(60));
