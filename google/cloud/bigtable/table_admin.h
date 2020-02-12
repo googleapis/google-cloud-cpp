@@ -23,7 +23,7 @@
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/status_or.h"
 #include <future>
 #include <memory>
