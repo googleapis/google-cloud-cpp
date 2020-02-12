@@ -165,6 +165,86 @@ class SetOptionsApplyHelper {
 };
 
 /**
+ * A class representing an individual shard of the parallel upload.
+ *
+ * In order to perform a parallel upload of a file, you should call
+ * `CreateUploadShards()` and it will return a vector of objects of this class.
+ * You should execute the `Upload()` member function on them in parallel to
+ * execute the upload.
+ *
+ * You can then obtain the status of the whole upload via `WaitForCompletion()`.
+ */
+class ParallelUploadFileShard {
+ public:
+  ParallelUploadFileShard(ParallelUploadFileShard const&) = delete;
+  ParallelUploadFileShard& operator=(ParallelUploadFileShard const&) = delete;
+  ParallelUploadFileShard(ParallelUploadFileShard&&) = default;
+  ParallelUploadFileShard& operator=(ParallelUploadFileShard&&) = default;
+  ~ParallelUploadFileShard();
+
+  /**
+   * Perform the upload of this shard.
+   *
+   * This function will block until the shard is completed, or a permanent
+   *     failure is encountered, or the retry policy is exhausted.
+   */
+  Status Upload();
+
+  /**
+   * Asynchronously wait for completion of the whole upload operation (not only
+   *     this shard).
+   *
+   * @return the returned future will become satisfied once the whole upload
+   *     operation finishes (i.e. `Upload()` completes on all shards); on
+   *     success, it will hold the destination object's metadata
+   */
+  future<StatusOr<ObjectMetadata>> WaitForCompletion() {
+    return state_->WaitForCompletion();
+  }
+
+  /**
+   * Cleanup all the temporary files
+   *
+   * The destruction of the last of these objects tied to a parallel upload will
+   * cleanup of all the temporary files used in the process of that parallel
+   * upload. If the cleanup fails, it will fail silently not to crash the
+   * program.
+   *
+   * If you want to control the status of the cleanup, use this member function
+   * to do it eagerly, before destruction.
+   *
+   * It is enough to call it on one of the objects, but it is not invalid to
+   * call it on all objects.
+   */
+  Status EagerCleanup() { return state_->EagerCleanup(); }
+
+ private:
+  ParallelUploadFileShard(std::shared_ptr<ParallelUploadStateImpl> state,
+                          ObjectWriteStream ostream, std::string file_name,
+                          std::uintmax_t offset_in_file,
+                          std::uintmax_t bytes_to_upload,
+                          std::size_t upload_buffer_size)
+      : state_(std::move(state)),
+        ostream_(std::move(ostream)),
+        file_name_(std::move(file_name)),
+        offset_in_file_(offset_in_file),
+        left_to_upload_(bytes_to_upload),
+        upload_buffer_size_(upload_buffer_size) {}
+
+  std::shared_ptr<ParallelUploadStateImpl> state_;
+  ObjectWriteStream ostream_;
+  std::string file_name_;
+  std::uintmax_t offset_in_file_;
+  std::uintmax_t left_to_upload_;
+  std::size_t upload_buffer_size_;
+
+  template <typename... Options>
+  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
+      Client client, std::string file_name, std::string bucket_name,
+      std::string object_name, std::string prefix, Options&&... options);
+};
+
+/**
  * The state controlling uploading a GCS object via multiple parallel streams.
  *
  * To use this class obtain the state via `PrepareParallelUpload` and then write
@@ -244,6 +324,10 @@ class NonResumableParallelUploadState {
   std::vector<ObjectWriteStream> shards_;
 
   friend class NonResumableParallelObjectWriteStreambuf;
+  template <typename... Options>
+  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
+      Client client, std::string file_name, std::string bucket_name,
+      std::string object_name, std::string prefix, Options&&... options);
 };
 
 /**
@@ -391,86 +475,6 @@ struct PrepareParallelUploadApplyHelper {
 };
 
 /**
- * A class representing an individual shard of the parallel upload.
- *
- * In order to perform a parallel upload of a file, you should call
- * `CreateUploadShards()` and it will return a vector of objects of this class.
- * You should execute the `Upload()` member function on them in parallel to
- * execute the upload.
- *
- * You can then obtain the status of the whole upload via `WaitForCompletion()`.
- */
-class ParallelUploadFileShard {
- public:
-  ParallelUploadFileShard(ParallelUploadFileShard const&) = delete;
-  ParallelUploadFileShard& operator=(ParallelUploadFileShard const&) = delete;
-  ParallelUploadFileShard(ParallelUploadFileShard&&) = default;
-  ParallelUploadFileShard& operator=(ParallelUploadFileShard&&) = default;
-  ~ParallelUploadFileShard();
-
-  /**
-   * Perform the upload of this shard.
-   *
-   * This function will block until the shard is completed, or a permanent
-   *     failure is encountered, or the retry policy is exhausted.
-   */
-  Status Upload();
-
-  /**
-   * Asynchronously wait for completion of the whole upload operation (not only
-   *     this shard).
-   *
-   * @return the returned future will become satisfied once the whole upload
-   *     operation finishes (i.e. `Upload()` completes on all shards); on
-   *     success, it will hold the destination object's metadata
-   */
-  future<StatusOr<ObjectMetadata>> WaitForCompletion() {
-    return state_->WaitForCompletion();
-  }
-
-  /**
-   * Cleanup all the temporary files
-   *
-   * The destruction of the last of these objects tied to a parallel upload will
-   * cleanup of all the temporary files used in the process of that parallel
-   * upload. If the cleanup fails, it will fail silently not to crash the
-   * program.
-   *
-   * If you want to control the status of the cleanup, use this member function
-   * to do it eagerly, before destruction.
-   *
-   * It is enough to call it on one of the objects, but it is not invalid to
-   * call it on all objects.
-   */
-  Status EagerCleanup() { return state_->EagerCleanup(); }
-
- private:
-  ParallelUploadFileShard(
-      std::shared_ptr<NonResumableParallelUploadState> state,
-      ObjectWriteStream ostream, std::string file_name,
-      std::uintmax_t offset_in_file, std::uintmax_t bytes_to_upload,
-      std::size_t upload_buffer_size)
-      : state_(std::move(state)),
-        ostream_(std::move(ostream)),
-        file_name_(std::move(file_name)),
-        offset_in_file_(offset_in_file),
-        left_to_upload_(bytes_to_upload),
-        upload_buffer_size_(upload_buffer_size) {}
-
-  std::shared_ptr<NonResumableParallelUploadState> state_;
-  ObjectWriteStream ostream_;
-  std::string file_name_;
-  std::uintmax_t offset_in_file_;
-  std::uintmax_t left_to_upload_;
-  std::size_t upload_buffer_size_;
-
-  template <typename... Options>
-  friend StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
-      Client client, std::string file_name, std::string bucket_name,
-      std::string object_name, std::string prefix, Options&&... options);
-};
-
-/**
  * Prepare a parallel upload of a given file.
  *
  * The returned opaque objects reflect computed shards of the given file. Each
@@ -569,8 +573,8 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
     std::uintmax_t offset = stream_size * i;
     std::uintmax_t size = (std::min)(file_size - stream_size * i, stream_size);
     res.emplace_back(ParallelUploadFileShard(
-        shared_state, std::move(shared_state->shards()[i]), file_name, offset,
-        size, upload_buffer_size));
+        shared_state->impl_, std::move(shared_state->shards()[i]), file_name,
+        offset, size, upload_buffer_size));
   }
 #if !defined(__clang__) && \
     (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 9))
