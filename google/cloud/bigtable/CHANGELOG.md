@@ -1,6 +1,12 @@
 # Changelog
 
-## v1.8.x - TBD
+## v1.9.x - TBD
+
+## v1.8.x - 2020-02
+
+* fix: correct environment handling in client_options_test (#3374)
+* chore: update g-c-cpp-common to v0.19.0 (#3384)
+* chore: upgrade to cpp-cmakefiles v0.4.1 (#3372)
 
 ## v1.7.x - 2020-02
 

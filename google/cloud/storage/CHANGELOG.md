@@ -1,6 +1,13 @@
 # Changelog
 
-## v1.10.x - TBD
+## v1.11.x - TBD
+
+## v1.10.x - 2020-02
+
+* chore: update g-c-cpp-common to v0.19.0 (#3384)
+* feat: implement ParallelUploadPersistentState (#3382)
+* refactor: create ParallelUploadStateImpl (#3379)
+* refactor: ScopedDeleter doesn't require metadata (#3380)
 
 ## v1.9.x - 2020-02
 
