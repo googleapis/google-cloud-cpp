@@ -36,6 +36,26 @@ class PublisherConnectionImpl : public PublisherConnection {
     return stub_->CreateTopic(context, p.topic);
   }
 
+  ListTopicsRange ListTopics(ListTopicsParams p) override {
+    google::pubsub::v1::ListTopicsRequest request;
+    request.set_project(std::move(p.project_id));
+    auto& stub = stub_;
+    return ListTopicsRange(
+        std::move(request),
+        [stub](google::pubsub::v1::ListTopicsRequest const& request) {
+          grpc::ClientContext context;
+          return stub->ListTopics(context, request);
+        },
+        [](google::pubsub::v1::ListTopicsResponse response) {
+          std::vector<google::pubsub::v1::Topic> items;
+          items.reserve(response.topics_size());
+          for (auto& item : *response.mutable_topics()) {
+            items.push_back(std::move(item));
+          }
+          return items;
+        });
+  }
+
   Status DeleteTopic(DeleteTopicParams p) override {
     google::pubsub::v1::DeleteTopicRequest request;
     request.set_topic(p.topic.FullName());

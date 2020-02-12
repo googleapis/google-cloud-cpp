@@ -51,6 +51,30 @@ void CreateTopicCommand(std::vector<std::string> const& argv) {
   CreateTopic(std::move(client), argv[0], argv[1]);
 }
 
+//! [list-topics]
+void ListTopics(google::cloud::pubsub::PublisherClient client,
+                std::string const& project_id) {
+  int count = 0;
+  for (auto const& topic : client.ListTopics(project_id)) {
+    if (!topic) throw std::runtime_error(topic.status().message());
+    std::cout << "Topic Name: " << topic->name() << "\n";
+    ++count;
+  }
+  if (count == 0) {
+    std::cout << "No topics found in project " << project_id << "\n";
+  }
+}
+//! [list-topics]
+
+void ListTopicsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("create-topic <project-id>");
+  }
+  google::cloud::pubsub::PublisherClient client(
+      google::cloud::pubsub::MakePublisherConnection());
+  ListTopics(std::move(client), argv[0]);
+}
+
 //! [delete-topic]
 void DeleteTopic(google::cloud::pubsub::PublisherClient client,
                  std::string project_id, std::string topic_id) {
@@ -78,6 +102,7 @@ int RunOneCommand(std::vector<std::string> argv) {
 
   CommandMap commands = {
       {"create-topic", CreateTopicCommand},
+      {"list-topics", ListTopicsCommand},
       {"delete-topic", DeleteTopicCommand},
   };
 
@@ -136,6 +161,9 @@ void RunAll() {
 
   std::cout << "\nRunning create-topic sample\n";
   RunOneCommand({"", "create-topic", project_id, topic_id});
+
+  std::cout << "\nRunning list-topics sample\n";
+  RunOneCommand({"", "list-topics", project_id});
 
   std::cout << "\nRunning delete-topic sample\n";
   RunOneCommand({"", "delete-topic", project_id, topic_id});

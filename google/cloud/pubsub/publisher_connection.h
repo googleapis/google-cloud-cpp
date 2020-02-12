@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/topic.h"
+#include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/status_or.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 #include <memory>
@@ -25,6 +26,19 @@ namespace google {
 namespace cloud {
 namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
+
+/**
+ * An input range to stream Cloud Pub/Sub topics.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::pubsub::v1::Topic` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListTopicsRange = google::cloud::internal::PaginationRange<
+    google::pubsub::v1::Topic, google::pubsub::v1::ListTopicsRequest,
+    google::pubsub::v1::ListTopicsResponse>;
 
 /**
  * A connection to Cloud Pub/Sub.
@@ -57,6 +71,10 @@ class PublisherConnection {
     google::pubsub::v1::Topic topic;
   };
 
+  struct ListTopicsParams {
+    std::string project_id;
+  };
+
   /// Wrap the arguments for `DeleteTopic()`
   struct DeleteTopicParams {
     Topic topic;
@@ -66,6 +84,9 @@ class PublisherConnection {
   /// Defines the interface for `Client::CreateTopic()`
   virtual StatusOr<google::pubsub::v1::Topic> CreateTopic(
       CreateTopicParams) = 0;
+
+  /// Defines the interface for `Client::ListTopics()`
+  virtual ListTopicsRange ListTopics(ListTopicsParams) = 0;
 
   /// Defines the interface for `Client::DeleteTopic()`
   virtual Status DeleteTopic(DeleteTopicParams) = 0;

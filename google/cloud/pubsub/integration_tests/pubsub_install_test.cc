@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/version.h"
+#include "google/cloud/pubsub/publisher_client.h"
 #include "google/cloud/internal/getenv.h"
 #include <google/pubsub/v1/pubsub.grpc.pb.h>
 #include <grpcpp/grpcpp.h>
@@ -35,12 +35,16 @@ int main(int argc, char* argv[]) try {
         "non-empty value");
   }
 
-  auto creds = grpc::InsecureChannelCredentials();
-  auto channel = grpc::CreateChannel("localhost:12345", creds);
-  auto stub = google::pubsub::v1::Publisher::NewStub(channel);
+  std::cout << "Cloud Pub/Sub C++ Client version: "
+            << google::cloud::pubsub::VersionString() << "\n";
 
-  // TODO(#4) - this is just a "does this link" test for now.
-  std::cout << google::cloud::pubsub::VersionString() << "\n";
+  auto publisher = google::cloud::pubsub::PublisherClient(
+      google::cloud::pubsub::MakePublisherConnection());
+  std::cout << "Available topics in project " << project_id << ":\n";
+  for (auto const& topic : publisher.ListTopics(project_id)) {
+    if (!topic) throw std::runtime_error(topic.status().message());
+    std::cout << topic->name() << "\n";
+  }
 
   return 0;
 } catch (std::exception const& ex) {

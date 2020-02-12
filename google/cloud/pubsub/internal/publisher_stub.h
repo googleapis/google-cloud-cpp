@@ -43,6 +43,11 @@ class PublisherStub {
       grpc::ClientContext& client_context,
       google::pubsub::v1::Topic const& request) = 0;
 
+  /// List existing topics.
+  virtual StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListTopicsRequest const& request) = 0;
+
   /// Delete a topic.
   virtual Status DeleteTopic(
       grpc::ClientContext& client_context,

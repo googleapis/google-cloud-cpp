@@ -39,7 +39,17 @@ class DefaultPublisherStub : public PublisherStub {
     return response;
   }
 
-  /// Delete a topic.
+  StatusOr<google::pubsub::v1::ListTopicsResponse> ListTopics(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListTopicsRequest const& request) override {
+    google::pubsub::v1::ListTopicsResponse response;
+    auto status = grpc_stub_->ListTopics(&context, request, &response);
+    if (!status.ok()) {
+      return MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   Status DeleteTopic(
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteTopicRequest const& request) override {
