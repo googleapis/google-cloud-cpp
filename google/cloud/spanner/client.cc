@@ -132,7 +132,7 @@ StatusOr<std::vector<QueryPartition>> Client::PartitionQuery(
     Transaction transaction, SqlStatement statement,
     PartitionOptions const& partition_options) {
   return conn_->PartitionQuery(
-      {{std::move(transaction), std::move(statement), {}}, partition_options});
+      {std::move(transaction), std::move(statement), partition_options});
 }
 
 StatusOr<DmlResult> Client::ExecuteDml(Transaction transaction,

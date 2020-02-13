@@ -1850,9 +1850,7 @@ TEST(ConnectionImplTest, PartitionQuerySuccess) {
 
   SqlStatement sql_statement("select * from table");
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
-      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
-        sql_statement,
-        {}},
+      {MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()), sql_statement,
        PartitionOptions()});
   ASSERT_STATUS_OK(result);
 
@@ -1883,10 +1881,8 @@ TEST(ConnectionImplTest, PartitionQueryPermanentFailure) {
       .WillOnce(Return(failed_status));
 
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
-      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
-        SqlStatement("select * from table"),
-        {}},
-       PartitionOptions()});
+      {MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
+       SqlStatement("select * from table"), PartitionOptions()});
   EXPECT_EQ(StatusCode::kPermissionDenied, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr(failed_status.message()));
 }
@@ -1910,10 +1906,8 @@ TEST(ConnectionImplTest, PartitionQueryTooManyTransientFailures) {
       .WillRepeatedly(Return(failed_status));
 
   StatusOr<std::vector<QueryPartition>> result = conn->PartitionQuery(
-      {{MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
-        SqlStatement("select * from table"),
-        {}},
-       PartitionOptions()});
+      {MakeReadOnlyTransaction(Transaction::ReadOnlyOptions()),
+       SqlStatement("select * from table"), PartitionOptions()});
   EXPECT_EQ(StatusCode::kUnavailable, result.status().code());
   EXPECT_THAT(result.status().message(), HasSubstr(failed_status.message()));
 }
@@ -2316,8 +2310,7 @@ TEST(ConnectionImplTest, PartitionQuerySessionNotFound) {
   auto conn = MakeLimitedRetryConnection(db, mock);
   auto txn = MakeReadWriteTransaction();
   SetTransactionId(txn, "test-txn-id");
-  auto sql_params = Connection::SqlParams{txn, SqlStatement(), {}};
-  auto response = conn->PartitionQuery({sql_params, {}});
+  auto response = conn->PartitionQuery({txn, {}, {}});
   EXPECT_FALSE(response.ok());
   auto status = response.status();
   EXPECT_TRUE(IsSessionNotFound(status)) << status;

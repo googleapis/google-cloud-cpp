@@ -97,7 +97,8 @@ class Connection {
 
   /// Wrap the arguments to `PartitionQuery()`.
   struct PartitionQueryParams {
-    SqlParams sql_params;
+    Transaction transaction;
+    SqlStatement statement;
     PartitionOptions partition_options;
   };
 

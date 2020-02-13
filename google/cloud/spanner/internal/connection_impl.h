@@ -131,7 +131,7 @@ class ConnectionImpl : public Connection {
 
   StatusOr<std::vector<QueryPartition>> PartitionQueryImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,
-      SqlParams const& params, PartitionOptions const& partition_options);
+      PartitionQueryParams params);
 
   StatusOr<BatchDmlResult> ExecuteBatchDmlImpl(
       SessionHolder& session, google::spanner::v1::TransactionSelector& s,

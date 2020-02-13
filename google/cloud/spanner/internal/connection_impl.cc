@@ -187,11 +187,10 @@ StatusOr<PartitionedDmlResult> ConnectionImpl::ExecutePartitionedDml(
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
     PartitionQueryParams params) {
   return internal::Visit(
-      std::move(params.sql_params.transaction),
+      std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       spanner_proto::TransactionSelector& s, std::int64_t) {
-        return PartitionQueryImpl(session, s, params.sql_params,
-                                  params.partition_options);
+        return PartitionQueryImpl(session, s, std::move(params));
       });
 }
 
@@ -582,7 +581,8 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
-    SqlParams const& params, PartitionOptions const& partition_options) {
+    PartitionQueryParams
+        params) {  // NOLINT(performance-unnecessary-value-param)
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
   auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
@@ -598,7 +598,8 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   *request.mutable_params() = std::move(*sql_statement.mutable_params());
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
-  *request.mutable_partition_options() = internal::ToProto(partition_options);
+  *request.mutable_partition_options() =
+      internal::ToProto(std::move(params.partition_options));
 
   auto stub = session_pool_->GetStub(*session);
   auto response = internal::RetryLoop(
@@ -623,7 +624,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   for (auto& partition : response->partitions()) {
     query_partitions.push_back(internal::MakeQueryPartition(
         response->transaction().id(), session->session_name(),
-        partition.partition_token(), params.statement));
+        partition.partition_token(), std::move(params.statement)));
   }
 
   return query_partitions;
