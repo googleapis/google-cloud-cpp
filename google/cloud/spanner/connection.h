@@ -87,6 +87,8 @@ class Connection {
   struct SqlParams {
     Transaction transaction;
     SqlStatement statement;
+    struct {
+    } placeholder_do_not_use_name_will_change;
     google::cloud::optional<std::string> partition_token;
   };
 
