@@ -17,7 +17,6 @@
 """Automatically generated source lists for spanner_client - DO NOT EDIT."""
 
 spanner_client_hdrs = [
-    "background_threads.h",
     "backoff_policy.h",
     "batch_dml_result.h",
     "bytes.h",
@@ -35,7 +34,6 @@ spanner_client_hdrs = [
     "instance_admin_client.h",
     "instance_admin_connection.h",
     "internal/api_client_header.h",
-    "internal/background_threads_impl.h",
     "internal/build_info.h",
     "internal/compiler_info.h",
     "internal/connection_impl.h",
@@ -98,7 +96,6 @@ spanner_client_srcs = [
     "instance_admin_client.cc",
     "instance_admin_connection.cc",
     "internal/api_client_header.cc",
-    "internal/background_threads_impl.cc",
     "internal/compiler_info.cc",
     "internal/connection_impl.cc",
     "internal/database_admin_logging.cc",

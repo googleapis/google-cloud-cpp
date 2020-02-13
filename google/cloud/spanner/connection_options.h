@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_OPTIONS_H
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_CONNECTION_OPTIONS_H
 
-#include "google/cloud/spanner/background_threads.h"
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/grpc_utils/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
