@@ -18,4 +18,5 @@
 
 pubsub_client_integration_tests = [
     "publisher_admin_integration_test.cc",
+    "subscriber_admin_integration_test.cc",
 ]

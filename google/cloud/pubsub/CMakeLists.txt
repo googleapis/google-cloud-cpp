@@ -95,6 +95,8 @@ add_library(
     internal/compiler_info.h
     internal/publisher_stub.cc
     internal/publisher_stub.h
+    internal/subscriber_stub.cc
+    internal/subscriber_stub.h
     internal/user_agent_prefix.cc
     internal/user_agent_prefix.h
     publisher_client.cc
