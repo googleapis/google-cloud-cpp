@@ -22,8 +22,11 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/background_threads.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
+#include <chrono>
 #include <condition_variable>
 #include <cstddef>
 #include <map>
@@ -62,8 +65,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    */
   SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
               SessionPoolOptions options,
+              std::unique_ptr<BackgroundThreads> background_threads,
               std::unique_ptr<RetryPolicy> retry_policy,
               std::unique_ptr<BackoffPolicy> backoff_policy);
+
+  ~SessionPool();
+
   /**
    * If using the factory method is not possible, call `Initialize()` exactly
    * once, immediately after constructing the pool. This is necessary because
@@ -118,8 +125,12 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   void UpdateNextChannelForCreateSessions();  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
+  void ScheduleBackgroundWork(std::chrono::seconds relative_time);
+  void DoBackgroundWork();
+
   Database const db_;
   SessionPoolOptions const options_;
+  std::unique_ptr<BackgroundThreads> const background_threads_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   int const max_pool_size_;
@@ -130,6 +141,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
   bool create_in_progress_ = false;                 // GUARDED_BY(mu_)
   int num_waiting_for_session_ = 0;                 // GUARDED_BY(mu_)
+  future<void> current_timer_;
 
   // `channels_` is guaranteed to be non-empty and will not be resized after
   // the constructor runs (so the iterators are guaranteed to always be valid).
@@ -150,7 +162,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
  */
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options, std::unique_ptr<RetryPolicy> retry_policy,
+    SessionPoolOptions options,
+    std::unique_ptr<BackgroundThreads> background_threads,
+    std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy);
 
 }  // namespace internal

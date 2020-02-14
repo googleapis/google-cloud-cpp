@@ -16,10 +16,15 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/grpc_utils/completion_queue.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/log.h"
 #include "google/cloud/status.h"
 #include <algorithm>
+#include <chrono>
 #include <random>
+#include <thread>
 
 namespace google {
 namespace cloud {
@@ -31,11 +36,14 @@ namespace spanner_proto = ::google::spanner::v1;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options, std::unique_ptr<RetryPolicy> retry_policy,
+    SessionPoolOptions options,
+    std::unique_ptr<BackgroundThreads> background_threads,
+    std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   auto pool = std::make_shared<SessionPool>(
       std::move(db), std::move(stubs), std::move(options),
-      std::move(retry_policy), std::move(backoff_policy));
+      std::move(background_threads), std::move(retry_policy),
+      std::move(backoff_policy));
   pool->Initialize();
   return pool;
 }
@@ -43,11 +51,13 @@ std::shared_ptr<SessionPool> MakeSessionPool(
 SessionPool::SessionPool(Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
                          SessionPoolOptions options,
+                         std::unique_ptr<BackgroundThreads> background_threads,
                          std::unique_ptr<RetryPolicy> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy)
     : db_(std::move(db)),
       options_(std::move(
           options.EnforceConstraints(static_cast<int>(stubs.size())))),
+      background_threads_(std::move(background_threads)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
       max_pool_size_(options_.max_sessions_per_channel() *
@@ -89,6 +99,43 @@ void SessionPool::Initialize() {
       (void)CreateSessions(lk, channel, options_.labels(), num_sessions);
     }
   }
+  ScheduleBackgroundWork(std::chrono::seconds(5));
+}
+
+SessionPool::~SessionPool() {
+  // All references to this object are via `shared_ptr`; since we're in the
+  // destructor that implies there can be no concurrent accesses to any member
+  // variables, including `current_timer_`.
+  //
+  // Note that it *is* possible the timer lambda in `ScheduleBackgroundWork`
+  // is executing concurrently. However, since we are in the destructor we know
+  // that the lambda must not have yet successfully finished a call to `lock()`
+  // on the `weak_ptr` to `this` it holds. Any subsequent or in-progress calls
+  // must return `nullptr`, and the lambda will not do any work nor reschedule
+  // the timer.
+  current_timer_.cancel();
+}
+
+void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {
+  // See the comment in the destructor about the thread safety of this method.
+  std::weak_ptr<SessionPool> pool = shared_from_this();
+  current_timer_ =
+      background_threads_->cq()
+          .MakeRelativeTimer(relative_time)
+          .then([pool](future<StatusOr<std::chrono::system_clock::time_point>>
+                           result) {
+            if (result.get().ok()) {
+              if (auto shared_pool = pool.lock()) {
+                shared_pool->DoBackgroundWork();
+              }
+            }
+          });
+}
+
+void SessionPool::DoBackgroundWork() {
+  // TODO(#1171) Implement SessionPool session refresh
+  // TODO(#1172) maintain desired SessionPool size
+  ScheduleBackgroundWork(std::chrono::seconds(5));
 }
 
 StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
@@ -219,6 +266,7 @@ Status SessionPool::CreateSessions(
 }
 
 void SessionPool::UpdateNextChannelForCreateSessions() {
+  // `mu_` must be held by the caller.
   next_channel_for_create_sessions_ = channels_.begin();
   for (auto it = channels_.begin(); it != channels_.end(); ++it) {
     if (it->session_count < next_channel_for_create_sessions_->session_count) {
