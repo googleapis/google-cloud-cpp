@@ -346,9 +346,13 @@ namespace internal {
 
 ScopedDeleter::ScopedDeleter(
     std::function<Status(std::string, std::int64_t)> delete_fun)
-    : delete_fun_(std::move(delete_fun)) {}
+    : enabled_(true), delete_fun_(std::move(delete_fun)) {}
 
-ScopedDeleter::~ScopedDeleter() { ExecuteDelete(); }
+ScopedDeleter::~ScopedDeleter() {
+  if (enabled_) {
+    ExecuteDelete();
+  }
+}
 
 void ScopedDeleter::Add(ObjectMetadata object) {
   auto generation = object.generation();

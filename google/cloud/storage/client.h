@@ -45,6 +45,7 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 class NonResumableParallelUploadState;
+class ResumableParallelUploadState;
 }  // namespace internal
 /**
  * The Google Cloud Storage (GCS) Client.
@@ -3052,6 +3053,7 @@ class Client {
   std::shared_ptr<internal::RawClient> raw_client_;
 
   friend class internal::NonResumableParallelUploadState;
+  friend class internal::ResumableParallelUploadState;
 };
 
 /**
@@ -3211,7 +3213,10 @@ class ScopedDeleter {
   /// Execute all the deferred deletions now.
   Status ExecuteDelete();
 
+  void Enable(bool enable) { enabled_ = enable; }
+
  private:
+  bool enabled_;
   std::function<Status(std::string, std::int64_t)> delete_fun_;
   std::vector<std::pair<std::string, std::int64_t>> object_list_;
 };

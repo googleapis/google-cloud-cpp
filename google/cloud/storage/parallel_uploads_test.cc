@@ -49,7 +49,13 @@ std::string const kDestObjectName = "final-object";
 int const kDestGeneration = 123;
 int const kUploadMarkerGeneration = 234;
 int const kComposeMarkerGeneration = 345;
+int const kPersistentStateGeneration = 456;
 std::string const kPrefix = "some-prefix";
+std::string const kPersistentStateName = kPrefix + ".upload_state";
+std::string const kParallelResumableId =
+    "ParUpl:" + kPersistentStateName + ":" +
+    std::to_string(kPersistentStateGeneration);
+std::string const kIndividualSessionId = "some_session_id";
 
 std::string ObjectId(std::string const& bucket, std::string const& object,
                      int generation) {
@@ -148,16 +154,20 @@ class ParallelUploadTest : public ::testing::Test {
     raw_client_mock.reset();
   }
 
-  void ExpectCreateSessionFailure(std::string const& object_name,
-                                  Status status) {
+  void ExpectCreateSessionFailure(
+      std::string const& object_name, Status status,
+      optional<std::string> const& resumable_session_id =
+          optional<std::string>()) {
     EXPECT_FALSE(status.ok())
         << "Expect either a failure or an actual MockResumableUploadSession";
     session_mocks.emplace(std::move(status));
-    AddNewExpectation(object_name);
+    AddNewExpectation(object_name, resumable_session_id);
   }
 
   testing::MockResumableUploadSession& ExpectCreateFailingSession(
-      std::string const& object_name, Status status) {
+      std::string const& object_name, Status status,
+      optional<std::string> const& resumable_session_id =
+          optional<std::string>()) {
     auto session = google::cloud::internal::make_unique<
         testing::MockResumableUploadSession>();
     auto& res = *session;
@@ -165,20 +175,24 @@ class ParallelUploadTest : public ::testing::Test {
     using internal::ResumableUploadResponse;
 
     EXPECT_CALL(res, done()).WillRepeatedly(Return(false));
+    static std::string session_id(kIndividualSessionId);
+    EXPECT_CALL(res, session_id()).WillRepeatedly(ReturnRef(session_id));
     EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
     EXPECT_CALL(res, UploadChunk(_))
         .WillRepeatedly(Return(make_status_or(ResumableUploadResponse{
             "fake-url", 0, {}, ResumableUploadResponse::kInProgress, {}})));
     EXPECT_CALL(res, UploadFinalChunk(_, _))
         .WillRepeatedly(Return(std::move(status)));
-    AddNewExpectation(object_name);
+    AddNewExpectation(object_name, resumable_session_id);
 
     return res;
   }
 
   testing::MockResumableUploadSession& ExpectCreateSession(
       std::string const& object_name, int generation,
-      optional<std::string> expected_content = optional<std::string>()) {
+      optional<std::string> expected_content = optional<std::string>(),
+      optional<std::string> const& resumable_session_id =
+          optional<std::string>()) {
     auto session = google::cloud::internal::make_unique<
         testing::MockResumableUploadSession>();
     auto& res = *session;
@@ -186,6 +200,8 @@ class ParallelUploadTest : public ::testing::Test {
     using internal::ResumableUploadResponse;
 
     EXPECT_CALL(res, done()).WillRepeatedly(Return(false));
+    static std::string session_id(kIndividualSessionId);
+    EXPECT_CALL(res, session_id()).WillRepeatedly(ReturnRef(session_id));
     EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
     if (expected_content) {
       EXPECT_CALL(res, UploadFinalChunk(_, _))
@@ -209,7 +225,26 @@ class ParallelUploadTest : public ::testing::Test {
                                       ResumableUploadResponse::kDone,
                                       {}})));
     }
-    AddNewExpectation(object_name);
+    AddNewExpectation(object_name, resumable_session_id);
+
+    return res;
+  }
+
+  testing::MockResumableUploadSession& ExpectCreateSessionToSuspend(
+      std::string const& object_name,
+      optional<std::string> const& resumable_session_id =
+          optional<std::string>()) {
+    auto session = google::cloud::internal::make_unique<
+        testing::MockResumableUploadSession>();
+    auto& res = *session;
+    session_mocks.emplace(std::move(session));
+    using internal::ResumableUploadResponse;
+
+    EXPECT_CALL(res, done()).WillRepeatedly(Return(false));
+    static std::string session_id(kIndividualSessionId);
+    EXPECT_CALL(res, session_id()).WillRepeatedly(ReturnRef(session_id));
+    EXPECT_CALL(res, next_expected_byte()).WillRepeatedly(Return(0));
+    AddNewExpectation(object_name, resumable_session_id);
 
     return res;
   }
@@ -222,13 +257,25 @@ class ParallelUploadTest : public ::testing::Test {
       ClientOptions(oauth2::CreateAnonymousCredentials());
 
  private:
-  void AddNewExpectation(std::string const& object_name) {
+  void AddNewExpectation(std::string const& object_name,
+                         optional<std::string> const& resumable_session_id =
+                             optional<std::string>()) {
     EXPECT_CALL(*raw_client_mock, CreateResumableSession(_))
         .WillOnce(Invoke(
-            [this, object_name](internal::ResumableUploadRequest const& request)
+            [this, object_name, resumable_session_id](
+                internal::ResumableUploadRequest const& request)
                 -> StatusOr<std::unique_ptr<internal::ResumableUploadSession>> {
               EXPECT_EQ(object_name, request.object_name());
               EXPECT_EQ(kBucketName, request.bucket_name());
+
+              if (resumable_session_id) {
+                EXPECT_TRUE(request.HasOption<UseResumableUploadSession>());
+                auto actual_resumable_session_id =
+                    request.GetOption<UseResumableUploadSession>();
+                EXPECT_EQ(*resumable_session_id,
+                          actual_resumable_session_id.value());
+              }
+
               auto res = std::move(session_mocks.top());
               session_mocks.pop();
               return res;
@@ -239,7 +286,9 @@ class ParallelUploadTest : public ::testing::Test {
 
 auto create_composition_check =
     [](std::vector<std::pair<std::string, int>> source_objects,
-       std::string const& dest_obj, StatusOr<ObjectMetadata> res) {
+       std::string const& dest_obj, StatusOr<ObjectMetadata> res,
+       optional<std::int64_t> expected_if_gen_match =
+           optional<std::int64_t>()) {
       internal::nl::json json_source_objects;
       for (auto& obj : source_objects) {
         json_source_objects.emplace_back(internal::nl::json{
@@ -249,13 +298,18 @@ auto create_composition_check =
       internal::nl::json expected_payload = {
           {"kind", "storage#composeRequest"},
           {"sourceObjects", json_source_objects}};
-      return [dest_obj, res,
-              expected_payload](internal::ComposeObjectRequest const& r) {
+      return [dest_obj, res, expected_payload,
+              expected_if_gen_match](internal::ComposeObjectRequest const& r) {
         EXPECT_EQ(kBucketName, r.bucket_name());
         EXPECT_EQ(dest_obj, r.object_name());
         internal::nl::json actual_payload =
             internal::nl::json::parse(r.JsonPayload());
         EXPECT_EQ(expected_payload, actual_payload);
+        if (expected_if_gen_match) {
+          EXPECT_TRUE(r.HasOption<IfGenerationMatch>());
+          auto if_gen_match = r.GetOption<IfGenerationMatch>();
+          EXPECT_EQ(*expected_if_gen_match, if_gen_match.value());
+        }
         return res;
       };
     };
@@ -282,6 +336,43 @@ auto expect_new_object = [](std::string const& object_name, int generation) {
     EXPECT_EQ(object_name, request.object_name());
     EXPECT_EQ("", request.contents());
     return make_status_or(MockObject(object_name, generation));
+  };
+};
+
+auto expect_persistent_state = [](std::string const& state_name, int generation,
+                                  internal::nl::json const& state) {
+  return [state_name, generation,
+          state](internal::InsertObjectMediaRequest const& request) {
+    EXPECT_EQ(kBucketName, request.bucket_name());
+    EXPECT_EQ(state_name, request.object_name());
+    EXPECT_EQ(state.dump(), request.contents());
+    return make_status_or(MockObject(state_name, generation));
+  };
+};
+
+auto create_state_read_expectation = [](std::string const state_object,
+                                        std::int64_t generation,
+                                        internal::nl::json const& state) {
+  return [state_object, generation, state](ReadObjectRangeRequest req) {
+    EXPECT_EQ(state_object, req.object_name());
+    EXPECT_TRUE(req.HasOption<IfGenerationMatch>());
+    auto if_gen_match = req.GetOption<IfGenerationMatch>();
+    EXPECT_EQ(generation, if_gen_match.value());
+    auto res =
+        google::cloud::internal::make_unique<testing::MockObjectReadSource>();
+    EXPECT_CALL(*res, Read(_, _))
+        .WillOnce(Invoke([state](char* buf, std::size_t n) {
+          auto state_str = state.dump();
+          EXPECT_GE(n, state_str.size());
+          memcpy(buf, state_str.c_str(), state_str.size());
+          return ReadSourceResult{static_cast<std::size_t>(state_str.size()),
+                                  HttpResponse{200, "", {}}};
+        }))
+        .WillOnce(Return(ReadSourceResult{0, HttpResponse{200, "", {}}}));
+    EXPECT_CALL(*res, IsOpen()).WillRepeatedly(Return(true));
+    EXPECT_CALL(*res, Close())
+        .WillRepeatedly(Return(HttpResponse{200, "", {}}));
+    return StatusOr<std::unique_ptr<ObjectReadSource>>(std::move(res));
   };
 };
 
@@ -1060,6 +1151,503 @@ TEST(ParallelUploadPersistentState, StreamsEmpty) {
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain any streams"));
 }
+
+TEST(ParseResumableSessionId, InvalidPrefix) {
+  auto res = ParseResumableSessionId("blahblah");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  res = ParseResumableSessionId("b");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+}
+
+TEST(ParseResumableSessionId, NoSecondColon) {
+  auto res = ParseResumableSessionId("ParUpl:");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  res = ParseResumableSessionId("ParUpl:blahblah");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+}
+
+TEST(ParseResumableSessionId, GenerationNotANumber) {
+  auto res = ParseResumableSessionId("ParUpl:");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+  res = ParseResumableSessionId("ParUpl:some_name:some_gen");
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kInternal, res.status().code());
+}
+
+TEST_F(ParallelUploadTest, ResumableSuccess) {
+  int const num_shards = 3;
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "", "");
+  ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "", "");
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
+  internal::nl::json expected_state{
+      {"destination", "final-object"},
+      {"expected_generation", 0},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_1"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_2"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_persistent_state(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(Status(StatusCode::kNotFound, "")));
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Invoke(create_composition_check(
+          {{kPrefix + ".upload_shard_0", 111},
+           {kPrefix + ".upload_shard_1", 222},
+           {kPrefix + ".upload_shard_2", 333}},
+          kDestObjectName, MockObject(kDestObjectName, kDestGeneration))));
+
+  ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
+                               {{kPrefix + ".upload_shard_1", 222}, Status()},
+                               {{kPrefix + ".upload_shard_2", 333}, Status()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke(
+          expect_deletion(kPersistentStateName, kPersistentStateGeneration)));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_STATUS_OK(state);
+  auto res_future = state->WaitForCompletion();
+  EXPECT_TRUE(Unsatisfied(res_future));
+
+  auto cleanup_too_early = state->EagerCleanup();
+  ASSERT_FALSE(cleanup_too_early.ok());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
+  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+
+  state->shards().clear();
+  auto res = res_future.get();
+  EXPECT_STATUS_OK(res);
+
+  EXPECT_STATUS_OK(state->EagerCleanup());
+  EXPECT_STATUS_OK(state->EagerCleanup());
+}
+
+TEST_F(ParallelUploadTest, Suspend) {
+  int const num_shards = 3;
+  // The expectations need to be reversed.
+  ExpectCreateSessionToSuspend(kPrefix + ".upload_shard_2", "");
+  ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "", "");
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
+  internal::nl::json expected_state{
+      {"destination", "final-object"},
+      {"expected_generation", 0},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_1"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_2"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_persistent_state(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)));
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(Status(StatusCode::kNotFound, "")));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_STATUS_OK(state);
+  EXPECT_EQ(kParallelResumableId, state->resumable_session_id());
+  auto res_future = state->WaitForCompletion();
+  EXPECT_TRUE(Unsatisfied(res_future));
+
+  auto cleanup_too_early = state->EagerCleanup();
+  ASSERT_FALSE(cleanup_too_early.ok());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
+  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+
+  std::move(state->shards()[2]).Suspend();
+  state->shards().clear();
+  auto res = res_future.get();
+  EXPECT_FALSE(res);
+  EXPECT_EQ(StatusCode::kCancelled, res.status().code());
+}
+
+TEST_F(ParallelUploadTest, Resume) {
+  int const num_shards = 3;
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_2", 333, "",
+                      kIndividualSessionId);
+  ExpectCreateSession(kPrefix + ".upload_shard_1", 222, "",
+                      kIndividualSessionId);
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "",
+                      kIndividualSessionId);
+  internal::nl::json state_json{
+      {"destination", "final-object"},
+      {"expected_generation", 0},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_1"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_2"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Invoke(create_composition_check(
+          {{kPrefix + ".upload_shard_0", 111},
+           {kPrefix + ".upload_shard_1", 222},
+           {kPrefix + ".upload_shard_2", 333}},
+          kDestObjectName, MockObject(kDestObjectName, kDestGeneration))));
+  EXPECT_CALL(*raw_client_mock, ReadObject(_))
+      .WillOnce(Invoke(create_state_read_expectation(
+          kPersistentStateName, kPersistentStateGeneration, state_json)));
+
+  ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()},
+                               {{kPrefix + ".upload_shard_1", 222}, Status()},
+                               {{kPrefix + ".upload_shard_2", 333}, Status()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke(
+          expect_deletion(kPersistentStateName, kPersistentStateGeneration)));
+
+  auto state = PrepareParallelUpload(
+      *client, kBucketName, kDestObjectName, num_shards, kPrefix,
+      UseResumableUploadSession(kParallelResumableId));
+  EXPECT_STATUS_OK(state);
+  auto res_future = state->WaitForCompletion();
+  EXPECT_TRUE(Unsatisfied(res_future));
+
+  auto cleanup_too_early = state->EagerCleanup();
+  ASSERT_FALSE(cleanup_too_early.ok());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
+  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+
+  state->shards().clear();
+  auto res = res_future.get();
+  EXPECT_STATUS_OK(res);
+
+  EXPECT_STATUS_OK(state->EagerCleanup());
+  EXPECT_STATUS_OK(state->EagerCleanup());
+}
+
+TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCration) {
+  int const num_shards = 3;
+  // The expectations need to be reversed.
+  ExpectCreateSessionFailure(kPrefix + ".upload_shard_1", PermanentError());
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
+
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(Status(StatusCode::kNotFound, "")));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(PermanentError().code(), state.status().code());
+}
+
+TEST_F(ParallelUploadTest, BrokenResumableStream) {
+  int const num_shards = 3;
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_2", 333);
+  ExpectCreateFailingSession(kPrefix + ".upload_shard_1", PermanentError());
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111);
+
+  internal::nl::json expected_state{
+      {"destination", "final-object"},
+      {"expected_generation", 0},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_1"},
+         {"resumable_session_id", kIndividualSessionId}},
+        {{"name", "some-prefix.upload_shard_2"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_persistent_state(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)));
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(Status(StatusCode::kNotFound, "")));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_STATUS_OK(state);
+
+  state->shards().clear();
+  auto res = state->WaitForCompletion().get();
+  EXPECT_FALSE(res);
+  EXPECT_EQ(PermanentError().code(), res.status().code());
+}
+
+TEST_F(ParallelUploadTest, ResumableSuccessDestinationExists) {
+  int const num_shards = 1;
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
+  internal::nl::json expected_state{
+      {"destination", "final-object"},
+      {"expected_generation", 42},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_persistent_state(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(MockObject(kDestObjectName, 42)));
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Invoke(create_composition_check(
+          {{kPrefix + ".upload_shard_0", 111}}, kDestObjectName,
+          MockObject(kDestObjectName, kDestGeneration), 42)));
+
+  ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke(
+          expect_deletion(kPersistentStateName, kPersistentStateGeneration)));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_STATUS_OK(state);
+  auto res_future = state->WaitForCompletion();
+  EXPECT_TRUE(Unsatisfied(res_future));
+
+  auto cleanup_too_early = state->EagerCleanup();
+  ASSERT_FALSE(cleanup_too_early.ok());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
+  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+
+  state->shards().clear();
+  auto res = res_future.get();
+  EXPECT_STATUS_OK(res);
+
+  EXPECT_STATUS_OK(state->EagerCleanup());
+  EXPECT_STATUS_OK(state->EagerCleanup());
+}
+
+TEST_F(ParallelUploadTest, ResumableSuccessDestinationChangedUnderhandedly) {
+  int const num_shards = 1;
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
+  internal::nl::json expected_state{
+      {"destination", "final-object"},
+      {"expected_generation", 42},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Invoke(expect_persistent_state(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)))
+      .WillOnce(Invoke(expect_new_object(kPrefix + ".compose_many",
+                                         kComposeMarkerGeneration)));
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(MockObject(kDestObjectName, 42)))
+      .WillOnce(Return(MockObject(kDestObjectName, kDestGeneration)));
+  EXPECT_CALL(*raw_client_mock, ComposeObject(_))
+      .WillOnce(Return(Status(StatusCode::kFailedPrecondition, "")));
+
+  ExpectedDeletions deletions({{{kPrefix + ".upload_shard_0", 111}, Status()}});
+  EXPECT_CALL(*raw_client_mock, DeleteObject(_))
+      .WillOnce(Invoke(
+          expect_deletion(kPrefix + ".compose_many", kComposeMarkerGeneration)))
+      .WillOnce(Invoke([&deletions](internal::DeleteObjectRequest const& r) {
+        return deletions(r);
+      }))
+      .WillOnce(Invoke(
+          expect_deletion(kPersistentStateName, kPersistentStateGeneration)));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_STATUS_OK(state);
+  auto res_future = state->WaitForCompletion();
+  EXPECT_TRUE(Unsatisfied(res_future));
+
+  auto cleanup_too_early = state->EagerCleanup();
+  ASSERT_FALSE(cleanup_too_early.ok());
+  EXPECT_EQ(StatusCode::kFailedPrecondition, cleanup_too_early.code());
+  EXPECT_THAT(cleanup_too_early.message(), HasSubstr("still in progress"));
+
+  state->shards().clear();
+  auto res = res_future.get();
+  EXPECT_STATUS_OK(res);
+
+  EXPECT_STATUS_OK(state->EagerCleanup());
+  EXPECT_STATUS_OK(state->EagerCleanup());
+}
+
+TEST_F(ParallelUploadTest, ResumableInitialGetMetadataFails) {
+  int const num_shards = 1;
+  // The expectations need to be reversed.
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "")));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(StatusCode::kPermissionDenied, state.status().code());
+}
+
+TEST_F(ParallelUploadTest, StoringPersistentStateFails) {
+  int const num_shards = 1;
+  // The expectations need to be reversed.
+  ExpectCreateSession(kPrefix + ".upload_shard_0", 111, "", "");
+
+  EXPECT_CALL(*raw_client_mock, InsertObjectMedia(_))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "")));
+
+  EXPECT_CALL(*raw_client_mock, GetObjectMetadata(_))
+      .WillOnce(Return(MockObject(kDestObjectName, 42)));
+
+  auto state =
+      PrepareParallelUpload(*client, kBucketName, kDestObjectName, num_shards,
+                            kPrefix, UseResumableUploadSession(""));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(StatusCode::kPermissionDenied, state.status().code());
+}
+
+TEST_F(ParallelUploadTest, ResumeFailsOnBadState) {
+  int const num_shards = 1;
+  internal::nl::json state_json{
+      {"destination", "final-object"},
+      {"expected_generation", 0},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, ReadObject(_))
+      .WillOnce(Invoke(create_state_read_expectation(
+          kPersistentStateName, kPersistentStateGeneration,
+          internal::nl::json{{"not", "valid"}})));
+
+  auto state = PrepareParallelUpload(
+      *client, kBucketName, kDestObjectName, num_shards, kPrefix,
+      UseResumableUploadSession(kParallelResumableId));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(StatusCode::kInternal, state.status().code());
+}
+
+TEST_F(ParallelUploadTest, ResumableOneStreamFailsUponCrationOnResume) {
+  int const num_shards = 1;
+  // The expectations need to be reversed.
+  ExpectCreateSessionFailure(kPrefix + ".upload_shard_0", PermanentError());
+
+  internal::nl::json state_json{
+      {"destination", "final-object"},
+      {"expected_generation", 0},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+  EXPECT_CALL(*raw_client_mock, ReadObject(_))
+      .WillOnce(Invoke(create_state_read_expectation(
+          kPersistentStateName, kPersistentStateGeneration, state_json)));
+
+  auto state = PrepareParallelUpload(
+      *client, kBucketName, kDestObjectName, num_shards, kPrefix,
+      UseResumableUploadSession(kParallelResumableId));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(PermanentError().code(), state.status().code());
+}
+
+TEST_F(ParallelUploadTest, ResumableBadSessionId) {
+  int const num_shards = 1;
+
+  auto state = PrepareParallelUpload(
+      *client, kBucketName, kDestObjectName, num_shards, kPrefix,
+      UseResumableUploadSession("bad session id"));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(StatusCode::kInternal, state.status().code());
+}
+
+TEST_F(ParallelUploadTest, ResumeBadNumShards) {
+  int const num_shards = 2;
+  // The expectations need to be reversed.
+  internal::nl::json expected_state{
+      {"destination", "final-object"},
+      {"expected_generation", 42},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, ReadObject(_))
+      .WillOnce(Invoke(create_state_read_expectation(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)));
+
+  auto state = PrepareParallelUpload(
+      *client, kBucketName, kDestObjectName, num_shards, kPrefix,
+      UseResumableUploadSession(kParallelResumableId));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(StatusCode::kInternal, state.status().code());
+  EXPECT_THAT(state.status().message(),
+              HasSubstr("previously specified number of shards"));
+}
+
+TEST_F(ParallelUploadTest, ResumeDifferentDest) {
+  int const num_shards = 1;
+  // The expectations need to be reversed.
+  internal::nl::json expected_state{
+      {"destination", "some-different-object"},
+      {"expected_generation", 42},
+      {"streams",
+       {{{"name", "some-prefix.upload_shard_0"},
+         {"resumable_session_id", kIndividualSessionId}}}}};
+
+  EXPECT_CALL(*raw_client_mock, ReadObject(_))
+      .WillOnce(Invoke(create_state_read_expectation(
+          kPersistentStateName, kPersistentStateGeneration, expected_state)));
+
+  auto state = PrepareParallelUpload(
+      *client, kBucketName, kDestObjectName, num_shards, kPrefix,
+      UseResumableUploadSession(kParallelResumableId));
+  EXPECT_FALSE(state);
+  EXPECT_EQ(StatusCode::kInternal, state.status().code());
+  EXPECT_THAT(state.status().message(),
+              HasSubstr("resumable session ID is doesn't match"));
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
