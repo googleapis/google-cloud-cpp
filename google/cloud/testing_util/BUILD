@@ -27,3 +27,41 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
+
+load(":google_cloud_cpp_testing_unit_tests.bzl", "google_cloud_cpp_testing_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_testing",
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_testing_unit_tests]
+
+load(":google_cloud_cpp_testing_grpc.bzl", "google_cloud_cpp_testing_grpc_hdrs", "google_cloud_cpp_testing_grpc_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_testing_grpc",
+    srcs = google_cloud_cpp_testing_grpc_srcs,
+    hdrs = google_cloud_cpp_testing_grpc_hdrs,
+    deps = [
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_google_googletest//:gtest",
+        "@com_google_protobuf//:protobuf",
+    ],
+)
+
+load(":google_cloud_cpp_testing_grpc_unit_tests.bzl", "google_cloud_cpp_testing_grpc_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_testing_grpc",
+        "//google/cloud:google_cloud_cpp_common",
+        "@com_google_googletest//:gtest_main",
+        "@com_google_protobuf//:protobuf",
+    ],
+) for test in google_cloud_cpp_testing_grpc_unit_tests]

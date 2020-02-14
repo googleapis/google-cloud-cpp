@@ -82,7 +82,7 @@ cc_library(
 load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
 
 [cc_test(
-    name = "google_cloud_cpp_grpc_utils_" + test.replace("/", "_").replace(".cc", ""),
+    name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
         ":google_cloud_cpp_grpc_utils",

@@ -62,6 +62,41 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         add_test(NAME ${target} COMMAND ${target})
     endforeach ()
 
+    find_package(googleapis)
+    add_library(google_cloud_cpp_testing_grpc is_proto_equal.cc
+                                              is_proto_equal.h)
+    target_link_libraries(
+        google_cloud_cpp_testing_grpc
+        PUBLIC google_cloud_cpp_common protobuf::libprotobuf GTest::gmock
+        PRIVATE google_cloud_cpp_common_options)
+
+    create_bazel_config(google_cloud_cpp_testing_grpc YEAR 2020)
+
+    set(google_cloud_cpp_testing_grpc_unit_tests is_proto_equal_test.cc)
+
+    export_list_to_bazel("google_cloud_cpp_testing_grpc_unit_tests.bzl"
+                         "google_cloud_cpp_testing_grpc_unit_tests" YEAR 2020)
+
+    foreach (fname ${google_cloud_cpp_testing_grpc_unit_tests})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(
+            ${target}
+            PRIVATE google_cloud_cpp_testing_grpc
+                    google_cloud_cpp_testing
+                    google_cloud_cpp_common
+                    protobuf::libprotobuf
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    google_cloud_cpp_common_options)
+        if (MSVC)
+            target_compile_options(${target} PRIVATE "/bigobj")
+        endif ()
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+
     # Export the CMake targets to make it easy to create configuration files.
     install(
         EXPORT google_cloud_cpp_testing-targets
@@ -70,7 +105,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # Install the libraries and headers in the locations determined by
     # GNUInstallDirs
     install(
-        TARGETS google_cloud_cpp_testing
+        TARGETS google_cloud_cpp_testing google_cloud_cpp_testing_grpc
         EXPORT google_cloud_cpp_testing-targets
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
                 COMPONENT google_cloud_cpp_runtime
@@ -82,7 +117,7 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     # With CMake-3.12 and higher we could avoid this separate command (and the
     # duplication).
     install(
-        TARGETS google_cloud_cpp_testing
+        TARGETS google_cloud_cpp_testing google_cloud_cpp_testing_grpc
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
                 COMPONENT google_cloud_cpp_development
                 NAMELINK_ONLY
@@ -100,12 +135,21 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         "Google Cloud C++ Client Library Testing Utilities")
     set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
         "Testing Utilities used by the Google Cloud C++ Client Libraries.")
-    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing")
 
-    # Create and install the pkg-config files.
+    # Create and install the pkg-config files. First for testing_utils:
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES "google_cloud_cpp_common")
     configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
                    "google_cloud_cpp_testing.pc" @ONLY)
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing.pc"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+    # Then for testing_utils_grpc:
+    set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_testing_grpc")
+    set(GOOGLE_CLOUD_CPP_PC_REQUIRES
+        "google_cloud_cpp_testing google_cloud_cpp_common")
+    configure_file("${PROJECT_SOURCE_DIR}/google/cloud/config.pc.in"
+                   "google_cloud_cpp_testing_grpc.pc" @ONLY)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_testing_grpc.pc"
             DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
     # Create and install the CMake configuration files.
