@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_TOPIC_H
-#define GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_TOPIC_H
+#ifndef GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_H
+#define GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_H
 
 #include "google/cloud/pubsub/version.h"
 #include <grpcpp/grpcpp.h>
@@ -24,45 +24,48 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 
 /**
- * Objects of this class identify a Cloud Pub/Sub topic.
+ * Objects of this class identify a Cloud Pub/Sub subscription.
  */
-class Topic {
+class Subscription {
  public:
-  Topic(std::string project_id, std::string topic_id)
-      : project_id_(std::move(project_id)), topic_id_(std::move(topic_id)) {}
+  Subscription(std::string project_id, std::string subscription_id)
+      : project_id_(std::move(project_id)),
+        subscription_id_(std::move(subscription_id)) {}
 
   /// @name Copy and move
   //@{
-  Topic(Topic const&) = default;
-  Topic& operator=(Topic const&) = default;
-  Topic(Topic&&) = default;
-  Topic& operator=(Topic&&) = default;
+  Subscription(Subscription const&) = default;
+  Subscription& operator=(Subscription const&) = default;
+  Subscription(Subscription&&) = default;
+  Subscription& operator=(Subscription&&) = default;
   //@}
 
   /// Returns the Project ID
   std::string const& project_id() const { return project_id_; }
 
-  /// Returns the Topic ID
-  std::string const& topic_id() const { return topic_id_; }
+  /// Returns the Subscription ID
+  std::string const& subscription_id() const { return subscription_id_; }
 
   /**
-   * Returns the fully qualified topic name as a string of the form:
-   * "projects/<project-id>/topics/<topic-id>"
+   * Returns the fully qualified subscription name as a string of the form:
+   * "projects/<project-id>/subscriptions/<subscription-id>"
    */
   std::string FullName() const;
 
   /// @name Equality operators
   //@{
-  friend bool operator==(Topic const& a, Topic const& b);
-  friend bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
+  friend bool operator==(Subscription const& a, Subscription const& b);
+  friend bool operator!=(Subscription const& a, Subscription const& b) {
+    return !(a == b);
+  }
   //@}
 
   /// Output the `FullName()` format.
-  friend std::ostream& operator<<(std::ostream& os, Topic const& rhs);
+  friend std::ostream& operator<<(std::ostream& os, Subscription const& rhs);
 
  private:
   std::string project_id_;
-  std::string topic_id_;
+  std::string subscription_id_;
 };
 
 }  // namespace GOOGLE_CLOUD_CPP_PUBSUB_NS
@@ -70,4 +73,4 @@ class Topic {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_TOPIC_H
+#endif  // GOOGLE_CLOUD_CPP_PUBSUB_GOOGLE_CLOUD_PUBSUB_SUBSCRIPTION_H
