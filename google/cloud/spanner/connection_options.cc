@@ -82,7 +82,7 @@ grpc::ChannelArguments ConnectionOptions::CreateChannelArguments() const {
 }
 
 ConnectionOptions& ConnectionOptions::DisableBackgroundThreads(
-    google::cloud::grpc_utils::CompletionQueue const& cq) {
+    google::cloud::CompletionQueue const& cq) {
   background_threads_factory_ = [cq] {
     return google::cloud::internal::make_unique<
         google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);

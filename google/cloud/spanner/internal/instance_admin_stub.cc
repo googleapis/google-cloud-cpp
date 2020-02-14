@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
 #include "google/cloud/spanner/internal/instance_admin_logging.h"
 #include "google/cloud/spanner/internal/instance_admin_metadata.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
@@ -46,7 +46,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     gcsa::Instance response;
     auto status = instance_admin_->GetInstance(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -58,7 +58,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     grpc::Status status =
         instance_admin_->CreateInstance(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -70,7 +70,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     grpc::Status status =
         instance_admin_->UpdateInstance(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -81,7 +81,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     grpc::Status status =
         instance_admin_->DeleteInstance(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status();
   }
@@ -93,7 +93,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     auto status =
         instance_admin_->GetInstanceConfig(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -105,7 +105,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     auto status =
         instance_admin_->ListInstanceConfigs(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -116,7 +116,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     gcsa::ListInstancesResponse response;
     auto status = instance_admin_->ListInstances(&context, request, &response);
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -127,7 +127,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     giam::Policy response;
     auto status = instance_admin_->GetIamPolicy(&context, request, &response);
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -138,7 +138,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     giam::Policy response;
     auto status = instance_admin_->SetIamPolicy(&context, request, &response);
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -150,7 +150,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     auto status =
         instance_admin_->TestIamPermissions(&context, request, &response);
     if (!status.ok()) {
-      return grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -162,7 +162,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     grpc::Status status =
         operations_->GetOperation(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }

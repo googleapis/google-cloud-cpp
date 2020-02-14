@@ -170,7 +170,7 @@ TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
 }
 
 TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
-  grpc_utils::CompletionQueue cq;
+  CompletionQueue cq;
 
   auto options = ConnectionOptions(grpc::InsecureChannelCredentials())
                      .DisableBackgroundThreads(cq);

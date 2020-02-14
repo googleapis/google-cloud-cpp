@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/internal/database_admin_logging.h"
 #include "google/cloud/spanner/internal/database_admin_metadata.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/longrunning/operations.grpc.pb.h>
 
@@ -46,7 +46,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         database_admin_->CreateDatabase(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -58,7 +58,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     auto status =
         database_admin_->GetDatabase(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -70,7 +70,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     auto status =
         database_admin_->GetDatabaseDdl(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -83,7 +83,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         database_admin_->UpdateDatabaseDdl(&context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -94,7 +94,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         database_admin_->DropDatabase(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return google::cloud::Status();
   }
@@ -106,7 +106,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     auto status =
         database_admin_->ListDatabases(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -118,7 +118,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     auto status =
         database_admin_->GetIamPolicy(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -130,7 +130,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     auto status =
         database_admin_->SetIamPolicy(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -142,7 +142,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     auto status = database_admin_->TestIamPermissions(&client_context, request,
                                                       &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }
@@ -154,7 +154,7 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     grpc::Status status =
         operations_->GetOperation(&client_context, request, &response);
     if (!status.ok()) {
-      return google::cloud::grpc_utils::MakeStatusFromRpcError(status);
+      return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
   }

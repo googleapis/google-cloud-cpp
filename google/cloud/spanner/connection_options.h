@@ -18,7 +18,7 @@
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/background_threads.h"
-#include "google/cloud/grpc_utils/completion_queue.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
@@ -188,7 +188,7 @@ class ConnectionOptions {
    * `CompletionQueue::Run()`.
    */
   ConnectionOptions& DisableBackgroundThreads(
-      google::cloud::grpc_utils::CompletionQueue const& cq);
+      google::cloud::CompletionQueue const& cq);
 
   using BackgroundThreadsFactory =
       std::function<std::unique_ptr<BackgroundThreads>()>;

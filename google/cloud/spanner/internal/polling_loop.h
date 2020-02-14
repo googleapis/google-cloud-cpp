@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_POLLING_LOOP_H
 
 #include "google/cloud/spanner/polling_policy.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/status_or.h"
 #include <google/longrunning/operations.pb.h>
@@ -141,9 +141,8 @@ typename ValueExtractor::ReturnType PollingLoopImpl(
   }
 
   if (operation.has_error()) {
-    // The long running operation failed, return the error to the
-    // caller.
-    return google::cloud::grpc_utils::MakeStatusFromRpcError(operation.error());
+    // The long running operation failed, return the error to the caller.
+    return google::cloud::MakeStatusFromRpcError(operation.error());
   }
   return ValueExtractor::Extract(operation, location);
 }

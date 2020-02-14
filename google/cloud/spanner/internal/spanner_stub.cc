@@ -15,7 +15,7 @@
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/internal/logging_spanner_stub.h"
 #include "google/cloud/spanner/internal/metadata_spanner_stub.h"
-#include "google/cloud/grpc_utils/grpc_error_delegate.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/log.h"
 #include <google/spanner/v1/spanner.grpc.pb.h>
 
@@ -96,7 +96,7 @@ StatusOr<spanner_proto::Session> DefaultSpannerStub::CreateSession(
   grpc::Status grpc_status =
       grpc_stub_->CreateSession(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -109,7 +109,7 @@ DefaultSpannerStub::BatchCreateSessions(
   grpc::Status grpc_status =
       grpc_stub_->BatchCreateSessions(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -121,7 +121,7 @@ StatusOr<spanner_proto::Session> DefaultSpannerStub::GetSession(
   grpc::Status grpc_status =
       grpc_stub_->GetSession(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -133,7 +133,7 @@ StatusOr<spanner_proto::ListSessionsResponse> DefaultSpannerStub::ListSessions(
   grpc::Status grpc_status =
       grpc_stub_->ListSessions(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -144,7 +144,7 @@ Status DefaultSpannerStub::DeleteSession(
   google::protobuf::Empty response;
   grpc::Status grpc_status =
       grpc_stub_->DeleteSession(&client_context, request, &response);
-  return grpc_utils::MakeStatusFromRpcError(grpc_status);
+  return google::cloud::MakeStatusFromRpcError(grpc_status);
 }
 
 StatusOr<spanner_proto::ResultSet> DefaultSpannerStub::ExecuteSql(
@@ -154,7 +154,7 @@ StatusOr<spanner_proto::ResultSet> DefaultSpannerStub::ExecuteSql(
   grpc::Status grpc_status =
       grpc_stub_->ExecuteSql(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -174,7 +174,7 @@ DefaultSpannerStub::ExecuteBatchDml(
   grpc::Status grpc_status =
       grpc_stub_->ExecuteBatchDml(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -186,7 +186,7 @@ StatusOr<spanner_proto::ResultSet> DefaultSpannerStub::Read(
   grpc::Status grpc_status =
       grpc_stub_->Read(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -204,7 +204,7 @@ StatusOr<spanner_proto::Transaction> DefaultSpannerStub::BeginTransaction(
   grpc::Status grpc_status =
       grpc_stub_->BeginTransaction(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -216,7 +216,7 @@ StatusOr<spanner_proto::CommitResponse> DefaultSpannerStub::Commit(
   grpc::Status grpc_status =
       grpc_stub_->Commit(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -227,7 +227,7 @@ Status DefaultSpannerStub::Rollback(
   google::protobuf::Empty response;
   grpc::Status grpc_status =
       grpc_stub_->Rollback(&client_context, request, &response);
-  return grpc_utils::MakeStatusFromRpcError(grpc_status);
+  return google::cloud::MakeStatusFromRpcError(grpc_status);
 }
 
 StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionQuery(
@@ -237,7 +237,7 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionQuery(
   grpc::Status grpc_status =
       grpc_stub_->PartitionQuery(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
@@ -249,7 +249,7 @@ StatusOr<spanner_proto::PartitionResponse> DefaultSpannerStub::PartitionRead(
   grpc::Status grpc_status =
       grpc_stub_->PartitionRead(&client_context, request, &response);
   if (!grpc_status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(grpc_status);
+    return google::cloud::MakeStatusFromRpcError(grpc_status);
   }
   return response;
 }
