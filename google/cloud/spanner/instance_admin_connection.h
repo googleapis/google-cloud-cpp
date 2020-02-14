@@ -73,7 +73,7 @@ class InstanceAdminConnection {
 
   //@{
   /**
-   * Define the arguments for each member function.
+   * @name Define the arguments for each member function.
    *
    * Applications may define classes derived from `InstanceAdminConnection`,
    * for example, because they want to mock the class. To avoid breaking all
@@ -114,7 +114,7 @@ class InstanceAdminConnection {
   };
 
   /**
-   * The parameters for a `ListInstances()` request.
+   * Wrap the arguments for `ListInstances()`.
    */
   struct ListInstancesParams {
     /**

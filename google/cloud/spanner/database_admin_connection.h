@@ -62,7 +62,7 @@ class DatabaseAdminConnection {
 
   //@{
   /**
-   * Define the arguments for each member function.
+   * @name Define the arguments for each member function.
    *
    * Applications may define classes derived from `DatabaseAdminConnection`, for
    * example, because they want to mock the class. To avoid breaking all such

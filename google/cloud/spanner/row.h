@@ -228,12 +228,12 @@ Row MakeTestRow(Ts&&... ts) {
 }
 
 /**
- * A `RowStreamIterator` is an [Input Iterator][input-iterator] that returns a
+ * A `RowStreamIterator` is an _Input Iterator_ (see below) that returns a
  * sequence of `StatusOr<Row>` objects.
  *
- * As an Input Iterator, the sequence may only be consumed once. Default
- * constructing a `RowStreamIterator` creates an instance that represents
- * "end".
+ * As an [Input Iterator][input-iterator], the sequence may only be consumed
+ * once. Default constructing a `RowStreamIterator` creates an instance that
+ * represents "end".
  *
  * @note The term "stream" in this name refers to the general nature
  *     of the the data source, and is not intended to suggest any similarity to

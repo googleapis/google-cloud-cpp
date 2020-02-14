@@ -29,6 +29,22 @@ inline namespace SPANNER_CLIENT_NS {
 // What action to take if the session pool is exhausted.
 enum class ActionOnExhaustion { kBlock, kFail };
 
+/**
+ * Controls the session pool maintained by a `spanner::Client`.
+ *
+ * Creating Cloud Spanner sessions is an expensive operation. The
+ * [recommended practice][spanner-sessions-doc] is to maintain a cache (or pool)
+ * of sessions in the client side. This class controls the initial size of this
+ * pool, and how the pool grows (or shrinks) as needed.
+ *
+ * @note If no sessions are available to perform an operation the client library
+ *     blocks until new sessions are available (either released by other threads
+ *     or allocated on-demand, depending on the active constraints). It is
+ *     also possible to configure the client to fail a request when the session
+ *     pool is exhausted.
+ *
+ * [spanner-sessions-doc]: https://cloud.google.com/spanner/docs/sessions
+ */
 class SessionPoolOptions {
  public:
   /**
