@@ -29,6 +29,9 @@ using ::testing::HasSubstr;
 using ::testing::StartsWith;
 
 TEST(ConnectionOptionsTest, Credentials) {
+  EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
+  google::cloud::internal::UnsetEnv("SPANNER_EMULATOR_HOST");
+
   // In the CI environment grpc::GoogleDefaultCredentials() may assert. Use the
   // insecure credentials to initialize the options in any unit test.
   auto expected = grpc::InsecureChannelCredentials();
@@ -42,10 +45,33 @@ TEST(ConnectionOptionsTest, Credentials) {
 }
 
 TEST(ConnectionOptionsTest, AdminEndpoint) {
+  EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
+  google::cloud::internal::UnsetEnv("SPANNER_EMULATOR_HOST");
+
   ConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_EQ("spanner.googleapis.com", options.endpoint());
   options.set_endpoint("invalid-endpoint");
   EXPECT_EQ("invalid-endpoint", options.endpoint());
+}
+
+TEST(ConnectionOptionsTest, SpannerEmulator) {
+  EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
+  google::cloud::internal::SetEnv("SPANNER_EMULATOR_HOST", "localhost:9010");
+
+  ConnectionOptions options(std::shared_ptr<grpc::ChannelCredentials>{});
+
+  // When SPANNER_EMULATOR_HOST is set, the passed credentials are overridden
+  // (by grpc::InsecureChannelCredentials()) and further updates are ignored.
+  EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());
+  auto other_credentials = grpc::InsecureChannelCredentials();
+  options.set_credentials(other_credentials);
+  EXPECT_NE(other_credentials, options.credentials());
+
+  // When SPANNER_EMULATOR_HOST is set, the default endpoint is overridden (by
+  // ${SPANNER_EMULATOR_HOST}), and further updates are ignored.
+  EXPECT_EQ("localhost:9010", options.endpoint());
+  options.set_endpoint("invalid-endpoint");
+  EXPECT_EQ("localhost:9010", options.endpoint());
 }
 
 TEST(ConnectionOptionsTest, NumChannels) {

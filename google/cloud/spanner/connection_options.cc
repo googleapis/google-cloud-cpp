@@ -33,7 +33,8 @@ std::string BaseUserAgentPrefix() {
 
 ConnectionOptions::ConnectionOptions(
     std::shared_ptr<grpc::ChannelCredentials> credentials)
-    : credentials_(std::move(credentials)),
+    : emulator_override_(false),
+      credentials_(std::move(credentials)),
       endpoint_("spanner.googleapis.com"),
       num_channels_(4),
       user_agent_prefix_(internal::BaseUserAgentPrefix()),
@@ -41,6 +42,13 @@ ConnectionOptions::ConnectionOptions(
         return google::cloud::internal::make_unique<
             google::cloud::internal::AutomaticallyCreatedBackgroundThreads>();
       }) {
+  auto emulator_addr = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+  if (emulator_addr.has_value()) {
+    emulator_override_ = true;
+    credentials_ = grpc::InsecureChannelCredentials();
+    endpoint_ = *emulator_addr;
+  }
+
   auto tracing =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (tracing.has_value()) {

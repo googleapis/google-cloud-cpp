@@ -39,6 +39,8 @@ class InstanceAdminClientTest : public testing::Test {
 
  protected:
   void SetUp() override {
+    emulator_ =
+        google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     instance_id_ =
@@ -52,6 +54,7 @@ class InstanceAdminClientTest : public testing::Test {
             .value_or("");
   }
   InstanceAdminClient client_;
+  bool emulator_;
   std::string project_id_;
   std::string instance_id_;
   std::string run_slow_integration_tests_;
@@ -170,21 +173,23 @@ TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   EXPECT_THAT(instance->name(), HasSubstr(instance_id));
   EXPECT_EQ("test-display-name", instance->display_name());
   EXPECT_NE(0, instance->node_count());
-  EXPECT_NE(0, instance->labels_size());
-  EXPECT_EQ(instance_config, instance->config());
-  EXPECT_EQ("label-value", instance->labels().at("label-key"));
+  if (!emulator_) {
+    EXPECT_NE(0, instance->labels_size());
+    EXPECT_EQ(instance_config, instance->config());
+    EXPECT_EQ("label-value", instance->labels().at("label-key"));
 
-  // Then update the instance
-  f = client_.UpdateInstance(UpdateInstanceRequestBuilder(*instance)
-                                 .SetDisplayName("New display name")
-                                 .AddLabels({{"new-key", "new-value"}})
-                                 .SetNodeCount(2)
-                                 .Build());
-  instance = f.get();
-  EXPECT_EQ("New display name", instance->display_name());
-  EXPECT_EQ(2, instance->labels_size());
-  EXPECT_EQ("new-value", instance->labels().at("new-key"));
-  EXPECT_EQ(2, instance->node_count());
+    // Then update the instance
+    f = client_.UpdateInstance(UpdateInstanceRequestBuilder(*instance)
+                                   .SetDisplayName("New display name")
+                                   .AddLabels({{"new-key", "new-value"}})
+                                   .SetNodeCount(2)
+                                   .Build());
+    instance = f.get();
+    EXPECT_EQ("New display name", instance->display_name());
+    EXPECT_EQ(2, instance->labels_size());
+    EXPECT_EQ("new-value", instance->labels().at("new-key"));
+    EXPECT_EQ(2, instance->node_count());
+  }
   auto status = client_.DeleteInstance(in);
   EXPECT_STATUS_OK(status);
 }
@@ -213,6 +218,8 @@ TEST_F(InstanceAdminClientTest, InstanceConfig) {
 }
 
 TEST_F(InstanceAdminClientTest, InstanceIam) {
+  if (emulator_) return;
+
   ASSERT_FALSE(project_id_.empty());
   ASSERT_FALSE(instance_id_.empty());
   ASSERT_FALSE(test_iam_service_account_.empty());

@@ -33,6 +33,8 @@ using ::testing::EndsWith;
 
 /// @test Verify the basic CRUD operations for databases work.
 TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
+  auto emulator =
+      google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
   auto project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
@@ -44,7 +46,7 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   auto test_iam_service_account =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
           .value_or("");
-  ASSERT_FALSE(test_iam_service_account.empty());
+  ASSERT_TRUE(emulator || !test_iam_service_account.empty());
 
   Instance const in(project_id, *instance_id);
 
@@ -85,55 +87,57 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
   ASSERT_STATUS_OK(get_result);
   EXPECT_EQ(database->name(), get_result->name());
 
-  auto current_policy = client.GetIamPolicy(db);
-  ASSERT_STATUS_OK(current_policy);
-  EXPECT_EQ(0, current_policy->bindings_size());
+  if (!emulator) {
+    auto current_policy = client.GetIamPolicy(db);
+    ASSERT_STATUS_OK(current_policy);
+    EXPECT_EQ(0, current_policy->bindings_size());
 
-  std::string const reader_role = "roles/spanner.databaseReader";
-  std::string const writer_role = "roles/spanner.databaseUser";
-  std::string const expected_member =
-      "serviceAccount:" + test_iam_service_account;
-  auto& binding = *current_policy->add_bindings();
-  binding.set_role(reader_role);
-  *binding.add_members() = expected_member;
+    std::string const reader_role = "roles/spanner.databaseReader";
+    std::string const writer_role = "roles/spanner.databaseUser";
+    std::string const expected_member =
+        "serviceAccount:" + test_iam_service_account;
+    auto& binding = *current_policy->add_bindings();
+    binding.set_role(reader_role);
+    *binding.add_members() = expected_member;
 
-  auto updated_policy = client.SetIamPolicy(db, *current_policy);
-  ASSERT_STATUS_OK(updated_policy);
-  EXPECT_EQ(1, updated_policy->bindings_size());
-  ASSERT_EQ(reader_role, updated_policy->bindings().Get(0).role());
-  ASSERT_EQ(1, updated_policy->bindings().Get(0).members().size());
-  ASSERT_EQ(expected_member,
-            updated_policy->bindings().Get(0).members().Get(0));
+    auto updated_policy = client.SetIamPolicy(db, *current_policy);
+    ASSERT_STATUS_OK(updated_policy);
+    EXPECT_EQ(1, updated_policy->bindings_size());
+    ASSERT_EQ(reader_role, updated_policy->bindings().Get(0).role());
+    ASSERT_EQ(1, updated_policy->bindings().Get(0).members().size());
+    ASSERT_EQ(expected_member,
+              updated_policy->bindings().Get(0).members().Get(0));
 
-  // Perform a different update using the the OCC loop API:
-  updated_policy =
-      client.SetIamPolicy(db, [&test_iam_service_account,
-                               &writer_role](google::iam::v1::Policy current) {
-        std::string const expected_member =
-            "serviceAccount:" + test_iam_service_account;
-        auto& binding = *current.add_bindings();
-        binding.set_role(writer_role);
-        *binding.add_members() = expected_member;
-        return current;
-      });
-  ASSERT_STATUS_OK(updated_policy);
-  EXPECT_EQ(2, updated_policy->bindings_size());
-  ASSERT_EQ(writer_role, updated_policy->bindings().Get(1).role());
-  ASSERT_EQ(1, updated_policy->bindings().Get(1).members().size());
-  ASSERT_EQ(expected_member,
-            updated_policy->bindings().Get(1).members().Get(0));
+    // Perform a different update using the the OCC loop API:
+    updated_policy =
+        client.SetIamPolicy(db, [&test_iam_service_account, &writer_role](
+                                    google::iam::v1::Policy current) {
+          std::string const expected_member =
+              "serviceAccount:" + test_iam_service_account;
+          auto& binding = *current.add_bindings();
+          binding.set_role(writer_role);
+          *binding.add_members() = expected_member;
+          return current;
+        });
+    ASSERT_STATUS_OK(updated_policy);
+    EXPECT_EQ(2, updated_policy->bindings_size());
+    ASSERT_EQ(writer_role, updated_policy->bindings().Get(1).role());
+    ASSERT_EQ(1, updated_policy->bindings().Get(1).members().size());
+    ASSERT_EQ(expected_member,
+              updated_policy->bindings().Get(1).members().Get(0));
 
-  // Fetch the Iam Policy again.
-  current_policy = client.GetIamPolicy(db);
-  ASSERT_STATUS_OK(current_policy);
-  EXPECT_THAT(*updated_policy, IsProtoEqual(*current_policy));
+    // Fetch the Iam Policy again.
+    current_policy = client.GetIamPolicy(db);
+    ASSERT_STATUS_OK(current_policy);
+    EXPECT_THAT(*updated_policy, IsProtoEqual(*current_policy));
 
-  auto test_iam_permission_result =
-      client.TestIamPermissions(db, {"spanner.databases.read"});
-  ASSERT_STATUS_OK(test_iam_permission_result);
-  ASSERT_EQ(1, test_iam_permission_result->permissions_size());
-  ASSERT_EQ("spanner.databases.read",
-            test_iam_permission_result->permissions(0));
+    auto test_iam_permission_result =
+        client.TestIamPermissions(db, {"spanner.databases.read"});
+    ASSERT_STATUS_OK(test_iam_permission_result);
+    ASSERT_EQ(1, test_iam_permission_result->permissions_size());
+    ASSERT_EQ("spanner.databases.read",
+              test_iam_permission_result->permissions(0));
+  }
 
   auto get_ddl_result = client.GetDatabaseDdl(db);
   ASSERT_STATUS_OK(get_ddl_result);

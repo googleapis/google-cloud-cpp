@@ -49,7 +49,8 @@ TEST(SpannerStub, CreateDefaultStubWithLogging) {
   auto session =
       stub->CreateSession(context, google::spanner::v1::CreateSessionRequest());
   EXPECT_THAT(session.status().code(),
-              AnyOf(StatusCode::kUnavailable, StatusCode::kDeadlineExceeded));
+              AnyOf(StatusCode::kUnavailable, StatusCode::kInvalidArgument,
+                    StatusCode::kDeadlineExceeded));
 
   auto const& lines = backend->log_lines;
   auto count = std::count_if(

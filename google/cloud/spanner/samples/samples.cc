@@ -1969,7 +1969,7 @@ int RunOneCommand(std::vector<std::string> argv) {
   return 0;
 }
 
-void RunAll() {
+void RunAll(bool emulator) {
   auto run_slow_integration_tests =
       google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
           .value_or("");
@@ -1982,7 +1982,7 @@ void RunAll() {
   auto test_iam_service_account =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
           .value_or("");
-  if (test_iam_service_account.empty()) {
+  if (!emulator && test_iam_service_account.empty()) {
     throw std::runtime_error(
         "GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA is not set or is empty");
   }
@@ -2005,7 +2005,8 @@ void RunAll() {
   GetInstance(instance_admin_client, project_id, instance_id);
 
   std::cout << "\nRunning get-instance-config sample\n";
-  GetInstanceConfig(instance_admin_client, project_id, "regional-us-central1");
+  GetInstanceConfig(instance_admin_client, project_id,
+                    emulator ? "emulator-config" : "regional-us-central1");
 
   std::cout << "\nRunning list-instance-configs sample\n";
   ListInstanceConfigs(instance_admin_client, project_id);
@@ -2013,8 +2014,10 @@ void RunAll() {
   std::cout << "\nRunning list-instances sample\n";
   ListInstances(instance_admin_client, project_id);
 
-  std::cout << "\nRunning (instance) get-iam-policy sample\n";
-  InstanceGetIamPolicy(instance_admin_client, project_id, instance_id);
+  if (!emulator) {
+    std::cout << "\nRunning (instance) get-iam-policy sample\n";
+    InstanceGetIamPolicy(instance_admin_client, project_id, instance_id);
+  }
 
   if (run_slow_integration_tests == "yes") {
     std::string crud_instance_id =
@@ -2022,21 +2025,25 @@ void RunAll() {
     std::cout << "\nRunning create-instance sample\n";
     CreateInstance(instance_admin_client, project_id, crud_instance_id,
                    "Test Instance");
-    std::cout << "\nRunning update-instance sample\n";
-    UpdateInstance(instance_admin_client, project_id, crud_instance_id,
-                   "New name");
-    std::cout << "\nRunning (instance) add-database-reader sample\n";
-    AddDatabaseReader(instance_admin_client, project_id, crud_instance_id,
-                      "serviceAccount:" + test_iam_service_account);
-    std::cout << "\nRunning (instance) remove-database-reader sample\n";
-    RemoveDatabaseReader(instance_admin_client, project_id, crud_instance_id,
-                         "serviceAccount:" + test_iam_service_account);
+    if (!emulator) {
+      std::cout << "\nRunning update-instance sample\n";
+      UpdateInstance(instance_admin_client, project_id, crud_instance_id,
+                     "New name");
+      std::cout << "\nRunning (instance) add-database-reader sample\n";
+      AddDatabaseReader(instance_admin_client, project_id, crud_instance_id,
+                        "serviceAccount:" + test_iam_service_account);
+      std::cout << "\nRunning (instance) remove-database-reader sample\n";
+      RemoveDatabaseReader(instance_admin_client, project_id, crud_instance_id,
+                           "serviceAccount:" + test_iam_service_account);
+    }
     std::cout << "\nRunning delete-instance sample\n";
     DeleteInstance(instance_admin_client, project_id, crud_instance_id);
   }
 
-  std::cout << "\nRunning (instance) test-iam-permissions sample\n";
-  InstanceTestIamPermissions(instance_admin_client, project_id, instance_id);
+  if (!emulator) {
+    std::cout << "\nRunning (instance) test-iam-permissions sample\n";
+    InstanceTestIamPermissions(instance_admin_client, project_id, instance_id);
+  }
 
   std::string database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
@@ -2073,18 +2080,20 @@ void RunAll() {
   std::cout << "\nRunning spanner_create_storing_index sample\n";
   AddStoringIndex(database_admin_client, project_id, instance_id, database_id);
 
-  std::cout << "\nRunning (database) get-iam-policy sample\n";
-  DatabaseGetIamPolicy(database_admin_client, project_id, instance_id,
-                       database_id);
+  if (!emulator) {
+    std::cout << "\nRunning (database) get-iam-policy sample\n";
+    DatabaseGetIamPolicy(database_admin_client, project_id, instance_id,
+                         database_id);
 
-  std::cout << "\nRunning (database) add-database-reader sample\n";
-  AddDatabaseReaderOnDatabase(database_admin_client, project_id, instance_id,
-                              database_id,
-                              "serviceAccount:" + test_iam_service_account);
+    std::cout << "\nRunning (database) add-database-reader sample\n";
+    AddDatabaseReaderOnDatabase(database_admin_client, project_id, instance_id,
+                                database_id,
+                                "serviceAccount:" + test_iam_service_account);
 
-  std::cout << "\nRunning (database) test-iam-permissions sample\n";
-  DatabaseTestIamPermissions(database_admin_client, project_id, instance_id,
-                             database_id, "spanner.databases.read");
+    std::cout << "\nRunning (database) test-iam-permissions sample\n";
+    DatabaseTestIamPermissions(database_admin_client, project_id, instance_id,
+                               database_id, "spanner.databases.read");
+  }
 
   std::cout << "\nRunning spanner_quickstart sample\n";
   Quickstart(project_id, instance_id, database_id);
@@ -2112,8 +2121,10 @@ void RunAll() {
   std::cout << "\nRunning spanner_stale_data sample\n";
   ReadStaleData(client);
 
-  std::cout << "\nRunning spanner_batch_client sample\n";
-  UsePartitionQuery(client);
+  if (!emulator) {
+    std::cout << "\nRunning spanner_batch_client sample\n";
+    UsePartitionQuery(client);
+  }
 
   std::cout << "\nRunning spanner_read_data_with_index sample\n";
   ReadDataWithIndex(client);
@@ -2142,8 +2153,10 @@ void RunAll() {
   std::cout << "\nRunning spanner_dml_write_then_read sample\n";
   DmlWriteThenRead(client);
 
-  std::cout << "\nRunning spanner_dml_batch_update sample\n";
-  DmlBatchUpdate(client);
+  if (!emulator) {
+    std::cout << "\nRunning spanner_dml_batch_update sample\n";
+    DmlBatchUpdate(client);
+  }
 
   std::cout << "\nRunning spanner_write_data_for_struct_queries sample\n";
   WriteDataForStructQueries(client);
@@ -2178,11 +2191,13 @@ void RunAll() {
   std::cout << "\nRunning spanner_field_access_on_nested_struct sample\n";
   FieldAccessOnNestedStruct(client);
 
-  std::cout << "\nRunning spanner_partition_read sample\n";
-  PartitionRead(client);
+  if (!emulator) {
+    std::cout << "\nRunning spanner_partition_read sample\n";
+    PartitionRead(client);
 
-  std::cout << "\nRunning spanner_partition_query sample\n";
-  PartitionQuery(client);
+    std::cout << "\nRunning spanner_partition_query sample\n";
+    PartitionQuery(client);
+  }
 
   std::cout << "\nRunning example-status-or sample\n";
   ExampleStatusOr(client);
@@ -2191,11 +2206,13 @@ void RunAll() {
   RunOneCommand(
       {"", "custom-retry-policy", project_id, instance_id, database_id});
 
-  std::cout << "\nRunning spanner_dml_partitioned_update sample\n";
-  DmlPartitionedUpdate(client);
+  if (!emulator) {
+    std::cout << "\nRunning spanner_dml_partitioned_update sample\n";
+    DmlPartitionedUpdate(client);
 
-  std::cout << "\nRunning spanner_dml_partitioned_delete sample\n";
-  DmlPartitionedDelete(client);
+    std::cout << "\nRunning spanner_dml_partitioned_delete sample\n";
+    DmlPartitionedDelete(client);
+  }
 
   std::cout << "\nRunning spanner_dml_structs sample\n";
   DmlStructs(client);
@@ -2215,11 +2232,15 @@ bool AutoRun() {
              .value_or("") == "yes";
 }
 
+bool Emulator() {
+  return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
+}
+
 }  // namespace
 
 int main(int ac, char* av[]) try {
   if (AutoRun()) {
-    RunAll();
+    RunAll(Emulator());
     return 0;
   }
 

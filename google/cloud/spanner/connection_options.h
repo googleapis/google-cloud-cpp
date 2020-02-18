@@ -52,7 +52,7 @@ class ConnectionOptions {
   /// `grpc::GoogleDefaultCredentials()`.
   ConnectionOptions& set_credentials(
       std::shared_ptr<grpc::ChannelCredentials> v) {
-    credentials_ = std::move(v);
+    if (!emulator_override_) credentials_ = std::move(v);
     return *this;
   }
 
@@ -69,7 +69,7 @@ class ConnectionOptions {
    * simulator, or (2) to use a beta or EAP version of the service.
    */
   ConnectionOptions& set_endpoint(std::string v) {
-    endpoint_ = std::move(v);
+    if (!emulator_override_) endpoint_ = std::move(v);
     return *this;
   }
 
@@ -197,6 +197,7 @@ class ConnectionOptions {
   }
 
  private:
+  bool emulator_override_;  // credentials_ and endpoint_ frozen
   std::shared_ptr<grpc::ChannelCredentials> credentials_;
   std::string endpoint_;
   int num_channels_;

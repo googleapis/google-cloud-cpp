@@ -34,6 +34,10 @@ using ::testing::UnorderedElementsAreArray;
 
 class ClientIntegrationTest : public ::testing::Test {
  public:
+  ClientIntegrationTest()
+      : emulator_(google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST")
+                      .has_value()) {}
+
   static void SetUpTestSuite() {
     client_ = google::cloud::internal::make_unique<Client>(
         MakeConnection(spanner_testing::DatabaseEnvironment::GetDatabase()));
@@ -60,6 +64,7 @@ class ClientIntegrationTest : public ::testing::Test {
   static void TearDownTestSuite() { client_ = nullptr; }
 
  protected:
+  bool emulator_;
   static std::unique_ptr<Client> client_;
 };
 
@@ -335,6 +340,8 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
 
 /// @test Test ExecutePartitionedDml
 TEST_F(ClientIntegrationTest, ExecutePartitionedDml) {
+  if (emulator_) return;
+
   auto& client = *client_;
   auto insert_result =
       client_->Commit([&client](Transaction txn) -> StatusOr<Mutations> {
@@ -546,6 +553,8 @@ StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
 }
 
 TEST_F(ClientIntegrationTest, PartitionRead) {
+  if (emulator_) return;
+
   auto expected_rows = AddSingerDataToTable(*client_);
   ASSERT_STATUS_OK(expected_rows);
 
@@ -587,6 +596,8 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
 }
 
 TEST_F(ClientIntegrationTest, PartitionQuery) {
+  if (emulator_) return;
+
   auto expected_rows = AddSingerDataToTable(*client_);
   ASSERT_STATUS_OK(expected_rows);
 
@@ -628,6 +639,8 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
+  if (emulator_) return;
+
   auto statements = {
       SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                    "VALUES(1, 'Foo1', 'Bar1')"),
@@ -685,6 +698,8 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
+  if (emulator_) return;
+
   std::vector<SqlStatement> v;
   constexpr auto kBatchSize = 200;
   for (int i = 0; i < kBatchSize; ++i) {
@@ -755,6 +770,8 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
+  if (emulator_) return;
+
   auto statements = {
       SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                    "VALUES(1, 'Foo1', 'Bar1')"),
@@ -785,6 +802,8 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
 }
 
 TEST_F(ClientIntegrationTest, AnalyzeSql) {
+  if (emulator_) return;
+
   auto txn = MakeReadOnlyTransaction();
   auto sql = SqlStatement(
       "SELECT * FROM Singers  "
@@ -810,9 +829,11 @@ TEST_F(ClientIntegrationTest, ProfileQuery) {
   EXPECT_TRUE(stats);
   EXPECT_GT(stats->size(), 0);
 
-  auto plan = rows.ExecutionPlan();
-  EXPECT_TRUE(plan);
-  EXPECT_GT(plan->plan_nodes_size(), 0);
+  if (!emulator_) {
+    auto plan = rows.ExecutionPlan();
+    EXPECT_TRUE(plan);
+    EXPECT_GT(plan->plan_nodes_size(), 0);
+  }
 }
 
 TEST_F(ClientIntegrationTest, ProfileDml) {
@@ -836,9 +857,11 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
   EXPECT_TRUE(stats);
   EXPECT_GT(stats->size(), 0);
 
-  auto plan = profile_result.ExecutionPlan();
-  EXPECT_TRUE(plan);
-  EXPECT_GT(plan->plan_nodes_size(), 0);
+  if (!emulator_) {
+    auto plan = profile_result.ExecutionPlan();
+    EXPECT_TRUE(plan);
+    EXPECT_GT(plan->plan_nodes_size(), 0);
+  }
 }
 
 }  // namespace
