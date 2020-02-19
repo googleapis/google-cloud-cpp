@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
@@ -92,6 +93,20 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
   auto response = functor(context, request);
   GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
                  << " stream";
+  return response;
+}
+
+template <
+    typename Functor, typename Request,
+    typename Result = google::cloud::internal::invoke_result_t<
+        Functor, grpc::ClientContext&, Request const&, grpc::CompletionQueue*>>
+Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
+                  Request const& request, grpc::CompletionQueue* cq,
+                  char const* where, TracingOptions const& options) {
+  GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
+  auto response = functor(context, request, cq);
+  GCP_LOG(DEBUG) << where << "() >> " << (response ? "not null" : "null")
+                 << " async response reader";
   return response;
 }
 

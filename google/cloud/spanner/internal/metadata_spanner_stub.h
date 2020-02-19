@@ -38,15 +38,31 @@ class MetadataSpannerStub : public SpannerStub {
   BatchCreateSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
+  std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+      google::spanner::v1::BatchCreateSessionsResponse>>
+  AsyncBatchCreateSessions(
+      grpc::ClientContext& client_context,
+      google::spanner::v1::BatchCreateSessionsRequest const& request,
+      grpc::CompletionQueue* cq) override;
   StatusOr<google::spanner::v1::Session> GetSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::GetSessionRequest const& request) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::spanner::v1::Session>>
+  AsyncGetSession(grpc::ClientContext& client_context,
+                  google::spanner::v1::GetSessionRequest const& request,
+                  grpc::CompletionQueue* cq) override;
   StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::ListSessionsRequest const& request) override;
   Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) override;
+  std::unique_ptr<
+      grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+  AsyncDeleteSession(grpc::ClientContext& client_context,
+                     google::spanner::v1::DeleteSessionRequest const& request,
+                     grpc::CompletionQueue* cq) override;
   StatusOr<google::spanner::v1::ResultSet> ExecuteSql(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteSqlRequest const& request) override;

@@ -46,6 +46,21 @@ LoggingSpannerStub::BatchCreateSessions(
       client_context, request, __func__, tracing_options_);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    spanner_proto::BatchCreateSessionsResponse>>
+LoggingSpannerStub::AsyncBatchCreateSessions(
+    grpc::ClientContext& client_context,
+    spanner_proto::BatchCreateSessionsRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             spanner_proto::BatchCreateSessionsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return child_->AsyncBatchCreateSessions(context, request, cq);
+      },
+      client_context, request, cq, __func__, tracing_options_);
+}
+
 StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
     grpc::ClientContext& client_context,
     spanner_proto::GetSessionRequest const& request) {
@@ -55,6 +70,21 @@ StatusOr<spanner_proto::Session> LoggingSpannerStub::GetSession(
         return child_->GetSession(context, request);
       },
       client_context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>
+LoggingSpannerStub::AsyncGetSession(
+    grpc::ClientContext& client_context,
+    spanner_proto::GetSessionRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             spanner_proto::GetSessionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return child_->AsyncGetSession(context, request, cq);
+      },
+      client_context, request, cq, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ListSessionsResponse> LoggingSpannerStub::ListSessions(
@@ -77,6 +107,21 @@ Status LoggingSpannerStub::DeleteSession(
         return child_->DeleteSession(context, request);
       },
       client_context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+LoggingSpannerStub::AsyncDeleteSession(
+    grpc::ClientContext& client_context,
+    spanner_proto::DeleteSessionRequest const& request,
+    grpc::CompletionQueue* cq) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             spanner_proto::DeleteSessionRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return child_->AsyncDeleteSession(context, request, cq);
+      },
+      client_context, request, cq, __func__, tracing_options_);
 }
 
 StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::ExecuteSql(

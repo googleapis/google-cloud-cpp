@@ -43,11 +43,31 @@ MetadataSpannerStub::BatchCreateSessions(
   return child_->BatchCreateSessions(client_context, request);
 }
 
+std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+    spanner_proto::BatchCreateSessionsResponse>>
+MetadataSpannerStub::AsyncBatchCreateSessions(
+    grpc::ClientContext& client_context,
+    spanner_proto::BatchCreateSessionsRequest const& request,
+    grpc::CompletionQueue* cq) {
+  SetMetadata(client_context, "database=" + request.database());
+  return child_->AsyncBatchCreateSessions(client_context, request, cq);
+}
+
 StatusOr<spanner_proto::Session> MetadataSpannerStub::GetSession(
     grpc::ClientContext& client_context,
     spanner_proto::GetSessionRequest const& request) {
   SetMetadata(client_context, "name=" + request.name());
   return child_->GetSession(client_context, request);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>
+MetadataSpannerStub::AsyncGetSession(
+    grpc::ClientContext& client_context,
+    spanner_proto::GetSessionRequest const& request,
+    grpc::CompletionQueue* cq) {
+  SetMetadata(client_context, "name=" + request.name());
+  return child_->AsyncGetSession(client_context, request, cq);
 }
 
 StatusOr<spanner_proto::ListSessionsResponse> MetadataSpannerStub::ListSessions(
@@ -62,6 +82,16 @@ Status MetadataSpannerStub::DeleteSession(
     spanner_proto::DeleteSessionRequest const& request) {
   SetMetadata(client_context, "name=" + request.name());
   return child_->DeleteSession(client_context, request);
+}
+
+std::unique_ptr<
+    grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>
+MetadataSpannerStub::AsyncDeleteSession(
+    grpc::ClientContext& client_context,
+    spanner_proto::DeleteSessionRequest const& request,
+    grpc::CompletionQueue* cq) {
+  SetMetadata(client_context, "name=" + request.name());
+  return child_->AsyncDeleteSession(client_context, request, cq);
 }
 
 StatusOr<spanner_proto::ResultSet> MetadataSpannerStub::ExecuteSql(

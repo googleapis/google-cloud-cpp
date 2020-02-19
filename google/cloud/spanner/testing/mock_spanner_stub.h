@@ -36,9 +36,23 @@ class MockSpannerStub : public google::cloud::spanner::internal::SpannerStub {
                    grpc::ClientContext&,
                    google::spanner::v1::BatchCreateSessionsRequest const&));
 
+  MOCK_METHOD3(AsyncBatchCreateSessions,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::spanner::v1::BatchCreateSessionsResponse>>(
+                   grpc::ClientContext&,
+                   google::spanner::v1::BatchCreateSessionsRequest const&,
+                   grpc::CompletionQueue*));
+
   MOCK_METHOD2(GetSession, StatusOr<google::spanner::v1::Session>(
                                grpc::ClientContext&,
                                google::spanner::v1::GetSessionRequest const&));
+
+  MOCK_METHOD3(AsyncGetSession,
+               std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
+                   google::spanner::v1::Session>>(
+                   grpc::ClientContext&,
+                   google::spanner::v1::GetSessionRequest const&,
+                   grpc::CompletionQueue*));
 
   MOCK_METHOD2(ListSessions,
                StatusOr<google::spanner::v1::ListSessionsResponse>(
@@ -48,6 +62,14 @@ class MockSpannerStub : public google::cloud::spanner::internal::SpannerStub {
   MOCK_METHOD2(DeleteSession,
                Status(grpc::ClientContext&,
                       google::spanner::v1::DeleteSessionRequest const&));
+
+  MOCK_METHOD3(
+      AsyncDeleteSession,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::protobuf::Empty>>(
+          grpc::ClientContext&,
+          google::spanner::v1::DeleteSessionRequest const&,
+          grpc::CompletionQueue*));
 
   MOCK_METHOD2(ExecuteSql, StatusOr<google::spanner::v1::ResultSet>(
                                grpc::ClientContext&,
