@@ -103,6 +103,8 @@ add_library(
     publisher_client.h
     publisher_connection.cc
     publisher_connection.h
+    subscriber_connection.cc
+    subscriber_connection.h
     subscription.cc
     subscription.h
     topic.cc

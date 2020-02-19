@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/publisher_client.h"
+#include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/getenv.h"
@@ -53,17 +53,14 @@ TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
   ASSERT_FALSE(project_id.empty());
 
   auto subscription_names =
-      [](std::shared_ptr<pubsub_internal::SubscriberStub> const& stub,
+      [](std::shared_ptr<SubscriberConnection> const& connection,
          std::string const& project_id) {
         std::vector<std::string> names;
-        grpc::ClientContext context;
-        google::pubsub::v1::ListSubscriptionsRequest request;
-        request.set_project("projects/" + project_id);
-        auto response = stub->ListSubscriptions(context, request);
-        EXPECT_STATUS_OK(response);
-        if (!response) return names;
-        for (auto& s : response->subscriptions()) {
-          names.push_back(s.name());
+        for (auto& subscription :
+             connection->ListSubscriptions({"projects/" + project_id})) {
+          EXPECT_STATUS_OK(subscription);
+          if (!subscription) break;
+          names.push_back(subscription->name());
         }
         return names;
       };
@@ -73,8 +70,7 @@ TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
   Subscription subscription(project_id, RandomSubscriptionId(generator));
 
   auto publisher_client = PublisherClient(MakePublisherConnection());
-  auto subscriber =
-      pubsub_internal::CreateDefaultSubscriberStub(ConnectionOptions{}, 0);
+  auto subscriber = pubsub::MakeSubscriberConnection();
 
   EXPECT_THAT(subscription_names(subscriber, project_id),
               Not(Contains(subscription.FullName())));
@@ -91,11 +87,10 @@ TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
       [&publisher_client, &topic] { publisher_client.DeleteTopic(topic); }};
 
   auto create_response = [&] {
-    grpc::ClientContext context;
     google::pubsub::v1::Subscription request;
     request.set_name(subscription.FullName());
     request.set_topic(topic.FullName());
-    return subscriber->CreateSubscription(context, request);
+    return subscriber->CreateSubscription({std::move(request)});
   }();
   ASSERT_STATUS_OK(create_response);
 
@@ -103,10 +98,7 @@ TEST(SubscriberAdminIntegrationTest, SubscriberCRUD) {
               Contains(subscription.FullName()));
 
   auto delete_response = [&] {
-    grpc::ClientContext context;
-    google::pubsub::v1::DeleteSubscriptionRequest request;
-    request.set_subscription(subscription.FullName());
-    return subscriber->DeleteSubscription(context, request);
+    return subscriber->DeleteSubscription({subscription});
   }();
   ASSERT_STATUS_OK(delete_response);
 
@@ -119,11 +111,9 @@ TEST(SubscriberAdminIntegrationTest, CreateSubscriptionFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto subscriber =
-      pubsub_internal::CreateDefaultSubscriberStub(ConnectionOptions{}, 0);
-  grpc::ClientContext context;
-  google::pubsub::v1::Subscription request;
-  auto create_response = subscriber->CreateSubscription(context, request);
+  auto subscriber = pubsub::MakeSubscriberConnection();
+  auto create_response =
+      subscriber->CreateSubscription({google::pubsub::v1::Subscription{}});
   ASSERT_FALSE(create_response.ok());
 }
 
@@ -132,12 +122,11 @@ TEST(SubscriberAdminIntegrationTest, ListSubscriptionsFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto subscriber =
-      pubsub_internal::CreateDefaultSubscriberStub(ConnectionOptions{}, 0);
-  grpc::ClientContext context;
-  google::pubsub::v1::ListSubscriptionsRequest request;
-  auto list_response = subscriber->ListSubscriptions(context, request);
-  ASSERT_FALSE(list_response.ok());
+  auto subscriber = pubsub::MakeSubscriberConnection();
+  auto list = subscriber->ListSubscriptions({"--invalid-project--"});
+  auto i = list.begin();
+  EXPECT_FALSE(i == list.end());
+  EXPECT_FALSE(*i);
 }
 
 TEST(SubscriberAdminIntegrationTest, DeleteSubscriptionFailure) {
@@ -145,11 +134,9 @@ TEST(SubscriberAdminIntegrationTest, DeleteSubscriptionFailure) {
   auto connection_options =
       ConnectionOptions(grpc::InsecureChannelCredentials())
           .set_endpoint("localhost:1");
-  auto subscriber =
-      pubsub_internal::CreateDefaultSubscriberStub(ConnectionOptions{}, 0);
-  grpc::ClientContext context;
-  google::pubsub::v1::DeleteSubscriptionRequest request;
-  auto delete_response = subscriber->DeleteSubscription(context, request);
+  auto subscriber = pubsub::MakeSubscriberConnection();
+  auto delete_response = subscriber->DeleteSubscription(
+      {Subscription("--invalid-project--", "--invalid-subscription--")});
   ASSERT_FALSE(delete_response.ok());
 }
 
