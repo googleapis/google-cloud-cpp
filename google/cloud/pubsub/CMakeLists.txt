@@ -89,6 +89,7 @@ add_library(
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     connection_options.cc
     connection_options.h
+    create_subscription_builder.h
     create_topic_builder.h
     internal/build_info.h
     internal/compiler_info.cc
@@ -150,6 +151,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
 
     set(googleapis_cpp_pubsub_client_unit_tests
         # cmake-format: sort
+        create_subscription_builder_test.cc
         create_topic_builder_test.cc
         internal/build_info_test.cc
         internal/compiler_info_test.cc
