@@ -23,8 +23,6 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-namespace gcsa = ::google::spanner::admin::instance::v1;
-
 /**
  * Implements the metadata Decorator for InstanceAdminStub.
  */
@@ -39,26 +37,42 @@ class InstanceAdminMetadata : public InstanceAdminStub {
    * @name Override the functions from `InstanceAdminStub`.
    */
   ///
-  StatusOr<gcsa::Instance> GetInstance(
-      grpc::ClientContext&, gcsa::GetInstanceRequest const&) override;
+  StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
 
   StatusOr<google::longrunning::Operation> CreateInstance(
-      grpc::ClientContext&, gcsa::CreateInstanceRequest const&) override;
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::CreateInstanceRequest const&)
+      override;
 
   StatusOr<google::longrunning::Operation> UpdateInstance(
-      grpc::ClientContext&, gcsa::UpdateInstanceRequest const&) override;
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::UpdateInstanceRequest const&)
+      override;
 
-  Status DeleteInstance(grpc::ClientContext&,
-                        gcsa::DeleteInstanceRequest const&) override;
+  Status DeleteInstance(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::DeleteInstanceRequest const&)
+      override;
 
-  StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
-      grpc::ClientContext&, gcsa::GetInstanceConfigRequest const&) override;
+  StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
+  GetInstanceConfig(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::GetInstanceConfigRequest const&)
+      override;
 
-  StatusOr<gcsa::ListInstanceConfigsResponse> ListInstanceConfigs(
-      grpc::ClientContext&, gcsa::ListInstanceConfigsRequest const&) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstanceConfigsResponse>
+  ListInstanceConfigs(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::ListInstanceConfigsRequest const&)
+      override;
 
-  StatusOr<gcsa::ListInstancesResponse> ListInstances(
-      grpc::ClientContext&, gcsa::ListInstancesRequest const&) override;
+  StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
+  ListInstances(
+      grpc::ClientContext&,
+      google::spanner::admin::instance::v1::ListInstancesRequest const&)
+      override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext&,
@@ -76,6 +90,7 @@ class InstanceAdminMetadata : public InstanceAdminStub {
       grpc::ClientContext& context,
       google::longrunning::GetOperationRequest const& request) override;
   //@}
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);
