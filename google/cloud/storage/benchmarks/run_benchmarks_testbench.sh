@@ -64,17 +64,19 @@ run_example ./storage_shard_throughput_benchmark \
       --iteration-size=2 \
       --iteration-count=2
 
+run_example ./storage_throughput_benchmark --help
+run_example ./storage_throughput_benchmark --description
 run_example ./storage_throughput_benchmark \
       --duration=1 \
       --object-count=8 \
       --object-size=10MiB \
-      "${FAKE_REGION}"
+      --region="${FAKE_REGION}"
 run_example ./storage_throughput_benchmark \
       --enable-xml-api=false \
       --duration=1 \
       --object-count=8 \
       --object-size=10MiB \
-      "${FAKE_REGION}"
+      --region="${FAKE_REGION}"
 
 run_example_usage ./storage_throughput_vs_cpu_benchmark \
       --help --description
