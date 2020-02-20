@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/log.h"
+#include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/environment_variable_restore.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -20,7 +22,10 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-using namespace ::testing;
+using ::testing::_;
+using ::testing::ExitedWithCode;
+using ::testing::HasSubstr;
+using ::testing::Invoke;
 
 TEST(LogSeverityTest, Streaming) {
   std::ostringstream os;
@@ -138,6 +143,29 @@ TEST(LogSinkTest, ClogMultiple) {
   LogSink::DisableStdClog();
   EXPECT_TRUE(LogSink::Instance().empty());
   EXPECT_EQ(0, LogSink::Instance().BackendCount());
+}
+
+TEST(LogSinkTest, ClogEnvironment) {
+  // We set the death test style to "threadsafe", which causes the
+  // ASSERT_EXIT() call to re-exec the test binary before executing the given
+  // statement. This makes the death test thread-safe and it also ensures that
+  // the LogSink singleton instance will be reconstructed in the child and will
+  // see the environment variable. See also:
+  // https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#death-test-styles
+  auto old_style = testing::FLAGS_gtest_death_test_style;
+  testing::FLAGS_gtest_death_test_style = "threadsafe";
+
+  testing_util::EnvironmentVariableRestore restore(
+      "GOOGLE_CLOUD_CPP_ENABLE_CLOG");
+  internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "anyvalue");
+
+  auto f = [] {
+    GCP_LOG(INFO) << "testing clog";
+    std::exit(42);
+  };
+  ASSERT_EXIT(f(), ExitedWithCode(42), HasSubstr("testing clog"));
+
+  testing::FLAGS_gtest_death_test_style = old_style;
 }
 
 namespace {

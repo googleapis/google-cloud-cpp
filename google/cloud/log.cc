@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/log.h"
+#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {
@@ -45,8 +46,14 @@ LogSink::LogSink()
       clog_backend_id_(0) {}
 
 LogSink& LogSink::Instance() {
-  static LogSink instance;
-  return instance;
+  static auto* const kInstance = [] {
+    auto* p = new LogSink;
+    if (internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG").has_value()) {
+      p->EnableStdClogImpl();
+    }
+    return p;
+  }();
+  return *kInstance;
 }
 
 long LogSink::AddBackend(std::shared_ptr<LogBackend> backend) {

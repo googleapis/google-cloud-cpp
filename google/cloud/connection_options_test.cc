@@ -233,25 +233,6 @@ TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
   EXPECT_EQ(42, actual.truncate_string_field_longer_than());
 }
 
-TEST(ConnectionOptionsTest, DefaultLoggingNoEnvironment) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-  LogSink::Instance().ClearBackends();
-  internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-  internal::DefaultLogging();
-  EXPECT_EQ(0, LogSink::Instance().BackendCount());
-}
-
-TEST(ConnectionOptionsTest, DefaultLoggingWithValue) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-  LogSink::Instance().ClearBackends();
-  EXPECT_EQ(0, LogSink::Instance().BackendCount());
-  internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "any-value");
-  internal::DefaultLogging();
-  EXPECT_EQ(1, LogSink::Instance().BackendCount());
-  LogSink::DisableStdClog();
-  EXPECT_EQ(0, LogSink::Instance().BackendCount());
-}
-
 TEST(ConnectionOptionsTest, DefaultBackgroundThreads) {
   auto actual = internal::DefaultBackgroundThreads();
   EXPECT_TRUE(actual);

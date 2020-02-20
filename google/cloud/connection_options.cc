@@ -42,13 +42,6 @@ TracingOptions DefaultTracingOptions() {
   return TracingOptions{}.SetOptions(*tracing_options);
 }
 
-void DefaultLogging() {
-  if (google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
-          .has_value()) {
-    google::cloud::LogSink::EnableStdClog();
-  }
-}
-
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads() {
   return google::cloud::internal::make_unique<
       AutomaticallyCreatedBackgroundThreads>();

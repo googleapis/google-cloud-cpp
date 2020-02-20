@@ -31,7 +31,6 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace internal {
 std::set<std::string> DefaultTracingComponents();
 TracingOptions DefaultTracingOptions();
-void DefaultLogging();
 std::unique_ptr<BackgroundThreads> DefaultBackgroundThreads();
 }  // namespace internal
 
@@ -53,9 +52,7 @@ class ConnectionOptions {
         tracing_components_(internal::DefaultTracingComponents()),
         tracing_options_(internal::DefaultTracingOptions()),
         user_agent_prefix_(ConnectionTraits::user_agent_prefix()),
-        background_threads_factory_(internal::DefaultBackgroundThreads) {
-    internal::DefaultLogging();
-  }
+        background_threads_factory_(internal::DefaultBackgroundThreads) {}
 
   /// Change the gRPC credentials value.
   ConnectionOptions& set_credentials(

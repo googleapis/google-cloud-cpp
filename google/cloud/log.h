@@ -57,6 +57,11 @@
  * }
  * @endcode
  *
+ * Alternatively, the application can enable logging to `std::clog` without any
+ * code changes or recompiling by setting the "GOOGLE_CLOUD_CPP_ENABLE_CLOG"
+ * environment variable before the program starts. The existence of this
+ * variable is all that matters; the value is ignored.
+ *
  * Note that while `std::clog` is buffered, the framework will flush any log
  * message at severity `WARNING` or higher.
  *
@@ -297,7 +302,12 @@ class LogSink {
 
   void Log(LogRecord log_record);
 
-  /// Enable `std::clog` on `LogSink::Instance()`.
+  /**
+   * Enable `std::clog` on `LogSink::Instance()`.
+   *
+   * This is also enabled if the "GOOGLE_CLOUD_CPP_ENABLE_CLOG" environment
+   * variable is set.
+   */
   static void EnableStdClog() { Instance().EnableStdClogImpl(); }
 
   /// Disable `std::clog` on `LogSink::Instance()`.
