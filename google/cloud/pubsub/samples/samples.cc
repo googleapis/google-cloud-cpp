@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/publisher_client.h"
+#include "google/cloud/pubsub/subscriber_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
@@ -27,6 +28,15 @@ std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator,
   return prefix + google::cloud::internal::Sample(generator,
                                                   kMaxRandomTopicSuffixLength,
                                                   "abcdefghijklmnopqrstuvwxyz");
+}
+
+std::string RandomSubscriptionId(
+    google::cloud::internal::DefaultPRNG& generator,
+    std::string const& prefix = "cloud-cpp-samples-") {
+  constexpr int kMaxRandomSubscriptionSuffixLength = 32;
+  return prefix + google::cloud::internal::Sample(
+                      generator, kMaxRandomSubscriptionSuffixLength,
+                      "abcdefghijklmnopqrstuvwxyz");
 }
 
 //! [create-topic]
@@ -96,6 +106,79 @@ void DeleteTopicCommand(std::vector<std::string> const& argv) {
   DeleteTopic(std::move(client), argv[0], argv[1]);
 }
 
+//! [create-subscription]
+void CreateSubscription(google::cloud::pubsub::SubscriberClient client,
+                        std::string const& project_id, std::string topic_id,
+                        std::string subscription_id) {
+  namespace pubsub = google::cloud::pubsub;
+  auto subscription =
+      client.CreateSubscription(pubsub::CreateSubscriptionBuilder(
+          pubsub::Subscription(project_id, std::move(subscription_id)),
+          pubsub::Topic(project_id, std::move(topic_id))));
+  if (!subscription) throw std::runtime_error(subscription.status().message());
+
+  std::cout << "The subscription was successfully created: "
+            << subscription->DebugString() << "\n";
+}
+//! [create-subscription]
+
+void CreateSubscriptionCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-subscription <project-id> <topic-id> <subscription-id>");
+  }
+  google::cloud::pubsub::SubscriberClient client(
+      google::cloud::pubsub::MakeSubscriberConnection());
+  CreateSubscription(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [list-subscriptions]
+void ListSubscriptions(google::cloud::pubsub::SubscriberClient client,
+                       std::string const& project_id) {
+  int count = 0;
+  for (auto const& subscription : client.ListSubscriptions(project_id)) {
+    if (!subscription)
+      throw std::runtime_error(subscription.status().message());
+    std::cout << "Subscription Name: " << subscription->name() << "\n";
+    ++count;
+  }
+  if (count == 0) {
+    std::cout << "No subscriptions found in project " << project_id << "\n";
+  }
+}
+//! [list-subscriptions]
+
+void ListSubscriptionsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("create-subscription <project-id>");
+  }
+  google::cloud::pubsub::SubscriberClient client(
+      google::cloud::pubsub::MakeSubscriberConnection());
+  ListSubscriptions(std::move(client), argv[0]);
+}
+
+//! [delete-subscription]
+void DeleteSubscription(google::cloud::pubsub::SubscriberClient client,
+                        std::string project_id, std::string subscription_id) {
+  namespace pubsub = google::cloud::pubsub;
+  auto status = client.DeleteSubscription(
+      pubsub::Subscription(std::move(project_id), std::move(subscription_id)));
+  if (!status.ok()) throw std::runtime_error(status.message());
+
+  std::cout << "The subscription was successfully deleted\n";
+}
+//! [delete-subscription]
+
+void DeleteSubscriptionCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error(
+        "delete-subscription <project-id> <subscription-id>");
+  }
+  google::cloud::pubsub::SubscriberClient client(
+      google::cloud::pubsub::MakeSubscriberConnection());
+  DeleteSubscription(std::move(client), argv[0], argv[1]);
+}
+
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
   using CommandMap = std::map<std::string, CommandType>;
@@ -104,6 +187,9 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"create-topic", CreateTopicCommand},
       {"list-topics", ListTopicsCommand},
       {"delete-topic", DeleteTopicCommand},
+      {"create-subscription", CreateSubscriptionCommand},
+      {"list-subscriptions", ListSubscriptionsCommand},
+      {"delete-subscription", DeleteSubscriptionCommand},
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -158,12 +244,23 @@ void RunAll() {
 
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto topic_id = RandomTopicId(generator);
+  auto subscription_id = RandomSubscriptionId(generator);
 
   std::cout << "\nRunning create-topic sample\n";
   RunOneCommand({"", "create-topic", project_id, topic_id});
 
   std::cout << "\nRunning list-topics sample\n";
   RunOneCommand({"", "list-topics", project_id});
+
+  std::cout << "\nRunning create-subscription sample\n";
+  RunOneCommand(
+      {"", "create-subscription", project_id, topic_id, subscription_id});
+
+  std::cout << "\nRunning list-subscriptions sample\n";
+  RunOneCommand({"", "list-subscriptions", project_id});
+
+  std::cout << "\nRunning delete-subscription sample\n";
+  RunOneCommand({"", "delete-subscription", project_id, subscription_id});
 
   std::cout << "\nRunning delete-topic sample\n";
   RunOneCommand({"", "delete-topic", project_id, topic_id});
