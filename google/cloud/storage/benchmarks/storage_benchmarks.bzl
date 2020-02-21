@@ -18,6 +18,7 @@
 
 storage_benchmarks_hdrs = [
     "benchmark_utils.h",
+    "bounded_queue.h",
 ]
 
 storage_benchmarks_srcs = [

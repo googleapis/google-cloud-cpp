@@ -16,7 +16,7 @@
 
 if (BUILD_TESTING)
 
-    add_library(storage_benchmarks benchmark_utils.h benchmark_utils.cc)
+    add_library(storage_benchmarks benchmark_utils.h benchmark_utils.cc bounded_queue.h)
     target_link_libraries(
         storage_benchmarks
         PUBLIC storage_client
@@ -40,6 +40,7 @@ if (BUILD_TESTING)
     set(storage_benchmark_programs
         storage_file_transfer_benchmark.cc
         storage_latency_benchmark.cc
+        storage_multi_throughput_benchmark.cc
         storage_shard_throughput_benchmark.cc
         storage_throughput_benchmark.cc
         storage_throughput_vs_cpu_benchmark.cc
