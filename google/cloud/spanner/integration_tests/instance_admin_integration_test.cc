@@ -168,23 +168,25 @@ TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
                                  .Build());
   StatusOr<google::spanner::admin::instance::v1::Instance> instance = f.get();
 
-  EXPECT_STATUS_OK(instance.status());
+  EXPECT_STATUS_OK(instance);
   EXPECT_THAT(instance->name(), HasSubstr(project_id_));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id));
   EXPECT_EQ("test-display-name", instance->display_name());
   EXPECT_NE(0, instance->node_count());
-  if (!emulator_) {
-    EXPECT_NE(0, instance->labels_size());
-    EXPECT_EQ(instance_config, instance->config());
+  EXPECT_EQ(instance_config, instance->config());
+  if (!emulator_ || instance->labels_size() != 0) {
     EXPECT_EQ("label-value", instance->labels().at("label-key"));
+  }
 
-    // Then update the instance
-    f = client_.UpdateInstance(UpdateInstanceRequestBuilder(*instance)
-                                   .SetDisplayName("New display name")
-                                   .AddLabels({{"new-key", "new-value"}})
-                                   .SetNodeCount(2)
-                                   .Build());
-    instance = f.get();
+  // Then update the instance
+  f = client_.UpdateInstance(UpdateInstanceRequestBuilder(*instance)
+                                 .SetDisplayName("New display name")
+                                 .AddLabels({{"new-key", "new-value"}})
+                                 .SetNodeCount(2)
+                                 .Build());
+  instance = f.get();
+  if (!emulator_ || instance) {
+    EXPECT_STATUS_OK(instance);
     EXPECT_EQ("New display name", instance->display_name());
     EXPECT_EQ(2, instance->labels_size());
     EXPECT_EQ("new-value", instance->labels().at("new-key"));
@@ -222,7 +224,7 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
 
   ASSERT_FALSE(project_id_.empty());
   ASSERT_FALSE(instance_id_.empty());
-  ASSERT_FALSE(test_iam_service_account_.empty());
+  ASSERT_TRUE(emulator_ || !test_iam_service_account_.empty());
 
   Instance in(project_id_, instance_id_);
 

@@ -64,6 +64,10 @@ class ClientIntegrationTest : public ::testing::Test {
   static void TearDownTestSuite() { client_ = nullptr; }
 
  protected:
+  bool EmulatorUnimplemented(Status const& status) {
+    return emulator_ && status.code() == StatusCode::kUnimplemented;
+  }
+
   bool emulator_;
   static std::unique_ptr<Client> client_;
 };
@@ -340,8 +344,6 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
 
 /// @test Test ExecutePartitionedDml
 TEST_F(ClientIntegrationTest, ExecutePartitionedDml) {
-  if (emulator_) return;
-
   auto& client = *client_;
   auto insert_result =
       client_->Commit([&client](Transaction txn) -> StatusOr<Mutations> {
@@ -360,7 +362,9 @@ TEST_F(ClientIntegrationTest, ExecutePartitionedDml) {
   auto result = client_->ExecutePartitionedDml(
       SqlStatement("UPDATE Singers SET LastName = 'test-only'"
                    " WHERE SingerId >= 1"));
-  EXPECT_STATUS_OK(result);
+  if (!EmulatorUnimplemented(result.status())) {
+    EXPECT_STATUS_OK(result);
+  }
 }
 
 void CheckReadWithOptions(
@@ -553,8 +557,6 @@ StatusOr<std::vector<std::vector<Value>>> AddSingerDataToTable(Client client) {
 }
 
 TEST_F(ClientIntegrationTest, PartitionRead) {
-  if (emulator_) return;
-
   auto expected_rows = AddSingerDataToTable(*client_);
   ASSERT_STATUS_OK(expected_rows);
 
@@ -562,6 +564,7 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
   auto read_partitions =
       client_->PartitionRead(ro_transaction, "Singers", KeySet::All(),
                              {"SingerId", "FirstName", "LastName"});
+  if (EmulatorUnimplemented(read_partitions.status())) return;
   ASSERT_STATUS_OK(read_partitions);
 
   std::vector<std::string> serialized_partitions;
@@ -596,8 +599,6 @@ TEST_F(ClientIntegrationTest, PartitionRead) {
 }
 
 TEST_F(ClientIntegrationTest, PartitionQuery) {
-  if (emulator_) return;
-
   auto expected_rows = AddSingerDataToTable(*client_);
   ASSERT_STATUS_OK(expected_rows);
 
@@ -605,6 +606,7 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
   auto query_partitions = client_->PartitionQuery(
       ro_transaction,
       SqlStatement("select SingerId, FirstName, LastName from Singers"));
+  if (EmulatorUnimplemented(query_partitions.status())) return;
   ASSERT_STATUS_OK(query_partitions);
 
   std::vector<std::string> serialized_partitions;
@@ -639,8 +641,6 @@ TEST_F(ClientIntegrationTest, PartitionQuery) {
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
-  if (emulator_) return;
-
   auto statements = {
       SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                    "VALUES(1, 'Foo1', 'Bar1')"),
@@ -663,6 +663,7 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
         return Mutations{};
       });
 
+  if (EmulatorUnimplemented(commit_result.status())) return;
   ASSERT_STATUS_OK(commit_result);
   ASSERT_STATUS_OK(batch_result);
   ASSERT_STATUS_OK(batch_result->status);
@@ -698,8 +699,6 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDml) {
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
-  if (emulator_) return;
-
   std::vector<SqlStatement> v;
   constexpr auto kBatchSize = 200;
   for (int i = 0; i < kBatchSize; ++i) {
@@ -734,6 +733,7 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
         return Mutations{};
       });
 
+  if (EmulatorUnimplemented(commit_result.status())) return;
   ASSERT_STATUS_OK(commit_result);
 
   ASSERT_STATUS_OK(batch_result_left);
@@ -770,8 +770,6 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlMany) {
 }
 
 TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
-  if (emulator_) return;
-
   auto statements = {
       SqlStatement("INSERT INTO Singers (SingerId, FirstName, LastName) "
                    "VALUES(1, 'Foo1', 'Bar1')"),
@@ -794,6 +792,7 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
       });
 
   ASSERT_FALSE(commit_result.ok());
+  if (EmulatorUnimplemented(batch_result.status())) return;
   ASSERT_STATUS_OK(batch_result);
   ASSERT_FALSE(batch_result->status.ok());
   ASSERT_EQ(batch_result->stats.size(), 2);
@@ -802,8 +801,6 @@ TEST_F(ClientIntegrationTest, ExecuteBatchDmlFailure) {
 }
 
 TEST_F(ClientIntegrationTest, AnalyzeSql) {
-  if (emulator_) return;
-
   auto txn = MakeReadOnlyTransaction();
   auto sql = SqlStatement(
       "SELECT * FROM Singers  "
@@ -811,8 +808,10 @@ TEST_F(ClientIntegrationTest, AnalyzeSql) {
 
   // This returns a ExecutionPlan without executing the query.
   auto plan = client_->AnalyzeSql(std::move(txn), std::move(sql));
-  ASSERT_STATUS_OK(plan);
-  EXPECT_GT(plan->plan_nodes_size(), 0);
+  if (!EmulatorUnimplemented(plan.status())) {
+    ASSERT_STATUS_OK(plan);
+    EXPECT_GT(plan->plan_nodes_size(), 0);
+  }
 }
 
 TEST_F(ClientIntegrationTest, ProfileQuery) {
@@ -829,8 +828,8 @@ TEST_F(ClientIntegrationTest, ProfileQuery) {
   EXPECT_TRUE(stats);
   EXPECT_GT(stats->size(), 0);
 
-  if (!emulator_) {
-    auto plan = rows.ExecutionPlan();
+  auto plan = rows.ExecutionPlan();
+  if (!emulator_ || plan) {
     EXPECT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
@@ -857,8 +856,8 @@ TEST_F(ClientIntegrationTest, ProfileDml) {
   EXPECT_TRUE(stats);
   EXPECT_GT(stats->size(), 0);
 
-  if (!emulator_) {
-    auto plan = profile_result.ExecutionPlan();
+  auto plan = profile_result.ExecutionPlan();
+  if (!emulator_ || plan) {
     EXPECT_TRUE(plan);
     EXPECT_GT(plan->plan_nodes_size(), 0);
   }
