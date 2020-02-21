@@ -300,6 +300,7 @@ function (spanner_client_define_tests)
     set(spanner_client_unit_tests
         # cmake-format: sortable
         client_test.cc
+        connection_options_test.cc
         database_test.cc
         database_admin_client_test.cc
         database_admin_connection_test.cc
