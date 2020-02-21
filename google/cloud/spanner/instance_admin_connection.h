@@ -17,9 +17,9 @@
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/internal/instance_admin_stub.h"
-#include "google/cloud/spanner/internal/range_from_pagination.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <google/spanner/admin/instance/v1/spanner_instance_admin.grpc.pb.h>
 #include <map>
 
@@ -37,7 +37,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListInstancesRange = internal::PaginationRange<
+using ListInstancesRange = google::cloud::internal::PaginationRange<
     google::spanner::admin::instance::v1::Instance,
     google::spanner::admin::instance::v1::ListInstancesRequest,
     google::spanner::admin::instance::v1::ListInstancesResponse>;
@@ -51,7 +51,7 @@ using ListInstancesRange = internal::PaginationRange<
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListInstanceConfigsRange = internal::PaginationRange<
+using ListInstanceConfigsRange = google::cloud::internal::PaginationRange<
     google::spanner::admin::instance::v1::InstanceConfig,
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest,
     google::spanner::admin::instance::v1::ListInstanceConfigsResponse>;

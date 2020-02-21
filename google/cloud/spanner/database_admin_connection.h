@@ -19,9 +19,9 @@
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
-#include "google/cloud/spanner/internal/range_from_pagination.h"
 #include "google/cloud/spanner/polling_policy.h"
 #include "google/cloud/spanner/retry_policy.h"
+#include "google/cloud/internal/pagination_range.h"
 #include <google/spanner/admin/database/v1/spanner_database_admin.grpc.pb.h>
 #include <string>
 #include <vector>
@@ -40,7 +40,7 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
  */
-using ListDatabaseRange = internal::PaginationRange<
+using ListDatabaseRange = google::cloud::internal::PaginationRange<
     google::spanner::admin::database::v1::Database,
     google::spanner::admin::database::v1::ListDatabasesRequest,
     google::spanner::admin::database::v1::ListDatabasesResponse>;
