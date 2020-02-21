@@ -25,6 +25,7 @@ google_cloud_cpp_testing_hdrs = [
     "expect_exception.h",
     "expect_future_error.h",
     "init_google_mock.h",
+    "scoped_environment.h",
     "testing_types.h",
 ]
 
@@ -34,5 +35,6 @@ google_cloud_cpp_testing_srcs = [
     "custom_google_mock_main.cc",
     "environment_variable_restore.cc",
     "init_google_mock.cc",
+    "scoped_environment.cc",
     "testing_types.cc",
 ]

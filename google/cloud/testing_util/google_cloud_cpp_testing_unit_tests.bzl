@@ -18,4 +18,5 @@
 
 google_cloud_cpp_testing_unit_tests = [
     "assert_ok_test.cc",
+    "scoped_environment_test.cc",
 ]
