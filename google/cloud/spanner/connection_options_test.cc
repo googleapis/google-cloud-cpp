@@ -55,22 +55,14 @@ TEST(ConnectionOptionsTest, AdminEndpoint) {
 }
 
 TEST(ConnectionOptionsTest, SpannerEmulator) {
+  // When SPANNER_EMULATOR_HOST is set, the original endpoint is reset to
+  // ${SPANNER_EMULATOR_HOST}, and the original credentials are reset to
+  // grpc::InsecureChannelCredentials().
   EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
   google::cloud::internal::SetEnv("SPANNER_EMULATOR_HOST", "localhost:9010");
-
   ConnectionOptions options(std::shared_ptr<grpc::ChannelCredentials>{});
-
-  // When SPANNER_EMULATOR_HOST is set, the passed credentials are overridden
-  // (by grpc::InsecureChannelCredentials()) and further updates are ignored.
+  options = internal::EmulatorOverrides(options);
   EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());
-  auto other_credentials = grpc::InsecureChannelCredentials();
-  options.set_credentials(other_credentials);
-  EXPECT_NE(other_credentials, options.credentials());
-
-  // When SPANNER_EMULATOR_HOST is set, the default endpoint is overridden (by
-  // ${SPANNER_EMULATOR_HOST}), and further updates are ignored.
-  EXPECT_EQ("localhost:9010", options.endpoint());
-  options.set_endpoint("invalid-endpoint");
   EXPECT_EQ("localhost:9010", options.endpoint());
 }
 

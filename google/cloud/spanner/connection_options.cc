@@ -23,18 +23,33 @@ namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
+
 namespace internal {
+
 std::string BaseUserAgentPrefix() {
   return "gcloud-cpp/" + google::cloud::spanner::VersionString() + " (" +
          CompilerId() + "-" + CompilerVersion() + "; " + CompilerFeatures() +
          ")";
 }
+
+// Override connection endpoint and credentials with values appropriate for
+// an emulated backend. This should be done after any user code that could
+// also override the default values (i.e., immediately before establishing
+// the connection).
+ConnectionOptions EmulatorOverrides(ConnectionOptions options) {
+  auto emulator_addr = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+  if (emulator_addr.has_value()) {
+    options.set_endpoint(*emulator_addr)
+        .set_credentials(grpc::InsecureChannelCredentials());
+  }
+  return options;
+}
+
 }  // namespace internal
 
 ConnectionOptions::ConnectionOptions(
     std::shared_ptr<grpc::ChannelCredentials> credentials)
-    : emulator_override_(false),
-      credentials_(std::move(credentials)),
+    : credentials_(std::move(credentials)),
       endpoint_("spanner.googleapis.com"),
       num_channels_(4),
       user_agent_prefix_(internal::BaseUserAgentPrefix()),
@@ -42,13 +57,6 @@ ConnectionOptions::ConnectionOptions(
         return google::cloud::internal::make_unique<
             google::cloud::internal::AutomaticallyCreatedBackgroundThreads>();
       }) {
-  auto emulator_addr = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
-  if (emulator_addr.has_value()) {
-    emulator_override_ = true;
-    credentials_ = grpc::InsecureChannelCredentials();
-    endpoint_ = *emulator_addr;
-  }
-
   auto tracing =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
   if (tracing.has_value()) {

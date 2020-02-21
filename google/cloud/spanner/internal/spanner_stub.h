@@ -125,8 +125,8 @@ class SpannerStub {
  * @p channel_id should be unique among all stubs in the same Connection pool,
  * to ensure they use different underlying connections.
  */
-std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(
-    ConnectionOptions const& options, int channel_id);
+std::shared_ptr<SpannerStub> CreateDefaultSpannerStub(ConnectionOptions options,
+                                                      int channel_id);
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

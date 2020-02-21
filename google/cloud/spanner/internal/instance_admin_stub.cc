@@ -173,7 +173,8 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 };
 
 std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
-    ConnectionOptions const& options) {
+    ConnectionOptions options) {
+  options = internal::EmulatorOverrides(std::move(options));
   auto channel =
       grpc::CreateCustomChannel(options.endpoint(), options.credentials(),
                                 options.CreateChannelArguments());
