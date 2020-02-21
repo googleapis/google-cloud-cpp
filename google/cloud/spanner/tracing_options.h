@@ -16,8 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TRACING_OPTIONS_H
 
 #include "google/cloud/spanner/version.h"
-#include <cstdint>
-#include <string>
+#include "google/cloud/tracing_options.h"
 
 namespace google {
 namespace cloud {
@@ -32,30 +31,7 @@ inline namespace SPANNER_CLIENT_NS {
  *   use_short_repeated_primitives=on
  *   truncate_string_field_longer_than=128
  */
-class TracingOptions {
- public:
-  /// Override the default options with values from @p `str`.
-  TracingOptions& SetOptions(std::string const& str);
-
-  /// The entire message will be output on a single line with no line breaks.
-  bool single_line_mode() const { return single_line_mode_; }
-
-  /// Print repeated primitives in a compact format instead of each value on
-  /// its own line.
-  bool use_short_repeated_primitives() const {
-    return use_short_repeated_primitives_;
-  }
-
-  /// If non-zero, truncate all string/bytes fields longer than this.
-  std::int64_t truncate_string_field_longer_than() const {
-    return truncate_string_field_longer_than_;
-  }
-
- private:
-  bool single_line_mode_ = true;
-  bool use_short_repeated_primitives_ = true;
-  std::int64_t truncate_string_field_longer_than_ = 128;
-};
+using TracingOptions = google::cloud::TracingOptions;
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

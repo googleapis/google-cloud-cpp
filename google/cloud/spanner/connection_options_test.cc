@@ -28,33 +28,36 @@ using ::google::cloud::testing_util::EnvironmentVariableRestore;
 using ::testing::HasSubstr;
 using ::testing::StartsWith;
 
-TEST(ConnectionOptionsTest, Credentials) {
-  EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
-  google::cloud::internal::UnsetEnv("SPANNER_EMULATOR_HOST");
-
-  // In the CI environment grpc::GoogleDefaultCredentials() may assert. Use the
-  // insecure credentials to initialize the options in any unit test.
-  auto expected = grpc::InsecureChannelCredentials();
-  ConnectionOptions options(expected);
-  EXPECT_EQ(expected.get(), options.credentials().get());
-
-  auto other_credentials = grpc::InsecureChannelCredentials();
-  EXPECT_NE(expected, other_credentials);
-  options.set_credentials(other_credentials);
-  EXPECT_EQ(other_credentials, options.credentials());
-}
-
-TEST(ConnectionOptionsTest, AdminEndpoint) {
-  EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
-  google::cloud::internal::UnsetEnv("SPANNER_EMULATOR_HOST");
-
+TEST(ConnectionOptionsTraits, AdminEndpoint) {
   ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_EQ("spanner.googleapis.com", options.endpoint());
+  EXPECT_EQ(ConnectionOptionsTraits::default_endpoint(), options.endpoint());
   options.set_endpoint("invalid-endpoint");
   EXPECT_EQ("invalid-endpoint", options.endpoint());
 }
 
-TEST(ConnectionOptionsTest, SpannerEmulator) {
+TEST(ConnectionOptionsTraits, NumChannels) {
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  int num_channels = options.num_channels();
+  EXPECT_EQ(ConnectionOptionsTraits::default_num_channels(), num_channels);
+  num_channels *= 2;  // ensure we change it from the default value.
+  options.set_num_channels(num_channels);
+  EXPECT_EQ(num_channels, options.num_channels());
+}
+
+TEST(ConnectionOptionsTraits, UserAgentPrefix) {
+  auto actual = ConnectionOptionsTraits::user_agent_prefix();
+  EXPECT_THAT(actual, StartsWith("gcloud-cpp/" + VersionString()));
+  EXPECT_THAT(actual, HasSubstr(internal::CompilerId()));
+  EXPECT_THAT(actual, HasSubstr(internal::CompilerVersion()));
+  EXPECT_THAT(actual, HasSubstr(internal::CompilerFeatures()));
+
+  ConnectionOptions options(grpc::InsecureChannelCredentials());
+  EXPECT_EQ(actual, options.user_agent_prefix());
+  options.add_user_agent_prefix("test-prefix/1.2.3");
+  EXPECT_EQ("test-prefix/1.2.3 " + actual, options.user_agent_prefix());
+}
+
+TEST(EmulatorOverrides, EnvironmentWorks) {
   // When SPANNER_EMULATOR_HOST is set, the original endpoint is reset to
   // ${SPANNER_EMULATOR_HOST}, and the original credentials are reset to
   // grpc::InsecureChannelCredentials().
@@ -64,151 +67,6 @@ TEST(ConnectionOptionsTest, SpannerEmulator) {
   options = internal::EmulatorOverrides(options);
   EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());
   EXPECT_EQ("localhost:9010", options.endpoint());
-}
-
-TEST(ConnectionOptionsTest, NumChannels) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  int num_channels = options.num_channels();
-  EXPECT_LT(0, num_channels);
-  num_channels *= 2;  // ensure we change it from the default value.
-  options.set_num_channels(num_channels);
-  EXPECT_EQ(num_channels, options.num_channels());
-}
-
-TEST(ConnectionOptionsTest, Tracing) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  options.enable_tracing("fake-component");
-  EXPECT_TRUE(options.tracing_enabled("fake-component"));
-  options.disable_tracing("fake-component");
-  EXPECT_FALSE(options.tracing_enabled("fake-component"));
-}
-
-TEST(ConnectionOptionsTest, DefaultTracingUnset) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-
-  google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_FALSE(options.tracing_enabled("rpc"));
-}
-
-TEST(ConnectionOptionsTest, DefaultTracingSet) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                                  "foo,bar,baz");
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_FALSE(options.tracing_enabled("rpc"));
-  EXPECT_TRUE(options.tracing_enabled("foo"));
-  EXPECT_TRUE(options.tracing_enabled("bar"));
-  EXPECT_TRUE(options.tracing_enabled("baz"));
-}
-
-TEST(ConnectionOptionsTest, TracingOptions) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
-                                  ",single_line_mode=off"
-                                  ",use_short_repeated_primitives=off"
-                                  ",truncate_string_field_longer_than=32");
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  TracingOptions tracing_options = options.tracing_options();
-  EXPECT_FALSE(tracing_options.single_line_mode());
-  EXPECT_FALSE(tracing_options.use_short_repeated_primitives());
-  EXPECT_EQ(32, tracing_options.truncate_string_field_longer_than());
-}
-
-TEST(ConnectionOptionsTest, ChannelPoolName) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_TRUE(options.channel_pool_domain().empty());
-  options.set_channel_pool_domain("test-channel-pool");
-  EXPECT_EQ("test-channel-pool", options.channel_pool_domain());
-}
-
-TEST(ConnectionOptionsTest, BaseUserAgentPrefix) {
-  auto actual = internal::BaseUserAgentPrefix();
-
-  EXPECT_THAT(actual, StartsWith("gcloud-cpp/" + VersionString()));
-  EXPECT_THAT(actual, HasSubstr(internal::CompilerId()));
-  EXPECT_THAT(actual, HasSubstr(internal::CompilerVersion()));
-  EXPECT_THAT(actual, HasSubstr(internal::CompilerFeatures()));
-}
-
-TEST(ConnectionOptionsTest, UserAgentPrefix) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_EQ(internal::BaseUserAgentPrefix(), options.user_agent_prefix());
-  options.add_user_agent_prefix("test-prefix/1.2.3");
-  EXPECT_EQ("test-prefix/1.2.3 " + internal::BaseUserAgentPrefix(),
-            options.user_agent_prefix());
-}
-
-TEST(ConnectionOptionsTest, CreateChannelArgumentsDefault) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-
-  auto actual = options.CreateChannelArguments();
-
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  grpc_channel_args test_args = actual.c_channel_args();
-  ASSERT_EQ(1, test_args.num_args);
-  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[0].type);
-  EXPECT_EQ("grpc.primary_user_agent", std::string(test_args.args[0].key));
-  // The gRPC library adds its own version to the user-agent string, so we only
-  // check that our component appears in it.
-  EXPECT_THAT(std::string(test_args.args[0].value.string),
-              StartsWith(options.user_agent_prefix()));
-}
-
-TEST(ConnectionOptionsTest, CreateChannelArgumentsWithChannelPool) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  options.set_channel_pool_domain("testing-pool");
-  options.add_user_agent_prefix("test-prefix/1.2.3");
-
-  auto actual = options.CreateChannelArguments();
-
-  // Use the low-level C API because grpc::ChannelArguments lacks high-level
-  // accessors.
-  grpc_channel_args test_args = actual.c_channel_args();
-  ASSERT_EQ(2, test_args.num_args);
-  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[0].type);
-  ASSERT_EQ(GRPC_ARG_STRING, test_args.args[1].type);
-
-  // There is no (AFAICT) guarantee on the order of the arguments in this array,
-  // and the C types are hard to work with. Capture the arguments in a map to
-  // make it easier to work with them.
-  std::map<std::string, std::string> args;
-  for (std::size_t i = 0; i != test_args.num_args; ++i) {
-    args[test_args.args[i].key] = test_args.args[i].value.string;
-  }
-
-  EXPECT_EQ("testing-pool", args["grpc.channel_pooling_domain"]);
-  // The gRPC library adds its own version to the user-agent string, so we only
-  // check that our component appears in it.
-  EXPECT_THAT(args["grpc.primary_user_agent"],
-              StartsWith(options.user_agent_prefix()));
-}
-
-TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
-  CompletionQueue cq;
-
-  auto options = ConnectionOptions(grpc::InsecureChannelCredentials())
-                     .DisableBackgroundThreads(cq);
-  auto background = options.background_threads_factory()();
-
-  using ms = std::chrono::milliseconds;
-
-  // Schedule some work, it cannot execute because there is no thread attached.
-  auto background_thread_id = background->cq().MakeRelativeTimer(ms(0)).then(
-      [](future<StatusOr<std::chrono::system_clock::time_point>>) {
-        return std::this_thread::get_id();
-      });
-  EXPECT_NE(std::future_status::ready, background_thread_id.wait_for(ms(1)));
-
-  // Verify we can create our own threads to drain the completion queue.
-  std::thread t([&cq] { cq.Run(); });
-  EXPECT_EQ(std::future_status::ready, background_thread_id.wait_for(ms(100)));
-
-  cq.Shutdown();
-  t.join();
 }
 
 }  // namespace

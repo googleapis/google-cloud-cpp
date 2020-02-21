@@ -198,7 +198,6 @@ add_library(
     sql_statement.h
     timestamp.h
     timestamp.cc
-    tracing_options.cc
     tracing_options.h
     transaction.cc
     transaction.h
@@ -300,7 +299,6 @@ function (spanner_client_define_tests)
 
     set(spanner_client_unit_tests
         # cmake-format: sortable
-        connection_options_test.cc
         client_test.cc
         database_test.cc
         database_admin_client_test.cc
@@ -347,7 +345,6 @@ function (spanner_client_define_tests)
         spanner_version_test.cc
         sql_statement_test.cc
         timestamp_test.cc
-        tracing_options_test.cc
         transaction_test.cc
         create_instance_request_builder_test.cc
         update_instance_request_builder_test.cc

@@ -14,23 +14,26 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/internal/compiler_info.h"
-#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/log.h"
-#include <sstream>
 
 namespace google {
 namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
-namespace internal {
-
-std::string BaseUserAgentPrefix() {
-  return "gcloud-cpp/" + google::cloud::spanner::VersionString() + " (" +
-         CompilerId() + "-" + CompilerVersion() + "; " + CompilerFeatures() +
-         ")";
+std::string ConnectionOptionsTraits::default_endpoint() {
+  return "spanner.googleapis.com";
 }
+
+std::string ConnectionOptionsTraits::user_agent_prefix() {
+  return "gcloud-cpp/" + google::cloud::spanner::VersionString() + " (" +
+         internal::CompilerId() + "-" + internal::CompilerVersion() + "; " +
+         internal::CompilerFeatures() + ")";
+}
+
+int ConnectionOptionsTraits::default_num_channels() { return 4; }
+
+namespace internal {
 
 // Override connection endpoint and credentials with values appropriate for
 // an emulated backend. This should be done after any user code that could
@@ -46,65 +49,6 @@ ConnectionOptions EmulatorOverrides(ConnectionOptions options) {
 }
 
 }  // namespace internal
-
-ConnectionOptions::ConnectionOptions(
-    std::shared_ptr<grpc::ChannelCredentials> credentials)
-    : credentials_(std::move(credentials)),
-      endpoint_("spanner.googleapis.com"),
-      num_channels_(4),
-      user_agent_prefix_(internal::BaseUserAgentPrefix()),
-      background_threads_factory_([] {
-        return google::cloud::internal::make_unique<
-            google::cloud::internal::AutomaticallyCreatedBackgroundThreads>();
-      }) {
-  auto tracing =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  if (tracing.has_value()) {
-    std::istringstream is{*tracing};
-    std::string token;
-    while (std::getline(is, token, ',')) {
-      tracing_components_.insert(token);
-    }
-  }
-
-  auto tracing_options =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-  if (tracing_options.has_value()) {
-    tracing_options_.SetOptions(*tracing_options);
-  }
-
-  if (google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG")
-          .has_value()) {
-    google::cloud::LogSink::EnableStdClog();
-  }
-}
-
-ConnectionOptions::ConnectionOptions()
-    : ConnectionOptions(grpc::GoogleDefaultCredentials()) {}
-
-grpc::ChannelArguments ConnectionOptions::CreateChannelArguments() const {
-  grpc::ChannelArguments channel_arguments;
-
-  if (!channel_pool_domain().empty()) {
-    // To get a different channel pool one just needs to set any channel
-    // parameter to a different value. Newer versions of gRPC include a macro
-    // for this purpose (GRPC_ARG_CHANNEL_POOL_DOMAIN). As we are compiling
-    // against older versions in some cases, we use the actual value.
-    channel_arguments.SetString("grpc.channel_pooling_domain",
-                                channel_pool_domain());
-  }
-  channel_arguments.SetUserAgentPrefix(user_agent_prefix());
-  return channel_arguments;
-}
-
-ConnectionOptions& ConnectionOptions::DisableBackgroundThreads(
-    google::cloud::CompletionQueue const& cq) {
-  background_threads_factory_ = [cq] {
-    return google::cloud::internal::make_unique<
-        google::cloud::internal::CustomerSuppliedBackgroundThreads>(cq);
-  };
-  return *this;
-}
 
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner

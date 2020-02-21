@@ -127,7 +127,6 @@ spanner_client_srcs = [
     "row.cc",
     "sql_statement.cc",
     "timestamp.cc",
-    "tracing_options.cc",
     "transaction.cc",
     "value.cc",
     "version.cc",
