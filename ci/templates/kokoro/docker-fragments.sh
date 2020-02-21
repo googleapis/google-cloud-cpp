@@ -112,9 +112,9 @@ _EOF_
 
 read_into_variable INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.19.0.tar.gz && \
-    tar -xf v0.19.0.tar.gz && \
-    cd google-cloud-cpp-common-0.19.0 && \
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
+    tar -xf v0.20.0.tar.gz && \
+    cd google-cloud-cpp-common-0.20.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
