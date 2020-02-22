@@ -203,7 +203,7 @@ std::vector<std::string> CreateAllObjects(
   using std::chrono::milliseconds;
 
   std::size_t const max_group_size =
-      std::max(options.object_count / options.thread_count, 1);
+      (std::max)(options.object_count / options.thread_count, 1);
   std::cout << "# Creating test objects [" << max_group_size << "]\n";
 
   // Generate the list of object names.
@@ -279,7 +279,6 @@ std::size_t WorkerThread(WorkItemQueue& work_queue) {
                              "-" + std::to_string(item.end - 1))
                                 .c_str()));
 
-      // TODO(...) - this does not work with URL-unsafe object names.
       auto const url = "https://storage-download.googleapis.com/" +
                        item.bucket + "/" + item.object;
 
@@ -394,7 +393,7 @@ void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
   using std::chrono::milliseconds;
 
   auto const max_group_size =
-      std::max(options.object_count / options.thread_count, 1);
+      (std::max)(options.object_count / options.thread_count, 1);
 
   std::cout << "# Deleting test objects [" << max_group_size << "]\n";
   auto start = std::chrono::steady_clock::now();
