@@ -45,11 +45,11 @@ class ServiceAccount(object):
         timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
         return self.keys.setdefault(key_id, {
             'kind': 'storage#hmacKeyCreate',
-            'secret': base64.b64encode(secret),
+            'secret': base64.b64encode(bytearray(secret, 'utf-8')).decode('utf-8'),
             'generator': 1,
             'metadata': {
                 'accessId': '%s:%s' % (self.email, key_id),
-                'etag': base64.b64encode('%d' % 1),
+                'etag': base64.b64encode(bytearray('%d' % 1, 'utf-8')).decode('utf-8'),
                 'id': key_id,
                 'kind': 'storage#hmacKey',
                 'projectId': project_id,
@@ -127,7 +127,7 @@ class ServiceAccount(object):
                 status_code=400)
         key['generator'] += 1
         metadata['state'] = state
-        metadata['etag'] = base64.b64encode('%d' % key['generator'])
+        metadata['etag'] = base64.b64encode(bytearray('%d' % key['generator'], 'utf-8')).decode('utf-8')
         now = time.gmtime(time.time())
         metadata['updated'] = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
         return metadata
@@ -193,7 +193,6 @@ class GcsProject(object):
 PROJECTS_HANDLER_PATH = '/storage/v1/projects'
 projects = flask.Flask(__name__)
 projects.debug = True
-
 
 VALID_PROJECTS = {}
 

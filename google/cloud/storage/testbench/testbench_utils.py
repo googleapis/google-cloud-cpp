@@ -96,7 +96,7 @@ def filter_fields_from_response(fields, response):
     """Format the response as a JSON string, using any filtering included in
     the request.
 
-    :param fields:str the value of the `fields` parameter in the origina
+    :param fields:str the value of the `fields` parameter in the original
         request.
     :param response:dict a dictionary to be formatted as a JSON string.
     :return: the response formatted as a string.
@@ -138,9 +138,9 @@ def raise_csek_error(code=400):
                 "extendedHelp": link,
             }],
             "code":
-            code,
+                code,
             "message":
-            msg,
+                msg,
         }
     }
     raise error_response.ErrorResponse(json.dumps(error), status_code=code)
@@ -167,7 +167,7 @@ def validate_customer_encryption_headers(key_header_value, hash_header_value,
 
         h = hashlib.sha256()
         h.update(key)
-        expected = base64.standard_b64encode(h.digest())
+        expected = base64.standard_b64encode(h.digest()).decode('utf-8')
         if hash_header_value is None or expected != hash_header_value:
             raise_csek_error()
     except error_response.ErrorResponse:
@@ -206,7 +206,7 @@ def json_api_patch(original, patch, recurse_on=set({})):
     :rtype:dict
     """
     tmp = original.copy()
-    for key, value in patch.iteritems():
+    for key, value in patch.items():
         if value is None:
             tmp.pop(key, None)
         elif key not in recurse_on:
@@ -244,10 +244,10 @@ def corrupt_media(media):
     """
     # Deal with the boundary condition.
     if not media:
-        return str(random.sample("abcdefghijklmnopqrstuvwxyz", 1))
-    if media[0] == 'A':
-        return 'B' + media[1:]
-    return 'A' + media[1:]
+        return bytearray(random.sample("abcdefghijklmnopqrstuvwxyz", 1), 'utf-8')
+    if media[0] == b'A':
+        return b'B' + media[1:]
+    return b'A' + media[1:]
 
 
 # Define the collection of Buckets indexed by <bucket_name>

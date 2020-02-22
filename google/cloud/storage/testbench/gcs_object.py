@@ -62,8 +62,8 @@ class GcsObjectVersion(object):
                 'entity': 'project-owners-123456789',
                 'entityId': '',
             },
-            'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()),
-            'crc32c': base64.b64encode(struct.pack('>I', crc32c.crc32(self.media)))
+            'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()).decode('utf-8'),
+            'crc32c': base64.b64encode(struct.pack('>I', crc32c.crc32(self.media))).decode('utf-8')
         }
         if request.headers.get('content-type') is not None:
             self.metadata['contentType'] = request.headers.get('content-type')
@@ -123,7 +123,7 @@ class GcsObjectVersion(object):
     def _validate_md5_hash(self):
         """Validate the md5Hash field against the stored media."""
         actual = self.metadata.get('md5Hash', '')
-        expected = base64.b64encode(hashlib.md5(self.media).digest())
+        expected = base64.b64encode(hashlib.md5(self.media).digest()).decode('utf-8')
         if actual != expected:
             raise error_response.ErrorResponse(
                 'Mismatched MD5 hash expected=%s, actual=%s' % (expected,
@@ -132,7 +132,7 @@ class GcsObjectVersion(object):
     def _validate_crc32c(self):
         """Validate the crc32c field against the stored media."""
         actual = self.metadata.get('crc32c', '')
-        expected = base64.b64encode(struct.pack('>I', crc32c.crc32(self.media)))
+        expected = base64.b64encode(struct.pack('>I', crc32c.crc32(self.media))).decode('utf-8')
         if actual != expected:
             raise error_response.ErrorResponse(
                 'Mismatched CRC32C checksum expected=%s, actual=%s' % (expected,
@@ -256,7 +256,7 @@ class GcsObjectVersion(object):
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
         }
-        self.metadata['acl'] = indexed.values()
+        self.metadata['acl'] = list(indexed.values())
         return indexed[entity]
 
     def delete_acl(self, entity):
@@ -268,7 +268,7 @@ class GcsObjectVersion(object):
         entity = testbench_utils.canonical_entity_name(entity)
         indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
-        self.metadata['acl'] = indexed.values()
+        self.metadata['acl'] = list(indexed.values())
 
     def get_acl(self, entity):
         """Get a single AccessControl entry from the Object revision.
@@ -327,7 +327,7 @@ class GcsObjectVersion(object):
         """Return the value for the x-goog-hash header."""
         hashes = {'md5': self.metadata.get('md5Hash', ''),
                   'crc32c': self.metadata.get('crc32c', '')}
-        hashes = ['%s=%s' % (key, val) for key, val in hashes.iteritems() if val]
+        hashes = ['%s=%s' % (key, val) for key, val in hashes.items() if val]
         return ','.join(hashes)
 
 
@@ -582,15 +582,15 @@ class GcsObject(object):
         """
         headers = dict()
         index = 0
-        next_line = multipart_upload_part.find('\r\n', index)
+        next_line = multipart_upload_part.find(b'\r\n', index)
         while next_line != index:
             header_line = multipart_upload_part[index:next_line]
-            key, value = header_line.split(': ', 2)
+            key, value = header_line.split(b': ', 2)
             # This does not work for repeated headers, but we do not expect
             # those in the testbench.
-            headers[key.encode('ascii', 'ignore')] = value
+            headers[key.decode('utf-8')] = value.decode('utf-8')
             index = next_line + 2
-            next_line = multipart_upload_part.find('\r\n', index)
+            next_line = multipart_upload_part.find(b'\r\n', index)
         return headers, multipart_upload_part[next_line + 2:]
 
     def insert_multipart(self, gcs_url, request):
@@ -612,7 +612,8 @@ class GcsObject(object):
                 'Missing boundary (%s) in content-type header in multipart upload'
                 % boundary)
 
-        marker = '--' + boundary + '\r\n'
+        boundary = bytearray(boundary, 'utf-8')
+        marker = b'--' + boundary + b'\r\n'
         body = testbench_utils.extract_media(request)
         parts = body.split(marker)
         # parts[0] is the empty string, `multipart` should start with the boundary
@@ -620,7 +621,7 @@ class GcsObject(object):
         resource_headers, resource_body = self._parse_part(parts[1])
         # parts[2] is the media, with some headers
         media_headers, media_body = self._parse_part(parts[2])
-        end = media_body.find('\r\n--' + boundary + '--\r\n')
+        end = media_body.find(b'\r\n--' + boundary + b'--\r\n')
         if end == -1:
             raise error_response.ErrorResponse(
                 'Missing end marker (--%s--) in media body' % boundary)
@@ -630,7 +631,7 @@ class GcsObject(object):
         # header and the resource['contentType'] field. They must be consistent,
         # and the service generates an error when they are not.
         if (resource.get('contentType') is not None and
-            media_headers.get('content-type') is not None and
+                media_headers.get('content-type') is not None and
                 resource.get('contentType') != media_headers.get('content-type')):
             raise error_response.ErrorResponse(
                 ('Content-Type specified in the upload (%s) does not match' +
@@ -795,13 +796,13 @@ class GcsObject(object):
     def make_rewrite_token(cls, operation, destination_bucket,
                            destination_object, generation):
         """Create a new rewrite token for the given operation."""
-        return base64.b64encode('/'.join([
+        return base64.b64encode(bytearray('/'.join([
             str(operation.get('id')),
             destination_bucket,
             destination_object,
             str(generation),
             str(operation.get('bytes_rewritten')),
-        ]))
+        ]), 'utf-8')).decode('utf-8')
 
     def make_rewrite_operation(self, request, destination_bucket,
                                destination_object):

@@ -45,15 +45,15 @@ version is updated, and we do not want the builds to break just
 because some third party changed something.
 
 ```console
-sudo apt install -y python python-pip
-pip install --upgrade pip
-pip install cmake_format==0.6.0
+sudo apt install -y python3 python3-pip
+pip3 install --upgrade pip3
+pip3 install cmake_format==0.6.0
 ```
 
 Install the Python modules used in the integration tests:
 
 ```console
-pip install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
+pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
     gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
 ```
 
