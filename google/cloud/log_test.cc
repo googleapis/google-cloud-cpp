@@ -13,8 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/log.h"
-#include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -155,9 +154,8 @@ TEST(LogSinkTest, ClogEnvironment) {
   auto old_style = testing::FLAGS_gtest_death_test_style;
   testing::FLAGS_gtest_death_test_style = "threadsafe";
 
-  testing_util::EnvironmentVariableRestore restore(
-      "GOOGLE_CLOUD_CPP_ENABLE_CLOG");
-  internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_CLOG", "anyvalue");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_CLOG",
+                                      "anyvalue");
 
   auto f = [] {
     GCP_LOG(INFO) << "testing clog";

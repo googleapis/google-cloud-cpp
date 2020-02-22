@@ -14,9 +14,8 @@
 
 #include "google/cloud/connection_options.h"
 #include "google/cloud/internal/compiler_info.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <map>
 
@@ -25,7 +24,6 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace {
 
-using ::google::cloud::testing_util::EnvironmentVariableRestore;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::StartsWith;
@@ -77,18 +75,14 @@ TEST(ConnectionOptionsTest, Tracing) {
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingUnset) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-
-  google::cloud::internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_FALSE(options.tracing_enabled("rpc"));
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingSet) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
-                                  "foo,bar,baz");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                                      "foo,bar,baz");
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   EXPECT_FALSE(options.tracing_enabled("rpc"));
   EXPECT_TRUE(options.tracing_enabled("foo"));
@@ -97,12 +91,10 @@ TEST(ConnectionOptionsTest, DefaultTracingSet) {
 }
 
 TEST(ConnectionOptionsTest, TracingOptions) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
-                                  ",single_line_mode=off"
-                                  ",use_short_repeated_primitives=off"
-                                  ",truncate_string_field_longer_than=32");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+                                      ",single_line_mode=off"
+                                      ",use_short_repeated_primitives=off"
+                                      ",truncate_string_field_longer_than=32");
   TestConnectionOptions options(grpc::InsecureChannelCredentials());
   TracingOptions tracing_options = options.tracing_options();
   EXPECT_FALSE(tracing_options.single_line_mode());
@@ -196,22 +188,20 @@ TEST(ConnectionOptionsTest, CustomBackgroundThreads) {
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingComponentsNoEnvironment) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  internal::UnsetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING", {});
   auto const actual = internal::DefaultTracingComponents();
   EXPECT_THAT(actual, ElementsAre());
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingComponentsWithValue) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_ENABLE_TRACING");
-  internal::SetEnv("GOOGLE_CLOUD_CPP_ENABLE_TRACING", "a,b,c");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_ENABLE_TRACING",
+                                      "a,b,c");
   auto const actual = internal::DefaultTracingComponents();
   EXPECT_THAT(actual, ElementsAre("a", "b", "c"));
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingOptionsNoEnvironment) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-  internal::UnsetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS", {});
   auto const actual = internal::DefaultTracingOptions();
   auto const expected = TracingOptions{};
   EXPECT_EQ(expected.single_line_mode(), actual.single_line_mode());
@@ -222,11 +212,10 @@ TEST(ConnectionOptionsTest, DefaultTracingOptionsNoEnvironment) {
 }
 
 TEST(ConnectionOptionsTest, DefaultTracingOptionsWithValue) {
-  EnvironmentVariableRestore restore("GOOGLE_CLOUD_CPP_TRACING_OPTIONS");
-  internal::SetEnv("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
-                   "single_line_mode=on"
-                   ",use_short_repeated_primitives=ON"
-                   ",truncate_string_field_longer_than=42");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_CPP_TRACING_OPTIONS",
+                                      "single_line_mode=on"
+                                      ",use_short_repeated_primitives=ON"
+                                      ",truncate_string_field_longer_than=42");
   auto const actual = internal::DefaultTracingOptions();
   EXPECT_TRUE(actual.single_line_mode());
   EXPECT_TRUE(actual.use_short_repeated_primitives());
