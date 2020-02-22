@@ -19,7 +19,6 @@ import error_response
 import flask
 import json
 
-
 IAM_HANDLER_PATH = '/iamapi'
 iam = flask.Flask(__name__)
 iam.debug = True
@@ -38,10 +37,10 @@ def sign_blob(service_account):
     except TypeError:
         raise error_response.ErrorResponse(
             'payload must be base64-encoded', status_code=400)
-    blob = 'signed: ' + blob
+    blob = b'signed: ' + blob
     response = {
         'keyId': 'fake-key-id-123',
-        'signedBlob': base64.b64encode(blob)
+        'signedBlob': base64.b64encode(blob).decode('utf-8')
     }
     return json.dumps(response)
 

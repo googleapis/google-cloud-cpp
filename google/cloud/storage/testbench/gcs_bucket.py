@@ -97,9 +97,12 @@ class GcsBucket(object):
             'labels', 'lifecycle', 'location', 'logging', 'retentionPolicy',
             'storageClass', 'versioning', 'website', 'iamConfiguration'
         }
+        non_writeable_keys = []
         for key in metadata.keys():
             if key not in writeable_keys:
-                metadata.pop(key, None)
+                non_writeable_keys.append(key)
+        for key in non_writeable_keys:
+            metadata.pop(key, None)
         return metadata
 
     def _adjust_field_patch(self, patch, field):
@@ -238,7 +241,7 @@ class GcsBucket(object):
         # Replace or insert the entry.
         indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed[entity] = entry
-        self.metadata['acl'] = indexed.values()
+        self.metadata['acl'] = list(indexed.values())
         return entry
 
     def delete_acl(self, entity):
@@ -251,7 +254,7 @@ class GcsBucket(object):
         entity = testbench_utils.canonical_entity_name(entity)
         indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
         indexed.pop(entity)
-        self.metadata['acl'] = indexed.values()
+        self.metadata['acl'] = list(indexed.values())
 
     def get_acl(self, entity):
         """Get a single BucketAccessControl entry from this bucket.
@@ -302,7 +305,7 @@ class GcsBucket(object):
             'role': role,
             'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
         }
-        self.metadata['defaultObjectAcl'] = indexed.values()
+        self.metadata['defaultObjectAcl'] = list(indexed.values())
         return indexed[entity]
 
     def delete_default_object_acl(self, entity):
@@ -314,7 +317,7 @@ class GcsBucket(object):
         entity = testbench_utils.canonical_entity_name(entity)
         indexed = testbench_utils.index_acl(self.metadata.get('defaultObjectAcl', []))
         indexed.pop(entity)
-        self.metadata['defaultObjectAcl'] = indexed.values()
+        self.metadata['defaultObjectAcl'] = list(indexed.values())
 
     def get_default_object_acl(self, entity):
         """Get a single default ObjectAccessControl entry from this Bucket.
@@ -346,7 +349,7 @@ class GcsBucket(object):
         :return: with the notification definitions.
         :rtype: list[dict]
         """
-        return self.notifications.values()
+        return list(self.notifications.values())
 
     def insert_notification(self, request):
         """
@@ -422,14 +425,14 @@ class GcsBucket(object):
                 members_by_role.setdefault(role, []).append(
                     entry.get('entity'))
         bindings = []
-        for k, v in members_by_role.iteritems():
+        for k, v in members_by_role.items():
             bindings.append({'role': k, 'members': v})
         policy = {
             'kind': 'storage#policy',
             'resourceId': 'projects/_/buckets/%s' % self.name,
             'bindings': bindings,
-            'etag': base64.b64encode(str(self.counter)),
-            'version':self.iam_version
+            'etag': base64.b64encode(bytearray(str(self.counter), 'utf-8')).decode('utf-8'),
+            'version': self.iam_version
         }
         return policy
 
@@ -451,7 +454,7 @@ class GcsBucket(object):
         :rtype: dict
         """
         self.check_preconditions(request)
-        current_etag = base64.b64encode(str(self.counter))
+        current_etag = base64.b64encode(bytearray(str(self.counter), 'utf-8')).decode('utf-8')
         if (request.headers.get('if-match') is not None
                 and current_etag != request.headers.get('if-match')):
             raise error_response.ErrorResponse(
@@ -573,14 +576,14 @@ class GcsBucket(object):
             'next_byte': 0,
             'expected_bytes': expected_bytes,
             'object_name': metadata.get('name'),
-            'media': '',
+            'media': b'',
             'done': False,
         }
         # Capture the preconditions, including those that are None.
         for precondition in ['ifGenerationMatch', 'ifGenerationNotMatch',
                              'ifMetagenerationMatch', 'ifMetagenerationNotMatch']:
             upload[precondition] = request.args.get(precondition)
-        upload_id = base64.b64encode(metadata.get('name'))
+        upload_id = base64.b64encode(bytearray(metadata.get('name'), 'utf-8')).decode('utf-8')
         self.resumable_uploads[upload_id] = upload
         location = '%s?uploadType=resumable&upload_id=%s' % (
             upload_url, upload_id)
@@ -650,7 +653,7 @@ class GcsBucket(object):
                         'Mismatched data range (%d) vs. content-length (%d)' % (
                             end - begin + 1, len(request.data)), status_code=400)
 
-        upload['media'] = upload.get('media', '') + request.data
+        upload['media'] = upload.get('media', b'') + request.data
         next_byte = len(upload.get('media', ''))
         upload['next_byte'] = next_byte
         response_payload = ''

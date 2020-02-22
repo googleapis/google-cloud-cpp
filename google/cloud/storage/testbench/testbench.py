@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright 2018 Google Inc.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -380,7 +380,7 @@ def objects_list(bucket_name):
         if o.get_latest() is None:
             continue
         if all_versions:
-            for object_version in o.revisions.itervalues():
+            for object_version in o.revisions.values():
                 result['items'].append(object_version.metadata)
         else:
             result['items'].append(o.get_latest().metadata)
@@ -468,6 +468,7 @@ def objects_get_common(bucket_name, object_name, revision):
                 time.sleep(0.1)
                 chunk_end = min(r + chunk_size, len(response_payload))
                 yield response_payload[r:chunk_end]
+
         length = len(response_payload)
         content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
         headers = {
@@ -535,6 +536,7 @@ def objects_get_common(bucket_name, object_name, revision):
                     time.sleep(0.01)
                     chunk_end = min(r + chunk_size, len(response_payload))
                     yield response_payload[r:chunk_end]
+
             return flask.Response(streamer(), status=200, headers=headers)
         if instructions.endswith(u'/retry-1'):
             print("## Return error for retry 1")
@@ -603,7 +605,7 @@ def objects_compose(bucket_name, object_name):
             'The number of source components provided'
             ' (%d) exceeds the maximum (32)' % len(source_objects),
             status_code=400)
-    composed_media = ""
+    composed_media = b''
     for source_object in source_objects:
         source_object_name = source_object.get('name')
         if source_object_name is None:
@@ -825,10 +827,8 @@ def xmlapi_put_object(bucket_name, object_name):
 # Define the WSGI application to handle HMAC key requests
 (PROJECTS_HANDLER_PATH, projects_app) = gcs_project.get_projects_app()
 
-
 # Define the WSGI application to handle IAM requests
 (IAM_HANDLER_PATH, iam_app) = gcs_iam.get_iam_app()
-
 
 application = DispatcherMiddleware(
     root, {
