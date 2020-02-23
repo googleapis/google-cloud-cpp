@@ -989,6 +989,13 @@ std::string ParallelFileUploadSplitPointsToString(
 StatusOr<std::vector<std::uintmax_t>> ParallelFileUploadSplitPointsFromString(
     std::string const& s);
 
+/**
+ * Helper functor to call `PrepareParallelUpload` via `apply`.
+ *
+ * This object holds only references to objects, hence it should not be stored.
+ * Instead, it should be used only as a transient object allowing for calling
+ * `PrepareParallelUpload` via `apply`.
+ */
 struct PrepareParallelUploadApplyHelper {
   // Some gcc versions crash on using decltype for return type here.
   template <typename... Options>
