@@ -66,14 +66,16 @@ run_example ./storage_shard_throughput_benchmark \
 
 run_example_usage ./storage_multi_throughput_benchmark --help
 run_example_usage ./storage_multi_throughput_benchmark --description
-run_example ./storage_shard_throughput_benchmark \
+run_example ./storage_multi_throughput_benchmark \
       "--project-id=${GOOGLE_CLOUD_PROJECT}" \
       "--region=${FAKE_REGION}" \
+      "--bucket-prefix=cloud-cpp-testing-" \
       --object-cout=1 \
-      --chunk-size=256KiB \
-      --chunk-count=1 \
+      --thread-count=1 \
       --iteration-size=2 \
-      --iteration-count=2
+      --iteration-count=2 \
+      --chunk-size=256KiB \
+      --chunk-count=1
 
 run_example ./storage_throughput_benchmark \
       --duration=1 \
