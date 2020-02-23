@@ -15,7 +15,7 @@
 #
 # WARNING: This is an automatically generated file. Consider changing the
 #     sources instead. You can find the source templates and scripts at:
-#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#     https://github.com/googleapis/google-cloud-cpp-common/tree/master/ci/templates
 #
 
 ARG DISTRO_VERSION=bionic
@@ -128,9 +128,9 @@ RUN wget -q https://github.com/google/googletest/archive/release-1.10.0.tar.gz &
 
 # ```bash
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.19.0.tar.gz && \
-    tar -xf v0.19.0.tar.gz && \
-    cd google-cloud-cpp-common-0.19.0 && \
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
+    tar -xf v0.20.0.tar.gz && \
+    cd google-cloud-cpp-common-0.20.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \

@@ -16,7 +16,7 @@
 #
 # WARNING: This is an automatically generated file. Consider changing the
 #     sources instead. You can find the source templates and scripts at:
-#         https://github.com/googleapis/google-cloud-cpp-common/ci/templates
+#     https://github.com/googleapis/google-cloud-cpp-common/tree/master/ci/templates
 #
 
 set -eu
