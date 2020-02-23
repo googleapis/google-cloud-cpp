@@ -238,16 +238,14 @@ def extract_media(request):
 def corrupt_media(media):
     """Return a randomly modified version of a string.
 
-    :param media:str a string (typically some object media) to be modified.
+    :param media:bytes a string (typically some object media) to be modified.
     :return: a string that is slightly different than media.
     :rtype: str
     """
     # Deal with the boundary condition.
     if not media:
         return bytearray(random.sample("abcdefghijklmnopqrstuvwxyz", 1), 'utf-8')
-    if media[0] == b'A':
-        return b'B' + media[1:]
-    return b'A' + media[1:]
+    return b'B' + media[1:] if media[0:1] == b'A' else b'A' + media[1:]
 
 
 # Define the collection of Buckets indexed by <bucket_name>
