@@ -112,6 +112,7 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
   Instance in(project_id_, instance_id_);
 
   auto instance = client_.GetInstance(in);
+  if (emulator_ && instance.status().code() == StatusCode::kNotFound) return;
   EXPECT_STATUS_OK(instance);
   EXPECT_THAT(instance->name(), HasSubstr(project_id_));
   EXPECT_THAT(instance->name(), HasSubstr(instance_id_));

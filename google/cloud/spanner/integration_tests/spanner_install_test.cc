@@ -63,11 +63,19 @@ int main(int argc, char* argv[]) try {
       if (full_name.find(substr) == std::string::npos) continue;
       names.push_back(full_name.substr(full_name.rfind('/') + 1));
     }
-    if (names.empty()) throw std::runtime_error("No instances in the project");
+    if (names.empty()) {
+      auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+      if (emulator.has_value()) {
+        std::cout << "No instances in the project within the emulator.\n";
+        return std::string{};
+      }
+      throw std::runtime_error("No instances in the project");
+    }
 
     return names[std::uniform_int_distribution<std::size_t>(
         0, names.size() - 1)(generator)];
   }();
+  if (instance_id.empty()) return 0;
 
   auto database_id =
       "db-" + google::cloud::internal::Sample(

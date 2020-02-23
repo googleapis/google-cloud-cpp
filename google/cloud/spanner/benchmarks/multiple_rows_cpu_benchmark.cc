@@ -19,6 +19,7 @@
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <google/spanner/v1/result_set.pb.h>
 #include <algorithm>
@@ -182,6 +183,14 @@ int main(int argc, char* argv[]) {
       std::cout << "# Re-using existing database\n";
       database_created = false;
     } else {
+      auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+      if (emulator.has_value() &&
+          db.status().code() == google::cloud::StatusCode::kNotFound) {
+        // The emulator probably doesn't have the instance, and we don't care
+        // to create it as benchmarking the emulator is a non-goal. So, just
+        // succeed quietly.
+        return 0;
+      }
       std::cerr << "Error creating database: " << db.status() << "\n";
       return 1;
     }

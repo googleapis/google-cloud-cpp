@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/internal/getenv.h"
 
 namespace google {
 namespace cloud {
@@ -44,6 +46,24 @@ StatusOr<std::string> PickRandomInstance(
     }
   }
 
+  if (instance_ids.empty()) {
+    auto emulator = google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST");
+    if (emulator.has_value()) {
+      // We expect test instances to exist when running against real services,
+      // but if we are running against the emulator we're happy to create one.
+      spanner::Instance in(project_id, "test-instance-a");
+      auto create_instance_request =
+          spanner::CreateInstanceRequestBuilder(
+              in, "projects/" + in.project_id() +
+                      "/instanceConfigs/emulator-config")
+              .Build();
+      StatusOr<google::spanner::admin::instance::v1::Instance> instance =
+          client.CreateInstance(create_instance_request).get();
+      if (instance || instance.status().code() == StatusCode::kAlreadyExists) {
+        instance_ids.push_back(in.instance_id());
+      }
+    }
+  }
   if (instance_ids.empty()) {
     return Status(StatusCode::kInternal, "No available instances for test");
   }
