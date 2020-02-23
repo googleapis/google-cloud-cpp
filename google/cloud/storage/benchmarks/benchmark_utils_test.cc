@@ -38,6 +38,17 @@ TEST(ProgressReporterTest, Trivial) {
   EXPECT_LE(3000, res[2].elapsed.count());
 }
 
+TEST(FormatSize, Basic) {
+  EXPECT_EQ("1023.0B", FormatSize(1023));
+  EXPECT_EQ("1.0KiB", FormatSize(kKiB));
+  EXPECT_EQ("1.1KiB", FormatSize(kKiB + 100));
+  EXPECT_EQ("1.0MiB", FormatSize(kMiB));
+  EXPECT_EQ("1.0GiB", FormatSize(kGiB));
+  EXPECT_EQ("1.1GiB", FormatSize(kGiB + 128 * kMiB));
+  EXPECT_EQ("1.0TiB", FormatSize(kTiB));
+  EXPECT_EQ("2.0TiB", FormatSize(2 * kTiB));
+}
+
 }  // namespace
 }  // namespace storage_benchmarks
 }  // namespace cloud

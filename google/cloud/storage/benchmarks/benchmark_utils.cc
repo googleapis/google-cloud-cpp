@@ -244,6 +244,33 @@ ProgressReporter::GetAccumulatedProgress() const {
   return progress_;
 }
 
+std::string FormatSize(std::uintmax_t size) {
+  struct {
+    std::uintmax_t limit;
+    std::uintmax_t resolution;
+    char const* name;
+  } ranges[] = {
+      {kKiB, 1, "B"},
+      {kMiB, kKiB, "KiB"},
+      {kGiB, kMiB, "MiB"},
+      {kTiB, kGiB, "GiB"},
+  };
+  auto resolution = kTiB;
+  char const* name = "TiB";
+  for (auto const& r : ranges) {
+    if (size < r.limit) {
+      resolution = r.resolution;
+      name = r.name;
+      break;
+    }
+  }
+  std::ostringstream os;
+  os.setf(std::ios::fixed);
+  os.precision(1);
+  os << static_cast<double>(size) / resolution << name;
+  return os.str();
+}
+
 }  // namespace storage_benchmarks
 }  // namespace cloud
 }  // namespace google

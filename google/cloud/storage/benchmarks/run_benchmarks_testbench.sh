@@ -77,7 +77,7 @@ run_example ./storage_throughput_benchmark \
       --thread-count=1 \
       --enable-connection-pool=true \
       --enable-xml-api=true \
-      --region="${FAKE_REGION}" \
+      "--region=${FAKE_REGION}" \
       "--bucket-name=${THROUGHPUT_BUCKET_NAME}" \
       --create-bucket=true \
       --delete-bucket=false \
@@ -96,7 +96,7 @@ run_example ./storage_throughput_benchmark \
       --thread-count=1 \
       --enable-connection-pool=true \
       --enable-xml-api=true \
-      --region="${FAKE_REGION}" \
+      "--region=${FAKE_REGION}" \
       "--bucket-name=${THROUGHPUT_BUCKET_NAME}" \
       --create-bucket=false \
       --delete-bucket=true \

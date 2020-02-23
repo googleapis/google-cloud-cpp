@@ -124,33 +124,7 @@ class ProgressReporter {
   std::vector<TimePoint> progress_;
 };
 
-template <typename Integer>
-std::string FormatSize(Integer size) {
-  struct {
-    std::int64_t limit;
-    std::int64_t resolution;
-    char const* name;
-  } ranges[] = {
-      {kKiB, 1, "B"},
-      {kMiB, kKiB, "KiB"},
-      {kGiB, kMiB, "MiB"},
-      {kTiB, kGiB, "GiB"},
-  };
-  auto resolution = kTiB;
-  char const* name = "TiB";
-  for (auto const& r : ranges) {
-    if (size < r.limit) {
-      resolution = r.resolution;
-      name = r.name;
-      break;
-    }
-  }
-  std::ostringstream os;
-  os.setf(std::ios::fixed);
-  os.precision(1);
-  os << static_cast<double>(size) / resolution << name;
-  return os.str();
-}
+std::string FormatSize(std::uintmax_t size);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

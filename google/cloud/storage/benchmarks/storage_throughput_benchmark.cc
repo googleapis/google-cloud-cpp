@@ -402,7 +402,7 @@ std::vector<std::string> GetObjectNames(gcs::Client client,
   for (auto const& o : client.ListObjects(options.bucket_name)) {
     if (!o) break;
     object_names.push_back(o->name());
-    if (object_names.size() > static_cast<std::size_t>(options.object_count)) {
+    if (object_names.size() >= static_cast<std::size_t>(options.object_count)) {
       break;
     }
   }
