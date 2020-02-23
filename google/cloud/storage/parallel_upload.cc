@@ -76,9 +76,11 @@ StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
     return std::move(session).status();
   }
 
+  auto idx = streams_.size();
+  ++num_unfinished_streams_;
   streams_.emplace_back(
       StreamInfo{request.object_name(), (*session)->session_id(), {}, false});
-  auto idx = num_unfinished_streams_++;
+  assert(idx < streams_.size());
   lk.unlock();
   return ObjectWriteStream(
       google::cloud::internal::make_unique<ParallelObjectWriteStreambuf>(
@@ -94,10 +96,13 @@ std::string ParallelUploadPersistentState::ToString() const {
         {"name", stream.object_name},
         {"resumable_session_id", stream.resumable_session_id}});
   }
-  return internal::nl::json{{"streams", json_streams},
-                            {"expected_generation", expected_generation},
-                            {"destination", destination_object_name}}
-      .dump();
+  auto res = internal::nl::json{{"streams", json_streams},
+                                {"expected_generation", expected_generation},
+                                {"destination", destination_object_name}};
+  if (!custom_data.empty()) {
+    res["custom_data"] = custom_data;
+  }
+  return std::move(res).dump();
 }
 
 StatusOr<ParallelUploadPersistentState>
@@ -137,6 +142,14 @@ ParallelUploadPersistentState::FromString(std::string const& json_rep) {
         "Parallel upload state's 'expected_generation' is not a number.");
   }
   res.expected_generation = expected_generation_json;
+  if (json.count("custom_data") > 0) {
+    auto& custom_data_json = json["custom_data"];
+    if (!custom_data_json.is_string()) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload state's 'custom_data' is not a string.");
+    }
+    res.custom_data = custom_data_json;
+  }
   if (json.count("streams") != 1) {
     return Status(StatusCode::kInternal,
                   "Parallel upload state doesn't contain 'streams'.");
@@ -219,7 +232,11 @@ ParallelUploadPersistentState ParallelUploadStateImpl::ToPersistentState()
   }
 
   return ParallelUploadPersistentState{
-      destination_object_name_, expected_generation_, std::move(streams)};
+      destination_object_name_,
+      expected_generation_,
+      custom_data_,
+      std::move(streams),
+  };
 }
 
 void ParallelUploadStateImpl::AllStreamsFinished(
@@ -250,6 +267,7 @@ void ParallelUploadStateImpl::AllStreamsFinished(
 void ParallelUploadStateImpl::StreamFinished(
     std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
   std::unique_lock<std::mutex> lk(mu_);
+  assert(stream_idx < streams_.size());
   if (streams_[stream_idx].finished) {
     return;
   }
@@ -303,6 +321,36 @@ future<StatusOr<ObjectMetadata>> ParallelUploadStateImpl::WaitForCompletion()
   return res;
 }
 
+std::string ParallelFileUploadSplitPointsToString(
+    std::vector<std::uintmax_t> const& split_points) {
+  auto json_rep = internal::nl::json::array();
+  std::copy(split_points.begin(), split_points.end(),
+            std::back_inserter(json_rep));
+  return json_rep.dump();
+}
+
+StatusOr<std::vector<std::uintmax_t>> ParallelFileUploadSplitPointsFromString(
+    std::string const& s) {
+  auto json = internal::nl::json::parse(s, nullptr, false);
+  if (json.is_discarded()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload file state is not a valid JSON.");
+  }
+  if (!json.is_array()) {
+    return Status(StatusCode::kInternal,
+                  "Parallel upload file state is not an array.");
+  }
+  std::vector<std::uintmax_t> res;
+  for (auto const& split_point : json) {
+    if (!split_point.is_number()) {
+      return Status(StatusCode::kInternal,
+                    "Parallel upload file state's item is not a number.");
+    }
+    res.emplace_back(split_point);
+  }
+  return res;
+}
+
 ParallelUploadFileShard::~ParallelUploadFileShard() {
   // If the object wasn't moved-from (i.e. `state != nullptr`) and
   // `left_to_upload_ > 0` it means that the object is being destroyed without
@@ -312,6 +360,7 @@ ParallelUploadFileShard::~ParallelUploadFileShard() {
     state_->Fail(Status(StatusCode::kCancelled,
                         "Shard destroyed before calling "
                         "ParallelUploadFileShard::Upload()."));
+    std::move(ostream_).Suspend();
   }
 }
 
@@ -322,9 +371,19 @@ Status ParallelUploadFileShard::Upload() {
     Status status(error_code, "ParallelUploadFileShard::Upload(" + file_name_ +
                                   "): " + reason);
     state_->Fail(status);
-    ostream_.Close();
+    std::move(ostream_).Suspend();
+    left_to_upload_ = 0;
     return status;
   };
+  std::uintmax_t const already_uploaded = ostream_.next_expected_byte();
+  if (already_uploaded > left_to_upload_) {
+    return fail(StatusCode::kInternal, "Corrupted upload state, uploaded " +
+                                           std::to_string(already_uploaded) +
+                                           " out of " +
+                                           std::to_string(left_to_upload_));
+  }
+  left_to_upload_ -= already_uploaded;
+  offset_in_file_ += already_uploaded;
   std::ifstream istream(file_name_, std::ios::binary);
   if (!istream.good()) {
     return fail(StatusCode::kNotFound, "cannot open upload file source");

@@ -1137,6 +1137,61 @@ TEST_F(ObjectIntegrationTest, ResumableParallelUpload) {
   ASSERT_STATUS_OK(deletion_status);
 }
 
+TEST_F(ObjectIntegrationTest, ResumeParallelUploadFile) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  std::string bucket_name = flag_bucket_name;
+
+  auto prefix = CreateRandomPrefixName();
+  std::string const dest_object_name = prefix + ".dest";
+
+  testing::TempFile temp_file(LoremIpsum());
+
+  auto shards = CreateUploadShards(*client, temp_file.name(), bucket_name,
+                                   dest_object_name, prefix, MinStreamSize(0),
+                                   MaxStreams(3), IfGenerationMatch(0),
+                                   UseResumableUploadSession(""));
+
+  ASSERT_STATUS_OK(shards);
+  ASSERT_GT(shards->size(), 1);
+
+  std::string resumable_session_id = (*shards)[0].resumable_session_id();
+  auto first_part_res_future = (*shards)[0].WaitForCompletion();
+  ASSERT_STATUS_OK((*shards)[0].Upload());
+  shards->clear();  // we'll resume those
+  auto first_part_res = first_part_res_future.get();
+  EXPECT_FALSE(first_part_res);
+  EXPECT_EQ(StatusCode::kCancelled, first_part_res.status().code());
+
+  auto object_metadata = ParallelUploadFile(
+      *client, temp_file.name(), bucket_name, dest_object_name, prefix, false,
+      MinStreamSize(0), IfGenerationMatch(0),
+      UseResumableUploadSession(resumable_session_id));
+
+  auto stream =
+      client->ReadObject(bucket_name, dest_object_name,
+                         IfGenerationMatch(object_metadata->generation()));
+  std::string actual(std::istreambuf_iterator<char>{stream}, {});
+  EXPECT_EQ(LoremIpsum(), actual);
+
+  std::vector<ObjectMetadata> objects;
+  for (auto& object : client->ListObjects(bucket_name)) {
+    ASSERT_STATUS_OK(object);
+    if (object->name().substr(0, prefix.size()) == prefix &&
+        object->name() != prefix) {
+      objects.emplace_back(*std::move(object));
+    }
+  }
+  ASSERT_EQ(1U, objects.size());
+  ASSERT_EQ(prefix + ".dest", objects[0].name());
+
+  auto deletion_status =
+      client->DeleteObject(bucket_name, dest_object_name,
+                           IfGenerationMatch(object_metadata->generation()));
+  ASSERT_STATUS_OK(deletion_status);
+}
+
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
