@@ -66,7 +66,7 @@ run_example ./storage_shard_throughput_benchmark \
 
 run_example ./storage_throughput_benchmark --help
 run_example ./storage_throughput_benchmark --description
-readonly THROUGHPUT_BUCKET_NAME="bm-bucket-${RANDOME}"
+readonly THROUGHPUT_BUCKET_NAME="bm-bucket-${RANDOM}"
 run_example ./storage_throughput_benchmark \
       --duration=1 \
       --object-count=8 \
