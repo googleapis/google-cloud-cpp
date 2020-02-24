@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/storage/benchmarks/bounded_queue.h"
 #include <cctype>
+#include <future>
 #include <sstream>
 #include <stdexcept>
 
@@ -269,6 +271,50 @@ std::string FormatSize(std::uintmax_t size) {
   os.precision(1);
   os << static_cast<double>(size) / resolution << name;
   return os.str();
+}
+
+void DeleteAllObjects(google::cloud::storage::Client client,
+                      std::string bucket_name, int thread_count) {
+  using WorkQueue = BoundedQueue<google::cloud::storage::ObjectMetadata>;
+  using std::chrono::duration_cast;
+  using std::chrono::milliseconds;
+  namespace gcs = google::cloud::storage;
+
+  std::cout << "# Deleting test objects [" << thread_count << "]\n";
+  auto start = std::chrono::steady_clock::now();
+  WorkQueue work_queue;
+  std::vector<std::future<google::cloud::Status>> workers;
+  std::generate_n(
+      std::back_inserter(workers), thread_count, [&client, &work_queue] {
+        auto worker_task = [](gcs::Client client, WorkQueue& wq) {
+          google::cloud::Status status{};
+          for (auto object = wq.Pop(); object.has_value(); object = wq.Pop()) {
+            auto s = client.DeleteObject(object->bucket(), object->name(),
+                                         gcs::Generation(object->generation()));
+            if (!s.ok()) status = s;
+          }
+          return status;
+        };
+        return std::async(std::launch::async, worker_task, client,
+                          std::ref(work_queue));
+      });
+
+  for (auto& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
+    if (!o) break;
+    work_queue.Push(*std::move(o));
+  }
+  work_queue.Shutdown();
+  int count = 0;
+  for (auto& t : workers) {
+    auto status = t.get();
+    if (!status.ok()) {
+      std::cerr << "Error return task[" << count << "]: " << status << "\n";
+    }
+    ++count;
+  }
+  auto elapsed = std::chrono::steady_clock::now() - start;
+  std::cout << "# Deleted in " << duration_cast<milliseconds>(elapsed).count()
+            << "ms\n";
 }
 
 }  // namespace storage_benchmarks

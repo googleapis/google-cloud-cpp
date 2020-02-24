@@ -109,9 +109,6 @@ std::vector<std::string> GetObjectNames(
 void RunTest(gcs::Client client, Options const& options,
              std::vector<std::string> const& object_names);
 
-void DeleteAllObjects(gcs::Client client, Options const& options,
-                      std::vector<std::string> const& object_names);
-
 google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
 
 }  // namespace
@@ -204,7 +201,8 @@ int main(int argc, char* argv[]) {
   RunTest(client, *options, object_names);
 
   if (options->delete_bucket) {
-    DeleteAllObjects(client, *options, object_names);
+    gcs_bm::DeleteAllObjects(client, options->bucket_name,
+                             options->thread_count);
     std::cout << "# Deleting " << options->bucket_name << "\n";
     auto status = client.DeleteBucket(options->bucket_name);
     if (!status.ok()) {
@@ -466,57 +464,6 @@ void RunTest(gcs::Client client, Options const& options,
   for (auto& t : tasks) {
     PrintResult(t.get());
   }
-}
-
-google::cloud::Status DeleteGroup(
-    gcs::Client client, std::vector<gcs::ObjectMetadata> const& group) {
-  google::cloud::Status last_error;
-  for (auto const& o : group) {
-    auto status = client.DeleteObject(o.bucket(), o.name(),
-                                      gcs::Generation(o.generation()));
-    if (!status.ok()) last_error = std::move(status);
-  }
-  return last_error;
-}
-
-void DeleteAllObjects(gcs::Client client, Options const& options,
-                      std::vector<std::string> const&) {
-  using std::chrono::duration_cast;
-  using std::chrono::milliseconds;
-
-  auto const max_group_size =
-      std::max(options.object_count / options.thread_count, 1L);
-
-  std::cout << "# Deleting test objects [" << max_group_size << "]\n";
-  auto start = std::chrono::steady_clock::now();
-  std::vector<std::future<google::cloud::Status>> tasks;
-  std::vector<gcs::ObjectMetadata> group;
-  for (auto& o : client.ListObjects(options.bucket_name, gcs::Versions(true))) {
-    group.emplace_back(std::move(o).value());
-    if (group.size() >= static_cast<std::size_t>(max_group_size)) {
-      tasks.emplace_back(std::async(std::launch::async, &DeleteGroup, client,
-                                    std::move(group)));
-      group = {};  // after a move, must assign to guarantee it is valid.
-    }
-  }
-  if (!group.empty()) {
-    tasks.emplace_back(
-        std::async(std::launch::async, &DeleteGroup, client, std::move(group)));
-  }
-  int count = 0;
-  for (auto& t : tasks) {
-    auto status = t.get();
-    if (!status.ok()) {
-      std::cerr << "Standard exception raised by task[" << count
-                << "]: " << status << "\n";
-    }
-    ++count;
-  }
-  // We do not print the latency to delete the objects because we have another
-  // benchmark to measure that.
-  auto elapsed = std::chrono::steady_clock::now() - start;
-  std::cout << "# Deleted in " << duration_cast<milliseconds>(elapsed).count()
-            << "ms\n";
 }
 
 google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {

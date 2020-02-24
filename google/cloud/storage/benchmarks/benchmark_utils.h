@@ -17,6 +17,7 @@
 
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
+#include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include <chrono>
 #include <functional>
@@ -125,6 +126,9 @@ class ProgressReporter {
 };
 
 std::string FormatSize(std::uintmax_t size);
+
+void DeleteAllObjects(google::cloud::storage::Client client,
+                      std::string bucket_name, int thread_count);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
