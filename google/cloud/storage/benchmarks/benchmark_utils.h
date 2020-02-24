@@ -20,6 +20,7 @@
 #include "google/cloud/storage/testing/random_names.h"
 #include <chrono>
 #include <functional>
+#include <sstream>
 #include <string>
 #if GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE
 #include <sys/resource.h>
@@ -122,6 +123,8 @@ class ProgressReporter {
   std::chrono::steady_clock::time_point start_;
   std::vector<TimePoint> progress_;
 };
+
+std::string FormatSize(std::uintmax_t size);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud
