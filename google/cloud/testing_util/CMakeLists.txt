@@ -129,6 +129,8 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
 
     google_cloud_cpp_install_headers(google_cloud_cpp_testing
                                      include/google/cloud/testing_util)
+    google_cloud_cpp_install_headers(google_cloud_cpp_testing_grpc
+                                     include/google/cloud/testing_util)
 
     # Setup global variables used in the following *.in files.
     set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
