@@ -22,7 +22,10 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 
 std::string ConnectionOptionsTraits::default_endpoint() {
-  return "spanner.googleapis.com";
+  auto default_endpoint = google::cloud::internal::GetEnv(
+      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
+  return default_endpoint.has_value() ? *default_endpoint
+                                      : "spanner.googleapis.com";
 }
 
 std::string ConnectionOptionsTraits::user_agent_prefix() {
