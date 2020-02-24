@@ -33,15 +33,14 @@ CurlPtr DefaultCurlHandleFactory::CreateHandle() {
   return CurlPtr(curl_easy_init(), &curl_easy_cleanup);
 }
 
-void DefaultCurlHandleFactory::CleanupHandle(CurlPtr&& h) {
+void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
   char* ip;
-  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     std::lock_guard<std::mutex> lk(mu_);
     last_client_ip_address_ = ip;
   }
-
-  h.reset();
+  ResetHandle(h);
 }
 
 CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
@@ -77,10 +76,10 @@ CurlPtr PooledCurlHandleFactory::CreateHandle() {
   return CurlPtr(curl_easy_init(), &curl_easy_cleanup);
 }
 
-void PooledCurlHandleFactory::CleanupHandle(CurlPtr&& h) {
+void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
   std::unique_lock<std::mutex> lk(mu_);
   char* ip;
-  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     last_client_ip_address_ = ip;
   }
@@ -89,9 +88,9 @@ void PooledCurlHandleFactory::CleanupHandle(CurlPtr&& h) {
     handles_.erase(handles_.begin());
     curl_easy_cleanup(tmp);
   }
-  handles_.push_back(h.get());
+  handles_.push_back(GetHandle(h));
   // The handles_ vector now has ownership, so release it.
-  (void)h.release();
+  ReleaseHandle(h);
 }
 
 CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {

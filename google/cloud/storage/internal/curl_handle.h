@@ -43,92 +43,8 @@ class CurlHandle {
   CurlHandle& operator=(CurlHandle const&) = delete;
 
   // Allow moves, they immediately disable callbacks.
-  CurlHandle(CurlHandle&& rhs) noexcept : handle_(std::move(rhs.handle_)) {
-    ResetHeaderCallback();
-    ResetReaderCallback();
-    ResetWriterCallback();
-    ResetSocketCallback();
-  }
-  CurlHandle& operator=(CurlHandle&& rhs) noexcept {
-    handle_ = std::move(rhs.handle_);
-    ResetHeaderCallback();
-    ResetReaderCallback();
-    ResetWriterCallback();
-    ResetSocketCallback();
-    return *this;
-  }
-
-  /**
-   * Define the callback type for sending data.
-   *
-   * In the conventions of libcurl, the read callbacks are invoked by the
-   * library to gather more data to send to the server.
-   *
-   * @see https://curl.haxx.se/libcurl/c/CURLOPT_READFUNCTION.html
-   */
-  using ReaderCallback = std::function<std::size_t(char* ptr, std::size_t size,
-                                                   std::size_t nmemb)>;
-
-  /**
-   * Define the callback type for receiving data.
-   *
-   * In the conventions of libcurl, the write callbacks are invoked by the
-   * library when more data has been received.
-   *
-   * @see https://curl.haxx.se/libcurl/c/CURLOPT_WRITEFUNCTION.html
-   */
-  using WriterCallback = std::function<std::size_t(void* ptr, std::size_t size,
-                                                   std::size_t nmemb)>;
-
-  /**
-   * Define the callback type for receiving header data.
-   *
-   * In the conventions of libcurl, the header callbacks are invoked when new
-   * header-like data is received.
-   *
-   * @see https://curl.haxx.se/libcurl/c/CURLOPT_HEADERFUNCTION.html
-   */
-  using HeaderCallback = std::function<std::size_t(
-      char* contents, std::size_t size, std::size_t nitems)>;
-
-  /**
-   * Sets the reader callback.
-   *
-   * @param callback this function must remain valid until either
-   *     `ResetReaderCallback` returns, or this object is destroyed.
-   *
-   * @see the notes on `ReaderCallback` for the semantics of the callback.
-   */
-  void SetReaderCallback(ReaderCallback callback);
-
-  /// Resets the reader callback.
-  void ResetReaderCallback();
-
-  /**
-   * Sets the writer callback.
-   *
-   * @param callback this function must remain valid until either
-   *     `ResetWriterCallback` returns, or this object is destroyed.
-   *
-   * @see the notes on `WriterCallback` for the semantics of the callback.
-   */
-  void SetWriterCallback(WriterCallback callback);
-
-  /// Resets the reader callback.
-  void ResetWriterCallback();
-
-  /**
-   * Sets the header callback.
-   *
-   * @param callback this function must remain valid until either
-   *    `ResetHeaderCallback` returns, or this object is destroyed
-   *
-   * @see the notes on `ReaderCallback` for the semantics of the callback.
-   */
-  void SetHeaderCallback(HeaderCallback callback);
-
-  /// Resets the reader callback.
-  void ResetHeaderCallback();
+  CurlHandle(CurlHandle&& rhs) = default;
+  CurlHandle& operator=(CurlHandle&& rhs) = default;
 
   /// Set the callback to initialize each socket.
   struct SocketOptions {
@@ -188,8 +104,8 @@ class CurlHandle {
   explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
 
   friend class CurlDownloadRequest;
-  friend class CurlRequest;
   friend class CurlRequestBuilder;
+  friend class CurlHandleFactory;
 
   [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, long param);
   [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
@@ -206,11 +122,6 @@ class CurlHandle {
 
   CurlPtr handle_;
   std::string debug_buffer_;
-
-  ReaderCallback reader_callback_;
-  WriterCallback writer_callback_;
-  HeaderCallback header_callback_;
-
   SocketOptions socket_options_;
 };
 
