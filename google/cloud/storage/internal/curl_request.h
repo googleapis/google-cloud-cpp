@@ -25,18 +25,16 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-extern "C" std::size_t CurlRequestOnWriteData(char* ptr, size_t size,
-                                              size_t nmemb, void* userdata);
-extern "C" std::size_t CurlRequestOnHeaderData(char* contents, std::size_t size,
-                                               std::size_t nitems,
-                                               void* userdata);
+extern "C" size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
+                                         void* userdata);
+extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
+                                          size_t nitems, void* userdata);
 
 class CurlRequest {
  public:
   CurlRequest() = default;
   ~CurlRequest() {
-    if (!factory_) return;
-    factory_->CleanupHandle(std::move(handle_));
+    if (factory_) factory_->CleanupHandle(std::move(handle_));
   }
 
   CurlRequest(CurlRequest&&) = default;
@@ -53,11 +51,10 @@ class CurlRequest {
 
  private:
   friend class CurlRequestBuilder;
-  friend std::size_t CurlRequestOnWriteData(char* ptr, size_t size,
-                                            size_t nmemb, void* userdata);
-  friend std::size_t CurlRequestOnHeaderData(char* contents, std::size_t size,
-                                             std::size_t nitems,
-                                             void* userdata);
+  friend size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
+                                       void* userdata);
+  friend size_t CurlRequestOnHeaderData(char* contents, size_t size,
+                                        size_t nitems, void* userdata);
 
   std::size_t OnWriteData(char* contents, std::size_t size, std::size_t nmemb);
   std::size_t OnHeaderData(char* contents, std::size_t size,

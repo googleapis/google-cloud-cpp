@@ -21,15 +21,14 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
-extern "C" std::size_t CurlRequestOnWriteData(char* ptr, size_t size,
-                                              size_t nmemb, void* userdata) {
+extern "C" size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
+                                         void* userdata) {
   auto* request = reinterpret_cast<CurlRequest*>(userdata);
   return request->OnWriteData(ptr, size, nmemb);
 }
 
-extern "C" std::size_t CurlRequestOnHeaderData(char* contents, std::size_t size,
-                                               std::size_t nitems,
-                                               void* userdata) {
+extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
+                                          size_t nitems, void* userdata) {
   auto* request = reinterpret_cast<CurlRequest*>(userdata);
   return request->OnHeaderData(contents, size, nitems);
 }
