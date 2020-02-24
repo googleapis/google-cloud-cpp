@@ -43,8 +43,8 @@ class CurlHandle {
   CurlHandle& operator=(CurlHandle const&) = delete;
 
   // Allow moves, they immediately disable callbacks.
-  CurlHandle(CurlHandle&& rhs) = default;
-  CurlHandle& operator=(CurlHandle&& rhs) = default;
+  CurlHandle(CurlHandle&&) = default;
+  CurlHandle& operator=(CurlHandle&&) = default;
 
   /// Set the callback to initialize each socket.
   struct SocketOptions {
