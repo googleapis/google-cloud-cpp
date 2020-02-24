@@ -46,7 +46,6 @@ CurlRequest CurlRequestBuilder::BuildRequest() {
   request.factory_ = std::move(factory_);
   request.logging_enabled_ = logging_enabled_;
   request.socket_options_ = socket_options_;
-  request.ResetOptions();
   return request;
 }
 

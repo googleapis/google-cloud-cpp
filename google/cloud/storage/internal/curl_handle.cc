@@ -65,28 +65,6 @@ extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
   return 0;
 }
 
-extern "C" std::size_t CurlHandleReadCallback(char* ptr, std::size_t size,
-                                              std::size_t nmemb,
-                                              void* userdata) {
-  auto* callback = reinterpret_cast<CurlHandle::ReaderCallback*>(userdata);
-  return callback->operator()(ptr, size, nmemb);
-}
-
-extern "C" std::size_t CurlHandleWriteCallback(void* contents, std::size_t size,
-                                               std::size_t nmemb,
-                                               void* userdata) {
-  auto* callback = reinterpret_cast<CurlHandle::WriterCallback*>(userdata);
-  return callback->operator()(contents, size, nmemb);
-}
-
-extern "C" std::size_t CurlHandleHeaderCallback(char* contents,
-                                                std::size_t size,
-                                                std::size_t nitems,
-                                                void* userdata) {
-  auto* callback = reinterpret_cast<CurlHandle::HeaderCallback*>(userdata);
-  return callback->operator()(contents, size, nitems);
-}
-
 extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
                                     curlsocktype purpose) {
   auto* options = reinterpret_cast<CurlHandle::SocketOptions*>(userdata);
@@ -143,42 +121,6 @@ CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
 }
 
 CurlHandle::~CurlHandle() { FlushDebug(__func__); }
-
-void CurlHandle::SetReaderCallback(ReaderCallback callback) {
-  reader_callback_ = std::move(callback);
-  SetOption(CURLOPT_READDATA, &reader_callback_);
-  SetOption(CURLOPT_READFUNCTION, &CurlHandleReadCallback);
-}
-
-void CurlHandle::ResetReaderCallback() {
-  SetOption(CURLOPT_READDATA, nullptr);
-  SetOption(CURLOPT_READFUNCTION, nullptr);
-  reader_callback_ = ReaderCallback();
-}
-
-void CurlHandle::SetWriterCallback(WriterCallback callback) {
-  writer_callback_ = std::move(callback);
-  SetOption(CURLOPT_WRITEDATA, &writer_callback_);
-  SetOption(CURLOPT_WRITEFUNCTION, &CurlHandleWriteCallback);
-}
-
-void CurlHandle::ResetWriterCallback() {
-  SetOption(CURLOPT_WRITEDATA, nullptr);
-  SetOption(CURLOPT_WRITEFUNCTION, nullptr);
-  writer_callback_ = WriterCallback();
-}
-
-void CurlHandle::SetHeaderCallback(HeaderCallback callback) {
-  header_callback_ = std::move(callback);
-  SetOption(CURLOPT_HEADERDATA, &header_callback_);
-  SetOption(CURLOPT_HEADERFUNCTION, &CurlHandleHeaderCallback);
-}
-
-void CurlHandle::ResetHeaderCallback() {
-  SetOption(CURLOPT_HEADERDATA, nullptr);
-  SetOption(CURLOPT_HEADERFUNCTION, nullptr);
-  header_callback_ = HeaderCallback();
-}
 
 void CurlHandle::SetSocketCallback(SocketOptions const& options) {
   socket_options_ = options;

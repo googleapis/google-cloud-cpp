@@ -25,73 +25,47 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
-/**
- * Makes RPC-like requests using CURL.
- *
- * The Google Cloud Storage Client library using libcurl to make http requests,
- * this class manages the resources and workflow to make a simple RPC-like
- * request.
- */
+extern "C" size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
+                                         void* userdata);
+extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
+                                          size_t nitems, void* userdata);
+
 class CurlRequest {
  public:
-  CurlRequest();
-
+  CurlRequest() = default;
   ~CurlRequest() {
-    if (!factory_) {
-      return;
-    }
-    factory_->CleanupHandle(std::move(handle_.handle_));
+    if (factory_) factory_->CleanupHandle(std::move(handle_));
   }
 
-  CurlRequest(CurlRequest&& rhs) noexcept(false)
-      : url_(std::move(rhs.url_)),
-        headers_(std::move(rhs.headers_)),
-        user_agent_(std::move(rhs.user_agent_)),
-        response_payload_(std::move(rhs.response_payload_)),
-        received_headers_(std::move(rhs.received_headers_)),
-        logging_enabled_(rhs.logging_enabled_),
-        socket_options_(rhs.socket_options_),
-        handle_(std::move(rhs.handle_)),
-        factory_(std::move(rhs.factory_)) {
-    ResetOptions();
-  }
-
-  CurlRequest& operator=(CurlRequest&& rhs) noexcept(false) {
-    url_ = std::move(rhs.url_);
-    headers_ = std::move(rhs.headers_);
-    user_agent_ = std::move(rhs.user_agent_);
-    response_payload_ = std::move(rhs.response_payload_);
-    received_headers_ = std::move(rhs.received_headers_);
-    logging_enabled_ = rhs.logging_enabled_;
-    socket_options_ = rhs.socket_options_;
-    handle_ = std::move(rhs.handle_);
-    factory_ = std::move(rhs.factory_);
-
-    ResetOptions();
-    return *this;
-  }
+  CurlRequest(CurlRequest&&) = default;
+  CurlRequest& operator=(CurlRequest&&) = default;
 
   /**
    * Makes the prepared request.
    *
    * This function can be called multiple times on the same request.
    *
-   * @return The response HTTP error code and the response payload.
-   *
-   * @throw std::runtime_error if the request cannot be made at all.
+   * @return The response HTTP error code, the headers and an empty payload.
    */
   StatusOr<HttpResponse> MakeRequest(std::string const& payload);
 
  private:
   friend class CurlRequestBuilder;
-  void ResetOptions();
+  friend size_t CurlRequestOnWriteData(char* ptr, size_t size, size_t nmemb,
+                                       void* userdata);
+  friend size_t CurlRequestOnHeaderData(char* contents, size_t size,
+                                        size_t nitems, void* userdata);
+
+  std::size_t OnWriteData(char* contents, std::size_t size, std::size_t nmemb);
+  std::size_t OnHeaderData(char* contents, std::size_t size,
+                           std::size_t nitems);
 
   std::string url_;
-  CurlHeaders headers_;
+  CurlHeaders headers_ = CurlHeaders(nullptr, &curl_slist_free_all);
   std::string user_agent_;
   std::string response_payload_;
   CurlReceivedHeaders received_headers_;
-  bool logging_enabled_;
+  bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   CurlHandle handle_;
   std::shared_ptr<CurlHandleFactory> factory_;

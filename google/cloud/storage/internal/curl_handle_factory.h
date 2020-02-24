@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_FACTORY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_FACTORY_H
 
+#include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
 #include "google/cloud/storage/version.h"
 #include <mutex>
@@ -33,12 +34,17 @@ class CurlHandleFactory {
   virtual ~CurlHandleFactory() = default;
 
   virtual CurlPtr CreateHandle() = 0;
-  virtual void CleanupHandle(CurlPtr&&) = 0;
+  virtual void CleanupHandle(CurlHandle&&) = 0;
 
   virtual CurlMulti CreateMultiHandle() = 0;
   virtual void CleanupMultiHandle(CurlMulti&&) = 0;
 
   virtual std::string LastClientIpAddress() const = 0;
+
+ protected:
+  static CURL* GetHandle(CurlHandle& h) { return h.handle_.get(); }
+  static void ResetHandle(CurlHandle& h) { h.handle_.reset(); }
+  static void ReleaseHandle(CurlHandle& h) { (void)h.handle_.release(); }
 };
 
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
@@ -55,7 +61,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
   DefaultCurlHandleFactory() = default;
 
   CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlPtr&&) override;
+  void CleanupHandle(CurlHandle&&) override;
 
   CurlMulti CreateMultiHandle() override;
   void CleanupMultiHandle(CurlMulti&&) override;
@@ -82,7 +88,7 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   ~PooledCurlHandleFactory() override;
 
   CurlPtr CreateHandle() override;
-  void CleanupHandle(CurlPtr&&) override;
+  void CleanupHandle(CurlHandle&&) override;
 
   CurlMulti CreateMultiHandle() override;
   void CleanupMultiHandle(CurlMulti&&) override;

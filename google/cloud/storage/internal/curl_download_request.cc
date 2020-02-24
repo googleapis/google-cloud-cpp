@@ -28,6 +28,20 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+extern "C" std::size_t CurlDownloadRequestWrite(char* ptr, size_t size,
+                                                size_t nmemb, void* userdata) {
+  auto* request = reinterpret_cast<CurlDownloadRequest*>(userdata);
+  return request->WriteCallback(ptr, size, nmemb);
+}
+
+extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
+                                                 std::size_t size,
+                                                 std::size_t nitems,
+                                                 void* userdata) {
+  auto* request = reinterpret_cast<CurlDownloadRequest*>(userdata);
+  return request->HeaderCallback(contents, size, nitems);
+}
+
 // Note that TRACE-level messages are disabled by default, even in
 // CMAKE_BUILD_TYPE=Debug builds. The level of detail created by the
 // TRACE_STATE() macro is only needed by the library developers when
@@ -120,6 +134,10 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   if (n == 0) {
     return Status(StatusCode::kInvalidArgument, "Empty buffer for Read()");
   }
+  handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlDownloadRequestWrite);
+  handle_.SetOption(CURLOPT_WRITEDATA, this);
+  handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlDownloadRequestHeader);
+  handle_.SetOption(CURLOPT_HEADERDATA, this);
 
   // Before calling `Wait()` copy any data from the spill buffer into the
   // application buffer. It is possible that `Wait()` will never call
@@ -179,7 +197,25 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
 }
 
 void CurlDownloadRequest::SetOptions() {
-  ResetOptions();
+  handle_.SetOption(CURLOPT_URL, url_.c_str());
+  handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
+  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
+  handle_.SetOption(CURLOPT_NOPROGRESS, 1L);
+  handle_.SetOption(CURLOPT_BUFFERSIZE, 128 * 1024L);
+  if (!payload_.empty()) {
+    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
+    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
+  }
+  handle_.EnableLogging(logging_enabled_);
+  handle_.SetSocketCallback(socket_options_);
+  if (download_stall_timeout_.count() != 0) {
+    // Timeout if the download receives less than 1 byte/second (i.e.
+    // effectively no bytes) for `download_stall_timeout_` seconds.
+    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    handle_.SetOption(CURLOPT_LOW_SPEED_TIME,
+                      static_cast<long>(download_stall_timeout_.count()));
+  }
   if (in_multi_) {
     return;
   }
@@ -191,39 +227,6 @@ void CurlDownloadRequest::SetOptions() {
     google::cloud::internal::ThrowStatus(AsStatus(error, __func__));
   }
   in_multi_ = true;
-}
-
-void CurlDownloadRequest::ResetOptions() {
-  if (curl_closed_) {
-    // Once closed, we do not want to reset the request.
-    return;
-  }
-  handle_.SetOption(CURLOPT_URL, url_.c_str());
-  handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
-  handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  if (!payload_.empty()) {
-    handle_.SetOption(CURLOPT_POSTFIELDSIZE, payload_.length());
-    handle_.SetOption(CURLOPT_POSTFIELDS, payload_.c_str());
-  }
-  handle_.SetWriterCallback(
-      [this](void* ptr, std::size_t size, std::size_t nmemb) {
-        return this->WriteCallback(ptr, size, nmemb);
-      });
-  handle_.SetHeaderCallback([this](char* contents, std::size_t size,
-                                   std::size_t nitems) {
-    return CurlAppendHeaderData(
-        received_headers_, static_cast<char const*>(contents), size * nitems);
-  });
-  handle_.EnableLogging(logging_enabled_);
-  handle_.SetSocketCallback(socket_options_);
-  if (download_stall_timeout_.count() != 0) {
-    // Timeout if the download receives less than 1 byte/second (i.e.
-    // effectively no bytes) for `download_stall_timeout_` seconds.
-    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
-    handle_.SetOption(CURLOPT_LOW_SPEED_TIME,
-                      static_cast<long>(download_stall_timeout_.count()));
-  }
 }
 
 void CurlDownloadRequest::DrainSpillBuffer() {
@@ -279,6 +282,12 @@ std::size_t CurlDownloadRequest::WriteCallback(void* ptr, std::size_t size,
   std::memcpy(spill_.data(), static_cast<char*>(ptr) + free, spill_offset_);
   TRACE_STATE() << ", n=" << size * nmemb << ", free=" << free;
   return size * nmemb;
+}
+
+std::size_t CurlDownloadRequest::HeaderCallback(char* contents,
+                                                std::size_t size,
+                                                std::size_t nitems) {
+  return CurlAppendHeaderData(received_headers_, contents, size * nitems);
 }
 
 StatusOr<int> CurlDownloadRequest::PerformWork() {

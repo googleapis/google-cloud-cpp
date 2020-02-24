@@ -25,6 +25,13 @@ namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+extern "C" std::size_t CurlDownloadRequestWrite(char* ptr, size_t size,
+                                                size_t nmemb, void* userdata);
+extern "C" std::size_t CurlDownloadRequestHeader(char* contents,
+                                                 std::size_t size,
+                                                 std::size_t nitems,
+                                                 void* userdata);
+
 /**
  * Makes streaming download requests using libcurl.
  *
@@ -43,56 +50,12 @@ class CurlDownloadRequest : public ObjectReadSource {
     if (!factory_) {
       return;
     }
-    factory_->CleanupHandle(std::move(handle_.handle_));
+    factory_->CleanupHandle(std::move(handle_));
     factory_->CleanupMultiHandle(std::move(multi_));
   }
 
-  CurlDownloadRequest(CurlDownloadRequest&& rhs) noexcept(false)
-      : url_(std::move(rhs.url_)),
-        headers_(std::move(rhs.headers_)),
-        payload_(std::move(rhs.payload_)),
-        user_agent_(std::move(rhs.user_agent_)),
-        logging_enabled_(rhs.logging_enabled_),
-        socket_options_(rhs.socket_options_),
-        download_stall_timeout_(rhs.download_stall_timeout_),
-        handle_(std::move(rhs.handle_)),
-        multi_(std::move(rhs.multi_)),
-        factory_(std::move(rhs.factory_)),
-        closing_(rhs.closing_),
-        curl_closed_(rhs.curl_closed_),
-        in_multi_(rhs.in_multi_),
-        paused_(rhs.paused_),
-        buffer_(rhs.buffer_),
-        buffer_size_(rhs.buffer_size_),
-        buffer_offset_(rhs.buffer_offset_),
-        spill_(std::move(rhs.spill_)),
-        spill_offset_(rhs.spill_offset_) {
-    ResetOptions();
-  }
-
-  CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) noexcept {
-    url_ = std::move(rhs.url_);
-    headers_ = std::move(rhs.headers_);
-    payload_ = std::move(rhs.payload_);
-    user_agent_ = std::move(rhs.user_agent_);
-    logging_enabled_ = rhs.logging_enabled_;
-    socket_options_ = rhs.socket_options_;
-    download_stall_timeout_ = rhs.download_stall_timeout_;
-    handle_ = std::move(rhs.handle_);
-    multi_ = std::move(rhs.multi_);
-    factory_ = std::move(rhs.factory_);
-    closing_ = rhs.closing_;
-    curl_closed_ = rhs.curl_closed_;
-    in_multi_ = rhs.in_multi_;
-    paused_ = rhs.paused_;
-    buffer_ = rhs.buffer_;
-    buffer_size_ = rhs.buffer_size_;
-    buffer_offset_ = rhs.buffer_offset_;
-    spill_ = std::move(rhs.spill_);
-    spill_offset_ = rhs.spill_offset_;
-    ResetOptions();
-    return *this;
-  }
+  CurlDownloadRequest(CurlDownloadRequest&&) = default;
+  CurlDownloadRequest& operator=(CurlDownloadRequest&& rhs) = default;
 
   bool IsOpen() const override { return !(curl_closed_ && spill_offset_ == 0); }
   StatusOr<HttpResponse> Close() override;
@@ -114,14 +77,20 @@ class CurlDownloadRequest : public ObjectReadSource {
   /// Set the underlying CurlHandle options on a new CurlDownloadRequest.
   void SetOptions();
 
-  /// Reset the underlying CurlHandle options after a move operation.
-  void ResetOptions();
+  friend std::size_t CurlDownloadRequestWrite(char* ptr, size_t size,
+                                              size_t nmemb, void* userdata);
+  friend std::size_t CurlDownloadRequestHeader(char* contents, std::size_t size,
+                                               std::size_t nitems,
+                                               void* userdata);
 
   /// Copy any available data from the spill buffer to `buffer_`
   void DrainSpillBuffer();
 
   /// Called by libcurl to show that more data is available in the download.
   std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);
+
+  std::size_t HeaderCallback(char* contents, std::size_t size,
+                             std::size_t nitems);
 
   /// Wait until a condition is met.
   template <typename Predicate>
