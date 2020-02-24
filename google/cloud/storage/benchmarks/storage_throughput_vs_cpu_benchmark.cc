@@ -187,22 +187,7 @@ int main(int argc, char* argv[]) {
     PrintResults(f.get());
   }
 
-  // Some of the downloads or deletes may have failed, delete any leftover
-  // objects.
-  std::cout << "# Deleting any leftover objects and the bucket\n";
-  for (auto object : client.ListObjects(bucket_name, gcs::Versions(true))) {
-    if (!object) {
-      std::cout << "# Error listing objects: " << object.status() << "\n";
-      break;
-    }
-    auto status = client.DeleteObject(object->bucket(), object->name(),
-                                      gcs::Generation(object->generation()));
-    if (!status.ok()) {
-      std::cout << "# Error deleting object, name=" << object->name()
-                << ", generation=" << object->generation()
-                << ", status=" << status << "\n";
-    }
-  }
+  gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
   auto status = client.DeleteBucket(bucket_name);
   if (!status.ok()) {
     std::cerr << "# Error deleting bucket, status=" << status << "\n";

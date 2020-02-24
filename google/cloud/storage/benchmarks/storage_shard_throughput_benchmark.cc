@@ -17,8 +17,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
+#include "google/cloud/storage/benchmarks/bounded_queue.h"
 #include "google/cloud/storage/client.h"
-#include <deque>
 #include <future>
 #include <iomanip>
 #include <sstream>
@@ -71,55 +71,6 @@ struct Options {
   int chunk_count = 20;
 };
 
-template <typename T>
-class BoundedQueue {
- public:
-  BoundedQueue() : BoundedQueue(512, 1024) {}
-  explicit BoundedQueue(std::size_t lwm, std::size_t hwm)
-      : lwm_(lwm), hwm_(hwm), is_shutdown_(false) {}
-
-  void Shutdown() {
-    std::unique_lock<std::mutex> lk(mu_);
-    is_shutdown_ = true;
-    lk.unlock();
-    cv_read_.notify_all();
-    cv_write_.notify_all();
-  }
-
-  google::cloud::optional<T> Pop() {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_read_.wait(lk, [this]() { return is_shutdown_ || !empty(); });
-    if (empty()) return {};
-    auto next = std::move(buffer_.front());
-    buffer_.pop_front();
-    if (below_lwm()) {
-      cv_write_.notify_all();
-    }
-    return next;
-  }
-
-  void Push(T data) {
-    std::unique_lock<std::mutex> lk(mu_);
-    cv_write_.wait(lk, [this]() { return is_shutdown_ || below_hwm(); });
-    if (is_shutdown_) return;
-    buffer_.push_back(std::move(data));
-    cv_read_.notify_all();
-  }
-
- private:
-  bool empty() const { return buffer_.empty(); }
-  bool below_hwm() const { return buffer_.size() <= hwm_; }
-  bool below_lwm() const { return buffer_.size() <= lwm_; }
-
-  std::size_t const lwm_;
-  std::size_t const hwm_;
-  std::mutex mu_;
-  std::condition_variable cv_read_;
-  std::condition_variable cv_write_;
-  std::deque<T> buffer_;
-  bool is_shutdown_ = false;
-};
-
 struct WorkItem {
   std::string bucket;
   std::string object;
@@ -127,7 +78,7 @@ struct WorkItem {
   std::int64_t end;
 };
 
-using WorkItemQueue = BoundedQueue<WorkItem>;
+using WorkItemQueue = gcs_bm::BoundedQueue<WorkItem>;
 
 struct IterationResult {
   std::int64_t bytes;
@@ -143,10 +94,6 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
                                 Options const& options,
                                 std::string const& bucket_name,
                                 std::vector<std::string> const& object_names);
-
-void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
-                      Options const& options,
-                      std::vector<std::string> const& object_names);
 
 google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]);
 
@@ -224,7 +171,7 @@ int main(int argc, char* argv[]) {
   auto const MiBs_avg = MiBs_sum / options->iteration_count;
   std::cout << "# Average Bandwidth (MiB/s): " << MiBs_avg << "\n";
 
-  DeleteAllObjects(client, bucket_name, *options, object_names);
+  gcs_bm::DeleteAllObjects(client, bucket_name, options->thread_count);
 
   std::cout << "# Deleting " << bucket_name << "\n";
   auto status = client.DeleteBucket(bucket_name);
@@ -352,59 +299,6 @@ IterationResult RunOneIteration(google::cloud::internal::DefaultPRNG& generator,
   }
   auto const elapsed = std::chrono::steady_clock::now() - download_start;
   return {total_bytes, duration_cast<microseconds>(elapsed)};
-}
-
-google::cloud::Status DeleteGroup(gcs::Client client,
-                                  std::vector<gcs::ObjectMetadata> group) {
-  google::cloud::Status final_status{};
-  for (auto const& o : group) {
-    auto status = client.DeleteObject(o.bucket(), o.name(),
-                                      gcs::Generation(o.generation()));
-    if (!status.ok()) {
-      final_status = std::move(status);
-      continue;
-    }
-  }
-  return final_status;
-}
-
-void DeleteAllObjects(gcs::Client client, std::string const& bucket_name,
-                      Options const& options, std::vector<std::string> const&) {
-  using std::chrono::duration_cast;
-  using std::chrono::milliseconds;
-
-  auto const max_group_size =
-      std::max(options.object_count / options.thread_count, 1);
-
-  std::cout << "# Deleting test objects [" << max_group_size << "]\n";
-  auto start = std::chrono::steady_clock::now();
-  std::vector<std::future<google::cloud::Status>> tasks;
-  std::vector<gcs::ObjectMetadata> group;
-  for (auto&& o : client.ListObjects(bucket_name, gcs::Versions(true))) {
-    group.emplace_back(std::move(o).value());
-    if (group.size() >= static_cast<std::size_t>(max_group_size)) {
-      tasks.emplace_back(std::async(std::launch::async, &DeleteGroup, client,
-                                    std::move(group)));
-      group = {};  // after a move, must assign to guarantee it is valid.
-    }
-  }
-  if (!group.empty()) {
-    tasks.emplace_back(
-        std::async(std::launch::async, &DeleteGroup, client, std::move(group)));
-  }
-  int count = 0;
-  for (auto& t : tasks) {
-    auto status = t.get();
-    if (!status.ok()) {
-      std::cerr << "Error return task[" << count << "]: " << status << "\n";
-    }
-    ++count;
-  }
-  // We do not print the latency to delete the objects because we have another
-  // benchmark to measure that.
-  auto elapsed = std::chrono::steady_clock::now() - start;
-  std::cout << "# Deleted in " << duration_cast<milliseconds>(elapsed).count()
-            << "ms\n";
 }
 
 google::cloud::StatusOr<Options> ParseArgs(int argc, char* argv[]) {
