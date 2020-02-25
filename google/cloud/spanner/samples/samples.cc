@@ -1453,7 +1453,7 @@ void ReadData(google::cloud::spanner::Client client) {
   for (auto const& row : spanner::StreamOf<RowType>(rows)) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
-    std::cout << "AlbumId: " << std::get<1>(*row) << "\n";
+    std::cout << "AlbumId: " << std::get<1>(*row) << "\t";
     std::cout << "AlbumTitle: " << std::get<2>(*row) << "\n";
   }
 
