@@ -14,8 +14,7 @@
 
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/internal/compiler_info.h"
-#include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,7 +23,7 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace {
 
-using ::google::cloud::testing_util::EnvironmentVariableRestore;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
 using ::testing::StartsWith;
 
@@ -59,10 +58,8 @@ TEST(ConnectionOptionsTraits, UserAgentPrefix) {
 
 TEST(DefaultEndpoint, EnvironmentWorks) {
   EXPECT_NE("invalid-endpoint", ConnectionOptionsTraits::default_endpoint());
-  EnvironmentVariableRestore restore(
-      "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT");
-  google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
-                                  "invalid-endpoint");
+  ScopedEnvironment env("GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
+                        "invalid-endpoint");
   EXPECT_EQ("invalid-endpoint", ConnectionOptionsTraits::default_endpoint());
 }
 
@@ -70,8 +67,7 @@ TEST(EmulatorOverrides, EnvironmentWorks) {
   // When SPANNER_EMULATOR_HOST is set, the original endpoint is reset to
   // ${SPANNER_EMULATOR_HOST}, and the original credentials are reset to
   // grpc::InsecureChannelCredentials().
-  EnvironmentVariableRestore restore("SPANNER_EMULATOR_HOST");
-  google::cloud::internal::SetEnv("SPANNER_EMULATOR_HOST", "localhost:9010");
+  ScopedEnvironment env("SPANNER_EMULATOR_HOST", "localhost:9010");
   ConnectionOptions options(std::shared_ptr<grpc::ChannelCredentials>{});
   options = internal::EmulatorOverrides(options);
   EXPECT_NE(std::shared_ptr<grpc::ChannelCredentials>{}, options.credentials());

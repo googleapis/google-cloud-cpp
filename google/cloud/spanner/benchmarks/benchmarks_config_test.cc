@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/benchmarks/benchmarks_config.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -46,8 +45,7 @@ TEST(BenchmarkConfigTest, ParseAll) {
 }
 
 TEST(BenchmarkConfigTest, ParseNone) {
-  testing_util::EnvironmentVariableRestore restore("GOOGLE_CLOUD_PROJECT");
-  internal::SetEnv("GOOGLE_CLOUD_PROJECT", "test-project");
+  testing_util::ScopedEnvironment env("GOOGLE_CLOUD_PROJECT", "test-project");
   auto config = ParseArgs({"placeholder"});
   EXPECT_STATUS_OK(config);
 }
