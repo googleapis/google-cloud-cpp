@@ -244,7 +244,7 @@ fi
 
 echo "================================================================"
 echo "Creating Docker image with all the development tools $(date)."
-echo "    docker build ${docker_build_flags[@]} ci"
+echo "    docker build ${docker_build_flags[*]} ci"
 echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
