@@ -311,7 +311,10 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
   std::ostringstream os;
   os << "https://storage.googleapis.com/" << request.bucket_name();
   if (!request.object_name().empty()) {
-    os << '/' << curl.MakeEscapedString(request.object_name()).get();
+    auto parts = request.ObjectNameParts();
+    for (auto& part : parts) {
+      os << '/' << curl.MakeEscapedString(part).get();
+    }
   }
   os << "?" << request.CanonicalQueryString(signing_email)
      << "&X-Goog-Signature=" << signature;
