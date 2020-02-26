@@ -123,7 +123,7 @@ in a `cmd.exe` shell, running as the `Administrator`:
 Then you can install the dependencies in the same shell:
 ```console
 > choco install -y cmake git cmake.portable activeperl ninja golang yasm putty msys2 bazel
-> choco install -y visualstudio2017community visualstudio2017-workload-nativedesktop microsoft-build-tools
+> choco install -y visualstudio2019community visualstudio2019-workload-nativedesktop microsoft-build-tools
 ```
 
 ### Connecting to GitHub with PuTTY
