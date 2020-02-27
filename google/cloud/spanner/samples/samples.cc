@@ -1327,7 +1327,7 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
 }
 //! [END spanner_write_data_for_struct_queries]
 
-//! [START spanner_query_data]
+//! [START spanner_query_data] [spanner-query-data]
 void QueryData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
@@ -1342,7 +1342,7 @@ void QueryData(google::cloud::spanner::Client client) {
 
   std::cout << "Query completed for [spanner_query_data]\n";
 }
-//! [END spanner_query_data]
+//! [END spanner_query_data] [spanner-query-data]
 
 //! [START spanner_dml_getting_started_insert]
 void DmlGettingStartedInsert(google::cloud::spanner::Client client) {

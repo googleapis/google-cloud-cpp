@@ -240,7 +240,10 @@ class Client {
    * returned/ignored, and the column order is known. This enables more
    * efficient and simpler code.
    *
-   * @par Example
+   * @par Example with explicitly selected columns.
+   * @snippet samples.cc spanner-query-data
+   *
+   * @par Example using SELECT *
    * @snippet samples.cc spanner-query-data-select-star
    *
    * @param statement The SQL statement to execute.
