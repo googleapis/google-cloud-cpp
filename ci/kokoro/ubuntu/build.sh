@@ -35,14 +35,6 @@ echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
-"${BAZEL_BIN}" clean --expunge
-echo "DEBUG DEBUG ================================================================"
-ls -l /home/kbuilder/.cache/bazel
-echo "DEBUG DEBUG ================================================================"
-ls -l /home/kbuilder/.cache/bazel/_bazel_kbuilder/install/4cfcf40fe067e89c8f5c38e156f8d8ca || echo "not found"
-echo "DEBUG DEBUG ================================================================"
-
-
 
 # Kokoro does guarantee that g++-4.9 will be installed, but the default compiler
 # might be g++-4.8. Set the compiler version explicitly:
@@ -111,22 +103,8 @@ export ACCESS_TOKEN
 echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
-echo "DEBUG DEBUG ================================================================"
-"${BAZEL_BIN}" version
-echo "DEBUG DEBUG ================================================================"
-"${BAZEL_BIN}" info bazel-bin
-echo "DEBUG DEBUG ================================================================"
-ls -l /home/kbuilder/.cache/bazel
-echo "DEBUG DEBUG ================================================================"
-ls -l /home/kbuilder/.cache/bazel/_bazel_kbuilder/install/4cfcf40fe067e89c8f5c38e156f8d8ca || echo "not found"
-echo "DEBUG DEBUG ================================================================"
-
-
 BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
 readonly BAZEL_BIN_DIR
-echo "DEBUG DEBUG ================================================================"
-echo "DEBUG DEBUG ${BAZEL_BIN_DIR}"
-echo "DEBUG DEBUG ================================================================"
 
 if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
   echo
