@@ -387,7 +387,8 @@ b6d09f3be351906e01e472adaad90398a37c1c69bfe82ad5cb9ba32d66dac850)""";
 }
 
 TEST(V4SignedUrlRequests, CanonicalRequestFullWithSlashes) {
-  V4SignUrlRequest request("GET", "test-bucket", "test-object/path/to/object");
+  V4SignUrlRequest request("GET", "test-bucket",
+                           "test-object/path/to/object_?foo=&bar");
   std::string const date = "2019-02-01T09:00:00Z";
   auto const valid_for = std::chrono::seconds(10);
   request.set_multiple_options(
@@ -402,7 +403,7 @@ TEST(V4SignedUrlRequests, CanonicalRequestFullWithSlashes) {
 
   EXPECT_EQ("GET", request.verb());
   EXPECT_EQ("test-bucket", request.bucket_name());
-  EXPECT_EQ("test-object/path/to/object", request.object_name());
+  EXPECT_EQ("test-object/path/to/object_?foo=&bar", request.object_name());
   EXPECT_EQ("acl", request.sub_resource());
   EXPECT_EQ(4U, object_name_parts.size());
   EXPECT_EQ(
@@ -411,7 +412,7 @@ TEST(V4SignedUrlRequests, CanonicalRequestFullWithSlashes) {
   EXPECT_EQ(valid_for, request.expires());
 
   std::string expected_canonical_request = R"""(GET
-/test-bucket/test-object/path/to/object?acl
+/test-bucket/test-object/path/to/object_%3Ffoo%3D%26bar?acl
 X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=cache-control%3Bcontent-type&generation=7&userProject=test-project
 cache-control:no-cache, max-age=3600
 content-type:application/octet-stream
@@ -428,7 +429,7 @@ UNSIGNED-PAYLOAD)""";
   std::string expected_string_to_sign = R"""(GOOG4-RSA-SHA256
 20190201T090000Z
 20190201/auto/storage/goog4_request
-b58806a84797faa43437db7a3aa71bb9efd68af7004ced828e59e6b951ed2cfe)""";
+7b0aed8cc3930353b6c5953ffd1c1db555891f26bc17bf0ddfa6d8de363600ea)""";
 
   EXPECT_EQ(expected_string_to_sign, request.StringToSign("fake-client-id"));
 
