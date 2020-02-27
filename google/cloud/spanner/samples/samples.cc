@@ -697,8 +697,11 @@ void Quickstart(std::string const& project_id, std::string const& instance_id,
                 std::string const& database_id) {
   namespace spanner = ::google::cloud::spanner;
 
-  spanner::Client client(spanner::MakeConnection(
-      spanner::Database(project_id, instance_id, database_id)));
+  //! [START init_client]
+  auto database = spanner::Database(project_id, instance_id, database_id);
+  auto connection = spanner::MakeConnection(database);
+  auto client = spanner::Client(connection);
+  //! [END init_client]
 
   auto rows =
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
