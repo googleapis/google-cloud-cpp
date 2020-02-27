@@ -29,36 +29,18 @@ echo "Update or Install Bazel $(date)."
 echo "================================================================"
 "${PROJECT_ROOT}/ci/install-bazel.sh"
 
+echo "================================================================"
+echo "Compiling and running unit tests $(date)"
+echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"
-
-cat >>kokoro-bazelrc <<_EOF_
-# Set flags for uploading to BES without Remote Build Execution.
-startup --host_jvm_args=-Dbazel.DigestFunction=SHA256
-build:results-local --remote_cache=remotebuildexecution.googleapis.com
-build:results-local --spawn_strategy=local
-build:results-local --remote_timeout=3600
-build:results-local --bes_backend="buildeventservice.googleapis.com"
-build:results-local --bes_best_effort=false
-build:results-local --bes_timeout=10m
-build:results-local --tls_enabled=true
-build:results-local --auth_enabled=true
-build:results-local --auth_scope=https://www.googleapis.com/auth/cloud-source-tools
-build:results-local --experimental_remote_spawn_cache
-_EOF_
+"${BAZEL_BIN}" version
+"${BAZEL_BIN}" clean --expunge
 
 # Kokoro does guarantee that g++-4.9 will be installed, but the default compiler
 # might be g++-4.8. Set the compiler version explicitly:
 export CC=/usr/bin/gcc-4.9
 export CXX=/usr/bin/g++-4.9
-
-# First build and run the unit tests.
-readonly INVOCATION_ID="$(python -c 'import uuid; print uuid.uuid4()')"
-echo "================================================================"
-echo "Configure and start Bazel: ${INVOCATION_ID} $(date)"
-echo "https://source.cloud.google.com/results/invocations/${INVOCATION_ID}"
-echo "================================================================"
-echo "${INVOCATION_ID}" >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
 
 echo "================================================================"
 echo "Compiling and running unit tests $(date)"
@@ -68,13 +50,6 @@ echo "================================================================"
     --verbose_failures=true \
     --keep_going \
     -- //google/cloud/...:all
-
-echo
-echo "================================================================"
-echo "================================================================"
-echo "Copying artifacts"
-cp "$(bazel info output_base)/java.log" "${KOKORO_ARTIFACTS_DIR}/" || echo "java log copy failed."
-echo "End of copying."
 
 echo "================================================================"
 echo "Compiling all the code, including integration tests $(date)"
