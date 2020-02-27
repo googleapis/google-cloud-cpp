@@ -29,36 +29,17 @@ echo "Update or Install Bazel $(date)."
 echo "================================================================"
 "${PROJECT_ROOT}/ci/install-bazel.sh"
 
+echo "================================================================"
+echo "Compiling and running unit tests $(date)"
+echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"
-
-cat >>kokoro-bazelrc <<_EOF_
-# Set flags for uploading to BES without Remote Build Execution.
-startup --host_jvm_args=-Dbazel.DigestFunction=SHA256
-build:results-local --remote_cache=remotebuildexecution.googleapis.com
-build:results-local --spawn_strategy=local
-build:results-local --remote_timeout=3600
-build:results-local --bes_backend="buildeventservice.googleapis.com"
-build:results-local --bes_best_effort=false
-build:results-local --bes_timeout=10m
-build:results-local --tls_enabled=true
-build:results-local --auth_enabled=true
-build:results-local --auth_scope=https://www.googleapis.com/auth/cloud-source-tools
-build:results-local --experimental_remote_spawn_cache
-_EOF_
+"${BAZEL_BIN}" version
 
 # Kokoro does guarantee that g++-4.9 will be installed, but the default compiler
 # might be g++-4.8. Set the compiler version explicitly:
 export CC=/usr/bin/gcc-4.9
 export CXX=/usr/bin/g++-4.9
-
-# First build and run the unit tests.
-readonly INVOCATION_ID="$(python -c 'import uuid; print uuid.uuid4()')"
-echo "================================================================"
-echo "Configure and start Bazel: ${INVOCATION_ID} $(date)"
-echo "https://source.cloud.google.com/results/invocations/${INVOCATION_ID}"
-echo "================================================================"
-echo "${INVOCATION_ID}" >> "${KOKORO_ARTIFACTS_DIR}/bazel_invocation_ids"
 
 echo "================================================================"
 echo "Compiling and running unit tests $(date)"
@@ -68,13 +49,6 @@ echo "================================================================"
     --verbose_failures=true \
     --keep_going \
     -- //google/cloud/...:all
-
-echo
-echo "================================================================"
-echo "================================================================"
-echo "Copying artifacts"
-cp "$(bazel info output_base)/java.log" "${KOKORO_ARTIFACTS_DIR}/" || echo "java log copy failed."
-echo "End of copying."
 
 echo "================================================================"
 echo "Compiling all the code, including integration tests $(date)"
@@ -129,14 +103,17 @@ export ACCESS_TOKEN
 echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
+BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
+readonly BAZEL_BIN_DIR
+
 if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
   echo
   echo "================================================================"
   echo "Running Google Cloud Bigtable Integration Tests $(date)"
   echo "================================================================"
-  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/tests" && \
+  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/tests" && \
      "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_admin_integration_tests_production.sh")
-  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
      "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
 fi
 
@@ -144,11 +121,11 @@ echo
 echo "================================================================"
 echo "Running Google Cloud Bigtable Integration Tests $(date)"
 echo "================================================================"
-(cd "$(bazel info bazel-bin)/google/cloud/bigtable/tests" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/tests" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
-(cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
-(cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_grpc_credential_examples_production.sh")
 
 echo
@@ -168,15 +145,18 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 
 echo "Create service account to run the tests."
 set +e
-(cd "$(bazel info bazel-bin)/google/cloud/storage/tests" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/storage/tests" && \
     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
 storage_integration_test_status=$?
 echo "Running Google Cloud Storage Examples"
-(cd "$(bazel info bazel-bin)/google/cloud/storage/examples" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" && \
     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
 storage_examples_status=$?
 set -e
 
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
+    --role roles/iam.serviceAccountTokenCreator
 gcloud iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}"
 
 if [[ "${storage_integration_test_status}" != 0 ]]; then
