@@ -36,6 +36,13 @@ readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 "${BAZEL_BIN}" clean --expunge
+echo "DEBUG DEBUG ================================================================"
+ls -l /home/kbuilder/.cache/bazel
+echo "DEBUG DEBUG ================================================================"
+ls -l /home/kbuilder/.cache/bazel/_bazel_kbuilder/install/4cfcf40fe067e89c8f5c38e156f8d8ca || echo "not found"
+echo "DEBUG DEBUG ================================================================"
+
+
 
 # Kokoro does guarantee that g++-4.9 will be installed, but the default compiler
 # might be g++-4.8. Set the compiler version explicitly:
@@ -104,14 +111,31 @@ export ACCESS_TOKEN
 echo "Reading CI secret configuration parameters."
 source "${KOKORO_GFILE_DIR}/test-configuration.sh"
 
+echo "DEBUG DEBUG ================================================================"
+"${BAZEL_BIN}" version
+echo "DEBUG DEBUG ================================================================"
+"${BAZEL_BIN}" info bazel-bin
+echo "DEBUG DEBUG ================================================================"
+ls -l /home/kbuilder/.cache/bazel
+echo "DEBUG DEBUG ================================================================"
+ls -l /home/kbuilder/.cache/bazel/_bazel_kbuilder/install/4cfcf40fe067e89c8f5c38e156f8d8ca || echo "not found"
+echo "DEBUG DEBUG ================================================================"
+
+
+BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
+readonly BAZEL_BIN_DIR
+echo "DEBUG DEBUG ================================================================"
+echo "DEBUG DEBUG ${BAZEL_BIN_DIR}"
+echo "DEBUG DEBUG ================================================================"
+
 if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
   echo
   echo "================================================================"
   echo "Running Google Cloud Bigtable Integration Tests $(date)"
   echo "================================================================"
-  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/tests" && \
+  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/tests" && \
      "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_admin_integration_tests_production.sh")
-  (cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
      "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
 fi
 
@@ -119,11 +143,11 @@ echo
 echo "================================================================"
 echo "Running Google Cloud Bigtable Integration Tests $(date)"
 echo "================================================================"
-(cd "$(bazel info bazel-bin)/google/cloud/bigtable/tests" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/tests" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
-(cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
-(cd "$(bazel info bazel-bin)/google/cloud/bigtable/examples" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
    "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_grpc_credential_examples_production.sh")
 
 echo
@@ -143,15 +167,18 @@ gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
 
 echo "Create service account to run the tests."
 set +e
-(cd "$(bazel info bazel-bin)/google/cloud/storage/tests" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/storage/tests" && \
     "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
 storage_integration_test_status=$?
 echo "Running Google Cloud Storage Examples"
-(cd "$(bazel info bazel-bin)/google/cloud/storage/examples" && \
+(cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" && \
     "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
 storage_examples_status=$?
 set -e
 
+gcloud projects remove-iam-policy-binding "${PROJECT_ID}" \
+    --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
+    --role roles/iam.serviceAccountTokenCreator
 gcloud iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}"
 
 if [[ "${storage_integration_test_status}" != 0 ]]; then
