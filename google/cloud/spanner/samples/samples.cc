@@ -1489,21 +1489,6 @@ void QueryDataSelectStar(google::cloud::spanner::Client client) {
     }
     std::cout << "\n";
   }
-
-  // However, if we can avoid "SELECT *" and instead enumerate the exact
-  // columns we care about in the query, it's more efficient because unwanted
-  // values aren't returned, and we can use `StreamOf<std::tuple<...>>` to
-  // automatically parse each row into the specified `std::tuple`, thus
-  // removing error paths and simplifying the code.
-  spanner::SqlStatement select("SELECT SingerId, LastName FROM Singers");
-  using RowType = std::tuple<std::int64_t, std::string>;
-  rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
-    std::cout << "SingerId: " << std::get<0>(*row) << "\t";
-    std::cout << "LastName: " << std::get<1>(*row) << "\n";
-  }
-
   std::cout << "Query completed for [spanner_query_data_select_star]\n";
 }
 //! [spanner-query-data-select-star]
