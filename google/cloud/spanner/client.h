@@ -148,6 +148,7 @@ class Client {
   RowStream Read(std::string table, KeySet keys,
                  std::vector<std::string> columns,
                  ReadOptions read_options = {});
+
   /**
    * @copydoc Read
    *
@@ -158,6 +159,7 @@ class Client {
                  std::string table, KeySet keys,
                  std::vector<std::string> columns,
                  ReadOptions read_options = {});
+
   /**
    * @copydoc Read
    *
@@ -268,6 +270,7 @@ class Client {
    * @param transaction Execute this query as part of an existing transaction.
    */
   RowStream ExecuteQuery(Transaction transaction, SqlStatement statement);
+
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
@@ -360,7 +363,7 @@ class Client {
    * occurs, the application should restart the transaction from the beginning.
    *
    * @note Single-use transactions are not supported with DML statements.
-
+   *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    */
@@ -377,7 +380,7 @@ class Client {
    * occurs, the application should restart the transaction from the beginning.
    *
    * @note Single-use transactions are not supported with DML statements.
-
+   *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    */
@@ -394,7 +397,7 @@ class Client {
    * occurs, the application should restart the transaction from the beginning.
    *
    * @note Single-use transactions are not supported with DML statements.
-
+   *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
    */
