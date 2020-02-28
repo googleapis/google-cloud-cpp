@@ -684,6 +684,23 @@ TEST(ClientTest, CommitMutatorPermanentFailure) {
   EXPECT_EQ(1, commit_attempts);  // no reruns
 }
 
+TEST(ClientTest, CommitMutations) {
+  auto conn = std::make_shared<MockConnection>();
+  auto mutation = MakeDeleteMutation("table", KeySet::All());
+  auto timestamp = internal::TimestampFromRFC3339("2020-02-28T04:49:17.335Z");
+  ASSERT_STATUS_OK(timestamp);
+  EXPECT_CALL(*conn, Commit(_))
+      .WillOnce([&mutation, &timestamp](Connection::CommitParams const& cp) {
+        EXPECT_EQ(cp.mutations, Mutations{mutation});
+        return CommitResult{*timestamp};
+      });
+
+  Client client(conn);
+  auto result = client.Commit({mutation});
+  EXPECT_STATUS_OK(result);
+  EXPECT_EQ(*timestamp, result->commit_timestamp);
+}
+
 MATCHER(DoesNotHaveSession, "not bound to a session") {
   return internal::Visit(
       arg, [&](internal::SessionHolder& session,

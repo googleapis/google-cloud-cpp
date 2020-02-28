@@ -481,6 +481,14 @@ class Client {
       std::function<StatusOr<Mutations>(Transaction)> const& mutator);
 
   /**
+   * Commits the given @p mutations atomically in order.
+   *
+   * This function uses the re-run loop described above with the default
+   * policies.
+   */
+  StatusOr<CommitResult> Commit(Mutations mutations);
+
+  /**
    * Commits a read-write transaction.
    *
    * The commit might return a `kAborted` error. This can occur at any time.

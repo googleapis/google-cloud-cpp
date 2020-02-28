@@ -251,6 +251,10 @@ StatusOr<CommitResult> Client::Commit(
                 std::move(default_commit_backoff_policy));
 }
 
+StatusOr<CommitResult> Client::Commit(Mutations mutations) {
+  return Commit([&mutations](Transaction const&) { return mutations; });
+}
+
 StatusOr<CommitResult> Client::Commit(Transaction transaction,
                                       Mutations mutations) {
   return conn_->Commit({std::move(transaction), std::move(mutations)});
