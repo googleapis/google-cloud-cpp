@@ -809,7 +809,7 @@ void DeleteData(google::cloud::spanner::Client client) {
   }
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
-//! [END spanner_update_data]
+//! [END spanner_delete_data]
 
 // [START spanner_insert_data_with_timestamp_column]
 void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
