@@ -178,6 +178,13 @@ StatusOr<CommitResult> Client::Commit(
 #endif
       mutations = mutator(txn);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+    } catch (RuntimeStatusError const& error) {
+      // Treat this like mutator() returned a bad Status.
+      Status status = error.status();
+      if (status.ok()) {
+        status = Status(StatusCode::kUnknown, "OK Status thrown from mutator");
+      }
+      mutations = status;
     } catch (...) {
       auto rb_status = Rollback(txn);
       if (!RerunnablePolicy::IsOk(rb_status)) {

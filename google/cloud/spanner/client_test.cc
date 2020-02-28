@@ -584,6 +584,30 @@ TEST(ClientTest, CommitMutatorException) {
     FAIL();
   }
 }
+
+TEST(ClientTest, CommitMutatorRuntimeStatusException) {
+  auto conn = std::make_shared<MockConnection>();
+  EXPECT_CALL(*conn, Rollback(_)).WillRepeatedly(Return(Status()));
+  Client client(conn);
+  try {
+    auto result = client.Commit([](Transaction const&) -> StatusOr<Mutations> {
+      throw RuntimeStatusError(Status());  // OK
+    });
+    EXPECT_EQ(StatusCode::kUnknown, result.status().code());
+    EXPECT_THAT(result.status().message(), HasSubstr("OK Status thrown"));
+  } catch (...) {
+    FAIL();  // exception consumed
+  }
+  try {
+    auto result = client.Commit([](Transaction const&) -> StatusOr<Mutations> {
+      throw RuntimeStatusError(Status(StatusCode::kCancelled, "uh oh"));
+    });
+    EXPECT_EQ(StatusCode::kCancelled, result.status().code());
+    EXPECT_EQ(result.status().message(), "uh oh");
+  } catch (...) {
+    FAIL();  // exception consumed
+  }
+}
 #endif
 
 TEST(ClientTest, CommitMutatorRerunTransientFailures) {

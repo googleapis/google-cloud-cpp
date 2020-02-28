@@ -461,7 +461,9 @@ class Client {
    * @param backoff_policy controls how long `Commit` waits between reruns.
    *
    * @throw Rethrows any exception thrown by @p `mutator` (after rolling back
-   *     the transaction).
+   *     the transaction). However, a `RuntimeStatusError` exception is
+   *     instead consumed and converted into a `mutator` return value of the
+   *     enclosed `Status`.
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,
