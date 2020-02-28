@@ -479,7 +479,7 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::GetBackup(
       metadata_update_policy, &AdminClient::GetBackup, request, "GetBackup",
       status, true);
   if (!status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(status);
+    return google::cloud::MakeStatusFromRpcError(status);
   }
 
   return result;
@@ -530,7 +530,7 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::UpdateBackup(
       metadata_update_policy, &AdminClient::UpdateBackup, std::move(request),
       "UpdateBackup", status, true);
   if (!status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(status);
+    return google::cloud::MakeStatusFromRpcError(status);
   }
 
   return result;
@@ -572,7 +572,7 @@ Status TableAdmin::DeleteBackup(std::string cluster_id, std::string backup_id) {
       metadata_update_policy, &AdminClient::DeleteBackup, request,
       "DeleteBackup", status, true);
   if (!status.ok()) {
-    return grpc_utils::MakeStatusFromRpcError(status);
+    return google::cloud::MakeStatusFromRpcError(status);
   }
 
   return {};
