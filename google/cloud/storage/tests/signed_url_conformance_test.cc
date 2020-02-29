@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/nljson.h"
+#include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -49,17 +50,6 @@ char const* data_file_name;
 class V4SignedUrlConformanceTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  // Converts ""20190201T090000Z",
-  // to  "2019-02-01T09:00:00Z"
-  std::string TimestampToRfc3339(std::string const& ts) {
-    if (ts.size() != 16) {
-      return "";
-    }
-    return ts.substr(0, 4) + '-' + ts.substr(4, 2) + '-' + ts.substr(6, 2) +
-           'T' + ts.substr(9, 2) + ':' + ts.substr(11, 2) + ':' +
-           ts.substr(13, 2) + 'Z';
-  }
-
   std::vector<std::pair<std::string, std::string>> ExtractHeaders(
       internal::nl::json j_obj) {
     std::vector<std::pair<std::string, std::string>> headers;
@@ -86,28 +76,48 @@ TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
       oauth2::CreateServiceAccountCredentialsFromJsonFilePath(account_file);
 
   ASSERT_STATUS_OK(creds);
+  std::string account_email = creds->get()->AccountEmail();
   Client client(*creds);
   StatusOr<std::string> actual;
+  std::string actual_canonical_request;
+  std::string actual_string_to_sign;
 
   for (auto const& j_obj : json_array) {
     std::string const method_name = j_obj["method"];
     std::string const bucket_name = j_obj["bucket"];
     std::string const object_name = j_obj["object"];
-    std::string const date = TimestampToRfc3339(j_obj["timestamp"]);
-    auto const valid_for = std::chrono::seconds(j_obj["expiration"]);
+    std::string const date = j_obj["timestamp"];
+    auto const valid_for =
+        std::chrono::seconds(std::stoi(j_obj["expiration"].get<std::string>()));
     std::string const expected = j_obj["expectedUrl"];
+    std::string const expected_canonical_request =
+        j_obj["expectedCanonicalRequest"];
+    std::string const expected_string_to_sign = j_obj["expectedStringToSign"];
 
     // Extract the headers for each object
     std::vector<std::pair<std::string, std::string>> headers =
         ExtractHeaders(j_obj);
 
+    google::cloud::storage::internal::V4SignUrlRequest request(
+        method_name, bucket_name, object_name);
     if (headers.empty()) {
+      request.set_multiple_options(
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"));
+
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
           SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
           SignedUrlDuration(valid_for),
           AddExtensionHeader("host", "storage.googleapis.com"));
     } else if (headers.size() == 1) {
+      request.set_multiple_options(
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"),
+          AddExtensionHeader(headers.at(0).first, headers.at(0).second));
+
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
           SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
@@ -115,6 +125,13 @@ TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
           AddExtensionHeader("host", "storage.googleapis.com"),
           AddExtensionHeader(headers.at(0).first, headers.at(0).second));
     } else if (headers.size() == 2) {
+      request.set_multiple_options(
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"),
+          AddExtensionHeader(headers.at(0).first, headers.at(0).second),
+          AddExtensionHeader(headers.at(1).first, headers.at(1).second));
+
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
           SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
@@ -123,6 +140,14 @@ TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
           AddExtensionHeader(headers.at(0).first, headers.at(0).second),
           AddExtensionHeader(headers.at(1).first, headers.at(1).second));
     } else if (headers.size() == 3) {
+      request.set_multiple_options(
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"),
+          AddExtensionHeader(headers.at(0).first, headers.at(0).second),
+          AddExtensionHeader(headers.at(1).first, headers.at(1).second),
+          AddExtensionHeader(headers.at(2).first, headers.at(2).second));
+
       actual = client.CreateV4SignedUrl(
           method_name, bucket_name, object_name,
           SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
@@ -131,13 +156,37 @@ TEST_F(V4SignedUrlConformanceTest, V4SignJson) {
           AddExtensionHeader(headers.at(0).first, headers.at(0).second),
           AddExtensionHeader(headers.at(1).first, headers.at(1).second),
           AddExtensionHeader(headers.at(2).first, headers.at(2).second));
+    } else if (headers.size() == 4) {
+      request.set_multiple_options(
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"),
+          AddExtensionHeader(headers.at(0).first, headers.at(0).second),
+          AddExtensionHeader(headers.at(1).first, headers.at(1).second),
+          AddExtensionHeader(headers.at(2).first, headers.at(2).second),
+          AddExtensionHeader(headers.at(3).first, headers.at(3).second));
+
+      actual = client.CreateV4SignedUrl(
+          method_name, bucket_name, object_name,
+          SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+          SignedUrlDuration(valid_for),
+          AddExtensionHeader("host", "storage.googleapis.com"),
+          AddExtensionHeader(headers.at(0).first, headers.at(0).second),
+          AddExtensionHeader(headers.at(1).first, headers.at(1).second),
+          AddExtensionHeader(headers.at(2).first, headers.at(2).second),
+          AddExtensionHeader(headers.at(3).first, headers.at(3).second));
     } else {
-      EXPECT_LT(headers.size(), 4);
+      EXPECT_LT(headers.size(), 5);
     }
+
+    actual_string_to_sign = request.StringToSign(account_email);
+    actual_canonical_request = request.CanonicalRequest(account_email);
+
     ASSERT_STATUS_OK(actual);
     EXPECT_THAT(*actual, HasSubstr(bucket_name));
-    EXPECT_THAT(*actual, HasSubstr(object_name));
     EXPECT_EQ(expected, *actual);
+    EXPECT_EQ(expected_canonical_request, actual_canonical_request);
+    EXPECT_EQ(expected_string_to_sign, actual_string_to_sign);
   }
 }
 

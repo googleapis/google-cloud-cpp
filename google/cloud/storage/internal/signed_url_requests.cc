@@ -42,6 +42,22 @@ void SignUrlRequestCommon::SetOption(AddExtensionHeaderOption const& o) {
   }
 }
 
+std::vector<std::string> SignUrlRequestCommon::ObjectNameParts() const {
+  std::vector<std::string> parts;
+  std::istringstream is(object_name());
+  std::string part;
+  do {
+    std::getline(is, part, '/');
+    parts.push_back(part);
+    is.tellg();
+  } while (is);
+  return parts;
+}
+
+std::vector<std::string> V4SignUrlRequest::ObjectNameParts() const {
+  return common_request_.ObjectNameParts();
+}
+
 std::chrono::system_clock::time_point
 V2SignUrlRequest::DefaultExpirationTime() {
   return std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
@@ -130,8 +146,8 @@ std::string V4SignUrlRequest::CanonicalRequest(
   os << verb() << "\n";
   CurlHandle curl;
   os << '/' << bucket_name();
-  if (!object_name().empty()) {
-    os << '/' << curl.MakeEscapedString(object_name()).get();
+  for (auto& part : ObjectNameParts()) {
+    os << '/' << curl.MakeEscapedString(part).get();
   }
   if (!sub_resource().empty()) {
     os << '?' << curl.MakeEscapedString(sub_resource()).get();
