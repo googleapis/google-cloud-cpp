@@ -18,7 +18,7 @@ find_package(google_cloud_cpp_common CONFIG REQUIRED)
 
 # This should be included from the top level CMakeLists file
 set(STORAGE_CLIENT_VERSION_MAJOR 1)
-set(STORAGE_CLIENT_VERSION_MINOR 11)
+set(STORAGE_CLIENT_VERSION_MINOR 12)
 set(STORAGE_CLIENT_VERSION_PATCH 0)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud Storage C++ Client")
