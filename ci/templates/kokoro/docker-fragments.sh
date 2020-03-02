@@ -23,9 +23,9 @@ _EOF_
 
 read_into_variable INSTALL_CPP_CMAKEFILES_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -112,9 +112,9 @@ _EOF_
 
 read_into_variable INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
