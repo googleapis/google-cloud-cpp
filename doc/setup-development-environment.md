@@ -69,12 +69,7 @@ on the
 [Google Cloud SDK website](https://cloud.google.com/sdk/) for alternatives.
 
 ```console
-wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
-sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
-    grep -q '^a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a '
-echo $?
-tar x -C $HOME -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
-$HOME/google-cloud-sdk/bin/gcloud --quiet components install cbt bigtable
+./ci/install-cloud-sdk.sh
 ```
 
 ### Clone and compile `google-cloud-cpp`
