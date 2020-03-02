@@ -1,6 +1,15 @@
 # Changelog
 
-## v1.11.x - TBD
+## v1.12.x - TBD
+
+## v1.11.x - 2020-03
+
+* feat: implement resumable parallel file uploads (#3389) - allow applications
+  to use multiple threads to upload large files, achieving throughput in excess
+  of 1GiB/s. With this change applications can restart such uploads even if the
+  application restarts.
+* chore: upgrade testbench to Python 3 (#3402) - you will need to have Python 3
+  installed to run the integration tests.
 
 ## v1.10.x - 2020-02
 
