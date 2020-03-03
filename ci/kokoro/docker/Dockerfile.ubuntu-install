@@ -46,7 +46,10 @@ RUN apt-get update && \
         tar \
         unzip \
         wget \
-        zlib1g-dev
+        zlib1g-dev \
+        apt-utils \
+        ca-certificates \
+        apt-transport-https
 
 # By default, Ubuntu 18.04 does not install the alternatives for clang-format
 # and clang-tidy, so we need to manually install those.
