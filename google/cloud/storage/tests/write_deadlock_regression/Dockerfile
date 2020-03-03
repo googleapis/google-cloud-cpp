@@ -15,8 +15,8 @@
 FROM ubuntu:bionic AS build
 
 # Install the typical development tools and some additions:
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y build-essential cmake git gcc g++ cmake \
         libssl-dev make pkg-config tar wget zlib1g-dev
 
 WORKDIR /var/tmp/build
@@ -47,8 +47,8 @@ RUN cmake \
 # Prepare the final image, this image is much smaller because only the required
 # dependencies are installed.
 FROM ubuntu:bionic
-RUN apt update && \
-    apt install -y libstdc++6 zlib1g dsniff binutils ca-certificates
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y libstdc++6 zlib1g dsniff binutils ca-certificates
 RUN /usr/sbin/update-ca-certificates
 
 COPY --from=build \
