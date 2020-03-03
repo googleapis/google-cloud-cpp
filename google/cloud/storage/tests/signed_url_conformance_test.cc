@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/signed_url_requests.h"
@@ -45,7 +46,7 @@ using ::testing::HasSubstr;
 
 // Initialized in main() below.
 char const* account_file_name;
-std::map<std::string, internal::nl::json> tests;
+std::map<std::string, internal::nl::json>* tests;
 
 class V4SignedUrlConformanceTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
@@ -77,7 +78,7 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
 
-  auto j_obj = tests[GetParam()];
+  auto j_obj = (*tests)[GetParam()];
   std::string const method_name = j_obj["method"];
   std::string const bucket_name = j_obj["bucket"];
   std::string const object_name = j_obj["object"];
@@ -188,7 +189,7 @@ INSTANTIATE_TEST_SUITE_P(
     V4SignedUrlConformanceTest, V4SignedUrlConformanceTest,
     ::testing::ValuesIn([] {
       std::vector<std::string> res;
-      std::transform(tests.begin(), tests.end(), std::back_inserter(res),
+      std::transform(tests->begin(), tests->end(), std::back_inserter(res),
                      [](std::pair<std::string, internal::nl::json> const& p) {
                        return p.first;
                      });
@@ -230,6 +231,10 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  auto tests_destroyer = google::cloud::internal::make_unique<
+      std::map<std::string, google::cloud::storage::internal::nl::json>>();
+  google::cloud::storage::tests = tests_destroyer.get();
+
   for (auto const& j_obj : json) {
     if (!j_obj.is_object()) {
       std::cerr << "Expected and array of objects, got this element in array: "
@@ -252,12 +257,11 @@ int main(int argc, char* argv[]) {
                  back_inserter(name), [](char c) {
                    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
                  });
-    bool inserted = google::cloud::storage::tests.emplace(name, j_obj).second;
+    bool inserted = google::cloud::storage::tests->emplace(name, j_obj).second;
     if (!inserted) {
       std::cerr << "Duplicate test description: " << name << "\n";
     }
   }
-
   google::cloud::testing_util::InitGoogleMock(argc, argv);
 
   return RUN_ALL_TESTS();
