@@ -15,8 +15,8 @@
 ARG DISTRO_VERSION=18.04
 FROM ubuntu:${DISTRO_VERSION}
 
-RUN apt update && \
-    apt install -y \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y \
         abi-compliance-checker \
         abi-dumper \
         automake \
@@ -49,7 +49,7 @@ RUN apt update && \
 # By default, Ubuntu 18.04 does not install the alternatives for clang-format
 # and clang-tidy, so we need to manually install those.
 RUN if grep -q 18.04 /etc/lsb-release; then \
-      apt update && apt install -y clang-tidy clang-format-7 clang-tools; \
+      apt-get update && apt-get --no-install-recommends install -y clang-tidy clang-format-7 clang-tools; \
       update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100; \
       update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-7 100; \
       update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100; \
