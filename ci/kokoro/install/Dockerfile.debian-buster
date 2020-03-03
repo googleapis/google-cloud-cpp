@@ -29,7 +29,8 @@ ARG NCPU=4
 # ```bash
 RUN apt-get update && \
     apt-get --no-install-recommends install -y build-essential cmake git gcc g++ cmake \
-        libcurl4-openssl-dev libssl-dev make pkg-config tar wget zlib1g-dev
+        libcurl4-openssl-dev libssl-dev make pkg-config tar wget zlib1g-dev \
+        apt-utils ca-certificates apt-transport-https
 # ```
 
 # Debian 10 includes versions of gRPC and Protobuf that support the
