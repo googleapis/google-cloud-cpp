@@ -215,9 +215,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -247,9 +247,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -325,9 +325,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -357,9 +357,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -484,9 +484,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -516,9 +516,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -546,9 +546,10 @@ sudo cmake --build . --target install
 Install the minimal development tools, libcurl, OpenSSL and libc-ares:
 
 ```bash
-sudo apt update && \
-sudo apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 ```
 
@@ -615,9 +616,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -647,9 +648,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -677,9 +678,10 @@ sudo cmake --build . --target install
 Install the minimal development tools, OpenSSL and libcurl:
 
 ```bash
-sudo apt update && \
-sudo apt install -y automake build-essential cmake git gcc g++ \
-        libcurl4-openssl-dev libssl-dev libtool make \
+apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
 ```
 
@@ -761,9 +763,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -793,9 +795,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -830,10 +832,11 @@ Note that this removes libssl-dev if you have it installed already, and would
 prevent you from compiling against openssl-1.1.0.
 
 ```bash
-sudo apt update && \
-sudo apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
-        pkg-config tar wget zlib1g-dev
+apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates git gcc g++ cmake libc-ares-dev \
+        libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 pkg-config tar \
+        wget zlib1g-dev
 ```
 
 #### Protobuf
@@ -899,9 +902,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -931,9 +934,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -1063,9 +1066,9 @@ We need a recent version of the Google Cloud Platform proto C++ libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz && \
-    tar -xf v0.4.1.tar.gz && \
-    cd cpp-cmakefiles-0.4.1 && \
+wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz && \
+    tar -xf v0.5.0.tar.gz && \
+    cd cpp-cmakefiles-0.5.0 && \
     cmake -DBUILD_SHARED_LIBS=YES -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
@@ -1095,9 +1098,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.20.0.tar.gz && \
-    tar -xf v0.20.0.tar.gz && \
-    cd google-cloud-cpp-common-0.20.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.21.0.tar.gz && \
+    tar -xf v0.21.0.tar.gz && \
+    cd google-cloud-cpp-common-0.21.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
