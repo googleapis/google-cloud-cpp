@@ -23,17 +23,19 @@ ARG NCPU=4
 # Install the minimal development tools, libcurl, and OpenSSL:
 
 # ```bash
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
-        libcurl4-openssl-dev libssl-dev make pkg-config tar wget zlib1g-dev
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential ca-certificates cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
+        pkg-config tar wget zlib1g-dev
 # ```
 
 # Debian 10 includes versions of gRPC and Protobuf that support the
 # Google Cloud Platform proto files. We simply install these pre-built versions:
 
 # ```bash
-RUN apt update && \
-    apt install -y libgrpc++-dev libprotobuf-dev libc-ares-dev \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y libgrpc++-dev libprotobuf-dev libc-ares-dev \
         protobuf-compiler protobuf-compiler-grpc
 # ```
 

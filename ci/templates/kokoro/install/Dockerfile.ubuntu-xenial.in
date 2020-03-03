@@ -23,9 +23,10 @@ ARG NCPU=4
 # Install the minimal development tools, OpenSSL and libcurl:
 
 # ```bash
-RUN apt update && \
-    apt install -y automake build-essential cmake git gcc g++ \
-        libcurl4-openssl-dev libssl-dev libtool make \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates git gcc g++ cmake \
+        libcurl4-openssl-dev libssl-dev libtool m4 make \
         pkg-config tar wget zlib1g-dev
 # ```
 

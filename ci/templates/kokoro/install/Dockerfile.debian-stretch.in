@@ -30,10 +30,11 @@ ARG NCPU=4
 # prevent you from compiling against openssl-1.1.0.
 
 # ```bash
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl1.0-dev make \
-        pkg-config tar wget zlib1g-dev
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential cmake ca-certificates git gcc g++ cmake libc-ares-dev \
+        libc-ares2 libcurl4-openssl-dev libssl1.0-dev make m4 pkg-config tar \
+        wget zlib1g-dev
 # ```
 
 # #### Protobuf

@@ -22,9 +22,10 @@ FROM debian:${DISTRO_VERSION} AS devtools
 # First install the development tools.
 
 # ```bash
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
-        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y apt-transport-https apt-utils \
+        automake build-essential ca-certificates cmake git gcc g++ cmake \
+        libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev m4 make \
         pkg-config tar wget zlib1g-dev
 # ```
 
