@@ -29,7 +29,7 @@ FROM ubuntu:${DISTRO_VERSION} AS devtools
 RUN apt-get update && \
     apt-get --no-install-recommends install -y build-essential cmake git gcc g++ cmake \
         libcurl4-openssl-dev libssl-dev make \
-        pkg-config tar wget zlib1g-dev
+        pkg-config tar wget zlib1g-dev apt-utils ca-certificates apt-transport-https
 # ```
 
 ## [END README.md]
