@@ -79,12 +79,11 @@ ls -l "$(dirname "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}")"
 ls -l "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 
 echo "    Getting cbt tool"
-wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
-sha256sum google-cloud-sdk-233.0.0-linux-x86_64.tar.gz | \
-    grep -q '^a04ff6c4dcfc59889737810174b5d3c702f7a0a20e5ffcec3a5c3fccc59c3b7a '
-tar x -C "${HOME}" -f google-cloud-sdk-233.0.0-linux-x86_64.tar.gz
+wget -q https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-282.0.0-linux-x86_64.tar.gz
+sha256sum google-cloud-sdk-282.0.0-linux-x86_64.tar.gz | \
+    grep -q '^db2fd176a998381ef937bd9f9e83b16eadff864111255d771976d654c961fc95 '
+tar x -C "${HOME}" -f google-cloud-sdk-282.0.0-linux-x86_64.tar.gz
 "${HOME}/google-cloud-sdk/bin/gcloud" --quiet components install cbt
-export CBT="${HOME}/google-cloud-sdk/bin/cbt"
 
 echo "================================================================"
 echo "Setup environment for integration tests $(date)"
