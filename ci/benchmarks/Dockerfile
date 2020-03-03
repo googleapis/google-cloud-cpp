@@ -14,8 +14,8 @@
 
 FROM ubuntu:bionic AS google-cloud-cpp-dependencies
 
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 
@@ -112,8 +112,8 @@ RUN cmake --build . --target install
 # - The final binaries, without any intermdiate object files.
 # - The run-time dependencies, without the build tool dependencies.
 FROM ubuntu:bionic
-RUN apt update && \
-    apt install -y ca-certificates libc-ares2 libcurl4 \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y ca-certificates libc-ares2 libcurl4 \
     libstdc++6 libssl1.1 zlib1g
 RUN /usr/sbin/update-ca-certificates
 
