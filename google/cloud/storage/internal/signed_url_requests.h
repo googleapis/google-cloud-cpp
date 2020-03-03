@@ -293,6 +293,9 @@ class V4SignUrlRequest {
   std::multimap<std::string, std::string> CanonicalQueryParameters(
       std::string const& client_id) const;
 
+  std::multimap<std::string, std::string> AllQueryParameters(
+      std::string const& client_id) const;
+
   std::string SignedHeaders() const;
 
   SignUrlRequestCommon common_request_;

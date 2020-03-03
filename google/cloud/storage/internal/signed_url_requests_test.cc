@@ -291,7 +291,8 @@ TEST(V4SignedUrlRequests, CanonicalQueryStringMultiHeader) {
       "&X-Goog-Credential=fake-client-id"
       "%2F20190201%2Fauto%2Fstorage%2Fgoog4_request"
       "&X-Goog-Date=20190201T090000Z"
-      "&X-Goog-Expires=10&X-Goog-SignedHeaders=content-type%3Bhost";
+      "&X-Goog-Expires=10&X-Goog-SignedHeaders=content-type%3Bhost"
+      "&generation=7&userProject=test-project";
   std::string actual = request.CanonicalQueryString("fake-client-id");
   EXPECT_EQ(expected, actual);
 }
