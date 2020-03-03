@@ -15,8 +15,8 @@
 FROM ubuntu:bionic AS devtools
 
 # Install the typical development tools and some additions:
-RUN apt update && \
-    apt install -y build-essential cmake git gcc g++ cmake \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y build-essential cmake git gcc g++ cmake \
         libc-ares-dev libc-ares2 libcurl4-openssl-dev libssl-dev make \
         pkg-config tar wget zlib1g-dev
 
@@ -42,8 +42,8 @@ RUN cmake \
 # Prepare the final image, this image is much smaller because only the required
 # dependencies are installed.
 FROM ubuntu:bionic
-RUN apt update && \
-    apt install -y libstdc++6 libc-ares2 libcurl4 zlib1g binutils \
+RUN apt-get update && \
+    apt-get --no-install-recommends install -y libstdc++6 libc-ares2 libcurl4 zlib1g binutils \
         ca-certificates tcpdump coreutils strace procps
 RUN /usr/sbin/update-ca-certificates
 
