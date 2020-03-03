@@ -449,6 +449,8 @@ TupleStream<Tuple> StreamOf(RowRange&& range) {
  * know how many rows may be returned, they should instead consume the range in
  * a loop.
  *
+ * @snippet samples.cc get-singular-row
+ *
  * @warning Due to the fact that a `RowStreamIteartor` is an input iterator,
  *     this function may consume the first element in the range, even in cases
  *     where an error is returned. But again, this function should not be used

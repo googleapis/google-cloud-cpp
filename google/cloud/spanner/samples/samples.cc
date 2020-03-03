@@ -1679,6 +1679,23 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+//! [get-singular-row]
+void GetSingularRow(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  auto query = client.ExecuteQuery(spanner::SqlStatement(
+      "SELECT FirstName, LastName FROM Singers WHERE SingerId = @singer_id",
+      {{"singer_id", spanner::Value(2)}}));
+  // `SingerId` is the primary key for the `Singers` table, the `GetSingularRow`
+  // helper returns a single row or an error:
+  using RowType = std::tuple<std::string, std::string>;
+  auto row = GetSingularRow(spanner::StreamOf<RowType>(query));
+  if (!row) throw std::runtime_error(row.status().message());
+  std::cout << "FirstName: " << std::get<0>(*row)
+            << "\nLastName: " << std::get<1>(*row) << "\n";
+}
+//! [get-singular-row]
+
 class RemoteConnectionFake {
  public:
   void SendBinaryStringData(std::string const& serialized_partition) {
@@ -1914,6 +1931,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("partition-read", &PartitionRead),
       make_command_entry("partition-query", &PartitionQuery),
       make_command_entry("example-status-or", &ExampleStatusOr),
+      make_command_entry("get-singular-row", GetSingularRow),
       {"custom-retry-policy", &CustomRetryPolicy},
   };
 
@@ -2189,6 +2207,9 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning example-status-or sample\n";
   ExampleStatusOr(client);
+
+  std::cout << "\nRunning get-singular-row sample\n";
+  GetSingularRow(client);
 
   std::cout << "\nRunning custom-retry-policy sample\n";
   RunOneCommand(
