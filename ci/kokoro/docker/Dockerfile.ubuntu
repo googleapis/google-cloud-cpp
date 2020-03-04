@@ -24,6 +24,7 @@ RUN apt-get update && \
         ccache \
         clang \
         cmake \
+        ctags \
         curl \
         doxygen \
         gawk \

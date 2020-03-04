@@ -27,6 +27,7 @@ RUN apt-get update && \
         clang-format-7 \
         cmake \
         curl \
+        ctags \
         doxygen \
         gawk \
         git \
