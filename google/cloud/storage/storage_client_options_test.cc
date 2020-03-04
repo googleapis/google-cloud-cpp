@@ -16,7 +16,7 @@
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,26 +27,15 @@ namespace {
 class ClientOptionsTest : public ::testing::Test {
  public:
   ClientOptionsTest()
-      : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING"),
-        endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
+      : enable_tracing_("CLOUD_STORAGE_ENABLE_TRACING", {}),
+        endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}) {}
 
  protected:
-  void SetUp() override {
-    enable_tracing_.SetUp();
-    endpoint_.SetUp();
-  }
-  void TearDown() override {
-    enable_tracing_.TearDown();
-    endpoint_.TearDown();
-  }
-
- protected:
-  testing_util::EnvironmentVariableRestore enable_tracing_;
-  testing_util::EnvironmentVariableRestore endpoint_;
+  testing_util::ScopedEnvironment enable_tracing_;
+  testing_util::ScopedEnvironment endpoint_;
 };
 
 TEST_F(ClientOptionsTest, Default) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_ENABLE_TRACING", nullptr);
   // Create the options with the anonymous credentials because the default
   // credentials try to load the application default credentials, and those do
   // not exist in the CI environment, which results in errors or warnings.
@@ -61,22 +50,22 @@ TEST_F(ClientOptionsTest, Default) {
 }
 
 TEST_F(ClientOptionsTest, EnableRpc) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_ENABLE_TRACING",
-                                  "foo,raw-client,bar");
+  testing_util::ScopedEnvironment enable_tracing("CLOUD_STORAGE_ENABLE_TRACING",
+                                                 "foo,raw-client,bar");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_TRUE(options.enable_raw_client_tracing());
 }
 
 TEST_F(ClientOptionsTest, EnableHttp) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_ENABLE_TRACING",
-                                  "foo,http,bar");
+  testing_util::ScopedEnvironment enable_tracing("CLOUD_STORAGE_ENABLE_TRACING",
+                                                 "foo,http,bar");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_TRUE(options.enable_http_tracing());
 }
 
 TEST_F(ClientOptionsTest, EndpointFromEnvironment) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:1234");
+  testing_util::ScopedEnvironment endpoint("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
+                                           "http://localhost:1234");
   ClientOptions options(oauth2::CreateAnonymousCredentials());
   EXPECT_EQ("http://localhost:1234", options.endpoint());
 }

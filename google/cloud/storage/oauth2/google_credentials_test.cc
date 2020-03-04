@@ -21,7 +21,7 @@
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <fstream>
 
@@ -32,40 +32,25 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
 
-using ::google::cloud::internal::SetEnv;
-using ::google::cloud::internal::UnsetEnv;
 using ::google::cloud::storage::internal::GceCheckOverrideEnvVar;
-using ::google::cloud::testing_util::EnvironmentVariableRestore;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
 
 class GoogleCredentialsTest : public ::testing::Test {
  public:
+  // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
+  // well-known path) aren't loaded.
   GoogleCredentialsTest()
-      : home_env_var_(GoogleAdcHomeEnvVar()),
-        adc_env_var_(GoogleAdcEnvVar()),
-        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar()),
-        gce_check_override_env_var_(GceCheckOverrideEnvVar()) {}
+      : home_env_var_(GoogleAdcHomeEnvVar(), {}),
+        adc_env_var_(GoogleAdcEnvVar(), {}),
+        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar(), {}),
+        gce_check_override_env_var_(GceCheckOverrideEnvVar(), {}) {}
 
  protected:
-  void SetUp() override {
-    home_env_var_.SetUp();
-    adc_env_var_.SetUp();
-    gcloud_path_override_env_var_.SetUp();
-    gce_check_override_env_var_.SetUp();
-  }
-
-  void TearDown() override {
-    gce_check_override_env_var_.TearDown();
-    gcloud_path_override_env_var_.TearDown();
-    adc_env_var_.TearDown();
-    home_env_var_.TearDown();
-  }
-
- protected:
-  EnvironmentVariableRestore home_env_var_;
-  EnvironmentVariableRestore adc_env_var_;
-  EnvironmentVariableRestore gcloud_path_override_env_var_;
-  EnvironmentVariableRestore gce_check_override_env_var_;
+  ScopedEnvironment home_env_var_;
+  ScopedEnvironment adc_env_var_;
+  ScopedEnvironment gcloud_path_override_env_var_;
+  ScopedEnvironment gce_check_override_env_var_;
 };
 
 // TODO(#3022): move these constants and WriteBase64AsBinary to a common place.
@@ -182,7 +167,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
 
   // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);
   // Need to create a temporary for the pointer because clang-tidy warns about
@@ -196,8 +181,8 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
   SetupAuthorizedUserCredentialsFileForTest(filename);
   // Test that the authorized user credentials are loaded as the default when
   // stored in the the well known gcloud ADC file path.
-  UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
+  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
+                                                 filename.c_str());
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
@@ -278,7 +263,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);
   // Need to create a temporary for the pointer because clang-tidy warns about
@@ -293,8 +278,8 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
 
   // Test that the service account credentials are loaded as the default when
   // stored in the the well known gcloud ADC file path.
-  UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
+  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
+                                                 filename.c_str());
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
@@ -360,7 +345,7 @@ TEST_F(GoogleCredentialsTest,
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
   ASSERT_STATUS_OK(creds);
   // Need to create a temporary for the pointer because clang-tidy warns about
@@ -376,8 +361,8 @@ TEST_F(GoogleCredentialsTest,
 
   // Test that the service account credentials are loaded as the default when
   // stored in the the well known gcloud ADC file path.
-  UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GoogleGcloudAdcFileEnvVar(), filename.c_str());
+  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
+                                                 filename.c_str());
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
   ASSERT_STATUS_OK(creds);
   auto* ptr = creds->get();
@@ -391,7 +376,7 @@ TEST_F(GoogleCredentialsTest,
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths(
       {{"https://www.googleapis.com/auth/devstorage.full_control"}},
       "user@foo.bar");
@@ -408,7 +393,7 @@ TEST_F(
 
   // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
   ASSERT_FALSE(creds) << "status=" << creds.status();
   EXPECT_THAT(creds.status().message(),
@@ -417,13 +402,10 @@ TEST_F(
 
 TEST_F(GoogleCredentialsTest,
        MissingCredentialsCreateServiceAccountCredentialsFromDefaultPaths) {
-  // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
-  // well-known path) aren't loaded.
-  UnsetEnv(GoogleAdcEnvVar());
   // The developer may have configured something that are not service account
   // credentials in the well-known path. Change the search location to a
   // directory that should have have developer configuration files.
-  SetEnv(GoogleAdcHomeEnvVar(), ::testing::TempDir());
+  ScopedEnvironment home_env_var(GoogleAdcHomeEnvVar(), ::testing::TempDir());
   // Test that when CreateServiceAccountCredentialsFromDefaultPaths cannot
   // find any credentials, it fails.
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();
@@ -455,13 +437,11 @@ TEST_F(GoogleCredentialsTest,
 }
 
 TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
-  // Make sure other higher-precedence credentials (ADC env var, gcloud ADC from
-  // well-known path) aren't loaded.
-  UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GoogleGcloudAdcFileEnvVar(), "");
+  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
+                                                 "");
   // If the ADC flow thinks we're on a GCE instance, it should return
   // ComputeEngineCredentials.
-  SetEnv(GceCheckOverrideEnvVar(), "1");
+  ScopedEnvironment gce_check_override_env_var(GceCheckOverrideEnvVar(), "1");
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);
@@ -495,7 +475,7 @@ TEST_F(GoogleCredentialsTest, LoadUnknownTypeCredentials) {
 })""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
@@ -510,7 +490,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidCredentials) {
   std::string contents_str = R"""( not-a-json-object-string )""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
@@ -525,7 +505,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidAuthorizedUserCredentialsViaADC) {
   std::string contents_str = R"""("type": "authorized_user")""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
@@ -538,7 +518,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidServiceAccountCredentialsViaADC) {
   std::string contents_str = R"""("type": "service_account")""";
   os << contents_str;
   os.close();
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
@@ -547,7 +527,7 @@ TEST_F(GoogleCredentialsTest, LoadInvalidServiceAccountCredentialsViaADC) {
 
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
   char const filename[] = "missing-credentials.json";
-  SetEnv(GoogleAdcEnvVar(), filename);
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename);
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
@@ -559,14 +539,12 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   char const filename[] = "missing-credentials.json";
 
-  // Make sure other credentials (ADC env var, implicit environment-based creds)
-  // aren't found either.
-  UnsetEnv(GoogleAdcEnvVar());
-  SetEnv(GceCheckOverrideEnvVar(), "0");
+  ScopedEnvironment gce_check_override_env_var(GceCheckOverrideEnvVar(), "0");
   // The method to create default credentials should see that no file exists at
   // this path, then continue trying to load the other credential types,
   // eventually finding no valid credentials and hitting a runtime error.
-  SetEnv(GoogleGcloudAdcFileEnvVar(), filename);
+  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
+                                                 filename);
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_FALSE(creds) << "status=" << creds.status();
@@ -579,7 +557,7 @@ TEST_F(GoogleCredentialsTest, LoadP12Credentials) {
   // a P12 file.
   std::string filename = ::testing::TempDir() + "credentials.p12";
   WriteBase64AsBinary(filename, kP12KeyFileContents);
-  SetEnv(GoogleAdcEnvVar(), filename.c_str());
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), filename.c_str());
 
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);

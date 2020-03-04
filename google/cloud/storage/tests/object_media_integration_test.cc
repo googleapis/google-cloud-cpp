@@ -19,8 +19,8 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
 #include "google/cloud/testing_util/init_google_mock.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
@@ -41,21 +41,13 @@ char const* flag_bucket_name;
 
 class ObjectMediaIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
- public:
-  ObjectMediaIntegrationTest()
-      : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
-
  protected:
   void SetUp() override {
     google::cloud::storage::testing::StorageIntegrationTest::SetUp();
-    endpoint_.SetUp();
   }
   void TearDown() override {
-    endpoint_.TearDown();
     google::cloud::storage::testing::StorageIntegrationTest::TearDown();
   }
-
-  google::cloud::testing_util::EnvironmentVariableRestore endpoint_;
 };
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadClose) {
@@ -572,8 +564,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:1");
+  google::cloud::testing_util::ScopedEnvironment endpoint(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -610,8 +602,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:1");
+  google::cloud::testing_util::ScopedEnvironment endpoint(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -628,8 +620,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:1");
+  google::cloud::testing_util::ScopedEnvironment endpoint(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
@@ -644,8 +636,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureDownloadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
-  google::cloud::internal::SetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT",
-                                  "http://localhost:1");
+  google::cloud::testing_util::ScopedEnvironment endpoint(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:1");
   Client client{ClientOptions(oauth2::CreateAnonymousCredentials())
                     .set_endpoint("http://localhost:1"),
                 LimitedErrorCountRetryPolicy(2)};
