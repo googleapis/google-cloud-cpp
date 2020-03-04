@@ -135,7 +135,8 @@ void V4SignUrlRequest::AddMissingRequiredHeaders() {
 std::string V4SignUrlRequest::CanonicalQueryString(
     std::string const& client_id) const {
   CurlHandle curl;
-  auto parameters = CanonicalQueryParameters(client_id);
+  // Query parameters.
+  auto parameters = AllQueryParameters(client_id);
   return QueryStringFromParameters(curl, parameters);
 }
 
@@ -155,10 +156,7 @@ std::string V4SignUrlRequest::CanonicalRequest(
   os << "\n";
 
   // Query parameters.
-  auto parameters = common_request_.query_parameters();
-  auto canonical_parameters = CanonicalQueryParameters(client_id);
-  // No .merge() until C++17, blegh.
-  parameters.insert(canonical_parameters.begin(), canonical_parameters.end());
+  auto parameters = AllQueryParameters(client_id);
   os << QueryStringFromParameters(curl, parameters) << "\n";
 
   // Headers
@@ -204,6 +202,17 @@ V4SignUrlRequest::CanonicalQueryParameters(std::string const& client_id) const {
       {"X-Goog-Expires", std::to_string(expires_.count())},
       {"X-Goog-SignedHeaders", SignedHeaders()},
   };
+}
+
+std::multimap<std::string, std::string> V4SignUrlRequest::AllQueryParameters(
+    std::string const& client_id) const {
+  CurlHandle curl;
+  // Query parameters.
+  auto parameters = common_request_.query_parameters();
+  auto canonical_parameters = CanonicalQueryParameters(client_id);
+  // No .merge() until C++17, blegh.
+  parameters.insert(canonical_parameters.begin(), canonical_parameters.end());
+  return parameters;
 }
 
 std::string V4SignUrlRequest::SignedHeaders() const {

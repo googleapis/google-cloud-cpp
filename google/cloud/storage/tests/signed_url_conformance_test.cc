@@ -18,10 +18,12 @@
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #include <fstream>
+#include <type_traits>
 
 /**
  * @file
@@ -54,15 +56,26 @@ class V4SignedUrlConformanceTest
  protected:
   std::vector<std::pair<std::string, std::string>> ExtractHeaders(
       internal::nl::json j_obj) {
-    std::vector<std::pair<std::string, std::string>> headers;
+    return ExtractListOfPairs(std::move(j_obj), "headers");
+  }
 
-    // Check for the keys of the headers field
-    for (auto& x : j_obj["headers"].items()) {
+  std::vector<std::pair<std::string, std::string>> ExtractQueryParams(
+      internal::nl::json j_obj) {
+    return ExtractListOfPairs(std::move(j_obj), "queryParameters");
+  }
+
+ private:
+  std::vector<std::pair<std::string, std::string>> ExtractListOfPairs(
+      internal::nl::json j_obj, std::string const& field) {
+    std::vector<std::pair<std::string, std::string>> res;
+
+    // Check for the keys of the relevant field
+    for (auto& x : j_obj[field].items()) {
       // The keys are returned in alphabetical order by nlohmann::json, but
       // the order does not matter when creating signed urls.
-      headers.emplace_back(x.key(), x.value());
+      res.emplace_back(x.key(), x.value());
     }
-    return headers;
+    return res;
   }
 };
 
@@ -74,7 +87,6 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   ASSERT_STATUS_OK(creds);
   std::string account_email = creds->get()->AccountEmail();
   Client client(*creds);
-  StatusOr<std::string> actual;
   std::string actual_canonical_request;
   std::string actual_string_to_sign;
 
@@ -91,89 +103,42 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   std::string const expected_string_to_sign = j_obj["expectedStringToSign"];
 
   // Extract the headers for each object
-  std::vector<std::pair<std::string, std::string>> headers =
-      ExtractHeaders(j_obj);
+  auto headers = ExtractHeaders(j_obj);
+  auto params = ExtractQueryParams(j_obj);
 
   google::cloud::storage::internal::V4SignUrlRequest request(
       method_name, bucket_name, object_name);
-  if (headers.empty()) {
-    request.set_multiple_options(
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"));
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for),
+      AddExtensionHeader("host", "storage.googleapis.com"));
 
-    actual = client.CreateV4SignedUrl(
-        method_name, bucket_name, object_name,
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"));
-  } else if (headers.size() == 1) {
+  std::vector<AddExtensionHeaderOption> header_extensions(5);
+  ASSERT_LE(headers.size(), header_extensions.size());
+  for (std::size_t i = 0; i < headers.size(); ++i) {
+    auto& header = headers.at(i);
     request.set_multiple_options(
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second));
-
-    actual = client.CreateV4SignedUrl(
-        method_name, bucket_name, object_name,
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second));
-  } else if (headers.size() == 2) {
-    request.set_multiple_options(
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second),
-        AddExtensionHeader(headers.at(1).first, headers.at(1).second));
-
-    actual = client.CreateV4SignedUrl(
-        method_name, bucket_name, object_name,
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second),
-        AddExtensionHeader(headers.at(1).first, headers.at(1).second));
-  } else if (headers.size() == 3) {
-    request.set_multiple_options(
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second),
-        AddExtensionHeader(headers.at(1).first, headers.at(1).second),
-        AddExtensionHeader(headers.at(2).first, headers.at(2).second));
-
-    actual = client.CreateV4SignedUrl(
-        method_name, bucket_name, object_name,
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second),
-        AddExtensionHeader(headers.at(1).first, headers.at(1).second),
-        AddExtensionHeader(headers.at(2).first, headers.at(2).second));
-  } else if (headers.size() == 4) {
-    request.set_multiple_options(
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second),
-        AddExtensionHeader(headers.at(1).first, headers.at(1).second),
-        AddExtensionHeader(headers.at(2).first, headers.at(2).second),
-        AddExtensionHeader(headers.at(3).first, headers.at(3).second));
-
-    actual = client.CreateV4SignedUrl(
-        method_name, bucket_name, object_name,
-        SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-        SignedUrlDuration(valid_for),
-        AddExtensionHeader("host", "storage.googleapis.com"),
-        AddExtensionHeader(headers.at(0).first, headers.at(0).second),
-        AddExtensionHeader(headers.at(1).first, headers.at(1).second),
-        AddExtensionHeader(headers.at(2).first, headers.at(2).second),
-        AddExtensionHeader(headers.at(3).first, headers.at(3).second));
-  } else {
-    EXPECT_LT(headers.size(), 5);
+        AddExtensionHeader(header.first, header.second));
+    header_extensions[i] = AddExtensionHeader(header.first, header.second);
   }
+
+  std::vector<AddQueryParameterOption> query_params(5);
+  ASSERT_LE(params.size(), query_params.size());
+  for (std::size_t i = 0; i < params.size(); ++i) {
+    auto& param = params.at(i);
+    request.set_multiple_options(
+        AddQueryParameterOption(param.first, param.second));
+    query_params[i] = AddQueryParameterOption(param.first, param.second);
+  }
+
+  auto actual = client.CreateV4SignedUrl(
+      method_name, bucket_name, object_name,
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for),
+      AddExtensionHeader("host", "storage.googleapis.com"),
+      header_extensions[0], header_extensions[1], header_extensions[2],
+      header_extensions[3], header_extensions[4], query_params[0],
+      query_params[1], query_params[2], query_params[3], query_params[4]);
 
   actual_string_to_sign = request.StringToSign(account_email);
   actual_canonical_request = request.CanonicalRequest(account_email);
@@ -237,8 +202,6 @@ int main(int argc, char* argv[]) {
       "POSTPolicySuccessWithRedirect",
       "POSTPolicySuccessWithStatus",
       "POSTPolicyWithinContentRange",
-      "QueryParameterEncoding",
-      "QueryParameterOrdering",
       "SignedPayloadInsteadofUNSIGNEDPAYLOAD",
       "Varyexpirationandtimestamp",
       "VirtualHostedStyle"};
