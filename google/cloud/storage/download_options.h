@@ -54,6 +54,8 @@ inline std::ostream& operator<<(std::ostream& os, ReadRangeData const& rhs) {
 struct ReadFromOffset
     : public internal::ComplexOption<ReadFromOffset, std::int64_t> {
   using ComplexOption::ComplexOption;
+  // g++ prior to version 7 has a bug which hides this ctor
+  ReadFromOffset() : ComplexOption<ReadFromOffset, std::int64_t>() {}
   static char const* name() { return "read-offset"; }
 };
 
@@ -62,6 +64,8 @@ struct ReadFromOffset
  */
 struct ReadLast : public internal::ComplexOption<ReadLast, std::int64_t> {
   using ComplexOption::ComplexOption;
+  // g++ prior to version 7 has a bug which hides this ctor
+  ReadLast() : ComplexOption<ReadLast, std::int64_t>() {}
   static char const* name() { return "read-last"; }
 };
 

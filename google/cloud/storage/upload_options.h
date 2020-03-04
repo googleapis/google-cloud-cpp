@@ -36,6 +36,9 @@ inline namespace STORAGE_CLIENT_NS {
 struct UseResumableUploadSession
     : public internal::ComplexOption<UseResumableUploadSession, std::string> {
   using ComplexOption<UseResumableUploadSession, std::string>::ComplexOption;
+  // g++ prior to version 7 has a bug which hides this ctor
+  UseResumableUploadSession()
+      : ComplexOption<UseResumableUploadSession, std::string>() {}
   static char const* name() { return "resumable-upload"; }
 };
 
