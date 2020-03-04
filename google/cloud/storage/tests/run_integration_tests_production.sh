@@ -37,8 +37,8 @@ set -eu
 if [ -z "${PROJECT_ROOT+x}" ]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
-readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestAccount.json"
-readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/UrlSignerV4TestData.json"
+readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
 
 echo
 echo "Running storage::internal::CurlResumableUploadSession integration tests."
