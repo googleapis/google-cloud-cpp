@@ -45,6 +45,7 @@ RUN dnf makecache && dnf install -y \
     zlib-devel
 
 RUN pip3 install --upgrade pip
+RUN pip3 install setuptools
 RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \
     gevent==1.4.0 gunicorn==19.10.0 crc32c==2.0
 
