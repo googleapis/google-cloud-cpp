@@ -730,7 +730,7 @@ google::cloud::spanner::Client MakeSampleClient(
       spanner::Database(project_id, instance_id, database_id)));
 }
 
-//! [START spanner_insert_data]
+//! [insert-mutation-builder] [START spanner_insert_data]
 void InsertData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto insert_singers = spanner::InsertMutationBuilder(
@@ -760,9 +760,9 @@ void InsertData(google::cloud::spanner::Client client) {
   }
   std::cout << "Insert was successful [spanner_insert_data]\n";
 }
-//! [END spanner_insert_data]
+//! [insert-mutation-builder] [END spanner_insert_data]
 
-//! [START spanner_update_data]
+//! [update-mutation-builder] [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit([](spanner::Transaction const&) {
@@ -778,9 +778,9 @@ void UpdateData(google::cloud::spanner::Client client) {
   }
   std::cout << "Update was successful [spanner_update_data]\n";
 }
-//! [END spanner_update_data]
+//! [update-mutation-builder] [END spanner_update_data]
 
-//! [START spanner_delete_data]
+//! [delete-mutation-builder] [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
@@ -809,7 +809,7 @@ void DeleteData(google::cloud::spanner::Client client) {
   }
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
-//! [END spanner_delete_data]
+//! [delete-mutation-builder] [END spanner_delete_data]
 
 // [START spanner_insert_data_with_timestamp_column]
 void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
@@ -1696,6 +1696,24 @@ void GetSingularRow(google::cloud::spanner::Client client) {
 }
 //! [get-singular-row]
 
+//! [stream-of]
+void StreamOf(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  std::cout << "Querying the Singers table:\n";
+  auto query = client.ExecuteQuery(spanner::SqlStatement(
+      "SELECT SingerId, FirstName, LastName FROM Singers"));
+  using RowType = std::tuple<std::int64_t, std::string, std::string>;
+
+  for (auto& row : spanner::StreamOf<RowType>(query)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "  FirstName: " << std::get<0>(*row)
+              << "\n  LastName: " << std::get<1>(*row) << "\n";
+  }
+  std::cout << "end of results\n";
+}
+//! [stream-of]
+
 class RemoteConnectionFake {
  public:
   void SendBinaryStringData(std::string const& serialized_partition) {
@@ -1930,6 +1948,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("partition-query", PartitionQuery),
       make_command_entry("example-status-or", ExampleStatusOr),
       make_command_entry("get-singular-row", GetSingularRow),
+      make_command_entry("stream-of", StreamOf),
       {"custom-retry-policy", CustomRetryPolicy},
   };
 
@@ -2209,6 +2228,9 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning get-singular-row sample\n";
   GetSingularRow(client);
+
+  std::cout << "\nRunning stream-of sample\n";
+  StreamOf(client);
 
   std::cout << "\nRunning custom-retry-policy sample\n";
   RunOneCommand(

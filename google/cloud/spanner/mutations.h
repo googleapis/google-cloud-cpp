@@ -188,6 +188,8 @@ class DeleteMutationBuilder {
 /**
  * A helper class to construct "insert" mutations.
  *
+ * @snippet samples.cc insert-mutation-builder
+ *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
  *   mutation API
  *
@@ -208,6 +210,8 @@ Mutation MakeInsertMutation(std::string table_name,
 
 /**
  * A helper class to construct "update" mutations.
+ *
+ * @snippet samples.cc update-mutation-builder
  *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
  *   mutation API
@@ -273,6 +277,8 @@ Mutation MakeReplaceMutation(std::string table_name,
 
 /**
  * A helper class to construct "delete" mutations.
+ *
+ * @snippet samples.cc delete-mutation-builder
  *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
  *   mutation API
