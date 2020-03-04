@@ -47,8 +47,7 @@ int main(int argc, char* argv[]) {
               << schema.status().message() << "\n";
     return 1;
   }
-  std::cout << "Created table " << table_name << ": " << schema->DebugString()
-            << "\n";
+  std::cout << "Deleted table " << table_name << "\n";
   int exit_status = 0;
 
   try {
