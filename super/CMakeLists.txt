@@ -42,7 +42,10 @@ include(ExternalProject)
 ExternalProject_Add(
     google_cloud_cpp_project
     DEPENDS ${GOOGLE_CLOUD_CPP_DEPENDENCIES_LIST}
-    EXCLUDE_FROM_ALL OFF
+    EXCLUDE_FROM_ALL
+        OFF
+        BUILD_ALWAYS
+        1
     PREFIX "${CMAKE_BINARY_DIR}/build/google-cloud-cpp"
     INSTALL_DIR
         "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
