@@ -323,9 +323,9 @@ class ObjectMetadataPatchBuilder {
 struct WithObjectMetadata
     : public internal::ComplexOption<WithObjectMetadata, ObjectMetadata> {
   using ComplexOption<WithObjectMetadata, ObjectMetadata>::ComplexOption;
-  // g++ prior to version 7 has a bug which hides this ctor
-  WithObjectMetadata()
-      : internal::ComplexOption<WithObjectMetadata, ObjectMetadata>() {}
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  WithObjectMetadata() = default;
   static char const* name() { return "object-metadata"; }
 };
 

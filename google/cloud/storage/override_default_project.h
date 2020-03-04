@@ -33,9 +33,9 @@ inline namespace STORAGE_CLIENT_NS {
 struct OverrideDefaultProject
     : public internal::ComplexOption<OverrideDefaultProject, std::string> {
   using ComplexOption<OverrideDefaultProject, std::string>::ComplexOption;
-  // g++ prior to version 7 has a bug which hides this ctor
-  OverrideDefaultProject()
-      : internal::ComplexOption<OverrideDefaultProject, std::string>() {}
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  OverrideDefaultProject() = default;
   static char const* name() { return "override_default_project"; }
 };
 

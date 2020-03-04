@@ -34,8 +34,9 @@ inline namespace STORAGE_CLIENT_NS {
 struct MD5HashValue
     : public internal::ComplexOption<MD5HashValue, std::string> {
   using ComplexOption<MD5HashValue, std::string>::ComplexOption;
-  // g++ prior to version 7 has a bug which hides this ctor
-  MD5HashValue() : internal::ComplexOption<MD5HashValue, std::string>() {}
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  MD5HashValue() = default;
   static char const* name() { return "md5-hash-value"; }
 };
 
@@ -57,8 +58,9 @@ std::string ComputeMD5Hash(std::string const& payload);
  */
 struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
   using ComplexOption<DisableMD5Hash, bool>::ComplexOption;
-  // g++ prior to version 7 has a bug which hides this ctor
-  DisableMD5Hash() : internal::ComplexOption<DisableMD5Hash, bool>() {}
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  DisableMD5Hash() = default;
   static char const* name() { return "disable-md5-hash"; }
 };
 
@@ -73,9 +75,9 @@ struct DisableMD5Hash : public internal::ComplexOption<DisableMD5Hash, bool> {
 struct Crc32cChecksumValue
     : public internal::ComplexOption<Crc32cChecksumValue, std::string> {
   using ComplexOption<Crc32cChecksumValue, std::string>::ComplexOption;
-  // g++ prior to version 7 has a bug which hides this ctor
-  Crc32cChecksumValue()
-      : internal::ComplexOption<Crc32cChecksumValue, std::string>() {}
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  Crc32cChecksumValue() = default;
   static char const* name() { return "crc32c-checksum"; }
 };
 
@@ -98,9 +100,9 @@ std::string ComputeCrc32cChecksum(std::string const& payload);
 struct DisableCrc32cChecksum
     : public internal::ComplexOption<DisableCrc32cChecksum, bool> {
   using ComplexOption<DisableCrc32cChecksum, bool>::ComplexOption;
-  // g++ prior to version 7 has a bug which hides this ctor
-  DisableCrc32cChecksum()
-      : internal::ComplexOption<DisableCrc32cChecksum, bool>() {}
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  DisableCrc32cChecksum() = default;
   static char const* name() { return "disable-crc32c-checksum"; }
 };
 
