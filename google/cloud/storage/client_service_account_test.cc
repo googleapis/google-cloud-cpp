@@ -247,6 +247,10 @@ TEST_F(ServiceAccountTest, UpdateHmacKeyPermanentFailure) {
       "UpdateHmacKey");
 }
 
+TEST(DefaultCtorsWork, Trivial) {
+  EXPECT_FALSE(OverrideDefaultProject().has_value());
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage

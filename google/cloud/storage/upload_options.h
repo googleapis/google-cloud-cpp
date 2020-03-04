@@ -36,6 +36,10 @@ inline namespace STORAGE_CLIENT_NS {
 struct UseResumableUploadSession
     : public internal::ComplexOption<UseResumableUploadSession, std::string> {
   using ComplexOption<UseResumableUploadSession, std::string>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  UseResumableUploadSession() = default;
+
   static char const* name() { return "resumable-upload"; }
 };
 

@@ -33,6 +33,9 @@ struct ExpirationTime
                                      std::chrono::system_clock::time_point> {
   using ComplexOption<ExpirationTime,
                       std::chrono::system_clock::time_point>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  ExpirationTime() = default;
   static char const* name() { return "expiration_time"; }
 };
 
@@ -44,6 +47,9 @@ struct AddExtensionHeaderOption
                                      std::pair<std::string, std::string>> {
   using ComplexOption<AddExtensionHeaderOption,
                       std::pair<std::string, std::string>>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  AddExtensionHeaderOption() = default;
   AddExtensionHeaderOption(std::string header, std::string value)
       : ComplexOption(std::make_pair(std::move(header), std::move(value))) {}
   static char const* name() { return "expiration_time"; }
@@ -62,6 +68,9 @@ struct AddQueryParameterOption
                                      std::pair<std::string, std::string>> {
   using ComplexOption<AddQueryParameterOption,
                       std::pair<std::string, std::string>>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  AddQueryParameterOption() = default;
   AddQueryParameterOption(std::string key, std::string value)
       : ComplexOption(std::make_pair(std::move(key), std::move(value))) {}
   AddQueryParameterOption(char const* key, std::string value)
@@ -103,6 +112,9 @@ inline AddQueryParameterOption WithResponseContentType(
 struct SubResourceOption
     : public internal::ComplexOption<SubResourceOption, std::string> {
   using ComplexOption<SubResourceOption, std::string>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  SubResourceOption() = default;
   static char const* name() { return "query-parameter"; }
 };
 
@@ -146,6 +158,9 @@ struct SignedUrlTimestamp
                                      std::chrono::system_clock::time_point> {
   using ComplexOption<SignedUrlTimestamp,
                       std::chrono::system_clock::time_point>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  SignedUrlTimestamp() = default;
   static char const* name() { return "x-good-date"; }
 };
 
@@ -155,6 +170,9 @@ struct SignedUrlTimestamp
 struct SignedUrlDuration
     : public internal::ComplexOption<SignedUrlDuration, std::chrono::seconds> {
   using ComplexOption<SignedUrlDuration, std::chrono::seconds>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  SignedUrlDuration() = default;
   static char const* name() { return "x-goog-expires"; }
 };
 
@@ -167,6 +185,9 @@ struct SignedUrlDuration
 struct SigningAccount
     : public internal::ComplexOption<SigningAccount, std::string> {
   using ComplexOption<SigningAccount, std::string>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  SigningAccount() = default;
   static char const* name() { return "signing-account"; }
 };
 
@@ -182,6 +203,9 @@ struct SigningAccountDelegates
                                      std::vector<std::string>> {
   using ComplexOption<SigningAccountDelegates,
                       std::vector<std::string>>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  SigningAccountDelegates() = default;
   static char const* name() { return "signing-account-delegates"; }
 };
 }  // namespace STORAGE_CLIENT_NS

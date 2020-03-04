@@ -438,6 +438,17 @@ UNSIGNED-PAYLOAD)""";
   EXPECT_THAT(os.str(), HasSubstr("/test-bucket/test-object/path/to/object"));
 }
 
+TEST(DefaultCtorsWork, Trivial) {
+  EXPECT_FALSE(ExpirationTime().has_value());
+  EXPECT_FALSE(AddExtensionHeaderOption().has_value());
+  EXPECT_FALSE(AddQueryParameterOption().has_value());
+  EXPECT_FALSE(SubResourceOption().has_value());
+  EXPECT_FALSE(SignedUrlTimestamp().has_value());
+  EXPECT_FALSE(SignedUrlDuration().has_value());
+  EXPECT_FALSE(SigningAccount().has_value());
+  EXPECT_FALSE(SigningAccountDelegates().has_value());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS

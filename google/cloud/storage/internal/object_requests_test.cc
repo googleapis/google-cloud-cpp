@@ -899,6 +899,17 @@ TEST(ComposeObjectRequestTest, SimpleCompose) {
   EXPECT_THAT(actual, HasSubstr("\"ifGenerationMatch\":2"));
 }
 
+TEST(DefaultCtorsWork, Trivial) {
+  EXPECT_FALSE(ReadFromOffset().has_value());
+  EXPECT_FALSE(ReadLast().has_value());
+  EXPECT_FALSE(MD5HashValue().has_value());
+  EXPECT_FALSE(DisableMD5Hash().has_value());
+  EXPECT_FALSE(Crc32cChecksumValue().has_value());
+  EXPECT_FALSE(DisableCrc32cChecksum().has_value());
+  EXPECT_FALSE(WithObjectMetadata().has_value());
+  EXPECT_FALSE(UseResumableUploadSession().has_value());
+}
+
 }  // namespace
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
