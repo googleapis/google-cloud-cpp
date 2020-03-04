@@ -16,16 +16,14 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include <google/protobuf/text_format.h>
-#include <sstream>
 
 namespace bigtable = google::cloud::bigtable;
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   // Make sure the arguments are valid.
   if (argc != 4) {
     std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of("/");
+    auto last_slash = cmd.find_last_of("/");
     std::cerr << "Usage: " << cmd.substr(last_slash + 1)
               << " <project> <instance> <table>\n";
     return 1;
@@ -39,59 +37,75 @@ int main(int argc, char* argv[]) try {
       bigtable::CreateDefaultAdminClient(project_id, bigtable::ClientOptions());
   bigtable::TableAdmin admin(admin_client, instance_id);
 
-  auto created_table = admin.CreateTable(
+  auto schema = admin.CreateTable(
       table_name, bigtable::TableConfig(
                       {{family, bigtable::GcRule::MaxNumVersions(1)}}, {}));
-  std::cout << table_name << " created successfully\n";
-
-  auto client = bigtable::CreateDefaultDataClient(project_id, instance_id,
-                                                  bigtable::ClientOptions());
-  bigtable::Table table(client, table_name);
-
-  bigtable::BulkMutation bulk{
-      bigtable::SingleRowMutation("row-key-0",
-                                  {bigtable::SetCell(family, "c0", "v0"),
-                                   bigtable::SetCell(family, "c1", "v1")}),
-      bigtable::SingleRowMutation("row-key-1",
-                                  {bigtable::SetCell(family, "c0", "v2"),
-                                   bigtable::SetCell(family, "c1", "v3")}),
-  };
-  table.BulkApply(std::move(bulk));
-  std::cout << "bulk mutation successful\n";
-
-  auto row0 = table.ReadRow("row-key-0", bigtable::Filter::PassAllFilter());
-  if (!row0) {
-    throw std::runtime_error(row0.status().message());
+  if (!schema) {
+    std::cerr << "Failed to create table " << table_name << ": "
+              << schema.status().message() << "\n";
+    return 1;
   }
-  if (!row0->first) {
-    std::cout << "Cannot find row-key-0\n";
-  } else {
-    for (auto const& cell : row0->second.cells()) {
-      std::cout << cell.row_key() << ": " << cell.family_name() << ":"
-                << cell.column_qualifier() << " = " << cell.value() << "\n";
+  std::cout << "Created table " << table_name << "\n";
+  int exit_status = 0;
+
+  try {
+    auto client = bigtable::CreateDefaultDataClient(project_id, instance_id,
+                                                    bigtable::ClientOptions());
+    bigtable::Table table(client, table_name);
+
+    bigtable::BulkMutation bulk{
+        bigtable::SingleRowMutation("row-key-0",
+                                    {bigtable::SetCell(family, "c0", "v0"),
+                                     bigtable::SetCell(family, "c1", "v1")}),
+        bigtable::SingleRowMutation("row-key-1",
+                                    {bigtable::SetCell(family, "c0", "v2"),
+                                     bigtable::SetCell(family, "c1", "v3")}),
+    };
+    table.BulkApply(std::move(bulk));
+    std::cout << "bulk mutation successful\n";
+
+    auto row0 = table.ReadRow("row-key-0", bigtable::Filter::PassAllFilter());
+    if (!row0) {
+      throw std::runtime_error(row0.status().message());
     }
-  }
-  auto row1 = table.ReadRow("row-key-1", bigtable::Filter::PassAllFilter());
-  if (!row1) {
-    throw std::runtime_error(row1.status().message());
-  }
-  if (!row1->first) {
-    std::cout << "Cannot find row-key-1\n";
-  } else {
-    for (auto const& cell : row1->second.cells()) {
-      std::cout << cell.row_key() << ": " << cell.family_name() << ":"
-                << cell.column_qualifier() << " = " << cell.value() << "\n";
+    if (!row0->first) {
+      std::cout << "Cannot find row-key-0\n";
+    } else {
+      for (auto const& cell : row0->second.cells()) {
+        std::cout << cell.row_key() << ": " << cell.family_name() << ":"
+                  << cell.column_qualifier() << " = " << cell.value() << "\n";
+      }
     }
+    auto row1 = table.ReadRow("row-key-1", bigtable::Filter::PassAllFilter());
+    if (!row1) {
+      throw std::runtime_error(row1.status().message());
+    }
+    if (!row1->first) {
+      std::cout << "Cannot find row-key-1\n";
+    } else {
+      for (auto const& cell : row1->second.cells()) {
+        std::cout << cell.row_key() << ": " << cell.family_name() << ":"
+                  << cell.column_qualifier() << " = " << cell.value() << "\n";
+      }
+    }
+  } catch (bigtable::PermanentMutationFailure const& ex) {
+    std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
+              << " - " << ex.status().error_message() << " ["
+              << ex.status().error_code()
+              << "], details=" << ex.status().error_details() << "\n";
+    exit_status = 1;
+  } catch (std::exception const& ex) {
+    std::cerr << "Standard exception raised: " << ex.what() << "\n";
+    exit_status = 1;
   }
 
-  return 0;
-} catch (bigtable::PermanentMutationFailure const& ex) {
-  std::cerr << "bigtable::PermanentMutationFailure raised: " << ex.what()
-            << " - " << ex.status().error_message() << " ["
-            << ex.status().error_code()
-            << "], details=" << ex.status().error_details() << "\n";
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
-  return 1;
+  auto status = admin.DeleteTable(table_name);
+  if (!status.ok()) {
+    std::cerr << "Failed to delete table " << table_name << ": "
+              << status.message() << "\n";
+    return 1;
+  }
+  std::cout << "Deleted table " << table_name << "\n";
+
+  return exit_status;
 }
