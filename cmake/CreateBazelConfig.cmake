@@ -15,12 +15,12 @@
 # ~~~
 
 function (write_bazel_copyright FILENAME YEAR)
-    file(
-        WRITE "${FILENAME}"
-        [=[
+    file(WRITE "${FILENAME}" [=[
 # Copyright ]=])
     file(APPEND "${FILENAME}" ${YEAR})
-    file(APPEND "${FILENAME}" [=[ Google LLC
+    file(
+        APPEND "${FILENAME}"
+        [=[ Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,7 +57,7 @@ function (create_bazel_config TARGET)
     get_target_property(target_type ${TARGET} TYPE)
     if (${target_type} STREQUAL "INTERFACE_LIBRARY")
         get_target_property(sources ${TARGET} INTERFACE_SOURCES)
-    else()
+    else ()
         get_target_property(sources ${TARGET} SOURCES)
     endif ()
     foreach (src ${sources})
@@ -65,23 +65,23 @@ function (create_bazel_config TARGET)
         if ("${in_binary_dir}" EQUAL 0)
             # Skip files in the binary directory, they are generated and handled
             # differently by our Bazel BUILD files.
-        elseif("${src}" MATCHES "\\.inc$")
+        elseif ("${src}" MATCHES "\\.inc$")
             list(APPEND H ${src})
-        elseif("${src}" MATCHES "\\.h$")
+        elseif ("${src}" MATCHES "\\.h$")
             list(APPEND H ${src})
-        elseif("${src}" MATCHES "\\.cc$")
+        elseif ("${src}" MATCHES "\\.cc$")
             list(APPEND CC ${src})
         endif ()
     endforeach ()
     write_bazel_copyright(${filename} ${_CREATE_BAZEL_CONFIG_OPT_YEAR})
     file(APPEND "${filename}" [=[
-"""Automatically generated source lists for ]=]
-            )
+"""Automatically generated source lists for ]=])
     file(APPEND "${filename}" ${TARGET})
-    file(APPEND "${filename}" [=[ - DO NOT EDIT."""
+    file(
+        APPEND "${filename}"
+        [=[ - DO NOT EDIT."""
 
-]=]
-        )
+]=])
     file(APPEND "${filename}" "${TARGET}_hdrs = [\n")
     foreach (src ${H})
         file(APPEND "${filename}" "    \"${src}\",\n")
@@ -102,13 +102,11 @@ function (export_list_to_bazel filename VAR)
     endif ()
     write_bazel_copyright(${filename} ${_EXPORT_LIST_TO_BAZEL_OPT_YEAR})
     file(
-        APPEND
-            "${filename}"
-            [=[
+        APPEND "${filename}"
+        [=[
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-]=]
-        )
+]=])
     file(APPEND "${filename}" "${VAR} = [\n")
     foreach (item ${${VAR}})
         file(APPEND "${filename}" "    \"${item}\",\n")
@@ -125,9 +123,8 @@ function (export_variables_to_bazel filename)
     endif ()
     write_bazel_copyright(${filename} ${_EXPORT_VARIABLES_TO_BAZEL_OPT_YEAR})
     file(
-        APPEND
-            "${filename}"
-            [=[
+        APPEND "${filename}"
+        [=[
 """Automatically generated version numbers - DO NOT EDIT."""
 
 ]=])

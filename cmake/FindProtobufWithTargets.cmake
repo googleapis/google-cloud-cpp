@@ -105,8 +105,7 @@ if (Protobuf_FOUND)
             TARGET protobuf::libprotobuf PROPERTY INTERFACE_INCLUDE_DIRECTORIES
                                                   ${Protobuf_INCLUDE_DIR})
         set_property(
-            TARGET protobuf::libprotobuf
-            APPEND
+            TARGET protobuf::libprotobuf APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LIBRARY}
                      Threads::Threads)
     endif ()
@@ -117,8 +116,7 @@ if (Protobuf_FOUND)
             TARGET protobuf::libprotobuf-lite
             PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${Protobuf_INCLUDE_DIR})
         set_property(
-            TARGET protobuf::libprotobuf-lite
-            APPEND
+            TARGET protobuf::libprotobuf-lite APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_LITE_LIBRARY}
                      Threads::Threads)
     endif ()
@@ -129,8 +127,7 @@ if (Protobuf_FOUND)
             TARGET protobuf::libprotoc PROPERTY INTERFACE_INCLUDE_DIRECTORIES
                                                 ${Protobuf_INCLUDE_DIR})
         set_property(
-            TARGET protobuf::libprotoc
-            APPEND
+            TARGET protobuf::libprotoc APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES ${Protobuf_PROTOC_LIBRARY}
                      Threads::Threads)
     endif ()
@@ -186,7 +183,7 @@ if (protobuf_DEBUG)
                " ProtobufWithTargets_VERSION = ${ProtobufWithTargets_VERSION}")
     if (ProtobufWithTargets_FOUND)
         foreach (_target protobuf::libprotobuf protobuf::libprotobuf-lite
-                 protobuf::libprotoc)
+                         protobuf::libprotoc)
             if (NOT TARGET ${_target})
                 message(
                     STATUS

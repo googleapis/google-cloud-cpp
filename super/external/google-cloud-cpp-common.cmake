@@ -39,8 +39,7 @@ if (NOT TARGET google-cloud-cpp-common-project)
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
         URL ${GOOGLE_CLOUD_CPP_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_SHA256}
-                 LIST_SEPARATOR
-                 |
+        LIST_SEPARATOR |
         CONFIGURE_COMMAND
             ${CMAKE_COMMAND}
             -G${CMAKE_GENERATOR}

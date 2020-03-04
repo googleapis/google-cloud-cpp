@@ -69,7 +69,7 @@ endif ()
 
 # Configure the location of proto files, particulary the googleapis protos.
 list(APPEND PROTOBUF_IMPORT_DIRS "${PROJECT_THIRD_PARTY_DIR}/googleapis"
-            "${PROJECT_SOURCE_DIR}")
+     "${PROJECT_SOURCE_DIR}")
 
 # Create a library with the generated files from the relevant protos.
 add_library(bigtable_protos INTERFACE)
@@ -90,94 +90,94 @@ include(CreateBazelConfig)
 # the client library
 add_library(
     bigtable_client
-    admin_client.h
     admin_client.cc
-    app_profile_config.h
+    admin_client.h
     app_profile_config.cc
+    app_profile_config.h
     async_row_reader.h
     cell.h
-    client_options.h
     client_options.cc
-    cluster_config.h
+    client_options.h
     cluster_config.cc
+    cluster_config.h
     cluster_list_responses.h
     column_family.h
     completion_queue.h
-    data_client.h
     data_client.cc
-    expr.h
+    data_client.h
     expr.cc
+    expr.h
     filters.h
-    iam_binding.h
     iam_binding.cc
-    iam_policy.h
+    iam_binding.h
     iam_policy.cc
-    instance_admin_client.h
-    instance_admin_client.cc
-    instance_admin.h
+    iam_policy.h
+    idempotent_mutation_policy.cc
+    idempotent_mutation_policy.h
     instance_admin.cc
-    instance_config.h
+    instance_admin.h
+    instance_admin_client.cc
+    instance_admin_client.h
     instance_config.cc
+    instance_config.h
     instance_list_responses.h
-    instance_update_config.h
     instance_update_config.cc
-    internal/async_bulk_apply.h
+    instance_update_config.h
     internal/async_bulk_apply.cc
+    internal/async_bulk_apply.h
     internal/async_longrunning_op.h
     internal/async_poll_op.h
     internal/async_retry_multi_page.h
     internal/async_retry_op.h
     internal/async_retry_unary_rpc.h
     internal/async_retry_unary_rpc_and_poll.h
-    internal/bulk_mutator.h
     internal/bulk_mutator.cc
+    internal/bulk_mutator.h
     internal/client_options_defaults.h
-    internal/common_client.h
     internal/common_client.cc
+    internal/common_client.h
     internal/conjunction.h
-    internal/google_bytes_traits.h
     internal/google_bytes_traits.cc
-    internal/prefix_range_end.h
+    internal/google_bytes_traits.h
     internal/prefix_range_end.cc
-    internal/readrowsparser.h
+    internal/prefix_range_end.h
     internal/readrowsparser.cc
-    internal/rpc_policy_parameters.inc
-    internal/rpc_policy_parameters.h
-    internal/rowreaderiterator.h
+    internal/readrowsparser.h
     internal/rowreaderiterator.cc
+    internal/rowreaderiterator.h
+    internal/rpc_policy_parameters.h
+    internal/rpc_policy_parameters.inc
     internal/unary_client_utils.h
-    idempotent_mutation_policy.h
-    idempotent_mutation_policy.cc
-    mutation_batcher.h
+    metadata_update_policy.cc
+    metadata_update_policy.h
     mutation_batcher.cc
-    mutations.h
+    mutation_batcher.h
     mutations.cc
-    polling_policy.h
+    mutations.h
     polling_policy.cc
+    polling_policy.h
     read_modify_write_rule.h
     row.h
     row_key.h
     row_key_sample.h
-    row_range.h
     row_range.cc
-    row_reader.h
+    row_range.h
     row_reader.cc
-    row_set.h
+    row_reader.h
     row_set.cc
-    rpc_backoff_policy.h
+    row_set.h
     rpc_backoff_policy.cc
-    rpc_retry_policy.h
+    rpc_backoff_policy.h
     rpc_retry_policy.cc
-    metadata_update_policy.h
-    metadata_update_policy.cc
-    table.h
+    rpc_retry_policy.h
     table.cc
-    table_admin.h
+    table.h
     table_admin.cc
-    table_config.h
+    table_admin.h
     table_config.cc
-    version.h
+    table_config.h
     version.cc
+    version.h
     version_info.h)
 target_link_libraries(
     bigtable_client
@@ -196,8 +196,7 @@ set_target_properties(
     PROPERTIES
         VERSION
         ${BIGTABLE_CLIENT_VERSION_MAJOR}.${BIGTABLE_CLIENT_VERSION_MINOR}.${BIGTABLE_CLIENT_VERSION_PATCH}
-        SOVERSION
-        ${BIGTABLE_CLIENT_VERSION_MAJOR})
+        SOVERSION ${BIGTABLE_CLIENT_VERSION_MAJOR})
 add_library(bigtable::client ALIAS bigtable_client)
 
 include(CreateBazelConfig)
@@ -209,27 +208,27 @@ if (BUILD_TESTING)
 
     add_library(
         bigtable_client_testing
-        testing/embedded_server_test_fixture.h
         testing/embedded_server_test_fixture.cc
-        testing/mock_admin_client.h
-        testing/mock_data_client.h
-        testing/mock_instance_admin_client.h
-        testing/inprocess_data_client.h
-        testing/inprocess_data_client.cc
-        testing/inprocess_admin_client.h
+        testing/embedded_server_test_fixture.h
         testing/inprocess_admin_client.cc
+        testing/inprocess_admin_client.h
+        testing/inprocess_data_client.cc
+        testing/inprocess_data_client.h
+        testing/mock_admin_client.h
         testing/mock_async_failing_rpc_factory.h
         testing/mock_completion_queue.h
+        testing/mock_data_client.h
+        testing/mock_instance_admin_client.h
         testing/mock_mutate_rows_reader.h
         testing/mock_read_rows_reader.h
         testing/mock_response_reader.h
         testing/mock_sample_row_keys_reader.h
-        testing/table_integration_test.h
         testing/table_integration_test.cc
-        testing/table_test_fixture.h
+        testing/table_integration_test.h
         testing/table_test_fixture.cc
-        testing/validate_metadata.h
-        testing/validate_metadata.cc)
+        testing/table_test_fixture.h
+        testing/validate_metadata.cc
+        testing/validate_metadata.h)
     target_link_libraries(
         bigtable_client_testing
         PUBLIC bigtable_client
@@ -340,8 +339,8 @@ option(GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS
 mark_as_advanced(GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
 if (GOOGLE_CLOUD_CPP_FORCE_STATIC_ANALYZER_ERRORS)
     target_compile_definitions(
-        bigtable_client_force_sanitizer_failures_test PRIVATE
-        -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
+        bigtable_client_force_sanitizer_failures_test
+        PRIVATE -DBIGTABLE_CLIENT_FORCE_STATIC_ANALYZER_ERRORS)
 endif ()
 
 if (BUILD_TESTING)

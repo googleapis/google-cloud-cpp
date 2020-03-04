@@ -71,8 +71,11 @@ inline nlohmann::json operator "" _json(const char* s, std::size_t n)
     return nlohmann::json::parse(s, s + n);
 }
 ]==]
-            "" JSON_HPP_CONTENT "${JSON_HPP_CONTENT}")
-    string(REPLACE
+            ""
+            JSON_HPP_CONTENT
+            "${JSON_HPP_CONTENT}")
+    string(
+        REPLACE
             [==[
 inline nlohmann::json::json_pointer operator "" _json_pointer(const char* s, std::size_t n)
 {

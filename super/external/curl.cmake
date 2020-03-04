@@ -38,24 +38,23 @@ if (NOT TARGET curl-project)
         INSTALL_DIR "${GOOGLE_CLOUD_CPP_EXTERNAL_PREFIX}"
         URL ${GOOGLE_CLOUD_CPP_CURL_URL}
         URL_HASH SHA256=${GOOGLE_CLOUD_CPP_CURL_SHA256}
-                 LIST_SEPARATOR
-                 |
-        CMAKE_ARGS
-            ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CMAKE_FLAGS}
-            -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
-            -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
-            -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
-            # libcurl automatically enables a number of protocols. With static
-            # libraries this is a problem. The indirect dependencies, such as
-            # libldap, become hard to predict and manage. Setting HTTP_ONLY=ON
-            # disables all optional protocols and meets our needs. If the
-            # application needs a version of libcurl with other protocols
-            # enabled they can compile against it by using find_package() and
-            # defining the `curl_project` target.
-            -DHTTP_ONLY=ON
-            -DCMAKE_ENABLE_OPENSSL=ON
-            -DENABLE_ARES=ON
-            -DCMAKE_DEBUG_POSTFIX=
+        LIST_SEPARATOR |
+        CMAKE_ARGS ${GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CMAKE_FLAGS}
+                   -DCMAKE_PREFIX_PATH=${GOOGLE_CLOUD_CPP_PREFIX_PATH}
+                   -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
+                   -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
+                   # libcurl automatically enables a number of protocols. With
+                   # static libraries this is a problem. The indirect
+                   # dependencies, such as libldap, become hard to predict and
+                   # manage. Setting HTTP_ONLY=ON disables all optional
+                   # protocols and meets our needs. If the application needs a
+                   # version of libcurl with other protocols enabled they can
+                   # compile against it by using find_package() and defining the
+                   # `curl_project` target.
+                   -DHTTP_ONLY=ON
+                   -DCMAKE_ENABLE_OPENSSL=ON
+                   -DENABLE_ARES=ON
+                   -DCMAKE_DEBUG_POSTFIX=
         BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
         LOG_DOWNLOAD ON
         LOG_CONFIGURE ON

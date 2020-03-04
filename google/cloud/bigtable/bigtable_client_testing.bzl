@@ -18,13 +18,13 @@
 
 bigtable_client_testing_hdrs = [
     "testing/embedded_server_test_fixture.h",
-    "testing/mock_admin_client.h",
-    "testing/mock_data_client.h",
-    "testing/mock_instance_admin_client.h",
-    "testing/inprocess_data_client.h",
     "testing/inprocess_admin_client.h",
+    "testing/inprocess_data_client.h",
+    "testing/mock_admin_client.h",
     "testing/mock_async_failing_rpc_factory.h",
     "testing/mock_completion_queue.h",
+    "testing/mock_data_client.h",
+    "testing/mock_instance_admin_client.h",
     "testing/mock_mutate_rows_reader.h",
     "testing/mock_read_rows_reader.h",
     "testing/mock_response_reader.h",
@@ -36,8 +36,8 @@ bigtable_client_testing_hdrs = [
 
 bigtable_client_testing_srcs = [
     "testing/embedded_server_test_fixture.cc",
-    "testing/inprocess_data_client.cc",
     "testing/inprocess_admin_client.cc",
+    "testing/inprocess_data_client.cc",
     "testing/table_integration_test.cc",
     "testing/table_test_fixture.cc",
     "testing/validate_metadata.cc",

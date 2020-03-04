@@ -72,7 +72,7 @@ RUN chmod 755 /usr/bin/buildifier
 # "latest" version is updated, and we do not want the builds to break just
 # because some third party changed something.
 RUN pip3 install --upgrade pip
-RUN pip3 install cmake_format==0.6.0
+RUN pip3 install cmake_format==0.6.8
 
 # Install Python packages used in the integration tests.
 RUN pip3 install setuptools
