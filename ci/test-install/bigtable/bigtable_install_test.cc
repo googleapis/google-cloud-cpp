@@ -16,8 +16,6 @@
 #include "google/cloud/bigtable/data_client.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include <google/protobuf/text_format.h>
-#include <sstream>
 
 namespace bigtable = google::cloud::bigtable;
 
@@ -47,7 +45,7 @@ int main(int argc, char* argv[]) {
               << schema.status().message() << "\n";
     return 1;
   }
-  std::cout << "Deleted table " << table_name << "\n";
+  std::cout << "Created table " << table_name << "\n";
   int exit_status = 0;
 
   try {
