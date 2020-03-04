@@ -21,7 +21,7 @@
 
 namespace bigtable = google::cloud::bigtable;
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   // Make sure the arguments are valid.
   if (argc != 4) {
     std::string const cmd = argv[0];
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) try {
               << schema.status().message() << "\n";
     return 1;
   }
-  std::cout << "Created table " << table_name << ": " schema->DebugString()
+  std::cout << "Created table " << table_name << ": " << schema->DebugString()
             << "\n";
   int exit_status = 0;
 
