@@ -19,7 +19,7 @@
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <memory>
 #include <utility>
@@ -54,8 +54,7 @@ class FailingCredentials : public Credentials {
 class CurlClientTest : public ::testing::Test,
                        public ::testing::WithParamInterface<std::string> {
  protected:
-  CurlClientTest() : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT") {}
-  ~CurlClientTest() override { endpoint_.TearDown(); }
+  CurlClientTest() : endpoint_("CLOUD_STORAGE_TESTBENCH_ENDPOINT", {}) {}
 
   void SetUp() override {
     std::string const error_type = GetParam();
@@ -92,7 +91,7 @@ class CurlClientTest : public ::testing::Test,
 
   std::shared_ptr<CurlClient> client_;
   std::function<void(Status const& status)> check_status_;
-  testing_util::EnvironmentVariableRestore endpoint_;
+  testing_util::ScopedEnvironment endpoint_;
 };
 
 TEST_P(CurlClientTest, UploadChunk) {

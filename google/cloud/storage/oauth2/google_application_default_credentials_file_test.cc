@@ -13,8 +13,7 @@
 // limitations under the License.
 
 #include "google_application_default_credentials_file.h"
-#include "google/cloud/internal/setenv.h"
-#include "google/cloud/testing_util/environment_variable_restore.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -24,58 +23,43 @@ inline namespace STORAGE_CLIENT_NS {
 namespace oauth2 {
 namespace {
 
-using ::google::cloud::internal::SetEnv;
-using ::google::cloud::internal::UnsetEnv;
-using ::google::cloud::testing_util::EnvironmentVariableRestore;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::HasSubstr;
 
 class DefaultServiceAccountFileTest : public ::testing::Test {
  public:
   DefaultServiceAccountFileTest()
-      : home_env_var_(GoogleAdcHomeEnvVar()),
-        adc_env_var_(GoogleAdcEnvVar()),
-        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar()) {}
+      : home_env_var_(GoogleAdcHomeEnvVar(), {}),
+        adc_env_var_(GoogleAdcEnvVar(), {}),
+        gcloud_path_override_env_var_(GoogleGcloudAdcFileEnvVar(), {}) {}
 
  protected:
-  void SetUp() override {
-    home_env_var_.SetUp();
-    adc_env_var_.SetUp();
-    gcloud_path_override_env_var_.SetUp();
-  }
-
-  void TearDown() override {
-    gcloud_path_override_env_var_.TearDown();
-    adc_env_var_.TearDown();
-    home_env_var_.TearDown();
-  }
-
- protected:
-  EnvironmentVariableRestore home_env_var_;
-  EnvironmentVariableRestore adc_env_var_;
-  EnvironmentVariableRestore gcloud_path_override_env_var_;
+  ScopedEnvironment home_env_var_;
+  ScopedEnvironment adc_env_var_;
+  ScopedEnvironment gcloud_path_override_env_var_;
 };
 
 /// @test Verify that the specified path is given when the ADC env var is set.
 TEST_F(DefaultServiceAccountFileTest, AdcEnvironmentVariableSet) {
-  SetEnv(GoogleAdcEnvVar(), "/foo/bar/baz");
+  ScopedEnvironment adc_env_var(GoogleAdcEnvVar(), "/foo/bar/baz");
   EXPECT_EQ("/foo/bar/baz", GoogleAdcFilePathFromEnvVarOrEmpty());
 }
 
 /// @test Verify that an empty string is given when the ADC env var is unset.
 TEST_F(DefaultServiceAccountFileTest, AdcEnvironmentVariableNotSet) {
-  UnsetEnv(GoogleAdcEnvVar());
   EXPECT_EQ(GoogleAdcFilePathFromEnvVarOrEmpty(), "");
 }
 
 /// @test Verify that the gcloud ADC file path can be overridden for testing.
 TEST_F(DefaultServiceAccountFileTest, GcloudAdcPathOverrideViaEnvVar) {
-  SetEnv(GoogleGcloudAdcFileEnvVar(), "/foo/bar/baz");
+  ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
+                                                 "/foo/bar/baz");
   EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "/foo/bar/baz");
 }
 
 /// @test Verify that the gcloud ADC file path is given when HOME is set.
 TEST_F(DefaultServiceAccountFileTest, HomeSet) {
-  SetEnv(GoogleAdcHomeEnvVar(), "/foo/bar/baz");
+  ScopedEnvironment home_env_var(GoogleAdcHomeEnvVar(), "/foo/bar/baz");
 
   auto actual = GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
@@ -87,7 +71,6 @@ TEST_F(DefaultServiceAccountFileTest, HomeSet) {
 
 /// @test Verify that the gcloud ADC file path is not given when HOME is unset.
 TEST_F(DefaultServiceAccountFileTest, HomeNotSet) {
-  UnsetEnv(GoogleAdcHomeEnvVar());
   EXPECT_EQ(GoogleAdcFilePathFromWellKnownPathOrEmpty(), "");
 }
 
