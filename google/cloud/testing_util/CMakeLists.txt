@@ -26,8 +26,6 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         check_predicate_becomes_false.h
         chrono_literals.h
         custom_google_mock_main.cc
-        environment_variable_restore.cc
-        environment_variable_restore.h
         expect_exception.h
         expect_future_error.h
         init_google_mock.cc
