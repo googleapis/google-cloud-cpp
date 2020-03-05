@@ -203,7 +203,6 @@ int main(int argc, char* argv[]) {
       "POSTPolicySuccessWithStatus",
       "POSTPolicyWithinContentRange",
       "SignedPayloadInsteadofUNSIGNEDPAYLOAD",
-      "Varyexpirationandtimestamp",
       "VirtualHostedStyle"};
 
   auto json = google::cloud::storage::internal::nl::json::parse(ifstr);
