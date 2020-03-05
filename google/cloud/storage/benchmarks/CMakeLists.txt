@@ -16,7 +16,7 @@
 
 if (BUILD_TESTING)
 
-    add_library(storage_benchmarks benchmark_utils.h benchmark_utils.cc
+    add_library(storage_benchmarks benchmark_utils.cc benchmark_utils.h
                                    bounded_queue.h)
     target_link_libraries(
         storage_benchmarks
@@ -31,20 +31,21 @@ if (BUILD_TESTING)
     target_compile_definitions(
         storage_benchmarks
         PUBLIC
-        GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
-        GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
+            GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_GETRUSAGE}>
+            GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD=$<BOOL:${GOOGLE_CLOUD_CPP_HAVE_RUSAGE_THREAD}>
     )
 
     include(CreateBazelConfig)
     create_bazel_config(storage_benchmarks YEAR 2019)
 
     set(storage_benchmark_programs
+        # cmake-format: sort
         storage_file_transfer_benchmark.cc
         storage_latency_benchmark.cc
+        storage_parallel_uploads_benchmark.cc
         storage_shard_throughput_benchmark.cc
         storage_throughput_benchmark.cc
-        storage_throughput_vs_cpu_benchmark.cc
-        storage_parallel_uploads_benchmark.cc)
+        storage_throughput_vs_cpu_benchmark.cc)
 
     foreach (fname ${storage_benchmark_programs})
         string(REPLACE "/" "_" target ${fname})

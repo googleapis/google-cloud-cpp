@@ -70,161 +70,161 @@ find_package(ZLIB REQUIRED)
 # the client library
 add_library(
     storage_client
-    bucket_access_control.h
     bucket_access_control.cc
-    bucket_metadata.h
+    bucket_access_control.h
     bucket_metadata.cc
-    client.h
+    bucket_metadata.h
     client.cc
-    client_options.h
+    client.h
     client_options.cc
+    client_options.h
     download_options.h
-    hashing_options.h
     hashing_options.cc
-    hmac_key_metadata.h
+    hashing_options.h
     hmac_key_metadata.cc
-    iam_policy.h
+    hmac_key_metadata.h
     iam_policy.cc
-    idempotency_policy.h
+    iam_policy.h
     idempotency_policy.cc
-    internal/access_control_common.h
+    idempotency_policy.h
     internal/access_control_common.cc
-    internal/binary_data_as_debug_string.h
+    internal/access_control_common.h
     internal/binary_data_as_debug_string.cc
-    internal/bucket_acl_requests.h
+    internal/binary_data_as_debug_string.h
     internal/bucket_acl_requests.cc
-    internal/bucket_requests.h
+    internal/bucket_acl_requests.h
     internal/bucket_requests.cc
-    internal/complex_option.h
+    internal/bucket_requests.h
     internal/common_metadata.h
-    internal/compute_engine_util.h
+    internal/complex_option.h
     internal/compute_engine_util.cc
-    internal/curl_handle.h
-    internal/curl_handle.cc
-    internal/curl_handle_factory.h
-    internal/curl_handle_factory.cc
-    internal/curl_download_request.h
-    internal/curl_download_request.cc
-    internal/curl_request.h
-    internal/curl_request.cc
-    internal/curl_request_builder.h
-    internal/curl_request_builder.cc
-    internal/curl_wrappers.h
-    internal/curl_wrappers.cc
-    internal/curl_client.h
+    internal/compute_engine_util.h
     internal/curl_client.cc
-    internal/curl_resumable_upload_session.h
+    internal/curl_client.h
+    internal/curl_download_request.cc
+    internal/curl_download_request.h
+    internal/curl_handle.cc
+    internal/curl_handle.h
+    internal/curl_handle_factory.cc
+    internal/curl_handle_factory.h
+    internal/curl_request.cc
+    internal/curl_request.h
+    internal/curl_request_builder.cc
+    internal/curl_request_builder.h
     internal/curl_resumable_upload_session.cc
-    internal/default_object_acl_requests.h
+    internal/curl_resumable_upload_session.h
+    internal/curl_wrappers.cc
+    internal/curl_wrappers.h
     internal/default_object_acl_requests.cc
-    internal/empty_response.h
+    internal/default_object_acl_requests.h
     internal/empty_response.cc
+    internal/empty_response.h
     internal/generate_message_boundary.h
     internal/generic_object_request.h
     internal/generic_request.h
-    internal/hash_validator.h
     internal/hash_validator.cc
-    internal/hash_validator_impl.h
+    internal/hash_validator.h
     internal/hash_validator_impl.cc
-    internal/hmac_key_requests.h
+    internal/hash_validator_impl.h
     internal/hmac_key_requests.cc
-    internal/http_response.h
+    internal/hmac_key_requests.h
     internal/http_response.cc
-    internal/logging_client.h
+    internal/http_response.h
     internal/logging_client.cc
-    internal/logging_resumable_upload_session.h
+    internal/logging_client.h
     internal/logging_resumable_upload_session.cc
-    internal/metadata_parser.h
+    internal/logging_resumable_upload_session.h
     internal/metadata_parser.cc
+    internal/metadata_parser.h
     internal/nljson.h
-    internal/notification_requests.h
     internal/notification_requests.cc
-    internal/openssl_util.h
-    internal/openssl_util.cc
-    internal/object_acl_requests.h
+    internal/notification_requests.h
     internal/object_acl_requests.cc
-    internal/object_requests.h
-    internal/object_requests.cc
-    internal/object_streambuf.h
-    internal/object_streambuf.cc
+    internal/object_acl_requests.h
     internal/object_read_source.h
-    internal/patch_builder.h
+    internal/object_requests.cc
+    internal/object_requests.h
+    internal/object_streambuf.cc
+    internal/object_streambuf.h
+    internal/openssl_util.cc
+    internal/openssl_util.h
     internal/parameter_pack_validation.h
-    internal/policy_document_request.h
+    internal/patch_builder.h
     internal/policy_document_request.cc
+    internal/policy_document_request.h
     internal/range_from_pagination.h
     internal/raw_client.h
     internal/raw_client_wrapper_utils.h
-    internal/resumable_upload_session.h
     internal/resumable_upload_session.cc
-    internal/retry_client.h
+    internal/resumable_upload_session.h
     internal/retry_client.cc
-    internal/retry_object_read_source.h
+    internal/retry_client.h
     internal/retry_object_read_source.cc
-    internal/retry_resumable_upload_session.h
+    internal/retry_object_read_source.h
     internal/retry_resumable_upload_session.cc
-    internal/service_account_requests.h
+    internal/retry_resumable_upload_session.h
     internal/service_account_requests.cc
-    internal/sha256_hash.h
+    internal/service_account_requests.h
     internal/sha256_hash.cc
-    internal/sign_blob_requests.h
+    internal/sha256_hash.h
     internal/sign_blob_requests.cc
-    internal/signed_url_requests.h
+    internal/sign_blob_requests.h
     internal/signed_url_requests.cc
+    internal/signed_url_requests.h
     internal/tuple_filter.h
-    lifecycle_rule.h
     lifecycle_rule.cc
-    list_buckets_reader.h
+    lifecycle_rule.h
     list_buckets_reader.cc
-    list_hmac_keys_reader.h
+    list_buckets_reader.h
     list_hmac_keys_reader.cc
-    list_objects_reader.h
+    list_hmac_keys_reader.h
     list_objects_reader.cc
+    list_objects_reader.h
     notification_event_type.h
-    notification_metadata.h
     notification_metadata.cc
+    notification_metadata.h
     notification_payload_format.h
-    oauth2/anonymous_credentials.h
     oauth2/anonymous_credentials.cc
-    oauth2/authorized_user_credentials.h
+    oauth2/anonymous_credentials.h
     oauth2/authorized_user_credentials.cc
-    oauth2/compute_engine_credentials.h
+    oauth2/authorized_user_credentials.h
     oauth2/compute_engine_credentials.cc
+    oauth2/compute_engine_credentials.h
     oauth2/credential_constants.h
-    oauth2/credentials.h
     oauth2/credentials.cc
-    oauth2/google_application_default_credentials_file.h
+    oauth2/credentials.h
     oauth2/google_application_default_credentials_file.cc
-    oauth2/google_credentials.h
+    oauth2/google_application_default_credentials_file.h
     oauth2/google_credentials.cc
-    oauth2/refreshing_credentials_wrapper.h
+    oauth2/google_credentials.h
     oauth2/refreshing_credentials_wrapper.cc
-    oauth2/service_account_credentials.h
+    oauth2/refreshing_credentials_wrapper.h
     oauth2/service_account_credentials.cc
-    object_access_control.h
+    oauth2/service_account_credentials.h
     object_access_control.cc
-    object_metadata.h
+    object_access_control.h
     object_metadata.cc
-    object_rewriter.h
+    object_metadata.h
     object_rewriter.cc
-    object_stream.h
+    object_rewriter.h
     object_stream.cc
-    parallel_upload.h
-    parallel_upload.cc
-    policy_document.h
-    policy_document.cc
+    object_stream.h
     override_default_project.h
+    parallel_upload.cc
+    parallel_upload.h
+    policy_document.cc
+    policy_document.h
     retry_policy.h
-    service_account.h
     service_account.cc
+    service_account.h
     signed_url_options.h
     storage_class.h
     upload_options.h
-    version.h
     version.cc
+    version.h
     version_info.h
-    well_known_headers.h
     well_known_headers.cc
+    well_known_headers.h
     well_known_parameters.h)
 target_link_libraries(
     storage_client
@@ -263,10 +263,8 @@ endif ()
 # it was fixed. I do not believe we need to be that accurate.
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" AND ${CMAKE_CXX_COMPILER_VERSION}
                                                 VERSION_LESS 8.0)
-    set_property(
-        SOURCE list_objects_reader.cc
-        APPEND_STRING
-        PROPERTY COMPILE_FLAGS "-Wno-maybe-uninitialized")
+    set_property(SOURCE list_objects_reader.cc APPEND_STRING
+                 PROPERTY COMPILE_FLAGS "-Wno-maybe-uninitialized")
 endif ()
 
 set_target_properties(
@@ -274,8 +272,7 @@ set_target_properties(
     PROPERTIES
         VERSION
         ${STORAGE_CLIENT_VERSION_MAJOR}.${STORAGE_CLIENT_VERSION_MINOR}.${STORAGE_CLIENT_VERSION_PATCH}
-        SOVERSION
-        ${STORAGE_CLIENT_VERSION_MAJOR})
+        SOVERSION ${STORAGE_CLIENT_VERSION_MAJOR})
 
 create_bazel_config(storage_client)
 google_cloud_cpp_add_clang_tidy(storage_client)
@@ -288,15 +285,15 @@ if (BUILD_TESTING)
         testing/canonical_errors.h
         testing/mock_client.h
         testing/mock_fake_clock.h
-        testing/mock_http_request.h
         testing/mock_http_request.cc
-        testing/retry_tests.h
-        testing/random_names.h
+        testing/mock_http_request.h
         testing/random_names.cc
-        testing/storage_integration_test.h
+        testing/random_names.h
+        testing/retry_tests.h
         testing/storage_integration_test.cc
-        testing/temp_file.h
-        testing/temp_file.cc)
+        testing/storage_integration_test.h
+        testing/temp_file.cc
+        testing/temp_file.h)
     target_link_libraries(
         storage_client_testing
         PUBLIC storage_client nlohmann_json GTest::gmock_main GTest::gmock
@@ -314,22 +311,22 @@ if (BUILD_TESTING)
 
     # List the unit tests, then setup the targets and dependencies.
     set(storage_client_unit_tests
+        # cmake-format: sort
         bucket_access_control_test.cc
         bucket_metadata_test.cc
         bucket_test.cc
         client_bucket_acl_test.cc
         client_default_object_acl_test.cc
+        client_notifications_test.cc
         client_object_acl_test.cc
         client_object_copy_test.cc
         client_service_account_test.cc
-        client_notifications_test.cc
         client_sign_policy_document_test.cc
         client_sign_url_test.cc
         client_test.cc
         client_write_object_test.cc
         hashing_options_test.cc
         hmac_key_metadata_test.cc
-        storage_iam_policy_test.cc
         idempotency_policy_test.cc
         internal/access_control_common_test.cc
         internal/binary_data_as_debug_string_test.cc
@@ -339,11 +336,11 @@ if (BUILD_TESTING)
         internal/curl_client_test.cc
         internal/curl_handle_test.cc
         internal/curl_resumable_upload_session_test.cc
-        internal/curl_wrappers_locking_already_present_test.cc
-        internal/curl_wrappers_locking_enabled_test.cc
-        internal/curl_wrappers_locking_disabled_test.cc
         internal/curl_wrappers_disable_sigpipe_handler_test.cc
         internal/curl_wrappers_enable_sigpipe_handler_test.cc
+        internal/curl_wrappers_locking_already_present_test.cc
+        internal/curl_wrappers_locking_disabled_test.cc
+        internal/curl_wrappers_locking_enabled_test.cc
         internal/default_object_acl_requests_test.cc
         internal/generate_message_boundary_test.cc
         internal/generic_request_test.cc
@@ -360,8 +357,8 @@ if (BUILD_TESTING)
         internal/object_requests_test.cc
         internal/object_streambuf_test.cc
         internal/openssl_util_test.cc
-        internal/patch_builder_test.cc
         internal/parameter_pack_validation_test.cc
+        internal/patch_builder_test.cc
         internal/policy_document_request_test.cc
         internal/resumable_upload_session_test.cc
         internal/retry_client_test.cc
@@ -376,6 +373,7 @@ if (BUILD_TESTING)
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc
         list_objects_reader_test.cc
+        notification_metadata_test.cc
         oauth2/anonymous_credentials_test.cc
         oauth2/authorized_user_credentials_test.cc
         oauth2/compute_engine_credentials_test.cc
@@ -388,12 +386,12 @@ if (BUILD_TESTING)
         object_test.cc
         parallel_uploads_test.cc
         policy_document_test.cc
-        notification_metadata_test.cc
         retry_policy_test.cc
         service_account_test.cc
         signed_url_options_test.cc
         storage_class_test.cc
         storage_client_options_test.cc
+        storage_iam_policy_test.cc
         storage_version_test.cc
         well_known_headers_test.cc)
 

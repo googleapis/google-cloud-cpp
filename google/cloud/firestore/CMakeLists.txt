@@ -52,7 +52,7 @@ include(CTest)
 include(CreateBazelConfig)
 
 # the client library
-add_library(firestore_client field_path.h field_path.cc)
+add_library(firestore_client field_path.cc field_path.h)
 target_link_libraries(
     firestore_client
     PUBLIC google_cloud_cpp_common
@@ -69,8 +69,7 @@ set_target_properties(
     PROPERTIES
         VERSION
         ${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}
-        SOVERSION
-        ${FIRESTORE_CLIENT_VERSION_MAJOR})
+        SOVERSION ${FIRESTORE_CLIENT_VERSION_MAJOR})
 add_library(firestore::client ALIAS firestore_client)
 
 create_bazel_config(firestore_client)
@@ -80,7 +79,8 @@ if (BUILD_TESTING)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     # List the unit tests, then setup the targets and dependencies.
-    set(firestore_client_unit_tests field_path_test.cc)
+    set(firestore_client_unit_tests # cmake-format: sort
+                                    field_path_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("firestore_client_unit_tests.bzl"

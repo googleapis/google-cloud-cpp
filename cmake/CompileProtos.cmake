@@ -66,7 +66,7 @@ function (google_cloud_cpp_generate_proto SRCS)
     foreach (dir ${_opt_PROTO_PATH_DIRECTORIES})
         get_filename_component(absolute_path ${dir} ABSOLUTE)
         list(FIND protobuf_include_path "${absolute_path}"
-                  already_in_search_path)
+             already_in_search_path)
         if (${already_in_search_path} EQUAL -1)
             list(APPEND protobuf_include_path "--proto_path" "${absolute_path}")
         endif ()
@@ -93,9 +93,10 @@ function (google_cloud_cpp_generate_proto SRCS)
         list(APPEND ${SRCS} "${pb_cc}" "${pb_h}")
         add_custom_command(
             OUTPUT "${pb_cc}" "${pb_h}"
-            COMMAND $<TARGET_FILE:protobuf::protoc> ARGS --cpp_out
-                    "${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
-                    "${filename}"
+            COMMAND
+                $<TARGET_FILE:protobuf::protoc> ARGS --cpp_out
+                "${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
+                "${filename}"
             DEPENDS "${filename}" protobuf::protoc
             COMMENT "Running C++ protocol buffer compiler on ${filename}"
             VERBATIM)
@@ -148,7 +149,7 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
     foreach (dir ${_opt_PROTO_PATH_DIRECTORIES})
         get_filename_component(absolute_path ${dir} ABSOLUTE)
         list(FIND protobuf_include_path "${absolute_path}"
-                  already_in_search_path)
+             already_in_search_path)
         if (${already_in_search_path} EQUAL -1)
             list(APPEND protobuf_include_path "--proto_path" "${absolute_path}")
         endif ()

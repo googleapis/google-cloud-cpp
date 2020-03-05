@@ -15,10 +15,10 @@
 # ~~~
 
 set(storage_client_integration_tests
+    # cmake-format: sort
     bucket_integration_test.cc
     curl_download_request_integration_test.cc
     curl_request_integration_test.cc
-    object_write_streambuf_integration_test.cc
     curl_resumable_upload_session_integration_test.cc
     curl_sign_blob_integration_test.cc
     error_injection_integration_test.cc
@@ -32,6 +32,7 @@ set(storage_client_integration_tests
     object_media_integration_test.cc
     object_resumable_write_integration_test.cc
     object_rewrite_integration_test.cc
+    object_write_streambuf_integration_test.cc
     service_account_integration_test.cc
     signed_url_conformance_test.cc
     signed_url_integration_test.cc

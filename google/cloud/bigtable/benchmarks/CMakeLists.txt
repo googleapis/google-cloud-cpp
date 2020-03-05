@@ -16,15 +16,15 @@
 
 add_library(
     bigtable_benchmark_common
-    benchmark.h
     benchmark.cc
+    benchmark.h
     constants.h
-    embedded_server.h
     embedded_server.cc
-    random_mutation.h
+    embedded_server.h
     random_mutation.cc
-    setup.h
-    setup.cc)
+    random_mutation.h
+    setup.cc
+    setup.h)
 target_link_libraries(
     bigtable_benchmark_common
     bigtable_client

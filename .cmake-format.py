@@ -14,6 +14,8 @@
 
 tab_size = 4
 separate_ctrl_name_with_space = True
+enable_sort = True
+autosort = True
 
 additional_commands = {
     "externalproject_add": {
@@ -30,6 +32,7 @@ additional_commands = {
             "EXCLUDE_FROM_ALL": 1,
             "INSTALL_COMMAND": "+",
             "INSTALL_DIR": 1,
+            "LIST_SEPARATOR": 1,
             "TEST_COMMAND": "+",
             "LOG_BUILD": 1,
             "LOG_CONFIGURE": 1,
@@ -38,6 +41,7 @@ additional_commands = {
             "PREFIX": 1,
             "URL": 1,
             "URL_HASH": 1,
+            "BUILD_ALWAYS": 1,
         }
     }
 }
