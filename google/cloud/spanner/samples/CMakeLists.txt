@@ -33,7 +33,7 @@ function (spanner_client_define_samples)
 
     # Generate a target for each unit test.
     foreach (fname ${spanner_client_integration_samples}
-             ${spanner_client_unit_samples})
+                   ${spanner_client_unit_samples})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
         google_cloud_cpp_add_clang_tidy(${target})

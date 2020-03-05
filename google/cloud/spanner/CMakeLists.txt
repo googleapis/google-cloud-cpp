@@ -216,8 +216,8 @@ target_link_libraries(
     spanner_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                           googleapis-c++::spanner_protos)
 set_target_properties(
-    spanner_client PROPERTIES VERSION "${SPANNER_CLIENT_VERSION}" SOVERSION
-                              "${SPANNER_CLIENT_VERSION_MAJOR}")
+    spanner_client PROPERTIES VERSION "${SPANNER_CLIENT_VERSION}"
+                              SOVERSION "${SPANNER_CLIENT_VERSION_MAJOR}")
 target_compile_options(spanner_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
@@ -238,10 +238,9 @@ create_bazel_config(spanner_client)
 add_library(spanner_client_mocks INTERFACE)
 target_sources(
     spanner_client_mocks
-    INTERFACE
-    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
+              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
 target_link_libraries(
     spanner_client_mocks
     INTERFACE googleapis-c++::spanner_client google_cloud_cpp_testing
@@ -299,11 +298,13 @@ function (spanner_client_define_tests)
 
     set(spanner_client_unit_tests
         # cmake-format: sortable
+        bytes_test.cc
         client_test.cc
         connection_options_test.cc
-        database_test.cc
+        create_instance_request_builder_test.cc
         database_admin_client_test.cc
         database_admin_connection_test.cc
+        database_test.cc
         date_test.cc
         instance_admin_client_test.cc
         instance_admin_connection_test.cc
@@ -312,9 +313,9 @@ function (spanner_client_define_tests)
         internal/build_info_test.cc
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc
-        internal/date_test.cc
         internal/database_admin_logging_test.cc
         internal/database_admin_metadata_test.cc
+        internal/date_test.cc
         internal/instance_admin_logging_test.cc
         internal/instance_admin_metadata_test.cc
         internal/log_wrapper_test.cc
@@ -322,8 +323,8 @@ function (spanner_client_define_tests)
         internal/logging_spanner_stub_test.cc
         internal/merge_chunk_test.cc
         internal/metadata_spanner_stub_test.cc
-        internal/partial_result_set_source_test.cc
         internal/partial_result_set_resume_test.cc
+        internal/partial_result_set_source_test.cc
         internal/polling_loop_test.cc
         internal/retry_loop_test.cc
         internal/session_pool_test.cc
@@ -332,22 +333,20 @@ function (spanner_client_define_tests)
         internal/time_format_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
-        bytes_test.cc
         keys_test.cc
         mutations_test.cc
         partition_options_test.cc
+        query_partition_test.cc
         read_options_test.cc
         read_partition_test.cc
         results_test.cc
         retry_policy_test.cc
         row_test.cc
-        query_partition_test.cc
         session_pool_options_test.cc
         spanner_version_test.cc
         sql_statement_test.cc
         timestamp_test.cc
         transaction_test.cc
-        create_instance_request_builder_test.cc
         update_instance_request_builder_test.cc
         value_test.cc)
 
