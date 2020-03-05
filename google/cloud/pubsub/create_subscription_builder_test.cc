@@ -14,8 +14,8 @@
 
 #include "create_subscription_builder.h"
 #include "google/cloud/pubsub/create_topic_builder.h"
+#include "google/cloud/testing_util/is_proto_equal.h"
 #include <google/protobuf/text_format.h>
-#include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 #include <sstream>
 
@@ -25,17 +25,8 @@ namespace pubsub {
 inline namespace GOOGLE_CLOUD_CPP_PUBSUB_NS {
 namespace {
 
+using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::protobuf::TextFormat;
-
-// TODO(#86) - use the version from `-common` when it is ready.
-MATCHER_P(IsProtoEqual, value, "Checks whether protos are equal") {
-  std::string delta;
-  google::protobuf::util::MessageDifferencer differencer;
-  differencer.ReportDifferencesToString(&delta);
-  auto const result = differencer.Compare(arg, value);
-  *result_listener << "\n" << delta;
-  return result;
-}
 
 TEST(CreateSubscriptionBuilder, MakeOidcToken) {
   auto const actual =
