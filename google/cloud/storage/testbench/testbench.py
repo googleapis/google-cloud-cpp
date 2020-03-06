@@ -745,17 +745,28 @@ def objects_insert(bucket_name):
             'objects_insert', bucket_name=bucket_name, _external=True)
         return bucket.create_resumable_upload(upload_url, flask.request)
 
-    object_name = flask.request.args.get('name', None)
-    if object_name is None:
-        raise error_response.ErrorResponse(
-            'name not set in Objects: insert', status_code=412)
-    object_path, blob = testbench_utils.get_object(
-        bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
-    blob.check_preconditions(flask.request)
+    object_path = None
+    blob = None
+    current_version = None
     if upload_type == 'media':
+        object_name = flask.request.args.get('name', None)
+        if object_name is None:
+            raise error_response.ErrorResponse(
+                'name not set in Objects: insert', status_code=412)
+        object_path, blob = testbench_utils.get_object(
+            bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
+        blob.check_preconditions(flask.request)
         current_version = blob.insert(gcs_url, flask.request)
     else:
-        current_version = blob.insert_multipart(gcs_url, flask.request)
+        resource, media_headers, media_body = testbench_utils.parse_multi_part(flask.request)
+        object_name = flask.request.args.get('name', resource.get('name', None))
+        if object_name is None:
+            raise error_response.ErrorResponse(
+                'name not set in Objects: insert', status_code=412)
+        object_path, blob = testbench_utils.get_object(
+            bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
+        blob.check_preconditions(flask.request)
+        current_version = blob.insert_multipart(gcs_url, flask.request, resource, media_headers, media_body)
     testbench_utils.insert_object(object_path, blob)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
