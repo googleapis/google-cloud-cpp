@@ -1127,6 +1127,35 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
 
 }  // namespace internal
 
+/**
+ * Perform a parallel upload of a given file.
+ *
+ * You can affect how many shards will be created by using the `MaxStreams` and
+ * `MinStreamSize` options.
+ *
+ * @param client the client on which to perform the operation.
+ * @param file_name the path to the file to be uploaded
+ * @param bucket_name the name of the bucket that will contain the object.
+ * @param object_name the uploaded object name.
+ * @param prefix the prefix with which temporary objects will be created.
+ * @param ignore_cleanup_failures treat failures to cleanup the temporary
+ *     objects as not fatal.
+ * @param options a list of optional query parameters and/or request headers.
+ *     Valid types for this operation include `DestinationPredefinedAcl`,
+ *     `EncryptionKey`, `IfGenerationMatch`, `IfMetagenerationMatch`,
+ *     `KmsKeyName`, `MaxStreams, `MinStreamSize`, `QuotaUser`, `UserIp`,
+ *     `UserProject`, `WithObjectMetadata`, `UseResumableUploadSession`.
+ *
+ * @return the metadata of the object created by the upload.
+ *
+ * @par Idempotency
+ * This operation is not idempotent. While each request performed by this
+ * function is retried based on the client policies, the operation itself stops
+ * on the first request that fails.
+ *
+ * @par Example
+ * @snippet storage_object_samples.cc parallel upload file
+ */
 template <typename... Options>
 StatusOr<ObjectMetadata> ParallelUploadFile(
     Client client, std::string file_name, std::string bucket_name,
