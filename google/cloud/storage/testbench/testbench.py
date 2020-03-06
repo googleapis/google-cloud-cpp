@@ -461,7 +461,7 @@ def objects_get_common(bucket_name, object_name, revision):
     if instructions == 'return-broken-stream':
         def streamer():
             chunk_size = 64 * 1024
-            for r in range(0, len(response_payload) / 2, chunk_size):
+            for r in range(0, len(response_payload), chunk_size):
                 if r > 1024 * 1024:
                     print("\n\n###### EXIT to simulate crash\n")
                     sys.exit(1)
@@ -473,6 +473,7 @@ def objects_get_common(bucket_name, object_name, revision):
         content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
         headers = {
             'Content-Range': content_range,
+            'Content-Length': length,
             'x-goog-hash': revision.x_goog_hash_header(),
             'x-goog-generation': revision.generation
         }
