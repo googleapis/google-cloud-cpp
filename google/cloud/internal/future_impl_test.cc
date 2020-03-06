@@ -139,11 +139,12 @@ TEST(ContinuationVoidTest, SetExceptionCallsContinuation) {
       std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(called);
   EXPECT_TRUE(output->is_ready());
-  EXPECT_THROW(try { output->get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { output->get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       input->set_exception(
@@ -226,11 +227,12 @@ TEST(FutureImplVoid, Abandon) {
   shared_state.abandon();
   EXPECT_TRUE(shared_state.is_ready());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { shared_state.get(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  },
-               std::future_error);
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       shared_state.get(),
@@ -371,11 +373,12 @@ TEST(FutureImplInt, Abandon) {
   shared_state.abandon();
   EXPECT_TRUE(shared_state.is_ready());
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { shared_state.get(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  },
-               std::future_error);
+  EXPECT_THROW(
+      try { shared_state.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       shared_state.get(),
@@ -479,11 +482,12 @@ TEST(ContinuationIntTest, SetExceptionCallsContinuation) {
       std::make_exception_ptr(std::runtime_error("test message")));
   EXPECT_TRUE(called);
   EXPECT_TRUE(output->is_ready());
-  EXPECT_THROW(try { output->get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { output->get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       input->set_exception(

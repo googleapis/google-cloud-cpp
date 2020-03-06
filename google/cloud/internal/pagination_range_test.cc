@@ -51,8 +51,8 @@ TEST(RangeFromPagination, Empty) {
     return response;
   }));
 
-  TestedRange range(Request{}, [&](Request const& r) { return mock.Loader(r); },
-                    GetItems);
+  TestedRange range(
+      Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   EXPECT_TRUE(range.begin() == range.end());
 }
 
@@ -67,8 +67,8 @@ TEST(RangeFromPagination, SinglePage) {
     return response;
   }));
 
-  TestedRange range(Request{}, [&](Request const& r) { return mock.Loader(r); },
-                    GetItems);
+  TestedRange range(
+      Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   std::vector<std::string> names;
   for (auto& p : range) {
     if (!p) break;
@@ -97,8 +97,8 @@ TEST(RangeFromPagination, TwoPages) {
         return response;
       }));
 
-  TestedRange range(Request{}, [&](Request const& r) { return mock.Loader(r); },
-                    GetItems);
+  TestedRange range(
+      Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   std::vector<std::string> names;
   for (auto& p : range) {
     if (!p) break;
@@ -131,8 +131,8 @@ TEST(RangeFromPagination, TwoPagesWithError) {
         return Status(StatusCode::kAborted, "bad-luck");
       }));
 
-  TestedRange range(Request{}, [&](Request const& r) { return mock.Loader(r); },
-                    GetItems);
+  TestedRange range(
+      Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   std::vector<std::string> names;
   for (auto& p : range) {
     if (!p) {
@@ -160,8 +160,8 @@ TEST(RangeFromPagination, IteratorCoverage) {
         return Status(StatusCode::kAborted, "bad-luck");
       }));
 
-  TestedRange range(Request{}, [&](Request const& r) { return mock.Loader(r); },
-                    GetItems);
+  TestedRange range(
+      Request{}, [&](Request const& r) { return mock.Loader(r); }, GetItems);
   auto i0 = range.begin();
   auto i1 = i0;
   EXPECT_TRUE(i0 == i1);

@@ -98,11 +98,12 @@ TEST(FutureTestInt, conform_30_6_5_7) {
   EXPECT_TRUE(f0.valid());
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { f0.get(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(std::future_errc::broken_promise, ex.code());
-    throw;
-  },
-               std::future_error);
+  EXPECT_THROW(
+      try { f0.get(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(std::future_errc::broken_promise, ex.code());
+        throw;
+      },
+      std::future_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f0.get(),
@@ -201,11 +202,12 @@ TEST(FutureTestInt, conform_30_6_5_18) {
   p0.set_exception(std::make_exception_ptr(std::runtime_error("testing")));
   ASSERT_EQ(std::future_status::ready, f0.wait_for(0_ms));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { f0.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_EQ(std::string("testing"), ex.what());
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { f0.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_EQ(std::string("testing"), ex.what());
+        throw;
+      },
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f0.get(),
@@ -430,11 +432,12 @@ TEST(FutureTestInt, conform_30_6_6_17) {
   future<int> f = p.get_future();
   p.set_exception(std::make_exception_ptr(std::runtime_error("test message")));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { f.get(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), HasSubstr("test message"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { f.get(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("test message"));
+        throw;
+      },
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(
       f.get(),

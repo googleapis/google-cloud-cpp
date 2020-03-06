@@ -90,14 +90,14 @@ class future final : private internal::future_base<T> {
    * ready.  The return type is a future wrapping the return type of
    * @a func.
    *
-   * @return future<T> where T is std::result_of_t<F, R> (basically).
-   * If T matches future<U> then it returns future<U>.  The returned
+   * @return `future<T>` where T is `std::result_of_t<F, R>` (basically).
+   * If T matches `future<U>` then it returns `future<U>`.  The returned
    * future will contain the result of @a func.
    * @param func a Callable to be invoked when the future is ready.
    * The function might be called immediately, e.g., if the future is
    * ready.
    *
-   * Side effects: valid() == false if the operation is successful.
+   * Side effects: `valid() == false` if the operation is successful.
    */
   template <typename F>
   typename internal::then_helper<F, T>::future_t then(F&& func) {

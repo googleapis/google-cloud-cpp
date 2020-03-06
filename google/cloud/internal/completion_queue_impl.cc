@@ -19,7 +19,7 @@
 // There is no wait to unblock the gRPC event loop, not even calling Shutdown(),
 // so we periodically wake up from the loop to check if the application has
 // shutdown the run.
-constexpr std::chrono::milliseconds kLoopTimeout(50);
+std::chrono::milliseconds constexpr kLoopTimeout(50);
 
 namespace google {
 namespace cloud {

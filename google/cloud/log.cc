@@ -14,6 +14,7 @@
 
 #include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
+#include <array>
 
 namespace google {
 namespace cloud {
@@ -26,7 +27,9 @@ static_assert(static_cast<int>(Severity::GCP_LS_LOWEST) <
               "Expect LOWEST severity to be smaller than HIGHEST severity");
 
 std::ostream& operator<<(std::ostream& os, Severity x) {
-  char const* names[] = {
+  auto constexpr kSeverityCount =
+      static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
+  std::array<char const*, kSeverityCount> names{
       "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
       "ERROR", "CRITICAL", "ALERT", "FATAL",
   };
@@ -56,11 +59,13 @@ LogSink& LogSink::Instance() {
   return *kInstance;
 }
 
+// NOLINTNEXTLINE(google-runtime-int)
 long LogSink::AddBackend(std::shared_ptr<LogBackend> backend) {
   std::unique_lock<std::mutex> lk(mu_);
   return AddBackendImpl(std::move(backend));
 }
 
+// NOLINTNEXTLINE(google-runtime-int)
 void LogSink::RemoveBackend(long id) {
   std::unique_lock<std::mutex> lk(mu_);
   RemoveBackendImpl(id);
@@ -134,13 +139,15 @@ void LogSink::DisableStdClogImpl() {
   clog_backend_id_ = 0;
 }
 
+// NOLINTNEXTLINE(google-runtime-int)
 long LogSink::AddBackendImpl(std::shared_ptr<LogBackend> backend) {
-  long id = ++next_id_;
+  auto const id = ++next_id_;
   backends_.emplace(id, std::move(backend));
   empty_.store(backends_.empty());
   return id;
 }
 
+// NOLINTNEXTLINE(google-runtime-int)
 void LogSink::RemoveBackendImpl(long id) {
   auto it = backends_.find(id);
   if (backends_.end() == it) {

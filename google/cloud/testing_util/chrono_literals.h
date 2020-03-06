@@ -24,27 +24,27 @@ namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 namespace chrono_literals {
-constexpr std::chrono::hours operator"" _h(unsigned long long h) {
+std::chrono::hours constexpr operator"" _h(unsigned long long h) {
   return std::chrono::hours(h);
 }
 
-constexpr std::chrono::minutes operator"" _min(unsigned long long m) {
+std::chrono::minutes constexpr operator"" _min(unsigned long long m) {
   return std::chrono::minutes(m);
 }
 
-constexpr std::chrono::seconds operator"" _s(unsigned long long s) {
+std::chrono::seconds constexpr operator"" _s(unsigned long long s) {
   return std::chrono::seconds(s);
 }
 
-constexpr std::chrono::milliseconds operator"" _ms(unsigned long long ms) {
+std::chrono::milliseconds constexpr operator"" _ms(unsigned long long ms) {
   return std::chrono::milliseconds(ms);
 }
 
-constexpr std::chrono::microseconds operator"" _us(unsigned long long us) {
+std::chrono::microseconds constexpr operator"" _us(unsigned long long us) {
   return std::chrono::microseconds(us);
 }
 
-constexpr std::chrono::nanoseconds operator"" _ns(unsigned long long ns) {
+std::chrono::nanoseconds constexpr operator"" _ns(unsigned long long ns) {
   return std::chrono::nanoseconds(ns);
 }
 

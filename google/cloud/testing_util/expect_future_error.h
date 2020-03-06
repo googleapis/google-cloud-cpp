@@ -35,11 +35,12 @@ namespace testing_util {
 template <typename Functor>
 void ExpectFutureError(Functor functor, std::future_errc code) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { functor(); } catch (std::future_error const& ex) {
-    EXPECT_EQ(code, ex.code());
-    throw;
-  },
-               std::future_error);
+  EXPECT_THROW(
+      try { functor(); } catch (std::future_error const& ex) {
+        EXPECT_EQ(code, ex.code());
+        throw;
+      },
+      std::future_error);
 #else
   std::string expected = "future_error\\[";
   expected += std::make_error_code(code).message();

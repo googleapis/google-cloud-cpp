@@ -32,21 +32,21 @@ namespace internal {
 template <typename T>
 class future_shared_state;
 
-/// Compute the return type for a future<T>::then()
+/// Compute the return type for a `future<T>::then()`
 template <typename FunctorReturn>
 struct unwrap_then {
   using type = FunctorReturn;
   using requires_unwrap_t = std::false_type;
 };
 
-/// Specialize the unwrap_then<> for functors that return future<U>
+/// Specialize the `unwrap_then<>` for functors that return `future<U>`
 template <typename U>
 struct unwrap_then<future<U>> {
   using type = U;
   using requires_unwrap_t = std::true_type;
 };
 
-/// Specialize the unwrap_then<> for functors that return future<U>
+/// Specialize the `unwrap_then<>` for functors that return `future<U>`
 template <typename U>
 struct unwrap_internal {
   using type = U;

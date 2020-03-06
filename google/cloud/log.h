@@ -240,7 +240,7 @@ class LogSink {
   LogSink();
 
   /// Return true if the severity is enabled at compile time.
-  constexpr static bool CompileTimeEnabled(Severity level) {
+  static bool constexpr CompileTimeEnabled(Severity level) {
     return level >= Severity::GCP_LS_LOWEST_ENABLED;
   }
 

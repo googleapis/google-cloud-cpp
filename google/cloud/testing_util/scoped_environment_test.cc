@@ -23,7 +23,7 @@ inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 namespace {
 
-constexpr auto kVarName = "SCOPED_ENVIRONMENT_TEST";
+auto constexpr kVarName = "SCOPED_ENVIRONMENT_TEST";
 
 TEST(ScopedEnvironment, SetOverSet) {
   ScopedEnvironment env_outer(kVarName, "foo");

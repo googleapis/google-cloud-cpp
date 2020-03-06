@@ -19,7 +19,7 @@
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
-/// Helper types to test google::cloud::optional<T>
+/// Helper types to test `google::cloud::optional<T>`
 namespace {
 
 using testing_util::Observable;

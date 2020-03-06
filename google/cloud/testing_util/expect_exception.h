@@ -75,11 +75,12 @@ void ExpectException(
     std::function<void(ExpectedException const& ex)> const& validator,
     char const* expected_message) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { expression(); } catch (ExpectedException const& ex) {
-    validator(ex);
-    throw;
-  },
-               ExpectedException);
+  EXPECT_THROW(
+      try { expression(); } catch (ExpectedException const& ex) {
+        validator(ex);
+        throw;
+      },
+      ExpectedException);
   (void)expected_message;  // suppress clang-tidy warning.
 #else
   (void)validator;  // suppress clang-tidy warning.

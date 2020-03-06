@@ -56,15 +56,15 @@ class continuation_base {
 /**
  * Common base class for all shared state classes.
  *
- * The implementation of the shared state for future<T>, future<R&> and
- * future<void> share a lot of code. This class refactors that code, it
+ * The implementation of the shared state for `future<T>`, `future<R&>` and
+ * `future<void>` share a lot of code. This class refactors that code, it
  * represents a shared state of unknown type.
  *
  * @note While most of the invariants for promises and futures are implemented
  *   by this class, not all of them are. Notably, future values can only be
- *   retrieved once, but this is enforced because calling .get() or .then() on a
- *   future invalidates the future for further use. The shared state does not
- *   record that state change.
+ *   retrieved once, but this is enforced because calling `.get()` or `.then()`
+ *   on a future invalidates the future for further use. The shared state does
+ *   not record that state change.
  */
 class future_shared_state_base {
  public:

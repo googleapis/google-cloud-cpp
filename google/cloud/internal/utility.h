@@ -29,7 +29,7 @@ namespace internal {
 template <class T, T... I>
 struct integer_sequence {
   typedef T value_type;
-  static constexpr size_t size() noexcept { return sizeof...(I); }
+  static std::size_t constexpr size() noexcept { return sizeof...(I); }
 };
 
 // Reimplementation of C++14 `std::index_sequence`.

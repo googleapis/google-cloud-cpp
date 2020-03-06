@@ -29,6 +29,7 @@ std::string compiler() {
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 std::string compiler_flags() {
+  // NOLINTNEXTLINE(modernize-avoid-c-arrays)
   static char const kCompilerFlags[] =
       R"""(@CMAKE_CXX_FLAGS@ ${CMAKE_CXX_FLAGS_${GOOGLE_CLOUD_CPP_BUILD_TYPE_UPPER}})""";
   return kCompilerFlags;
@@ -38,7 +39,7 @@ std::string compiler_flags() {
 std::string build_metadata() {
   // Sometimes GOOGLE_CLOUD_CPP_BUILD_METADATA string expands to nothing, and
   // then clang-tidy complains.
-  // NOLINTNEXTLINE(readability-redundant-string-init)
+  // NOLINTNEXTLINE(readability-redundant-string-init,modernize-avoid-c-arrays)
   static char const kBuildMetadata[] = R"""(@GOOGLE_CLOUD_CPP_BUILD_METADATA@)""";
   return kBuildMetadata;
 }
