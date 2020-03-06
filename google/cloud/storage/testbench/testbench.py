@@ -556,22 +556,6 @@ def objects_get_common(bucket_name, object_name, revision):
     return response
 
 
-@gcs.route('/b/<bucket_name>/o/<path:object_name>')
-def objects_get(bucket_name, object_name):
-    """Implement the 'Objects: get' API.  Read objects or their metadata."""
-    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
-    blob.check_preconditions(flask.request)
-    revision = blob.get_revision(flask.request)
-
-    media = flask.request.args.get('alt', None)
-    if media is None or media == 'json':
-        return testbench_utils.filtered_response(flask.request, revision.metadata)
-    if media != 'media':
-        raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
-    revision.validate_encryption_for_read(flask.request)
-    return objects_get_common(bucket_name, object_name, revision)
-
-
 @gcs.route('/b/<bucket_name>/o/<path:object_name>', methods=['DELETE'])
 def objects_delete(bucket_name, object_name):
     """Implement the 'Objects: delete' API.  Delete objects."""
@@ -712,6 +696,34 @@ def objects_acl_patch(bucket_name, object_name, entity):
 
 
 # Define the WSGI application to handle bucket requests.
+DOWNLOAD_HANDLER_PATH = '/download/storage/v1'
+download = flask.Flask(__name__)
+download.debug = True
+
+
+@download.errorhandler(error_response.ErrorResponse)
+def download_error(error):
+    return error.as_response()
+
+
+@gcs.route('/b/<bucket_name>/o/<path:object_name>')
+@download.route('/b/<bucket_name>/o/<path:object_name>')
+def objects_get(bucket_name, object_name):
+    """Implement the 'Objects: get' API.  Read objects or their metadata."""
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
+
+    media = flask.request.args.get('alt', None)
+    if media is None or media == 'json':
+        return testbench_utils.filtered_response(flask.request, revision.metadata)
+    if media != 'media':
+        raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
+    revision.validate_encryption_for_read(flask.request)
+    return objects_get_common(bucket_name, object_name, revision)
+
+
+# Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
 upload.debug = True
@@ -835,6 +847,7 @@ application = DispatcherMiddleware(
         '/httpbin': httpbin.app,
         GCS_HANDLER_PATH: gcs,
         UPLOAD_HANDLER_PATH: upload,
+        DOWNLOAD_HANDLER_PATH: download,
         XMLAPI_HANDLER_PATH: xmlapi,
         PROJECTS_HANDLER_PATH: projects_app,
         IAM_HANDLER_PATH: iam_app,
