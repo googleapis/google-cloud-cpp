@@ -346,3 +346,61 @@ def all_objects():
     :rtype:dict[str, GcsBucket]
     """
     return GCS_OBJECTS.items()
+
+
+def parse_part(multipart_upload_part):
+    """Parse a portion of a multipart breaking out the headers and payload.
+
+    :param multipart_upload_part:str a portion of the multipart upload body.
+    :return: a tuple with the headers and the payload.
+    :rtype: (dict, str)
+    """
+    headers = dict()
+    index = 0
+    next_line = multipart_upload_part.find(b'\r\n', index)
+    while next_line != index:
+        header_line = multipart_upload_part[index:next_line]
+        key, value = header_line.split(b': ', 2)
+        # This does not work for repeated headers, but we do not expect
+        # those in the testbench.
+        headers[key.decode('utf-8')] = value.decode('utf-8')
+        index = next_line + 2
+        next_line = multipart_upload_part.find(b'\r\n', index)
+    return headers, multipart_upload_part[next_line + 2:]
+
+
+def parse_multi_part(request):
+    """Parse a multi-part request
+
+    :param request:flask.Request multipart request.
+    :return: a tuple with the resource, media_headers and the media_body.
+    :rtype: (dict, dict, str)
+    """
+    content_type = request.headers.get('content-type')
+    if content_type is None or not content_type.startswith(
+            'multipart/related'):
+        raise error_response.ErrorResponse(
+            'Missing or invalid content-type header in multipart upload')
+    _, _, boundary = content_type.partition('boundary=')
+    if boundary is None:
+        raise error_response.ErrorResponse(
+            'Missing boundary (%s) in content-type header in multipart upload'
+            % boundary)
+
+    boundary = bytearray(boundary, 'utf-8')
+    marker = b'--' + boundary + b'\r\n'
+    body = extract_media(request)
+    parts = body.split(marker)
+    # parts[0] is the empty string, `multipart` should start with the boundary
+    # parts[1] is the JSON resource object part, with some headers
+    resource_headers, resource_body = parse_part(parts[1])
+    # parts[2] is the media, with some headers
+    media_headers, media_body = parse_part(parts[2])
+    end = media_body.find(b'\r\n--' + boundary + b'--\r\n')
+    if end == -1:
+        raise error_response.ErrorResponse(
+            'Missing end marker (--%s--) in media body' % boundary)
+    media_body = media_body[:end]
+    resource = json.loads(resource_body)
+
+    return resource, media_headers, media_body

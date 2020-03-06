@@ -573,60 +573,17 @@ class GcsObject(object):
         self._insert_revision(revision)
         return revision
 
-    def _parse_part(self, multipart_upload_part):
-        """Parse a portion of a multipart breaking out the headers and payload.
-
-        :param multipart_upload_part:str a portion of the multipart upload body.
-        :return: a tuple with the headers and the payload.
-        :rtype: (dict, str)
-        """
-        headers = dict()
-        index = 0
-        next_line = multipart_upload_part.find(b'\r\n', index)
-        while next_line != index:
-            header_line = multipart_upload_part[index:next_line]
-            key, value = header_line.split(b': ', 2)
-            # This does not work for repeated headers, but we do not expect
-            # those in the testbench.
-            headers[key.decode('utf-8')] = value.decode('utf-8')
-            index = next_line + 2
-            next_line = multipart_upload_part.find(b'\r\n', index)
-        return headers, multipart_upload_part[next_line + 2:]
-
-    def insert_multipart(self, gcs_url, request):
+    def insert_multipart(self, gcs_url, request, resource, media_headers, media_body):
         """Insert a new revision based on the give flask request.
 
         :param gcs_url:str the root URL for the fake GCS service.
         :param request:flask.Request the contents of the HTTP request.
+        :param resource:dict JSON resource with object metadata.
+        :param media_headers:dict media headers in a multi-part upload.
+        :param media_body:str object data in a multi-part upload.
         :return: the newly created object version.
         :rtype: GcsObjectVersion
         """
-        content_type = request.headers.get('content-type')
-        if content_type is None or not content_type.startswith(
-                'multipart/related'):
-            raise error_response.ErrorResponse(
-                'Missing or invalid content-type header in multipart upload')
-        _, _, boundary = content_type.partition('boundary=')
-        if boundary is None:
-            raise error_response.ErrorResponse(
-                'Missing boundary (%s) in content-type header in multipart upload'
-                % boundary)
-
-        boundary = bytearray(boundary, 'utf-8')
-        marker = b'--' + boundary + b'\r\n'
-        body = testbench_utils.extract_media(request)
-        parts = body.split(marker)
-        # parts[0] is the empty string, `multipart` should start with the boundary
-        # parts[1] is the JSON resource object part, with some headers
-        resource_headers, resource_body = self._parse_part(parts[1])
-        # parts[2] is the media, with some headers
-        media_headers, media_body = self._parse_part(parts[2])
-        end = media_body.find(b'\r\n--' + boundary + b'--\r\n')
-        if end == -1:
-            raise error_response.ErrorResponse(
-                'Missing end marker (--%s--) in media body' % boundary)
-        media_body = media_body[:end]
-        resource = json.loads(resource_body)
         # There are two ways to specify the content-type, the 'content-type'
         # header and the resource['contentType'] field. They must be consistent,
         # and the service generates an error when they are not.
