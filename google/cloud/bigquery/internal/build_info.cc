@@ -30,8 +30,7 @@ std::string BuildFlags() {
     if (!flags->empty()) {
       *flags += ' ';
     }
-    *flags +=
-        R"""()""";
+    *flags += R"""()""";
     return flags;
   }();
   return *kFlags;

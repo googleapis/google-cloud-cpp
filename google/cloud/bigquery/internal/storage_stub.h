@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_INTERNAL_STORAGE_STUB_H_
-#define BIGQUERY_INTERNAL_STORAGE_STUB_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STORAGE_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STORAGE_STUB_H
 
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/connection_options.h"
@@ -60,4 +60,4 @@ std::shared_ptr<StorageStub> MakeDefaultStorageStub(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_INTERNAL_STORAGE_STUB_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STORAGE_STUB_H

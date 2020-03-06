@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_BIGQUERY_READ_STREAM_H_
-#define GOOGLE_CLOUD_BIGQUERY_READ_STREAM_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_READ_STREAM_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_READ_STREAM_H
 
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/status_or.h"
@@ -57,11 +57,11 @@ std::string SerializeReadStream(ReadStream const& /*read_stream*/);
 
 // Deserializes the provided string to a `ReadStream`, if able.
 StatusOr<ReadStream> DeserializeReadStream(
-    std::string /*serialized_read_stream*/);
+    std::string const& /*serialized_read_stream*/);
 
 }  // namespace BIGQUERY_CLIENT_NS
 }  // namespace bigquery
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_BIGQUERY_READ_STREAM_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_READ_STREAM_H

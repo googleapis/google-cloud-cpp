@@ -103,10 +103,11 @@ TEST(ConnectionImplTest, ParallelReadRpcSuccess) {
             EXPECT_TRUE(TextFormat::ParseFromString(
                 R"pb(
                   name: "my-session"
-                  streams {name: "stream-0"}
-                  streams {name: "stream-1"}
-                  streams {name: "stream-2"}
-                )pb", &response));
+                  streams { name: "stream-0" }
+                  streams { name: "stream-1" }
+                  streams { name: "stream-2" }
+                )pb",
+                &response));
             return response;
           }));
 

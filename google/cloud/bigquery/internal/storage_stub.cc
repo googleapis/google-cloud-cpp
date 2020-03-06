@@ -38,16 +38,14 @@ constexpr auto kRoutingHeader = "x-goog-request-params";
 namespace bigquerystorage_proto = ::google::cloud::bigquery::storage::v1beta1;
 
 using ::google::cloud::optional;
-using ::google::cloud::Status;
-using ::google::cloud::StatusCode;
 using ::google::cloud::StatusOr;
 using ::google::cloud::grpc_utils::MakeStatusFromRpcError;
 
 // An implementation of StreamReader for gRPC unary-streaming methods.
 template <class T>
-class gRPCStreamReader : public StreamReader<T> {
+class GrpcStreamReader : public StreamReader<T> {
  public:
-  gRPCStreamReader(std::unique_ptr<grpc::ClientContext> context,
+  GrpcStreamReader(std::unique_ptr<grpc::ClientContext> context,
                    std::unique_ptr<grpc::ClientReaderInterface<T>> reader)
       : context_(std::move(context)), reader_(std::move(reader)) {}
 
@@ -134,7 +132,7 @@ DefaultStorageStub::ReadRows(
   auto stream = grpc_stub_->ReadRows(client_context.get(), request);
   // TODO(aryann): Replace this with `absl::make_unique`.
   return std::unique_ptr<StreamReader<bigquerystorage_proto::ReadRowsResponse>>(
-      new gRPCStreamReader<bigquerystorage_proto::ReadRowsResponse>(
+      new GrpcStreamReader<bigquerystorage_proto::ReadRowsResponse>(
           std::move(client_context), std::move(stream)));
 }
 

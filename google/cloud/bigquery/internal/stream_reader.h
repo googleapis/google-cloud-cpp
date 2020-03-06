@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_INTERNAL_STREAMING_READER_H_
-#define BIGQUERY_INTERNAL_STREAMING_READER_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STREAM_READER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STREAM_READER_H
 
 #include "google/cloud/bigquery/version.h"
 #include "google/cloud/optional.h"
@@ -51,4 +51,4 @@ class StreamReader {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_INTERNAL_STREAMING_READER_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_STREAM_READER_H

@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_CONNECTION_OPTIONS_H_
-#define BIGQUERY_CONNECTION_OPTIONS_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_OPTIONS_H
 
 #include "google/cloud/bigquery/version.h"
 #include <grpcpp/grpcpp.h>
@@ -72,4 +72,4 @@ class ConnectionOptions {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_CONNECTION_OPTIONS_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_OPTIONS_H

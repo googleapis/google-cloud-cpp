@@ -35,27 +35,27 @@ using ::google::cloud::StatusCode;
 using ::google::cloud::StatusOr;
 
 namespace {
-template <char delimiter>
+template <char Delimiter>
 class DelimitedBy : public std::string {};
 
 // TODO(aryann): Replace this with absl::StrSplit once it is
 // available.
-template <char delimiter>
-std::vector<std::string> StrSplit(std::string input) {
+template <char Delimiter>
+std::vector<std::string> StrSplit(std::string const& input) {
   std::istringstream iss(input);
-  return {std::istream_iterator<DelimitedBy<delimiter>>(iss),
-          std::istream_iterator<DelimitedBy<delimiter>>()};
+  return {std::istream_iterator<DelimitedBy<Delimiter>>(iss),
+          std::istream_iterator<DelimitedBy<Delimiter>>()};
 }
 
-template <char delimiter>
-std::istream& operator>>(std::istream& is, DelimitedBy<delimiter>& output) {
-  std::getline(is, output, delimiter);
+template <char Delimiter>
+std::istream& operator>>(std::istream& is, DelimitedBy<Delimiter>& output) {
+  std::getline(is, output, Delimiter);
   return is;
 }
 }  // namespace
 
 ConnectionImpl::ConnectionImpl(std::shared_ptr<StorageStub> read_stub)
-    : read_stub_(read_stub) {}
+    : read_stub_(std::move(read_stub)) {}
 
 ReadResult ConnectionImpl::Read(ReadStream const& read_stream) {
   bigquerystorage_proto::ReadRowsRequest request;
@@ -66,6 +66,10 @@ ReadResult ConnectionImpl::Read(ReadStream const& read_stream) {
   return ReadResult(std::move(source));
 }
 
+// TODO(aryann) - convert all TODO entries to use GitHub issues.
+// TODO(aryann) - follow Google Style Guide wrt to default arguments and virtual
+//     functions.
+// NOLINTNEXTLINE(google-default-arguments)
 StatusOr<std::vector<ReadStream>> ConnectionImpl::ParallelRead(
     std::string const& parent_project_id, std::string const& table,
     std::vector<std::string> const& columns) {

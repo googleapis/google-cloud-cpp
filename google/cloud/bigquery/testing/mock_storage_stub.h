@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_BIGQUERY_TESTING_MOCK_STORAGE_STUB_H_
-#define GOOGLE_CLOUD_BIGQUERY_TESTING_MOCK_STORAGE_STUB_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TESTING_MOCK_STORAGE_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TESTING_MOCK_STORAGE_STUB_H
 
 #include "google/cloud/bigquery/internal/storage_stub.h"
 #include "google/cloud/bigquery/internal/stream_reader.h"
@@ -26,8 +26,7 @@ namespace google {
 namespace cloud {
 namespace bigquery_testing {
 inline namespace BIGQUERY_CLIENT_NS {
-class MockStorageStub
-    : public google::cloud::bigquery::internal::StorageStub {
+class MockStorageStub : public google::cloud::bigquery::internal::StorageStub {
  public:
   MOCK_METHOD1(CreateReadSession,
                google::cloud::StatusOr<
@@ -47,4 +46,4 @@ class MockStorageStub
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_BIGQUERY_TESTING_MOCK_STORAGE_STUB_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_TESTING_MOCK_STORAGE_STUB_H

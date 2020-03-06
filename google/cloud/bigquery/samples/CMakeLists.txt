@@ -31,14 +31,13 @@ function (bigquery_client_define_samples)
 
     # Generate a target for each unit test.
     foreach (fname ${bigquery_client_integration_samples}
-             ${bigquery_client_unit_samples})
+                   ${bigquery_client_unit_samples})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
         google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target}
-                              PRIVATE googleapis-c++::bigquery_client)
+        target_link_libraries(${target} PRIVATE googleapis-c++::bigquery_client)
     endforeach ()
 
     foreach (fname ${bigquery_client_integration_samples})

@@ -26,6 +26,7 @@ namespace bigquery {
 inline namespace BIGQUERY_CLIENT_NS {
 using ::google::cloud::StatusOr;
 
+// NOLINTNEXTLINE(readability-convert-member-functions-to-static)
 ReadResult Client::Read(std::string const& /*parent_project_id*/,
                         std::string const& /*table*/,
                         std::vector<std::string> const& /*columns*/) {

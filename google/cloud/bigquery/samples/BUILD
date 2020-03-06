@@ -13,11 +13,11 @@
 # limitations under the License.
 
 cc_binary(
-  name = "read",
-  srcs = [
-    "read.cc",
-  ],
-  deps = [
-    "//google/cloud/bigquery:bigquery_client",
-  ],
+    name = "read",
+    srcs = [
+        "read.cc",
+    ],
+    deps = [
+        "//google/cloud/bigquery:bigquery_client",
+    ],
 )

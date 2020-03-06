@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_INTERNAL_CONNECTION_H_
-#define BIGQUERY_INTERNAL_CONNECTION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_CONNECTION_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_CONNECTION_IMPL_H
 
 #include "google/cloud/bigquery/connection.h"
 #include "google/cloud/bigquery/internal/storage_stub.h"
@@ -61,4 +61,4 @@ std::shared_ptr<ConnectionImpl> MakeConnection(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_INTERNAL_CONNECTION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_INTERNAL_CONNECTION_IMPL_H

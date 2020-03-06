@@ -115,8 +115,8 @@ target_link_libraries(
     bigquery_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                            googleapis-c++::cloud_bigquery_protos)
 set_target_properties(
-    bigquery_client PROPERTIES VERSION "${BIGQUERY_CLIENT_VERSION}" SOVERSION
-                               "${BIGQUERY_CLIENT_VERSION_MAJOR}")
+    bigquery_client PROPERTIES VERSION "${BIGQUERY_CLIENT_VERSION}"
+                               SOVERSION "${BIGQUERY_CLIENT_VERSION_MAJOR}")
 target_compile_options(bigquery_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_BIGQUERY_EXCEPTIONS_FLAG})
 
@@ -141,7 +141,7 @@ function (bigquery_client_define_tests)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
     add_library(bigquery_client_testing
-            ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_storage_stub.h)
+                ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_storage_stub.h)
     target_link_libraries(
         bigquery_client_testing
         PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing
@@ -231,18 +231,8 @@ install(
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
             COMPONENT google_cloud_cpp_bigquery_development)
 
-install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-    DESTINATION include/google/cloud/bigquery
-    COMPONENT google_cloud_cpp_bigquery_development
-    FILES_MATCHING
-    PATTERN "*.h")
-install(
-    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/"
-    DESTINATION include/google/cloud/bigquery
-    COMPONENT google_cloud_cpp_bigquery_development
-    FILES_MATCHING
-    PATTERN "*.inc")
+google_cloud_cpp_install_headers("bigquery_client"
+                                 "include/google/cloud/bigquery")
 
 # Setup global variables used in the following *.in files.
 set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_MAJOR ${BIGQUERY_CLIENT_VERSION_MAJOR})

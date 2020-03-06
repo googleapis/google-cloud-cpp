@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
-#define GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_H
 
 #include "google/cloud/bigquery/read_result.h"
 #include "google/cloud/bigquery/read_stream.h"
@@ -42,4 +42,4 @@ class Connection {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_BIGQUERY_CONNECTION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_CONNECTION_H

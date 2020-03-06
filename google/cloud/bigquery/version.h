@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef BIGQUERY_VERSION_H_
-#define BIGQUERY_VERSION_H_
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_VERSION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_VERSION_H
 
 #include "google/cloud/bigquery/version_info.h"
 #include "google/cloud/version.h"
@@ -55,4 +55,4 @@ std::string VersionString();
 }  // namespace cloud
 }  // namespace google
 
-#endif  // BIGQUERY_VERSION_H_
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_VERSION_H

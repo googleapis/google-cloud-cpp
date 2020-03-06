@@ -31,7 +31,7 @@ std::string SerializeReadStream(ReadStream const& /*read_stream*/) {
 }
 
 StatusOr<ReadStream> DeserializeReadStream(
-    std::string /*serialized_read_stream*/) {
+    std::string const& /*serialized_read_stream*/) {
   return {};
 }
 
