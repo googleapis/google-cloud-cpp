@@ -86,7 +86,7 @@ trap exit_handler EXIT
 # we make sure it's installed early on so we don't fail after completing part
 # of the release. We also use 'hub' to do the clone so that the user is asked
 # to authenticate at the beginning of the process rather than at the end.
-if ! which hub > /dev/null; then
+if command -v hub > /dev/null; then
   echo "Can't find 'hub' command"
   echo "Maybe run: sudo apt install hub"
   echo "Or build it from https://github.com/github/hub"
