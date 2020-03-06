@@ -84,6 +84,7 @@ sha256sum google-cloud-sdk-282.0.0-linux-x86_64.tar.gz | \
     grep -q '^db2fd176a998381ef937bd9f9e83b16eadff864111255d771976d654c961fc95 '
 tar x -C "${HOME}" -f google-cloud-sdk-282.0.0-linux-x86_64.tar.gz
 "${HOME}/google-cloud-sdk/bin/gcloud" --quiet components install cbt
+export CBT="${HOME}/google-cloud-sdk/bin/cbt"
 
 echo "================================================================"
 echo "Setup environment for integration tests $(date)"
