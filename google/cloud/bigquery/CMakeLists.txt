@@ -155,7 +155,8 @@ function (bigquery_client_define_tests)
     target_compile_options(bigquery_client_testing
                            PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
 
-    set(bigquery_client_unit_tests internal/connection_impl_test.cc)
+    set(bigquery_client_unit_tests # cmake-format: sort
+                                   internal/connection_impl_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.

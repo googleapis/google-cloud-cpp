@@ -19,8 +19,10 @@ include(EnableWerror)
 include(GoogleCloudCppBigQueryFunctions)
 
 function (bigquery_client_define_samples)
-    set(bigquery_client_integration_samples read.cc)
-    set(bigquery_client_unit_samples)
+    set(bigquery_client_integration_samples # cmake-format: sort
+                                            read.cc)
+    set(bigquery_client_unit_samples # cmake-format: sort
+    )
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain
     # the list in two places.
