@@ -230,13 +230,13 @@ std::string V4SignUrlRequest::SignedHeaders() const {
 }
 
 std::string V4SignUrlRequest::PayloadHashValue() const {
-  auto it =
-      std::find_if(common_request_.extension_headers().begin(),
-                   common_request_.extension_headers().end(),
-                   [](const std::pair<const std::string, std::string>& entry) {
-                     return entry.first == "x-goog-content-sha256" ||
-                            entry.first == "x-amz-content-sha256";
-                   });
+  using value_type = std::map<std::string, std::string>::value_type;
+  auto it = std::find_if(common_request_.extension_headers().begin(),
+                         common_request_.extension_headers().end(),
+                         [](value_type const& entry) {
+                           return entry.first == "x-goog-content-sha256" ||
+                                  entry.first == "x-amz-content-sha256";
+                         });
   if (it != common_request_.extension_headers().end()) {
     return it->second;
   }
