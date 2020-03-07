@@ -58,9 +58,17 @@ std::vector<std::string> V4SignUrlRequest::ObjectNameParts() const {
   return common_request_.ObjectNameParts();
 }
 
+namespace {
+std::chrono::hours DefaultV4SignedUrlExpiration() {
+  auto constexpr kHoursInDay = 24;
+  auto constexpr kDaysInWeek = 7;
+  return std::chrono::hours{kDaysInWeek * kHoursInDay};
+}
+}  // namespace
+
 std::chrono::system_clock::time_point
 V2SignUrlRequest::DefaultExpirationTime() {
-  return std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
+  return std::chrono::system_clock::now() + DefaultV4SignedUrlExpiration();
 }
 
 std::string V2SignUrlRequest::StringToSign() const {
@@ -182,7 +190,7 @@ std::chrono::system_clock::time_point V4SignUrlRequest::DefaultTimestamp() {
 }
 
 std::chrono::seconds V4SignUrlRequest::DefaultExpires() {
-  return std::chrono::seconds(7 * std::chrono::hours(24));
+  return DefaultV4SignedUrlExpiration();
 }
 
 std::string V4SignUrlRequest::CanonicalRequestHash(
