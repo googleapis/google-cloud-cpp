@@ -386,8 +386,9 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  auto clusters_list = instance_admin_->ListClusters();
-  ASSERT_STATUS_OK((clusters_list));
+  auto clusters_list =
+      instance_admin_->ListClusters(table_admin_->instance_id());
+  ASSERT_STATUS_OK(clusters_list);
   std::string const backup_cluster_full_name = clusters_list->clusters.begin()->name();
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
           backup_cluster_full_name.rfind("/") + 1, backup_cluster_full_name.size() -
@@ -473,8 +474,9 @@ TEST_F(AdminIntegrationTest, RestoreTableFromBackup) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-  auto clusters_list = instance_admin_->ListClusters();
-  ASSERT_STATUS_OK((clusters_list));
+  auto clusters_list =
+      instance_admin_->ListClusters(table_admin_->instance_id());
+  ASSERT_STATUS_OK(clusters_list);
   std::string const backup_cluster_full_name = clusters_list->clusters.begin()->name();
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
           backup_cluster_full_name.rfind("/") + 1, backup_cluster_full_name.size() -
