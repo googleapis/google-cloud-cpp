@@ -62,9 +62,9 @@ RUN ldconfig
 # #### googleapis
 
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.4.1.tar.gz
-RUN tar -xf v0.4.1.tar.gz
-WORKDIR /var/tmp/build/cpp-cmakefiles-0.4.1
+RUN wget -q https://github.com/googleapis/cpp-cmakefiles/archive/v0.5.0.tar.gz
+RUN tar -xf v0.5.0.tar.gz
+WORKDIR /var/tmp/build/cpp-cmakefiles-0.5.0
 RUN cmake \
     -DBUILD_SHARED_LIBS=YES \
     -H. -Bcmake-out
