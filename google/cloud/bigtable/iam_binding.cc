@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace BIGTABLE_CLIENT_NS {
 google::iam::v1::Binding IamBinding(
     std::string role, std::initializer_list<std::string> members) {
   return IamBinding(std::move(role), members.begin(), members.end());
@@ -73,7 +73,7 @@ std::ostream& operator<<(std::ostream& os,
   return os;
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

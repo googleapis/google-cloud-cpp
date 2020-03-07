@@ -22,7 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace STORAGE_CLIENT_NS {
 /**
  * Represents a google::type::Expr.
  *
@@ -154,7 +154,7 @@ class NativeIamPolicy {
 
 std::ostream& operator<<(std::ostream& os, NativeIamPolicy const& rhs);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google

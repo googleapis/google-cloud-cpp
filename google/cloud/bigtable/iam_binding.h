@@ -15,14 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_IAM_BINDING_H
 
-#include "google/cloud/version.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/bigtable/admin/v2/bigtable_instance_admin.grpc.pb.h>
 #include <set>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Create a google::iam::v1::Binding.
  *
@@ -169,7 +169,7 @@ google::iam::v1::Binding IamBinding(std::string role, InputIt begin,
                                 std::move(condition));
 }
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
