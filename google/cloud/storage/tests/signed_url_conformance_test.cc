@@ -191,19 +191,16 @@ int main(int argc, char* argv[]) {
 
   // The implementation is not yet completed and these tests still fail, so skip
   // them so far.
-  std::set<std::string> nonconformant_tests{
-      "HTTPBucketBoundDomainSupport",
-      "HTTPSBucketBoundDomainSupport",
-      "Headersshouldbetrimmed",
-      "ListObjects",
-      "POSTPolicyACLmatching",
-      "POSTPolicyCacheControlFileHeader",
-      "POSTPolicySimple",
-      "POSTPolicySuccessWithRedirect",
-      "POSTPolicySuccessWithStatus",
-      "POSTPolicyWithinContentRange",
-      "SignedPayloadInsteadofUNSIGNEDPAYLOAD",
-      "VirtualHostedStyle"};
+  std::set<std::string> nonconformant_tests{"HTTPBucketBoundDomainSupport",
+                                            "HTTPSBucketBoundDomainSupport",
+                                            "ListObjects",
+                                            "POSTPolicyACLmatching",
+                                            "POSTPolicyCacheControlFileHeader",
+                                            "POSTPolicySimple",
+                                            "POSTPolicySuccessWithRedirect",
+                                            "POSTPolicySuccessWithStatus",
+                                            "POSTPolicyWithinContentRange",
+                                            "VirtualHostedStyle"};
 
   auto json = google::cloud::storage::internal::nl::json::parse(ifstr);
   if (json.is_discarded()) {

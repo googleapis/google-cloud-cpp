@@ -116,6 +116,9 @@ std::string QueryStringFromParameters(
 
 std::string TrimHeaderValue(std::string const& value) {
   std::string tmp = value;
+  // Heasder values need to be normalized for spaces, whitespaces and tabs
+  std::replace_if(tmp.begin(), tmp.end(),
+                  [](char c) { return std::isspace(c); }, ' ');
   tmp.erase(0, tmp.find_first_not_of(' '));
   tmp = tmp.substr(0, tmp.find_last_not_of(' ') + 1);
   auto end = std::unique(tmp.begin(), tmp.end(),
@@ -163,7 +166,7 @@ std::string V4SignUrlRequest::CanonicalRequest(
   for (auto&& kv : common_request_.extension_headers()) {
     os << kv.first << ":" << TrimHeaderValue(kv.second) << "\n";
   }
-  os << "\n" << SignedHeaders() << "\nUNSIGNED-PAYLOAD";
+  os << "\n" << SignedHeaders() << "\n" << PayloadHashValue();
 
   return std::move(os).str();
 }
@@ -224,6 +227,20 @@ std::string V4SignUrlRequest::SignedHeaders() const {
     sep = ";";
   }
   return result;
+}
+
+std::string V4SignUrlRequest::PayloadHashValue() const {
+  auto it =
+      std::find_if(common_request_.extension_headers().begin(),
+                   common_request_.extension_headers().end(),
+                   [](const std::pair<const std::string, std::string>& entry) {
+                     return entry.first == "x-goog-content-sha256" ||
+                            entry.first == "x-amz-content-sha256";
+                   });
+  if (it != common_request_.extension_headers().end()) {
+    return it->second;
+  }
+  return "UNSIGNED-PAYLOAD";
 }
 
 std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r) {
