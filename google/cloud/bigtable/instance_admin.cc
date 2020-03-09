@@ -101,7 +101,8 @@ future<StatusOr<InstanceList>> InstanceAdmin::AsyncListInstances(
                return client->AsyncListInstances(context, request, cq);
              },
              std::move(request), Accumulator(),
-             [](Accumulator acc, btadmin::ListInstancesResponse response) {
+             [](Accumulator acc,
+                btadmin::ListInstancesResponse const& response) {
                std::move(response.failed_locations().begin(),
                          response.failed_locations().end(),
                          std::inserter(acc.failed_locations,
@@ -462,7 +463,8 @@ future<StatusOr<ClusterList>> InstanceAdmin::AsyncListClusters(
                return client->AsyncListClusters(context, request, cq);
              },
              std::move(request), Accumulator(),
-             [](Accumulator acc, btadmin::ListClustersResponse response) {
+             [](Accumulator acc,
+                btadmin::ListClustersResponse const& response) {
                std::move(response.failed_locations().begin(),
                          response.failed_locations().end(),
                          std::inserter(acc.failed_locations,
@@ -710,7 +712,7 @@ InstanceAdmin::AsyncListAppProfiles(CompletionQueue& cq,
       },
       std::move(request), std::vector<btadmin::AppProfile>(),
       [](std::vector<btadmin::AppProfile> acc,
-         btadmin::ListAppProfilesResponse response) {
+         btadmin::ListAppProfilesResponse const& response) {
         std::move(response.app_profiles().begin(),
                   response.app_profiles().end(), std::back_inserter(acc));
         return acc;
