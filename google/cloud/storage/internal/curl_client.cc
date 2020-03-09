@@ -31,14 +31,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 namespace {
 
-// The libcurl library handles (most) redirects, so anything above 300 is
-// actually an error.
-auto constexpr kHttpStatusCodeMinError = 300;
-
-// Google's resumable upload protocol abuses 308 (Permanent Redirect) as
-// "Resume Incomplete".
-auto constexpr kHttpStatusCodeResumeIncomplete = 308;
-
 extern "C" void CurlShareLockCallback(CURL*, curl_lock_data data,
                                       curl_lock_access, void* userptr) {
   auto* client = reinterpret_cast<CurlClient*>(userptr);
@@ -87,7 +79,7 @@ StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ReturnType::ParseFromString(response->payload);
@@ -99,7 +91,7 @@ auto CheckedFromString(StatusOr<HttpResponse> response)
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return Parser::FromString(response->payload);
@@ -109,7 +101,7 @@ StatusOr<EmptyResponse> ReturnEmptyResponse(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return EmptyResponse{};
@@ -120,7 +112,7 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ReturnType::FromHttpResponse(response->payload);
@@ -245,7 +237,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   if (!http_response.ok()) {
     return std::move(http_response).status();
   }
-  if (http_response->status_code >= kHttpStatusCodeMinError) {
+  if (http_response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*http_response);
   }
   auto response =
@@ -316,7 +308,8 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code < kHttpStatusCodeMinError || response->status_code == kHttpStatusCodeResumeIncomplete) {
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -336,7 +329,8 @@ StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code < kHttpStatusCodeMinError || response->status_code == kHttpStatusCodeResumeIncomplete) {
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -434,7 +428,7 @@ StatusOr<IamPolicy> CurlClient::GetBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ParseIamPolicyFromString(response->payload);
@@ -453,7 +447,7 @@ StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return NativeIamPolicy::CreateFromJson(response->payload);
@@ -473,7 +467,7 @@ StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ParseIamPolicyFromString(response->payload);
@@ -493,7 +487,7 @@ StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return NativeIamPolicy::CreateFromJson(response->payload);
@@ -515,7 +509,7 @@ StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return TestBucketIamPermissionsResponse::FromHttpResponse(response->payload);
@@ -724,7 +718,7 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   // This one does not use the common "ParseFromHttpResponse" function because
@@ -762,7 +756,7 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return internal::ListBucketAclResponse::FromHttpResponse(response->payload);
@@ -1329,7 +1323,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= kHttpStatusCodeMinError) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return internal::ObjectMetadataParser::FromJson(nl::json{

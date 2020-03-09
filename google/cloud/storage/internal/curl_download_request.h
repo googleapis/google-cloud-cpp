@@ -103,7 +103,7 @@ class CurlDownloadRequest : public ObjectReadSource {
   Status WaitForHandles(int& repeats);
 
   /// Simplify handling of errors in the curl_multi_* API.
-  Status AsStatus(CURLMcode result, char const* where);
+  static Status AsStatus(CURLMcode result, char const* where);
 
   std::string url_;
   CurlHeaders headers_;

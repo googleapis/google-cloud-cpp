@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/object_metadata.h"
+#include <cinttypes>
 #include <sstream>
 
 namespace google {
@@ -233,9 +234,10 @@ std::ostream& operator<<(std::ostream& os, InsertObjectMediaRequest const& r) {
   os << "InsertObjectMediaRequest={bucket_name=" << r.bucket_name()
      << ", object_name=" << r.object_name();
   r.DumpOptions(os, ", ");
-  if (r.contents().size() > 1024) {
+  std::size_t constexpr kMaxDumpSize = 1024;
+  if (r.contents().size() > kMaxDumpSize) {
     os << ", contents[0..1024]=\n"
-       << BinaryDataAsDebugString(r.contents().data(), 1024);
+       << BinaryDataAsDebugString(r.contents().data(), kMaxDumpSize);
   } else {
     os << ", contents=\n"
        << BinaryDataAsDebugString(r.contents().data(), r.contents().size());
@@ -331,8 +333,8 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
        << ">";
     google::cloud::internal::ThrowInvalidArgument(os.str());
   };
-  char unit_descriptor[] = "bytes";
-  if (0 != content_range_value.find(unit_descriptor)) {
+  char const unit_descriptor[] = "bytes";  // NOLINT(modernize-avoid-c-arrays)
+  if (content_range_value.rfind(unit_descriptor, 0) != 0) {
     raise_error();
   }
   char const* buffer = content_range_value.data();
@@ -347,8 +349,8 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
   if (buffer[0] == '*' && buffer[1] == '/') {
     // The header is just the indication of size ('bytes */<size>'), parse that.
     buffer += 2;
-    long long object_size;
-    auto count = std::sscanf(buffer, "%lld", &object_size);
+    std::int64_t object_size;
+    auto count = std::sscanf(buffer, "%" PRId64, &object_size);
     if (count != 1) {
       raise_error();
     }
@@ -356,11 +358,11 @@ ReadObjectRangeResponse ReadObjectRangeResponse::FromHttpResponse(
                                    object_size};
   }
 
-  long long first_byte;
-  long long last_byte;
-  long long object_size;
-  auto count = std::sscanf(buffer, "%lld-%lld/%lld", &first_byte, &last_byte,
-                           &object_size);
+  std::int64_t first_byte;
+  std::int64_t last_byte;
+  std::int64_t object_size;
+  auto count = std::sscanf(buffer, "%" PRId64 "-%" PRId64 "/%" PRId64,
+                           &first_byte, &last_byte, &object_size);
   if (count != 3) {
     raise_error();
   }
@@ -589,9 +591,10 @@ std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r) {
   os << "UploadChunkRequest={upload_session_url=" << r.upload_session_url()
      << ", range=<" << r.RangeHeader() << ">";
   r.DumpOptions(os, ", ");
+  auto constexpr kMaxOutputBytes = 128;
   return os << ", payload="
             << BinaryDataAsDebugString(r.payload().data(), r.payload().size(),
-                                       128)
+                                       kMaxOutputBytes)
             << "}";
 }
 

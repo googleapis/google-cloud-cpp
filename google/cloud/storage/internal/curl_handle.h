@@ -107,13 +107,14 @@ class CurlHandle {
   friend class CurlRequestBuilder;
   friend class CurlHandleFactory;
 
-  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, long param);
-  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                        char const* param);
-  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt,
-                                        void* param);
+  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
+                                               std::intmax_t param);
+  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
+                                               char const* param);
+  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt,
+                                               void* param);
   template <typename T>
-  [[noreturn]] void ThrowSetOptionError(CURLcode e, CURLoption opt, T) {
+  [[noreturn]] static void ThrowSetOptionError(CURLcode e, CURLoption opt, T) {
     std::string param = "complex-type=<";
     param += typeid(T).name();
     param += ">";
