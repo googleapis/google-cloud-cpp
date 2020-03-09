@@ -20,8 +20,9 @@ namespace google {
 namespace cloud {
 namespace firestore {
 
-FieldPath::FieldPath(std::vector<std::string> const parts) : parts_(parts) {
-  for (auto const& part : parts) {
+FieldPath::FieldPath(std::vector<std::string> parts)
+    : parts_(std::move(parts)) {
+  for (auto const& part : parts_) {
     if (part.empty()) {
       this->valid_ = false;
       return;
