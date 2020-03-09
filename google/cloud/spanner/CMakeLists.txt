@@ -126,6 +126,7 @@ add_library(
     internal/api_client_header.cc
     internal/api_client_header.h
     internal/build_info.h
+    internal/channel.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/connection_impl.cc

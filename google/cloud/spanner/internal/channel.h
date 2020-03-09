@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,7 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/spanner/internal/session.h"
+#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_CHANNEL_H
+#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_CHANNEL_H
+
+#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/version.h"
+#include <memory>
 
 namespace google {
 namespace cloud {
@@ -20,14 +25,26 @@ namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 
-SessionHolder MakeDissociatedSessionHolder(std::string session_name) {
-  return SessionHolder(
-      new Session(std::move(session_name), /*channel=*/nullptr),
-      std::default_delete<Session>());
-}
+/**
+ * `Channel` represents a single gRPC Channel/Stub.
+ */
+struct Channel {
+  /// @p stub_param must not be nullptr
+  explicit Channel(std::shared_ptr<SpannerStub> stub_param)
+      : stub(std::move(stub_param)) {}
+
+  // This class is not copyable or movable.
+  Channel(Channel const&) = delete;
+  Channel& operator=(Channel const&) = delete;
+
+  std::shared_ptr<SpannerStub> const stub;
+  int session_count = 0;
+};
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
 }  // namespace cloud
 }  // namespace google
+
+#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_CHANNEL_H

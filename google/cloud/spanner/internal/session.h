@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_H
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_H
 
-#include "google/cloud/spanner/internal/spanner_stub.h"
+#include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/version.h"
 #include <atomic>
 #include <memory>
@@ -35,9 +35,9 @@ namespace internal {
  */
 class Session {
  public:
-  Session(std::string session_name, std::shared_ptr<SpannerStub> stub)
+  Session(std::string session_name, std::shared_ptr<Channel> channel)
       : session_name_(std::move(session_name)),
-        stub_(std::move(stub)),
+        channel_(std::move(channel)),
         is_bad_(false) {}
 
   // Not copyable or moveable.
@@ -53,11 +53,11 @@ class Session {
   bool is_bad() const { return is_bad_.load(std::memory_order_relaxed); }
 
  private:
-  friend class SessionPool;  // for access to stub()
-  std::shared_ptr<SpannerStub> stub() const { return stub_; }
+  friend class SessionPool;  // for access to channel()
+  std::shared_ptr<Channel> const& channel() const { return channel_; }
 
   std::string const session_name_;
-  std::shared_ptr<SpannerStub> const stub_;
+  std::shared_ptr<Channel> const channel_;
   std::atomic<bool> is_bad_;
 };
 

@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/database.h"
+#include "google/cloud/spanner/internal/channel.h"
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/retry_policy.h"
@@ -97,13 +98,6 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
 
  private:
-  struct ChannelInfo {
-    explicit ChannelInfo(std::shared_ptr<SpannerStub> stub_param)
-        : stub(std::move(stub_param)) {}
-    std::shared_ptr<SpannerStub> const stub;
-    int session_count = 0;
-  };
-
   // Release session back to the pool.
   void Release(std::unique_ptr<Session> session);
 
@@ -116,7 +110,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     --num_waiting_for_session_;
   }
 
-  Status CreateSessions(std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
+  Status CreateSessions(std::unique_lock<std::mutex>& lk,
+                        std::shared_ptr<Channel> const& channel,
                         std::map<std::string, std::string> const& labels,
                         int num_sessions);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
@@ -146,11 +141,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // `channels_` is guaranteed to be non-empty and will not be resized after
   // the constructor runs (so the iterators are guaranteed to always be valid).
   // TODO(#566) replace `vector` with `absl::FixedArray` when available.
-  std::vector<ChannelInfo> channels_;  // GUARDED_BY(mu_)
-  std::vector<ChannelInfo>::iterator
-      next_channel_for_create_sessions_;  // GUARDED_BY(mu_)
-  std::vector<ChannelInfo>::iterator
-      next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
+  using ChannelVec = std::vector<std::shared_ptr<Channel>>;
+  ChannelVec channels_;                                    // GUARDED_BY(mu_)
+  ChannelVec::iterator next_channel_for_create_sessions_;  // GUARDED_BY(mu_)
+  ChannelVec::iterator next_dissociated_stub_channel_;     // GUARDED_BY(mu_)
 };
 
 /**

@@ -69,7 +69,7 @@ SessionPool::SessionPool(Database db,
 
   channels_.reserve(stubs.size());
   for (auto& stub : stubs) {
-    channels_.emplace_back(std::move(stub));
+    channels_.push_back(std::make_shared<Channel>(std::move(stub)));
   }
   // `channels_` is never resized after this point.
   next_dissociated_stub_channel_ = channels_.begin();
@@ -147,6 +147,10 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
       sessions_.pop_back();
       if (dissociate_from_pool) {
         --total_sessions_;
+        auto const& channel = session->channel();
+        if (channel) {
+          --channel->session_count;
+        }
       }
       return {MakeSessionHolder(std::move(session), dissociate_from_pool)};
     }
@@ -176,10 +180,10 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 
     // Add `min_sessions` to the pool (plus the one we're going to return),
     // subject to the `max_sessions_per_channel` cap.
-    ChannelInfo& channel = *next_channel_for_create_sessions_;
-    int sessions_to_create =
-        (std::min)(options_.min_sessions() + 1,
-                   options_.max_sessions_per_channel() - channel.session_count);
+    auto const& channel = *next_channel_for_create_sessions_;
+    int sessions_to_create = (std::min)(
+        options_.min_sessions() + 1,
+        options_.max_sessions_per_channel() - channel->session_count);
     auto create_status =
         CreateSessions(lk, channel, options_.labels(), sessions_to_create);
     if (!create_status.ok()) {
@@ -191,15 +195,18 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
 }
 
 std::shared_ptr<SpannerStub> SessionPool::GetStub(Session const& session) {
-  std::shared_ptr<SpannerStub> stub = session.stub();
-  if (!stub) {
-    // Sessions that were created for partitioned Reads/Queries do not have
-    // their own stub; return one to use by round-robining between the channels.
-    std::unique_lock<std::mutex> lk(mu_);
-    stub = next_dissociated_stub_channel_->stub;
-    if (++next_dissociated_stub_channel_ == channels_.end()) {
-      next_dissociated_stub_channel_ = channels_.begin();
-    }
+  auto const& channel = session.channel();
+  if (channel) {
+    return channel->stub;
+  }
+
+  // Sessions that were created for partitioned Reads/Queries do not have
+  // their own channel/stub; return a stub to use by round-robining between
+  // the channels.
+  std::unique_lock<std::mutex> lk(mu_);
+  auto stub = (*next_dissociated_stub_channel_)->stub;
+  if (++next_dissociated_stub_channel_ == channels_.end()) {
+    next_dissociated_stub_channel_ = channels_.begin();
   }
   return stub;
 }
@@ -210,6 +217,10 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
     // Once we have support for background processing, we may want to signal
     // that to replenish this bad session.
     --total_sessions_;
+    auto const& channel = session->channel();
+    if (channel) {
+      --channel->session_count;
+    }
     return;
   }
   sessions_.push_back(std::move(session));
@@ -224,7 +235,7 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
 // Requires `lk` has locked `mu_` prior to this call. `lk` will be dropped
 // while the RPC is in progress and then reacquired.
 Status SessionPool::CreateSessions(
-    std::unique_lock<std::mutex>& lk, ChannelInfo& channel,
+    std::unique_lock<std::mutex>& lk, std::shared_ptr<Channel> const& channel,
     std::map<std::string, std::string> const& labels, int num_sessions) {
   create_in_progress_ = true;
   lk.unlock();
@@ -233,7 +244,7 @@ Status SessionPool::CreateSessions(
   request.mutable_session_template()->mutable_labels()->insert(labels.begin(),
                                                                labels.end());
   request.set_session_count(std::int32_t{num_sessions});
-  auto const& stub = channel.stub;
+  auto const& stub = channel->stub;
   auto response = RetryLoop(
       retry_policy_prototype_->clone(), backoff_policy_prototype_->clone(),
       true,
@@ -249,12 +260,12 @@ Status SessionPool::CreateSessions(
   }
   // Add sessions to the pool and update counters for `channel` and the pool.
   int sessions_created = response->session_size();
-  channel.session_count += sessions_created;
+  channel->session_count += sessions_created;
   total_sessions_ += sessions_created;
   sessions_.reserve(sessions_.size() + sessions_created);
   for (auto& session : *response->mutable_session()) {
     sessions_.push_back(google::cloud::internal::make_unique<Session>(
-        std::move(*session.mutable_name()), stub));
+        std::move(*session.mutable_name()), channel));
   }
   // Shuffle the pool so we distribute returned sessions across channels.
   std::shuffle(sessions_.begin(), sessions_.end(),
@@ -269,7 +280,8 @@ void SessionPool::UpdateNextChannelForCreateSessions() {
   // `mu_` must be held by the caller.
   next_channel_for_create_sessions_ = channels_.begin();
   for (auto it = channels_.begin(); it != channels_.end(); ++it) {
-    if (it->session_count < next_channel_for_create_sessions_->session_count) {
+    if ((*it)->session_count <
+        (*next_channel_for_create_sessions_)->session_count) {
       next_channel_for_create_sessions_ = it;
     }
   }
