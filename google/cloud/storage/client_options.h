@@ -23,6 +23,26 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
+
+/**
+ * Describes the configuration of low-level features to do with the I/O
+ * channels. Held in a separate class from ClientOptions so they can be used,
+ * e.g. when constructing the Credentials object needed by ClientOptions.
+ *
+ */
+class ChannelOptions {
+ public:
+  std::string ssl_root_path() const { return ssl_root_path_; }
+
+  ChannelOptions& set_ssl_root_path(std::string ssl_root_path) {
+    ssl_root_path_ = std::move(ssl_root_path);
+    return *this;
+  }
+
+ private:
+  std::string ssl_root_path_;
+};
+
 /**
  * Describes the configuration for a `storage::Client` object.
  *
@@ -41,7 +61,8 @@ inline namespace STORAGE_CLIENT_NS {
  */
 class ClientOptions {
  public:
-  explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials);
+  explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials) : ClientOptions(credentials, {}) {}
+  ClientOptions(std::shared_ptr<oauth2::Credentials> credentials, ChannelOptions const& channel_options);
 
   /**
    * Creates a `ClientOptions` with Google Application Default %Credentials.
@@ -52,6 +73,7 @@ class ClientOptions {
    * `AnonymousCredentials` to configure the client.
    */
   static StatusOr<ClientOptions> CreateDefaultClientOptions();
+  static StatusOr<ClientOptions> CreateDefaultClientOptions(ChannelOptions const& channel_options);
 
   std::shared_ptr<oauth2::Credentials> credentials() const {
     return credentials_;
@@ -163,6 +185,9 @@ class ClientOptions {
     return *this;
   }
 
+  ChannelOptions& channel_options() { return channel_options_; }
+  ChannelOptions const& channel_options() const { return channel_options_; }
+
   //@{
   /**
    * Control the maximum amount of time allowed for "stalls" during a download.
@@ -203,6 +228,7 @@ class ClientOptions {
   std::size_t maximum_socket_recv_size_ = 0;
   std::size_t maximum_socket_send_size_ = 0;
   std::chrono::seconds download_stall_timeout_;
+  ChannelOptions channel_options_;
 };
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
