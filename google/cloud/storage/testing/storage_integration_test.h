@@ -74,11 +74,12 @@ class StorageIntegrationTest : public ::testing::Test {
 template <typename Callable>
 void TestPermanentFailure(Callable&& callable) {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { callable(); } catch (std::runtime_error const& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr("Permanent error in"));
-    throw;
-  },
-               std::runtime_error);
+  EXPECT_THROW(
+      try { callable(); } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("Permanent error in"));
+        throw;
+      },
+      std::runtime_error);
 #else
   EXPECT_DEATH_IF_SUPPORTED(callable(), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

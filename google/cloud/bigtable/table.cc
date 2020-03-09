@@ -425,12 +425,12 @@ future<StatusOr<std::pair<bool, Row>>> Table::AsyncReadRow(CompletionQueue& cq,
   RowSet row_set(std::move(row_key));
   std::int64_t const rows_limit = 1;
   auto handler = std::make_shared<AsyncReadRowHandler>();
-  AsyncReadRows(cq,
-                [handler](Row row) { return handler->OnRow(std::move(row)); },
-                [handler](Status status) {
-                  handler->OnStreamFinished(std::move(status));
-                },
-                std::move(row_set), rows_limit, std::move(filter));
+  AsyncReadRows(
+      cq, [handler](Row row) { return handler->OnRow(std::move(row)); },
+      [handler](Status status) {
+        handler->OnStreamFinished(std::move(status));
+      },
+      std::move(row_set), rows_limit, std::move(filter));
   return handler->GetFuture();
 }
 

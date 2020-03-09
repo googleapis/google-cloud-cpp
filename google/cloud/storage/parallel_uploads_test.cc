@@ -1048,8 +1048,8 @@ TEST(ParallelUploadPersistentState, NoGeneration) {
 
 TEST(ParallelUploadPersistentState, GenerationNotAString) {
   auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
-      {"destination", "dest"}, {"expected_generation", "blah"}}
-                                                           .dump());
+      {"destination", "dest"},
+      {"expected_generation", "blah"}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1058,8 +1058,9 @@ TEST(ParallelUploadPersistentState, GenerationNotAString) {
 
 TEST(ParallelUploadPersistentState, CustomDataNotAString) {
   auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
-      {"destination", "dest"}, {"expected_generation", 1}, {"custom_data", 123}}
-                                                           .dump());
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"custom_data", 123}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1067,9 +1068,8 @@ TEST(ParallelUploadPersistentState, CustomDataNotAString) {
 }
 
 TEST(ParallelUploadPersistentState, NoStreams) {
-  auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", "dest"}, {"expected_generation", 1}}
-          .dump());
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"}, {"expected_generation", 1}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain 'streams'"));
@@ -1077,8 +1077,9 @@ TEST(ParallelUploadPersistentState, NoStreams) {
 
 TEST(ParallelUploadPersistentState, StreamsNotArray) {
   auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
-      {"destination", "dest"}, {"expected_generation", 1}, {"streams", 5}}
-                                                           .dump());
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", 5}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("is not an array"));
@@ -1086,19 +1087,19 @@ TEST(ParallelUploadPersistentState, StreamsNotArray) {
 
 TEST(ParallelUploadPersistentState, StreamNotObject) {
   auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
-      {"destination", "dest"}, {"expected_generation", 1}, {"streams", {5}}}
-                                                           .dump());
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", {5}}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("'stream' is not an object"));
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoName) {
-  auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", "dest"},
-                         {"expected_generation", 1},
-                         {"streams", {internal::nl::json::object()}}}
-          .dump());
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", {internal::nl::json::object()}}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1106,11 +1107,10 @@ TEST(ParallelUploadPersistentState, StreamHasNoName) {
 }
 
 TEST(ParallelUploadPersistentState, StreamNameNotString) {
-  auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", "dest"},
-                         {"expected_generation", 1},
-                         {"streams", {{{"name", 1}}}}}
-          .dump());
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", {{{"name", 1}}}}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1118,11 +1118,10 @@ TEST(ParallelUploadPersistentState, StreamNameNotString) {
 }
 
 TEST(ParallelUploadPersistentState, StreamHasNoSessionId) {
-  auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", "dest"},
-                         {"expected_generation", 1},
-                         {"streams", {{{"name", "abc"}}}}}
-          .dump());
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", {{{"name", "abc"}}}}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1133,8 +1132,8 @@ TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
   auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
       {"destination", "dest"},
       {"expected_generation", 1},
-      {"streams", {{{"name", "abc"}, {"resumable_session_id", 123}}}}}
-                                                           .dump());
+      {"streams",
+       {{{"name", "abc"}, {"resumable_session_id", 123}}}}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(),
@@ -1142,11 +1141,10 @@ TEST(ParallelUploadPersistentState, StreamSessionIdNotString) {
 }
 
 TEST(ParallelUploadPersistentState, StreamsEmpty) {
-  auto res = ParallelUploadPersistentState::FromString(
-      internal::nl::json{{"destination", "dest"},
-                         {"expected_generation", 1},
-                         {"streams", internal::nl::json::array()}}
-          .dump());
+  auto res = ParallelUploadPersistentState::FromString(internal::nl::json{
+      {"destination", "dest"},
+      {"expected_generation", 1},
+      {"streams", internal::nl::json::array()}}.dump());
   EXPECT_FALSE(res);
   EXPECT_EQ(StatusCode::kInternal, res.status().code());
   EXPECT_THAT(res.status().message(), HasSubstr("doesn't contain any streams"));

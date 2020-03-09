@@ -1,9 +1,30 @@
 ---
 # Configure clang-tidy for this project.
 
-# Disabled:
-#  -google-readability-namespace-comments the *_CLIENT_NS is a macro, and
-#   clang-tidy fails to match it against the initial value.
+# Here is an explanation for why some of the checks are disabled:
+#
+#  -google-readability-namespace-comments: the *_CLIENT_NS is a macro, and
+#      clang-tidy fails to match it against the initial value.
+#
+#  -modernize-use-trailing-return-type: clang-tidy recommends using
+#      `auto Foo() -> std::string { return ...; }`, we think the code is less
+#      readable in this form.
+#
+#  -modernize-return-braced-init-list: We think removing typenames and using
+#      only braced-init can hurt readability.
+#
+#  -performance-move-const-arg: This warning requires the developer to
+#      know/care more about the implementation details of types/functions than
+#      should be necessary. For example, `A a; F(std::move(a));` will trigger a
+#      warning IFF `A` is a trivial type (and therefore the move is
+#      meaningless). It would also warn if `F` accepts by `const&`, which is
+#      another detail that the caller need not care about.
+#
+#  -readability-redundant-declaration: A friend declaration inside a class
+#      counts as a declaration, so if we also declare that friend outside the
+#      class in order to document it as part of the public API, that will
+#      trigger a redundant declaration warning from this check.
+#
 Checks: >
   -*,
   bugprone-*,
@@ -13,24 +34,32 @@ Checks: >
   performance-*,
   portability-*,
   readability-*,
+  -google-readability-braces-around-statements,
   -google-readability-namespace-comments,
-  -google-runtime-int,
   -google-runtime-references,
   -misc-non-private-member-variables-in-classes,
+  -modernize-return-braced-init-list,
+  -performance-move-const-arg,
   -readability-named-parameter,
+  -modernize-use-trailing-return-type,
   -readability-braces-around-statements,
-  -readability-magic-numbers
+  -readability-redundant-declaration
 
 # Turn all the warnings from the checks above into errors.
 WarningsAsErrors: "*"
+
+# TODO(#205) - Enable clang-tidy checks in our headers.
+#    HeaderFilterRegex: "google/cloud/.*"
 
 CheckOptions:
   - { key: readability-identifier-naming.NamespaceCase,          value: lower_case }
   - { key: readability-identifier-naming.ClassCase,              value: CamelCase  }
   - { key: readability-identifier-naming.StructCase,             value: CamelCase  }
   - { key: readability-identifier-naming.TemplateParameterCase,  value: CamelCase  }
-  - { key: readability-identifier-naming.FunctionCase,           value: CamelCase  }
+  - { key: readability-identifier-naming.FunctionCase,           value: aNy_CasE  }
   - { key: readability-identifier-naming.VariableCase,           value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberCase,        value: lower_case }
+  - { key: readability-identifier-naming.ClassMemberSuffix,      value: _          }
   - { key: readability-identifier-naming.PrivateMemberSuffix,    value: _          }
   - { key: readability-identifier-naming.ProtectedMemberSuffix,  value: _          }
   - { key: readability-identifier-naming.MacroDefinitionCase,    value: UPPER_CASE }

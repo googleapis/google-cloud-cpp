@@ -270,12 +270,14 @@ TEST(LifecycleRuleTest, ConditionConjunctionIsLiveInvalid) {
   auto c1 = LifecycleRule::IsLive(true);
   auto c2 = LifecycleRule::IsLive(false);
 #ifdef GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { LifecycleRule::ConditionConjunction(c1, c2); } catch (
-                   std::exception const& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr("LifecycleRule"));
-    throw;
-  },
-               std::invalid_argument);
+  EXPECT_THROW(
+      try {
+        LifecycleRule::ConditionConjunction(c1, c2);
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("LifecycleRule"));
+        throw;
+      },
+      std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(LifecycleRule::ConditionConjunction(c1, c2), "");
 #endif
