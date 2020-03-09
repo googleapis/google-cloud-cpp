@@ -130,7 +130,7 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                       char const* method) {
-  auto auth_header = AuthorizationHeader(options_.credentials());
+  auto auth_header = options_.credentials()->AuthorizationHeader();
   if (!auth_header.ok()) {
     return std::move(auth_header).status();
   }
@@ -1496,12 +1496,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
                     std::to_string(request.contents().size()));
   return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.contents()));
-}
-
-StatusOr<std::string> CurlClient::AuthorizationHeader(
-    std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
-        credentials) {
-  return credentials->AuthorizationHeader();
 }
 
 }  // namespace internal
