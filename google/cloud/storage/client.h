@@ -3205,7 +3205,7 @@ class ScopedDeleter {
   ~ScopedDeleter();
 
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())
-  void Add(ObjectMetadata object);
+  void Add(ObjectMetadata const& object);
 
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())
   void Add(std::string object_name, std::int64_t generation);
