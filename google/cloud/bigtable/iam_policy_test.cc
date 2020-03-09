@@ -20,7 +20,7 @@
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace BIGTABLE_CLIENT_NS {
 namespace {
 
 template <typename Iter>
@@ -84,7 +84,7 @@ TEST(IamPolicy, Printing) {
 }
 
 }  // namespace
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google

@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXPR_H
 
-#include "google/cloud/version.h"
+#include "google/cloud/bigtable/version.h"
 #include <google/type/expr.pb.h>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
-inline namespace GOOGLE_CLOUD_CPP_NS {
+inline namespace BIGTABLE_CLIENT_NS {
 /**
  * Create a google::type::Expr.
  *
@@ -43,7 +43,7 @@ google::type::Expr Expression(std::string expression, std::string title = "",
 
 std::ostream& operator<<(std::ostream& stream, google::type::Expr const&);
 
-}  // namespace GOOGLE_CLOUD_CPP_NS
+}  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
 }  // namespace cloud
 }  // namespace google
