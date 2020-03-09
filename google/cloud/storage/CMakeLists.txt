@@ -334,6 +334,7 @@ if (BUILD_TESTING)
         internal/bucket_requests_test.cc
         internal/compute_engine_util_test.cc
         internal/curl_client_test.cc
+        internal/curl_handle_factory_test.cc
         internal/curl_handle_test.cc
         internal/curl_resumable_upload_session_test.cc
         internal/curl_wrappers_disable_sigpipe_handler_test.cc

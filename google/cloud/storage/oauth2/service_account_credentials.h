@@ -131,9 +131,13 @@ template <typename HttpRequestBuilderType =
 class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
+      : ServiceAccountCredentials(info, {}) {}
+  ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
+                            ChannelOptions const& options)
       : info_(std::move(info)), clock_() {
     HttpRequestBuilderType request_builder(
-        info_.token_uri, storage::internal::GetDefaultCurlHandleFactory());
+        info_.token_uri,
+        storage::internal::GetDefaultCurlHandleFactory(options));
     request_builder.AddHeader(
         "Content-Type: application/x-www-form-urlencoded");
     // This is the value of grant_type for JSON-formatted service account
