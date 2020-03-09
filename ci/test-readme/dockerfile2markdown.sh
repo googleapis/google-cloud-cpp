@@ -46,6 +46,7 @@ sed_args=(
     '-e' 's/update-alternatives/sudo update-alternatives/g'
     '-e' 's/add-apt-repository/sudo add-apt-repository/g'
     '-e' 's/apt /sudo apt /g'
+    '-e' 's/apt-get /sudo apt-get /g'
     '-e' 's/dnf /sudo dnf /g'
     '-e' 's/rpm /sudo rpm /g'
     '-e' 's/yum /sudo yum /g'
