@@ -58,13 +58,6 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size,
     } else {
       text_column[count] = '.';
     }
-    auto constexpr kExpectedCharDigits = 8;
-    static_assert(
-        std::numeric_limits<unsigned char>::digits == kExpectedCharDigits,
-        "This code is designed to work on platforms with 8-bit characters."
-        " Please file a bug at"
-        "    https://github.com/googleapis/google-cloud-cpp/issues"
-        " with the details of your platform.");
     auto constexpr kCharHexWidth = 2;
     std::array<char, kCharHexWidth + 1> buf{};
     snprintf(buf.data(), buf.size(), "%02x", cval);

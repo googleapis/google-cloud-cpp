@@ -32,10 +32,9 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
             source);
   }
 
-  char const client_id_key[] = "client_id";
-  char const client_secret_key[] = "client_secret";
-  char const refresh_token_key[] = "refresh_token";
-  char const token_uri_key[] = "token_uri";  // Not required; often not present.
+  std::string const client_id_key = "client_id";
+  std::string const client_secret_key = "client_secret";
+  std::string const refresh_token_key = "refresh_token";
   for (auto const& key :
        {client_id_key, client_secret_key, refresh_token_key}) {
     if (credentials.count(key) == 0) {
@@ -58,7 +57,7 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       // Some credential formats (e.g. gcloud's ADC file) don't contain a
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
-      credentials.value(token_uri_key, default_token_uri)};
+      credentials.value("token_uri", default_token_uri)};
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>

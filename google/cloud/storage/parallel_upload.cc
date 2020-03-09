@@ -365,9 +365,9 @@ ParallelUploadFileShard::~ParallelUploadFileShard() {
 }
 
 Status ParallelUploadFileShard::Upload() {
-  std::unique_ptr<char[]> buf(new char[upload_buffer_size_]);
+  std::vector<char> buf(upload_buffer_size_);
 
-  auto fail = [this](StatusCode error_code, std::string reason) {
+  auto fail = [this](StatusCode error_code, std::string const& reason) {
     Status status(error_code, "ParallelUploadFileShard::Upload(" + file_name_ +
                                   "): " + reason);
     state_->Fail(status);
@@ -395,11 +395,11 @@ Status ParallelUploadFileShard::Upload() {
   while (left_to_upload_ > 0) {
     std::size_t const to_copy =
         std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_);
-    istream.read(buf.get(), to_copy);
+    istream.read(buf.data(), to_copy);
     if (!istream.good()) {
       return fail(StatusCode::kInternal, "cannot read from file source");
     }
-    ostream_.write(buf.get(), to_copy);
+    ostream_.write(buf.data(), to_copy);
     if (!ostream_.good()) {
       return Status(StatusCode::kInternal,
                     "Writing to output stream failed, look into whole parallel "

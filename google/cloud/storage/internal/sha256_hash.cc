@@ -15,7 +15,7 @@
 #include "google/cloud/storage/internal/sha256_hash.h"
 #include <openssl/evp.h>
 #include <openssl/sha.h>
-#include <limits>
+#include <array>
 
 namespace google {
 namespace cloud {
@@ -29,19 +29,15 @@ template <typename Byte,
 std::vector<std::uint8_t> Sha256Hash(Byte const* data, std::size_t count) {
   SHA256_CTX sha256;
   SHA256_Init(&sha256);
-  static_assert(std::numeric_limits<unsigned char>::digits == 8,
-                "This function assumes that a 'char' uses a single byte,"
-                " because the argument to SHA256_Update() must be 'count bytes"
-                " at data'.");
   SHA256_Update(&sha256, data, count);
 
-  unsigned char hash[SHA256_DIGEST_LENGTH];
-  SHA256_Final(hash, &sha256);
+  std::array<unsigned char, SHA256_DIGEST_LENGTH> hash{};
+  SHA256_Final(hash.data(), &sha256);
   // Note that this constructor (from a range) converts the `unsigned char` to
   // `std::uint8_t` if needed, this should work because (a) the values returned
   // by `SHA256_Final()` are 8-bit values, and (b) because if `std::uint8_t`
   // exists it must be large enough to fit an `unsigned char`.
-  return {hash, hash + sizeof(hash)};
+  return {hash.begin(), hash.end()};
 }
 }  // namespace
 
@@ -55,10 +51,10 @@ std::vector<std::uint8_t> Sha256Hash(std::vector<std::uint8_t> const& bytes) {
 
 std::string HexEncode(std::vector<std::uint8_t> const& bytes) {
   std::string result;
+  std::array<char, sizeof("ff")> buf{};
   for (auto c : bytes) {
-    char buf[sizeof("ff")];
-    std::snprintf(buf, sizeof(buf), "%02x", c);
-    result += buf;
+    std::snprintf(buf.data(), buf.size(), "%02x", c);
+    result += buf.data();
   }
   return result;
 }

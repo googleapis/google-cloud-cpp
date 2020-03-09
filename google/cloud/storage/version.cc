@@ -15,6 +15,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/compiler_info.h"
+#include <limits>
 #include <sstream>
 
 namespace google {
@@ -49,6 +50,17 @@ std::string x_goog_api_client() {
   }();
   return kXGoogApiClient;
 }
+
+// These were sprinkled through the code, consolidated here because I could
+// not find a better place.
+auto constexpr kExpectedCharDigits = 8;
+static_assert(
+    std::numeric_limits<unsigned char>::digits == kExpectedCharDigits,
+    "The Google Cloud Storage C++ library is only supported on platforms\n"
+    "with 8-bit chars.  Please file a bug on\n"
+    "    https://github.com/googleapis/google-cloud-cpp/issues\n"
+    "describing your platform details to request support for it.");
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
