@@ -26,11 +26,11 @@
 /// Supporting types and functions to implement `BenchmarkSetup`
 namespace {
 std::string FormattedStartTime() {
-  auto const start = std::chrono::system_clock::now();
-  auto const start_as_time_t = std::chrono::system_clock::to_time_t(start);
+  auto start = std::chrono::system_clock::now();
+  std::time_t start_c = std::chrono::system_clock::to_time_t(start);
   std::string formatted("YYYY-MM-DDTHH:SS:MMZ");
   auto s = std::strftime(&formatted[0], formatted.size() + 1, "%FT%TZ",
-                         std::gmtime(&start_as_time_t));
+                         std::gmtime(&start_c));
   formatted[s] = '\0';
   return formatted;
 }
