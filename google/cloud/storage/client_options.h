@@ -23,12 +23,16 @@ namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
-
 /**
- * Describes the configuration of low-level features to do with the I/O
- * channels. Held in a separate class from ClientOptions so they can be used,
- * e.g. when constructing the Credentials object needed by ClientOptions.
+ * Describes the configuration for low-level connection features.
  *
+ * Some applications may want to use a different SSL root of trust for their
+ * connections, for example, containerized applications might store the
+ * certificate authority certificates in a hard-coded location.
+ *
+ * This is a separate class, as it is used to configure both the normal
+ * connections to GCS and the connections used to obtain Oauth2 access
+ * tokens.
  */
 class ChannelOptions {
  public:
@@ -61,8 +65,10 @@ class ChannelOptions {
  */
 class ClientOptions {
  public:
-  explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials) : ClientOptions(credentials, {}) {}
-  ClientOptions(std::shared_ptr<oauth2::Credentials> credentials, ChannelOptions const& channel_options);
+  explicit ClientOptions(std::shared_ptr<oauth2::Credentials> credentials)
+      : ClientOptions(credentials, {}) {}
+  ClientOptions(std::shared_ptr<oauth2::Credentials> credentials,
+                ChannelOptions channel_options);
 
   /**
    * Creates a `ClientOptions` with Google Application Default %Credentials.
@@ -73,7 +79,8 @@ class ClientOptions {
    * `AnonymousCredentials` to configure the client.
    */
   static StatusOr<ClientOptions> CreateDefaultClientOptions();
-  static StatusOr<ClientOptions> CreateDefaultClientOptions(ChannelOptions const& channel_options);
+  static StatusOr<ClientOptions> CreateDefaultClientOptions(
+      ChannelOptions const& channel_options);
 
   std::shared_ptr<oauth2::Credentials> credentials() const {
     return credentials_;

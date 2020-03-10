@@ -149,8 +149,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
   // doesn't exist or can't be read and parsed.
   return LoadCredsFromPath(path, non_service_account_ok,
                            std::move(service_account_scopes),
-                           std::move(service_account_subject),
-                           options);
+                           std::move(service_account_subject), options);
 }
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
@@ -200,7 +199,8 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents, ChannelOptions const& options) {
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents,
+                                                ChannelOptions const& options) {
   auto info = ParseAuthorizedUserCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
@@ -237,7 +237,8 @@ StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject, ChannelOptions const& options) {
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
@@ -285,8 +286,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
     google::cloud::optional<std::set<std::string>> scopes,
     google::cloud::optional<std::string> subject,
     ChannelOptions const& options) {
-  auto creds =
-      MaybeLoadCredsFromAdcPaths(false, std::move(scopes), std::move(subject), options);
+  auto creds = MaybeLoadCredsFromAdcPaths(false, std::move(scopes),
+                                          std::move(subject), options);
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
@@ -304,8 +305,9 @@ CreateServiceAccountCredentialsFromDefaultPaths(
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
-    ChannelOptions const& options) {
-  return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {}, options);
+                                                ChannelOptions const& options) {
+  return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {},
+                                                         options);
 }
 
 StatusOr<std::shared_ptr<Credentials>>

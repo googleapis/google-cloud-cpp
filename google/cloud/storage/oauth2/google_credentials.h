@@ -16,8 +16,8 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_GOOGLE_CREDENTIALS_H
 
 #include "google/cloud/optional.h"
-#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/client_options.h"
+#include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include <memory>
 #include <set>
@@ -136,6 +136,8 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -170,6 +172,8 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path);
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -194,6 +198,9 @@ CreateServiceAccountCredentialsFromP12FilePath(
  * has configured an Application Default %Credentials file, that file is
  * loaded. The loaded file is used to create a ServiceAccountCredentials.
  *
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
+ *
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
  */
@@ -216,6 +223,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -251,6 +260,8 @@ CreateServiceAccountCredentialsFromJsonContents(
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.

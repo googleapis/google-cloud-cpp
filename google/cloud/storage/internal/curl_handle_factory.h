@@ -44,7 +44,7 @@ class CurlHandleFactory {
  protected:
   // Only virtual for testing purposes.
   virtual void SetCurlStringOption(CURL* handle, CURLoption option_tag,
-                                   const char* value);
+                                   char const* value);
   void SetCurlOptions(CURL* handle, ChannelOptions const& options);
 
   static CURL* GetHandle(CurlHandle& h) { return h.handle_.get(); }
@@ -66,7 +66,8 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
 class DefaultCurlHandleFactory : public CurlHandleFactory {
  public:
   DefaultCurlHandleFactory() = default;
-  DefaultCurlHandleFactory(ChannelOptions const& options) : options_(options) {}
+  DefaultCurlHandleFactory(ChannelOptions options)
+      : options_(std::move(options)) {}
 
   CurlPtr CreateHandle() override;
   void CleanupHandle(CurlHandle&&) override;
@@ -93,8 +94,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
  */
 class PooledCurlHandleFactory : public CurlHandleFactory {
  public:
-  PooledCurlHandleFactory(std::size_t maximum_size,
-                          ChannelOptions const& options);
+  PooledCurlHandleFactory(std::size_t maximum_size, ChannelOptions options);
   explicit PooledCurlHandleFactory(std::size_t maximum_size)
       : PooledCurlHandleFactory(maximum_size, {}) {}
   ~PooledCurlHandleFactory() override;

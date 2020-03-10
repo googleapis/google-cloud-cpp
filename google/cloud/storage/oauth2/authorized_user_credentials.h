@@ -78,10 +78,10 @@ template <typename HttpRequestBuilderType =
 class AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
-      ChannelOptions const& channel_options = {})
+                                     ChannelOptions const& channel_options = {})
       : clock_() {
     HttpRequestBuilderType request_builder(
-        info.token_uri, 
+        info.token_uri,
         storage::internal::GetDefaultCurlHandleFactory(channel_options));
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";

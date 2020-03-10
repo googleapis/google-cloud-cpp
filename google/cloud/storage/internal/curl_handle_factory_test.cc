@@ -79,7 +79,7 @@ TEST(CurlHandleFactoryTest, DefaultFactoryChannelOptionsCallsSetOptions) {
   options.set_ssl_root_path("foo");
   OverriddenDefaultCurlHandleFactory object_under_test(options);
 
-  auto expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
+  auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
 
   object_under_test.CreateHandle();
   EXPECT_THAT(object_under_test.set_options_, testing::ElementsAre(expected));
@@ -97,7 +97,7 @@ TEST(CurlHandleFactoryTest, PooledFactoryChannelOptionsCallsSetOptions) {
   options.set_ssl_root_path("foo");
   OverriddenPooledCurlHandleFactory object_under_test(2, options);
 
-  auto expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
+  auto const expected = std::make_pair(CURLOPT_CAINFO, std::string("foo"));
 
   {
     object_under_test.CreateHandle();
