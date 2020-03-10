@@ -45,10 +45,35 @@ TEST(ParseRfc3339Test, ParseEpoch) {
 }
 
 TEST(ParseRfc3339Test, ParseSimpleZulu) {
-  auto timestamp = ParseRfc3339("2018-05-18T14:42:03Z");
-  // Use `date -u +%s --date='2018-05-18T14:42:03'` to get the magic value:
-  EXPECT_EQ(1526654523L,
-            duration_cast<seconds>(timestamp.time_since_epoch()).count());
+  struct Timestamps {
+    std::string input;
+    std::time_t expected;
+  } tests[] = {
+      // Use `date -u +%s --date='....'` to get the expected values.
+      {"2018-05-18T14:42:03Z", 1526654523L},
+      {"2020-01-01T00:00:00Z", 1577836800L},
+      {"2020-01-31T00:00:00Z", 1580428800L},
+      {"2020-02-29T00:00:00Z", 1582934400L},
+      {"2020-03-31T00:00:00Z", 1585612800L},
+      {"2020-04-30T00:00:00Z", 1588204800L},
+      {"2020-05-31T00:00:00Z", 1590883200L},
+      {"2020-06-30T00:00:00Z", 1593475200L},
+      {"2020-07-31T00:00:00Z", 1596153600L},
+      {"2020-08-31T00:00:00Z", 1598832000L},
+      {"2020-09-30T00:00:00Z", 1601424000L},
+      {"2020-10-31T00:00:00Z", 1604102400L},
+      {"2020-11-20T00:00:00Z", 1605830400L},
+      {"2020-12-31T00:00:00Z", 1609372800L},
+      {"2020-01-01T00:00:59Z", 1577836859L},
+      {"2020-01-01T00:59:59Z", 1577840399L},
+      {"2020-01-01T23:59:59Z", 1577923199L},
+  };
+  for (auto const& test : tests) {
+    auto timestamp = ParseRfc3339(test.input);
+    auto actual = std::chrono::system_clock::to_time_t(timestamp);
+    EXPECT_EQ(actual, test.expected)
+        << " when testing with input=" << test.input;
+  }
 }
 
 TEST(ParseRfc3339Test, ParseAlternativeSeparators) {

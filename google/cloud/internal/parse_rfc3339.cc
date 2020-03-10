@@ -94,7 +94,7 @@ std::chrono::system_clock::time_point ParseDateTime(
   if (hours < 0 || hours >= kHoursInDay) {
     ReportError(timestamp, "Out of range hour.");
   }
-  if (minutes < 0 || minutes >= kMinutesInHour - 1) {
+  if (minutes < 0 || minutes >= kMinutesInHour) {
     ReportError(timestamp, "Out of range minute.");
   }
   // RFC-3339 points out that the seconds field can only assume value '60' for
