@@ -23,10 +23,10 @@ if (NOT TARGET google-cloud-cpp-common-project)
     # Give application developers a hook to configure the version and hash
     # downloaded from GitHub.
     set(GOOGLE_CLOUD_CPP_URL
-        "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.22.0.tar.gz"
+        "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.22.1.tar.gz"
     )
     set(GOOGLE_CLOUD_CPP_SHA256
-        "34fc8b56d78ec8fb0582e0d0dded7804d3f7fe86be9497f651c6d55db641f978")
+        "43108ffa0c66fc871e1787c30c5aa6ecac593e6e19fc1190470ba2436756c4a2")
 
     set_external_project_build_parallel_level(PARALLEL)
     set_external_project_vars()

@@ -43,9 +43,9 @@ def google_cloud_cpp_deps():
             name = "com_github_googleapis_google_cloud_cpp_common",
             strip_prefix = "google-cloud-cpp-common-0.22.0",
             urls = [
-                "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.22.0.tar.gz",
+                "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.22.1.tar.gz",
             ],
-            sha256 = "34fc8b56d78ec8fb0582e0d0dded7804d3f7fe86be9497f651c6d55db641f978",
+            sha256 = "43108ffa0c66fc871e1787c30c5aa6ecac593e6e19fc1190470ba2436756c4a2",
         )
 
     # Load a version of googletest that we know works.
