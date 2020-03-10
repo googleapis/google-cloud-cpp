@@ -7,6 +7,14 @@ differ from the GSG.
 
 [google-style-guide-link]: https://google.github.io/styleguide/cppguide.html
 
+## Include Guards
+
+All header files should have include guards formatted like
+`PROJECT_DIR_FILE_H`. This differs from the advice in the GSG in that ours do
+not end with a trailing underscore.
+
+[link to GSG's section on include guards](https://google.github.io/styleguide/cppguide.html#The__define_Guard)
+
 ## Reference Arguments
 
 Function return values are preferred over argument out-params. However, when an
