@@ -17,8 +17,9 @@
 #include "google/cloud/internal/build_info.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/internal/throw_delegate.h"
+#include <algorithm>
 #include <cctype>
-#include <iomanip>
+#include <ctime>
 #include <iostream>
 #include <sstream>
 
