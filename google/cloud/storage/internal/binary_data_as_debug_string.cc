@@ -24,15 +24,21 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::string BinaryDataAsDebugString(char const* data, std::size_t size,
                                     std::size_t max_output_bytes) {
-  // We want about 1/2 of a standard 80 column terminal to be used by the hex
-  // representation and the rest with text. This uses 72 columns: 48 for the hex
-  // representation, 24 for text, and a few columns for separators and such.
+  // We want about 2/3 of a standard 80 column terminal to be used by the hex
+  // representation and the other 1/3 (because it is half as wide) with the
+  // text representation. Setting this value to 24 uses 72 columns: 48 for the
+  // hex representation, 24 for text, and one space. We could use 25 or 26, we
+  // chose (somewhat arbitrarily) 24 as it is 16 + 8 and thus more "round" in
+  // base 2.
   auto constexpr kTextWidth = 24;
   std::string result;
   std::string text_column(kTextWidth, ' ');
   std::string hex_column(2 * kTextWidth, ' ');
 
-  auto flush = [&result, &text_column, &hex_column] {
+  // Capture everything (which we use anyway) because:
+  //   - clang-tidy complains if you capture a constexpr or const
+  //   - MSVC does not automatically capture constexpr types unless we do this
+  auto flush = [&] {
     result += text_column;
     result += ' ';
     result += hex_column;
