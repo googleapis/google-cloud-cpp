@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/internal/getenv.h"

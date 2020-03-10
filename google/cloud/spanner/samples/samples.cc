@@ -1035,6 +1035,45 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_data_with_index]
 
+void CreateClientWithQueryOptions(std::string const& project_id,
+                                  std::string const& instance_id,
+                                  std::string const& db_id) {
+  auto db = ::google::cloud::spanner::Database(project_id, instance_id, db_id);
+  //! [START spanner_create_client_with_query_options]
+  namespace spanner = ::google::cloud::spanner;
+  spanner::Client client(
+      spanner::MakeConnection(db),
+      spanner::ClientOptions().set_query_options(
+          spanner::QueryOptions().set_optimizer_version("1")));
+  //! [END spanner_create_client_with_query_options]
+}
+
+void CreateClientWithQueryOptionsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "create-client-with-query-options <project-id> <instance-id> "
+        "<database-id>");
+  }
+  CreateClientWithQueryOptions(argv[0], argv[1], argv[2]);
+}
+
+void QueryWithQueryOptions(google::cloud::spanner::Client client) {
+  //! [START spanner_query_with_query_options]
+  namespace spanner = ::google::cloud::spanner;
+  auto sql = spanner::SqlStatement("SELECT SingerId, FirstName FROM Singers");
+  auto opts = spanner::QueryOptions().set_optimizer_version("1");
+  auto rows = client.ExecuteQuery(std::move(sql), std::move(opts));
+  //! [END spanner_query_with_query_options]
+
+  using RowType = std::tuple<std::int64_t, std::string>;
+  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::runtime_error(row.status().message());
+    std::cout << "SingerId: " << std::get<0>(*row) << "\t";
+    std::cout << "FirstName: " << std::get<1>(*row) << "\n";
+  }
+  std::cout << "Read completed for [spanner_query_with_query_options]\n";
+}
+
 //! [START spanner_read_data_with_storing_index]
 void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -1904,6 +1943,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"add-database-reader-on-database", AddDatabaseReaderOnDatabaseCommand},
       {"database-test-iam-permissions", DatabaseTestIamPermissionsCommand},
       {"quickstart", QuickstartCommand},
+      {"create-client-with-query-options", CreateClientWithQueryOptionsCommand},
       make_command_entry("insert-data", InsertData),
       make_command_entry("update-data", UpdateData),
       make_command_entry("delete-data", DeleteData),
@@ -1916,6 +1956,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("read-data-with-index", ReadDataWithIndex),
       make_command_entry("query-new-column", QueryNewColumn),
       make_command_entry("query-data-with-index", QueryUsingIndex),
+      make_command_entry("query-with-query-options", QueryWithQueryOptions),
       make_command_entry("read-data-with-storing-index",
                          ReadDataWithStoringIndex),
       make_command_entry("read-write-transaction", ReadWriteTransaction),
@@ -2122,6 +2163,10 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_quickstart sample\n";
   RunOneCommand({"", "quickstart", project_id, instance_id, database_id});
 
+  std::cout << "\nRunning spanner_create_client_with_query_options sample\n";
+  RunOneCommand({"", "create-client-with-query-options", project_id,
+                 instance_id, database_id});
+
   auto client = MakeSampleClient(project_id, instance_id, database_id);
 
   std::cout << "\nRunning spanner_insert_data sample\n";
@@ -2158,6 +2203,9 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_query_data_with_index sample\n";
   QueryUsingIndex(client);
+
+  std::cout << "\nRunning spanner_query_with_query_options sample\n";
+  QueryWithQueryOptions(client);
 
   std::cout << "\nRunning spanner_read_data_with_storing_index sample\n";
   ReadDataWithStoringIndex(client);

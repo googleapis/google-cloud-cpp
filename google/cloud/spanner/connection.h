@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/partition_options.h"
 #include "google/cloud/spanner/partitioned_dml_result.h"
+#include "google/cloud/spanner/query_options.h"
 #include "google/cloud/spanner/read_options.h"
 #include "google/cloud/spanner/results.h"
 #include "google/cloud/spanner/sql_statement.h"
@@ -88,8 +89,7 @@ class Connection {
   struct SqlParams {
     Transaction transaction;
     SqlStatement statement;
-    struct {
-    } placeholder_do_not_use_name_will_change;
+    QueryOptions query_options;
     google::cloud::optional<std::string> partition_token;
   };
 

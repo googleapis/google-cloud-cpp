@@ -103,6 +103,7 @@ add_library(
     bytes.h
     client.cc
     client.h
+    client_options.h
     commit_result.h
     connection.h
     connection_options.cc
@@ -184,6 +185,7 @@ add_library(
     partition_options.h
     partitioned_dml_result.h
     polling_policy.h
+    query_options.h
     query_partition.cc
     query_partition.h
     read_options.h
@@ -300,6 +302,7 @@ function (spanner_client_define_tests)
     set(spanner_client_unit_tests
         # cmake-format: sortable
         bytes_test.cc
+        client_options_test.cc
         client_test.cc
         connection_options_test.cc
         create_instance_request_builder_test.cc
@@ -337,6 +340,7 @@ function (spanner_client_define_tests)
         keys_test.cc
         mutations_test.cc
         partition_options_test.cc
+        query_options_test.cc
         query_partition_test.cc
         read_options_test.cc
         read_partition_test.cc

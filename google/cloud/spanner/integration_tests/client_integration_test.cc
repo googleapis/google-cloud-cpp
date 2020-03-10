@@ -342,6 +342,37 @@ TEST_F(ClientIntegrationTest, ExecuteQueryDml) {
   EXPECT_THAT(actual_rows, UnorderedElementsAreArray(expected_rows));
 }
 
+TEST_F(ClientIntegrationTest, QueryOptionsWork) {
+  ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
+
+  // An optimizer_version of "latest" should work.
+  auto rows = client_->ExecuteQuery(
+      SqlStatement("SELECT FirstName, LastName FROM Singers"),
+      QueryOptions().set_optimizer_version("latest"));
+  int row_count = 0;
+  for (auto const& row : rows) {
+    ASSERT_STATUS_OK(row);
+    ++row_count;
+  }
+  EXPECT_EQ(2, row_count);
+
+  // An invalid optimizer_version should produce an error.
+  rows = client_->ExecuteQuery(
+      SqlStatement("SELECT FirstName, LastName FROM Singers"),
+      QueryOptions().set_optimizer_version("some-invalid-version"));
+  row_count = 0;
+  bool got_error = false;
+  for (auto const& row : rows) {
+    if (!row) {
+      got_error = true;
+      break;
+    }
+    ++row_count;
+  }
+  EXPECT_TRUE(got_error) << "An invalid optimizer version should be an error";
+  EXPECT_EQ(0, row_count);
+}
+
 /// @test Test ExecutePartitionedDml
 TEST_F(ClientIntegrationTest, ExecutePartitionedDml) {
   auto& client = *client_;

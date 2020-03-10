@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/batch_dml_result.h"
+#include "google/cloud/spanner/client_options.h"
 #include "google/cloud/spanner/commit_result.h"
 #include "google/cloud/spanner/connection.h"
 #include "google/cloud/spanner/connection_options.h"
@@ -24,6 +25,7 @@
 #include "google/cloud/spanner/keys.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/partition_options.h"
+#include "google/cloud/spanner/query_options.h"
 #include "google/cloud/spanner/query_partition.h"
 #include "google/cloud/spanner/read_options.h"
 #include "google/cloud/spanner/read_partition.h"
@@ -55,11 +57,11 @@ inline namespace SPANNER_CLIENT_NS {
  *
  * @par Performance
  *
- * `Client` objects are cheap to create, copy, and move. However, each `Client`
- * object must be created with a `std::shared_ptr<Connection>`, which itself is
- * relatively expensive to create. Therefore, connection instances should be
- * shared when possible. See the `MakeConnection()` method and the `Connection`
- * interface for more details.
+ * `Client` objects are relatively cheap to create, copy, and move. However,
+ * each `Client` object must be created with a `std::shared_ptr<Connection>`,
+ * which itself is relatively expensive to create. Therefore, connection
+ * instances should be shared when possible. See the `MakeConnection()` method
+ * and the `Connection` interface for more details.
  *
  * @par Thread Safety
  *
@@ -90,19 +92,35 @@ inline namespace SPANNER_CLIENT_NS {
  * }
  * @endcode
  *
+ * @par Query Options
+ *
+ * Most operations that take an `SqlStatement` may also be modified with
+ * `QueryOptions`. These options can be set at various levels, with more
+ * specific levels taking precedence over broader ones. For example,
+ * `QueryOptions` that are passed directly to `Client::ExecuteQuery()` will
+ * take precedence over the `Client`-level defaults (if any), which will
+ * themselves take precedence over any environment variables. The following
+ * table shows the environment variables that may optionally be set and the
+ * `QueryOptions` setting that they affect.
+ *
+ * Environment Variable         | QueryOptions setting
+ * ---------------------------- | --------------------
+ * `SPANNER_OPTIMIZER_VERSION`  | `QueryOptions::optimizer_version()`
+ *
  * [spanner-doc-link]:
  * https://cloud.google.com/spanner/docs/api-libraries-overview
  */
 class Client {
  public:
   /**
-   * Constructs a `Client` object that will use the specified `Connection`.
+   * Constructs a `Client` object using the specified @p conn and @p opts.
    *
    * See `MakeConnection()` for how to create a connection to Spanner. To help
    * with unit testing, callers may create fake/mock `Connection` objects that
    * are injected into the `Client`.
    */
-  explicit Client(std::shared_ptr<Connection> conn) : conn_(std::move(conn)) {}
+  explicit Client(std::shared_ptr<Connection> conn, ClientOptions opts = {})
+      : conn_(std::move(conn)), opts_(std::move(opts)) {}
 
   /// No default construction. Use `Client(std::shared_ptr<Connection>)`
   Client() = delete;
@@ -249,34 +267,40 @@ class Client {
    * @snippet samples.cc spanner-query-data-select-star
    *
    * @param statement The SQL statement to execute.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    */
-  RowStream ExecuteQuery(SqlStatement statement);
+  RowStream ExecuteQuery(SqlStatement statement, QueryOptions const& opts = {});
 
   /**
-   * @copydoc ExecuteQuery(SqlStatement)
+   * @copydoc ExecuteQuery(SqlStatement, QueryOptions const&)
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
   RowStream ExecuteQuery(Transaction::SingleUseOptions transaction_options,
-                         SqlStatement statement);
+                         SqlStatement statement, QueryOptions const& opts = {});
 
   /**
-   * @copydoc ExecuteQuery(SqlStatement)
+   * @copydoc ExecuteQuery(SqlStatement, QueryOptions const&)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
-  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement);
-
+  RowStream ExecuteQuery(Transaction transaction, SqlStatement statement,
+                         QueryOptions const& opts = {});
   /**
    * Executes a SQL query on a subset of rows in a database. Requires a prior
    * call to `PartitionQuery` to obtain the partition information; see the
    * documentation of that method for full details.
    *
    * @param partition A `QueryPartition`, obtained by calling `PartitionRead`.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    *
    * @note No individual row in the `RowStream` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
@@ -284,7 +308,8 @@ class Client {
    * @par Example
    * @snippet samples.cc execute-sql-query-partition
    */
-  RowStream ExecuteQuery(QueryPartition const& partition);
+  RowStream ExecuteQuery(QueryPartition const& partition,
+                         QueryOptions const& opts = {});
   //@}
 
   //@{
@@ -306,29 +331,34 @@ class Client {
    *     statistics and `ExecutionPlan` are available.
    *
    * @param statement The SQL statement to execute.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    *
    * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
    *     no column value can exceed 10 MiB.
    */
-  ProfileQueryResult ProfileQuery(SqlStatement statement);
+  ProfileQueryResult ProfileQuery(SqlStatement statement,
+                                  QueryOptions const& opts = {});
 
   /**
-   * @copydoc ProfileQuery(SqlStatement)
+   * @copydoc ProfileQuery(SqlStatement, QueryOptions const&)
    *
    * @param transaction_options Execute this query in a single-use transaction
    *     with these options.
    */
   ProfileQueryResult ProfileQuery(
-      Transaction::SingleUseOptions transaction_options,
-      SqlStatement statement);
+      Transaction::SingleUseOptions transaction_options, SqlStatement statement,
+      QueryOptions const& opts = {});
 
   /**
-   * @copydoc ProfileQuery(SqlStatement)
+   * @copydoc ProfileQuery(SqlStatement, QueryOptions const&)
    *
    * @param transaction Execute this query as part of an existing transaction.
    */
   ProfileQueryResult ProfileQuery(Transaction transaction,
-                                  SqlStatement statement);
+                                  SqlStatement statement,
+                                  QueryOptions const& opts = {});
   //@}
 
   /**
@@ -366,9 +396,13 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    */
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
-                                 SqlStatement statement);
+                                 SqlStatement statement,
+                                 QueryOptions const& opts = {});
 
   /**
    * Profiles a SQL DML statement.
@@ -383,9 +417,13 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    */
   StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
-                                        SqlStatement statement);
+                                        SqlStatement statement,
+                                        QueryOptions const& opts = {});
 
   /**
    * Analyzes the execution plan of a SQL statement.
@@ -400,9 +438,13 @@ class Client {
    *
    * @param transaction Execute this query as part of an existing transaction.
    * @param statement The SQL statement to execute.
+   * @param opts The `QueryOptions` to use for this call. If given, these will
+   *     take precedence over the options set at the client and environment
+   *     levels.
    */
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
-                                     SqlStatement statement);
+                                     SqlStatement statement,
+                                     QueryOptions const& opts = {});
 
   /**
    * Executes a batch of SQL DML statements. This method allows many statements
@@ -551,7 +593,10 @@ class Client {
   StatusOr<PartitionedDmlResult> ExecutePartitionedDml(SqlStatement statement);
 
  private:
+  QueryOptions OverlayQueryOptions(QueryOptions const&);
+
   std::shared_ptr<Connection> conn_;
+  ClientOptions opts_;
 };
 
 /**

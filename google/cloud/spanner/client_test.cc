@@ -21,7 +21,9 @@
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/internal/make_unique.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
 #include <array>
@@ -43,9 +45,12 @@ using ::google::cloud::spanner_mocks::MockResultSetSource;
 using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::AnyNumber;
 using ::testing::ByMove;
 using ::testing::DoAll;
 using ::testing::ElementsAre;
+using ::testing::Eq;
+using ::testing::Field;
 using ::testing::HasSubstr;
 using ::testing::Return;
 using ::testing::SaveArg;
@@ -999,6 +1004,55 @@ TEST(ClientTest, ProfileQueryWithOptionsSuccess) {
   std::unordered_map<std::string, std::string> expected_stats{
       {"elapsed_time", "42 secs"}};
   EXPECT_EQ(expected_stats, *actual_stats);
+}
+
+TEST(ClientTest, QueryOptionsOverlayPrecedence) {
+  struct Levels {
+    google::cloud::optional<std::string> env;
+    google::cloud::optional<std::string> client;
+    google::cloud::optional<std::string> function;
+    google::cloud::optional<std::string> expected;
+  };
+  std::vector<Levels> levels = {
+      {{}, {}, {}, {}},
+      {"env", {}, {}, "env"},
+      {{}, "client", {}, "client"},
+      {{}, {}, "function", "function"},
+      {"env", "client", {}, "client"},
+      {"env", {}, "function", "function"},
+      {{}, "client", "function", "function"},
+      {"env", "client", "function", "function"},
+  };
+
+  auto constexpr kQueryOptionsField = &Connection::SqlParams::query_options;
+  auto constexpr kEnvName = "SPANNER_OPTIMIZER_VERSION";
+  auto conn = std::make_shared<MockConnection>();
+  for (auto const& level : levels) {
+    google::cloud::testing_util::ScopedEnvironment env(kEnvName, level.env);
+    auto client_qo = QueryOptions().set_optimizer_version(level.client);
+    Client client(conn, ClientOptions().set_query_options(client_qo));
+    auto expected = QueryOptions().set_optimizer_version(level.expected);
+    EXPECT_CALL(*conn, ExecuteQuery(Field(kQueryOptionsField, Eq(expected))))
+        .Times(AnyNumber());
+
+    auto const qo = QueryOptions().set_optimizer_version(level.function);
+    auto const ro = Transaction::ReadOnlyOptions{};
+    auto const su = Transaction::SingleUseOptions{ro};
+
+    // Call all the overloads that accept QueryOptions to ensure they all work.
+    client.ExecuteQuery(SqlStatement{}, qo);
+    client.ExecuteQuery(su, SqlStatement{}, qo);
+    client.ExecuteQuery(Transaction{ro}, SqlStatement{}, qo);
+    client.ExecuteQuery(QueryPartition{}, qo);
+
+    client.ProfileQuery(SqlStatement{}, qo);
+    client.ProfileQuery(su, SqlStatement{}, qo);
+    client.ProfileQuery(Transaction{ro}, SqlStatement{}, qo);
+
+    client.ExecuteDml(Transaction{ro}, SqlStatement{}, qo);
+    client.ProfileDml(Transaction{ro}, SqlStatement{}, qo);
+    client.AnalyzeSql(Transaction{ro}, SqlStatement{}, qo);
+  }
 }
 
 }  // namespace

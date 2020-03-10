@@ -62,6 +62,7 @@ using ::testing::DoAll;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::InSequence;
+using ::testing::Property;
 using ::testing::Return;
 using ::testing::SetArgPointee;
 using ::testing::StartsWith;
@@ -521,6 +522,41 @@ TEST(ConnectionImplTest, ExecuteQueryImplicitBeginTransaction) {
     EXPECT_STATUS_OK(row);
   }
   EXPECT_THAT(txn, HasSessionAndTransactionId("test-session-name", "00FEDCBA"));
+}
+
+TEST(ConnectionImplTest, QueryOptions) {
+  auto constexpr kQueryOptionsProp =
+      &spanner_proto::ExecuteSqlRequest::query_options;
+  std::vector<optional<std::string>> const optimizer_versions = {
+      {}, "", "some-version"};
+
+  for (auto const& version : optimizer_versions) {
+    spanner_proto::ExecuteSqlRequest::QueryOptions qo;
+    if (version) qo.set_optimizer_version(*version);
+    auto m = Property(kQueryOptionsProp, spanner_testing::IsProtoEqual(qo));
+    auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+    EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+        .WillOnce(Return(MakeSessionsResponse({"session-name"})));
+
+    auto txn = MakeReadOnlyTransaction(Transaction::ReadOnlyOptions());
+    auto query_options = QueryOptions().set_optimizer_version(version);
+    auto params = Connection::SqlParams{txn, SqlStatement{}, query_options};
+    auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
+    auto conn = MakeConnection(db, {mock});
+
+    // Calls the 5 Connection::* methods that take SqlParams and ensures that
+    // the protos being sent contain the expected options.
+    EXPECT_CALL(*mock, ExecuteStreamingSql(_, m))
+        .WillOnce(Return(ByMove(make_unique<MockGrpcReader>())))
+        .WillOnce(Return(ByMove(make_unique<MockGrpcReader>())));
+    (void)conn->ExecuteQuery(params);
+    (void)conn->ProfileQuery(params);
+
+    EXPECT_CALL(*mock, ExecuteSql(_, m)).Times(3);
+    (void)conn->ExecuteDml(params);
+    (void)conn->ProfileDml(params);
+    (void)conn->AnalyzeSql(params);
+  }
 }
 
 TEST(ConnectionImplTest, ExecuteDmlGetSessionFailure) {

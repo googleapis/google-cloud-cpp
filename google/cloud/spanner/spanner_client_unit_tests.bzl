@@ -18,6 +18,7 @@
 
 spanner_client_unit_tests = [
     "bytes_test.cc",
+    "client_options_test.cc",
     "client_test.cc",
     "connection_options_test.cc",
     "create_instance_request_builder_test.cc",
@@ -55,6 +56,7 @@ spanner_client_unit_tests = [
     "keys_test.cc",
     "mutations_test.cc",
     "partition_options_test.cc",
+    "query_options_test.cc",
     "query_partition_test.cc",
     "read_options_test.cc",
     "read_partition_test.cc",

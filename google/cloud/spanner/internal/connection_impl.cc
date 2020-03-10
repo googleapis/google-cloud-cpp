@@ -426,11 +426,14 @@ StatusOr<ResultType> ConnectionImpl::ExecuteSqlImpl(
   *request.mutable_param_types() =
       std::move(*sql_statement.mutable_param_types());
   request.set_seqno(seqno);
+  request.set_query_mode(query_mode);
   if (params.partition_token) {
     request.set_partition_token(*std::move(params.partition_token));
   }
-  request.set_query_mode(query_mode);
-
+  if (params.query_options.optimizer_version()) {
+    request.mutable_query_options()->set_optimizer_version(
+        *params.query_options.optimizer_version());
+  }
   auto reader = retry_resume_fn(request);
   if (!reader.ok()) {
     return std::move(reader).status();
