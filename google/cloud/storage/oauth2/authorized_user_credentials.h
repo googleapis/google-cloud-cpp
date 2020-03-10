@@ -77,10 +77,12 @@ template <typename HttpRequestBuilderType =
           typename ClockType = std::chrono::system_clock>
 class AuthorizedUserCredentials : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info)
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
+                                     ChannelOptions const& channel_options = {})
       : clock_() {
     HttpRequestBuilderType request_builder(
-        info.token_uri, storage::internal::GetDefaultCurlHandleFactory());
+        info.token_uri,
+        storage::internal::GetDefaultCurlHandleFactory(channel_options));
     std::string payload("grant_type=refresh_token");
     payload += "&client_id=";
     payload += request_builder.MakeEscapedString(info.client_id).get();

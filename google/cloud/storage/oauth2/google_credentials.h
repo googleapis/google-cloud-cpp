@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_GOOGLE_CREDENTIALS_H
 
 #include "google/cloud/optional.h"
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include <memory>
@@ -39,7 +40,8 @@ namespace oauth2 {
  * @see https://cloud.google.com/docs/authentication/production for details
  * about Application Default %Credentials.
  */
-StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials();
+StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
+    ChannelOptions const& options = {});
 
 //@{
 /**
@@ -65,7 +67,8 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path);
  * with Cloud Storage client libraries.
  */
 StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents);
+CreateAuthorizedUserCredentialsFromJsonContents(
+    std::string const& contents, ChannelOptions const& options = {});
 
 //@{
 /// @name Load service account key files.
@@ -133,6 +136,8 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -144,7 +149,8 @@ StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject);
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a P12 file at the specified path.
@@ -166,6 +172,8 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path);
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -177,7 +185,8 @@ StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject);
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options = {});
 //@}
 
 /**
@@ -189,11 +198,15 @@ CreateServiceAccountCredentialsFromP12FilePath(
  * has configured an Application Default %Credentials file, that file is
  * loaded. The loaded file is used to create a ServiceAccountCredentials.
  *
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
+ *
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
  */
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromDefaultPaths();
+CreateServiceAccountCredentialsFromDefaultPaths(
+    ChannelOptions const& options = {});
 
 /**
  * Produces a ServiceAccountCredentials type by trying to load the standard
@@ -210,6 +223,8 @@ CreateServiceAccountCredentialsFromDefaultPaths();
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -220,7 +235,8 @@ CreateServiceAccountCredentialsFromDefaultPaths();
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject);
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a JSON string.
@@ -230,7 +246,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  * the overloaded version of this function.
  */
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(std::string const& contents);
+CreateServiceAccountCredentialsFromJsonContents(
+    std::string const& contents, ChannelOptions const& options = {});
 
 /**
  * Creates a ServiceAccountCredentials from a JSON string.
@@ -243,6 +260,8 @@ CreateServiceAccountCredentialsFromJsonContents(std::string const& contents);
  * @param subject for domain-wide delegation; the email address of the user for
  *     which to request delegated access. If omitted, no "subject" attribute is
  *     included in the authorization grant.
+ * @param options any configuration needed for the transport channel to
+ *     Google's authentication servers.
  *
  * @see https://developers.google.com/identity/protocols/googlescopes for a list
  *     of OAuth 2.0 scopes used with Google APIs.
@@ -254,7 +273,8 @@ StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject);
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options = {});
 
 /// Creates a ComputeEngineCredentials for the VM's default service account.
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();

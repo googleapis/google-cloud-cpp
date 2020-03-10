@@ -42,11 +42,18 @@ class CurlHandleFactory {
   virtual std::string LastClientIpAddress() const = 0;
 
  protected:
+  // Only virtual for testing purposes.
+  virtual void SetCurlStringOption(CURL* handle, CURLoption option_tag,
+                                   char const* value);
+  void SetCurlOptions(CURL* handle, ChannelOptions const& options);
+
   static CURL* GetHandle(CurlHandle& h) { return h.handle_.get(); }
   static void ResetHandle(CurlHandle& h) { h.handle_.reset(); }
   static void ReleaseHandle(CurlHandle& h) { (void)h.handle_.release(); }
 };
 
+std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory(
+    ChannelOptions const& options);
 std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
 
 /**
@@ -59,6 +66,8 @@ std::shared_ptr<CurlHandleFactory> GetDefaultCurlHandleFactory();
 class DefaultCurlHandleFactory : public CurlHandleFactory {
  public:
   DefaultCurlHandleFactory() = default;
+  DefaultCurlHandleFactory(ChannelOptions options)
+      : options_(std::move(options)) {}
 
   CurlPtr CreateHandle() override;
   void CleanupHandle(CurlHandle&&) override;
@@ -74,6 +83,7 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
  private:
   mutable std::mutex mu_;
   std::string last_client_ip_address_;
+  ChannelOptions options_;
 };
 
 /**
@@ -84,7 +94,9 @@ class DefaultCurlHandleFactory : public CurlHandleFactory {
  */
 class PooledCurlHandleFactory : public CurlHandleFactory {
  public:
-  explicit PooledCurlHandleFactory(std::size_t maximum_size);
+  PooledCurlHandleFactory(std::size_t maximum_size, ChannelOptions options);
+  explicit PooledCurlHandleFactory(std::size_t maximum_size)
+      : PooledCurlHandleFactory(maximum_size, {}) {}
   ~PooledCurlHandleFactory() override;
 
   CurlPtr CreateHandle() override;
@@ -104,6 +116,7 @@ class PooledCurlHandleFactory : public CurlHandleFactory {
   std::vector<CURL*> handles_;
   std::vector<CURLM*> multi_handles_;
   std::string last_client_ip_address_;
+  ChannelOptions options_;
 };
 
 }  // namespace internal

@@ -46,10 +46,11 @@ extern "C" void CurlShareUnlockCallback(CURL*, curl_lock_data data,
 std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
     ClientOptions const& options) {
   if (options.connection_pool_size() == 0) {
-    return std::make_shared<DefaultCurlHandleFactory>();
+    return std::make_shared<DefaultCurlHandleFactory>(
+        options.channel_options());
   }
   return std::make_shared<PooledCurlHandleFactory>(
-      options.connection_pool_size());
+      options.connection_pool_size(), options.channel_options());
 }
 
 std::string XmlMapPredefinedAcl(std::string const& acl) {
@@ -1323,7 +1324,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (response->status_code >= 300) {
     return AsStatus(*response);
   }
-  return internal::ObjectMetadataParser::FromJson(internal::nl::json{
+  return internal::ObjectMetadataParser::FromJson(nl::json{
       {"name", request.object_name()},
       {"bucket", request.bucket_name()},
   });

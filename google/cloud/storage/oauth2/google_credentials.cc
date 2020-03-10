@@ -46,7 +46,8 @@ constexpr char kAdcLink[] =
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     std::string const& path, bool non_service_account_ok,
     google::cloud::optional<std::set<std::string>> service_account_scopes,
-    google::cloud::optional<std::string> service_account_subject) {
+    google::cloud::optional<std::string> service_account_subject,
+    ChannelOptions const& options) {
   namespace nl = google::cloud::storage::internal::nl;
 
   std::ifstream ifs(path);
@@ -100,7 +101,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     info->scopes = std::move(service_account_scopes);
     std::unique_ptr<Credentials> ptr =
         google::cloud::internal::make_unique<ServiceAccountCredentials<>>(
-            *info);
+            *info, options);
     return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
   }
   return StatusOr<std::unique_ptr<Credentials>>(
@@ -124,7 +125,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
 StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
     bool non_service_account_ok,
     google::cloud::optional<std::set<std::string>> service_account_scopes,
-    google::cloud::optional<std::string> service_account_subject) {
+    google::cloud::optional<std::string> service_account_subject,
+    ChannelOptions const& options = {}) {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
   if (path.empty()) {
@@ -147,13 +149,14 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
   // doesn't exist or can't be read and parsed.
   return LoadCredsFromPath(path, non_service_account_ok,
                            std::move(service_account_scopes),
-                           std::move(service_account_subject));
+                           std::move(service_account_subject), options);
 }
 
-StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials() {
+StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
+    ChannelOptions const& options) {
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
-  auto creds = MaybeLoadCredsFromAdcPaths(true, {}, {});
+  auto creds = MaybeLoadCredsFromAdcPaths(true, {}, {}, options);
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
@@ -196,13 +199,14 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path) {
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents) {
+CreateAuthorizedUserCredentialsFromJsonContents(std::string const& contents,
+                                                ChannelOptions const& options) {
   auto info = ParseAuthorizedUserCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
   }
   return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<AuthorizedUserCredentials<>>(*info));
+      std::make_shared<AuthorizedUserCredentials<>>(*info, options));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
@@ -233,7 +237,8 @@ StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
     std::string const& path,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options) {
   std::ifstream is(path);
   std::string contents(std::istreambuf_iterator<char>{is}, {});
   auto info = ParseServiceAccountCredentials(contents, path);
@@ -245,14 +250,15 @@ CreateServiceAccountCredentialsFromJsonFilePath(
   info->subject = std::move(subject);
   info->scopes = std::move(scopes);
   return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<ServiceAccountCredentials<>>(*info));
+      std::make_shared<ServiceAccountCredentials<>>(*info, options));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options) {
   auto info = ParseServiceAccountP12File(path);
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
@@ -262,7 +268,7 @@ CreateServiceAccountCredentialsFromP12FilePath(
   info->subject = std::move(subject);
   info->scopes = std::move(scopes);
   return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<ServiceAccountCredentials<>>(*info));
+      std::make_shared<ServiceAccountCredentials<>>(*info, options));
 }
 
 StatusOr<std::shared_ptr<Credentials>>
@@ -271,16 +277,17 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path) {
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromDefaultPaths() {
-  return CreateServiceAccountCredentialsFromDefaultPaths({}, {});
+CreateServiceAccountCredentialsFromDefaultPaths(ChannelOptions const& options) {
+  return CreateServiceAccountCredentialsFromDefaultPaths({}, {}, options);
 }
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
-  auto creds =
-      MaybeLoadCredsFromAdcPaths(false, std::move(scopes), std::move(subject));
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options) {
+  auto creds = MaybeLoadCredsFromAdcPaths(false, std::move(scopes),
+                                          std::move(subject), options);
   if (!creds) {
     return StatusOr<std::shared_ptr<Credentials>>(creds.status());
   }
@@ -297,15 +304,18 @@ CreateServiceAccountCredentialsFromDefaultPaths(
 }
 
 StatusOr<std::shared_ptr<Credentials>>
-CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
-  return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {});
+CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
+                                                ChannelOptions const& options) {
+  return CreateServiceAccountCredentialsFromJsonContents(contents, {}, {},
+                                                         options);
 }
 
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents,
     google::cloud::optional<std::set<std::string>> scopes,
-    google::cloud::optional<std::string> subject) {
+    google::cloud::optional<std::string> subject,
+    ChannelOptions const& options) {
   auto info = ParseServiceAccountCredentials(contents, "memory");
   if (!info) {
     return StatusOr<std::shared_ptr<Credentials>>(info.status());
@@ -315,7 +325,7 @@ CreateServiceAccountCredentialsFromJsonContents(
   info->subject = std::move(subject);
   info->scopes = std::move(scopes);
   return StatusOr<std::shared_ptr<Credentials>>(
-      std::make_shared<ServiceAccountCredentials<>>(*info));
+      std::make_shared<ServiceAccountCredentials<>>(*info, options));
 }
 
 std::shared_ptr<Credentials> CreateComputeEngineCredentials() {
