@@ -340,7 +340,8 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   return Status(code, std::move(os).str());
 }
 
-void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt, std::intmax_t param) {
+void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt,
+                                     std::intmax_t param) {
   std::ostringstream os;
   os << "Error [" << e << "]=" << curl_easy_strerror(e)
      << " while setting curl option [" << opt << "] to " << param;

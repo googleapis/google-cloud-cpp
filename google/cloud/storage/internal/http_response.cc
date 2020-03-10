@@ -91,7 +91,8 @@ Status AsStatus(HttpResponse const& http_response) {
   if (http_response.status_code == HttpStatusCode::kPayloadTooLarge) {
     return Status(StatusCode::kOutOfRange, http_response.payload);
   }
-  if (http_response.status_code == HttpStatusCode::kRequestRangeNotSatisfiable) {
+  if (http_response.status_code ==
+      HttpStatusCode::kRequestRangeNotSatisfiable) {
     return Status(StatusCode::kOutOfRange, http_response.payload);
   }
   if (http_response.status_code == HttpStatusCode::kTooManyRequests) {
