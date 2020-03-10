@@ -34,6 +34,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::spanner_testing::IsProtoEqual;
+using ::testing::Not;
 
 std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
 MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
@@ -71,6 +72,12 @@ void TestBasicSemantics(T init) {
   // Round-trip from Value -> Proto(s) -> Value
   auto const protos = internal::ToProto(v);
   EXPECT_EQ(v, internal::FromProto(protos.first, protos.second));
+
+  // Ensures that the protos for a NULL T have the same "type" as a non-null T.
+  auto const null_protos = internal::ToProto(null);
+  EXPECT_THAT(null_protos.first, IsProtoEqual(protos.first));
+  EXPECT_EQ(null_protos.second.null_value(),
+            google::protobuf::NullValue::NULL_VALUE);
 
   Value const not_null{optional<T>(init)};
   EXPECT_STATUS_OK(not_null.get<T>());
@@ -517,6 +524,24 @@ TEST(Value, SpannerStruct) {
 
   EXPECT_STATUS_OK(v6.get<T6>());
   EXPECT_EQ(crazy, *v6.get<T6>());
+}
+
+TEST(Value, SpannerStructWithNull) {
+  auto v1 = Value(std::make_tuple(123, true));
+  auto v2 = Value(std::make_tuple(123, optional<bool>{}));
+
+  auto protos1 = internal::ToProto(v1);
+  auto protos2 = internal::ToProto(v2);
+
+  // The type protos match for both values, but the value protos DO NOT match.
+  EXPECT_THAT(protos1.first, IsProtoEqual(protos2.first));
+  EXPECT_THAT(protos1.second, Not(IsProtoEqual(protos2.second)));
+
+  // Now verify that the second value has two fields and the second field
+  // contains a NULL value.
+  ASSERT_EQ(protos2.second.list_value().values_size(), 2);
+  ASSERT_EQ(protos2.second.list_value().values(1).null_value(),
+            google::protobuf::NullValue::NULL_VALUE);
 }
 
 TEST(Value, ProtoConversionBool) {
