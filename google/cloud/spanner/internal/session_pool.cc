@@ -25,6 +25,7 @@
 #include <chrono>
 #include <random>
 #include <thread>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -73,31 +74,12 @@ SessionPool::SessionPool(Database db,
   }
   // `channels_` is never resized after this point.
   next_dissociated_stub_channel_ = channels_.begin();
-  next_channel_for_create_sessions_ = channels_.begin();
 }
 
 void SessionPool::Initialize() {
-  // Eagerly initialize the pool with `min_sessions` sessions.
-  // TODO(#307) this was moved to `Initialize` in preparation of using
-  // `shared_from_this()` in the process of creating sessions, which cannot
-  // be done in the constructor.
   if (options_.min_sessions() > 0) {
     std::unique_lock<std::mutex> lk(mu_);
-    int num_channels = static_cast<int>(channels_.size());
-    int sessions_per_channel = options_.min_sessions() / num_channels;
-    // If the number of sessions doesn't divide evenly by the number of
-    // channels, add one extra session to the first `extra_sessions` channels.
-    int extra_sessions = options_.min_sessions() % num_channels;
-    for (auto& channel : channels_) {
-      int num_sessions = sessions_per_channel;
-      if (extra_sessions > 0) {
-        ++num_sessions;
-        --extra_sessions;
-      }
-      // Just ignore failures; we'll try again when the caller requests a
-      // session, and we'll be in a position to return an error at that time.
-      (void)CreateSessions(lk, channel, options_.labels(), num_sessions);
-    }
+    (void)Grow(lk, options_.min_sessions(), WaitForSessionAllocation::kWait);
   }
   ScheduleBackgroundWork(std::chrono::seconds(5));
 }
@@ -133,9 +115,105 @@ void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {
 }
 
 void SessionPool::DoBackgroundWork() {
+  MaintainPoolSize();
   // TODO(#1171) Implement SessionPool session refresh
-  // TODO(#1172) maintain desired SessionPool size
   ScheduleBackgroundWork(std::chrono::seconds(5));
+}
+
+// Ensure the pool size conforms to what was specified in the `SessionOptions`,
+// creating or deleting sessions as necessary.
+void SessionPool::MaintainPoolSize() {
+  std::unique_lock<std::mutex> lk(mu_);
+  if (!create_in_progress_ && total_sessions_ < options_.min_sessions()) {
+    Grow(lk, total_sessions_ - options_.min_sessions(),
+         WaitForSessionAllocation::kNoWait);
+  }
+}
+
+/**
+ * Grow the session pool by creating up to `sessions_to_create` sessions and
+ * adding them to the pool.  Note that `lk` may be released and reacquired in
+ * this method.
+ *
+ * TODO(#1271) eliminate the `wait` parameter and do all creation
+ * asynchronously. The main obstacle is making existing tests pass.
+ */
+Status SessionPool::Grow(std::unique_lock<std::mutex>& lk,
+                         int sessions_to_create,
+                         WaitForSessionAllocation wait) {
+  int num_channels = static_cast<int>(channels_.size());
+  int session_limit = options_.max_sessions_per_channel() * num_channels;
+  if (total_sessions_ == session_limit) {
+    // Can't grow the pool since we're already at max size.
+    return Status(StatusCode::kResourceExhausted, "session pool exhausted");
+  }
+
+  create_in_progress_ = true;
+
+  // Compute how many Sessions to create on each Channel, trying to keep the
+  // number of Sessions on each channel equal.
+  //
+  // However, the counts may become unequal over time, and we do not want
+  // to delete sessions just to make the counts equal, so do the best we
+  // can within those constraints.
+  int target_total_sessions =
+      (std::min)(total_sessions_ + sessions_to_create, session_limit);
+
+  // Sort the channels in *descending* order of session count.
+  std::vector<std::shared_ptr<Channel>> channels_by_count = channels_;
+  std::sort(channels_by_count.begin(), channels_by_count.end(),
+            [](std::shared_ptr<Channel> const& lhs,
+               std::shared_ptr<Channel> const& rhs) {
+              // Use `>` to sort in descending order.
+              return lhs->session_count > rhs->session_count;
+            });
+
+  // Compute the number of new Sessions to create on each channel.
+  int sessions_remaining = target_total_sessions;
+  int channels_remaining = num_channels;
+  std::vector<std::pair<std::shared_ptr<Channel>, int>> create_counts;
+  for (auto& channel : channels_by_count) {
+    // The target number of sessions for this channel, rounded up.
+    int target =
+        (sessions_remaining + channels_remaining - 1) / channels_remaining;
+    --channels_remaining;
+    if (channel->session_count < target) {
+      int sessions_to_create = target - channel->session_count;
+      create_counts.emplace_back(channel, sessions_to_create);
+      // Subtract the number of Sessions this channel will have after creation
+      // finishes from the remaining sessions count.
+      sessions_remaining -= target;
+    } else {
+      // This channel is already over its target. Don't create any Sessions
+      // on it, just update the remaining sessions count.
+      sessions_remaining -= channel->session_count;
+    }
+  }
+
+  // Create all the sessions (note that `lk` can be released during creation,
+  // which is why we don't do this directly in the loop above).
+  for (auto& op : create_counts) {
+    switch (wait) {
+      case WaitForSessionAllocation::kWait: {
+        auto status =
+            CreateSessions(lk, op.first, options_.labels(), op.second);
+        if (!status.ok()) {
+          create_in_progress_ = false;
+          return status;
+        }
+      } break;
+      case WaitForSessionAllocation::kNoWait:
+        // TODO(#1172) make an async create call
+        break;
+    }
+  }
+
+  // TODO(#1172) when we implement kNoWait, setting create_in_progress_ and
+  // notifying cond_ should only happen after the calls finish.
+  create_in_progress_ = false;
+  // Wake up everyone that was waiting for a session.
+  cond_.notify_all();
+  return Status();
 }
 
 StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
@@ -178,19 +256,13 @@ StatusOr<SessionHolder> SessionPool::Allocate(bool dissociate_from_pool) {
       continue;
     }
 
-    // Add `min_sessions` to the pool (plus the one we're going to return),
-    // subject to the `max_sessions_per_channel` cap.
-    auto const& channel = *next_channel_for_create_sessions_;
-    int sessions_to_create = (std::min)(
-        options_.min_sessions() + 1,
-        options_.max_sessions_per_channel() - channel->session_count);
-    auto create_status =
-        CreateSessions(lk, channel, options_.labels(), sessions_to_create);
-    if (!create_status.ok()) {
-      return create_status;
+    // Try to add some sessions to the pool; for now add `min_sessions` plus
+    // one for the `Session` this caller is waiting for.
+    auto status =
+        Grow(lk, options_.min_sessions() + 1, WaitForSessionAllocation::kWait);
+    if (!status.ok()) {
+      return status;
     }
-    // Wake up everyone that was waiting for a session.
-    cond_.notify_all();
   }
 }
 
@@ -270,21 +342,7 @@ Status SessionPool::CreateSessions(
   // Shuffle the pool so we distribute returned sessions across channels.
   std::shuffle(sessions_.begin(), sessions_.end(),
                std::mt19937(std::random_device()()));
-  if (&*next_channel_for_create_sessions_ == &channel) {
-    UpdateNextChannelForCreateSessions();
-  }
   return Status();
-}
-
-void SessionPool::UpdateNextChannelForCreateSessions() {
-  // `mu_` must be held by the caller.
-  next_channel_for_create_sessions_ = channels_.begin();
-  for (auto it = channels_.begin(); it != channels_.end(); ++it) {
-    if ((*it)->session_count <
-        (*next_channel_for_create_sessions_)->session_count) {
-      next_channel_for_create_sessions_ = it;
-    }
-  }
 }
 
 SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,

@@ -122,6 +122,10 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
+  void MaintainPoolSize();
+  enum class WaitForSessionAllocation { kWait, kNoWait };
+  Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
+              WaitForSessionAllocation wait);
 
   Database const db_;
   SessionPoolOptions const options_;
@@ -142,9 +146,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // the constructor runs (so the iterators are guaranteed to always be valid).
   // TODO(#566) replace `vector` with `absl::FixedArray` when available.
   using ChannelVec = std::vector<std::shared_ptr<Channel>>;
-  ChannelVec channels_;                                    // GUARDED_BY(mu_)
-  ChannelVec::iterator next_channel_for_create_sessions_;  // GUARDED_BY(mu_)
-  ChannelVec::iterator next_dissociated_stub_channel_;     // GUARDED_BY(mu_)
+  ChannelVec channels_;                                 // GUARDED_BY(mu_)
+  ChannelVec::iterator next_dissociated_stub_channel_;  // GUARDED_BY(mu_)
 };
 
 /**
