@@ -298,6 +298,8 @@ class V4SignUrlRequest {
 
   std::string SignedHeaders() const;
 
+  std::string PayloadHashValue() const;
+
   SignUrlRequestCommon common_request_;
   std::chrono::system_clock::time_point timestamp_;
   std::chrono::seconds expires_;

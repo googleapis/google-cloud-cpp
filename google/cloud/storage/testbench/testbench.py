@@ -461,7 +461,7 @@ def objects_get_common(bucket_name, object_name, revision):
     if instructions == 'return-broken-stream':
         def streamer():
             chunk_size = 64 * 1024
-            for r in range(0, len(response_payload) / 2, chunk_size):
+            for r in range(0, len(response_payload), chunk_size):
                 if r > 1024 * 1024:
                     print("\n\n###### EXIT to simulate crash\n")
                     sys.exit(1)
@@ -473,6 +473,7 @@ def objects_get_common(bucket_name, object_name, revision):
         content_range = 'bytes %d-%d/%d' % (begin, end - 1, length)
         headers = {
             'Content-Range': content_range,
+            'Content-Length': length,
             'x-goog-hash': revision.x_goog_hash_header(),
             'x-goog-generation': revision.generation
         }
@@ -554,22 +555,6 @@ def objects_get_common(bucket_name, object_name, revision):
     response.headers['x-goog-hash'] = revision.x_goog_hash_header()
     response.headers['x-goog-generation'] = revision.generation
     return response
-
-
-@gcs.route('/b/<bucket_name>/o/<path:object_name>')
-def objects_get(bucket_name, object_name):
-    """Implement the 'Objects: get' API.  Read objects or their metadata."""
-    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
-    blob.check_preconditions(flask.request)
-    revision = blob.get_revision(flask.request)
-
-    media = flask.request.args.get('alt', None)
-    if media is None or media == 'json':
-        return testbench_utils.filtered_response(flask.request, revision.metadata)
-    if media != 'media':
-        raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
-    revision.validate_encryption_for_read(flask.request)
-    return objects_get_common(bucket_name, object_name, revision)
 
 
 @gcs.route('/b/<bucket_name>/o/<path:object_name>', methods=['DELETE'])
@@ -712,6 +697,34 @@ def objects_acl_patch(bucket_name, object_name, entity):
 
 
 # Define the WSGI application to handle bucket requests.
+DOWNLOAD_HANDLER_PATH = '/download/storage/v1'
+download = flask.Flask(__name__)
+download.debug = True
+
+
+@download.errorhandler(error_response.ErrorResponse)
+def download_error(error):
+    return error.as_response()
+
+
+@gcs.route('/b/<bucket_name>/o/<path:object_name>')
+@download.route('/b/<bucket_name>/o/<path:object_name>')
+def objects_get(bucket_name, object_name):
+    """Implement the 'Objects: get' API.  Read objects or their metadata."""
+    _, blob = testbench_utils.lookup_object(bucket_name, object_name)
+    blob.check_preconditions(flask.request)
+    revision = blob.get_revision(flask.request)
+
+    media = flask.request.args.get('alt', None)
+    if media is None or media == 'json':
+        return testbench_utils.filtered_response(flask.request, revision.metadata)
+    if media != 'media':
+        raise error_response.ErrorResponse('Invalid alt=%s parameter' % media)
+    revision.validate_encryption_for_read(flask.request)
+    return objects_get_common(bucket_name, object_name, revision)
+
+
+# Define the WSGI application to handle bucket requests.
 UPLOAD_HANDLER_PATH = '/upload/storage/v1'
 upload = flask.Flask(__name__)
 upload.debug = True
@@ -745,17 +758,28 @@ def objects_insert(bucket_name):
             'objects_insert', bucket_name=bucket_name, _external=True)
         return bucket.create_resumable_upload(upload_url, flask.request)
 
-    object_name = flask.request.args.get('name', None)
-    if object_name is None:
-        raise error_response.ErrorResponse(
-            'name not set in Objects: insert', status_code=412)
-    object_path, blob = testbench_utils.get_object(
-        bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
-    blob.check_preconditions(flask.request)
+    object_path = None
+    blob = None
+    current_version = None
     if upload_type == 'media':
+        object_name = flask.request.args.get('name', None)
+        if object_name is None:
+            raise error_response.ErrorResponse(
+                'name not set in Objects: insert', status_code=412)
+        object_path, blob = testbench_utils.get_object(
+            bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
+        blob.check_preconditions(flask.request)
         current_version = blob.insert(gcs_url, flask.request)
     else:
-        current_version = blob.insert_multipart(gcs_url, flask.request)
+        resource, media_headers, media_body = testbench_utils.parse_multi_part(flask.request)
+        object_name = flask.request.args.get('name', resource.get('name', None))
+        if object_name is None:
+            raise error_response.ErrorResponse(
+                'name not set in Objects: insert', status_code=412)
+        object_path, blob = testbench_utils.get_object(
+            bucket_name, object_name, gcs_object.GcsObject(bucket_name, object_name))
+        blob.check_preconditions(flask.request)
+        current_version = blob.insert_multipart(gcs_url, flask.request, resource, media_headers, media_body)
     testbench_utils.insert_object(object_path, blob)
     return testbench_utils.filtered_response(flask.request, current_version.metadata)
 
@@ -835,6 +859,7 @@ application = DispatcherMiddleware(
         '/httpbin': httpbin.app,
         GCS_HANDLER_PATH: gcs,
         UPLOAD_HANDLER_PATH: upload,
+        DOWNLOAD_HANDLER_PATH: download,
         XMLAPI_HANDLER_PATH: xmlapi,
         PROJECTS_HANDLER_PATH: projects_app,
         IAM_HANDLER_PATH: iam_app,

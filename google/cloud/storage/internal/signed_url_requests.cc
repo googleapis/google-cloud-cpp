@@ -58,9 +58,17 @@ std::vector<std::string> V4SignUrlRequest::ObjectNameParts() const {
   return common_request_.ObjectNameParts();
 }
 
+namespace {
+std::chrono::hours DefaultV4SignedUrlExpiration() {
+  auto constexpr kHoursInDay = 24;
+  auto constexpr kDaysInWeek = 7;
+  return std::chrono::hours{kDaysInWeek * kHoursInDay};
+}
+}  // namespace
+
 std::chrono::system_clock::time_point
 V2SignUrlRequest::DefaultExpirationTime() {
-  return std::chrono::system_clock::now() + std::chrono::hours(7 * 24);
+  return std::chrono::system_clock::now() + DefaultV4SignedUrlExpiration();
 }
 
 std::string V2SignUrlRequest::StringToSign() const {
@@ -116,6 +124,9 @@ std::string QueryStringFromParameters(
 
 std::string TrimHeaderValue(std::string const& value) {
   std::string tmp = value;
+  // Heasder values need to be normalized for spaces, whitespaces and tabs
+  std::replace_if(tmp.begin(), tmp.end(),
+                  [](char c) { return std::isspace(c); }, ' ');
   tmp.erase(0, tmp.find_first_not_of(' '));
   tmp = tmp.substr(0, tmp.find_last_not_of(' ') + 1);
   auto end = std::unique(tmp.begin(), tmp.end(),
@@ -163,7 +174,7 @@ std::string V4SignUrlRequest::CanonicalRequest(
   for (auto&& kv : common_request_.extension_headers()) {
     os << kv.first << ":" << TrimHeaderValue(kv.second) << "\n";
   }
-  os << "\n" << SignedHeaders() << "\nUNSIGNED-PAYLOAD";
+  os << "\n" << SignedHeaders() << "\n" << PayloadHashValue();
 
   return std::move(os).str();
 }
@@ -179,7 +190,7 @@ std::chrono::system_clock::time_point V4SignUrlRequest::DefaultTimestamp() {
 }
 
 std::chrono::seconds V4SignUrlRequest::DefaultExpires() {
-  return std::chrono::seconds(7 * std::chrono::hours(24));
+  return DefaultV4SignedUrlExpiration();
 }
 
 std::string V4SignUrlRequest::CanonicalRequestHash(
@@ -224,6 +235,20 @@ std::string V4SignUrlRequest::SignedHeaders() const {
     sep = ";";
   }
   return result;
+}
+
+std::string V4SignUrlRequest::PayloadHashValue() const {
+  using value_type = std::map<std::string, std::string>::value_type;
+  auto it = std::find_if(common_request_.extension_headers().begin(),
+                         common_request_.extension_headers().end(),
+                         [](value_type const& entry) {
+                           return entry.first == "x-goog-content-sha256" ||
+                                  entry.first == "x-amz-content-sha256";
+                         });
+  if (it != common_request_.extension_headers().end()) {
+    return it->second;
+  }
+  return "UNSIGNED-PAYLOAD";
 }
 
 std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r) {
