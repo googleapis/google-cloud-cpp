@@ -46,10 +46,15 @@ class NativeExpression {
    */
   NativeExpression(std::string expression, std::string title = "",
                    std::string description = "", std::string location = "");
-  NativeExpression(NativeExpression const& other);
   ~NativeExpression();
 
+  NativeExpression(NativeExpression const& other);
   NativeExpression& operator=(NativeExpression const& other);
+
+  // This have to be declared explicitly and defined out of line because `Impl`
+  // is incomplete at this point.
+  NativeExpression(NativeExpression&&) noexcept;
+  NativeExpression& operator=(NativeExpression&&) noexcept;
 
   std::string expression() const;
   void set_expression(std::string expression);
@@ -88,10 +93,15 @@ class NativeIamBinding {
   NativeIamBinding(std::string role, std::vector<std::string> members);
   NativeIamBinding(std::string role, std::vector<std::string> members,
                    NativeExpression condition);
-  NativeIamBinding(NativeIamBinding const& other);
   ~NativeIamBinding();
 
+  NativeIamBinding(NativeIamBinding const& other);
   NativeIamBinding& operator=(NativeIamBinding const& other);
+
+  // This have to be declared explicitly and defined out of line because `Impl`
+  // is incomplete at this point.
+  NativeIamBinding(NativeIamBinding&&) noexcept;
+  NativeIamBinding& operator=(NativeIamBinding&&) noexcept;
 
   std::string role() const;
   void set_role(std::string role);

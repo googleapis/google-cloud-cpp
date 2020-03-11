@@ -21,14 +21,22 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 inline namespace BIGTABLE_CLIENT_NS {
+
+// Cloud Bigtable doesn't accept more than this.
+auto constexpr kBigtableMutationLimit = 100000;
+// Let's make the default slightly smaller, so that overheads or
+// miscalculations don't tip us over.
+auto constexpr kDefaultMaxSizePerBatch =
+    (BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 90LL) / 100LL;
+auto constexpr kDefaultMaxBatches = 8;
+auto constexpr kDefaultMaxOutstandingSize =
+    kDefaultMaxSizePerBatch * kDefaultMaxBatches;
+
 MutationBatcher::Options::Options()
-    :  // Cloud Bigtable doesn't accept more than this.
-      max_mutations_per_batch(100000),
-      // Let's make the default slightly smaller, so that overheads or
-      // miscalculations don't tip us over.
-      max_size_per_batch(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 9LL / 10),
-      max_batches(8),
-      max_outstanding_size(BIGTABLE_CLIENT_DEFAULT_MAX_MESSAGE_LENGTH * 6) {}
+    : max_mutations_per_batch(kBigtableMutationLimit),
+      max_size_per_batch(kDefaultMaxSizePerBatch),
+      max_batches(kDefaultMaxBatches),
+      max_outstanding_size(kDefaultMaxOutstandingSize) {}
 
 std::pair<future<void>, future<Status>> MutationBatcher::AsyncApply(
     CompletionQueue& cq, SingleRowMutation mut) {
@@ -144,9 +152,9 @@ bool MutationBatcher::FlushIfPossible(CompletionQueue cq) {
   return false;
 }
 
-void MutationBatcher::OnBulkApplyDone(CompletionQueue cq,
-                                      MutationBatcher::Batch batch,
-                                      std::vector<FailedMutation> failed) {
+void MutationBatcher::OnBulkApplyDone(
+    CompletionQueue cq, MutationBatcher::Batch batch,
+    std::vector<FailedMutation> const& failed) {
   // First process all the failures, marking the mutations as done after
   // processing them.
   for (auto const& f : failed) {

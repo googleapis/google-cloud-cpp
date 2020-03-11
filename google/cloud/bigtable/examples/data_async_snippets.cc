@@ -148,22 +148,22 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
         cbt::Filter::Latest(1));
     promise<Status> stream_status_promise;
     // Read and print the rows.
-    table.AsyncReadRows(cq,
-                        [](cbt::Row row) {
-                          if (row.cells().size() != 1) {
-                            std::cout << "Unexpected number of cells in "
-                                      << row.row_key() << "\n";
-                            return make_ready_future(false);
-                          }
-                          auto const& cell = row.cells().at(0);
-                          std::cout << cell.row_key() << " = [" << cell.value()
-                                    << "]\n";
-                          return make_ready_future(true);
-                        },
-                        [&stream_status_promise](Status stream_status) {
-                          stream_status_promise.set_value(stream_status);
-                        },
-                        range, filter);
+    table.AsyncReadRows(
+        cq,
+        [](cbt::Row row) {
+          if (row.cells().size() != 1) {
+            std::cout << "Unexpected number of cells in " << row.row_key()
+                      << "\n";
+            return make_ready_future(false);
+          }
+          auto const& cell = row.cells().at(0);
+          std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
+          return make_ready_future(true);
+        },
+        [&stream_status_promise](Status stream_status) {
+          stream_status_promise.set_value(stream_status);
+        },
+        range, filter);
     Status stream_status = stream_status_promise.get_future().get();
     if (!stream_status.ok()) {
       throw std::runtime_error(stream_status.message());
@@ -196,22 +196,22 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
         cbt::Filter::Latest(1));
     promise<Status> stream_status_promise;
     // Read and print the rows.
-    table.AsyncReadRows(cq,
-                        [](cbt::Row row) {
-                          if (row.cells().size() != 1) {
-                            std::cout << "Unexpected number of cells in "
-                                      << row.row_key() << "\n";
-                            return make_ready_future(false);
-                          }
-                          auto const& cell = row.cells().at(0);
-                          std::cout << cell.row_key() << " = [" << cell.value()
-                                    << "]\n";
-                          return make_ready_future(true);
-                        },
-                        [&stream_status_promise](Status stream_status) {
-                          stream_status_promise.set_value(stream_status);
-                        },
-                        range, filter);
+    table.AsyncReadRows(
+        cq,
+        [](cbt::Row row) {
+          if (row.cells().size() != 1) {
+            std::cout << "Unexpected number of cells in " << row.row_key()
+                      << "\n";
+            return make_ready_future(false);
+          }
+          auto const& cell = row.cells().at(0);
+          std::cout << cell.row_key() << " = [" << cell.value() << "]\n";
+          return make_ready_future(true);
+        },
+        [&stream_status_promise](Status stream_status) {
+          stream_status_promise.set_value(stream_status);
+        },
+        range, filter);
     Status stream_status = stream_status_promise.get_future().get();
     if (!stream_status.ok()) {
       throw std::runtime_error(stream_status.message());

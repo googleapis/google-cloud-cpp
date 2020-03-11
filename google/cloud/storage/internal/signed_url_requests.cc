@@ -125,8 +125,8 @@ std::string QueryStringFromParameters(
 std::string TrimHeaderValue(std::string const& value) {
   std::string tmp = value;
   // Heasder values need to be normalized for spaces, whitespaces and tabs
-  std::replace_if(tmp.begin(), tmp.end(),
-                  [](char c) { return std::isspace(c); }, ' ');
+  std::replace_if(
+      tmp.begin(), tmp.end(), [](char c) { return std::isspace(c); }, ' ');
   tmp.erase(0, tmp.find_first_not_of(' '));
   tmp = tmp.substr(0, tmp.find_last_not_of(' ') + 1);
   auto end = std::unique(tmp.begin(), tmp.end(),

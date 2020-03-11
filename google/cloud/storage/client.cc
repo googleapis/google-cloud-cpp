@@ -337,9 +337,10 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
 }
 
 std::string CreateRandomPrefixName(std::string const& prefix) {
+  auto constexpr kPrefixNameSize = 16;
   auto rng = google::cloud::internal::MakeDefaultPRNG();
-  return prefix +
-         google::cloud::internal::Sample(rng, 16, "abcdefghijklmnopqrstuvwxyz");
+  return prefix + google::cloud::internal::Sample(rng, kPrefixNameSize,
+                                                  "abcdefghijklmnopqrstuvwxyz");
 }
 
 namespace internal {
@@ -354,7 +355,7 @@ ScopedDeleter::~ScopedDeleter() {
   }
 }
 
-void ScopedDeleter::Add(ObjectMetadata object) {
+void ScopedDeleter::Add(ObjectMetadata const& object) {
   auto generation = object.generation();
   Add(std::move(object).name(), generation);
 }

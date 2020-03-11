@@ -1766,7 +1766,6 @@ class Client {
    * The API is offered for consistency with the other resource types where
    * Patch and Update APIs have different semantics.
    *
-   * @param bucket_name the name of the bucket that contains the bucket.
    * @param bucket_name the name of the bucket.
    * @param entity the identifier for the user, group, service account, or
    *     predefined set of actors holding the permission.
@@ -3205,7 +3204,7 @@ class ScopedDeleter {
   ~ScopedDeleter();
 
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())
-  void Add(ObjectMetadata object);
+  void Add(ObjectMetadata const& object);
 
   /// Defer object's deletion to this objects destruction (or ExecuteDelete())
   void Add(std::string object_name, std::int64_t generation);

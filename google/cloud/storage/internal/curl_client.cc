@@ -79,7 +79,7 @@ StatusOr<ReturnType> ParseFromString(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ReturnType::ParseFromString(response->payload);
@@ -91,7 +91,7 @@ auto CheckedFromString(StatusOr<HttpResponse> response)
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return Parser::FromString(response->payload);
@@ -101,7 +101,7 @@ StatusOr<EmptyResponse> ReturnEmptyResponse(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return EmptyResponse{};
@@ -112,7 +112,7 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ReturnType::FromHttpResponse(response->payload);
@@ -122,7 +122,7 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                       char const* method) {
-  auto auth_header = AuthorizationHeader(options_.credentials());
+  auto auth_header = options_.credentials()->AuthorizationHeader();
   if (!auth_header.ok()) {
     return std::move(auth_header).status();
   }
@@ -237,7 +237,7 @@ CurlClient::CreateResumableSessionGeneric(RequestType const& request) {
   if (!http_response.ok()) {
     return std::move(http_response).status();
   }
-  if (http_response->status_code >= 300) {
+  if (http_response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*http_response);
   }
   auto response =
@@ -308,7 +308,8 @@ StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code < 300 || response->status_code == 308) {
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -328,7 +329,8 @@ StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code < 300 || response->status_code == 308) {
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
     return ResumableUploadResponse::FromHttpResponse(*std::move(response));
   }
   return AsStatus(*response);
@@ -426,7 +428,7 @@ StatusOr<IamPolicy> CurlClient::GetBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ParseIamPolicyFromString(response->payload);
@@ -445,7 +447,7 @@ StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return NativeIamPolicy::CreateFromJson(response->payload);
@@ -465,7 +467,7 @@ StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return ParseIamPolicyFromString(response->payload);
@@ -485,7 +487,7 @@ StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return NativeIamPolicy::CreateFromJson(response->payload);
@@ -507,7 +509,7 @@ StatusOr<TestBucketIamPermissionsResponse> CurlClient::TestBucketIamPermissions(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return TestBucketIamPermissionsResponse::FromHttpResponse(response->payload);
@@ -716,7 +718,7 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   // This one does not use the common "ParseFromHttpResponse" function because
@@ -754,7 +756,7 @@ StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return internal::ListBucketAclResponse::FromHttpResponse(response->payload);
@@ -1321,7 +1323,7 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if (response->status_code >= 300) {
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(*response);
   }
   return internal::ObjectMetadataParser::FromJson(nl::json{
@@ -1488,12 +1490,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(
                     std::to_string(request.contents().size()));
   return CheckedFromString<ObjectMetadataParser>(
       builder.BuildRequest().MakeRequest(request.contents()));
-}
-
-StatusOr<std::string> CurlClient::AuthorizationHeader(
-    std::shared_ptr<google::cloud::storage::oauth2::Credentials> const&
-        credentials) {
-  return credentials->AuthorizationHeader();
 }
 
 }  // namespace internal

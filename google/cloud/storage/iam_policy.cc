@@ -138,42 +138,42 @@ NativeExpression& NativeExpression::operator=(NativeExpression const& other) {
   return *this;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
+NativeExpression::NativeExpression(NativeExpression&& rhs) noexcept
+    : pimpl_(std::move(rhs.pimpl_)) {}
+
+NativeExpression& NativeExpression::operator=(NativeExpression&& rhs) noexcept {
+  pimpl_ = std::move(rhs.pimpl_);
+  return *this;
+}
+
 std::string NativeExpression::expression() const {
   return pimpl_->native_json.value("expression", "");
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeExpression::set_expression(std::string expression) {
   pimpl_->native_json["expression"] = std::move(expression);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeExpression::title() const {
   return pimpl_->native_json.value("title", "");
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeExpression::set_title(std::string title) {
   pimpl_->native_json["title"] = std::move(title);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeExpression::description() const {
   return pimpl_->native_json.value("description", "");
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeExpression::set_description(std::string description) {
   pimpl_->native_json["description"] = std::move(description);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeExpression::location() const {
   return pimpl_->native_json.value("location", "");
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeExpression::set_location(std::string location) {
   pimpl_->native_json["location"] = std::move(location);
 }
@@ -286,45 +286,44 @@ NativeIamBinding& NativeIamBinding::operator=(NativeIamBinding const& other) {
   return *this;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
+NativeIamBinding::NativeIamBinding(NativeIamBinding&& rhs) noexcept
+    : pimpl_(std::move(rhs.pimpl_)) {}
+
+NativeIamBinding& NativeIamBinding::operator=(NativeIamBinding&& rhs) noexcept {
+  pimpl_ = std::move(rhs.pimpl_);
+  return *this;
+}
+
 std::string NativeIamBinding::role() const {
   return pimpl_->native_json.value("role", "");
-};
+}
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamBinding::set_role(std::string role) {
   pimpl_->native_json["role"] = std::move(role);
-};
+}
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::vector<std::string> const& NativeIamBinding::members() const {
   return pimpl_->members;
-};
+}
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::vector<std::string>& NativeIamBinding::members() {
   return pimpl_->members;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 NativeExpression const& NativeIamBinding::condition() const {
   return *pimpl_->condition;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 NativeExpression& NativeIamBinding::condition() { return *pimpl_->condition; }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamBinding::set_condition(NativeExpression condition) {
   pimpl_->condition = std::move(condition);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 bool NativeIamBinding::has_condition() const {
   return pimpl_->condition.has_value();
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamBinding::clear_condition() { pimpl_->condition.reset(); }
 
 std::ostream& operator<<(std::ostream& os, NativeIamBinding const& binding) {

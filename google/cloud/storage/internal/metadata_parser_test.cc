@@ -188,14 +188,16 @@ void CheckParseInvalidFieldType(
   std::string text = R"""({ "field_name": [0, 1, 2] })""";
   auto json_object = nl::json::parse(text);
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
-  EXPECT_THROW(try { tested(json_object, "field_name"); } catch (
-                   std::exception const& ex) {
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr("json="));
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr("<field_name>"));
-    EXPECT_THAT(ex.what(), ::testing::HasSubstr("[0,1,2]"));
-    throw;
-  },
-               std::invalid_argument);
+  EXPECT_THROW(
+      try {
+        tested(json_object, "field_name");
+      } catch (std::exception const& ex) {
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("json="));
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("<field_name>"));
+        EXPECT_THAT(ex.what(), ::testing::HasSubstr("[0,1,2]"));
+        throw;
+      },
+      std::invalid_argument);
 #else
   EXPECT_DEATH_IF_SUPPORTED(tested(json_object, "field_name"), "");
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS

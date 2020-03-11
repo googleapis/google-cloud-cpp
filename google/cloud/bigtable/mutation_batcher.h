@@ -79,10 +79,10 @@ class MutationBatcher {
       return *this;
     }
 
-    size_t max_mutations_per_batch;
-    size_t max_size_per_batch;
-    size_t max_batches;
-    size_t max_outstanding_size;
+    std::size_t max_mutations_per_batch;
+    std::size_t max_size_per_batch;
+    std::size_t max_batches;
+    std::size_t max_outstanding_size;
   };
 
   explicit MutationBatcher(Table table, Options options = Options())
@@ -246,7 +246,7 @@ class MutationBatcher {
 
   /// Handle a completed batch.
   void OnBulkApplyDone(CompletionQueue cq, MutationBatcher::Batch batch,
-                       std::vector<FailedMutation> failed);
+                       std::vector<FailedMutation> const& failed);
 
   /**
    * Try to move mutations waiting in `pending_mutations_` to the currently

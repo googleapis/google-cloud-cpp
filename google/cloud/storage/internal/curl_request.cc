@@ -34,8 +34,12 @@ extern "C" size_t CurlRequestOnHeaderData(char* contents, size_t size,
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) {
+  // We get better performance using a slightly larger buffer (128KiB) than the
+  // default buffer size set by libcurl (16KiB)
+  auto constexpr kDefaultBufferSize = 128 * 1024L;
+
   response_payload_.clear();
-  handle_.SetOption(CURLOPT_BUFFERSIZE, 128 * 1024L);
+  handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());

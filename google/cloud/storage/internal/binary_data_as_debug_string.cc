@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include <array>
 #include <cctype>
+#include <limits>
 
 namespace google {
 namespace cloud {
@@ -22,18 +24,27 @@ inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 std::string BinaryDataAsDebugString(char const* data, std::size_t size,
                                     std::size_t max_output_bytes) {
+  // We want about 2/3 of a standard 80 column terminal to be used by the hex
+  // representation and the other 1/3 (because it is half as wide) with the
+  // text representation. Setting this value to 24 uses 72 columns: 48 for the
+  // hex representation, 24 for text, and one space. We could use 25 or 26, we
+  // chose (somewhat arbitrarily) 24 as it is 16 + 8 and thus more "round" in
+  // base 2.
+  auto constexpr kTextWidth = 24;
   std::string result;
-  std::size_t text_width = 24;
-  std::string text_column(text_width, ' ');
-  std::string hex_column(2 * text_width, ' ');
+  std::string text_column(kTextWidth, ' ');
+  std::string hex_column(2 * kTextWidth, ' ');
 
-  auto flush = [&result, &text_column, &hex_column, text_width] {
+  // Capture everything (which we use anyway) because:
+  //   - clang-tidy complains if you capture a constexpr or const
+  //   - MSVC does not automatically capture constexpr types unless we do this
+  auto flush = [&] {
     result += text_column;
     result += ' ';
     result += hex_column;
     result += '\n';
-    text_column = std::string(text_width, ' ');
-    hex_column = std::string(2 * text_width, ' ');
+    text_column = std::string(kTextWidth, ' ');
+    hex_column = std::string(2 * kTextWidth, ' ');
   };
 
   // Limit the output to the first `max_output_bytes`.
@@ -53,12 +64,13 @@ std::string BinaryDataAsDebugString(char const* data, std::size_t size,
     } else {
       text_column[count] = '.';
     }
-    char buf[3];
-    snprintf(buf, sizeof(buf), "%02x", cval);
+    auto constexpr kCharHexWidth = 2;
+    std::array<char, kCharHexWidth + 1> buf{};
+    snprintf(buf.data(), buf.size(), "%02x", cval);
     hex_column[2 * count] = buf[0];
     hex_column[2 * count + 1] = buf[1];
     ++count;
-    if (count == text_width) {
+    if (count == kTextWidth) {
       flush();
       count = 0;
     }

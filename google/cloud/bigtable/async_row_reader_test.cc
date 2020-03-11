@@ -93,20 +93,21 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
 
   // Start Table::AsyncReadRows.
   void ReadRows(int row_limit = RowReader::NO_ROWS_LIMIT) {
-    table_.AsyncReadRows(cq_,
-                         [this](Row row) {
-                           EXPECT_EQ(expected_rows_.front(), row.row_key());
-                           expected_rows_.pop();
-                           row_promises_.front().set_value(row.row_key());
-                           row_promises_.pop();
-                           auto ret = std::move(futures_from_user_cb_.front());
-                           futures_from_user_cb_.pop();
-                           return ret;
-                         },
-                         [this](Status stream_status) {
-                           stream_status_promise_.set_value(stream_status);
-                         },
-                         RowSet(), row_limit, Filter::PassAllFilter());
+    table_.AsyncReadRows(
+        cq_,
+        [this](Row row) {
+          EXPECT_EQ(expected_rows_.front(), row.row_key());
+          expected_rows_.pop();
+          row_promises_.front().set_value(row.row_key());
+          row_promises_.pop();
+          auto ret = std::move(futures_from_user_cb_.front());
+          futures_from_user_cb_.pop();
+          return ret;
+        },
+        [this](Status stream_status) {
+          stream_status_promise_.set_value(stream_status);
+        },
+        RowSet(), row_limit, Filter::PassAllFilter());
   }
 
   /// Expect a row whose row key is equal to this function's argument.

@@ -26,19 +26,21 @@ Status AsStatus(HttpResponse const& http_response) {
   // just to make it readable. There are probably shorter (and/or more
   // efficient) ways to write this, but we went for readability.
 
-  if (http_response.status_code < 100) {
+  if (http_response.status_code < HttpStatusCode::kMinContinue) {
     return Status(StatusCode::kUnknown, http_response.payload);
   }
-  if (http_response.status_code < 200) {
+  if (HttpStatusCode::kMinContinue <= http_response.status_code &&
+      http_response.status_code < HttpStatusCode::kMinSuccess) {
     // We treat the 100s (e.g. 100 Continue) as OK results. They normally are
     // ignored by libcurl, so we do not really expect to see them.
     return Status(StatusCode::kOk, std::string{});
   }
-  if (http_response.status_code < 300) {
+  if (HttpStatusCode::kMinSuccess <= http_response.status_code &&
+      http_response.status_code < HttpStatusCode::kMinRedirects) {
     // We treat the 200s as Okay results.
     return Status(StatusCode::kOk, std::string{});
   }
-  if (http_response.status_code == 308) {
+  if (http_response.status_code == HttpStatusCode::kResumeIncomplete) {
     // 308 - Resume Incomplete: this one is terrible. When performing a PUT
     // for a resumable upload this means "The client and server are out of sync
     // in this resumable upload, please reset". Unfortunately, during a
@@ -49,7 +51,8 @@ Status AsStatus(HttpResponse const& http_response) {
     // handle, i.e., the mapping depends on the operation.
     return Status(StatusCode::kFailedPrecondition, http_response.payload);
   }
-  if (http_response.status_code < 400) {
+  if (HttpStatusCode::kMinRedirects <= http_response.status_code &&
+      http_response.status_code < HttpStatusCode::kMinRequestErrors) {
     // The 300s should be handled by libcurl, we should not get them, according
     // to the Google Cloud Storage documentation these are:
     // 302 - Found
@@ -58,71 +61,59 @@ Status AsStatus(HttpResponse const& http_response) {
     // 307 - Temporary Redirect
     return Status(StatusCode::kUnknown, http_response.payload);
   }
-  if (http_response.status_code == 400) {
-    // 400 - Bad Request
+  if (http_response.status_code == HttpStatusCode::kBadRequest) {
     return Status(StatusCode::kInvalidArgument, http_response.payload);
   }
-  if (http_response.status_code == 401) {
-    // 401 - Unauthorized
+  if (http_response.status_code == HttpStatusCode::kUnauthorized) {
     return Status(StatusCode::kUnauthenticated, http_response.payload);
   }
-  if (http_response.status_code == 403) {
-    // 403 - Forbidden
+  if (http_response.status_code == HttpStatusCode::kForbidden) {
     return Status(StatusCode::kPermissionDenied, http_response.payload);
   }
-  if (http_response.status_code == 404) {
-    // 404 - Not Found
+  if (http_response.status_code == HttpStatusCode::kNotFound) {
     return Status(StatusCode::kNotFound, http_response.payload);
   }
-  if (http_response.status_code == 405) {
-    // 405 - Method Not Allowed
+  if (http_response.status_code == HttpStatusCode::kMethodNotAllowed) {
     return Status(StatusCode::kPermissionDenied, http_response.payload);
   }
-  if (http_response.status_code == 409) {
-    // 409 - Conflict
+  if (http_response.status_code == HttpStatusCode::kConflict) {
     return Status(StatusCode::kAborted, http_response.payload);
   }
-  if (http_response.status_code == 410) {
-    // 410 - Gone
+  if (http_response.status_code == HttpStatusCode::kGone) {
     return Status(StatusCode::kNotFound, http_response.payload);
   }
-  if (http_response.status_code == 411) {
-    // 411 - Length Required
+  if (http_response.status_code == HttpStatusCode::kLengthRequired) {
     return Status(StatusCode::kInvalidArgument, http_response.payload);
   }
-  if (http_response.status_code == 412) {
-    // 412 - Precondition Failed
+  if (http_response.status_code == HttpStatusCode::kPreconditionFailed) {
     return Status(StatusCode::kFailedPrecondition, http_response.payload);
   }
-  if (http_response.status_code == 413) {
-    // 413 - Payload Too Large
+  if (http_response.status_code == HttpStatusCode::kPayloadTooLarge) {
     return Status(StatusCode::kOutOfRange, http_response.payload);
   }
-  if (http_response.status_code == 416) {
-    // 416 - Request Range Not Satisfiable
+  if (http_response.status_code ==
+      HttpStatusCode::kRequestRangeNotSatisfiable) {
     return Status(StatusCode::kOutOfRange, http_response.payload);
   }
-  if (http_response.status_code == 429) {
-    // 429 - Too Many Requests
+  if (http_response.status_code == HttpStatusCode::kTooManyRequests) {
     return Status(StatusCode::kUnavailable, http_response.payload);
   }
-  if (http_response.status_code < 500) {
+  if (HttpStatusCode::kMinRequestErrors <= http_response.status_code &&
+      http_response.status_code < HttpStatusCode::kMinInternalErrors) {
     // 4XX - A request error.
     return Status(StatusCode::kInvalidArgument, http_response.payload);
   }
-  if (http_response.status_code == 500) {
-    // 500 - Internal Server Error
+  if (http_response.status_code == HttpStatusCode::kInternalServerError) {
     return Status(StatusCode::kUnavailable, http_response.payload);
   }
-  if (http_response.status_code == 502) {
-    // 502 - Bad Gateway
+  if (http_response.status_code == HttpStatusCode::kBadGateway) {
     return Status(StatusCode::kUnavailable, http_response.payload);
   }
-  if (http_response.status_code == 503) {
-    // 503 - Service Unavailable
+  if (http_response.status_code == HttpStatusCode::kServiceUnavailable) {
     return Status(StatusCode::kUnavailable, http_response.payload);
   }
-  if (http_response.status_code < 600) {
+  if (HttpStatusCode::kMinInternalErrors <= http_response.status_code &&
+      http_response.status_code < HttpStatusCode::kMinInvalidCode) {
     // 5XX - server errors are mapped to kInternal.
     return Status(StatusCode::kInternal, http_response.payload);
   }

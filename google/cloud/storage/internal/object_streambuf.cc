@@ -56,7 +56,8 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
     return traits_type::eof();
   }
 
-  current_ios_buffer_.resize(128 * 1024);
+  auto constexpr kInitialPeekRead = 128 * 1024;
+  current_ios_buffer_.resize(kInitialPeekRead);
   std::size_t n = current_ios_buffer_.size();
   StatusOr<ReadSourceResult> read_result =
       source_->Read(current_ios_buffer_.data(), n);
@@ -70,7 +71,7 @@ StatusOr<ObjectReadStreambuf::int_type> ObjectReadStreambuf::Peek() {
     hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
-  if (read_result->response.status_code >= 300) {
+  if (read_result->response.status_code >= HttpStatusCode::kMinNotSuccess) {
     return AsStatus(read_result->response);
   }
 
@@ -200,7 +201,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
     hash_validator_->ProcessHeader(kv.first, kv.second);
     headers_.emplace(kv.first, kv.second);
   }
-  if (read_result->response.status_code >= 300) {
+  if (read_result->response.status_code >= HttpStatusCode::kMinNotSuccess) {
     return run_validator_if_closed(AsStatus(read_result->response));
   }
   return run_validator_if_closed(Status());

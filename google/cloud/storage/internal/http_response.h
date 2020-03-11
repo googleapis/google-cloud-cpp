@@ -27,6 +27,45 @@ namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
 
+enum HttpStatusCode {
+  kMinContinue = 100,
+  kMinSuccess = 200,
+  kMinRedirects = 300,
+  kMinRequestErrors = 400,
+  kMinInternalErrors = 500,
+  kMinInvalidCode = 600,
+
+  kContinue = 100,
+
+  kOk = 200,
+  kCreated = 201,
+
+  // Google's resumable upload protocol abuses 308 (Permanent Redirect) as
+  // "Resume Incomplete".
+  kResumeIncomplete = 308,
+
+  // The libcurl library handles (most) redirects, so anything above 300 is
+  // actually an error.
+  kMinNotSuccess = 300,
+
+  kBadRequest = 400,
+  kUnauthorized = 401,
+  kForbidden = 403,
+  kNotFound = 404,
+  kMethodNotAllowed = 405,
+  kConflict = 409,
+  kGone = 410,
+  kLengthRequired = 411,
+  kPreconditionFailed = 412,
+  kPayloadTooLarge = 413,
+  kRequestRangeNotSatisfiable = 416,
+  kTooManyRequests = 429,
+
+  kInternalServerError = 500,
+  kBadGateway = 502,
+  kServiceUnavailable = 503,
+};
+
 /**
  * Contains the results of a HTTP request.
  */

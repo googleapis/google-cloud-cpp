@@ -18,7 +18,8 @@
 #include <openssl/err.h>
 #include <openssl/pem.h>
 #include <openssl/pkcs12.h>
-#include <fstream>
+#include <array>
+#include <cstdio>
 
 namespace google {
 namespace cloud {
@@ -37,10 +38,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
                   "parsing failed on data loaded from " +
                       source);
   }
-  char const private_key_id_key[] = "private_key_id";
-  char const private_key_key[] = "private_key";
-  char const token_uri_key[] = "token_uri";
-  char const client_email_key[] = "client_email";
+  std::string const private_key_id_key = "private_key_id";
+  std::string const private_key_key = "private_key";
+  std::string const token_uri_key = "token_uri";
+  std::string const client_email_key = "client_email";
   for (auto const& key :
        {private_key_id_key, private_key_key, client_email_key}) {
     if (credentials.count(key) == 0) {
@@ -99,9 +100,10 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
       //   https://www.openssl.org/docs/man1.1.1/man3/ERR_error_string_n.html
       //   https://www.openssl.org/docs/man1.0.2/man3/ERR_error_string_n.html
       // we could not find a macro or constant to replace the 256 literal.
-      char buf[256];
-      ERR_error_string_n(code, buf, sizeof(buf));
-      msg += buf;
+      auto constexpr kMaxOpenSslErrorLength = 256;
+      std::array<char, kMaxOpenSslErrorLength> buf{};
+      ERR_error_string_n(code, buf.data(), buf.size());
+      msg += buf.data();
     }
     return msg;
   };
@@ -202,12 +204,13 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
 
   auto expiration = now + GoogleOAuthAccessTokenLifetime();
   // As much as possible, do the time arithmetic using the std::chrono types.
-  // Convert to longs only when we are dealing with timestamps since the
-  // epoch.
-  auto now_from_epoch =
-      static_cast<long>(std::chrono::system_clock::to_time_t(now));
-  auto expiration_from_epoch =
-      static_cast<long>(std::chrono::system_clock::to_time_t(expiration));
+  // Convert to an integer only when we are dealing with timestamps since the
+  // epoch. Note that we cannot use `time_t` directly because that might be a
+  // floating point.
+  auto const now_from_epoch =
+      static_cast<std::intmax_t>(std::chrono::system_clock::to_time_t(now));
+  auto const expiration_from_epoch = static_cast<std::intmax_t>(
+      std::chrono::system_clock::to_time_t(expiration));
   storage::internal::nl::json assertion_payload = {
       {"iss", info.client_email},
       {"scope", scope_str},

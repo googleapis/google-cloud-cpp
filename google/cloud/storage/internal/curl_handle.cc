@@ -73,6 +73,7 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
       // An option value of zero (the default) means "do not change the buffer
       // size", this is reasonable because 0 is an invalid value anyway.
       if (options->recv_buffer_size_ != 0) {
+        // NOLINTNEXTLINE(google-runtime-int) - setsockopt *requires* `long`
         auto size = static_cast<long>(options->recv_buffer_size_);
 #if _WIN32
         int r = setsockopt(curlfd, SOL_SOCKET, SO_RCVBUF,
@@ -89,6 +90,7 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
         }
       }
       if (options->send_buffer_size_ != 0) {
+        // NOLINTNEXTLINE(google-runtime-int) - setsockopt *requires* `long`
         auto size = static_cast<long>(options->send_buffer_size_);
 #if _WIN32
         int r = setsockopt(curlfd, SOL_SOCKET, SO_SNDBUF,
@@ -293,6 +295,7 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
       code = StatusCode::kNotFound;
       break;
 
+      // NOLINTNEXTLINE(bugprone-branch-clone)
     case CURLE_SSH:
     case CURLE_SSL_SHUTDOWN_FAILED:
       code = StatusCode::kUnknown;
@@ -337,7 +340,8 @@ Status CurlHandle::AsStatus(CURLcode e, char const* where) {
   return Status(code, std::move(os).str());
 }
 
-void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt, long param) {
+void CurlHandle::ThrowSetOptionError(CURLcode e, CURLoption opt,
+                                     std::intmax_t param) {
   std::ostringstream os;
   os << "Error [" << e << "]=" << curl_easy_strerror(e)
      << " while setting curl option [" << opt << "] to " << param;

@@ -155,7 +155,7 @@ future<StatusOr<std::vector<btadmin::Table>>> TableAdmin::AsyncListTables(
       },
       std::move(request), std::vector<btadmin::Table>(),
       [](std::vector<btadmin::Table> acc,
-         btadmin::ListTablesResponse response) {
+         btadmin::ListTablesResponse const& response) {
         std::move(response.tables().begin(), response.tables().end(),
                   std::back_inserter(acc));
         return acc;
