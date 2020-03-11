@@ -15,6 +15,7 @@
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/parse_rfc3339.h"
+#include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -439,6 +440,96 @@ UNSIGNED-PAYLOAD)""";
   EXPECT_THAT(os.str(), HasSubstr("/test-bucket/test-object/path/to/object"));
 }
 
+TEST(V4SignedUrlRequests, VirtualHostnameFalse) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for), VirtualHostname(false));
+  ASSERT_STATUS_OK(request.Validate());
+  request.AddMissingRequiredHeaders();
+  ASSERT_STATUS_OK(request.Validate());
+
+  std::string expected =
+      "GET\n"
+      "/test-bucket/test-object\n"
+      "X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%"
+      "2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date="
+      "20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=host\n"
+      "host:storage.googleapis.com\n"
+      "\n"
+      "host\n"
+      "UNSIGNED-PAYLOAD";
+  std::string actual = request.CanonicalRequest("fake-client-id");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, VirtualHostname) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for), VirtualHostname(true));
+  ASSERT_STATUS_OK(request.Validate());
+  request.AddMissingRequiredHeaders();
+  ASSERT_STATUS_OK(request.Validate());
+
+  std::string expected =
+      "GET\n"
+      "/test-object\n"
+      "X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%"
+      "2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date="
+      "20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=host\n"
+      "host:test-bucket.storage.googleapis.com\n"
+      "\n"
+      "host\n"
+      "UNSIGNED-PAYLOAD";
+  std::string actual = request.CanonicalRequest("fake-client-id");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, VirtualHostnameWithManualHostname) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for), VirtualHostname(true),
+      AddExtensionHeader("host", "test-bucket.storage.googleapis.com"));
+  ASSERT_STATUS_OK(request.Validate());
+  request.AddMissingRequiredHeaders();
+  ASSERT_STATUS_OK(request.Validate());
+
+  std::string expected =
+      "GET\n"
+      "/test-object\n"
+      "X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=fake-client-id%"
+      "2F20190201%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date="
+      "20190201T090000Z&X-Goog-Expires=10&X-Goog-SignedHeaders=host\n"
+      "host:test-bucket.storage.googleapis.com\n"
+      "\n"
+      "host\n"
+      "UNSIGNED-PAYLOAD";
+  std::string actual = request.CanonicalRequest("fake-client-id");
+  EXPECT_EQ(expected, actual);
+}
+
+TEST(V4SignedUrlRequests, VirtualHostnameWithBadHostname) {
+  V4SignUrlRequest request("GET", "test-bucket", "test-object");
+  std::string const date = "2019-02-01T09:00:00Z";
+  auto const valid_for = std::chrono::seconds(10);
+  request.set_multiple_options(
+      SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
+      SignedUrlDuration(valid_for), VirtualHostname(true),
+      AddExtensionHeader("host", "some-other-hostname"));
+  auto status = request.Validate();
+  ASSERT_FALSE(status.ok());
+  EXPECT_EQ(StatusCode::kInvalidArgument, status.code());
+  EXPECT_THAT(status.message(), HasSubstr("some-other-hostname"));
+}
+
 TEST(DefaultCtorsWork, Trivial) {
   EXPECT_FALSE(ExpirationTime().has_value());
   EXPECT_FALSE(AddExtensionHeaderOption().has_value());
@@ -448,6 +539,7 @@ TEST(DefaultCtorsWork, Trivial) {
   EXPECT_FALSE(SignedUrlDuration().has_value());
   EXPECT_FALSE(SigningAccount().has_value());
   EXPECT_FALSE(SigningAccountDelegates().has_value());
+  EXPECT_FALSE(VirtualHostname().has_value());
 }
 
 }  // namespace

@@ -296,6 +296,10 @@ StatusOr<std::string> Client::SignUrlV2(
 }
 
 StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
+  auto valid = request.Validate();
+  if (!valid.ok()) {
+    return valid;
+  }
   request.AddMissingRequiredHeaders();
   SigningAccount const& signing_account = request.signing_account();
   auto signing_email = SigningEmail(signing_account);
@@ -309,7 +313,7 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
   std::string signature = internal::HexEncode(signed_blob->signed_blob);
   internal::CurlHandle curl;
   std::ostringstream os;
-  os << "https://storage.googleapis.com/" << request.bucket_name();
+  os << request.HostnameWithBucket();
   for (auto& part : request.ObjectNameParts()) {
     os << '/' << curl.MakeEscapedString(part).get();
   }
