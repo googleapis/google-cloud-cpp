@@ -67,6 +67,10 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   export CLANG_TIDY=yes
   export TEST_INSTALL=yes
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
+elif [[ "${BUILD_NAME}" = "coverage" ]]; then
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=31
+  export BUILD_TYPE=Coverage
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
   export BUILD_TYPE=Debug
   export CC=clang
@@ -171,10 +175,6 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=30
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
-elif [[ "${BUILD_NAME}" = "coverage" ]]; then
-  export BUILD_TYPE=Coverage
-  export DISTRO=fedora-install
-  export DISTRO_VERSION=30
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
