@@ -201,7 +201,8 @@ class V4SignUrlRequest {
       : common_request_(std::move(verb), std::move(bucket_name),
                         std::move(object_name)),
         timestamp_(DefaultTimestamp()),
-        expires_(DefaultExpires()) {}
+        expires_(DefaultExpires()),
+        virtual_host_name_{} {}
 
   std::string const& verb() const { return common_request_.verb(); }
   std::string const& bucket_name() const {
@@ -252,6 +253,12 @@ class V4SignUrlRequest {
 
   V4SignUrlRequest& set_multiple_options() { return *this; }
 
+  Status Validate();
+
+  std::string Hostname();
+
+  std::string HostnameWithBucket();
+
  private:
   static std::chrono::system_clock::time_point DefaultTimestamp();
   static std::chrono::seconds DefaultExpires();
@@ -286,6 +293,8 @@ class V4SignUrlRequest {
     common_request_.SetOption(o);
   }
 
+  void SetOption(VirtualHostname const& hostname);
+
   std::string CanonicalRequestHash(std::string const& client_id) const;
 
   std::string Scope() const;
@@ -303,6 +312,7 @@ class V4SignUrlRequest {
   SignUrlRequestCommon common_request_;
   std::chrono::system_clock::time_point timestamp_;
   std::chrono::seconds expires_;
+  bool virtual_host_name_;
 };
 
 std::ostream& operator<<(std::ostream& os, V4SignUrlRequest const& r);

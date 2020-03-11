@@ -208,6 +208,21 @@ struct SigningAccountDelegates
   SigningAccountDelegates() = default;
   static char const* name() { return "signing-account-delegates"; }
 };
+
+/**
+ * Indicate that the bucket should be a part of hostname in the URL.
+ *
+ * If this option is set, the resultin
+ * 'https://mybucket.storage.googleapis.com'
+ */
+struct VirtualHostname : public internal::ComplexOption<VirtualHostname, bool> {
+  using ComplexOption<VirtualHostname, bool>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  VirtualHostname() = default;
+  char const* option_name() const { return "virtual-hostname"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

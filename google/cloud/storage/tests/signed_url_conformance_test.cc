@@ -94,6 +94,10 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   std::string const method_name = j_obj["method"];
   std::string const bucket_name = j_obj["bucket"];
   std::string const object_name = j_obj["object"];
+  std::string url_style;
+  if (j_obj.count("urlStyle") > 0) {
+    url_style = j_obj["urlStyle"];
+  }
   std::string const date = j_obj["timestamp"];
   auto const valid_for =
       std::chrono::seconds(std::stoi(j_obj["expiration"].get<std::string>()));
@@ -110,8 +114,7 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
       method_name, bucket_name, object_name);
   request.set_multiple_options(
       SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-      SignedUrlDuration(valid_for),
-      AddExtensionHeader("host", "storage.googleapis.com"));
+      SignedUrlDuration(valid_for));
 
   std::vector<AddExtensionHeaderOption> header_extensions(5);
   ASSERT_LE(headers.size(), header_extensions.size());
@@ -131,14 +134,22 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
     query_params[i] = AddQueryParameterOption(param.first, param.second);
   }
 
+  VirtualHostname virtual_hotname;
+  if (url_style == "VIRTUAL_HOSTED_STYLE") {
+    virtual_hotname = VirtualHostname(true);
+    request.set_multiple_options(VirtualHostname(true));
+  }
+
   auto actual = client.CreateV4SignedUrl(
       method_name, bucket_name, object_name,
       SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
-      SignedUrlDuration(valid_for),
-      AddExtensionHeader("host", "storage.googleapis.com"),
-      header_extensions[0], header_extensions[1], header_extensions[2],
-      header_extensions[3], header_extensions[4], query_params[0],
-      query_params[1], query_params[2], query_params[3], query_params[4]);
+      SignedUrlDuration(valid_for), header_extensions[0], header_extensions[1],
+      header_extensions[2], header_extensions[3], header_extensions[4],
+      query_params[0], query_params[1], query_params[2], query_params[3],
+      query_params[4], virtual_hotname);
+  ASSERT_STATUS_OK(request.Validate());
+  request.AddMissingRequiredHeaders();
+  ASSERT_STATUS_OK(request.Validate());
 
   actual_string_to_sign = request.StringToSign(account_email);
   actual_canonical_request = request.CanonicalRequest(account_email);
@@ -199,8 +210,7 @@ int main(int argc, char* argv[]) {
                                             "POSTPolicySimple",
                                             "POSTPolicySuccessWithRedirect",
                                             "POSTPolicySuccessWithStatus",
-                                            "POSTPolicyWithinContentRange",
-                                            "VirtualHostedStyle"};
+                                            "POSTPolicyWithinContentRange"};
 
   auto json = google::cloud::storage::internal::nl::json::parse(ifstr);
   if (json.is_discarded()) {
