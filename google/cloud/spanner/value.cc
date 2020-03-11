@@ -88,6 +88,70 @@ bool Equal(google::spanner::v1::Type const& pt1,
   }
 }
 
+std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
+                           google::spanner::v1::Type const& t) {
+  if (v.kind_case() == google::protobuf::Value::kNullValue) {
+    return os << "NULL";
+  }
+
+  switch (t.code()) {
+    case google::spanner::v1::BOOL:
+      return os << (v.bool_value() ? "TRUE" : "FALSE");
+
+    case google::spanner::v1::TIMESTAMP:
+    case google::spanner::v1::DATE:
+    case google::spanner::v1::INT64:
+      return os << v.string_value();
+
+    case google::spanner::v1::FLOAT64:
+      if (v.kind_case() == google::protobuf::Value::kStringValue) {
+        return os << v.string_value();
+      }
+      return os << v.number_value();
+
+    case google::spanner::v1::STRING:
+      return os << "\"" << v.string_value() << "\"";
+
+    case google::spanner::v1::BYTES:
+      return os
+             << "B\""
+             << internal::BytesFromBase64(v.string_value())->get<std::string>()
+             << "\"";
+
+    case google::spanner::v1::ARRAY: {
+      const char* delimiter = "";
+      os << '[';
+      for (auto const& e : v.list_value().values()) {
+        os << delimiter;
+        StreamHelper(os, e, t.array_element_type());
+        delimiter = ", ";
+      }
+      return os << ']';
+    }
+
+    case google::spanner::v1::STRUCT: {
+      const char* delimiter = "";
+      os << '(';
+      for (int i = 0; i < v.list_value().values_size(); ++i) {
+        os << delimiter;
+        if (!t.struct_type().fields(i).name().empty()) {
+          os << t.struct_type().fields(i).name() << ": ";
+        }
+        StreamHelper(os, v.list_value().values(i),
+                     t.struct_type().fields(i).type());
+        delimiter = ", ";
+      }
+      return os << ')';
+    }
+
+    case google::spanner::v1::TYPE_CODE_UNSPECIFIED:
+    case google::spanner::v1::TypeCode_INT_MIN_SENTINEL_DO_NOT_USE_:
+    case google::spanner::v1::TypeCode_INT_MAX_SENTINEL_DO_NOT_USE_:
+      break;
+  }
+  return os;
+}
+
 }  // namespace
 
 namespace internal {
@@ -108,6 +172,10 @@ bool operator==(Value const& a, Value const& b) {
 
 void PrintTo(Value const& v, std::ostream* os) {
   *os << v.type_.ShortDebugString() << "; " << v.value_.ShortDebugString();
+}
+
+std::ostream& operator<<(std::ostream& os, Value const& v) {
+  return StreamHelper(os, v.value_, v.type_);
 }
 
 //

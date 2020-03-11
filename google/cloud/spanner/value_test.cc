@@ -35,6 +35,8 @@ namespace {
 
 using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::testing::Not;
+using ::testing::TestParamInfo;
+using ::testing::TestWithParam;
 
 std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
 MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
@@ -681,6 +683,12 @@ TEST(Value, ProtoConversionStruct) {
   EXPECT_EQ(v, internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT, p.first.code());
 
+  Value const null_struct_value(
+      MakeNullValue<std::tuple<bool, std::int64_t>>());
+  auto const null_struct_proto = internal::ToProto(null_struct_value);
+  EXPECT_EQ(google::spanner::v1::TypeCode::STRUCT,
+            null_struct_proto.first.code());
+
   auto const& field0 = p.first.struct_type().fields(0);
   EXPECT_EQ("", field0.name());
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, field0.type().code());
@@ -928,6 +936,102 @@ TEST(Value, CommitTimestamp) {
   auto bad = v.get<Timestamp>();
   EXPECT_FALSE(bad.ok());
 }
+
+class ValueStreamOperator
+    : public TestWithParam<std::tuple<std::string, Value, std::string>> {
+ public:
+  static std::string TestName(
+      TestParamInfo<ValueStreamOperator::ParamType> const& info) {
+    return std::get<0>(info.param);
+  }
+};
+
+TEST_P(ValueStreamOperator, ValueType) {
+  auto param = GetParam();
+  std::stringstream scalar_value_stream;
+  scalar_value_stream << std::get<1>(param);
+  EXPECT_EQ(scalar_value_stream.str(), std::get<2>(param));
+}
+
+INSTANTIATE_TEST_SUITE_P(
+    ValueStreamOperatorScalar, ValueStreamOperator,
+    testing::Values(
+        std::make_tuple("Bool", Value(false), "FALSE"),
+        std::make_tuple("Int64", Value(42), "42"),
+        std::make_tuple("NullInt64", MakeNullValue<std::int64_t>(), "NULL"),
+        std::make_tuple("Float64", Value(42.0), "42"),
+        std::make_tuple("InfinityFloat64",
+                        Value(std::numeric_limits<double>::infinity()),
+                        "Infinity"),
+        std::make_tuple("NegativeInfinityFloat64",
+                        Value(-std::numeric_limits<double>::infinity()),
+                        "-Infinity"),
+        std::make_tuple("NaNFloat64", Value(std::nan("NaN")), "NaN"),
+        std::make_tuple("String", Value("Seatac Astronomy"),
+                        "\"Seatac Astronomy\""),
+        std::make_tuple("EmptyString", Value(""), "\"\""),
+        std::make_tuple("StringNullValue", Value(optional<std::string>()),
+                        "NULL"),
+        std::make_tuple("StringLiteralNullValue", Value("NULL"), "\"NULL\""),
+        std::make_tuple("Bytes", Value(Bytes(std::string("DEADBEEF"))),
+                        "B\"DEADBEEF\""),
+        std::make_tuple(
+            "Timestamp",
+            Value(MakeTimestamp(MakeTimePoint(1561147549LL, 0)).value()),
+            "2019-06-21T20:05:49Z"),
+        std::make_tuple("Date", Value(Date(1970, 1, 1)), "1970-01-01")),
+    ValueStreamOperator::TestName);
+
+INSTANTIATE_TEST_SUITE_P(
+    ValueStreamOperatorArray, ValueStreamOperator,
+    testing::Values(
+        std::make_tuple("Int64", Value(std::vector<std::int64_t>{1, 2, 3}),
+                        "[1, 2, 3]"),
+        std::make_tuple("EmptyInt64", Value(std::vector<std::int64_t>()), "[]"),
+        std::make_tuple("NullInt64", MakeNullValue<std::vector<std::int64_t>>(),
+                        "NULL"),
+        std::make_tuple("NullableInt64",
+                        Value(std::vector<optional<std::int64_t>>{
+                            1, optional<std::int64_t>(), 3}),
+                        "[1, NULL, 3]")),
+    ValueStreamOperator::TestName);
+
+INSTANTIATE_TEST_SUITE_P(
+    ValueStreamOperatorStruct, ValueStreamOperator,
+    testing::Values(
+        std::make_tuple("BoolInt64", Value(std::make_tuple(true, 123)),
+                        "(TRUE, 123)"),
+        std::make_tuple("NullBoolInt64",
+                        MakeNullValue<std::tuple<bool, std::int64_t>>(),
+                        "NULL"),
+        std::make_tuple("MixedArrays",
+                        Value(std::make_tuple(
+                            std::vector<std::int64_t>{1, 2, 3},
+                            std::make_pair("Middle",
+                                           std::vector<double>{4.1, 5.2, 6.3}),
+                            std::vector<std::int64_t>{7, 8, 9, 10})),
+                        "([1, 2, 3], Middle: [4.1, 5.2, 6.3], "
+                        "[7, 8, 9, 10])"),
+        std::make_tuple("StructInception",
+                        Value(std::make_tuple(std::make_tuple(std::make_tuple(
+                            std::vector<std::int64_t>{1, 2, 3})))),
+                        "((([1, 2, 3])))"),
+        std::make_tuple("StructWithFieldNames",
+                        Value(std::make_tuple(std::make_pair("Last", "Blues"),
+                                              std::make_pair("First",
+                                                             "Elwood"))),
+                        "(Last: \"Blues\", First: \"Elwood\")"),
+        std::make_tuple("StructWithNullFieldFirst",
+                        Value(std::make_tuple(optional<bool>(), 123)),
+                        "(NULL, 123)"),
+        std::make_tuple("StructWithNullFieldLast",
+                        Value(std::make_tuple(true, optional<std::int64_t>())),
+                        "(TRUE, NULL)"),
+        std::make_tuple("StructWithNullFieldMiddle",
+                        Value(std::make_tuple(true, optional<std::int64_t>(),
+                                              42.0)),
+                        "(TRUE, NULL, 42)")),
+    ValueStreamOperator::TestName);
 
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS

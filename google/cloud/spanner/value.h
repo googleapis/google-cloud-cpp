@@ -314,6 +314,20 @@ class Value {
    */
   friend void PrintTo(Value const& v, std::ostream* os);
 
+  /**
+   * Outputs string representation of a given Value to the provided stream.
+   *
+   * @warning This is intended for debugging and human consumption only, not
+   *   machine consumption as the output format may change without notice.
+   *
+   * @par Example:
+   * @code
+   *   spanner::Value v{42};
+   *   std::cout << v << "\n";
+   * @endcode
+   */
+  friend std::ostream& operator<<(std::ostream& os, Value const& v);
+
  private:
   // Metafunction that returns true if `T` is an optional<U>
   template <typename T>
