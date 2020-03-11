@@ -295,6 +295,7 @@ void SessionPool::Release(std::unique_ptr<Session> session) {
     }
     return;
   }
+  session->update_last_use_time();
   sessions_.push_back(std::move(session));
   if (num_waiting_for_session_ > 0) {
     lk.unlock();
