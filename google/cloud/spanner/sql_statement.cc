@@ -58,9 +58,7 @@ google::cloud::StatusOr<Value> SqlStatement::GetParameter(
 std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt) {
   os << stmt.statement_;
   for (auto const& param : stmt.params_) {
-    os << "\n[param]: {value}\t[" << param.first << "]: {";
-    PrintTo(param.second, &os);
-    os << "}";
+    os << "\n[param]: {" << param.first << "=" << param.second << "}";
   }
   return os;
 }

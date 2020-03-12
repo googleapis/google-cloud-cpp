@@ -103,8 +103,15 @@ class SqlStatement {
     return !(a == b);
   }
 
- private:
+  /**
+   * Outputs a string representation of the given @p stmt to the given @p os.
+   *
+   * @warning This is intended for debugging and human consumption only, not
+   *     machine consumption, as the output format may change without notice.
+   */
   friend std::ostream& operator<<(std::ostream& os, SqlStatement const& stmt);
+
+ private:
   friend internal::SqlStatementProto internal::ToProto(SqlStatement s);
 
   std::string statement_;

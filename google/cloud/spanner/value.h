@@ -306,19 +306,10 @@ class Value {
   }
 
   /**
-   * Allows Google Test to print internal debugging information when test
-   * assertions fail.
-   *
-   * @warning This is intended for debugging and human consumption only, not
-   *   machine consumption as the output format may change without notice.
-   */
-  friend void PrintTo(Value const& v, std::ostream* os);
-
-  /**
    * Outputs string representation of a given Value to the provided stream.
    *
    * @warning This is intended for debugging and human consumption only, not
-   *   machine consumption as the output format may change without notice.
+   *     machine consumption, as the output format may change without notice.
    *
    * @par Example:
    * @code
@@ -327,6 +318,14 @@ class Value {
    * @endcode
    */
   friend std::ostream& operator<<(std::ostream& os, Value const& v);
+
+  /**
+   * Prints the same output as `operator<<`.
+   *
+   * @warning DO NOT CALL. This function will be removed in a future release.
+   *     Use `operator<<` instead.
+   */
+  friend void PrintTo(Value const& v, std::ostream* os) { *os << v; }
 
  private:
   // Metafunction that returns true if `T` is an optional<U>

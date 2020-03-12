@@ -170,10 +170,6 @@ bool operator==(Value const& a, Value const& b) {
   return Equal(a.type_, a.value_, b.type_, b.value_);
 }
 
-void PrintTo(Value const& v, std::ostream* os) {
-  *os << v.type_.ShortDebugString() << "; " << v.value_.ShortDebugString();
-}
-
 std::ostream& operator<<(std::ostream& os, Value const& v) {
   return StreamHelper(os, v.value_, v.type_);
 }
