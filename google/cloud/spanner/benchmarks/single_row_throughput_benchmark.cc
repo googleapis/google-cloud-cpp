@@ -185,9 +185,8 @@ void FillTableTask(Config const& config, spanner::Client client, std::mutex& mu,
     if (!force && current_mutations < 1000) {
       return;
     }
-    auto m = std::move(mutation).Build();
-    auto result = client.Commit(
-        [&m](spanner::Transaction const&) { return spanner::Mutations{m}; });
+    auto result =
+        client.Commit(spanner::Mutations{std::move(mutation).Build()});
     if (!result) {
       std::lock_guard<std::mutex> lk(mu);
       std::cerr << "# Error in Commit() " << result.status() << "\n";
@@ -319,10 +318,9 @@ class InsertOrUpdateExperiment : public Experiment {
               deadline = start + config.iteration_duration;
          start < deadline; start = std::chrono::steady_clock::now()) {
       auto key = key_generator();
-      auto m = spanner::MakeInsertOrUpdateMutation("KeyValue", {"Key", "Data"},
-                                                   key, value);
-      auto result = client.Commit(
-          [&m](spanner::Transaction const&) { return spanner::Mutations{m}; });
+      auto result =
+          client.Commit(spanner::Mutations{spanner::MakeInsertOrUpdateMutation(
+              "KeyValue", {"Key", "Data"}, key, value)});
       if (!result) {
         errors.push_back(std::move(result).status());
       }

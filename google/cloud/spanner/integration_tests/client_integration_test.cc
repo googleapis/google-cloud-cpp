@@ -44,20 +44,17 @@ class ClientIntegrationTest : public ::testing::Test {
   }
 
   void SetUp() override {
-    auto commit_result = client_->Commit([](Transaction const&) {
-      return Mutations{MakeDeleteMutation("Singers", KeySet::All())};
-    });
+    auto commit_result = client_->Commit(
+        Mutations{MakeDeleteMutation("Singers", KeySet::All())});
     EXPECT_STATUS_OK(commit_result);
   }
 
   void InsertTwoSingers() {
-    auto commit_result = client_->Commit([](Transaction const&) {
-      return Mutations{InsertMutationBuilder(
-                           "Singers", {"SingerId", "FirstName", "LastName"})
-                           .EmplaceRow(1, "test-fname-1", "test-lname-1")
-                           .EmplaceRow(2, "test-fname-2", "test-lname-2")
-                           .Build()};
-    });
+    auto commit_result = client_->Commit(Mutations{
+        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+            .EmplaceRow(1, "test-fname-1", "test-lname-1")
+            .EmplaceRow(2, "test-fname-2", "test-lname-2")
+            .Build()});
     ASSERT_STATUS_OK(commit_result);
   }
 
@@ -98,10 +95,8 @@ TEST_F(ClientIntegrationTest, InsertAndCommit) {
 TEST_F(ClientIntegrationTest, DeleteAndCommit) {
   ASSERT_NO_FATAL_FAILURE(InsertTwoSingers());
 
-  auto commit_result = client_->Commit([](Transaction const&) {
-    return Mutations{
-        MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(1)))};
-  });
+  auto commit_result = client_->Commit(
+      Mutations{MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(1)))});
   EXPECT_STATUS_OK(commit_result);
 
   auto rows = client_->Read("Singers", KeySet::All(),
@@ -248,25 +243,18 @@ TEST_F(ClientIntegrationTest, TransactionRollback) {
 /// @test Verify the basics of Commit().
 TEST_F(ClientIntegrationTest, Commit) {
   // Insert SingerIds 100, 102, and 199.
-  auto inserter = [](Transaction const&) {
-    auto isb =
-        InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
-            .EmplaceRow(100, "first-name-100", "last-name-100")
-            .EmplaceRow(102, "first-name-102", "last-name-102")
-            .EmplaceRow(199, "first-name-199", "last-name-199");
-    return Mutations{isb.Build()};
-  };
-  auto insert_result = client_->Commit(inserter);
+  auto isb =
+      InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
+          .EmplaceRow(100, "first-name-100", "last-name-100")
+          .EmplaceRow(102, "first-name-102", "last-name-102")
+          .EmplaceRow(199, "first-name-199", "last-name-199");
+  auto insert_result = client_->Commit(Mutations{isb.Build()});
   EXPECT_STATUS_OK(insert_result);
   EXPECT_NE(Timestamp{}, insert_result->commit_timestamp);
 
   // Delete SingerId 102.
-  auto deleter = [](Transaction const&) {
-    auto mutation =
-        MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(102)));
-    return Mutations{mutation};
-  };
-  auto delete_result = client_->Commit(deleter);
+  auto delete_result = client_->Commit(
+      Mutations{MakeDeleteMutation("Singers", KeySet().AddKey(MakeKey(102)))});
   EXPECT_STATUS_OK(delete_result);
   EXPECT_LT(insert_result->commit_timestamp, delete_result->commit_timestamp);
 

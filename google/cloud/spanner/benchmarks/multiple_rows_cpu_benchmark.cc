@@ -523,9 +523,8 @@ class ExperimentImpl {
       if (!force && current_mutations < 1000) {
         return {};
       }
-      auto m = std::move(mutation).Build();
-      auto result = client.Commit(
-          [&m](spanner::Transaction const&) { return spanner::Mutations{m}; });
+      auto result =
+          client.Commit(spanner::Mutations{std::move(mutation).Build()});
       if (!result) {
         std::lock_guard<std::mutex> lk(mu_);
         std::cout << "# Error in Commit() " << result.status() << "\n";
@@ -1505,13 +1504,10 @@ class MutationExperiment : public Experiment {
 
       int row_count = 0;
       auto commit_result =
-          client.Commit([&](spanner::Transaction const&)
-                            -> google::cloud::StatusOr<spanner::Mutations> {
-            return spanner::Mutations{spanner::MakeInsertOrUpdateMutation(
-                table_name_, column_names, key, values[0], values[1], values[2],
-                values[3], values[4], values[5], values[6], values[7],
-                values[8], values[9])};
-          });
+          client.Commit(spanner::Mutations{spanner::MakeInsertOrUpdateMutation(
+              table_name_, column_names, key, values[0], values[1], values[2],
+              values[3], values[4], values[5], values[6], values[7], values[8],
+              values[9])});
       timer.Stop();
       samples.push_back(RowCpuSample{
           client_count, thread_count, false, row_count, timer.elapsed_time(),

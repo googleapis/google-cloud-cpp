@@ -751,10 +751,8 @@ void InsertData(google::cloud::spanner::Client client) {
                            .EmplaceRow(2, 3, "Terrified")
                            .Build();
 
-  auto commit_result = client.Commit(
-      [&insert_singers, &insert_albums](spanner::Transaction const&) {
-        return spanner::Mutations{insert_singers, insert_albums};
-      });
+  auto commit_result =
+      client.Commit(spanner::Mutations{insert_singers, insert_albums});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
@@ -765,14 +763,12 @@ void InsertData(google::cloud::spanner::Client client) {
 //! [update-mutation-builder] [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto commit_result = client.Commit([](spanner::Transaction const&) {
-    return spanner::Mutations{
-        spanner::UpdateMutationBuilder(
-            "Albums", {"SingerId", "AlbumId", "MarketingBudget"})
-            .EmplaceRow(1, 1, 100000)
-            .EmplaceRow(2, 2, 500000)
-            .Build()};
-  });
+  auto commit_result = client.Commit(spanner::Mutations{
+      spanner::UpdateMutationBuilder("Albums",
+                                     {"SingerId", "AlbumId", "MarketingBudget"})
+          .EmplaceRow(1, 1, 100000)
+          .EmplaceRow(2, 2, 500000)
+          .Build()});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
@@ -800,10 +796,8 @@ void DeleteData(google::cloud::spanner::Client client) {
                                                 spanner::MakeKeyBoundClosed(5)))
           .Build();
 
-  auto commit_result = client.Commit(
-      [&delete_albums, &delete_singers](spanner::Transaction const&) {
-        return spanner::Mutations{delete_albums, delete_singers};
-      });
+  auto commit_result =
+      client.Commit(spanner::Mutations{delete_albums, delete_singers});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
@@ -814,19 +808,17 @@ void DeleteData(google::cloud::spanner::Client client) {
 // [START spanner_insert_data_with_timestamp_column]
 void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto commit_result = client.Commit([](spanner::Transaction const&) {
-    return spanner::Mutations{
-        spanner::InsertOrUpdateMutationBuilder(
-            "Performances",
-            {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
-            .EmplaceRow(1, 4, spanner::Date(2017, 10, 5), 11000,
-                        spanner::CommitTimestamp{})
-            .EmplaceRow(1, 19, spanner::Date(2017, 11, 2), 15000,
-                        spanner::CommitTimestamp{})
-            .EmplaceRow(2, 42, spanner::Date(2017, 12, 23), 7000,
-                        spanner::CommitTimestamp{})
-            .Build()};
-  });
+  auto commit_result = client.Commit(spanner::Mutations{
+      spanner::InsertOrUpdateMutationBuilder(
+          "Performances",
+          {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
+          .EmplaceRow(1, 4, spanner::Date(2017, 10, 5), 11000,
+                      spanner::CommitTimestamp{})
+          .EmplaceRow(1, 19, spanner::Date(2017, 11, 2), 15000,
+                      spanner::CommitTimestamp{})
+          .EmplaceRow(2, 42, spanner::Date(2017, 12, 23), 7000,
+                      spanner::CommitTimestamp{})
+          .Build()});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
@@ -838,15 +830,13 @@ void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
 // [START spanner_update_data_with_timestamp_column]
 void UpdateDataWithTimestamp(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto commit_result = client.Commit([](spanner::Transaction const&) {
-    return spanner::Mutations{
-        spanner::UpdateMutationBuilder(
-            "Albums",
-            {"SingerId", "AlbumId", "MarketingBudget", "LastUpdateTime"})
-            .EmplaceRow(1, 1, 1000000, spanner::CommitTimestamp{})
-            .EmplaceRow(2, 2, 750000, spanner::CommitTimestamp{})
-            .Build()};
-  });
+  auto commit_result = client.Commit(spanner::Mutations{
+      spanner::UpdateMutationBuilder(
+          "Albums",
+          {"SingerId", "AlbumId", "MarketingBudget", "LastUpdateTime"})
+          .EmplaceRow(1, 1, 1000000, spanner::CommitTimestamp{})
+          .EmplaceRow(2, 2, 750000, spanner::CommitTimestamp{})
+          .Build()});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
@@ -1348,16 +1338,14 @@ void DmlStructs(google::cloud::spanner::Client client) {
 //! [START spanner_write_data_for_struct_queries]
 void WriteDataForStructQueries(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
-  auto commit_result = client.Commit([](spanner::Transaction const&) {
-    return spanner::Mutations{
-        spanner::InsertMutationBuilder("Singers",
-                                       {"SingerId", "FirstName", "LastName"})
-            .EmplaceRow(6, "Elena", "Campbell")
-            .EmplaceRow(7, "Gabriel", "Wright")
-            .EmplaceRow(8, "Benjamin", "Martinez")
-            .EmplaceRow(9, "Hannah", "Harris")
-            .Build()};
-  });
+  auto commit_result = client.Commit(
+      spanner::Mutations{spanner::InsertMutationBuilder(
+                             "Singers", {"SingerId", "FirstName", "LastName"})
+                             .EmplaceRow(6, "Elena", "Campbell")
+                             .EmplaceRow(7, "Gabriel", "Wright")
+                             .EmplaceRow(8, "Benjamin", "Martinez")
+                             .EmplaceRow(9, "Hannah", "Harris")
+                             .Build()});
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }

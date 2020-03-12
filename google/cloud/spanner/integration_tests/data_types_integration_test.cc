@@ -44,16 +44,13 @@ MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
 template <typename T>
 StatusOr<T> WriteReadData(Client& client, T const& data,
                           std::string const& column) {
-  auto commit_result = client.Commit(
-      [&data, &column](Transaction const&) -> StatusOr<Mutations> {
-        Mutations mutations;
-        int id = 0;
-        for (auto const& x : data) {
-          mutations.push_back(MakeInsertMutation(
-              "DataTypes", {"Id", column}, "Id-" + std::to_string(id++), x));
-        }
-        return mutations;
-      });
+  Mutations mutations;
+  int id = 0;
+  for (auto const& x : data) {
+    mutations.push_back(MakeInsertMutation("DataTypes", {"Id", column},
+                                           "Id-" + std::to_string(id++), x));
+  }
+  auto commit_result = client.Commit(std::move(mutations));
   if (!commit_result) return commit_result.status();
 
   T actual;
@@ -74,10 +71,8 @@ class DataTypeIntegrationTest : public ::testing::Test {
   }
 
   void SetUp() override {
-    auto commit_result = client_->Commit([](Transaction const&) {
-      return Mutations{
-          MakeDeleteMutation("DataTypes", KeySet::All()),
-      };
+    auto commit_result = client_->Commit(Mutations{
+        MakeDeleteMutation("DataTypes", KeySet::All()),
     });
     EXPECT_STATUS_OK(commit_result);
   }
