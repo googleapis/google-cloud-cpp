@@ -68,6 +68,12 @@ DatabaseAdminMetadata::ListDatabases(
   return child_->ListDatabases(context, request);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::RestoreDatabase(
+    grpc::ClientContext& context, gcsa::RestoreDatabaseRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->RestoreDatabase(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> DatabaseAdminMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -90,11 +96,69 @@ DatabaseAdminMetadata::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::CreateBackup(
+    grpc::ClientContext& context, gcsa::CreateBackupRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateBackup(context, request);
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminMetadata::GetBackup(
+    grpc::ClientContext& context, gcsa::GetBackupRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetBackup(context, request);
+}
+
+Status DatabaseAdminMetadata::DeleteBackup(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteBackup(context, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
+DatabaseAdminMetadata::ListBackups(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListBackups(context, request);
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminMetadata::UpdateBackup(
+    grpc::ClientContext& context, gcsa::UpdateBackupRequest const& request) {
+  SetMetadata(context, "backup.name=" + request.backup().name());
+  return child_->UpdateBackup(context, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
+DatabaseAdminMetadata::ListBackupOperations(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListBackupOperationsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListBackupOperations(context, request);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
+DatabaseAdminMetadata::ListDatabaseOperations(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListDatabaseOperations(context, request);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminMetadata::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {
   SetMetadata(context, "name=" + request.name());
   return child_->GetOperation(context, request);
+}
+
+Status DatabaseAdminMetadata::CancelOperation(
+    grpc::ClientContext& context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CancelOperation(context, request);
 }
 
 void DatabaseAdminMetadata::SetMetadata(grpc::ClientContext& context,

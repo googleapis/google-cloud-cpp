@@ -98,6 +98,8 @@ add_library(
     spanner_client
     ${CMAKE_CURRENT_BINARY_DIR}/internal/build_info.cc
     backoff_policy.h
+    backup.cc
+    backup.h
     batch_dml_result.h
     bytes.cc
     bytes.h
@@ -174,6 +176,7 @@ add_library(
     internal/status_utils.h
     internal/time_format.cc
     internal/time_format.h
+    internal/time_utils.h
     internal/transaction_impl.cc
     internal/transaction_impl.h
     internal/tuple_utils.h
@@ -278,6 +281,8 @@ function (spanner_client_define_tests)
         testing/mock_spanner_stub.h
         testing/pick_random_instance.cc
         testing/pick_random_instance.h
+        testing/random_backup_name.cc
+        testing/random_backup_name.h
         testing/random_database_name.cc
         testing/random_database_name.h
         testing/random_instance_name.cc
@@ -301,6 +306,7 @@ function (spanner_client_define_tests)
 
     set(spanner_client_unit_tests
         # cmake-format: sortable
+        backup_test.cc
         bytes_test.cc
         client_options_test.cc
         client_test.cc
@@ -335,6 +341,7 @@ function (spanner_client_define_tests)
         internal/spanner_stub_test.cc
         internal/status_utils_test.cc
         internal/time_format_test.cc
+        internal/time_utils_test.cc
         internal/transaction_impl_test.cc
         internal/tuple_utils_test.cc
         keys_test.cc

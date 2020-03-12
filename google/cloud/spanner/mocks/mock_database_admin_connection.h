@@ -51,6 +51,9 @@ class MockDatabaseAdminConnection
           UpdateDatabaseParams));
   MOCK_METHOD1(DropDatabase, Status(DropDatabaseParams));
   MOCK_METHOD1(ListDatabases, spanner::ListDatabaseRange(ListDatabasesParams));
+  MOCK_METHOD1(RestoreDatabase,
+               future<StatusOr<google::spanner::admin::database::v1::Database>>(
+                   RestoreDatabaseParams));
   MOCK_METHOD1(GetIamPolicy,
                StatusOr<google::iam::v1::Policy>(GetIamPolicyParams));
   MOCK_METHOD1(SetIamPolicy,
@@ -58,6 +61,21 @@ class MockDatabaseAdminConnection
   MOCK_METHOD1(TestIamPermissions,
                StatusOr<google::iam::v1::TestIamPermissionsResponse>(
                    TestIamPermissionsParams));
+  MOCK_METHOD1(CreateBackup,
+               future<StatusOr<google::spanner::admin::database::v1::Backup>>(
+                   CreateBackupParams));
+  MOCK_METHOD1(
+      GetBackup,
+      StatusOr<google::spanner::admin::database::v1::Backup>(GetBackupParams));
+  MOCK_METHOD1(DeleteBackup, Status(DeleteBackupParams));
+  MOCK_METHOD1(ListBackups, spanner::ListBackupsRange(ListBackupsParams));
+  MOCK_METHOD1(UpdateBackup,
+               StatusOr<google::spanner::admin::database::v1::Backup>(
+                   UpdateBackupParams));
+  MOCK_METHOD1(ListBackupOperations,
+               spanner::ListBackupOperationsRange(ListBackupOperationsParams));
+  MOCK_METHOD1(ListDatabaseOperations, spanner::ListDatabaseOperationsRange(
+                                           ListDatabaseOperationsParams));
 };
 
 }  // namespace SPANNER_CLIENT_NS

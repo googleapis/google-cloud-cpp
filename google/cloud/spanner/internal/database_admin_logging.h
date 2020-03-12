@@ -75,6 +75,11 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       google::spanner::admin::database::v1::ListDatabasesRequest const&)
       override;
 
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) override;
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
@@ -87,9 +92,49 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override;
+
+  StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::GetBackupRequest const& request)
+      override;
+
+  Status DeleteBackup(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::DeleteBackupRequest const& request)
+      override;
+
+  StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
+  ListBackups(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::ListBackupsRequest const&) override;
+
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
+      grpc::ClientContext& context,
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request)
+      override;
+
+  StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
+  ListBackupOperations(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::ListBackupOperationsRequest const&)
+      override;
+
+  StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
+  ListDatabaseOperations(grpc::ClientContext&,
+                         google::spanner::admin::database::v1::
+                             ListDatabaseOperationsRequest const&) override;
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& context,
       google::longrunning::GetOperationRequest const& request) override;
+
+  Status CancelOperation(
+      grpc::ClientContext& context,
+      google::longrunning::CancelOperationRequest const& request) override;
   //@}
 
  private:

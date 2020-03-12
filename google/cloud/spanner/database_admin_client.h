@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CLIENT_H
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CLIENT_H
 
+#include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_connection.h"
@@ -22,6 +23,7 @@
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -211,6 +213,40 @@ class DatabaseAdminClient {
   ListDatabaseRange ListDatabases(Instance in);
 
   /**
+   * Create a new database by restoring from a completed backup.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation. Transient failures are not retried.
+   *
+   * The new database must be in the same project and in an instance with the
+   * same instance configuration as the instance containing the backup.
+   *
+   * @return A `google::cloud::future` that becomes satisfied when the operation
+   *   completes on the service. Note that this can take minutes in some cases.
+   *
+   * @par Example
+   * @snippet samples.cc restore-database
+   */
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  RestoreDatabase(Database db, Backup const& backup);
+
+  /**
+   * Create a new database by restoring from a completed backup.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation. Transient failures are not retried.
+   *
+   * The new database must be in the same project and in an instance with the
+   * same instance configuration as the instance containing the backup.
+   *
+   * @return A `google::cloud::future` that becomes satisfied when the operation
+   *   completes on the service. Note that this can take minutes in some cases.
+   */
+  future<StatusOr<google::spanner::admin::database::v1::Database>>
+  RestoreDatabase(Database db,
+                  google::spanner::admin::database::v1::Backup const& backup);
+
+  /**
    * Gets the IAM policy for a database.
    *
    * @par Idempotency
@@ -310,6 +346,161 @@ class DatabaseAdminClient {
    */
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       Database db, std::vector<std::string> permissions);
+
+  /**
+   * Creates a new Cloud Spanner backup for the given database.
+   *
+   * @par Idempotency
+   * This is not an idempotent operation. Transient failures are not retried.
+   *
+   * This function creates a database backup for the given Google Cloud Spanner
+   * database.
+   *
+   * Note that the backup id must be unique within the same instance, it must be
+   * between 2 and 60 characters long, it must start with a lowercase letter
+   * (`[a-z]`), it must end with a lowercase letter or a number (`[a-z0-9]`) and
+   * any characters between the beginning and ending characters must be lower
+   * case letters, numbers, underscore (`_`) or dashes (`-`), that is, they must
+   * belong to the `[a-z0-9_-]` character set.
+   *
+   * The @p expire_time must be at least 6 hours and at most 366 days from the
+   * time the `CreateBackup()` request is processed.
+   *
+   * @return A `google::cloud::future` that becomes satisfied when the operation
+   *   completes on the service. Note that this can take minutes in some cases.
+   *
+   * @par Example
+   * @snippet samples.cc create-backup
+   */
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CreateBackup(
+      Database db, std::string backup_id,
+      std::chrono::system_clock::time_point expire_time);
+
+  /**
+   * Retrieve metadata information about a Backup.
+   *
+   * @par Idempotency
+   * This is a read-only operation and therefore always idempotent. Transient
+   * failures are automatically retried.
+   *
+   * @par Example
+   * @snippet samples.cc get-backup
+   */
+  StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      Backup const& backup);
+
+  /**
+   * Deletes a pending or completed Backup.
+   *
+   * @par Idempotency
+   * We treat this operation as idempotent. Transient failures are automatically
+   * retried.
+   */
+  Status DeleteBackup(
+      google::spanner::admin::database::v1::Backup const& backup);
+
+  /**
+   * Deletes a pending or completed Backup.
+   *
+   * @par Idempotency
+   * We treat this operation as idempotent. Transient failures are automatically
+   * retried.
+   *
+   * @par Example
+   * @snippet samples.cc delete-backup
+   */
+  Status DeleteBackup(Backup const& backup);
+
+  /**
+   * List all the backups in a given project and instance that match
+   * the filter.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore always idempotent.
+   *
+   * @param in An instance where the backup operations belong to.
+   * @param filter A filter expression that filters backups listed in the
+   *  response. See [this documentation][spanner-api-reference-link] for the
+   *  syntax of the filter expression.
+   *
+   * @par Example
+   * @snippet samples.cc list-backups
+   *
+   * [spanner-api-reference-link]:
+   * https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.admin.database.v1#google.spanner.admin.database.v1.ListBackupsRequest
+   */
+  ListBackupsRange ListBackups(Instance in, std::string filter = {});
+
+  /**
+   * Update backup's @p expire_time.
+   *
+   * @par Idempotency
+   * This operation is idempotent as its result does not depend on the previous
+   * state of the backup. Note that, as is the case with all operations, it is
+   * subject to race conditions if multiple tasks are attempting to change the
+   * expire time in the same backup.
+   */
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
+      google::spanner::admin::database::v1::Backup const& backup,
+      std::chrono::system_clock::time_point const& expire_time);
+
+  /**
+   * Update backup's @p expire_time.
+   *
+   * @par Idempotency
+   * This operation is idempotent as its result does not depend on the previous
+   * state of the backup. Note that, as is the case with all operations, it is
+   * subject to race conditions if multiple tasks are attempting to change the
+   * expire time in the same backup.
+   *
+   * @par Example
+   * @snippet samples.cc update-backup
+   */
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackupExpireTime(
+      Backup const& backup,
+      std::chrono::system_clock::time_point const& expire_time);
+
+  /**
+   * List all the backup operations in a given project and instance that match
+   * the filter.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore always idempotent.
+   *
+   * @param in An instance where the backup operations belong to.
+   * @param filter A filter expression that filters what operations are returned
+   * in the response. See [this documentation][spanner-api-reference-link] for
+   * the syntax of the filter expression.
+   *
+   * @par Example
+   * @snippet samples.cc list-backup-operations
+   *
+   * [spanner-api-reference-link]:
+   * https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.admin.database.v1#google.spanner.admin.database.v1.ListBackupOperationsRequest
+   */
+  ListBackupOperationsRange ListBackupOperations(Instance in,
+                                                 std::string filter = {});
+
+  /**
+   * List all the database operations in a given project and instance that match
+   * the filter.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore always idempotent.
+   *
+   * @param in An instance where the database operations belong to.
+   * @param filter A filter expression that filters what operations are returned
+   * in the response. See [this documentation][spanner-api-reference-link] for
+   * the syntax of the filter expression.
+   *
+   * @par Example
+   * @snippet samples.cc list-database-operations
+   *
+   * [spanner-api-reference-link]:
+   * https://cloud.google.com/spanner/docs/reference/rpc/google.spanner.admin.database.v1#google.spanner.admin.database.v1.ListDatabaseOperationsRequest
+   */
+  ListDatabaseOperationsRange ListDatabaseOperations(Instance in,
+                                                     std::string filter = {});
 
   /// Create a new client with the given stub. For testing only.
   explicit DatabaseAdminClient(std::shared_ptr<DatabaseAdminConnection> c)

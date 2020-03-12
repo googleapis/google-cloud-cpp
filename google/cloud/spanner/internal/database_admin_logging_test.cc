@@ -143,6 +143,19 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
+  EXPECT_CALL(*mock_, RestoreDatabase(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status = stub.RestoreDatabase(context, gcsa::RestoreDatabaseRequest{});
+  EXPECT_EQ(TransientError(), status.status());
+
+  HasLogLineWith("RestoreDatabase");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(DatabaseAdminLoggingTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy(_, _)).WillOnce(Return(TransientError()));
 
@@ -186,6 +199,101 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
   HasLogLineWith(TransientError().message());
 }
 
+TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
+  EXPECT_CALL(*mock_, CreateBackup(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status = stub.CreateBackup(context, gcsa::CreateBackupRequest{});
+  EXPECT_EQ(TransientError(), status.status());
+
+  HasLogLineWith("CreateBackup");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, GetBackup) {
+  EXPECT_CALL(*mock_, GetBackup(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status = stub.GetBackup(context, gcsa::GetBackupRequest{});
+  EXPECT_EQ(TransientError(), status.status());
+
+  HasLogLineWith("GetBackup");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
+  EXPECT_CALL(*mock_, DeleteBackup(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status = stub.DeleteBackup(context, gcsa::DeleteBackupRequest{});
+  EXPECT_EQ(TransientError(), status);
+
+  HasLogLineWith("DeleteBackup");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, ListBackups) {
+  EXPECT_CALL(*mock_, ListBackups(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto response = stub.ListBackups(context, gcsa::ListBackupsRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("ListBackups");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
+  EXPECT_CALL(*mock_, UpdateBackup(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status = stub.UpdateBackup(context, gcsa::UpdateBackupRequest{});
+  EXPECT_EQ(TransientError(), status.status());
+
+  HasLogLineWith("UpdateBackup");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
+  EXPECT_CALL(*mock_, ListBackupOperations(_, _))
+      .WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto response =
+      stub.ListBackupOperations(context, gcsa::ListBackupOperationsRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("ListBackupOperations");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
+  EXPECT_CALL(*mock_, ListDatabaseOperations(_, _))
+      .WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto response = stub.ListDatabaseOperations(
+      context, gcsa::ListDatabaseOperationsRequest{});
+  EXPECT_EQ(TransientError(), response.status());
+
+  HasLogLineWith("ListDatabaseOperations");
+  HasLogLineWith(TransientError().message());
+}
+
 TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_CALL(*mock_, GetOperation(_, _)).WillOnce(Return(TransientError()));
 
@@ -197,6 +305,20 @@ TEST_F(DatabaseAdminLoggingTest, GetOperation) {
   EXPECT_EQ(TransientError(), status.status());
 
   HasLogLineWith("GetOperation");
+  HasLogLineWith(TransientError().message());
+}
+
+TEST_F(DatabaseAdminLoggingTest, CancelOperation) {
+  EXPECT_CALL(*mock_, CancelOperation(_, _)).WillOnce(Return(TransientError()));
+
+  DatabaseAdminLogging stub(mock_, TracingOptions{});
+
+  grpc::ClientContext context;
+  auto status = stub.CancelOperation(
+      context, google::longrunning::CancelOperationRequest{});
+  EXPECT_EQ(TransientError(), status);
+
+  HasLogLineWith("CancelOperation");
   HasLogLineWith(TransientError().message());
 }
 

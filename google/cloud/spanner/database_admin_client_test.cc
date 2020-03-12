@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/mocks/mock_database_admin_connection.h"
+#include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 
@@ -24,6 +26,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 using ::google::cloud::spanner_mocks::MockDatabaseAdminConnection;
+using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
@@ -333,6 +336,301 @@ TEST(DatabaseAdminClientTest, TestIamPermissions) {
   EXPECT_STATUS_OK(response);
   EXPECT_EQ(1, response->permissions_size());
   EXPECT_EQ(expected_permission, response->permissions(0));
+}
+
+/// @test Verify DatabaseAdminClient uses CreateBackup() correctly.
+TEST(DatabaseAdminClientTest, CreateBackup) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+
+  Database dbase("test-project", "test-instance", "test-db");
+  std::string backup_id = "test-backup";
+  std::chrono::system_clock::time_point expire_time =
+      std::chrono::system_clock::now() + std::chrono::hours(7);
+  Backup backup_name(dbase.instance(), backup_id);
+  EXPECT_CALL(*mock, CreateBackup(_))
+      .WillOnce([&dbase, &expire_time, &backup_id, &backup_name](
+                    DatabaseAdminConnection::CreateBackupParams const& p) {
+        EXPECT_EQ(p.database, dbase);
+        EXPECT_EQ(p.expire_time, expire_time);
+        EXPECT_EQ(p.backup_id, backup_id);
+        gcsa::Backup backup;
+        backup.set_name(backup_name.FullName());
+        backup.set_state(gcsa::Backup::CREATING);
+        return make_ready_future(make_status_or(backup));
+      });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto fut = client.CreateBackup(dbase, backup_id, expire_time);
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto backup = fut.get();
+  EXPECT_STATUS_OK(backup);
+
+  EXPECT_EQ(backup_name.FullName(), backup->name());
+  EXPECT_EQ(gcsa::Backup::CREATING, backup->state());
+}
+
+/// @test Verify DatabaseAdminClient uses RestoreDatabase() correctly.
+TEST(DatabaseAdminClientTest, RestoreDatabase) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+
+  Database dbase("test-project", "test-instance", "test-db");
+  Backup backup(dbase.instance(), "test-backup");
+  EXPECT_CALL(*mock, RestoreDatabase(_))
+      .WillOnce([&dbase, &backup](
+                    DatabaseAdminConnection::RestoreDatabaseParams const& p) {
+        EXPECT_EQ(p.database, dbase);
+        EXPECT_EQ(p.backup_full_name, backup.FullName());
+        gcsa::Database database;
+        database.set_name(dbase.FullName());
+        database.set_state(gcsa::Database::READY_OPTIMIZING);
+        return make_ready_future(make_status_or(database));
+      });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto fut = client.RestoreDatabase(dbase, backup);
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto database = fut.get();
+  EXPECT_STATUS_OK(database);
+
+  EXPECT_EQ(dbase.FullName(), database->name());
+  EXPECT_EQ(gcsa::Database::READY_OPTIMIZING, database->state());
+}
+
+/// @test Verify DatabaseAdminClient uses RestoreDatabase() correctly.
+TEST(DatabaseAdminClientTest, RestoreDatabaseOverload) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+
+  Database dbase("test-project", "test-instance", "test-db");
+  Backup backup_name(dbase.instance(), "test-backup");
+  gcsa::Backup backup;
+  backup.set_name(backup_name.FullName());
+  EXPECT_CALL(*mock, RestoreDatabase(_))
+      .WillOnce([&dbase, &backup_name](
+                    DatabaseAdminConnection::RestoreDatabaseParams const& p) {
+        EXPECT_EQ(p.database, dbase);
+        EXPECT_EQ(p.backup_full_name, backup_name.FullName());
+        gcsa::Database database;
+        database.set_name(dbase.FullName());
+        database.set_state(gcsa::Database::READY_OPTIMIZING);
+        return make_ready_future(make_status_or(database));
+      });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto fut = client.RestoreDatabase(dbase, backup);
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto database = fut.get();
+  EXPECT_STATUS_OK(database);
+
+  EXPECT_EQ(dbase.FullName(), database->name());
+  EXPECT_EQ(gcsa::Database::READY_OPTIMIZING, database->state());
+}
+
+/// @test Verify DatabaseAdminClient uses GetBackup() correctly.
+TEST(DatabaseAdminClientTest, GetBackup) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Backup backup(Instance("test-project", "test-instance"), "test-backup");
+
+  EXPECT_CALL(*mock, GetBackup(_))
+      .WillOnce([&backup](DatabaseAdminConnection::GetBackupParams const& p) {
+        EXPECT_EQ(backup.FullName(), p.backup_full_name);
+        gcsa::Backup response;
+        response.set_name(p.backup_full_name);
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.GetBackup(backup);
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(backup.FullName(), response->name());
+}
+
+/// @test Verify DatabaseAdminClient uses DeleteBackup() correctly.
+TEST(DatabaseAdminClientTest, DeleteBackup) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Backup backup(Instance("test-project", "test-instance"), "test-backup");
+
+  EXPECT_CALL(*mock, DeleteBackup(_))
+      .WillOnce(
+          [&backup](DatabaseAdminConnection::DeleteBackupParams const& p) {
+            EXPECT_EQ(backup.FullName(), p.backup_full_name);
+            return Status();
+          });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.DeleteBackup(backup);
+  EXPECT_STATUS_OK(response);
+}
+
+/// @test Verify DatabaseAdminClient uses DeleteBackup() correctly.
+TEST(DatabaseAdminClientTest, DeleteBackupOverload) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Backup backup_name(Instance("test-project", "test-instance"), "test-backup");
+  gcsa::Backup backup;
+  backup.set_name(backup_name.FullName());
+
+  EXPECT_CALL(*mock, DeleteBackup(_))
+      .WillOnce(
+          [&backup_name](DatabaseAdminConnection::DeleteBackupParams const& p) {
+            EXPECT_EQ(backup_name.FullName(), p.backup_full_name);
+            return Status();
+          });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.DeleteBackup(backup);
+  EXPECT_STATUS_OK(response);
+}
+
+TEST(DatabaseAdminClientTest, ListBackups) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Instance const expected_instance("test-project", "test-instance");
+  std::string expected_filter("test-filter");
+  EXPECT_CALL(*mock, ListBackups(_))
+      .WillOnce([&expected_instance, &expected_filter](
+                    DatabaseAdminConnection::ListBackupsParams const& p) {
+        EXPECT_EQ(expected_instance, p.instance);
+        EXPECT_EQ(expected_filter, p.filter);
+
+        return ListBackupsRange(
+            gcsa::ListBackupsRequest{},
+            [](gcsa::ListBackupsRequest const&) {
+              return StatusOr<gcsa::ListBackupsResponse>(
+                  Status(StatusCode::kPermissionDenied, "uh-oh"));
+            },
+            [](gcsa::ListBackupsResponse const&) {
+              return std::vector<gcsa::Backup>{};
+            });
+      });
+
+  DatabaseAdminClient client(mock);
+  auto range = client.ListBackups(expected_instance, expected_filter);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+/// @test Verify DatabaseAdminClient uses GetBackup() correctly.
+TEST(DatabaseAdminClientTest, UpdateBackupExpireTime) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Backup backup(Instance("test-project", "test-instance"), "test-backup");
+  std::chrono::system_clock::time_point expire_time =
+      std::chrono::system_clock::now() + std::chrono::hours(7);
+  auto proto_expire_time =
+      internal::ConvertTimePointToProtoTimestamp(expire_time);
+  ASSERT_STATUS_OK(proto_expire_time);
+
+  EXPECT_CALL(*mock, UpdateBackup(_))
+      .WillOnce([&backup, &proto_expire_time](
+                    DatabaseAdminConnection::UpdateBackupParams const& p) {
+        EXPECT_EQ(backup.FullName(), p.request.backup().name());
+        EXPECT_THAT(*proto_expire_time,
+                    IsProtoEqual(p.request.backup().expire_time()));
+        gcsa::Backup response;
+        response.set_name(p.request.backup().name());
+        *response.mutable_expire_time() = p.request.backup().expire_time();
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.UpdateBackupExpireTime(backup, expire_time);
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(backup.FullName(), response->name());
+  EXPECT_THAT(*proto_expire_time, IsProtoEqual(response->expire_time()));
+}
+
+/// @test Verify DatabaseAdminClient uses GetBackup() correctly.
+TEST(DatabaseAdminClientTest, UpdateBackupExpireTimeOverload) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Backup backup_name(Instance("test-project", "test-instance"), "test-backup");
+  gcsa::Backup backup;
+  backup.set_name(backup_name.FullName());
+  std::chrono::system_clock::time_point expire_time =
+      std::chrono::system_clock::now() + std::chrono::hours(7);
+  auto proto_expire_time =
+      internal::ConvertTimePointToProtoTimestamp(expire_time);
+  ASSERT_STATUS_OK(proto_expire_time);
+
+  EXPECT_CALL(*mock, UpdateBackup(_))
+      .WillOnce([&backup_name, &proto_expire_time](
+                    DatabaseAdminConnection::UpdateBackupParams const& p) {
+        EXPECT_EQ(backup_name.FullName(), p.request.backup().name());
+        EXPECT_THAT(*proto_expire_time,
+                    IsProtoEqual(p.request.backup().expire_time()));
+        gcsa::Backup response;
+        response.set_name(p.request.backup().name());
+        *response.mutable_expire_time() = p.request.backup().expire_time();
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      });
+
+  DatabaseAdminClient client(std::move(mock));
+  auto response = client.UpdateBackupExpireTime(backup, expire_time);
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(backup_name.FullName(), response->name());
+  EXPECT_THAT(*proto_expire_time, IsProtoEqual(response->expire_time()));
+}
+
+TEST(DatabaseAdminClientTest, ListBackupOperations) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Instance const expected_instance("test-project", "test-instance");
+  std::string expected_filter("test-filter");
+  EXPECT_CALL(*mock, ListBackupOperations(_))
+      .WillOnce(
+          [&expected_instance, &expected_filter](
+              DatabaseAdminConnection::ListBackupOperationsParams const& p) {
+            EXPECT_EQ(expected_instance, p.instance);
+            EXPECT_EQ(expected_filter, p.filter);
+
+            return ListBackupOperationsRange(
+                gcsa::ListBackupOperationsRequest{},
+                [](gcsa::ListBackupOperationsRequest const&) {
+                  return StatusOr<gcsa::ListBackupOperationsResponse>(
+                      Status(StatusCode::kPermissionDenied, "uh-oh"));
+                },
+                [](gcsa::ListBackupOperationsResponse const&) {
+                  return std::vector<google::longrunning::Operation>{};
+                });
+          });
+
+  DatabaseAdminClient client(mock);
+  auto range = client.ListBackupOperations(expected_instance, expected_filter);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
+  auto mock = std::make_shared<MockDatabaseAdminConnection>();
+  Instance const expected_instance("test-project", "test-instance");
+  std::string expected_filter("test-filter");
+  EXPECT_CALL(*mock, ListDatabaseOperations(_))
+      .WillOnce(
+          [&expected_instance, &expected_filter](
+              DatabaseAdminConnection::ListDatabaseOperationsParams const& p) {
+            EXPECT_EQ(expected_instance, p.instance);
+            EXPECT_EQ(expected_filter, p.filter);
+
+            return ListDatabaseOperationsRange(
+                gcsa::ListDatabaseOperationsRequest{},
+                [](gcsa::ListDatabaseOperationsRequest const&) {
+                  return StatusOr<gcsa::ListDatabaseOperationsResponse>(
+                      Status(StatusCode::kPermissionDenied, "uh-oh"));
+                },
+                [](gcsa::ListDatabaseOperationsResponse const&) {
+                  return std::vector<google::longrunning::Operation>{};
+                });
+          });
+
+  DatabaseAdminClient client(mock);
+  auto range =
+      client.ListDatabaseOperations(expected_instance, expected_filter);
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
 }
 
 }  // namespace

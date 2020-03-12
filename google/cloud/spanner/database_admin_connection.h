@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_DATABASE_ADMIN_CONNECTION_H
 
 #include "google/cloud/spanner/backoff_policy.h"
+#include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/internal/database_admin_stub.h"
@@ -44,6 +45,48 @@ using ListDatabaseRange = google::cloud::internal::PaginationRange<
     google::spanner::admin::database::v1::Database,
     google::spanner::admin::database::v1::ListDatabasesRequest,
     google::spanner::admin::database::v1::ListDatabasesResponse>;
+
+/**
+ * An input range to stream backup operations in Cloud Spanner instance.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::longrunning::Operation` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListBackupOperationsRange = google::cloud::internal::PaginationRange<
+    google::longrunning::Operation,
+    google::spanner::admin::database::v1::ListBackupOperationsRequest,
+    google::spanner::admin::database::v1::ListBackupOperationsResponse>;
+
+/**
+ * An input range to stream database operations in Cloud Spanner instance.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::longrunning::Operation` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListDatabaseOperationsRange = google::cloud::internal::PaginationRange<
+    google::longrunning::Operation,
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest,
+    google::spanner::admin::database::v1::ListDatabaseOperationsResponse>;
+
+/**
+ * An input range to stream backups in Cloud Spanner instance.
+ *
+ * This type models an [input range][cppref-input-range] of
+ * `google::longrunning::Operation` objects. Applications can make a
+ * single pass through the results.
+ *
+ * [cppref-input-range]: https://en.cppreference.com/w/cpp/ranges/input_range
+ */
+using ListBackupsRange = google::cloud::internal::PaginationRange<
+    google::spanner::admin::database::v1::Backup,
+    google::spanner::admin::database::v1::ListBackupsRequest,
+    google::spanner::admin::database::v1::ListBackupsResponse>;
 
 /**
  * A connection to the Cloud Spanner instance administration service.
@@ -128,6 +171,60 @@ class DatabaseAdminConnection {
     Database database;
     std::vector<std::string> permissions;
   };
+
+  /// Wrap the arguments for `CreateBackup()`.
+  struct CreateBackupParams {
+    /// The name of the database.
+    Database database;
+    std::string backup_id;
+    std::chrono::system_clock::time_point expire_time;
+  };
+
+  /// Wrap the arguments for `GetBackup()`.
+  struct GetBackupParams {
+    /// The name of the backup.
+    std::string backup_full_name;
+  };
+
+  /// Wrap the arguments for `DeleteBackup()`.
+  struct DeleteBackupParams {
+    /// The name of the backup.
+    std::string backup_full_name;
+  };
+
+  /// Wrap the arguments for `ListBackups()`.
+  struct ListBackupsParams {
+    /// The name of the instance.
+    Instance instance;
+    std::string filter;
+  };
+
+  /// Wrap the arguments for `RestoreDatabase()`.
+  struct RestoreDatabaseParams {
+    /// The name of the database.
+    Database database;
+    /// The source backup for the restore.
+    std::string backup_full_name;
+  };
+
+  /// Wrap the arguments for `UpdateBackup()`.
+  struct UpdateBackupParams {
+    google::spanner::admin::database::v1::UpdateBackupRequest request;
+  };
+
+  /// Wrap the arguments for `ListBackupOperations()`.
+  struct ListBackupOperationsParams {
+    /// The name of the instance.
+    Instance instance;
+    std::string filter;
+  };
+
+  /// Wrap the arguments for `ListDatabaseOperations()`.
+  struct ListDatabaseOperationsParams {
+    /// The name of the instance.
+    Instance instance;
+    std::string filter;
+  };
   //@}
 
   /// Define the interface for a google.spanner.v1.DatabaseAdmin.CreateDatabase
@@ -159,6 +256,11 @@ class DatabaseAdminConnection {
   /// RPC.
   virtual ListDatabaseRange ListDatabases(ListDatabasesParams) = 0;
 
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.RestoreDatabase
+  /// RPC.
+  virtual future<StatusOr<google::spanner::admin::database::v1::Database>>
+      RestoreDatabase(RestoreDatabaseParams);
+
   /// Define the interface for a google.spanner.v1.DatabaseAdmin.GetIamPolicy
   /// RPC.
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -173,6 +275,38 @@ class DatabaseAdminConnection {
   /// google.spanner.v1.DatabaseAdmin.TestIamPermissions RPC.
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
       TestIamPermissions(TestIamPermissionsParams) = 0;
+
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.CreateBackup
+  /// RPC.
+  virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
+      CreateBackup(CreateBackupParams);
+
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.GetBackup RPC.
+  virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      GetBackupParams);
+
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.DeleteBackup
+  /// RPC.
+  virtual Status DeleteBackup(DeleteBackupParams);
+
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.ListBackups
+  /// RPC.
+  virtual ListBackupsRange ListBackups(ListBackupsParams);
+
+  /// Define the interface for a google.spanner.v1.DatabaseAdmin.UpdateBackup
+  /// RPC.
+  virtual StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
+      UpdateBackupParams);
+
+  /// Define the interface for a
+  /// google.spanner.v1.DatabaseAdmin.ListBackupOperations RPC.
+  virtual ListBackupOperationsRange ListBackupOperations(
+      ListBackupOperationsParams);
+
+  /// Define the interface for a
+  /// google.spanner.v1.DatabaseAdmin.ListDatabaseOperations RPC.
+  virtual ListDatabaseOperationsRange ListDatabaseOperations(
+      ListDatabaseOperationsParams);
 };
 
 /**

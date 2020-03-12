@@ -15,17 +15,21 @@
 //! [START spanner_quickstart]
 #include "google/cloud/spanner/client.h"
 //! [END spanner_quickstart]
+#include "google/cloud/spanner/backup.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/optional.h"
+#include <google/protobuf/util/time_util.h>
 #include <chrono>
 #include <sstream>
 #include <tuple>
@@ -577,6 +581,256 @@ void ListDatabasesCommand(std::vector<std::string> const& argv) {
   }
   google::cloud::spanner::DatabaseAdminClient client;
   ListDatabases(std::move(client), argv[0], argv[1]);
+}
+
+//! [create-backup] [START spanner_create_backup]
+void CreateBackup(google::cloud::spanner::DatabaseAdminClient client,
+                  std::string const& project_id, std::string const& instance_id,
+                  std::string const& database_id,
+                  std::string const& backup_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  auto backup = client
+                    .CreateBackup(database, backup_id,
+                                  std::chrono::system_clock::now() +
+                                      std::chrono::hours(7))
+                    .get();
+  if (!backup.ok()) throw std::runtime_error(backup.status().message());
+  std::cout << "Backup '" << backup->name() << "' of size "
+            << backup->size_bytes() << " bytes was created at "
+            << google::protobuf::util::TimeUtil::ToString(backup->create_time())
+            << ".\n";
+}
+//! [create-backup] [END spanner_create_backup]
+
+void CreateBackupCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "create-backup <project-id> <instance-id>"
+        " <database-id> <backup-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  CreateBackup(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [restore-database] [START spanner_restore_database]
+void RestoreDatabase(google::cloud::spanner::DatabaseAdminClient client,
+                     std::string const& project_id,
+                     std::string const& instance_id,
+                     std::string const& database_id,
+                     std::string const& backup_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  google::cloud::spanner::Backup backup(
+      google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  auto restored_db = client.RestoreDatabase(database, backup).get();
+  if (!restored_db.ok())
+    throw std::runtime_error(restored_db.status().message());
+  std::cout << "Database '" << restored_db->name() << "' was restored from "
+            << " backup '" << backup.FullName() << "'.\n";
+}
+//! [restore-database] [END spanner_restore_database]
+
+void RestoreDatabaseCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "restore-backup <project-id> <instance-id>"
+        " <database-id> <backup-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  RestoreDatabase(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [get-backup] [START spanner_get_backup]
+void GetBackup(google::cloud::spanner::DatabaseAdminClient client,
+               std::string const& project_id, std::string const& instance_id,
+               std::string const& backup_id) {
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Backup backup_name(
+      google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  auto backup = client.GetBackup(backup_name);
+  if (!backup.ok()) throw std::runtime_error(backup.status().message());
+  std::cout << "Backup '" << backup->name() << "' of size "
+            << backup->size_bytes() << " bytes was created at "
+            << google::protobuf::util::TimeUtil::ToString(backup->create_time())
+            << ".\n";
+}
+//! [get-backup] [END spanner_get_backup]
+
+void GetBackupCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "get-backup <project-id> <instance-id> <backup-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  GetBackup(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [update-backup] [START spanner_update_backup]
+void UpdateBackup(google::cloud::spanner::DatabaseAdminClient client,
+                  std::string const& project_id, std::string const& instance_id,
+                  std::string const& backup_id) {
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Backup backup_name(
+      google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  auto backup = client.UpdateBackupExpireTime(
+      backup_name, std::chrono::system_clock::now() + std::chrono::hours(7));
+  if (!backup.ok()) throw std::runtime_error(backup.status().message());
+  std::cout << "Backup '" << backup->name() << "' updated to new expire_time "
+            << google::protobuf::util::TimeUtil::ToString(backup->expire_time())
+            << ".\n";
+}
+//! [update-backup] [END spanner_update_backup]
+
+void UpdateBackupCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "update-backup <project-id> <instance-id> <backup-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  UpdateBackup(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [delete-backup] [START spanner_delete_backup]
+void DeleteBackup(google::cloud::spanner::DatabaseAdminClient client,
+                  std::string const& project_id, std::string const& instance_id,
+                  std::string const& backup_id) {
+  using ::google::cloud::Status;
+  google::cloud::spanner::Backup backup(
+      google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  Status status = client.DeleteBackup(backup);
+  if (!status.ok()) throw std::runtime_error(status.message());
+  std::cout << "Backup '" << backup.FullName() << "' was deleted.\n";
+}
+//! [delete-backup] [END spanner_delete_backup]
+
+void DeleteBackupCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "delete-backup <project-id> <instance-id>"
+        " <backup-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  DeleteBackup(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+// [START spanner_cancel_backup_create]
+void CreateBackupAndCancel(google::cloud::spanner::DatabaseAdminClient client,
+                           std::string const& project_id,
+                           std::string const& instance_id,
+                           std::string const& database_id,
+                           std::string const& backup_id) {
+  using ::google::cloud::future;
+  using ::google::cloud::Status;
+  using ::google::cloud::StatusOr;
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  auto f = client.CreateBackup(
+      database, backup_id,
+      std::chrono::system_clock::now() + std::chrono::hours(7));
+  f.cancel();
+  auto backup = f.get();
+  if (backup.ok()) {
+    Status status = client.DeleteBackup(backup.value());
+    if (!status.ok()) throw std::runtime_error(status.message());
+    std::cout << "Backup '" << backup->name() << "' was deleted.\n";
+  } else {
+    std::cout << "CreateBackup operation was cancelled with the message '"
+              << backup.status().message() << "'.\n";
+  }
+}
+// [END spanner_cancel_backup_create]
+
+void CreateBackupAndCancelCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "create-backup-and-cancel <project-id> <instance-id>"
+        " <database-id> <backup-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  CreateBackupAndCancel(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
+
+//! [list-backups] [START spanner_list_backups]
+void ListBackups(google::cloud::spanner::DatabaseAdminClient client,
+                 std::string const& project_id,
+                 std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  std::cout << "All backups:\n";
+  for (auto const& backup : client.ListBackups(in)) {
+    if (!backup) {
+      throw std::runtime_error(backup.status().message());
+    }
+    std::cout << "Backup " << backup->name() << " on database "
+              << backup->database() << " with size : " << backup->size_bytes()
+              << " bytes.\n";
+  }
+}
+//! [list-backups] [END spanner_list_backups]
+
+void ListBackupsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("list-backups <project-id> <instance-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  ListBackups(std::move(client), argv[0], argv[1]);
+}
+
+//! [list-backup-operations] [START spanner_list_backup_operations]
+void ListBackupOperations(google::cloud::spanner::DatabaseAdminClient client,
+                          std::string const& project_id,
+                          std::string const& instance_id,
+                          std::string const& database_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto filter = std::string("(metadata.database:") + database_id + ") AND " +
+                "(metadata.@type:type.googleapis.com/" +
+                "google.spanner.admin.database.v1.CreateBackupMetadata)";
+  for (auto const& operation : client.ListBackupOperations(in, filter)) {
+    if (!operation) {
+      throw std::runtime_error(operation.status().message());
+    }
+    google::spanner::admin::database::v1::CreateBackupMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "Backup " << metadata.name() << " on database "
+              << metadata.database()
+              << " progress: " << metadata.progress().progress_percent()
+              << "% complete.";
+  }
+}
+//! [list-backup-operations] [END spanner_list_backup_operations]
+
+//! [list-database-operations] [START spanner_list_database_operations]
+void ListDatabaseOperations(google::cloud::spanner::DatabaseAdminClient client,
+                            std::string const& project_id,
+                            std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto filter = std::string(
+      "(metadata.@type:type.googleapis.com/"
+      "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)");
+  for (auto const& operation : client.ListDatabaseOperations(in, filter)) {
+    if (!operation) {
+      throw std::runtime_error(operation.status().message());
+    }
+    google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata
+        metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "Database " << metadata.name() << " restored from backup is "
+              << metadata.progress().progress_percent() << "% optimized.";
+  }
+}
+//! [list-database-operations] [END spanner_list_database_operations]
+
+void ListDatabaseOperationsCommand(std::vector<std::string> const& argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error(
+        "list-database-operations <project-id> <instance-id>");
+  }
+  google::cloud::spanner::DatabaseAdminClient client;
+  ListDatabaseOperations(std::move(client), argv[0], argv[1]);
 }
 
 //! [drop-database] [START spanner_drop_database]
@@ -1925,6 +2179,16 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("add-column", AddColumn),
       make_database_command_entry("add-timestamp-column", AddTimestampColumn),
       {"list-databases", ListDatabasesCommand},
+      {"create-backup", CreateBackupCommand},
+      {"restore-database", RestoreDatabaseCommand},
+      {"get-backup", GetBackupCommand},
+      {"update-backup", UpdateBackupCommand},
+      {"delete-backup", DeleteBackupCommand},
+      {"create-backup-and-cancel", CreateBackupAndCancelCommand},
+      {"list-backups", ListBackupsCommand},
+      make_database_command_entry("list-backup-operations",
+                                  ListBackupOperations),
+      {"list-database-operations", ListDatabaseOperationsCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
                                   DatabaseGetIamPolicy),
@@ -2288,6 +2552,49 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_delete_data sample\n";
   DeleteData(client);
+
+  if (run_slow_integration_tests == "yes" && (!emulator)) {
+    std::string backup_id =
+        google::cloud::spanner_testing::RandomBackupName(generator);
+
+    std::cout << "\nRunning spanner_create_backup sample\n";
+    CreateBackup(database_admin_client, project_id, instance_id, database_id,
+                 backup_id);
+
+    std::cout << "\nRunning spanner_get_backup sample\n";
+    GetBackup(database_admin_client, project_id, instance_id, backup_id);
+
+    std::cout << "\nRunning spanner_update_backup sample\n";
+    UpdateBackup(database_admin_client, project_id, instance_id, backup_id);
+
+    std::string restore_database_id =
+        google::cloud::spanner_testing::RandomDatabaseName(generator);
+
+    std::cout << "\nRunning spanner_restore_database sample\n";
+    RestoreDatabase(database_admin_client, project_id, instance_id,
+                    restore_database_id, backup_id);
+
+    std::cout << "\nRunning spanner_drop_database sample\n";
+    DropDatabase(database_admin_client, project_id, instance_id,
+                 restore_database_id);
+
+    std::cout << "\nRunning spanner_delete_backup sample\n";
+    DeleteBackup(database_admin_client, project_id, instance_id, backup_id);
+
+    std::cout << "\nRunning spanner_cancel_backup_create sample\n";
+    CreateBackupAndCancel(database_admin_client, project_id, instance_id,
+                          database_id, backup_id);
+
+    std::cout << "\nRunning spanner_list_backup_operations sample\n";
+    ListBackupOperations(database_admin_client, project_id, instance_id,
+                         database_id);
+
+    std::cout << "\nRunning spanner_list_backups sample\n";
+    ListBackups(database_admin_client, project_id, instance_id);
+
+    std::cout << "\nRunning spanner_list_database_operations sample\n";
+    ListDatabaseOperations(database_admin_client, project_id, instance_id);
+  }
 
   std::cout << "\nRunning spanner_drop_database sample\n";
   DropDatabase(database_admin_client, project_id, instance_id, database_id);

@@ -66,6 +66,13 @@ class DatabaseAdminStub {
       grpc::ClientContext&,
       google::spanner::admin::database::v1::ListDatabasesRequest const&) = 0;
 
+  /// Start the long-running operation to restore a database from a given
+  /// backup.
+  virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::RestoreDatabaseRequest const&
+          request) = 0;
+
   /// Fetch the IAM policy for a particular database.
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext&, google::iam::v1::GetIamPolicyRequest const&) = 0;
@@ -79,10 +86,59 @@ class DatabaseAdminStub {
   TestIamPermissions(grpc::ClientContext&,
                      google::iam::v1::TestIamPermissionsRequest const&) = 0;
 
+  /// Start the long-running operation to create a new Cloud Spanner backup.
+  virtual StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::CreateBackupRequest const&
+          request) = 0;
+
+  /// Get metadata on a pending or completed Backup.
+  virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::GetBackupRequest const&
+          request) = 0;
+
+  /// Deletes a pending or completed Backup.
+  virtual Status DeleteBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::DeleteBackupRequest const&
+          request) = 0;
+
+  /// Fetch a page of backups.
+  virtual StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
+  ListBackups(
+      grpc::ClientContext&,
+      google::spanner::admin::database::v1::ListBackupsRequest const&) = 0;
+
+  /// Update a pending or completed backup.
+  virtual StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::UpdateBackupRequest const&
+          request) = 0;
+
+  /// Fetch a page of Backup operations.
+  virtual StatusOr<
+      google::spanner::admin::database::v1::ListBackupOperationsResponse>
+  ListBackupOperations(grpc::ClientContext&,
+                       google::spanner::admin::database::v1::
+                           ListBackupOperationsRequest const&) = 0;
+
+  /// Fetch a page of database operations.
+  virtual StatusOr<
+      google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
+  ListDatabaseOperations(grpc::ClientContext&,
+                         google::spanner::admin::database::v1::
+                             ListDatabaseOperationsRequest const&) = 0;
+
   /// Poll a long-running operation.
   virtual StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) = 0;
+
+  /// Cancel a long-running operation.
+  virtual Status CancelOperation(
+      grpc::ClientContext& client_context,
+      google::longrunning::CancelOperationRequest const& request) = 0;
 };
 
 /**

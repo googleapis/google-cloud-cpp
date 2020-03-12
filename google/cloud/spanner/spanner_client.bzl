@@ -18,6 +18,7 @@
 
 spanner_client_hdrs = [
     "backoff_policy.h",
+    "backup.h",
     "batch_dml_result.h",
     "bytes.h",
     "client.h",
@@ -61,6 +62,7 @@ spanner_client_hdrs = [
     "internal/spanner_stub.h",
     "internal/status_utils.h",
     "internal/time_format.h",
+    "internal/time_utils.h",
     "internal/transaction_impl.h",
     "internal/tuple_utils.h",
     "keys.h",
@@ -87,6 +89,7 @@ spanner_client_hdrs = [
 ]
 
 spanner_client_srcs = [
+    "backup.cc",
     "bytes.cc",
     "client.cc",
     "connection_options.cc",

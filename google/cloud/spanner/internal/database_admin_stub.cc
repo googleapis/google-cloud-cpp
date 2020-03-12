@@ -111,6 +111,18 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
+  StatusOr<google::longrunning::Operation> RestoreDatabase(
+      grpc::ClientContext& client_context,
+      gcsa::RestoreDatabaseRequest const& request) override {
+    google::longrunning::Operation response;
+    grpc::Status status =
+        database_admin_->RestoreDatabase(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& client_context,
       google::iam::v1::GetIamPolicyRequest const& request) override {
@@ -147,6 +159,92 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
     return response;
   }
 
+  StatusOr<google::longrunning::Operation> CreateBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::CreateBackupRequest const& request)
+      override {
+    google::longrunning::Operation response;
+    auto status =
+        database_admin_->CreateBackup(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::GetBackupRequest const& request)
+      override {
+    google::spanner::admin::database::v1::Backup response;
+    auto status =
+        database_admin_->GetBackup(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  Status DeleteBackup(grpc::ClientContext& client_context,
+                      gcsa::DeleteBackupRequest const& request) override {
+    google::protobuf::Empty response;
+    grpc::Status status =
+        database_admin_->DeleteBackup(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+  }
+
+  StatusOr<gcsa::ListBackupsResponse> ListBackups(
+      grpc::ClientContext& client_context,
+      gcsa::ListBackupsRequest const& request) override {
+    gcsa::ListBackupsResponse response;
+    auto status =
+        database_admin_->ListBackups(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  StatusOr<google::spanner::admin::database::v1::Backup> UpdateBackup(
+      grpc::ClientContext& client_context,
+      google::spanner::admin::database::v1::UpdateBackupRequest const& request)
+      override {
+    google::spanner::admin::database::v1::Backup response;
+    auto status =
+        database_admin_->UpdateBackup(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  StatusOr<gcsa::ListBackupOperationsResponse> ListBackupOperations(
+      grpc::ClientContext& client_context,
+      gcsa::ListBackupOperationsRequest const& request) override {
+    gcsa::ListBackupOperationsResponse response;
+    auto status = database_admin_->ListBackupOperations(&client_context,
+                                                        request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
+  StatusOr<gcsa::ListDatabaseOperationsResponse> ListDatabaseOperations(
+      grpc::ClientContext& client_context,
+      gcsa::ListDatabaseOperationsRequest const& request) override {
+    gcsa::ListDatabaseOperationsResponse response;
+    auto status = database_admin_->ListDatabaseOperations(&client_context,
+                                                          request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return response;
+  }
+
   StatusOr<google::longrunning::Operation> GetOperation(
       grpc::ClientContext& client_context,
       google::longrunning::GetOperationRequest const& request) override {
@@ -157,6 +255,18 @@ class DefaultDatabaseAdminStub : public DatabaseAdminStub {
       return google::cloud::MakeStatusFromRpcError(status);
     }
     return response;
+  }
+
+  Status CancelOperation(
+      grpc::ClientContext& client_context,
+      google::longrunning::CancelOperationRequest const& request) override {
+    google::protobuf::Empty response;
+    grpc::Status status =
+        operations_->CancelOperation(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
   }
 
  private:

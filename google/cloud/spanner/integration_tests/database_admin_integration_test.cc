@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/testing/matchers.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -48,6 +49,9 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
           .value_or("");
   ASSERT_TRUE(emulator || !test_iam_service_account.empty());
 
+  auto run_slow_integration_tests =
+      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+          .value_or("");
   Instance const in(project_id, *instance_id);
 
   std::string database_id = spanner_testing::RandomDatabaseName(generator);
@@ -164,6 +168,103 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
 
   db_list = get_current_databases();
   ASSERT_EQ(1, std::count(db_list.begin(), db_list.end(), db.FullName()));
+
+  // Tests for Backup are taking long time. To run them, set
+  // RUN_SLOW_INTEGRATION_TESTS environment variable to yes.
+  if (run_slow_integration_tests == "yes" && !emulator) {
+    auto backup_future = client.CreateBackup(
+        db, database_id,
+        std::chrono::system_clock::now() + std::chrono::hours(7));
+
+    // Cancel the CreateBackup operation.
+    backup_future.cancel();
+    auto cancelled_backup = backup_future.get();
+    if (cancelled_backup) {
+      auto delete_result = client.DeleteBackup(cancelled_backup.value());
+      EXPECT_STATUS_OK(delete_result);
+    }
+
+    // Then create a Backup without cancelling
+    backup_future = client.CreateBackup(
+        db, database_id,
+        std::chrono::system_clock::now() + std::chrono::hours(7));
+
+    // List the backup operations
+    auto filter = std::string("(metadata.database:") + database_id + ") AND " +
+                  "(metadata.@type:type.googleapis.com/" +
+                  "google.spanner.admin.database.v1.CreateBackupMetadata)";
+
+    std::vector<std::string> db_names;
+    for (auto const& operation : client.ListBackupOperations(in, filter)) {
+      if (!operation) break;
+      google::spanner::admin::database::v1::CreateBackupMetadata metadata;
+      operation->metadata().UnpackTo(&metadata);
+      db_names.push_back(metadata.database());
+    }
+    EXPECT_LE(1, std::count(db_names.begin(), db_names.end(), db.FullName()))
+        << "Database " << database_id
+        << " not found in the backup operation list.";
+
+    auto backup = backup_future.get();
+    EXPECT_STATUS_OK(backup);
+
+    google::cloud::spanner::Backup backup_name = google::cloud::spanner::Backup(
+        google::cloud::spanner::Instance(project_id, *instance_id),
+        database_id);
+    auto backup_get = client.GetBackup(backup_name);
+    EXPECT_STATUS_OK(backup_get);
+    EXPECT_EQ(backup_get->name(), backup->name());
+    // RestoreDatabase
+    std::string restore_database_id =
+        spanner_testing::RandomDatabaseName(generator);
+    Database restore_db(project_id, *instance_id, restore_database_id);
+    auto r_future = client.RestoreDatabase(restore_db, backup_name);
+    auto restored_database = r_future.get();
+    EXPECT_STATUS_OK(restored_database);
+
+    // List the database operations
+    filter = std::string(
+        "(metadata.@type:type.googleapis.com/"
+        "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)");
+    std::vector<std::string> restored_db_names;
+    for (auto const& operation : client.ListDatabaseOperations(in, filter)) {
+      if (!operation) break;
+      google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata md;
+      operation->metadata().UnpackTo(&md);
+      restored_db_names.push_back(md.name());
+    }
+    EXPECT_LE(1, std::count(restored_db_names.begin(), restored_db_names.end(),
+                            restored_database->name()))
+        << "Backup " << restored_database->name()
+        << " not found in the OptimizeRestoredDatabase operation list.";
+    auto drop_restored_db_status = client.DropDatabase(restore_db);
+    EXPECT_STATUS_OK(drop_restored_db_status);
+    filter = std::string("expire_time < \"3000-01-01T00:00:00Z\"");
+    std::vector<std::string> backup_names;
+    for (auto const& backup : client.ListBackups(in, filter)) {
+      if (!backup) break;
+      backup_names.push_back(backup->name());
+    }
+    EXPECT_LE(
+        1, std::count(backup_names.begin(), backup_names.end(), backup->name()))
+        << "Backup " << backup->name() << " not found in the backup list.";
+    auto new_expire_time =
+        std::chrono::system_clock::now() + std::chrono::hours(7);
+    auto updated_backup =
+        client.UpdateBackupExpireTime(backup.value(), new_expire_time);
+    EXPECT_STATUS_OK(updated_backup);
+    auto expected_timestamp =
+        google::cloud::spanner::internal::ConvertTimePointToProtoTimestamp(
+            new_expire_time);
+    EXPECT_STATUS_OK(expected_timestamp);
+    EXPECT_EQ(expected_timestamp->seconds(),
+              updated_backup->expire_time().seconds());
+    // The server only preserves micros.
+    EXPECT_EQ(expected_timestamp->nanos() / 1000,
+              updated_backup->expire_time().nanos() / 1000);
+    auto delete_result = client.DeleteBackup(backup.value());
+    EXPECT_STATUS_OK(delete_result);
+  }
 
   auto drop_status = client.DropDatabase(db);
   EXPECT_STATUS_OK(drop_status);

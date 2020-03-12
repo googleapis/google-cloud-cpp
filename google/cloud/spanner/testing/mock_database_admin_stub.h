@@ -61,6 +61,12 @@ class MockDatabaseAdminStub
           grpc::ClientContext&,
           google::spanner::admin::database::v1::ListDatabasesRequest const&));
 
+  MOCK_METHOD2(
+      RestoreDatabase,
+      StatusOr<google::longrunning::Operation>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::RestoreDatabaseRequest const&));
+
   MOCK_METHOD2(GetIamPolicy, StatusOr<google::iam::v1::Policy>(
                                  grpc::ClientContext&,
                                  google::iam::v1::GetIamPolicyRequest const&));
@@ -74,10 +80,57 @@ class MockDatabaseAdminStub
                    grpc::ClientContext&,
                    google::iam::v1::TestIamPermissionsRequest const&));
 
+  MOCK_METHOD2(
+      CreateBackup,
+      StatusOr<google::longrunning::Operation>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::CreateBackupRequest const&));
+
+  MOCK_METHOD2(
+      GetBackup,
+      StatusOr<google::spanner::admin::database::v1::Backup>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::GetBackupRequest const&));
+
+  MOCK_METHOD2(
+      DeleteBackup,
+      Status(grpc::ClientContext&,
+             google::spanner::admin::database::v1::DeleteBackupRequest const&));
+
+  MOCK_METHOD2(
+      ListBackups,
+      StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::ListBackupsRequest const&));
+
+  MOCK_METHOD2(
+      UpdateBackup,
+      StatusOr<google::spanner::admin::database::v1::Backup>(
+          grpc::ClientContext&,
+          google::spanner::admin::database::v1::UpdateBackupRequest const&));
+
+  MOCK_METHOD2(
+      ListBackupOperations,
+      StatusOr<
+          google::spanner::admin::database::v1::ListBackupOperationsResponse>(
+          grpc::ClientContext&, google::spanner::admin::database::v1::
+                                    ListBackupOperationsRequest const&));
+
+  MOCK_METHOD2(
+      ListDatabaseOperations,
+      StatusOr<
+          google::spanner::admin::database::v1::ListDatabaseOperationsResponse>(
+          grpc::ClientContext&, google::spanner::admin::database::v1::
+                                    ListDatabaseOperationsRequest const&));
+
   MOCK_METHOD2(GetOperation,
                StatusOr<google::longrunning::Operation>(
                    grpc::ClientContext&,
                    google::longrunning::GetOperationRequest const&));
+
+  MOCK_METHOD2(CancelOperation,
+               Status(grpc::ClientContext&,
+                      google::longrunning::CancelOperationRequest const&));
 };
 
 }  // namespace SPANNER_CLIENT_NS

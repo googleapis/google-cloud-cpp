@@ -87,6 +87,16 @@ DatabaseAdminLogging::ListDatabases(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::RestoreDatabase(
+    grpc::ClientContext& context, gcsa::RestoreDatabaseRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::RestoreDatabaseRequest const& request) {
+        return child_->RestoreDatabase(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::iam::v1::Policy> DatabaseAdminLogging::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -121,6 +131,86 @@ DatabaseAdminLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::longrunning::Operation> DatabaseAdminLogging::CreateBackup(
+    grpc::ClientContext& context, gcsa::CreateBackupRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::CreateBackupRequest const& request) {
+        return child_->CreateBackup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminLogging::GetBackup(
+    grpc::ClientContext& context, gcsa::GetBackupRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::GetBackupRequest const& request) {
+        return child_->GetBackup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status DatabaseAdminLogging::DeleteBackup(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::DeleteBackupRequest const& request) {
+        return child_->DeleteBackup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupsResponse>
+DatabaseAdminLogging::ListBackups(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListBackupsRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::spanner::admin::database::v1::ListBackupsRequest const&
+                 request) { return child_->ListBackups(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminLogging::UpdateBackup(
+    grpc::ClientContext& context, gcsa::UpdateBackupRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             gcsa::UpdateBackupRequest const& request) {
+        return child_->UpdateBackup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListBackupOperationsResponse>
+DatabaseAdminLogging::ListBackupOperations(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListBackupOperationsRequest const&
+        request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::spanner::admin::database::v1::
+                 ListBackupOperationsRequest const& request) {
+        return child_->ListBackupOperations(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::spanner::admin::database::v1::ListDatabaseOperationsResponse>
+DatabaseAdminLogging::ListDatabaseOperations(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabaseOperationsRequest const&
+        request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::spanner::admin::database::v1::
+                 ListDatabaseOperationsRequest const& request) {
+        return child_->ListDatabaseOperations(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
     grpc::ClientContext& context,
     google::longrunning::GetOperationRequest const& request) {
@@ -128,6 +218,17 @@ StatusOr<google::longrunning::Operation> DatabaseAdminLogging::GetOperation(
       [this](grpc::ClientContext& context,
              google::longrunning::GetOperationRequest const& request) {
         return child_->GetOperation(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status DatabaseAdminLogging::CancelOperation(
+    grpc::ClientContext& context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->CancelOperation(context, request);
       },
       context, request, __func__, tracing_options_);
 }

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/database_admin_client.h"
+#include "google/cloud/spanner/internal/time_utils.h"
 #include <algorithm>
 
 namespace google {
@@ -51,6 +52,16 @@ ListDatabaseRange DatabaseAdminClient::ListDatabases(Instance in) {
 
 Status DatabaseAdminClient::DropDatabase(Database db) {
   return conn_->DropDatabase({std::move(db)});
+}
+
+future<StatusOr<gcsa::Database>> DatabaseAdminClient::RestoreDatabase(
+    Database db, Backup const& backup) {
+  return conn_->RestoreDatabase({std::move(db), backup.FullName()});
+}
+
+future<StatusOr<gcsa::Database>> DatabaseAdminClient::RestoreDatabase(
+    Database db, google::spanner::admin::database::v1::Backup const& backup) {
+  return conn_->RestoreDatabase({std::move(db), backup.name()});
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminClient::GetIamPolicy(
@@ -115,6 +126,71 @@ StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminClient::TestIamPermissions(Database db,
                                         std::vector<std::string> permissions) {
   return conn_->TestIamPermissions({std::move(db), std::move(permissions)});
+}
+
+future<StatusOr<gcsa::Backup>> DatabaseAdminClient::CreateBackup(
+    Database db, std::string backup_id,
+    std::chrono::system_clock::time_point expire_time) {
+  return conn_->CreateBackup(
+      {std::move(db), std::move(backup_id), expire_time});
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminClient::GetBackup(Backup const& backup) {
+  return conn_->GetBackup({backup.FullName()});
+}
+
+Status DatabaseAdminClient::DeleteBackup(
+    google::spanner::admin::database::v1::Backup const& backup) {
+  return conn_->DeleteBackup({backup.name()});
+}
+
+Status DatabaseAdminClient::DeleteBackup(Backup const& backup) {
+  return conn_->DeleteBackup({backup.FullName()});
+}
+
+ListBackupsRange DatabaseAdminClient::ListBackups(Instance in,
+                                                  std::string filter) {
+  return conn_->ListBackups({std::move(in), std::move(filter)});
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+    google::spanner::admin::database::v1::Backup const& backup,
+    std::chrono::system_clock::time_point const& expire_time) {
+  auto proto_expire_time =
+      internal::ConvertTimePointToProtoTimestamp(expire_time);
+  if (!proto_expire_time) {
+    return proto_expire_time.status();
+  }
+  google::spanner::admin::database::v1::UpdateBackupRequest request;
+  request.mutable_backup()->set_name(backup.name());
+  *request.mutable_backup()->mutable_expire_time() = *proto_expire_time;
+  request.mutable_update_mask()->add_paths("expire_time");
+  return conn_->UpdateBackup({request});
+}
+
+StatusOr<gcsa::Backup> DatabaseAdminClient::UpdateBackupExpireTime(
+    Backup const& backup,
+    std::chrono::system_clock::time_point const& expire_time) {
+  auto proto_expire_time =
+      internal::ConvertTimePointToProtoTimestamp(expire_time);
+  if (!proto_expire_time) {
+    return proto_expire_time.status();
+  }
+  google::spanner::admin::database::v1::UpdateBackupRequest request;
+  request.mutable_backup()->set_name(backup.FullName());
+  *request.mutable_backup()->mutable_expire_time() = *proto_expire_time;
+  request.mutable_update_mask()->add_paths("expire_time");
+  return conn_->UpdateBackup({request});
+}
+
+ListBackupOperationsRange DatabaseAdminClient::ListBackupOperations(
+    Instance in, std::string filter) {
+  return conn_->ListBackupOperations({std::move(in), std::move(filter)});
+}
+
+ListDatabaseOperationsRange DatabaseAdminClient::ListDatabaseOperations(
+    Instance in, std::string filter) {
+  return conn_->ListDatabaseOperations({std::move(in), std::move(filter)});
 }
 
 }  // namespace SPANNER_CLIENT_NS

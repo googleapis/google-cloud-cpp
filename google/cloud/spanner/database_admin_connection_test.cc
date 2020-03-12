@@ -31,6 +31,7 @@ using ::google::protobuf::TextFormat;
 using ::testing::_;
 using ::testing::AtLeast;
 using ::testing::ElementsAre;
+using ::testing::Mock;
 using ::testing::Return;
 namespace gcsa = ::google::spanner::admin::database::v1;
 
@@ -405,6 +406,61 @@ TEST(DatabaseAdminClientTest, ListDatabasesTooManyFailures) {
   EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
+/// @test Verify that successful case works.
+TEST(DatabaseAdminClientTest, RestoreDatabaseSuccess) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, RestoreDatabase(_, _))
+      .WillOnce([](grpc::ClientContext&, gcsa::RestoreDatabaseRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Database database;
+        database.set_name("test-db");
+        op.mutable_response()->PackFrom(database);
+        return make_status_or(op);
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  Database dbase("test-project", "test-instance", "test-db");
+  Backup backup(Instance("test-project", "test-instance"), "test-backup");
+  auto fut = conn->RestoreDatabase({dbase, backup.FullName()});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto db = fut.get();
+  EXPECT_STATUS_OK(db);
+
+  EXPECT_EQ("test-db", db->name());
+}
+
+/// @test Verify that a permanent error in RestoreDatabase is immediately
+/// reported.
+TEST(DatabaseAdminClientTest, HandleRestoreDatabaseError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, RestoreDatabase(_, _))
+      .WillOnce([](grpc::ClientContext&, gcsa::RestoreDatabaseRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  Database dbase("test-project", "test-instance", "test-db");
+  Backup backup(Instance("test-project", "test-instance"), "test-backup");
+  auto fut = conn->RestoreDatabase({dbase, backup.FullName()});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto db = fut.get();
+  EXPECT_EQ(StatusCode::kPermissionDenied, db.status().code());
+}
+
 /// @test Verify that the successful case works.
 TEST(DatabaseAdminClientTest, GetIamPolicySuccess) {
   auto mock = std::make_shared<MockDatabaseAdminStub>();
@@ -605,6 +661,516 @@ TEST(DatabaseAdminClientTest, TestIamPermissionsTooManyTransients) {
   auto response = conn->TestIamPermissions(
       {Database("test-project", "test-instance", "test-database"), {}});
   EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+/// @test Verify that successful case works.
+TEST(DatabaseAdminClientTest, CreateBackupSuccess) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, CreateBackup(_, _))
+      .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Backup backup;
+        backup.set_name("test-backup");
+        op.mutable_response()->PackFrom(backup);
+        return make_status_or(op);
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  Database dbase("test-project", "test-instance", "test-db");
+  auto fut = conn->CreateBackup({dbase, "test-backup", {}});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(10)));
+  auto backup = fut.get();
+  EXPECT_STATUS_OK(backup);
+
+  EXPECT_EQ("test-backup", backup->name());
+}
+
+/// @test Verify cancellation.
+TEST(DatabaseAdminClientTest, CreateBackupCancel) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  // Suppress a false leak.
+  // TODO(#127): After we fix the issue #127, we won't need to use
+  // `AllowLeak()` any more.
+  Mock::AllowLeak(mock.get());
+  promise<void> p;
+
+  EXPECT_CALL(*mock, CreateBackup(_, _))
+      .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const&) {
+        google::longrunning::Operation op;
+        op.set_name("test-operation-name");
+        op.set_done(false);
+        return make_status_or(op);
+      });
+  EXPECT_CALL(*mock, CancelOperation(_, _))
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::CancelOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        return google::cloud::Status();
+      });
+  EXPECT_CALL(*mock, GetOperation(_, _))
+      .WillOnce([&p](grpc::ClientContext&,
+                     google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(false);
+        // wait for `cancel` call in the main thread.
+        p.get_future().get();
+        return make_status_or(op);
+      })
+      .WillOnce([](grpc::ClientContext&,
+                   google::longrunning::GetOperationRequest const& r) {
+        EXPECT_EQ("test-operation-name", r.name());
+        google::longrunning::Operation op;
+        op.set_name(r.name());
+        op.set_done(true);
+        gcsa::Backup backup;
+        backup.set_name("test-backup");
+        op.mutable_response()->PackFrom(backup);
+        return make_status_or(op);
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  Database dbase("test-project", "test-instance", "test-db");
+  auto fut = conn->CreateBackup({dbase, "test-backup", {}});
+  fut.cancel();
+  p.set_value();
+  auto backup = fut.get();
+  EXPECT_STATUS_OK(backup);
+  EXPECT_EQ("test-backup", backup->name());
+  // Explicitly verify the expectations in the mock.
+  EXPECT_TRUE(Mock::VerifyAndClearExpectations(mock.get()));
+}
+
+/// @test Verify that a permanent error in CreateBackup is immediately
+/// reported.
+TEST(DatabaseAdminClientTest, HandleCreateBackupError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, CreateBackup(_, _))
+      .WillOnce([](grpc::ClientContext&, gcsa::CreateBackupRequest const&) {
+        return StatusOr<google::longrunning::Operation>(
+            Status(StatusCode::kPermissionDenied, "uh-oh"));
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  Database dbase("test-project", "test-instance", "test-db");
+  auto fut = conn->CreateBackup({dbase, "test-backup", {}});
+  EXPECT_EQ(std::future_status::ready, fut.wait_for(std::chrono::seconds(0)));
+  auto backup = fut.get();
+  EXPECT_EQ(StatusCode::kPermissionDenied, backup.status().code());
+}
+
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, GetBackupSuccess) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/backups/test-backup";
+
+  EXPECT_CALL(*mock, GetBackup(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::GetBackupRequest const& request) {
+        EXPECT_EQ(expected_name, request.name());
+        gcsa::Backup response;
+        response.set_name(request.name());
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->GetBackup(
+      {Backup(Instance("test-project", "test-instance"), "test-backup")
+           .FullName()});
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(expected_name, response->name());
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, GetBackupPermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetBackup(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->GetBackup(
+      {Backup(Instance("test-project", "test-instance"), "test-backup")
+           .FullName()});
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+/// @test Verify that too many transients errors are reported corrrectly.
+TEST(DatabaseAdminClientTest, GetBackupTooManyTransients) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, GetBackup(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto response = conn->GetBackup(
+      {Backup(Instance("test-project", "test-instance"), "test-backup")
+           .FullName()});
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, DeleteBackupSuccess) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/backups/test-backup";
+
+  EXPECT_CALL(*mock, DeleteBackup(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::DeleteBackupRequest const& request) {
+        EXPECT_EQ(expected_name, request.name());
+        return google::cloud::Status();
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto status = conn->DeleteBackup({expected_name});
+  EXPECT_STATUS_OK(status);
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, DeleteBackupPermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, DeleteBackup(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto status = conn->DeleteBackup(
+      {"projects/test-project/instances/test-instance/backups/test-backup"});
+  EXPECT_EQ(StatusCode::kPermissionDenied, status.code());
+}
+
+/// @test Verify that too many transients errors are reported corrrectly.
+TEST(DatabaseAdminClientTest, DeleteBackupTooManyTransients) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, DeleteBackup(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto status = conn->DeleteBackup(
+      {"projects/test-project/instances/test-instance/backups/test-backup"});
+  EXPECT_EQ(StatusCode::kUnavailable, status.code());
+}
+
+/// @test Verify that we can list backups in multiple pages.
+TEST(DatabaseAdminClientTest, ListBackups) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+  std::string const expected_parent = in.FullName();
+
+  EXPECT_CALL(*mock, ListBackups(_, _))
+      .WillOnce([&expected_parent](grpc::ClientContext&,
+                                   gcsa::ListBackupsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
+
+        gcsa::ListBackupsResponse page;
+        page.set_next_page_token("page-1");
+        page.add_backups()->set_name("backup-1");
+        page.add_backups()->set_name("backup-2");
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](grpc::ClientContext&,
+                                   gcsa::ListBackupsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-1", request.page_token());
+
+        gcsa::ListBackupsResponse page;
+        page.set_next_page_token("page-2");
+        page.add_backups()->set_name("backup-3");
+        page.add_backups()->set_name("backup-4");
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](grpc::ClientContext&,
+                                   gcsa::ListBackupsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-2", request.page_token());
+
+        gcsa::ListBackupsResponse page;
+        page.clear_next_page_token();
+        page.add_backups()->set_name("backup-5");
+        return make_status_or(page);
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  std::vector<std::string> actual_names;
+  for (auto const& backup : conn->ListBackups({in, ""})) {
+    ASSERT_STATUS_OK(backup);
+    actual_names.push_back(backup->name());
+  }
+  EXPECT_THAT(actual_names,
+              ::testing::ElementsAre("backup-1", "backup-2", "backup-3",
+                                     "backup-4", "backup-5"));
+}
+
+TEST(DatabaseAdminClientTest, ListBackupsPermanentFailure) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+
+  EXPECT_CALL(*mock, ListBackups(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->ListBackups({in, ""});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(DatabaseAdminClientTest, ListBackupsTooManyFailures) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+
+  EXPECT_CALL(*mock, ListBackups(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->ListBackups({in, ""});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
+/// @test Verify that the successful case works.
+TEST(DatabaseAdminClientTest, UpdateBackupSuccess) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  std::string const expected_name =
+      "projects/test-project/instances/test-instance/backups/test-backup";
+
+  EXPECT_CALL(*mock, UpdateBackup(_, _))
+      .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
+      .WillOnce([&expected_name](grpc::ClientContext&,
+                                 gcsa::UpdateBackupRequest const& request) {
+        EXPECT_EQ(expected_name, request.backup().name());
+        gcsa::Backup response;
+        response.set_name(request.backup().name());
+        response.set_state(gcsa::Backup::READY);
+        return response;
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  google::spanner::admin::database::v1::UpdateBackupRequest request;
+  request.mutable_backup()->set_name(
+      Backup(Instance("test-project", "test-instance"), "test-backup")
+          .FullName());
+  auto response = conn->UpdateBackup({request});
+  EXPECT_STATUS_OK(response);
+  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(expected_name, response->name());
+}
+
+/// @test Verify that permanent errors are reported immediately.
+TEST(DatabaseAdminClientTest, UpdateBackupPermanentError) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, UpdateBackup(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  google::spanner::admin::database::v1::UpdateBackupRequest request;
+  auto response = conn->UpdateBackup({request});
+  EXPECT_EQ(StatusCode::kPermissionDenied, response.status().code());
+}
+
+/// @test Verify that too many transients errors are reported corrrectly.
+TEST(DatabaseAdminClientTest, UpdateBackupTooManyTransients) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+
+  EXPECT_CALL(*mock, UpdateBackup(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  google::spanner::admin::database::v1::UpdateBackupRequest request;
+  auto response = conn->UpdateBackup({request});
+  EXPECT_EQ(StatusCode::kUnavailable, response.status().code());
+}
+
+/// @test Verify that we can list backup operations in multiple pages.
+TEST(DatabaseAdminClientTest, ListBackupOperations) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+  std::string const expected_parent = in.FullName();
+
+  EXPECT_CALL(*mock, ListBackupOperations(_, _))
+      .WillOnce(
+          [&expected_parent](grpc::ClientContext&,
+                             gcsa::ListBackupOperationsRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_TRUE(request.page_token().empty());
+
+            gcsa::ListBackupOperationsResponse page;
+            page.set_next_page_token("page-1");
+            page.add_operations()->set_name("op-1");
+            page.add_operations()->set_name("op-2");
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&expected_parent](grpc::ClientContext&,
+                             gcsa::ListBackupOperationsRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_EQ("page-1", request.page_token());
+
+            gcsa::ListBackupOperationsResponse page;
+            page.set_next_page_token("page-2");
+            page.add_operations()->set_name("op-3");
+            page.add_operations()->set_name("op-4");
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&expected_parent](grpc::ClientContext&,
+                             gcsa::ListBackupOperationsRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_EQ("page-2", request.page_token());
+
+            gcsa::ListBackupOperationsResponse page;
+            page.clear_next_page_token();
+            page.add_operations()->set_name("op-5");
+            return make_status_or(page);
+          });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  std::vector<std::string> actual_names;
+  for (auto const& operation : conn->ListBackupOperations({in, ""})) {
+    ASSERT_STATUS_OK(operation);
+    actual_names.push_back(operation->name());
+  }
+  EXPECT_THAT(actual_names,
+              ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
+}
+
+TEST(DatabaseAdminClientTest, ListBackupOperationsPermanentFailure) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+
+  EXPECT_CALL(*mock, ListBackupOperations(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->ListBackupOperations({in, ""});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(DatabaseAdminClientTest, ListBackupOperationsTooManyFailures) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+
+  EXPECT_CALL(*mock, ListBackupOperations(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->ListBackupOperations({in, ""});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
+}
+
+/// @test Verify that we can list database operations in multiple pages.
+TEST(DatabaseAdminClientTest, ListDatabaseOperations) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+  std::string const expected_parent = in.FullName();
+
+  EXPECT_CALL(*mock, ListDatabaseOperations(_, _))
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext&,
+                    gcsa::ListDatabaseOperationsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
+
+        gcsa::ListDatabaseOperationsResponse page;
+        page.set_next_page_token("page-1");
+        page.add_operations()->set_name("op-1");
+        page.add_operations()->set_name("op-2");
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext&,
+                    gcsa::ListDatabaseOperationsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-1", request.page_token());
+
+        gcsa::ListDatabaseOperationsResponse page;
+        page.set_next_page_token("page-2");
+        page.add_operations()->set_name("op-3");
+        page.add_operations()->set_name("op-4");
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext&,
+                    gcsa::ListDatabaseOperationsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-2", request.page_token());
+
+        gcsa::ListDatabaseOperationsResponse page;
+        page.clear_next_page_token();
+        page.add_operations()->set_name("op-5");
+        return make_status_or(page);
+      });
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  std::vector<std::string> actual_names;
+  for (auto const& operation : conn->ListDatabaseOperations({in, ""})) {
+    ASSERT_STATUS_OK(operation);
+    actual_names.push_back(operation->name());
+  }
+  EXPECT_THAT(actual_names,
+              ::testing::ElementsAre("op-1", "op-2", "op-3", "op-4", "op-5"));
+}
+
+TEST(DatabaseAdminClientTest, ListDatabaseOperationsPermanentFailure) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+
+  EXPECT_CALL(*mock, ListDatabaseOperations(_, _))
+      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->ListDatabaseOperations({in, ""});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kPermissionDenied, begin->status().code());
+}
+
+TEST(DatabaseAdminClientTest, ListDatabaseOperationsTooManyFailures) {
+  auto mock = std::make_shared<MockDatabaseAdminStub>();
+  Instance in("test-project", "test-instance");
+
+  EXPECT_CALL(*mock, ListDatabaseOperations(_, _))
+      .Times(AtLeast(2))
+      .WillRepeatedly(Return(Status(StatusCode::kUnavailable, "try-again")));
+
+  auto conn = CreateTestingConnection(std::move(mock));
+  auto range = conn->ListDatabaseOperations({in, ""});
+  auto begin = range.begin();
+  ASSERT_NE(begin, range.end());
+  EXPECT_EQ(StatusCode::kUnavailable, begin->status().code());
 }
 
 }  // namespace
