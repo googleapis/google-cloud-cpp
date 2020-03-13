@@ -15,6 +15,10 @@
 REM Install Bazel using Chocolatey.
 choco install -y bazel --version 2.0.0
 
+REM Change PATH to use chocolatey's version of Bazel
+set PATH=C:\ProgramData\chocolatey\bin;%PATH%
+bazel version
+
 REM Configure the environment to use MSVC 2019 and then switch to PowerShell.
 call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
@@ -23,16 +27,6 @@ echo %date% %time%
 cd github\google-cloud-cpp
 powershell -exec bypass ci\kokoro\windows\build.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
-
-@REM Kokoro rsyncs all the files in the %KOKORO_ARTIFACTS_DIR%, which takes a
-@REM long time. The recommended workaround is to remove all the files that are
-@REM not interesting artifacts.
-if defined KOKORO_ARTIFACTS_DIR (
-  @echo %date% %time% "Cleanup Kokoro artifacts directory"
-  cd "%KOKORO_ARTIFACTS_DIR%"
-  powershell -Command "& {Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | Remove-Item -Recurse -Force}"
-  if %errorlevel% neq 0 exit /b %errorlevel%
-)
 
 @echo DONE "============================================="
 @echo %date% %time%
