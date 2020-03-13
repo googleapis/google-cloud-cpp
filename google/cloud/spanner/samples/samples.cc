@@ -1382,13 +1382,8 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                             {"MarketingBudget"});
     using RowType = std::tuple<std::int64_t>;
     auto row = spanner::GetSingularRow(spanner::StreamOf<RowType>(rows));
-    // Return the error (as opposed to throwing an exception) because
-    // Commit() only retries on StatusCode::kAborted.
     if (!row) return std::move(row).status();
     return std::get<0>(*std::move(row));
-    // Throw an exception because this should terminate the transaction.
-    throw std::runtime_error("Key not found (" + std::to_string(singer_id) +
-                             "," + std::to_string(album_id) + ")");
   };
 
   auto commit = client.Commit(
