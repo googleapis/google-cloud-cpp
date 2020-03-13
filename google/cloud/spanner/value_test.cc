@@ -21,6 +21,7 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <cmath>
+#include <ios>
 #include <limits>
 #include <string>
 #include <tuple>
@@ -35,8 +36,6 @@ namespace {
 
 using ::google::cloud::spanner_testing::IsProtoEqual;
 using ::testing::Not;
-using ::testing::TestParamInfo;
-using ::testing::TestWithParam;
 
 std::chrono::time_point<std::chrono::system_clock, std::chrono::nanoseconds>
 MakeTimePoint(std::time_t sec, std::chrono::nanoseconds::rep nanos) {
@@ -937,101 +936,125 @@ TEST(Value, CommitTimestamp) {
   EXPECT_FALSE(bad.ok());
 }
 
-class ValueStreamOperator
-    : public TestWithParam<std::tuple<std::string, Value, std::string>> {
- public:
-  static std::string TestName(
-      TestParamInfo<ValueStreamOperator::ParamType> const& info) {
-    return std::get<0>(info.param);
+TEST(Value, OutputStream) {
+  auto const normal = [](std::ostream& os) -> std::ostream& { return os; };
+  auto const hex = [](std::ostream& os) -> std::ostream& {
+    return os << std::hex;
+  };
+  auto const boolalpha = [](std::ostream& os) -> std::ostream& {
+    return os << std::boolalpha;
+  };
+  auto const float4 = [](std::ostream& os) -> std::ostream& {
+    return os << std::showpoint << std::setprecision(4);
+  };
+  auto const alphahex = [](std::ostream& os) -> std::ostream& {
+    return os << std::boolalpha << std::hex;
+  };
+
+  auto const inf = std::numeric_limits<double>::infinity();
+  auto const nan = std::nan("NaN");
+
+  struct TestCase {
+    Value value;
+    std::string expected;
+    std::function<std::ostream&(std::ostream&)> manip;
+  };
+
+  std::vector<TestCase> test_case = {
+      {Value(false), "0", normal},
+      {Value(true), "1", normal},
+      {Value(false), "false", boolalpha},
+      {Value(true), "true", boolalpha},
+      {Value(42), "42", normal},
+      {Value(42), "2a", hex},
+      {Value(42.0), "42", normal},
+      {Value(42.0), "42.00", float4},
+      {Value(inf), "inf", normal},
+      {Value(-inf), "-inf", normal},
+      {Value(nan), "nan", normal},
+      {Value(""), R"("")", normal},
+      {Value("foo"), R"("foo")", normal},
+      {Value("NULL"), R"("NULL")", normal},
+      {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
+      {Value(Date()), "1970-01-01", normal},
+      {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
+
+      // Tests null values
+      {MakeNullValue<bool>(), "NULL", normal},
+      {MakeNullValue<std::int64_t>(), "NULL", normal},
+      {MakeNullValue<double>(), "NULL", normal},
+      {MakeNullValue<std::string>(), "NULL", normal},
+      {MakeNullValue<Bytes>(), "NULL", normal},
+      {MakeNullValue<Date>(), "NULL", normal},
+      {MakeNullValue<Timestamp>(), "NULL", normal},
+
+      // Tests arrays
+      {Value(std::vector<bool>{false, true}), "[0, 1]", normal},
+      {Value(std::vector<bool>{false, true}), "[false, true]", boolalpha},
+      {Value(std::vector<std::int64_t>{10, 11}), "[10, 11]", normal},
+      {Value(std::vector<std::int64_t>{10, 11}), "[a, b]", hex},
+      {Value(std::vector<double>{1.0, 2.0}), "[1, 2]", normal},
+      {Value(std::vector<double>{1.0, 2.0}), "[1.000, 2.000]", float4},
+      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
+      {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
+      {Value(std::vector<Date>{2}), "[1970-01-01, 1970-01-01]", normal},
+      {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+      {Value(std::vector<optional<double>>{1, {}, 2}), "[1, NULL, 2]", normal},
+
+      // Tests null arrays
+      {MakeNullValue<std::vector<bool>>(), "NULL", normal},
+      {MakeNullValue<std::vector<std::int64_t>>(), "NULL", normal},
+      {MakeNullValue<std::vector<double>>(), "NULL", normal},
+      {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Date>>(), "NULL", normal},
+      {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
+
+      // Tests structs
+      {Value(std::make_tuple(true, 123)), "(1, 123)", normal},
+      {Value(std::make_tuple(true, 123)), "(true, 7b)", alphahex},
+      {Value(std::make_tuple(std::make_pair("A", true),
+                             std::make_pair("B", 123))),
+       "(A: 1, B: 123)", normal},
+      {Value(std::make_tuple(std::make_pair("A", true),
+                             std::make_pair("B", 123))),
+       "(A: true, B: 7b)", alphahex},
+      {Value(std::make_tuple(
+           std::vector<std::int64_t>{10, 11, 12},
+           std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
+       "([10, 11, 12], B: [13, 14, 15])", normal},
+      {Value(std::make_tuple(
+           std::vector<std::int64_t>{10, 11, 12},
+           std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
+       "([a, b, c], B: [d, e, f])", hex},
+      {Value(std::make_tuple(std::make_tuple(
+           std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
+       "((([10, 11, 12])))", normal},
+      {Value(std::make_tuple(std::make_tuple(
+           std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
+       "((([a, b, c])))", hex},
+
+      // Tests struct with null members
+      {Value(std::make_tuple(optional<bool>{})), "(NULL)", normal},
+      {Value(std::make_tuple(optional<bool>{}, 123)), "(NULL, 123)", normal},
+      {Value(std::make_tuple(optional<bool>{}, 123)), "(NULL, 7b)", hex},
+      {Value(std::make_tuple(optional<bool>{}, optional<std::int64_t>{})),
+       "(NULL, NULL)", normal},
+
+      // Tests null structs
+      {MakeNullValue<std::tuple<bool>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<bool, std::int64_t>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<bool, std::string>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<std::vector<bool>>>(), "NULL", normal},
+  };
+
+  for (auto const& tc : test_case) {
+    std::stringstream ss;
+    tc.manip(ss) << tc.value;
+    EXPECT_EQ(ss.str(), tc.expected);
   }
-};
-
-TEST_P(ValueStreamOperator, ValueType) {
-  auto param = GetParam();
-  std::stringstream scalar_value_stream;
-  scalar_value_stream << std::get<1>(param);
-  EXPECT_EQ(scalar_value_stream.str(), std::get<2>(param));
 }
-
-INSTANTIATE_TEST_SUITE_P(
-    ValueStreamOperatorScalar, ValueStreamOperator,
-    testing::Values(
-        std::make_tuple("Bool", Value(false), "FALSE"),
-        std::make_tuple("Int64", Value(42), "42"),
-        std::make_tuple("NullInt64", MakeNullValue<std::int64_t>(), "NULL"),
-        std::make_tuple("Float64", Value(42.0), "42"),
-        std::make_tuple("InfinityFloat64",
-                        Value(std::numeric_limits<double>::infinity()),
-                        "Infinity"),
-        std::make_tuple("NegativeInfinityFloat64",
-                        Value(-std::numeric_limits<double>::infinity()),
-                        "-Infinity"),
-        std::make_tuple("NaNFloat64", Value(std::nan("NaN")), "NaN"),
-        std::make_tuple("String", Value("Seatac Astronomy"),
-                        "\"Seatac Astronomy\""),
-        std::make_tuple("EmptyString", Value(""), "\"\""),
-        std::make_tuple("StringNullValue", Value(optional<std::string>()),
-                        "NULL"),
-        std::make_tuple("StringLiteralNullValue", Value("NULL"), "\"NULL\""),
-        std::make_tuple("Bytes", Value(Bytes(std::string("DEADBEEF"))),
-                        "B\"DEADBEEF\""),
-        std::make_tuple(
-            "Timestamp",
-            Value(MakeTimestamp(MakeTimePoint(1561147549LL, 0)).value()),
-            "2019-06-21T20:05:49Z"),
-        std::make_tuple("Date", Value(Date(1970, 1, 1)), "1970-01-01")),
-    ValueStreamOperator::TestName);
-
-INSTANTIATE_TEST_SUITE_P(
-    ValueStreamOperatorArray, ValueStreamOperator,
-    testing::Values(
-        std::make_tuple("Int64", Value(std::vector<std::int64_t>{1, 2, 3}),
-                        "[1, 2, 3]"),
-        std::make_tuple("EmptyInt64", Value(std::vector<std::int64_t>()), "[]"),
-        std::make_tuple("NullInt64", MakeNullValue<std::vector<std::int64_t>>(),
-                        "NULL"),
-        std::make_tuple("NullableInt64",
-                        Value(std::vector<optional<std::int64_t>>{
-                            1, optional<std::int64_t>(), 3}),
-                        "[1, NULL, 3]")),
-    ValueStreamOperator::TestName);
-
-INSTANTIATE_TEST_SUITE_P(
-    ValueStreamOperatorStruct, ValueStreamOperator,
-    testing::Values(
-        std::make_tuple("BoolInt64", Value(std::make_tuple(true, 123)),
-                        "(TRUE, 123)"),
-        std::make_tuple("NullBoolInt64",
-                        MakeNullValue<std::tuple<bool, std::int64_t>>(),
-                        "NULL"),
-        std::make_tuple("MixedArrays",
-                        Value(std::make_tuple(
-                            std::vector<std::int64_t>{1, 2, 3},
-                            std::make_pair("Middle",
-                                           std::vector<double>{4.1, 5.2, 6.3}),
-                            std::vector<std::int64_t>{7, 8, 9, 10})),
-                        "([1, 2, 3], Middle: [4.1, 5.2, 6.3], "
-                        "[7, 8, 9, 10])"),
-        std::make_tuple("StructInception",
-                        Value(std::make_tuple(std::make_tuple(std::make_tuple(
-                            std::vector<std::int64_t>{1, 2, 3})))),
-                        "((([1, 2, 3])))"),
-        std::make_tuple("StructWithFieldNames",
-                        Value(std::make_tuple(std::make_pair("Last", "Blues"),
-                                              std::make_pair("First",
-                                                             "Elwood"))),
-                        "(Last: \"Blues\", First: \"Elwood\")"),
-        std::make_tuple("StructWithNullFieldFirst",
-                        Value(std::make_tuple(optional<bool>(), 123)),
-                        "(NULL, 123)"),
-        std::make_tuple("StructWithNullFieldLast",
-                        Value(std::make_tuple(true, optional<std::int64_t>())),
-                        "(TRUE, NULL)"),
-        std::make_tuple("StructWithNullFieldMiddle",
-                        Value(std::make_tuple(true, optional<std::int64_t>(),
-                                              42.0)),
-                        "(TRUE, NULL, 42)")),
-    ValueStreamOperator::TestName);
 
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS

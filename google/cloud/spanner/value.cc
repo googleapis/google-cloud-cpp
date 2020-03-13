@@ -96,21 +96,20 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
 
   switch (t.code()) {
     case google::spanner::v1::BOOL:
-      return os << (v.bool_value() ? "TRUE" : "FALSE");
+      return os << v.bool_value();
 
-    case google::spanner::v1::TIMESTAMP:
-    case google::spanner::v1::DATE:
     case google::spanner::v1::INT64:
-      return os << v.string_value();
+      return os << internal::FromProto(t, v).get<std::int64_t>().value();
 
     case google::spanner::v1::FLOAT64:
-      if (v.kind_case() == google::protobuf::Value::kStringValue) {
-        return os << v.string_value();
-      }
-      return os << v.number_value();
+      return os << internal::FromProto(t, v).get<double>().value();
 
     case google::spanner::v1::STRING:
       return os << "\"" << v.string_value() << "\"";
+
+    case google::spanner::v1::TIMESTAMP:
+    case google::spanner::v1::DATE:
+      return os << v.string_value();
 
     case google::spanner::v1::BYTES:
       return os
@@ -144,10 +143,8 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       return os << ')';
     }
 
-    case google::spanner::v1::TYPE_CODE_UNSPECIFIED:
-    case google::spanner::v1::TypeCode_INT_MIN_SENTINEL_DO_NOT_USE_:
-    case google::spanner::v1::TypeCode_INT_MAX_SENTINEL_DO_NOT_USE_:
-      break;
+    default:
+      return os << "Error: unknown value type code " << t.code();
   }
   return os;
 }

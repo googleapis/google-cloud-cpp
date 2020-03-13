@@ -302,7 +302,8 @@ class Value {
       if (IsOptional<T>::value) return T{};
       return Status(StatusCode::kUnknown, "null value");
     }
-    return GetValue(T{}, std::move(value_), type_);
+    auto tag = T{};  // Works around an odd msvc issue
+    return GetValue(std::move(tag), std::move(value_), type_);
   }
 
   /**
