@@ -110,7 +110,7 @@ $packages = @("zlib", "openssl",
               "protobuf", "c-ares",
               "grpc", "curl",
               "gtest", "crc32c"
-              "googleapis", "google-cloud-cpp-common")
+              "googleapis", "google-cloud-cpp-common[test]")
 foreach ($pkg in $packages) {
     .\vcpkg.exe install ${vcpkg_flags} ${pkg}
     if ($LastExitCode) {

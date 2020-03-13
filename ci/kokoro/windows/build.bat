@@ -24,7 +24,7 @@ if %errorlevel% neq 0 exit /b %errorlevel%
 
 set CONFIG=Debug
 set PROVIDER=package
-call "c:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 
 echo %date% %time%
 cmd /c gcloud auth activate-service-account --key-file "%KOKORO_GFILE_DIR%/build-results-service-account.json"
