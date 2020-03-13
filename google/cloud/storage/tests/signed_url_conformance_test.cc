@@ -94,6 +94,7 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   std::string const method_name = j_obj["method"];
   std::string const bucket_name = j_obj["bucket"];
   std::string const object_name = j_obj["object"];
+  std::string const scheme = j_obj["scheme"];
   std::string url_style;
   if (j_obj.count("urlStyle") > 0) {
     url_style = j_obj["urlStyle"];
@@ -140,13 +141,20 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
     request.set_multiple_options(VirtualHostname(true));
   }
 
+  BucketBoundHostname domain_named_bucket;
+  if (url_style == "BUCKET_BOUND_DOMAIN") {
+    domain_named_bucket = BucketBoundHostname(j_obj["bucketBoundDomain"]);
+    request.set_multiple_options(
+        BucketBoundHostname(j_obj["bucketBoundDomain"]));
+  }
+
   auto actual = client.CreateV4SignedUrl(
       method_name, bucket_name, object_name,
       SignedUrlTimestamp(google::cloud::internal::ParseRfc3339(date)),
       SignedUrlDuration(valid_for), header_extensions[0], header_extensions[1],
       header_extensions[2], header_extensions[3], header_extensions[4],
       query_params[0], query_params[1], query_params[2], query_params[3],
-      query_params[4], virtual_hotname);
+      query_params[4], virtual_hotname, domain_named_bucket, Scheme(scheme));
   ASSERT_STATUS_OK(request.Validate());
   request.AddMissingRequiredHeaders();
   ASSERT_STATUS_OK(request.Validate());
@@ -155,7 +163,9 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   actual_canonical_request = request.CanonicalRequest(account_email);
 
   ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(*actual, HasSubstr(bucket_name));
+  if (!domain_named_bucket.has_value()) {
+    EXPECT_THAT(*actual, HasSubstr(bucket_name));
+  }
   EXPECT_EQ(expected, *actual);
   EXPECT_EQ(expected_canonical_request, actual_canonical_request);
   EXPECT_EQ(expected_string_to_sign, actual_string_to_sign);
@@ -202,9 +212,7 @@ int main(int argc, char* argv[]) {
 
   // The implementation is not yet completed and these tests still fail, so skip
   // them so far.
-  std::set<std::string> nonconformant_tests{"HTTPBucketBoundDomainSupport",
-                                            "HTTPSBucketBoundDomainSupport",
-                                            "ListObjects",
+  std::set<std::string> nonconformant_tests{"ListObjects",
                                             "POSTPolicyACLmatching",
                                             "POSTPolicyCacheControlFileHeader",
                                             "POSTPolicySimple",

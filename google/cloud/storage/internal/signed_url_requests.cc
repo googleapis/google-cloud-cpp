@@ -147,6 +147,21 @@ void V4SignUrlRequest::SetOption(VirtualHostname const& hostname) {
   virtual_host_name_ = hostname.has_value() && hostname.value();
 }
 
+void V4SignUrlRequest::SetOption(BucketBoundHostname const& o) {
+  if (!o.has_value()) {
+    domain_named_bucket_.reset();
+    return;
+  }
+  domain_named_bucket_ = o.value();
+}
+
+void V4SignUrlRequest::SetOption(Scheme const& o) {
+  if (!o.has_value()) {
+    return;
+  }
+  scheme_ = o.value();
+}
+
 std::string V4SignUrlRequest::CanonicalQueryString(
     std::string const& client_id) const {
   CurlHandle curl;
@@ -161,7 +176,7 @@ std::string V4SignUrlRequest::CanonicalRequest(
 
   os << verb() << "\n";
   CurlHandle curl;
-  if (!virtual_host_name_) {
+  if (!SkipBucketInPath()) {
     os << '/' << bucket_name();
   }
   for (auto& part : ObjectNameParts()) {
@@ -192,31 +207,45 @@ std::string V4SignUrlRequest::StringToSign(std::string const& client_id) const {
 }
 
 Status V4SignUrlRequest::Validate() {
-  if (!virtual_host_name_) {
-    return Status();
+  if (virtual_host_name_ && domain_named_bucket_) {
+    return Status(StatusCode::kInvalidArgument,
+                  "VirtualHostname and BucketBoundHostname cannot be specified "
+                  "simultaneously");
   }
   auto const& headers = common_request_.extension_headers();
   auto host_it = headers.find("host");
   if (host_it == headers.end()) {
     return Status();
   }
-  return host_it->second == Hostname()
-             ? Status()
-             : Status(StatusCode::kInvalidArgument,
-                      "specified 'host' (" + host_it->second +
-                          ") header stands in conflict with "
-                          "'VirtualHostname' option.");
+  if (virtual_host_name_ && host_it->second != Hostname()) {
+    return Status(StatusCode::kInvalidArgument,
+                  "specified 'host' (" + host_it->second +
+                      ") header stands in conflict with "
+                      "'VirtualHostname' option.");
+  }
+  if (domain_named_bucket_ && host_it->second != *domain_named_bucket_) {
+    return Status(StatusCode::kInvalidArgument,
+                  "specified 'host' (" + host_it->second +
+                      ") doesn't match domain specified in the "
+                      "'BucketBoundHostname' option (" +
+                      *domain_named_bucket_ + ").");
+  }
+  return Status();
 }
 
 std::string V4SignUrlRequest::Hostname() {
-  return virtual_host_name_
-             ? (common_request_.bucket_name() + ".storage.googleapis.com")
-             : std::string("storage.googleapis.com");
+  if (virtual_host_name_) {
+    return common_request_.bucket_name() + ".storage.googleapis.com";
+  }
+  if (domain_named_bucket_) {
+    return *domain_named_bucket_;
+  }
+  return "storage.googleapis.com";
 }
 
 std::string V4SignUrlRequest::HostnameWithBucket() {
-  return "https://" + Hostname() +
-         (virtual_host_name_ ? std::string()
+  return scheme_ + "://" + Hostname() +
+         (SkipBucketInPath() ? std::string()
                              : ("/" + common_request_.bucket_name()));
 }
 

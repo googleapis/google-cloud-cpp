@@ -223,6 +223,30 @@ struct VirtualHostname : public internal::ComplexOption<VirtualHostname, bool> {
   char const* option_name() const { return "virtual-hostname"; }
 };
 
+/**
+ * Use domain-named bucket in a V4 signed URL.
+ *
+ * The resulting URL will use the provided domain to address objects like this:
+ * 'https://mydomain.tld/my-object'
+ */
+struct BucketBoundHostname
+    : public internal::ComplexOption<BucketBoundHostname, std::string> {
+  using ComplexOption<BucketBoundHostname, std::string>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  BucketBoundHostname() = default;
+  char const* option_name() const { return "domain-named-bucket"; }
+};
+
+/// Use the specified scheme (e.g. "http") in a V4 signed URL.
+struct Scheme : public internal::ComplexOption<Scheme, std::string> {
+  using ComplexOption<Scheme, std::string>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  Scheme() = default;
+  char const* option_name() const { return "scheme"; }
+};
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud
