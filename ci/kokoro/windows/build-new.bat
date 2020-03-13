@@ -29,15 +29,5 @@ cd github\google-cloud-cpp
 powershell -exec bypass ci\kokoro\windows\build.ps1
 if %errorlevel% neq 0 exit /b %errorlevel%
 
-@REM Kokoro rsyncs all the files in the %KOKORO_ARTIFACTS_DIR%, which takes a
-@REM long time. The recommended workaround is to remove all the files that are
-@REM not interesting artifacts.
-if defined KOKORO_ARTIFACTS_DIR (
-  @echo %date% %time% "Cleanup Kokoro artifacts directory"
-  cd "%KOKORO_ARTIFACTS_DIR%"
-  powershell -Command "& {Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | Remove-Item -Recurse -Force}"
-  if %errorlevel% neq 0 exit /b %errorlevel%
-)
-
 @echo DONE "============================================="
 @echo %date% %time%
