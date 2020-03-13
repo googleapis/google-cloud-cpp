@@ -337,6 +337,9 @@ class Client {
    *
    * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
    *     no column value can exceed 10 MiB.
+   *
+   * @par Example:
+   * @snippet samples.cc profile-query
    */
   ProfileQueryResult ProfileQuery(SqlStatement statement,
                                   QueryOptions const& opts = {});
@@ -399,6 +402,9 @@ class Client {
    * @param opts The `QueryOptions` to use for this call. If given, these will
    *     take precedence over the options set at the client and environment
    *     levels.
+   *
+   * @par Example:
+   * @snippet samples.cc execute-dml
    */
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
                                  SqlStatement statement,
@@ -420,6 +426,9 @@ class Client {
    * @param opts The `QueryOptions` to use for this call. If given, these will
    *     take precedence over the options set at the client and environment
    *     levels.
+   *
+   * @par Example:
+   * @snippet samples.cc profile-dml
    */
   StatusOr<ProfileDmlResult> ProfileDml(Transaction transaction,
                                         SqlStatement statement,
@@ -441,6 +450,9 @@ class Client {
    * @param opts The `QueryOptions` to use for this call. If given, these will
    *     take precedence over the options set at the client and environment
    *     levels.
+   *
+   * @par Example:
+   * @snippet samples.cc analyze-query
    */
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
                                      SqlStatement statement,

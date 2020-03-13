@@ -33,6 +33,9 @@ inline namespace SPANNER_CLIENT_NS {
  * performs in order to execute a particular SQL statement.
  * [Query Plan
  * proto](https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/query_plan.proto)
+ *
+ * @par Example:
+ * @snippet samples.cc analyze-query
  */
 using ExecutionPlan = ::google::spanner::v1::QueryPlan;
 
@@ -99,6 +102,9 @@ class RowStream {
  * `INSERT`, `UPDATE`, or `DELETE`.
  *
  * @note `ExecuteDmlResult` returns the number of rows modified.
+ *
+ * @par Example:
+ * @snippet samples.cc execute-dml
  */
 class DmlResult {
  public:
@@ -136,6 +142,9 @@ class DmlResult {
  * `Row` into a `std::tuple` with the specified types.
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+ *
+ * @par Example:
+ * @snippet samples.cc profile-query
  */
 class ProfileQueryResult {
  public:
@@ -190,6 +199,9 @@ class ProfileQueryResult {
  *
  * @note `ProfileDmlResult` returns the number of rows modified, execution
  *     statistics, and query plan.
+ *
+ * @par Example:
+ * @snippet samples.cc profile-dml
  */
 class ProfileDmlResult {
  public:
