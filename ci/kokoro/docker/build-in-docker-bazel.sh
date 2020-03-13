@@ -46,6 +46,10 @@ echo "Using Bazel in ${BAZEL_BIN}"
 echo "================================================================"
 
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
+if [[ -n "${RUNS_PER_TEST}" ]]; then
+    bazel_args+=("--runs_per_test=${RUNS_PER_TEST}")
+fi
+
 if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi

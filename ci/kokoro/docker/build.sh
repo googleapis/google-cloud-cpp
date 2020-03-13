@@ -391,6 +391,10 @@ docker_flags=(
     # produces properly colorized error messages.
     "--env" "TERM=${TERM:-dumb}"
 
+    # If set, add a flag --runs_per_test=<value> to bazel or --repeat-until-fail
+    # to ctest.
+    "--env" "RUNS_PER_TEST=${RUNS_PER_TEST:-}"
+
     # Tells scripts whether they are running as part of a CI or not.
     "--env" "RUNNING_CI=${RUNNING_CI:-no}"
 

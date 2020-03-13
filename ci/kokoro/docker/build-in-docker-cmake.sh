@@ -145,6 +145,11 @@ _EOF_
   fi
 fi
 
+ctest_args=("--output-on-failure")
+if [[ -n "${RUNS_PER_TEST}" ]]; then
+    ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
+fi
+
 if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   # When the user does a super-build the tests are hidden in a subdirectory.
   # We can tell that ${BINARY_DIR} does not have the tests by checking for this
@@ -155,7 +160,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
     echo "${COLOR_YELLOW}Running unit tests $(date)${COLOR_RESET}"
     echo
-    (cd "${BINARY_DIR}" && ctest --output-on-failure)
+    (cd "${BINARY_DIR}" && ctest "${ctest_args[@]}")
 
     echo
     echo "${COLOR_YELLOW}Completed unit tests $(date)${COLOR_RESET}"
