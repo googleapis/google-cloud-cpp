@@ -988,6 +988,20 @@ TEST(Value, OutputStream) {
       {MakeNullValue<Date>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
 
+      // Tests escaping of bytes
+      {Value(Bytes(std::string("ab\011Z"))), R"(B"ab\011Z")", normal},
+      {Value(Bytes(std::string("ab\011Z"))), R"(B"ab\011Z")", hex},
+      {Value(Bytes(std::string("ab\001Z\0211"))), R"(B"ab\001Z\0211")", normal},
+      {Value(Bytes(std::string("ab\001Z\0211"))), R"(B"ab\001Z\0211")", hex},
+      {Value(Bytes(std::string(3, '\0'))), R"(B"\000\000\000")", normal},
+      {Value(Bytes(std::string(3, '\0'))), R"(B"\000\000\000")", hex},
+      {Value(Bytes(std::string("!@#$%^&*()-."))), R"(B"!@#$%^&*()-.")", normal},
+      {Value(Bytes(std::string("!@#$%^&*()-."))), R"(B"!@#$%^&*()-.")", hex},
+      {Value(Bytes(std::string(R"("foo")"))), R"(B"\"foo\"")", normal},
+      {Value(Bytes(std::string(R"("foo")"))), R"(B"\"foo\"")", hex},
+      {Value(Bytes("foo")), R"(B"foo\000")", normal},
+      {Value(Bytes("foo")), R"(B"foo\000")", hex},
+
       // Tests arrays
       {Value(std::vector<bool>{false, true}), "[0, 1]", normal},
       {Value(std::vector<bool>{false, true}), "[false, true]", boolalpha},
@@ -1053,6 +1067,16 @@ TEST(Value, OutputStream) {
     std::stringstream ss;
     tc.manip(ss) << tc.value;
     EXPECT_EQ(ss.str(), tc.expected);
+  }
+}
+
+TEST(Value, ByteEscapingCannotFail) {
+  using ByteType = unsigned char;
+  for (int i = 0; i < std::numeric_limits<ByteType>::max() + 1; ++i) {
+    auto const b = static_cast<ByteType>(i);
+    std::ostringstream ss;
+    ss << Value(Bytes(std::array<ByteType, 1>{b}));
+    EXPECT_NE(ss.str(), R"(B"\?")") << "i=" << i;
   }
 }
 
