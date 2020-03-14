@@ -530,6 +530,9 @@ class Client {
    * Same as above, but uses the default rerun and backoff policies.
    *
    * @param mutator the function called to create mutations
+   *
+   * @par Example
+   * @snippet samples.cc commit-with-mutator
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator);
@@ -539,6 +542,9 @@ class Client {
    *
    * This function uses the re-run loop described above with the default
    * policies.
+   *
+   * @par Example
+   * @snippet samples.cc commit-with-mutations
    */
   StatusOr<CommitResult> Commit(Mutations mutations);
 

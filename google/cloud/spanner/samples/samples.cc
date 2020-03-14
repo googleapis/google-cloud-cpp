@@ -1010,6 +1010,7 @@ void InsertData(google::cloud::spanner::Client client) {
 
 //! [update-mutation-builder] [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
+  //! [commit-with-mutations]
   namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit(spanner::Mutations{
       spanner::UpdateMutationBuilder("Albums",
@@ -1020,6 +1021,7 @@ void UpdateData(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
+  //! [commit-with-mutations]
   std::cout << "Update was successful [spanner_update_data]\n";
 }
 //! [update-mutation-builder] [END spanner_update_data]
@@ -1431,6 +1433,7 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
 
 //! [START spanner_dml_standard_update]
 void DmlStandardUpdate(google::cloud::spanner::Client client) {
+  //! [commit-with-mutator]
   using ::google::cloud::StatusOr;
   namespace spanner = ::google::cloud::spanner;
   auto commit_result = client.Commit(
@@ -1446,6 +1449,7 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
   if (!commit_result) {
     throw std::runtime_error(commit_result.status().message());
   }
+  //! [commit-with-mutator]
   std::cout << "Update was successful [spanner_dml_standard_update]\n";
 }
 //! [END spanner_dml_standard_update]
