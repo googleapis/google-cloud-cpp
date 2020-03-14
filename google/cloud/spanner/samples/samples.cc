@@ -762,9 +762,7 @@ void ListBackups(google::cloud::spanner::DatabaseAdminClient client,
   google::cloud::spanner::Instance in(project_id, instance_id);
   std::cout << "All backups:\n";
   for (auto const& backup : client.ListBackups(in)) {
-    if (!backup) {
-      throw std::runtime_error(backup.status().message());
-    }
+    if (!backup) throw std::runtime_error(backup.status().message());
     std::cout << "Backup " << backup->name() << " on database "
               << backup->database() << " with size : " << backup->size_bytes()
               << " bytes.\n";
@@ -790,9 +788,7 @@ void ListBackupOperations(google::cloud::spanner::DatabaseAdminClient client,
                 "(metadata.@type:type.googleapis.com/" +
                 "google.spanner.admin.database.v1.CreateBackupMetadata)";
   for (auto const& operation : client.ListBackupOperations(in, filter)) {
-    if (!operation) {
-      throw std::runtime_error(operation.status().message());
-    }
+    if (!operation) throw std::runtime_error(operation.status().message());
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
     operation->metadata().UnpackTo(&metadata);
     std::cout << "Backup " << metadata.name() << " on database "
@@ -812,9 +808,7 @@ void ListDatabaseOperations(google::cloud::spanner::DatabaseAdminClient client,
       "(metadata.@type:type.googleapis.com/"
       "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)");
   for (auto const& operation : client.ListDatabaseOperations(in, filter)) {
-    if (!operation) {
-      throw std::runtime_error(operation.status().message());
-    }
+    if (!operation) throw std::runtime_error(operation.status().message());
     google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata
         metadata;
     operation->metadata().UnpackTo(&metadata);
@@ -839,7 +833,7 @@ void DropDatabase(google::cloud::spanner::DatabaseAdminClient client,
                   std::string const& database_id) {
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
-  google::cloud::Status status = client.DropDatabase(database);
+  auto status = client.DropDatabase(database);
   if (!status.ok()) throw std::runtime_error(status.message());
   std::cout << "Database " << database << " successfully dropped\n";
 }
