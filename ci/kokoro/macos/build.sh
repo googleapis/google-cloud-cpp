@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,27 +16,53 @@
 
 set -eu
 
-echo "Reading CI secret configuration parameters."
-source "${KOKORO_GFILE_DIR}/test-configuration.sh"
+export BAZEL_CONFIG=""
+export RUN_INTEGRATION_TESTS="no"
+driver_script="ci/kokoro/macos/build-bazel.sh"
 
-echo "Running build and tests"
-cd "$(dirname "$0")/../../.."
-readonly PROJECT_ROOT="${PWD}"
+# Set it to "no" for any value other than "yes".
+if [[ "${RUN_SLOW_INTEGRATION_TESTS:-}" != "yes" ]]; then
+  RUN_SLOW_INTEGRATION_TESTS="no"
+fi
+export RUN_SLOW_INTEGRATION_TESTS
 
-echo
-echo "================================================================"
-echo "================================================================"
-echo "Update or Install Bazel."
-echo
+if [[ $# -eq 1 ]]; then
+  export BUILD_NAME="${1}"
+elif [[ -n "${KOKORO_JOB_NAME:-}" ]]; then
+  # Kokoro injects the KOKORO_JOB_NAME environment variable, the value of this
+  # variable is cloud-cpp/pubsub/<config-file-name-without-cfg> (or more
+  # generally <path/to/config-file-without-cfg>). By convention we name these
+  # files `$foo.cfg` for continuous builds and `$foo-presubmit.cfg` for
+  # presubmit builds. Here we extract the value of "foo" and use it as the build
+  # name.
+  BUILD_NAME="$(basename "${KOKORO_JOB_NAME}" "-presubmit")"
+  export BUILD_NAME
+else
+  echo "Aborting build as the build name is not defined."
+  echo "If you are invoking this script via the command line use:"
+  echo "    $0 <build-name>"
+  echo
+  echo "If this script is invoked by Kokoro, the CI system is expected to set"
+  echo "the KOKORO_JOB_NAME environment variable."
+  exit 1
+fi
 
-# macOS does not have sha256sum by default, but `shasum -a 256` does the same
-# thing:
-function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
+cd "${PROJECT_ROOT}"
 
-"${PROJECT_ROOT}/ci/install-bazel.sh"
+script_flags=("${PROJECT_ROOT}")
 
-readonly BAZEL_BIN="$HOME/bin/bazel"
-echo "Using Bazel in ${BAZEL_BIN}"
+if [[ "${BUILD_NAME}" = "bazel" ]]; then
+  driver_script="ci/kokoro/macos/build-bazel.sh"
+elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
+  driver_script="ci/kokoro/macos/build-cmake.sh"
+  script_flags+=("super" "cmake-out/macos")
+else
+  echo "Unknown BUILD_NAME (${BUILD_NAME})."
+  exit 1
+fi
 
 # We need this environment variable because on macOS gRPC crashes if it cannot
 # find the credentials, even if you do not use them. Some of the unit tests do
@@ -47,23 +73,16 @@ echo "================================================================"
 echo "Define GOOGLE_APPLICATION_CREDENTIALS."
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 
-# The -DGRPC_BAZEL_BUILD is needed because gRPC does not compile on macOS unless
-# it is set.
-"${BAZEL_BIN}" test \
-    --copt=-DGRPC_BAZEL_BUILD \
-    --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
-    --test_output=errors \
-    --verbose_failures=true \
-    --keep_going \
-    -- //google/cloud/...:all
+# Download the gRPC `roots.pem` file. On macOS gRPC does not use the native
+# trust store. One needs to set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH. There was
+# a PR to fix this:
+#    https://github.com/grpc/grpc/pull/16246
+# But it was closed without being merged, and there are open bugs:
+#    https://github.com/grpc/grpc/issues/16571
+echo "================================================================"
+echo "Getting roots.pem for gRPC $(date)."
+export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${KOKORO_GFILE_DIR}/roots.pem"
+rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
+wget -O "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 
-echo
-echo "================================================================"
-echo "================================================================"
-"${BAZEL_BIN}" build \
-    --copt=-DGRPC_BAZEL_BUILD \
-    --action_env=GOOGLE_APPLICATION_CREDENTIALS="${GOOGLE_APPLICATION_CREDENTIALS}" \
-    --test_output=errors \
-    --verbose_failures=true \
-    --keep_going \
-    -- //google/cloud/...:all
+exec "${driver_script}" "${script_flags[@]}"
