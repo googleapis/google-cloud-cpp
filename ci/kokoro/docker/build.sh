@@ -175,6 +175,10 @@ elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=30
   in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
+elif [[ "${BUILD_NAME}" = "bazel-dependency" ]]; then
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel-dependency.sh"
 else
   echo "Unknown BUILD_NAME (${BUILD_NAME}). Fix the Kokoro .cfg file."
   exit 1
