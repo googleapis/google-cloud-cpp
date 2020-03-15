@@ -150,9 +150,10 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   gcloud --quiet iam service-accounts create "--project=${PROJECT_ID}" \
       "${HMAC_SERVICE_ACCOUNT_NAME}"
+  echo "$(date -u): Grant service account permissions to create HMAC keys."
   gcloud --quiet projects add-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
-      --role roles/iam.serviceAccountTokenCreator
+      --role roles/iam.serviceAccountTokenCreator >/dev/null 2>&1
   # Deactivate all the accounts in `gcloud` to prevent accidents
   gcloud --quiet auth revoke --all
 
@@ -179,7 +180,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   gcloud --quiet projects remove-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
       --role roles/iam.serviceAccountTokenCreator
-  gcloud --quiet iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}"
+  echo "$(date -u): Revoke service account permissions to create HMAC keys."
+  gcloud --quiet iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}" >/dev/null 2>&1
   # Deactivate all the accounts in `gcloud` to prevent accidents
   gcloud --quiet auth revoke --all
 
