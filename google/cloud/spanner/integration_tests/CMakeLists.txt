@@ -29,6 +29,7 @@ function (spanner_client_define_integration_tests)
 
     set(spanner_client_integration_tests
         # cmake-format: sortable
+        backup_integration_test.cc
         client_integration_test.cc
         client_stress_test.cc
         data_types_integration_test.cc
