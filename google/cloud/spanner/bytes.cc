@@ -48,10 +48,13 @@ constexpr std::array<unsigned char, UCHAR_MAX + 1> kCharToIndexExcessOne = {{
     38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
 }};
 
+// kCharToIndexExcessOne[] assumes an ASCII execution character set.
+static_assert('A' == 65, "required by base64 decoder");
+
 // UCHAR_MAX is required to be at least 255, meaning std::string::value_type
 // can always hold an octet. If UCHAR_MAX > 255, however, we have no way to
 // base64 encode large values. So, we demand exactly 255.
-static_assert(UCHAR_MAX == 255, "required by base64 encoder");
+static_assert(UCHAR_MAX == 255, "required by base64 decoder");
 
 }  // namespace
 
