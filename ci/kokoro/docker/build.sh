@@ -71,6 +71,17 @@ elif [[ "${BUILD_NAME}" = "coverage" ]]; then
   export DISTRO=fedora-install
   export DISTRO_VERSION=31
   export BUILD_TYPE=Coverage
+elif [[ "${BUILD_NAME}" = "integration" ]]; then
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS=auto
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
+elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS=auto
+  ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
   export BUILD_TYPE=Debug
   export CC=clang
@@ -342,6 +353,11 @@ docker_flags=(
     # Additional flags to enable CMake features.
     "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
 
+    # When running the integration tests this directory contains the
+    # configuration files needed to run said tests. Make it available inside
+    # the Docker container.
+    "--volume" "${KOKORO_GFILE_DIR:-/dev/shm}:/c"
+
     # The type of the build for Bazel.
     "--env" "BAZEL_CONFIG=${BAZEL_CONFIG:-}"
 
@@ -376,6 +392,10 @@ docker_flags=(
 
     # If set to 'no', skip the integration tests.
     "--env" "RUN_INTEGRATION_TESTS=${RUN_INTEGRATION_TESTS:-}"
+
+    # The Bigtable Admin integration tests can only run in nightly builds, the
+    # quota (as in calls per day) is too restrictive to run more often.
+    "--env" "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
 
     # If set, run the scripts to generate Doxygen docs. Note that the scripts
     # to upload said docs are not part of the build, they run afterwards on
