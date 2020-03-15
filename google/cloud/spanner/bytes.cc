@@ -15,7 +15,9 @@
 #include "google/cloud/spanner/bytes.h"
 #include "google/cloud/status.h"
 #include <array>
+#include <cctype>
 #include <climits>
+#include <cstdio>
 
 namespace google {
 namespace cloud {
@@ -57,6 +59,32 @@ static_assert('A' == 65, "required by base64 decoder");
 static_assert(UCHAR_MAX == 255, "required by base64 decoder");
 
 }  // namespace
+
+// Prints the bytes in the form B"...", where printable bytes are output
+// normally, double quotes are backslash escaped, and non-printable characters
+// are printed as a 3-digit octal escape sequence.
+std::ostream& operator<<(std::ostream& os, Bytes const& bytes) {
+  os << R"(B")";
+  for (auto const byte : Bytes::Decoder(bytes.base64_rep_)) {
+    if (byte == '"') {
+      os << R"(\")";
+    } else if (std::isprint(byte)) {
+      os << byte;
+    } else {
+      // This uses snprintf rather than iomanip so we don't mess up the
+      // formatting on `os` for other streaming operations.
+      std::array<char, sizeof(R"(\000)")> buf;
+      auto n = std::snprintf(buf.data(), buf.size(), R"(\%03o)", byte);
+      if (n == static_cast<int>(buf.size() - 1)) {
+        os << buf.data();
+      } else {
+        os << R"(\?)";
+      }
+    }
+  }
+  // Can't use raw string literal here because of a doxygen bug.
+  return os << "\"";
+}
 
 void Bytes::Encoder::Flush() {
   unsigned int const v = buf_[0] << 16 | buf_[1] << 8 | buf_[2];

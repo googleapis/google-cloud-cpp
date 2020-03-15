@@ -20,6 +20,7 @@
 #include <array>
 #include <cstddef>
 #include <iterator>
+#include <ostream>
 #include <string>
 
 namespace google {
@@ -76,6 +77,14 @@ class Bytes {
   }
   friend bool operator!=(Bytes const& a, Bytes const& b) { return !(a == b); }
   ///@}
+
+  /**
+   * Outputs string representation of the Bytes to the provided stream.
+   *
+   * @warning This is intended for debugging and human consumption only, not
+   *     machine consumption, as the output format may change without notice.
+   */
+  friend std::ostream& operator<<(std::ostream& os, Bytes const& bytes);
 
  private:
   friend StatusOr<Bytes> internal::BytesFromBase64(std::string input);

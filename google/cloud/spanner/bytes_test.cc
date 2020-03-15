@@ -18,6 +18,7 @@
 #include <cstdint>
 #include <deque>
 #include <limits>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -250,6 +251,40 @@ TEST(Bytes, RelationalOperators) {
   EXPECT_NE(x_bytes, s_bytes);
   EXPECT_NE(x_bytes, d_bytes);
   EXPECT_NE(x_bytes, v_bytes);
+}
+
+TEST(Bytes, OutputStream) {
+  struct TestCase {
+    Bytes bytes;
+    std::string expected;
+  };
+
+  std::vector<TestCase> test_cases = {
+      {Bytes(std::string("")), R"(B"")"},
+      {Bytes(std::string("foo")), R"(B"foo")"},
+      {Bytes(std::string("a\011B")), R"(B"a\011B")"},
+      {Bytes(std::string("a\377B")), R"(B"a\377B")"},
+      {Bytes(std::string("!@#$%^&*()-.")), R"(B"!@#$%^&*()-.")"},
+      {Bytes(std::string(3, '\0')), R"(B"\000\000\000")"},
+      {Bytes(""), R"(B"\000")"},
+      {Bytes("foo"), R"(B"foo\000")"},
+  };
+
+  for (auto const& tc : test_cases) {
+    std::ostringstream ss;
+    ss << tc.bytes;
+    EXPECT_EQ(ss.str(), tc.expected);
+  }
+}
+
+TEST(Bytes, OutputStreamEscapingCannotFail) {
+  using ByteType = unsigned char;
+  for (int i = 0; i < std::numeric_limits<ByteType>::max() + 1; ++i) {
+    auto const b = static_cast<ByteType>(i);
+    std::ostringstream ss;
+    ss << Bytes(std::array<ByteType, 1>{b});
+    EXPECT_NE(ss.str(), R"(B"\?")") << "i=" << i;
+  }
 }
 
 }  // namespace

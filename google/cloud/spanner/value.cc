@@ -15,11 +15,8 @@
 #include "google/cloud/spanner/value.h"
 #include "google/cloud/spanner/internal/date.h"
 #include "google/cloud/log.h"
-#include <array>
-#include <cctype>
 #include <cerrno>
 #include <cmath>
-#include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <ios>
@@ -114,29 +111,8 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
     case google::spanner::v1::DATE:
       return os << v.string_value();
 
-    case google::spanner::v1::BYTES: {
-      auto const bytes = internal::BytesFromBase64(v.string_value())
-                             ->get<std::vector<unsigned char>>();
-      os << R"(B")";
-      for (auto const byte : bytes) {
-        if (byte == '"') {
-          os << R"(\")";
-        } else if (std::isprint(byte)) {
-          os << byte;
-        } else {
-          // This uses snprintf rather than iomanip so we don't mess up the
-          // formatting on `os` for other streaming operations.
-          std::array<char, sizeof(R"(\000)")> buf;
-          auto n = std::snprintf(buf.data(), buf.size(), R"(\%03o)", byte);
-          if (n == static_cast<int>(buf.size() - 1)) {
-            os << buf.data();
-          } else {
-            os << R"(\?)";
-          }
-        }
-      }
-      return os << R"(")";
-    }
+    case google::spanner::v1::BYTES:
+      return os << internal::BytesFromBase64(v.string_value()).value();
 
     case google::spanner::v1::ARRAY: {
       const char* delimiter = "";
