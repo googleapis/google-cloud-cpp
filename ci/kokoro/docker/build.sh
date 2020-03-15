@@ -74,10 +74,12 @@ elif [[ "${BUILD_NAME}" = "coverage" ]]; then
 elif [[ "${BUILD_NAME}" = "integration" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS=auto
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "integration-nightly" ]]; then
   export DISTRO=ubuntu
   export DISTRO_VERSION=18.04
+  RUN_INTEGRATION_TESTS=auto
   ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "publish-refdocs" ]]; then
@@ -350,6 +352,11 @@ docker_flags=(
     "--env" "BUILD_TYPE=${BUILD_TYPE:-Release}"
     # Additional flags to enable CMake features.
     "--env" "CMAKE_FLAGS=${CMAKE_FLAGS:-}"
+
+    # When running the integration tests this directory contains the
+    # configuration files needed to run said tests. Make it available inside
+    # the Docker container.
+    "--volume" "${KOKORO_GFILE_DIR:-/dev/shm}:/c"
 
     # The type of the build for Bazel.
     "--env" "BAZEL_CONFIG=${BAZEL_CONFIG:-}"
