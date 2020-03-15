@@ -36,7 +36,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # ci/Dockerfile.* build scripts.
 
 echo
-echo "${COLOR_YELLOW}$(date -u): Starting docker build $(date) with ${NCPU} cores${COLOR_RESET}"
+echo "${COLOR_YELLOW}$(date -u): Starting docker build with ${NCPU} cores${COLOR_RESET}"
 echo
 
 echo "================================================================"
