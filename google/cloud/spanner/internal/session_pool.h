@@ -118,6 +118,19 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
                                   bool dissociate_from_pool);
 
+  // Asynchronous calls used to maintain the pool.
+  future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
+  AsyncBatchCreateSessions(CompletionQueue& cq,
+                           std::shared_ptr<SpannerStub> stub,
+                           std::map<std::string, std::string> const& labels,
+                           int num_sessions);
+  future<StatusOr<google::protobuf::Empty>> AsyncDeleteSession(
+      CompletionQueue& cq, std::shared_ptr<SpannerStub> stub,
+      std::string session_name);
+  future<StatusOr<google::spanner::v1::Session>> AsyncGetSession(
+      CompletionQueue& cq, std::shared_ptr<SpannerStub> stub,
+      std::string session_name);
+
   void UpdateNextChannelForCreateSessions();  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
