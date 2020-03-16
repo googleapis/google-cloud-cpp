@@ -470,6 +470,9 @@ class Client {
    * outside of the transaction until it is committed. For that reason, it is
    * advisable to run this method from a `Commit` mutator.
    *
+   * @par Example
+   * @snippet samples.cc execute-batch-dml
+   *
    * @warning A returned status of OK from this function does not imply that
    *     all the statements were executed successfully. For that, you need to
    *     inspect the `BatchDmlResult::status` field.

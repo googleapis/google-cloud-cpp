@@ -1790,7 +1790,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
 }
 //! [END spanner_dml_batch_update]
 
-//! [START spanner_dml_structs]
+//! [execute-batch-dml] [START spanner_dml_structs]
 void DmlStructs(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   std::int64_t rows_modified = 0;
@@ -1814,7 +1814,7 @@ void DmlStructs(google::cloud::spanner::Client client) {
   std::cout << rows_modified
             << " update was successful [spanner_dml_structs]\n";
 }
-//! [END spanner_dml_structs]
+//! [execute-batch-dml] [END spanner_dml_structs]
 
 //! [START spanner_write_data_for_struct_queries]
 void WriteDataForStructQueries(google::cloud::spanner::Client client) {
