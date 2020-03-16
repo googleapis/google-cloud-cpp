@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) try {
     throw std::runtime_error(status.message());
   }
 
-  std::cout << "Exiting storage_install_test.\n"
+  std::cout << "Exiting storage_install_test.\n";
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";
