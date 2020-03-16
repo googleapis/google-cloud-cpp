@@ -18,6 +18,8 @@
 
 google_cloud_cpp_testing_grpc_hdrs = [
     "is_proto_equal.h",
+    "mock_async_response_reader.h",
+    "mock_completion_queue.h",
 ]
 
 google_cloud_cpp_testing_grpc_srcs = [

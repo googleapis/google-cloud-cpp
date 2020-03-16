@@ -30,15 +30,27 @@ namespace internal {
  * @tparam RetryablePolicy the policy to decide if a status represents a
  *     permanent failure.
  */
-template <typename StatusType, typename RetryablePolicy>
+template <typename StatusTypeP, typename RetryableTraitsP>
 class RetryPolicy {
  public:
+  ///@{
+  /**
+   * @name type traits
+   */
+
+  /// The status type used by the retry policy
+  using StatusType = StatusTypeP;
+
+  /// The traits describing which errors are permanent failures
+  using RetryableTraits = RetryableTraitsP;
+  ///@}
+
   virtual ~RetryPolicy() = default;
 
   virtual std::unique_ptr<RetryPolicy> clone() const = 0;
 
   bool OnFailure(StatusType const& status) {
-    if (RetryablePolicy::IsPermanentFailure(status)) {
+    if (RetryableTraits::IsPermanentFailure(status)) {
       return false;
     }
     OnFailureImpl();

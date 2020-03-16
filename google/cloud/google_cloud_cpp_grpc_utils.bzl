@@ -27,6 +27,7 @@ google_cloud_cpp_grpc_utils_hdrs = [
     "grpc_utils/grpc_error_delegate.h",
     "grpc_utils/version.h",
     "internal/async_read_stream_impl.h",
+    "internal/async_retry_unary_rpc.h",
     "internal/background_threads_impl.h",
     "internal/completion_queue_impl.h",
     "internal/pagination_range.h",

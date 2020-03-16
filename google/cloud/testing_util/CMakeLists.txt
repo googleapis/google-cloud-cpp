@@ -64,8 +64,10 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
     endforeach ()
 
     find_package(googleapis)
-    add_library(google_cloud_cpp_testing_grpc is_proto_equal.cc
-                                              is_proto_equal.h)
+    add_library(
+        google_cloud_cpp_testing_grpc
+        is_proto_equal.cc is_proto_equal.h mock_async_response_reader.h
+        mock_completion_queue.h)
     target_link_libraries(
         google_cloud_cpp_testing_grpc
         PUBLIC google_cloud_cpp_common protobuf::libprotobuf GTest::gmock

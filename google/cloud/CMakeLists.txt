@@ -328,6 +328,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
         grpc_utils/grpc_error_delegate.h
         grpc_utils/version.h
         internal/async_read_stream_impl.h
+        internal/async_retry_unary_rpc.h
         internal/background_threads_impl.cc
         internal/background_threads_impl.h
         internal/completion_queue_impl.cc
@@ -361,6 +362,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
             completion_queue_test.cc
             connection_options_test.cc
             grpc_error_delegate_test.cc
+            internal/async_retry_unary_rpc_test.cc
             internal/background_threads_impl_test.cc
             internal/pagination_range_test.cc)
 
@@ -375,6 +377,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_GRPC_UTILS)
             target_link_libraries(
                 ${target}
                 PRIVATE google_cloud_cpp_grpc_utils
+                        google_cloud_cpp_testing_grpc
                         google_cloud_cpp_testing
                         google_cloud_cpp_common
                         googleapis-c++::bigtable_protos
