@@ -1056,6 +1056,62 @@ TEST(Value, OutputStream) {
   }
 }
 
+// Ensures that the following expressions produce the same output.
+//
+// `os << t`
+// `os << Value(t)`
+//
+template <typename T>
+void StreamMatchesValueStream(T t) {
+  std::ostringstream ss1;
+  ss1 << t;
+  std::ostringstream ss2;
+  ss2 << Value(std::move(t));
+  EXPECT_EQ(ss1.str(), ss2.str());
+}
+
+TEST(Value, OutputStreamMatchesT) {
+  // bool
+  StreamMatchesValueStream(false);
+  StreamMatchesValueStream(true);
+
+  // std::int64_t
+  StreamMatchesValueStream(-1);
+  StreamMatchesValueStream(0);
+  StreamMatchesValueStream(1);
+
+  // double
+  StreamMatchesValueStream(0.0);
+  StreamMatchesValueStream(3.14);
+  StreamMatchesValueStream(std::nan("NaN"));
+  StreamMatchesValueStream(std::numeric_limits<double>::infinity());
+  StreamMatchesValueStream(-std::numeric_limits<double>::infinity());
+
+  // std::string
+  // Note: `os << std::string{}` != `os << Value(std::string{})`
+  // because the latter includes surrounding double quotes.
+  // StreamMatchesValueStream("foo");
+
+  // Bytes
+  StreamMatchesValueStream(Bytes());
+  StreamMatchesValueStream(Bytes("foo"));
+
+  // Date
+  StreamMatchesValueStream(Date(1, 1, 1));
+  StreamMatchesValueStream(Date());
+  StreamMatchesValueStream(Date(9999, 12, 31));
+
+  // Timestamp
+  StreamMatchesValueStream(Timestamp());
+  StreamMatchesValueStream(MakeTimestamp(MakeTimePoint(1, 1)).value());
+
+  // std::vector<T>
+  // Not included, because a raw vector cannot be streamed.
+
+  // std::tuple<...>
+  // Not included, because a raw tuple cannot be streamed.
+}
+
 }  // namespace
 }  // namespace SPANNER_CLIENT_NS
 }  // namespace spanner
