@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/date.h"
+#include "google/cloud/spanner/internal/date.h"
 #include <array>
 
 namespace google {
@@ -57,6 +58,10 @@ Date::Date(std::int64_t year, int month, int day)
       month_ = 1;
     }
   }
+}
+
+std::ostream& operator<<(std::ostream& os, Date const& date) {
+  return os << internal::DateToString(date);
 }
 
 }  // namespace SPANNER_CLIENT_NS

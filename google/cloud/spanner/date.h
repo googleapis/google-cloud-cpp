@@ -17,6 +17,7 @@
 
 #include "google/cloud/spanner/version.h"
 #include <cstdint>
+#include <ostream>
 #include <tuple>
 
 namespace google {
@@ -45,6 +46,8 @@ class Date {
   int month_;
   int day_;
 };
+
+std::ostream& operator<<(std::ostream& os, Date const& date);
 
 inline bool operator==(Date const& a, Date const& b) {
   return std::make_tuple(a.year(), a.month(), a.day()) ==

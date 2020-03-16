@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/date.h"
 #include <gmock/gmock.h>
+#include <sstream>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -76,6 +78,26 @@ TEST(Date, Normalization) {
 
   // Mixed.
   EXPECT_EQ(Date(2012, 9, 30), Date(2016, -42, 122));
+}
+
+TEST(Date, OutputStream) {
+  struct TestCase {
+    Date date;
+    std::string expected;
+  };
+
+  std::vector<TestCase> test_cases = {
+      {Date(1, 1, 1), "0001-01-01"},
+      {Date(1970, 1, 1), "1970-01-01"},
+      {Date(2020, 3, 14), "2020-03-14"},
+      {Date(9999, 12, 31), "9999-12-31"},
+  };
+
+  for (auto const& tc : test_cases) {
+    std::ostringstream ss;
+    ss << tc.date;
+    EXPECT_EQ(ss.str(), tc.expected);
+  }
 }
 
 }  // namespace
