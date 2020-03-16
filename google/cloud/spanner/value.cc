@@ -51,6 +51,8 @@ bool Equal(google::spanner::v1::Type const& pt1,
              pv1.number_value() == pv2.number_value();
     case google::spanner::v1::TypeCode::STRING:
     case google::spanner::v1::TypeCode::BYTES:
+    case google::spanner::v1::TypeCode::DATE:
+    case google::spanner::v1::TypeCode::TIMESTAMP:
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::ARRAY: {
       auto const& etype1 = pt1.array_element_type();

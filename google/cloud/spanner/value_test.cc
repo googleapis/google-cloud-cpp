@@ -190,6 +190,32 @@ TEST(Value, BasicSemantics) {
   TestBasicSemantics(v);
 }
 
+TEST(Value, Equality) {
+  std::vector<std::pair<Value, Value>> test_cases = {
+      {Value(false), Value(true)},
+      {Value(0), Value(1)},
+      {Value(3.14), Value(42.0)},
+      {Value("foo"), Value("bar")},
+      {Value(Bytes("foo")), Value(Bytes("bar"))},
+      {Value(Date(1970, 1, 1)), Value(Date(2020, 3, 15))},
+      {Value(std::vector<double>{1.2, 3.4}),
+       Value(std::vector<double>{4.5, 6.7})},
+      {Value(std::make_tuple(false, 123, "foo")),
+       Value(std::make_tuple(true, 456, "bar"))},
+  };
+
+  for (auto const& tc : test_cases) {
+    EXPECT_EQ(tc.first, tc.first);
+    EXPECT_EQ(tc.second, tc.second);
+    EXPECT_NE(tc.first, tc.second);
+    // Compares tc.first to tc2.second, which ensures that different "kinds" of
+    // value are never equal.
+    for (auto const& tc2 : test_cases) {
+      EXPECT_NE(tc.first, tc2.second);
+    }
+  }
+}
+
 // NOTE: This test relies on unspecified behavior about the moved-from state
 // of std::string. Specifically, this test relies on the fact that "large"
 // strings, when moved-from, end up empty. And we use this fact to verify that
