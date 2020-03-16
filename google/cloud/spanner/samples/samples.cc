@@ -978,7 +978,7 @@ google::cloud::spanner::Client MakeSampleClient(
       spanner::Database(project_id, instance_id, database_id)));
 }
 
-//! [insert-mutation-builder] [START spanner_insert_data]
+//! [START spanner_insert_data]
 void InsertData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto insert_singers = spanner::InsertMutationBuilder(
@@ -1006,9 +1006,9 @@ void InsertData(google::cloud::spanner::Client client) {
   }
   std::cout << "Insert was successful [spanner_insert_data]\n";
 }
-//! [insert-mutation-builder] [END spanner_insert_data]
+//! [END spanner_insert_data]
 
-//! [update-mutation-builder] [START spanner_update_data]
+//! [START spanner_update_data]
 void UpdateData(google::cloud::spanner::Client client) {
   //! [commit-with-mutations]
   namespace spanner = ::google::cloud::spanner;
@@ -1024,9 +1024,9 @@ void UpdateData(google::cloud::spanner::Client client) {
   //! [commit-with-mutations]
   std::cout << "Update was successful [spanner_update_data]\n";
 }
-//! [update-mutation-builder] [END spanner_update_data]
+//! [END spanner_update_data]
 
-//! [delete-mutation-builder] [START spanner_delete_data]
+//! [START spanner_delete_data]
 void DeleteData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
@@ -1053,7 +1053,184 @@ void DeleteData(google::cloud::spanner::Client client) {
   }
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
-//! [delete-mutation-builder] [END spanner_delete_data]
+//! [END spanner_delete_data]
+
+//! [keyset-all]
+void DeleteAll(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  // Delete all the performances, albums and singers.
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::MakeDeleteMutation("Performances", spanner::KeySet::All()),
+      spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
+      spanner::MakeDeleteMutation("Singers", spanner::KeySet::All()),
+  });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "delete-all was successful\n";
+}
+//! [keyset-all]
+
+//! [insert-mutation-builder]
+void InsertMutationBuilder(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(
+      spanner::Mutations{spanner::InsertMutationBuilder(
+                             "Singers", {"SingerId", "FirstName", "LastName"})
+                             .EmplaceRow(1, "Marc", "Richards")
+                             .EmplaceRow(2, "Catalina", "Smith")
+                             .EmplaceRow(3, "Alice", "Trentor")
+                             .EmplaceRow(4, "Lea", "Martin")
+                             .EmplaceRow(5, "David", "Lomond")
+                             .Build(),
+                         spanner::InsertMutationBuilder(
+                             "Albums", {"SingerId", "AlbumId", "AlbumTitle"})
+                             .EmplaceRow(1, 1, "Total Junk")
+                             .EmplaceRow(1, 2, "Go, Go, Go")
+                             .EmplaceRow(2, 1, "Green")
+                             .EmplaceRow(2, 2, "Forever Hold Your Peace")
+                             .EmplaceRow(2, 3, "Terrified")
+                             .Build()});
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "insert-mutation-builder was successful\n";
+}
+//! [insert-mutation-builder]
+
+//! [make-insert-mutation]
+void MakeInsertMutation(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+
+  // Delete each of the albums by individual key, then delete all the singers
+  // using a key range.
+  auto commit_result = client.Commit(spanner::Mutations{
+      spanner::InsertOrUpdateMutationBuilder(
+          "Performances",
+          {"SingerId", "VenueId", "EventDate", "Revenue", "LastUpdateTime"})
+          .EmplaceRow(1, 4, spanner::Date(2017, 10, 5), 11000,
+                      spanner::CommitTimestamp{})
+          .EmplaceRow(1, 19, spanner::Date(2017, 11, 2), 15000,
+                      spanner::CommitTimestamp{})
+          .Build()});
+  if (!commit_result) {
+    throw std::runtime_error(commit_result.status().message());
+  }
+  std::cout << "make-insert-mutation was successful\n";
+}
+//! [make-insert-mutation]
+
+//! [update-mutation-builder]
+void UpdateMutationBuilder(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::UpdateMutationBuilder("Albums",
+                                     {"SingerId", "AlbumId", "MarketingBudget"})
+          .EmplaceRow(1, 1, 100000)
+          .EmplaceRow(2, 2, 500000)
+          .Build()});
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "update-mutation-builder was successful\n";
+}
+//! [update-mutation-builder]
+
+//! [make-update-mutation]
+void MakeUpdateMutation(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::MakeUpdateMutation(
+          "Albums", {"SingerId", "AlbumId", "MarketingBudget"}, 1, 1, 200000),
+  });
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "make-update-mutation was succesful\n";
+}
+//! [make-update-mutation]
+
+//! [insert-or-update-mutation-builder]
+void InsertOrUpdateMutationBuilder(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::InsertOrUpdateMutationBuilder(
+          "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"})
+          .EmplaceRow(1, 1, "Total Junk", 100000)
+          .EmplaceRow(1, 2, "Go, Go, Go", 200000)
+          .EmplaceRow(2, 1, "Green", 300000)
+          .EmplaceRow(2, 2, "Forever Hold Your Peace", 400000)
+          .EmplaceRow(2, 3, "Terrified", 500000)
+          .Build()});
+  if (!commit) throw std::runtime_error(commit.status().message());
+
+  std::cout << "insert-or-update-mutation-builder was successful\n";
+}
+//! [insert-or-update-mutation-builder]
+
+//! [make-insert-or-update-mutation]
+void MakeInsertOrUpdateMutation(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::MakeInsertOrUpdateMutation(
+          "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"}, 1,
+          1, "Total Junk", 200000),
+  });
+  if (!commit) throw std::runtime_error(commit.status().message());
+
+  std::cout << "make-insert-or-update-mutation was successful\n";
+}
+//! [make-insert-or-update-mutation]
+
+//! [replace-mutation-builder]
+void ReplaceMutationBuilder(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::ReplaceMutationBuilder(
+          "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"})
+          .EmplaceRow(1, 1, "Total Junk", 500000)
+          .EmplaceRow(1, 2, "Go, Go, Go", 400000)
+          .EmplaceRow(2, 1, "Green", 300000)
+          .Build()});
+  if (!commit) throw std::runtime_error(commit.status().message());
+
+  std::cout << "replace-mutation-builder was successful\n";
+}
+//! [replace-mutation-builder]
+
+//! [make-replace-mutation]
+void MakeReplaceMutation(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::MakeReplaceMutation(
+          "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"}, 1,
+          1, "Go, Go, Go", 600000),
+  });
+  if (!commit) throw std::runtime_error(commit.status().message());
+
+  std::cout << "make-replace-mutation was successful\n";
+}
+//! [make-replace-mutation]
+
+//! [delete-mutation-builder]
+void DeleteMutationBuilder(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(
+      spanner::Mutations{spanner::DeleteMutationBuilder(
+                             "Albums", spanner::KeySet()
+                                           .AddKey(spanner::MakeKey(1, 1))
+                                           .AddKey(spanner::MakeKey(1, 2)))
+                             .Build()});
+  if (!commit) throw std::runtime_error(commit.status().message());
+
+  std::cout << "delete-mutation-builder was successful\n";
+}
+//! [delete-mutation-builder]
+
+//! [make-delete-mutation]
+void MakeDeleteMutation(google::cloud::spanner::Client client) {
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(spanner::Mutations{
+      spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
+  });
+  if (!commit) throw std::runtime_error(commit.status().message());
+
+  std::cout << "make-delete-mutation was successful\n";
+}
+//! [make-delete-mutation]
 
 // [START spanner_insert_data_with_timestamp_column]
 void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
@@ -2315,6 +2492,19 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("stream-of", StreamOf),
       make_command_entry("profile-query", ProfileQuery),
       {"custom-retry-policy", CustomRetryPolicy},
+      make_command_entry("delete-all", DeleteAll),
+      make_command_entry("insert-mutation-builder", InsertMutationBuilder),
+      make_command_entry("make-insert-mutation", MakeInsertMutation),
+      make_command_entry("update-mutation-builder", UpdateMutationBuilder),
+      make_command_entry("make-update-mutation", MakeUpdateMutation),
+      make_command_entry("insert-or-update-mutation-builder",
+                         InsertOrUpdateMutationBuilder),
+      make_command_entry("make-insert-or-update-mutation",
+                         MakeInsertOrUpdateMutation),
+      make_command_entry("replace-mutation-builder", ReplaceMutationBuilder),
+      make_command_entry("make-replace-mutation", MakeReplaceMutation),
+      make_command_entry("delete-mutation-builder", DeleteMutationBuilder),
+      make_command_entry("make-delete-mutation", MakeDeleteMutation),
   };
 
   static std::string usage_msg = [&argv, &commands] {
@@ -2680,7 +2870,41 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning spanner_delete_data sample\n";
   DeleteData(client);
 
+  std::cout << "\nDeleting all data to run the mutation examples\n";
+  DeleteAll(client);
+
+  std::cout << "\nRunning the insert-mutation-builder example\n";
+  InsertMutationBuilder(client);
+
+  std::cout << "\nRunning the make-insert-mutation example\n";
+  MakeInsertMutation(client);
+
+  std::cout << "\nRunning the update-mutation-builder example\n";
+  UpdateMutationBuilder(client);
+
+  std::cout << "\nRunning the make-update-mutation example\n";
+  MakeUpdateMutation(client);
+
+  std::cout << "\nRunning the insert-or-update-mutation-builder example\n";
+  InsertOrUpdateMutationBuilder(client);
+
+  std::cout << "\nRunning the make-insert-or-update-mutation example\n";
+  MakeInsertOrUpdateMutation(client);
+
+  std::cout << "\nRunning the replace-mutation-builder example\n";
+  ReplaceMutationBuilder(client);
+
+  std::cout << "\nRunning the make-replace-mutation example\n";
+  MakeReplaceMutation(client);
+
+  std::cout << "\nRunning the delete-mutation-builder example\n";
+  DeleteMutationBuilder(client);
+
+  std::cout << "\nRunning the make-delete-mutation example\n";
+  MakeDeleteMutation(client);
+
   std::cout << "\nRunning spanner_drop_database sample\n";
+  DeleteAll(client);
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 }
 

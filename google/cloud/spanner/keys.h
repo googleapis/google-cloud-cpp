@@ -144,7 +144,12 @@ KeySet FromProto(::google::spanner::v1::KeySet);
  */
 class KeySet {
  public:
-  /// Returns a `KeySet` that represents the set of "All" keys for the index.
+  /**
+   * Returns a `KeySet` that represents the set of "All" keys for the index.
+   *
+   * @par Example
+   * @snippet samples.cc keyset-all
+   */
   static KeySet All() {
     KeySet ks;
     ks.proto_.set_all(true);

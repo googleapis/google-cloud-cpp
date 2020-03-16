@@ -188,6 +188,7 @@ class DeleteMutationBuilder {
 /**
  * A helper class to construct "insert" mutations.
  *
+ * @par Example
  * @snippet samples.cc insert-mutation-builder
  *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
@@ -199,7 +200,18 @@ class DeleteMutationBuilder {
 using InsertMutationBuilder =
     internal::WriteMutationBuilder<internal::InsertOp>;
 
-/// Creates a simple insert mutation for the values in @p values.
+/**
+ * Creates a simple insert mutation for the values in @p values.
+ *
+ * @par Example
+ * @snippet samples.cc make-insert-mutation
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
 template <typename... Ts>
 Mutation MakeInsertMutation(std::string table_name,
                             std::vector<std::string> columns, Ts&&... values) {
@@ -211,6 +223,7 @@ Mutation MakeInsertMutation(std::string table_name,
 /**
  * A helper class to construct "update" mutations.
  *
+ * @par Example
  * @snippet samples.cc update-mutation-builder
  *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
@@ -222,7 +235,18 @@ Mutation MakeInsertMutation(std::string table_name,
 using UpdateMutationBuilder =
     internal::WriteMutationBuilder<internal::UpdateOp>;
 
-/// Creates a simple update mutation for the values in @p values.
+/**
+ * Creates a simple update mutation for the values in @p values.
+ *
+ * @par Example
+ * @snippet samples.cc make-update-mutation
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
 template <typename... Ts>
 Mutation MakeUpdateMutation(std::string table_name,
                             std::vector<std::string> columns, Ts&&... values) {
@@ -234,6 +258,9 @@ Mutation MakeUpdateMutation(std::string table_name,
 /**
  * A helper class to construct "insert_or_update" mutations.
  *
+ * @par Example
+ * @snippet samples.cc insert-or-update-mutation-builder
+ *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
  *   mutation API
  *
@@ -243,7 +270,18 @@ Mutation MakeUpdateMutation(std::string table_name,
 using InsertOrUpdateMutationBuilder =
     internal::WriteMutationBuilder<internal::InsertOrUpdateOp>;
 
-/// Creates a simple "insert or update" mutation for the values in @p values.
+/**
+ * Creates a simple "insert or update" mutation for the values in @p values.
+ *
+ * @par Example
+ * @snippet samples.cc make-insert-or-update-mutation
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
 template <typename... Ts>
 Mutation MakeInsertOrUpdateMutation(std::string table_name,
                                     std::vector<std::string> columns,
@@ -255,7 +293,10 @@ Mutation MakeInsertOrUpdateMutation(std::string table_name,
 }
 
 /**
- * A helper class to construct "insert_or_update" mutations.
+ * A helper class to construct "replace" mutations.
+ *
+ * @par Example
+ * @snippet samples.cc replace-mutation-builder
  *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
  *   mutation API
@@ -266,7 +307,18 @@ Mutation MakeInsertOrUpdateMutation(std::string table_name,
 using ReplaceMutationBuilder =
     internal::WriteMutationBuilder<internal::ReplaceOp>;
 
-/// Creates a simple "replace" mutation for the values in @p values.
+/**
+ * Creates a simple "replace" mutation for the values in @p values.
+ *
+ * @par Example
+ * @snippet samples.cc make-replace-mutation
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
 template <typename... Ts>
 Mutation MakeReplaceMutation(std::string table_name,
                              std::vector<std::string> columns, Ts&&... values) {
@@ -278,6 +330,7 @@ Mutation MakeReplaceMutation(std::string table_name,
 /**
  * A helper class to construct "delete" mutations.
  *
+ * @par Example
  * @snippet samples.cc delete-mutation-builder
  *
  * @see The Mutation class documentation for an overview of the Cloud Spanner
@@ -288,7 +341,18 @@ Mutation MakeReplaceMutation(std::string table_name,
  */
 using DeleteMutationBuilder = internal::DeleteMutationBuilder;
 
-/// Creates a simple "delete" mutation for the values in @p keys.
+/**
+ * Creates a simple "delete" mutation for the values in @p keys.
+ *
+ * @par Example
+ * @snippet samples.cc make-delete-mutation
+ *
+ * @see The Mutation class documentation for an overview of the Cloud Spanner
+ *   mutation API
+ *
+ * @see https://cloud.google.com/spanner/docs/modify-mutation-api
+ *   for more information about the Cloud Spanner mutation API.
+ */
 inline Mutation MakeDeleteMutation(std::string table_name, KeySet keys) {
   return DeleteMutationBuilder(std::move(table_name), std::move(keys)).Build();
 }
