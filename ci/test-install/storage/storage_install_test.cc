@@ -29,6 +29,9 @@ int main(int argc, char* argv[]) try {
   std::string const bucket_name = argv[1];
   std::string const object_name = argv[2];
 
+  std::cout << "std::cout " << std::string(argv[0]) << "\n";
+  std::cerr << "std::cerr " << std::string(argv[0]) << "\n";
+
   google::cloud::StatusOr<gcs::Client> client =
       gcs::Client::CreateDefaultClient();
   if (!client) {
@@ -37,6 +40,9 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
+  std::cout << "Created default GCS Client" << "\n";
+
+  std::cout << "Writing Hello World Object" << "\n";
   gcs::ObjectWriteStream os = client->WriteObject(bucket_name, object_name);
   os.exceptions(std::ios_base::badbit | std::ios_base::failbit);
   os << "Hello World\n";
@@ -45,6 +51,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Successfully created object, generation=" << meta.generation()
             << "\n";
 
+  std::cout << "Reading Hello World Object" << "\n";
   gcs::ObjectReadStream stream = client->ReadObject(bucket_name, object_name);
   stream.exceptions(std::ios_base::badbit);
 
@@ -53,12 +60,15 @@ int main(int argc, char* argv[]) try {
   while (std::getline(stream, line, '\n')) {
     ++count;
   }
+
+  std::cout << "Deleting Hello World Object" << "\n";
   google::cloud::Status status = client->DeleteObject(
       bucket_name, object_name, gcs::Generation(meta.generation()));
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
 
+  std::cout << "Exiting storage_install_test.\n"
   return 0;
 } catch (std::exception const& ex) {
   std::cerr << "Standard exception raised: " << ex.what() << "\n";

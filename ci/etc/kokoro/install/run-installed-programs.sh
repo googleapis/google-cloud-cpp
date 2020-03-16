@@ -13,6 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+echo "================================================================"
+echo "run-installed-programs.sh"
+echo "================================================================"
+
 CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
 readonly CONFIG_DIRECTORY
 if [[ -f "${CONFIG_DIRECTORY}/test-configuration.sh" ]]; then
@@ -39,6 +43,9 @@ if [[ -f "${CONFIG_DIRECTORY}/test-configuration.sh" ]]; then
 
 
   echo "Run Storage test programs against installed libraries ${DISTRO}."
+  echo "INSTALL_RUN_IMAGE = ${INSTALL_RUN_IMAGE}"
+  echo "BUCKET_NAME = ${BUCKET_NAME}"
+  echo "NONCE = ${NONCE}"
   docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
       "/i/storage/storage_install_test" \
       "${BUCKET_NAME}" "object-${NONCE}.txt"
