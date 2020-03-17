@@ -41,11 +41,11 @@ def google_cloud_cpp_deps():
     if "com_github_googleapis_google_cloud_cpp_common" not in native.existing_rules():
         http_archive(
             name = "com_github_googleapis_google_cloud_cpp_common",
-            strip_prefix = "google-cloud-cpp-common-0.22.1",
+            strip_prefix = "google-cloud-cpp-common-0.23.0",
             urls = [
-                "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.22.1.tar.gz",
+                "https://github.com/googleapis/google-cloud-cpp-common/archive/v0.23.0.tar.gz",
             ],
-            sha256 = "43108ffa0c66fc871e1787c30c5aa6ecac593e6e19fc1190470ba2436756c4a2",
+            sha256 = "5079dfa6a1d735a9da52769fc0619030cef3f82a1f30a2a66f7825f9c148b24e",
         )
 
     # Load a version of googletest that we know works.
