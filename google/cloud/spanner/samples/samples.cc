@@ -31,6 +31,7 @@
 #include "google/cloud/optional.h"
 #include <google/protobuf/util/time_util.h>
 #include <chrono>
+#include <regex>
 #include <sstream>
 #include <tuple>
 #include <utility>
@@ -69,20 +70,26 @@ void CreateInstance(google::cloud::spanner::InstanceAdminClient client,
   using ::google::cloud::StatusOr;
   google::cloud::spanner::Instance in(project_id, instance_id);
 
-  std::vector<std::string> instance_config_names = [client,
-                                                    project_id]() mutable {
-    std::vector<std::string> names;
+  // Pick instance config that matches the regex, if there's no match, pick the
+  // first one.
+  std::string instance_config = [client, project_id]() mutable {
+    std::string ret{};
+    std::regex filter = std::regex(".*us-west.*");
     for (auto const& instance_config : client.ListInstanceConfigs(project_id)) {
       if (!instance_config) break;
-      names.push_back(instance_config->name());
+      if (ret.empty()) {
+        // fallback to the first element.
+        ret = instance_config->name();
+      }
+      if (std::regex_match(instance_config->name(), filter)) {
+        return instance_config->name();
+      }
     }
-    return names;
+    return ret;
   }();
-  if (instance_config_names.empty()) {
-    throw std::runtime_error("Can not retrieve the list of instance configs.");
+  if (instance_config.empty()) {
+    throw std::runtime_error("could not pick an instance config");
   }
-  // Use the name of the first element from the list of instance configs.
-  auto instance_config = instance_config_names[0];
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
       client.CreateInstance(
           google::cloud::spanner::CreateInstanceRequestBuilder(in,

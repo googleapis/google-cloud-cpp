@@ -14,6 +14,7 @@
 
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
 #include "google/cloud/internal/getenv.h"
@@ -67,6 +68,7 @@ class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
     InstanceAdminClientTest::SetUp();
     instance_name_regex_ = std::regex(
         R"(projects/.+/instances/(temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
+    instance_config_regex_ = std::regex(".*us-west.*");
     if (run_slow_integration_tests_ != "yes") {
       return;
     }
@@ -101,6 +103,7 @@ class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
       client_.DeleteInstance(Instance(project_id_, id_to_delete));
     }
   }
+  std::regex instance_config_regex_;
   std::regex instance_name_regex_;
 };
 
@@ -147,19 +150,10 @@ TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   std::smatch m;
   auto full_name = in.FullName();
   EXPECT_TRUE(std::regex_match(full_name, m, instance_name_regex_));
-  std::vector<std::string> instance_config_names = [this]() mutable {
-    std::vector<std::string> names;
-    for (auto const& instance_config :
-         client_.ListInstanceConfigs(project_id_)) {
-      EXPECT_STATUS_OK(instance_config);
-      if (!instance_config) break;
-      names.push_back(instance_config->name());
-    }
-    return names;
-  }();
-  ASSERT_FALSE(instance_config_names.empty());
-  // Use the name of the first element from the list of instance configs.
-  auto instance_config = instance_config_names[0];
+
+  std::string instance_config = spanner_testing::PickInstanceConfig(
+      project_id_, instance_config_regex_, generator);
+  ASSERT_FALSE(instance_config.empty()) << "could not get an instance config";
 
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
       client_.CreateInstance(CreateInstanceRequestBuilder(in, instance_config)

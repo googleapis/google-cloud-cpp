@@ -68,6 +68,9 @@ function (spanner_client_define_integration_tests)
         add_dependencies(spanner-client-integration-tests ${target})
     endforeach ()
 
+    # backup_integration_test sometimes takes long time
+    set_tests_properties("backup_integration_test" PROPERTIES TIMEOUT 2400)
+
     if (MSVC)
         # MSVC warns about using localtime(), this is a valuable warning, so we
         # do not want to disable for everything. But for these files the usage

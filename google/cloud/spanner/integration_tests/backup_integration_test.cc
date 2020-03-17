@@ -16,6 +16,7 @@
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/internal/time_utils.h"
+#include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
@@ -64,6 +65,7 @@ class BackupTestWithCleanup : public BackupTest {
     BackupTest::SetUp();
     instance_name_regex_ = std::regex(
         R"(projects/.+/instances/(temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
+    instance_config_regex_ = std::regex(".*us-west.*");
     if (run_slow_integration_tests_ != "yes") {
       return;
     }
@@ -101,6 +103,7 @@ class BackupTestWithCleanup : public BackupTest {
     }
   }
   std::regex instance_name_regex_;
+  std::regex instance_config_regex_;
 };
 
 /// @test Backup related integration tests.
@@ -129,17 +132,9 @@ TEST_F(BackupTestWithCleanup, BackupTestSuite) {
   std::smatch m;
   auto full_name = in.FullName();
   EXPECT_TRUE(std::regex_match(full_name, m, instance_name_regex_));
-  std::string instance_config = [this]() mutable -> std::string {
-    for (auto const& instance_config :
-         instance_admin_client_.ListInstanceConfigs(project_id_)) {
-      EXPECT_STATUS_OK(instance_config);
-      if (!instance_config) return {};
-      return instance_config->name();
-    }
-    return {};
-  }();
-  ASSERT_FALSE(instance_config.empty())
-      << "could not get an instance config name";
+  std::string instance_config = spanner_testing::PickInstanceConfig(
+      project_id_, instance_config_regex_, generator);
+  ASSERT_FALSE(instance_config.empty()) << "could not get an instance config";
   future<StatusOr<google::spanner::admin::instance::v1::Instance>> f =
       instance_admin_client_.CreateInstance(
           CreateInstanceRequestBuilder(in, instance_config)
