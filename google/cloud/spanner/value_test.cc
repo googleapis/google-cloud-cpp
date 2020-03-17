@@ -998,12 +998,25 @@ TEST(Value, OutputStream) {
       {Value(inf), "inf", normal},
       {Value(-inf), "-inf", normal},
       {Value(nan), "nan", normal},
-      {Value(""), R"("")", normal},
-      {Value("foo"), R"("foo")", normal},
-      {Value("NULL"), R"("NULL")", normal},
+      {Value(""), "", normal},
+      {Value("foo"), "foo", normal},
+      {Value("NULL"), "NULL", normal},
       {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
       {Value(Date()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
+
+      // Tests string quoting: No quotes for scalars; quotes within aggregates
+      {Value(""), "", normal},
+      {Value("foo"), "foo", normal},
+      {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
+      {Value(std::make_tuple("foo")), R"(("foo"))", normal},
+      {Value(std::make_tuple(std::make_pair("foo", "bar"))),
+       R"(("foo": "bar"))", normal},
+      {Value(std::vector<std::string>{"\"a\"", "\"b\""}),
+       R"(["\"a\"", "\"b\""])", normal},
+      {Value(std::make_tuple("\"foo\"")), R"(("\"foo\""))", normal},
+      {Value(std::make_tuple(std::make_pair("\"foo\"", "\"bar\""))),
+       R"(("\"foo\"": "\"bar\""))", normal},
 
       // Tests null values
       {MakeNullValue<bool>(), "NULL", normal},
@@ -1041,18 +1054,18 @@ TEST(Value, OutputStream) {
       {Value(std::make_tuple(true, 123)), "(true, 7b)", alphahex},
       {Value(std::make_tuple(std::make_pair("A", true),
                              std::make_pair("B", 123))),
-       "(A: 1, B: 123)", normal},
+       R"(("A": 1, "B": 123))", normal},
       {Value(std::make_tuple(std::make_pair("A", true),
                              std::make_pair("B", 123))),
-       "(A: true, B: 7b)", alphahex},
+       R"(("A": true, "B": 7b))", alphahex},
       {Value(std::make_tuple(
            std::vector<std::int64_t>{10, 11, 12},
            std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
-       "([10, 11, 12], B: [13, 14, 15])", normal},
+       R"(([10, 11, 12], "B": [13, 14, 15]))", normal},
       {Value(std::make_tuple(
            std::vector<std::int64_t>{10, 11, 12},
            std::make_pair("B", std::vector<std::int64_t>{13, 14, 15}))),
-       "([a, b, c], B: [d, e, f])", hex},
+       R"(([a, b, c], "B": [d, e, f]))", hex},
       {Value(std::make_tuple(std::make_tuple(
            std::make_tuple(std::vector<std::int64_t>{10, 11, 12})))),
        "((([10, 11, 12])))", normal},
@@ -1114,9 +1127,9 @@ TEST(Value, OutputStreamMatchesT) {
   StreamMatchesValueStream(-std::numeric_limits<double>::infinity());
 
   // std::string
-  // Note: `os << std::string{}` != `os << Value(std::string{})`
-  // because the latter includes surrounding double quotes.
-  // StreamMatchesValueStream("foo");
+  StreamMatchesValueStream("");
+  StreamMatchesValueStream("foo");
+  StreamMatchesValueStream("\"foo\"");
 
   // Bytes
   StreamMatchesValueStream(Bytes());

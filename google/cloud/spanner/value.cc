@@ -90,8 +90,25 @@ bool Equal(google::spanner::v1::Type const& pt1,
   }
 }
 
+// A helper to escape all double quotes in the given string `s`. For example,
+// if given `"foo"`, outputs `\"foo\"`. This is useful when a caller needs to
+// wrap `s` itself in double quotes.
+std::ostream& EscapeQuotes(std::ostream& os, std::string const& s) {
+  for (auto const& c : s) {
+    if (c == '"') os << "\\";
+    os << c;
+  }
+  return os;
+}
+
+// An enum to tell StreamHelper() whether a value is being printed as a scalar
+// or as part of an aggregate type (i.e., a vector or tuple). Some types may
+// format themselves differently in each case.
+enum class StreamMode { kScalar, kAggregate };
+
 std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
-                           google::spanner::v1::Type const& t) {
+                           google::spanner::v1::Type const& t,
+                           StreamMode mode) {
   if (v.kind_case() == google::protobuf::Value::kNullValue) {
     return os << "NULL";
   }
@@ -107,21 +124,29 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       return os << internal::FromProto(t, v).get<double>().value();
 
     case google::spanner::v1::STRING:
-      return os << "\"" << v.string_value() << "\"";
+      switch (mode) {
+        case StreamMode::kScalar:
+          return os << v.string_value();
+        case StreamMode::kAggregate:
+          os << '"';
+          EscapeQuotes(os, v.string_value());
+          return os << '"';
+      }
+      return os;  // Unreachable, but quiets warning.
+
+    case google::spanner::v1::BYTES:
+      return os << internal::BytesFromBase64(v.string_value()).value();
 
     case google::spanner::v1::TIMESTAMP:
     case google::spanner::v1::DATE:
       return os << v.string_value();
-
-    case google::spanner::v1::BYTES:
-      return os << internal::BytesFromBase64(v.string_value()).value();
 
     case google::spanner::v1::ARRAY: {
       const char* delimiter = "";
       os << '[';
       for (auto const& e : v.list_value().values()) {
         os << delimiter;
-        StreamHelper(os, e, t.array_element_type());
+        StreamHelper(os, e, t.array_element_type(), StreamMode::kAggregate);
         delimiter = ", ";
       }
       return os << ']';
@@ -133,10 +158,12 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       for (int i = 0; i < v.list_value().values_size(); ++i) {
         os << delimiter;
         if (!t.struct_type().fields(i).name().empty()) {
-          os << t.struct_type().fields(i).name() << ": ";
+          os << '"';
+          EscapeQuotes(os, t.struct_type().fields(i).name());
+          os << '"' << ": ";
         }
         StreamHelper(os, v.list_value().values(i),
-                     t.struct_type().fields(i).type());
+                     t.struct_type().fields(i).type(), StreamMode::kAggregate);
         delimiter = ", ";
       }
       return os << ')';
@@ -167,7 +194,7 @@ bool operator==(Value const& a, Value const& b) {
 }
 
 std::ostream& operator<<(std::ostream& os, Value const& v) {
-  return StreamHelper(os, v.value_, v.type_);
+  return StreamHelper(os, v.value_, v.type_, StreamMode::kScalar);
 }
 
 //
