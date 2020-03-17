@@ -35,6 +35,16 @@ std::unique_ptr<PollingPolicy> TestPollingPolicy() {
       .clone();
 }
 
+// This function is used to test early failures, where the polling loop callable
+// should not get called.
+StatusOr<google::longrunning::Operation> ShouldNotBeCalled(
+    grpc::ClientContext&, google::longrunning::GetOperationRequest const&) {
+  // The polling operation should not be called for requests
+  // FAIL() fails here (he he) because it has an embedded `return;`
+  EXPECT_TRUE(false);
+  return make_status_or(google::longrunning::Operation{});
+}
+
 TEST(PollingLoopTest, ExtractResponseSuccess) {
   google::protobuf::Value expected;
   expected.set_string_value("42");
@@ -120,15 +130,7 @@ TEST(PollingLoopTest, ImmediateSuccess) {
 
   StatusOr<google::protobuf::Value> actual =
       PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
-          TestPollingPolicy(),
-          [](grpc::ClientContext&,
-             google::longrunning::GetOperationRequest const&) {
-            // The polling operation should not be called for requests
-            // FAIL() fails here (he he) because it has an embedded `return;`
-            EXPECT_TRUE(false);
-            return make_status_or(google::longrunning::Operation{});
-          },
-          operation, "location");
+          TestPollingPolicy(), ShouldNotBeCalled, operation, "location");
   EXPECT_STATUS_OK(actual);
   EXPECT_EQ(expected.string_value(), actual->string_value());
 }
@@ -144,14 +146,7 @@ TEST(PollingLoopTest, ImmediateFailure) {
 
   StatusOr<google::protobuf::Value> actual =
       PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
-          TestPollingPolicy(),
-          [](grpc::ClientContext&,
-             google::longrunning::GetOperationRequest const&) {
-            // The polling operation should not be called for requests
-            EXPECT_TRUE(false);
-            return make_status_or(google::longrunning::Operation{});
-          },
-          operation, "location");
+          TestPollingPolicy(), ShouldNotBeCalled, operation, "location");
   EXPECT_EQ(StatusCode::kResourceExhausted, actual.status().code());
   EXPECT_EQ(error.message(), actual.status().message());
 }
@@ -292,12 +287,7 @@ TEST(PollingLoopTest, FailureMissingResponseAndError) {
 
   StatusOr<google::protobuf::Value> actual =
       PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
-          TestPollingPolicy(),
-          [](grpc::ClientContext&,
-             google::longrunning::GetOperationRequest const&) {
-            return make_status_or(google::longrunning::Operation{});
-          },
-          operation, "test-location");
+          TestPollingPolicy(), ShouldNotBeCalled, operation, "test-location");
   EXPECT_EQ(StatusCode::kInternal, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
@@ -309,12 +299,7 @@ TEST(PollingLoopTest, FailureMissingMetadataAndError) {
 
   StatusOr<google::protobuf::Value> actual =
       PollingLoop<PollingLoopMetadataExtractor<google::protobuf::Value>>(
-          TestPollingPolicy(),
-          [](grpc::ClientContext&,
-             google::longrunning::GetOperationRequest const&) {
-            return make_status_or(google::longrunning::Operation{});
-          },
-          operation, "test-location");
+          TestPollingPolicy(), ShouldNotBeCalled, operation, "test-location");
   EXPECT_EQ(StatusCode::kInternal, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
@@ -328,12 +313,7 @@ TEST(PollingLoopTest, FailureInvalidContentsResponse) {
 
   StatusOr<google::protobuf::Value> actual =
       PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
-          TestPollingPolicy(),
-          [](grpc::ClientContext&,
-             google::longrunning::GetOperationRequest const&) {
-            return make_status_or(google::longrunning::Operation{});
-          },
-          operation, "test-location");
+          TestPollingPolicy(), ShouldNotBeCalled, operation, "test-location");
   EXPECT_EQ(StatusCode::kInternal, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
@@ -347,12 +327,7 @@ TEST(PollingLoopTest, FailureInvalidContentsMetadata) {
 
   StatusOr<google::protobuf::Value> actual =
       PollingLoop<PollingLoopMetadataExtractor<google::protobuf::Value>>(
-          TestPollingPolicy(),
-          [](grpc::ClientContext&,
-             google::longrunning::GetOperationRequest const&) {
-            return make_status_or(google::longrunning::Operation{});
-          },
-          operation, "test-location");
+          TestPollingPolicy(), ShouldNotBeCalled, operation, "test-location");
   EXPECT_EQ(StatusCode::kInternal, actual.status().code());
   EXPECT_THAT(actual.status().message(), HasSubstr("test-location"));
 }
