@@ -96,11 +96,11 @@ ConnectionImpl::ConnectionImpl(Database db,
     : db_(std::move(db)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
-      session_pool_(MakeSessionPool(db_, std::move(stubs),
-                                    std::move(session_pool_options),
-                                    options.background_threads_factory()(),
-                                    retry_policy_prototype_->clone(),
-                                    backoff_policy_prototype_->clone())),
+      background_threads_(options.background_threads_factory()()),
+      session_pool_(MakeSessionPool(
+          db_, std::move(stubs), std::move(session_pool_options),
+          background_threads_->cq(), retry_policy_prototype_->clone(),
+          backoff_policy_prototype_->clone())),
       rpc_stream_tracing_enabled_(options.tracing_enabled("rpc-streams")),
       tracing_options_(options.tracing_options()) {}
 

@@ -17,7 +17,6 @@
 #include "google/cloud/spanner/internal/connection_impl.h"
 #include "google/cloud/spanner/internal/retry_loop.h"
 #include "google/cloud/spanner/internal/session.h"
-#include "google/cloud/background_threads.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/log.h"
@@ -38,14 +37,12 @@ namespace spanner_proto = ::google::spanner::v1;
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options,
-    std::unique_ptr<BackgroundThreads> background_threads,
+    SessionPoolOptions options, google::cloud::CompletionQueue cq,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy) {
   auto pool = std::make_shared<SessionPool>(
-      std::move(db), std::move(stubs), std::move(options),
-      std::move(background_threads), std::move(retry_policy),
-      std::move(backoff_policy));
+      std::move(db), std::move(stubs), std::move(options), std::move(cq),
+      std::move(retry_policy), std::move(backoff_policy));
   pool->Initialize();
   return pool;
 }
@@ -53,13 +50,13 @@ std::shared_ptr<SessionPool> MakeSessionPool(
 SessionPool::SessionPool(Database db,
                          std::vector<std::shared_ptr<SpannerStub>> stubs,
                          SessionPoolOptions options,
-                         std::unique_ptr<BackgroundThreads> background_threads,
+                         google::cloud::CompletionQueue cq,
                          std::unique_ptr<RetryPolicy> retry_policy,
                          std::unique_ptr<BackoffPolicy> backoff_policy)
     : db_(std::move(db)),
       options_(std::move(
           options.EnforceConstraints(static_cast<int>(stubs.size())))),
-      background_threads_(std::move(background_threads)),
+      cq_(std::move(cq)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
       max_pool_size_(options_.max_sessions_per_channel() *
@@ -103,8 +100,7 @@ void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {
   // See the comment in the destructor about the thread safety of this method.
   std::weak_ptr<SessionPool> pool = shared_from_this();
   current_timer_ =
-      background_threads_->cq()
-          .MakeRelativeTimer(relative_time)
+      cq_.MakeRelativeTimer(relative_time)
           .then([pool](future<StatusOr<std::chrono::system_clock::time_point>>
                            result) {
             if (result.get().ok()) {

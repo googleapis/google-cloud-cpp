@@ -24,6 +24,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/tracing_options.h"
 #include "google/cloud/spanner/version.h"
+#include "google/cloud/background_threads.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -167,6 +168,7 @@ class ConnectionImpl : public Connection {
   Database db_;
   std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
   std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::unique_ptr<BackgroundThreads> background_threads_;
   std::shared_ptr<SessionPool> session_pool_;
   bool rpc_stream_tracing_enabled_ = false;
   TracingOptions tracing_options_;

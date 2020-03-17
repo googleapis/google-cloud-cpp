@@ -23,7 +23,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/version.h"
-#include "google/cloud/background_threads.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include <google/spanner/v1/spanner.pb.h>
@@ -65,8 +65,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
    * than calling the constructor and `Initialize()` directly.
    */
   SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-              SessionPoolOptions options,
-              std::unique_ptr<BackgroundThreads> background_threads,
+              SessionPoolOptions options, google::cloud::CompletionQueue cq,
               std::unique_ptr<RetryPolicy> retry_policy,
               std::unique_ptr<BackoffPolicy> backoff_policy);
 
@@ -142,7 +141,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   Database const db_;
   SessionPoolOptions const options_;
-  std::unique_ptr<BackgroundThreads> const background_threads_;
+  google::cloud::CompletionQueue cq_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   int const max_pool_size_;
@@ -172,8 +171,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
  */
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options,
-    std::unique_ptr<BackgroundThreads> background_threads,
+    SessionPoolOptions options, google::cloud::CompletionQueue cq,
     std::unique_ptr<RetryPolicy> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy);
 
