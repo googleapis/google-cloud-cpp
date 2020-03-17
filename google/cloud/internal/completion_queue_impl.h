@@ -247,8 +247,30 @@ class CompletionQueueImpl {
   /// The underlying gRPC completion queue.
   grpc::CompletionQueue& cq() { return cq_; }
 
-  /// Add a new asynchronous operation to the completion queue.
-  void* RegisterOperation(std::shared_ptr<AsyncGrpcOperation> op);
+  /// Atomically add a new operation to the completion queue and start it.
+  template <typename Callable,
+            typename std::enable_if<
+                google::cloud::internal::is_invocable<Callable, void*>::value,
+                int>::type = 0>
+  void StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
+                      Callable&& start) {
+    void* tag = op.get();
+    std::unique_lock<std::mutex> lk(mu_);
+    if (shutdown_) {
+      lk.unlock();
+      op->Notify(/*ok=*/false);
+      return;
+    }
+    auto ins = pending_ops_.emplace(reinterpret_cast<std::intptr_t>(tag),
+                                    std::move(op));
+    if (ins.second) {
+      start(tag);
+      lk.unlock();
+      return;
+    }
+    google::cloud::internal::ThrowRuntimeError(
+        "assertion failure: insertion should succeed");
+  }
 
  protected:
   /// Return the asynchronous operation associated with @p tag.

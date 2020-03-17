@@ -333,11 +333,14 @@ TEST(CompletionQueueTest, RunAsync) {
 // Sets up a timer that reschedules itself and verifies we can shut down
 // cleanly whether we call `CancelAll()` on the queue first or not.
 namespace {
-void RunAndReschedule(CompletionQueue& cq, bool ok) {
+using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
+
+void RunAndReschedule(CompletionQueue& cq, bool ok,
+                      std::chrono::seconds duration) {
   if (ok) {
-    cq.MakeRelativeTimer(std::chrono::seconds(1))
-        .then([&cq](future<StatusOr<std::chrono::system_clock::time_point>>
-                        result) { RunAndReschedule(cq, result.get().ok()); });
+    cq.MakeRelativeTimer(duration).then([&cq, duration](TimerFuture result) {
+      RunAndReschedule(cq, result.get().ok(), duration);
+    });
   }
 }
 }  // namespace
@@ -346,17 +349,40 @@ TEST(CompletionQueueTest, ShutdownWithReschedulingTimer) {
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
 
-  RunAndReschedule(cq, /*ok=*/true);
+  RunAndReschedule(cq, /*ok=*/true, std::chrono::seconds(1));
 
   cq.Shutdown();
   t.join();
+}
+
+TEST(CompletionQueueTest, ShutdownWithFastReschedulingTimer) {
+  auto constexpr kThreadCount = 32;
+  auto constexpr kTimerCount = 100;
+  CompletionQueue cq;
+  std::vector<std::thread> threads(kThreadCount);
+  std::generate_n(threads.begin(), threads.size(),
+                  [&cq] { return std::thread([&cq] { cq.Run(); }); });
+
+  for (int i = 0; i != kTimerCount; ++i) {
+    RunAndReschedule(cq, /*ok=*/true, std::chrono::seconds(0));
+  }
+
+  promise<void> wait;
+  cq.MakeRelativeTimer(std::chrono::milliseconds(1)).then([&wait](TimerFuture) {
+    wait.set_value();
+  });
+  wait.get_future().get();
+  cq.Shutdown();
+  for (auto& t : threads) {
+    t.join();
+  }
 }
 
 TEST(CompletionQueueTest, CancelAndShutdownWithReschedulingTimer) {
   CompletionQueue cq;
   std::thread t([&cq] { cq.Run(); });
 
-  RunAndReschedule(cq, /*ok=*/true);
+  RunAndReschedule(cq, /*ok=*/true, std::chrono::seconds(1));
 
   cq.CancelAll();
   cq.Shutdown();
