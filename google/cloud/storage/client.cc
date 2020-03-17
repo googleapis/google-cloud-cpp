@@ -48,6 +48,7 @@ StatusOr<Client> Client::CreateDefaultClient() {
 
 ObjectReadStream Client::ReadObjectImpl(
     internal::ReadObjectRangeRequest const& request) {
+  std::cout << __PRETTY_FUNCTION__ << "entering" << std::endl;
   auto source = raw_client_->ReadObject(request);
   if (!source) {
     ObjectReadStream error_stream(
@@ -56,17 +57,23 @@ ObjectReadStream Client::ReadObjectImpl(
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     return error_stream;
   }
+  std::cout << __PRETTY_FUNCTION__ << "create stream" << std::endl;
   auto stream = ObjectReadStream(
       google::cloud::internal::make_unique<internal::ObjectReadStreambuf>(
           request, *std::move(source)));
-  (void)stream.peek();
+
+//  std::cout << __PRETTY_FUNCTION__ << "stream.peek()" << std::endl;
+//  (void)stream.peek();
+//  std::cout << __PRETTY_FUNCTION__ << " post stream.peek()" << std::endl;
 #if !GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   // Without exceptions the streambuf cannot report errors, so we have to
   // manually update the status bits.
+  std::cout << __PRETTY_FUNCTION__ << "update status bits" << std::endl;
   if (!stream.status().ok()) {
     stream.setstate(std::ios::badbit | std::ios::eofbit);
   }
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+  std::cout << __PRETTY_FUNCTION__ << "exiting" << std::endl;
   return stream;
 }
 

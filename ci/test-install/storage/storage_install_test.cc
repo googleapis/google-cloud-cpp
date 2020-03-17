@@ -29,9 +29,6 @@ int main(int argc, char* argv[]) try {
   std::string const bucket_name = argv[1];
   std::string const object_name = argv[2];
 
-  std::cout << "std::cout " << std::string(argv[0]) << "\n";
-  std::cerr << "std::cerr " << std::string(argv[0]) << "\n";
-
   google::cloud::StatusOr<gcs::Client> client =
       gcs::Client::CreateDefaultClient();
   if (!client) {
@@ -40,37 +37,41 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  std::cout << "Created default GCS Client" << "\n";
-
-  std::cout << "Writing Hello World Object" << "\n";
+  std::cout << "Writing Hello World Object" << std::endl;
   gcs::ObjectWriteStream os = client->WriteObject(bucket_name, object_name);
   os.exceptions(std::ios_base::badbit | std::ios_base::failbit);
   os << "Hello World\n";
   os.Close();
+  std::cout << "Hello World Object written" << std::endl;
+
   gcs::ObjectMetadata meta = os.metadata().value();
   std::cout << "Successfully created object, generation=" << meta.generation()
-            << "\n";
+            << std::endl;
 
-  std::cout << "Reading Hello World Object" << "\n";
+
+
+  std::cout << "Reading Hello World Object" << std::endl;
   gcs::ObjectReadStream stream = client->ReadObject(bucket_name, object_name);
-  stream.exceptions(std::ios_base::badbit);
 
-  int count = 0;
-  std::string line;
-  while (std::getline(stream, line, '\n')) {
-    ++count;
-  }
+  std::cout << "Created OjbectReadStream" << std::endl;
 
-  std::cout << "Deleting Hello World Object" << "\n";
+//  stream.exceptions(std::ios_base::badbit);
+//  int count = 0;
+//  std::string line;
+//  while (std::getline(stream, line, '\n')) {
+//    ++count;
+//  }
+
+  std::cout << "Deleting Hello World Object" << std::endl;
   google::cloud::Status status = client->DeleteObject(
       bucket_name, object_name, gcs::Generation(meta.generation()));
   if (!status.ok()) {
     throw std::runtime_error(status.message());
   }
 
-  std::cout << "Exiting storage_install_test.\n";
+  std::cout << "Exiting storage_install_test." << std::endl;
   return 0;
 } catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+  std::cerr << "Standard exception raised: " << ex.what() << std::endl;
   return 1;
 }
