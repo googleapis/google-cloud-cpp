@@ -424,6 +424,7 @@ function (spanner_client_define_benchmarks)
         string(REPLACE "/" "_" target ${fname})
         string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
+        add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(${target} PRIVATE googleapis-c++::spanner_client
                                                 benchmark::benchmark_main)
         google_cloud_cpp_add_clang_tidy(${target})
