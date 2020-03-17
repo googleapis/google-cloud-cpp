@@ -160,6 +160,9 @@ class Client {
    *     this request.
    * @param read_options `ReadOptions` used for this request.
    *
+   * @par Example
+   * @snippet samples.cc read-data
+   *
    * @note No individual row in the `ReadResult` can exceed 100 MiB, and no
    *     column value can exceed 10 MiB.
    */
@@ -338,7 +341,7 @@ class Client {
    * @note No individual row in the `ProfileQueryResult` can exceed 100 MiB, and
    *     no column value can exceed 10 MiB.
    *
-   * @par Example:
+   * @par Example
    * @snippet samples.cc profile-query
    */
   ProfileQueryResult ProfileQuery(SqlStatement statement,
@@ -403,7 +406,7 @@ class Client {
    *     take precedence over the options set at the client and environment
    *     levels.
    *
-   * @par Example:
+   * @par Example
    * @snippet samples.cc execute-dml
    */
   StatusOr<DmlResult> ExecuteDml(Transaction transaction,
@@ -470,9 +473,6 @@ class Client {
    * outside of the transaction until it is committed. For that reason, it is
    * advisable to run this method from a `Commit` mutator.
    *
-   * @par Example
-   * @snippet samples.cc execute-batch-dml
-   *
    * @warning A returned status of OK from this function does not imply that
    *     all the statements were executed successfully. For that, you need to
    *     inspect the `BatchDmlResult::status` field.
@@ -483,6 +483,9 @@ class Client {
    *     are visible to statement i+1. Each statement must be a DML statement.
    *     Execution will stop at the first failed statement; the remaining
    *     statements will not run. Must not be empty.
+   *
+   * @par Example
+   * @snippet samples.cc execute-batch-dml
    */
   StatusOr<BatchDmlResult> ExecuteBatchDml(
       Transaction transaction, std::vector<SqlStatement> statements);
@@ -521,6 +524,9 @@ class Client {
    *     the transaction). However, a `RuntimeStatusError` exception is
    *     instead consumed and converted into a `mutator` return value of the
    *     enclosed `Status`.
+   *
+   * @par Example
+   * @snippet samples.cc commit-with-policies
    */
   StatusOr<CommitResult> Commit(
       std::function<StatusOr<Mutations>(Transaction)> const& mutator,

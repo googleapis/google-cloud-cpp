@@ -1631,6 +1631,33 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
 }
 //! [END spanner_dml_standard_update]
 
+//! [commit-with-policies]
+void CommitWithPolicies(google::cloud::spanner::Client client) {
+  using ::google::cloud::StatusOr;
+  namespace spanner = ::google::cloud::spanner;
+  auto commit = client.Commit(
+      [&client](spanner::Transaction txn) -> StatusOr<spanner::Mutations> {
+        auto update = client.ExecuteDml(
+            std::move(txn),
+            spanner::SqlStatement(
+                "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
+                " WHERE SingerId = 1 AND AlbumId = 1"));
+        if (!update) return update.status();
+        return spanner::Mutations{};
+      },
+      // Retry for up to 42 minutes.
+      spanner::LimitedTimeTransactionRerunPolicy(std::chrono::minutes(42))
+          .clone(),
+      // After a failure backoff for 2 seconds (with jitter), then triple the
+      // backoff time on each retry, up to 5 minutes.
+      spanner::ExponentialBackoffPolicy(std::chrono::seconds(2),
+                                        std::chrono::minutes(5), 3.0)
+          .clone());
+  if (!commit) throw std::runtime_error(commit.status().message());
+  std::cout << "commit-with-policies was successful\n";
+}
+//! [commit-with-policies]
+
 void ProfileDmlStandardUpdate(google::cloud::spanner::Client client) {
   using ::google::cloud::StatusOr;
   namespace spanner = ::google::cloud::spanner;
@@ -1953,7 +1980,7 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
 }
 //! [END spanner_query_with_parameter]
 
-//! [START spanner_read_data]
+//! [read-data] [START spanner_read_data]
 void ReadData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
 
@@ -1969,7 +1996,7 @@ void ReadData(google::cloud::spanner::Client client) {
 
   std::cout << "Read completed for [spanner_read_data]\n";
 }
-//! [END spanner_read_data]
+//! [read-data] [END spanner_read_data]
 
 //! [spanner-query-data-select-star]
 void QueryDataSelectStar(google::cloud::spanner::Client client) {
@@ -2464,6 +2491,7 @@ int RunOneCommand(std::vector<std::string> argv) {
                          DmlStandardUpdateWithTimestamp),
       make_command_entry("profile-dml-standard-update",
                          ProfileDmlStandardUpdate),
+      make_command_entry("commit-with-policies", CommitWithPolicies),
       make_command_entry("dml-write-then-read", DmlWriteThenRead),
       make_command_entry("dml-standard-delete", DmlStandardDelete),
       make_command_entry("dml-partitioned-update", DmlPartitionedUpdate),
@@ -2784,6 +2812,9 @@ void RunAll(bool emulator) {
 
   std::cout << "\nRunning spanner_dml_standard_update sample\n";
   DmlStandardUpdate(client);
+
+  std::cout << "\nRunning commit-with-policies sample\n";
+  CommitWithPolicies(client);
 
   std::cout << "\nRunning spanner_dml_standard_update_with_timestamp sample\n";
   DmlStandardUpdateWithTimestamp(client);
