@@ -29,10 +29,18 @@ static_assert(static_cast<int>(Severity::GCP_LS_LOWEST) <
 std::ostream& operator<<(std::ostream& os, Severity x) {
   auto constexpr kSeverityCount =
       static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
-  std::array<char const*, kSeverityCount> names{
-      "TRACE", "DEBUG",    "INFO",  "NOTICE", "WARNING",
-      "ERROR", "CRITICAL", "ALERT", "FATAL",
-  };
+  // Double braces needed to workaround a clang-3.8 bug.
+  std::array<char const*, kSeverityCount> names{{
+      "TRACE",
+      "DEBUG",
+      "INFO",
+      "NOTICE",
+      "WARNING",
+      "ERROR",
+      "CRITICAL",
+      "ALERT",
+      "FATAL",
+  }};
   auto index = static_cast<int>(x);
   return os << names[index];
 }

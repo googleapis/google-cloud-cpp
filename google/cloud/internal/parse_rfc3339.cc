@@ -67,7 +67,8 @@ std::chrono::system_clock::time_point ParseDateTime(
     ReportError(timestamp, "Invalid date-time separator, expected 'T' or 't'.");
   }
 
-  std::array<int, kMonthsInYear> constexpr kMaxDaysInMonth{
+  // Double braces are needed to workaround a clang-3.8 bug.
+  std::array<int, kMonthsInYear> constexpr kMaxDaysInMonth{{
       31,  // January
       29,  // February (non-leap years checked below)
       31,  // March
@@ -80,7 +81,7 @@ std::chrono::system_clock::time_point ParseDateTime(
       31,  // October
       30,  // November
       31,  // December
-  };
+  }};
   auto constexpr kMkTimeBaseYear = 1900;
   if (month < 1 || month > kMonthsInYear) {
     ReportError(timestamp, "Out of range month.");
