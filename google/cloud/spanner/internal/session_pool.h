@@ -33,6 +33,7 @@
 #include <map>
 #include <memory>
 #include <mutex>
+#include <random>
 #include <string>
 #include <utility>
 #include <vector>
@@ -97,6 +98,14 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::shared_ptr<SpannerStub> GetStub(Session const& session);
 
  private:
+  // Represents a request to create `session_count` sessions on `channel`
+  // See `ComputeCreateCounts` and `CreateSessions`.
+  struct CreateCount {
+    std::shared_ptr<Channel> channel;
+    int session_count;
+  };
+  enum class WaitForSessionAllocation { kWait, kNoWait };
+
   // Release session back to the pool.
   void Release(std::unique_ptr<Session> session);
 
@@ -109,10 +118,18 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
     --num_waiting_for_session_;
   }
 
-  Status CreateSessions(std::unique_lock<std::mutex>& lk,
-                        std::shared_ptr<Channel> const& channel,
-                        std::map<std::string, std::string> const& labels,
-                        int num_sessions);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
+              WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  StatusOr<std::vector<CreateCount>> ComputeCreateCounts(
+      int sessions_to_create);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
+  Status CreateSessions(std::vector<CreateCount> create_counts,
+                        WaitForSessionAllocation wait);  // LOCKS_EXCLUDED(mu_)
+  Status CreateSessionsSync(std::shared_ptr<Channel> const& channel,
+                            std::map<std::string, std::string> const& labels,
+                            int num_sessions);  // LOCKS_EXCLUDED(mu_)
+  void CreateSessionsAsync(std::shared_ptr<Channel> const& channel,
+                           std::map<std::string, std::string> const& labels,
+                           int num_sessions);  // LOCKS_EXCLUDED(mu_)
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
                                   bool dissociate_from_pool);
@@ -130,14 +147,15 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
       CompletionQueue& cq, std::shared_ptr<SpannerStub> stub,
       std::string session_name);
 
+  Status HandleBatchCreateSessionsDone(
+      std::shared_ptr<Channel> const& channel,
+      StatusOr<google::spanner::v1::BatchCreateSessionsResponse> response);
+
   void UpdateNextChannelForCreateSessions();  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
 
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
   void MaintainPoolSize();
-  enum class WaitForSessionAllocation { kWait, kNoWait };
-  Status Grow(std::unique_lock<std::mutex>& lk, int sessions_to_create,
-              WaitForSessionAllocation wait);
 
   Database const db_;
   SessionPoolOptions const options_;
@@ -145,12 +163,13 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
   int const max_pool_size_;
+  std::mt19937 random_generator_;
 
   std::mutex mu_;
   std::condition_variable cond_;
   std::vector<std::unique_ptr<Session>> sessions_;  // GUARDED_BY(mu_)
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
-  bool create_in_progress_ = false;                 // GUARDED_BY(mu_)
+  int create_calls_in_progress_ = 0;                // GUARDED_BY(mu_)
   int num_waiting_for_session_ = 0;                 // GUARDED_BY(mu_)
   future<void> current_timer_;
 
