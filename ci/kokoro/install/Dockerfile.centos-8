@@ -88,7 +88,7 @@ RUN wget -q https://github.com/grpc/grpc/archive/78ace4cd5dfcc1f2eced44d22d752f1
 # ```bash
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1,0.tar.gz && \
+    tar -xf 1.1.0.tar.gz && \
     cd crc32c-1.1.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
