@@ -150,7 +150,7 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   handle_.FlushDebug(__func__);
   TRACE_STATE();
 
-  if (!curl_closed_) {
+  if (!curl_closed_ && paused_) {
     auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     if (!status.ok()) {
       TRACE_STATE() << ", status=" << status;
