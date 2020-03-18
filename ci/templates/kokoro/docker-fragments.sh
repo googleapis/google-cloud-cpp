@@ -61,7 +61,7 @@ _EOF_
 read_into_variable INSTALL_CRC32C_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
 RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
-    tar -xf 1.1,0.tar.gz && \
+    tar -xf 1.1.0.tar.gz && \
     cd crc32c-1.1.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
