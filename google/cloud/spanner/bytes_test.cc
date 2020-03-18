@@ -282,7 +282,8 @@ TEST(Bytes, OutputStreamEscapingCannotFail) {
   for (int i = 0; i < std::numeric_limits<ByteType>::max() + 1; ++i) {
     auto const b = static_cast<ByteType>(i);
     std::ostringstream ss;
-    ss << Bytes(std::array<ByteType, 1>{b});
+    // Workaround clang-3.8 bug by using double braces
+    ss << Bytes(std::array<ByteType, 1>{{b}});
     EXPECT_NE(ss.str(), R"(B"\?")") << "i=" << i;
   }
 }

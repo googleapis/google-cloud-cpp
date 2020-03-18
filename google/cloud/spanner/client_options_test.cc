@@ -24,7 +24,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(ClientOptionsTest, OptimizerVersion) {
-  ClientOptions const default_constructed;
+  ClientOptions const default_constructed{};
   EXPECT_EQ(QueryOptions{}, default_constructed.query_options());
 
   auto copy = default_constructed;

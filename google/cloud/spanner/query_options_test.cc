@@ -23,7 +23,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace {
 
 TEST(QueryOptionsTest, OptimizerVersion) {
-  QueryOptions const default_constructed;
+  QueryOptions const default_constructed{};
   EXPECT_FALSE(default_constructed.optimizer_version().has_value());
 
   auto copy = default_constructed;
