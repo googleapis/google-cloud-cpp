@@ -49,7 +49,7 @@ class ClientIntegrationTest : public ::testing::Test {
     EXPECT_STATUS_OK(commit_result);
   }
 
-  void InsertTwoSingers() {
+  static void InsertTwoSingers() {
     auto commit_result = client_->Commit(Mutations{
         InsertMutationBuilder("Singers", {"SingerId", "FirstName", "LastName"})
             .EmplaceRow(1, "test-fname-1", "test-lname-1")
@@ -428,7 +428,7 @@ void CheckReadWithOptions(
 }
 
 /// @test Test Read() with bounded staleness set by a timestamp.
-TEST_F(ClientIntegrationTest, Read_BoundedStaleness_Timestamp) {
+TEST_F(ClientIntegrationTest, ReadBoundedStalenessTimestamp) {
   CheckReadWithOptions(*client_, [](CommitResult const& result) {
     return Transaction::SingleUseOptions(
         /*min_read_timestamp=*/result.commit_timestamp);
@@ -436,7 +436,7 @@ TEST_F(ClientIntegrationTest, Read_BoundedStaleness_Timestamp) {
 }
 
 /// @test Test Read() with bounded staleness set by duration.
-TEST_F(ClientIntegrationTest, Read_BoundedStaleness_Duration) {
+TEST_F(ClientIntegrationTest, ReadBoundedStalenessDuration) {
   CheckReadWithOptions(*client_, [](CommitResult const&) {
     // We want a duration sufficiently recent to include the latest commit.
     return Transaction::SingleUseOptions(
@@ -445,14 +445,14 @@ TEST_F(ClientIntegrationTest, Read_BoundedStaleness_Duration) {
 }
 
 /// @test Test Read() with exact staleness set to "all previous transactions".
-TEST_F(ClientIntegrationTest, Read_ExactStaleness_Latest) {
+TEST_F(ClientIntegrationTest, ReadExactStalenessLatest) {
   CheckReadWithOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions());
   });
 }
 
 /// @test Test Read() with exact staleness set by a timestamp.
-TEST_F(ClientIntegrationTest, Read_ExactStaleness_Timestamp) {
+TEST_F(ClientIntegrationTest, ReadExactStalenessTimestamp) {
   CheckReadWithOptions(*client_, [](CommitResult const& result) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
         /*read_timestamp=*/result.commit_timestamp));
@@ -460,7 +460,7 @@ TEST_F(ClientIntegrationTest, Read_ExactStaleness_Timestamp) {
 }
 
 /// @test Test Read() with exact staleness set by duration.
-TEST_F(ClientIntegrationTest, Read_ExactStaleness_Duration) {
+TEST_F(ClientIntegrationTest, ReadExactStalenessDuration) {
   CheckReadWithOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
         /*exact_staleness=*/std::chrono::nanoseconds(0)));
@@ -511,7 +511,7 @@ void CheckExecuteQueryWithSingleUseOptions(
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by a timestamp.
-TEST_F(ClientIntegrationTest, ExecuteQuery_BoundedStaleness_Timestamp) {
+TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessTimestamp) {
   CheckExecuteQueryWithSingleUseOptions(
       *client_, [](CommitResult const& result) {
         return Transaction::SingleUseOptions(
@@ -520,7 +520,7 @@ TEST_F(ClientIntegrationTest, ExecuteQuery_BoundedStaleness_Timestamp) {
 }
 
 /// @test Test ExecuteQuery() with bounded staleness set by duration.
-TEST_F(ClientIntegrationTest, ExecuteQuery_BoundedStaleness_Duration) {
+TEST_F(ClientIntegrationTest, ExecuteQueryBoundedStalenessDuration) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     // We want a duration sufficiently recent to include the latest commit.
     return Transaction::SingleUseOptions(
@@ -530,14 +530,14 @@ TEST_F(ClientIntegrationTest, ExecuteQuery_BoundedStaleness_Duration) {
 
 /// @test Test ExecuteQuery() with exact staleness set to "all previous
 /// transactions".
-TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Latest) {
+TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessLatest) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions());
   });
 }
 
 /// @test Test ExecuteQuery() with exact staleness set by a timestamp.
-TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Timestamp) {
+TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessTimestamp) {
   CheckExecuteQueryWithSingleUseOptions(
       *client_, [](CommitResult const& result) {
         return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
@@ -546,7 +546,7 @@ TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Timestamp) {
 }
 
 /// @test Test ExecuteQuery() with exact staleness set by duration.
-TEST_F(ClientIntegrationTest, ExecuteQuery_ExactStaleness_Duration) {
+TEST_F(ClientIntegrationTest, ExecuteQueryExactStalenessDuration) {
   CheckExecuteQueryWithSingleUseOptions(*client_, [](CommitResult const&) {
     return Transaction::SingleUseOptions(Transaction::ReadOnlyOptions(
         /*exact_staleness=*/std::chrono::nanoseconds(0)));

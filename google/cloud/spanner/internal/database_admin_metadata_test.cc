@@ -39,7 +39,7 @@ class DatabaseAdminMetadataTest : public ::testing::Test {
 
   void TearDown() override {}
 
-  Status TransientError() {
+  static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 

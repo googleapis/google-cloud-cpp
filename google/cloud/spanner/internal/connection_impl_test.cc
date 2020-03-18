@@ -1266,7 +1266,7 @@ TEST(ConnectionImplTest, ExecutePartitionedDmlDeleteTooManyTransientFailures) {
 }
 
 TEST(ConnectionImplTest,
-     ExecutePartitionedDmlDelete_BeginTransactionPermanentFailure) {
+     ExecutePartitionedDmlDeleteBeginTransactionPermanentFailure) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
   auto conn = MakeConnection(db, {mock});
@@ -1287,7 +1287,7 @@ TEST(ConnectionImplTest,
 }
 
 TEST(ConnectionImplTest,
-     ExecutePartitionedDmlDelete_BeginTransactionTooManyTransientFailures) {
+     ExecutePartitionedDmlDeleteBeginTransactionTooManyTransientFailures) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = Database("dummy_project", "dummy_instance", "dummy_database_id");
   auto conn = MakeLimitedRetryConnection(db, mock);

@@ -47,9 +47,8 @@ RowStreamIterator::Source MakeRowStreamIteratorSource(
 class RowRange {
  public:
   explicit RowRange(RowStreamIterator::Source s) : s_(std::move(s)) {}
-  // NOLINTNEXTLINE(readability-identifier-naming)
   RowStreamIterator begin() { return RowStreamIterator(s_); }
-  // NOLINTNEXTLINE(readability-identifier-naming)
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   RowStreamIterator end() { return RowStreamIterator(); }
 
  private:

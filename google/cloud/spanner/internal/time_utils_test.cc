@@ -24,7 +24,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
-TEST(time_utils, ConvertTimePointToProtoTimestamp) {
+TEST(TimeUtils, ConvertTimePointToProtoTimestamp) {
   auto const epoch = std::chrono::system_clock::from_time_t(0);
   auto t = epoch + std::chrono::seconds(123) + std::chrono::nanoseconds(456000);
   auto proto_timestamp = ConvertTimePointToProtoTimestamp(t);

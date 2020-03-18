@@ -44,16 +44,16 @@ class MetadataSpannerStubTest : public ::testing::Test {
 
   void TearDown() override {}
 
-  Status TransientError() {
+  static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 
   template <typename T>
-  void ExpectTransientError(StatusOr<T> const& status) {
+  static void ExpectTransientError(StatusOr<T> const& status) {
     EXPECT_EQ(TransientError(), status.status());
   }
 
-  void ExpectTransientError(Status const& status) {
+  static void ExpectTransientError(Status const& status) {
     EXPECT_EQ(TransientError(), status);
   }
 

@@ -295,7 +295,7 @@ class InsertOrUpdateExperiment : public Experiment {
     auto start = std::chrono::steady_clock::now();
     for (auto& t : tasks) {
       t = std::async(std::launch::async, &InsertOrUpdateExperiment::RunTask,
-                     this, config, client, locked_random_key, error_sink);
+                     config, client, locked_random_key, error_sink);
     }
     int insert_count = 0;
     for (auto& t : tasks) {
@@ -308,9 +308,9 @@ class InsertOrUpdateExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, spanner::Client client,
-              RandomKeyGenerator const& key_generator,
-              ErrorSink const& error_sink) {
+  static int RunTask(Config const& config, spanner::Client client,
+                     RandomKeyGenerator const& key_generator,
+                     ErrorSink const& error_sink) {
     int count = 0;
     std::string value(1024, 'A');
     std::vector<google::cloud::Status> errors;
@@ -387,7 +387,7 @@ class ReadExperiment : public Experiment {
     std::vector<std::future<int>> tasks(thread_count);
     auto start = std::chrono::steady_clock::now();
     for (auto& t : tasks) {
-      t = std::async(std::launch::async, &ReadExperiment::RunTask, this, config,
+      t = std::async(std::launch::async, &ReadExperiment::RunTask, config,
                      client, locked_random_key, error_sink);
     }
     int total_count = 0;
@@ -401,9 +401,9 @@ class ReadExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, spanner::Client client,
-              RandomKeyGenerator const& key_generator,
-              ErrorSink const& error_sink) {
+  static int RunTask(Config const& config, spanner::Client client,
+                     RandomKeyGenerator const& key_generator,
+                     ErrorSink const& error_sink) {
     int count = 0;
     std::string value(1024, 'A');
     std::vector<google::cloud::Status> errors;
@@ -484,8 +484,8 @@ class UpdateDmlExperiment : public Experiment {
     std::vector<std::future<int>> tasks(thread_count);
     auto start = std::chrono::steady_clock::now();
     for (auto& t : tasks) {
-      t = std::async(std::launch::async, &UpdateDmlExperiment::RunTask, this,
-                     config, client, locked_random_key, error_sink);
+      t = std::async(std::launch::async, &UpdateDmlExperiment::RunTask, config,
+                     client, locked_random_key, error_sink);
     }
     int insert_count = 0;
     for (auto& t : tasks) {
@@ -498,9 +498,9 @@ class UpdateDmlExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, spanner::Client client,
-              RandomKeyGenerator const& key_generator,
-              ErrorSink const& error_sink) {
+  static int RunTask(Config const& config, spanner::Client client,
+                     RandomKeyGenerator const& key_generator,
+                     ErrorSink const& error_sink) {
     int count = 0;
     std::string value(1024, 'A');
     std::vector<google::cloud::Status> errors;
@@ -585,8 +585,8 @@ class SelectExperiment : public Experiment {
     std::vector<std::future<int>> tasks(thread_count);
     auto start = std::chrono::steady_clock::now();
     for (auto& t : tasks) {
-      t = std::async(std::launch::async, &SelectExperiment::RunTask, this,
-                     config, client, locked_random_key, error_sink);
+      t = std::async(std::launch::async, &SelectExperiment::RunTask, config,
+                     client, locked_random_key, error_sink);
     }
     int total_count = 0;
     for (auto& t : tasks) {
@@ -599,9 +599,9 @@ class SelectExperiment : public Experiment {
         std::chrono::duration_cast<std::chrono::microseconds>(elapsed)}});
   }
 
-  int RunTask(Config const& config, spanner::Client client,
-              RandomKeyGenerator const& key_generator,
-              ErrorSink const& error_sink) {
+  static int RunTask(Config const& config, spanner::Client client,
+                     RandomKeyGenerator const& key_generator,
+                     ErrorSink const& error_sink) {
     int count = 0;
     std::string value(1024, 'A');
     std::vector<google::cloud::Status> errors;

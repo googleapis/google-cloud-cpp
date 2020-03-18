@@ -45,7 +45,7 @@ class InstanceAdminLoggingTest : public ::testing::Test {
     logger_id_ = 0;
   }
 
-  Status TransientError() {
+  static Status TransientError() {
     return Status(StatusCode::kUnavailable, "try-again");
   }
 

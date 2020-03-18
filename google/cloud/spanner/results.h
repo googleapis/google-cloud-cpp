@@ -81,6 +81,7 @@ class RowStream {
   }
 
   /// Returns a `RowStreamIterator` defining the end of this range.
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   RowStreamIterator end() { return {}; }
 
   /**
@@ -163,6 +164,7 @@ class ProfileQueryResult {
   }
 
   /// Returns a `RowStreamIterator` defining the end of this result set.
+  // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   RowStreamIterator end() { return {}; }
 
   /**
