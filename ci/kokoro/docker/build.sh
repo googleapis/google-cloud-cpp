@@ -248,6 +248,7 @@ docker_build_flags=(
   # upload it.
   "-t" "${IMAGE}:latest"
   "--build-arg" "NCPU=${NCPU}"
+  "--build-arg" "DISTRO_VERSION=${DISTRO_VERSION}"
   "-f" "ci/kokoro/docker/Dockerfile.${DISTRO}"
 )
 
