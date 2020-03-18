@@ -48,9 +48,6 @@ TEST(DatabaseAdminClient, DatabaseBasicCRUD) {
           .value_or("");
   ASSERT_TRUE(emulator || !test_iam_service_account.empty());
 
-  auto run_slow_integration_tests =
-      google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
-          .value_or("");
   Instance const in(project_id, *instance_id);
 
   std::string database_id = spanner_testing::RandomDatabaseName(generator);

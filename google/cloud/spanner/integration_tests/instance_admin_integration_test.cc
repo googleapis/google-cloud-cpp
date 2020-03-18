@@ -24,6 +24,7 @@
 #include <chrono>
 #include <ctime>
 #include <regex>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -47,19 +48,21 @@ class InstanceAdminClientTest : public testing::Test {
     instance_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_INSTANCE")
             .value_or("");
-    run_slow_integration_tests_ =
-        google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
-            .value_or("");
     test_iam_service_account_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
             .value_or("");
+    auto const run_slow_integration_tests =
+        google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+            .value_or("");
+    run_slow_instance_tests_ =
+        run_slow_integration_tests.find("instance") != std::string::npos;
   }
   InstanceAdminClient client_;
   bool emulator_;
   std::string project_id_;
   std::string instance_id_;
-  std::string run_slow_integration_tests_;
   std::string test_iam_service_account_;
+  bool run_slow_instance_tests_;
 };
 
 class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
@@ -69,7 +72,7 @@ class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
     instance_name_regex_ = std::regex(
         R"(projects/.+/instances/(temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
     instance_config_regex_ = std::regex(".*us-west.*");
-    if (run_slow_integration_tests_ != "yes") {
+    if (!run_slow_instance_tests_) {
       return;
     }
     // Deletes leaked temporary instances.
@@ -136,7 +139,7 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
-  if (run_slow_integration_tests_ != "yes") {
+  if (!run_slow_instance_tests_) {
     GTEST_SKIP();
   }
   auto generator = google::cloud::internal::MakeDefaultPRNG();
@@ -227,7 +230,7 @@ TEST_F(InstanceAdminClientTest, InstanceIam) {
   ASSERT_STATUS_OK(actual_policy);
   EXPECT_FALSE(actual_policy->etag().empty());
 
-  if (run_slow_integration_tests_ == "yes") {
+  if (run_slow_instance_tests_) {
     // Set the policy to the existing value of the policy. While this changes
     // nothing it tests all the code in the client library.
     auto updated_policy = client_.SetIamPolicy(in, *actual_policy);

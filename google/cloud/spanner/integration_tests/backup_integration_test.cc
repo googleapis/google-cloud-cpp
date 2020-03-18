@@ -27,6 +27,7 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <regex>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -44,19 +45,21 @@ class BackupTest : public testing::Test {
         google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-    run_slow_integration_tests_ =
-        google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
-            .value_or("");
     test_iam_service_account_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_SPANNER_IAM_TEST_SA")
             .value_or("");
+    auto const run_slow_integration_tests =
+        google::cloud::internal::GetEnv("RUN_SLOW_INTEGRATION_TESTS")
+            .value_or("");
+    run_slow_backup_tests_ =
+        run_slow_integration_tests.find("backup") != std::string::npos;
   }
   InstanceAdminClient instance_admin_client_;
   DatabaseAdminClient database_admin_client_;
   bool emulator_;
   std::string project_id_;
-  std::string run_slow_integration_tests_;
   std::string test_iam_service_account_;
+  bool run_slow_backup_tests_;
 };
 
 class BackupTestWithCleanup : public BackupTest {
@@ -66,7 +69,7 @@ class BackupTestWithCleanup : public BackupTest {
     instance_name_regex_ = std::regex(
         R"(projects/.+/instances/(temporary-instance-(\d{4}-\d{2}-\d{2})-.+))");
     instance_config_regex_ = std::regex(".*us-west.*");
-    if (run_slow_integration_tests_ != "yes") {
+    if (!run_slow_backup_tests_) {
       return;
     }
     // Deletes leaked temporary instances.
@@ -108,7 +111,7 @@ class BackupTestWithCleanup : public BackupTest {
 
 /// @test Backup related integration tests.
 TEST_F(BackupTestWithCleanup, BackupTestSuite) {
-  if (run_slow_integration_tests_ != "yes" || emulator_) {
+  if (!run_slow_backup_tests_ || emulator_) {
     GTEST_SKIP();
   }
 #if !defined(__clang__) && defined(__GNUC__) && \
