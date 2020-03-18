@@ -60,9 +60,9 @@ _EOF_
 
 read_into_variable INSTALL_CRC32C_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/google/crc32c/archive/1.0.6.tar.gz && \
-    tar -xf 1.0.6.tar.gz && \
-    cd crc32c-1.0.6 && \
+RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
+    tar -xf 1.1,0.tar.gz && \
+    cd crc32c-1.1.0 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
@@ -112,9 +112,9 @@ _EOF_
 
 read_into_variable INSTALL_GOOGLE_CLOUD_CPP_COMMON_FROM_SOURCE <<'_EOF_'
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.23.0.tar.gz && \
-    tar -xf v0.23.0.tar.gz && \
-    cd google-cloud-cpp-common-0.23.0 && \
+RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
+    tar -xf v0.24.0.tar.gz && \
+    cd google-cloud-cpp-common-0.24.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
