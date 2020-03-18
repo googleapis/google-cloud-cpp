@@ -22,7 +22,8 @@ include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${SPANNER_CLIENT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/../../../quickstart)
 include(EnableDoxygen)
 
 # Define a function to fetch the current git revision. Using a function creates
