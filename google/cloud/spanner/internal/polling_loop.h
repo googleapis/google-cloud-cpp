@@ -130,11 +130,23 @@ typename ValueExtractor::ReturnType PollingLoopImpl(
     google::longrunning::GetOperationRequest poll_request;
     poll_request.set_name(operation.name());
     auto update = functor(poll_context, poll_request);
-    if (!update) {
-      if (!polling_policy->OnFailure(update.status())) {
-        return std::move(update).status();
+    if (update && update->done()) {
+      // Before updating the polling policy make sure we do not discard a
+      // successful result that completes the request.
+      using std::swap;
+      swap(*update, operation);
+      break;
+    }
+    // Update the polling policy even on successful requests, so we can stop
+    // after too many polling attempts.
+    if (!polling_policy->OnFailure(update.status())) {
+      if (update) {
+        return Status(StatusCode::kDeadlineExceeded,
+                      "exhausted polling policy with no previous error");
       }
-    } else {
+      return std::move(update).status();
+    }
+    if (update) {
       using std::swap;
       swap(*update, operation);
     }

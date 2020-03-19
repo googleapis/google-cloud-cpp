@@ -280,6 +280,23 @@ TEST(PollingLoopTest, FailureTooManyTransients) {
   EXPECT_EQ(StatusCode::kUnavailable, actual.status().code());
 }
 
+TEST(PollingLoopTest, FailureTooManySuccesses) {
+  google::longrunning::Operation operation;
+  operation.set_name("test-operation");
+  operation.set_done(false);
+
+  StatusOr<google::protobuf::Value> actual =
+      PollingLoop<PollingLoopResponseExtractor<google::protobuf::Value>>(
+          TestPollingPolicy(),
+          [&operation](grpc::ClientContext&,
+                       google::longrunning::GetOperationRequest const&) {
+            return StatusOr<google::longrunning::Operation>(operation);
+          },
+          operation, "location");
+  EXPECT_EQ(StatusCode::kDeadlineExceeded, actual.status().code());
+  EXPECT_THAT(actual.status().message(), HasSubstr("exhausted polling policy"));
+}
+
 TEST(PollingLoopTest, FailureMissingResponseAndError) {
   google::longrunning::Operation operation;
   operation.set_name("test-operation");
