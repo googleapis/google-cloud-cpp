@@ -65,7 +65,7 @@ behaviors in the library.
   request and response.
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
-  gRPC calls, such as `Client::Read()`, `Client::ExecutEQuery()`, and
+  gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
   `Client::ProfileQuery()`. This can produce a lot of output, so use with
   caution!
 
