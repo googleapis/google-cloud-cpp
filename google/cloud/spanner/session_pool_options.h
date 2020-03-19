@@ -122,13 +122,13 @@ class SessionPoolOptions {
    * minutes, so any duration below that (less some slack to allow the calls
    * to be made to refresh the sessions) should suffice.
    */
-  SessionPoolOptions& set_keep_alive_interval(std::chrono::minutes minutes) {
-    keep_alive_interval_ = minutes;
+  SessionPoolOptions& set_keep_alive_interval(std::chrono::seconds interval) {
+    keep_alive_interval_ = interval;
     return *this;
   }
 
   /// Return the interval at which we refresh sessions to prevent GC.
-  std::chrono::minutes keep_alive_interval() const {
+  std::chrono::seconds keep_alive_interval() const {
     return keep_alive_interval_;
   }
 
@@ -151,7 +151,7 @@ class SessionPoolOptions {
   int max_sessions_per_channel_ = 100;
   int max_idle_sessions_ = 0;
   ActionOnExhaustion action_on_exhaustion_ = ActionOnExhaustion::kBlock;
-  std::chrono::minutes keep_alive_interval_ = std::chrono::minutes(55);
+  std::chrono::seconds keep_alive_interval_ = std::chrono::minutes(55);
   std::map<std::string, std::string> labels_;
 };
 

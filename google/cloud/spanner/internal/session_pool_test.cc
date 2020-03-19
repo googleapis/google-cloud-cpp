@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/testing/mock_completion_queue.h"
+#include "google/cloud/spanner/testing/mock_response_reader.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_unique.h"
@@ -36,7 +38,9 @@ namespace {
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
+using ::testing::Invoke;
 using ::testing::Return;
+using ::testing::StrictMock;
 using ::testing::UnorderedElementsAre;
 
 namespace spanner_proto = ::google::spanner::v1;
@@ -380,6 +384,69 @@ TEST(SessionPool, GetStubForStublessSession) {
   // ensure we get a stub even if we didn't allocate from the pool.
   auto session = MakeDissociatedSessionHolder("session_id");
   EXPECT_EQ(pool->GetStub(*session), mock);
+}
+
+// TODO(#1428): This test runs in real time. SessionPool does not currently
+// provide any mechanism to inject a clock source, or to control its
+// background-work scheduling. This makes the test slower and more fragile
+// than desired.
+TEST(SessionPool, SessionRefresh) {
+  auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
+  EXPECT_CALL(*mock, BatchCreateSessions(_, _))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"s1"}))))
+      .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
+
+  auto reader = google::cloud::internal::make_unique<
+      StrictMock<google::cloud::spanner::testing::MockAsyncResponseReader<
+          spanner_proto::Session>>>();
+  EXPECT_CALL(*mock, AsyncGetSession(_, _, _))
+      .WillOnce(Invoke([&reader](
+                           grpc::ClientContext&,
+                           spanner_proto::GetSessionRequest const& request,
+                           grpc::CompletionQueue*) {
+        EXPECT_EQ("s2", request.name());
+        // This is safe. See comments in MockAsyncResponseReader.
+        return std::unique_ptr<
+            grpc::ClientAsyncResponseReaderInterface<spanner_proto::Session>>(
+            reader.get());
+      }));
+  EXPECT_CALL(*reader, Finish(_, _, _))
+      .WillOnce(Invoke(
+          [](spanner_proto::Session* session, grpc::Status* status, void*) {
+            session->set_name("s2");
+            *status = grpc::Status::OK;
+          }));
+
+  auto db = Database("project", "instance", "database");
+  SessionPoolOptions options;
+  options.set_keep_alive_interval(std::chrono::seconds(10));
+  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  auto pool = MakeSessionPool(db, {mock}, options, CompletionQueue(impl));
+
+  // now == t0: Allocate and release two sessions such that "s1" will expire
+  // at t0 + 18s, and "s2" will expire at t0 + 10s, and after which both the
+  // BatchCreateSessions() expectations have been satisfied.
+  {
+    auto s1 = pool->Allocate();
+    ASSERT_STATUS_OK(s1);
+    EXPECT_EQ("s1", (*s1)->session_name());
+    {
+      auto s2 = pool->Allocate();
+      ASSERT_STATUS_OK(s2);
+      EXPECT_EQ("s2", (*s2)->session_name());
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(8));
+  }
+  std::this_thread::sleep_for(std::chrono::seconds(8));
+
+  // now == t0 + 16s: Session "s2" has expired, but "s1" has not, and
+  // RefreshExpiringSessions() has run exactly once since "s2" expired.
+  impl->SimulateCompletion(true);  // make the async GetSession() RPC
+
+  // The AsyncGetSession() and Finish() expectations should now have been
+  // satisfied. If anything goes wrong we'll get unsatisfied/uninteresting
+  // gmock errors.
+  impl->SimulateCompletion(true);  // run the completion callback
 }
 
 }  // namespace

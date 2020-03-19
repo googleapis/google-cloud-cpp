@@ -156,6 +156,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   void ScheduleBackgroundWork(std::chrono::seconds relative_time);
   void DoBackgroundWork();
   void MaintainPoolSize();
+  void RefreshExpiringSessions();
 
   Database const db_;
   SessionPoolOptions const options_;
@@ -171,6 +172,11 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   int total_sessions_ = 0;                          // GUARDED_BY(mu_)
   int create_calls_in_progress_ = 0;                // GUARDED_BY(mu_)
   int num_waiting_for_session_ = 0;                 // GUARDED_BY(mu_)
+
+  // Lower bound on all `sessions_[i]->last_use_time()` values.
+  Session::Clock::time_point last_use_time_lower_bound_ =
+      Session::Clock::now();  // GUARDED_BY(mu_)
+
   future<void> current_timer_;
 
   // `channels_` is guaranteed to be non-empty and will not be resized after

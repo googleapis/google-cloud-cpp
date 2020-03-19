@@ -25,6 +25,7 @@
 #include <chrono>
 #include <random>
 #include <thread>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -114,7 +115,7 @@ void SessionPool::ScheduleBackgroundWork(std::chrono::seconds relative_time) {
 
 void SessionPool::DoBackgroundWork() {
   MaintainPoolSize();
-  // TODO(#1171) Implement SessionPool session refresh
+  RefreshExpiringSessions();
   ScheduleBackgroundWork(std::chrono::seconds(5));
 }
 
@@ -126,6 +127,43 @@ void SessionPool::MaintainPoolSize() {
       total_sessions_ < options_.min_sessions()) {
     Grow(lk, total_sessions_ - options_.min_sessions(),
          WaitForSessionAllocation::kNoWait);
+  }
+}
+
+// Initiate an async GetSession() call on any session whose last-use time is
+// older than the keep-alive interval.
+void SessionPool::RefreshExpiringSessions() {
+  std::vector<std::pair<std::shared_ptr<SpannerStub>, std::string>>
+      sessions_to_refresh;
+  Session::Clock::time_point now = Session::Clock::now();
+  Session::Clock::time_point refresh_limit =
+      now - options_.keep_alive_interval();
+  {
+    std::unique_lock<std::mutex> lk(mu_);
+    if (last_use_time_lower_bound_ <= refresh_limit) {
+      last_use_time_lower_bound_ = now;
+      for (auto const& session : sessions_) {
+        Session::Clock::time_point last_use_time = session->last_use_time();
+        if (last_use_time <= refresh_limit) {
+          sessions_to_refresh.emplace_back(session->channel()->stub,
+                                           session->session_name());
+          session->update_last_use_time();
+        } else if (last_use_time < last_use_time_lower_bound_) {
+          last_use_time_lower_bound_ = last_use_time;
+        }
+      }
+    }
+  }
+  for (auto& refresh : sessions_to_refresh) {
+    AsyncGetSession(cq_, std::move(refresh.first), std::move(refresh.second))
+        .then([](future<StatusOr<spanner_proto::Session>> result) {
+          // We simply discard the response as handling IsSessionNotFound()
+          // by removing the session from the pool is problematic (and would
+          // not eliminate the possibility of IsSessionNotFound() elsewhere).
+          // The last-use time has already been updated to throttle attempts.
+          // TODO(#1430): Re-evaluate these decisions.
+          (void)result.get();
+        });
   }
 }
 

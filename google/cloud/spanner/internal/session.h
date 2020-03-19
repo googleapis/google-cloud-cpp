@@ -40,7 +40,7 @@ class Session {
       : session_name_(std::move(session_name)),
         channel_(std::move(channel)),
         is_bad_(false),
-        last_use_time_(std::chrono::steady_clock::now()) {}
+        last_use_time_(Clock::now()) {}
 
   // Not copyable or moveable.
   Session(Session const&) = delete;
@@ -55,23 +55,20 @@ class Session {
   bool is_bad() const { return is_bad_.load(std::memory_order_relaxed); }
 
  private:
-  // Give `SessionPool` access to the private methods below.
+  // Give `SessionPool` access to the private types/methods below.
   friend class SessionPool;
+  using Clock = std::chrono::steady_clock;
   std::shared_ptr<Channel> const& channel() const { return channel_; }
 
   // The caller is responsible for ensuring these methods are used in a
   // thread-safe manner (i.e. using external locking).
-  std::chrono::steady_clock::time_point last_use_time() const {
-    return last_use_time_;
-  }
-  void update_last_use_time() {
-    last_use_time_ = std::chrono::steady_clock::now();
-  }
+  Clock::time_point last_use_time() const { return last_use_time_; }
+  void update_last_use_time() { last_use_time_ = Clock::now(); }
 
   std::string const session_name_;
   std::shared_ptr<Channel> const channel_;
   std::atomic<bool> is_bad_;
-  std::chrono::steady_clock::time_point last_use_time_;
+  Clock::time_point last_use_time_;
 };
 
 /**
