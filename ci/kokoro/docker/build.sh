@@ -287,6 +287,10 @@ if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
   docker push "${IMAGE}:latest" || true
 fi
 
+echo "================================================================"
+echo "Detecting libcurl version."
+curl-config --version
+
 # Because Kokoro checks out the code in `detached HEAD` mode there is no easy
 # way to discover what is the current branch (and Kokoro does not expose the
 # branch as an enviroment variable, like other CI systems do). We use the
