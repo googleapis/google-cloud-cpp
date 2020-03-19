@@ -148,10 +148,13 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
   DrainSpillBuffer();
 
   handle_.FlushDebug(__func__);
-  GCP_LOG(TRACE) << "Check for pause";
   TRACE_STATE();
 
+  #if LIBCURL_VERSION_NUM >= 0x076900
   if (!curl_closed_ && paused_) {
+  #else
+  if (!curl_closed_) {
+  #endif  // LIBCURL_VERSION_NUM
     auto status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
     if (!status.ok()) {
       TRACE_STATE() << ", status=" << status;
@@ -161,14 +164,9 @@ StatusOr<ReadSourceResult> CurlDownloadRequest::Read(char* buf, std::size_t n) {
     TRACE_STATE();
   }
 
-  GCP_LOG(TRACE) << "pre Wait";
-
   auto status = Wait([this] {
     return curl_closed_ || paused_ || buffer_offset_ >= buffer_size_;
   });
-
-  GCP_LOG(TRACE) << "post Wait";
-
   if (!status.ok()) {
     return status;
   }
