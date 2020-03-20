@@ -50,8 +50,6 @@ function (spanner_client_define_samples)
         google_cloud_cpp_test_name_to_target(target "${fname}")
         set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
     endforeach ()
-    # samples sometimes takes long time
-    set_tests_properties("samples" PROPERTIES TIMEOUT 2400)
 endfunction ()
 
 if (BUILD_TESTING)

@@ -14,6 +14,8 @@
 
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/instance_admin_client.h"
+#include "google/cloud/spanner/testing/cleanup_stale_instances.h"
+#include "google/cloud/spanner/testing/compiler_supports_regexp.h"
 #include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
 #include "google/cloud/spanner/update_instance_request_builder.h"
@@ -75,36 +77,9 @@ class InstanceAdminClientTestWithCleanup : public InstanceAdminClientTest {
     if (!run_slow_instance_tests_) {
       return;
     }
-    // Deletes leaked temporary instances.
-    std::vector<std::string> instance_ids = [this]() mutable {
-      std::vector<std::string> instance_ids;
-      for (auto const& instance : client_.ListInstances(project_id_, "")) {
-        EXPECT_STATUS_OK(instance);
-        if (!instance) break;
-        auto name = instance->name();
-        std::smatch m;
-        if (std::regex_match(name, m, instance_name_regex_)) {
-          auto instance_id = m[1];
-          auto date_str = m[2];
-          std::string cut_off_date = "1973-03-01";
-          auto cut_off_time_t = std::chrono::system_clock::to_time_t(
-              std::chrono::system_clock::now() - std::chrono::hours(48));
-          std::strftime(&cut_off_date[0], cut_off_date.size() + 1, "%Y-%m-%d",
-                        std::localtime(&cut_off_time_t));
-          // Compare the strings
-          if (date_str < cut_off_date) {
-            instance_ids.push_back(instance_id);
-          }
-        }
-      }
-      return instance_ids;
-    }();
-    // Let it fail if we have too many leaks.
-    EXPECT_GT(20, instance_ids.size());
-    for (auto const& id_to_delete : instance_ids) {
-      // Probably better to ignore failures.
-      client_.DeleteInstance(Instance(project_id_, id_to_delete));
-    }
+    auto s = spanner_testing::CleanupStaleInstances(project_id_,
+                                                    instance_name_regex_);
+    EXPECT_STATUS_OK(s) << s.message();
   }
   std::regex instance_config_regex_;
   std::regex instance_name_regex_;
@@ -140,6 +115,10 @@ TEST_F(InstanceAdminClientTest, InstanceReadOperations) {
 /// @test Verify the basic CRUD operations for instances work.
 TEST_F(InstanceAdminClientTestWithCleanup, InstanceCRUDOperations) {
   if (!run_slow_instance_tests_) {
+    GTEST_SKIP();
+  }
+  if (!spanner_testing::CompilerSupportsRegexp()) {
+    // This test (not the code) depends on regexp.
     GTEST_SKIP();
   }
   auto generator = google::cloud::internal::MakeDefaultPRNG();

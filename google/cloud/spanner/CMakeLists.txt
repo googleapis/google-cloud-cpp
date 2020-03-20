@@ -273,6 +273,9 @@ function (spanner_client_define_tests)
 
     add_library(
         spanner_client_testing
+        testing/cleanup_stale_instances.cc
+        testing/cleanup_stale_instances.h
+        testing/compiler_supports_regexp.h
         testing/database_environment.cc
         testing/database_environment.h
         testing/matchers.h
@@ -284,6 +287,7 @@ function (spanner_client_define_tests)
         testing/pick_instance_config.h
         testing/pick_random_instance.cc
         testing/pick_random_instance.h
+        testing/policies.h
         testing/random_backup_name.cc
         testing/random_backup_name.h
         testing/random_database_name.cc

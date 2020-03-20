@@ -16,12 +16,14 @@
 #include "google/cloud/spanner/client.h"
 //! [END spanner_quickstart]
 #include "google/cloud/spanner/backup.h"
+#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/database_admin_client.h"
 #include "google/cloud/spanner/instance_admin_client.h"
 #include "google/cloud/spanner/internal/time_utils.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/policies.h"
 #include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/testing/random_instance_name.h"
@@ -2617,7 +2619,11 @@ void RunAll(bool emulator) {
   std::cout << "Running instance admin samples on " << instance_id << std::endl;
 
   google::cloud::spanner::InstanceAdminClient instance_admin_client(
-      google::cloud::spanner::MakeInstanceAdminConnection());
+      google::cloud::spanner::MakeInstanceAdminConnection(
+          google::cloud::spanner::ConnectionOptions{},
+          google::cloud::spanner_testing::TestRetryPolicy(),
+          google::cloud::spanner_testing::TestBackoffPolicy(),
+          google::cloud::spanner_testing::TestPollingPolicy()));
 
   std::cout << "\nRunning get-instance sample" << std::endl;
   GetInstance(instance_admin_client, project_id, instance_id);
@@ -2640,7 +2646,12 @@ void RunAll(bool emulator) {
   std::string database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-  google::cloud::spanner::DatabaseAdminClient database_admin_client;
+  google::cloud::spanner::DatabaseAdminClient database_admin_client(
+      MakeDatabaseAdminConnection(
+          google::cloud::spanner::ConnectionOptions{},
+          google::cloud::spanner_testing::TestRetryPolicy(),
+          google::cloud::spanner_testing::TestBackoffPolicy(),
+          google::cloud::spanner_testing::TestPollingPolicy()));
 
   if (run_slow_instance_tests) {
     std::string crud_instance_id =
