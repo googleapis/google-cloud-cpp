@@ -42,9 +42,14 @@ fi
 echo "================================================================"
 echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 
-tar -C "${HOME_DIR}" -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" .cache .ccache
+ls -la "${HOME_DIR}"
+tar -C "${HOME_DIR}" -zcvf "${HOME_DIR}/${CACHE_NAME}.tar.gz" .cache .ccache
+ls -la "${HOME_DIR}"
+
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 gcloud --quiet auth revoke --all >/dev/null 2>&1
+
+ls -la "${HOME_DIR}"
 
 exit 0
