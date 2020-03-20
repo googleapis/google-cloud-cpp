@@ -2223,6 +2223,116 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
   (argv[0], argv[1], argv[2]);
 }
 
+void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("custom-instance-admin-policies <project-id>");
+  }
+  //! [custom-instance-admin-policies]
+  namespace spanner = ::google::cloud::spanner;
+  [](std::string const& project_id) {
+    // An instance admin client is controlled by three policies. The retry
+    // policy determines for how long the client will retry transient failures.
+    auto retry_policy = spanner::LimitedTimeRetryPolicy(
+                            /*maximum_duration=*/std::chrono::minutes(25))
+                            .clone();
+    // The backoff policy controls how long does the client waits to retry after
+    // a transient failure. Here we configure a truncated exponential backoff
+    // with jitter:
+    //   https://en.wikipedia.org/wiki/Exponential_backoff
+    //   https://cloud.google.com/storage/docs/exponential-backoff
+    auto backoff_policy = spanner::ExponentialBackoffPolicy(
+                              /*initial_delay=*/std::chrono::seconds(2),
+                              /*maximum_delay=*/std::chrono::minutes(10),
+                              /*scaling=*/2.0)
+                              .clone();
+    // The polling policy controls how the client waits for long-running
+    // operations (such as creating new instances). `GenericPollingPolicy<>`
+    // combines existing policies.  In this case, keep polling until the
+    // operation completes (with success or error) or 45 minutes, whichever
+    // happens first. Initially pause for 10 seconds between polling requests,
+    // increasing the pause by a factor of 4 until it becomes 2 minutes.
+    auto polling_policy =
+        spanner::GenericPollingPolicy<>(
+            spanner::LimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45)),
+            spanner::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0))
+            .clone();
+    auto client =
+        spanner::InstanceAdminClient(spanner::MakeInstanceAdminConnection(
+            spanner::ConnectionOptions{}, std::move(retry_policy),
+            std::move(backoff_policy), std::move(polling_policy)));
+
+    // Use the client as usual.
+    std::cout << "Available configs for project " << project_id << "\n";
+    for (auto const& cfg : client.ListInstanceConfigs(project_id)) {
+      if (!cfg) throw std::runtime_error(cfg.status().message());
+      std::cout << cfg->name() << "\n";
+    }
+    std::cout << "End of available configs\n";
+  }
+  //! [custom-instance-admin-policies]
+  (argv[0]);
+}
+
+void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error(
+        "custom-database-admin-policies <project-id> <instance-id>");
+  }
+  //! [custom-database-admin-policies]
+  namespace spanner = ::google::cloud::spanner;
+  [](std::string const& project_id, std::string const& instance_id) {
+    // A database admin client is controlled by three policies. The retry
+    // policy determines for how long the client will retry transient failures.
+    auto retry_policy = spanner::LimitedTimeRetryPolicy(
+                            /*maximum_duration=*/std::chrono::minutes(25))
+                            .clone();
+    // The backoff policy controls how long does the client waits to retry after
+    // a transient failure. Here we configure a truncated exponential backoff
+    // with jitter:
+    //   https://en.wikipedia.org/wiki/Exponential_backoff
+    //   https://cloud.google.com/storage/docs/exponential-backoff
+    auto backoff_policy = spanner::ExponentialBackoffPolicy(
+                              /*initial_delay=*/std::chrono::seconds(2),
+                              /*maximum_delay=*/std::chrono::minutes(10),
+                              /*scaling=*/2.0)
+                              .clone();
+    // The polling policy controls how the client waits for long-running
+    // operations (such as creating new instances). `GenericPollingPolicy<>`
+    // combines existing policies.  In this case, keep polling until the
+    // operation completes (with success or error) or 45 minutes, whichever
+    // happens first. Initially pause for 10 seconds between polling requests,
+    // increasing the pause by a factor of 4 until it becomes 2 minutes.
+    auto polling_policy =
+        spanner::GenericPollingPolicy<>(
+            spanner::LimitedTimeRetryPolicy(
+                /*maximum_duration=*/std::chrono::minutes(45)),
+            spanner::ExponentialBackoffPolicy(
+                /*initial_delay=*/std::chrono::seconds(10),
+                /*maximum_delay=*/std::chrono::minutes(2),
+                /*scaling=*/4.0))
+            .clone();
+    auto client =
+        spanner::DatabaseAdminClient(spanner::MakeDatabaseAdminConnection(
+            spanner::ConnectionOptions{}, std::move(retry_policy),
+            std::move(backoff_policy), std::move(polling_policy)));
+
+    // Use the client as usual.
+    spanner::Instance instance(project_id, instance_id);
+    std::cout << "Available databases for instance " << instance << "\n";
+    for (auto const& db : client.ListDatabases(instance)) {
+      if (!db) throw std::runtime_error(db.status().message());
+      std::cout << db->name() << "\n";
+    }
+    std::cout << "End of available databases\n";
+  }
+  //! [custom-database-admin-policies]
+  (argv[0], argv[1]);
+}
+
 //! [get-singular-row]
 void GetSingularRow(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
@@ -2530,6 +2640,8 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_command_entry("stream-of", StreamOf),
       make_command_entry("profile-query", ProfileQuery),
       {"custom-retry-policy", CustomRetryPolicy},
+      {"custom-instance-admin-policies", CustomInstanceAdminPolicies},
+      {"custom-database-admin-policies", CustomDatabaseAdminPolicies},
       make_command_entry("delete-all", DeleteAll),
       make_command_entry("insert-mutation-builder", InsertMutationBuilder),
       make_command_entry("make-insert-mutation", MakeInsertMutation),
@@ -2931,6 +3043,13 @@ void RunAll(bool emulator) {
   std::cout << "\nRunning custom-retry-policy sample" << std::endl;
   RunOneCommand(
       {"", "custom-retry-policy", project_id, instance_id, database_id});
+
+  std::cout << "\nRunning custom-instance-admin-policies sample" << std::endl;
+  RunOneCommand({"", "custom-instance-admin-policies", project_id});
+
+  std::cout << "\nRunning custom-database-admin-policies sample" << std::endl;
+  RunOneCommand(
+      {"", "custom-database-admin-policies", project_id, instance_id});
 
   if (!emulator) {
     std::cout << "\nRunning spanner_dml_partitioned_update sample" << std::endl;

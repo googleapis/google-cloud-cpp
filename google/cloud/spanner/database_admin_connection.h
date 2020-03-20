@@ -333,6 +333,9 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
  *     typically some form of expotential backoff with jitter
  * @param polling_policy controls for how often, and how quickly, are long
  *     running checked for completion
+ *
+ * @par Example
+ * @snippet samples.cc custom-database-admin-policies
  */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,

@@ -223,6 +223,9 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
  *     typically some form of expotential backoff with jitter
  * @param polling_policy controls for how often, and how quickly, are long
  *     running checked for completion
+ *
+ * @par Example
+ * @snippet samples.cc custom-instance-admin-policies
  */
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
