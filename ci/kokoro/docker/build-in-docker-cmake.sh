@@ -38,6 +38,10 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
+echo "$(date -u): ccache stats"
+ccache --show-stats
+ccache --zero-stats
+
 CMAKE_COMMAND="cmake"
 if [[ "${SCAN_BUILD}" == "yes" ]]; then
   CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
@@ -230,3 +234,8 @@ if [[ "${GENERATE_DOCS}" == "yes" ]]; then
       "$(date).${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
+
+
+echo "$(date -u): ccache stats"
+ccache --show-stats
+ccache --zero-stats
