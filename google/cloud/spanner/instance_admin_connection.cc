@@ -305,6 +305,16 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
       internal::CreateDefaultInstanceAdminStub(options), options);
 }
 
+std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy) {
+  return internal::MakeInstanceAdminConnection(
+      internal::CreateDefaultInstanceAdminStub(options),
+      std::move(retry_policy), std::move(backoff_policy),
+      std::move(polling_policy));
+}
+
 namespace internal {
 
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(

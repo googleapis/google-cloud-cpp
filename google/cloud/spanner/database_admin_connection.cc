@@ -631,6 +631,16 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
       internal::CreateDefaultDatabaseAdminStub(options));
 }
 
+std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy) {
+  return std::make_shared<DatabaseAdminConnectionImpl>(
+      internal::CreateDefaultDatabaseAdminStub(options),
+      std::move(retry_policy), std::move(backoff_policy),
+      std::move(polling_policy));
+}
+
 namespace internal {
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(

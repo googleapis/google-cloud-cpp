@@ -214,6 +214,21 @@ class InstanceAdminConnection {
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     ConnectionOptions const& options = ConnectionOptions());
 
+/**
+ * @copydoc MakeInstanceAdminConnection
+ *
+ * @param retry_policy control for how long (or how many times) are retryable
+ *     RPCs attempted
+ * @param backoff_policy controls the backoff behavior between retry attempts,
+ *     typically some form of expotential backoff with jitter
+ * @param polling_policy controls for how often, and how quickly, are long
+ *     running checked for completion
+ */
+std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
+    ConnectionOptions const& options, std::unique_ptr<RetryPolicy> retry_policy,
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::unique_ptr<PollingPolicy> polling_policy);
+
 namespace internal {
 /**
  * Create an InstanceAdminConnection using an existing base Stub.
