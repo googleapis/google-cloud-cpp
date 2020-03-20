@@ -24,7 +24,7 @@ readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 readonly HOME_DIR="$3"
 
-readonly KEYFILE="${KOGORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
+readonly KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
   echo "================================================================"
   echo "Service account for cache access is not configured."

@@ -27,7 +27,7 @@ readonly HOME_DIR="$3"
 mkdir -p "${HOME_DIR}/.ccache"
 echo "max_size = 1.0G" >"${HOME_DIR}/.ccache/ccache.conf"
 
-readonly KEYFILE="${KOGORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
+readonly KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
   echo "================================================================"
   echo "Service account for cache access is not configured."
