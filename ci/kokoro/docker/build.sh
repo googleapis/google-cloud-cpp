@@ -343,9 +343,6 @@ docker_flags=(
     "--env" "BUILD_NAME=${BUILD_NAME}"
     "--env" "BRANCH=${BRANCH}"
 
-    # Disable ccache(1) for Kokoro builds.
-    "--env" "NEEDS_CCACHE=no"
-
     # If set, pass -DGOOGLE_CLOUD_CPP_CXX_STANDARD=<value> to CMake.
     "--env" "GOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}"
 
@@ -465,6 +462,12 @@ if [[ -t 0 ]]; then
   docker_flags+=("-it")
 fi
 
+CACHE_FOLDER="cloud-cpp-kokoro-results/build-cache/google-cloud-cpp"
+CACHE_NAME="cache-${DOCKER_IMAGE_BASENAME}-${BUILD_NAME}"
+
+"${PROJECT_ROOT}/ci/kokoro/docker/download-cache.sh" \
+      "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
+
 # If more than two arguments are given, arguments after the first one will
 # become the commands run in the container, otherwise run $in_docker_script with
 # appropriate arguments.
@@ -496,6 +499,9 @@ else
 fi
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${IMAGE}:latest" "${docker_flags[@]}"
+
+"${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
+      "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
 
 if [[ "${exit_status}" != 0 ]]; then
   echo "================================================================"
