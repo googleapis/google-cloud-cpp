@@ -14,13 +14,13 @@
 
 #include "google/cloud/spanner/internal/session_pool.h"
 #include "google/cloud/spanner/internal/session.h"
-#include "google/cloud/spanner/testing/mock_completion_queue.h"
-#include "google/cloud/spanner/testing/mock_response_reader.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status.h"
 #include "google/cloud/testing_util/assert_ok.h"
+#include "google/cloud/testing_util/mock_async_response_reader.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <gmock/gmock.h>
 #include <chrono>
 #include <memory>
@@ -35,6 +35,8 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::testing_util::MockAsyncResponseReader;
+using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
 using ::testing::ByMove;
 using ::testing::HasSubstr;
@@ -397,8 +399,7 @@ TEST(SessionPool, SessionRefresh) {
       .WillOnce(Return(ByMove(MakeSessionsResponse({"s2"}))));
 
   auto reader = google::cloud::internal::make_unique<
-      StrictMock<google::cloud::spanner::testing::MockAsyncResponseReader<
-          spanner_proto::Session>>>();
+      StrictMock<MockAsyncResponseReader<spanner_proto::Session>>>();
   EXPECT_CALL(*mock, AsyncGetSession(_, _, _))
       .WillOnce(Invoke([&reader](
                            grpc::ClientContext&,
@@ -420,7 +421,7 @@ TEST(SessionPool, SessionRefresh) {
   auto db = Database("project", "instance", "database");
   SessionPoolOptions options;
   options.set_keep_alive_interval(std::chrono::seconds(10));
-  auto impl = std::make_shared<testing::MockCompletionQueue>();
+  auto impl = std::make_shared<MockCompletionQueue>();
   auto pool = MakeSessionPool(db, {mock}, options, CompletionQueue(impl));
 
   // now == t0: Allocate and release two sessions such that "s1" will expire

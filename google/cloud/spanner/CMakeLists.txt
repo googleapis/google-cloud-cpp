@@ -129,8 +129,6 @@ add_library(
     instance_admin_connection.h
     internal/api_client_header.cc
     internal/api_client_header.h
-    internal/async_retry_op.h
-    internal/async_retry_unary_rpc.h
     internal/build_info.h
     internal/channel.h
     internal/compiler_info.cc
@@ -278,11 +276,9 @@ function (spanner_client_define_tests)
         testing/database_environment.cc
         testing/database_environment.h
         testing/matchers.h
-        testing/mock_completion_queue.h
         testing/mock_database_admin_stub.h
         testing/mock_instance_admin_stub.h
         testing/mock_partial_result_set_reader.h
-        testing/mock_response_reader.h
         testing/mock_spanner_stub.h
         testing/pick_instance_config.cc
         testing/pick_instance_config.h
@@ -327,7 +323,6 @@ function (spanner_client_define_tests)
         instance_admin_connection_test.cc
         instance_test.cc
         internal/api_client_header_test.cc
-        internal/async_retry_unary_rpc_test.cc
         internal/build_info_test.cc
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc

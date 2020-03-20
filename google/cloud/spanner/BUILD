@@ -91,6 +91,7 @@ load(":spanner_client_unit_tests.bzl", "spanner_client_unit_tests")
         ":spanner_client_testing",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
+        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
 ) for test in spanner_client_unit_tests]

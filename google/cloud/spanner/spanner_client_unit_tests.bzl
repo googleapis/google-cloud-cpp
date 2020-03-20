@@ -31,7 +31,6 @@ spanner_client_unit_tests = [
     "instance_admin_connection_test.cc",
     "instance_test.cc",
     "internal/api_client_header_test.cc",
-    "internal/async_retry_unary_rpc_test.cc",
     "internal/build_info_test.cc",
     "internal/compiler_info_test.cc",
     "internal/connection_impl_test.cc",
