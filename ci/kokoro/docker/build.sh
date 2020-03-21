@@ -215,6 +215,7 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
 fi
 
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
+source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
@@ -462,8 +463,12 @@ if [[ -t 0 ]]; then
   docker_flags+=("-it")
 fi
 
-CACHE_FOLDER="cloud-cpp-kokoro-results/build-cache/google-cloud-cpp"
+CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+readonly CACHE_BUCKET
+CACHE_FOLDER="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}"
+readonly CACHE_FOLDER
 CACHE_NAME="cache-${DOCKER_IMAGE_BASENAME}-${BUILD_NAME}"
+readonly CACHE_NAME
 
 "${PROJECT_ROOT}/ci/kokoro/docker/download-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
