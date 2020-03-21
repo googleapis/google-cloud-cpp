@@ -36,21 +36,27 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   echo "This is a presubmit build, cache will not be updated, exist with success."
-  exit 0
+# TODO(coryan) - debug  exit 0
 fi
 
 echo "================================================================"
 echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 
+echo "$(date -u): DEBUG DEBUG DEBUG"
 ls -la "${HOME_DIR}"
+echo "$(date -u): DEBUG DEBUG DEBUG"
 tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
     "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
+echo "$(date -u): DEBUG DEBUG DEBUG"
 ls -la "${HOME_DIR}"
+echo "$(date -u): DEBUG DEBUG DEBUG"
 
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 gcloud --quiet auth revoke --all >/dev/null 2>&1
 
+echo "$(date -u): DEBUG DEBUG DEBUG"
 ls -la "${HOME_DIR}"
+echo "$(date -u): DEBUG DEBUG DEBUG"
 
 exit 0
