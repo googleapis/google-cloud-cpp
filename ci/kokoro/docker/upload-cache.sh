@@ -36,7 +36,7 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   echo "This is a presubmit build, cache will not be updated, exist with success."
-# TODO(coryan) - debug  exit 0
+  exit 0
 fi
 
 echo "================================================================"
