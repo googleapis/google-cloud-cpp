@@ -224,10 +224,6 @@ TEST_F(MetadataSpannerStubTest, ExecuteBatchDml) {
   SESSION_TEST(ExecuteBatchDml, spanner_proto::ExecuteBatchDmlRequest);
 }
 
-TEST_F(MetadataSpannerStubTest, Read) {
-  SESSION_TEST(Read, spanner_proto::ReadRequest);
-}
-
 TEST_F(MetadataSpannerStubTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead(_, _))
       .WillOnce([this](grpc::ClientContext& context,

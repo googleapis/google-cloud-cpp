@@ -92,9 +92,6 @@ class SpannerStub {
   ExecuteBatchDml(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteBatchDmlRequest const& request) = 0;
-  virtual StatusOr<google::spanner::v1::ResultSet> Read(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ReadRequest const& request) = 0;
   virtual std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   StreamingRead(grpc::ClientContext& client_context,

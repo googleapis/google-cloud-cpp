@@ -74,9 +74,6 @@ class MetadataSpannerStub : public SpannerStub {
   StatusOr<google::spanner::v1::ExecuteBatchDmlResponse> ExecuteBatchDml(
       grpc::ClientContext& client_context,
       google::spanner::v1::ExecuteBatchDmlRequest const& request) override;
-  StatusOr<google::spanner::v1::ResultSet> Read(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ReadRequest const& request) override;
   std::unique_ptr<
       grpc::ClientReaderInterface<google::spanner::v1::PartialResultSet>>
   StreamingRead(grpc::ClientContext& client_context,

@@ -159,17 +159,6 @@ LoggingSpannerStub::ExecuteBatchDml(
       client_context, request, __func__, tracing_options_);
 }
 
-StatusOr<spanner_proto::ResultSet> LoggingSpannerStub::Read(
-    grpc::ClientContext& client_context,
-    spanner_proto::ReadRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             spanner_proto::ReadRequest const& request) {
-        return child_->Read(context, request);
-      },
-      client_context, request, __func__, tracing_options_);
-}
-
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
 LoggingSpannerStub::StreamingRead(grpc::ClientContext& client_context,
                                   spanner_proto::ReadRequest const& request) {

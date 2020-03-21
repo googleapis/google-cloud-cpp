@@ -188,17 +188,6 @@ TEST_F(LoggingSpannerStubTest, ExecuteBatchDml) {
   HasLogLineWith(TransientError().message());
 }
 
-TEST_F(LoggingSpannerStubTest, Read) {
-  EXPECT_CALL(*mock_, Read(_, _)).WillOnce(Return(TransientError()));
-
-  LoggingSpannerStub stub(mock_, TracingOptions{});
-  grpc::ClientContext context;
-  auto status = stub.Read(context, spanner_proto::ReadRequest());
-  EXPECT_EQ(TransientError(), status.status());
-  HasLogLineWith("Read");
-  HasLogLineWith(TransientError().message());
-}
-
 TEST_F(LoggingSpannerStubTest, StreamingRead) {
   EXPECT_CALL(*mock_, StreamingRead(_, _))
       .WillOnce([](grpc::ClientContext&, spanner_proto::ReadRequest const&) {

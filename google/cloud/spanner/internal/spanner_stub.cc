@@ -80,9 +80,6 @@ class DefaultSpannerStub : public SpannerStub {
   StatusOr<spanner_proto::ExecuteBatchDmlResponse> ExecuteBatchDml(
       grpc::ClientContext& client_context,
       spanner_proto::ExecuteBatchDmlRequest const& request) override;
-  StatusOr<spanner_proto::ResultSet> Read(
-      grpc::ClientContext& client_context,
-      spanner_proto::ReadRequest const& request) override;
   std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
   StreamingRead(grpc::ClientContext& client_context,
                 spanner_proto::ReadRequest const& request) override;
@@ -216,18 +213,6 @@ DefaultSpannerStub::ExecuteBatchDml(
   spanner_proto::ExecuteBatchDmlResponse response;
   grpc::Status grpc_status =
       grpc_stub_->ExecuteBatchDml(&client_context, request, &response);
-  if (!grpc_status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(grpc_status);
-  }
-  return response;
-}
-
-StatusOr<spanner_proto::ResultSet> DefaultSpannerStub::Read(
-    grpc::ClientContext& client_context,
-    spanner_proto::ReadRequest const& request) {
-  spanner_proto::ResultSet response;
-  grpc::Status grpc_status =
-      grpc_stub_->Read(&client_context, request, &response);
   if (!grpc_status.ok()) {
     return google::cloud::MakeStatusFromRpcError(grpc_status);
   }

@@ -117,13 +117,6 @@ MetadataSpannerStub::ExecuteBatchDml(
   return child_->ExecuteBatchDml(client_context, request);
 }
 
-StatusOr<spanner_proto::ResultSet> MetadataSpannerStub::Read(
-    grpc::ClientContext& client_context,
-    spanner_proto::ReadRequest const& request) {
-  SetMetadata(client_context, "session=" + request.session());
-  return child_->Read(client_context, request);
-}
-
 std::unique_ptr<grpc::ClientReaderInterface<spanner_proto::PartialResultSet>>
 MetadataSpannerStub::StreamingRead(grpc::ClientContext& client_context,
                                    spanner_proto::ReadRequest const& request) {
