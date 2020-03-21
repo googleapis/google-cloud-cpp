@@ -43,6 +43,6 @@ set -v
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
-tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" || echo "DEBUG DEBUG tar failed"
+tar --touch -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz"
 
 exit 0
