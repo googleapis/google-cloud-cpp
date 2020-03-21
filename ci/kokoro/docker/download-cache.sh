@@ -42,7 +42,18 @@ echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 gcloud --quiet auth revoke --all >/dev/null 2>&1
+
+echo "$(date -u): DEBUG DEBUG DEBUG"
+echo "HOME = ${HOME_DIR} PWD = ${PWD:-}"
+ls -la "${HOME_DIR}"
+echo "HOME = ${HOME_DIR}"
+ls -la "${HOME_DIR}/.cache"
+echo "HOME = ${HOME_DIR}"
+ls -la "${HOME_DIR}/.ccache"
+echo "$(date -u): DEBUG DEBUG DEBUG"
+
 tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz"
+
 echo "$(date -u): DEBUG DEBUG DEBUG"
 echo "HOME = ${HOME_DIR}"
 ls -la "${HOME_DIR}"

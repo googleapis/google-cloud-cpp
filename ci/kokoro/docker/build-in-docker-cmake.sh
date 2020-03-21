@@ -40,16 +40,16 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "$(date -u): ccache stats"
 echo "$(date -u): DEBUG DEBUG DEBUG"
-echo "HOME = ${HOME_DIR}"
+echo "HOME = ${HOME}"
 ls -la "${HOME}"
-echo "HOME = ${HOME_DIR}"
+echo "HOME = ${HOME}"
 ls -la "${HOME}/.cache"
-echo "HOME = ${HOME_DIR}"
+echo "HOME = ${HOME}"
 ls -la "${HOME}/.ccache"
 echo "/h"
-ls -l /h
+ls -la /h
 echo "/v"
-ls -l /v
+ls -la /v
 echo "$(date -u): DEBUG DEBUG DEBUG"
 ccache --show-stats
 ccache --zero-stats
@@ -165,7 +165,7 @@ if [[ -n "${RUNS_PER_TEST}" ]]; then
     ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
 fi
 
-if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
+if [[ "${BUILD_TESTING:-}" = "TODO(coryan) yes" ]]; then
   # When the user does a super-build the tests are hidden in a subdirectory.
   # We can tell that ${BINARY_DIR} does not have the tests by checking for this
   # file:
@@ -203,7 +203,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 fi
 
 # Test the install rule and that the installation works.
-if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
+if [[ "${TEST_INSTALL:-}" = "TODO(coryan) yes" ]]; then
   echo
   echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target install

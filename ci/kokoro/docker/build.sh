@@ -501,8 +501,10 @@ fi
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${IMAGE}:latest" "${docker_flags[@]}"
 
-"${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
+if [[ "${exit_status}" -eq 0 ]]; then
+  "${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
+fi
 
 if [[ "${exit_status}" != 0 ]]; then
   echo "================================================================"
