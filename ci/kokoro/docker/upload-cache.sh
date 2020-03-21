@@ -46,7 +46,7 @@ set -v
 tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
     "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-gsutil cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
+gsutil -q cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
 
 exit 0

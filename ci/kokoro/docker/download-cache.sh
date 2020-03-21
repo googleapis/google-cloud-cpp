@@ -41,7 +41,7 @@ echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 
 set -v
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-gsutil cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
+gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
 tar --touch -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz"
 
