@@ -39,18 +39,6 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
 echo "$(date -u): ccache stats"
-echo "$(date -u): DEBUG DEBUG DEBUG"
-echo "HOME = ${HOME}"
-ls -la "${HOME}"
-echo "HOME = ${HOME}"
-ls -la "${HOME}/.cache"
-echo "HOME = ${HOME}"
-ls -la "${HOME}/.ccache"
-echo "/h"
-ls -la /h
-echo "/v"
-ls -la /v
-echo "$(date -u): DEBUG DEBUG DEBUG"
 ccache --show-stats
 ccache --zero-stats
 
