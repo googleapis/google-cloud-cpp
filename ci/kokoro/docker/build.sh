@@ -485,6 +485,7 @@ else
 fi
 
 # Run the docker image with that giant collection of flags.
+echo sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?

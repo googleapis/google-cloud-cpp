@@ -43,7 +43,8 @@ echo "================================================================"
 echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 
 ls -la "${HOME_DIR}"
-tar -C "${HOME_DIR}" -zcvf "${HOME_DIR}/${CACHE_NAME}.tar.gz" .cache .ccache
+tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
+    "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
 ls -la "${HOME_DIR}"
 
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"

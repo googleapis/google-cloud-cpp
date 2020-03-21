@@ -24,8 +24,9 @@ readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 readonly HOME_DIR="$3"
 
+mkdir -p "${HOME_DIR}/.cache"
 mkdir -p "${HOME_DIR}/.ccache"
-echo "max_size = 1.0G" >"${HOME_DIR}/.ccache/ccache.conf"
+echo "max_size = 4.0G" >"${HOME_DIR}/.ccache/ccache.conf"
 
 readonly KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
@@ -41,8 +42,6 @@ echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 gcloud --quiet auth revoke --all >/dev/null 2>&1
-ls -la "${HOME_DIR}"
-tar -C "${HOME_DIR}" -zxvf "${HOME_DIR}/${CACHE_NAME}.tar.gz"
-ls -la "${HOME_DIR}"
+tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz"
 
 exit 0
