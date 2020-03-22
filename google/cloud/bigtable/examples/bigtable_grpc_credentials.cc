@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all code]
-
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/internal/getenv.h"
 #include <fstream>
 #include <sstream>
 
@@ -23,20 +22,9 @@ struct Usage {
   std::string msg;
 };
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
 std::string command_usage;
 
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
+void PrintUsage(std::string const& cmd, std::string const& msg) {
   auto last_slash = std::string(cmd).find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
@@ -44,13 +32,10 @@ void PrintUsage(int, char* argv[], std::string const& msg) {
             << command_usage << "\n";
 }
 
-void AccessToken(int argc, char* argv[]) {
-  if (argc != 4) {
+void AccessToken(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
     throw Usage{"test-access-token: <project-id> <instance-id> <access-token>"};
   }
-  std::string project_id = ConsumeArg(argc, argv);
-  std::string instance_id = ConsumeArg(argc, argv);
-  std::string access_token = ConsumeArg(argc, argv);
 
   // Create a namespace alias to make the code easier to read.
   namespace cbt = google::cloud::bigtable;
@@ -75,19 +60,15 @@ void AccessToken(int argc, char* argv[]) {
     }
   }
   //! [test access token]
-  (std::move(project_id), std::move(instance_id), std::move(access_token));
+  (argv[0], argv[1], argv[2]);
 }
 
-void JWTAccessToken(int argc, char* argv[]) {
-  if (argc != 4) {
+void JWTAccessToken(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
     throw Usage{
-        "test-jwt-access-token: <project-id> <instance-id> "
+        "test-jwt-access-token <project-id> <instance-id> "
         "<service_account_file_json>"};
   }
-  std::string project_id = ConsumeArg(argc, argv);
-  std::string instance_id = ConsumeArg(argc, argv);
-  std::string service_account_file_json = ConsumeArg(argc, argv);
-
   // Create a namespace alias to make the code easier to read.
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -120,17 +101,13 @@ void JWTAccessToken(int argc, char* argv[]) {
     }
   }
   //! [test jwt access token]
-  (std::move(project_id), std::move(instance_id),
-   std::move(service_account_file_json));
+  (argv[0], argv[1], argv[2]);
 }
 
-void GCECredentials(int argc, char* argv[]) {
-  if (argc != 3) {
+void GCECredentials(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
     throw Usage{"test-gce-credentials: <project-id> <instance-id>"};
   }
-  std::string project_id = ConsumeArg(argc, argv);
-  std::string instance_id = ConsumeArg(argc, argv);
-
   // Create a namespace alias to make the code easier to read.
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -152,18 +129,50 @@ void GCECredentials(int argc, char* argv[]) {
     }
   }
   //! [test gce credentials]
-  (std::move(project_id), std::move(instance_id));
+  (argv[0], argv[1]);
+}
+
+void RunAll(std::vector<std::string> argv) {
+  if (!argv.empty()) throw Usage{"auto"};
+
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto const instance_id = google::cloud::internal::GetEnv(
+                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                               .value_or("");
+  auto const access_token =
+      google::cloud::internal::GetEnv("ACCESS_TOKEN").value_or("");
+  auto const credentials_file =
+      google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS")
+          .value_or("");
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+        "ACCESS_TOKEN", "GOOGLE_APPLICATION_CREDENTIALS"}) {
+    auto const value = google::cloud::internal::GetEnv(var);
+    if (!value) {
+      throw std::runtime_error("The " + std::string(var) +
+                               " environment variable is not set");
+    }
+    if (value->empty()) {
+      throw std::runtime_error("The " + std::string(var) +
+                               " environment variable has an empty value");
+    }
+  }
+
+  AccessToken({project_id, instance_id, access_token});
+  JWTAccessToken({project_id, instance_id, credentials_file});
 }
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(int, char*[])>;
+int main(int ac, char* av[]) try {
+  using CommandType = std::function<void(std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
-      {"test-access-token", &AccessToken},
-      {"test-jwt-access-token", &JWTAccessToken},
-      {"test-gce-credentials", &GCECredentials},
+      {"test-access-token", AccessToken},
+      {"test-jwt-access-token", JWTAccessToken},
+      {"test-gce-credentials", GCECredentials},
+      {"auto", RunAll},
   };
 
   {
@@ -173,8 +182,8 @@ int main(int argc, char* argv[]) try {
     // commands, without any calls made to it.
     for (auto&& kv : commands) {
       try {
-        int fake_argc = 0;
-        kv.second(fake_argc, argv);
+        if (kv.first == "auto") continue;
+        kv.second({});
       } catch (Usage const& u) {
         command_usage += "    ";
         command_usage += u.msg;
@@ -183,28 +192,26 @@ int main(int argc, char* argv[]) try {
     }
   }
 
-  if (argc < 4) {
-    PrintUsage(argc, argv, "Missing command and/or project-id");
+  if (ac < 2) {
+    PrintUsage(av[0], "Missing command");
     return 1;
   }
-
-  std::string const command_name = ConsumeArg(argc, argv);
+  std::string const command_name = av[1];
+  std::vector<std::string> argv(av + 2, av + ac);
 
   auto command = commands.find(command_name);
   if (commands.end() == command) {
-    PrintUsage(argc, argv, "Unknown command: " + command_name);
+    PrintUsage(av[0], "Unknown command: " + command_name);
     return 1;
   }
 
-  command->second(argc, argv);
+  command->second(argv);
 
   return 0;
 } catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
+  PrintUsage(av[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
-
-//! [all code]
