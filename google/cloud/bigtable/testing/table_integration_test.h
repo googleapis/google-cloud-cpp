@@ -31,34 +31,15 @@ namespace testing {
 /// Store the project and instance captured from the command-line arguments.
 class TableTestEnvironment : public ::testing::Environment {
  public:
-  TableTestEnvironment(std::string project, std::string instance) {
-    project_id_ = std::move(project);
-    instance_id_ = std::move(instance);
-  }
-
-  TableTestEnvironment(std::string project, std::string instance,
-                       std::string cluster) {
-    project_id_ = std::move(project);
-    instance_id_ = std::move(instance);
-    cluster_id_ = std::move(cluster);
-  }
-
-  TableTestEnvironment(std::string project, std::string instance,
-                       std::string zone, std::string replication_zone) {
-    project_id_ = std::move(project);
-    instance_id_ = std::move(instance);
-    zone_ = std::move(zone);
-    replication_zone_ = std::move(replication_zone);
-  }
+  TableTestEnvironment();
 
   void SetUp() override;
   void TearDown() override;
 
   static std::string const& project_id() { return project_id_; }
   static std::string const& instance_id() { return instance_id_; }
-  static std::string const& cluster_id() { return cluster_id_; }
-  static std::string const& zone() { return zone_; }
-  static std::string const& replication_zone() { return replication_zone_; }
+  static std::string const& zone_a() { return zone_a_; }
+  static std::string const& zone_b() { return zone_b_; }
 
   /**
    * Generate a random string for instance, cluster, or table identifiers.
@@ -86,9 +67,8 @@ class TableTestEnvironment : public ::testing::Environment {
  private:
   static std::string project_id_;
   static std::string instance_id_;
-  static std::string cluster_id_;
-  static std::string zone_;
-  static std::string replication_zone_;
+  static std::string zone_a_;
+  static std::string zone_b_;
 
   static google::cloud::internal::DefaultPRNG generator_;
 

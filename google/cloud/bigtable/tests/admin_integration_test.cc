@@ -249,11 +249,11 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
   // than 30 characters.
   auto display_name = ("IT " + id).substr(0, 30);
   auto cluster_config_1 =
-      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone(),
+      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_a(),
                               3, bigtable::ClusterConfig::HDD);
-  auto cluster_config_2 = bigtable::ClusterConfig(
-      bigtable::testing::TableTestEnvironment::replication_zone(), 3,
-      bigtable::ClusterConfig::HDD);
+  auto cluster_config_2 =
+      bigtable::ClusterConfig(bigtable::testing::TableTestEnvironment::zone_b(),
+                              3, bigtable::ClusterConfig::HDD);
   bigtable::InstanceConfig config(
       id, display_name,
       {{id + "-c1", cluster_config_1}, {id + "-c2", cluster_config_2}});
@@ -311,25 +311,7 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Check for arguments validity
-  if (argc != 5) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(cmd).find_last_of('/');
-    // Show Usage if invalid no of arguments
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << "<project_id> <instance_id> <zone> <replication_zone>\n";
-    return 1;
-  }
-
-  std::string const project_id = argv[1];
-  std::string const instance_id = argv[2];
-  std::string const zone = argv[3];
-  std::string const replication_zone = argv[4];
-
   (void)::testing::AddGlobalTestEnvironment(
-      new bigtable::testing::TableTestEnvironment(project_id, instance_id, zone,
-                                                  replication_zone));
-
+      new bigtable::testing::TableTestEnvironment);
   return RUN_ALL_TESTS();
 }

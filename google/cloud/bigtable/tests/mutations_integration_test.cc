@@ -444,20 +444,8 @@ TEST_F(MutationIntegrationTest, DeleteFromRowTest) {
 
 int main(int argc, char* argv[]) {
   google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 3) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of("/");
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <instance>\n";
-    return 1;
-  }
-  std::string const project_id = argv[1];
-  std::string const instance_id = argv[2];
-
   (void)::testing::AddGlobalTestEnvironment(
-      new ::bigtable::testing::TableTestEnvironment(project_id, instance_id));
+      new ::bigtable::testing::TableTestEnvironment);
 
   return RUN_ALL_TESTS();
 }

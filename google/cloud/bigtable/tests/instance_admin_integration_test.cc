@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/status_or.h"
@@ -27,23 +28,37 @@ using testing::HasSubstr;
 
 namespace {
 
-// Initialized in main() below.
-char const* flag_project_id;
-char const* flag_zone_a;
-char const* flag_zone_b;
-char const* flag_service_account;
-
 class InstanceAdminIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id_.empty());
+    zone_a_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
+            .value_or("");
+    ASSERT_FALSE(zone_a_.empty());
+    zone_b_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
+            .value_or("");
+    ASSERT_FALSE(zone_b_.empty());
+    service_account_ = google::cloud::internal::GetEnv(
+                           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
+                           .value_or("");
+    ASSERT_FALSE(service_account_.empty());
+
     auto instance_admin_client = bigtable::CreateDefaultInstanceAdminClient(
-        flag_project_id, bigtable::ClientOptions());
+        project_id_, bigtable::ClientOptions());
     instance_admin_ =
         google::cloud::internal::make_unique<bigtable::InstanceAdmin>(
             instance_admin_client);
   }
 
  protected:
+  std::string project_id_;
+  std::string zone_a_;
+  std::string zone_b_;
+  std::string service_account_;
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;
   google::cloud::internal::DefaultPRNG generator_ =
       google::cloud::internal::MakeDefaultPRNG();
@@ -94,9 +109,9 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   auto instance_config1 = IntegrationTestConfig(
-      id1, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      id1, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_config2 = IntegrationTestConfig(
-      id2, flag_zone_b, bigtable::InstanceConfig::PRODUCTION, 3);
+      id2, zone_b_, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance1_future = instance_admin_->CreateInstance(instance_config1);
   auto instance2_future = instance_admin_->CreateInstance(instance_config2);
   // Wait for instance creation
@@ -127,7 +142,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
                   generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
 
   auto instance_config = IntegrationTestConfig(
-      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
   auto future = instance_admin_->CreateInstance(instance_config);
   auto actual = future.get();
   EXPECT_STATUS_OK(actual);
@@ -222,7 +237,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
       << " generated at random.";
 
   // create instance
-  auto config = IntegrationTestConfig(instance_id, flag_zone_a);
+  auto config = IntegrationTestConfig(instance_id, zone_a_);
   auto instance = instance_admin_->CreateInstance(config).get();
   ASSERT_STATUS_OK(instance);
 
@@ -271,7 +286,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 
   // create instance prerequisites for cluster operations
   auto instance_config = IntegrationTestConfig(
-      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
@@ -285,7 +300,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
       << " generated at random.";
   std::string cluster_id(cluster_id_str);
   auto cluster_config =
-      bigtable::ClusterConfig(flag_zone_b, 3, bigtable::ClusterConfig::HDD);
+      bigtable::ClusterConfig(zone_b_, 3, bigtable::ClusterConfig::HDD);
   auto cluster =
       instance_admin_->CreateCluster(cluster_config, instance_id, cluster_id)
           .get();
@@ -338,14 +353,13 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
 
   // create instance prerequisites for cluster operations
   auto instance_config = IntegrationTestConfig(
-      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
   auto iam_bindings = google::cloud::IamBindings(
-      "roles/bigtable.reader",
-      {"serviceAccount:" + std::string(flag_service_account)});
+      "roles/bigtable.reader", {"serviceAccount:" + service_account_});
 
   auto initial_policy =
       instance_admin_->SetIamPolicy(instance_id, iam_bindings);
@@ -373,14 +387,13 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
 
   // create instance prerequisites for cluster operations
   auto instance_config = IntegrationTestConfig(
-      instance_id, flag_zone_a, bigtable::InstanceConfig::PRODUCTION, 3);
+      instance_id, zone_a_, bigtable::InstanceConfig::PRODUCTION, 3);
   auto instance_details =
       instance_admin_->CreateInstance(instance_config).get();
   ASSERT_STATUS_OK(instance_details);
 
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
-      "roles/bigtable.reader",
-      {"serviceAccount:" + std::string(flag_service_account)})});
+      "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
   auto initial_policy = instance_admin_->SetIamPolicy(instance_id, iam_policy);
   ASSERT_STATUS_OK(initial_policy);
@@ -397,24 +410,4 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
 
   EXPECT_EQ(2, permission_set->size());
   EXPECT_STATUS_OK(instance_admin_->DeleteInstance(instance_id));
-}
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  if (argc != 5) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(cmd).find_last_of('/');
-    // Show usage if number of arguments is invalid.
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <project_id>"
-              << " <zone-a> <zone-b> <service-account>\n";
-    return 1;
-  }
-
-  flag_project_id = argv[1];
-  flag_zone_a = argv[2];
-  flag_zone_b = argv[3];
-  flag_service_account = argv[4];
-
-  return RUN_ALL_TESTS();
 }
