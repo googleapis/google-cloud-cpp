@@ -215,6 +215,7 @@ if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
 fi
 
 source "${PROJECT_ROOT}/ci/kokoro/define-docker-variables.sh"
+source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
@@ -343,9 +344,6 @@ docker_flags=(
     "--env" "BUILD_NAME=${BUILD_NAME}"
     "--env" "BRANCH=${BRANCH}"
 
-    # Disable ccache(1) for Kokoro builds.
-    "--env" "NEEDS_CCACHE=no"
-
     # If set, pass -DGOOGLE_CLOUD_CPP_CXX_STANDARD=<value> to CMake.
     "--env" "GOOGLE_CLOUD_CPP_CXX_STANDARD=${GOOGLE_CLOUD_CPP_CXX_STANDARD:-}"
 
@@ -465,6 +463,16 @@ if [[ -t 0 ]]; then
   docker_flags+=("-it")
 fi
 
+CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
+readonly CACHE_BUCKET
+CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}"
+readonly CACHE_FOLDER
+CACHE_NAME="cache-${DOCKER_IMAGE_BASENAME}-${BUILD_NAME}"
+readonly CACHE_NAME
+
+"${PROJECT_ROOT}/ci/kokoro/docker/download-cache.sh" \
+      "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
+
 # If more than two arguments are given, arguments after the first one will
 # become the commands run in the container, otherwise run $in_docker_script with
 # appropriate arguments.
@@ -482,6 +490,7 @@ else
 fi
 
 # Run the docker image with that giant collection of flags.
+echo sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?
@@ -496,6 +505,11 @@ else
 fi
 
 "${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${IMAGE}:latest" "${docker_flags[@]}"
+
+if [[ "${exit_status}" -eq 0 ]]; then
+  "${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
+      "${CACHE_FOLDER}" "${CACHE_NAME}" "${BUILD_HOME}" || true
+fi
 
 if [[ "${exit_status}" != 0 ]]; then
   echo "================================================================"

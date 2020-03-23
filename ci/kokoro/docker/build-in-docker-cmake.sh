@@ -38,6 +38,10 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
+echo "$(date -u): ccache stats"
+ccache --show-stats
+ccache --zero-stats
+
 CMAKE_COMMAND="cmake"
 if [[ "${SCAN_BUILD}" == "yes" ]]; then
   CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
@@ -95,7 +99,6 @@ fi
 # shellcheck disable=SC2086
 ${CMAKE_COMMAND} \
     -DCMAKE_BUILD_TYPE="${BUILD_TYPE}" \
-    "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" \
     "${cmake_extra_flags[@]+"${cmake_extra_flags[@]}"}" \
     ${CMAKE_FLAGS:-} \
     "-H${SOURCE_DIR}" \
@@ -231,3 +234,8 @@ if [[ "${GENERATE_DOCS}" == "yes" ]]; then
       "$(date).${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
+
+
+echo "$(date -u): ccache stats"
+ccache --show-stats
+ccache --zero-stats
