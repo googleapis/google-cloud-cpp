@@ -43,6 +43,7 @@ namespace cloud {
 namespace spanner {
 inline namespace SPANNER_CLIENT_NS {
 namespace internal {
+struct SessionPoolFriendForTest;
 
 /**
  * Maintains a pool of `Session` objects.
@@ -134,6 +135,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
                                   bool dissociate_from_pool);
 
+  friend struct SessionPoolFriendForTest;  // To test Async*()
   // Asynchronous calls used to maintain the pool.
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(CompletionQueue& cq,
