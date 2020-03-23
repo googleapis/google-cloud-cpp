@@ -26,11 +26,11 @@ start_emulators
 # Use a unique project name to allow multiple runs of the test with
 # an externally launched emulator.
 readonly NONCE="${RANDOM}-${RANDOM}"
-export PROJECT_ID="emulated-${NONCE}"
-export INSTANCE_ID="it-${NONCE}"
-export ZONE_A="fake-region1-a"
-export ZONE_B="fake-region1-b"
-export SERVICE_ACCOUNT="fake-sa@${PROJECT_ID}.iam.gserviceaccount.com"
+export GOOGLE_CLOUD_PROJECT="emulated-${NONCE}"
+export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="it-${NONCE}"
+export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="fake-region1-a"
+export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="fake-region1-b"
+export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="fake-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
 # We run the same tests we run in production, just with different settings.
 "${BINDIR}/run_integration_tests_production.sh"

@@ -21,30 +21,30 @@ set -eu
 # The following environment variables must be defined before calling this
 # script:
 #
-# - PROJECT_ID: the id (typically the string form) of a valid GCP project.
-# - ZONE_A: the name of a valid GCP zone supporting Cloud Bigtable.
-# - ZONE_B: the name of a valid GCP zone supporting Cloud Bigtable, should be
+# - GOOGLE_CLOUD_PROJECT: the id (typically the string form) of a valid GCP
+#   project.
+# - GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A: the name of a valid GCP zone
+#   supporting Cloud Bigtable.
+# - GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B: the name of a valid GCP zone
+#   supporting Cloud Bigtable, should be
 #   different from ZONE_A and should be in the same region.
-# - INSTANCE_ID: the ID of an existing Cloud Bigtable instance in ZONE_A.
-# - SERVICE_ACCOUNT: a valid service account to test IAM operations.
+# - GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID: the ID of an existing Cloud
+#   Bigtable instance in ZONE_A.
+# - GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT: a valid service account to
+#   test IAM operations.
 #
 
 echo
 echo "Running bigtable::InstanceAdmin integration test."
-./instance_admin_integration_test \
-    "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}" "${SERVICE_ACCOUNT}"
-
+./instance_admin_integration_test
 echo
 echo "Running bigtable::InstanceAdmin async with futures integration test."
-./instance_admin_async_future_integration_test \
-    "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}" "${SERVICE_ACCOUNT}"
+./instance_admin_async_future_integration_test
 
 echo
 echo "Running bigtable::TableAdmin integration test."
-./admin_integration_test \
-    "${PROJECT_ID}" "${INSTANCE_ID}" "${ZONE_A}" "${ZONE_B}"
+./admin_integration_test
 
 echo
 echo "Running TableAdmin async with futures integration test."
-./admin_async_future_integration_test \
-    "${PROJECT_ID}" "${INSTANCE_ID}"  "${ZONE_A}" "${ZONE_B}"
+./admin_async_future_integration_test

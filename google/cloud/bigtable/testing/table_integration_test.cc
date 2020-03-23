@@ -29,14 +29,32 @@ namespace testing {
 
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
-std::string TableTestEnvironment::cluster_id_;
-std::string TableTestEnvironment::zone_;
-std::string TableTestEnvironment::replication_zone_;
+std::string TableTestEnvironment::zone_a_;
+std::string TableTestEnvironment::zone_b_;
 google::cloud::internal::DefaultPRNG TableTestEnvironment::generator_;
 std::string TableTestEnvironment::table_id_;
 bool TableTestEnvironment::using_cloud_bigtable_emulator_;
 
+TableTestEnvironment::TableTestEnvironment() {
+  project_id_ =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  instance_id_ = google::cloud::internal::GetEnv(
+                     "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                     .value_or("");
+  zone_a_ =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
+          .value_or("");
+  zone_b_ =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
+          .value_or("");
+}
+
 void TableTestEnvironment::SetUp() {
+  ASSERT_FALSE(project_id_.empty());
+  ASSERT_FALSE(instance_id_.empty());
+  ASSERT_FALSE(zone_a_.empty());
+  ASSERT_FALSE(zone_b_.empty());
+
   using_cloud_bigtable_emulator_ =
       google::cloud::internal::GetEnv("BIGTABLE_EMULATOR_HOST").has_value();
 

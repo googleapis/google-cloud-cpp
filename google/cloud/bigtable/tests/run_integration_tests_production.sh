@@ -20,16 +20,16 @@ set -eu
 # PROJECT_ID and INSTANCE_ID.
 echo
 echo "Running bigtable::Table integration test."
-./data_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+./data_integration_test
 
 echo
 echo "Running bigtable::Filters integration tests."
-./filters_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+./filters_integration_test
 
 echo
 echo "Running Mutation (e.g. DeleteFromColumn, SetCell) integration tests."
-./mutations_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+./mutations_integration_test
 
 echo
 echo "Running Table::Async* integration test."
-./data_async_future_integration_test "${PROJECT_ID}" "${INSTANCE_ID}"
+./data_async_future_integration_test
