@@ -18,9 +18,9 @@
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/internal/async_longrunning_op.h"
 #include "google/cloud/bigtable/internal/async_poll_op.h"
-#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/internal/async_retry_unary_rpc.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <sstream>
 
@@ -68,12 +68,27 @@ future<StatusOr<Response>> AsyncStartPollAfterRetryUnaryRpc(
                        AsyncCallType, RequestType>::type,
                    google::longrunning::Operation>::value,
       "async_call should return a google::longrunning::Operation");
+  struct CallWrapper {
+    MetadataUpdatePolicy metadata_update_policy;
+    AsyncCallType async_call;
+
+    google::cloud::internal::invoke_result_t<
+        AsyncCallType, grpc::ClientContext*, RequestType const&,
+        grpc::CompletionQueue*>
+    operator()(grpc::ClientContext* context, RequestType const& request,
+               grpc::CompletionQueue* cq) {
+      metadata_update_policy.Setup(*context);
+      return async_call(context, request, cq);
+    }
+  };
+  CallWrapper wrapper{std::move(metadata_update_policy), std::move(async_call)};
+
   return StartAsyncLongrunningOp<Client, Response>(
       location, std::move(polling_policy), metadata_update_policy, client, cq,
-      StartRetryAsyncUnaryRpc(
-          location, std::move(rpc_retry_policy), std::move(rpc_backoff_policy),
-          std::move(idempotent_policy), metadata_update_policy,
-          std::move(async_call), std::move(request), cq));
+      google::cloud::internal::StartRetryAsyncUnaryRpc(
+          cq, location, std::move(rpc_retry_policy),
+          std::move(rpc_backoff_policy), idempotent_policy.is_idempotent(),
+          std::move(wrapper), std::move(request)));
 }
 
 }  // namespace internal

@@ -14,10 +14,10 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/internal/async_bulk_apply.h"
-#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_retry_unary_rpc.h"
 #include <thread>
 #include <type_traits>
 
@@ -125,16 +125,18 @@ future<Status> Table::AsyncApply(SingleRowMutation mut, CompletionQueue& cq) {
       });
 
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(is_idempotent),
-             clone_metadata_update_policy(),
-             [client](grpc::ClientContext* context,
-                      google::bigtable::v2::MutateRowRequest const& request,
-                      grpc::CompletionQueue* cq) {
+  auto metadata_update_policy = clone_metadata_update_policy();
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             is_idempotent,
+             [client, metadata_update_policy](
+                 grpc::ClientContext* context,
+                 google::bigtable::v2::MutateRowRequest const& request,
+                 grpc::CompletionQueue* cq) {
+               metadata_update_policy.Setup(*context);
                return client->AsyncMutateRow(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<google::bigtable::v2::MutateRowResponse>> r) {
         return r.get().status();
       });
@@ -263,16 +265,18 @@ future<StatusOr<MutationBranch>> Table::AsyncCheckAndMutateRow(
       idempotent_mutation_policy_->is_idempotent(request);
 
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(is_idempotent),
-             clone_metadata_update_policy(),
-             [client](grpc::ClientContext* context,
-                      btproto::CheckAndMutateRowRequest const& request,
-                      grpc::CompletionQueue* cq) {
+  auto metadata_update_policy = clone_metadata_update_policy();
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             is_idempotent,
+             [client, metadata_update_policy](
+                 grpc::ClientContext* context,
+                 btproto::CheckAndMutateRowRequest const& request,
+                 grpc::CompletionQueue* cq) {
+               metadata_update_policy.Setup(*context);
                return client->AsyncCheckAndMutateRow(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<btproto::CheckAndMutateRowResponse>> f)
                 -> StatusOr<MutationBranch> {
         auto response = f.get();
@@ -357,16 +361,17 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
       request, app_profile_id_, table_name_);
 
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(false),
-             clone_metadata_update_policy(),
-             [client](grpc::ClientContext* context,
+  auto metadata_update_policy = clone_metadata_update_policy();
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/false,
+             [client, metadata_update_policy](grpc::ClientContext* context,
                       btproto::ReadModifyWriteRowRequest const& request,
                       grpc::CompletionQueue* cq) {
+               metadata_update_policy.Setup(*context);
                return client->AsyncReadModifyWriteRow(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<btproto::ReadModifyWriteRowResponse>> fut)
                 -> StatusOr<Row> {
         auto result = fut.get();
