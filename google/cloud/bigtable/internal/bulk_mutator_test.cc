@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/internal/bulk_mutator.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 
 /// Define types and functions used in the tests.
 namespace {
@@ -29,6 +29,7 @@ using namespace ::testing;
 using namespace google::cloud::testing_util::chrono_literals;
 
 using bigtable::testing::MockMutateRowsReader;
+using google::cloud::testing_util::MockCompletionQueue;
 
 std::unique_ptr<grpc::ClientContext> TestContext() {
   auto context = google::cloud::internal::make_unique<grpc::ClientContext>();

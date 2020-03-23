@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_data_client.h"
 #include "google/cloud/bigtable/testing/mock_read_rows_reader.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
@@ -22,6 +21,7 @@
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -35,6 +35,7 @@ namespace btproto = google::bigtable::v2;
 using namespace ::testing;
 using namespace google::cloud::testing_util::chrono_literals;
 using bigtable::testing::MockClientAsyncReaderInterface;
+using google::cloud::testing_util::MockCompletionQueue;
 
 template <typename T>
 bool Unsatisfied(future<T> const& fut) {
@@ -44,7 +45,7 @@ bool Unsatisfied(future<T> const& fut) {
 class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
  protected:
   TableAsyncReadRowsTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         stream_status_future_(stream_status_promise_.get_future()) {}
 
@@ -128,7 +129,7 @@ class TableAsyncReadRowsTest : public bigtable::testing::TableTestFixture {
     }
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::vector<MockClientAsyncReaderInterface<btproto::ReadRowsResponse>*>
       readers_;

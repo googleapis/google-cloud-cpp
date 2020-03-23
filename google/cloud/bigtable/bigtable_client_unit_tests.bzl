@@ -29,7 +29,6 @@ bigtable_client_unit_tests = [
     "client_options_test.cc",
     "cluster_config_test.cc",
     "column_family_test.cc",
-    "completion_queue_test.cc",
     "data_client_test.cc",
     "expr_test.cc",
     "filters_test.cc",
