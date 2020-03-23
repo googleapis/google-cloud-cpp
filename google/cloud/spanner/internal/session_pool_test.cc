@@ -388,10 +388,9 @@ TEST(SessionPool, GetStubForStublessSession) {
   EXPECT_EQ(pool->GetStub(*session), mock);
 }
 
-// TODO(#1428): This test runs in real time. SessionPool does not currently
-// provide any mechanism to inject a clock source, or to control its
-// background-work scheduling. This makes the test slower and more fragile
-// than desired.
+// TODO(#1428): This test has a real-time component (see sleep_for() below)
+// as SessionPool does not currently provide a mechanism to inject a clock
+// source to control whether sessions require refreshing.
 TEST(SessionPool, SessionRefresh) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
@@ -420,13 +419,12 @@ TEST(SessionPool, SessionRefresh) {
 
   auto db = Database("project", "instance", "database");
   SessionPoolOptions options;
-  options.set_keep_alive_interval(std::chrono::seconds(10));
+  options.set_keep_alive_interval(std::chrono::seconds(1));
   auto impl = std::make_shared<MockCompletionQueue>();
   auto pool = MakeSessionPool(db, {mock}, options, CompletionQueue(impl));
 
-  // now == t0: Allocate and release two sessions such that "s1" will expire
-  // at t0 + 18s, and "s2" will expire at t0 + 10s, and after which both the
-  // BatchCreateSessions() expectations have been satisfied.
+  // Allocate and release two session, "s1" and "s2". This will satisfy the
+  // BatchCreateSessions() expectations.
   {
     auto s1 = pool->Allocate();
     ASSERT_STATUS_OK(s1);
@@ -436,18 +434,19 @@ TEST(SessionPool, SessionRefresh) {
       ASSERT_STATUS_OK(s2);
       EXPECT_EQ("s2", (*s2)->session_name());
     }
-    std::this_thread::sleep_for(std::chrono::seconds(8));
+    // Wait for "s2" to need refreshing before releasing "s1".
+    std::this_thread::sleep_for(options.keep_alive_interval() * 2);
   }
-  std::this_thread::sleep_for(std::chrono::seconds(8));
 
-  // now == t0 + 16s: Session "s2" has expired, but "s1" has not, and
-  // RefreshExpiringSessions() has run exactly once since "s2" expired.
-  impl->SimulateCompletion(true);  // make the async GetSession() RPC
+  // Simulate completion of pending operations, which will result in
+  // a call to RefreshExpiringSessions(). This should refresh "s2" and
+  // satisfy the AsyncGetSession() and Finish() expectations.
+  impl->SimulateCompletion(true);
 
-  // The AsyncGetSession() and Finish() expectations should now have been
-  // satisfied. If anything goes wrong we'll get unsatisfied/uninteresting
-  // gmock errors.
-  impl->SimulateCompletion(true);  // run the completion callback
+  // Simulate completion again, making another RefreshExpiringSessions()
+  // call, which should do nothing.  If anything goes wrong with this
+  // process, we'll get unsatisfied/uninteresting gmock errors.
+  impl->SimulateCompletion(true);
 }
 
 }  // namespace
