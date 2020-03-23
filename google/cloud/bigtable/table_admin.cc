@@ -14,9 +14,9 @@
 
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/internal/async_retry_multi_page.h"
-#include "google/cloud/bigtable/internal/async_retry_unary_rpc.h"
 #include "google/cloud/bigtable/internal/unary_client_utils.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_retry_unary_rpc.h"
 #include <google/protobuf/duration.pb.h>
 #include <sstream>
 
@@ -72,16 +72,18 @@ future<StatusOr<btadmin::Table>> TableAdmin::AsyncCreateTable(
   request.set_table_id(std::move(table_id));
 
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(false),
-      clone_metadata_update_policy(),
-      [client](grpc::ClientContext* context,
-               btadmin::CreateTableRequest const& request,
-               grpc::CompletionQueue* cq) {
+  auto metadata_update_policy = clone_metadata_update_policy();
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+      cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      /*is_idempotent=*/false,
+      [client, metadata_update_policy](
+          grpc::ClientContext* context,
+          btadmin::CreateTableRequest const& request,
+          grpc::CompletionQueue* cq) {
+        metadata_update_policy.Setup(*context);
         return client->AsyncCreateTable(context, request, cq);
       },
-      std::move(request), cq);
+      std::move(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
@@ -94,15 +96,18 @@ future<StatusOr<google::bigtable::admin::v2::Table>> TableAdmin::AsyncGetTable(
 
   // Copy the client because we lack C++14 extended lambda captures.
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(true), clone_metadata_update_policy(),
-      [client](grpc::ClientContext* context,
-               google::bigtable::admin::v2::GetTableRequest const& request,
-               grpc::CompletionQueue* cq) {
+  auto metadata_update_policy = clone_metadata_update_policy();
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+      cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      /*is_idempotent=*/true,
+      [client, metadata_update_policy](
+          grpc::ClientContext* context,
+          google::bigtable::admin::v2::GetTableRequest const& request,
+          grpc::CompletionQueue* cq) {
+        metadata_update_policy.Setup(*context);
         return client->AsyncGetTable(context, request, cq);
       },
-      std::move(request), cq);
+      std::move(request));
 }
 
 StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
@@ -208,19 +213,19 @@ future<Status> TableAdmin::AsyncDeleteTable(CompletionQueue& cq,
   auto name = TableName(table_id);
   request.set_name(name);
 
-  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
-
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
-             [client](
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/true,
+             [client, name](
                  grpc::ClientContext* context,
                  google::bigtable::admin::v2::DeleteTableRequest const& request,
                  grpc::CompletionQueue* cq) {
+               MetadataUpdatePolicy(name, MetadataParamTypes::NAME)
+                   .Setup(*context);
                return client->AsyncDeleteTable(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<google::protobuf::Empty>> r) {
         return r.get().status();
       });
@@ -258,18 +263,18 @@ future<StatusOr<btadmin::Table>> TableAdmin::AsyncModifyColumnFamilies(
   for (auto& m : modifications) {
     *request.add_modifications() = std::move(m).as_proto();
   }
-  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-      __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
-      [client](grpc::ClientContext* context,
-               btadmin::ModifyColumnFamiliesRequest const& request,
-               grpc::CompletionQueue* cq) {
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+      cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+      /*is_idempotent=*/true,
+      [client, name](grpc::ClientContext* context,
+                     btadmin::ModifyColumnFamiliesRequest const& request,
+                     grpc::CompletionQueue* cq) {
+        MetadataUpdatePolicy(name, MetadataParamTypes::NAME).Setup(*context);
         return client->AsyncModifyColumnFamilies(context, request, cq);
       },
-      std::move(request), cq);
+      std::move(request));
 }
 
 Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
@@ -294,17 +299,19 @@ future<Status> TableAdmin::AsyncDropRowsByPrefix(CompletionQueue& cq,
   auto name = TableName(table_id);
   request.set_name(name);
   request.set_row_key_prefix(std::move(row_key_prefix));
-  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
+
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
-             [client](grpc::ClientContext* context,
-                      btadmin::DropRowRangeRequest const& request,
-                      grpc::CompletionQueue* cq) {
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/true,
+             [client, name](grpc::ClientContext* context,
+                            btadmin::DropRowRangeRequest const& request,
+                            grpc::CompletionQueue* cq) {
+               MetadataUpdatePolicy(name, MetadataParamTypes::NAME)
+                   .Setup(*context);
                return client->AsyncDropRowRange(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<google::protobuf::Empty>> r) {
         return r.get().status();
       });
@@ -415,17 +422,19 @@ future<Status> TableAdmin::AsyncDropAllRows(CompletionQueue& cq,
   auto name = TableName(table_id);
   request.set_name(name);
   request.set_delete_all_data_from_table(true);
-  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
+
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
-             [client](grpc::ClientContext* context,
-                      btadmin::DropRowRangeRequest const& request,
-                      grpc::CompletionQueue* cq) {
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/true,
+             [client, name](grpc::ClientContext* context,
+                            btadmin::DropRowRangeRequest const& request,
+                            grpc::CompletionQueue* cq) {
+               MetadataUpdatePolicy(name, MetadataParamTypes::NAME)
+                   .Setup(*context);
                return client->AsyncDropRowRange(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<google::protobuf::Empty>> r) {
         return r.get().status();
       });
@@ -455,18 +464,21 @@ future<StatusOr<std::string>> TableAdmin::AsyncGenerateConsistencyToken(
   btadmin::GenerateConsistencyTokenRequest request;
   auto name = TableName(table_id);
   request.set_name(name);
-  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
+
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
-             [client](grpc::ClientContext* context,
-                      btadmin::GenerateConsistencyTokenRequest const& request,
-                      grpc::CompletionQueue* cq) {
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/true,
+             [client, name](
+                 grpc::ClientContext* context,
+                 btadmin::GenerateConsistencyTokenRequest const& request,
+                 grpc::CompletionQueue* cq) {
+               MetadataUpdatePolicy(name, MetadataParamTypes::NAME)
+                   .Setup(*context);
                return client->AsyncGenerateConsistencyToken(context, request,
                                                             cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<btadmin::GenerateConsistencyTokenResponse>> fut)
                 -> StatusOr<std::string> {
         auto result = fut.get();
@@ -506,17 +518,19 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
   auto name = TableName(table_id);
   request.set_name(name);
   request.set_consistency_token(consistency_token);
-  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
+
   auto client = client_;
-  return internal::StartRetryAsyncUnaryRpc(
-             __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-             internal::ConstantIdempotencyPolicy(true), metadata_update_policy,
-             [client](grpc::ClientContext* context,
-                      btadmin::CheckConsistencyRequest const& request,
-                      grpc::CompletionQueue* cq) {
+  return google::cloud::internal::StartRetryAsyncUnaryRpc(
+             cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
+             /*is_idempotent=*/true,
+             [client, name](grpc::ClientContext* context,
+                            btadmin::CheckConsistencyRequest const& request,
+                            grpc::CompletionQueue* cq) {
+               MetadataUpdatePolicy(name, MetadataParamTypes::NAME)
+                   .Setup(*context);
                return client->AsyncCheckConsistency(context, request, cq);
              },
-             std::move(request), cq)
+             std::move(request))
       .then([](future<StatusOr<btadmin::CheckConsistencyResponse>> fut)
                 -> StatusOr<Consistency> {
         auto result = fut.get();

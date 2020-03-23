@@ -42,7 +42,6 @@ bigtable_client_hdrs = [
     "internal/async_poll_op.h",
     "internal/async_retry_multi_page.h",
     "internal/async_retry_op.h",
-    "internal/async_retry_unary_rpc.h",
     "internal/async_retry_unary_rpc_and_poll.h",
     "internal/bulk_mutator.h",
     "internal/client_options_defaults.h",

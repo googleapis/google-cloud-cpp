@@ -81,6 +81,8 @@ struct SafeGrpcRetry {
  */
 class RPCRetryPolicy {
  public:
+  using RetryableTraits = internal::SafeGrpcRetry;
+
   virtual ~RPCRetryPolicy() = default;
 
   /**

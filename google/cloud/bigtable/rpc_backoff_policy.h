@@ -70,6 +70,10 @@ class RPCBackoffPolicy {
       google::cloud::Status const& status) = 0;
   // TODO(#2344) - remove ::grpc::Status version.
   virtual std::chrono::milliseconds OnCompletion(grpc::Status const& s) = 0;
+
+  std::chrono::milliseconds OnCompletion() {
+    return OnCompletion(google::cloud::Status{});
+  }
 };
 
 /// Return an instance of the default RPCBackoffPolicy.

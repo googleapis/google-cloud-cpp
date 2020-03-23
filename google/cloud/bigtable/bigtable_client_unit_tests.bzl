@@ -43,7 +43,6 @@ bigtable_client_unit_tests = [
     "instance_update_config_test.cc",
     "internal/async_longrunning_op_test.cc",
     "internal/async_retry_multi_page_test.cc",
-    "internal/async_retry_unary_rpc_test.cc",
     "internal/bulk_mutator_test.cc",
     "internal/google_bytes_traits_test.cc",
     "internal/prefix_range_end_test.cc",
