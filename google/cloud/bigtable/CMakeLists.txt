@@ -129,7 +129,7 @@ add_library(
     internal/async_poll_op.h
     internal/async_retry_multi_page.h
     internal/async_retry_op.h
-        internal/async_retry_unary_rpc_and_poll.h
+    internal/async_retry_unary_rpc_and_poll.h
     internal/bulk_mutator.cc
     internal/bulk_mutator.h
     internal/client_options_defaults.h
@@ -272,7 +272,7 @@ if (BUILD_TESTING)
         instance_update_config_test.cc
         internal/async_longrunning_op_test.cc
         internal/async_retry_multi_page_test.cc
-            internal/bulk_mutator_test.cc
+        internal/bulk_mutator_test.cc
         internal/google_bytes_traits_test.cc
         internal/prefix_range_end_test.cc
         mutation_batcher_test.cc

@@ -269,8 +269,8 @@ future<StatusOr<btadmin::Table>> TableAdmin::AsyncModifyColumnFamilies(
       cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       /*is_idempotent=*/true,
       [client, name](grpc::ClientContext* context,
-               btadmin::ModifyColumnFamiliesRequest const& request,
-               grpc::CompletionQueue* cq) {
+                     btadmin::ModifyColumnFamiliesRequest const& request,
+                     grpc::CompletionQueue* cq) {
         MetadataUpdatePolicy(name, MetadataParamTypes::NAME).Setup(*context);
         return client->AsyncModifyColumnFamilies(context, request, cq);
       },

@@ -365,9 +365,10 @@ future<StatusOr<Row>> Table::AsyncReadModifyWriteRowImpl(
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
              cq, __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
              /*is_idempotent=*/false,
-             [client, metadata_update_policy](grpc::ClientContext* context,
-                      btproto::ReadModifyWriteRowRequest const& request,
-                      grpc::CompletionQueue* cq) {
+             [client, metadata_update_policy](
+                 grpc::ClientContext* context,
+                 btproto::ReadModifyWriteRowRequest const& request,
+                 grpc::CompletionQueue* cq) {
                metadata_update_policy.Setup(*context);
                return client->AsyncReadModifyWriteRow(context, request, cq);
              },
