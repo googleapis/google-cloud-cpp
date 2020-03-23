@@ -215,7 +215,6 @@ if (BUILD_TESTING)
         testing/inprocess_data_client.h
         testing/mock_admin_client.h
         testing/mock_async_failing_rpc_factory.h
-        testing/mock_completion_queue.h
         testing/mock_data_client.h
         testing/mock_instance_admin_client.h
         testing/mock_mutate_rows_reader.h
@@ -258,7 +257,6 @@ if (BUILD_TESTING)
         client_options_test.cc
         cluster_config_test.cc
         column_family_test.cc
-        completion_queue_test.cc
         data_client_test.cc
         expr_test.cc
         filters_test.cc

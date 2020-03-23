@@ -14,11 +14,12 @@
 
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 
 namespace bigtable = google::cloud::bigtable;
 namespace bt = ::google::bigtable::v2;
+using google::cloud::testing_util::MockCompletionQueue;
 
 /// Define types and functions used in the tests.
 namespace {
@@ -115,7 +116,7 @@ std::string const kTableId = "the-table";
 class ValidContextMdAsyncTest : public ::testing::Test {
  public:
   ValidContextMdAsyncTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockDataClient) {
     EXPECT_CALL(*client_, project_id())
@@ -147,7 +148,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
     EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockDataClient> client_;
   std::unique_ptr<bigtable::Table> table_;

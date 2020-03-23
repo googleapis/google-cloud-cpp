@@ -14,13 +14,13 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -31,6 +31,7 @@ namespace bigtable = google::cloud::bigtable;
 
 using MockAdminClient = bigtable::testing::MockInstanceAdminClient;
 using namespace google::cloud::testing_util::chrono_literals;
+using google::cloud::testing_util::MockCompletionQueue;
 
 std::string const kProjectId = "the-project";
 
@@ -664,7 +665,7 @@ using MockAsyncIamPolicyReader =
 class AsyncGetIamPolicyTest : public ::testing::Test {
  public:
   AsyncGetIamPolicyTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncIamPolicyReader) {
@@ -697,7 +698,7 @@ class AsyncGetIamPolicyTest : public ::testing::Test {
         instance_admin.AsyncGetNativeIamPolicy(cq_, "test-instance");
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
@@ -1044,7 +1045,7 @@ using MockAsyncDeleteClusterReader =
 class AsyncDeleteClusterTest : public ::testing::Test {
  public:
   AsyncDeleteClusterTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncDeleteClusterReader) {
@@ -1074,7 +1075,7 @@ class AsyncDeleteClusterTest : public ::testing::Test {
         instance_admin.AsyncDeleteCluster(cq_, "test-instance", "the-cluster");
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::Status> user_future_;
@@ -1131,7 +1132,7 @@ using MockAsyncSetIamPolicyReader =
 class AsyncSetIamPolicyTest : public ::testing::Test {
  public:
   AsyncSetIamPolicyTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncSetIamPolicyReader) {
@@ -1172,7 +1173,7 @@ class AsyncSetIamPolicyTest : public ::testing::Test {
                             "test-tag", 0));
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<google::cloud::IamPolicy>>
@@ -1301,7 +1302,7 @@ using MockAsyncTestIamPermissionsReader =
 class AsyncTestIamPermissionsTest : public ::testing::Test {
  public:
   AsyncTestIamPermissionsTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient),
         reader_(new MockAsyncTestIamPermissionsReader) {
@@ -1333,7 +1334,7 @@ class AsyncTestIamPermissionsTest : public ::testing::Test {
         cq_, "the-resource", std::move(permissions));
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   google::cloud::future<google::cloud::StatusOr<std::vector<std::string>>>
@@ -1394,7 +1395,7 @@ TEST_F(AsyncTestIamPermissionsTest, AsyncTestIamPermissionsUnrecoverableError) {
 class ValidContextMdAsyncTest : public ::testing::Test {
  public:
   ValidContextMdAsyncTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new bigtable::testing::MockInstanceAdminClient) {
     EXPECT_CALL(*client_, project())
@@ -1415,7 +1416,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
               res.status().code());
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockInstanceAdminClient> client_;
   std::unique_ptr<bigtable::InstanceAdmin> instance_admin_;

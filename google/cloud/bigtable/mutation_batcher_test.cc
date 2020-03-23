@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutation_batcher.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/future.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
 
@@ -34,6 +34,7 @@ namespace bt = ::google::cloud::bigtable;
 using namespace ::testing;
 using namespace google::cloud::testing_util::chrono_literals;
 using bigtable::testing::MockClientAsyncReaderInterface;
+using google::cloud::testing_util::MockCompletionQueue;
 
 std::size_t MutationSize(SingleRowMutation mut) {
   google::bigtable::v2::MutateRowsRequest::Entry entry;
@@ -127,7 +128,7 @@ auto generate_response_generator = [](ResultPiece const& result_piece) {
 class MutationBatcherTest : public bigtable::testing::TableTestFixture {
  protected:
   MutationBatcherTest()
-      : cq_impl_(std::make_shared<bigtable::testing::MockCompletionQueue>()),
+      : cq_impl_(std::make_shared<MockCompletionQueue>()),
         cq_(cq_impl_),
         batcher_(new MutationBatcher(table_)) {}
 
@@ -237,7 +238,7 @@ class MutationBatcherTest : public bigtable::testing::TableTestFixture {
 
   std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   CompletionQueue cq_;
   std::unique_ptr<MutationBatcher> batcher_;
 };

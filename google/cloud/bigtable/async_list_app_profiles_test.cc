@@ -14,13 +14,13 @@
 
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/instance_admin.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_instance_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/table_test_fixture.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -37,6 +37,7 @@ using namespace ::testing;
 using MockAsyncListAppProfilesReader =
     google::cloud::bigtable::testing::MockAsyncResponseReader<
         btadmin::ListAppProfilesResponse>;
+using google::cloud::testing_util::MockCompletionQueue;
 
 using Functor = std::function<void(
     CompletionQueue&, std::vector<btadmin::AppProfile>&, grpc::Status&)>;
@@ -46,7 +47,7 @@ std::string const kProjectId = "the-project";
 class AsyncListAppProfilesTest : public ::testing::Test {
  public:
   AsyncListAppProfilesTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new testing::MockInstanceAdminClient),
         profiles_reader_1_(new MockAsyncListAppProfilesReader),
@@ -61,7 +62,7 @@ class AsyncListAppProfilesTest : public ::testing::Test {
     user_future_ = instance_admin.AsyncListAppProfiles(cq_, "my_instance");
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   CompletionQueue cq_;
   std::shared_ptr<testing::MockInstanceAdminClient> client_;
   future<StatusOr<std::vector<btadmin::AppProfile>>> user_future_;

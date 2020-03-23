@@ -15,13 +15,13 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/mock_admin_client.h"
 #include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
-#include "google/cloud/bigtable/testing/mock_completion_queue.h"
 #include "google/cloud/bigtable/testing/mock_response_reader.h"
 #include "google/cloud/bigtable/testing/validate_metadata.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
+#include "google/cloud/testing_util/mock_completion_queue.h"
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/util/message_differencer.h>
 #include <gmock/gmock.h>
@@ -32,6 +32,7 @@ namespace btadmin = ::google::bigtable::admin::v2;
 namespace bigtable = google::cloud::bigtable;
 using namespace google::cloud::testing_util::chrono_literals;
 using MockAdminClient = bigtable::testing::MockAdminClient;
+using google::cloud::testing_util::MockCompletionQueue;
 
 std::string const kProjectId = "the-project";
 std::string const kInstanceId = "the-instance";
@@ -685,8 +686,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Simple) {
       .WillOnce(Invoke(make_invoke(r2)))
       .WillOnce(Invoke(make_invoke(r3)));
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl(
-      new bigtable::testing::MockCompletionQueue);
+  std::shared_ptr<MockCompletionQueue> cq_impl(new MockCompletionQueue);
   bigtable::CompletionQueue cq(cq_impl);
 
   google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
@@ -764,8 +764,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
             ::btadmin::CheckConsistencyResponse>>(reader.get());
       }));
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl(
-      new bigtable::testing::MockCompletionQueue);
+  std::shared_ptr<MockCompletionQueue> cq_impl(new MockCompletionQueue);
   bigtable::CompletionQueue cq(cq_impl);
 
   google::cloud::future<google::cloud::StatusOr<bigtable::Consistency>> result =
@@ -791,7 +790,7 @@ TEST_F(TableAdminTest, AsyncWaitForConsistency_Failure) {
 class ValidContextMdAsyncTest : public ::testing::Test {
  public:
   ValidContextMdAsyncTest()
-      : cq_impl_(new bigtable::testing::MockCompletionQueue),
+      : cq_impl_(new MockCompletionQueue),
         cq_(cq_impl_),
         client_(new MockAdminClient) {
     EXPECT_CALL(*client_, project())
@@ -821,7 +820,7 @@ class ValidContextMdAsyncTest : public ::testing::Test {
     EXPECT_EQ(google::cloud::StatusCode::kPermissionDenied, res.code());
   }
 
-  std::shared_ptr<bigtable::testing::MockCompletionQueue> cq_impl_;
+  std::shared_ptr<MockCompletionQueue> cq_impl_;
   bigtable::CompletionQueue cq_;
   std::shared_ptr<bigtable::testing::MockAdminClient> client_;
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
