@@ -135,8 +135,8 @@ void GCECredentials(std::vector<std::string> argv) {
 void RunAll(std::vector<std::string> argv) {
   if (!argv.empty()) throw Usage{"auto"};
   for (auto const& var :
-      {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
-       "ACCESS_TOKEN", "GOOGLE_APPLICATION_CREDENTIALS"}) {
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+        "ACCESS_TOKEN", "GOOGLE_APPLICATION_CREDENTIALS"}) {
     auto const value = google::cloud::internal::GetEnv(var);
     if (!value) {
       throw std::runtime_error("The " + std::string(var) +
