@@ -152,7 +152,6 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
       PredefinedAcl::PublicReadWrite(),
   };
 
-
   for (auto const& acl : test_values) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
@@ -180,7 +179,6 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
       PredefinedDefaultObjectAcl::PublicRead(),
   };
 
-
   for (auto const& acl : test_values) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
@@ -200,7 +198,6 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -344,7 +341,6 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -377,7 +373,6 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -544,7 +539,6 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -621,14 +615,13 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id_, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   auto current_notifications = client->ListNotifications(bucket_name);
@@ -676,14 +669,13 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id_, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   StatusOr<IamPolicy> policy = client->GetBucketIamPolicy(bucket_name);
@@ -732,14 +724,13 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id_, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   StatusOr<NativeIamPolicy> policy =
@@ -810,14 +801,13 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id_, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   auto after_setting_retention_policy = client->PatchBucket(
@@ -838,7 +828,6 @@ TEST_F(BucketIntegrationTest, BucketLock) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
-
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
