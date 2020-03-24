@@ -1,21 +1,25 @@
 #!/bin/bash
 #
 # Usage:
-#   $ release.sh [-f] <organization/project-name>
+#   $ release.sh [-f] <organization/project-name> [<new-version>]
+#
+#   Args:
+#     organization/project-name    Required. The GitHub repo to release.
+#
+#     new-version                  Optional. The new version number to use,
+#                                  specified as M.N.0. If not specified, the
+#                                  new version will be computed from existing
+#                                  git tags. This flag should only be needed
+#                                  when jumping to a non-sequential version
+#                                  number.
 #
 #   Options:
 #     -f     Force; actually make and push the changes
 #     -h     Print help message
 #
-# Example:
-#   # Shows what commands would be run. NO CHANGES ARE PUSHED
-#   $ release.sh googleapis/google-cloud-cpp-spanner
-#
-#   # Shows commands AND PUSHES changes when -f is specified
-#   $ release.sh -f googleapis/google-cloud-cpp-spanner
-#
 # This script creates a "release" on github by doing the following:
-#   1. Computes the next version to use
+#
+#   1. Computes the next version to use, if not specified on the command line
 #   2. Creates and pushes the tag w/ the new version
 #   3. Creates and pushes a new branch w/ the new version
 #   4. Creates the "Pre-Release" in the GitHub UI.
@@ -25,11 +29,34 @@
 # happen. Then run this script. After running this script, the user must still
 # go to the GH UI where the new release will exist as a "pre-release", and edit
 # the release notes.
+#
+# Examples:
+#
+#   # NO CHANGES ARE PUSHED. Shows what commands would be run.
+#   $ release.sh googleapis/google-cloud-cpp-spanner
+#
+#   # NO CHANGES ARE PUSHED. Shows what commands would be run.
+#   $ release.sh googleapis/google-cloud-cpp-spanner 2.0.0
+#
+#   # PUSHES CHANGES to release -spanner
+#   $ release.sh -f googleapis/google-cloud-cpp-spanner
+#
+#   # PUSHES CHANGES to release -spanner, setting its new version to 2.0.0
+#   $ release.sh -f googleapis/google-cloud-cpp-spanner 2.0.0
 
 set -eu
 
 # Extracts all the documentation at the top of this file as the usage text.
 readonly USAGE="$(sed -n '3,/^$/s/^# \?//p' "$0")"
+
+# Takes an optional list of strings to be printed with a trailing newline and
+# exits the program with code 1
+function die_with_message() {
+  for m in "$@"; do
+    echo "$m" 1>&2
+  done
+  exit 1
+}
 
 FORCE_FLAG="no"
 while getopts "fh" opt "$@"; do
@@ -37,25 +64,30 @@ while getopts "fh" opt "$@"; do
     [f])
       FORCE_FLAG="yes";;
     [h])
-      echo "$USAGE"
+      echo "${USAGE}"
       exit 0;;
     *)
-      echo "$USAGE"
-      exit 1;;
+      die_with_message "${USAGE}";;
   esac
 done
 shift $((OPTIND - 1))
 declare -r FORCE_FLAG
 
-if [[ $# -ne 1 ]]; then
-  echo "Missing repo name, example googleapis/google-cloud-cpp-spanner"
-  echo "$USAGE"
-  exit 1;
+PROJECT_ARG=""
+VERSION_ARG=""
+if [[ $# -eq 1 ]]; then
+  PROJECT_ARG="$1"
+elif [[ $# -eq 2 ]]; then
+  PROJECT_ARG="$1"
+  VERSION_ARG="$2"
+else
+  die_with_message "Invalid arguments" "${USAGE}"
 fi
+declare -r PROJECT_ARG
+declare -r VERSION_ARG
 
-readonly PROJECT="$1"
-readonly CLONE_URL="git@github.com:${PROJECT}.git"
-readonly TMP_DIR="$(mktemp -d "/tmp/${PROJECT//\//-}-release.XXXXXXXX")"
+readonly CLONE_URL="git@github.com:${PROJECT_ARG}.git"
+readonly TMP_DIR="$(mktemp -d "/tmp/${PROJECT_ARG//\//-}-release.XXXXXXXX")"
 readonly REPO_DIR="${TMP_DIR}/repo"
 
 function banner() {
@@ -87,25 +119,40 @@ trap exit_handler EXIT
 # of the release. We also use 'hub' to do the clone so that the user is asked
 # to authenticate at the beginning of the process rather than at the end.
 if ! command -v hub > /dev/null; then
-  echo "Can't find 'hub' command"
-  echo "Maybe run: sudo apt install hub"
-  echo "Or build it from https://github.com/github/hub"
-  exit 1
+  die_with_message \
+    "Can't find 'hub' command" \
+    "Maybe run: sudo apt install hub" \
+    "Or build it from https://github.com/github/hub"
 fi
 
-banner "Starting release for ${PROJECT} (${CLONE_URL})"
-hub clone "${PROJECT}" "${REPO_DIR}"  # May force login to GH at this point
+banner "Starting release for ${PROJECT_ARG} (${CLONE_URL})"
+hub clone "${PROJECT_ARG}" "${REPO_DIR}"  # May force login to GH at this point
 cd "${REPO_DIR}"
 
 # Figures out the most recent tagged version, and computes the next version.
 readonly TAG="$(git describe --tags --abbrev=0 origin/master)"
 readonly CUR_TAG="$(test -n "${TAG}" && echo "${TAG}" || echo "v0.0.0")"
-readonly NEW_RELEASE="$(perl -pe 's/v0.(\d+).0/"v0.${\($1+1)}"/e' <<<"${CUR_TAG}")"
-readonly NEW_TAG="${NEW_RELEASE}.0"
-readonly NEW_BRANCH="${NEW_RELEASE}.x"
+readonly CUR_VERSION="${CUR_TAG#v}"
 
-banner "Release info for ${NEW_RELEASE}"
-echo "Current tag: ${CUR_TAG}"
+NEW_VERSION=""
+if [[ -n "${VERSION_ARG}" ]]; then
+  NEW_VERSION="${VERSION_ARG}"
+else
+  # No new version specified; compute the new version number
+  NEW_VERSION="$(perl -pe 's/(\d+).(\d+).(\d+)/"$1.${\($2+1)}.$3"/e' <<<"${CUR_VERSION}")"
+fi
+declare -r NEW_VERSION
+
+# Avoid handling patch releases for now, because we wouldn't need a new branch
+# for those.
+if ! grep -P "\d+\.\d+\.0" <<<"${NEW_VERSION}" > /dev/null; then
+  die_with_message "Sorry, cannot handle patch releases (yet)" "${USAGE}"
+fi
+
+readonly NEW_TAG="v${NEW_VERSION}"
+readonly NEW_BRANCH="${NEW_TAG%.0}.x"
+
+banner "Release info for ${CUR_TAG} -> ${NEW_TAG}"
 echo "    New tag: ${NEW_TAG}"
 echo " New branch: ${NEW_BRANCH}"
 
