@@ -1770,7 +1770,7 @@ int main(int argc, char* argv[]) try {
       {"read-encrypted-object", ReadEncryptedObject},
       {"compose-object", ComposeObject},
       {"compose-object-from-encrypted-objects",
-       &ComposeObjectFromEncryptedObjects},
+       ComposeObjectFromEncryptedObjects},
       {"compose-object-from-many", ComposeObjectFromMany},
       {"write-object-with-kms-key", WriteObjectWithKmsKey},
       {"rewrite-object", RewriteObject},
