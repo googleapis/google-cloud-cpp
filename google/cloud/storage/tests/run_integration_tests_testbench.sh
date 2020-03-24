@@ -26,6 +26,7 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 # can use the same testbench.
 export GOOGLE_CLOUD_PROJECT="fake-project-${RANDOM}-${RANDOM}"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="fake-bucket-${RANDOM}-${RANDOM}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID="fake-region-${RANDOM}"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${GOOGLE_CLOUD_PROJECT}/topics/fake-topic-${RANDOM}-${RANDOM}"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account@example.com"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="fake-service-account@example.com"
@@ -110,9 +111,5 @@ echo "Running Signed URL integration test."
 echo
 echo "Running error injection integration tests."
 ./error_injection_integration_test
-
-# The tests were successful, so disable dumping of test bench log during
-# shutdown.
-TESTBENCH_DUMP_LOG=no
 
 exit 0
