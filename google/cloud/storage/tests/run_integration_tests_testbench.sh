@@ -16,7 +16,7 @@
 
 set -eu
 
-if [ -z "${PROJECT_ROOT+x}" ]; then
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
@@ -24,13 +24,11 @@ source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 # Create most likely unique names for the project and bucket so multiple tests
 # can use the same testbench.
-export PROJECT_ID="fake-project-${RANDOM}-${RANDOM}"
-export BUCKET_NAME="fake-bucket-${RANDOM}-${RANDOM}"
-export TOPIC_NAME="projects/${PROJECT_ID}/topics/fake-topic-${RANDOM}-${RANDOM}"
-export LOCATION="fake-region1"
-readonly HMAC_SERVICE_ACCOUNT="fake-service-account@example.com"
-readonly SIGNING_SERVICE_ACCOUNT="fake-service-account@example.com"
-
+export GOOGLE_CLOUD_PROJECT="fake-project-${RANDOM}-${RANDOM}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="fake-bucket-${RANDOM}-${RANDOM}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${GOOGLE_CLOUD_PROJECT}/topics/fake-topic-${RANDOM}-${RANDOM}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account@example.com"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="fake-service-account@example.com"
 
 readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
 readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
@@ -49,70 +47,70 @@ echo "Running storage::internal::CurlRequestDownload integration test."
 
 echo
 echo "Running storage::internal::CurlResumableUploadSession integration tests."
-./curl_resumable_upload_session_integration_test "${BUCKET_NAME}"
+./curl_resumable_upload_session_integration_test
 
 echo
 echo "Running CurlClient::SignBlob integration tests."
-./curl_sign_blob_integration_test "${SIGNING_SERVICE_ACCOUNT}"
+./curl_sign_blob_integration_test
 
 echo
 echo "Running GCS Bucket APIs integration tests."
-./bucket_integration_test "${PROJECT_ID}" "${BUCKET_NAME}" "${TOPIC_NAME}" "${HMAC_SERVICE_ACCOUNT}"
+./bucket_integration_test
 
 echo
 echo "Running GCS Object Checksum integration tests."
-./object_checksum_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_checksum_integration_test
 
 echo
 echo "Running GCS Object Hash integration tests."
-./object_hash_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_hash_integration_test
 
 echo
 echo "Running GCS Object Insert API integration tests."
-./object_insert_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_insert_integration_test
 
 echo
 echo "Running GCS Object APIs integration tests."
-./object_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_integration_test
 
 echo
 echo "Running GCS Object file upload/download integration tests."
-./object_file_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_file_integration_test
 
 echo
 echo "Running GCS Object file download multi-threaded test."
-./object_file_multi_threaded_test "${BUCKET_NAME}" "128"
+./object_file_multi_threaded_test
 
 echo
 echo "Running GCS Object media integration tests."
-./object_media_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_media_integration_test
 
 echo
 echo "Running GCS Object resumable upload integration tests."
-./object_resumable_write_integration_test "${BUCKET_NAME}"
+./object_resumable_write_integration_test
 
 echo
 echo "Running GCS Object Rewrite integration tests."
-./object_rewrite_integration_test "${PROJECT_ID}" "${BUCKET_NAME}"
+./object_rewrite_integration_test
 
 echo
 echo "Running GCS multi-threaded integration test."
-./thread_integration_test "${PROJECT_ID}" "${LOCATION}"
+./thread_integration_test
 
 echo
 echo "Running GCS Projects.serviceAccount integration tests."
-./service_account_integration_test "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}"
+./service_account_integration_test
 
 echo
 echo "Running V4 Signed URL conformance tests."
-./signed_url_conformance_test "${TEST_ACCOUNT_FILE}" "${TEST_DATA_FILE}"
+./signed_url_conformance_test
 
 echo "Running Signed URL integration test."
-./signed_url_integration_test "${BUCKET_NAME}" "${SIGNING_SERVICE_ACCOUNT}"
+./signed_url_integration_test
 
 echo
 echo "Running error injection integration tests."
-./error_injection_integration_test "${BUCKET_NAME}"
+./error_injection_integration_test
 
 # The tests were successful, so disable dumping of test bench log during
 # shutdown.
