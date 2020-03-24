@@ -55,7 +55,7 @@ gcs.debug = True
 
 def insert_magic_bucket(base_url):
     if len(testbench_utils.all_buckets()) == 0:
-        bucket_name = os.environ.get('BUCKET_NAME', 'test-bucket')
+        bucket_name = os.environ.get('GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME', 'test-bucket')
         bucket = gcs_bucket.GcsBucket(base_url, bucket_name)
         # Enable versioning in the Bucket, the integration tests expect this to
         # be the case, this brings the metageneration number to 2.

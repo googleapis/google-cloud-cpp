@@ -29,10 +29,6 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ObjectNameList = std::vector<std::string>;
 
-// Initialized in main() below.
-char const* flag_project_id;
-char const* flag_location;
-
 class ThreadIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  public:
@@ -56,6 +52,20 @@ class ThreadIntegrationTest
       (void)client->DeleteObject(bucket_name, object_name);
     }
   }
+
+ protected:
+  void SetUp() override {
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id_.empty());
+    region_id_ = google::cloud::internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID")
+        .value_or("");
+    ASSERT_FALSE(region_id_.empty());
+  }
+
+  std::string project_id_;
+  std::string region_id_;
 };
 
 /**
@@ -91,16 +101,15 @@ std::vector<ObjectNameList> DivideIntoEqualSizedGroups(
 }  // anonymous namespace
 
 TEST_F(ThreadIntegrationTest, Unshared) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   StatusOr<BucketMetadata> meta = client->CreateBucketForProject(
-      bucket_name, project_id,
+      bucket_name, project_id_,
       BucketMetadata()
           .set_storage_class(storage_class::Standard())
-          .set_location(flag_location)
+          .set_location(region_id_)
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
@@ -170,15 +179,14 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
 
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
 
   auto id = LogSink::Instance().AddBackend(log_backend);
   StatusOr<BucketMetadata> meta = client.CreateBucketForProject(
-      bucket_name, project_id,
+      bucket_name, project_id_,
       BucketMetadata()
           .set_storage_class(storage_class::Standard())
-          .set_location(flag_location)
+          .set_location(region_id_)
           .disable_versioning(),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
       Projection("full"));
@@ -239,21 +247,3 @@ TEST_F(ThreadIntegrationTest, ReuseConnections) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 3) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project-id> <location (GCP region, e.g us-east1)>\n";
-    return 1;
-  }
-
-  google::cloud::storage::flag_project_id = argv[1];
-  google::cloud::storage::flag_location = argv[2];
-
-  return RUN_ALL_TESTS();
-}

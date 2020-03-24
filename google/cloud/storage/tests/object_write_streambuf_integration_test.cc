@@ -30,19 +30,22 @@ namespace {
 
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* flag_bucket_name;
-
 class ObjectWriteStreambufIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
+  void SetUp() override {
+    bucket_name_ = google::cloud::internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+        .value_or("");
+    ASSERT_FALSE(bucket_name_.empty());
+  }
+
   void CheckUpload(int line_count, int line_size) {
     StatusOr<Client> client = MakeIntegrationTestClient();
     ASSERT_STATUS_OK(client);
-    std::string bucket_name = flag_bucket_name;
     auto object_name = MakeRandomObjectName();
 
-    ResumableUploadRequest request(bucket_name, object_name);
+    ResumableUploadRequest request(bucket_name_, object_name);
     request.set_multiple_options(IfGenerationMatch(0));
 
     StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -60,9 +63,9 @@ class ObjectWriteStreambufIntegrationTest
     writer.Close();
     ObjectMetadata metadata = writer.metadata().value();
     EXPECT_EQ(object_name, metadata.name());
-    EXPECT_EQ(bucket_name, metadata.bucket());
+    EXPECT_EQ(bucket_name_, metadata.bucket());
 
-    ObjectReadStream reader = client->ReadObject(bucket_name, object_name);
+    ObjectReadStream reader = client->ReadObject(bucket_name_, object_name);
 
     std::string actual(std::istreambuf_iterator<char>{reader}, {});
 
@@ -70,10 +73,12 @@ class ObjectWriteStreambufIntegrationTest
     ASSERT_EQ(expected.size(), actual.size());
     EXPECT_EQ(expected, actual);
 
-    auto status = client->DeleteObject(bucket_name, object_name,
+    auto status = client->DeleteObject(bucket_name_, object_name,
                                        Generation(metadata.generation()));
     ASSERT_STATUS_OK(status);
   }
+
+  std::string bucket_name_;
 };
 
 TEST_F(ObjectWriteStreambufIntegrationTest, Simple) { CheckUpload(20, 128); }
@@ -92,19 +97,3 @@ TEST_F(ObjectWriteStreambufIntegrationTest, QuantumAndNonQuantum) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 2) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <bucket-name>\n";
-    return 1;
-  }
-
-  google::cloud::storage::internal::flag_bucket_name = argv[1];
-
-  return RUN_ALL_TESTS();
-}
