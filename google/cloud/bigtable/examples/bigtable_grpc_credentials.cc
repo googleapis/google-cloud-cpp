@@ -25,7 +25,7 @@ struct Usage {
 std::string command_usage;
 
 void PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = std::string(cmd).find_last_of('/');
+  auto last_slash = cmd.find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
@@ -134,20 +134,9 @@ void GCECredentials(std::vector<std::string> argv) {
 
 void RunAll(std::vector<std::string> argv) {
   if (!argv.empty()) throw Usage{"auto"};
-
-  auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  auto const instance_id = google::cloud::internal::GetEnv(
-                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
-                               .value_or("");
-  auto const access_token =
-      google::cloud::internal::GetEnv("ACCESS_TOKEN").value_or("");
-  auto const credentials_file =
-      google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS")
-          .value_or("");
   for (auto const& var :
-       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
-        "ACCESS_TOKEN", "GOOGLE_APPLICATION_CREDENTIALS"}) {
+      {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+       "ACCESS_TOKEN", "GOOGLE_APPLICATION_CREDENTIALS"}) {
     auto const value = google::cloud::internal::GetEnv(var);
     if (!value) {
       throw std::runtime_error("The " + std::string(var) +
@@ -159,13 +148,24 @@ void RunAll(std::vector<std::string> argv) {
     }
   }
 
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto const instance_id = google::cloud::internal::GetEnv(
+                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                               .value_or("");
+  auto const access_token =
+      google::cloud::internal::GetEnv("ACCESS_TOKEN").value_or("");
+  auto const credentials_file =
+      google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS")
+          .value_or("");
+
   AccessToken({project_id, instance_id, access_token});
   JWTAccessToken({project_id, instance_id, credentials_file});
 }
 
 }  // anonymous namespace
 
-int main(int ac, char* av[]) try {
+int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
@@ -192,24 +192,24 @@ int main(int ac, char* av[]) try {
     }
   }
 
-  if (ac < 2) {
-    PrintUsage(av[0], "Missing command");
+  if (argc < 2) {
+    PrintUsage(argv[0], "Missing command");
     return 1;
   }
-  std::string const command_name = av[1];
-  std::vector<std::string> argv(av + 2, av + ac);
+  std::string const command_name = argv[1];
+  std::vector<std::string> av(argv + 2, argv + argc);
 
   auto command = commands.find(command_name);
   if (commands.end() == command) {
-    PrintUsage(av[0], "Unknown command: " + command_name);
+    PrintUsage(command_name, "Unknown command: " + command_name);
     return 1;
   }
 
-  command->second(argv);
+  command->second(av);
 
   return 0;
 } catch (Usage const& ex) {
-  PrintUsage(av[0], ex.msg);
+  PrintUsage(argv[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
