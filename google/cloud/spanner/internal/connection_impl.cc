@@ -191,7 +191,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQuery(
       std::move(params.transaction),
       [this, &params](SessionHolder& session,
                       spanner_proto::TransactionSelector& s, std::int64_t) {
-        return PartitionQueryImpl(session, s, std::move(params));
+        return PartitionQueryImpl(session, s, params);
       });
 }
 
@@ -585,8 +585,7 @@ StatusOr<ExecutionPlan> ConnectionImpl::AnalyzeSqlImpl(
 
 StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
     SessionHolder& session, spanner_proto::TransactionSelector& s,
-    PartitionQueryParams
-        params) {  // NOLINT(performance-unnecessary-value-param)
+    PartitionQueryParams const& params) {
   // Since the session may be sent to other machines, it should not be returned
   // to the pool when the Transaction is destroyed.
   auto prepare_status = PrepareSession(session, /*dissociate_from_pool=*/true);
@@ -628,7 +627,7 @@ StatusOr<std::vector<QueryPartition>> ConnectionImpl::PartitionQueryImpl(
   for (auto& partition : response->partitions()) {
     query_partitions.push_back(internal::MakeQueryPartition(
         response->transaction().id(), session->session_name(),
-        partition.partition_token(), std::move(params.statement)));
+        partition.partition_token(), params.statement));
   }
 
   return query_partitions;

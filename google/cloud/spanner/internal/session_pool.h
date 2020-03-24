@@ -123,7 +123,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
               WaitForSessionAllocation wait);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
   StatusOr<std::vector<CreateCount>> ComputeCreateCounts(
       int sessions_to_create);  // EXCLUSIVE_LOCKS_REQUIRED(mu_)
-  Status CreateSessions(std::vector<CreateCount> create_counts,
+  Status CreateSessions(std::vector<CreateCount> const& create_counts,
                         WaitForSessionAllocation wait);  // LOCKS_EXCLUDED(mu_)
   Status CreateSessionsSync(std::shared_ptr<Channel> const& channel,
                             std::map<std::string, std::string> const& labels,
@@ -139,14 +139,14 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   // Asynchronous calls used to maintain the pool.
   future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(CompletionQueue& cq,
-                           std::shared_ptr<SpannerStub> stub,
+                           std::shared_ptr<SpannerStub> const& stub,
                            std::map<std::string, std::string> const& labels,
                            int num_sessions);
   future<StatusOr<google::protobuf::Empty>> AsyncDeleteSession(
-      CompletionQueue& cq, std::shared_ptr<SpannerStub> stub,
+      CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
       std::string session_name);
   future<StatusOr<google::spanner::v1::Session>> AsyncGetSession(
-      CompletionQueue& cq, std::shared_ptr<SpannerStub> stub,
+      CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
       std::string session_name);
 
   Status HandleBatchCreateSessionsDone(

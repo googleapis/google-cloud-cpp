@@ -155,7 +155,7 @@ void SessionPool::RefreshExpiringSessions() {
     }
   }
   for (auto& refresh : sessions_to_refresh) {
-    AsyncGetSession(cq_, std::move(refresh.first), std::move(refresh.second))
+    AsyncGetSession(cq_, refresh.first, std::move(refresh.second))
         .then([](future<StatusOr<spanner_proto::Session>> result) {
           // We simply discard the response as handling IsSessionNotFound()
           // by removing the session from the pool is problematic (and would
@@ -187,7 +187,7 @@ Status SessionPool::Grow(std::unique_lock<std::mutex>& lk,
   // Create all the sessions without the lock held (the lock will be
   // reacquired independently when the remote calls complete).
   lk.unlock();
-  Status status = CreateSessions(*std::move(create_counts), wait);
+  Status status = CreateSessions(*create_counts, wait);
   lk.lock();
   return status;
 }
@@ -243,9 +243,9 @@ SessionPool::ComputeCreateCounts(int sessions_to_create) {
   return create_counts;
 }
 
-// NOLINTNEXTLINE(performance-unnecessary-value-param)
-Status SessionPool::CreateSessions(std::vector<CreateCount> create_counts,
-                                   WaitForSessionAllocation wait) {
+Status SessionPool::CreateSessions(
+    std::vector<CreateCount> const& create_counts,
+    WaitForSessionAllocation wait) {
   Status return_status;
   for (auto& op : create_counts) {
     switch (wait) {
@@ -408,9 +408,7 @@ SessionHolder SessionPool::MakeSessionHolder(std::unique_ptr<Session> session,
 
 future<StatusOr<spanner_proto::BatchCreateSessionsResponse>>
 SessionPool::AsyncBatchCreateSessions(
-    CompletionQueue& cq,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<SpannerStub> stub,
+    CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
     std::map<std::string, std::string> const& labels, int num_sessions) {
   spanner_proto::BatchCreateSessionsRequest request;
   request.set_database(db_.FullName());
@@ -430,9 +428,8 @@ SessionPool::AsyncBatchCreateSessions(
 }
 
 future<StatusOr<google::protobuf::Empty>> SessionPool::AsyncDeleteSession(
-    CompletionQueue& cq,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<SpannerStub> stub, std::string session_name) {
+    CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
+    std::string session_name) {
   spanner_proto::DeleteSessionRequest request;
   request.set_name(std::move(session_name));
   return google::cloud::internal::StartRetryAsyncUnaryRpc(
@@ -448,9 +445,8 @@ future<StatusOr<google::protobuf::Empty>> SessionPool::AsyncDeleteSession(
 }
 
 future<StatusOr<spanner_proto::Session>> SessionPool::AsyncGetSession(
-    CompletionQueue& cq,
-    // NOLINTNEXTLINE(performance-unnecessary-value-param)
-    std::shared_ptr<SpannerStub> stub, std::string session_name) {
+    CompletionQueue& cq, std::shared_ptr<SpannerStub> const& stub,
+    std::string session_name) {
   spanner_proto::GetSessionRequest request;
   request.set_name(std::move(session_name));
   return google::cloud::internal::StartRetryAsyncUnaryRpc(

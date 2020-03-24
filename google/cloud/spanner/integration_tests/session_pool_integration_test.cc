@@ -27,25 +27,23 @@ struct SessionPoolFriendForTest {
   static future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(std::shared_ptr<SessionPool> const& session_pool,
                            CompletionQueue& cq,
-                           std::shared_ptr<SpannerStub> stub,
+                           std::shared_ptr<SpannerStub> const& stub,
                            std::map<std::string, std::string> const& labels,
                            int num_sessions) {
-    return session_pool->AsyncBatchCreateSessions(cq, std::move(stub), labels,
+    return session_pool->AsyncBatchCreateSessions(cq, stub, labels,
                                                   num_sessions);
   }
 
   static future<StatusOr<google::protobuf::Empty>> AsyncDeleteSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
-      std::shared_ptr<SpannerStub> stub, std::string session_name) {
-    return session_pool->AsyncDeleteSession(cq, std::move(stub),
-                                            std::move(session_name));
+      std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
+    return session_pool->AsyncDeleteSession(cq, stub, std::move(session_name));
   }
 
   static future<StatusOr<google::spanner::v1::Session>> AsyncGetSession(
       std::shared_ptr<SessionPool> const& session_pool, CompletionQueue& cq,
-      std::shared_ptr<SpannerStub> stub, std::string session_name) {
-    return session_pool->AsyncGetSession(cq, std::move(stub),
-                                         std::move(session_name));
+      std::shared_ptr<SpannerStub> const& stub, std::string session_name) {
+    return session_pool->AsyncGetSession(cq, stub, std::move(session_name));
   }
 };
 namespace {
