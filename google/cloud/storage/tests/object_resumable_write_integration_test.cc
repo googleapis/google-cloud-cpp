@@ -34,8 +34,8 @@ class ObjectResumableWriteIntegrationTest
   void SetUp() override {
     google::cloud::storage::testing::StorageIntegrationTest::SetUp();
     bucket_name_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-        .value_or("");
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
   }
 
@@ -235,7 +235,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteSlow) {
 
   auto data = MakeRandomData(1024 * 1024);
 
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+  auto os =
+      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   os.write(data.data(), data.size());
   EXPECT_FALSE(os.bad());
   std::cout << "Sleeping to force timeout ... " << std::flush;

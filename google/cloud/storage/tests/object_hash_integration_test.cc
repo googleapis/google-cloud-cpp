@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
@@ -19,7 +20,6 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/expect_exception.h"
-#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <regex>
 
@@ -38,8 +38,8 @@ class ObjectHashIntegrationTest
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-        .value_or("");
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
   }
 
@@ -57,8 +57,9 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
+  StatusOr<ObjectMetadata> insert_meta =
+      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
 
   LogSink::Instance().RemoveBackend(id);
@@ -222,8 +223,8 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
-  auto stream =
-      client->ReadObject(bucket_name_, object_name, IfMetagenerationNotMatch(0));
+  auto stream = client->ReadObject(bucket_name_, object_name,
+                                   IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -297,7 +298,8 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+  auto os =
+      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -587,8 +589,8 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
 
   // Create a stream to upload an object.
   ObjectWriteStream stream =
-      client->WriteObject(bucket_name_, object_name, DisableCrc32cChecksum(true),
-                          IfGenerationMatch(0),
+      client->WriteObject(bucket_name_, object_name,
+                          DisableCrc32cChecksum(true), IfGenerationMatch(0),
                           CustomHeader("x-goog-testbench-instructions",
                                        "inject-upload-data-error"));
   stream << LoremIpsum() << "\n";

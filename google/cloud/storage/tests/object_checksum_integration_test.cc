@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include <gmock/gmock.h>
@@ -259,9 +259,8 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingReadJSON) {
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
-  auto stream =
-      client->ReadObject(bucket_name_, object_name, IfMetagenerationNotMatch
-      (0));
+  auto stream = client->ReadObject(bucket_name_, object_name,
+                                   IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -281,8 +280,8 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch
-  (0));
+  auto os =
+      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;

@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <fstream>
@@ -33,12 +33,12 @@ class KeyFileIntegrationTest
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-        .value_or("");
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
     key_filename_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILENAME")
-        .value_or("");
+                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILENAME")
+                        .value_or("");
     ASSERT_FALSE(key_filename_.empty());
     service_account_ =
         google::cloud::internal::GetEnv(

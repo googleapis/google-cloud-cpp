@@ -17,8 +17,6 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -47,8 +45,8 @@ class BucketIntegrationTest
                       .value_or("");
     ASSERT_FALSE(topic_name_.empty());
     service_account_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
-        .value_or("");
+                           "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
+                           .value_or("");
     ASSERT_FALSE(service_account_.empty());
   }
 
@@ -1111,8 +1109,8 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
 
   original.set_iam_configuration(std::move(configuration));
 
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-      original);
+  auto meta =
+      client->CreateBucketForProject(bucket_name, project_id_, original);
   ASSERT_STATUS_OK(meta);
 
   StatusOr<NativeIamPolicy> policy =

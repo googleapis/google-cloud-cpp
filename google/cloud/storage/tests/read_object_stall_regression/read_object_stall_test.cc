@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/internal/big_endian.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/internal/getenv.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <thread>

@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
-#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <regex>
 
@@ -36,8 +36,8 @@ class ObjectInsertIntegrationTest
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-        .value_or("");
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
   }
 
@@ -630,8 +630,9 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
-  StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0), UserIp(""));
+  StatusOr<ObjectMetadata> insert_meta =
+      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
+                          IfGenerationMatch(0), UserIp(""));
   ASSERT_STATUS_OK(insert_meta);
 
   LogSink::Instance().RemoveBackend(id);

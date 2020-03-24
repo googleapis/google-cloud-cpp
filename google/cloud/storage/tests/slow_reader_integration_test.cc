@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -34,8 +34,8 @@ class SlowReaderIntegrationTest
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-        .value_or("");
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
   }
 
@@ -45,7 +45,6 @@ class SlowReaderIntegrationTest
 TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-
 
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
@@ -131,7 +130,8 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
           CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
           ReadFromOffset(offset));
     }
-    return client->ReadObject(bucket_name_, object_name, ReadFromOffset(offset));
+    return client->ReadObject(bucket_name_, object_name,
+                              ReadFromOffset(offset));
   };
 
   ObjectReadStream stream = make_reader(0);

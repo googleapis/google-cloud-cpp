@@ -12,10 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <cstdio>
 #include <fstream>
@@ -36,11 +36,10 @@ auto const kObjectSize = 16 * 1024;
 class ObjectFileMultiThreadedTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-        .value_or("");
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
     auto object_count = google::cloud::internal::GetEnv(
         "GOOGLE_CLOUD_CPP_STORAGE_TEST_OBJECT_COUNT");
@@ -76,8 +75,8 @@ class ObjectFileMultiThreadedTest
         std::unique_lock<std::mutex> lk(mu_);
         std::cout << '.' << std::flush;
       }
-      auto metadata = client.InsertObject(bucket_name_, n, contents,
-                                          IfGenerationMatch(0));
+      auto metadata =
+          client.InsertObject(bucket_name_, n, contents, IfGenerationMatch(0));
       if (!metadata) return metadata.status();
     }
     return Status();
