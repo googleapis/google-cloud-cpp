@@ -57,10 +57,7 @@ void ListNotifications(google::cloud::storage::Client client, int& argc,
     StatusOr<std::vector<gcs::NotificationMetadata>> items =
         client.ListNotifications(bucket_name);
 
-    if (!items) {
-      throw std::runtime_error(items.status().message());
-    }
-
+    if (!items) throw std::runtime_error(items.status().message());
     std::cout << "Notifications for bucket=" << bucket_name << "\n";
     for (gcs::NotificationMetadata const& notification : *items) {
       std::cout << notification << "\n";
@@ -153,10 +150,7 @@ void DeleteNotification(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status =
         client.DeleteNotification(bucket_name, notification_id);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Successfully deleted notification " << notification_id
               << " on bucket " << bucket_name << "\n";
   }
@@ -180,10 +174,10 @@ int main(int argc, char* argv[]) try {
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"list-notifications", &ListNotifications},
-      {"create-notification", &CreateNotification},
-      {"get-notification", &GetNotification},
-      {"delete-notification", &DeleteNotification},
+      {"list-notifications", ListNotifications},
+      {"create-notification", CreateNotification},
+      {"get-notification", GetNotification},
+      {"delete-notification", DeleteNotification},
   };
   for (auto&& kv : commands) {
     try {

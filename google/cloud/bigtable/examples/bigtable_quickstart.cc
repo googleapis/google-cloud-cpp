@@ -42,9 +42,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Getting a single row by row key:" << std::flush;
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       table.ReadRow(row_key, cbt::Filter::FamilyRegex(column_family));
-  if (!result) {
-    throw std::runtime_error(result.status().message());
-  }
+  if (!result) throw std::runtime_error(result.status().message());
   if (!result->first) {
     std::cout << "Cannot find row " << row_key << " in the table: " << table_id
               << "\n";

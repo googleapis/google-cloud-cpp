@@ -55,9 +55,7 @@ void AccessToken(std::vector<std::string> argv) {
                           instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-    if (!tables) {
-      throw std::runtime_error(tables.status().message());
-    }
+    if (!tables) throw std::runtime_error(tables.status().message());
   }
   //! [test access token]
   (argv[0], argv[1], argv[2]);
@@ -96,9 +94,7 @@ void JWTAccessToken(std::vector<std::string> argv) {
                           instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-    if (!tables) {
-      throw std::runtime_error(tables.status().message());
-    }
+    if (!tables) throw std::runtime_error(tables.status().message());
   }
   //! [test jwt access token]
   (argv[0], argv[1], argv[2]);
@@ -124,9 +120,7 @@ void GCECredentials(std::vector<std::string> argv) {
                           instance_id);
 
     auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-    if (!tables) {
-      throw std::runtime_error(tables.status().message());
-    }
+    if (!tables) throw std::runtime_error(tables.status().message());
   }
   //! [test gce credentials]
   (argv[0], argv[1]);

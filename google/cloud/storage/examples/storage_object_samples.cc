@@ -168,10 +168,7 @@ void InsertObjectStrictIdempotency(google::cloud::storage::Client, int& argc,
     StatusOr<gcs::ClientOptions> options =
         gcs::ClientOptions::CreateDefaultClientOptions();
 
-    if (!options) {
-      throw std::runtime_error(options.status().message());
-    }
-
+    if (!options) throw std::runtime_error(options.status().message());
     gcs::Client client{*options, gcs::StrictIdempotencyPolicy()};
     StatusOr<gcs::ObjectMetadata> object_metadata =
         client.InsertObject(bucket_name, object_name, std::move(contents),
@@ -208,10 +205,7 @@ void InsertObjectModifiedRetry(google::cloud::storage::Client, int& argc,
     StatusOr<gcs::ClientOptions> options =
         gcs::ClientOptions::CreateDefaultClientOptions();
 
-    if (!options) {
-      throw std::runtime_error(options.status().message());
-    }
-
+    if (!options) throw std::runtime_error(options.status().message());
     gcs::Client client{*options, gcs::LimitedErrorCountRetryPolicy(3)};
 
     StatusOr<gcs::ObjectMetadata> object_metadata =
@@ -477,10 +471,7 @@ void DeleteObject(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status =
         client.DeleteObject(bucket_name, object_name);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Deleted " << object_name << " in bucket " << bucket_name
               << "\n";
   }
@@ -505,10 +496,7 @@ void DeleteVersionedObject(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status = client.DeleteObject(
         bucket_name, object_name, gcs::Generation{object_version});
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Deleted " << object_name << " generation " << object_version
               << " in bucket " << bucket_name << "\n";
   }
@@ -545,11 +533,7 @@ void WriteObject(google::cloud::storage::Client client, int& argc,
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
-
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-
+    if (!metadata) throw std::runtime_error(metadata.status().message());
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << "\n";
@@ -664,10 +648,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = stream.metadata();
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-
+    if (!metadata) throw std::runtime_error(metadata.status().message());
     std::cout << "Upload completed, the new object metadata is: " << *metadata
               << "\n";
   }
@@ -790,10 +771,7 @@ void DownloadFile(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status =
         client.DownloadToFile(bucket_name, object_name, file_name);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Downloaded " << object_name << " to " << file_name << "\n";
   }
   //! [download file]
@@ -829,10 +807,7 @@ void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
         client.UpdateObject(bucket_name, object_name, desired,
                             gcs::Generation(object_metadata->generation()));
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "Object updated. The full metadata after the update is: "
               << *updated << "\n";
   }
@@ -856,20 +831,14 @@ void PatchObjectDeleteMetadata(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     gcs::ObjectMetadata desired = *original;
     desired.mutable_metadata().erase(key);
 
     StatusOr<gcs::ObjectMetadata> updated =
         client.PatchObject(bucket_name, object_name, *original, desired);
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "Object updated. The full metadata after the update is: "
               << *updated << "\n";
   }
@@ -895,10 +864,7 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetContentType(content_type));
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "Object updated. The full metadata after the update is: "
               << *updated << "\n";
   }
@@ -921,10 +887,7 @@ void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
         bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
         gcs::PredefinedAcl::PublicRead());
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "Object updated. The full metadata after the update is: "
               << *updated << "\n";
   }
@@ -1200,10 +1163,7 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
 
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
-
+    if (!metadata) throw std::runtime_error(metadata.status().message());
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << "\n";
@@ -1315,10 +1275,7 @@ void RewriteObjectToken(google::cloud::storage::Client client, int& argc,
 
     StatusOr<gcs::RewriteProgress> progress = rewriter.Iterate();
 
-    if (!progress) {
-      throw std::runtime_error(progress.status().message());
-    }
-
+    if (!progress) throw std::runtime_error(progress.status().message());
     if (progress->done) {
       std::cout
           << "The rewrite completed immediately, no token to resume later\n";
@@ -1539,10 +1496,7 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status =
         client.DeleteObject(bucket_name, old_object_name);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Renamed " << old_object_name << " to " << new_object_name
               << " in bucket " << bucket_name << "\n";
   }
@@ -1564,19 +1518,13 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "The event hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
               << (updated->event_based_hold() ? "enabled" : "disabled") << "\n";
@@ -1599,19 +1547,13 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "The event hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
               << (updated->event_based_hold() ? "enabled" : "disabled") << "\n";
@@ -1634,19 +1576,13 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "The temporary hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
               << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";
@@ -1669,19 +1605,13 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
 
-    if (!updated) {
-      throw std::runtime_error(updated.status().message());
-    }
-
+    if (!updated) throw std::runtime_error(updated.status().message());
     std::cout << "The temporary hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
               << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";
@@ -1706,10 +1636,7 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client, int& argc,
         gcs::ExpirationTime(std::chrono::system_clock::now() +
                             std::chrono::minutes(15)));
 
-    if (!signed_url) {
-      throw std::runtime_error(signed_url.status().message());
-    }
-
+    if (!signed_url) throw std::runtime_error(signed_url.status().message());
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl '" << *signed_url << "'\n";
@@ -1735,10 +1662,7 @@ void CreatePutSignedUrlV2(google::cloud::storage::Client client, int& argc,
                             std::chrono::minutes(15)),
         gcs::ContentType("application/octet-stream"));
 
-    if (!signed_url) {
-      throw std::runtime_error(signed_url.status().message());
-    }
-
+    if (!signed_url) throw std::runtime_error(signed_url.status().message());
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"
@@ -1763,10 +1687,7 @@ void CreateGetSignedUrlV4(google::cloud::storage::Client client, int& argc,
         "GET", std::move(bucket_name), std::move(object_name),
         gcs::SignedUrlDuration(std::chrono::minutes(15)));
 
-    if (!signed_url) {
-      throw std::runtime_error(signed_url.status().message());
-    }
-
+    if (!signed_url) throw std::runtime_error(signed_url.status().message());
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl '" << *signed_url << "'\n";
@@ -1791,10 +1712,7 @@ void CreatePutSignedUrlV4(google::cloud::storage::Client client, int& argc,
         gcs::SignedUrlDuration(std::chrono::minutes(15)),
         gcs::AddExtensionHeader("content-type", "application/octet-stream"));
 
-    if (!signed_url) {
-      throw std::runtime_error(signed_url.status().message());
-    }
-
+    if (!signed_url) throw std::runtime_error(signed_url.status().message());
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"
@@ -1819,59 +1737,59 @@ int main(int argc, char* argv[]) try {
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"list-objects", &ListObjects},
-      {"list-objects-with-prefix", &ListObjectsWithPrefix},
-      {"list-versioned-objects", &ListVersionedObjects},
-      {"insert-object", &InsertObject},
-      {"insert-object-strict-idempotency", &InsertObjectStrictIdempotency},
-      {"insert-object-modified-retry", &InsertObjectModifiedRetry},
-      {"insert-object-multipart", &InsertObjectMultipart},
-      {"copy-object", &CopyObject},
-      {"copy-versioned-object", &CopyVersionedObject},
-      {"copy-encrypted-object", &CopyEncryptedObject},
-      {"get-object-metadata", &GetObjectMetadata},
-      {"read-object", &ReadObject},
-      {"read-object-range", &ReadObjectRange},
-      {"delete-object", &DeleteObject},
-      {"delete-versioned-object", &DeleteVersionedObject},
-      {"write-object", &WriteObject},
-      {"write-large-object", &WriteLargeObject},
-      {"start-resumable-upload", &StartResumableUpload},
-      {"resume-resumable-upload", &ResumeResumableUpload},
-      {"upload-file", &UploadFile},
-      {"upload-file-resumable", &UploadFileResumable},
-      {"parallel-upload-file", &ParallelUploadFile},
-      {"download-file", &DownloadFile},
-      {"update-object-metadata", &UpdateObjectMetadata},
-      {"patch-object-delete-metadata", &PatchObjectDeleteMetadata},
-      {"patch-object-content-type", &PatchObjectContentType},
-      {"make-object-public", &MakeObjectPublic},
-      {"read-object-unauthenticated", &ReadObjectUnauthenticated},
-      {"generate-encryption-key", &GenerateEncryptionKey},
-      {"write-encrypted-object", &WriteEncryptedObject},
-      {"read-encrypted-object", &ReadEncryptedObject},
-      {"compose-object", &ComposeObject},
+      {"list-objects", ListObjects},
+      {"list-objects-with-prefix", ListObjectsWithPrefix},
+      {"list-versioned-objects", ListVersionedObjects},
+      {"insert-object", InsertObject},
+      {"insert-object-strict-idempotency", InsertObjectStrictIdempotency},
+      {"insert-object-modified-retry", InsertObjectModifiedRetry},
+      {"insert-object-multipart", InsertObjectMultipart},
+      {"copy-object", CopyObject},
+      {"copy-versioned-object", CopyVersionedObject},
+      {"copy-encrypted-object", CopyEncryptedObject},
+      {"get-object-metadata", GetObjectMetadata},
+      {"read-object", ReadObject},
+      {"read-object-range", ReadObjectRange},
+      {"delete-object", DeleteObject},
+      {"delete-versioned-object", DeleteVersionedObject},
+      {"write-object", WriteObject},
+      {"write-large-object", WriteLargeObject},
+      {"start-resumable-upload", StartResumableUpload},
+      {"resume-resumable-upload", ResumeResumableUpload},
+      {"upload-file", UploadFile},
+      {"upload-file-resumable", UploadFileResumable},
+      {"parallel-upload-file", ParallelUploadFile},
+      {"download-file", DownloadFile},
+      {"update-object-metadata", UpdateObjectMetadata},
+      {"patch-object-delete-metadata", PatchObjectDeleteMetadata},
+      {"patch-object-content-type", PatchObjectContentType},
+      {"make-object-public", MakeObjectPublic},
+      {"read-object-unauthenticated", ReadObjectUnauthenticated},
+      {"generate-encryption-key", GenerateEncryptionKey},
+      {"write-encrypted-object", WriteEncryptedObject},
+      {"read-encrypted-object", ReadEncryptedObject},
+      {"compose-object", ComposeObject},
       {"compose-object-from-encrypted-objects",
        &ComposeObjectFromEncryptedObjects},
-      {"compose-object-from-many", &ComposeObjectFromMany},
-      {"write-object-with-kms-key", &WriteObjectWithKmsKey},
-      {"rewrite-object", &RewriteObject},
-      {"rewrite-object-non-blocking", &RewriteObjectNonBlocking},
-      {"rewrite-object-token", &RewriteObjectToken},
-      {"rewrite-object-resume", &RewriteObjectResume},
-      {"change-object-storage-class", &ChangeObjectStorageClass},
-      {"rotate-encryption-key", &RotateEncryptionKey},
-      {"object-csek-to-cmek", &ObjectCsekToCmek},
-      {"get-object-kms-key", &GetObjectKmsKey},
-      {"rename-object", &RenameObject},
-      {"set-event-based-hold", &SetObjectEventBasedHold},
-      {"release-event-based-hold", &ReleaseObjectEventBasedHold},
-      {"set-temporary-hold", &SetObjectTemporaryHold},
-      {"release-temporary-hold", &ReleaseObjectTemporaryHold},
-      {"create-get-signed-url-v2", &CreateGetSignedUrlV2},
-      {"create-put-signed-url-v2", &CreatePutSignedUrlV2},
-      {"create-get-signed-url-v4", &CreateGetSignedUrlV4},
-      {"create-put-signed-url-v4", &CreatePutSignedUrlV4},
+      {"compose-object-from-many", ComposeObjectFromMany},
+      {"write-object-with-kms-key", WriteObjectWithKmsKey},
+      {"rewrite-object", RewriteObject},
+      {"rewrite-object-non-blocking", RewriteObjectNonBlocking},
+      {"rewrite-object-token", RewriteObjectToken},
+      {"rewrite-object-resume", RewriteObjectResume},
+      {"change-object-storage-class", ChangeObjectStorageClass},
+      {"rotate-encryption-key", RotateEncryptionKey},
+      {"object-csek-to-cmek", ObjectCsekToCmek},
+      {"get-object-kms-key", GetObjectKmsKey},
+      {"rename-object", RenameObject},
+      {"set-event-based-hold", SetObjectEventBasedHold},
+      {"release-event-based-hold", ReleaseObjectEventBasedHold},
+      {"set-temporary-hold", SetObjectTemporaryHold},
+      {"release-temporary-hold", ReleaseObjectTemporaryHold},
+      {"create-get-signed-url-v2", CreateGetSignedUrlV2},
+      {"create-put-signed-url-v2", CreatePutSignedUrlV2},
+      {"create-get-signed-url-v4", CreateGetSignedUrlV4},
+      {"create-put-signed-url-v4", CreatePutSignedUrlV4},
   };
   for (auto&& kv : commands) {
     try {

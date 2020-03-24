@@ -219,10 +219,7 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name) {
     google::cloud::Status status = client.DeleteBucket(bucket_name);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "The bucket " << bucket_name << " was deleted successfully.\n";
   }
   //! [delete bucket] [END storage_delete_bucket]
@@ -242,10 +239,7 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name, std::string storage_class) {
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
 
-    if (!meta) {
-      throw std::runtime_error(meta.status().message());
-    }
-
+    if (!meta) throw std::runtime_error(meta.status().message());
     meta->set_storage_class(storage_class);
     StatusOr<gcs::BucketMetadata> updated_meta =
         client.UpdateBucket(bucket_name, *meta);
@@ -276,20 +270,14 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     gcs::BucketMetadata desired = *original;
     desired.set_storage_class(storage_class);
 
     StatusOr<gcs::BucketMetadata> patched =
         client.PatchBucket(bucket_name, *original, desired);
 
-    if (!patched) {
-      throw std::runtime_error(patched.status().message());
-    }
-
+    if (!patched) throw std::runtime_error(patched.status().message());
     std::cout << "Storage class for bucket " << patched->name()
               << " has been patched to " << patched->storage_class() << "."
               << "\nFull metadata: " << *patched << "\n";
@@ -314,10 +302,7 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetStorageClass(storage_class));
 
-    if (!patched) {
-      throw std::runtime_error(patched.status().message());
-    }
-
+    if (!patched) throw std::runtime_error(patched.status().message());
     std::cout << "Storage class for bucket " << patched->name()
               << " has been patched to " << patched->storage_class() << "."
               << "\nFull metadata: " << *patched << "\n";
@@ -400,10 +385,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string bucket_name) {
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
 
-    if (!meta) {
-      throw std::runtime_error(meta.status().message());
-    }
-
+    if (!meta) throw std::runtime_error(meta.status().message());
     if (!meta->has_encryption()) {
       std::cout << "The bucket " << meta->name()
                 << " does not have a default KMS key set.\n";
@@ -975,9 +957,7 @@ void WriteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
-    if (!metadata) {
-      throw std::runtime_error(metadata.status().message());
-    }
+    if (!metadata) throw std::runtime_error(metadata.status().message());
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << "\n";
@@ -1030,9 +1010,7 @@ void DeleteObjectRequesterPays(google::cloud::storage::Client client, int& argc,
      std::string billed_project) {
     google::cloud::Status status = client.DeleteObject(
         bucket_name, object_name, gcs::UserProject(billed_project));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [read object requester pays]
   (std::move(client), bucket_name, object_name, billed_project);
@@ -1081,10 +1059,7 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true),
@@ -1119,10 +1094,7 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
@@ -1187,10 +1159,7 @@ void EnableObjectVersioning(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetVersioning(
@@ -1228,10 +1197,7 @@ void DisableObjectVersioning(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetVersioning(
@@ -1304,10 +1270,7 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetRetentionPolicy(period),
@@ -1346,10 +1309,7 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetRetentionPolicy(),
         gcs::IfMetagenerationMatch(original->metageneration()));
@@ -1389,10 +1349,7 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> updated_metadata =
         client.LockBucketRetentionPolicy(bucket_name,
                                          original->metageneration());
@@ -1474,10 +1431,7 @@ void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetWebsite(
@@ -1518,10 +1472,7 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetWebsite(),
         gcs::IfMetagenerationMatch(original->metageneration()));
@@ -1559,10 +1510,7 @@ void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) {
-      throw std::runtime_error(original.status().message());
-    }
-
+    if (!original) throw std::runtime_error(original.status().message());
     std::vector<gcs::CorsEntry> cors_configuration;
     cors_configuration.emplace_back(
         gcs::CorsEntry{3600, {"GET"}, {origin}, {"Content-Type"}});
@@ -1642,57 +1590,57 @@ int main(int argc, char* argv[]) try {
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"list-buckets", &ListBuckets},
-      {"list-buckets-for-project", &ListBucketsForProject},
-      {"create-bucket", &CreateBucket},
-      {"create-bucket-for-project", &CreateBucketForProject},
+      {"list-buckets", ListBuckets},
+      {"list-buckets-for-project", ListBucketsForProject},
+      {"create-bucket", CreateBucket},
+      {"create-bucket-for-project", CreateBucketForProject},
       {"create-bucket-with-storage-class-location",
        &CreateBucketWithStorageClassLocation},
-      {"get-bucket-metadata", &GetBucketMetadata},
-      {"delete-bucket", &DeleteBucket},
-      {"change-default-storage-class", &ChangeDefaultStorageClass},
-      {"patch-bucket-storage-class", &PatchBucketStorageClass},
+      {"get-bucket-metadata", GetBucketMetadata},
+      {"delete-bucket", DeleteBucket},
+      {"change-default-storage-class", ChangeDefaultStorageClass},
+      {"patch-bucket-storage-class", PatchBucketStorageClass},
       {"patch-bucket-storage-class-with-builder",
        &PatchBucketStorageClassWithBuilder},
-      {"get-bucket-class-and-location", &GetBucketClassAndLocation},
-      {"add-bucket-default-kms-key", &AddBucketDefaultKmsKey},
-      {"get-bucket-default-kms-key", &GetBucketDefaultKmsKey},
-      {"remove-bucket-default-kms-key", &RemoveBucketDefaultKmsKey},
-      {"enable-bucket-policy-only", &EnableBucketPolicyOnly},
-      {"disable-bucket-policy-only", &DisableBucketPolicyOnly},
-      {"get-bucket-policy-only", &GetBucketPolicyOnly},
-      {"enable-uniform-bucket-level-access", &EnableUniformBucketLevelAccess},
-      {"disable-uniform-bucket-level-access", &DisableUniformBucketLevelAccess},
-      {"get-uniform-bucket-level-access", &GetUniformBucketLevelAccess},
-      {"add-bucket-label", &AddBucketLabel},
-      {"get-bucket-labels", &GetBucketLabels},
-      {"remove-bucket-label", &RemoveBucketLabel},
-      {"get-bucket-lifecycle-management", &GetBucketLifecycleManagement},
-      {"enable-bucket-lifecycle-management", &EnableBucketLifecycleManagement},
+      {"get-bucket-class-and-location", GetBucketClassAndLocation},
+      {"add-bucket-default-kms-key", AddBucketDefaultKmsKey},
+      {"get-bucket-default-kms-key", GetBucketDefaultKmsKey},
+      {"remove-bucket-default-kms-key", RemoveBucketDefaultKmsKey},
+      {"enable-bucket-policy-only", EnableBucketPolicyOnly},
+      {"disable-bucket-policy-only", DisableBucketPolicyOnly},
+      {"get-bucket-policy-only", GetBucketPolicyOnly},
+      {"enable-uniform-bucket-level-access", EnableUniformBucketLevelAccess},
+      {"disable-uniform-bucket-level-access", DisableUniformBucketLevelAccess},
+      {"get-uniform-bucket-level-access", GetUniformBucketLevelAccess},
+      {"add-bucket-label", AddBucketLabel},
+      {"get-bucket-labels", GetBucketLabels},
+      {"remove-bucket-label", RemoveBucketLabel},
+      {"get-bucket-lifecycle-management", GetBucketLifecycleManagement},
+      {"enable-bucket-lifecycle-management", EnableBucketLifecycleManagement},
       {"disable-bucket-lifecycle-management",
        &DisableBucketLifecycleManagement},
-      {"get-billing", &GetBilling},
-      {"enable-requester-pays", &EnableRequesterPays},
-      {"disable-requester-pays", &DisableRequesterPays},
-      {"write-object-requester-pays", &WriteObjectRequesterPays},
-      {"read-object-requester-pays", &ReadObjectRequesterPays},
-      {"delete-object-requester-pays", &DeleteObjectRequesterPays},
-      {"get-default-event-based-hold", &GetDefaultEventBasedHold},
-      {"enable-default-event-based-hold", &EnableDefaultEventBasedHold},
-      {"disable-default-event-based-hold", &DisableDefaultEventBasedHold},
-      {"get-object-versioning", &GetObjectVersioning},
-      {"enable-object-versioning", &EnableObjectVersioning},
-      {"disable-object-versioning", &DisableObjectVersioning},
-      {"get-retention-policy", &GetRetentionPolicy},
-      {"set-retention-policy", &SetRetentionPolicy},
-      {"remove-retention-policy", &RemoveRetentionPolicy},
-      {"lock-retention-policy", &LockRetentionPolicy},
-      {"get-static-website-configuration", &GetStaticWebsiteConfiguration},
-      {"set-static-website-configuration", &SetStaticWebsiteConfiguration},
+      {"get-billing", GetBilling},
+      {"enable-requester-pays", EnableRequesterPays},
+      {"disable-requester-pays", DisableRequesterPays},
+      {"write-object-requester-pays", WriteObjectRequesterPays},
+      {"read-object-requester-pays", ReadObjectRequesterPays},
+      {"delete-object-requester-pays", DeleteObjectRequesterPays},
+      {"get-default-event-based-hold", GetDefaultEventBasedHold},
+      {"enable-default-event-based-hold", EnableDefaultEventBasedHold},
+      {"disable-default-event-based-hold", DisableDefaultEventBasedHold},
+      {"get-object-versioning", GetObjectVersioning},
+      {"enable-object-versioning", EnableObjectVersioning},
+      {"disable-object-versioning", DisableObjectVersioning},
+      {"get-retention-policy", GetRetentionPolicy},
+      {"set-retention-policy", SetRetentionPolicy},
+      {"remove-retention-policy", RemoveRetentionPolicy},
+      {"lock-retention-policy", LockRetentionPolicy},
+      {"get-static-website-configuration", GetStaticWebsiteConfiguration},
+      {"set-static-website-configuration", SetStaticWebsiteConfiguration},
       {"remove-static-website-configuration",
        &RemoveStaticWebsiteConfiguration},
-      {"set-cors-configuration", &SetCorsConfiguration},
-      {"create-signed-policy-document", &CreateSignedPolicyDocument},
+      {"set-cors-configuration", SetCorsConfiguration},
+      {"create-signed-policy-document", CreateSignedPolicyDocument},
   };
   for (auto&& kv : commands) {
     try {

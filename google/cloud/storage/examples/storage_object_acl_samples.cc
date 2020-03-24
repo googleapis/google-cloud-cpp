@@ -59,10 +59,7 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     StatusOr<std::vector<gcs::ObjectAccessControl>> items =
         client.ListObjectAcl(bucket_name, object_name);
 
-    if (!items) {
-      throw std::runtime_error(items.status().message());
-    }
-
+    if (!items) throw std::runtime_error(items.status().message());
     std::cout << "ACLs for object=" << object_name << " in bucket "
               << bucket_name << "\n";
     for (gcs::ObjectAccessControl const& acl : *items) {
@@ -90,10 +87,7 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     StatusOr<gcs::ObjectAccessControl> object_acl =
         client.CreateObjectAcl(bucket_name, object_name, entity, role);
 
-    if (!object_acl) {
-      throw std::runtime_error(object_acl.status().message());
-    }
-
+    if (!object_acl) throw std::runtime_error(object_acl.status().message());
     std::cout << "Role " << object_acl->role() << " granted to "
               << object_acl->entity() << " on " << object_acl->object()
               << "\nFull attributes: " << *object_acl << "\n";
@@ -116,10 +110,7 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     google::cloud::Status status =
         client.DeleteObjectAcl(bucket_name, object_name, entity);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Deleted ACL entry for " << entity << " in object "
               << object_name << " in bucket " << bucket_name << "\n";
   }
@@ -142,10 +133,7 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     StatusOr<gcs::ObjectAccessControl> acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
 
-    if (!acl) {
-      throw std::runtime_error(acl.status().message());
-    }
-
+    if (!acl) throw std::runtime_error(acl.status().message());
     std::cout << "ACL entry for " << acl->entity() << " in object "
               << acl->object() << " in bucket " << acl->bucket() << " is "
               << *acl << "\n";
@@ -171,19 +159,13 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     StatusOr<gcs::ObjectAccessControl> current_acl =
         client.GetObjectAcl(bucket_name, object_name, entity);
 
-    if (!current_acl) {
-      throw std::runtime_error(current_acl.status().message());
-    }
-
+    if (!current_acl) throw std::runtime_error(current_acl.status().message());
     current_acl->set_role(role);
 
     StatusOr<gcs::ObjectAccessControl> updated_acl =
         client.UpdateObjectAcl(bucket_name, object_name, *current_acl);
 
-    if (!updated_acl) {
-      throw std::runtime_error(updated_acl.status().message());
-    }
-
+    if (!updated_acl) throw std::runtime_error(updated_acl.status().message());
     std::cout << "ACL entry for " << updated_acl->entity() << " in object "
               << updated_acl->object() << " in bucket " << updated_acl->bucket()
               << " is now " << *updated_acl << "\n";
@@ -218,10 +200,7 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     StatusOr<gcs::ObjectAccessControl> patched_acl = client.PatchObjectAcl(
         bucket_name, object_name, entity, *original_acl, new_acl);
 
-    if (!patched_acl) {
-      throw std::runtime_error(patched_acl.status().message());
-    }
-
+    if (!patched_acl) throw std::runtime_error(patched_acl.status().message());
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
               << " is now " << *patched_acl << "\n";
@@ -248,10 +227,7 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
         bucket_name, object_name, entity,
         gcs::ObjectAccessControlPatchBuilder().set_role(role));
 
-    if (!patched_acl) {
-      throw std::runtime_error(patched_acl.status().message());
-    }
-
+    if (!patched_acl) throw std::runtime_error(patched_acl.status().message());
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
               << " is now " << *patched_acl << "\n";
@@ -276,10 +252,7 @@ void AddObjectOwner(gcs::Client client, int& argc, char* argv[]) {
         client.CreateObjectAcl(bucket_name, object_name, entity,
                                gcs::ObjectAccessControl::ROLE_OWNER());
 
-    if (!patched_acl) {
-      throw std::runtime_error(patched_acl.status().message());
-    }
-
+    if (!patched_acl) throw std::runtime_error(patched_acl.status().message());
     std::cout << "ACL entry for " << patched_acl->entity() << " in object "
               << patched_acl->object() << " in bucket " << patched_acl->bucket()
               << " is now " << *patched_acl << "\n";
@@ -327,10 +300,7 @@ void RemoveObjectOwner(gcs::Client client, int& argc, char* argv[]) {
     google::cloud::Status status =
         client.DeleteObjectAcl(bucket_name, object_name, owner.entity());
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Deleted ACL entry for " << owner.entity() << " for file "
               << object_name << " in bucket " << bucket_name << "\n";
   }
@@ -352,15 +322,15 @@ int main(int argc, char* argv[]) try {
   // Build the list of commands and the usage string from that list.
   using CommandType = std::function<void(gcs::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"list-object-acl", &ListObjectAcl},
-      {"create-object-acl", &CreateObjectAcl},
-      {"delete-object-acl", &DeleteObjectAcl},
-      {"get-object-acl", &GetObjectAcl},
-      {"update-object-acl", &UpdateObjectAcl},
-      {"patch-object-acl", &PatchObjectAcl},
-      {"patch-object-acl-no-read", &PatchObjectAclNoRead},
-      {"add-object-owner", &AddObjectOwner},
-      {"remove-object-owner", &RemoveObjectOwner},
+      {"list-object-acl", ListObjectAcl},
+      {"create-object-acl", CreateObjectAcl},
+      {"delete-object-acl", DeleteObjectAcl},
+      {"get-object-acl", GetObjectAcl},
+      {"update-object-acl", UpdateObjectAcl},
+      {"patch-object-acl", PatchObjectAcl},
+      {"patch-object-acl-no-read", PatchObjectAclNoRead},
+      {"add-object-owner", AddObjectOwner},
+      {"remove-object-owner", RemoveObjectOwner},
   };
   for (auto&& kv : commands) {
     try {
