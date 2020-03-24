@@ -17,7 +17,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
+#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <thread>
 
@@ -29,18 +29,24 @@ namespace {
 
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* flag_project_id;
-char const* flag_bucket_name;
-
 class SlowReaderIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ protected:
+  void SetUp() override {
+    bucket_name_ = google::cloud::internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+        .value_or("");
+    ASSERT_FALSE(bucket_name_.empty());
+  }
+
+  std::string bucket_name_;
+};
 
 TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string const bucket_name = flag_bucket_name;
+
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
@@ -49,7 +55,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
-      bucket_name, object_name, large_text, IfGenerationMatch(0));
+      bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
 
   // Create an iostream to read the object back. When running against the
@@ -59,11 +65,11 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   auto slow_reader_period = std::chrono::seconds(400);
   if (UsingTestbench()) {
     stream = client->ReadObject(
-        bucket_name, object_name,
+        bucket_name_, object_name,
         CustomHeader("x-goog-testbench-instructions", "return-broken-stream"));
     slow_reader_period = std::chrono::seconds(1);
   } else {
-    stream = client->ReadObject(bucket_name, object_name);
+    stream = client->ReadObject(bucket_name_, object_name);
   }
 
   auto const max_slow_reader_period = std::chrono::minutes(10);
@@ -93,7 +99,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingRead) {
   stream.Close();
   EXPECT_STATUS_OK(stream.status());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -101,7 +107,6 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string const bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto file_name = MakeRandomObjectName();
 
@@ -111,7 +116,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
 
   // Create an object with the contents to download.
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
-      bucket_name, object_name, large_text, IfGenerationMatch(0));
+      bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
 
   // Create an iostream to read the object back. When running against the
@@ -119,14 +124,14 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
   // in the middle.
   auto slow_reader_period = std::chrono::seconds(UsingTestbench() ? 1 : 400);
 
-  auto make_reader = [this, bucket_name, object_name, &client](int64_t offset) {
+  auto make_reader = [this, object_name, &client](int64_t offset) {
     if (UsingTestbench()) {
       return client->ReadObject(
-          bucket_name, object_name,
+          bucket_name_, object_name,
           CustomHeader("x-goog-testbench-instructions", "return-broken-stream"),
           ReadFromOffset(offset));
     }
-    return client->ReadObject(bucket_name, object_name, ReadFromOffset(offset));
+    return client->ReadObject(bucket_name_, object_name, ReadFromOffset(offset));
   };
 
   ObjectReadStream stream = make_reader(0);
@@ -162,7 +167,7 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
   stream.Close();
   EXPECT_STATUS_OK(stream.status());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -171,21 +176,3 @@ TEST_F(SlowReaderIntegrationTest, StreamingReadRestart) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 3) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project-id> <bucket-name>\n";
-    return 1;
-  }
-
-  google::cloud::storage::flag_project_id = argv[1];
-  google::cloud::storage::flag_bucket_name = argv[2];
-
-  return RUN_ALL_TESTS();
-}

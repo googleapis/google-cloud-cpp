@@ -107,10 +107,12 @@ echo "Running Signed URL integration test."
 ./signed_url_integration_test
 
 echo "Running JSON keyfile integration test."
-./key_file_integration_test
+env "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILENAME=${TEST_KEY_FILE_JSON}" \
+    ./key_file_integration_test
 
 echo "Running P12 keyfile integration test."
-./key_file_integration_test
+env "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILENAME=${TEST_KEY_FILE_P12}" \
+    ./key_file_integration_test
 
 echo
 echo "Running GCS Object APIs with P12 credentials."

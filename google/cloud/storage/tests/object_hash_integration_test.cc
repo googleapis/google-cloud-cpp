@@ -19,7 +19,7 @@
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
 #include "google/cloud/testing_util/expect_exception.h"
-#include "google/cloud/testing_util/init_google_mock.h"
+#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <regex>
 
@@ -33,12 +33,18 @@ using ::google::cloud::storage::testing::CountMatchingEntities;
 using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* flag_project_id;
-char const* flag_bucket_name;
-
 class ObjectHashIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ protected:
+  void SetUp() override {
+    bucket_name_ = google::cloud::internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+        .value_or("");
+    ASSERT_FALSE(bucket_name_.empty());
+  }
+
+  std::string bucket_name_;
+};
 
 /// @test Verify that MD5 hashes are computed by default.
 TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
@@ -47,13 +53,12 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
 
   LogSink::Instance().RemoveBackend(id);
@@ -65,7 +70,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashXML) {
                     });
   EXPECT_EQ(1, count);
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -76,13 +81,12 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0));
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0));
   ASSERT_STATUS_OK(insert_meta);
 
   LogSink::Instance().RemoveBackend(id);
@@ -107,7 +111,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5HashJSON) {
     EXPECT_EQ(expected_md5, insert_meta->metadata("x_testbench_md5"));
   }
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -118,13 +122,12 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   StatusOr<ObjectMetadata> insert_meta = client.InsertObject(
-      bucket_name, object_name, LoremIpsum(), IfGenerationMatch(0),
+      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       DisableMD5Hash(true), Fields(""));
   ASSERT_STATUS_OK(insert_meta);
 
@@ -137,7 +140,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashXML) {
                     });
   EXPECT_EQ(0, count);
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -148,13 +151,12 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
   Client client((*client_options)
                     .set_enable_raw_client_tracing(true)
                     .set_enable_http_tracing(true));
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   auto backend = std::make_shared<testing_util::CaptureLogLinesBackend>();
   auto id = LogSink::Instance().AddBackend(backend);
   StatusOr<ObjectMetadata> insert_meta =
-      client.InsertObject(bucket_name, object_name, LoremIpsum(),
+      client.InsertObject(bucket_name_, object_name, LoremIpsum(),
                           IfGenerationMatch(0), DisableMD5Hash(true));
   ASSERT_STATUS_OK(insert_meta);
 
@@ -178,7 +180,7 @@ TEST_F(ObjectHashIntegrationTest, DisableMD5HashJSON) {
     ASSERT_FALSE(insert_meta->has_metadata("x_testbench_md5"));
   }
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -187,16 +189,15 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
-  auto stream = client->ReadObject(bucket_name, object_name);
+  auto stream = client->ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -204,7 +205,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadXML) {
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->md5_hash()));
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -213,17 +214,16 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream =
-      client->ReadObject(bucket_name, object_name, IfMetagenerationNotMatch(0));
+      client->ReadObject(bucket_name_, object_name, IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
   ASSERT_FALSE(actual.empty());
@@ -231,7 +231,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingReadJSON) {
   EXPECT_EQ(stream.received_hash(), stream.computed_hash());
   EXPECT_THAT(stream.received_hash(), HasSubstr(meta->md5_hash()));
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -240,17 +240,16 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream =
-      client->ReadObject(bucket_name, object_name, DisableMD5Hash(true),
+      client->ReadObject(bucket_name_, object_name, DisableMD5Hash(true),
                          DisableCrc32cChecksum(true));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
@@ -259,7 +258,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadXML) {
   EXPECT_TRUE(stream.computed_hash().empty());
   EXPECT_TRUE(stream.received_hash().empty());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -268,17 +267,16 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name, object_name, DisableMD5Hash(true),
+      bucket_name_, object_name, DisableMD5Hash(true),
       DisableCrc32cChecksum(true), IfMetagenerationNotMatch(0));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   ASSERT_FALSE(stream.IsOpen());
@@ -287,7 +285,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingReadJSON) {
   EXPECT_TRUE(stream.computed_hash().empty());
   EXPECT_TRUE(stream.received_hash().empty());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -296,11 +294,10 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0));
+  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
@@ -313,7 +310,7 @@ TEST_F(ObjectHashIntegrationTest, DefaultMD5StreamingWriteJSON) {
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -322,14 +319,13 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
   auto expected_md5hash = ComputeMD5Hash(expected);
 
   // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                 MD5HashValue(expected_md5hash));
 
   os.exceptions(std::ios_base::failbit);
@@ -340,7 +336,7 @@ TEST_F(ObjectHashIntegrationTest, VerifyValidMD5StreamingWriteJSON) {
   EXPECT_EQ(os.received_hash(), os.computed_hash());
   EXPECT_THAT(os.received_hash(), HasSubstr(expected_md5hash));
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -349,14 +345,13 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already. Dummy MD5HasValue
   // is passed during WriteObject.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                 MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
 
   os.exceptions(std::ios_base::failbit);
@@ -372,14 +367,13 @@ TEST_F(ObjectHashIntegrationTest, InvalidMD5StreamingWriteXML) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   std::string expected = LoremIpsum();
 
   // Create the object, but only if it does not exist already. Dummy MD5HasValue
   // is passed during WriteObject.
-  auto os = client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                 Projection::Full(),
                                 MD5HashValue("AAAAAAAAAA+AAAAAAAAAAA=="));
   os.exceptions(std::ios_base::failbit);
@@ -395,12 +389,11 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create the object, but only if it does not exist already.
   auto os =
-      client->WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                           DisableMD5Hash(true), DisableCrc32cChecksum(true));
   os.exceptions(std::ios_base::failbit);
   // We will construct the expected response while streaming the data up.
@@ -412,7 +405,7 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
   EXPECT_TRUE(os.received_hash().empty());
   EXPECT_TRUE(os.computed_hash().empty());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
 
@@ -426,17 +419,16 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
@@ -457,7 +449,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
   EXPECT_FALSE(stream.status().ok());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -471,17 +463,16 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, LoremIpsum(),
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true),
       IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
@@ -503,7 +494,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -517,18 +508,17 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto contents = MakeRandomData(1024 * 1024);
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, contents,
+      client->InsertObject(bucket_name_, object_name, contents,
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to hold the results and read pas EOF.
@@ -541,7 +531,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->md5_hash());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -555,18 +545,17 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
   auto contents = MakeRandomData(1024 * 1024);
 
   // Create an object and a stream to read it back.
   StatusOr<ObjectMetadata> meta =
-      client->InsertObject(bucket_name, object_name, contents,
+      client->InsertObject(bucket_name_, object_name, contents,
                            IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(meta);
 
   auto stream = client->ReadObject(
-      bucket_name, object_name, DisableCrc32cChecksum(true),
+      bucket_name_, object_name, DisableCrc32cChecksum(true),
       IfMetagenerationNotMatch(0),
       CustomHeader("x-goog-testbench-instructions", "return-corrupted-data"));
 
@@ -580,7 +569,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
   EXPECT_EQ(stream.received_hash(), meta->md5_hash());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -594,12 +583,11 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // Create a stream to upload an object.
   ObjectWriteStream stream =
-      client->WriteObject(bucket_name, object_name, DisableCrc32cChecksum(true),
+      client->WriteObject(bucket_name_, object_name, DisableCrc32cChecksum(true),
                           IfGenerationMatch(0),
                           CustomHeader("x-goog-testbench-instructions",
                                        "inject-upload-data-error"));
@@ -611,7 +599,7 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
   EXPECT_STATUS_OK(stream.metadata());
   EXPECT_NE(stream.received_hash(), stream.computed_hash());
 
-  auto status = client->DeleteObject(bucket_name, object_name);
+  auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -620,21 +608,3 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 3) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project-id> <bucket-name>\n";
-    return 1;
-  }
-
-  google::cloud::storage::flag_project_id = argv[1];
-  google::cloud::storage::flag_bucket_name = argv[2];
-
-  return RUN_ALL_TESTS();
-}

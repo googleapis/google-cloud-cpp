@@ -17,7 +17,8 @@
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 
 namespace google {

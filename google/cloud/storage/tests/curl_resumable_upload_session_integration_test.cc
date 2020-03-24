@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -27,20 +27,26 @@ namespace {
 
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* flag_bucket_name;
-
 class CurlResumableUploadIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ protected:
+  void SetUp() override {
+    bucket_name_ = google::cloud::internal::GetEnv(
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+        .value_or("");
+    ASSERT_FALSE(bucket_name_.empty());
+  }
+
+  std::string bucket_name_;
+};
 
 TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  ResumableUploadRequest request(bucket_name, object_name);
+  ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -56,11 +62,11 @@ TEST_F(CurlResumableUploadIntegrationTest, Simple) {
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(contents.size(), metadata.size());
 
   auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
   ASSERT_STATUS_OK(status);
 }
 
@@ -68,10 +74,9 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  ResumableUploadRequest request(bucket_name, object_name);
+  ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -93,11 +98,11 @@ TEST_F(CurlResumableUploadIntegrationTest, WithReset) {
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
 
   auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
   ASSERT_STATUS_OK(status);
 }
 
@@ -105,10 +110,9 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  ResumableUploadRequest request(bucket_name, object_name);
+  ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> old_session;
@@ -136,11 +140,11 @@ TEST_F(CurlResumableUploadIntegrationTest, Restore) {
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(3 * contents.size(), metadata.size());
 
   auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
   ASSERT_STATUS_OK(status);
 }
 
@@ -148,10 +152,9 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  ResumableUploadRequest request(bucket_name, object_name);
+  ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -179,11 +182,11 @@ TEST_F(CurlResumableUploadIntegrationTest, EmptyTrailer) {
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(2 * contents.size(), metadata.size());
 
   auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
   ASSERT_STATUS_OK(status);
 }
 
@@ -191,10 +194,9 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
   auto client_options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(client_options);
   auto client = CurlClient::Create(*client_options);
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
-  ResumableUploadRequest request(bucket_name, object_name);
+  ResumableUploadRequest request(bucket_name_, object_name);
   request.set_multiple_options(IfGenerationMatch(0));
 
   StatusOr<std::unique_ptr<ResumableUploadSession>> session =
@@ -208,11 +210,11 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
   EXPECT_TRUE(response->payload.has_value());
   auto metadata = *response->payload;
   EXPECT_EQ(object_name, metadata.name());
-  EXPECT_EQ(bucket_name, metadata.bucket());
+  EXPECT_EQ(bucket_name_, metadata.bucket());
   EXPECT_EQ(0, metadata.size());
 
   auto status =
-      client->DeleteObject(DeleteObjectRequest(bucket_name, object_name));
+      client->DeleteObject(DeleteObjectRequest(bucket_name_, object_name));
   ASSERT_STATUS_OK(status);
 }
 
@@ -222,19 +224,3 @@ TEST_F(CurlResumableUploadIntegrationTest, Empty) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 2) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <bucket-name>\n";
-    return 1;
-  }
-
-  google::cloud::storage::internal::flag_bucket_name = argv[1];
-
-  return RUN_ALL_TESTS();
-}

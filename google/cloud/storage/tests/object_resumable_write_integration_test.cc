@@ -15,7 +15,7 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
+#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <thread>
 

@@ -20,7 +20,7 @@
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
+#include "google/cloud/internal/getenv.h"
 #include <gmock/gmock.h>
 #include <fstream>
 #include <type_traits>
@@ -46,14 +46,17 @@ inline namespace STORAGE_CLIENT_NS {
 namespace {
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* account_file_name;
-std::map<std::string, internal::nl::json>* tests;
-
 class V4SignedUrlConformanceTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<std::string> {
  protected:
+  void SetUp() override {
+    
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+
+  }
+
   std::vector<std::pair<std::string, std::string>> ExtractHeaders(
       internal::nl::json j_obj) {
     return ExtractListOfPairs(std::move(j_obj), "headers");
@@ -77,6 +80,9 @@ class V4SignedUrlConformanceTest
     }
     return res;
   }
+
+  std::string service_account_key_filename_;
+  std::map<std::string, internal::nl::json> tests_;
 };
 
 TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
