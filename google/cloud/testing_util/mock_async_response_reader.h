@@ -18,6 +18,7 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <grpcpp/grpcpp.h>
+#include <grpcpp/support/async_unary_call.h>
 
 namespace google {
 namespace cloud {
