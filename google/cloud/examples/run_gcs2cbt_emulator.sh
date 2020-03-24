@@ -65,5 +65,3 @@ run_example ./gcs2cbt --key=1 --separator=, \
     "${BUCKET_NAME}" "${object_name}"
 
 run_example_usage ./gcs2cbt --help
-
-TESTBENCH_DUMP_LOG=no

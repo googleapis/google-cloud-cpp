@@ -20,13 +20,11 @@ fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 TESTBENCH_PID=0
-TESTBENCH_DUMP_LOG=yes
 
 ################################################
 # Terminate the Google Cloud Storage test bench
 # Globals:
 #   TESTBENCH_PID: the process id for the test bench
-#   TESTBENCH_DUMP_LOG: if set to 'yes' the testbench log is dumped
 #   COLOR_*: colorize output messages, defined in colors.sh
 # Arguments:
 #   None
@@ -39,19 +37,6 @@ kill_testbench() {
   kill "${TESTBENCH_PID}"
   wait "${TESTBENCH_PID}" >/dev/null 2>&1
   echo "done."
-  if [ "${TESTBENCH_DUMP_LOG}" = "yes" ] && [ -e "testbench.log" ]; then
-    echo "================ [begin testbench.log] ================"
-    # Travis has a limit of ~10,000 lines, and sometimes the
-    # emulator log gets too long, just print the interesting bits:
-    if [ "$(wc -l "testbench.log" | awk '{print $1}')" -lt 1000 ]; then
-      cat "testbench.log"
-    else
-      head -500 "testbench.log"
-      echo "        [snip snip snip]        "
-      tail -500 "testbench.log"
-    fi
-    echo "================ [end testbench.log] ================"
-  fi
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET} Integration test environment tear-down."
 
 }
