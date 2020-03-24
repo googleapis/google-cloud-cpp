@@ -40,8 +40,8 @@ set -eu
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../../.."; pwd)"
 fi
-readonly TEST_ACCOUNT_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
-readonly TEST_DATA_FILE="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
 
 echo
 echo "Running storage::internal::CurlResumableUploadSession integration tests."
@@ -92,7 +92,7 @@ echo "Running GCS Object Rewrite integration tests."
 ./object_rewrite_integration_test
 
 echo
-echo "Running GCS Projects.serviceAccount integration tests."
+echo "Running GCS multi-threaded integration test."
 ./thread_integration_test
 
 echo
