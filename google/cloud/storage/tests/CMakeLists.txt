@@ -64,7 +64,3 @@ target_link_libraries(error_injection_integration_test PRIVATE ${CMAKE_DL_LIBS})
 include(CreateBazelConfig)
 export_list_to_bazel("storage_client_integration_tests.bzl"
                      "storage_client_integration_tests")
-
-add_subdirectory(parallel_upload_regression)
-add_subdirectory(read_object_stall_regression)
-add_subdirectory(write_deadlock_regression)
