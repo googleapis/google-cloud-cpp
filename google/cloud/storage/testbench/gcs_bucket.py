@@ -420,7 +420,6 @@ class GcsBucket(object):
             })
         return bindings
 
-
     def iam_policy_as_json(self):
         """Get the current IamPolicy in the right format for JSON."""
         role_mapping = {
