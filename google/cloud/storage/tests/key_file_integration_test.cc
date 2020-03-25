@@ -32,6 +32,9 @@ class KeyFileIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
+    // The testbench does not implement signed URLs.
+    if (UsingTestbench()) GTEST_SKIP();
+
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
@@ -53,10 +56,6 @@ class KeyFileIntegrationTest
 };
 
 TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
   auto credentials =
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
   ASSERT_STATUS_OK(credentials);
@@ -90,10 +89,6 @@ TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
 }
 
 TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
   auto credentials =
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
   ASSERT_STATUS_OK(credentials);
