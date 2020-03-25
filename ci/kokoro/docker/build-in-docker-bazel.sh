@@ -112,8 +112,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "--test_tag_filters=bigtable-integration-tests" \
       -- //google/cloud/...:all
 
-  exit 0
-
   export INTEGRATION_TESTS_CONFIG
   export TEST_KEY_FILE_JSON
   export TEST_KEY_FILE_P12
