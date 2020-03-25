@@ -13,11 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/log.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/capture_log_lines_backend.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <regex>
 
@@ -32,15 +34,30 @@ using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::HasSubstr;
 
 class ObjectInsertIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
+    : public google::cloud::storage::testing::StorageIntegrationTest,
+      public ::testing::WithParamInterface<std::string> {
  protected:
+  ObjectInsertIntegrationTest()
+      : application_credentials_("GOOGLE_APPLICATION_CREDENTIALS", {}) {}
+
   void SetUp() override {
+    if (!UsingTestbench()) {
+      // This test was chosen (more or less arbitrarily) to validate that both
+      // P12 and JSON credentials are usable in production. The positives for
+      // this test are (1) it is relatively short (less than 60 seconds), (2) it
+      // actually performs multiple operations against production.
+      std::string const key_file_envvar = GetParam();
+      auto value = google::cloud::internal::GetEnv(key_file_envvar.c_str());
+      ASSERT_TRUE(value) << " expected ${" << key_file_envvar << "} to be set";
+      google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", value);
+    }
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
   }
 
+  ::google::cloud::testing_util::ScopedEnvironment application_credentials_;
   std::string bucket_name_;
 };
 
@@ -729,6 +746,13 @@ TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
   auto status = client->DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(status);
 }
+
+INSTANTIATE_TEST_SUITE_P(
+    ObjectInsertWithJsonCredentialsTest, ObjectInsertIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_TEST_KEY_FILE_JSON"));
+INSTANTIATE_TEST_SUITE_P(
+    ObjectInsertWithP12CredentialsTest, ObjectInsertIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_TEST_KEY_FILE_P12"));
 
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS
