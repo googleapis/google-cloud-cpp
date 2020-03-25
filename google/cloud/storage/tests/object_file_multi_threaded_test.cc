@@ -43,7 +43,7 @@ class ObjectFileMultiThreadedTest
     ASSERT_FALSE(bucket_name_.empty());
     auto object_count = google::cloud::internal::GetEnv(
         "GOOGLE_CLOUD_CPP_STORAGE_TEST_OBJECT_COUNT");
-    if (object_count) std::stoi(*object_count);
+    if (object_count) object_count_ = std::stoi(*object_count);
   }
 
   unsigned ThreadCount() {
