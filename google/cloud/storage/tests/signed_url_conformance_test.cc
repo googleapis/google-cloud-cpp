@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/nljson.h"
@@ -47,13 +48,20 @@ namespace {
 using ::testing::HasSubstr;
 
 // Initialized in main() below.
-char const* account_file_name;
 std::map<std::string, internal::nl::json>* tests;
 
 class V4SignedUrlConformanceTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<std::string> {
  protected:
+  void SetUp() override {
+    service_account_key_filename_ =
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE")
+            .value_or("");
+    ASSERT_FALSE(service_account_key_filename_.empty());
+  }
+
   std::vector<std::pair<std::string, std::string>> ExtractHeaders(
       internal::nl::json j_obj) {
     return ExtractListOfPairs(std::move(j_obj), "headers");
@@ -63,6 +71,8 @@ class V4SignedUrlConformanceTest
       internal::nl::json j_obj) {
     return ExtractListOfPairs(std::move(j_obj), "queryParameters");
   }
+
+  std::string service_account_key_filename_;
 
  private:
   std::vector<std::pair<std::string, std::string>> ExtractListOfPairs(
@@ -80,9 +90,8 @@ class V4SignedUrlConformanceTest
 };
 
 TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
-  std::string account_file = account_file_name;
-  auto creds =
-      oauth2::CreateServiceAccountCredentialsFromJsonFilePath(account_file);
+  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonFilePath(
+      service_account_key_filename_);
 
   ASSERT_STATUS_OK(creds);
   std::string account_email = creds->get()->AccountEmail();
@@ -189,20 +198,20 @@ INSTANTIATE_TEST_SUITE_P(
 }  // namespace google
 
 int main(int argc, char* argv[]) {
-  // Make sure the arguments are valid.
-  if (argc != 3) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <key-file-name> <conformance-tests-json-file-name>\n";
+  auto conformance_tests_file =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME")
+          .value_or("");
+  if (conformance_tests_file.empty()) {
+    std::cerr
+        << "The GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME"
+        << " environment variable must be set and not empty.\n";
     return 1;
   }
-
-  google::cloud::storage::account_file_name = argv[1];
-
-  std::ifstream ifstr(argv[2]);
+  std::ifstream ifstr(conformance_tests_file);
   if (!ifstr.is_open()) {
-    std::cerr << "Failed to open data file: \"" << argv[2] << "\"\n";
+    std::cerr << "Failed to open data file: \"" << conformance_tests_file
+              << "\"\n";
     return 1;
   }
 

@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/terminate_handler.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 #ifndef _WIN32
 #include <dlfcn.h>
@@ -32,16 +32,23 @@ namespace {
 
 using ::google::cloud::testing_util::chrono_literals::operator"" _us;
 
-// Initialized in main() below.
-char const* flag_bucket_name;
-
-// This test uess dlsym(), which is not present on Windows.
+// This test uses dlsym(), which is not present on Windows.
 // One could replace it with LoadLibrary() on Windows, but it's only a test, so
 // it's not worth it.
 #ifndef _WIN32
 
 class ErrorInjectionIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ protected:
+  void SetUp() override {
+    bucket_name_ = google::cloud::internal::GetEnv(
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
+    ASSERT_FALSE(bucket_name_.empty());
+  }
+
+  std::string bucket_name_;
+};
 
 /**
  * Object of this class is an interface to intercept symbols from libc.
@@ -200,14 +207,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectErrorOnStreamingWrite) {
 
   Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(100)));
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   // Make sure the buffer is big enough to cause a flush.
   std::vector<char> buf(opts->upload_buffer_size() + 1, 'X');
@@ -236,21 +242,20 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(500)),
                 ExponentialBackoffPolicy(1_us, 2_us, 2));
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   WriteRandomLines(os, expected, 80, opts->download_buffer_size() * 3 / 80);
   os.Close();
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
 
-  auto is = client.ReadObject(bucket_name, object_name);
+  auto is = client.ReadObject(bucket_name_, object_name);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   SymbolInterceptor::Instance().StartFailingRecv(
@@ -260,7 +265,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectRecvErrorOnRead) {
   is.Close();
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 2);
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -271,14 +276,13 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   opts->SetDownloadBufferSize(512 * 1024);
   Client client(*opts, LimitedTimeRetryPolicy(std::chrono::milliseconds(500)));
 
-  std::string bucket_name = flag_bucket_name;
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
   std::ostringstream expected;
 
   // Create the object, but only if it does not exist already.
-  auto os = client.WriteObject(bucket_name, object_name, IfGenerationMatch(0),
+  auto os = client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
                                NewResumableUploadSession());
   os.exceptions(std::ios_base::badbit);
 
@@ -287,7 +291,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   EXPECT_TRUE(os);
   EXPECT_TRUE(os.metadata().ok());
 
-  auto is = client.ReadObject(bucket_name, object_name);
+  auto is = client.ReadObject(bucket_name_, object_name);
   std::vector<char> read_buf(opts->download_buffer_size() + 1);
   is.read(read_buf.data(), read_buf.size());
   // The failed recv will trigger a retry, which includes sending.
@@ -302,7 +306,7 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingSend(), 1);
   EXPECT_GE(SymbolInterceptor::Instance().StopFailingRecv(), 1);
 
-  auto status = client.DeleteObject(bucket_name, object_name);
+  auto status = client.DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
 }
 
@@ -313,19 +317,3 @@ TEST_F(ErrorInjectionIntegrationTest, InjectSendErrorOnRead) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 2) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1) << " <bucket-name>\n";
-    return 1;
-  }
-
-  google::cloud::storage::flag_bucket_name = argv[1];
-
-  return RUN_ALL_TESTS();
-}

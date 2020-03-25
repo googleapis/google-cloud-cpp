@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/list_objects_reader.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -29,28 +29,44 @@ using ::google::cloud::storage::testing::TestPermanentFailure;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* flag_project_id;
-char const* flag_bucket_name;
-char const* flag_topic_name;
-char const* flag_service_account;
-
 class BucketIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
+  void SetUp() override {
+    project_id_ =
+        google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+    ASSERT_FALSE(project_id_.empty());
+    bucket_name_ = google::cloud::internal::GetEnv(
+                       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
+                       .value_or("");
+    ASSERT_FALSE(bucket_name_.empty());
+    topic_name_ = google::cloud::internal::GetEnv(
+                      "GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME")
+                      .value_or("");
+    ASSERT_FALSE(topic_name_.empty());
+    service_account_ = google::cloud::internal::GetEnv(
+                           "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
+                           .value_or("");
+    ASSERT_FALSE(service_account_.empty());
+  }
+
   std::string MakeEntityName() {
     // We always use the viewers for the project because it is known to exist.
-    return "project-viewers-" + std::string(flag_project_id);
+    return "project-viewers-" + project_id_;
   }
+
+  std::string project_id_;
+  std::string bucket_name_;
+  std::string topic_name_;
+  std::string service_account_;
 };
 
 TEST_F(BucketIntegrationTest, BasicCRUD) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto buckets = client->ListBucketsForProject(project_id);
+  auto buckets = client->ListBucketsForProject(project_id_);
   std::vector<BucketMetadata> initial_buckets;
   for (auto&& b : buckets) {
     initial_buckets.emplace_back(std::move(b).value());
@@ -65,12 +81,12 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
       << " This is unexpected as the test generates a random bucket name.";
 
-  auto insert_meta =
-      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  auto insert_meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                                    BucketMetadata());
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
 
-  buckets = client->ListBucketsForProject(project_id);
+  buckets = client->ListBucketsForProject(project_id_);
   std::vector<BucketMetadata> current_buckets;
   for (auto&& b : buckets) {
     current_buckets.emplace_back(std::move(b).value());
@@ -121,7 +137,7 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
-  buckets = client->ListBucketsForProject(project_id);
+  buckets = client->ListBucketsForProject(project_id_);
   current_buckets.clear();
   for (auto&& b : buckets) {
     current_buckets.emplace_back(std::move(b).value());
@@ -136,7 +152,6 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
       PredefinedAcl::PublicReadWrite(),
   };
 
-  std::string project_id = flag_project_id;
   for (auto const& acl : test_values) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
@@ -145,7 +160,7 @@ TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
     ASSERT_STATUS_OK(client);
 
     auto metadata = client->CreateBucketForProject(
-        bucket_name, project_id, BucketMetadata(), PredefinedAcl(acl));
+        bucket_name, project_id_, BucketMetadata(), PredefinedAcl(acl));
     ASSERT_STATUS_OK(metadata);
     EXPECT_EQ(bucket_name, metadata->name());
 
@@ -164,7 +179,6 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
       PredefinedDefaultObjectAcl::PublicRead(),
   };
 
-  std::string project_id = flag_project_id;
   for (auto const& acl : test_values) {
     SCOPED_TRACE(std::string("Testing with ") +
                  acl.well_known_parameter_name() + "=" + acl.value());
@@ -173,7 +187,7 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
     ASSERT_STATUS_OK(client);
 
     auto metadata = client->CreateBucketForProject(
-        bucket_name, project_id, BucketMetadata(),
+        bucket_name, project_id_, BucketMetadata(),
         PredefinedDefaultObjectAcl(acl));
     ASSERT_STATUS_OK(metadata);
     EXPECT_EQ(bucket_name, metadata->name());
@@ -184,7 +198,6 @@ TEST_F(BucketIntegrationTest, CreatePredefinedDefaultObjectAcl) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -192,7 +205,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // We need to have an available bucket for logging ...
   std::string logging_name = MakeRandomBucketName();
   StatusOr<BucketMetadata> const logging_meta = client->CreateBucketForProject(
-      logging_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      logging_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("noAcl"));
   ASSERT_STATUS_OK(logging_meta);
   EXPECT_EQ(logging_name, logging_meta->name());
@@ -200,7 +213,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   // Create a Bucket, use the default settings for most fields, except the
   // storage class and location. Fetch the full attributes of the bucket.
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id,
+      bucket_name, project_id_,
       BucketMetadata().set_location("US").set_storage_class(
           storage_class::Standard()),
       PredefinedAcl("private"), PredefinedDefaultObjectAcl("projectPrivate"),
@@ -328,7 +341,6 @@ TEST_F(BucketIntegrationTest, FullPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -336,7 +348,7 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
   // Create a Bucket, use the default settings for all fields. Fetch the full
   // attributes of the bucket.
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
@@ -361,7 +373,6 @@ TEST_F(BucketIntegrationTest, BucketPolicyOnlyPatch) {
 
 // @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -369,7 +380,7 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   // Create a Bucket, use the default settings for all fields. Fetch the full
   // attributes of the bucket.
   StatusOr<BucketMetadata> const insert_meta = client->CreateBucketForProject(
-      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
@@ -394,66 +405,61 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
 }
 
 TEST_F(BucketIntegrationTest, GetMetadata) {
-  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto metadata = client->GetBucketMetadata(bucket_name);
+  auto metadata = client->GetBucketMetadata(bucket_name_);
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name, metadata->name());
-  EXPECT_EQ(bucket_name, metadata->id());
+  EXPECT_EQ(bucket_name_, metadata->name());
+  EXPECT_EQ(bucket_name_, metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataFields) {
-  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto metadata = client->GetBucketMetadata(bucket_name, Fields("name"));
+  auto metadata = client->GetBucketMetadata(bucket_name_, Fields("name"));
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name, metadata->name());
+  EXPECT_EQ(bucket_name_, metadata->name());
   EXPECT_TRUE(metadata->id().empty());
   EXPECT_TRUE(metadata->kind().empty());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatch_Success) {
-  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto metadata = client->GetBucketMetadata(bucket_name);
+  auto metadata = client->GetBucketMetadata(bucket_name_);
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name, metadata->name());
-  EXPECT_EQ(bucket_name, metadata->id());
+  EXPECT_EQ(bucket_name_, metadata->name());
+  EXPECT_EQ(bucket_name_, metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 
   auto metadata2 = client->GetBucketMetadata(
-      bucket_name, storage::Projection("noAcl"),
+      bucket_name_, storage::Projection("noAcl"),
       storage::IfMetagenerationMatch(metadata->metageneration()));
   ASSERT_STATUS_OK(metadata2);
   EXPECT_EQ(*metadata2, *metadata);
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatch_Failure) {
-  std::string bucket_name = flag_bucket_name;
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto metadata = client->GetBucketMetadata(bucket_name);
+  auto metadata = client->GetBucketMetadata(bucket_name_);
   ASSERT_STATUS_OK(metadata);
-  EXPECT_EQ(bucket_name, metadata->name());
-  EXPECT_EQ(bucket_name, metadata->id());
+  EXPECT_EQ(bucket_name_, metadata->name());
+  EXPECT_EQ(bucket_name_, metadata->id());
   EXPECT_EQ("storage#bucket", metadata->kind());
 
   auto metadata2 = client->GetBucketMetadata(
-      bucket_name, storage::Projection("noAcl"),
+      bucket_name_, storage::Projection("noAcl"),
       storage::IfMetagenerationNotMatch(metadata->metageneration()));
   EXPECT_FALSE(metadata2.ok()) << "metadata=" << *metadata2;
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -461,7 +467,7 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
   // Create a new bucket to run the test, with the "private" PredefinedAcl so
   // we know what the contents of the ACL will be.
   auto meta = client->CreateBucketForProject(
-      bucket_name, project_id, BucketMetadata(), PredefinedAcl("private"),
+      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
       Projection("full"));
   ASSERT_STATUS_OK(meta);
 
@@ -533,7 +539,6 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -542,7 +547,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   // PredefinedDefaultObjectAcl, that way we can predict the the contents of the
   // ACL.
   auto meta = client->CreateBucketForProject(
-      bucket_name, project_id, BucketMetadata(),
+      bucket_name, project_id_, BucketMetadata(),
       PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
   ASSERT_STATUS_OK(meta);
 
@@ -573,7 +578,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   ASSERT_STATUS_OK(current_acl);
   EXPECT_FALSE(current_acl->empty());
   // Search using the entity name returned by the request, because we use
-  // 'project-editors-<project_id>' this different than the original entity
+  // 'project-editors-<project_id_>' this different than the original entity
   // name, the server "translates" the project id to a project number.
   EXPECT_EQ(1, name_counter(result->entity(), *current_acl));
 
@@ -610,14 +615,13 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   auto current_notifications = client->ListNotifications(bucket_name);
@@ -628,12 +632,12 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
       << ">. This is unexpected because the bucket name is chosen at random.";
 
   auto create = client->CreateNotification(
-      bucket_name, flag_topic_name, payload_format::JsonApiV1(),
+      bucket_name, topic_name_, payload_format::JsonApiV1(),
       NotificationMetadata().append_event_type(event_type::ObjectFinalize()));
   ASSERT_STATUS_OK(create);
 
   EXPECT_EQ(payload_format::JsonApiV1(), create->payload_format());
-  EXPECT_THAT(create->topic(), HasSubstr(flag_topic_name));
+  EXPECT_THAT(create->topic(), HasSubstr(topic_name_));
 
   current_notifications = client->ListNotifications(bucket_name);
   ASSERT_STATUS_OK(current_notifications);
@@ -665,14 +669,13 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, IamCRUD) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   StatusOr<IamPolicy> policy = client->GetBucketIamPolicy(bucket_name);
@@ -721,14 +724,13 @@ TEST_F(BucketIntegrationTest, IamCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   StatusOr<NativeIamPolicy> policy =
@@ -799,14 +801,13 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLock) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test.
-  auto meta =
-      client->CreateBucketForProject(bucket_name, project_id, BucketMetadata());
+  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
+                                             BucketMetadata());
   ASSERT_STATUS_OK(meta);
 
   auto after_setting_retention_policy = client->PatchBucket(
@@ -827,7 +828,6 @@ TEST_F(BucketIntegrationTest, BucketLock) {
 }
 
 TEST_F(BucketIntegrationTest, BucketLockFailure) {
-  std::string project_id = flag_project_id;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -1086,8 +1086,6 @@ TEST_F(BucketIntegrationTest, DeleteDefaultAccessControlFailure) {
 }
 
 TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
-  std::string project_id = flag_project_id;
-  std::string service_account = flag_service_account;
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -1100,7 +1098,8 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
 
   original.set_iam_configuration(std::move(configuration));
 
-  auto meta = client->CreateBucketForProject(bucket_name, project_id, original);
+  auto meta =
+      client->CreateBucketForProject(bucket_name, project_id_, original);
   ASSERT_STATUS_OK(meta);
 
   StatusOr<NativeIamPolicy> policy =
@@ -1128,12 +1127,12 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
     auto& members = binding.members();
     if (std::find(members.begin(), members.end(), "allAuthenticatedUsers") ==
         members.end()) {
-      members.emplace_back("serviceAccount:" + service_account);
+      members.emplace_back("serviceAccount:" + service_account_);
     }
   }
   if (!role_updated) {
     update.bindings().emplace_back(NativeIamBinding(
-        "roles/storage.objectViewer", {"serviceAccount:" + service_account},
+        "roles/storage.objectViewer", {"serviceAccount:" + service_account_},
         NativeExpression(
             "request.time < timestamp(\"2019-07-01T00:00:00.000Z\")",
             "Expires_July_1_2019", "Expires on July 1, 2019")));
@@ -1164,23 +1163,3 @@ TEST_F(BucketIntegrationTest, NativeIamWithRequestedPolicyVersion) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 5) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <project> <bucket> <topic> <service-account>\n";
-    return 1;
-  }
-
-  google::cloud::storage::flag_project_id = argv[1];
-  google::cloud::storage::flag_bucket_name = argv[2];
-  google::cloud::storage::flag_topic_name = argv[3];
-  google::cloud::storage::flag_service_account = argv[4];
-
-  return RUN_ALL_TESTS();
-}

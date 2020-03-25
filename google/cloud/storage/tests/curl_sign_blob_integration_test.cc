@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/testing_util/assert_ok.h"
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -28,20 +28,27 @@ namespace {
 
 using ::testing::HasSubstr;
 
-// Initialized in main() below.
-char const* flag_service_account;
-
 class CurlSignBlobIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {};
+    : public google::cloud::storage::testing::StorageIntegrationTest {
+ protected:
+  void SetUp() override {
+    service_account_ =
+        google::cloud::internal::GetEnv(
+            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
+            .value_or("");
+    ASSERT_FALSE(service_account_.empty());
+  }
+
+  std::string service_account_;
+};
 
 TEST_F(CurlSignBlobIntegrationTest, Simple) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
-  std::string service_account = flag_service_account;
 
   auto encoded = Base64Encode(LoremIpsum());
 
-  SignBlobRequest request(service_account, encoded, {});
+  SignBlobRequest request(service_account_, encoded, {});
 
   StatusOr<SignBlobResponse> response = client->raw_client()->SignBlob(request);
   ASSERT_STATUS_OK(response);
@@ -59,20 +66,3 @@ TEST_F(CurlSignBlobIntegrationTest, Simple) {
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
-
-  // Make sure the arguments are valid.
-  if (argc != 2) {
-    std::string const cmd = argv[0];
-    auto last_slash = std::string(argv[0]).find_last_of('/');
-    std::cerr << "Usage: " << cmd.substr(last_slash + 1)
-              << " <service-account>\n";
-    return 1;
-  }
-
-  google::cloud::storage::internal::flag_service_account = argv[1];
-
-  return RUN_ALL_TESTS();
-}
