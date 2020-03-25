@@ -41,6 +41,7 @@ class ErrorInjectionIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {
  protected:
   void SetUp() override {
+    if (!UsingTestbench()) GTEST_SKIP();
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
