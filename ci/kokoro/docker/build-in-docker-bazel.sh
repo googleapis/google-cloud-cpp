@@ -117,8 +117,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   export TEST_KEY_FILE_P12
   export GOOGLE_APPLICATION_CREDENTIALS
 
-  # Changing the PATH disables the Bazel cache, so use an
-  # absolute path
+  # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
 
   "${GCLOUD}" --quiet auth activate-service-account --key-file \
