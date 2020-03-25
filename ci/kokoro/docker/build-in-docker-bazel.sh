@@ -95,13 +95,27 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # shellcheck disable=SC1091
   source "${INTEGRATION_TESTS_CONFIG}"
   bazel_args+=(
+      # Common configuration
       "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
       "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+
+      # Bigtable
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}"
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
-      "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}")
+      "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
+
+      # Storage
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+  )
+
 
   BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
   readonly BAZEL_BIN_DIR
@@ -110,6 +124,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   "${BAZEL_BIN}" test \
       "${bazel_args[@]}" \
       "--test_tag_filters=bigtable-integration-tests" \
+      "--test_tag_filters=storage-integration-tests" \
       -- //google/cloud/...:all
 
   export INTEGRATION_TESTS_CONFIG
@@ -169,12 +184,9 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  echo "$(date -u): Running Google Cloud Storage Integration Tests $(date)"
+  echo "$(date -u): Running Google Cloud Storage Examples"
   echo "================================================================"
   set +e
-  (cd "${BAZEL_BIN_DIR}/google/cloud/storage/tests" && \
-      "${PROJECT_ROOT}/google/cloud/storage/tests/run_integration_tests_production.sh")
-  storage_integration_test_status=$?
   echo "Running Google Cloud Storage Examples"
   (cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" && \
       "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
@@ -194,11 +206,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   "${GCLOUD}" --quiet iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}" >/dev/null 2>&1
   # Deactivate all the accounts in `gcloud` to prevent accidents
   "${GCLOUD}" --quiet auth revoke --all
-
-  if [[ "${storage_integration_test_status}" != 0 ]]; then
-    echo "$(date -u): Error in storage integration tests."
-    exit 1
-  fi
 
   if [[ "${storage_examples_status}" != 0 ]]; then
     echo "$(date -u): Error in storage examples."

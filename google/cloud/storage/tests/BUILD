@@ -21,9 +21,13 @@ load(
     "storage_client_integration_tests",
 )
 
-[cc_binary(
+[cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
+    tags = [
+        "storage-integration-tests",
+        "integration-tests",
+    ],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
         "//conditions:default": [
