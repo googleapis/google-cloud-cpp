@@ -65,9 +65,7 @@ int main(int argc, char* argv[]) try {
     std::string row_key = "key-" + std::to_string(i);
     google::cloud::Status status = write.Apply(cbt::SingleRowMutation(
         std::move(row_key), cbt::SetCell("fam", "c0", greeting)));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     ++i;
   }
 
@@ -79,9 +77,7 @@ int main(int argc, char* argv[]) try {
 
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
-  if (!result) {
-    throw std::runtime_error(result.status().message());
-  }
+  if (!result) throw std::runtime_error(result.status().message());
   if (!result->first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table_id << "\n";
     return 1;
@@ -97,9 +93,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Scanning all the data from " << table_id << "\n";
   for (google::cloud::StatusOr<cbt::Row>& row : read.ReadRows(
            cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+    if (!row) throw std::runtime_error(row.status().message());
     std::cout << row->row_key() << ":\n";
     for (cbt::Cell const& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()

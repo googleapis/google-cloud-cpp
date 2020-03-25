@@ -295,10 +295,10 @@ void MockWriteObjectFailure(int& argc, char* argv[]) {
 int main(int argc, char* argv[]) try {
   using CommandType = std::function<void(int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"mock-read-object", &MockReadObject},
-      {"mock-write-object", &MockWriteObject},
-      {"mock-read-object-failure", &MockReadObjectFailure},
-      {"mock-write-object-failure", &MockWriteObjectFailure},
+      {"mock-read-object", MockReadObject},
+      {"mock-write-object", MockWriteObject},
+      {"mock-read-object-failure", MockReadObjectFailure},
+      {"mock-write-object-failure", MockWriteObjectFailure},
   };
   for (auto&& kv : commands) {
     try {

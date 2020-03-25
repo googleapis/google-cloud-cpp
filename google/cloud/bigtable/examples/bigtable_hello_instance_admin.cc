@@ -51,9 +51,7 @@ int main(int argc, char* argv[]) try {
   //! [check instance exists]
   std::cout << "\nCheck Instance exists:\n";
   StatusOr<cbt::InstanceList> instances = instance_admin.ListInstances();
-  if (!instances) {
-    throw std::runtime_error(instances.status().message());
-  }
+  if (!instances) throw std::runtime_error(instances.status().message());
   if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
@@ -108,9 +106,7 @@ int main(int argc, char* argv[]) try {
   //! [list instances]
   std::cout << "\nListing Instances:\n";
   instances = instance_admin.ListInstances();
-  if (!instances) {
-    throw std::runtime_error(instances.status().message());
-  }
+  if (!instances) throw std::runtime_error(instances.status().message());
   if (!instances->failed_locations.empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
@@ -128,9 +124,7 @@ int main(int argc, char* argv[]) try {
   //! [get instance]
   std::cout << "\nGet Instance:\n";
   auto instance = instance_admin.GetInstance(instance_id);
-  if (!instance) {
-    throw std::runtime_error(instance.status().message());
-  }
+  if (!instance) throw std::runtime_error(instance.status().message());
   std::cout << "Instance details :\n" << instance->DebugString() << "\n";
   //! [get instance]
 
@@ -138,9 +132,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "\nListing Clusters:\n";
   StatusOr<cbt::ClusterList> cluster_list =
       instance_admin.ListClusters(instance_id);
-  if (!cluster_list) {
-    throw std::runtime_error(cluster_list.status().message());
-  }
+  if (!cluster_list) throw std::runtime_error(cluster_list.status().message());
   if (!cluster_list->failed_locations.empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "
@@ -160,9 +152,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Deleting instance " << instance_id << "\n";
   google::cloud::Status delete_status =
       instance_admin.DeleteInstance(instance_id);
-  if (!delete_status.ok()) {
-    throw std::runtime_error(delete_status.message());
-  }
+  if (!delete_status.ok()) throw std::runtime_error(delete_status.message());
   std::cout << "DONE\n";
   //! [delete instance]
 

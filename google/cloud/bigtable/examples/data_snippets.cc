@@ -68,9 +68,7 @@ void Apply(google::cloud::bigtable::Table table, int argc, char*[]) {
     mutation.emplace_back(cbt::SetCell("fam", "even-more-columns", timestamp,
                                        "with-explicit-timestamp"));
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply]
   (std::move(table));
@@ -98,9 +96,7 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table, int argc,
     cbt::SingleRowMutation mutation(
         row_key, cbt::SetCell("fam", "some-column", "some-value"));
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply relaxed idempotency]
   (table.project_id(), table.instance_id(), table.table_id(), row_key);
@@ -126,9 +122,7 @@ void ApplyCustomRetry(google::cloud::bigtable::Table table, int argc,
         row_key, cbt::SetCell("fam", "some-column",
                               std::chrono ::milliseconds(0), "some-value"));
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply custom retry]
   (table.project_id(), table.instance_id(), table.table_id(), row_key);
@@ -194,9 +188,7 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     // Read a row, this returns a tuple (bool, row)
     StatusOr<std::pair<bool, cbt::Row>> tuple =
         table.ReadRow(row_key, std::move(filter));
-    if (!tuple) {
-      throw std::runtime_error(tuple.status().message());
-    }
+    if (!tuple) throw std::runtime_error(tuple.status().message());
     if (!tuple->first) {
       std::cout << "Row " << row_key << " not found\n";
       return;
@@ -237,9 +229,7 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char*[]) {
         cbt::Filter::Latest(1));
     // Read and print the rows.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
+      if (!row) throw std::runtime_error(row.status().message());
       if (row->cells().size() != 1) {
         std::ostringstream os;
         os << "Unexpected number of cells in " << row->row_key();
@@ -272,9 +262,7 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
         cbt::Filter::Latest(1));
     // Read and print the first 5 rows in the range.
     for (StatusOr<cbt::Row> const& row : table.ReadRows(range, 5, filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
+      if (!row) throw std::runtime_error(row.status().message());
       if (row->cells().size() != 1) {
         std::ostringstream os;
         os << "Unexpected number of cells in " << row->row_key();
@@ -312,9 +300,7 @@ void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
 
     cbt::Filter filter = cbt::Filter::Latest(1);
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
+      if (!row) throw std::runtime_error(row.status().message());
       std::cout << row->row_key() << ":\n";
       for (auto& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
@@ -348,9 +334,7 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
 
     cbt::Filter filter = cbt::Filter::Latest(1);
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
+      if (!row) throw std::runtime_error(row.status().message());
       std::cout << row->row_key() << ":\n";
       for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
@@ -389,9 +373,7 @@ void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
     }
 
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
+      if (!row) throw std::runtime_error(row.status().message());
       std::cout << row->row_key() << ":\n";
       for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
@@ -435,9 +417,7 @@ void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
     auto filter = cbt::Filter::Latest(1);
 
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) {
-        throw std::runtime_error(row.status().message());
-      }
+      if (!row) throw std::runtime_error(row.status().message());
       std::cout << row->row_key() << ":\n";
       for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
@@ -478,9 +458,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
                                 {cbt::SetCell("fam", "flip-flop", "on"),
                                  cbt::SetCell("fam", "flop-flip", "off")});
 
-    if (!branch) {
-      throw std::runtime_error(branch.status().message());
-    }
+    if (!branch) throw std::runtime_error(branch.status().message());
     if (*branch == cbt::MutationBranch::kPredicateMatched) {
       std::cout << "The predicate was matched\n";
     } else {
@@ -515,9 +493,7 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table, int argc,
         row_key, std::move(predicate), {},
         {cbt::SetCell("fam", "had-test-column", "false")});
 
-    if (!branch) {
-      throw std::runtime_error(branch.status().message());
-    }
+    if (!branch) throw std::runtime_error(branch.status().message());
     if (*branch == cbt::MutationBranch::kPredicateMatched) {
       std::cout << "The predicate was matched\n";
     } else {
@@ -545,9 +521,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
         row_key, cbt::ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+    if (!row) throw std::runtime_error(row.status().message());
     std::cout << row->row_key() << "\n";
   }
   //! [read modify write]
@@ -564,9 +538,7 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char*[]) {
   using google::cloud::StatusOr;
   [](cbt::Table table) {
     StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows();
-    if (!samples) {
-      throw std::runtime_error(samples.status().message());
-    }
+    if (!samples) throw std::runtime_error(samples.status().message());
     for (auto const& sample : *samples) {
       std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
                 << "\n";
@@ -590,9 +562,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
     google::cloud::Status status =
         table.Apply(cbt::SingleRowMutation(row_key, cbt::DeleteFromRow()));
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete all cells]
   (std::move(table), row_key);
@@ -615,9 +585,7 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
     google::cloud::Status status = table.Apply(
         cbt::SingleRowMutation(row_key, cbt::DeleteFromFamily(family_name)));
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete family cells]
   (std::move(table), row_key, family_name);
@@ -642,9 +610,7 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
     google::cloud::Status status = table.Apply(cbt::SingleRowMutation(
         row_key, cbt::DeleteFromColumn(family_name, column_name)));
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete selective family cells]
 
@@ -667,9 +633,7 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     // Read a row, this returns a tuple (bool, row)
     StatusOr<std::pair<bool, cbt::Row>> status = table.ReadRow(row_key, filter);
 
-    if (!status) {
-      throw std::runtime_error("Table does not exist!");
-    }
+    if (!status) throw std::runtime_error("Table does not exist!");
 
     if (!status->first) {
       std::cout << "Row  not found\n";
@@ -713,9 +677,7 @@ void MutateDeleteColumns(google::cloud::bigtable::Table table, int argc,
       mutation.emplace_back(cbt::DeleteFromColumn(c.first, c.second));
     }
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Columns successfully deleted from row\n";
   }
   // [END bigtable_mutate_delete_columns]
@@ -809,9 +771,7 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table, int argc,
           cbt::SetCell(mut.column_family, mut.column, mut.value));
     }
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Row successfully updated\n";
   }
   // [END bigtable_insert_update_rows]
@@ -840,12 +800,8 @@ void RenameColumn(google::cloud::bigtable::Table table, int argc,
     StatusOr<std::pair<bool, cbt::Row>> row =
         table.ReadRow(key, cbt::Filter::ColumnName(family, old_name));
 
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
-    if (!row->first) {
-      throw std::runtime_error("Cannot find row " + key);
-    }
+    if (!row) throw std::runtime_error(row.status().message());
+    if (!row->first) throw std::runtime_error("Cannot find row " + key);
 
     cbt::SingleRowMutation mutation(key);
     for (auto const& cell : row->second.cells()) {
@@ -859,9 +815,7 @@ void RenameColumn(google::cloud::bigtable::Table table, int argc,
     mutation.emplace_back(cbt::DeleteFromColumn("fam", old_name));
 
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Row successfully updated\n";
   }
   // [END bigtable_mutate_mix_match]
@@ -936,9 +890,7 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
             cbt::SetCell("fam", "col0", "value-" + std::to_string(q)));
         ++q;
         google::cloud::Status status = table.Apply(std::move(mutation));
-        if (!status.ok()) {
-          throw std::runtime_error(status.message());
-        }
+        if (!status.ok()) throw std::runtime_error(status.message());
       }
     }
   }
@@ -966,9 +918,7 @@ void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
     mutation.emplace_back(
         cbt::SetCell(column_family, "os_build", timestamp, "PQ2A.190405.003"));
     google::cloud::Status status = table.Apply(std::move(mutation));
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Successfully wrote row" << row_key << "\n";
   }
   // [END bigtable_writes_simple]
@@ -1030,9 +980,7 @@ void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
         row_key, cbt::ReadModifyWriteRule::IncrementAmount(
                      column_family, "connected_wifi", -1));
 
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+    if (!row) throw std::runtime_error(row.status().message());
     std::cout << "Successfully updated row" << row->row_key() << "\n";
   }
   // [END bigtable_writes_increment]
@@ -1063,9 +1011,7 @@ void WriteConditionally(google::cloud::bigtable::Table table, int argc,
             row_key, std::move(predicate),
             {cbt::SetCell(column_family, "os_name", timestamp, "android")}, {});
 
-    if (!branch) {
-      throw std::runtime_error(branch.status().message());
-    }
+    if (!branch) throw std::runtime_error(branch.status().message());
     if (*branch == cbt::MutationBranch::kPredicateMatched) {
       std::cout << "Successfully updated row\n";
     } else {
@@ -1083,35 +1029,35 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::bigtable::Table, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
-      {"apply", &Apply},
-      {"apply-relaxed-idempotency", &ApplyRelaxedIdempotency},
-      {"apply-custom-retry", &ApplyCustomRetry},
-      {"bulk-apply", &BulkApply},
-      {"read-row", &ReadRow},
-      {"read-rows", &ReadRows},
-      {"populate-table-hierarchy", &PopulateTableHierarchy},
-      {"read-keys-set", &ReadKeysSet},
-      {"read-rowset-prefix", &ReadRowSetPrefix},
-      {"read-prefix-list", &ReadPrefixList},
-      {"read-multiple-ranges", &ReadMultipleRanges},
-      {"read-rows-with-limit", &ReadRowsWithLimit},
-      {"check-and-mutate", &CheckAndMutate},
-      {"check-and-mutate-not-present", &CheckAndMutateNotPresent},
-      {"read-modify-write", &ReadModifyWrite},
-      {"sample-rows", &SampleRows},
-      {"delete-all-cells", &DeleteAllCells},
-      {"delete-family-cells", &DeleteFamilyCells},
-      {"delete-selective-family-cells", &DeleteSelectiveFamilyCells},
-      {"row-exists", &RowExists},
-      {"mutate-delete-columns", &MutateDeleteColumns},
-      {"mutate-delete-rows", &MutateDeleteRows},
-      {"mutate-insert-update-rows", &MutateInsertUpdateRows},
-      {"rename-column", &RenameColumn},
-      {"insert-test-data", &InsertTestData},
-      {"write-simple", &WriteSimple},
-      {"write-batch", &WriteBatch},
-      {"write-increment", &WriteIncrement},
-      {"write-conditional", &WriteConditionally},
+      {"apply", Apply},
+      {"apply-relaxed-idempotency", ApplyRelaxedIdempotency},
+      {"apply-custom-retry", ApplyCustomRetry},
+      {"bulk-apply", BulkApply},
+      {"read-row", ReadRow},
+      {"read-rows", ReadRows},
+      {"populate-table-hierarchy", PopulateTableHierarchy},
+      {"read-keys-set", ReadKeysSet},
+      {"read-rowset-prefix", ReadRowSetPrefix},
+      {"read-prefix-list", ReadPrefixList},
+      {"read-multiple-ranges", ReadMultipleRanges},
+      {"read-rows-with-limit", ReadRowsWithLimit},
+      {"check-and-mutate", CheckAndMutate},
+      {"check-and-mutate-not-present", CheckAndMutateNotPresent},
+      {"read-modify-write", ReadModifyWrite},
+      {"sample-rows", SampleRows},
+      {"delete-all-cells", DeleteAllCells},
+      {"delete-family-cells", DeleteFamilyCells},
+      {"delete-selective-family-cells", DeleteSelectiveFamilyCells},
+      {"row-exists", RowExists},
+      {"mutate-delete-columns", MutateDeleteColumns},
+      {"mutate-delete-rows", MutateDeleteRows},
+      {"mutate-insert-update-rows", MutateInsertUpdateRows},
+      {"rename-column", RenameColumn},
+      {"insert-test-data", InsertTestData},
+      {"write-simple", WriteSimple},
+      {"write-batch", WriteBatch},
+      {"write-increment", WriteIncrement},
+      {"write-conditional", WriteConditionally},
   };
 
   {

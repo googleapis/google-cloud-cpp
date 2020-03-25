@@ -60,9 +60,7 @@ void AsyncApply(google::cloud::bigtable::Table table,
     future<google::cloud::Status> status_future =
         table.AsyncApply(std::move(mutation), cq);
     auto status = status_future.get();
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Successfully applied mutation\n";
   }
   //! [async-apply]
@@ -165,9 +163,7 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
         },
         range, filter);
     Status stream_status = stream_status_promise.get_future().get();
-    if (!stream_status.ok()) {
-      throw std::runtime_error(stream_status.message());
-    }
+    if (!stream_status.ok()) throw std::runtime_error(stream_status.message());
   }
   //! [async read rows]
   (std::move(cq), std::move(table));
@@ -213,9 +209,7 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
         },
         range, filter);
     Status stream_status = stream_status_promise.get_future().get();
-    if (!stream_status.ok()) {
-      throw std::runtime_error(stream_status.message());
-    }
+    if (!stream_status.ok()) throw std::runtime_error(stream_status.message());
   }
   //! [async read rows with limit]
   (std::move(cq), std::move(table));
@@ -242,9 +236,7 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
             [row_key](future<StatusOr<std::pair<bool, cbt::Row>>> row_future) {
               // Read a row, this returns a tuple (bool, row)
               auto tuple = row_future.get();
-              if (!tuple) {
-                throw std::runtime_error(tuple.status().message());
-              }
+              if (!tuple) throw std::runtime_error(tuple.status().message());
               if (!tuple->first) {
                 std::cout << "Row " << row_key << " not found\n";
                 return;
@@ -299,9 +291,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
     branch_future
         .then([](future<StatusOr<cbt::MutationBranch>> f) {
           auto response = f.get();
-          if (!response) {
-            throw std::runtime_error(response.status().message());
-          }
+          if (!response) throw std::runtime_error(response.status().message());
           if (*response == cbt::MutationBranch::kPredicateMatched) {
             std::cout << "The predicate was matched\n";
           } else {
@@ -335,9 +325,7 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
     row_future
         .then([](future<StatusOr<cbt::Row>> f) {
           auto row = f.get();
-          if (!row) {
-            throw std::runtime_error(row.status().message());
-          }
+          if (!row) throw std::runtime_error(row.status().message());
         })
         .get();  // block to simplify example.
   }
@@ -352,13 +340,13 @@ int main(int argc, char* argv[]) try {
       std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
-      {"async-apply", &AsyncApply},
-      {"async-bulk-apply", &AsyncBulkApply},
-      {"async-read-rows", &AsyncReadRows},
-      {"async-read-rows-with-limit", &AsyncReadRowsWithLimit},
-      {"async-read-row", &AsyncReadRow},
-      {"async-check-and-mutate", &AsyncCheckAndMutate},
-      {"async-read-modify-write", &AsyncReadModifyWrite}};
+      {"async-apply", AsyncApply},
+      {"async-bulk-apply", AsyncBulkApply},
+      {"async-read-rows", AsyncReadRows},
+      {"async-read-rows-with-limit", AsyncReadRowsWithLimit},
+      {"async-read-row", AsyncReadRow},
+      {"async-check-and-mutate", AsyncCheckAndMutate},
+      {"async-read-modify-write", AsyncReadModifyWrite}};
 
   google::cloud::bigtable::CompletionQueue cq;
 

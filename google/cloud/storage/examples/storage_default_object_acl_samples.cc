@@ -57,10 +57,7 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     StatusOr<std::vector<gcs::ObjectAccessControl>> items =
         client.ListDefaultObjectAcl(bucket_name);
 
-    if (!items) {
-      throw std::runtime_error(items.status().message());
-    }
-
+    if (!items) throw std::runtime_error(items.status().message());
     std::cout << "ACLs for bucket=" << bucket_name << "\n";
     for (gcs::ObjectAccessControl const& acl : *items) {
       std::cout << acl.role() << ":" << acl.entity() << "\n";
@@ -113,10 +110,7 @@ void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     google::cloud::Status status =
         client.DeleteDefaultObjectAcl(bucket_name, entity);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
-
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Deleted ACL entry for " << entity << " in bucket "
               << bucket_name << "\n";
   }
@@ -138,10 +132,7 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     StatusOr<gcs::ObjectAccessControl> acl =
         client.GetDefaultObjectAcl(bucket_name, entity);
 
-    if (!acl) {
-      throw std::runtime_error(acl.status().message());
-    }
-
+    if (!acl) throw std::runtime_error(acl.status().message());
     std::cout << "Default Object ACL entry for " << acl->entity()
               << " in bucket " << acl->bucket() << " is " << *acl << "\n";
   }
@@ -213,10 +204,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
         client.PatchDefaultObjectAcl(bucket_name, entity, *original_acl,
                                      new_acl);
 
-    if (!patched_acl) {
-      throw std::runtime_error(patched_acl.status().message());
-    }
-
+    if (!patched_acl) throw std::runtime_error(patched_acl.status().message());
     std::cout << "Default Object ACL entry for " << patched_acl->entity()
               << " in bucket " << patched_acl->bucket() << " is now "
               << *patched_acl << "\n";
@@ -244,10 +232,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
             bucket_name, entity,
             gcs::ObjectAccessControlPatchBuilder().set_role(role));
 
-    if (!patched_acl) {
-      throw std::runtime_error(patched_acl.status().message());
-    }
-
+    if (!patched_acl) throw std::runtime_error(patched_acl.status().message());
     std::cout << "Default Object ACL entry for " << patched_acl->entity()
               << " in bucket " << patched_acl->bucket() << " is now "
               << *patched_acl << "\n";
@@ -271,13 +256,13 @@ int main(int argc, char* argv[]) try {
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"list-default-object-acl", &ListDefaultObjectAcl},
-      {"create-default-object-acl", &CreateDefaultObjectAcl},
-      {"delete-default-object-acl", &DeleteDefaultObjectAcl},
-      {"get-default-object-acl", &GetDefaultObjectAcl},
-      {"update-default-object-acl", &UpdateDefaultObjectAcl},
-      {"patch-default-object-acl", &PatchDefaultObjectAcl},
-      {"patch-default-object-acl-no-read", &PatchDefaultObjectAclNoRead},
+      {"list-default-object-acl", ListDefaultObjectAcl},
+      {"create-default-object-acl", CreateDefaultObjectAcl},
+      {"delete-default-object-acl", DeleteDefaultObjectAcl},
+      {"get-default-object-acl", GetDefaultObjectAcl},
+      {"update-default-object-acl", UpdateDefaultObjectAcl},
+      {"patch-default-object-acl", PatchDefaultObjectAcl},
+      {"patch-default-object-acl-no-read", PatchDefaultObjectAclNoRead},
   };
   for (auto&& kv : commands) {
     try {
