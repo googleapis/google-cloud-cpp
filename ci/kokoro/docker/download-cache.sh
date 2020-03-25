@@ -45,6 +45,6 @@ gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
-tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" 2>&1 | egrep -v 'tar:.*in the future'
+tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" 2>&1 | grep -E -v 'tar:.*in the future'
 
 exit 0
