@@ -1100,6 +1100,8 @@ run_all_bucket_iam_examples() {
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
+  run_example ./storage_bucket_samples enable-uniform-bucket-level-access \
+      "${bucket_name}"
   run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
       "${bucket_name}"
   run_example ./storage_bucket_iam_samples add-bucket-iam-member \
