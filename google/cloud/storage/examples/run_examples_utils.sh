@@ -1285,8 +1285,5 @@ run_all_storage_examples() {
   run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
-  if [ "${EXIT_STATUS}" = "0" ]; then
-    TESTBENCH_DUMP_LOG=no
-  fi
   exit "${EXIT_STATUS}"
 }

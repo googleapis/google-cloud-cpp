@@ -57,10 +57,7 @@ void GetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
 
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
-
+    if (!policy) throw std::runtime_error(policy.status().message());
     std::cout << "The IAM policy for bucket " << bucket_name << " is "
               << *policy << "\n";
   }
@@ -81,10 +78,7 @@ void NativeGetBucketIamPolicy(google::cloud::storage::Client client, int& argc,
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
 
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
-
+    if (!policy) throw std::runtime_error(policy.status().message());
     std::cout << "The IAM policy for bucket " << bucket_name << " is "
               << *policy << "\n";
   }
@@ -108,10 +102,7 @@ void AddBucketIamMember(google::cloud::storage::Client client, int& argc,
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
 
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
-
+    if (!policy) throw std::runtime_error(policy.status().message());
     policy->bindings.AddMember(role, member);
 
     StatusOr<google::cloud::IamPolicy> updated_policy =
@@ -144,9 +135,7 @@ void NativeAddBucketIamMember(google::cloud::storage::Client client, int& argc,
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
 
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
+    if (!policy) throw std::runtime_error(policy.status().message());
 
     policy->set_version(3);
     for (auto& binding : policy->bindings()) {
@@ -242,10 +231,7 @@ void RemoveBucketIamMember(google::cloud::storage::Client client, int& argc,
      std::string member) {
     StatusOr<google::cloud::IamPolicy> policy =
         client.GetBucketIamPolicy(bucket_name);
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
-
+    if (!policy) throw std::runtime_error(policy.status().message());
     policy->bindings.RemoveMember(role, member);
 
     StatusOr<google::cloud::IamPolicy> updated_policy =
@@ -278,9 +264,7 @@ void NativeRemoveBucketIamMember(google::cloud::storage::Client client,
      std::string member) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
+    if (!policy) throw std::runtime_error(policy.status().message());
 
     policy->set_version(3);
     std::vector<google::cloud::storage::NativeIamBinding> updated_bindings;
@@ -301,7 +285,6 @@ void NativeRemoveBucketIamMember(google::cloud::storage::Client client,
     if (!updated_policy) {
       throw std::runtime_error(updated_policy.status().message());
     }
-
     std::cout << "Updated IAM policy bucket " << bucket_name
               << ". The new policy is " << *updated_policy << "\n";
   }
@@ -387,7 +370,6 @@ void TestBucketIamPermissions(google::cloud::storage::Client client, int& argc,
     if (!actual_permissions) {
       throw std::runtime_error(actual_permissions.status().message());
     }
-
     if (actual_permissions->empty()) {
       std::cout << "The caller does not hold any of the tested permissions the"
                 << " bucket " << bucket_name << "\n";
@@ -508,19 +490,19 @@ int main(int argc, char* argv[]) try {
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"get-bucket-iam-policy", &GetBucketIamPolicy},
-      {"native-get-bucket-iam-policy", &NativeGetBucketIamPolicy},
-      {"add-bucket-iam-member", &AddBucketIamMember},
-      {"native-add-bucket-iam-member", &NativeAddBucketIamMember},
+      {"get-bucket-iam-policy", GetBucketIamPolicy},
+      {"native-get-bucket-iam-policy", NativeGetBucketIamPolicy},
+      {"add-bucket-iam-member", AddBucketIamMember},
+      {"native-add-bucket-iam-member", NativeAddBucketIamMember},
       {"native-add-bucket-conditional-iam-binding",
        NativeAddBucketConditionalIamBinding},
-      {"remove-bucket-iam-member", &RemoveBucketIamMember},
-      {"native-remove-bucket-iam-member", &NativeRemoveBucketIamMember},
+      {"remove-bucket-iam-member", RemoveBucketIamMember},
       {"native-remove-bucket-conditional-iam-binding",
        NativeRemoveBucketConditionalIamBinding},
-      {"test-bucket-iam-permissions", &TestBucketIamPermissions},
-      {"set-bucket-public-iam", &SetBucketPublicIam},
-      {"native-set-bucket-public-iam", &NativeSetBucketPublicIam},
+      {"native-remove-bucket-iam-member", NativeRemoveBucketIamMember},
+      {"test-bucket-iam-permissions", TestBucketIamPermissions},
+      {"set-bucket-public-iam", SetBucketPublicIam},
+      {"native-set-bucket-public-iam", NativeSetBucketPublicIam},
   };
   for (auto&& kv : commands) {
     try {

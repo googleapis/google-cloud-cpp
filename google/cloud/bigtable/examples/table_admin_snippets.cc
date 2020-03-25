@@ -65,9 +65,7 @@ void CreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
         cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)},
                           {"foo", cbt::GcRule::MaxAge(std::chrono::hours(72))}},
                          {}));
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Table successfully created: " << schema->DebugString()
               << "\n";
   }
@@ -87,9 +85,7 @@ void ListTables(google::cloud::bigtable::TableAdmin admin, int argc, char*[]) {
     StatusOr<std::vector<google::bigtable::admin::v2::Table>> tables =
         admin.ListTables(cbt::TableAdmin::NAME_ONLY);
 
-    if (!tables) {
-      throw std::runtime_error(tables.status().message());
-    }
+    if (!tables) throw std::runtime_error(tables.status().message());
     for (auto const& table : *tables) {
       std::cout << table.name() << "\n";
     }
@@ -111,9 +107,7 @@ void GetTable(google::cloud::bigtable::TableAdmin admin, int argc,
   [](cbt::TableAdmin admin, std::string table_id) {
     StatusOr<google::bigtable::admin::v2::Table> table =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
-    if (!table) {
-      throw std::runtime_error(table.status().message());
-    }
+    if (!table) throw std::runtime_error(table.status().message());
     std::cout << table->name() << " details=\n" << table->DebugString() << "\n";
   }
   //! [get table] [END bigtable_get_table_metadata]
@@ -165,16 +159,12 @@ void GetOrCreateTable(google::cloud::bigtable::TableAdmin admin, int argc,
       table = admin.CreateTable(
           table_id,
           cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
-      if (!table) {
-        throw std::runtime_error(table.status().message());
-      }
+      if (!table) throw std::runtime_error(table.status().message());
       // The schema returned by a `CreateTable()` request does not include all
       // the metadata for a table, we need to explicitly request the rest:
       table = admin.GetTable(table_id, cbt::TableAdmin::FULL);
     }
-    if (!table) {
-      throw std::runtime_error(table.status().message());
-    }
+    if (!table) throw std::runtime_error(table.status().message());
     std::cout << "Table metadata: " << table->DebugString() << "\n";
   }
   // [END bigtable_get_or_create_table]
@@ -192,9 +182,7 @@ void DeleteTable(google::cloud::bigtable::TableAdmin admin, int argc,
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DeleteTable(table_id);
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Table successfully deleted\n";
   }
   //! [delete table] [END bigtable_delete_table]
@@ -225,9 +213,7 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin, int argc,
                             cbt::GcRule::MaxNumVersions(3),
                             cbt::GcRule::MaxAge(std::chrono::hours(72))))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   //! [modify table]
@@ -254,9 +240,7 @@ void CreateMaxAgeFamily(google::cloud::bigtable::TableAdmin admin, int argc,
             {cbt::ColumnFamilyModification::Create(
                 family_name, cbt::GcRule::MaxAge(std::chrono::hours(5 * 24)))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_max_age]
@@ -282,9 +266,7 @@ void CreateMaxVersionsFamily(google::cloud::bigtable::TableAdmin admin,
             table_id, {cbt::ColumnFamilyModification::Create(
                           family_name, cbt::GcRule::MaxNumVersions(2))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_max_versions]
@@ -314,9 +296,7 @@ void CreateUnionFamily(google::cloud::bigtable::TableAdmin admin, int argc,
                     cbt::GcRule::MaxNumVersions(1),
                     cbt::GcRule::MaxAge(5 * std::chrono::hours(24))))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_union]
@@ -346,9 +326,7 @@ void CreateIntersectionFamily(google::cloud::bigtable::TableAdmin admin,
                     cbt::GcRule::MaxNumVersions(1),
                     cbt::GcRule::MaxAge(5 * std::chrono::hours(24))))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_intersection]
@@ -380,9 +358,7 @@ void CreateNestedFamily(google::cloud::bigtable::TableAdmin admin, int argc,
                         cbt::GcRule::MaxNumVersions(1),
                         cbt::GcRule::MaxAge(5 * std::chrono::hours(24)))))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_nested]
@@ -406,9 +382,7 @@ void GetFamilyMetadata(google::cloud::bigtable::TableAdmin admin, int argc,
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       std::cout << "Cannot find family <" << family_name << "> in table\n";
@@ -438,9 +412,7 @@ void GetOrCreateFamily(google::cloud::bigtable::TableAdmin admin, int argc,
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       // Try to create the column family instead:
@@ -449,9 +421,7 @@ void GetOrCreateFamily(google::cloud::bigtable::TableAdmin admin, int argc,
           {cbt::ColumnFamilyModification::Create(
               family_name, cbt::GcRule::MaxAge(std::chrono::hours(5 * 24)))});
 
-      if (!modified) {
-        throw std::runtime_error(schema.status().message());
-      }
+      if (!modified) throw std::runtime_error(schema.status().message());
       schema = *std::move(modified);
       pos = schema->column_families().find(family_name);
     }
@@ -486,9 +456,7 @@ void DeleteColumnFamily(google::cloud::bigtable::TableAdmin admin, int argc,
         admin.ModifyColumnFamilies(
             table_id, {cbt::ColumnFamilyModification::Drop(family_name)});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_delete_family]
@@ -512,9 +480,7 @@ void CheckFamilyExists(google::cloud::bigtable::TableAdmin admin, int argc,
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       std::string msg =
@@ -541,9 +507,7 @@ void ListColumnFamilies(google::cloud::bigtable::TableAdmin admin, int argc,
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(table_id, cbt::TableAdmin::FULL);
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     for (auto const& kv : schema->column_families()) {
       std::string const& column_family_name = kv.first;
       google::bigtable::admin::v2::ColumnFamily const& family = kv.second;
@@ -574,9 +538,7 @@ void UpdateGcRule(google::cloud::bigtable::TableAdmin admin, int argc,
             table_id, {cbt::ColumnFamilyModification::Update(
                           family_name, cbt::GcRule::MaxNumVersions(1))});
 
-    if (!schema) {
-      throw std::runtime_error(schema.status().message());
-    }
+    if (!schema) throw std::runtime_error(schema.status().message());
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_update_gc_rule]
@@ -595,9 +557,7 @@ void DropAllRows(google::cloud::bigtable::TableAdmin admin, int argc,
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id) {
     google::cloud::Status status = admin.DropAllRows(table_id);
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows successfully deleted\n";
   }
   // [END bigtable_truncate_table] [END bigtable_delete_rows]
@@ -619,9 +579,7 @@ void DropRowsByPrefix(google::cloud::bigtable::TableAdmin admin, int argc,
   namespace cbt = google::cloud::bigtable;
   [](cbt::TableAdmin admin, std::string table_id, std::string prefix) {
     google::cloud::Status status = admin.DropRowsByPrefix(table_id, prefix);
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "All rows starting with " << prefix
               << " successfully deleted\n";
   }
@@ -687,9 +645,7 @@ void CheckConsistency(google::cloud::bigtable::TableAdmin admin, int argc,
      std::string consistency_token) {
     StatusOr<cbt::Consistency> result =
         admin.CheckConsistency(table_id, consistency_token);
-    if (!result) {
-      throw std::runtime_error(result.status().message());
-    }
+    if (!result) throw std::runtime_error(result.status().message());
     if (*result == cbt::Consistency::kConsistent) {
       std::cout << "Table is consistent with token " << consistency_token
                 << "\n";
@@ -716,9 +672,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id) {
     StatusOr<std::string> token = admin.GenerateConsistencyToken(table_id);
-    if (!token) {
-      throw std::runtime_error(token.status().message());
-    }
+    if (!token) throw std::runtime_error(token.status().message());
     std::cout << "generated token is : " << *token << "\n";
   }
   //! [generate consistency token]
@@ -732,29 +686,29 @@ int main(int argc, char* argv[]) try {
       std::function<void(google::cloud::bigtable::TableAdmin, int, char*[])>;
 
   std::map<std::string, CommandType> commands = {
-      {"create-table", &CreateTable},
-      {"list-tables", &ListTables},
-      {"get-table", &GetTable},
-      {"check-table-exists", &CheckTableExists},
-      {"get-or-create-table", &GetOrCreateTable},
-      {"delete-table", &DeleteTable},
-      {"modify-table", &ModifyTable},
-      {"create-max-age-family", &CreateMaxAgeFamily},
-      {"create-max-versions-family", &CreateMaxVersionsFamily},
-      {"create-union-family", &CreateUnionFamily},
-      {"create-intersection-family", &CreateIntersectionFamily},
-      {"create-nested-family", &CreateNestedFamily},
-      {"get-family-metadata", &GetFamilyMetadata},
-      {"get-or-create-family", &GetOrCreateFamily},
-      {"delete-column-family", &DeleteColumnFamily},
-      {"check-family-exists", &CheckFamilyExists},
-      {"list-column-families", &ListColumnFamilies},
-      {"update-gc-rule", &UpdateGcRule},
-      {"drop-all-rows", &DropAllRows},
-      {"drop-rows-by-prefix", &DropRowsByPrefix},
-      {"wait-for-consistency-check", &WaitForConsistencyCheck},
-      {"check-consistency", &CheckConsistency},
-      {"generate-consistency-token", &GenerateConsistencyToken},
+      {"create-table", CreateTable},
+      {"list-tables", ListTables},
+      {"get-table", GetTable},
+      {"check-table-exists", CheckTableExists},
+      {"get-or-create-table", GetOrCreateTable},
+      {"delete-table", DeleteTable},
+      {"modify-table", ModifyTable},
+      {"create-max-age-family", CreateMaxAgeFamily},
+      {"create-max-versions-family", CreateMaxVersionsFamily},
+      {"create-union-family", CreateUnionFamily},
+      {"create-intersection-family", CreateIntersectionFamily},
+      {"create-nested-family", CreateNestedFamily},
+      {"get-family-metadata", GetFamilyMetadata},
+      {"get-or-create-family", GetOrCreateFamily},
+      {"delete-column-family", DeleteColumnFamily},
+      {"check-family-exists", CheckFamilyExists},
+      {"list-column-families", ListColumnFamilies},
+      {"update-gc-rule", UpdateGcRule},
+      {"drop-all-rows", DropAllRows},
+      {"drop-rows-by-prefix", DropRowsByPrefix},
+      {"wait-for-consistency-check", WaitForConsistencyCheck},
+      {"check-consistency", CheckConsistency},
+      {"generate-consistency-token", GenerateConsistencyToken},
   };
 
   {

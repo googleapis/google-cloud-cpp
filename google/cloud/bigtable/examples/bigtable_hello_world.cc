@@ -84,9 +84,7 @@ int main(int argc, char* argv[]) try {
     google::cloud::Status status = table.Apply(cbt::SingleRowMutation(
         std::move(row_key), cbt::SetCell("family", "c0", greeting)));
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     ++i;
   }
   //! [write rows] [END bigtable_hw_write_rows]
@@ -98,9 +96,7 @@ int main(int argc, char* argv[]) try {
   // Read a single row.
   //! [read row] [START bigtable_hw_get_with_filter]
   StatusOr<std::pair<bool, cbt::Row>> result = table.ReadRow("key-0", filter);
-  if (!result) {
-    throw std::runtime_error(result.status().message());
-  }
+  if (!result) throw std::runtime_error(result.status().message());
   if (!result->first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << "\n";
@@ -116,9 +112,7 @@ int main(int argc, char* argv[]) try {
   //! [scan all] [START bigtable_hw_scan_with_filter]
   for (StatusOr<cbt::Row> const& row : table.ReadRows(
            cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
-    if (!row) {
-      throw std::runtime_error(row.status().message());
-    }
+    if (!row) throw std::runtime_error(row.status().message());
     std::cout << row->row_key() << ":\n";
     for (cbt::Cell const& cell : row->cells()) {
       std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
@@ -131,9 +125,7 @@ int main(int argc, char* argv[]) try {
   // Delete the table
   //! [delete table] [START bigtable_hw_delete_table]
   google::cloud::Status status = table_admin.DeleteTable(table_id);
-  if (!status.ok()) {
-    throw std::runtime_error(status.message());
-  }
+  if (!status.ok()) throw std::runtime_error(status.message());
   //! [delete table] [END bigtable_hw_delete_table]
 
   return 0;

@@ -208,9 +208,7 @@ void DeleteHmacKey(google::cloud::storage::Client client, int& argc,
   [](gcs::Client client, std::string access_id) {
     google::cloud::Status status = client.DeleteHmacKey(access_id);
 
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "The key is deleted, though it may still appear"
               << " in ListHmacKeys() results.\n";
   }
@@ -335,17 +333,17 @@ int main(int argc, char* argv[]) try {
   using CommandType =
       std::function<void(google::cloud::storage::Client, int&, char*[])>;
   std::map<std::string, CommandType> commands = {
-      {"get-service-account", &GetServiceAccount},
-      {"get-service-account-for-project", &GetServiceAccountForProject},
-      {"list-hmac-keys", &ListHmacKeys},
-      {"list-hmac-keys-with-service-account", &ListHmacKeysWithServiceAccount},
-      {"create-hmac-key-for-project", &CreateHmacKeyForProject},
-      {"create-hmac-key", &CreateHmacKey},
-      {"delete-hmac-key", &DeleteHmacKey},
-      {"get-hmac-key", &GetHmacKey},
-      {"update-hmac-key", &UpdateHmacKey},
-      {"activate-hmac-key", &ActivateHmacKey},
-      {"deactivate-hmac-key", &DeactivateHmacKey},
+      {"get-service-account", GetServiceAccount},
+      {"get-service-account-for-project", GetServiceAccountForProject},
+      {"list-hmac-keys", ListHmacKeys},
+      {"list-hmac-keys-with-service-account", ListHmacKeysWithServiceAccount},
+      {"create-hmac-key-for-project", CreateHmacKeyForProject},
+      {"create-hmac-key", CreateHmacKey},
+      {"delete-hmac-key", DeleteHmacKey},
+      {"get-hmac-key", GetHmacKey},
+      {"update-hmac-key", UpdateHmacKey},
+      {"activate-hmac-key", ActivateHmacKey},
+      {"deactivate-hmac-key", DeactivateHmacKey},
   };
   for (auto&& kv : commands) {
     try {

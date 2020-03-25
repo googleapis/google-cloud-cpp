@@ -63,9 +63,7 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     instance_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     auto instance = instance_future.get();
-    if (!instance) {
-      throw std::runtime_error(instance.status().message());
-    }
+    if (!instance) throw std::runtime_error(instance.status().message());
     std::cout << "DONE, details=" << instance->name() << "\n";
   }
   //! [async create instance]
@@ -96,9 +94,7 @@ void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     cluster_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     auto cluster = cluster_future.get();
-    if (!cluster) {
-      throw std::runtime_error(cluster.status().message());
-    }
+    if (!cluster) throw std::runtime_error(cluster.status().message());
     std::cout << "DONE, details=" << cluster->DebugString() << "\n";
   }
   //! [async create cluster]
@@ -131,9 +127,7 @@ void AsyncCreateAppProfile(
     profile_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     auto app_profile = profile_future.get();
-    if (!app_profile) {
-      throw std::runtime_error(app_profile.status().message());
-    }
+    if (!app_profile) throw std::runtime_error(app_profile.status().message());
     std::cout << "DONE, details=" << app_profile->DebugString() << "\n";
   }
   //! [async create app profile]
@@ -159,9 +153,7 @@ void AsyncGetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     future<google::cloud::Status> final = instance_future.then(
         [](future<StatusOr<google::bigtable::admin::v2::Instance>> f) {
           auto instance = f.get();
-          if (!instance) {
-            throw std::runtime_error(instance.status().message());
-          }
+          if (!instance) throw std::runtime_error(instance.status().message());
           std::cout << "GetInstance details : " << instance->DebugString()
                     << "\n";
           return google::cloud::Status();
@@ -235,9 +227,7 @@ void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
             google::cloud::StatusOr<google::bigtable::admin::v2::Cluster>>
                f) {
           StatusOr<google::bigtable::admin::v2::Cluster> cluster = f.get();
-          if (!cluster) {
-            throw std::runtime_error(cluster.status().message());
-          }
+          if (!cluster) throw std::runtime_error(cluster.status().message());
           std::string cluster_detail;
           google::protobuf::TextFormat::PrintToString(*cluster,
                                                       &cluster_detail);
@@ -371,18 +361,16 @@ void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
     future<void> final =
         clusters_future.then([](future<StatusOr<cbt::ClusterList>> f) {
-          auto cluster_list = f.get();
-          if (!cluster_list) {
-            throw std::runtime_error(cluster_list.status().message());
-          }
+          auto clusters = f.get();
+          if (!clusters) throw std::runtime_error(clusters.status().message());
           std::cout << "Cluster Name List\n";
-          for (const auto& cluster : cluster_list->clusters) {
+          for (const auto& cluster : clusters->clusters) {
             std::cout << cluster.name() << "\n";
           }
-          if (!cluster_list->failed_locations.empty()) {
+          if (!clusters->failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
-            for (const auto& failed_location : cluster_list->failed_locations) {
+            for (const auto& failed_location : clusters->failed_locations) {
               std::cout << failed_location << "\n";
             }
             std::cout << "This is typically a transient condition, try again "
@@ -413,18 +401,16 @@ void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 
     future<void> final =
         clusters_future.then([](future<StatusOr<cbt::ClusterList>> f) {
-          auto cluster_list = f.get();
-          if (!cluster_list) {
-            throw std::runtime_error(cluster_list.status().message());
-          }
+          auto clusters = f.get();
+          if (!clusters) throw std::runtime_error(clusters.status().message());
           std::cout << "Cluster Name List\n";
-          for (const auto& cluster : cluster_list->clusters) {
+          for (const auto& cluster : clusters->clusters) {
             std::cout << cluster.name() << "\n";
           }
-          if (!cluster_list->failed_locations.empty()) {
+          if (!clusters->failed_locations.empty()) {
             std::cout << "The Cloud Bigtable service reports that it could not "
                          "retrieve data for the following zones:\n";
-            for (const auto& failed_location : cluster_list->failed_locations) {
+            for (const auto& failed_location : clusters->failed_locations) {
               std::cout << failed_location << "\n";
             }
             std::cout << "This is typically a transient condition, try again "
@@ -595,9 +581,7 @@ void AsyncUpdateAppProfile(
     profile_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     auto app_profile = profile_future.get();
-    if (!app_profile) {
-      throw std::runtime_error(app_profile.status().message());
-    }
+    if (!app_profile) throw std::runtime_error(app_profile.status().message());
     std::cout << "DONE, details=" << app_profile->DebugString() << "\n";
   }
   //! [async update app profile]
@@ -620,9 +604,7 @@ void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
         instance_admin.AsyncDeleteInstance(instance_id, cq);
 
     google::cloud::Status status = status_future.get();
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Instance " << instance_id << " successfully deleted\n";
   }
   //! [async-delete-instance] [END bigtable_async_delete_instance]
@@ -646,9 +628,7 @@ void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
         instance_admin.AsyncDeleteCluster(cq, instance_id, cluster_id);
 
     google::cloud::Status status = status_future.get();
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Cluster " << cluster_id << " successfully deleted\n";
   }
   //! [async delete cluster]
@@ -675,9 +655,7 @@ void AsyncDeleteAppProfile(
                                              /*ignore_warnings=*/true);
 
     google::cloud::Status status = status_future.get();
-    if (!status.ok()) {
-      throw std::runtime_error(status.message());
-    }
+    if (!status.ok()) throw std::runtime_error(status.message());
     std::cout << "Profile " << app_profile_id << " successfully deleted\n";
   }
   //! [async delete app profile]
@@ -722,9 +700,7 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     updated_future.wait_for(std::chrono::seconds(2));
     auto result = updated_future.get();
     std::cout << '.' << std::flush;
-    if (!result) {
-      throw std::runtime_error(result.status().message());
-    }
+    if (!result) throw std::runtime_error(result.status().message());
     std::cout << "DONE, the IAM Policy for " << instance_id << " is\n"
               << *result << "\n";
   }
@@ -784,9 +760,7 @@ void AsyncSetNativeIamPolicy(
     updated_future.wait_for(std::chrono::seconds(2));
     auto result = updated_future.get();
     std::cout << '.' << std::flush;
-    if (!result) {
-      throw std::runtime_error(result.status().message());
-    }
+    if (!result) throw std::runtime_error(result.status().message());
     using cbt::operator<<;
     std::cout << "DONE, the IAM Policy for " << instance_id << " is\n"
               << *result << "\n";
@@ -819,9 +793,7 @@ void AsyncTestIamPermissions(
     permissions_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     auto result = permissions_future.get();
-    if (!result) {
-      throw std::runtime_error(result.status().message());
-    }
+    if (!result) throw std::runtime_error(result.status().message());
     std::cout << "DONE, the current user has the following permissions [";
     char const* sep = "";
     for (auto const& p : *result) {
@@ -843,27 +815,27 @@ int main(int argc, char* argv[]) try {
       google::cloud::bigtable::CompletionQueue, std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
-      {"async-create-instance", &AsyncCreateInstance},
-      {"async-create-cluster", &AsyncCreateCluster},
-      {"async-create-app-profile", &AsyncCreateAppProfile},
-      {"async-get-instance", &AsyncGetInstance},
-      {"async-get-cluster", &AsyncGetCluster},
-      {"async-get-app-profile", &AsyncGetAppProfile},
-      {"async-get-iam-policy", &AsyncGetIamPolicy},
-      {"async-get-native-iam-policy", &AsyncGetNativeIamPolicy},
-      {"async-list-instances", &AsyncListInstances},
-      {"async-list-clusters", &AsyncListClusters},
-      {"async-list-all-clusters", &AsyncListAllClusters},
-      {"async-list-app-profiles", &AsyncListAppProfiles},
-      {"async-update-instance", &AsyncUpdateInstance},
-      {"async-update-cluster", &AsyncUpdateCluster},
-      {"async-update-app-profile", &AsyncUpdateAppProfile},
-      {"async-delete-instance", &AsyncDeleteInstance},
-      {"async-delete-cluster", &AsyncDeleteCluster},
-      {"async-delete-app-profile", &AsyncDeleteAppProfile},
-      {"async-set-iam-policy", &AsyncSetIamPolicy},
-      {"async-set-native-iam-policy", &AsyncSetNativeIamPolicy},
-      {"async-test-iam-permissions", &AsyncTestIamPermissions}};
+      {"async-create-instance", AsyncCreateInstance},
+      {"async-create-cluster", AsyncCreateCluster},
+      {"async-create-app-profile", AsyncCreateAppProfile},
+      {"async-get-instance", AsyncGetInstance},
+      {"async-get-cluster", AsyncGetCluster},
+      {"async-get-app-profile", AsyncGetAppProfile},
+      {"async-get-iam-policy", AsyncGetIamPolicy},
+      {"async-get-native-iam-policy", AsyncGetNativeIamPolicy},
+      {"async-list-instances", AsyncListInstances},
+      {"async-list-clusters", AsyncListClusters},
+      {"async-list-all-clusters", AsyncListAllClusters},
+      {"async-list-app-profiles", AsyncListAppProfiles},
+      {"async-update-instance", AsyncUpdateInstance},
+      {"async-update-cluster", AsyncUpdateCluster},
+      {"async-update-app-profile", AsyncUpdateAppProfile},
+      {"async-delete-instance", AsyncDeleteInstance},
+      {"async-delete-cluster", AsyncDeleteCluster},
+      {"async-delete-app-profile", AsyncDeleteAppProfile},
+      {"async-set-iam-policy", AsyncSetIamPolicy},
+      {"async-set-native-iam-policy", AsyncSetNativeIamPolicy},
+      {"async-test-iam-permissions", AsyncTestIamPermissions}};
 
   google::cloud::bigtable::CompletionQueue cq;
 

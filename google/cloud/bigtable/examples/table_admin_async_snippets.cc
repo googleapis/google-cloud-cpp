@@ -55,9 +55,7 @@ void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
     auto final = table_future.then(
         [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
           auto table = f.get();
-          if (!table) {
-            throw std::runtime_error(table.status().message());
-          }
+          if (!table) throw std::runtime_error(table.status().message());
           std::cout << "Table created as " << table->name() << "\n";
           return google::cloud::Status();
         });
@@ -86,9 +84,7 @@ void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
         [](future<StatusOr<std::vector<google::bigtable::admin::v2::Table>>>
                f) {
           auto tables = f.get();
-          if (!tables) {
-            throw std::runtime_error(tables.status().message());
-          }
+          if (!tables) throw std::runtime_error(tables.status().message());
           for (auto const& table : *tables) {
             std::cout << table.name() << "\n";
           }
@@ -119,9 +115,7 @@ void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
     auto final = table_future.then(
         [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
           auto table = f.get();
-          if (!table) {
-            throw std::runtime_error(table.status().message());
-          }
+          if (!table) throw std::runtime_error(table.status().message());
           std::cout << table->name() << "\n";
           for (auto const& family : table->column_families()) {
             std::string const& family_name = family.first;
@@ -156,9 +150,7 @@ void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
     auto final =
         status_future.then([table_id](future<google::cloud::Status> f) {
           auto status = f.get();
-          if (!status.ok()) {
-            throw std::runtime_error(status.message());
-          }
+          if (!status.ok()) throw std::runtime_error(status.message());
           std::cout << "Successfully deleted table: " << table_id << "\n";
         });
 
@@ -196,9 +188,7 @@ void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
     auto final = table_future.then(
         [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
           auto table = f.get();
-          if (!table) {
-            throw std::runtime_error(table.status().message());
-          }
+          if (!table) throw std::runtime_error(table.status().message());
           std::cout << table->name() << ":\n";
           std::cout << table->DebugString() << "\n";
         });
@@ -228,9 +218,7 @@ void AsyncDropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
         admin.AsyncDropRowsByPrefix(cq, table_id, row_key);
     auto final = status_future.then([row_key](future<google::cloud::Status> f) {
       auto status = f.get();
-      if (!status.ok()) {
-        throw std::runtime_error(status.message());
-      }
+      if (!status.ok()) throw std::runtime_error(status.message());
       std::cout << "Successfully dropped rows with prefix " << row_key << "\n";
     });
 
@@ -257,9 +245,7 @@ void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
     auto final =
         status_future.then([table_id](future<google::cloud::Status> f) {
           auto status = f.get();
-          if (!status.ok()) {
-            throw std::runtime_error(status.message());
-          }
+          if (!status.ok()) throw std::runtime_error(status.message());
           std::cout << "Successfully dropped all rows for table_id " << table_id
                     << "\n";
         });
@@ -323,9 +309,7 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
         admin.AsyncGenerateConsistencyToken(cq, table_id);
     auto final = token_future.then([](future<StatusOr<std::string>> f) {
       auto token = f.get();
-      if (!token) {
-        throw std::runtime_error(token.status().message());
-      }
+      if (!token) throw std::runtime_error(token.status().message());
       std::cout << "generated token is : " << *token << "\n";
     });
     final.get();  // block to simplify example.
@@ -354,9 +338,7 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
 
     auto final = result.then([&](future<StatusOr<cbt::Consistency>> f) {
       auto consistent = f.get();
-      if (!consistent) {
-        throw std::runtime_error(consistent.status().message());
-      }
+      if (!consistent) throw std::runtime_error(consistent.status().message());
       if (*consistent == cbt::Consistency::kConsistent) {
         std::cout << "The table " << table_id << " is now consistent with"
                   << " the token " << consistency_token << "\n";
@@ -379,16 +361,16 @@ int main(int argc, char* argv[]) try {
       google::cloud::bigtable::CompletionQueue, std::vector<std::string>)>;
 
   std::map<std::string, CommandType> commands = {
-      {"async-create-table", &AsyncCreateTable},
-      {"async-list-tables", &AsyncListTables},
-      {"async-get-table", &AsyncGetTable},
-      {"async-delete-table", &AsyncDeleteTable},
-      {"async-modify-table", &AsyncModifyTable},
-      {"async-drop-rows-by-prefix", &AsyncDropRowsByPrefix},
-      {"async-drop-all-rows", &AsyncDropAllRows},
-      {"async-check-consistency", &AsyncCheckConsistency},
-      {"async-generate-consistency-token", &AsyncGenerateConsistencyToken},
-      {"async-wait-for-consistency", &AsyncWaitForConsistency},
+      {"async-create-table", AsyncCreateTable},
+      {"async-list-tables", AsyncListTables},
+      {"async-get-table", AsyncGetTable},
+      {"async-delete-table", AsyncDeleteTable},
+      {"async-modify-table", AsyncModifyTable},
+      {"async-drop-rows-by-prefix", AsyncDropRowsByPrefix},
+      {"async-drop-all-rows", AsyncDropAllRows},
+      {"async-check-consistency", AsyncCheckConsistency},
+      {"async-generate-consistency-token", AsyncGenerateConsistencyToken},
+      {"async-wait-for-consistency", AsyncWaitForConsistency},
   };
 
   google::cloud::bigtable::CompletionQueue cq;

@@ -899,11 +899,7 @@ run_all_grpc_credentials_examples() {
   local instance_id=$2
   shift 2
 
-  run_example ./bigtable_grpc_credentials test-access-token \
-      "${project_id}" "${instance_id}" "${ACCESS_TOKEN:-}"
-  run_example ./bigtable_grpc_credentials test-jwt-access-token \
-      "${project_id}" "${instance_id}" "${GOOGLE_APPLICATION_CREDENTIALS:-}"
-
+  run_example ./bigtable_grpc_credentials auto
   # Verify that calling without a command produces the right exit status and
   # some kind of Usage message.
   run_example_usage ./bigtable_grpc_credentials

@@ -130,7 +130,4 @@ run_example ./storage_parallel_uploads_benchmark \
       --thread-count=1 \
       --duration=1s
 
-if [[ "${EXIT_STATUS}" = "0" ]]; then
-  TESTBENCH_DUMP_LOG=no
-fi
 exit "${EXIT_STATUS}"
