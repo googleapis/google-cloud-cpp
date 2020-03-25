@@ -37,18 +37,16 @@ def validate_bucket_name(bucket_name):
     :rtype: bool
     """
     valid = True
-    if "." in bucket_name:
+    if '.' in bucket_name:
         valid &= len(bucket_name) <= 222
-        valid &= all([len(part) <= 63 for part in bucket_name.split(".")])
+        valid &= all([len(part) <= 63 for part in bucket_name.split('.')])
     else:
         valid &= len(bucket_name) <= 63
-    valid &= re.match("^[a-z0-9][a-z0-9._\\-]+[a-z0-9]$", bucket_name) is not None
-    valid &= not bucket_name.startswith("goog")
-    valid &= re.search("g[0o][0o]g[1l][e3]", bucket_name) is None
-    valid &= (
-        re.match("^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$", bucket_name)
-        is None
-    )
+    valid &= re.match('^[a-z0-9][a-z0-9._\\-]+[a-z0-9]$', bucket_name) is not None
+    valid &= not bucket_name.startswith('goog')
+    valid &= re.search('g[0o][0o]g[1l][e3]', bucket_name) is None
+    valid &= re.match('^[0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}[.][0-9]{1,3}$',
+                      bucket_name) is None
     return valid
 
 
@@ -62,14 +60,14 @@ def canonical_entity_name(entity):
     :return: the name in canonical form.
     :rtype:str
     """
-    if entity == "allUsers" or entity == "allAuthenticatedUsers":
+    if entity == 'allUsers' or entity == 'allAuthenticatedUsers':
         return entity
-    if entity.startswith("project-owners-"):
-        entity = "project-owners-123456789"
-    if entity.startswith("project-editors-"):
-        entity = "project-editors-123456789"
-    if entity.startswith("project-viewers-"):
-        entity = "project-viewers-123456789"
+    if entity.startswith('project-owners-'):
+        entity = 'project-owners-123456789'
+    if entity.startswith('project-editors-'):
+        entity = 'project-editors-123456789'
+    if entity.startswith('project-viewers-'):
+        entity = 'project-viewers-123456789'
     return entity.lower()
 
 
@@ -90,7 +88,7 @@ def index_acl(acl):
     # readable in that form.
     indexed = dict()
     for e in acl:
-        indexed[e["entity"]] = e
+        indexed[e['entity']] = e
     return indexed
 
 
@@ -108,7 +106,7 @@ def filter_fields_from_response(fields, response):
         return json.dumps(response)
     tmp = {}
     # TODO(#1037) - support full filter expressions
-    for key in fields.split(","):
+    for key in fields.split(','):
         if key in response:
             tmp[key] = response[key]
     return json.dumps(tmp)
@@ -123,34 +121,33 @@ def filtered_response(request, response):
     :return: the response formatted as a string.
     :rtype:str
     """
-    fields = request.args.get("fields")
+    fields = request.args.get('fields')
     return filter_fields_from_response(fields, response)
 
 
 def raise_csek_error(code=400):
-    msg = "Missing a SHA256 hash of the encryption key, or it is not"
-    msg += " base64 encoded, or it does not match the encryption key."
-    link = "https://cloud.google.com/storage/docs/encryption#customer-supplied_encryption_keys"
+    msg = 'Missing a SHA256 hash of the encryption key, or it is not'
+    msg += ' base64 encoded, or it does not match the encryption key.'
+    link = 'https://cloud.google.com/storage/docs/encryption#customer-supplied_encryption_keys'
     error = {
         "error": {
-            "errors": [
-                {
-                    "domain": "global",
-                    "reason": "customerEncryptionKeySha256IsInvalid",
-                    "message": msg,
-                    "extendedHelp": link,
-                }
-            ],
-            "code": code,
-            "message": msg,
+            "errors": [{
+                "domain": "global",
+                "reason": "customerEncryptionKeySha256IsInvalid",
+                "message": msg,
+                "extendedHelp": link,
+            }],
+            "code":
+                code,
+            "message":
+                msg,
         }
     }
     raise error_response.ErrorResponse(json.dumps(error), status_code=code)
 
 
-def validate_customer_encryption_headers(
-    key_header_value, hash_header_value, algo_header_value
-):
+def validate_customer_encryption_headers(key_header_value, hash_header_value,
+                                         algo_header_value):
     """Verify that the encryption headers are internally consistent.
 
     :param key_header_value: str the value of the x-goog-*-key header
@@ -159,11 +156,10 @@ def validate_customer_encryption_headers(
     :rtype: NoneType
     """
     try:
-        if algo_header_value is None or algo_header_value != "AES256":
+        if algo_header_value is None or algo_header_value != 'AES256':
             raise error_response.ErrorResponse(
-                "Invalid or missing algorithm %s for CSEK" % algo_header_value,
-                status_code=400,
-            )
+                'Invalid or missing algorithm %s for CSEK' % algo_header_value,
+                status_code=400)
 
         key = base64.standard_b64decode(key_header_value)
         if key is None or len(key) != 256 / 8:
@@ -171,7 +167,7 @@ def validate_customer_encryption_headers(
 
         h = hashlib.sha256()
         h.update(key)
-        expected = base64.standard_b64encode(h.digest()).decode("utf-8")
+        expected = base64.standard_b64encode(h.digest()).decode('utf-8')
         if hash_header_value is None or expected != hash_header_value:
             raise_csek_error()
     except error_response.ErrorResponse:
@@ -234,8 +230,8 @@ def extract_media(request):
     :return: the full media of the request.
     :rtype: str
     """
-    if request.environ.get("HTTP_TRANSFER_ENCODING", "") == "chunked":
-        return request.environ.get("wsgi.input").read()
+    if request.environ.get('HTTP_TRANSFER_ENCODING', '') == 'chunked':
+        return request.environ.get('wsgi.input').read()
     return request.data
 
 
@@ -248,8 +244,8 @@ def corrupt_media(media):
     """
     # Deal with the boundary condition.
     if not media:
-        return bytearray(random.sample("abcdefghijklmnopqrstuvwxyz", 1), "utf-8")
-    return b"B" + media[1:] if media[0:1] == b"A" else b"A" + media[1:]
+        return bytearray(random.sample("abcdefghijklmnopqrstuvwxyz", 1), 'utf-8')
+    return b'B' + media[1:] if media[0:1] == b'A' else b'A' + media[1:]
 
 
 # Define the collection of Buckets indexed by <bucket_name>
@@ -267,8 +263,7 @@ def lookup_bucket(bucket_name):
     bucket = GCS_BUCKETS.get(bucket_name)
     if bucket is None:
         raise error_response.ErrorResponse(
-            "Bucket %s not found" % bucket_name, status_code=404
-        )
+            'Bucket %s not found' % bucket_name, status_code=404)
     return bucket
 
 
@@ -315,8 +310,8 @@ def lookup_object(bucket_name, object_name):
     object_path, gcs_object = get_object(bucket_name, object_name, None)
     if gcs_object is None:
         raise error_response.ErrorResponse(
-            "Object %s in %s not found" % (object_name, bucket_name), status_code=404
-        )
+            'Object %s in %s not found' % (object_name, bucket_name),
+            status_code=404)
     return object_path, gcs_object
 
 
@@ -331,7 +326,7 @@ def get_object(bucket_name, object_name, default_value):
     :return: tuple the object path and the object.
     :rtype: (str,GcsObject)
     """
-    object_path = bucket_name + "/o/" + object_name
+    object_path = bucket_name + '/o/' + object_name
     return object_path, GCS_OBJECTS.get(object_path, default_value)
 
 
@@ -362,16 +357,16 @@ def parse_part(multipart_upload_part):
     """
     headers = dict()
     index = 0
-    next_line = multipart_upload_part.find(b"\r\n", index)
+    next_line = multipart_upload_part.find(b'\r\n', index)
     while next_line != index:
         header_line = multipart_upload_part[index:next_line]
-        key, value = header_line.split(b": ", 2)
+        key, value = header_line.split(b': ', 2)
         # This does not work for repeated headers, but we do not expect
         # those in the testbench.
-        headers[key.decode("utf-8")] = value.decode("utf-8")
+        headers[key.decode('utf-8')] = value.decode('utf-8')
         index = next_line + 2
-        next_line = multipart_upload_part.find(b"\r\n", index)
-    return headers, multipart_upload_part[next_line + 2 :]
+        next_line = multipart_upload_part.find(b'\r\n', index)
+    return headers, multipart_upload_part[next_line + 2:]
 
 
 def parse_multi_part(request):
@@ -381,20 +376,19 @@ def parse_multi_part(request):
     :return: a tuple with the resource, media_headers and the media_body.
     :rtype: (dict, dict, str)
     """
-    content_type = request.headers.get("content-type")
-    if content_type is None or not content_type.startswith("multipart/related"):
+    content_type = request.headers.get('content-type')
+    if content_type is None or not content_type.startswith(
+            'multipart/related'):
         raise error_response.ErrorResponse(
-            "Missing or invalid content-type header in multipart upload"
-        )
-    _, _, boundary = content_type.partition("boundary=")
+            'Missing or invalid content-type header in multipart upload')
+    _, _, boundary = content_type.partition('boundary=')
     if boundary is None:
         raise error_response.ErrorResponse(
-            "Missing boundary (%s) in content-type header in multipart upload"
-            % boundary
-        )
+            'Missing boundary (%s) in content-type header in multipart upload'
+            % boundary)
 
-    boundary = bytearray(boundary, "utf-8")
-    marker = b"--" + boundary + b"\r\n"
+    boundary = bytearray(boundary, 'utf-8')
+    marker = b'--' + boundary + b'\r\n'
     body = extract_media(request)
     parts = body.split(marker)
     # parts[0] is the empty string, `multipart` should start with the boundary
@@ -402,11 +396,10 @@ def parse_multi_part(request):
     resource_headers, resource_body = parse_part(parts[1])
     # parts[2] is the media, with some headers
     media_headers, media_body = parse_part(parts[2])
-    end = media_body.find(b"\r\n--" + boundary + b"--\r\n")
+    end = media_body.find(b'\r\n--' + boundary + b'--\r\n')
     if end == -1:
         raise error_response.ErrorResponse(
-            "Missing end marker (--%s--) in media body" % boundary
-        )
+            'Missing end marker (--%s--) in media body' % boundary)
     media_body = media_body[:end]
     resource = json.loads(resource_body)
 
