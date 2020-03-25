@@ -23,6 +23,7 @@ load(
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
