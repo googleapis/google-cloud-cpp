@@ -337,7 +337,7 @@ void NativeRemoveBucketConditionalIamBinding(
     policy->set_version(3);
     auto& bindings = policy->bindings();
     auto original_size = bindings.size();
-    std::remove_if(
+    bindings.erase(std::remove_if(
         bindings.begin(), bindings.end(),
         [role, condition_title, condition_description,
          condition_expression](gcs::NativeIamBinding b) {
@@ -345,7 +345,7 @@ void NativeRemoveBucketConditionalIamBinding(
                   b.condition().title() == condition_title &&
                   b.condition().description() == condition_description &&
                   b.condition().expression() == condition_expression);
-        });
+        }));
     auto updated_policy = client.SetNativeBucketIamPolicy(bucket_name, *policy);
 
     if (!updated_policy) {
