@@ -59,8 +59,8 @@ foreach (fname ${storage_client_integration_tests})
                 storage_common_options)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties(
-            ${target} PROPERTIES LABELS
-            "integration-tests;storage-integration-tests")
+        ${target} PROPERTIES LABELS
+                             "integration-tests;storage-integration-tests")
 endforeach ()
 
 target_link_libraries(error_injection_integration_test PRIVATE ${CMAKE_DL_LIBS})
