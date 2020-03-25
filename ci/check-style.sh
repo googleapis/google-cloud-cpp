@@ -99,6 +99,17 @@ find . \( "${ignore[@]}" \) -prune -o \
        -print0 |
   xargs -0 buildifier -mode=fix
 
+# Apply psf/black to format Python files.
+#    https://github.com/bazelbuild/buildtools/tree/master/buildifier
+find . \( "${ignore[@]}" \) -prune -o \
+       \( -name '*.py' \) \
+       -print0 |
+  xargs -0 python3 -m black
+find google/cloud/storage/testbench \
+       \( -name '*.py' \) \
+       -print0 |
+  xargs -0 python3 -m black
+
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 find . \( "${ignore[@]}" \) -prune -o \
        -iname '*.sh' -exec shellcheck \

@@ -59,12 +59,12 @@ FILE_HEADER = """
 
 def print_defines(interface):
     defines = []
-    prefix = "GOOGLE_CLOUD_CPP_" + interface['name'].upper().rsplit('.', 1)[1]
-    struct = interface['name'].rsplit('.', 1)[1]
+    prefix = "GOOGLE_CLOUD_CPP_" + interface["name"].upper().rsplit(".", 1)[1]
+    struct = interface["name"].rsplit(".", 1)[1]
     constants = collections.OrderedDict()
-    constants['_DEFAULT_INITIAL_DELAY'] = 'initial_retry_delay_millis'
-    constants['_DEFAULT_MAXIMUM_DELAY'] = 'max_retry_delay_millis'
-    constants['_DEFAULT_MAXIMUM_RETRY_PERIOD'] = 'total_timeout_millis'
+    constants["_DEFAULT_INITIAL_DELAY"] = "initial_retry_delay_millis"
+    constants["_DEFAULT_MAXIMUM_DELAY"] = "max_retry_delay_millis"
+    constants["_DEFAULT_MAXIMUM_RETRY_PERIOD"] = "total_timeout_millis"
 
     print("// Define the defaults using a pre-processor macro, this allows")
     print("// the application developers to change the defaults for their")
@@ -72,7 +72,7 @@ def print_defines(interface):
     print("")
     for constant in constants:
         name = prefix + constant
-        val = interface['retry_params_def'][0]
+        val = interface["retry_params_def"][0]
         o = "#define " + name
         o += " std::chrono::milliseconds(" + str(val[constants[constant]])
         o += ")"
@@ -95,7 +95,7 @@ def main():
     all_defines = []
     links = [
         "https://raw.githubusercontent.com/googleapis/googleapis/master/google/bigtable/admin/v2/bigtableadmin_gapic.yaml",
-        "https://raw.githubusercontent.com/googleapis/googleapis/master/google/bigtable/v2/bigtable_gapic.yaml"
+        "https://raw.githubusercontent.com/googleapis/googleapis/master/google/bigtable/v2/bigtable_gapic.yaml",
     ]
 
     print(FILE_HEADER.lstrip())
@@ -104,9 +104,9 @@ def main():
         f = urllib.urlopen(link)
         myfile = f.read()
         t = yaml.load(myfile)
-        for intf in t['interfaces']:
+        for intf in t["interfaces"]:
             print("")
-            print('// Interface name: "' + intf['name'] + '"')
+            print('// Interface name: "' + intf["name"] + '"')
             intf_defines = print_defines(intf)
             all_defines.append(intf_defines)
             print("")
@@ -117,5 +117,5 @@ def main():
         print("#undef " + define)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

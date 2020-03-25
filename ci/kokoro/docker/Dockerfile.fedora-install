@@ -39,6 +39,9 @@ RUN chmod 755 /usr/bin/buildifier
 RUN pip3 install --upgrade pip
 RUN pip3 install cmake_format==0.6.8
 
+# Install black to automatically format the Python files.
+RUN pip3 install black==19.3b0
+
 RUN dnf makecache && dnf install -y python3-devel
 RUN pip3 install setuptools
 RUN pip3 install flask==1.1.1 Werkzeug==1.0.0 httpbin==0.7.0 \

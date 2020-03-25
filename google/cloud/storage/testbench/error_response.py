@@ -19,6 +19,7 @@ import flask
 
 class ErrorResponse(Exception):
     """Simplify generation of error responses."""
+
     status_code = 400
 
     def __init__(self, message, status_code=None, payload=None):
@@ -30,7 +31,7 @@ class ErrorResponse(Exception):
 
     def as_response(self):
         kv = dict(self.payload or ())
-        kv['message'] = self.message
+        kv["message"] = self.message
         response = flask.jsonify(kv)
         response.status_code = self.status_code
         return response

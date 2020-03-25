@@ -56,59 +56,59 @@ FILE_HEADER = """
 
 
 def camel_case(s):
-    words = ''.join([c for c in s if c.isalpha() or c == ' ']).split(' ')
-    return ''.join([w[:1].upper() + w[1:].lower() for w in words])
+    words = "".join([c for c in s if c.isalpha() or c == " "]).split(" ")
+    return "".join([w[:1].upper() + w[1:].lower() for w in words])
 
 
 def print_test(t):
-    o = '// Test name: "' + t['name'] + '"\n'
-    o += 'TEST_F(AcceptanceTest, ' + camel_case(t['name']) + ') {\n'
+    o = '// Test name: "' + t["name"] + '"\n'
+    o += "TEST_F(AcceptanceTest, " + camel_case(t["name"]) + ") {\n"
 
-    o += '  std::vector<std::string> chunk_strings = {\n'
-    for c in t['chunks']:
+    o += "  std::vector<std::string> chunk_strings = {\n"
+    for c in t["chunks"]:
         s = c.rstrip()
-        s = s.replace('<\n ', '<')
-        s = s.replace('\n>', '>')
-        s = s.replace('\n', '\n          ')
+        s = s.replace("<\n ", "<")
+        s = s.replace("\n>", ">")
+        s = s.replace("\n", "\n          ")
         o += '      R"chunk(\n'
-        o += '          ' + s + '\n'
+        o += "          " + s + "\n"
         o += '        )chunk",\n'
-    o += '  };\n'
-    o += '\n'
+    o += "  };\n"
+    o += "\n"
 
-    o += '  auto chunks = ConvertChunks(std::move(chunk_strings));\n'
-    o += '  ASSERT_FALSE(chunks.empty());\n'
+    o += "  auto chunks = ConvertChunks(std::move(chunk_strings));\n"
+    o += "  ASSERT_FALSE(chunks.empty());\n"
 
-    o += '\n'
+    o += "\n"
 
     ok = True
-    if t['results']:
-        ok = not any([r['error'] for r in t['results']])
+    if t["results"]:
+        ok = not any([r["error"] for r in t["results"]])
 
     if ok:
-        o += 'EXPECT_STATUS_OK(FeedChunks(chunks));\n'
+        o += "EXPECT_STATUS_OK(FeedChunks(chunks));\n"
     else:
-        o += 'EXPECT_FALSE(FeedChunks(chunks).ok());\n'
+        o += "EXPECT_FALSE(FeedChunks(chunks).ok());\n"
 
-    o += '\n'
-    o += '  std::vector<std::string> expected_cells = {'
-    if t['results']:
-        for r in t['results']:
-            if not r['error']:
-                o += '\n'
-                o += '      "rk: ' + r['rk'] + '\\n"\n'
-                o += '      "fm: ' + r['fm'] + '\\n"\n'
-                o += '      "qual: ' + r['qual'] + '\\n"\n'
-                o += '      "ts: ' + str(r['ts']) + '\\n"\n'
-                o += '      "value: ' + r['value'] + '\\n"\n'
-                o += '      "label: ' + r['label'] + '\\n",\n'
+    o += "\n"
+    o += "  std::vector<std::string> expected_cells = {"
+    if t["results"]:
+        for r in t["results"]:
+            if not r["error"]:
+                o += "\n"
+                o += '      "rk: ' + r["rk"] + '\\n"\n'
+                o += '      "fm: ' + r["fm"] + '\\n"\n'
+                o += '      "qual: ' + r["qual"] + '\\n"\n'
+                o += '      "ts: ' + str(r["ts"]) + '\\n"\n'
+                o += '      "value: ' + r["value"] + '\\n"\n'
+                o += '      "label: ' + r["label"] + '\\n",\n'
 
-    if o[-1] == '\n':
-        o += '  '
-    o += '};\n'
+    if o[-1] == "\n":
+        o += "  "
+    o += "};\n"
 
-    o += '  EXPECT_EQ(expected_cells, ExtractCells());\n'
-    o += '}\n'
+    o += "  EXPECT_EQ(expected_cells, ExtractCells());\n"
+    o += "}\n"
     return o
 
 
@@ -116,9 +116,9 @@ def main():
     t = json.loads(sys.stdin.read())
 
     print(FILE_HEADER.lstrip())
-    for tt in t['tests']:
+    for tt in t["tests"]:
         print(print_test(tt))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

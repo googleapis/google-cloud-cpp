@@ -19,28 +19,29 @@ import error_response
 import flask
 import json
 
-IAM_HANDLER_PATH = '/iamapi'
+IAM_HANDLER_PATH = "/iamapi"
 iam = flask.Flask(__name__)
 iam.debug = True
 
 
-@iam.route('/projects/-/serviceAccounts/<service_account>:signBlob',
-           methods=['POST'])
+@iam.route("/projects/-/serviceAccounts/<service_account>:signBlob", methods=["POST"])
 def sign_blob(service_account):
     """Implement the `projects.serviceAccounts.signBlob` API."""
     payload = json.loads(flask.request.data)
-    if payload.get('payload') is None:
+    if payload.get("payload") is None:
         raise error_response.ErrorResponse(
-            'Missing payload in the payload', status_code=400)
+            "Missing payload in the payload", status_code=400
+        )
     try:
-        blob = base64.b64decode(payload.get('payload'))
+        blob = base64.b64decode(payload.get("payload"))
     except TypeError:
         raise error_response.ErrorResponse(
-            'payload must be base64-encoded', status_code=400)
-    blob = b'signed: ' + blob
+            "payload must be base64-encoded", status_code=400
+        )
+    blob = b"signed: " + blob
     response = {
-        'keyId': 'fake-key-id-123',
-        'signedBlob': base64.b64encode(blob).decode('utf-8')
+        "keyId": "fake-key-id-123",
+        "signedBlob": base64.b64encode(blob).decode("utf-8"),
     }
     return json.dumps(response)
 
