@@ -117,13 +117,15 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   export TEST_KEY_FILE_P12
   export GOOGLE_APPLICATION_CREDENTIALS
 
+  # Changing the PATH disables the Bazel cache, so use an
+  # absolute path
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
 
   "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
   # create a grpc::Credentials object.
-  ACCESS_TOKEN="$(gcloud --quiet auth print-access-token)"
+  ACCESS_TOKEN="$("${GCLOUD}" --quiet auth print-access-token)"
   export ACCESS_TOKEN
   # Deactivate all the accounts in `gcloud` to prevent accidents
   "${GCLOUD}" --quiet auth revoke --all
@@ -157,7 +159,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
-  gcloud --quiet iam service-accounts create "--project=${PROJECT_ID}" \
+  "${GCLOUD}" --quiet iam service-accounts create "--project=${PROJECT_ID}" \
       "${HMAC_SERVICE_ACCOUNT_NAME}"
   echo "$(date -u): Grant service account permissions to create HMAC keys."
   "${GCLOUD}" --quiet projects add-iam-policy-binding "${PROJECT_ID}" \
