@@ -176,7 +176,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
     "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
         "${BINARY_DIR}" "${ctest_args[@]}"
-    "${PROJECT_ROOT}/google/cloud/storage/ci/run_integration_tests_testbench_cmake.sh" \
+    "${PROJECT_ROOT}/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh" \
         "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
