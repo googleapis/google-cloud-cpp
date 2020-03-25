@@ -1100,6 +1100,8 @@ run_all_bucket_iam_examples() {
   run_example ./storage_bucket_samples create-bucket-for-project \
       "${bucket_name}" "${PROJECT_ID}"
 
+  run_example ./storage_bucket_samples enable-uniform-bucket-level-access \
+      "${bucket_name}"
   run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
       "${bucket_name}"
   run_example ./storage_bucket_iam_samples add-bucket-iam-member \
@@ -1116,6 +1118,12 @@ run_all_bucket_iam_examples() {
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
   run_example ./storage_bucket_iam_samples native-remove-bucket-iam-member \
       "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
+  run_example ./storage_bucket_iam_samples native-add-bucket-conditional-iam-binding \
+      "${bucket_name}" "roles/storage.objectViewer" "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
+      "match-prefix" "description" "resource.name.startsWith(\"projects/_/buckets/bucket-name/objects/prefix-a-\")"
+  run_example ./storage_bucket_iam_samples native-remove-bucket-conditional-iam-binding \
+      "${bucket_name}" "roles/storage.objectViewer" "match-prefix" "description" \
+      "resource.name.startsWith(\"projects/_/buckets/bucket-name/objects/prefix-a-\")"
   run_example ./storage_bucket_iam_samples native-set-bucket-public-iam \
       "${bucket_name}"
 
