@@ -25,7 +25,10 @@ load(
     name = test.replace("/", "_").replace(".cc", ""),
     timeout = "long",
     srcs = [test],
-    tags = ["integration-tests", "bigtable-integration-tests"],
+    tags = [
+        "bigtable-integration-tests",
+        "integration-tests",
+    ],
     deps = [
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/bigtable:bigtable_client_testing",

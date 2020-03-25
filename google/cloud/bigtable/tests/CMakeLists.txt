@@ -51,7 +51,9 @@ foreach (fname ${bigtable_client_integration_tests})
                 protobuf::libprotobuf
                 bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
-    set_tests_properties(${target} PROPERTIES LABELS "integration-tests;bigtable-integration-tests")
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-tests;bigtable-integration-tests")
 endforeach ()
 
 add_executable(instance_admin_emulator instance_admin_emulator.cc)
