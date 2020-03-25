@@ -21,9 +21,11 @@ load(
     "bigtable_client_integration_tests",
 )
 
-[cc_binary(
+[cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
     srcs = [test],
+    tags = ["integration-tests", "bigtable-integration-tests"],
     deps = [
         "//google/cloud/bigtable:bigtable_client",
         "//google/cloud/bigtable:bigtable_client_testing",

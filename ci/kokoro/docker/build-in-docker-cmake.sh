@@ -148,7 +148,7 @@ _EOF_
   fi
 fi
 
-ctest_args=("--output-on-failure")
+ctest_args=("--output-on-failure" "-j" "${NCPU}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
     ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
 fi
@@ -163,11 +163,19 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
     echo "${COLOR_YELLOW}Running unit tests $(date)${COLOR_RESET}"
     echo
-    (cd "${BINARY_DIR}" && ctest "${ctest_args[@]}")
+    (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
 
     echo
     echo "${COLOR_YELLOW}Completed unit tests $(date)${COLOR_RESET}"
     echo
+  fi
+
+  if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
+    echo
+    echo "${COLOR_YELLOW}Running integration tests via CTest $(date)${COLOR_RESET}"
+    echo
+    "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
+        "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then

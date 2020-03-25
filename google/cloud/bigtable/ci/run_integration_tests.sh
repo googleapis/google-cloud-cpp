@@ -23,36 +23,6 @@ source "${BINDIR}/../../../../ci/colors.sh"
 
 readonly BTDIR="google/cloud/bigtable"
 
-# TODO(#441) - fix the workaround below and use just this time:
-# (cd bigtable/tests && "${BINDIR}/../tests/run_integration_tests_emulator.sh")
-# Sometimes the integration tests manage to crash the Bigtable emulator.
-# Manually restarting the build clears up the problem, but that is just a waste
-# of everybody's time. Use a (short) timeout to run the test and try 3 times.
-set +e
-success=""
-readonly TIMEOUT_CMD="$(command -v timeout)"
-if [ -n "${TIMEOUT_CMD}" ]; then
-  timeout="${TIMEOUT_CMD} 300s"
-else
-  timeout="env"
-fi
-
-for attempt in 1 2 3; do
-  (cd "${BTDIR}/tests" && \
-   ${timeout} "${BINDIR}/../tests/run_integration_tests_emulator.sh")
-  if [ $? = 0 ]; then
-    success="yes"
-    break
-  fi
-  echo "${COLOR_YELLOW}Failure or timeout in integration test during " \
-      "attempt=${attempt} $(date)${COLOR_RESET}"
-done
-if [ "${success}" != "yes" ]; then
-  echo "Integration tests failed multiple times, aborting tests."
-  exit 1
-fi
-set -e
-
 if [ -d ${BTDIR}/examples ]; then
   (cd "${BTDIR}/examples" && "${BINDIR}/../examples/run_examples_emulator.sh")
 else
