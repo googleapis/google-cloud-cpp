@@ -469,22 +469,16 @@ void NativeSetBucketPublicIam(google::cloud::storage::Client client, int& argc,
   namespace gcs = google::cloud::storage;
   using google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
-    auto current_policy = client.GetNativeBucketIamPolicy(bucket_name);
+    auto current_policy = client.GetNativeBucketIamPolicy(
+        bucket_name, gcs::RequestedPolicyVersion(3));
 
     if (!current_policy) {
       throw std::runtime_error(current_policy.status().message());
     }
 
-    for (auto& binding : current_policy->bindings()) {
-      if (binding.role() != "roles/storage.objectViewer") {
-        continue;
-      }
-      auto& members = binding.members();
-      if (std::find(members.begin(), members.end(), "allUsers") ==
-          members.end()) {
-        members.emplace_back("allUsers");
-      }
-    }
+    current_policy->set_version(3);
+    current_policy->bindings().emplace_back(
+        gcs::NativeIamBinding("roles/storage.objectViewer", {"allUsers"}));
 
     auto updated_policy =
         client.SetNativeBucketIamPolicy(bucket_name, *current_policy);
@@ -519,11 +513,11 @@ int main(int argc, char* argv[]) try {
       {"add-bucket-iam-member", &AddBucketIamMember},
       {"native-add-bucket-iam-member", &NativeAddBucketIamMember},
       {"native-add-bucket-conditional-iam-binding",
-       &NativeAddBucketConditionalIamBinding},
+       NativeAddBucketConditionalIamBinding},
       {"remove-bucket-iam-member", &RemoveBucketIamMember},
       {"native-remove-bucket-iam-member", &NativeRemoveBucketIamMember},
       {"native-remove-bucket-conditional-iam-binding",
-       &NativeRemoveBucketConditionalIamBinding},
+       NativeRemoveBucketConditionalIamBinding},
       {"test-bucket-iam-permissions", &TestBucketIamPermissions},
       {"set-bucket-public-iam", &SetBucketPublicIam},
       {"native-set-bucket-public-iam", &NativeSetBucketPublicIam},
