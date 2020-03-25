@@ -49,7 +49,7 @@ class GcsBucket(object):
         self.notifications = {}
         self.iam_version = 1
         self.counter = 1
-        self.iam_bindings = {}
+        self.iam_bindings = []
         self.resumable_uploads = {}
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
@@ -110,7 +110,7 @@ class GcsBucket(object):
         or BucketPolicyOnly patch.
 
         :param patch:dict a dictionary of metadata values.
-        :param field: one of 'uniformBucketLevelAccess' or 'bucketPolicyOnly' 
+        :param field: one of 'uniformBucketLevelAccess' or 'bucketPolicyOnly'
         """
         field_was_enabled = False
         if self.metadata.get('iamConfiguration'):
@@ -402,6 +402,25 @@ class GcsBucket(object):
                 status_code=404)
         return details
 
+    @classmethod
+    def _append_acl_members_to_binding(cls, role, members, bindings):
+        """Add ACL members into IAM bindings."""
+        found = False
+        for binding in bindings:
+            if binding.get("role") == role and not binding.get("condition"):
+                found = True
+                binding.setdefault("members", [])
+                for member in members:
+                    binding["members"].append(member)
+                break
+        if not found:
+            bindings.append({
+                "role": role,
+                "members": members
+            })
+        return bindings
+
+
     def iam_policy_as_json(self):
         """Get the current IamPolicy in the right format for JSON."""
         role_mapping = {
@@ -409,7 +428,7 @@ class GcsBucket(object):
             'WRITER': 'roles/storage.legacyBucketWriter',
             'OWNER': 'roles/storage.legacyBucketOwner',
         }
-        members_by_role = self.iam_bindings.copy()
+        copy_of_bindings = self.iam_bindings.copy()
         if self.metadata.get('acl') is not None:
             # Store the ACLs as IamBindings
             for entry in self.metadata.get('acl', []):
@@ -422,15 +441,13 @@ class GcsBucket(object):
                     raise error_response.ErrorResponse(
                         'Invalid legacy role %s' % legacy_role,
                         status_code=500)
-                members_by_role.setdefault(role, []).append(
-                    entry.get('entity'))
-        bindings = []
-        for k, v in members_by_role.items():
-            bindings.append({'role': k, 'members': v})
+                copy_of_bindings = GcsBucket._append_acl_members_to_binding(
+                  role, [entry.get("entity")], copy_of_bindings
+                )
         policy = {
             'kind': 'storage#policy',
             'resourceId': 'projects/_/buckets/%s' % self.name,
-            'bindings': bindings,
+            'bindings': copy_of_bindings,
             'etag': base64.b64encode(bytearray(str(self.counter), 'utf-8')).decode('utf-8'),
             'version': self.iam_version
         }
@@ -469,7 +486,7 @@ class GcsBucket(object):
             raise error_response.ErrorResponse('Missing "bindings" field')
 
         new_acl = []
-        new_iam_bindings = {}
+        new_iam_bindings = []
         role_mapping = {
             'roles/storage.legacyBucketReader': 'READER',
             'roles/storage.legacyBucketWriter': 'WRITER',
@@ -478,11 +495,18 @@ class GcsBucket(object):
         for binding in policy.get('bindings'):
             role = binding.get('role')
             members = binding.get('members')
+            condition = binding.get('condition')
             if role is None or members is None:
                 raise error_response.ErrorResponse(
                     'Missing "role" or "members" fields')
             if role_mapping.get(role) is None:
-                new_iam_bindings[role] = members
+                new_binding = {
+                    'role': role,
+                    'members': members
+                }
+                if condition:
+                    new_binding["condition"] = condition
+                new_iam_bindings.append(new_binding)
             else:
                 for m in members:
                     legacy_role = role_mapping.get(role)
