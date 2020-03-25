@@ -25,6 +25,9 @@ readonly BINARY_DIR
 shift
 ctest_args=("$@")
 
+# Configure run_emulators_utils.sh to find the instance admin emulator.
+export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
+
 CMDDIR="$(dirname "$0")"
 readonly CMDDIR
 PROJECT_ROOT="$(cd "${CMDDIR}/../../../.."; pwd)"
@@ -41,7 +44,6 @@ export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="it-${NONCE}"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="fake-region1-a"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="fake-region1-b"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="fake-sa@emulated-${NONCE}.iam.gserviceaccount.com"
-export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
 
 ctest "-L" "bigtable-integration-tests" "${ctest_args[@]}"
 exit_status=$?
