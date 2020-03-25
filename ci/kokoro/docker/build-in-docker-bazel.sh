@@ -91,47 +91,57 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo "================================================================"
   echo "$(date -u): Running the integration tests"
   echo "================================================================"
+
   # shellcheck disable=SC1091
   source "${INTEGRATION_TESTS_CONFIG}"
+  bazel_args+=(
+      "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
+      "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A}"
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
+      "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}")
+
+  BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
+  readonly BAZEL_BIN_DIR
+
+  # Run the integration tests using Bazel to drive them.
+  "${BAZEL_BIN}" test \
+      "${bazel_args[@]}" \
+      "--test_tag_filters=bigtable-integration-tests" \
+      -- //google/cloud/...:all
 
   export INTEGRATION_TESTS_CONFIG
   export TEST_KEY_FILE_JSON
   export TEST_KEY_FILE_P12
   export GOOGLE_APPLICATION_CREDENTIALS
 
-  BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
-  readonly BAZEL_BIN_DIR
+  # Changing the PATH disables the Bazel cache, so use an absolute path.
+  readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
 
-  # Add gcloud to the PATH
-  PATH="/usr/local/google-cloud-sdk/bin:${PATH}"
-  export PATH
-
-  gcloud --quiet auth activate-service-account --key-file \
+  "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
   # create a grpc::Credentials object.
-  ACCESS_TOKEN="$(gcloud --quiet auth print-access-token)"
+  ACCESS_TOKEN="$("${GCLOUD}" --quiet auth print-access-token)"
   export ACCESS_TOKEN
   # Deactivate all the accounts in `gcloud` to prevent accidents
-  gcloud --quiet auth revoke --all
+  "${GCLOUD}" --quiet auth revoke --all
 
   if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
     echo
     echo "================================================================"
-    echo "$(date -u): Running Google Cloud Bigtable Integration Tests"
+    echo "$(date -u): Running Google Cloud Bigtable Admin Examples"
     echo "================================================================"
-    (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/tests" && \
-       "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_admin_integration_tests_production.sh")
     (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
        "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
   fi
 
   echo
   echo "================================================================"
-  echo "$(date -u): Running Google Cloud Bigtable Integration Tests"
+  echo "$(date -u): Running Google Cloud Bigtable Examples"
   echo "================================================================"
-  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/tests" && \
-      "${PROJECT_ROOT}/google/cloud/bigtable/tests/run_integration_tests_production.sh")
   (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
       "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
   (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
@@ -146,16 +156,16 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
   export HMAC_SERVICE_ACCOUNT
 
-  gcloud --quiet auth activate-service-account --key-file \
+  "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
-  gcloud --quiet iam service-accounts create "--project=${PROJECT_ID}" \
+  "${GCLOUD}" --quiet iam service-accounts create "--project=${PROJECT_ID}" \
       "${HMAC_SERVICE_ACCOUNT_NAME}"
   echo "$(date -u): Grant service account permissions to create HMAC keys."
-  gcloud --quiet projects add-iam-policy-binding "${PROJECT_ID}" \
+  "${GCLOUD}" --quiet projects add-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
       --role roles/iam.serviceAccountTokenCreator >/dev/null 2>&1
   # Deactivate all the accounts in `gcloud` to prevent accidents
-  gcloud --quiet auth revoke --all
+  "${GCLOUD}" --quiet auth revoke --all
 
   echo
   echo "================================================================"
@@ -175,15 +185,15 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo "================================================================"
   echo "$(date -u): Delete service account to used in the storage HMAC tests."
   echo "================================================================"
-  gcloud --quiet auth activate-service-account --key-file \
+  "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
-  gcloud --quiet projects remove-iam-policy-binding "${PROJECT_ID}" \
+  "${GCLOUD}" --quiet projects remove-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
       --role roles/iam.serviceAccountTokenCreator
   echo "$(date -u): Revoke service account permissions to create HMAC keys."
-  gcloud --quiet iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}" >/dev/null 2>&1
+  "${GCLOUD}" --quiet iam service-accounts delete --quiet "${HMAC_SERVICE_ACCOUNT}" >/dev/null 2>&1
   # Deactivate all the accounts in `gcloud` to prevent accidents
-  gcloud --quiet auth revoke --all
+  "${GCLOUD}" --quiet auth revoke --all
 
   if [[ "${storage_integration_test_status}" != 0 ]]; then
     echo "$(date -u): Error in storage integration tests."

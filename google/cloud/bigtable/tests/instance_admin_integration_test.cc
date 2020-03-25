@@ -31,6 +31,11 @@ namespace {
 class InstanceAdminIntegrationTest : public ::testing::Test {
  protected:
   void SetUp() override {
+    if (google::cloud::internal::GetEnv(
+            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
+            .value_or("") != "yes") {
+      GTEST_SKIP();
+    }
     project_id_ =
         google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_FALSE(project_id_.empty());

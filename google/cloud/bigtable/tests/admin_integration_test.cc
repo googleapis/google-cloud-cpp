@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_unique.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/assert_ok.h"
@@ -32,6 +33,11 @@ class AdminIntegrationTest : public bigtable::testing::TableIntegrationTest {
   std::unique_ptr<bigtable::TableAdmin> table_admin_;
 
   void SetUp() {
+    if (google::cloud::internal::GetEnv(
+            "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS")
+            .value_or("") != "yes") {
+      GTEST_SKIP();
+    }
     TableIntegrationTest::SetUp();
     std::shared_ptr<bigtable::AdminClient> admin_client =
         bigtable::CreateDefaultAdminClient(
