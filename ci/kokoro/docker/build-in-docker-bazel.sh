@@ -64,7 +64,7 @@ echo "================================================================"
 echo "$(date -u): Compiling and running unit tests"
 echo "================================================================"
 "${BAZEL_BIN}" test \
-    "${bazel_args[@]}" \
+    "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
     -- //google/cloud/...:all
 
 echo "================================================================"

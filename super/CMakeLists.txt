@@ -55,7 +55,8 @@ ExternalProject_Add(
                -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
-    TEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure
+    TEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -LE
+                 integration-tests
     LOG_DOWNLOAD OFF
     LOG_CONFIGURE OFF
     LOG_BUILD OFF
