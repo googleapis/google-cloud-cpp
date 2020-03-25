@@ -42,7 +42,7 @@ CONTENTS_DICT = {
     "auth_uri": "https://accounts.google.com/o/oauth2/auth",
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com",
 }
 
 # Timestamp used to represent the current time in the JWT assertion.
@@ -52,7 +52,7 @@ TIMESTAMP = 1530060324
 # also used in constructing the JWT assertion.
 SCOPE_STR = "https://www.googleapis.com/auth/cloud-platform"
 
-ALT_SCOPE_STR = "https://www.googleapis.com/auth/devstorage.full_control";
+ALT_SCOPE_STR = "https://www.googleapis.com/auth/devstorage.full_control"
 
 # pylint: enable=line-too-long
 ############################################
@@ -64,14 +64,16 @@ def ordered_json_str(ordered_dict):
     # Keys must be iterated over in alphabetical order in order to have
     # deterministic string dump functionality.
     for key, val in sorted(ordered_dict.items()):
-        kv_strs.append('"{k}":{q}{v}{q}'.format(
-            k=key,
-            v=val,
-            # Numeric values don't have quotes around them. Note that this falls
-            # apart for JSON objects or arrays, but these keyfile attributes
-            # only map to strings and ints, so we can take this shortcut.
-            q=('' if isinstance(val, int) else '"')
-        ))
+        kv_strs.append(
+            '"{k}":{q}{v}{q}'.format(
+                k=key,
+                v=val,
+                # Numeric values don't have quotes around them. Note that this falls
+                # apart for JSON objects or arrays, but these keyfile attributes
+                # only map to strings and ints, so we can take this shortcut.
+                q=("" if isinstance(val, int) else '"'),
+            )
+        )
     return "{" + ",".join(kv_strs) + "}"
 
 
@@ -87,36 +89,43 @@ def payload_str(scopes, subject=None):
         payload_dict["sub"] = subject
     return jwk.base64url_encode(ordered_json_str(payload_dict))
 
+
 def main():
     """Print out the JWT assertion."""
     signing_algorithm_str = "RS256"  # RSA
     headers_str = jwk.base64url_encode(
-        ordered_json_str({
-            "alg": signing_algorithm_str,
-            "kid": CONTENTS_DICT["private_key_id"],
-            "typ": "JWT",
-        })
+        ordered_json_str(
+            {
+                "alg": signing_algorithm_str,
+                "kid": CONTENTS_DICT["private_key_id"],
+                "typ": "JWT",
+            }
+        )
     )
 
     payload_str_for_defaults = payload_str(SCOPE_STR)
     print("Assertion for default scope and no subject:")
-    print(jws._sign_header_and_claims(  # pylint: disable=protected-access
-        headers_str,
-        payload_str_for_defaults,
-        signing_algorithm_str,
-        CONTENTS_DICT["private_key"]
-    ))
+    print(
+        jws._sign_header_and_claims(  # pylint: disable=protected-access
+            headers_str,
+            payload_str_for_defaults,
+            signing_algorithm_str,
+            CONTENTS_DICT["private_key"],
+        )
+    )
 
     print()
 
     payload_str_for_nondefaults = payload_str(ALT_SCOPE_STR, "user@foo.bar")
     print("Assertion for non-default scope and using a subject:")
-    print(jws._sign_header_and_claims(  # pylint: disable=protected-access
-        headers_str,
-        payload_str_for_nondefaults,
-        signing_algorithm_str,
-        CONTENTS_DICT["private_key"]
-    ))
+    print(
+        jws._sign_header_and_claims(  # pylint: disable=protected-access
+            headers_str,
+            payload_str_for_nondefaults,
+            signing_algorithm_str,
+            CONTENTS_DICT["private_key"],
+        )
+    )
 
 
 if __name__ == "__main__":

@@ -19,8 +19,7 @@ autosort = True
 
 additional_commands = {
     "externalproject_add": {
-        "flags": [
-        ],
+        "flags": [],
         "kwargs": {
             "BUILD_COMMAND": "+",
             "BUILD_BYPRODUCTS": "+",
@@ -42,6 +41,6 @@ additional_commands = {
             "URL": 1,
             "URL_HASH": 1,
             "BUILD_ALWAYS": 1,
-        }
+        },
     }
 }

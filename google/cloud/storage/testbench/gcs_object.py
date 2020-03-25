@@ -41,53 +41,55 @@ class GcsObjectVersion(object):
         self.bucket_name = bucket_name
         self.name = name
         self.generation = generation
-        self.object_id = bucket_name + '/o/' + name + '/' + str(generation)
+        self.object_id = bucket_name + "/o/" + name + "/" + str(generation)
         now = time.gmtime(time.time())
-        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", now)
         self.media = media
-        instructions = request.headers.get('x-goog-testbench-instructions')
-        if instructions == 'inject-upload-data-error':
+        instructions = request.headers.get("x-goog-testbench-instructions")
+        if instructions == "inject-upload-data-error":
             self.media = testbench_utils.corrupt_media(media)
 
         self.metadata = {
-            'timeCreated': timestamp,
-            'updated': timestamp,
-            'metageneration': 0,
-            'generation': generation,
-            'location': 'US',
-            'storageClass': 'STANDARD',
-            'size': len(self.media),
-            'etag': 'XYZ=',
-            'owner': {
-                'entity': 'project-owners-123456789',
-                'entityId': '',
-            },
-            'md5Hash': base64.b64encode(hashlib.md5(self.media).digest()).decode('utf-8'),
-            'crc32c': base64.b64encode(struct.pack('>I', crc32c.crc32(self.media))).decode('utf-8')
+            "timeCreated": timestamp,
+            "updated": timestamp,
+            "metageneration": 0,
+            "generation": generation,
+            "location": "US",
+            "storageClass": "STANDARD",
+            "size": len(self.media),
+            "etag": "XYZ=",
+            "owner": {"entity": "project-owners-123456789", "entityId": ""},
+            "md5Hash": base64.b64encode(hashlib.md5(self.media).digest()).decode(
+                "utf-8"
+            ),
+            "crc32c": base64.b64encode(
+                struct.pack(">I", crc32c.crc32(self.media))
+            ).decode("utf-8"),
         }
-        if request.headers.get('content-type') is not None:
-            self.metadata['contentType'] = request.headers.get('content-type')
+        if request.headers.get("content-type") is not None:
+            self.metadata["contentType"] = request.headers.get("content-type")
         # Update the derived metadata attributes (e.g.: id, kind, selfLink)
         self.update_from_metadata({})
         # Capture any encryption key headers.
         self._capture_customer_encryption(request)
-        self._update_predefined_acl(request.args.get('predefinedAcl'))
+        self._update_predefined_acl(request.args.get("predefinedAcl"))
         acl2json_mapping = {
-            'authenticated-read': 'authenticatedRead',
-            'bucket-owner-full-control': 'bucketOwnerFullControl',
-            'bucket-owner-read': 'bucketOwnerRead',
-            'private': 'private',
-            'project-private': 'projectPrivate',
-            'public-read': 'publicRead',
+            "authenticated-read": "authenticatedRead",
+            "bucket-owner-full-control": "bucketOwnerFullControl",
+            "bucket-owner-read": "bucketOwnerRead",
+            "private": "private",
+            "project-private": "projectPrivate",
+            "public-read": "publicRead",
         }
-        if request.headers.get('x-goog-acl') is not None:
-            acl = request.headers.get('x-goog-acl')
+        if request.headers.get("x-goog-acl") is not None:
+            acl = request.headers.get("x-goog-acl")
             predefined = acl2json_mapping.get(acl)
             if predefined is not None:
                 self._update_predefined_acl(predefined)
             else:
                 raise error_response.ErrorResponse(
-                    'Invalid predefinedAcl value %s' % acl, status_code=400)
+                    "Invalid predefinedAcl value %s" % acl, status_code=400
+                )
 
     def update_from_metadata(self, metadata):
         """Update from a metadata dictionary.
@@ -97,21 +99,23 @@ class GcsObjectVersion(object):
         """
         tmp = self.metadata.copy()
         tmp.update(metadata)
-        tmp['bucket'] = tmp.get('bucket', self.name)
-        tmp['name'] = tmp.get('name', self.name)
+        tmp["bucket"] = tmp.get("bucket", self.name)
+        tmp["name"] = tmp.get("name", self.name)
         now = time.gmtime(time.time())
-        timestamp = time.strftime('%Y-%m-%dT%H:%M:%SZ', now)
+        timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", now)
         # Some values cannot be changed via updates, so we always reset them.
-        tmp.update({
-            'kind': 'storage#object',
-            'bucket': self.bucket_name,
-            'name': self.name,
-            'id': self.object_id,
-            'selfLink': self.gcs_url + self.name,
-            'projectNumber': '123456789',
-            'updated': timestamp,
-        })
-        tmp['metageneration'] = tmp.get('metageneration', 0) + 1
+        tmp.update(
+            {
+                "kind": "storage#object",
+                "bucket": self.bucket_name,
+                "name": self.name,
+                "id": self.object_id,
+                "selfLink": self.gcs_url + self.name,
+                "projectNumber": "123456789",
+                "updated": timestamp,
+            }
+        )
+        tmp["metageneration"] = tmp.get("metageneration", 0) + 1
         self.metadata = tmp
         self._validate_hashes()
 
@@ -122,24 +126,25 @@ class GcsObjectVersion(object):
 
     def _validate_md5_hash(self):
         """Validate the md5Hash field against the stored media."""
-        actual = self.metadata.get('md5Hash', '')
-        expected = base64.b64encode(hashlib.md5(self.media).digest()).decode('utf-8')
+        actual = self.metadata.get("md5Hash", "")
+        expected = base64.b64encode(hashlib.md5(self.media).digest()).decode("utf-8")
         if actual != expected:
             raise error_response.ErrorResponse(
-                'Mismatched MD5 hash expected=%s, actual=%s' % (expected,
-                                                                actual))
+                "Mismatched MD5 hash expected=%s, actual=%s" % (expected, actual)
+            )
 
     def _validate_crc32c(self):
         """Validate the crc32c field against the stored media."""
-        actual = self.metadata.get('crc32c', '')
-        expected = base64.b64encode(struct.pack('>I', crc32c.crc32(self.media))).decode('utf-8')
+        actual = self.metadata.get("crc32c", "")
+        expected = base64.b64encode(struct.pack(">I", crc32c.crc32(self.media))).decode(
+            "utf-8"
+        )
         if actual != expected:
             raise error_response.ErrorResponse(
-                'Mismatched CRC32C checksum expected=%s, actual=%s' % (expected,
-                                                                       actual))
+                "Mismatched CRC32C checksum expected=%s, actual=%s" % (expected, actual)
+            )
 
-    def validate_encryption_for_read(self, request,
-                                     prefix='x-goog-encryption'):
+    def validate_encryption_for_read(self, request, prefix="x-goog-encryption"):
         """Verify that the request includes the correct encryption keys.
 
         :param request:flask.Request the http request.
@@ -148,10 +153,10 @@ class GcsObjectVersion(object):
             'x-good-copy-source-encryption'.
         :rtype:NoneType
         """
-        key_header = prefix + '-key'
-        hash_header = prefix + '-key-sha256'
-        algo_header = prefix + '-algorithm'
-        encryption = self.metadata.get('customerEncryption')
+        key_header = prefix + "-key"
+        hash_header = prefix + "-key-sha256"
+        algo_header = prefix + "-algorithm"
+        encryption = self.metadata.get("customerEncryption")
         if encryption is None:
             # The object is not encrypted, no key is needed.
             if request.headers.get(key_header) is None:
@@ -166,8 +171,9 @@ class GcsObjectVersion(object):
         hash_header_value = request.headers.get(hash_header)
         algo_header_value = request.headers.get(algo_header)
         testbench_utils.validate_customer_encryption_headers(
-            key_header_value, hash_header_value, algo_header_value)
-        if encryption.get('keySha256') != hash_header_value:
+            key_header_value, hash_header_value, algo_header_value
+        )
+        if encryption.get("keySha256") != hash_header_value:
             testbench_utils.raise_csek_error()
 
     def _capture_customer_encryption(self, request):
@@ -176,18 +182,19 @@ class GcsObjectVersion(object):
         :param request:flask.Request the http request.
         :rtype:NoneType
         """
-        if request.headers.get('x-goog-encryption-key') is None:
+        if request.headers.get("x-goog-encryption-key") is None:
             return
-        prefix = 'x-goog-encryption'
-        key_header = prefix + '-key'
-        hash_header = prefix + '-key-sha256'
-        algo_header = prefix + '-algorithm'
+        prefix = "x-goog-encryption"
+        key_header = prefix + "-key"
+        hash_header = prefix + "-key-sha256"
+        algo_header = prefix + "-algorithm"
         key_header_value = request.headers.get(key_header)
         hash_header_value = request.headers.get(hash_header)
         algo_header_value = request.headers.get(algo_header)
         testbench_utils.validate_customer_encryption_headers(
-            key_header_value, hash_header_value, algo_header_value)
-        self.metadata['customerEncryption'] = {
+            key_header_value, hash_header_value, algo_header_value
+        )
+        self.metadata["customerEncryption"] = {
             "encryptionAlgorithm": algo_header_value,
             "keySha256": hash_header_value,
         }
@@ -195,38 +202,43 @@ class GcsObjectVersion(object):
     def _update_predefined_acl(self, predefined_acl):
         """Update the ACL based on the given request parameter value."""
         if predefined_acl is None:
-            predefined_acl = 'projectPrivate'
+            predefined_acl = "projectPrivate"
         self.insert_acl(
-            testbench_utils.canonical_entity_name('project-owners-123456789'), 'OWNER')
+            testbench_utils.canonical_entity_name("project-owners-123456789"), "OWNER"
+        )
         bucket = testbench_utils.lookup_bucket(self.bucket_name)
-        owner = bucket.metadata.get('owner')
+        owner = bucket.metadata.get("owner")
         if owner is None:
-            owner_entity = 'project-owners-123456789'
+            owner_entity = "project-owners-123456789"
         else:
-            owner_entity = owner.get('entity')
-        if predefined_acl == 'authenticatedRead':
-            self.insert_acl('allAuthenticatedUsers', 'READER')
-        elif predefined_acl == 'bucketOwnerFullControl':
-            self.insert_acl(owner_entity, 'OWNER')
-        elif predefined_acl == 'bucketOwnerRead':
-            self.insert_acl(owner_entity, 'READER')
-        elif predefined_acl == 'private':
-            self.insert_acl('project-owners', 'OWNER')
-        elif predefined_acl == 'projectPrivate':
+            owner_entity = owner.get("entity")
+        if predefined_acl == "authenticatedRead":
+            self.insert_acl("allAuthenticatedUsers", "READER")
+        elif predefined_acl == "bucketOwnerFullControl":
+            self.insert_acl(owner_entity, "OWNER")
+        elif predefined_acl == "bucketOwnerRead":
+            self.insert_acl(owner_entity, "READER")
+        elif predefined_acl == "private":
+            self.insert_acl("project-owners", "OWNER")
+        elif predefined_acl == "projectPrivate":
             self.insert_acl(
-                testbench_utils.canonical_entity_name('project-editors-123456789'), 'OWNER')
+                testbench_utils.canonical_entity_name("project-editors-123456789"),
+                "OWNER",
+            )
             self.insert_acl(
-                testbench_utils.canonical_entity_name('project-viewers-123456789'), 'READER')
-        elif predefined_acl == 'publicRead':
-            self.insert_acl(
-                testbench_utils.canonical_entity_name('allUsers'), 'READER')
+                testbench_utils.canonical_entity_name("project-viewers-123456789"),
+                "READER",
+            )
+        elif predefined_acl == "publicRead":
+            self.insert_acl(testbench_utils.canonical_entity_name("allUsers"), "READER")
         else:
             raise error_response.ErrorResponse(
-                'Invalid predefinedAcl value', status_code=400)
+                "Invalid predefinedAcl value", status_code=400
+            )
 
     def reset_predefined_acl(self, predefined_acl):
         """Reset the ACL based on the given request parameter value."""
-        self.metadata['acl'] = []
+        self.metadata["acl"] = []
         self._update_predefined_acl(predefined_acl)
 
     def insert_acl(self, entity, role):
@@ -238,25 +250,25 @@ class GcsObjectVersion(object):
         :rtype:dict
         """
         entity = testbench_utils.canonical_entity_name(entity)
-        email = ''
-        if entity.startswith('user-'):
+        email = ""
+        if entity.startswith("user-"):
             email = entity
         # Replace or insert the entry.
-        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
+        indexed = testbench_utils.index_acl(self.metadata.get("acl", []))
         indexed[entity] = {
-            'bucket': self.bucket_name,
-            'email': email,
-            'entity': entity,
-            'entity_id': '',
-            'etag': self.metadata.get('etag', 'XYZ='),
-            'generation': self.generation,
-            'id': self.metadata.get('id', '') + '/' + entity,
-            'kind': 'storage#objectAccessControl',
-            'object': self.name,
-            'role': role,
-            'selfLink': self.metadata.get('selfLink') + '/acl/' + entity
+            "bucket": self.bucket_name,
+            "email": email,
+            "entity": entity,
+            "entity_id": "",
+            "etag": self.metadata.get("etag", "XYZ="),
+            "generation": self.generation,
+            "id": self.metadata.get("id", "") + "/" + entity,
+            "kind": "storage#objectAccessControl",
+            "object": self.name,
+            "role": role,
+            "selfLink": self.metadata.get("selfLink") + "/acl/" + entity,
         }
-        self.metadata['acl'] = list(indexed.values())
+        self.metadata["acl"] = list(indexed.values())
         return indexed[entity]
 
     def delete_acl(self, entity):
@@ -266,9 +278,9 @@ class GcsObjectVersion(object):
         :rtype:NoneType
         """
         entity = testbench_utils.canonical_entity_name(entity)
-        indexed = testbench_utils.index_acl(self.metadata.get('acl', []))
+        indexed = testbench_utils.index_acl(self.metadata.get("acl", []))
         indexed.pop(entity)
-        self.metadata['acl'] = list(indexed.values())
+        self.metadata["acl"] = list(indexed.values())
 
     def get_acl(self, entity):
         """Get a single AccessControl entry from the Object revision.
@@ -278,11 +290,12 @@ class GcsObjectVersion(object):
         :rtype:dict
         """
         entity = testbench_utils.canonical_entity_name(entity)
-        for acl in self.metadata.get('acl', []):
-            if acl.get('entity', '') == entity:
+        for acl in self.metadata.get("acl", []):
+            if acl.get("entity", "") == entity:
                 return acl
         raise error_response.ErrorResponse(
-            'Entity %s not found in object %s' % (entity, self.name))
+            "Entity %s not found in object %s" % (entity, self.name)
+        )
 
     def update_acl(self, entity, role):
         """Update a single AccessControl entry in this Object revision.
@@ -304,31 +317,31 @@ class GcsObjectVersion(object):
         """
         acl = self.get_acl(entity)
         payload = json.loads(request.data)
-        request_entity = payload.get('entity')
+        request_entity = payload.get("entity")
         if request_entity is not None and request_entity != entity:
             raise error_response.ErrorResponse(
-                'Entity mismatch in ObjectAccessControls: patch, expected=%s, got=%s'
-                % (entity, request_entity))
-        etag_match = request.headers.get('if-match')
-        if etag_match is not None and etag_match != acl.get('etag'):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
-        etag_none_match = request.headers.get('if-none-match')
-        if (etag_none_match is not None
-                and etag_none_match != acl.get('etag')):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
-        role = payload.get('role')
+                "Entity mismatch in ObjectAccessControls: patch, expected=%s, got=%s"
+                % (entity, request_entity)
+            )
+        etag_match = request.headers.get("if-match")
+        if etag_match is not None and etag_match != acl.get("etag"):
+            raise error_response.ErrorResponse("Precondition Failed", status_code=412)
+        etag_none_match = request.headers.get("if-none-match")
+        if etag_none_match is not None and etag_none_match != acl.get("etag"):
+            raise error_response.ErrorResponse("Precondition Failed", status_code=412)
+        role = payload.get("role")
         if role is None:
-            raise error_response.ErrorResponse('Missing role value')
+            raise error_response.ErrorResponse("Missing role value")
         return self.insert_acl(entity, role)
 
     def x_goog_hash_header(self):
         """Return the value for the x-goog-hash header."""
-        hashes = {'md5': self.metadata.get('md5Hash', ''),
-                  'crc32c': self.metadata.get('crc32c', '')}
-        hashes = ['%s=%s' % (key, val) for key, val in hashes.items() if val]
-        return ','.join(hashes)
+        hashes = {
+            "md5": self.metadata.get("md5Hash", ""),
+            "crc32c": self.metadata.get("crc32c", ""),
+        }
+        hashes = ["%s=%s" % (key, val) for key, val in hashes.items() if val]
+        return ",".join(hashes)
 
 
 class GcsObject(object):
@@ -352,7 +365,7 @@ class GcsObject(object):
         self.rewrite_token_generator = 0
         self.rewrite_operations = {}
 
-    def get_revision(self, request, version_field_name='generation'):
+    def get_revision(self, request, version_field_name="generation"):
         """Get the information about a particular object revision or raise.
 
         :param request:flask.Request the contents of the http request.
@@ -369,7 +382,8 @@ class GcsObject(object):
         version = self.revisions.get(int(generation))
         if version is None:
             raise error_response.ErrorResponse(
-                'Precondition Failed: generation %s not found' % generation)
+                "Precondition Failed: generation %s not found" % generation
+            )
         return version
 
     def del_revision(self, request):
@@ -379,7 +393,7 @@ class GcsObject(object):
         :return: True if the object entry in the Bucket should be deleted.
         :rtype: bool
         """
-        generation = request.args.get('generation') or self.current_generation
+        generation = request.args.get("generation") or self.current_generation
         if generation is None:
             return True
         self.revisions.pop(int(generation))
@@ -404,9 +418,16 @@ class GcsObject(object):
          :rtype: dict
          """
         writeable_keys = {
-            'acl', 'cacheControl', 'contentDisposition', 'contentEncoding',
-            'contentLanguage', 'contentType', 'eventBasedHold', 'metadata',
-            'temporaryHold', 'storageClass'
+            "acl",
+            "cacheControl",
+            "contentDisposition",
+            "contentEncoding",
+            "contentLanguage",
+            "contentType",
+            "eventBasedHold",
+            "metadata",
+            "temporaryHold",
+            "storageClass",
         }
         for key in metadata.keys():
             if key not in writeable_keys:
@@ -422,15 +443,15 @@ class GcsObject(object):
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
-        generation = request.args.get('generation')
+        generation = request.args.get("generation")
         if generation is None:
             version = self.get_latest()
         else:
             version = self.revisions.get(int(generation))
             if version is None:
                 raise error_response.ErrorResponse(
-                    'Precondition Failed: generation %s not found' %
-                    generation)
+                    "Precondition Failed: generation %s not found" % generation
+                )
         metadata = GcsObject._remove_non_writable_keys(json.loads(request.data))
         version.update_from_metadata(metadata)
         return version
@@ -444,19 +465,20 @@ class GcsObject(object):
         :raises:ErrorResponse if the request contains an invalid generation
             number.
         """
-        generation = request.args.get('generation')
+        generation = request.args.get("generation")
         if generation is None:
             version = self.get_latest()
         else:
             version = self.revisions.get(int(generation))
             if version is None:
                 raise error_response.ErrorResponse(
-                    'Precondition Failed: generation %s not found' %
-                    generation)
+                    "Precondition Failed: generation %s not found" % generation
+                )
         patch = GcsObject._remove_non_writable_keys(json.loads(request.data))
         patched = testbench_utils.json_api_patch(
-            version.metadata, patch, recurse_on={'metadata'})
-        patched['metageneration'] = patched.get('metageneration', 0) + 1
+            version.metadata, patch, recurse_on={"metadata"}
+        )
+        patched["metageneration"] = patched.get("metageneration", 0) + 1
         version.metadata = patched
         return version
 
@@ -473,48 +495,53 @@ class GcsObject(object):
         return self.revisions.get(self.current_generation, None)
 
     def check_preconditions_by_value(
-            self, generation_match, generation_not_match, metageneration_match,
-            metageneration_not_match):
+        self,
+        generation_match,
+        generation_not_match,
+        metageneration_match,
+        metageneration_not_match,
+    ):
         """Verify that the given precondition values are met."""
         current_generation = self.current_generation or 0
-        if (generation_match is not None
-                and int(generation_match) != current_generation):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
+        if generation_match is not None and int(generation_match) != current_generation:
+            raise error_response.ErrorResponse("Precondition Failed", status_code=412)
         # This object does not exist (yet), testing in this case is special.
-        if (generation_not_match is not None
-                and int(generation_not_match) == current_generation):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
+        if (
+            generation_not_match is not None
+            and int(generation_not_match) == current_generation
+        ):
+            raise error_response.ErrorResponse("Precondition Failed", status_code=412)
 
         if self.current_generation is None:
-            if (metageneration_match is not None
-                    or metageneration_not_match is not None):
+            if metageneration_match is not None or metageneration_not_match is not None:
                 raise error_response.ErrorResponse(
-                    'Precondition Failed', status_code=412)
+                    "Precondition Failed", status_code=412
+                )
             return
 
         current = self.revisions.get(current_generation)
         if current is None:
-            raise error_response.ErrorResponse(
-                'Object not found', status_code=404)
-        metageneration = current.metadata.get('metageneration')
-        if (metageneration_not_match is not None
-                and int(metageneration_not_match) == metageneration):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
-        if (metageneration_match is not None
-                and int(metageneration_match) != metageneration):
-            raise error_response.ErrorResponse(
-                'Precondition Failed', status_code=412)
+            raise error_response.ErrorResponse("Object not found", status_code=404)
+        metageneration = current.metadata.get("metageneration")
+        if (
+            metageneration_not_match is not None
+            and int(metageneration_not_match) == metageneration
+        ):
+            raise error_response.ErrorResponse("Precondition Failed", status_code=412)
+        if (
+            metageneration_match is not None
+            and int(metageneration_match) != metageneration
+        ):
+            raise error_response.ErrorResponse("Precondition Failed", status_code=412)
 
     def check_preconditions(
-            self,
-            request,
-            if_generation_match='ifGenerationMatch',
-            if_generation_not_match='ifGenerationNotMatch',
-            if_metageneration_match='ifMetagenerationMatch',
-            if_metageneration_not_match='ifMetagenerationNotMatch'):
+        self,
+        request,
+        if_generation_match="ifGenerationMatch",
+        if_generation_not_match="ifGenerationNotMatch",
+        if_metageneration_match="ifMetagenerationMatch",
+        if_metageneration_not_match="ifMetagenerationNotMatch",
+    ):
         """Verify that the preconditions in request are met.
 
         :param request:flask.Request the http request.
@@ -535,11 +562,13 @@ class GcsObject(object):
         generation_match = request.args.get(if_generation_match)
         generation_not_match = request.args.get(if_generation_not_match)
         metageneration_match = request.args.get(if_metageneration_match)
-        metageneration_not_match = request.args.get(
-            if_metageneration_not_match)
+        metageneration_not_match = request.args.get(if_metageneration_not_match)
         self.check_preconditions_by_value(
-            generation_match, generation_not_match, metageneration_match,
-            metageneration_not_match)
+            generation_match,
+            generation_not_match,
+            metageneration_match,
+            metageneration_not_match,
+        )
 
     def _insert_revision(self, revision):
         """Insert a new revision that has been initialized and checked.
@@ -566,10 +595,15 @@ class GcsObject(object):
         media = testbench_utils.extract_media(request)
         self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, media)
-        meta = revision.metadata.setdefault('metadata', {})
-        meta['x_testbench_upload'] = 'simple'
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            media,
+        )
+        meta = revision.metadata.setdefault("metadata", {})
+        meta["x_testbench_upload"] = "simple"
         self._insert_revision(revision)
         return revision
 
@@ -587,26 +621,35 @@ class GcsObject(object):
         # There are two ways to specify the content-type, the 'content-type'
         # header and the resource['contentType'] field. They must be consistent,
         # and the service generates an error when they are not.
-        if (resource.get('contentType') is not None and
-                media_headers.get('content-type') is not None and
-                resource.get('contentType') != media_headers.get('content-type')):
+        if (
+            resource.get("contentType") is not None
+            and media_headers.get("content-type") is not None
+            and resource.get("contentType") != media_headers.get("content-type")
+        ):
             raise error_response.ErrorResponse(
-                ('Content-Type specified in the upload (%s) does not match' +
-                 'contentType specified in the metadata (%s).') % (
-                    media_headers.get('content-type'),
-                    resource.get('contentType')),
-                status_code=400)
+                (
+                    "Content-Type specified in the upload (%s) does not match"
+                    + "contentType specified in the metadata (%s)."
+                )
+                % (media_headers.get("content-type"), resource.get("contentType")),
+                status_code=400,
+            )
         # Set the contentType in the resource from the header. Note that if both
         # are set they have the same value.
-        resource.setdefault('contentType', media_headers.get('content-type'))
+        resource.setdefault("contentType", media_headers.get("content-type"))
         self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, media_body)
-        meta = revision.metadata.setdefault('metadata', {})
-        meta['x_testbench_upload'] = 'multipart'
-        meta['x_testbench_md5'] = resource.get('md5Hash', '')
-        meta['x_testbench_crc32c'] = resource.get('crc32c', '')
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            media_body,
+        )
+        meta = revision.metadata.setdefault("metadata", {})
+        meta["x_testbench_upload"] = "multipart"
+        meta["x_testbench_md5"] = resource.get("md5Hash", "")
+        meta["x_testbench_crc32c"] = resource.get("crc32c", "")
         # Apply any overrides from the resource object part.
         revision.update_from_metadata(resource)
         self._insert_revision(revision)
@@ -624,12 +667,17 @@ class GcsObject(object):
         """
         self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, media)
-        meta = revision.metadata.setdefault('metadata', {})
-        meta['x_testbench_upload'] = 'resumable'
-        meta['x_testbench_md5'] = resource.get('md5Hash', '')
-        meta['x_testbench_crc32c'] = resource.get('crc32c', '')
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            media,
+        )
+        meta = revision.metadata.setdefault("metadata", {})
+        meta["x_testbench_upload"] = "resumable"
+        meta["x_testbench_md5"] = resource.get("md5Hash", "")
+        meta["x_testbench_crc32c"] = resource.get("crc32c", "")
         # Apply any overrides from the resource object part.
         revision.update_from_metadata(resource)
         self._insert_revision(revision)
@@ -645,30 +693,31 @@ class GcsObject(object):
         """
         media = testbench_utils.extract_media(request)
         self.generation_generator += 1
-        goog_hash = request.headers.get('x-goog-hash')
+        goog_hash = request.headers.get("x-goog-hash")
         md5hash = None
         crc32c = None
         if goog_hash is not None:
-            for hash in goog_hash.split(','):
-                if hash.startswith('md5='):
+            for hash in goog_hash.split(","):
+                if hash.startswith("md5="):
                     md5hash = hash[4:]
-                if hash.startswith('crc32c='):
+                if hash.startswith("crc32c="):
                     crc32c = hash[7:]
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, media)
-        meta = revision.metadata.setdefault('metadata', {})
-        meta['x_testbench_upload'] = 'xml'
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            media,
+        )
+        meta = revision.metadata.setdefault("metadata", {})
+        meta["x_testbench_upload"] = "xml"
         if md5hash is not None:
-            meta['x_testbench_md5'] = md5hash
-            revision.update_from_metadata({
-                'md5Hash': md5hash,
-            })
+            meta["x_testbench_md5"] = md5hash
+            revision.update_from_metadata({"md5Hash": md5hash})
         if crc32c is not None:
-            meta['x_testbench_crc32c'] = crc32c
-            revision.update_from_metadata({
-                'crc32c': crc32c,
-            })
+            meta["x_testbench_crc32c"] = crc32c
+            revision.update_from_metadata({"crc32c": crc32c})
         self._insert_revision(revision)
         return revision
 
@@ -685,10 +734,14 @@ class GcsObject(object):
         self.generation_generator += 1
         source_revision.validate_encryption_for_read(request)
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, source_revision.media)
-        revision.reset_predefined_acl(
-            request.args.get('destinationPredefinedAcl'))
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            source_revision.media,
+        )
+        revision.reset_predefined_acl(request.args.get("destinationPredefinedAcl"))
         metadata = json.loads(request.data)
         revision.update_from_metadata(metadata)
         self._insert_revision(revision)
@@ -705,17 +758,21 @@ class GcsObject(object):
         """
         self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, composed_media)
-        revision.reset_predefined_acl(
-            request.args.get('destinationPredefinedAcl'))
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            composed_media,
+        )
+        revision.reset_predefined_acl(request.args.get("destinationPredefinedAcl"))
         payload = json.loads(request.data)
-        if payload.get('destination') is not None:
-            revision.update_from_metadata(payload.get('destination'))
+        if payload.get("destination") is not None:
+            revision.update_from_metadata(payload.get("destination"))
         # The server often discards the MD5 Hash when composing objects, we can
         # easily maintain them in the testbench, but dropping them helps us
         # detect bugs sooner.
-        revision.metadata.pop('md5Hash')
+        revision.metadata.pop("md5Hash")
         self._insert_revision(revision)
         return revision
 
@@ -724,18 +781,26 @@ class GcsObject(object):
         """The arguments that should not change between requests for the same
         rewrite operation."""
         return [
-            'destinationKmsKeyName', 'destinationPredefinedAcl',
-            'ifGenerationMatch', 'ifGenerationNotMatch',
-            'ifMetagenerationMatch', 'ifMetagenerationNotMatch',
-            'ifSourceGenerationMatch', 'ifSourceGenerationNotMatch',
-            'ifSourceMetagenerationMatch', 'ifSourceMetagenerationNotMatch',
-            'maxBytesRewrittenPerCall', 'projection', 'sourceGeneration',
-            'userProject'
+            "destinationKmsKeyName",
+            "destinationPredefinedAcl",
+            "ifGenerationMatch",
+            "ifGenerationNotMatch",
+            "ifMetagenerationMatch",
+            "ifMetagenerationNotMatch",
+            "ifSourceGenerationMatch",
+            "ifSourceGenerationNotMatch",
+            "ifSourceMetagenerationMatch",
+            "ifSourceMetagenerationNotMatch",
+            "maxBytesRewrittenPerCall",
+            "projection",
+            "sourceGeneration",
+            "userProject",
         ]
 
     @classmethod
-    def capture_rewrite_operation_arguments(cls, request, destination_bucket,
-                                            destination_object):
+    def capture_rewrite_operation_arguments(
+        cls, request, destination_bucket, destination_object
+    ):
         """Captures the arguments used to validate related rewrite calls.
 
         :rtype:dict
@@ -743,28 +808,37 @@ class GcsObject(object):
         original_arguments = {}
         for arg in GcsObject.rewrite_fixed_args():
             original_arguments[arg] = request.args.get(arg)
-        original_arguments.update({
-            'destination_bucket': destination_bucket,
-            'destination_object': destination_object,
-        })
+        original_arguments.update(
+            {
+                "destination_bucket": destination_bucket,
+                "destination_object": destination_object,
+            }
+        )
         return original_arguments
 
     @classmethod
-    def make_rewrite_token(cls, operation, destination_bucket,
-                           destination_object, generation):
+    def make_rewrite_token(
+        cls, operation, destination_bucket, destination_object, generation
+    ):
         """Create a new rewrite token for the given operation."""
-        return base64.b64encode(bytearray('/'.join([
-            str(operation.get('id')),
-            destination_bucket,
-            destination_object,
-            str(generation),
-            str(operation.get('bytes_rewritten')),
-        ]), 'utf-8')).decode('utf-8')
+        return base64.b64encode(
+            bytearray(
+                "/".join(
+                    [
+                        str(operation.get("id")),
+                        destination_bucket,
+                        destination_object,
+                        str(generation),
+                        str(operation.get("bytes_rewritten")),
+                    ]
+                ),
+                "utf-8",
+            )
+        ).decode("utf-8")
 
-    def make_rewrite_operation(self, request, destination_bucket,
-                               destination_object):
+    def make_rewrite_operation(self, request, destination_bucket, destination_object):
         """Create a new rewrite token for `Objects: rewrite`."""
-        generation = request.args.get('sourceGeneration')
+        generation = request.args.get("sourceGeneration")
         if generation is None:
             generation = self.generation_generator
         else:
@@ -773,16 +847,18 @@ class GcsObject(object):
         self.rewrite_token_generator = self.rewrite_token_generator + 1
         body = json.loads(request.data)
         original_arguments = self.capture_rewrite_operation_arguments(
-            request, destination_object, destination_object)
+            request, destination_object, destination_object
+        )
         operation = {
-            'id': self.rewrite_token_generator,
-            'original_arguments': original_arguments,
-            'actual_generation': generation,
-            'bytes_rewritten': 0,
-            'body': body,
+            "id": self.rewrite_token_generator,
+            "original_arguments": original_arguments,
+            "actual_generation": generation,
+            "bytes_rewritten": 0,
+            "body": body,
         }
-        token = GcsObject.make_rewrite_token(operation, destination_bucket,
-                                             destination_object, generation)
+        token = GcsObject.make_rewrite_token(
+            operation, destination_bucket, destination_object, generation
+        )
         return token, operation
 
     def rewrite_finish(self, gcs_url, request, body, source):
@@ -799,14 +875,18 @@ class GcsObject(object):
         self.check_preconditions(request)
         self.generation_generator += 1
         revision = GcsObjectVersion(
-            gcs_url, self.bucket_name, self.name, self.generation_generator,
-            request, media)
+            gcs_url,
+            self.bucket_name,
+            self.name,
+            self.generation_generator,
+            request,
+            media,
+        )
         revision.update_from_metadata(body)
         self._insert_revision(revision)
         return revision
 
-    def rewrite_step(self, gcs_url, request, destination_bucket,
-                     destination_object):
+    def rewrite_step(self, gcs_url, request, destination_bucket, destination_object):
         """Execute an iteration of `Objects: rewrite.
 
         Objects: rewrite may need to be called multiple times before it
@@ -828,8 +908,8 @@ class GcsObject(object):
         :rtype:dict
         """
         body = json.loads(request.data)
-        rewrite_token = request.args.get('rewriteToken')
-        if rewrite_token is not None and rewrite_token != '':
+        rewrite_token = request.args.get("rewriteToken")
+        if rewrite_token is not None and rewrite_token != "":
             # Note that we remove the rewrite operation, not just look it up.
             # That way if the operation completes in this call, and/or fails,
             # it is already removed. We need to insert it with a new token
@@ -837,55 +917,56 @@ class GcsObject(object):
             rewrite = self.rewrite_operations.pop(rewrite_token, None)
             if rewrite is None:
                 raise error_response.ErrorResponse(
-                    'Invalid or expired token in rewrite', status_code=410)
+                    "Invalid or expired token in rewrite", status_code=410
+                )
         else:
             rewrite_token, rewrite = self.make_rewrite_operation(
-                request, destination_bucket, destination_bucket)
+                request, destination_bucket, destination_bucket
+            )
 
         # Compare the difference to the original arguments, on the first call
         # this is a waste, but the code is easier to follow.
         current_arguments = self.capture_rewrite_operation_arguments(
-            request, destination_bucket, destination_object)
-        diff = set(current_arguments) ^ set(rewrite.get('original_arguments'))
+            request, destination_bucket, destination_object
+        )
+        diff = set(current_arguments) ^ set(rewrite.get("original_arguments"))
         if len(diff) != 0:
             raise error_response.ErrorResponse(
-                'Mismatched arguments to rewrite', status_code=412)
+                "Mismatched arguments to rewrite", status_code=412
+            )
 
         # This will raise if the version is deleted while the operation is in
         # progress.
-        source = self.get_revision_by_generation(
-            rewrite.get('actual_generation'))
+        source = self.get_revision_by_generation(rewrite.get("actual_generation"))
         source.validate_encryption_for_read(
-            request, prefix='x-goog-copy-source-encryption')
-        bytes_rewritten = rewrite.get('bytes_rewritten')
-        bytes_rewritten += (1024 * 1024)
-        result = {
-            'kind': 'storage#rewriteResponse',
-            'objectSize': len(source.media),
-        }
+            request, prefix="x-goog-copy-source-encryption"
+        )
+        bytes_rewritten = rewrite.get("bytes_rewritten")
+        bytes_rewritten += 1024 * 1024
+        result = {"kind": "storage#rewriteResponse", "objectSize": len(source.media)}
         if bytes_rewritten >= len(source.media):
             bytes_rewritten = len(source.media)
-            rewrite['bytes_rewritten'] = bytes_rewritten
+            rewrite["bytes_rewritten"] = bytes_rewritten
             # Success, the operation completed. Return the new object:
             object_path, destination = testbench_utils.get_object(
-                destination_bucket, destination_object,
-                GcsObject(destination_bucket, destination_object))
-            revision = destination.rewrite_finish(gcs_url, request, body,
-                                                  source)
+                destination_bucket,
+                destination_object,
+                GcsObject(destination_bucket, destination_object),
+            )
+            revision = destination.rewrite_finish(gcs_url, request, body, source)
             testbench_utils.insert_object(object_path, destination)
-            result['done'] = True
-            result['resource'] = revision.metadata
-            rewrite_token = ''
+            result["done"] = True
+            result["resource"] = revision.metadata
+            rewrite_token = ""
         else:
-            rewrite['bytes_rewritten'] = bytes_rewritten
+            rewrite["bytes_rewritten"] = bytes_rewritten
             rewrite_token = GcsObject.make_rewrite_token(
-                rewrite, destination_bucket, destination_object,
-                source.generation)
+                rewrite, destination_bucket, destination_object, source.generation
+            )
             self.rewrite_operations[rewrite_token] = rewrite
-            result['done'] = False
+            result["done"] = False
 
-        result.update({
-            'totalBytesRewritten': bytes_rewritten,
-            'rewriteToken': rewrite_token,
-        })
+        result.update(
+            {"totalBytesRewritten": bytes_rewritten, "rewriteToken": rewrite_token}
+        )
         return result
