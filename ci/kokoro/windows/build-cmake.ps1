@@ -54,14 +54,19 @@ if (Test-Path env:RUNNING_CI) {
     # temporary files.
     $env:TEMP="T:\tmp"
 }
-ctest --output-on-failure -LE integration-tests -C $env:CONFIG
+
+# Get the number of processors to parallelize the tests
+$NCPU=(Get-CimInstance Win32_ComputerSystem).NumberOfLogicalProcessors
+
+$ctest_flags = @("--output-on-failure", "-j", $NCPU, "-C", $env:CONFIG)
+ctest $ctest_flags -LE integration-tests
 if ($LastExitCode) {
     throw "ctest failed with exit code $LastExitCode"
 }
 
 if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running integration tests $env:CONFIG"
-    ctest --output-on-failure -L integration-tests
+    ctest $ctest_flags -L integration-tests
     if ($LastExitCode) {
         throw "Integration tests failed with exit code $LastExitCode"
     }

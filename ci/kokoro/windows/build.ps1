@@ -61,7 +61,13 @@ if (Test-Path env:KOKORO_GFILE_DIR) {
     }
 }
 
-if ($BuildName -eq "cmake") {
+if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
+    $env:CONFIG = "Debug"
+    $env:GENERATOR = "Ninja"
+    $env:VCPKG_TRIPLET = "x64-windows-static"
+    $DependencyScript = "build-cmake-dependencies.ps1"
+    $BuildScript = "build-cmake.ps1"
+} elseif ($BuildName -eq "cmake-release") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
@@ -85,6 +91,16 @@ powershell -exec bypass "${ScriptLocation}/${BuildScript}"
 # Save the build exit code, we want to delete the artifacts
 # even if the build fails.
 $BuildExitCode = $LastExitCode
+
+# Remove most things from the artifacts directory. Kokoro copies these files
+# *very* slowly on Windows, and then ignores most of them :shrug:
+if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
+    Set-Location "$env:KOKORO_ARTIFACTS_DIR"
+    Get-ChildItem -Recurse -File `
+        -Exclude test.xml,sponge_log.xml,build.bat `
+        -ErrorAction SilentlyContinue | `
+        Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+}
 
 if ($BuildExitCode) {
     throw "Build failed with exit code $LastExitCode"
