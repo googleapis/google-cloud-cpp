@@ -61,7 +61,13 @@ if (Test-Path env:KOKORO_GFILE_DIR) {
     }
 }
 
-if ($BuildName -eq "cmake") {
+if (($BuildName -eq "cmake") -or ($BuildName -eq "cmake-debug")) {
+    $env:CONFIG = "Debug"
+    $env:GENERATOR = "Ninja"
+    $env:VCPKG_TRIPLET = "x64-windows-static"
+    $DependencyScript = "build-cmake-dependencies.ps1"
+    $BuildScript = "build-cmake.ps1"
+} elseif ($BuildName -eq "cmake-release") {
     $env:CONFIG = "Release"
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x64-windows-static"
