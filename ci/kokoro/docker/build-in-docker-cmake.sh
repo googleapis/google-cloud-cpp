@@ -237,7 +237,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # over the ones that do.
     for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
       echo
-      echo "${COLOR_YELLOW}$(date -u): Running integration tests for ${subdir}${COLOR_RESET}"
+      echo "${COLOR_YELLOW}$(date -u): Running integration tests for" \
+          " ${subdir}${COLOR_RESET}"
       (cd "${BINARY_DIR}" && \
           "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
     done
@@ -257,8 +258,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
-  echo "${COLOR_YELLOW}$(date -u): Verify installed headers created only expected" \
-      "directories.${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): Verify installed headers created only" \
+      "expected directories.${COLOR_RESET}"
   if comm -23 \
       <(find /var/tmp/staging/include/google/cloud -type d | sort) \
       <(echo /var/tmp/staging/include/google/cloud ; \
@@ -288,7 +289,8 @@ fi
 # If document generation is enabled, run it now.
 if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}$(date -u): Generating Doxygen documentation${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): Generating Doxygen" \
+      "documentation${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
