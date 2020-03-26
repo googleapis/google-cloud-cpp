@@ -185,12 +185,40 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
   fi
 
+  TIMEOUT_CMD="timeout 300s"
+  TIMEOUT_ARGS=("300s")
+  if ! command -v "${TIMEOUT_CMD}"; then
+    TIMEOUT_CMD="env"
+    TIMEOUT_ARGS=()
+  fi
+  readonly TIMEOUT_CMD
+  readonly TIMEOUT_ARGS
+
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
+    # TODO(#441) - remove the for loops below.
+    # Sometimes the integration tests manage to crash the Bigtable emulator.
+    # Manually restarting the build clears up the problem, but that is just a waste
+    # of everybody's time. Use a (short) timeout to run the test and try 3 times.
+    set +e
+    success=no
+    for attempt in 1 2 3; do
+      echo
+      echo "${COLOR_YELLOW}: $(date -u): running bigtable integration tests via CTest [${attempt}]${COLOR_RESET}"
+      echo
+      if "${TIMEOUT_CMD}" "${TIMEOUT_ARGS[@]}" \
+             "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
+             "${BINARY_DIR}" "${ctest_args[@]}"; then
+        success=yes
+      fi
+    done
+    if [ "${success}" != "yes" ]; then
+      echo "${COLOR_RED}$(date -u): integration tests failed multiple times, aborting tests.${COLOR_RESET}"
+      exit 1
+    fi
+    set -e
     echo
-    echo "${COLOR_YELLOW}$(date -u): Running integration tests via CTest${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): running storage integration tests via CTest [${attempt}]${COLOR_RESET}"
     echo
-    "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
-        "${BINARY_DIR}" "${ctest_args[@]}"
     "${PROJECT_ROOT}/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh" \
         "${BINARY_DIR}" "${ctest_args[@]}"
   fi
