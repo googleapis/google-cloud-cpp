@@ -21,8 +21,9 @@ load(
     "storage_client_integration_tests",
 )
 
-[cc_binary(
+[cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
+    timeout = "long",
     srcs = [test],
     linkopts = select({
         "@bazel_tools//src/conditions:windows": [],
@@ -31,6 +32,10 @@ load(
             "-ldl",
         ],
     }),
+    tags = [
+        "integration-tests",
+        "storage-integration-tests",
+    ],
     deps = [
         "//google/cloud/storage:storage_client",
         "//google/cloud/storage:storage_client_testing",

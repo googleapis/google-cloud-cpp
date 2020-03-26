@@ -26,30 +26,32 @@ shift
 ctest_args=("$@")
 
 # Configure run_emulators_utils.sh to find the instance admin emulator.
-export CBT_INSTANCE_ADMIN_EMULATOR_CMD="${BINARY_DIR}/google/cloud/bigtable/tests/instance_admin_emulator"
-
 CMDDIR="$(dirname "$0")"
 readonly CMDDIR
 PROJECT_ROOT="$(cd "${CMDDIR}/../../../.."; pwd)"
 readonly PROJECT_ROOT
-source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
-
-cd "${BINARY_DIR}"
-start_emulators
+source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
 NONCE="$(date +%s)-${RANDOM}"
 readonly NONCE
-export GOOGLE_CLOUD_PROJECT="emulated-${NONCE}"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="it-${NONCE}"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="fake-region1-a"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="fake-region1-b"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="fake-sa@emulated-${NONCE}.iam.gserviceaccount.com"
-export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+# Create most likely unique names for the project and bucket so multiple tests
+# can use the same testbench.
+export GOOGLE_CLOUD_PROJECT="fake-project-${NONCE}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="fake-bucket-${NONCE}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID="fake-region-${NONCE}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${GOOGLE_CLOUD_PROJECT}/topics/fake-topic-${NONCE}"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account@example.com"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="fake-service-account@example.com"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
 
-ctest -L "bigtable-integration-tests" "${ctest_args[@]}"
+cd "${BINARY_DIR}"
+start_testbench
+
+ctest -L "storage-integration-tests" "${ctest_args[@]}"
 exit_status=$?
 
-kill_emulators
+kill_testbench
 trap '' EXIT
 
 exit "${exit_status}"

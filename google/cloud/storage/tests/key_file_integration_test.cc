@@ -29,17 +29,23 @@ namespace {
 using ::testing::HasSubstr;
 
 class KeyFileIntegrationTest
-    : public google::cloud::storage::testing::StorageIntegrationTest {
+    : public google::cloud::storage::testing::StorageIntegrationTest,
+      public ::testing::WithParamInterface<std::string> {
  protected:
   void SetUp() override {
+    // The testbench does not implement signed URLs.
+    if (UsingTestbench()) GTEST_SKIP();
+
+    std::string const key_file_envvar = GetParam();
+
     bucket_name_ = google::cloud::internal::GetEnv(
                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
                        .value_or("");
     ASSERT_FALSE(bucket_name_.empty());
-    key_filename_ = google::cloud::internal::GetEnv(
-                        "GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILENAME")
-                        .value_or("");
-    ASSERT_FALSE(key_filename_.empty());
+    key_filename_ =
+        google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
+    ASSERT_FALSE(key_filename_.empty())
+        << " expected non-empty value for ${" << key_file_envvar << "}";
     service_account_ =
         google::cloud::internal::GetEnv(
             "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT")
@@ -52,11 +58,7 @@ class KeyFileIntegrationTest
   std::string service_account_;
 };
 
-TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
+TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   auto credentials =
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
   ASSERT_STATUS_OK(credentials);
@@ -89,11 +91,7 @@ TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadDefaultAccount) {
   ASSERT_STATUS_OK(deleted);
 }
 
-TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
+TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   auto credentials =
       oauth2::CreateServiceAccountCredentialsFromFilePath(key_filename_);
   ASSERT_STATUS_OK(credentials);
@@ -125,6 +123,13 @@ TEST_F(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
   auto deleted = client.DeleteObject(bucket_name_, object_name);
   ASSERT_STATUS_OK(deleted);
 }
+
+INSTANTIATE_TEST_SUITE_P(
+    KeyFileJsonTest, KeyFileIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
+INSTANTIATE_TEST_SUITE_P(
+    KeyFileP12Test, KeyFileIntegrationTest,
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
 
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS

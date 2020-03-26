@@ -37,7 +37,8 @@ storage_client_integration_tests = [
     "service_account_integration_test.cc",
     "signed_url_conformance_test.cc",
     "signed_url_integration_test.cc",
-    "slow_reader_integration_test.cc",
+    "slow_reader_chunk_integration_test.cc",
+    "slow_reader_stream_integration_test.cc",
     "storage_include_test.cc",
     "thread_integration_test.cc",
 ]
