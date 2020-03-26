@@ -185,13 +185,46 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
   fi
 
+  TIMEOUT_CMD="timeout 300s"
+  TIMEOUT_ARGS=("300s")
+  if ! command -v "${TIMEOUT_CMD}"; then
+    TIMEOUT_CMD="env"
+    TIMEOUT_ARGS=()
+  fi
+  readonly TIMEOUT_CMD
+  readonly TIMEOUT_ARGS
+
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
+    readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
+    # TODO(#441) - remove the for loops below.
+    # Sometimes the integration tests manage to crash the Bigtable emulator.
+    # Manually restarting the build clears up the problem, but that is just a
+    # waste of everybody's time. Use a (short) timeout to run the test and try
+    # 3 times.
+    set +e
+    success=no
+    for attempt in 1 2 3; do
+      echo
+      echo "${COLOR_YELLOW}: $(date -u): running bigtable integration tests" \
+          "via CTest [${attempt}]${COLOR_RESET}"
+      echo
+      if "${TIMEOUT_CMD}" "${TIMEOUT_ARGS[@]}" \
+             "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+             "${BINARY_DIR}" "${ctest_args[@]}"; then
+        success=yes
+      fi
+    done
+    if [ "${success}" != "yes" ]; then
+      echo "${COLOR_RED}$(date -u): integration tests failed multiple times," \
+          "aborting tests.${COLOR_RESET}"
+      exit 1
+    fi
+    set -e
     echo
-    echo "${COLOR_YELLOW}$(date -u): Running integration tests via CTest${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): running storage integration tests via" \
+        "CTest [${attempt}]${COLOR_RESET}"
     echo
-    "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
-        "${BINARY_DIR}" "${ctest_args[@]}"
-    "${PROJECT_ROOT}/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh" \
+    "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
         "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
@@ -200,11 +233,12 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo "${COLOR_YELLOW}$(date -u): Running integration tests${COLOR_RESET}"
     echo
 
-    # Run the integration tests. Not all projects have them, so just iterate over
-    # the ones that do.
+    # Run the integration tests. Not all projects have them, so just iterate
+    # over the ones that do.
     for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
       echo
-      echo "${COLOR_YELLOW}$(date -u): Running integration tests for ${subdir}${COLOR_RESET}"
+      echo "${COLOR_YELLOW}$(date -u): Running integration tests for" \
+          " ${subdir}${COLOR_RESET}"
       (cd "${BINARY_DIR}" && \
           "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
     done
@@ -224,8 +258,8 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
-  echo "${COLOR_YELLOW}$(date -u): Verify installed headers created only expected" \
-      "directories.${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): Verify installed headers created only" \
+      "expected directories.${COLOR_RESET}"
   if comm -23 \
       <(find /var/tmp/staging/include/google/cloud -type d | sort) \
       <(echo /var/tmp/staging/include/google/cloud ; \
@@ -255,7 +289,8 @@ fi
 # If document generation is enabled, run it now.
 if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}$(date -u): Generating Doxygen documentation${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): Generating Doxygen" \
+      "documentation${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
