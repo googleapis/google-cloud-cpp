@@ -35,7 +35,7 @@ if (Test-Path env:RUNNING_CI) {
     if (Test-Path "vcpkg") {
         Remove-Item -LiteralPath "vcpkg" -Force -Recurse
     }
-    git clone --depth 10 https://github.com/Microsoft/vcpkg.git
+    git clone --quiet --depth 10 https://github.com/Microsoft/vcpkg.git
     if ($LastExitCode) {
       throw "vcpkg git setup failed with exit code $LastExitCode"
     }
