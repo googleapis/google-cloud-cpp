@@ -61,7 +61,7 @@ class ObjectInsertIntegrationTest
   std::string bucket_name_;
 };
 
-TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
+TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -86,7 +86,7 @@ TEST_F(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -110,7 +110,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
+TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -134,7 +134,7 @@ TEST_F(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithMD5) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -159,7 +159,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMD5) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -184,7 +184,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -209,7 +209,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithMetadata) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -239,7 +239,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithMetadata) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
+TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -259,7 +259,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclAuthenticatedRead) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
+TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -284,7 +284,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerFullControl) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
+TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -310,7 +310,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclBucketOwnerRead) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
+TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -332,7 +332,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPrivate) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
+TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -353,7 +353,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclProjectPrivate) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
+TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -373,7 +373,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -397,7 +397,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest,
+TEST_P(ObjectInsertIntegrationTest,
        XmlInsertPredefinedAclBucketOwnerFullControl) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -427,7 +427,7 @@ TEST_F(ObjectInsertIntegrationTest,
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -456,7 +456,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -481,7 +481,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -506,7 +506,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
+TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -539,7 +539,7 @@ TEST_F(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
  * the server.  To verify that the parameter appears in the request we rely
  * on the logging facilities in the library, which is ugly to do.
  */
-TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(opts);
   Client client((*std::move(opts))
@@ -582,7 +582,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithQuotaUser) {
  * the server.  To verify that the parameter appears in the request we rely
  * on the logging facilities in the library, which is ugly to do.
  */
-TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithUserIp) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(opts);
   Client client((*std::move(opts))
@@ -625,7 +625,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIp) {
  * the server.  To verify that the parameter appears in the request we rely
  * on the logging facilities in the library, which is ugly to do.
  */
-TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
   auto opts = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(opts);
   Client client((*std::move(opts))
@@ -680,7 +680,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithUserIpBlank) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
+TEST_P(ObjectInsertIntegrationTest, InsertWithContentType) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -698,7 +698,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertWithContentType) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
+TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -722,7 +722,7 @@ TEST_F(ObjectInsertIntegrationTest, InsertFailure) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
+TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -749,10 +749,10 @@ TEST_F(ObjectInsertIntegrationTest, InsertXmlFailure) {
 
 INSTANTIATE_TEST_SUITE_P(
     ObjectInsertWithJsonCredentialsTest, ObjectInsertIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_TEST_KEY_FILE_JSON"));
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
 INSTANTIATE_TEST_SUITE_P(
     ObjectInsertWithP12CredentialsTest, ObjectInsertIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_TEST_KEY_FILE_P12"));
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
 
 }  // anonymous namespace
 }  // namespace STORAGE_CLIENT_NS

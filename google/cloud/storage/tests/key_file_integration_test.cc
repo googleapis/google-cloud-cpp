@@ -126,10 +126,10 @@ TEST_P(KeyFileIntegrationTest, ObjectWriteSignAndReadExplicitAccount) {
 
 INSTANTIATE_TEST_SUITE_P(
     KeyFileJsonTest, KeyFileIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_TEST_KEY_FILE_JSON"));
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON"));
 INSTANTIATE_TEST_SUITE_P(
     KeyFileP12Test, KeyFileIntegrationTest,
-    ::testing::Values("GOOGLE_CLOUD_CPP_TEST_KEY_FILE_P12"));
+    ::testing::Values("GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12"));
 
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
