@@ -69,6 +69,10 @@ behaviors in the library.
   `Client::ProfileQuery()`. This can produce a lot of output, so use with
   caution!
 
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
 - `GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=...` changes the default endpoint
   (spanner.googleapis.com) for the library.
 
