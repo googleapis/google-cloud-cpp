@@ -95,7 +95,7 @@ $BuildExitCode = $LastExitCode
 # Remove most things from the artifacts directory. Kokoro copies these files
 # *very* slowly on Windows, and then ignores most of them :shrug:
 if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
-    Set-Location "$env:KOKORO_ARTIFACTS_DIR"    
+    Set-Location "$env:KOKORO_ARTIFACTS_DIR"
     Get-ChildItem -Recurse -File `
         -Exclude test.xml,sponge_log.xml,build.bat `
         -ErrorAction SilentlyContinue | `
