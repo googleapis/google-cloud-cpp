@@ -16,10 +16,45 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
+$GOOGLE_CLOUD_CPP_REPOSITORY="google-cloud-cpp"
+$CACHE_BUCKET=if(Test-Path env:GOOGLE_CLOUD_CPP_KOKORO_RESULTS) `
+    {$env:GOOGLE_CLOUD_CPP_KOKORO_RESULTS} else {"cloud-cpp-kokoro-results"}
+$BRANCH_NAME="master"
+$CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRANCH_NAME}"
+$CACHE_NAME="cache-windows-bazel.zip"
+
+$IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
+    ($env:KOKORO_JOB_TYPE = "GITHUB_PULL_REQUEST")
+$CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
+    (Test-Path "${env:KOKORO_GFILE_DIR}/build-results-service-account.json")
+$Has7z= Get-Command "7z" -ErrorAction SilentlyContinue
+
+# Shutdown the Bazel server to release any locks
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+bazel shutdown
+
+if ($CacheConfigured -and $Has7z) {
+    gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Downloading Bazel cache."
+    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}" "${CACHE_NAME}"
+    if ($LastExitCode) {
+        # Ignore errors, caching failures should not break the build.
+        Write-Host "gsutil download failed with exit code $LastExitCode"
+        Write-Host "Continue building without a cache"
+    } else {
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Extracting build cache."
+        7z x "${CACHE_NAME}" -spf -aoa -bsp0
+        if ($LastExitCode) {
+            # Ignore errors, caching failures should not break the build.
+            Write-Host "extracting build cache failed with exit code $LastExitCode"
+            Write-Host "Continue building without a cache"
+        }
+    }
+}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
 bazel version
 
-$common_flags = @()
 # Create output directory for Bazel. Bazel creates really long paths,
 # sometimes exceeding the Windows limits. Using a short name for the
 # root of the Bazel output directory works around this problem.
@@ -28,7 +63,8 @@ if (-not (Test-Path $bazel_root)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create bazel user root (${bazel_root})"
     New-Item -ItemType Directory -Path $bazel_root | Out-Null
 }
-$common_flags += ("--output_user_root=${bazel_root}")
+
+$common_flags = @("--output_user_root=${bazel_root}")
 
 $test_flags = @("--test_output=errors",
                 "--verbose_failures=true",
@@ -76,4 +112,29 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
     }
 }
 
+# Shutdown the Bazel server to release any locks
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+bazel shutdown
+
+if (-not $IsPR -and $CacheConfigured -and $Has7z) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
+    7z a "${CACHE_NAME}" "${bazel_root}" -spf -bso0 -bse0 -bsp0
+    if ($LastExitCode) {
+        # Ignore errors, caching failures should not break the build.
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) zipping cache "`
+            "contents failed with exit code $LastExitCode"
+    }
+    if (Test-Path "${CACHE_NAME}") {
+        gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Uploading Bazel cache."
+        gsutil -q cp  "${CACHE_NAME}" "gs://${CACHE_FOLDER}/${CACHE_NAME}"
+        if ($LastExitCode) {
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) uploading cache failed exit code $LastExitCode"
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) cache not updated"
+        }
+    }
+}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
+
+Exit 0
