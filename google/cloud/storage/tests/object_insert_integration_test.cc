@@ -47,8 +47,10 @@ class ObjectInsertIntegrationTest
       // this test are (1) it is relatively short (less than 60 seconds), (2) it
       // actually performs multiple operations against production.
       std::string const key_file_envvar = GetParam();
-      auto value = google::cloud::internal::GetEnv(key_file_envvar.c_str());
-      ASSERT_TRUE(value) << " expected ${" << key_file_envvar << "} to be set";
+      auto value =
+          google::cloud::internal::GetEnv(key_file_envvar.c_str()).value_or("");
+      ASSERT_FALSE(value.empty()) << " expected ${" << key_file_envvar
+                                  << "} to be set and be not empty";
       google::cloud::internal::SetEnv("GOOGLE_APPLICATION_CREDENTIALS", value);
     }
     bucket_name_ = google::cloud::internal::GetEnv(

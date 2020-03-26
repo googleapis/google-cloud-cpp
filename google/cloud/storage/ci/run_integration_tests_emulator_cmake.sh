@@ -48,7 +48,7 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROO
 cd "${BINARY_DIR}"
 start_testbench
 
-ctest "-L" "storage-integration-tests" "${ctest_args[@]}"
+ctest -L "storage-integration-tests" "${ctest_args[@]}"
 exit_status=$?
 
 kill_testbench

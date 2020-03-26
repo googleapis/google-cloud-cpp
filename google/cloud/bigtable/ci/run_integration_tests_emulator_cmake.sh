@@ -46,7 +46,7 @@ export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="fake-region1-b"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="fake-sa@emulated-${NONCE}.iam.gserviceaccount.com"
 export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 
-ctest "-L" "bigtable-integration-tests" "${ctest_args[@]}"
+ctest -L "bigtable-integration-tests" "${ctest_args[@]}"
 exit_status=$?
 
 kill_emulators
