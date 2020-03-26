@@ -245,7 +245,7 @@ void GetBackup(google::cloud::bigtable::TableAdmin admin, int argc,
                char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "get-table <project-id> <instance-id> <cluster-id> <backup-id>"};
+        "get-backup <project-id> <instance-id> <cluster-id> <backup-id>"};
   }
   std::string const cluster_id = ConsumeArg(argc, argv);
   std::string const backup_id = ConsumeArg(argc, argv);
@@ -270,7 +270,7 @@ void DeleteBackup(google::cloud::bigtable::TableAdmin admin, int argc,
                   char* argv[]) {
   if (argc != 3) {
     throw Usage{
-        "delete-table <project-id> <instance-id> <cluster-id> <table-id>"};
+        "delete-backup <project-id> <instance-id> <cluster-id> <table-id>"};
   }
   std::string const cluster_id = ConsumeArg(argc, argv);
   std::string const backup_id = ConsumeArg(argc, argv);
@@ -293,7 +293,7 @@ void UpdateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
                   char* argv[]) {
   if (argc != 4) {
     throw Usage{
-        "get-table <project-id> <instance-id> <cluster-id> <backup-id> "
+        "update-backup <project-id> <instance-id> <cluster-id> <backup-id> "
         "<expire-time>"};
   }
   std::string const cluster_id = ConsumeArg(argc, argv);
@@ -330,7 +330,7 @@ void RestoreTable(google::cloud::bigtable::TableAdmin admin, int argc,
                   char* argv[]) {
   if (argc != 4) {
     throw Usage{
-        "create-backup <project-id> <instance-id> <table-id> <cluster-id> "
+        "restore-table <project-id> <instance-id> <table-id> <cluster-id> "
         "<backup-id>"};
   }
   std::string const table_id = ConsumeArg(argc, argv);

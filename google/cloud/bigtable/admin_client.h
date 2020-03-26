@@ -17,7 +17,6 @@
 
 #include "google/cloud/bigtable/client_options.h"
 #include "google/cloud/bigtable/version.h"
-#include <google/bigtable/admin/v2/backup.grpc.pb.h>
 #include <google/bigtable/admin/v2/bigtable_table_admin.grpc.pb.h>
 #include <memory>
 #include <string>

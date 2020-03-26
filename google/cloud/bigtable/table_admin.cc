@@ -419,7 +419,7 @@ future<Status> TableAdmin::AsyncDeleteBackup(CompletionQueue& cq,
 }
 
 google::bigtable::admin::v2::CreateBackupRequest
-TableAdmin::CreateBackupParams::as_proto(std::string instance_name) const {
+TableAdmin::CreateBackupParams::AsProto(std::string instance_name) const {
   google::bigtable::admin::v2::CreateBackupRequest proto;
   proto.set_parent(instance_name + "/clusters/" + cluster_id_);
   proto.set_backup_id(backup_id_);
@@ -430,10 +430,10 @@ TableAdmin::CreateBackupParams::as_proto(std::string instance_name) const {
 }
 
 StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::CreateBackup(
-    CreateBackupParams params) {
+    CreateBackupParams const& params) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-  return AsyncCreateBackup(cq, std::move(params))
+  return AsyncCreateBackup(cq, params)
       .then(
           [cq](
               future<StatusOr<google::bigtable::admin::v2::Backup>> f) mutable {
@@ -445,8 +445,8 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::CreateBackup(
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 TableAdmin::AsyncCreateBackup(CompletionQueue& cq,
-                              CreateBackupParams backup_config) {
-  auto request = backup_config.as_proto(instance_name());
+                              CreateBackupParams const& params) {
+  auto request = params.AsProto(instance_name());
   MetadataUpdatePolicy metadata_update_policy(request.parent(),
                                               MetadataParamTypes::PARENT);
   auto client = client_;
@@ -464,15 +464,14 @@ TableAdmin::AsyncCreateBackup(CompletionQueue& cq,
 }
 
 StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::GetBackup(
-    std::string cluster_id, std::string backup_id) {
+    std::string const& cluster_id, std::string const& backup_id) {
   grpc::Status status;
   btadmin::GetBackupRequest request;
   std::string name =
       instance_name() + "/clusters/" + cluster_id + "/backups/" + backup_id;
   request.set_name(name);
 
-  MetadataUpdatePolicy metadata_update_policy(std::move(name),
-                                              MetadataParamTypes::NAME);
+  MetadataUpdatePolicy metadata_update_policy(name, MetadataParamTypes::NAME);
 
   auto result = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
@@ -486,8 +485,8 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::GetBackup(
 }
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
-TableAdmin::AsyncGetBackup(CompletionQueue& cq, std::string cluster_id,
-                           std::string backup_id) {
+TableAdmin::AsyncGetBackup(CompletionQueue& cq, std::string const& cluster_id,
+                           std::string const& backup_id) {
   google::bigtable::admin::v2::GetBackupRequest request{};
   std::string name =
       instance_name() + "/clusters/" + cluster_id + "/backups/" + backup_id;
@@ -507,7 +506,8 @@ TableAdmin::AsyncGetBackup(CompletionQueue& cq, std::string cluster_id,
 }
 
 google::bigtable::admin::v2::UpdateBackupRequest
-TableAdmin::UpdateBackupParams::as_proto(std::string instance_name) const {
+TableAdmin::UpdateBackupParams::AsProto(
+    std::string const& instance_name) const {
   google::bigtable::admin::v2::UpdateBackupRequest proto;
   proto.mutable_backup()->set_name(instance_name + "/clusters/" + cluster_id_ +
                                    "/backups/" + backup_name_);
@@ -517,17 +517,16 @@ TableAdmin::UpdateBackupParams::as_proto(std::string instance_name) const {
 }
 
 StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::UpdateBackup(
-    UpdateBackupParams update_config) {
+    UpdateBackupParams const& params) {
   grpc::Status status;
-  btadmin::UpdateBackupRequest request =
-      update_config.as_proto(instance_name());
+  btadmin::UpdateBackupRequest request = params.AsProto(instance_name());
 
   MetadataUpdatePolicy metadata_update_policy(request.backup().name(),
                                               MetadataParamTypes::BACKUP_NAME);
 
   auto result = ClientUtils::MakeCall(
       *client_, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-      metadata_update_policy, &AdminClient::UpdateBackup, std::move(request),
+      metadata_update_policy, &AdminClient::UpdateBackup, request,
       "UpdateBackup", status, true);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
@@ -538,9 +537,8 @@ StatusOr<google::bigtable::admin::v2::Backup> TableAdmin::UpdateBackup(
 
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 TableAdmin::AsyncUpdateBackup(CompletionQueue& cq,
-                              UpdateBackupParams update_config) {
-  btadmin::UpdateBackupRequest request =
-      update_config.as_proto(instance_name());
+                              UpdateBackupParams const& params) {
+  btadmin::UpdateBackupRequest request = params.AsProto(instance_name());
 
   MetadataUpdatePolicy metadata_update_policy(request.backup().name(),
                                               MetadataParamTypes::NAME);
@@ -558,7 +556,8 @@ TableAdmin::AsyncUpdateBackup(CompletionQueue& cq,
       std::move(request), cq);
 }
 
-Status TableAdmin::DeleteBackup(std::string cluster_id, std::string backup_id) {
+Status TableAdmin::DeleteBackup(std::string const& cluster_id,
+                                std::string const& backup_id) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
   request.set_name(instance_name() + "/clusters/" + cluster_id + "/backups/" +
@@ -579,12 +578,12 @@ Status TableAdmin::DeleteBackup(std::string cluster_id, std::string backup_id) {
 }
 
 future<Status> TableAdmin::AsyncDeleteBackup(CompletionQueue& cq,
-                                             std::string cluster_id,
-                                             std::string backup_name) {
+                                             std::string const& cluster_id,
+                                             std::string const& backup_id) {
   grpc::Status status;
   btadmin::DeleteBackupRequest request;
   request.set_name(instance_name() + "/clusters/" + cluster_id + "/backups/" +
-                   backup_name);
+                   backup_id);
   MetadataUpdatePolicy metadata_update_policy(request.name(),
                                               MetadataParamTypes::NAME);
 
@@ -605,7 +604,7 @@ future<Status> TableAdmin::AsyncDeleteBackup(CompletionQueue& cq,
 }
 
 google::bigtable::admin::v2::ListBackupsRequest
-TableAdmin::ListBackupsParams::as_proto(std::string instance_name) const {
+TableAdmin::ListBackupsParams::AsProto(std::string const& instance_name) const {
   google::bigtable::admin::v2::ListBackupsRequest proto;
   proto.set_parent(cluster_id_ ? instance_name + "/clusters/" + *cluster_id_
                                : instance_name + "/clusters/-");
@@ -615,7 +614,7 @@ TableAdmin::ListBackupsParams::as_proto(std::string instance_name) const {
 }
 
 StatusOr<std::vector<google::bigtable::admin::v2::Backup>>
-TableAdmin::ListBackups(ListBackupsParams params) {
+TableAdmin::ListBackups(ListBackupsParams const& params) {
   grpc::Status status;
 
   // Copy the policies in effect for the operation.
@@ -624,7 +623,7 @@ TableAdmin::ListBackups(ListBackupsParams params) {
 
   // Build the RPC request, try to minimize copying.
   std::vector<btadmin::Backup> result;
-  btadmin::ListBackupsRequest request = params.as_proto(instance_name());
+  btadmin::ListBackupsRequest request = params.AsProto(instance_name());
 
   MetadataUpdatePolicy metadata_update_policy(request.parent(),
                                               MetadataParamTypes::PARENT);
@@ -650,9 +649,10 @@ TableAdmin::ListBackups(ListBackupsParams params) {
 }
 
 future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
-TableAdmin::AsyncListBackups(CompletionQueue& cq, ListBackupsParams params) {
+TableAdmin::AsyncListBackups(CompletionQueue& cq,
+                             ListBackupsParams const& params) {
   auto client = client_;
-  btadmin::ListBackupsRequest request = params.as_proto(instance_name());
+  btadmin::ListBackupsRequest request = params.AsProto(instance_name());
   return internal::StartAsyncRetryMultiPage(
       __func__, clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
       clone_metadata_update_policy(),
@@ -672,7 +672,8 @@ TableAdmin::AsyncListBackups(CompletionQueue& cq, ListBackupsParams params) {
 }
 
 google::bigtable::admin::v2::RestoreTableRequest
-TableAdmin::RestoreTableParams::as_proto(std::string instance_name) const {
+TableAdmin::RestoreTableParams::AsProto(
+    std::string const& instance_name) const {
   google::bigtable::admin::v2::RestoreTableRequest proto;
   proto.set_parent(instance_name);
   proto.set_table_id(table_id_);
@@ -682,10 +683,10 @@ TableAdmin::RestoreTableParams::as_proto(std::string instance_name) const {
 }
 
 StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
-    RestoreTableParams params) {
+    RestoreTableParams const& params) {
   CompletionQueue cq;
   std::thread([](CompletionQueue cq) { cq.Run(); }, cq).detach();
-  return AsyncRestoreTable(cq, std::move(params))
+  return AsyncRestoreTable(cq, params)
       .then(
           [cq](future<StatusOr<google::bigtable::admin::v2::Table>> f) mutable {
             cq.Shutdown();
@@ -695,7 +696,8 @@ StatusOr<google::bigtable::admin::v2::Table> TableAdmin::RestoreTable(
 }
 
 future<StatusOr<google::bigtable::admin::v2::Table>>
-TableAdmin::AsyncRestoreTable(CompletionQueue& cq, RestoreTableParams params) {
+TableAdmin::AsyncRestoreTable(CompletionQueue& cq,
+                              RestoreTableParams const& params) {
   MetadataUpdatePolicy metadata_update_policy(instance_name(),
                                               MetadataParamTypes::PARENT);
   auto client = client_;
@@ -709,7 +711,7 @@ TableAdmin::AsyncRestoreTable(CompletionQueue& cq, RestoreTableParams params) {
                grpc::CompletionQueue* cq) {
         return client->AsyncRestoreTable(context, request, cq);
       },
-      params.as_proto(instance_name()), cq);
+      params.AsProto(instance_name()), cq);
 }
 
 StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(

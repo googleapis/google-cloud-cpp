@@ -440,7 +440,7 @@ class TableAdmin {
 
     std::string source_table() const { return table_name_; }
 
-    google::bigtable::admin::v2::CreateBackupRequest as_proto(
+    google::bigtable::admin::v2::CreateBackupRequest AsProto(
         std::string instance_name) const;
 
    private:
@@ -462,7 +462,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc create backup
    */
   StatusOr<google::bigtable::admin::v2::Backup> CreateBackup(
-      CreateBackupParams params);
+      CreateBackupParams const& params);
 
   /**
    * Sends an asynchronous request to create a new backup of a table in the
@@ -472,6 +472,9 @@ class TableAdmin {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param params instance of `CreateBackupParams`.
    *
    * @return a future that will be satisfied when the request succeeds or the
@@ -483,11 +486,11 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc async create backup
+   * @snippet table_admin_async_snippets.cc async create backup
    *
    */
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncCreateBackup(
-      CompletionQueue& cq, CreateBackupParams backup_config);
+      CompletionQueue& cq, CreateBackupParams const& params);
 
   /**
    * Get information about a single backup.
@@ -511,7 +514,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc get backup
    */
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
-      std::string cluster_id, std::string backup_id);
+      std::string const& cluster_id, std::string const& backup_id);
 
   /**
    * Sends an asynchronous request to get information about a single backup.
@@ -520,6 +523,9 @@ class TableAdmin {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
@@ -541,10 +547,11 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc async get backup
+   * @snippet table_admin_async_snippets.cc async get backup
    */
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncGetBackup(
-      CompletionQueue& cq, std::string cluster_id, std::string backup_id);
+      CompletionQueue& cq, std::string const& cluster_id,
+      std::string const& backup_id);
 
   /**
    * Parameters for `UpdateBackup` and `AsyncUpdateBackup`.
@@ -571,8 +578,8 @@ class TableAdmin {
           backup_name_(std::move(backup_id)),
           expire_time_(std::move(expire_time)) {}
 
-    google::bigtable::admin::v2::UpdateBackupRequest as_proto(
-        std::string instance_name) const;
+    google::bigtable::admin::v2::UpdateBackupRequest AsProto(
+        std::string const& instance_name) const;
 
    private:
     std::string cluster_id_;
@@ -592,7 +599,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc update backup
    */
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
-      UpdateBackupParams update_config);
+      UpdateBackupParams const& params);
 
   /**
    * Sends an asynchronous request to update a backup of a table in the
@@ -602,6 +609,9 @@ class TableAdmin {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param params instance of `UpdateBackupParams`.
    *
    * @return a future that will be satisfied when the request succeeds or the
@@ -613,11 +623,11 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc async update backup
+   * @snippet table_admin_async_snippets.cc async update backup
    *
    */
   future<StatusOr<google::bigtable::admin::v2::Backup>> AsyncUpdateBackup(
-      CompletionQueue& cq, UpdateBackupParams update_config);
+      CompletionQueue& cq, UpdateBackupParams const& params);
 
   /**
    * Delete a backup.
@@ -640,7 +650,8 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc delete backup
    */
-  Status DeleteBackup(std::string cluster_id, std::string backup_id);
+  Status DeleteBackup(std::string const& cluster_id,
+                      std::string const& backup_id);
 
   /**
    * Sends an asynchronous request to delete a backup.
@@ -649,6 +660,9 @@ class TableAdmin {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param cluster_id the name of the cluster relative to the instance managed
    *     by the `TableAdmin` object. The full cluster name is
    *     `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<cluster_id>`
@@ -670,10 +684,11 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc async delete backup
+   * @snippet table_admin_async_snippets.cc async delete backup
    */
-  future<Status> AsyncDeleteBackup(CompletionQueue& cq, std::string cluster_id,
-                                   std::string backup_name);
+  future<Status> AsyncDeleteBackup(CompletionQueue& cq,
+                                   std::string const& cluster_id,
+                                   std::string const& backup_id);
 
   /**
    * Parameters for `ListBackups` and `AsyncListBackups`.
@@ -766,8 +781,8 @@ class TableAdmin {
       return *this;
     }
 
-    google::bigtable::admin::v2::ListBackupsRequest as_proto(
-        std::string instance_name) const;
+    google::bigtable::admin::v2::ListBackupsRequest AsProto(
+        std::string const& instance_name) const;
 
    private:
     optional<std::string> cluster_id_;
@@ -787,7 +802,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc list backups
    */
   StatusOr<std::vector<google::bigtable::admin::v2::Backup>> ListBackups(
-      ListBackupsParams params);
+      ListBackupsParams const& params);
 
   /**
    * Sends an asynchronous request to retrieve a list of backups.
@@ -796,6 +811,9 @@ class TableAdmin {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param params instance of `ListBackupsParams`.
    *
    * @return a future that will be satisfied when the request succeeds or the
@@ -807,11 +825,11 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc async list backups
+   * @snippet table_admin_async_snippets.cc async list backups
    *
    */
   future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
-  AsyncListBackups(CompletionQueue& cq, ListBackupsParams params);
+  AsyncListBackups(CompletionQueue& cq, ListBackupsParams const& params);
 
   /**
    * Parameters for `RestoreTable` and `AsyncRestoreTable`.
@@ -841,8 +859,8 @@ class TableAdmin {
           cluster_id_(std::move(cluster_id)),
           backup_id_(std::move(backup_id)) {}
 
-    google::bigtable::admin::v2::RestoreTableRequest as_proto(
-        std::string instance_name) const;
+    google::bigtable::admin::v2::RestoreTableRequest AsProto(
+        std::string const& instance_name) const;
 
    private:
     std::string table_id_;
@@ -862,7 +880,7 @@ class TableAdmin {
    * @snippet table_admin_snippets.cc restore table
    */
   StatusOr<google::bigtable::admin::v2::Table> RestoreTable(
-      RestoreTableParams params);
+      RestoreTableParams const& params);
 
   /**
    * Sends an asynchronous request to restore a backup into a new table in the
@@ -872,6 +890,9 @@ class TableAdmin {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
    * @param params instance of `RestoreTableParams`.
    *
    * @return a future that will be satisfied when the request succeeds or the
@@ -883,11 +904,11 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc async restore table
+   * @snippet table_admin_async_snippets.cc async restore table
    *
    */
   future<StatusOr<google::bigtable::admin::v2::Table>> AsyncRestoreTable(
-      CompletionQueue& cq, RestoreTableParams params);
+      CompletionQueue& cq, RestoreTableParams const& params);
 
   /**
    * Modify the schema for an existing table.

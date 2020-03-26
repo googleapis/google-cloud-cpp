@@ -16,6 +16,9 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include <google/protobuf/text_format.h>
+#include <google/protobuf/util/time_util.h>
+#include <algorithm>
 
 namespace {
 
@@ -293,6 +296,245 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
+void AsyncCreateBackup(google::cloud::bigtable::TableAdmin admin,
+                       google::cloud::bigtable::CompletionQueue cq,
+                       std::vector<std::string> argv) {
+  if (argv.size() != 5) {
+    throw Usage{
+        "async-create-backup <project-id> <instance-id> <table-id> "
+        "<cluster-id> "
+        "<backup-id> <expire_time>"};
+  }
+
+  //! [async create backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
+     std::string cluster_id, std::string backup_id,
+     std::string expire_time_string) {
+    google::protobuf::Timestamp expire_time;
+    if (!google::protobuf::util::TimeUtil::FromString(expire_time_string,
+                                                      &expire_time)) {
+      throw std::runtime_error("Unable to parse expire_time:" +
+                               expire_time_string);
+    }
+
+    future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
+        admin.AsyncCreateBackup(
+            cq, cbt::TableAdmin::CreateBackupParams(
+                    std::move(cluster_id), std::move(backup_id),
+                    std::move(table_id), std::move(expire_time)));
+
+    auto final = backup_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Backup>> f) {
+          auto backup = f.get();
+          if (!backup) {
+            throw std::runtime_error(backup.status().message());
+          }
+          std::cout << "Backup successfully created: " << backup->DebugString()
+                    << "\n";
+          return google::cloud::Status();
+        });
+    final.get();
+  }
+  //! [async create backup]
+  (std::move(admin), std::move(cq), std::move(argv[1]), std::move(argv[2]),
+   std::move(argv[3]), std::move(argv[4]));
+}
+
+void AsyncListBackups(google::cloud::bigtable::TableAdmin admin,
+                      google::cloud::bigtable::CompletionQueue cq,
+                      std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw Usage{
+        "async-list-backups <project-id> <instance-id> <cluster-id> <filter> "
+        "<order_by>"};
+  }
+
+  //! [async list backups]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string cluster_id,
+     std::string filter, std::string order_by) {
+    cbt::TableAdmin::ListBackupsParams list_backups_params;
+    list_backups_params.set_cluster(std::move(cluster_id));
+    list_backups_params.set_filter(std::move(filter));
+    list_backups_params.set_order_by(std::move(order_by));
+    future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
+        backups_future =
+            admin.AsyncListBackups(cq, std::move(list_backups_params));
+
+    auto final = backups_future.then(
+        [](future<StatusOr<std::vector<google::bigtable::admin::v2::Backup>>>
+               f) {
+          auto backups = f.get();
+          if (!backups) {
+            throw std::runtime_error(backups.status().message());
+          }
+          for (auto const& backup : *backups) {
+            std::cout << backup.name() << "\n";
+          }
+          return google::cloud::Status();
+        });
+    final.get();
+  }
+  //! [async list backups]
+  (std::move(admin), std::move(cq), std::move(argv[1]), std::move(argv[2]),
+   std::move(argv[3]));
+}
+
+void AsyncGetBackup(google::cloud::bigtable::TableAdmin admin,
+                    google::cloud::bigtable::CompletionQueue cq,
+                    std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw Usage{
+        "async-get-backup <project-id> <instance-id> <cluster-id> <backup-id>"};
+  }
+
+  //! [async get backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string cluster_id,
+     std::string backup_id) {
+    future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
+        admin.AsyncGetBackup(cq, std::move(cluster_id), std::move(backup_id));
+
+    auto final = backup_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Backup>> f) {
+          auto backup = f.get();
+          if (!backup) {
+            throw std::runtime_error(backup.status().message());
+          }
+          std::cout << backup->name() << " details=\n"
+                    << backup->DebugString() << "\n";
+        });
+    final.get();
+  }
+  //! [async get backup]
+  (std::move(admin), std::move(cq), std::move(argv[1]), std::move(argv[2]));
+}
+
+void AsyncDeleteBackup(google::cloud::bigtable::TableAdmin admin,
+                       google::cloud::bigtable::CompletionQueue cq,
+                       std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw Usage{
+        "async-delete-backup <project-id> <instance-id> <cluster-id> "
+        "<table-id>"};
+  }
+
+  //! [async delete backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string cluster_id,
+     std::string backup_id) {
+    future<google::cloud::Status> status_future = admin.AsyncDeleteBackup(
+        cq, std::move(cluster_id), std::move(backup_id));
+
+    auto final = status_future.then([](future<google::cloud::Status> f) {
+      auto status = f.get();
+
+      if (!status.ok()) {
+        throw std::runtime_error(status.message());
+      }
+      std::cout << "Backup successfully deleted\n";
+    });
+    final.get();
+  }
+  //! [async delete backup]
+  (std::move(admin), std::move(cq), std::move(argv[1]), std::move(argv[2]));
+}
+
+void AsyncUpdateBackup(google::cloud::bigtable::TableAdmin admin,
+                       google::cloud::bigtable::CompletionQueue cq,
+                       std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw Usage{
+        "async-update-backup <project-id> <instance-id> <cluster-id> "
+        "<backup-id> "
+        "<expire-time>"};
+  }
+
+  //! [async update backup]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string cluster_id,
+     std::string backup_id, std::string expire_time_string) {
+    google::protobuf::Timestamp expire_time;
+    if (!google::protobuf::util::TimeUtil::FromString(expire_time_string,
+                                                      &expire_time)) {
+      throw std::runtime_error("Unable to parse expire_time:" +
+                               expire_time_string);
+    }
+
+    future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
+        admin.AsyncUpdateBackup(
+            cq, cbt::TableAdmin::UpdateBackupParams(std::move(cluster_id),
+                                                    std::move(backup_id),
+                                                    std::move(expire_time)));
+
+    auto final = backup_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Backup>> f) {
+          auto backup = f.get();
+          if (!backup) {
+            throw std::runtime_error(backup.status().message());
+          }
+          std::cout << backup->name() << " details=\n"
+                    << backup->DebugString() << "\n";
+        });
+    final.get();
+  }
+  //! [async update backup]
+  (std::move(admin), std::move(cq), std::move(argv[1]), std::move(argv[2]),
+   std::move(argv[3]));
+}
+
+void AsyncRestoreTable(google::cloud::bigtable::TableAdmin admin,
+                       google::cloud::bigtable::CompletionQueue cq,
+                       std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw Usage{
+        "async-restore-table <project-id> <instance-id> <table-id> "
+        "<cluster-id> "
+        "<backup-id>"};
+  }
+
+  //! [async restore table]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::future;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
+     std::string cluster_id, std::string backup_id) {
+    future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
+        admin.AsyncRestoreTable(
+            cq, cbt::TableAdmin::RestoreTableParams(std::move(table_id),
+                                                    std::move(cluster_id),
+                                                    std::move(backup_id)));
+
+    auto final = table_future.then(
+        [](future<StatusOr<google::bigtable::admin::v2::Table>> f) {
+          auto table = f.get();
+
+          if (!table) {
+            throw std::runtime_error(table.status().message());
+          }
+          std::cout << "Table successfully restored: " << table->DebugString()
+                    << "\n";
+        });
+    final.get();
+  }
+  //! [async restore table]
+  (std::move(admin), std::move(cq), std::move(argv[1]), std::move(argv[2]),
+   std::move(argv[3]));
+}
+
+}  // anonymous namespace
+
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -364,8 +606,6 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the AsyncDeleteTable() example" << std::endl;
   AsyncDeleteTable(admin, cq, {table_id});
 }
-
-}  // anonymous namespace
 
 int main(int argc, char* argv[]) {
   namespace examples = google::cloud::bigtable::examples;

@@ -59,7 +59,7 @@ else
   exit 1
 fi
 
-if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
+if [[ "${BUILD_NAME}" = "clang-tidy" ]] || [[ "${BUILD_NAME}" = "clang-tidy-gob" ]]; then
   # Compile with clang-tidy(1) turned on. The build treats clang-tidy warnings
   # as errors.
   export DISTRO=fedora-install

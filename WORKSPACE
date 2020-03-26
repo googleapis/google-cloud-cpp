@@ -14,14 +14,6 @@
 
 workspace(name = "com_github_googleapis_google_cloud_cpp")
 
-# Load the googleapis-private dependency.
-# TODO(sdhart): remove this once backup protos are public.
-new_local_repository(
-    name = "local_bigtable_proto",
-    build_file = "proto/BUILD.bazel",
-    path = "proto",
-)
-
 load("//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
