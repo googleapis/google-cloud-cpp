@@ -109,8 +109,8 @@ std::string TableTestEnvironment::RandomTableId() {
 }
 
 std::string TableTestEnvironment::RandomBackupId() {
-  // Per google/bigtable/admin/v2/backup.proto, backup names must be between 1 and 50
-  // characters such, [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
+  // Per google/bigtable/admin/v2/bigtable_table_admin.proto, backup names must
+  // be between 1 and 50 characters such, [_a-zA-Z0-9][-_.a-zA-Z0-9]*.
   constexpr int kMaxBackupIdLength = 50;
   static char const prefix[] = "backup-";
   static_assert(kMaxBackupIdLength > sizeof(prefix), "prefix is too long");

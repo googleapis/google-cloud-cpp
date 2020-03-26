@@ -694,6 +694,37 @@ int main(int argc, char* argv[]) {
                                  CheckConsistency),
       examples::MakeCommandEntry("generate-consistency-token", {"<table-id>"},
                                  GenerateConsistencyToken),
+      examples::MakeCommandEntry("get-iam-policy", {"<table-id>"},
+                                 GetIamPolicy),
+      examples::MakeCommandEntry(
+          "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
+      {"test-iam-permissions", TestIamPermissions},
+      examples::MakeCommandEntry(
+          "create-backup",
+          {"<project-id>", "<instance-id>", "<table-id>", "<cluster-id>",
+           "<backup-id>", "<expire_time>"},
+          CreateBackup),
+      examples::MakeCommandEntry("list-backups",
+                                 {"<project-id>", "<instance-id>",
+                                  "<cluster-id>", "<filter>", "<order_by>"},
+                                 ListBackups),
+      examples::MakeCommandEntry(
+          "get-backup",
+          {"<project-id>", "<instance-id>", "<cluster-id>", "<backup-id>"},
+          GetBackup),
+      examples::MakeCommandEntry(
+          "delete-backup",
+          {"<project-id>", "<instance-id>", "<cluster-id>", "<table-id>"},
+          DeleteBackup),
+      examples::MakeCommandEntry(
+          "update-backup",
+          {"<project-id>", "<instance-id>", "<cluster-id>", "<backup-id>",
+           "<expire-time>"},
+          UpdateBackup),
+      examples::MakeCommandEntry("restore-table",
+                                 {"<project-id>", "<instance-id>", "<table-id>",
+                                  "<cluster-id>", "<backup-id>"},
+                                 RestoreTable),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

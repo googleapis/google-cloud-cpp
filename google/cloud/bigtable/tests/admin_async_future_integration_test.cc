@@ -69,17 +69,16 @@ class AdminAsyncFutureIntegrationTest
   }
 
   int CountMatchingBackups(std::string const& cluster_id,
-          std::string const& backup_id,
-                          std::vector<btadmin::Backup> const& backups) {
-    std::string backup_name =
-        table_admin_->instance_name() + "/clusters/" + cluster_id + "/backups/" + backup_id;
+                           std::string const& backup_id,
+                           std::vector<btadmin::Backup> const& backups) {
+    std::string backup_name = table_admin_->instance_name() + "/clusters/" +
+                              cluster_id + "/backups/" + backup_id;
     auto count = std::count_if(backups.begin(), backups.end(),
                                [&backup_name](btadmin::Backup const& t) {
                                  return backup_name == t.name();
                                });
     return static_cast<int>(count);
   }
-
 };
 
 /// @test Verify that `bigtable::TableAdmin` Async CRUD operations work as
@@ -455,9 +454,12 @@ TEST_F(AdminAsyncFutureIntegrationTest, SetGetTestIamAPIsTest) {
   pool.join();
 }
 
-/// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work as
-/// expected.
+/// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work
+/// as expected.
 TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP();
+  }
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -479,44 +481,43 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-
   auto clusters_list =
       instance_admin_->ListClusters(table_admin_->instance_id());
   ASSERT_STATUS_OK(clusters_list);
   std::string const backup_cluster_full_name =
-          clusters_list->clusters.begin()->name();
+      clusters_list->clusters.begin()->name();
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
-          backup_cluster_full_name.rfind("/") + 1,
-          backup_cluster_full_name.size() -
-          backup_cluster_full_name.rfind("/"));
+      backup_cluster_full_name.rfind("/") + 1,
+      backup_cluster_full_name.size() - backup_cluster_full_name.rfind("/"));
   std::string const backup_id = RandomBackupId();
-  std::string const backup_full_name = backup_cluster_full_name + "/backups/" +
-          backup_id;
+  std::string const backup_full_name =
+      backup_cluster_full_name + "/backups/" + backup_id;
   google::protobuf::Timestamp const expire_time =
-          google::protobuf::util::TimeUtil::GetCurrentTime() +
-          google::protobuf::util::TimeUtil::HoursToDuration(12);
-  google::protobuf::Timestamp const updated_expire_time = expire_time +
-          google::protobuf::util::TimeUtil::HoursToDuration(12);
+      google::protobuf::util::TimeUtil::GetCurrentTime() +
+      google::protobuf::util::TimeUtil::HoursToDuration(12);
+  google::protobuf::Timestamp const updated_expire_time =
+      expire_time + google::protobuf::util::TimeUtil::HoursToDuration(12);
 
   future<void> chain =
       table_admin_->AsyncListBackups(cq, {})
           .then([&](future<StatusOr<std::vector<btadmin::Backup>>> fut) {
             StatusOr<std::vector<btadmin::Backup>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingBackups(backup_cluster_id, backup_id, *result);
+            auto previous_count =
+                CountMatchingBackups(backup_cluster_id, backup_id, *result);
             EXPECT_EQ(0, previous_count)
                 << "Backup (" << backup_id << ") already exists."
                 << " This is unexpected, as the backup ids are"
                 << " generated at random.";
-            return table_admin_->AsyncCreateBackup(cq, {backup_cluster_id,
-            backup_id, table_id, expire_time});
+            return table_admin_->AsyncCreateBackup(
+                cq, {backup_cluster_id, backup_id, table_id, expire_time});
           })
           .then([&](future<StatusOr<btadmin::Backup>> fut) {
             StatusOr<btadmin::Backup> result = fut.get();
             EXPECT_STATUS_OK(result);
             EXPECT_THAT(result->name(), ::testing::HasSubstr(backup_id));
             return table_admin_->AsyncGetBackup(cq, backup_cluster_id,
-                                               backup_id);
+                                                backup_id);
           })
           .then([&](future<StatusOr<btadmin::Backup>> fut) {
             StatusOr<btadmin::Backup> get_result = fut.get();
@@ -530,20 +531,22 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
             EXPECT_STATUS_OK(update_result);
             EXPECT_EQ(update_result->name(), backup_full_name);
             EXPECT_EQ(update_result->expire_time(), updated_expire_time);
-            return table_admin_->AsyncDeleteBackup(cq, backup_cluster_id, backup_id);
+            return table_admin_->AsyncDeleteBackup(cq, backup_cluster_id,
+                                                   backup_id);
           })
           .then([&](future<Status> fut) {
-              Status delete_result = fut.get();
-              EXPECT_STATUS_OK(delete_result);
-              return table_admin_->AsyncListBackups(cq, {});
+            Status delete_result = fut.get();
+            EXPECT_STATUS_OK(delete_result);
+            return table_admin_->AsyncListBackups(cq, {});
           })
           .then([&](future<StatusOr<std::vector<btadmin::Backup>>> fut) {
-              StatusOr<std::vector<btadmin::Backup>> result = fut.get();
-              EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingBackups(backup_cluster_id, backup_id, *result);
+            StatusOr<std::vector<btadmin::Backup>> result = fut.get();
+            EXPECT_STATUS_OK(result);
+            auto previous_count =
+                CountMatchingBackups(backup_cluster_id, backup_id, *result);
             ASSERT_EQ(0, previous_count)
                 << "Backup (" << backup_id << ") still exists.";
-            });
+          });
   chain.get();
 
   // delete table
@@ -563,6 +566,10 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
 /// @test Verify that `bigtable::TableAdmin` Async Backup and Restore
 /// operations work as expected.
 TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP();
+  }
+
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -586,29 +593,30 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
       instance_admin_->ListClusters(table_admin_->instance_id());
   ASSERT_STATUS_OK(clusters_list);
   std::string const backup_cluster_full_name =
-          clusters_list->clusters.begin()->name();
+      clusters_list->clusters.begin()->name();
   std::string const backup_cluster_id = backup_cluster_full_name.substr(
-          backup_cluster_full_name.rfind("/") + 1, backup_cluster_full_name.size() -
-          backup_cluster_full_name.rfind("/"));
+      backup_cluster_full_name.rfind("/") + 1,
+      backup_cluster_full_name.size() - backup_cluster_full_name.rfind("/"));
   std::string const backup_id = RandomBackupId();
-  std::string const backup_full_name = backup_cluster_full_name + "/backups/" +
-          backup_id;
+  std::string const backup_full_name =
+      backup_cluster_full_name + "/backups/" + backup_id;
   google::protobuf::Timestamp const expire_time =
-          google::protobuf::util::TimeUtil::GetCurrentTime() +
-          google::protobuf::util::TimeUtil::HoursToDuration(12);
+      google::protobuf::util::TimeUtil::GetCurrentTime() +
+      google::protobuf::util::TimeUtil::HoursToDuration(12);
 
   future<void> chain =
       table_admin_->AsyncListBackups(cq, {})
           .then([&](future<StatusOr<std::vector<btadmin::Backup>>> fut) {
             StatusOr<std::vector<btadmin::Backup>> result = fut.get();
             EXPECT_STATUS_OK(result);
-            auto previous_count = CountMatchingBackups(backup_cluster_id, backup_id, *result);
+            auto previous_count =
+                CountMatchingBackups(backup_cluster_id, backup_id, *result);
             EXPECT_EQ(0, previous_count)
                 << "Backup (" << backup_id << ") already exists."
                 << " This is unexpected, as the backup ids are"
                 << " generated at random.";
-            return table_admin_->AsyncCreateBackup(cq, {backup_cluster_id,
-            backup_id, table_id, expire_time});
+            return table_admin_->AsyncCreateBackup(
+                cq, {backup_cluster_id, backup_id, table_id, expire_time});
           })
           .then([&](future<StatusOr<btadmin::Backup>> fut) {
             StatusOr<btadmin::Backup> result = fut.get();
@@ -621,11 +629,11 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
             EXPECT_STATUS_OK(delete_table_result);
             return table_admin_->AsyncRestoreTable(
                 cq, {table_id, backup_cluster_id, backup_id});
-          }).
-          then([&](future<StatusOr<btadmin::Table>> fut) {
+          })
+          .then([&](future<StatusOr<btadmin::Table>> fut) {
             auto restore_result = fut.get();
-              EXPECT_STATUS_OK(restore_result);
-            });
+            EXPECT_STATUS_OK(restore_result);
+          });
   chain.get();
 
   // verify table was restored

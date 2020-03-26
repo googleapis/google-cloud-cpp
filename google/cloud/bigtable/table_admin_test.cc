@@ -1298,7 +1298,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateTable) {
             parent: "projects/the-project/instances/the-instance"
             table_id: "the-table"
             table: {}
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateTable")));
   FinishTest(table_admin_->AsyncCreateTable(cq_, "the-table",
                                             bigtable::TableConfig()));
 }
@@ -1311,7 +1312,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncDeleteTable) {
       .WillOnce(::testing::Invoke(rpc_factory.Create(
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.DeleteTable")));
   FinishTest(table_admin_->AsyncDeleteTable(cq_, "the-table"));
 }
 
@@ -1329,7 +1331,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncCreateBackup) {
               source_table: "projects/the-project/instances/the-instance/tables/the-table"
               expire_time: { seconds: 1893387600 }
             }
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.CreateBackup")));
   google::protobuf::Timestamp expire_time;
   EXPECT_TRUE(google::protobuf::util::TimeUtil::FromString(
       "2029-12-31T00:00:00.000-05:00", &expire_time));
@@ -1349,7 +1352,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncRestoreTable) {
             parent: "projects/the-project/instances/the-instance"
             table_id: "restored-table"
             backup: "projects/the-project/instances/the-instance/clusters/the-cluster/backups/the-backup"
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.RestoreTable")));
   bigtable::TableAdmin::RestoreTableParams params("restored-table",
                                                   "the-cluster", "the-backup");
   FinishTest(table_admin_->AsyncRestoreTable(cq_, std::move(params)));
@@ -1364,7 +1368,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropAllRows) {
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
             delete_all_data_from_table: true
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
   FinishTest(table_admin_->AsyncDropAllRows(cq_, "the-table"));
 }
 
@@ -1377,7 +1382,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncDropRowsByPrefix) {
           R"pb(
             name: "projects/the-project/instances/the-instance/tables/the-table"
             row_key_prefix: "prefix"
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange")));
   FinishTest(table_admin_->AsyncDropRowsByPrefix(cq_, "the-table", "prefix"));
 }
 
@@ -1405,7 +1411,8 @@ TEST_F(ValidContextMdAsyncTest, AsyncListTables) {
           R"pb(
             parent: "projects/the-project/instances/the-instance"
             view: SCHEMA_VIEW
-          )pb", "google.bigtable.admin.v2.BigtableTableAdmin.ListTables")));
+          )pb",
+          "google.bigtable.admin.v2.BigtableTableAdmin.ListTables")));
   FinishTest(table_admin_->AsyncListTables(cq_, btadmin::Table::SCHEMA_VIEW));
 }
 
