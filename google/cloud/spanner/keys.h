@@ -40,13 +40,7 @@ using Key = std::vector<Value>;
  * Constructs a `Key` from the given arguments.
  *
  * @par Example
- *
- * @code
- *  Key key = MakeKey(123, "hello");
- *  assert(key.size() == 2);
- *  assert(key[0] == Value(123));
- *  assert(key[1] == Value("hello"));
- * @endcode
+ * @snippet samples.cc make-key
  */
 template <typename... Ts>
 Key MakeKey(Ts&&... ts) {
@@ -65,6 +59,12 @@ Key MakeKey(Ts&&... ts) {
  * the results, or "closed" meaning the matching row will be included.
  * `KeyBound` instances should be created with the `MakeKeyBoundOpen()` or
  * `MakeKeyBoundClosed()` factory functions.
+ *
+ * @par Example
+ * @snippet samples.cc make-keybound-open
+ *
+ * @par Example
+ * @snippet samples.cc make-keybound-closed
  */
 class KeyBound {
  public:
@@ -111,6 +111,9 @@ class KeyBound {
 /**
  * Returns a "closed" `KeyBound` with a `Key` constructed from the given
  * arguments.
+ *
+ * @par Example
+ * @snippet samples.cc make-keybound-closed
  */
 template <typename... Ts>
 KeyBound MakeKeyBoundClosed(Ts&&... ts) {
@@ -120,6 +123,9 @@ KeyBound MakeKeyBoundClosed(Ts&&... ts) {
 /**
  * Returns an "open" `KeyBound` with a `Key` constructed from the given
  * arguments.
+ *
+ * @par Example
+ * @snippet samples.cc make-keybound-open
  */
 template <typename... Ts>
 KeyBound MakeKeyBoundOpen(Ts&&... ts) {
@@ -141,6 +147,13 @@ KeySet FromProto(::google::spanner::v1::KeySet);
  *
  * Users may also optionally construct an instance that
  * represents all keys with `KeySet::All()`.
+ *
+ * @par Example
+ * @snippet samples.cc keyset-add-key
+ *
+ * @par Example
+ * @snippet samples.cc keyset-all
+ *
  */
 class KeySet {
  public:
@@ -165,10 +178,20 @@ class KeySet {
   KeySet(KeySet&&) = default;
   KeySet& operator=(KeySet&&) = default;
 
-  /// Adds the given @p key to the `KeySet`.
+  /**
+   * Adds the given @p key to the `KeySet`.
+   *
+   * @par Example
+   * @snippet samples.cc keyset-add-key
+   */
   KeySet& AddKey(Key key);
 
-  /// Adds a range of keys defined by the given `KeyBound`s.
+  /**
+   * Adds a range of keys defined by the given `KeyBound`s.
+   *
+   * @par Example
+   * @snippet samples.cc keyset-add-key
+   */
   KeySet& AddRange(KeyBound start, KeyBound end);
 
   /// @name Equality
