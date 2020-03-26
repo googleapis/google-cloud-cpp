@@ -16,10 +16,6 @@
 # Stop on errors. This is similar to `set -e` on Unix shells.
 $ErrorActionPreference = "Stop"
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
-bazel version
-
-$common_flags = @()
 # Create output directory for Bazel. Bazel creates really long paths,
 # sometimes exceeding the Windows limits. Using a short name for the
 # root of the Bazel output directory works around this problem.
@@ -28,7 +24,57 @@ if (-not (Test-Path $bazel_root)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create bazel user root (${bazel_root})"
     New-Item -ItemType Directory -Path $bazel_root | Out-Null
 }
-$common_flags += ("--output_user_root=${bazel_root}")
+
+$common_flags = @("--output_user_root=${bazel_root}")
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Capture Bazel information for troubleshooting"
+bazel $common_flags version
+bazel $common_flags shutdown
+
+$GOOGLE_CLOUD_CPP_REPOSITORY="google-cloud-cpp"
+$CACHE_BUCKET=if(Test-Path env:GOOGLE_CLOUD_CPP_KOKORO_RESULTS) `
+    {$env:GOOGLE_CLOUD_CPP_KOKORO_RESULTS} else {"cloud-cpp-kokoro-results"}
+$BRANCH_NAME="master"
+$CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRANCH_NAME}"
+# Bazel creates many links (aka NTFS JUNCTIONS) and only .tgz files seem to
+# support those well.
+$CACHE_BASENAME="cache-windows-bazel"
+
+$IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
+    ($env:KOKORO_JOB_TYPE = "GITHUB_PULL_REQUEST")
+$CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
+    (Test-Path "${env:KOKORO_GFILE_DIR}/build-results-service-account.json")
+$Has7z= Get-Command "7z" -ErrorAction SilentlyContinue
+
+# Shutdown the Bazel server to release any locks
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+bazel $common_flags shutdown
+
+$download_dir="T:\tmp"
+if (Test-Path env:TEMP) {
+    $download_dir="${env:TEMP}"
+} elseif (-not $download_dir) {
+    Make-Item -Type "Directory" ${download_dir}
+}
+if ("TRUE") { # TODO(coryan) - $IsPR -and $CacheConfigured -and $Has7z) {
+    gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Downloading Bazel cache."
+    gsutil cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar" "${download_dir}"
+    # Copy-Item "C:\k\${CACHE_BASENAME}.tar" "${download_dir}" -ErrorAction SilentlyContinue
+    if ($LastExitCode) {
+        # Ignore errors, caching failures should not break the build.
+        Write-Host "gsutil download failed with exit code $LastExitCode"
+        Write-Host "Continue building without a cache"
+    } else {
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Extracting build cache."
+        7z x "${download_dir}/${CACHE_BASENAME}.tar" -spf -snl -snh -aoa #TODO(coryan) -bsp0
+        if ($LastExitCode) {
+            # Ignore errors, caching failures should not break the build.
+            Write-Host "extracting build cache failed with exit code $LastExitCode"
+            Write-Host "Continue building without a cache"
+        }
+    }
+}
 
 $test_flags = @("--test_output=errors",
                 "--verbose_failures=true",
@@ -37,11 +83,11 @@ $build_flags = @("--keep_going")
 
 $env:BAZEL_VC="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC"
 
-1..3 | ForEach-Object {
+ForEach($_ in (1, 2, 3)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Fetch dependencies [$_]"
     bazel $common_flags fetch -- //google/cloud/...:all
     if ($LastExitCode -eq 0) {
-        return
+        break
     }
 }
 
@@ -76,4 +122,48 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
     }
 }
 
+# Shutdown the Bazel server to release any locks
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
+bazel $common_flags shutdown
+
+if ("TRUE") { # TODO(coryan) - -not $IsPR -and $CacheConfigured -and $Has7z) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
+    # We use 7z because it knows how to handle locked files better than Unix
+    # tools like tar(1).
+    $archive_flags=@(
+        # Preserve hard links
+        "-snh",
+        # Preserve soft links
+        "-snl",
+        # Preserve full path
+        "-spf",
+        # Exclude directories named "install"
+        "-xr!install",
+        # Suppress errors
+        # TODO(coryan) DO NOT MERGE "-bse0",
+        # Suppress progress
+        # TODO(coryan) DO NOT MERGE "-bsp0",
+        # Suppress standard logging
+        "-bso0"
+    )
+    7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
+    if ($LastExitCode) {
+        # Ignore errors, caching failures should not break the build.
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) zipping cache "`
+            "contents failed with exit code $LastExitCode"
+    }
+    if (Test-Path "${CACHE_BASENAME}.tar") {
+        gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Uploading Bazel cache."
+        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
+#        Copy-Item "${download_dir}/${CACHE_BASENAME}.tar" "C:\k" -ErrorAction SilentlyContinue
+        if ($LastExitCode) {
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) uploading cache failed exit code $LastExitCode"
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) cache not updated"
+        }
+    }
+}
+
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
+
+Exit 0
