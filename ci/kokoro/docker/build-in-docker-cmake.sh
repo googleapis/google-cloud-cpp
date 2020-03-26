@@ -203,7 +203,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     success=no
     for attempt in 1 2 3; do
       echo
-      echo "${COLOR_YELLOW}: $(date -u): running bigtable integration tests via CTest [${attempt}]${COLOR_RESET}"
+      echo "${COLOR_YELLOW}: $(date -u): running bigtable integration tests" \
+          "via CTest [${attempt}]${COLOR_RESET}"
       echo
       if "${TIMEOUT_CMD}" "${TIMEOUT_ARGS[@]}" \
              "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
@@ -212,12 +213,14 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       fi
     done
     if [ "${success}" != "yes" ]; then
-      echo "${COLOR_RED}$(date -u): integration tests failed multiple times, aborting tests.${COLOR_RESET}"
+      echo "${COLOR_RED}$(date -u): integration tests failed multiple times," \
+          "aborting tests.${COLOR_RESET}"
       exit 1
     fi
     set -e
     echo
-    echo "${COLOR_YELLOW}$(date -u): running storage integration tests via CTest [${attempt}]${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): running storage integration tests via" \
+        "CTest [${attempt}]${COLOR_RESET}"
     echo
     "${PROJECT_ROOT}/google/cloud/storage/ci/run_integration_tests_emulator_cmake.sh" \
         "${BINARY_DIR}" "${ctest_args[@]}"
@@ -228,8 +231,8 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo "${COLOR_YELLOW}$(date -u): Running integration tests${COLOR_RESET}"
     echo
 
-    # Run the integration tests. Not all projects have them, so just iterate over
-    # the ones that do.
+    # Run the integration tests. Not all projects have them, so just iterate
+    # over the ones that do.
     for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
       echo
       echo "${COLOR_YELLOW}$(date -u): Running integration tests for ${subdir}${COLOR_RESET}"
