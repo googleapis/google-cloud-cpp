@@ -32,27 +32,32 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
+echo
+echo "${COLOR_YELLOW}$(date -u): Starting docker build with ${NCPU}"\
+    "cores${COLOR_RESET}"
+echo
+
 # Run the configure / compile / test cycle inside a docker image.
 # This script is designed to work in the context created by the
 # ci/Dockerfile.* build scripts.
 
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): Verify formatting${COLOR_RESET}"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
-echo "$(date -u): ccache stats"
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
 ccache --show-stats
 ccache --zero-stats
+
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): Configure CMake${COLOR_RESET}"
 
 CMAKE_COMMAND="cmake"
 if [[ "${SCAN_BUILD}" == "yes" ]]; then
   CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
 fi
 
-echo
-echo "${COLOR_YELLOW}Starting docker build $(date) with ${NCPU}"\
-    "cores${COLOR_RESET}"
-echo
-
-echo "${COLOR_YELLOW}Started CMake config at: $(date)${COLOR_RESET}"
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
 if [[ "${BUILD_TESTING:-}" == "no" ]]; then
@@ -104,7 +109,7 @@ ${CMAKE_COMMAND} \
     "-H${SOURCE_DIR}" \
     "-B${BINARY_DIR}"
 echo
-echo "${COLOR_YELLOW}Finished CMake config at: $(date)${COLOR_RESET}"
+echo "${COLOR_YELLOW}$(date -u): Finished CMake config${COLOR_RESET}"
 
 # CMake can generate dependency graphs, which are useful to understand and
 # troubleshoot dependencies.
@@ -118,9 +123,10 @@ fi
 # needed; otherwise, we pick errors from things we do not care about. With
 # scan-build disabled we compile everything, to test the build as most
 # developers will experience it.
-echo "${COLOR_YELLOW}Started build at: $(date)${COLOR_RESET}"
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): started build${COLOR_RESET}"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
-echo "${COLOR_YELLOW}Finished build at: $(date)${COLOR_RESET}"
+echo "${COLOR_YELLOW}$(date -u): finished build${COLOR_RESET}"
 
 # Collect the output from the Clang static analyzer and provide instructions to
 # the developers on how to do that locally.
@@ -170,18 +176,18 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # It is Okay to skip the tests in this case because the super build
     # automatically runs them.
     echo
-    echo "${COLOR_YELLOW}Running unit tests $(date)${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): Running unit tests${COLOR_RESET}"
     echo
     (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
 
     echo
-    echo "${COLOR_YELLOW}Completed unit tests $(date)${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): Completed unit tests${COLOR_RESET}"
     echo
   fi
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     echo
-    echo "${COLOR_YELLOW}Running integration tests via CTest $(date)${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): Running integration tests via CTest${COLOR_RESET}"
     echo
     "${PROJECT_ROOT}/google/cloud/bigtable/ci/run_integration_tests_emulator_cmake.sh" \
         "${BINARY_DIR}" "${ctest_args[@]}"
@@ -191,20 +197,20 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     echo
-    echo "${COLOR_YELLOW}Running integration tests $(date)${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): Running integration tests${COLOR_RESET}"
     echo
 
     # Run the integration tests. Not all projects have them, so just iterate over
     # the ones that do.
     for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
       echo
-      echo "${COLOR_GREEN}Running integration tests for ${subdir}${COLOR_RESET}"
+      echo "${COLOR_YELLOW}$(date -u): Running integration tests for ${subdir}${COLOR_RESET}"
       (cd "${BINARY_DIR}" && \
           "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
     done
 
     echo
-    echo "${COLOR_YELLOW}Completed integration tests $(date)${COLOR_RESET}"
+    echo "${COLOR_YELLOW}$(date -u): Completed integration tests${COLOR_RESET}"
     echo
   fi
 fi
@@ -212,13 +218,13 @@ fi
 # Test the install rule and that the installation works.
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}Testing install rule.${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): testing install rule${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target install
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
-  echo "${COLOR_YELLOW}Verify installed headers created only expected" \
+  echo "${COLOR_YELLOW}$(date -u): Verify installed headers created only expected" \
       "directories.${COLOR_RESET}"
   if comm -23 \
       <(find /var/tmp/staging/include/google/cloud -type d | sort) \
@@ -231,7 +237,7 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
         echo /var/tmp/staging/include/google/cloud/storage/oauth2 ; \
         echo /var/tmp/staging/include/google/cloud/storage/testing ; \
         /bin/true) | grep -q /var/tmp; then
-      echo "${COLOR_YELLOW}Installed directories do not match" \
+      echo "${COLOR_RED}$(date -u): Installed directories do not match" \
           "expectation.${COLOR_RESET}"
       echo "${COLOR_RED}Found:"
       find /var/tmp/staging/include/google/cloud -type d | sort
@@ -249,12 +255,11 @@ fi
 # If document generation is enabled, run it now.
 if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}Generating Doxygen documentation at:" \
-      "$(date).${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): Generating Doxygen documentation${COLOR_RESET}"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
-
-echo "$(date -u): ccache stats"
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
 ccache --show-stats
 ccache --zero-stats
