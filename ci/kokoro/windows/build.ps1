@@ -96,7 +96,9 @@ $BuildExitCode = $LastExitCode
 # *very* slowly on Windows, and then ignores most of them :shrug:
 if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
     Set-Location "$env:KOKORO_ARTIFACTS_DIR"    
-    Get-ChildItem -Recurse -File -Exclude test.xml,sponge_log.xml,build.bat | `
+    Get-ChildItem -Recurse -File `
+        -Exclude test.xml,sponge_log.xml,build.bat `
+        -ErrorAction SilentlyContinue | `
         Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
 }
 
