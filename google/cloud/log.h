@@ -14,6 +14,7 @@
 
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOG_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOG_H
+
 /**
  * @file log.h
  *
@@ -222,7 +223,7 @@ struct LogRecord {
 std::ostream& operator<<(std::ostream& os, LogRecord const& rhs);
 
 /**
- * A sink to receive log records.
+ * The logging backend interface.
  */
 class LogBackend {
  public:
@@ -233,7 +234,7 @@ class LogBackend {
 };
 
 /**
- *
+ * A sink to receive log records.
  */
 class LogSink {
  public:

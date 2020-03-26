@@ -15,10 +15,14 @@
 #include "google/cloud/log.h"
 #include "google/cloud/internal/getenv.h"
 #include <array>
+#include <cstdint>
+#include <ctime>
+#include <iomanip>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
+
 static_assert(sizeof(Severity) <= sizeof(int),
               "Expected Severity to fit in an integer");
 
@@ -26,28 +30,62 @@ static_assert(static_cast<int>(Severity::GCP_LS_LOWEST) <
                   static_cast<int>(Severity::GCP_LS_HIGHEST),
               "Expect LOWEST severity to be smaller than HIGHEST severity");
 
+namespace {
+struct Timestamp {
+  explicit Timestamp(std::chrono::system_clock::time_point const& tp) {
+    auto const tt = std::chrono::system_clock::to_time_t(tp);
+#if defined(_WIN32)
+    gmtime_s(&tm, &tt);
+#else
+    gmtime_r(&tt, &tm);
+#endif
+    auto const ss = tp - std::chrono::system_clock::from_time_t(tt);
+    nanos = std::chrono::duration_cast<std::chrono::nanoseconds>(ss).count();
+  }
+  std::tm tm;
+  std::int32_t nanos;
+};
+
+std::ostream& operator<<(std::ostream& os, Timestamp const& ts) {
+  auto const prev = os.fill(' ');
+  auto constexpr kTmYearOffset = 1900;
+  os << std::setw(4) << ts.tm.tm_year + kTmYearOffset;
+  os.fill('0');
+  os << '-' << std::setw(2) << ts.tm.tm_mon + 1;
+  os << '-' << std::setw(2) << ts.tm.tm_mday;
+  os << 'T' << std::setw(2) << ts.tm.tm_hour;
+  os << ':' << std::setw(2) << ts.tm.tm_min;
+  os << ':' << std::setw(2) << ts.tm.tm_sec;
+  // NOLINTNEXTLINE(readability-magic-numbers)
+  os << '.' << std::setw(9) << ts.nanos << 'Z';
+  os.fill(prev);
+  return os;
+}
+
+auto constexpr kSeverityCount = static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
+
+// Double braces needed to workaround a clang-3.8 bug.
+std::array<char const*, kSeverityCount> constexpr kSeverityNames{{
+    "TRACE",
+    "DEBUG",
+    "INFO",
+    "NOTICE",
+    "WARNING",
+    "ERROR",
+    "CRITICAL",
+    "ALERT",
+    "FATAL",
+}};
+}  // namespace
+
 std::ostream& operator<<(std::ostream& os, Severity x) {
-  auto constexpr kSeverityCount =
-      static_cast<int>(Severity::GCP_LS_HIGHEST) + 1;
-  // Double braces needed to workaround a clang-3.8 bug.
-  std::array<char const*, kSeverityCount> names{{
-      "TRACE",
-      "DEBUG",
-      "INFO",
-      "NOTICE",
-      "WARNING",
-      "ERROR",
-      "CRITICAL",
-      "ALERT",
-      "FATAL",
-  }};
   auto index = static_cast<int>(x);
-  return os << names[index];
+  return os << kSeverityNames[index];
 }
 
 std::ostream& operator<<(std::ostream& os, LogRecord const& rhs) {
-  return os << '[' << rhs.severity << "] " << rhs.message << " ("
-            << rhs.filename << ':' << rhs.lineno << ')';
+  return os << Timestamp{rhs.timestamp} << " [" << rhs.severity << "] "
+            << rhs.message << " (" << rhs.filename << ':' << rhs.lineno << ')';
 }
 
 LogSink::LogSink()
