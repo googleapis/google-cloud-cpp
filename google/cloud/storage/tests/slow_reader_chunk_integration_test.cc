@@ -53,7 +53,7 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
 
   // Construct an object too large to fit in the first chunk.
   auto const read_size = 1024 * 1024L;
-  auto const large_text = MakeRandomData(2 * read_size);
+  auto const large_text = MakeRandomData(4 * read_size);
   StatusOr<ObjectMetadata> source_meta = client->InsertObject(
       bucket_name_, object_name, large_text, IfGenerationMatch(0));
   ASSERT_STATUS_OK(source_meta);
@@ -75,6 +75,7 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
   ObjectReadStream stream = make_reader(0);
 
   auto slow_reader_period = std::chrono::seconds(UsingTestbench() ? 1 : 400);
+  auto const period_increment = std::chrono::seconds(UsingTestbench() ? 5 : 60);
   auto const max_slow_reader_period = std::chrono::minutes(10);
   std::vector<char> buffer;
   long const size = 1024 * 1024;
@@ -97,7 +98,7 @@ TEST_F(SlowReaderChunkIntegrationTest, LongPauses) {
     offset += stream.gcount();
     EXPECT_STATUS_OK(stream.status());
     if (slow_reader_period < max_slow_reader_period) {
-      slow_reader_period += std::chrono::minutes(1);
+      slow_reader_period += period_increment;
     }
   }
   std::cout << " DONE\n";
