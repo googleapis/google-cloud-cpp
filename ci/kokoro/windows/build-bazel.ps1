@@ -116,7 +116,8 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel shutdown
 
-if (-not $IsPR -and $CacheConfigured -and $Has7z) {
+if (# TODO(coryan) restore before merging: -not $IsPR -and
+    $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     7z a "${CACHE_NAME}" "${bazel_root}" -spf -bso0 -bse0 -bsp0
     if ($LastExitCode) {
