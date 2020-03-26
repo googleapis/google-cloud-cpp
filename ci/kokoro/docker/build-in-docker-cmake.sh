@@ -148,7 +148,16 @@ _EOF_
   fi
 fi
 
-ctest_args=("--output-on-failure" "-j" "${NCPU}")
+TEST_JOB_COUNT="${NCPU}"
+if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
+  # The code coverage build cannot run the tests in parallel. Some of the files
+  # where the code coverage is recorded are shared and not protected by locks
+  # of any kind.
+  TEST_JOB_COUNT=1
+fi
+readonly TEST_JOB_COUNT
+
+ctest_args=("--output-on-failure" "-j" "${TEST_JOB_COUNT}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
     ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")
 fi
