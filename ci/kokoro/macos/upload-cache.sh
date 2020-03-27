@@ -44,13 +44,19 @@ fi
 echo "================================================================"
 echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 
-set -v
 readonly BAZEL_CACHE_DIR="/private/var/tmp/_bazel_${USER}"
 readonly CCACHE_DIR="${HOME}/.ccache"
 
-tar -C / -zcf "${HOME}/${CACHE_NAME}.tar.gz" \
-    --exclude="${BAZEL_CACHE_DIR}/install/" \
-    "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"
+dirs=()
+for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
+  if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
+done
+
+readonly UPLOAD="cmake-out/upload"
+mkdir -p "${UPLOAD}"
+
+set -v
+tar -C / -zcf "${UPLOAD}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil -q cp "${HOME}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 # gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"

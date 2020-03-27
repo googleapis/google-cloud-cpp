@@ -48,13 +48,16 @@ fi
 echo "================================================================"
 echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 
+readonly DOWNLOAD="cmake-out/download"
+mkdir -p "${DOWNLOAD}"
+
 set -v
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME}"
+gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
 # gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
-tar -C / -zxf "${HOME}/${CACHE_NAME}.tar.gz" 2>&1 | \
+echo tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 | \
     grep -E -v 'tar:.*in the future'
 
 exit 0

@@ -22,21 +22,24 @@ fi
 
 readonly PROJECT_ROOT="$1"
 
+source "${PROJECT_ROOT}/ci/colors.sh"
 echo
 echo "================================================================"
-echo "Update or Install Bazel at $(date)."
-echo
+echo "${COLOR_YELLOW}$(date -u): update or install Bazel.${COLOR_RESET}"
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
 function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
 
-"${PROJECT_ROOT}/ci/install-bazel.sh"
+mkdir -p "cmake-out/download"
+(cd "cmake-out/download"; "${PROJECT_ROOT}/ci/install-bazel.sh" >/dev/null)
 
 echo
 echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
-echo "Using Bazel in ${BAZEL_BIN}"
+echo "$(date -u): using Bazel in ${BAZEL_BIN}"
+"${BAZEL_BIN}" version
+"${BAZEL_BIN}" shutdown
 
 bazel_args=(
     # On macOS gRPC does not compile correctly unless one defines this:
@@ -55,23 +58,24 @@ fi
 echo
 echo "================================================================"
 for repeat in 1 2 3; do
-  echo "Fetch bazel dependencies at $(date) [${repeat}/3]."
+  echo "${COLOR_YELLOW}$(date -u): Fetch bazel dependencies at"\
+      "[${repeat}/3].${COLOR_RESET}"
   if "${BAZEL_BIN}" fetch -- //google/cloud/...; then
     break;
   else
-    echo "bazel fetch failed with $?"
+    echo "${COLOR_YELLOW}$(date -u): bazel fetch failed with $?${COLOR_RESET}"
   fi
 done
 
 echo
 echo "================================================================"
-echo "Build and run unit tests at $(date)."
+echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
 "${BAZEL_BIN}" test \
     "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
     -- //google/cloud/...:all
 
 echo
 echo "================================================================"
-echo "Build and all targets at $(date)."
+echo "${COLOR_YELLOW}$(date -u): build all targets.${COLOR_RESET}"
 "${BAZEL_BIN}" build \
     "${bazel_args[@]}" -- //google/cloud/...:all
