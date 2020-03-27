@@ -357,8 +357,13 @@ TEST_F(ClientIntegrationTest, QueryOptionsWork) {
     }
     ++row_count;
   }
-  EXPECT_TRUE(got_error) << "An invalid optimizer version should be an error";
-  EXPECT_EQ(0, row_count);
+  if (!emulator_) {
+    EXPECT_TRUE(got_error) << "An invalid optimizer version should be an error";
+    EXPECT_EQ(0, row_count);
+  } else {
+    EXPECT_FALSE(got_error) << "An invalid optimizer version should be OK";
+    EXPECT_EQ(2, row_count);
+  }
 }
 
 /// @test Test ExecutePartitionedDml
