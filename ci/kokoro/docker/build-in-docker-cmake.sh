@@ -212,6 +212,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
              "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
              "${BINARY_DIR}" "${ctest_args[@]}"; then
         success=yes
+        break
       fi
     done
     if [ "${success}" != "yes" ]; then
