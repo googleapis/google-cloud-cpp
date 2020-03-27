@@ -118,6 +118,17 @@ readonly CACHE_NAME
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
+echo "DEBUG DEBUG DEBUG"
+ls -la /private/var/tmp/
+echo "DEBUG DEBUG DEBUG $USER"
+ls -la /private/var/tmp/_bazel_${USER}
+echo "DEBUG DEBUG DEBUG"
+ls -la /
+echo "DEBUG DEBUG DEBUG"
+ls -la $HOME
+ls -la $HOME/.ccache
+echo "DEBUG DEBUG DEBUG"
+
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): starting build script.${COLOR_RESET}"
 
