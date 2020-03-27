@@ -101,25 +101,8 @@ rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 wget -O "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
     -q https://raw.githubusercontent.com/grpc/grpc/master/etc/roots.pem
 
-# Because Kokoro checks out the code in `detached HEAD` mode there is no easy
-# way to discover what is the current branch (and Kokoro does not expose the
-# branch as an enviroment variable, like other CI systems do). We use the
-# following trick:
-# - Find out the current commit using git rev-parse HEAD.
-# - Exclude "HEAD detached" branches (they are not really branches).
-# - Choose the branch from the bottom of the list.
-# - Typically this is the branch that was checked out by Kokoro.
-echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): detecting the branch name.${COLOR_RESET}"
-BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
-  grep -v 'HEAD' | tail -1 || exit 0)"
-# Enable extglob if not enabled
-shopt -q extglob || shopt -s extglob
-BRANCH="${BRANCH##*( )}"
-BRANCH="${BRANCH%%*( )}"
-BRANCH="${BRANCH##remotes/origin/}"
-BRANCH="${BRANCH##remotes/upstream/}"
-export BRANCH
+BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-master}"
+readonly BRANCH
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): detected the branch name:"\
     "${BRANCH}.${COLOR_RESET}"
