@@ -133,6 +133,26 @@ struct PolicyDocument {
 std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs);
 
 /**
+ * Define a policy document V4.
+ *
+ * Policy documents allow HTML forms to restrict uploads based on certain
+ * conditions. If the policy document is expired or the conditions are not
+ * satisified, POST'ing the form will not succeed.
+ *
+ * @see https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
+ * for general information on policy documents in Google Cloud Storage.
+ */
+struct PolicyDocumentV4 {
+  std::string bucket;
+  std::string object;
+  std::chrono::seconds expiration;
+  std::chrono::system_clock::time_point timestamp;
+  std::vector<PolicyDocumentCondition> conditions;
+};
+
+std::ostream& operator<<(std::ostream& os, PolicyDocumentV4 const& rhs);
+
+/**
  * Define a policy document result.
  *
  * `access_id` is the the Cloud Storage email form of the client ID. `policy`
@@ -147,6 +167,24 @@ struct PolicyDocumentResult {
 };
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentResult const& rhs);
+
+/**
+ * Define a policy document result V4.
+ *
+ * `access_id` is the the Cloud Storage email form of the client ID. `policy`
+ * is the base64 encoded form of the plain-text policy document and `signature`
+ * is the signed policy document.
+ */
+struct PolicyDocumentV4Result {
+  std::string url;
+  std::string access_id;
+  std::chrono::system_clock::time_point expiration;
+  std::string policy;
+  std::string signature;
+  std::string signing_algorithm;
+};
+
+std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs);
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

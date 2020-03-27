@@ -2805,6 +2805,47 @@ class Client {
     return SignPolicyDocument(request);
   }
 
+  /**
+   * Create a signed V4 policy document.
+   *
+   * @note The application must ensure that any document created with this
+   * function contains valid conditions. This function does not do any error
+   * checking, e.g. that a `ExactMatchObject()` condition contains two
+   * elements. Using the provided helper functions can prevent errors.
+   *
+   * @note It is the application's responsibility to construct a POST request
+   * based on the value returned by this function.  For example, a web
+   * application can create a HTML form containing these fields, the result of
+   * which is a POST request to GCS.
+   *
+   * @param document the policy document.
+   * @param options a list of optional parameters, this includes:
+   * `AddExtensionFieldOption`, `BucketBoundHostname`, `PredefinedAcl`,
+   * `Scheme`, `SigningAccountDelegates`, `SigningAccount`, `VirtualHostname`
+   *
+   * @par Helper Functions
+   * The following functions create a `PolicyDocumentCondition` with less
+   * opportunities for typos: `StartsWith()`, `ExactMatchObject()`,
+   * `ExactMatch()`, `ContentLengthRange()`.
+   *
+   * @par Example
+   * @snippet storage_bucket_samples.cc create signed policy document v4
+   *
+   * @see
+   * https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
+   *     for a general description of policy documents and how they can be used.
+   *
+   * @see https://cloud.google.com/storage/docs/xml-api/overview for a detailed
+   *     description of the XML API.
+   */
+  template <typename... Options>
+  StatusOr<PolicyDocumentV4Result> GenerateSignedPostPolicyV4(
+      PolicyDocumentV4 document, Options&&... options) {
+    internal::PolicyDocumentV4Request request(std::move(document));
+    request.set_multiple_options(std::forward<Options>(options)...);
+    return SignPolicyDocumentV4(std::move(request));
+  }
+
   //@{
   /**
    * @name Pub/Sub operations.
@@ -3048,6 +3089,8 @@ class Client {
 
   StatusOr<PolicyDocumentResult> SignPolicyDocument(
       internal::PolicyDocumentRequest const& request);
+  StatusOr<PolicyDocumentV4Result> SignPolicyDocumentV4(
+      internal::PolicyDocumentV4Request request);
 
   std::shared_ptr<internal::RawClient> raw_client_;
 

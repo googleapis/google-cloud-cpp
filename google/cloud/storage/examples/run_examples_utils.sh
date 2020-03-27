@@ -988,6 +988,7 @@ run_signed_policy_document_examples() {
   fi
 
   run_example ./storage_bucket_samples create-signed-policy-document
+  run_example ./storage_bucket_samples create-signed-policy-document-v4
 }
 
 ################################################
