@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RANGE_FROM_PAGINATION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RANGE_FROM_PAGINATION_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <functional>
 #include <iterator>
 #include <string>

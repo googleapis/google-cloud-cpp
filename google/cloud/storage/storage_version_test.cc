@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/build_info.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/build_info.h"
 #include <gmock/gmock.h>
 
 namespace google {

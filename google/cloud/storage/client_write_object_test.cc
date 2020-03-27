@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 

@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_STREAMBUF_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/hash_validator.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <iostream>
 #include <map>
 #include <memory>

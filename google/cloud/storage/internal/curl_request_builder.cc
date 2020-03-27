@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/internal/build_info.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/build_info.h"
 
 namespace google {
 namespace cloud {

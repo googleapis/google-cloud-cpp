@@ -15,14 +15,14 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_PARALLEL_UPLOAD_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_PARALLEL_UPLOAD_H
 
-#include "google/cloud/future.h"
-#include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/make_unique.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/tuple_filter.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/future.h"
+#include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/make_unique.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 #include <condition_variable>
 #include <cstddef>

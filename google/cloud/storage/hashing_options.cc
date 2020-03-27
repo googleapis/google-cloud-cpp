@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/hashing_options.h"
-#include "google/cloud/internal/big_endian.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/internal/big_endian.h"
 #include <crc32c/crc32c.h>
 #include <openssl/md5.h>
 #include <cstring>

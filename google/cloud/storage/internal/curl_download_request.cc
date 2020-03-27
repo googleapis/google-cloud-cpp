@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_download_request.h"
-#include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
 #include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/log.h"
 #include <curl/multi.h>
 #include <algorithm>
 #include <cstring>

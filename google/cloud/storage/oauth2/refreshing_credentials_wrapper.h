@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H
 
+#include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storage/version.h"
 #include <chrono>
 #include <string>
 #include <utility>

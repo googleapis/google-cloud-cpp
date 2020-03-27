@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPLEX_OPTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_COMPLEX_OPTION_H
 
-#include "google/cloud/optional.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
 #include <iostream>
 
 namespace google {

@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PATCH_BUILDER_H
 
-#include "google/cloud/optional.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
 #include <iostream>
 #include <string>
 #include <vector>

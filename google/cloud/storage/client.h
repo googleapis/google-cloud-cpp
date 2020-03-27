@@ -15,10 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_CLIENT_H
 
-#include "google/cloud/internal/disjunction.h"
-#include "google/cloud/internal/throw_delegate.h"
-#include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/hmac_key_metadata.h"
 #include "google/cloud/storage/internal/logging_client.h"
 #include "google/cloud/storage/internal/parameter_pack_validation.h"
@@ -37,6 +33,10 @@
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/disjunction.h"
+#include "google/cloud/internal/throw_delegate.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include <type_traits>
 
 namespace google {

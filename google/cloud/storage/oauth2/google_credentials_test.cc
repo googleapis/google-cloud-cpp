@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_credentials.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/oauth2/anonymous_credentials.h"
 #include "google/cloud/storage/oauth2/authorized_user_credentials.h"
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>

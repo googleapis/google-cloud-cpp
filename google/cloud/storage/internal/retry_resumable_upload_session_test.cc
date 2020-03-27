@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/chrono_literals.h"
 #include <gmock/gmock.h>

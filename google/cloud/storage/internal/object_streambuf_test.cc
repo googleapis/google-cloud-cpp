@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/object_streambuf.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 

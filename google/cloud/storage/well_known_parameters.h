@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_WELL_KNOWN_PARAMETERS_H
 
+#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/ios_flags_saver.h"
 #include "google/cloud/optional.h"
-#include "google/cloud/storage/version.h"
 #include <cstdint>
 #include <iomanip>
 #include <string>

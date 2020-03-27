@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_rewriter.h"
-#include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/internal/throw_delegate.h"
 
 namespace google {
 namespace cloud {

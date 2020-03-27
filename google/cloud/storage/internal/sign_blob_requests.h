@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SIGN_BLOB_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SIGN_BLOB_REQUESTS_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/status_or.h"
 #include <string>
 #include <vector>
 

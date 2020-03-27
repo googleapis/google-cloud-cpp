@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_READ_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_OBJECT_READ_SOURCE_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <string>
 
 namespace google {

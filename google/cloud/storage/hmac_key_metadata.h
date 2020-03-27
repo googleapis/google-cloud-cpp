@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HMAC_KEY_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_HMAC_KEY_METADATA_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 #include <iosfwd>
 #include <string>

@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_RETRY_POLICY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_RETRY_POLICY_H
 
+#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/status.h"
-#include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {

@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RESUMABLE_UPLOAD_SESSION_H
 
-#include "google/cloud/optional.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include <cstdint>
 #include <iosfwd>
 #include <string>

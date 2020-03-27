@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/retry_client.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/storage/internal/retry_resumable_upload_session.h"
+#include "google/cloud/internal/make_unique.h"
 #include <sstream>
 #include <thread>
 

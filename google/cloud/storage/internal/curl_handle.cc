@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/log.h"
 #include <string.h>  // NOLINT
 #ifdef _WIN32
 #include <winsock.h>

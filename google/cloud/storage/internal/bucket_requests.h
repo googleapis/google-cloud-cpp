@@ -15,13 +15,13 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_BUCKET_REQUESTS_H
 
-#include "google/cloud/iam_policy.h"
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/iam_policy.h"
 #include <iosfwd>
 
 namespace google {

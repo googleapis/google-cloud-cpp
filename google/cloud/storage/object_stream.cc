@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_stream.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/object_requests.h"
+#include "google/cloud/log.h"
 #include <sstream>
 #include <thread>
 

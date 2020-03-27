@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIST_HMAC_KEYS_READER_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/hmac_key_requests.h"
 #include "google/cloud/storage/internal/range_from_pagination.h"
 #include "google/cloud/storage/internal/raw_client.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status_or.h"
 #include <iterator>
 
 namespace google {

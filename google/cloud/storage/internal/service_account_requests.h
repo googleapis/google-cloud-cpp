@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_REQUESTS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_SERVICE_ACCOUNT_REQUESTS_H
 
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/generic_request.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/status_or.h"
 #include <iosfwd>
 
 namespace google {
