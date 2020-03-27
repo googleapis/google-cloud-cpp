@@ -41,7 +41,7 @@ $CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRAN
 $CACHE_BASENAME="cache-windows-bazel"
 
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
-    ($env:KOKORO_JOB_TYPE -eq "GITHUB_PULL_REQUEST")
+    ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
 $CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
     (Test-Path "${env:KOKORO_GFILE_DIR}/build-results-service-account.json")
 $Has7z = Get-Command "7z" -ErrorAction SilentlyContinue
@@ -149,8 +149,7 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
 
-if (# TODO(coryan) - DO NOT MERGE (-not $IsPR) -and
-    $CacheConfigured -and $Has7z) {
+if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
