@@ -13,11 +13,15 @@
 @REM limitations under the License.
 
 REM Install Bazel using Chocolatey.
-choco install -y bazel --version 2.0.0
+choco install --no-progress -y bazel --version 2.0.0
 
 REM Change PATH to use chocolatey's version of Bazel
 set PATH=C:\ProgramData\chocolatey\bin;%PATH%
+
+@REM capture the version for troubleshooting
 bazel version
+@REM shutdown afterwards otherwise the server locks files
+bazel shutdown
 
 REM Configure the environment to use MSVC 2019 and then switch to PowerShell.
 call "c:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"

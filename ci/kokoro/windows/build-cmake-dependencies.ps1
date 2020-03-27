@@ -35,7 +35,7 @@ if (Test-Path env:RUNNING_CI) {
     if (Test-Path "vcpkg") {
         Remove-Item -LiteralPath "vcpkg" -Force -Recurse
     }
-    git clone --depth 10 https://github.com/Microsoft/vcpkg.git
+    git clone --quiet --depth 10 https://github.com/Microsoft/vcpkg.git
     if ($LastExitCode) {
       throw "vcpkg git setup failed with exit code $LastExitCode"
     }
@@ -48,18 +48,25 @@ Set-Location vcpkg
 # If BUILD_CACHE is set (which typically is on Kokoro builds), try
 # to download and extract the build cache.
 if (Test-Path env:BUILD_CACHE) {
-    gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Downloading build cache."
-    gsutil cp $env:BUILD_CACHE vcpkg-installed.zip
+    gcloud auth activate-service-account `
+        --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+        "downloading build cache."
+    gsutil -q cp $env:BUILD_CACHE vcpkg-installed.zip
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
         Write-Host "gsutil download failed with exit code $LastExitCode"
-    }
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Extracting build cache."
-    7z x vcpkg-installed.zip -aoa
-    if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
-        Write-Host "extracting build cache failed with exit code $LastExitCode"
+    } else {
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "extracting build cache."
+        7z x vcpkg-installed.zip -aoa -bsp0
+        if ($LastExitCode) {
+            # Ignore errors, caching failures should not break the build.
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "extracting build cache failed with exit code ${LastExitCode}."
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "build will continue without a cache."
+        }
     }
 }
 
@@ -108,18 +115,26 @@ foreach ($pkg in $packages) {
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 .\vcpkg.exe list
 
-if (Test-Path env:BUILD_CACHE) {
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create cache zip file."
-    7z a vcpkg-installed.zip installed\
+# Do not update the vcpkg cache on PRs, it might dirty the cache for any
+# PRs running in parallel, and it is a waste of time in most cases.
+$IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
+    ($env:KOKORO_JOB_TYPE = "GITHUB_PULL_REQUEST")
+if (-not $IsPR -and (Test-Path env:BUILD_CACHE)) {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+      "zip vcpkg cache for upload."
+    7z a vcpkg-installed.zip installed\ -bsp0
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
-        Write-Host "zip build cache failed with exit code $LastExitCode"
-    }
-
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Upload cache zip file."
-    gsutil cp vcpkg-installed.zip $env:BUILD_CACHE
-    if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
-        Write-Host "gsutil upload failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "zip failed with exit code ${LastExitCode}."
+    } else {
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "upload zip with vcpkg cache."
+        gsutil -q cp vcpkg-installed.zip "${env:BUILD_CACHE}"
+        if ($LastExitCode) {
+            # Ignore errors, caching failures should not break the build.
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "continue despite upload failure with code ${LastExitCode}".
+        }
     }
 }
