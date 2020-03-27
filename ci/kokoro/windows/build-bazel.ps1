@@ -46,8 +46,6 @@ $CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
     (Test-Path "${env:KOKORO_GFILE_DIR}/build-results-service-account.json")
 $Has7z = Get-Command "7z" -ErrorAction SilentlyContinue
 
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) $IsPR $CacheConfigured $Has7z DEBUG DEBUG"
-
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
@@ -64,7 +62,6 @@ if ($IsPR -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
         "downloading Bazel cache."
     gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar" "${download_dir}"
-    # Copy-Item "C:\k\${CACHE_BASENAME}.tar" "${download_dir}" -ErrorAction SilentlyContinue
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
@@ -181,7 +178,6 @@ if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
             "uploading Bazel cache."
         gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
             "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
-#        Copy-Item "${download_dir}/${CACHE_BASENAME}.tar" "C:\k" -ErrorAction SilentlyContinue
         if ($LastExitCode) {
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
                 "uploading cache failed exit code ${LastExitCode}."
@@ -192,5 +188,3 @@ if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) DONE"
-
-Exit 0
