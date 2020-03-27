@@ -56,22 +56,43 @@ if (Test-Path env:TEMP) {
 } elseif (-not $download_dir) {
     Make-Item -Type "Directory" ${download_dir}
 }
-if ("TRUE") { # TODO(coryan) - $IsPR -and $CacheConfigured -and $Has7z) {
-    gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Downloading Bazel cache."
-    gsutil cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar" "${download_dir}"
+if ($IsPR -and $CacheConfigured -and $Has7z) {
+    gcloud auth activate-service-account --key-file `
+        "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+        "downloading Bazel cache."
+    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar" "${download_dir}"
     # Copy-Item "C:\k\${CACHE_BASENAME}.tar" "${download_dir}" -ErrorAction SilentlyContinue
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
-        Write-Host "gsutil download failed with exit code $LastExitCode"
-        Write-Host "Continue building without a cache"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "gsutil download failed with exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "continue building without a cache"
     } else {
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Extracting build cache."
-        7z x "${download_dir}/${CACHE_BASENAME}.tar" -spf -snl -snh -aoa #TODO(coryan) -bsp0
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "extracting build cache."
+        $extract_flags=@(
+            # Preserve full path
+            "-spf",
+            # Preserve symbolic links
+            "-snl",
+            # Preserve hard links
+            "-snh",
+            # Overwrite all items
+            "-aoa",
+            # Suppress progress messages
+            # TODO(coryan) DO NOT MERGE "-bsp0",
+            # Suppress typicaly output messages
+            "-bso0"
+        )
+        7z x "${download_dir}/${CACHE_BASENAME}.tar" ${extract_flags}
         if ($LastExitCode) {
             # Ignore errors, caching failures should not break the build.
-            Write-Host "extracting build cache failed with exit code $LastExitCode"
-            Write-Host "Continue building without a cache"
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "extracting build cache failed with exit code ${LastExitCode}."
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "Continue building without a cache"
         }
     }
 }
@@ -96,13 +117,13 @@ bazel $common_flags test $test_flags `
   --test_tag_filters=-integration-tests `
   -- //google/cloud/...:all
 if ($LastExitCode) {
-    throw "bazel test failed with exit code $LastExitCode"
+    throw "bazel test failed with exit code ${LastExitCode}."
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling extra programs"
 bazel $common_flags build $build_flags -- //google/cloud/...:all
 if ($LastExitCode) {
-    throw "bazel test failed with exit code $LastExitCode"
+    throw "bazel test failed with exit code ${LastExitCode}."
 }
 
 if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "true")) {
@@ -118,7 +139,7 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
       --test_tag_filters=integration-tests `
       -- //google/cloud/...:all
     if ($LastExitCode) {
-        throw "Integration tests failed with exit code $LastExitCode"
+        throw "Integration tests failed with exit code ${LastExitCode}."
     }
 }
 
@@ -126,7 +147,7 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
 
-if ("TRUE") { # TODO(coryan) - -not $IsPR -and $CacheConfigured -and $Has7z) {
+if (-not $IsPR -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
@@ -140,26 +161,31 @@ if ("TRUE") { # TODO(coryan) - -not $IsPR -and $CacheConfigured -and $Has7z) {
         # Exclude directories named "install"
         "-xr!install",
         # Suppress errors
-        # TODO(coryan) DO NOT MERGE "-bse0",
+        "-bse0",
         # Suppress progress
-        # TODO(coryan) DO NOT MERGE "-bsp0",
+        #  TODO(coryan) - do not merge "-bsp0",
         # Suppress standard logging
         "-bso0"
     )
     7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) zipping cache "`
-            "contents failed with exit code $LastExitCode"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "zipping cache contents failed with exit code ${LastExitCode}."
     }
     if (Test-Path "${CACHE_BASENAME}.tar") {
-        gcloud auth activate-service-account --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Uploading Bazel cache."
-        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
+        gcloud auth activate-service-account --key-file `
+            "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "uploading Bazel cache."
+        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
+            "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
 #        Copy-Item "${download_dir}/${CACHE_BASENAME}.tar" "C:\k" -ErrorAction SilentlyContinue
         if ($LastExitCode) {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) uploading cache failed exit code $LastExitCode"
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) cache not updated"
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "uploading cache failed exit code ${LastExitCode}."
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "cache not updated, this will not cause a build failure."
         }
     }
 }
