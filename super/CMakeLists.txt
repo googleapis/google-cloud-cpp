@@ -23,12 +23,33 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(GOOGLE_CLOUD_CPP_ROOT "${PROJECT_SOURCE_DIR}/..")
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 
+option(GOOGLE_CLOUD_CPP_ENABLE_CCACHE "Automatically use ccache if available"
+       ON)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_CCACHE)
+
+if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
+    find_program(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM ccache NAMES /usr/bin/ccache)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
+    if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
+        message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE
+                "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+        set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK
+                "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+    endif ()
+    set(GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE
+        "-DCMAKE_CXX_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}"
+        "-DCMAKE_CC_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+endif ()
+
 include(external/curl)
 include(external/crc32c)
 include(external/grpc)
 include(external/googleapis)
 include(external/googletest)
 include(external/google-cloud-cpp-common)
+include(ProcessorCount)
+processorcount(NCPU)
 
 include(ExternalProjectHelper)
 set_external_project_build_parallel_level(PARALLEL)
@@ -56,7 +77,7 @@ ExternalProject_Add(
                -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
     TEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -LE
-                 integration-tests
+                 integration-tests -- -j "${NCPU}"
     LOG_DOWNLOAD OFF
     LOG_CONFIGURE OFF
     LOG_BUILD OFF
