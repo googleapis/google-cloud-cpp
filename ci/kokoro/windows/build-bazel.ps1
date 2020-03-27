@@ -41,16 +41,18 @@ $CACHE_FOLDER="${CACHE_BUCKET}/build-cache/${GOOGLE_CLOUD_CPP_REPOSITORY}/${BRAN
 $CACHE_BASENAME="cache-windows-bazel"
 
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
-    ($env:KOKORO_JOB_TYPE = "GITHUB_PULL_REQUEST")
+    ($env:KOKORO_JOB_TYPE -eq "GITHUB_PULL_REQUEST")
 $CacheConfigured = (Test-Path env:KOKORO_GFILE_DIR) -and `
     (Test-Path "${env:KOKORO_GFILE_DIR}/build-results-service-account.json")
-$Has7z= Get-Command "7z" -ErrorAction SilentlyContinue
+$Has7z = Get-Command "7z" -ErrorAction SilentlyContinue
+
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) $IsPR $CacheConfigured $Has7z DEBUG DEBUG"
 
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
 
-$download_dir="T:\tmp"
+$download_dir = "T:\tmp"
 if (Test-Path env:TEMP) {
     $download_dir="${env:TEMP}"
 } elseif (-not $download_dir) {
@@ -147,7 +149,7 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
 
-if (-not $IsPR -and $CacheConfigured -and $Has7z) {
+if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
@@ -172,8 +174,7 @@ if (-not $IsPR -and $CacheConfigured -and $Has7z) {
         # Ignore errors, caching failures should not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "zipping cache contents failed with exit code ${LastExitCode}."
-    }
-    if (Test-Path "${CACHE_BASENAME}.tar") {
+    } else {
         gcloud auth activate-service-account --key-file `
             "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
