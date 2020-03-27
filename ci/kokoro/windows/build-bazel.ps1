@@ -81,7 +81,7 @@ if ($IsPR -and $CacheConfigured -and $Has7z) {
             # Overwrite all items
             "-aoa",
             # Suppress progress messages
-            # TODO(coryan) DO NOT MERGE "-bsp0",
+            "-bsp0",
             # Suppress typicaly output messages
             "-bso0"
         )
@@ -162,7 +162,7 @@ if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
         # Suppress errors
         "-bse0",
         # Suppress progress
-        #  TODO(coryan) - do not merge "-bsp0",
+        "-bsp0",
         # Suppress standard logging
         "-bso0"
     )
