@@ -13,14 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/object_streambuf.h"
 #include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/terminate_handler.h"
 #include <sstream>
 

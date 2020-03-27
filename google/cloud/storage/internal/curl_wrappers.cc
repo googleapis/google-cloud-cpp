@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_wrappers.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/log.h"
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
 #include <algorithm>

@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_CREDENTIALS_H
 
-#include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include <chrono>
 
 namespace google {

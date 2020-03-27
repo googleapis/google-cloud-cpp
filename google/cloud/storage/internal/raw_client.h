@@ -15,8 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_RAW_CLIENT_H
 
-#include "google/cloud/status.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/bucket_acl_requests.h"
@@ -37,6 +35,8 @@
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {

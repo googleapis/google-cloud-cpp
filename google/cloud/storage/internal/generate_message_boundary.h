@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GENERATE_MESSAGE_BOUNDARY_H
 
-#include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/invoke_result.h"
 #include <string>
 
 namespace google {

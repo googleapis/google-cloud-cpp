@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_HTTP_RESPONSE_H
 
-#include "google/cloud/status.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/status.h"
 #include <iosfwd>
 #include <map>
 #include <string>

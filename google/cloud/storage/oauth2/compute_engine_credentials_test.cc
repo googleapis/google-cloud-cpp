@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/compute_engine_credentials.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/internal/compute_engine_util.h"
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/testing/mock_fake_clock.h"
 #include "google/cloud/storage/testing/mock_http_request.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include <gmock/gmock.h>
 #include <chrono>

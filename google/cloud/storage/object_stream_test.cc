@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/object_stream.h"
-#include "google/cloud/internal/make_unique.h"
 #include "google/cloud/storage/internal/raw_client.h"
+#include "google/cloud/internal/make_unique.h"
 #include <gmock/gmock.h>
 
 namespace google {

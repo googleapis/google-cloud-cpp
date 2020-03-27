@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_LIFECYCLE_RULE_H
 
+#include "google/cloud/storage/storage_class.h"
+#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
-#include "google/cloud/storage/storage_class.h"
-#include "google/cloud/storage/version.h"
 #include <chrono>
 #include <iosfwd>
 #include <utility>

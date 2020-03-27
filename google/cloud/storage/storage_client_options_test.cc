@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/assert_ok.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>

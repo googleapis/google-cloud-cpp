@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_BENCHMARK_UTILS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_BENCHMARK_UTILS_H
 
-#include "google/cloud/internal/random.h"
-#include "google/cloud/optional.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
+#include "google/cloud/internal/random.h"
+#include "google/cloud/optional.h"
 #include <chrono>
 #include <functional>
 #include <sstream>

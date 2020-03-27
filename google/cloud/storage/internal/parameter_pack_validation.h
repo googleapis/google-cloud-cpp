@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARAMETER_PACK_VALIDATION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_PARAMETER_PACK_VALIDATION_H
 
-#include "google/cloud/internal/disjunction.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/disjunction.h"
 
 namespace google {
 namespace cloud {

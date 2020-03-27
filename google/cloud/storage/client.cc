@@ -13,13 +13,13 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
-#include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/make_unique.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
+#include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/make_unique.h"
+#include "google/cloud/log.h"
 #include <openssl/md5.h>
 #include <fstream>
 #include <thread>

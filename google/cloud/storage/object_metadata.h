@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_METADATA_H
 
-#include "google/cloud/optional.h"
-#include "google/cloud/status_or.h"
 #include "google/cloud/storage/internal/common_metadata.h"
 #include "google/cloud/storage/internal/complex_option.h"
 #include "google/cloud/storage/object_access_control.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/optional.h"
+#include "google/cloud/status_or.h"
 #include <map>
 
 namespace google {

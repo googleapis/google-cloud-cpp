@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_STORAGE_INTEGRATION_TEST_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_TESTING_STORAGE_INTEGRATION_TEST_H
 
-#include "google/cloud/internal/random.h"
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/well_known_headers.h"
+#include "google/cloud/internal/random.h"
 #include <gmock/gmock.h>
 #include <string>
 #include <vector>

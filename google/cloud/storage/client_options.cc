@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client_options.h"
-#include "google/cloud/internal/getenv.h"
-#include "google/cloud/log.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/log.h"
 #include <cstdlib>
 #include <set>
 #include <sstream>

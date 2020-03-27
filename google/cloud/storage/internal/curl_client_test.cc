@@ -13,12 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_client.h"
-#include "google/cloud/internal/make_unique.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/storage/iam_policy.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
+#include "google/cloud/internal/make_unique.h"
+#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
 #include <memory>

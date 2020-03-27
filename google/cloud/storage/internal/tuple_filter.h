@@ -15,11 +15,11 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TUPLE_FILTER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_TUPLE_FILTER_H
 
+#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/disjunction.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/internal/tuple.h"
 #include "google/cloud/internal/utility.h"
-#include "google/cloud/storage/version.h"
 #include <tuple>
 #include <type_traits>
 #include <utility>
