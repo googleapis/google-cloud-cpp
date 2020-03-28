@@ -38,14 +38,21 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   echo "This is a presubmit build, cache will not be updated, exist with success."
-  exit 0
+# TODO(coryan) restore this before MERGE:  exit 0
 fi
 
-readonly BAZEL_CACHE_DIR="/private/var/tmp/_bazel_${USER}"
 readonly CCACHE_DIR="${HOME}/.ccache"
 
+maybe_dirs=("${CCACHE_DIR}")
+readonly BAZEL_BIN="$HOME/bin/bazel"
+if [[ -x "${BAZEL_BIN}" ]]; then
+  maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
+  maybe_dirs+=("$("${BAZEL_BIN}" info install_base)")
+  maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
+fi
+
 dirs=()
-for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
+for dir in "${maybe_dirs[@]}"; do
   if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
 done
 

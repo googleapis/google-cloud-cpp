@@ -116,10 +116,6 @@ readonly CACHE_FOLDER
 CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
-# Kokoro does not not seem to cleanup old bazel caches, remove them before
-# doing anything else
-rm -fr "/private/var/tmp/_bazel_${USER}"
-
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
