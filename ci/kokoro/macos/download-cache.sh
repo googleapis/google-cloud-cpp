@@ -26,6 +26,9 @@ readonly CACHE_NAME="$2"
 mkdir -p "${HOME}/.ccache"
 [[ -f "${HOME}/.ccache/ccache.conf" ]] || \
   echo "max_size = 4.0G" >"${HOME}/.ccache/ccache.conf"
+# Remove any old Bazel caches, apparently the Kokoro build machines have them
+# survive after a build
+rm -fr "/private/var/tmp/_bazel_${USER}"
 
 KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly KOKORO_GFILE_DIR
