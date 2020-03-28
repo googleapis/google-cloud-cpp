@@ -47,7 +47,6 @@ maybe_dirs=("${CCACHE_DIR}")
 readonly BAZEL_BIN="$HOME/bin/bazel"
 if [[ -x "${BAZEL_BIN}" ]]; then
   maybe_dirs+=("$("${BAZEL_BIN}" info repository_cache)")
-  maybe_dirs+=("$("${BAZEL_BIN}" info install_base)")
   maybe_dirs+=("$("${BAZEL_BIN}" info output_base)")
 fi
 
