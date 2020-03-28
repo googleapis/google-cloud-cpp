@@ -125,6 +125,18 @@ echo "DEBUG DEBUG"
 ls -la /usr/bin/tar
 echo "DEBUG DEBUG DEBUG"
 
+bazel version || echo "Failed bazel version"
+bazel shutdown || echo "failed bazel shutdown"
+# Kokoro does not not seem to cleanup old bazel caches, remove them before
+# doing anything else
+rm -fr "/private/var/tmp/_bazel_${USER}"
+
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/ || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
+echo "DEBUG DEBUG"
+
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
