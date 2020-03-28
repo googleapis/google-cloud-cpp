@@ -56,8 +56,7 @@ readonly UPLOAD="cmake-out/upload"
 mkdir -p "${UPLOAD}"
 
 set -v
-tar -C / -zcf "${HOME}/${CACHE_NAME}.tar.gz" \
-    --exclude="${BAZEL_CACHE_DIR}/install/" "${dirs[@]}"
+tar -C / -zcf "${HOME}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil -q cp "${HOME}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 # gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
