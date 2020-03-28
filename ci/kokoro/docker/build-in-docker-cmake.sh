@@ -185,15 +185,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     echo
   fi
 
-  TIMEOUT_CMD="timeout 300s"
-  TIMEOUT_ARGS=("300s")
-  if ! command -v "${TIMEOUT_CMD}"; then
-    TIMEOUT_CMD="env"
-    TIMEOUT_ARGS=()
-  fi
-  readonly TIMEOUT_CMD
-  readonly TIMEOUT_ARGS
-
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     readonly EMULATOR_SCRIPT="run_integration_tests_emulator_cmake.sh"
     # TODO(#441) - remove the for loops below.
@@ -208,9 +199,10 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       echo "${COLOR_YELLOW}: $(date -u): running bigtable integration tests" \
           "via CTest [${attempt}]${COLOR_RESET}"
       echo
-      if "${TIMEOUT_CMD}" "${TIMEOUT_ARGS[@]}" \
-             "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
-             "${BINARY_DIR}" "${ctest_args[@]}"; then
+      # TODO(#441) - when the emulator crashes the tests can take a long time.
+      # The slowest test normally finishes in about 6 seconds, 60 seems safe.
+      if "${PROJECT_ROOT}/google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
+             "${BINARY_DIR}" "${ctest_args[@]}" --timeout 60; then
         success=yes
         break
       fi
