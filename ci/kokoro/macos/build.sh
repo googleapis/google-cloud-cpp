@@ -118,9 +118,11 @@ readonly CACHE_NAME
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER} || true
+ls -la /private/var/tmp/_bazel_${USER}/ || true
 echo "DEBUG DEBUG"
-printenv
+ls -la /private/var/tmp/_bazel_${USER}/* || true
+echo "DEBUG DEBUG"
+ls -la /usr/bin/tar
 echo "DEBUG DEBUG DEBUG"
 
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \

@@ -46,12 +46,28 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
 
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/ || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
+echo "DEBUG DEBUG"
+
 echo
 echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "$(date -u): using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 "${BAZEL_BIN}" shutdown
+
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/ || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
+echo "DEBUG DEBUG"
 
 echo
 echo "================================================================"
@@ -68,7 +84,9 @@ done
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER} || true
+ls -la /private/var/tmp/_bazel_${USER}/ || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
 echo "DEBUG DEBUG"
 
 echo
@@ -81,7 +99,9 @@ echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER} || true
+ls -la /private/var/tmp/_bazel_${USER}/ || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
 echo "DEBUG DEBUG"
 
 echo
@@ -93,5 +113,7 @@ echo "${COLOR_YELLOW}$(date -u): build all targets.${COLOR_RESET}"
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER} || true
+ls -la /private/var/tmp/_bazel_${USER}/ || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
 echo "DEBUG DEBUG"
