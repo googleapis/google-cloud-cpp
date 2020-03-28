@@ -48,16 +48,17 @@ if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
   exit 0
 fi
 
+gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
+
 echo "================================================================"
 echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
-
 readonly DOWNLOAD="cmake-out/download"
 mkdir -p "${DOWNLOAD}"
-
-set -v
-gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
-# gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
+gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
+
+echo "================================================================"
+echo "$(date -u): Extracting build cache ${CACHE_NAME}"
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
 tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 | \

@@ -41,9 +41,6 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
 # TODO(coryan) - restore this before MERGE:  exit 0
 fi
 
-echo "================================================================"
-echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
-
 readonly BAZEL_CACHE_DIR="/private/var/tmp/_bazel_${USER}"
 readonly CCACHE_DIR="${HOME}/.ccache"
 
@@ -55,10 +52,14 @@ done
 readonly UPLOAD="cmake-out/upload"
 mkdir -p "${UPLOAD}"
 
-set -v
+echo "================================================================"
+echo "$(date -u): Preparing cache tarball for ${CACHE_NAME}"
 tar -C / -zcf "${UPLOAD}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
+
+echo "================================================================"
+echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
-# gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
+gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
 
 exit 0
