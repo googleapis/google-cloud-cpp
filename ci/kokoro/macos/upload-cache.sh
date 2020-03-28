@@ -38,7 +38,7 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   echo "This is a presubmit build, cache will not be updated, exist with success."
-# TODO(coryan) - restore this before MERGE:  exit 0
+  exit 0
 fi
 
 readonly BAZEL_CACHE_DIR="/private/var/tmp/_bazel_${USER}"
@@ -47,9 +47,6 @@ readonly CCACHE_DIR="${HOME}/.ccache"
 dirs=()
 for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
   if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
-  echo DEBUG DEBUG DEBUG
-  ls -la "${dir}" || true
-  echo DEBUG DEBUG DEBUG
 done
 
 readonly UPLOAD="cmake-out/upload"
@@ -66,6 +63,9 @@ gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 
 echo "================================================================"
 echo "$(date -u): Upload completed"
-gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
+ACCOUNT="$(sed -n 's/.*"client_email": "\(.*\)",.*/\1/p' "${KEYFILE}")"
+readonly ACCOUNT
+gcloud --quiet auth revoke "${ACCOUNT}" >/dev/null 2>&1 || \
+    echo "Ignore revoke failure"
 
 exit 0

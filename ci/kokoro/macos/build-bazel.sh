@@ -46,24 +46,14 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
-
 echo
 echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
 echo "$(date -u): using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
+echo "$(date -u): bazel info"
+"${BAZEL_BIN}" info
 "${BAZEL_BIN}" shutdown
-
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
 
 echo
 echo "================================================================"
@@ -77,12 +67,6 @@ for repeat in 1 2 3; do
   fi
 done
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
-
 echo
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
@@ -90,20 +74,8 @@ echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
     "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
     -- //google/cloud/...:all
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
-
 echo
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): build all targets.${COLOR_RESET}"
 "${BAZEL_BIN}" build \
     "${bazel_args[@]}" -- //google/cloud/...:all
-
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"

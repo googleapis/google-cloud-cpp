@@ -54,7 +54,8 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): change working directory to project root."
+echo "${COLOR_YELLOW}$(date -u): change working directory to project root."\
+    "${COLOR_RESET}"
 cd "${PROJECT_ROOT}"
 
 NCPU="$(sysctl -n hw.logicalcpu)"
@@ -115,36 +116,12 @@ readonly CACHE_FOLDER
 CACHE_NAME="cache-macos-${BUILD_NAME}"
 readonly CACHE_NAME
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
-ls -la /usr/bin/tar
-echo "DEBUG DEBUG DEBUG"
-
-bazel version || echo "Failed bazel version"
-bazel shutdown || echo "failed bazel shutdown"
 # Kokoro does not not seem to cleanup old bazel caches, remove them before
 # doing anything else
 rm -fr "/private/var/tmp/_bazel_${USER}"
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/ || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
-
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
-
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER} || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
 
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): starting build script.${COLOR_RESET}"
@@ -161,11 +138,5 @@ if [[ "${exit_status}" -eq 0 ]]; then
   "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 fi
-
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER} || true
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp/_bazel_${USER}/* || true
-echo "DEBUG DEBUG"
 
 exit ${exit_status}

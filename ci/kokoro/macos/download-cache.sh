@@ -52,7 +52,11 @@ echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 readonly DOWNLOAD="cmake-out/download"
 mkdir -p "${DOWNLOAD}"
 gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
-gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
+
+ACCOUNT="$(sed -n 's/.*"client_email": "\(.*\)",.*/\1/p' "${KEYFILE}")"
+readonly ACCOUNT
+gcloud --quiet auth revoke "${ACCOUNT}" >/dev/null 2>&1 || \
+    echo "Ignore revoke failure"
 
 echo "================================================================"
 echo "$(date -u): Extracting build cache ${CACHE_NAME}"
