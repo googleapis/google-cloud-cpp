@@ -50,8 +50,6 @@ for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
   echo DEBUG DEBUG DEBUG
   ls -la "${dir}" || true
   echo DEBUG DEBUG DEBUG
-  printenv
-  echo DEBUG DEBUG DEBUG
 done
 
 readonly UPLOAD="cmake-out/upload"

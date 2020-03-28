@@ -120,6 +120,8 @@ ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER} || true
 echo "DEBUG DEBUG"
+printenv
+echo "DEBUG DEBUG DEBUG"
 
 "${PROJECT_ROOT}/ci/kokoro/macos/download-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
