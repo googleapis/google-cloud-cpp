@@ -33,9 +33,9 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
     if (GOOGLE_CLOUD_CPP_CCACHE_PROGRAM)
         message(STATUS "ccache found: ${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
         set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE
-                "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+                                     "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
         set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK
-                "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
+                                     "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
     endif ()
     set(GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE
         "-DCMAKE_CXX_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}"
@@ -76,8 +76,14 @@ ExternalProject_Add(
                -DCMAKE_INSTALL_RPATH=${GOOGLE_CLOUD_CPP_INSTALL_RPATH}
                -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR>
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> ${PARALLEL}
-    TEST_COMMAND ${CMAKE_CTEST_COMMAND} --output-on-failure -LE
-                 integration-tests -- -j "${NCPU}"
+    TEST_COMMAND
+        ${CMAKE_CTEST_COMMAND}
+        --output-on-failure
+        -LE
+        integration-tests
+        --
+        -j
+        "${NCPU}"
     LOG_DOWNLOAD OFF
     LOG_CONFIGURE OFF
     LOG_BUILD OFF
