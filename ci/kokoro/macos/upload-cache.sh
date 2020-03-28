@@ -47,6 +47,11 @@ readonly CCACHE_DIR="${HOME}/.ccache"
 dirs=()
 for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
   if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
+  echo DEBUG DEBUG DEBUG
+  ls -la "${dir}" || true
+  echo DEBUG DEBUG DEBUG
+  printenv
+  echo DEBUG DEBUG DEBUG
 done
 
 readonly UPLOAD="cmake-out/upload"
