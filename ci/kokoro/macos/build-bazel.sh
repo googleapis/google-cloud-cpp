@@ -47,8 +47,6 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
 fi
 
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
-echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/ || true
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/* || true
@@ -61,8 +59,6 @@ echo "$(date -u): using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 "${BAZEL_BIN}" shutdown
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/ || true
 echo "DEBUG DEBUG"
@@ -82,8 +78,6 @@ for repeat in 1 2 3; do
 done
 
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
-echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/ || true
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/* || true
@@ -97,8 +91,6 @@ echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
     -- //google/cloud/...:all
 
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
-echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/ || true
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/* || true
@@ -110,8 +102,6 @@ echo "${COLOR_YELLOW}$(date -u): build all targets.${COLOR_RESET}"
 "${BAZEL_BIN}" build \
     "${bazel_args[@]}" -- //google/cloud/...:all
 
-echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
 echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER}/ || true
 echo "DEBUG DEBUG"

@@ -129,9 +129,9 @@ echo "DEBUG DEBUG DEBUG"
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
 echo "DEBUG DEBUG"
-ls -la /private/var/tmp || true
-echo "DEBUG DEBUG"
 ls -la /private/var/tmp/_bazel_${USER} || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
 echo "DEBUG DEBUG"
 
 echo "================================================================"
@@ -149,5 +149,11 @@ if [[ "${exit_status}" -eq 0 ]]; then
   "${PROJECT_ROOT}/ci/kokoro/macos/upload-cache.sh" \
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 fi
+
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER} || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER}/* || true
+echo "DEBUG DEBUG"
 
 exit ${exit_status}
