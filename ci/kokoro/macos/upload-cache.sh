@@ -48,8 +48,7 @@ readonly BAZEL_CACHE_DIR="/private/var/tmp/_bazel_${USER}"
 readonly CCACHE_DIR="${HOME}/.ccache"
 
 dirs=()
-# TODO(#3519) - add "${BAZEL_CACHE_DIR}" here
-for dir in "${CCACHE_DIR}"; do
+for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
   if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
 done
 
@@ -57,9 +56,9 @@ readonly UPLOAD="cmake-out/upload"
 mkdir -p "${UPLOAD}"
 
 set -v
-tar -C / -zcf "${HOME}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
+tar -C / -zcf "${UPLOAD}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-gsutil -q cp "${HOME}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
+gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 # gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
 
 exit 0
