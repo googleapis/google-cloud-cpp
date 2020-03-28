@@ -30,26 +30,37 @@ readonly NCPU
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "================================================================"
-echo "Update or install dependencies at $(date)."
+echo "${COLOR_YELLOW}$(date -u): Update or install dependencies.${COLOR_RESET}"
 brew install libressl
 
 echo "================================================================"
-echo "Compiling on $(date) with ${NCPU} cpus"
+echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+ccache --show-stats
+ccache --zero-stats
+
 echo "================================================================"
 cd "${PROJECT_ROOT}"
 export OPENSSL_ROOT_DIR=/usr/local/opt/libressl
-cmake_flags=("-DCMAKE_INSTALL_PREFIX=$HOME/staging")
+cmake_flags=(
+  "-DCMAKE_INSTALL_PREFIX=$HOME/staging"
+  "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
+)
 
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): Configure CMake.${COLOR_RESET}"
 cmake "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
+
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): Compiling with ${NCPU} cpus.${COLOR_RESET}"
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 # When user a super-build the tests are hidden in a subdirectory. We can tell
 # that ${BINARY_DIR} does not have the tests by checking for this file:
 if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
+  # If the file is not present, then this is a super build, which automatically
+  # run the tests anyway, no need to run them again.
   echo "================================================================"
-  # It is Okay to skip the tests in this case because the super build
-  # automatically runs them.
-  echo "Running the unit tests $(date)"
+  echo "${COLOR_YELLOW}$(date -u): Running unit tests.${COLOR_RESET}"
   (cd "${BINARY_DIR}"; ctest \
       -LE integration-tests \
       --output-on-failure -j "${NCPU}")
@@ -57,7 +68,12 @@ if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
 fi
 
 echo "================================================================"
-echo "Build finished at $(date)"
+echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+ccache --show-stats
+ccache --zero-stats
+
+echo "================================================================"
+echo "${COLOR_GREEN}$(date -u): Build finished sucessfully${COLOR_RESET}"
 echo "================================================================"
 
 exit 0

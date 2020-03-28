@@ -93,10 +93,6 @@ if ("${GOOGLE_CLOUD_CPP_ENABLE_CCACHE}")
                                      "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
         set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK
                                      "${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
-
-        set(GOOGLE_CLOUD_CPP_EXTERNAL_PROJECT_CCACHE
-            "-DCMAKE_CXX_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}"
-            "-DCMAKE_CC_COMPILER_LAUNCHER=${GOOGLE_CLOUD_CPP_CCACHE_PROGRAM}")
     endif ()
 endif ()
 
