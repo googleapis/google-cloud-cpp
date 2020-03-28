@@ -38,7 +38,7 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   echo "This is a presubmit build, cache will not be updated, exist with success."
-# TODO(coryan) - warm up the cache on first PR  exit 0
+  exit 0
 fi
 
 echo "================================================================"
@@ -48,7 +48,8 @@ readonly BAZEL_CACHE_DIR="/private/var/tmp/_bazel_${USER}"
 readonly CCACHE_DIR="${HOME}/.ccache"
 
 dirs=()
-for dir in "${BAZEL_CACHE_DIR}" "${CCACHE_DIR}"; do
+# TODO(#3519) - add "${BAZEL_CACHE_DIR}" here
+for dir in "${CCACHE_DIR}"; do
   if [[ -d "${dir}"  ]]; then dirs+=("${dir}"); fi
 done
 
