@@ -34,16 +34,7 @@ function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
 mkdir -p "cmake-out/download"
 (cd "cmake-out/download"; "${PROJECT_ROOT}/ci/install-bazel.sh" >/dev/null)
 
-echo
-echo "================================================================"
-readonly BAZEL_BIN="$HOME/bin/bazel"
-echo "$(date -u): using Bazel in ${BAZEL_BIN}"
-"${BAZEL_BIN}" version
-"${BAZEL_BIN}" shutdown
-
 bazel_args=(
-    # On macOS gRPC does not compile correctly unless one defines this:
-    "--copt=-DGRPC_BAZEL_BUILD"
     # We need this environment variable because on macOS gRPC crashes if it
     # cannot find the credentials, even if you do not use them. Some of the
     # unit tests do exactly that.
@@ -57,6 +48,13 @@ fi
 
 echo
 echo "================================================================"
+readonly BAZEL_BIN="$HOME/bin/bazel"
+echo "$(date -u): using Bazel in ${BAZEL_BIN}"
+"${BAZEL_BIN}" version
+"${BAZEL_BIN}" shutdown
+
+echo
+echo "================================================================"
 for repeat in 1 2 3; do
   echo "${COLOR_YELLOW}$(date -u): Fetch bazel dependencies" \
       "[${repeat}/3].${COLOR_RESET}"
@@ -67,6 +65,12 @@ for repeat in 1 2 3; do
   fi
 done
 
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER} || true
+echo "DEBUG DEBUG"
+
 echo
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
@@ -74,8 +78,20 @@ echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
     "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
     -- //google/cloud/...:all
 
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER} || true
+echo "DEBUG DEBUG"
+
 echo
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): build all targets.${COLOR_RESET}"
 "${BAZEL_BIN}" build \
     "${bazel_args[@]}" -- //google/cloud/...:all
+
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp || true
+echo "DEBUG DEBUG"
+ls -la /private/var/tmp/_bazel_${USER} || true
+echo "DEBUG DEBUG"

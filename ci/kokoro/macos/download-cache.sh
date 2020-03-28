@@ -64,4 +64,7 @@ echo "$(date -u): Extracting build cache ${CACHE_NAME}"
 tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 | \
     grep -E -v 'tar:.*in the future'
 
+echo "================================================================"
+echo "$(date -u): build cache extracted"
+
 exit 0

@@ -63,6 +63,9 @@ echo "================================================================"
 echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
+
+echo "================================================================"
+echo "$(date -u): Upload completed"
 gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
 
 exit 0
