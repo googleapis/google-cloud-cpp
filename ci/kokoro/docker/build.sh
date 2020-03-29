@@ -198,19 +198,22 @@ fi
 if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
 fi
+source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "================================================================"
-echo "Change working directory to project root $(date)."
+echo "${COLOR_YELLOW}$(date -u): change working directory to project root."\
+    "${COLOR_RESET}"
 cd "${PROJECT_ROOT}"
 
 echo "================================================================"
-echo "Capture Docker version to troubleshoot $(date)."
+echo "${COLOR_YELLOW}$(date -u): Capture Docker version to" \
+    "troubleshoot.${COLOR_RESET}"
 sudo docker version
-echo "================================================================"
 
-echo "================================================================"
-echo "Load Google Container Registry configuration parameters $(date)."
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
+  echo "================================================================"
+  echo "${COLOR_YELLOW}$(date -u): Load Google Container Registry" \
+      "configuration parameters.${COLOR_RESET}"
   source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
 fi
 
@@ -219,10 +222,12 @@ source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
-echo "Building with ${NCPU} cores $(date) on ${PWD}."
+echo "${COLOR_YELLOW}$(date -u): Building with ${NCPU} cores on" \
+    "${PWD}.${COLOR_RESET}"
 
 echo "================================================================"
-echo "Setup Google Container Registry access $(date)."
+echo "${COLOR_YELLOW}$(date -u): Setup Google Container Registry" \
+    "access.${COLOR_RESET}"
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
   gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
@@ -233,7 +238,8 @@ if [[ "${RUNNING_CI:-}" == "yes" ]]; then
 fi
 
 echo "================================================================"
-echo "Download existing image (if available) for ${DISTRO} $(date)."
+echo "${COLOR_YELLOW}$(date -u): Download existing image (if available)" \
+    "for ${DISTRO}.${COLOR_RESET}"
 has_cache="false"
 if [[ -n "${PROJECT_ID:-}" ]] && docker pull "${IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
@@ -241,7 +247,8 @@ if [[ -n "${PROJECT_ID:-}" ]] && docker pull "${IMAGE}:latest"; then
 fi
 
 echo "================================================================"
-echo "Build Docker image ${IMAGE} with development tools for ${DISTRO} $(date)."
+echo "${COLOR_YELLOW}$(date -u): Build Docker image ${IMAGE} with" \
+    "development tools for ${DISTRO}.${COLOR_RESET}"
 update_cache="false"
 
 docker_build_flags=(
@@ -263,9 +270,11 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && \
 fi
 
 echo "================================================================"
-echo "Creating Docker image with all the development tools $(date)."
+echo "${COLOR_YELLOW}$(date -u): Creating Docker image with all the" \
+    "development tools.${COLOR_RESET}"
 echo "    docker build ${docker_build_flags[*]} ci"
-echo "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
+echo "${COLOR_YELLOW}$(date -u): Logging to" \
+    "${BUILD_OUTPUT}/create-build-docker-image.log${COLOR_RESET}"
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
 # is an error, so disabling from this point on is the right choice.
@@ -274,16 +283,19 @@ mkdir -p "${BUILD_OUTPUT}"
 if timeout 3600s docker build "${docker_build_flags[@]}" ci \
     >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
   update_cache="true"
-  echo "Docker image successfully rebuilt"
+  echo "${COLOR_GREEN}$(date -u): Docker image successfully rebuilt"\
+      "${COLOR_RESET}"
 else
-  echo "Error updating Docker image, using cached image for this build"
+  echo "${COLOR_YELLOW}$(date -u): Error updating Docker image, using cached" \
+      "image for this build${COLOR_RESET}"
   dump_log "${BUILD_OUTPUT}/create-build-docker-image.log"
 fi
 
 if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
    [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
-  echo "Uploading updated base image for ${DISTRO} $(date)."
+  echo "${COLOR_YELLOW}$(date -u): Uploading updated base image for" \
+      "${DISTRO}.${COLOR_RESET}"
   # Do not stop the build on a failure to update the cache.
   docker push "${IMAGE}:latest" || true
 fi
@@ -297,7 +309,7 @@ fi
 # - Choose the branch from the bottom of the list.
 # - Typically this is the branch that was checked out by Kokoro.
 echo "================================================================"
-echo "Detecting the branch name $(date)."
+echo "${COLOR_YELLOW}$(date -u): Detecting the branch name.${COLOR_RESET}"
 BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
   grep -v 'HEAD' | tail -1 || exit 0)"
 # Enable extglob if not enabled
@@ -308,7 +320,8 @@ BRANCH="${BRANCH##remotes/origin/}"
 BRANCH="${BRANCH##remotes/upstream/}"
 export BRANCH
 echo "================================================================"
-echo "Detected the branch name: ${BRANCH} $(date)."
+echo "${COLOR_YELLOW}$(date -u): Detected the branch name: ${BRANCH}." \
+    "${COLOR_RESET}"
 
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
@@ -478,10 +491,12 @@ readonly CACHE_NAME
 # appropriate arguments.
 echo "================================================================"
 if [[ $# -ge 2 ]]; then
-  echo "Running the given commands '" "${@:2}" "' in the container $(date)."
+  echo "${COLOR_YELLOW}$(date -u): Running the given commands '" \
+      "${@:2}" "' in the container.${COLOR_RESET}"
   readonly commands=( "${@:2}" )
 else
-  echo "Running the full build inside docker $(date)."
+  echo "${COLOR_YELLOW}$(date -u): Running the full build inside docker." \
+      "${COLOR_RESET}"
   readonly commands=(
     "/v/${in_docker_script}"
     "${CMAKE_SOURCE_DIR}"
@@ -494,9 +509,10 @@ echo sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?
-echo "Build finished with ${exit_status} exit status $(date)."
-echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): Build finished with ${exit_status} exit" \
+    "status.${COLOR_RESET}"
 
+echo "================================================================"
 if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/publish-refdocs.sh"
   exit_status=$?
@@ -504,7 +520,8 @@ else
   "${PROJECT_ROOT}/ci/kokoro/docker/upload-docs.sh"
 fi
 
-"${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" "${IMAGE}:latest" "${docker_flags[@]}"
+"${PROJECT_ROOT}/ci/kokoro/docker/upload-coverage.sh" \
+    "${IMAGE}:latest" "${docker_flags[@]}"
 
 if [[ "${exit_status}" -eq 0 ]]; then
   "${PROJECT_ROOT}/ci/kokoro/docker/upload-cache.sh" \
@@ -513,15 +530,21 @@ fi
 
 if [[ "${exit_status}" != 0 ]]; then
   echo "================================================================"
-  echo "Build failed printing logs at $(date)."
+  echo "${COLOR_RED}$(date -u): Build failed printing logs.${COLOR_RESET}"
   "${PROJECT_ROOT}/ci/kokoro/docker/dump-logs.sh"
 fi
 
 echo "================================================================"
 "${PROJECT_ROOT}/ci/kokoro/docker/dump-reports.sh"
-echo "================================================================"
 
 echo
-echo "Build script finished with ${exit_status} exit status $(date)."
-echo
+echo "================================================================"
+if [[ ${exit_status} -eq 0 ]]; then
+  echo "${COLOR_GREEN}$(date -u): Build script finished successfully."\
+      "${COLOR_RESET}"
+else
+  echo "${COLOR_RED}$(date -u): Build script failed with status"\
+      "${exit_status}${COLOR_RESET}"
+fi
+
 exit ${exit_status}
