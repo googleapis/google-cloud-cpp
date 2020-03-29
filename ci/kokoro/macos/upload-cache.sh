@@ -38,7 +38,7 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
   echo "This is a presubmit build, cache will not be updated, exist with success."
-# TODO(coryan) restore this before MERGE:  exit 0
+# TODO(coryan) restore this before MERGE test again:  exit 0
 fi
 
 readonly CCACHE_DIR="${HOME}/.ccache"
