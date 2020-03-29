@@ -34,7 +34,16 @@ function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
 mkdir -p "cmake-out/download"
 (cd "cmake-out/download"; "${PROJECT_ROOT}/ci/install-bazel.sh" >/dev/null)
 
+echo
+echo "================================================================"
+readonly BAZEL_BIN="$HOME/bin/bazel"
+echo "$(date -u): using Bazel in ${BAZEL_BIN}"
+"${BAZEL_BIN}" version
+"${BAZEL_BIN}" shutdown
+
 bazel_args=(
+    # On macOS gRPC does not compile correctly unless one defines this:
+    "--copt=-DGRPC_BAZEL_BUILD"
     # We need this environment variable because on macOS gRPC crashes if it
     # cannot find the credentials, even if you do not use them. Some of the
     # unit tests do exactly that.
@@ -45,15 +54,6 @@ bazel_args=(
 if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=("--config" "${BAZEL_CONFIG}")
 fi
-
-echo
-echo "================================================================"
-readonly BAZEL_BIN="$HOME/bin/bazel"
-echo "$(date -u): using Bazel in ${BAZEL_BIN}"
-"${BAZEL_BIN}" version
-echo "$(date -u): bazel info"
-"${BAZEL_BIN}" info
-"${BAZEL_BIN}" shutdown
 
 echo
 echo "================================================================"

@@ -45,12 +45,11 @@ if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
   exit 0
 fi
 
-gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-
 echo "================================================================"
 echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 readonly DOWNLOAD="cmake-out/download"
 mkdir -p "${DOWNLOAD}"
+gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
 gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
 
 ACCOUNT="$(sed -n 's/.*"client_email": "\(.*\)",.*/\1/p' "${KEYFILE}")"
