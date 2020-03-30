@@ -623,6 +623,7 @@ void MutateDeleteRowsCommand(std::vector<std::string> argv) {
           argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
       argv[2]);
   argv.erase(argv.begin(), argv.begin() + 3);
+  MutateDeleteRows(table, std::move(argv));
 }
 
 void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
@@ -908,7 +909,7 @@ using TableCommandType = std::function<void(google::cloud::bigtable::Table,
 
 std::map<std::string, CommandType>::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
-    TableCommandType function) {
+    TableCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     if (argv.size() != 3 + args.size()) {
       std::ostringstream os;
@@ -956,7 +957,13 @@ void CleanupOldTables(std::string const& prefix,
   if (!tables) return;
   for (auto const& t : *tables) {
     if (t.name().rfind(prefix, 0) != 0) continue;
+    // Eventually (I heard from good authority around year 2286) the date
+    // formatted in seconds will gain an extra digit and this will no longer
+    // work. If you are a programmer from the future, I (coryan) am (a) almost
+    // certainly dead, (b) very confused that this code is still being
+    // maintained or used, and (c) a bit sorry that this caused you problems.
     if (t.name() >= max_table_name) continue;
+    // Failure to cleanup is not an error.
     (void)admin.DeleteTable(t.name());
   }
 }
@@ -1131,7 +1138,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
         generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
   };
 
-  // TODO(...) why do we need to run this twice?
+  // TODO(#3523) why do we need to run this twice?
   std::cout << "\nPopulating data for CheckAndMutate() example" << std::endl;
   auto read_row_key = "read-row-" + random_key_suffix();
   ReadRow(table, {read_row_key});
