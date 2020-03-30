@@ -70,9 +70,13 @@ cc_binary(
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 
-cc_binary(
+cc_test(
     name = "data_snippets",
     srcs = ["data_snippets.cc"],
+    tags = [
+        "bigtable-integration-tests",
+        "integration-tests",
+    ],
     deps = ["//google/cloud/bigtable:bigtable_client"],
 )
 

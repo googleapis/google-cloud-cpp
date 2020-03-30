@@ -18,10 +18,9 @@
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 //! [bigtable includes]
-#include <google/protobuf/text_format.h>
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
 #include <chrono>
-#include <deque>
-#include <list>
 #include <sstream>
 
 namespace {
@@ -29,32 +28,18 @@ struct Usage {
   std::string msg;
 };
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
 std::string command_usage;
 
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
+void PrintUsage(std::string const& cmd, std::string const& msg) {
+  auto last_slash = cmd.find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
             << command_usage << "\n";
 }
 
-void Apply(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"apply <project-id> <instance-id> <table-id>"};
-  }
-
+void Apply(google::cloud::bigtable::Table table,
+           std::vector<std::string> const&) {
   //! [apply]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
@@ -74,15 +59,8 @@ void Apply(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table, int argc,
-                             char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "apply-relaxed-idempotency <project-id> <instance-id>"
-        " <table-id> <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table,
+                             std::vector<std::string> const& argv) {
   //! [apply relaxed idempotency]
   namespace cbt = google::cloud::bigtable;
   [](std::string project_id, std::string instance_id, std::string table_id,
@@ -99,18 +77,11 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table, int argc,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply relaxed idempotency]
-  (table.project_id(), table.instance_id(), table.table_id(), row_key);
+  (table.project_id(), table.instance_id(), table.table_id(), argv[0]);
 }
 
-void ApplyCustomRetry(google::cloud::bigtable::Table table, int argc,
-                      char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "apply-custom-retry <project-id> <instance-id>"
-        " <table-id> <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void ApplyCustomRetry(google::cloud::bigtable::Table table,
+                      std::vector<std::string> const& argv) {
   //! [apply custom retry]
   namespace cbt = google::cloud::bigtable;
   [](std::string project_id, std::string instance_id, std::string table_id,
@@ -125,14 +96,11 @@ void ApplyCustomRetry(google::cloud::bigtable::Table table, int argc,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply custom retry]
-  (table.project_id(), table.instance_id(), table.table_id(), row_key);
+  (table.project_id(), table.instance_id(), table.table_id(), argv[0]);
 }
 
-void BulkApply(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"bulk-apply <project-id> <instance-id> <table-id>"};
-  }
-
+void BulkApply(google::cloud::bigtable::Table table,
+               std::vector<std::string> const&) {
   //! [bulk apply] [START bigtable_mutate_insert_rows]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
@@ -173,12 +141,8 @@ void BulkApply(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"read-row <project-id> <instance-id> <table-id> <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void ReadRow(google::cloud::bigtable::Table table,
+             std::vector<std::string> const& argv) {
   //! [read row] [START bigtable_read_error]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -208,14 +172,11 @@ void ReadRow(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
   }
   //! [read row] [END bigtable_read_error]
-  (std::move(table), row_key);
+  (std::move(table), argv[0]);
 }
 
-void ReadRows(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"read-rows: <project-id> <instance-id> <table-id>"};
-  }
-
+void ReadRows(google::cloud::bigtable::Table table,
+              std::vector<std::string> const&) {
   //! [read rows] [START bigtable_read_range]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -243,12 +204,8 @@ void ReadRows(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
-                       char*[]) {
-  if (argc != 1) {
-    throw Usage{"read-rows-with-limit: <project-id> <instance-id> <table-id>"};
-  }
-
+void ReadRowsWithLimit(google::cloud::bigtable::Table table,
+                       std::vector<std::string> const&) {
   //! [read rows with limit] [START bigtable_read_filter]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -276,22 +233,23 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
-void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
-  if (argc < 3) {
+void ReadKeysSet(std::vector<std::string> argv) {
+  if (argv.size() < 4) {
     throw Usage{
         "read-keys-set <project-id> <instance-id> <table-id>"
         " key1 [key2 ...]"};
   }
 
-  std::vector<std::string> row_keys;
-  while (argc > 1) {
-    row_keys.emplace_back(ConsumeArg(argc, argv));
-  }
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+      argv[2]);
+  argv.erase(argv.begin(), argv.begin() + 3);
 
   // [START bigtable_read_keys_set]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::vector<std::string> row_keys) {
+  [](cbt::Table table, std::vector<std::string> const& row_keys) {
     auto row_set = cbt::RowSet();
 
     for (auto const& row_key : row_keys) {
@@ -311,18 +269,11 @@ void ReadKeysSet(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     }
   }
   // [END bigtable_read_keys_set]
-  (std::move(table), std::move(row_keys));
+  (std::move(table), argv);
 }
 
-void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
-                      char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "read-rowset-prefix: <project-id> <instance-id> <table-id> <prefix>"};
-  }
-
-  std::string prefix = ConsumeArg(argc, argv);
-
+void ReadRowSetPrefix(google::cloud::bigtable::Table table,
+                      std::vector<std::string> const& argv) {
   //! [read rowset prefix] [START bigtable_read_prefix]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -345,26 +296,15 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [read rowset prefix] [END bigtable_read_prefix]
-  (std::move(table), prefix);
+  (std::move(table), argv[0]);
 }
 
-void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
-                    char* argv[]) {
-  if (argc < 2) {
-    throw Usage{
-        "read-prefix-list: <project-id> <instance-id> <table-id> "
-        "[prefixes]"};
-  }
-
-  std::vector<std::string> prefix_list;
-  while (argc > 1) {
-    prefix_list.emplace_back(ConsumeArg(argc, argv));
-  }
-
+void ReadPrefixList(google::cloud::bigtable::Table table,
+                    std::vector<std::string> const& argv) {
   //! [read prefix list] [START bigtable_read_prefix_list]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
-  [](cbt::Table table, std::vector<std::string> prefix_list) {
+  [](cbt::Table table, std::vector<std::string> const& prefix_list) {
     cbt::Filter filter = cbt::Filter::Latest(1);
     auto row_set = cbt::RowSet();
     for (auto const& prefix : prefix_list) {
@@ -384,24 +324,31 @@ void ReadPrefixList(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [read prefix list] [END bigtable_read_prefix_list]
-  (std::move(table), prefix_list);
+  (std::move(table), argv);
 }
 
-void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
-                        char* argv[]) {
-  if (argc < 3) {
+void ReadMultipleRanges(std::vector<std::string> argv) {
+  if (argv.size() < 5) {
     throw Usage{
         "read-multiple-ranges <project-id> <instance-id> <table-id>"
         " <begin1> <end1> [<begin2> <end2> ...]"};
   }
 
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+      argv[2]);
+  argv.erase(argv.begin(), argv.begin() + 3);
+
   std::vector<std::pair<std::string, std::string>> ranges;
-  while (argc > 1) {
-    auto begin = ConsumeArg(argc, argv);
-    if (argc <= 1) {
+  while (!argv.empty()) {
+    auto begin = argv[0];
+    argv.erase(argv.begin());
+    if (argv.empty()) {
       throw Usage{"read-multiple-ranges - error: mismatched [begin,end) pair"};
     }
-    auto end = ConsumeArg(argc, argv);
+    auto end = argv[0];
+    argv.erase(argv.begin());
     ranges.emplace_back(std::make_pair(begin, end));
   }
 
@@ -409,7 +356,7 @@ void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::Table table,
-     std::vector<std::pair<std::string, std::string>> ranges) {
+     std::vector<std::pair<std::string, std::string>> const& ranges) {
     auto row_set = cbt::RowSet();
     for (auto const& range : ranges) {
       row_set.Append(cbt::RowRange::Range(range.first, range.second));
@@ -431,15 +378,8 @@ void ReadMultipleRanges(google::cloud::bigtable::Table table, int argc,
   (std::move(table), std::move(ranges));
 }
 
-void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
-                    char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "check-and-mutate <project-id> <instance-id> <table-id>"
-        " <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void CheckAndMutate(google::cloud::bigtable::Table table,
+                    std::vector<std::string> const& argv) {
   //! [check and mutate]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -466,18 +406,11 @@ void CheckAndMutate(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [check and mutate]
-  (std::move(table), row_key);
+  (std::move(table), argv[0]);
 }
 
-void CheckAndMutateNotPresent(google::cloud::bigtable::Table table, int argc,
-                              char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "check-and-mutate-not-present <project-id> <instance-id> <table-id>"
-        " <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
+                              std::vector<std::string> const& argv) {
   //! [check and mutate not present]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -501,18 +434,11 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table, int argc,
     }
   }
   //! [check and mutate not present]
-  (std::move(table), row_key);
+  (std::move(table), argv[0]);
 }
 
-void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
-                     char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "read-modify-write <project-id> <instance-id> <table-id>"
-        " <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void ReadModifyWrite(google::cloud::bigtable::Table table,
+                     std::vector<std::string> const& argv) {
   //! [read modify write]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -525,14 +451,11 @@ void ReadModifyWrite(google::cloud::bigtable::Table table, int argc,
     std::cout << row->row_key() << "\n";
   }
   //! [read modify write]
-  (std::move(table), row_key);
+  (std::move(table), argv[0]);
 }
 
-void SampleRows(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"sample-rows: <project-id> <instance-id> <table-id>"};
-  }
-
+void SampleRows(google::cloud::bigtable::Table table,
+                std::vector<std::string> const&) {
   //! [sample row keys] [START bigtable_table_sample_splits]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -548,14 +471,8 @@ void SampleRows(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
-                    char* argv[]) {
-  if (argc != 2) {
-    throw Usage{
-        "delete-all-cells: <project-id> <instance-id> <table-id> <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void DeleteAllCells(google::cloud::bigtable::Table table,
+                    std::vector<std::string> const& argv) {
   //! [delete all cells]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, std::string row_key) {
@@ -565,19 +482,11 @@ void DeleteAllCells(google::cloud::bigtable::Table table, int argc,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete all cells]
-  (std::move(table), row_key);
+  (std::move(table), argv[0]);
 }
 
-void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
-                       char* argv[]) {
-  if (argc != 3) {
-    throw Usage{
-        "delete-family-cells: <project-id> <instance-id> <table-id> "
-        "<row-key> <family-name>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-  auto family_name = ConsumeArg(argc, argv);
-
+void DeleteFamilyCells(google::cloud::bigtable::Table table,
+                       std::vector<std::string> const& argv) {
   //! [delete family cells]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, std::string row_key, std::string family_name) {
@@ -588,20 +497,11 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table, int argc,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete family cells]
-  (std::move(table), row_key, family_name);
+  (std::move(table), argv[0], argv[1]);
 }
 
-void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
-                                char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "delete-selective-family-cells: <project-id> <instance-id> <table-id> "
-        "<row-key> <family-name> <column-name>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-  auto family_name = ConsumeArg(argc, argv);
-  auto column_name = ConsumeArg(argc, argv);
-
+void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table,
+                                std::vector<std::string> const& argv) {
   //! [delete selective family cells]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, std::string row_key, std::string family_name,
@@ -613,16 +513,11 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table, int argc,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete selective family cells]
-
-  (std::move(table), row_key, family_name, column_name);
+  (std::move(table), argv[0], argv[1], argv[2]);
 }
 
-void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"row-exists: <project-id> <instance-id> <table-id> <row-key>"};
-  }
-  auto row_key = ConsumeArg(argc, argv);
-
+void RowExists(google::cloud::bigtable::Table table,
+               std::vector<std::string> const& argv) {
   //! [row exists]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -642,12 +537,11 @@ void RowExists(google::cloud::bigtable::Table table, int argc, char* argv[]) {
     std::cout << "Row exists.\n";
   }
   //! [row exists]
-  (std::move(table), row_key);
+  (std::move(table), argv[0]);
 }
 
-void MutateDeleteColumns(google::cloud::bigtable::Table table, int argc,
-                         char* argv[]) {
-  if (argc < 3) {
+void MutateDeleteColumns(std::vector<std::string> argv) {
+  if (argv.size() < 5) {
     // Use the same format as the cbt tool to receive mutations from the
     // command-line.
     throw Usage{
@@ -655,10 +549,16 @@ void MutateDeleteColumns(google::cloud::bigtable::Table table, int argc,
         " <table-id> key family:column [family:column]"};
   }
 
-  auto key = ConsumeArg(argc, argv);
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+      argv[2]);
+  argv.erase(argv.begin(), argv.begin() + 3);
+
+  auto key = argv[0];
+  argv.erase(argv.begin());
   std::vector<std::pair<std::string, std::string>> columns;
-  while (argc > 1) {
-    std::string arg = ConsumeArg(argc, argv);
+  for (auto arg : argv) {
     auto pos = arg.find_first_of(':');
     if (pos == std::string::npos) {
       throw std::runtime_error("Invalid argument (" + arg +
@@ -684,21 +584,8 @@ void MutateDeleteColumns(google::cloud::bigtable::Table table, int argc,
   (std::move(table), key, std::move(columns));
 }
 
-void MutateDeleteRows(google::cloud::bigtable::Table table, int argc,
-                      char* argv[]) {
-  if (argc < 2) {
-    // Use the same format as the cbt tool to receive mutations from the
-    // command-line.
-    throw Usage{
-        "mutate-delete-rows <project-id> <instance-id>"
-        " <table-id> row-key [row-key...]"};
-  }
-
-  std::vector<std::string> keys;
-  while (argc > 1) {
-    keys.emplace_back(ConsumeArg(argc, argv));
-  }
-
+void MutateDeleteRows(google::cloud::bigtable::Table table,
+                      std::vector<std::string> argv) {
   // [START bigtable_mutate_delete_rows]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table, std::vector<std::string> keys) {
@@ -720,19 +607,26 @@ void MutateDeleteRows(google::cloud::bigtable::Table table, int argc,
     throw std::runtime_error(failures.front().status().message());
   }
   // [END bigtable_mutate_delete_rows]
-  (std::move(table), std::move(keys));
+  (std::move(table), std::move(argv));
 }
 
-void MutateInsertUpdateRows(google::cloud::bigtable::Table table, int argc,
-                            char* argv[]) {
-  if (argc < 3) {
+void MutateDeleteRowsCommand(std::vector<std::string> argv) {
+  if (argv.size() < 4) {
     // Use the same format as the cbt tool to receive mutations from the
     // command-line.
     throw Usage{
-        "mutate-insert-update-rows <project-id> <instance-id>"
-        " <table-id> key family:column=value [family:column=value...]"};
+        "mutate-delete-rows <project-id> <instance-id>"
+        " <table-id> row-key [row-key...]"};
   }
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+      argv[2]);
+  argv.erase(argv.begin(), argv.begin() + 3);
+}
 
+void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
+                            std::vector<std::string> argv) {
   // Fortunately region tags can appear more than once, the segments are merged
   // by the region tag processing tools.
 
@@ -756,10 +650,11 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table, int argc,
     return InsertOrUpdate{family, column, value};
   };
 
-  auto key = ConsumeArg(argc, argv);
+  auto key = argv[0];
+  argv.erase(argv.begin());
   std::vector<InsertOrUpdate> mutations;
-  while (argc > 1) {
-    mutations.emplace_back(parse(ConsumeArg(argc, argv)));
+  for (auto& a : argv) {
+    mutations.emplace_back(parse(a));
   }
 
   // [START bigtable_insert_update_rows]
@@ -778,19 +673,25 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table, int argc,
   (std::move(table), key, std::move(mutations));
 }
 
-void RenameColumn(google::cloud::bigtable::Table table, int argc,
-                  char* argv[]) {
-  if (argc != 5) {
+void MutateInsertUpdateRowsCommand(std::vector<std::string> argv) {
+  if (argv.size() < 5) {
+    // Use the same format as the cbt tool to receive mutations from the
+    // command-line.
     throw Usage{
-        "rename-column <project-id> <instance-id>"
-        " <table-id> key family old-name new-name"};
+        "mutate-insert-update-rows <project-id> <instance-id>"
+        " <table-id> key family:column=value [family:column=value...]"};
   }
 
-  auto key = ConsumeArg(argc, argv);
-  auto family = ConsumeArg(argc, argv);
-  auto old_name = ConsumeArg(argc, argv);
-  auto new_name = ConsumeArg(argc, argv);
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+      argv[2]);
+  argv.erase(argv.begin(), argv.begin() + 3);
+  MutateInsertUpdateRows(table, std::move(argv));
+}
 
+void RenameColumn(google::cloud::bigtable::Table table,
+                  std::vector<std::string> const& argv) {
   // [START bigtable_mutate_mix_match]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::Status;
@@ -819,16 +720,13 @@ void RenameColumn(google::cloud::bigtable::Table table, int argc,
     std::cout << "Row successfully updated\n";
   }
   // [END bigtable_mutate_mix_match]
-  (std::move(table), key, family, old_name, new_name);
+  (std::move(table), argv[0], argv[1], argv[2], argv[3]);
 }
 
 // This command just generates data suitable for other examples to run. This
 // code is not extracted into the documentation.
-void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"insert-test-data <project-id> <instance-id> <table-id>"};
-  }
-
+void InsertTestData(google::cloud::bigtable::Table table,
+                    std::vector<std::string> const&) {
   // Write several rows in a single operation, each row has some trivial data.
   // This is not a code sample in the normal sense, we do not display this code
   // in the documentation. We use it to populate data in the table used to run
@@ -869,13 +767,8 @@ void InsertTestData(google::cloud::bigtable::Table table, int argc, char*[]) {
 
 // This command just generates data suitable for other examples to run. This
 // code is not extracted into the documentation.
-void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
-                            char*[]) {
-  if (argc != 1) {
-    throw Usage{
-        "populate-table-hierarchy <project-id> <instance-id> <table-id>"};
-  }
-
+void PopulateTableHierarchy(google::cloud::bigtable::Table table,
+                            std::vector<std::string> const&) {
   namespace cbt = google::cloud::bigtable;
   // Write several rows.
   int q = 0;
@@ -896,11 +789,8 @@ void PopulateTableHierarchy(google::cloud::bigtable::Table table, int argc,
   }
 }
 
-void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-simple <project-id> <instance-id> <table-id>"};
-  }
-
+void WriteSimple(google::cloud::bigtable::Table table,
+                 std::vector<std::string> const&) {
   // [START bigtable_writes_simple]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
@@ -925,11 +815,8 @@ void WriteSimple(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-batch <project-id> <instance-id> <table-id>"};
-  }
-
+void WriteBatch(google::cloud::bigtable::Table table,
+                std::vector<std::string> const&) {
   // [START bigtable_writes_batch]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
@@ -965,11 +852,8 @@ void WriteBatch(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-increment <project-id> <instance-id> <table-id>"};
-  }
-
+void WriteIncrement(google::cloud::bigtable::Table table,
+                    std::vector<std::string> const&) {
   // [START bigtable_writes_increment]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
@@ -987,12 +871,8 @@ void WriteIncrement(google::cloud::bigtable::Table table, int argc, char*[]) {
   (std::move(table));
 }
 
-void WriteConditionally(google::cloud::bigtable::Table table, int argc,
-                        char*[]) {
-  if (argc != 1) {
-    throw Usage{"write-conditional <project-id> <instance-id> <table-id>"};
-  }
-
+void WriteConditionally(google::cloud::bigtable::Table table,
+                        std::vector<std::string> const&) {
   // [START bigtable_writes_conditional]
   namespace cbt = google::cloud::bigtable;
   [](cbt::Table table) {
@@ -1022,42 +902,336 @@ void WriteConditionally(google::cloud::bigtable::Table table, int argc,
   (std::move(table));
 }
 
+using CommandType = std::function<void(std::vector<std::string> const& argv)>;
+using TableCommandType = std::function<void(google::cloud::bigtable::Table,
+                                            std::vector<std::string>)>;
+
+std::map<std::string, CommandType>::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    TableCommandType function) {
+  auto command = [=](std::vector<std::string> argv) {
+    if (argv.size() != 3 + args.size()) {
+      std::ostringstream os;
+      os << name << " <project-id> <instance-id> <table-id>";
+      char const* sep = " ";
+      for (auto const& a : args) {
+        os << sep << a;
+      }
+      throw Usage{std::move(os).str()};
+    }
+    google::cloud::bigtable::Table table(
+        google::cloud::bigtable::CreateDefaultDataClient(
+            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+        argv[2]);
+    argv.erase(argv.begin(), argv.begin() + 3);
+    function(table, argv);
+  };
+  return {name, command};
+}
+
+std::string DefaultTablePrefix() { return "tbl-data-"; }
+
+std::string TablePrefix(std::string const& prefix,
+                        std::chrono::system_clock::time_point tp) {
+  auto as_seconds =
+      std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch());
+  return prefix + std::to_string(as_seconds.count()) + "-";
+}
+
+std::string RandomTableId(std::string const& prefix,
+                          google::cloud::internal::DefaultPRNG& generator) {
+  return TablePrefix(prefix, std::chrono::system_clock::now()) +
+         google::cloud::internal::Sample(generator, 8,
+                                         "abcdefhijklmnopqrstuvwxyz");
+}
+
+void CleanupOldTables(std::string const& prefix,
+                      google::cloud::bigtable::TableAdmin admin) {
+  auto const threshold =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
+  auto const max_table_name = TablePrefix(prefix, threshold);
+
+  namespace cbt = google::cloud::bigtable;
+  auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
+  if (!tables) return;
+  for (auto const& t : *tables) {
+    if (t.name().rfind(prefix, 0) != 0) continue;
+    if (t.name() >= max_table_name) continue;
+    (void)admin.DeleteTable(t.name());
+  }
+}
+
+void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
+                       google::cloud::internal::DefaultPRNG& generator) {
+  namespace cbt = google::cloud::bigtable;
+  auto table_id = RandomTableId(DefaultTablePrefix(), generator);
+  auto schema = admin.CreateTable(
+      table_id,
+      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  if (!schema) throw std::runtime_error(schema.status().message());
+
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          admin.project(), admin.instance_id(),
+          google::cloud::bigtable::ClientOptions()),
+      table_id);
+
+  std::cout << "Running MutateInsertUpdateRows() example [1]" << std::endl;
+  MutateInsertUpdateRows(table, {"row1", "fam:col1=value1.1",
+                                 "fam:col2=value1.2", "fam:col3=value1.3"});
+  std::cout << "Running MutateInsertUpdateRows() example [2]" << std::endl;
+  MutateInsertUpdateRows(table, {"row2", "fam:col1=value2.1",
+                                 "fam:col2=value2.2", "fam:col3=value2.3"});
+
+  admin.DeleteTable(table_id);
+}
+
+void RunWriteExamples(google::cloud::bigtable::TableAdmin admin,
+                      google::cloud::internal::DefaultPRNG& generator) {
+  namespace cbt = google::cloud::bigtable;
+  auto table_id = RandomTableId("mobile-time-series-", generator);
+  auto schema = admin.CreateTable(
+      table_id, cbt::TableConfig(
+                    {{"stats_summary", cbt::GcRule::MaxNumVersions(11)}}, {}));
+  if (!schema) throw std::runtime_error(schema.status().message());
+
+  // Some temporary variables to make the snippet below more readable.
+  auto const project_id = admin.project();
+  auto const instance_id = admin.instance_id();
+  //! [connect data]
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+      table_id);
+  //! [connect data]
+
+  std::cout << "Running WriteSimple() example" << std::endl;
+  WriteSimple(table, {});
+  std::cout << "Running WriteBatch() example" << std::endl;
+  WriteBatch(table, {});
+  std::cout << "Running WriteIncrement() example" << std::endl;
+  WriteIncrement(table, {});
+  std::cout << "Running WriteConditionally() example" << std::endl;
+  WriteConditionally(table, {});
+
+  admin.DeleteTable(table_id);
+}
+
+void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
+                     google::cloud::internal::DefaultPRNG& generator) {
+  namespace cbt = google::cloud::bigtable;
+  auto table_id = RandomTableId(DefaultTablePrefix(), generator);
+  std::cout << "Creating table " << table_id << std::endl;
+  auto schema = admin.CreateTable(
+      table_id,
+      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  if (!schema) throw std::runtime_error(schema.status().message());
+
+  google::cloud::bigtable::Table table(
+      google::cloud::bigtable::CreateDefaultDataClient(
+          admin.project(), admin.instance_id(),
+          google::cloud::bigtable::ClientOptions()),
+      table_id);
+
+  std::cout << "\nPreparing data for MutateDeleteColumns()" << std::endl;
+  MutateInsertUpdateRows(
+      table, {"insert-update-01", "fam:col0=value0-0", "fam:col1=value2-0",
+              "fam:col3=value3-0", "fam:col4=value4-0"});
+  std::cout << "Running MutateDeleteColumns() example" << std::endl;
+  MutateDeleteColumns({table.project_id(), table.instance_id(),
+                       table.table_id(), "insert-update-01", "fam:col3",
+                       "fam:col4"});
+  std::cout << "Running MutateDeleteRows() example [1]" << std::endl;
+  MutateDeleteRows(table, {"insert-update-01"});
+
+  std::cout << "\nPreparing data for MutateDeleteRows()" << std::endl;
+  MutateInsertUpdateRows(
+      table, {"to-delete-01", "fam:col0=value0-0", "fam:col1=value2-0",
+              "fam:col3=value3-0", "fam:col4=value4-0"});
+  MutateInsertUpdateRows(
+      table, {"to-delete-02", "fam:col0=value0-0", "fam:col1=value2-0",
+              "fam:col3=value3-0", "fam:col4=value4-0"});
+  std::cout << "Running MutateDeleteRows() example [2]" << std::endl;
+  MutateDeleteRows(table, {"to-delete-01", "to-delete-02"});
+
+  std::cout << "\nPreparing data for RenameColumn()" << std::endl;
+  MutateInsertUpdateRows(table, {"mix-match-01", "fam:col0=value0-0"});
+  MutateInsertUpdateRows(table, {"mix-match-01", "fam:col0=value0-1"});
+  MutateInsertUpdateRows(table, {"mix-match-01", "fam:col0=value0-2"});
+  std::cout << "Running RenameColumn() example" << std::endl;
+  RenameColumn(table, {"mix-match-01", "fam", "col0", "new-name"});
+  std::cout << "\nPreparing data for multiple examples" << std::endl;
+  InsertTestData(table, {});
+  std::cout << "Running Apply() example" << std::endl;
+  Apply(table, {});
+  std::cout << "Running Apply() with relaxed idempotency example" << std::endl;
+  ApplyRelaxedIdempotency(table, {"apply-relaxed-idempotency"});
+  std::cout << "Running Apply() with custom retry example" << std::endl;
+  ApplyCustomRetry(table, {"apply-custom-retry"});
+  std::cout << "Running BulkApply() example" << std::endl;
+  BulkApply(table, {});
+  std::cout << "Running ReadRowsWithLimit() example" << std::endl;
+  ReadRowsWithLimit(table, {});
+  std::cout << "Running ReadRows() example" << std::endl;
+  ReadRows(table, {});
+
+  std::cout << "\nPopulate data for prefix and row set examples" << std::endl;
+  PopulateTableHierarchy(table, {});
+  std::cout << "Running ReadKeySet() example" << std::endl;
+  ReadKeysSet({table.project_id(), table.instance_id(), table.table_id(),
+               "root/0/0/1", "root/0/1/0"});
+  std::cout << "Running ReadRowSetPrefix() example" << std::endl;
+  ReadRowSetPrefix(table, {"root/0/1"});
+  std::cout << "Running ReadPrefixList() example" << std::endl;
+  ReadPrefixList(table, {"root/0/1/", "root/2/1/"});
+  std::cout << "Running ReadMultipleRanges() example [1]" << std::endl;
+  ReadMultipleRanges({table.project_id(), table.instance_id(), table.table_id(),
+                      "root/0/1/", "root/2/1/"});
+  std::cout << "Running ReadMultipleRanges() example [2]" << std::endl;
+  ReadMultipleRanges({table.project_id(), table.instance_id(), table.table_id(),
+                      "root/0/1/", "root/2/1/", "key-000007", "key-000009"});
+  try {
+    std::cout << "Running ReadMultipleRanges() example [3]" << std::endl;
+    ReadMultipleRanges({table.project_id(), table.instance_id(),
+                        table.table_id(), "root/0/1/", "root/2/1/",
+                        "mismatched-begin-end-pair"});
+
+  } catch (Usage const&) {
+  }
+
+  std::cout << "Running SampleRows() example" << std::endl;
+  SampleRows(table, {});
+
+  std::cout << "Running RowExists example" << std::endl;
+  RowExists(table, {"root/0/0/1"});
+  std::cout << "Running DeleteAllCells example" << std::endl;
+  DeleteAllCells(table, {"root/0/0/1"});
+  std::cout << "Running DeleteFamilyCells() example" << std::endl;
+  DeleteFamilyCells(table, {"root/0/1/0", "fam"});
+  std::cout << "Running DeleteSelectiveFamilyCells() example" << std::endl;
+  DeleteSelectiveFamilyCells(table, {"root/0/1/0", "fam", "col2"});
+
+  std::cout << "\nPopulating data for CheckAndMutate() example" << std::endl;
+  MutateInsertUpdateRows(table, {"check-and-mutate-row", "fam:flip-flop:on"});
+  MutateInsertUpdateRows(
+      table, {"check-and-mutate-row-not-present", "fam:unused=unused-value"});
+  std::cout << "Running CheckAndMutate() example [1]" << std::endl;
+  CheckAndMutate(table, {"check-and-mutate-row"});
+  std::cout << "Running CheckAndMutate() example [2]" << std::endl;
+  CheckAndMutate(table, {"check-and-mutate-row"});
+  std::cout << "Running CheckAndMutate() example [3]" << std::endl;
+  CheckAndMutateNotPresent(table, {"check-and-mutate-row-not-present"});
+  std::cout << "Running CheckAndMutate() example [4]" << std::endl;
+  MutateInsertUpdateRows(
+      table, {"check-and-mutate-row-not-present", "fam:unused=unused-value"});
+  CheckAndMutateNotPresent(table, {"check-and-mutate-row-not-present"});
+
+  auto random_key_suffix = [&generator] {
+    return google::cloud::internal::Sample(
+        generator, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  };
+
+  // TODO(...) why do we need to run this twice?
+  std::cout << "\nPopulating data for CheckAndMutate() example" << std::endl;
+  auto read_row_key = "read-row-" + random_key_suffix();
+  ReadRow(table, {read_row_key});
+  MutateInsertUpdateRows(table, {read_row_key, "fam:flip-flop:on"});
+  ReadRow(table, {read_row_key});
+  CheckAndMutate(table, {read_row_key});
+  ReadRow(table, {read_row_key});
+  CheckAndMutate(table, {read_row_key});
+  ReadRow(table, {read_row_key});
+
+  std::cout << "\nPopulating data for ReadModifyWrite() example" << std::endl;
+  auto read_modify_write_key = "read-modify-write-" + random_key_suffix();
+  ReadModifyWrite(table, {read_modify_write_key});
+  ReadRow(table, {read_modify_write_key});
+  ReadModifyWrite(table, {read_modify_write_key});
+  ReadRow(table, {read_modify_write_key});
+  ReadModifyWrite(table, {read_modify_write_key});
+  ReadRow(table, {read_modify_write_key});
+
+  admin.DeleteTable(table_id);
+}
+
+void RunAll(std::vector<std::string> const& argv) {
+  if (!argv.empty()) throw Usage{"auto"};
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID"}) {
+    auto const value = google::cloud::internal::GetEnv(var);
+    if (!value) {
+      throw std::runtime_error("The " + std::string(var) +
+                               " environment variable is not set");
+    }
+    if (value->empty()) {
+      throw std::runtime_error("The " + std::string(var) +
+                               " environment variable has an empty value");
+    }
+  }
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto const instance_id = google::cloud::internal::GetEnv(
+                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                               .value_or("");
+
+  namespace cbt = google::cloud::bigtable;
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
+
+  // If a previous run of these samples crashes before cleaning up there may be
+  // old tables left over. As there are quotas on the total number of tables we
+  // remove stale tables after 48 hours.
+  CleanupOldTables(DefaultTablePrefix(), admin);
+  CleanupOldTables("mobile-time-series-", admin);
+
+  // Initialize a generator with some amount of entropy.
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  RunMutateExamples(admin, generator);
+  RunWriteExamples(admin, generator);
+  RunDataExamples(admin, generator);
+}
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  using CommandType =
-      std::function<void(google::cloud::bigtable::Table, int, char*[])>;
-
   std::map<std::string, CommandType> commands = {
-      {"apply", Apply},
-      {"apply-relaxed-idempotency", ApplyRelaxedIdempotency},
-      {"apply-custom-retry", ApplyCustomRetry},
-      {"bulk-apply", BulkApply},
-      {"read-row", ReadRow},
-      {"read-rows", ReadRows},
-      {"populate-table-hierarchy", PopulateTableHierarchy},
+      MakeCommandEntry("apply", {}, Apply),
+      MakeCommandEntry("apply-relaxed-idempotency", {"<row-key>"},
+                       ApplyRelaxedIdempotency),
+      MakeCommandEntry("apply-custom-retry", {"<row-key>"}, ApplyCustomRetry),
+      MakeCommandEntry("bulk-apply", {}, BulkApply),
+      MakeCommandEntry("read-row", {"<row-key>"}, ReadRow),
+      MakeCommandEntry("read-rows", {}, ReadRows),
+      MakeCommandEntry("read-rows-with-limit", {}, ReadRowsWithLimit),
       {"read-keys-set", ReadKeysSet},
-      {"read-rowset-prefix", ReadRowSetPrefix},
-      {"read-prefix-list", ReadPrefixList},
+      MakeCommandEntry("read-rowset-prefix", {"prefix"}, ReadRowSetPrefix),
+      MakeCommandEntry("read-prefix-list", {"[prefixes]"}, ReadPrefixList),
       {"read-multiple-ranges", ReadMultipleRanges},
-      {"read-rows-with-limit", ReadRowsWithLimit},
-      {"check-and-mutate", CheckAndMutate},
-      {"check-and-mutate-not-present", CheckAndMutateNotPresent},
-      {"read-modify-write", ReadModifyWrite},
-      {"sample-rows", SampleRows},
-      {"delete-all-cells", DeleteAllCells},
-      {"delete-family-cells", DeleteFamilyCells},
-      {"delete-selective-family-cells", DeleteSelectiveFamilyCells},
-      {"row-exists", RowExists},
+      MakeCommandEntry("check-and-mutate", {"<row-key>"}, CheckAndMutate),
+      MakeCommandEntry("check-and-mutate-not-present", {"<row-key>"},
+                       CheckAndMutateNotPresent),
+      MakeCommandEntry("read-modify-write", {"<row-key>"}, ReadModifyWrite),
+      MakeCommandEntry("sample-rows", {}, SampleRows),
+      MakeCommandEntry("delete-all-cells", {"<row-key>"}, DeleteAllCells),
+      MakeCommandEntry("delete-family-cells", {"<row-key>", "<family-name>"},
+                       DeleteFamilyCells),
+      MakeCommandEntry("delete-selective-family-cells",
+                       {"<row-key>", "<family-name>", "<column-name>"},
+                       DeleteSelectiveFamilyCells),
+      MakeCommandEntry("row-exists", {"<row-key>"}, RowExists),
       {"mutate-delete-columns", MutateDeleteColumns},
-      {"mutate-delete-rows", MutateDeleteRows},
-      {"mutate-insert-update-rows", MutateInsertUpdateRows},
-      {"rename-column", RenameColumn},
-      {"insert-test-data", InsertTestData},
-      {"write-simple", WriteSimple},
-      {"write-batch", WriteBatch},
-      {"write-increment", WriteIncrement},
-      {"write-conditional", WriteConditionally},
+      {"mutate-delete-rows", MutateDeleteRowsCommand},
+      {"mutate-insert-update-rows", MutateInsertUpdateRowsCommand},
+      MakeCommandEntry("rename-column",
+                       {"<key> <family> <old-name> <new-name>"}, RenameColumn),
+      MakeCommandEntry("insert-test-data", {}, InsertTestData),
+      MakeCommandEntry("populate-table-hierarchy", {}, PopulateTableHierarchy),
+      MakeCommandEntry("write-simple", {}, WriteSimple),
+      MakeCommandEntry("write-batch", {}, WriteBatch),
+      MakeCommandEntry("write-increment", {}, WriteIncrement),
+      MakeCommandEntry("write-conditional", {}, WriteConditionally),
+      {"auto", RunAll},
   };
 
   {
@@ -1065,15 +1239,10 @@ int main(int argc, char* argv[]) try {
     // usage string for the whole program. We need to create an Table
     // object to do this, but that object is never used, it is passed to the
     // commands, without any calls made to it.
-    google::cloud::bigtable::Table unused(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            "unused-project", "Unused-instance",
-            google::cloud::bigtable::ClientOptions()),
-        "Unused-table");
     for (auto&& kv : commands) {
+      if (kv.first == "auto") continue;
       try {
-        int fake_argc = 0;
-        kv.second(unused, fake_argc, argv);
+        kv.second({});
       } catch (Usage const& u) {
         command_usage += "    ";
         command_usage += u.msg;
@@ -1084,36 +1253,31 @@ int main(int argc, char* argv[]) try {
     }
   }
 
-  if (argc < 5) {
-    PrintUsage(argc, argv,
-               "Missing command and/or project-id/ or instance-id or table-id");
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (argc == 1 && auto_run) {
+    RunAll({});
+    return 0;
+  }
+
+  if (argc < 2) {
+    PrintUsage(argv[0], "Missing command");
     return 1;
   }
 
-  std::string const command_name = ConsumeArg(argc, argv);
-  std::string const project_id = ConsumeArg(argc, argv);
-  std::string const instance_id = ConsumeArg(argc, argv);
-  std::string const table_id = ConsumeArg(argc, argv);
-
+  std::string const command_name = argv[1];
   auto command = commands.find(command_name);
   if (commands.end() == command) {
-    PrintUsage(argc, argv, "Unknown command: " + command_name);
+    PrintUsage(argv[0], "Unknown command: " + command_name);
     return 1;
   }
 
-  // Connect to the Cloud Bigtable endpoint.
-  //! [connect data]
-  google::cloud::bigtable::Table table(
-      google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
-      table_id);
-  //! [connect data]
-
-  command->second(table, argc, argv);
+  command->second({argv + 2, argv + argc});
 
   return 0;
 } catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
+  PrintUsage(argv[0], ex.msg);
   return 1;
 } catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";

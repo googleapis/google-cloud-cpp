@@ -45,6 +45,7 @@ export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="fake-region1-a"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="fake-region1-b"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="fake-sa@emulated-${NONCE}.iam.gserviceaccount.com"
 export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 
 ctest -L "bigtable-integration-tests" "${ctest_args[@]}"
 exit_status=$?
