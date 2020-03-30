@@ -54,7 +54,8 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): change working directory to project root."
+echo "${COLOR_YELLOW}$(date -u): change working directory to project root."\
+    "${COLOR_RESET}"
 cd "${PROJECT_ROOT}"
 
 NCPU="$(sysctl -n hw.logicalcpu)"
