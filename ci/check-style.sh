@@ -95,7 +95,8 @@ find google/cloud \( -name '*.cc' -o -name '*.h' \) -print0 |
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 find . \( "${ignore[@]}" \) -prune -o \
-       \( -name BUILD -o -name '*.bzl' \) \
+       \( -name WORKSPACE -o -name BUILD \
+          -o -name '*.BUILD' -o -name '*.bzl' \) \
        -print0 |
   xargs -0 buildifier -mode=fix
 
