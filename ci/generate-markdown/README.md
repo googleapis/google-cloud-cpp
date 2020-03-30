@@ -19,7 +19,7 @@ The INSTALL file is generated from these Dockerfiles, just run:
 
 ```bash
 cd google-cloud-cpp
-./ci/test-readme/generate-install.sh >INSTALL.md
+./ci/generate-markdown/generate-install.sh >INSTALL.md
 ```
 
 and then create a pull request to merge your changes.
@@ -30,7 +30,7 @@ The README file is partially generated from these Dockerfiles, just run:
 
 ```bash
 cd google-cloud-cpp
-./ci/test-readme/generate-readme.sh >temp.md
+./ci/test-markdown/generate-readme.sh >temp.md
 ```
 
 Then manually replace the section in the README.md file with the contents of
