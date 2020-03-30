@@ -63,6 +63,7 @@ if [[ "${BUILD_NAME}" = "clang-tidy" ]]; then
   export CXX=clang++
   export BUILD_TYPE=Debug
   export CHECK_STYLE=yes
+  export CHECK_MARKDOWN=yes
   export GENERATE_DOCS=yes
   export CLANG_TIDY=yes
   export TEST_INSTALL=yes
@@ -426,6 +427,10 @@ docker_flags=(
     # If set, run the scripts to check (and fix) the code formatting (i.e.
     # clang-format, cmake-format, and buildifier).
     "--env" "CHECK_STYLE=${CHECK_STYLE:-}"
+
+    # If set to 'yes', the build script will verify that auto-generated
+    # markdown files are in sync.
+    "--env" "CHECK_MARKDOWN=${CHECK_MARKDOWN:-}"
 
     # If set to 'yes', the build script will configure clang-tidy. Currently
     # only the CMake builds use this flag.

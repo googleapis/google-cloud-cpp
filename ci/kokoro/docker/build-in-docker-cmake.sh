@@ -45,6 +45,10 @@ echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): Verify formatting${COLOR_RESET}"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
+echo "================================================================"
+echo "${COLOR_YELLOW}$(date -u): Verify markdown${COLOR_RESET}"
+(cd "${PROJECT_ROOT}" ; ./ci/check-markdown.sh)
+
 if command -v ccache; then
   echo "================================================================"
   echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
