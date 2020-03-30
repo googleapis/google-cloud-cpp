@@ -12,25 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
 #include <fstream>
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
-
-std::string command_usage;
-
-void PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = cmd.find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
+using google::cloud::bigtable::examples::Usage;
 
 void AccessToken(std::vector<std::string> argv) {
   if (argv.size() != 3) {
@@ -159,53 +148,14 @@ void RunAll(std::vector<std::string> argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(std::vector<std::string>)>;
-
-  std::map<std::string, CommandType> commands = {
+int main(int argc, char* argv[]) {
+  google::cloud::bigtable::examples::Commands commands = {
       {"test-access-token", AccessToken},
       {"test-jwt-access-token", JWTAccessToken},
       {"test-gce-credentials", GCECredentials},
       {"auto", RunAll},
   };
 
-  {
-    // Force each command to generate its Usage string, so we can provide a good
-    // usage string for the whole program. We need to create an InstanceAdmin
-    // object to do this, but that object is never used, it is passed to the
-    // commands, without any calls made to it.
-    for (auto&& kv : commands) {
-      try {
-        if (kv.first == "auto") continue;
-        kv.second({});
-      } catch (Usage const& u) {
-        command_usage += "    ";
-        command_usage += u.msg;
-        command_usage += "\n";
-      }
-    }
-  }
-
-  if (argc < 2) {
-    PrintUsage(argv[0], "Missing command");
-    return 1;
-  }
-  std::string const command_name = argv[1];
-  std::vector<std::string> av(argv + 2, argv + argc);
-
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    PrintUsage(command_name, "Unknown command: " + command_name);
-    return 1;
-  }
-
-  command->second(av);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argv[0], ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  google::cloud::bigtable::examples::Example example(std::move(commands));
+  return example.Run(argc, argv);
 }
