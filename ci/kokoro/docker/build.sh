@@ -135,15 +135,18 @@ elif [[ "${BUILD_NAME}" = "ninja" ]]; then
   # Compiling with Ninja can catch bugs that may not be caught using Make.
   export USE_NINJA=yes
 elif [[ "${BUILD_NAME}" = "gcc-9" ]]; then
-  # Compile under fedora:30. This distro uses gcc-9.
+  # Compile under fedora:31. This distro uses gcc-9.
   export DISTRO=fedora-install
-  export DISTRO_VERSION=30
-elif [[ "${BUILD_NAME}" = "clang-8" ]]; then
-  # Compile under fedora:30. This distro uses clang-8.
+  export DISTRO_VERSION=31
+  export CC=gcc
+  export CXX=g++
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
+elif [[ "${BUILD_NAME}" = "clang-9" ]]; then
+  # Compile under fedora:31. This distro uses clang-9.
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=31
   export CC=clang
   export CXX=clang++
-  export DISTRO=fedora-install
-  export DISTRO_VERSION=30
 elif [[ "${BUILD_NAME}" = "noex" ]]; then
   # Compile with -fno-exceptions
   export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS=no"
@@ -152,6 +155,32 @@ elif [[ "${BUILD_NAME}" = "no-tests" ]]; then
   # package maintainers, where the cost of running the tests for a fixed version
   # is too high.
   export BUILD_TESTING=no
+elif [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
+  # The oldest version of GCC we support is 4.8, this build checks the code
+  # against that version. The use of CentOS 7 for that build is not a
+  # coincidence: the reason we support GCC 4.8 is to support this distribution
+  # (and its commercial cousin: RHEL 7).
+  export DISTRO=centos
+  export DISTRO_VERSION=7
+  export CMAKE_SOURCE_DIR="super"
+  # Note that the integration tests are run by default. This is the opposite of
+  # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
+  export RUN_INTEGRATION_TESTS="no"
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
+elif [[ "${BUILD_NAME}" = "clang-3.8" ]]; then
+  # The oldest version of Clang we actively test is 3.8. There is nothing
+  # particularly interesting about that version. It is simply the version
+  # included with Ubuntu:16.04, and the oldest version tested by
+  # google-cloud-cpp.
+  export DISTRO=ubuntu
+  export DISTRO_VERSION=16.04
+  export CC=clang
+  export CXX=clang++
+  export CMAKE_SOURCE_DIR="super"
+  # Note that the integration tests are run by default. This is the opposite of
+  # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
+  export RUN_INTEGRATION_TESTS="no"
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "libcxx" ]]; then
   # Compile using libc++. This is easier to install on Fedora.
   export CC=clang

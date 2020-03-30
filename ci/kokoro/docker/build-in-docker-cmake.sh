@@ -45,10 +45,12 @@ echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): Verify formatting${COLOR_RESET}"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
-echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
-ccache --show-stats
-ccache --zero-stats
+if command -v ccache; then
+  echo "================================================================"
+  echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+  ccache --show-stats
+  ccache --zero-stats
+fi
 
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): Configure CMake${COLOR_RESET}"
@@ -196,7 +198,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     success=no
     for attempt in 1 2 3; do
       echo
-      echo "${COLOR_YELLOW}: $(date -u): running bigtable integration tests" \
+      echo "${COLOR_YELLOW}$(date -u): running bigtable integration tests" \
           "via CTest [${attempt}]${COLOR_RESET}"
       echo
       # TODO(#441) - when the emulator crashes the tests can take a long time.
@@ -287,7 +289,9 @@ if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
-echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
-ccache --show-stats
-ccache --zero-stats
+if command -v ccache; then
+  echo "================================================================"
+  echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+  ccache --show-stats
+  ccache --zero-stats
+fi
