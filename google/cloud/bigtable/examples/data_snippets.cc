@@ -24,9 +24,9 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::Usage;
 using google::cloud::bigtable::examples::CleanupOldTables;
 using google::cloud::bigtable::examples::RandomTableId;
+using google::cloud::bigtable::examples::Usage;
 
 void Apply(google::cloud::bigtable::Table table,
            std::vector<std::string> const&) {
