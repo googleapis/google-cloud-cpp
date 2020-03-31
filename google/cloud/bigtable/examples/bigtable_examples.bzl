@@ -16,7 +16,7 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-bigtable_client_examples = [
+bigtable_examples = [
     "bigtable_grpc_credentials.cc",
     "bigtable_hello_app_profile.cc",
     "bigtable_hello_instance_admin.cc",

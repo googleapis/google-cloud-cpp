@@ -16,6 +16,6 @@
 
 """Automatically generated unit tests list - DO NOT EDIT."""
 
-bigtable_client_examples_unit_tests = [
+bigtable_examples_unit_tests = [
     "bigtable_examples_common_test.cc",
 ]

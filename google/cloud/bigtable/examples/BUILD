@@ -73,4 +73,4 @@ not_auto_runnable_tags = [
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
-) for test in bigtable_client_unit_tests]
+) for test in bigtable_examples]

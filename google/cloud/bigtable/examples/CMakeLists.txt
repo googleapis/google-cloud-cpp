@@ -27,7 +27,7 @@ target_link_libraries(
     protobuf::libprotobuf
     bigtable_common_options)
 
-set(bigtable_client_examples
+set(bigtable_examples
     # cmake-format: sort
     bigtable_grpc_credentials.cc
     bigtable_hello_app_profile.cc
@@ -42,16 +42,16 @@ set(bigtable_client_examples
     table_admin_async_snippets.cc
     table_admin_snippets.cc)
 
-set(bigtable_client_examples_unit_tests # cmake-format: sort
-                                        bigtable_examples_common_test.cc)
+set(bigtable_examples_unit_tests # cmake-format: sort
+                                 bigtable_examples_common_test.cc)
 
 include(CreateBazelConfig)
-export_list_to_bazel("bigtable_client_examples.bzl" "bigtable_client_examples")
-export_list_to_bazel("bigtable_client_examples_unit_tests.bzl"
-                     "bigtable_client_examples_unit_tests")
+export_list_to_bazel("bigtable_examples.bzl" "bigtable_examples")
+export_list_to_bazel("bigtable_examples_unit_tests.bzl"
+                     "bigtable_examples_unit_tests")
 create_bazel_config(bigtable_examples_common)
 
-foreach (fname ${bigtable_client_examples_unit_tests})
+foreach (fname ${bigtable_examples_unit_tests})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
@@ -73,7 +73,7 @@ foreach (fname ${bigtable_client_examples_unit_tests})
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
-foreach (fname ${bigtable_client_examples})
+foreach (fname ${bigtable_examples})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
