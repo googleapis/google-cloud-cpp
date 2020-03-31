@@ -25,6 +25,8 @@
 namespace {
 
 using google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::CleanupOldTables;
+using google::cloud::bigtable::examples::RandomTableId;
 
 void Apply(google::cloud::bigtable::Table table,
            std::vector<std::string> const&) {
@@ -918,42 +920,6 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
 }
 
 std::string DefaultTablePrefix() { return "tbl-data-"; }
-
-std::string TablePrefix(std::string const& prefix,
-                        std::chrono::system_clock::time_point tp) {
-  auto as_seconds =
-      std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch());
-  return prefix + std::to_string(as_seconds.count()) + "-";
-}
-
-std::string RandomTableId(std::string const& prefix,
-                          google::cloud::internal::DefaultPRNG& generator) {
-  return TablePrefix(prefix, std::chrono::system_clock::now()) +
-         google::cloud::internal::Sample(generator, 8,
-                                         "abcdefhijklmnopqrstuvwxyz");
-}
-
-void CleanupOldTables(std::string const& prefix,
-                      google::cloud::bigtable::TableAdmin admin) {
-  auto const threshold =
-      std::chrono::system_clock::now() - std::chrono::hours(48);
-  auto const max_table_name = TablePrefix(prefix, threshold);
-
-  namespace cbt = google::cloud::bigtable;
-  auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
-  if (!tables) return;
-  for (auto const& t : *tables) {
-    if (t.name().rfind(prefix, 0) != 0) continue;
-    // Eventually (I heard from good authority around year 2286) the date
-    // formatted in seconds will gain an extra digit and this will no longer
-    // work. If you are a programmer from the future, I (coryan) am (a) almost
-    // certainly dead, (b) very confused that this code is still being
-    // maintained or used, and (c) a bit sorry that this caused you problems.
-    if (t.name() >= max_table_name) continue;
-    // Failure to cleanup is not an error.
-    (void)admin.DeleteTable(t.name());
-  }
-}
 
 void RunMutateExamples(google::cloud::bigtable::TableAdmin admin,
                        google::cloud::internal::DefaultPRNG& generator) {

@@ -96,6 +96,8 @@ foreach (fname ${bigtable_examples})
 endforeach ()
 
 # TODO(#3523) - add here the examples driven by CTest and/or Bazel
-set_tests_properties(
-    data_snippets PROPERTIES LABELS
+foreach (target data_snippets bigtable_hello_app_profile)
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
+endforeach ()

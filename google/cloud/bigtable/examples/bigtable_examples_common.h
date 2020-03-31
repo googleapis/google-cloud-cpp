@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
 
+#include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/internal/random.h"
 #include <functional>
 #include <map>
 #include <stdexcept>
@@ -46,6 +48,15 @@ class Example {
   std::map<std::string, CommandType> commands_;
   std::string full_usage_;
 };
+
+std::string TablePrefix(std::string const& prefix,
+                        std::chrono::system_clock::time_point tp);
+std::string RandomTableId(std::string const& prefix,
+                          google::cloud::internal::DefaultPRNG& generator);
+void CleanupOldTables(std::string const& prefix,
+                      google::cloud::bigtable::TableAdmin admin);
+bool UsingEmulator();
+bool RunAdminIntegrationTests();
 
 }  // namespace examples
 }  // namespace bigtable

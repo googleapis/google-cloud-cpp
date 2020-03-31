@@ -49,7 +49,10 @@ load(":bigtable_examples.bzl", "bigtable_examples")
 
 # TODO(#3523) - add auto-runnable examples to this list until all
 # examples are auto-runnable and then cleanup this code.
-auto_runnable_bigtable_examples = ["data_snippets"]
+auto_runnable_bigtable_examples = [
+    "data_snippets",
+    "bigtable_hello_app_profile",
+]
 
 auto_runnable_tags = [
     "bigtable-integration-tests",
