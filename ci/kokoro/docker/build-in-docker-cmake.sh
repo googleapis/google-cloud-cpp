@@ -110,14 +110,6 @@ ${CMAKE_COMMAND} \
 echo
 echo "${COLOR_YELLOW}$(date -u): Finished CMake config${COLOR_RESET}"
 
-# CMake can generate dependency graphs, which are useful to understand and
-# troubleshoot dependencies.
-if [[ "${CREATE_GRAPHVIZ:-}" == "yes" ]]; then
-  ${CMAKE_COMMAND} \
-      --graphviz="${BINARY_DIR}/graphviz/google-cloud-cpp" \
-      --build "${BINARY_DIR}"
-fi
-
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): started build${COLOR_RESET}"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
