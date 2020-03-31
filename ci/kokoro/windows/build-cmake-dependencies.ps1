@@ -120,7 +120,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
     ($env:KOKORO_JOB_TYPE -eq "GITHUB_PULL_REQUEST")
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
-if (-not $IsPR -and $HasBuildCache) {
+if ((-not $IsPR) -and $HasBuildCache) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
       "zip vcpkg cache for upload."
     7z a vcpkg-installed.zip installed\ -bsp0
