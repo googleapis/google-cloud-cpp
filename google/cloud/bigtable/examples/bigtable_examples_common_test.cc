@@ -47,17 +47,14 @@ TEST(BigtableExamplesCommon, AutoRunDisabled) {
   google::cloud::testing_util::ScopedEnvironment env(
       "GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES", "no");
   int test_calls = 0;
-  int auto_calls = 0;
   Example example({
       {"test", [&](std::vector<std::string> const&) { ++test_calls; }},
-      {"auto", [&](std::vector<std::string> const&) { ++auto_calls; }},
   });
   char argv0[] = "argv0";
   char* argv[] = {argv0};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(1, test_calls);
-  EXPECT_EQ(0, auto_calls);
 }
 
 TEST(BigtableExamplesCommon, AutoRunMissing) {
@@ -102,6 +99,42 @@ TEST(BigtableExamplesCommon, CommandNotFound) {
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(1, test_calls);
+}
+
+TEST(BigtableExamplesCommon, CommandUsage) {
+  int test_calls = 0;
+  Example example({
+      {"test",
+       [&](std::vector<std::string> const& args) {
+         ++test_calls;
+         if (args.empty()) throw Usage("test-usage");
+       }},
+  });
+  char argv0[] = "argv0";
+  char argv1[] = "test";
+  char* argv[] = {argv0, argv1};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  EXPECT_EQ(example.Run(argc, argv), 1);
+  EXPECT_EQ(2, test_calls);
+}
+
+TEST(BigtableExamplesCommon, CommandError) {
+  int test_calls = 0;
+  Example example({
+      {"test",
+       [&](std::vector<std::string> const& args) {
+         ++test_calls;
+         if (args.empty()) throw Usage("test-usage");
+         throw std::runtime_error("some problem");
+       }},
+  });
+  char argv0[] = "argv0";
+  char argv1[] = "test";
+  char argv2[] = "a0";
+  char* argv[] = {argv0, argv1, argv2};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  EXPECT_EQ(example.Run(argc, argv), 1);
+  EXPECT_EQ(2, test_calls);
 }
 
 }  // namespace examples
