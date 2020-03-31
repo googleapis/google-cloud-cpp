@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
 
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/polling_policy.h"
@@ -56,4 +56,4 @@ inline std::unique_ptr<spanner::PollingPolicy> TestPollingPolicy() {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_POLICIES_H

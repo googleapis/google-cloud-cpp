@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_BACKUP_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_BACKUP_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKUP_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKUP_H
 
 #include "google/cloud/spanner/instance.h"
 #include "google/cloud/spanner/version.h"
@@ -78,4 +78,4 @@ class Backup {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_BACKUP_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BACKUP_H

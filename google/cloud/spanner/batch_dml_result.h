@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_BATCH_DML_RESULT_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_BATCH_DML_RESULT_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BATCH_DML_RESULT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BATCH_DML_RESULT_H
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/status.h"
@@ -56,4 +56,4 @@ struct BatchDmlResult {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_BATCH_DML_RESULT_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_BATCH_DML_RESULT_H

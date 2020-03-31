@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H
 
 #include "google/cloud/spanner/database_admin_connection.h"
 #include <gmock/gmock.h>
@@ -83,4 +83,4 @@ class MockDatabaseAdminConnection
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_MOCKS_MOCK_DATABASE_ADMIN_CONNECTION_H

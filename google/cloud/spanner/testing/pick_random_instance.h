@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/internal/random.h"
@@ -34,4 +34,4 @@ StatusOr<std::string> PickRandomInstance(
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_PICK_RANDOM_INSTANCE_H

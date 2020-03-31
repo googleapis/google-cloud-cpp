@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TRANSACTION_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TRANSACTION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TRANSACTION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TRANSACTION_H
 
 #include "google/cloud/spanner/internal/transaction_impl.h"
 #include "google/cloud/spanner/timestamp.h"
@@ -233,4 +233,4 @@ VisitInvokeResult<Functor> Visit(Transaction txn, Functor&& f) {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TRANSACTION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TRANSACTION_H

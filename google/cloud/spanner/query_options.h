@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
 
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/optional.h"
@@ -68,4 +68,4 @@ class QueryOptions {
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_QUERY_OPTIONS_H

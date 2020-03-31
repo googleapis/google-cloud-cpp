@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_DATABASE_ADMIN_STUB_H
-#define GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_DATABASE_ADMIN_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_DATABASE_ADMIN_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_DATABASE_ADMIN_STUB_H
 
 #include "google/cloud/spanner/internal/database_admin_stub.h"
 #include "google/cloud/spanner/version.h"
@@ -138,4 +138,4 @@ class MockDatabaseAdminStub
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_SPANNER_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_DATABASE_ADMIN_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_TESTING_MOCK_DATABASE_ADMIN_STUB_H
