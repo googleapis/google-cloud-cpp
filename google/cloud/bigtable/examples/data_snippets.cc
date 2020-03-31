@@ -12,8 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all code]
-
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 //! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
@@ -24,19 +23,8 @@
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-std::string command_usage;
-
-void PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = cmd.find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
+using google::cloud::bigtable::examples::Usage;
 
 void Apply(google::cloud::bigtable::Table table,
            std::vector<std::string> const&) {
@@ -903,13 +891,12 @@ void WriteConditionally(google::cloud::bigtable::Table table,
   (std::move(table));
 }
 
-using CommandType = std::function<void(std::vector<std::string> const& argv)>;
 using TableCommandType = std::function<void(google::cloud::bigtable::Table,
                                             std::vector<std::string>)>;
 
-std::map<std::string, CommandType>::value_type MakeCommandEntry(
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
-    TableCommandType const& function) {
+    TableCommandType function) {
   auto command = [=](std::vector<std::string> argv) {
     if (argv.size() != 3 + args.size()) {
       std::ostringstream os;
@@ -918,7 +905,7 @@ std::map<std::string, CommandType>::value_type MakeCommandEntry(
       for (auto const& a : args) {
         os << sep << a;
       }
-      throw Usage{std::move(os).str()};
+      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
         google::cloud::bigtable::CreateDefaultDataClient(
@@ -1103,7 +1090,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
                         table.table_id(), "root/0/1/", "root/2/1/",
                         "mismatched-begin-end-pair"});
 
-  } catch (Usage const&) {
+  } catch (std::exception const&) {
   }
 
   std::cout << "Running SampleRows() example" << std::endl;
@@ -1162,7 +1149,7 @@ void RunDataExamples(google::cloud::bigtable::TableAdmin admin,
 }
 
 void RunAll(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
   for (auto const& var :
        {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID"}) {
     auto const value = google::cloud::internal::GetEnv(var);
@@ -1201,8 +1188,8 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  std::map<std::string, CommandType> commands = {
+int main(int argc, char* argv[]) {
+  google::cloud::bigtable::examples::Commands commands = {
       MakeCommandEntry("apply", {}, Apply),
       MakeCommandEntry("apply-relaxed-idempotency", {"<row-key>"},
                        ApplyRelaxedIdempotency),
@@ -1241,53 +1228,6 @@ int main(int argc, char* argv[]) try {
       {"auto", RunAll},
   };
 
-  {
-    // Force each command to generate its Usage string, so we can provide a good
-    // usage string for the whole program. We need to create an Table
-    // object to do this, but that object is never used, it is passed to the
-    // commands, without any calls made to it.
-    for (auto&& kv : commands) {
-      if (kv.first == "auto") continue;
-      try {
-        kv.second({});
-      } catch (Usage const& u) {
-        command_usage += "    ";
-        command_usage += u.msg;
-        command_usage += "\n";
-      } catch (...) {
-        // ignore other exceptions.
-      }
-    }
-  }
-
-  bool auto_run =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
-          .value_or("") == "yes";
-  if (argc == 1 && auto_run) {
-    RunAll({});
-    return 0;
-  }
-
-  if (argc < 2) {
-    PrintUsage(argv[0], "Missing command");
-    return 1;
-  }
-
-  std::string const command_name = argv[1];
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    PrintUsage(argv[0], "Unknown command: " + command_name);
-    return 1;
-  }
-
-  command->second({argv + 2, argv + argc});
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argv[0], ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  google::cloud::bigtable::examples::Example example(std::move(commands));
+  return example.Run(argc, argv);
 }
-//! [all code]
