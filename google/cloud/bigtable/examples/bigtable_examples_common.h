@@ -28,7 +28,7 @@ namespace examples {
 
 class Usage : public std::runtime_error {
  public:
-  explicit Usage(std::string const& msg) : std::runtime_error(msg.c_str()) {}
+  explicit Usage(std::string const& msg) : std::runtime_error(msg) {}
 };
 
 using CommandType = std::function<void(std::vector<std::string> const& argv)>;

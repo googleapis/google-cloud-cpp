@@ -22,24 +22,19 @@ namespace examples {
 
 Example::Example(std::map<std::string, CommandType> commands)
     : commands_(std::move(commands)) {
-  std::string full_usage;
+  full_usage_.clear();
   // Force each command to generate its Usage string, so we can provide a good
-  // usage string for the whole program. We need to create an Table
-  // object to do this, but that object is never used, it is passed to the
-  // commands, without any calls made to it.
+  // usage string for the whole program.
   for (auto const& kv : commands_) {
     if (kv.first == "auto") continue;
     try {
       kv.second({});
     } catch (Usage const& u) {
-      full_usage += "    ";
-      full_usage += u.what();
-      full_usage += "\n";
-    } catch (...) {
-      // ignore other exceptions.
+      full_usage_ += "    ";
+      full_usage_ += u.what();
+      full_usage_ += "\n";
     }
   }
-  full_usage_ = std::move(full_usage);
 }
 
 int Example::Run(int argc, char* argv[]) try {
