@@ -14,45 +14,41 @@
 # limitations under the License.
 # ~~~
 
-add_library(
-        bigtable_examples_common
-        bigtable_examples_common.cc
-        bigtable_examples_common.h)
+add_library(bigtable_examples_common bigtable_examples_common.cc
+                                     bigtable_examples_common.h)
 target_link_libraries(
-        bigtable_examples_common
-        bigtable_client
-        bigtable_protos
-        google_cloud_cpp_common
-        google_cloud_cpp_grpc_utils
-        gRPC::grpc++
-        gRPC::grpc
-        protobuf::libprotobuf
-        bigtable_common_options)
+    bigtable_examples_common
+    bigtable_client
+    bigtable_protos
+    google_cloud_cpp_common
+    google_cloud_cpp_grpc_utils
+    gRPC::grpc++
+    gRPC::grpc
+    protobuf::libprotobuf
+    bigtable_common_options)
 
 set(bigtable_client_examples
-        # cmake-format: sort
-        bigtable_hello_table_admin.cc
-        bigtable_hello_instance_admin.cc
-        bigtable_hello_world.cc
-        bigtable_hello_app_profile.cc
-        bigtable_quickstart.cc
-        bigtable_instance_admin_snippets.cc
-        instance_admin_async_snippets.cc
-        table_admin_async_snippets.cc
-        table_admin_snippets.cc
-        data_snippets.cc
-        data_async_snippets.cc
-        bigtable_grpc_credentials.cc)
+    # cmake-format: sort
+    bigtable_grpc_credentials.cc
+    bigtable_hello_app_profile.cc
+    bigtable_hello_instance_admin.cc
+    bigtable_hello_table_admin.cc
+    bigtable_hello_world.cc
+    bigtable_instance_admin_snippets.cc
+    bigtable_quickstart.cc
+    data_async_snippets.cc
+    data_snippets.cc
+    instance_admin_async_snippets.cc
+    table_admin_async_snippets.cc
+    table_admin_snippets.cc)
 
-set(bigtable_client_examples_unit_tests
-        # cmake-format: sort
-        bigtable_examples_common_test.cc)
+set(bigtable_client_examples_unit_tests # cmake-format: sort
+                                        bigtable_examples_common_test.cc)
 
 include(CreateBazelConfig)
-export_list_to_bazel("bigtable_client_examples.bzl"
-        "bigtable_client_examples")
+export_list_to_bazel("bigtable_client_examples.bzl" "bigtable_client_examples")
 export_list_to_bazel("bigtable_client_examples_unit_tests.bzl"
-        "bigtable_client_examples_unit_tests")
+                     "bigtable_client_examples_unit_tests")
 create_bazel_config(bigtable_examples_common)
 
 foreach (fname ${bigtable_client_examples_unit_tests})
@@ -60,21 +56,20 @@ foreach (fname ${bigtable_client_examples_unit_tests})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     target_link_libraries(
-            ${target}
-            PRIVATE
-            bigtable_examples_common
-            bigtable_client
-            bigtable_protos
-            google_cloud_cpp_testing
-            google_cloud_cpp_common
-            google_cloud_cpp_grpc_utils
-            GTest::gmock_main
-            GTest::gmock
-            GTest::gtest
-            gRPC::grpc++
-            gRPC::grpc
-            protobuf::libprotobuf
-            bigtable_common_options)
+        ${target}
+        PRIVATE bigtable_examples_common
+                bigtable_client
+                bigtable_protos
+                google_cloud_cpp_testing
+                google_cloud_cpp_common
+                google_cloud_cpp_grpc_utils
+                GTest::gmock_main
+                GTest::gmock
+                GTest::gtest
+                gRPC::grpc++
+                gRPC::grpc
+                protobuf::libprotobuf
+                bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
 endforeach ()
 
@@ -83,24 +78,21 @@ foreach (fname ${bigtable_client_examples})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
     target_link_libraries(
-            ${target}
-            PRIVATE
-            bigtable_client_examples
-            bigtable_client
-            bigtable_protos
-            google_cloud_cpp_common
-            google_cloud_cpp_grpc_utils
-            gRPC::grpc++
-            gRPC::grpc
-            protobuf::libprotobuf
-            bigtable_common_options)
+        ${target}
+        PRIVATE bigtable_examples_common
+                bigtable_client
+                bigtable_protos
+                google_cloud_cpp_common
+                google_cloud_cpp_grpc_utils
+                gRPC::grpc++
+                gRPC::grpc
+                protobuf::libprotobuf
+                bigtable_common_options)
     add_test(NAME ${target} COMMAND ${target})
-    set_tests_properties(
-            ${target} PROPERTIES LABELS
-            "integration-tests")
+    set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
 endforeach ()
 
 # TODO(#3523) - add here the examples driven by CTest and/or Bazel
 set_tests_properties(
-        data_snippets PROPERTIES LABELS
-        "integration-tests;bigtable-integration-tests")
+    data_snippets PROPERTIES LABELS
+                             "integration-tests;bigtable-integration-tests")

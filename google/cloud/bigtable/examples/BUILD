@@ -48,14 +48,16 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
 load(":bigtable_examples.bzl", "bigtable_examples")
 
 auto_runnable_bigtable_examples = ["data_snippets"]
+
 normal_tags = [
-        "bigtable-integration-tests",
-        "integration-tests",
+    "bigtable-integration-tests",
+    "integration-tests",
 ]
+
 not_auto_runnable_tags = [
-        "bigtable-integration-tests",
-        "integration-tests",
-        "not-auto-runnable-tests",
+    "bigtable-integration-tests",
+    "integration-tests",
+    "not-auto-runnable-tests",
 ]
 
 [cc_test(

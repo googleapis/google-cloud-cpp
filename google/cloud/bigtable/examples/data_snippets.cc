@@ -894,9 +894,9 @@ void WriteConditionally(google::cloud::bigtable::Table table,
 using TableCommandType = std::function<void(google::cloud::bigtable::Table,
                                             std::vector<std::string>)>;
 
-google::cloud::bigtable::examples::Commands::value_type
-MakeCommandEntry(std::string const& name, std::vector<std::string> const& args,
-                 TableCommandType function) {
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    TableCommandType function) {
   auto command = [=](std::vector<std::string> argv) {
     if (argv.size() != 3 + args.size()) {
       std::ostringstream os;

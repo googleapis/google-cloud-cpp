@@ -74,7 +74,7 @@ int Example::Run(int argc, char* argv[]) try {
 } catch (Usage const& u) {
   PrintUsage(argv[0], u.what());
   return 1;
-} catch(std::exception const& ex) {
+} catch (std::exception const& ex) {
   std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
   return 1;
 }
