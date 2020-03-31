@@ -171,6 +171,30 @@ TEST(BigtableExamplesCommon, CheckEnvironmentVariablesSetEmpty) {
       std::runtime_error);
 }
 
+TEST(BigtableExamplesCommon, RunAdminIntegrationTestsEmulator) {
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
+  google::cloud::testing_util::ScopedEnvironment admin(
+      "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS", "no");
+  EXPECT_TRUE(RunAdminIntegrationTests());
+}
+
+TEST(BigtableExamplesCommon, RunAdminIntegrationTestsProductionAndDisabled) {
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", {});
+  google::cloud::testing_util::ScopedEnvironment admin(
+      "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS", "no");
+  EXPECT_FALSE(RunAdminIntegrationTests());
+}
+
+TEST(BigtableExamplesCommon, RunAdminIntegrationTestsProductionAndEnabled) {
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", {});
+  google::cloud::testing_util::ScopedEnvironment admin(
+      "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS", "yes");
+  EXPECT_TRUE(RunAdminIntegrationTests());
+}
+
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud
