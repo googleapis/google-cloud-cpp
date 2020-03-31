@@ -125,7 +125,7 @@ elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
   export BUILD_TYPE=Release
-  export CMAKE_FLAGS=-DBUILD_SHARED_LIBS=yes
+  export CMAKE_FLAGS="-DBUILD_SHARED_LIBS=yes -DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   # Note that the integration tests are run by default. This is the opposite of
   # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
   export RUN_INTEGRATION_TESTS="no"
@@ -164,6 +164,7 @@ elif [[ "${BUILD_NAME}" = "gcc-4.8" ]]; then
   export DISTRO=centos
   export DISTRO_VERSION=7
   export CMAKE_SOURCE_DIR="super"
+  export CMAKE_FLAGS="-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=ON"
   # Note that the integration tests are run by default. This is the opposite of
   # what spanner does where RUN_INTEGRATION_TESTS is explicitly set to yes.
   export RUN_INTEGRATION_TESTS="no"
