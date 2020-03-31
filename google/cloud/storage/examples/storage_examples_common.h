@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
-#include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/internal/random.h"
 #include <functional>
 #include <map>
 #include <stdexcept>
@@ -25,7 +23,7 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable {
+namespace storage {
 namespace examples {
 
 // TODO(#3624) - refactor this class to -common
@@ -52,19 +50,9 @@ class Example {
   std::string full_usage_;
 };
 
-std::string TablePrefix(std::string const& prefix,
-                        std::chrono::system_clock::time_point tp);
-std::string RandomTableId(std::string const& prefix,
-                          google::cloud::internal::DefaultPRNG& generator);
-void CleanupOldTables(std::string const& prefix,
-                      google::cloud::bigtable::TableAdmin admin);
-bool UsingEmulator();
-bool RunAdminIntegrationTests();
-void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
-
 }  // namespace examples
-}  // namespace bigtable
+}  // namespace storage
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
