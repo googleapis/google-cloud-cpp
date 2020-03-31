@@ -51,27 +51,30 @@ export_list_to_bazel("bigtable_examples_unit_tests.bzl"
                      "bigtable_examples_unit_tests")
 create_bazel_config(bigtable_examples_common)
 
-foreach (fname ${bigtable_examples_unit_tests})
-    string(REPLACE "/" "_" target ${fname})
-    string(REPLACE ".cc" "" target ${target})
-    add_executable(${target} ${fname})
-    target_link_libraries(
-        ${target}
-        PRIVATE bigtable_examples_common
-                bigtable_client
-                bigtable_protos
-                google_cloud_cpp_testing
-                google_cloud_cpp_common
-                google_cloud_cpp_grpc_utils
-                GTest::gmock_main
-                GTest::gmock
-                GTest::gtest
-                gRPC::grpc++
-                gRPC::grpc
-                protobuf::libprotobuf
-                bigtable_common_options)
-    add_test(NAME ${target} COMMAND ${target})
-endforeach ()
+if (BUILD_TESTING)
+    find_package(google_cloud_cpp_testing CONFIG REQUIRED)
+    foreach (fname ${bigtable_examples_unit_tests})
+        string(REPLACE "/" "_" target ${fname})
+        string(REPLACE ".cc" "" target ${target})
+        add_executable(${target} ${fname})
+        target_link_libraries(
+            ${target}
+            PRIVATE bigtable_examples_common
+                    bigtable_client
+                    bigtable_protos
+                    google_cloud_cpp_testing
+                    google_cloud_cpp_common
+                    google_cloud_cpp_grpc_utils
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest
+                    gRPC::grpc++
+                    gRPC::grpc
+                    protobuf::libprotobuf
+                    bigtable_common_options)
+        add_test(NAME ${target} COMMAND ${target})
+    endforeach ()
+endif ()
 
 foreach (fname ${bigtable_examples})
     string(REPLACE "/" "_" target ${fname})
