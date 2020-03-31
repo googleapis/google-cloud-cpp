@@ -22,7 +22,6 @@ namespace examples {
 
 Example::Example(std::map<std::string, CommandType> commands)
     : commands_(std::move(commands)) {
-  full_usage_.clear();
   // Force each command to generate its Usage string, so we can provide a good
   // usage string for the whole program.
   for (auto const& kv : commands_) {
@@ -37,7 +36,7 @@ Example::Example(std::map<std::string, CommandType> commands)
   }
 }
 
-int Example::Run(int argc, char* argv[]) try {
+int Example::Run(int argc, char const* const argv[]) try {
   bool auto_run =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
           .value_or("") == "yes";
