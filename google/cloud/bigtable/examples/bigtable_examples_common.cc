@@ -136,6 +136,20 @@ bool RunAdminIntegrationTests() {
              .value_or("") == "yes";
 }
 
+void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
+  for (auto const& var : vars) {
+    auto const value = google::cloud::internal::GetEnv(var.c_str());
+    if (!value) {
+      throw std::runtime_error("The " + var +
+                               " environment variable is not set");
+    }
+    if (value->empty()) {
+      throw std::runtime_error("The " + var +
+                               " environment variable has an empty value");
+    }
+  }
+}
+
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud

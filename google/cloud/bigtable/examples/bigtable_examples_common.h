@@ -57,6 +57,7 @@ void CleanupOldTables(std::string const& prefix,
                       google::cloud::bigtable::TableAdmin admin);
 bool UsingEmulator();
 bool RunAdminIntegrationTests();
+void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
 }  // namespace examples
 }  // namespace bigtable

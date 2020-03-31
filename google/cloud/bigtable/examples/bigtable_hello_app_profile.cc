@@ -18,7 +18,6 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
-#include <sstream>
 
 //! [cbt namespace]
 namespace cbt = google::cloud::bigtable;
@@ -80,11 +79,7 @@ void HelloWorldAppProfile(std::vector<std::string> argv) {
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
   if (!result) throw std::runtime_error(result.status().message());
-  if (!result->first) {
-    std::ostringstream os;
-    os << "Cannot find row 'key-0' in the table: " << table_id;
-    throw std::runtime_error(std::move(os).str());
-  }
+  if (!result->first) throw std::runtime_error("missing row with key = key-0");
   cbt::Cell const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
@@ -109,20 +104,13 @@ void HelloWorldAppProfile(std::vector<std::string> argv) {
 
 void RunAll(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
-  if (!google::cloud::bigtable::examples::RunAdminIntegrationTests()) return;
 
-  for (auto const& var :
-       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID"}) {
-    auto const value = google::cloud::internal::GetEnv(var);
-    if (!value) {
-      throw std::runtime_error("The " + std::string(var) +
-                               " environment variable is not set");
-    }
-    if (value->empty()) {
-      throw std::runtime_error("The " + std::string(var) +
-                               " environment variable has an empty value");
-    }
-  }
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (!examples::RunAdminIntegrationTests()) return;
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+  });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   auto const instance_id = google::cloud::internal::GetEnv(
