@@ -47,23 +47,23 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
 
 load(":bigtable_examples.bzl", "bigtable_examples")
 
+# TODO(#3523) - add auto-runnable examples to this list until all
+# examples are auto-runnable and then cleanup this code.
 auto_runnable_bigtable_examples = ["data_snippets"]
 
-normal_tags = [
+auto_runnable_tags = [
     "bigtable-integration-tests",
     "integration-tests",
 ]
 
-not_auto_runnable_tags = [
-    "bigtable-integration-tests",
+integration_test_tags = [
     "integration-tests",
-    "not-auto-runnable-tests",
 ]
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    tags = normal_tags if test in auto_runnable_bigtable_examples else not_auto_runnable_tags,
+    tags = auto_runnable_tags if test in auto_runnable_bigtable_examples else integration_test_tags,
     deps = [
         ":bigtable_examples_common",
         "//google/cloud/bigtable:bigtable_client",

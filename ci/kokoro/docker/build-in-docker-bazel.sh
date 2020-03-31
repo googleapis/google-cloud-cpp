@@ -73,7 +73,7 @@ echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
 "${BAZEL_BIN}" build \
-    "${bazel_args[@]}" "--test_tags_filters=-not-auto-runnable" \
+    "${bazel_args[@]}" \
     -- //google/cloud/...:all
 
 readonly INTEGRATION_TESTS_CONFIG="/c/test-configuration.sh"
