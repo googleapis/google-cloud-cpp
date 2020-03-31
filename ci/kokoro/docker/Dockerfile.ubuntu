@@ -56,7 +56,6 @@ RUN if grep -q 18.04 /etc/lsb-release; then \
       apt-get update && apt-get --no-install-recommends install -y clang-tidy clang-format-7 clang-tools; \
       update-alternatives --install /usr/bin/clang-tidy clang-tidy /usr/bin/clang-tidy-6.0 100; \
       update-alternatives --install /usr/bin/clang-format clang-format /usr/bin/clang-format-7 100; \
-      update-alternatives --install /usr/bin/scan-build scan-build /usr/bin/scan-build-6.0 100; \
     fi
 
 # Install the the buildifier tool, which does not compile with the default

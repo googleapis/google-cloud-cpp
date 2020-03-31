@@ -204,13 +204,6 @@ elif [[ "${BUILD_NAME}" = "check-abi" ]] || [[ "${BUILD_NAME}" = "update-abi" ]]
   if [[ "${BUILD_NAME}" = "update-abi" ]]; then
     export UPDATE_ABI=yes
   fi
-elif [[ "${BUILD_NAME}" = "scan-build" ]]; then
-  # Compile using Clang's static analyzer. Use fedora because it has recent
-  # versions of the toolchain.
-  export BUILD_TYPE=Debug
-  export CC=clang
-  export CXX=clang++
-  export SCAN_BUILD=yes
 elif [[ "${BUILD_NAME}" = "cxx17" ]]; then
   export GOOGLE_CLOUD_CPP_CXX_STANDARD=17
   export TEST_INSTALL=yes
@@ -413,10 +406,6 @@ docker_flags=(
 
     # If set, enable the Ninja generator with CMake.
     "--env" "USE_NINJA=${USE_NINJA:-}"
-
-    # If set, use Clang's static analyzer. Currently there is no build that
-    # uses this feature, it may have rotten.
-    "--env" "SCAN_BUILD=${SCAN_BUILD:-}"
 
     # If set, run the check-abi.sh script.
     "--env" "CHECK_ABI=${CHECK_ABI:-}"

@@ -60,9 +60,6 @@ echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): Configure CMake${COLOR_RESET}"
 
 CMAKE_COMMAND="cmake"
-if [[ "${SCAN_BUILD}" == "yes" ]]; then
-  CMAKE_COMMAND="scan-build --use-cc=${CC} --use-c++=${CXX} cmake"
-fi
 
 # Extra flags to pass to CMake based on our build configurations.
 declare -a cmake_extra_flags
@@ -81,10 +78,6 @@ fi
 
 if [[ "${TEST_INSTALL:-}" == "yes" ]]; then
   cmake_extra_flags+=( "-DCMAKE_INSTALL_PREFIX=/var/tmp/staging" )
-fi
-
-if [[ "${SCAN_BUILD:-}" == "yes" ]]; then
-  cmake_extra_flags+=( "-DGOOGLE_CLOUD_CPP_ENABLE_CCACHE=OFF" )
 fi
 
 if [[ "${USE_LIBCXX:-}" == "yes" ]]; then
@@ -125,40 +118,10 @@ if [[ "${CREATE_GRAPHVIZ:-}" == "yes" ]]; then
       --build "${BINARY_DIR}"
 fi
 
-# If scan-build is enabled we build the smallest subset of things that is
-# needed; otherwise, we pick errors from things we do not care about. With
-# scan-build disabled we compile everything, to test the build as most
-# developers will experience it.
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): started build${COLOR_RESET}"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
 echo "${COLOR_YELLOW}$(date -u): finished build${COLOR_RESET}"
-
-# Collect the output from the Clang static analyzer and provide instructions to
-# the developers on how to do that locally.
-if [[ "${SCAN_BUILD:-}" = "yes" ]]; then
-  if [[ -n "$(ls -1d /tmp/scan-build-* 2>/dev/null)" ]]; then
-    cp -r /tmp/scan-build-* /v/scan-cmake-out
-  fi
-  if [[ -r scan-cmake-out/index.html ]]; then
-    cat <<_EOF_;
-
-${COLOR_RED}
-scan-build detected errors.  Please read the log for details. To
-run scan-build locally and examine the HTML output install and configure Docker,
-then run:
-
-./ci/kokoro/docker/build.sh scan-build
-
-The HTML output will be copied into the scan-cmake-out subdirectory.
-${COLOR_RESET}
-_EOF_
-    exit 1
-  else
-    echo
-    echo "${COLOR_GREEN}scan-build completed without errors.${COLOR_RESET}"
-  fi
-fi
 
 TEST_JOB_COUNT="${NCPU}"
 if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
