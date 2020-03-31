@@ -158,7 +158,6 @@ TEST(BigtableExamplesCommon, CheckEnvironmentVariablesNotSet) {
       std::runtime_error);
 }
 
-
 TEST(BigtableExamplesCommon, CheckEnvironmentVariablesSetEmpty) {
   google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", "");
   EXPECT_THROW(
