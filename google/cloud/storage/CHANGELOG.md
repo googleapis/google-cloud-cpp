@@ -14,9 +14,9 @@ https://github.com/googleapis/google-cloud-cpp/issues/3615 for more info.
 **BREAKING CHANGE**
   * fix!: moved IAM-related symbols to the correct inlined namespace (#3453)
    Most users should not notice any difference, but those that explicitly referenced
-   symbols through the `google::cloud::bigtable::v0` namespace may need to switch
-   to `google::cloud::bigtable` (the recommended approach) or
-  `google::cloud::bigtable::v1`. We apologize if this causes you inconvenience.
+   symbols through the `google::cloud::storage::v0` namespace may need to switch
+   to `google::cloud::storage` (the recommended approach) or
+  `google::cloud::storage::v1`. We apologize if this causes you inconvenience.
 
 **Other Changes:**
   * feat: add support for iam conditions (#3497)
