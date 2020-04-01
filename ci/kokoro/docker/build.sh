@@ -563,11 +563,11 @@ echo "================================================================"
 
 echo "================================================================"
 if [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+  # Our CI system (kokoro) syncs the data in this directory to somewhere after
+  # the build completes. Removing the cmake-out/ dir shaves minutes off this
+  # process. This is safe as long as we don't wish to save any build artifacts.
   echo "${COLOR_YELLOW}$(date -u): cleaning up artifacts.${COLOR_RESET}"
-  if [[ -d "cmake-out" ]]; then
-    echo Removing cmake-out/
-    rm -rf cmake-out
-  fi
+  (cd "${KOKORO_ARTIFACTS_DIR}" && test -d "cmake-out" && rm -rf cmake-out)
 else
   echo "${COLOR_YELLOW}$(date -u): KOKORO_ARTIFACTS_DIR is unset; " \
     skipping cleanup".${COLOR_RESET}"
