@@ -38,7 +38,7 @@ class Example {
  public:
   explicit Example(std::map<std::string, CommandType> commands);
 
-  int Run(int argc, char* argv[]);
+  int Run(int argc, char const* const argv[]);
 
  private:
   void PrintUsage(std::string const& cmd, std::string const& msg);

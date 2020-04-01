@@ -33,11 +33,7 @@ TEST(BigtableExamplesCommon, Simple) {
          EXPECT_EQ("a1", args[1]);
        }},
   });
-  char argv0[] = "argv0";
-  char argv1[] = "test";
-  char argv2[] = "a0";
-  char argv3[] = "a1";
-  char* argv[] = {argv0, argv1, argv2, argv3};
+  char const* argv[] = {"argv0", "test", "a0", "a1"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 0);
   EXPECT_EQ(2, test_calls);
@@ -50,8 +46,7 @@ TEST(BigtableExamplesCommon, AutoRunDisabled) {
   Example example({
       {"test", [&](std::vector<std::string> const&) { ++test_calls; }},
   });
-  char argv0[] = "argv0";
-  char* argv[] = {argv0};
+  char const* argv[] = {"argv0"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(1, test_calls);
@@ -64,8 +59,7 @@ TEST(BigtableExamplesCommon, AutoRunMissing) {
   Example example({
       {"test", [&](std::vector<std::string> const&) { ++test_calls; }},
   });
-  char argv0[] = "argv0";
-  char* argv[] = {argv0};
+  char const* argv[] = {"argv0"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(1, test_calls);
@@ -80,8 +74,7 @@ TEST(BigtableExamplesCommon, AutoRun) {
       {"test", [&](std::vector<std::string> const&) { ++test_calls; }},
       {"auto", [&](std::vector<std::string> const&) { ++auto_calls; }},
   });
-  char argv0[] = "argv0";
-  char* argv[] = {argv0};
+  char const* argv[] = {"argv0"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 0);
   EXPECT_EQ(1, test_calls);
@@ -93,9 +86,7 @@ TEST(BigtableExamplesCommon, CommandNotFound) {
   Example example({
       {"test", [&](std::vector<std::string> const&) { ++test_calls; }},
   });
-  char argv0[] = "argv0";
-  char argv1[] = "wrong-name";
-  char* argv[] = {argv0, argv1};
+  char const* argv[] = {"argv0", "wrong-name"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(1, test_calls);
@@ -110,9 +101,7 @@ TEST(BigtableExamplesCommon, CommandUsage) {
          if (args.empty()) throw Usage("test-usage");
        }},
   });
-  char argv0[] = "argv0";
-  char argv1[] = "test";
-  char* argv[] = {argv0, argv1};
+  char const* argv[] = {"argv0", "test"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(2, test_calls);
@@ -128,10 +117,7 @@ TEST(BigtableExamplesCommon, CommandError) {
          throw std::runtime_error("some problem");
        }},
   });
-  char argv0[] = "argv0";
-  char argv1[] = "test";
-  char argv2[] = "a0";
-  char* argv[] = {argv0, argv1, argv2};
+  char const* argv[] = {"argv0", "test", "a0"};
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(2, test_calls);
