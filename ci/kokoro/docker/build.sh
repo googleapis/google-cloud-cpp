@@ -570,8 +570,8 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
   find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -print0 \
     | xargs -0 -t rm -rf
 else
-  echo "${COLOR_YELLOW}$(date -u): KOKORO_ARTIFACTS_DIR is unset; " \
-    skipping cleanup".${COLOR_RESET}"
+  echo "${COLOR_YELLOW}$(date -u): Not a CI build; " \
+    skipping artifact cleanup".${COLOR_RESET}"
 fi
 
 echo
