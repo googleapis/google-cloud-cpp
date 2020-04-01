@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SESSION_H
 
 #include "google/cloud/spanner/internal/channel.h"
+#include "google/cloud/spanner/internal/clock.h"
 #include "google/cloud/spanner/version.h"
 #include <atomic>
 #include <chrono>
@@ -36,11 +37,14 @@ namespace internal {
  */
 class Session {
  public:
-  Session(std::string session_name, std::shared_ptr<Channel> channel)
+  using Clock = ::google::cloud::spanner::internal::SteadyClock;
+  Session(std::string session_name, std::shared_ptr<Channel> channel,
+          std::shared_ptr<Clock> clock = std::make_shared<Clock>())
       : session_name_(std::move(session_name)),
         channel_(std::move(channel)),
         is_bad_(false),
-        last_use_time_(Clock::now()) {}
+        clock_(std::move(clock)),
+        last_use_time_(clock_->Now()) {}
 
   // Not copyable or moveable.
   Session(Session const&) = delete;
@@ -55,19 +59,19 @@ class Session {
   bool is_bad() const { return is_bad_.load(std::memory_order_relaxed); }
 
  private:
-  // Give `SessionPool` access to the private types/methods below.
+  // Give `SessionPool` access to the private methods below.
   friend class SessionPool;
-  using Clock = std::chrono::steady_clock;
   std::shared_ptr<Channel> const& channel() const { return channel_; }
 
   // The caller is responsible for ensuring these methods are used in a
   // thread-safe manner (i.e. using external locking).
   Clock::time_point last_use_time() const { return last_use_time_; }
-  void update_last_use_time() { last_use_time_ = Clock::now(); }
+  void update_last_use_time() { last_use_time_ = clock_->Now(); }
 
   std::string const session_name_;
   std::shared_ptr<Channel> const channel_;
   std::atomic<bool> is_bad_;
+  std::shared_ptr<Clock> clock_;
   Clock::time_point last_use_time_;
 };
 

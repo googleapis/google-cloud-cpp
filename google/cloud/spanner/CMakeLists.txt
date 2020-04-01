@@ -131,6 +131,7 @@ add_library(
     internal/api_client_header.h
     internal/build_info.h
     internal/channel.h
+    internal/clock.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/connection_impl.cc
@@ -278,6 +279,7 @@ function (spanner_client_define_tests)
         testing/compiler_supports_regexp.h
         testing/database_environment.cc
         testing/database_environment.h
+        testing/fake_clock.h
         testing/matchers.h
         testing/mock_database_admin_stub.h
         testing/mock_instance_admin_stub.h
@@ -328,6 +330,7 @@ function (spanner_client_define_tests)
         instance_test.cc
         internal/api_client_header_test.cc
         internal/build_info_test.cc
+        internal/clock_test.cc
         internal/compiler_info_test.cc
         internal/connection_impl_test.cc
         internal/database_admin_logging_test.cc

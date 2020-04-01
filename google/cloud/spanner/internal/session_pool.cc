@@ -40,10 +40,11 @@ std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     SessionPoolOptions options, google::cloud::CompletionQueue cq,
     std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy) {
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::shared_ptr<Session::Clock> clock) {
   auto pool = std::make_shared<SessionPool>(
       std::move(db), std::move(stubs), std::move(options), std::move(cq),
-      std::move(retry_policy), std::move(backoff_policy));
+      std::move(retry_policy), std::move(backoff_policy), std::move(clock));
   pool->Initialize();
   return pool;
 }
@@ -53,13 +54,15 @@ SessionPool::SessionPool(Database db,
                          SessionPoolOptions options,
                          google::cloud::CompletionQueue cq,
                          std::unique_ptr<RetryPolicy> retry_policy,
-                         std::unique_ptr<BackoffPolicy> backoff_policy)
+                         std::unique_ptr<BackoffPolicy> backoff_policy,
+                         std::shared_ptr<Session::Clock> clock)
     : db_(std::move(db)),
       options_(std::move(
           options.EnforceConstraints(static_cast<int>(stubs.size())))),
       cq_(std::move(cq)),
       retry_policy_prototype_(std::move(retry_policy)),
       backoff_policy_prototype_(std::move(backoff_policy)),
+      clock_(std::move(clock)),
       max_pool_size_(options_.max_sessions_per_channel() *
                      static_cast<int>(stubs.size())),
       random_generator_(std::random_device()()) {
@@ -135,15 +138,14 @@ void SessionPool::MaintainPoolSize() {
 void SessionPool::RefreshExpiringSessions() {
   std::vector<std::pair<std::shared_ptr<SpannerStub>, std::string>>
       sessions_to_refresh;
-  Session::Clock::time_point now = Session::Clock::now();
-  Session::Clock::time_point refresh_limit =
-      now - options_.keep_alive_interval();
+  auto now = clock_->Now();
+  auto refresh_limit = now - options_.keep_alive_interval();
   {
     std::unique_lock<std::mutex> lk(mu_);
     if (last_use_time_lower_bound_ <= refresh_limit) {
       last_use_time_lower_bound_ = now;
       for (auto const& session : sessions_) {
-        Session::Clock::time_point last_use_time = session->last_use_time();
+        auto last_use_time = session->last_use_time();
         if (last_use_time <= refresh_limit) {
           sessions_to_refresh.emplace_back(session->channel()->stub,
                                            session->session_name());
@@ -474,7 +476,7 @@ Status SessionPool::HandleBatchCreateSessionsDone(
   sessions_.reserve(sessions_.size() + sessions_created);
   for (auto& session : *response->mutable_session()) {
     sessions_.push_back(google::cloud::internal::make_unique<Session>(
-        std::move(*session.mutable_name()), channel));
+        std::move(*session.mutable_name()), channel, clock_));
   }
   // Shuffle the pool so we distribute returned sessions across channels.
   std::shuffle(sessions_.begin(), sessions_.end(), random_generator_);

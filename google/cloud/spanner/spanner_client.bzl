@@ -38,6 +38,7 @@ spanner_client_hdrs = [
     "internal/api_client_header.h",
     "internal/build_info.h",
     "internal/channel.h",
+    "internal/clock.h",
     "internal/compiler_info.h",
     "internal/connection_impl.h",
     "internal/database_admin_logging.h",

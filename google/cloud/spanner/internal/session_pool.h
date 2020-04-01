@@ -69,7 +69,8 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   SessionPool(Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
               SessionPoolOptions options, google::cloud::CompletionQueue cq,
               std::unique_ptr<RetryPolicy> retry_policy,
-              std::unique_ptr<BackoffPolicy> backoff_policy);
+              std::unique_ptr<BackoffPolicy> backoff_policy,
+              std::shared_ptr<Session::Clock> clock);
 
   ~SessionPool();
 
@@ -165,6 +166,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   google::cloud::CompletionQueue cq_;
   std::unique_ptr<RetryPolicy const> retry_policy_prototype_;
   std::unique_ptr<BackoffPolicy const> backoff_policy_prototype_;
+  std::shared_ptr<Session::Clock> clock_;
   int const max_pool_size_;
   std::mt19937 random_generator_;
 
@@ -177,7 +179,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
 
   // Lower bound on all `sessions_[i]->last_use_time()` values.
   Session::Clock::time_point last_use_time_lower_bound_ =
-      Session::Clock::now();  // GUARDED_BY(mu_)
+      clock_->Now();  // GUARDED_BY(mu_)
 
   future<void> current_timer_;
 
@@ -200,7 +202,8 @@ std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
     SessionPoolOptions options, google::cloud::CompletionQueue cq,
     std::unique_ptr<RetryPolicy> retry_policy,
-    std::unique_ptr<BackoffPolicy> backoff_policy);
+    std::unique_ptr<BackoffPolicy> backoff_policy,
+    std::shared_ptr<Session::Clock> clock = std::make_shared<Session::Clock>());
 
 }  // namespace internal
 }  // namespace SPANNER_CLIENT_NS

@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/internal/session_pool.h"
+#include "google/cloud/spanner/internal/clock.h"
 #include "google/cloud/spanner/internal/session.h"
+#include "google/cloud/spanner/testing/fake_clock.h"
 #include "google/cloud/spanner/testing/mock_spanner_stub.h"
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/make_unique.h"
@@ -35,6 +37,7 @@ inline namespace SPANNER_CLIENT_NS {
 namespace internal {
 namespace {
 
+using ::google::cloud::spanner_testing::FakeSteadyClock;
 using ::google::cloud::testing_util::MockAsyncResponseReader;
 using ::google::cloud::testing_util::MockCompletionQueue;
 using ::testing::_;
@@ -71,13 +74,15 @@ spanner_proto::BatchCreateSessionsResponse MakeSessionsResponse(
 
 std::shared_ptr<SessionPool> MakeSessionPool(
     Database db, std::vector<std::shared_ptr<SpannerStub>> stubs,
-    SessionPoolOptions options, CompletionQueue cq) {
+    SessionPoolOptions options, CompletionQueue cq,
+    std::shared_ptr<SteadyClock> clock = std::make_shared<SteadyClock>()) {
   return MakeSessionPool(
       std::move(db), std::move(stubs), std::move(options), std::move(cq),
       google::cloud::internal::make_unique<LimitedTimeRetryPolicy>(
           std::chrono::minutes(10)),
       google::cloud::internal::make_unique<ExponentialBackoffPolicy>(
-          std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0));
+          std::chrono::milliseconds(100), std::chrono::minutes(1), 2.0),
+      std::move(clock));
 }
 
 TEST(SessionPool, Allocate) {
@@ -388,9 +393,6 @@ TEST(SessionPool, GetStubForStublessSession) {
   EXPECT_EQ(pool->GetStub(*session), mock);
 }
 
-// TODO(#1428): This test has a real-time component (see sleep_for() below)
-// as SessionPool does not currently provide a mechanism to inject a clock
-// source to control whether sessions require refreshing.
 TEST(SessionPool, SessionRefresh) {
   auto mock = std::make_shared<StrictMock<spanner_testing::MockSpannerStub>>();
   EXPECT_CALL(*mock, BatchCreateSessions(_, _))
@@ -421,7 +423,9 @@ TEST(SessionPool, SessionRefresh) {
   SessionPoolOptions options;
   options.set_keep_alive_interval(std::chrono::seconds(1));
   auto impl = std::make_shared<MockCompletionQueue>();
-  auto pool = MakeSessionPool(db, {mock}, options, CompletionQueue(impl));
+  auto clock = std::make_shared<FakeSteadyClock>();
+  auto pool =
+      MakeSessionPool(db, {mock}, options, CompletionQueue(impl), clock);
 
   // Allocate and release two session, "s1" and "s2". This will satisfy the
   // BatchCreateSessions() expectations.
@@ -435,7 +439,7 @@ TEST(SessionPool, SessionRefresh) {
       EXPECT_EQ("s2", (*s2)->session_name());
     }
     // Wait for "s2" to need refreshing before releasing "s1".
-    std::this_thread::sleep_for(options.keep_alive_interval() * 2);
+    clock->AdvanceTime(options.keep_alive_interval() * 2);
   }
 
   // Simulate completion of pending operations, which will result in
