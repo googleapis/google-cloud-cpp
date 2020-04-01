@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_client.h"
@@ -51,9 +52,35 @@ constexpr char kJsonKeyfileContents[] = R"""({
 })""";
 
 /**
+ * Helper for decoding base64.
+ *
+ * Should only be used in tests because it fails if its input isn't proper
+ * base64.
+ */
+std::string Dec64(std::string const& s) {
+  auto res = internal::Base64Decode(s);
+  return std::string(res.begin(), res.end());
+};
+
+/**
  * Test the CreateSignedPolicyDocument function in storage::Client.
  */
 class CreateSignedPolicyDocTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
+        kJsonKeyfileContents);
+    ASSERT_STATUS_OK(creds);
+    client.reset(new Client(*creds));
+  }
+
+  std::unique_ptr<Client> client;
+};
+
+/**
+ * Test the RPCs in CreateSignedPolicyDocument function in storage::Client.
+ */
+class CreateSignedPolicyDocRPCTest : public ::testing::Test {
  protected:
   void SetUp() override {
     mock = std::make_shared<testing::MockClient>();
@@ -93,13 +120,8 @@ PolicyDocument CreatePolicyDocumentForTest() {
 }
 
 TEST_F(CreateSignedPolicyDocTest, Sign) {
-  auto creds = oauth2::CreateServiceAccountCredentialsFromJsonContents(
-      kJsonKeyfileContents);
-  ASSERT_STATUS_OK(creds);
-  Client client(*creds);
-
   auto actual =
-      client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+      client->CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("foo-email@foo-project.iam.gserviceaccount.com", actual->access_id);
@@ -108,25 +130,29 @@ TEST_F(CreateSignedPolicyDocTest, Sign) {
             google::cloud::internal::FormatRfc3339(actual->expiration));
 
   EXPECT_EQ(
-      "eyJjb25kaXRpb25zIjpbeyJhY2wiOiJidWNrZXQtb3duZXItcmVhZCJ9LHsiYnVja2V0Ijoi"
-      "dHJhdmVsLW1hcHMifSxbImNvbnRlbnQtbGVuZ3RoLXJhbmdlIiwwLDEwMDAwMDBdXSwiZXhw"
-      "aXJhdGlvbiI6IjIwMTAtMDYtMTZUMTE6MTE6MTFaIn0=",
-      actual->policy);
+      "{"
+      "\"conditions\":["
+      "[\"starts-with\",\"$key\",\"\"],"
+      "{\"acl\":\"bucket-owner-read\"},"
+      "{\"bucket\":\"travel-maps\"},"
+      "[\"eq\",\"$Content-Type\",\"image/jpeg\"],"
+      "[\"content-length-range\",0,1000000]"
+      "],"
+      "\"expiration\":\"2010-06-16T11:11:11Z\"}",
+      Dec64(actual->policy));
 
   EXPECT_EQ(
-      "kFWvHSh72uILi3XyvLe7dFzL4mzyHjEYHMwAo1UnfKTzfX7fcnuPa0jRWym8fAg5Q9dSnVrx"
-      "PWXKbIaxk1UmlQ992iMhwtgEFpGyc+znRXJBX/"
-      "CeDOj7i4t41RScLBzEcdPdGLm+"
-      "tyGM79SoBacJMmmw3gTZIrv4ASFp7we784tEpXBcAF1AcY4hKUfMX87cyqdH/"
-      "s+YKWuow7CJwpHJoC0QogkPpUCW2gt0tpZtRQZn5Beo9imFIvqG0Qkan/"
-      "nCxBpgTP3b9AzebOx1XQb6wi1QWWBjIFtPHyCOI7alpu8XNlN61jQNo/"
-      "MQcW2OKVKgjcQS6vnLm+MJiAo+sslUtg==",
+      "QoQzyjIedQkiLydcnBvZMvXRlF5yGWgHaEahybtNOZErr6tDqB7pyUCFcGM8aiukSDYVi/"
+      "vxQ5YR3YjjTt9khphFOBqBRO5z6/HdX1i9QUGAd3MsTRe9Atlfwx9fj+7sz87Hebv9lJN/"
+      "VLRJv7nMuVqGY+QVaXk3krPQNSWJ1cxo+Ip/M7SPP/iFH9O1CnN5QsE7lgLEH/"
+      "BdMTaNoblc4XZMfgFZXtxWgi4hSsuAgbGx4ByTlU+BP1cbpfsc1A2Cu8byZtYJQ5cEp7f1+"
+      "Kv2zNRqGqYrFWwDhfFHj9t3jj/DuaWycTfpCGfTtOMSB7+rEV87w/vgitFyVS+o0TrrHA==",
       actual->signature);
 }
 
 /// @test Verify that CreateSignedPolicyDocument() uses the SignBlob API when
 /// needed.
-TEST_F(CreateSignedPolicyDocTest, SignRemote) {
+TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
   // Use `echo -n test-signed-blob | openssl base64 -e` to create the magic
   // string.
   std::string expected_signed_blob = "dGVzdC1zaWduZWQtYmxvYg==";
@@ -146,7 +172,7 @@ TEST_F(CreateSignedPolicyDocTest, SignRemote) {
 
 /// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
 /// policies.
-TEST_F(CreateSignedPolicyDocTest, SignPolicyTooManyFailures) {
+TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyTooManyFailures) {
   testing::TooManyFailuresStatusTest<internal::SignBlobResponse>(
       mock, EXPECT_CALL(*mock, SignBlob(_)),
       [](Client& client) {
@@ -158,7 +184,7 @@ TEST_F(CreateSignedPolicyDocTest, SignPolicyTooManyFailures) {
 
 /// @test Verify that CreateSignedPolicyDocument() + SignBlob() respects retry
 /// policies.
-TEST_F(CreateSignedPolicyDocTest, SignPolicyPermanentFailure) {
+TEST_F(CreateSignedPolicyDocRPCTest, SignPolicyPermanentFailure) {
   testing::PermanentFailureStatusTest<internal::SignBlobResponse>(
       *client, EXPECT_CALL(*mock, SignBlob(_)),
       [](Client& client) {
@@ -166,6 +192,111 @@ TEST_F(CreateSignedPolicyDocTest, SignPolicyPermanentFailure) {
             .status();
       },
       "SignBlob");
+}
+
+PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
+  PolicyDocumentV4 result;
+  result.bucket = "test-bucket";
+  result.object = "test-object";
+  result.expiration = std::chrono::seconds(13);
+  result.timestamp =
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+  result.conditions.emplace_back(
+      PolicyDocumentCondition::StartsWith("Content-Type", "image/"));
+  result.conditions.emplace_back(
+      PolicyDocumentCondition::ExactMatchObject("bucket", "travel-maps"));
+  result.conditions.emplace_back(
+      PolicyDocumentCondition::ExactMatch("Content-Disposition", "inline"));
+  result.conditions.emplace_back(
+      PolicyDocumentCondition::ContentLengthRange(0, 1000000));
+  return result;
+}
+
+TEST_F(CreateSignedPolicyDocTest, SignV4) {
+  auto actual = client->GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(), AddExtensionFieldOption(),
+      PredefinedAcl(), Scheme());
+  ASSERT_STATUS_OK(actual);
+
+  EXPECT_EQ("https://storage.googleapis.com/test-bucket/", actual->url);
+  EXPECT_EQ(
+      "foo-email@foo-project.iam.gserviceaccount.com/20100616/auto/storage/"
+      "goog4_request",
+      actual->access_id);
+  EXPECT_EQ("2010-06-16T11:11:24Z",
+            google::cloud::internal::FormatRfc3339(actual->expiration));
+
+  EXPECT_EQ(
+      "{"
+      "\"conditions\":["
+      "[\"starts-with\",\"$Content-Type\",\"image/\"],"
+      "{\"bucket\":\"travel-maps\"},"
+      "[\"eq\",\"$Content-Disposition\",\"inline\"],"
+      "[\"content-length-range\",0,1000000],"
+      "{\"key\":\"test-object\"},"
+      "{\"x-goog-date\":\"20100616T111111Z\"},"
+      "{\"x-goog-credential\":\"foo-email@foo-project.iam.gserviceaccount.com/"
+      "20100616/auto/storage/goog4_request\"},"
+      "{\"x-goog-algorithm\":\"GOOG4-RSA-SHA256\"}"
+      "],"
+      "\"expiration\":\"2010-06-16T11:11:24Z\"}",
+      Dec64(actual->policy));
+
+  EXPECT_EQ(
+      "1ad929a8db0f03f6617f20c448998467d048a74ebbd1e794a36eb81d2a99de9b1a173037"
+      "27e1f5b9793759c35bb3449f6bf496c384e8d62b079d9fa8acc2646ec2638697f9a83fef"
+      "aa5c44cc1877bfa0cd590003ccfc958cc29bed4fb5467a32063221eb0bfa6e27107eb43e"
+      "c7d6c70da40ac7e86d70410ed6ef53d3a8da3a072b781b83dd285bb8d57e07f1acc27d13"
+      "98193ae09baee4f6331b67df91bd3e7f745cd772a660378128f5ea21fa0613adbe17b68a"
+      "844c8783e725de9927dc3da183bbd6a908971eef946c240bfdafc8c0b728b312b969871a"
+      "1efe7820f5bd362d03c953005e48c9dc50cc82d54613208aee82fcae4d6e27fd5dd8d33d"
+      "3fd3735e",
+      actual->signature);
+
+  EXPECT_EQ("GOOG4-RSA-SHA256", actual->signing_algorithm);
+}
+
+TEST_F(CreateSignedPolicyDocTest, SignV4AddExtensionField) {
+  auto actual = client->GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(),
+      AddExtensionField("my-field", "my-value"));
+  ASSERT_STATUS_OK(actual);
+
+  EXPECT_THAT(Dec64(actual->policy), HasSubstr("{\"my-field\":\"my-value\"}"));
+}
+
+TEST_F(CreateSignedPolicyDocTest, SignV4PredefinedAcl) {
+  auto actual = client->GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(), PredefinedAcl::BucketOwnerRead());
+  ASSERT_STATUS_OK(actual);
+
+  EXPECT_THAT(Dec64(actual->policy),
+              HasSubstr("{\"acl\":\"bucket-owner-read\"}"));
+}
+
+TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostname) {
+  auto actual = client->GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"));
+  ASSERT_STATUS_OK(actual);
+
+  EXPECT_EQ("https://mydomain.tld/", actual->url);
+}
+
+TEST_F(CreateSignedPolicyDocTest, SignV4BucketBoundHostnameHTTP) {
+  auto actual = client->GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(), BucketBoundHostname("mydomain.tld"),
+      Scheme("http"));
+  ASSERT_STATUS_OK(actual);
+
+  EXPECT_EQ("http://mydomain.tld/", actual->url);
+}
+
+TEST_F(CreateSignedPolicyDocTest, SignV4VirtualHostname) {
+  auto actual = client->GenerateSignedPostPolicyV4(
+      CreatePolicyDocumentV4ForTest(), VirtualHostname(true));
+  ASSERT_STATUS_OK(actual);
+
+  EXPECT_EQ("https://test-bucket.storage.googleapis.com/", actual->url);
 }
 
 }  // namespace

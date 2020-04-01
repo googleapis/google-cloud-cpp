@@ -38,6 +38,22 @@ PolicyDocument CreatePolicyDocumentForTest() {
   return result;
 }
 
+PolicyDocumentV4 CreatePolicyDocumentV4ForTest() {
+  PolicyDocumentV4 result;
+  result.timestamp =
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z");
+  result.conditions = {
+      {{"starts-with", "$key", ""}},
+      {{"acl", "bucket-owner-read"}},
+      {{"eq", "$Content-Type", "image/jpeg"}},
+      {{"content-length-range", "0", "1000000"}},
+  };
+  result.bucket = "test-bucket";
+  result.object = "test-object";
+  result.expiration = std::chrono::seconds(123);
+  return result;
+}
+
 /**
  * @test Verify that PolicyDocumentCondition streaming operator works as
  * expected.
@@ -145,6 +161,41 @@ TEST(PolicyDocumentTests, PolicyDocumentResultStreaming) {
             ", expiration=" +
                 google::cloud::internal::FormatRfc3339(result.expiration) +
                 ", policy=asdfasdfasdf, signature=asdfasdfasdf}");
+}
+
+/// @test Verify that PolicyDocumentV4 streaming operator works as expected.
+TEST(PolicyDocumentTests, PolicyDocumentV4Streaming) {
+  PolicyDocumentV4 document = CreatePolicyDocumentV4ForTest();
+  std::ostringstream os;
+  os << document;
+  auto actual = os.str();
+  EXPECT_EQ(actual,
+            "PolicyDocumentV4={bucket=test-bucket, object=test-object, "
+            "expiration=123, timestamp=2010-06-16T11:11:11Z, "
+            "conditions=[PolicyDocumentCondition=[starts-with, $key, ], "
+            "PolicyDocumentCondition=[acl, bucket-owner-read], "
+            "PolicyDocumentCondition=[eq, $Content-Type, image/jpeg], "
+            "PolicyDocumentCondition=[content-length-range, 0, 1000000]]}");
+}
+
+/// @test Verify that PolicyDocumentResult streaming operator works as expected.
+TEST(PolicyDocumentTests, PolicyDocumentV4ResultStreaming) {
+  PolicyDocumentV4Result result = {
+      "https://storage.googleapis.com/rsaposttest",
+      "foo@foo.com",
+      google::cloud::internal::ParseRfc3339("2010-06-16T11:11:11Z"),
+      "test-policy",
+      "test-sig",
+      "test-alg"};
+  std::ostringstream os;
+  os << result;
+  auto actual = os.str();
+  EXPECT_EQ(actual,
+            "PolicyDocumentV4Result={url=https://storage.googleapis.com/"
+            "rsaposttest, access_id=foo@foo.com, expiration=" +
+                google::cloud::internal::FormatRfc3339(result.expiration) +
+                ", policy=test-policy, signature=test-sig, "
+                "signing_algorithm=test-alg}");
 }
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS

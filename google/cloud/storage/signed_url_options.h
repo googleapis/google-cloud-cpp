@@ -247,6 +247,27 @@ struct Scheme : public internal::ComplexOption<Scheme, std::string> {
   char const* option_name() const { return "scheme"; }
 };
 
+/**
+ * Add a extension header to a POST policy.
+ */
+struct AddExtensionFieldOption
+    : public internal::ComplexOption<AddExtensionFieldOption,
+                                     std::pair<std::string, std::string>> {
+  using ComplexOption<AddExtensionFieldOption,
+                      std::pair<std::string, std::string>>::ComplexOption;
+  // GCC <= 7.0 does not use the inherited default constructor, redeclare it
+  // explicitly
+  AddExtensionFieldOption() = default;
+  AddExtensionFieldOption(std::string field, std::string value)
+      : ComplexOption(std::make_pair(std::move(field), std::move(value))) {}
+  static char const* name() { return "extension_field"; }
+};
+
+inline AddExtensionFieldOption AddExtensionField(std::string field,
+                                                 std::string value) {
+  return AddExtensionFieldOption(std::move(field), std::move(value));
+}
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

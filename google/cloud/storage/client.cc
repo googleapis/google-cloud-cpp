@@ -340,6 +340,27 @@ StatusOr<PolicyDocumentResult> Client::SignPolicyDocument(
       internal::Base64Encode(signed_blob->signed_blob)};
 }
 
+StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
+    internal::PolicyDocumentV4Request request) {
+  SigningAccount const& signing_account = request.signing_account();
+  auto signing_email = SigningEmail(signing_account);
+  request.SetSigningEmail(signing_email);
+
+  auto string_to_sign = request.StringToSign();
+  auto base64_policy = internal::Base64Encode(string_to_sign);
+  auto signed_blob = SignBlobImpl(signing_account, base64_policy);
+  if (!signed_blob) {
+    return signed_blob.status();
+  }
+
+  return PolicyDocumentV4Result{request.Url(),
+                                request.Credentials(),
+                                request.ExpirationDate(),
+                                base64_policy,
+                                internal::HexEncode(signed_blob->signed_blob),
+                                "GOOG4-RSA-SHA256"};
+}
+
 std::string CreateRandomPrefixName(std::string const& prefix) {
   auto constexpr kPrefixNameSize = 16;
   auto rng = google::cloud::internal::MakeDefaultPRNG();

@@ -18,12 +18,16 @@
 #include "google/cloud/storage/policy_document.h"
 #include "google/cloud/storage/signed_url_options.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/storage/well_known_parameters.h"
+#include "google/cloud/status_or.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 inline namespace STORAGE_CLIENT_NS {
 namespace internal {
+
+StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes);
 
 /**
  * Creates a policy document.
@@ -69,6 +73,75 @@ class PolicyDocumentRequest {
 };
 
 std::ostream& operator<<(std::ostream& os, PolicyDocumentRequest const& r);
+
+class PolicyDocumentV4Request {
+ public:
+  PolicyDocumentV4Request() : scheme_("https"), virtual_host_name_() {}
+  PolicyDocumentV4Request(PolicyDocumentV4 document)
+      : PolicyDocumentV4Request() {
+    document_ = std::move(document);
+  }
+
+  PolicyDocumentV4 const& policy_document() const { return document_; }
+
+  /**
+   * Creates the string to be signed.
+   *
+   * @note unlike signed URL's, policy documents are base64-encoded before
+   * being signed.
+   */
+  std::string StringToSign() const;
+
+  SigningAccount const& signing_account() const { return signing_account_; }
+  SigningAccountDelegates const& signing_account_delegates() const {
+    return signing_account_delegates_;
+  }
+
+  void SetOption(SigningAccount const& o) { signing_account_ = o; }
+
+  void SetOption(SigningAccountDelegates const& o) {
+    signing_account_delegates_ = o;
+  }
+
+  void SetOption(AddExtensionFieldOption const& o);
+
+  void SetOption(PredefinedAcl const& o);
+
+  void SetOption(BucketBoundHostname const& o);
+
+  void SetOption(Scheme const& o);
+
+  void SetOption(VirtualHostname const& o);
+
+  template <typename H, typename... T>
+  PolicyDocumentV4Request& set_multiple_options(H&& h, T&&... tail) {
+    SetOption(std::forward<H>(h));
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+
+  PolicyDocumentV4Request& set_multiple_options() { return *this; }
+
+  std::chrono::system_clock::time_point ExpirationDate() const;
+  std::string Url() const;
+
+  void SetSigningEmail(std::string signing_email) {
+    signing_email_ = std::move(signing_email);
+  }
+
+  std::string Credentials() const;
+
+ private:
+  PolicyDocumentV4 document_;
+  SigningAccount signing_account_;
+  SigningAccountDelegates signing_account_delegates_;
+  std::string signing_email_;
+  std::vector<std::pair<std::string, std::string>> extension_fields_;
+  optional<std::string> bucket_bound_domain_;
+  std::string scheme_;
+  bool virtual_host_name_;
+};
+
+std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Request const& r);
 
 }  // namespace internal
 }  // namespace STORAGE_CLIENT_NS
