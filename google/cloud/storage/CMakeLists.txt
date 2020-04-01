@@ -225,6 +225,7 @@ add_library(
     version_info.h
     well_known_headers.cc
     well_known_headers.h
+    well_known_parameters.cc
     well_known_parameters.h)
 target_link_libraries(
     storage_client
@@ -394,7 +395,8 @@ if (BUILD_TESTING)
         storage_client_options_test.cc
         storage_iam_policy_test.cc
         storage_version_test.cc
-        well_known_headers_test.cc)
+        well_known_headers_test.cc
+        well_known_parameters_test.cc)
 
     foreach (fname ${storage_client_unit_tests})
         string(REPLACE "/" "_" target ${fname})
