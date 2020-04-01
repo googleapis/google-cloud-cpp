@@ -55,13 +55,20 @@ std::vector<unsigned int> FetchEntropy(std::size_t desired_bits) {
   // [4]: https://linux.die.net/man/3/arc4random
   // [5]: https://en.wikipedia.org/wiki/NaCl_(software)
   //
-#if defined(__GLIBCXX__) && __GLIBCXX__ >= 20200128
+#if defined(__linux) && defined(__GLIBCXX__) && __GLIBCXX__ >= 20200128
   // Workaround for a libstd++ bug:
   //     https://gcc.gnu.org/bugzilla/show_bug.cgi?id=94087
-  // we cannot simply use `rdrand` everywhere because this is library and
-  // version specific, i.e., other standard C++ libraries do not support
-  // `rdrand`, and even older versions of libstdc++ do not support `rdrand`.
-  std::random_device rd("rdrand");
+  // I (@coryan) would like to use `rdrand` as the token, but:
+  //   - `rdrand` is not supported by all versions of libstdc++
+  //   - even for the versions that do support it, that is CPU specific
+  //   - I know of no reliable way to detect if the library version supports
+  //     `rdrand` (other than trying and getting an exception), for
+  //     example:
+  //     * __GLIBCXX__ is 2020318 on Fedora:31 with g++-9.3.1, but it does
+  //       *not* support `rdrand`
+  //     * __GLIBCXX__ is 20200306 on openSUSE/Tumbleweed, with g++-9.2.1,
+  //       but it *does* support `rdrand`
+  std::random_device rd("/dev/urandom");
 #else
   std::random_device rd;
 #endif  // defined(__GLIBCXX__) && __GLIBCXX__ >= 20200128
