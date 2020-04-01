@@ -156,18 +156,16 @@ RUN ldconfig
 
 # Download and compile google-cloud-cpp from source too:
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz
-RUN tar -xf v0.24.0.tar.gz
-WORKDIR /var/tmp/build/google-cloud-cpp-common-0.24.0
-# Compile without the tests because we are testing google-cloud-cpp, not the
-# base libraries
-RUN cmake -H. -Bcmake-out \
-    -DBUILD_TESTING=OFF \
-    -DBUILD_SHARED_LIBS=yes \
-    -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON
-RUN cmake --build cmake-out -- -j $(nproc)
-RUN cmake --build cmake-out --target install
-RUN ldconfig
+RUN wget -q https://github.com/coryan/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd /var/tmp/build/google-cloud-cpp-common-0.25.0 && \
+    cmake -H. -Bcmake-out \
+      -DBUILD_SHARED_LIBS=YES \
+      -DBUILD_TESTING=OFF \
+      -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
+    cmake --build cmake-out --target install -- -j ${NCPU} && \
+    ldconfig && \
+    cd /var/tmp && rm -fr build
 
 RUN find /usr/local -type d | xargs chmod 777
 

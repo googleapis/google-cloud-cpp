@@ -247,9 +247,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -357,9 +357,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -516,9 +516,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -648,9 +648,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -795,9 +795,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -934,9 +934,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
@@ -1098,9 +1098,9 @@ all the Google Cloud C++ client libraries:
 
 ```bash
 cd $HOME/Downloads
-wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd google-cloud-cpp-common-0.24.0 && \
+wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
         -DBUILD_TESTING=OFF \
         -DGOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL=ON && \
