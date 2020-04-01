@@ -81,6 +81,9 @@ foreach (fname ${storage_examples})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
 endforeach ()
 
-# TODO(#3524) - add here the examples driven by CTest and/or Bazel foreach
-# (target ) set_tests_properties( ${target} PROPERTIES LABELS "integration-
-# tests;storage-integration-tests") endforeach ()
+# TODO(#3524) - add here the examples driven by CTest and/or Bazel
+foreach (target storage_bucket_acl_samples)
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-tests;bigtable-integration-tests")
+endforeach ()
