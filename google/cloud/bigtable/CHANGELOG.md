@@ -1,8 +1,27 @@
 # Changelog
 
-## v1.9.x - TBD
+## v1.10.x - TBD
 
-## v1.8.x - 2020-02
+## v1.9.x - 2020-04
+
+> **NOTICE:** This repo will soon contain the code for all the other related
+`google-cloud-cpp-*` repos. As a new monorepo
+([#3612](https://github.com/googleapis/google-cloud-cpp/issues/3612)), the
+versioning of this repo will be changing to have a single per-repo version.
+**The per-library version numbers will be removed in favor of the repo version.** See
+https://github.com/googleapis/google-cloud-cpp/issues/3615 for more info.
+
+* **BREAKING CHANGES**
+  * fix!: moved IAM-related symbols to the correct inlined namespace (#3453)
+   Most users should not notice any difference, but those that explicitly referenced
+   symbols through the `google::cloud::bigtable::v0` namespace may need to switch
+   to `google::cloud::bigtable` (the recommended approach) or
+  `google::cloud::bigtable::v1`. We apologize if this causes you inconvenience.
+
+* **Other Changes**
+  * None
+
+## v1.8.x - 2020-03
 
 * fix: correct environment handling in client_options_test (#3374)
 * chore: update g-c-cpp-common to v0.19.0 (#3384)
