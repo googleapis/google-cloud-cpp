@@ -1,6 +1,27 @@
 # Changelog
 
-## v1.12.x - TBD
+## v1.13.x - TBD
+
+## v1.12.x - 2020-04
+
+**BREAKING CHANGE**
+  * fix!: moved IAM-related symbols to the correct namespace (#3453)
+
+**Other Changes:**
+  * ci: drive storage integration tests with Bazel/CMake (#3506)
+  * feat: add support for iam conditions (#3497)
+  * bug: express libcurl version in hex (#3487)
+  * bug: check curl connection before unpausing (#3485)
+  * feat: allow domain named buckets in signed URLs v4 (#3463)
+  * feat: implement virtual hostname V4 signatures
+  * feat: add configuration options to set the SSL root of trust (#3455)
+  * feat(3449): add testbench README
+  * doc: add doxygen comments for ParallelUploadFile (#3448)
+  * feat: support x-goog-content-sha256 for V4 signed URLs (#3435)
+  * feat: fix float issue and add content-length to failure case (#3445)
+  * feat: support multi-part object name in resource metadata (#3443)
+  * feat: add requirements.txt for development (#3441)
+  * feat: add /download/storage/v1 handler (#3439)
 
 ## v1.11.x - 2020-03
 

@@ -1,8 +1,16 @@
 # Changelog
 
-## v1.9.x - TBD
+## v1.10.x - TBD
 
-## v1.8.x - 2020-02
+## v1.9.x - 2020-4
+
+* **BREAKING CHANGES**
+  * fix!: moved IAM-related symbols to the correct namespace (#3453)
+
+* **Other Changes**
+  * ci: drive Bigtable integration tests with Bazel or CTest (#3504)
+
+## v1.8.x - 2020-03
 
 * fix: correct environment handling in client_options_test (#3374)
 * chore: update g-c-cpp-common to v0.19.0 (#3384)
