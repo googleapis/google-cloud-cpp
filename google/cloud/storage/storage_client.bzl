@@ -176,4 +176,5 @@ storage_client_srcs = [
     "service_account.cc",
     "version.cc",
     "well_known_headers.cc",
+    "well_known_parameters.cc",
 ]

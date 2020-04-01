@@ -333,6 +333,8 @@ struct PredefinedAcl
   static PredefinedAcl PublicReadWrite() {
     return PredefinedAcl("publicReadWrite");
   }
+
+  std::string HeaderName() const;
 };
 
 /**

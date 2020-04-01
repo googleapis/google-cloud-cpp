@@ -53,22 +53,6 @@ std::shared_ptr<CurlHandleFactory> CreateHandleFactory(
       options.connection_pool_size(), options.channel_options());
 }
 
-std::string XmlMapPredefinedAcl(std::string const& acl) {
-  static std::map<std::string, std::string> mapping{
-      {"authenticatedRead", "authenticated-read"},
-      {"bucketOwnerFullControl", "bucket-owner-full-control"},
-      {"bucketOwnerRead", "bucket-owner-read"},
-      {"private", "private"},
-      {"projectPrivate", "project-private"},
-      {"publicRead", "public-read"},
-  };
-  auto loc = mapping.find(acl);
-  if (loc == mapping.end()) {
-    return acl;
-  }
-  return loc->second;
-}
-
 std::string UrlEscapeString(std::string const& value) {
   CurlHandle handle;
   return std::string(handle.MakeEscapedString(value).get());
@@ -1300,9 +1284,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
                       ComputeCrc32cChecksum(request.contents()));
   }
   if (request.HasOption<PredefinedAcl>()) {
-    builder.AddHeader(
-        "x-goog-acl: " +
-        XmlMapPredefinedAcl(request.GetOption<PredefinedAcl>().value()));
+    builder.AddHeader("x-goog-acl: " +
+                      request.GetOption<PredefinedAcl>().HeaderName());
   }
   builder.AddOption(request.GetOption<UserProject>());
 
