@@ -12,32 +12,33 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
 
 //! [cbt namespace]
 namespace cbt = google::cloud::bigtable;
 //! [cbt namespace]
 
-int main(int argc, char* argv[]) try {
-  // A little helper to extract the last component of a '/' separated path.
-  auto basename = [](std::string const& path) -> std::string {
-    auto last_slash = path.find_last_of('/');
-    return path.substr(last_slash + 1);
-  };
+namespace {
 
-  if (argc != 5) {
-    std::string const cmd = argv[0];
-    std::cerr << "Usage: " << basename(cmd)
-              << " <project_id> <instance_id> <table_id> <profile_id>\n";
-    return 1;
+using google::cloud::bigtable::examples::CleanupOldTables;
+using google::cloud::bigtable::examples::RandomTableId;
+using google::cloud::bigtable::examples::Usage;
+
+void HelloWorldAppProfile(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw Usage{
+        "hello-world-app-profile <project-id> <instance-id>"
+        " <table-id> <profile-id>"};
   }
-
-  std::string const project_id = argv[1];
-  std::string const instance_id = argv[2];
-  std::string const table_id = argv[3];
-  std::string const profile_id = argv[4];
+  std::string const project_id = argv[0];
+  std::string const instance_id = argv[1];
+  std::string const table_id = argv[2];
+  std::string const profile_id = argv[3];
 
   // Create an object to access the Cloud Bigtable Data API.
   auto data_client = cbt::CreateDefaultDataClient(project_id, instance_id,
@@ -78,10 +79,7 @@ int main(int argc, char* argv[]) try {
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       read.ReadRow("key-0", cbt::Filter::ColumnRangeClosed("fam", "c0", "c0"));
   if (!result) throw std::runtime_error(result.status().message());
-  if (!result->first) {
-    std::cout << "Cannot find row 'key-0' in the table: " << table_id << "\n";
-    return 1;
-  }
+  if (!result->first) throw std::runtime_error("missing row with key = key-0");
   cbt::Cell const& cell = result->second.cells().front();
   std::cout << cell.family_name() << ":" << cell.column_qualifier() << "    @ "
             << cell.timestamp().count() << "us\n"
@@ -95,16 +93,66 @@ int main(int argc, char* argv[]) try {
            cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << row->row_key() << ":\n";
-    for (cbt::Cell const& cell : row->cells()) {
-      std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
-                << "    @ " << cell.timestamp().count() << "us\n"
-                << "\t\"" << cell.value() << '"' << "\n";
+    for (cbt::Cell const& c : row->cells()) {
+      std::cout << "\t" << c.family_name() << ":" << c.column_qualifier()
+                << "    @ " << c.timestamp().count() << "us\n"
+                << "\t\"" << c.value() << '"' << "\n";
     }
   }
   //! [scan all with app profile]
+}
 
-  return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+void RunAll(std::vector<std::string> const& argv) {
+  if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
+
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (!examples::RunAdminIntegrationTests()) return;
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  auto const instance_id = google::cloud::internal::GetEnv(
+                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                               .value_or("");
+
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
+
+  CleanupOldTables("hw-app-profile-tbl-", admin);
+
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto table_id = RandomTableId("hw-app-profile-tbl-", generator);
+  auto schema = admin.CreateTable(
+      table_id,
+      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  if (!schema) throw std::runtime_error(schema.status().message());
+
+  auto profile_id = "hw-app-profile-" +
+                    google::cloud::internal::Sample(
+                        generator, 8, "abcdefghilklmnopqrstuvwxyz0123456789");
+
+  cbt::InstanceAdmin instance_admin(
+      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
+  auto profile = instance_admin.CreateAppProfile(
+      instance_id, cbt::AppProfileConfig::MultiClusterUseAny(profile_id));
+  if (!profile) throw std::runtime_error(profile.status().message());
+
+  std::cout << "\nRunning the AppProfile hello world example" << std::endl;
+  HelloWorldAppProfile({project_id, instance_id, table_id, profile_id});
+
+  instance_admin.DeleteAppProfile(instance_id, profile_id);
+  admin.DeleteTable(table_id);
+}
+
+}  // namespace
+
+int main(int argc, char* argv[]) {
+  google::cloud::bigtable::examples::Example example({
+      {"auto", RunAll},
+      {"hello-world-app-profile", HelloWorldAppProfile},
+  });
+  return example.Run(argc, argv);
 }

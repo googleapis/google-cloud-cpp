@@ -15,11 +15,14 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <stdexcept>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 namespace examples {
+
+using ::testing::HasSubstr;
 
 TEST(BigtableExamplesCommon, Simple) {
   int test_calls = 0;
@@ -121,6 +124,60 @@ TEST(BigtableExamplesCommon, CommandError) {
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(2, test_calls);
+}
+
+TEST(BigtableExamplesCommon, CheckEnvironmentVariablesNormal) {
+  google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", "a");
+  google::cloud::testing_util::ScopedEnvironment test_b("TEST_B", "b");
+  EXPECT_NO_THROW(CheckEnvironmentVariablesAreSet({"TEST_A", "TEST_B"}));
+}
+
+TEST(BigtableExamplesCommon, CheckEnvironmentVariablesNotSet) {
+  google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", {});
+  EXPECT_THROW(
+      try {
+        CheckEnvironmentVariablesAreSet({"TEST_A"});
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("TEST_A"));
+        throw;
+      },
+      std::runtime_error);
+}
+
+TEST(BigtableExamplesCommon, CheckEnvironmentVariablesSetEmpty) {
+  google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", "");
+  EXPECT_THROW(
+      try {
+        CheckEnvironmentVariablesAreSet({"TEST_A"});
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("TEST_A"));
+        throw;
+      },
+      std::runtime_error);
+}
+
+TEST(BigtableExamplesCommon, RunAdminIntegrationTestsEmulator) {
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
+  google::cloud::testing_util::ScopedEnvironment admin(
+      "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS", "no");
+  EXPECT_TRUE(RunAdminIntegrationTests());
+}
+
+TEST(BigtableExamplesCommon, RunAdminIntegrationTestsProductionAndDisabled) {
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", {});
+  google::cloud::testing_util::ScopedEnvironment admin(
+      "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS", "no");
+  EXPECT_FALSE(RunAdminIntegrationTests());
+}
+
+TEST(BigtableExamplesCommon, RunAdminIntegrationTestsProductionAndEnabled) {
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", {});
+  google::cloud::testing_util::ScopedEnvironment admin(
+      "ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS", "yes");
+  EXPECT_TRUE(RunAdminIntegrationTests());
 }
 
 }  // namespace examples
