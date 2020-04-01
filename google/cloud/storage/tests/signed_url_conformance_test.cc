@@ -151,10 +151,10 @@ TEST_P(V4SignedUrlConformanceTest, V4SignJson) {
   }
 
   BucketBoundHostname domain_named_bucket;
-  if (url_style == "BUCKET_BOUND_DOMAIN") {
-    domain_named_bucket = BucketBoundHostname(j_obj["bucketBoundDomain"]);
+  if (url_style == "BUCKET_BOUND_HOSTNAME") {
+    domain_named_bucket = BucketBoundHostname(j_obj["bucketBoundHostname"]);
     request.set_multiple_options(
-        BucketBoundHostname(j_obj["bucketBoundDomain"]));
+        BucketBoundHostname(j_obj["bucketBoundHostname"]));
   }
 
   auto actual = client.CreateV4SignedUrl(
@@ -239,44 +239,54 @@ int main(int argc, char* argv[]) {
     std::cerr << "The provided file should contain one JSON object.\n";
     return 1;
   }
-  for (auto& json_array : json.items()) {
-    if (!json_array.value().is_array()) {
-      std::cerr << "Expected an obects' value to be arrays, found: "
-                << json_array.value() << ".\n";
+  if (json.count("signingV4Tests") < 1) {
+    std::cerr << "The provided file should contain a 'signingV4Tests' entry.\n"
+              << json;
+    return 1;
+  }
+
+  auto signing_tests_json = json["signingV4Tests"];
+  if (!signing_tests_json.is_array()) {
+    std::cerr << "Expected an obects' value to be arrays, found: "
+              << signing_tests_json << ".\n";
+    return 1;
+  }
+
+  if (!signing_tests_json.is_array()) {
+    std::cerr << "Expected an obects' value to be arrays, found: "
+              << signing_tests_json << ".\n";
+    return 1;
+  }
+
+  for (auto const& j_obj : signing_tests_json) {
+    if (!j_obj.is_object()) {
+      std::cerr << "Expected an array of objects, got this element in array: "
+                << j_obj << "\n";
       return 1;
     }
-
-    for (auto const& j_obj : json_array.value()) {
-      if (!j_obj.is_object()) {
-        std::cerr << "Expected an array of objects, got this element in array: "
-                  << j_obj << "\n";
-        return 1;
-      }
-      if (j_obj.count("description") != 1) {
-        std::cerr << "Expected all tests to have a description\n";
-        return 1;
-      }
-      auto j_descr = j_obj["description"];
-      if (!j_descr.is_string()) {
-        std::cerr << "Expected description to be a string, got: " << j_descr
-                  << "\n";
-        return 1;
-      }
-      std::string name_with_spaces = j_descr;
-      std::string name;
-      // gtest doesn't allow for anything other than [a-zA-Z]
-      std::copy_if(name_with_spaces.begin(), name_with_spaces.end(),
-                   back_inserter(name), [](char c) {
-                     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-                   });
-      if (nonconformant_tests.find(name) != nonconformant_tests.end()) {
-        continue;
-      }
-      bool inserted =
-          google::cloud::storage::tests->emplace(name, j_obj).second;
-      if (!inserted) {
-        std::cerr << "Duplicate test description: " << name << "\n";
-      }
+    if (j_obj.count("description") != 1) {
+      std::cerr << "Expected all tests to have a description\n";
+      return 1;
+    }
+    auto j_descr = j_obj["description"];
+    if (!j_descr.is_string()) {
+      std::cerr << "Expected description to be a string, got: " << j_descr
+                << "\n";
+      return 1;
+    }
+    std::string name_with_spaces = j_descr;
+    std::string name;
+    // gtest doesn't allow for anything other than [a-zA-Z]
+    std::copy_if(name_with_spaces.begin(), name_with_spaces.end(),
+                 back_inserter(name), [](char c) {
+                   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+                 });
+    if (nonconformant_tests.find(name) != nonconformant_tests.end()) {
+      continue;
+    }
+    bool inserted = google::cloud::storage::tests->emplace(name, j_obj).second;
+    if (!inserted) {
+      std::cerr << "Duplicate test description: " << name << "\n";
     }
   }
   google::cloud::testing_util::InitGoogleMock(argc, argv);
