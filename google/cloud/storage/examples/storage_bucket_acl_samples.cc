@@ -293,26 +293,35 @@ void RunAll(std::vector<std::string> const& argv) {
                                                      gcs::BucketMetadata{})
                              .value();
 
+  auto const reader = gcs::BucketAccessControl::ROLE_READER();
+  auto const owner = gcs::BucketAccessControl::ROLE_OWNER();
+
   std::cout << "\nRunning ListBucketAcl() example" << std::endl;
   ListBucketAcl(client, {bucket_name});
 
   std::cout << "\nRunning CreateBucketAcl() example" << std::endl;
-  CreateBucketAcl(client, {bucket_name, "allAuthenticatedUsers", "READER"});
+  CreateBucketAcl(client, {bucket_name, "allAuthenticatedUsers", reader});
 
   std::cout << "\nRunning GetBucketAcl() example" << std::endl;
   GetBucketAcl(client, {bucket_name, "allAuthenticatedUsers"});
 
   std::cout << "\nRunning UpdateBucketAcl() example" << std::endl;
-  UpdateBucketAcl(client, {bucket_name, entity, "OWNER"});
+  UpdateBucketAcl(client, {bucket_name, entity, owner});
 
   std::cout << "\nRunning PatchBucketAcl() example" << std::endl;
-  PatchBucketAcl(client, {bucket_name, entity, "READER"});
+  PatchBucketAcl(client, {bucket_name, entity, reader});
 
   std::cout << "\nRunning PatchBucketAcl() example" << std::endl;
-  PatchBucketAclNoRead(client, {bucket_name, entity, "OWNER"});
+  PatchBucketAclNoRead(client, {bucket_name, entity, owner});
 
   std::cout << "\nRunning DeleteBucketAcl() example" << std::endl;
   DeleteBucketAcl(client, {bucket_name, entity});
+
+  std::cout << "\nRunning AddBucketOwner() example" << std::endl;
+  AddBucketOwner(client, {bucket_name, entity});
+
+  std::cout << "\nRunning RemoveBucketOwner() example" << std::endl;
+  RemoveBucketOwner(client, {bucket_name, entity});
 
   (void)client.DeleteBucket(bucket_name);
 }
