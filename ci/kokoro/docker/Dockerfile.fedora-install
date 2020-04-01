@@ -91,9 +91,9 @@ RUN wget -q https://github.com/google/crc32c/archive/1.1.0.tar.gz && \
 
 # Download and compile google-cloud-cpp-common from source too.
 WORKDIR /var/tmp/build
-RUN wget -q https://github.com/googleapis/google-cloud-cpp-common/archive/v0.24.0.tar.gz && \
-    tar -xf v0.24.0.tar.gz && \
-    cd /var/tmp/build/google-cloud-cpp-common-0.24.0 && \
+RUN wget -q https://github.com/coryan/google-cloud-cpp-common/archive/v0.25.0.tar.gz && \
+    tar -xf v0.25.0.tar.gz && \
+    cd /var/tmp/build/google-cloud-cpp-common-0.25.0 && \
     cmake -H. -Bcmake-out \
       -DBUILD_SHARED_LIBS=YES \
       -DBUILD_TESTING=OFF \
