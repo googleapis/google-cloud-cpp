@@ -47,7 +47,7 @@ load(":storage_examples.bzl", "storage_examples")
 # TODO(#3523) - add auto-runnable examples to this list until all
 # examples are auto-runnable and then cleanup this code.
 auto_runnable_storage_examples = [
-    "storage_bucket_acl_samples",
+    "storage_bucket_acl_samples.cc",
 ]
 
 auto_runnable_tags = [

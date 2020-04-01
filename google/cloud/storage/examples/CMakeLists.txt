@@ -85,5 +85,5 @@ endforeach ()
 foreach (target storage_bucket_acl_samples)
     set_tests_properties(
         ${target} PROPERTIES LABELS
-                             "integration-tests;bigtable-integration-tests")
+                             "integration-tests;storage-integration-tests")
 endforeach ()
