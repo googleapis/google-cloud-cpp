@@ -561,6 +561,19 @@ fi
 echo "================================================================"
 "${PROJECT_ROOT}/ci/kokoro/docker/dump-reports.sh"
 
+echo "================================================================"
+if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+  # Our CI system (kokoro) syncs the data in this directory to somewhere after
+  # the build completes. Removing the cmake-out/ dir shaves minutes off this
+  # process. This is safe as long as we don't wish to save any build artifacts.
+  echo "${COLOR_YELLOW}$(date -u): cleaning up artifacts.${COLOR_RESET}"
+  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -print0 \
+    | xargs -0 -t rm -rf
+else
+  echo "${COLOR_YELLOW}$(date -u): Not a CI build; " \
+    skipping artifact cleanup".${COLOR_RESET}"
+fi
+
 echo
 echo "================================================================"
 if [[ ${exit_status} -eq 0 ]]; then
