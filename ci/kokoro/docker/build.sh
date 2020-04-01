@@ -562,13 +562,12 @@ echo "================================================================"
 "${PROJECT_ROOT}/ci/kokoro/docker/dump-reports.sh"
 
 echo "================================================================"
-echo "##### BEGIN JGM DEBUGGING"
-echo PWD=$(pwd)
-ls
-find . -name cmake-out
-echo "##### END JGM DEBUGGING"
 if [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
   echo "${COLOR_YELLOW}$(date -u): cleaning up artifacts.${COLOR_RESET}"
+  if [[ -d "cmake-out" ]]; then
+    echo Removing cmake-out/
+    rm -rf cmake-out
+  fi
 else
   echo "${COLOR_YELLOW}$(date -u): KOKORO_ARTIFACTS_DIR is unset; " \
     skipping cleanup".${COLOR_RESET}"
