@@ -39,14 +39,7 @@ function dump_report() {
 
 export -f dump_report
 
-# Find any analysis reports, currently ABI checks and Clang static analysis are
-# the two things that produce them. Note that the Clang static analysis reports
-# are copied into the scan-cmake-out directory by the build-docker.sh script.
-
+# Dumps the API/ABI compatibility report.
 find "${BUILD_OUTPUT}" -name 'src_compat_report.html' \
     -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \
   echo "No ABI compatibility reports found."
-
-find scan-cmake-out/ -name '*.html' \
-    -exec bash -c 'dump_report "$1"' _ {} \; 2>/dev/null || \
-  echo "No static analysis reports found."
