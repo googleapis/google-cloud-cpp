@@ -43,12 +43,7 @@ load(":storage_examples_unit_tests.bzl", "storage_examples_unit_tests")
 ) for test in storage_examples_unit_tests]
 
 load(":storage_examples.bzl", "storage_examples")
-
-# TODO(#3523) - add auto-runnable examples to this list until all
-# examples are auto-runnable and then cleanup this code.
-auto_runnable_storage_examples = [
-    "storage_bucket_acl_samples.cc",
-]
+load(":storage_autorun_examples.bzl", "storage_autorun_examples")
 
 auto_runnable_tags = [
     "storage-integration-tests",
@@ -62,7 +57,7 @@ integration_test_tags = [
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    tags = auto_runnable_tags if test in auto_runnable_storage_examples else integration_test_tags,
+    tags = auto_runnable_tags if test in storage_autorun_examples else integration_test_tags,
     deps = [
         ":storage_examples_common",
         "//google/cloud/storage:storage_client",
@@ -70,4 +65,4 @@ integration_test_tags = [
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
         "@com_google_googletest//:gtest",
     ],
-) for test in storage_examples]
+) for test in storage_examples + storage_autorun_examples]

@@ -27,17 +27,18 @@ target_link_libraries(
     protobuf::libprotobuf
     bigtable_common_options)
 
+set(bigtable_autorun_examples # cmake-format: sort
+                              bigtable_hello_app_profile.cc data_snippets.cc)
+
 set(bigtable_examples
     # cmake-format: sort
     bigtable_grpc_credentials.cc
-    bigtable_hello_app_profile.cc
     bigtable_hello_instance_admin.cc
     bigtable_hello_table_admin.cc
     bigtable_hello_world.cc
     bigtable_instance_admin_snippets.cc
     bigtable_quickstart.cc
     data_async_snippets.cc
-    data_snippets.cc
     instance_admin_async_snippets.cc
     table_admin_async_snippets.cc
     table_admin_snippets.cc)
@@ -46,6 +47,8 @@ set(bigtable_examples_unit_tests # cmake-format: sort
                                  bigtable_examples_common_test.cc)
 
 include(CreateBazelConfig)
+export_list_to_bazel("bigtable_autorun_examples.bzl"
+                     "bigtable_autorun_examples")
 export_list_to_bazel("bigtable_examples.bzl" "bigtable_examples")
 export_list_to_bazel("bigtable_examples_unit_tests.bzl"
                      "bigtable_examples_unit_tests")
@@ -76,7 +79,8 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-foreach (fname ${bigtable_examples})
+# TODO(#3524) - merge these loops when `storage_examples` is empty.
+foreach (fname ${bigtable_examples} ${bigtable_autorun_examples})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
     add_executable(${target} ${fname})
@@ -95,8 +99,9 @@ foreach (fname ${bigtable_examples})
     set_tests_properties(${target} PROPERTIES LABELS "integration-tests")
 endforeach ()
 
-# TODO(#3523) - add here the examples driven by CTest and/or Bazel
-foreach (target data_snippets bigtable_hello_app_profile)
+foreach (fname ${bigtable_autorun_examples})
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
