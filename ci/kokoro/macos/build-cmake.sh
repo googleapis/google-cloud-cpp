@@ -31,7 +31,12 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): Update or install dependencies.${COLOR_RESET}"
-brew install libressl
+
+brew_env=()
+if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
+  brew_env+=("HOMEBREW_NO_AUTO_UPDATE=1")
+fi
+env "${brew_env[@]}" brew install libressl
 
 echo "================================================================"
 echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
