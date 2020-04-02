@@ -310,7 +310,7 @@ int main(int argc, char* argv[]) {
   auto make_entry = [](std::string const& name,
                        std::vector<std::string> arg_names,
                        examples::ClientCommand const& cmd) {
-    arg_names.insert(arg_names.begin(), "<bucket-name<");
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
     return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
   google::cloud::storage::examples::Example example({
