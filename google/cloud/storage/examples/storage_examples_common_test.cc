@@ -21,6 +21,8 @@ namespace cloud {
 namespace storage {
 namespace examples {
 
+using ::testing::HasSubstr;
+
 TEST(StorageExamplesCommon, Simple) {
   int test_calls = 0;
   Example example({
@@ -121,6 +123,47 @@ TEST(StorageExamplesCommon, CommandError) {
   int argc = sizeof(argv) / sizeof(argv[0]);
   EXPECT_EQ(example.Run(argc, argv), 1);
   EXPECT_EQ(2, test_calls);
+}
+
+TEST(StorageExamplesCommon, UsingTestbenchTrue) {
+  google::cloud::testing_util::ScopedEnvironment env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+  EXPECT_TRUE(UsingTestbench());
+}
+
+TEST(StorageExamplesCommon, UsingTestbenchFalse) {
+  google::cloud::testing_util::ScopedEnvironment env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
+  EXPECT_FALSE(UsingTestbench());
+}
+
+TEST(StorageExamplesCommon, CreateCommandEntryUsage) {
+  // Set the client to use the testbench, this avoids any problems trying to
+  // find and load the default credentials file.
+  google::cloud::testing_util::ScopedEnvironment env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+
+  int call_count = 0;
+  auto command = [&call_count](google::cloud::storage::Client const&,
+                               std::vector<std::string> const& argv) {
+    ++call_count;
+    ASSERT_EQ(2, argv.size());
+    EXPECT_EQ("1", argv.at(0));
+    EXPECT_EQ("2", argv.at(1));
+  };
+  auto entry = CreateCommandEntry("my-test", {"foo", "bar"}, command);
+  EXPECT_EQ("my-test", entry.first);
+
+  EXPECT_THROW(
+      try { entry.second({}); } catch (Usage const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("my-test foo bar"));
+        throw;
+      },
+      Usage);
+
+  EXPECT_EQ(0, call_count);
+  entry.second({"1", "2"});
+  EXPECT_EQ(1, call_count);
 }
 
 }  // namespace examples

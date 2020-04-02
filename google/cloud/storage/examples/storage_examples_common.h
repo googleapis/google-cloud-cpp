@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_EXAMPLES_STORAGE_EXAMPLES_COMMON_H
 
+#include "google/cloud/storage/client.h"
+#include "google/cloud/internal/random.h"
 #include <functional>
 #include <map>
 #include <stdexcept>
@@ -49,6 +51,16 @@ class Example {
   std::map<std::string, CommandType> commands_;
   std::string full_usage_;
 };
+
+bool UsingTestbench();
+std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
+                                 std::string const& prefix);
+
+using ClientCommand = std::function<void(google::cloud::storage::Client,
+                                         std::vector<std::string> argv)>;
+Commands::value_type CreateCommandEntry(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    ClientCommand const& command);
 
 }  // namespace examples
 }  // namespace storage

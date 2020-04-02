@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -79,6 +80,44 @@ void Example::PrintUsage(std::string const& cmd, std::string const& msg) {
   std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n"
             << full_usage_ << "\n";
+}
+
+bool UsingTestbench() {
+  return !google::cloud::internal::GetEnv("CLOUD_STORAGE_TESTBENCH_ENDPOINT")
+              .value_or("")
+              .empty();
+}
+
+std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
+                                 std::string const& prefix) {
+  // The total length of an object name is something like 1024 characters (UTF-8
+  // encoded), but we do not need that many.
+  static std::size_t const kMaxObjectNameLength = 128;
+  std::size_t const max_random_characters =
+      kMaxObjectNameLength - prefix.size();
+  // object names might contain all kinds of characters, but we can use just
+  // a subset for these purposes.
+  return prefix + google::cloud::internal::Sample(
+                      gen, static_cast<int>(max_random_characters),
+                      "abcdefghijklmnopqrstuvwxyz012456789");
+}
+
+Commands::value_type CreateCommandEntry(
+    std::string const& name, std::vector<std::string> const& arg_names,
+    ClientCommand const& command) {
+  auto adapter = [=](std::vector<std::string> argv) {
+    if (argv.size() != arg_names.size()) {
+      std::ostringstream os;
+      os << name;
+      for (auto& a : arg_names) {
+        os << " " << a;
+      }
+      throw Usage{std::move(os).str()};
+    }
+    auto client = google::cloud::storage::Client::CreateDefaultClient().value();
+    command(std::move(client), std::move(argv));
+  };
+  return {name, std::move(adapter)};
 }
 
 }  // namespace examples

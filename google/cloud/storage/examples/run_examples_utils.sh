@@ -870,62 +870,6 @@ run_all_cmek_examples() {
 }
 
 ################################################
-# Run the examples to create V2 signed urls.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_all_signed_url_v2_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-
-  if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " V2 Signed URL examples disabled when using the testbench."
-    return
-  fi
-
-  run_example ./storage_object_samples create-put-signed-url-v2 \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples create-get-signed-url-v2 \
-      "${bucket_name}" "${object_name}"
-}
-
-################################################
-# Run the examples to create V4 signed urls.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_all_signed_url_v4_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-
-  if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " V4 Signed URL examples disabled when using the testbench."
-    return
-  fi
-
-  run_example ./storage_object_samples create-put-signed-url-v4 \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples create-get-signed-url-v4 \
-      "${bucket_name}" "${object_name}"
-}
-
-################################################
 # Run the examples to create signed policy documents.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -1229,8 +1173,6 @@ run_all_storage_examples() {
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
   run_object_versioning_examples
-  run_all_signed_url_v2_examples "${BUCKET_NAME}"
-  run_all_signed_url_v4_examples "${BUCKET_NAME}"
   run_signed_policy_document_examples
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
