@@ -45,14 +45,9 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
     ],
 ) for test in bigtable_examples_unit_tests]
 
+# TODO(#3523) - cleanup these additional variables when no longer needed
 load(":bigtable_examples.bzl", "bigtable_examples")
-
-# TODO(#3523) - add auto-runnable examples to this list until all
-# examples are auto-runnable and then cleanup this code.
-auto_runnable_bigtable_examples = [
-    "data_snippets.cc",
-    "bigtable_hello_app_profile.cc",
-]
+load(":bigtable_autorun_examples.bzl", "bigtable_autorun_examples")
 
 auto_runnable_tags = [
     "bigtable-integration-tests",
@@ -66,7 +61,7 @@ integration_test_tags = [
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    tags = auto_runnable_tags if test in auto_runnable_bigtable_examples else integration_test_tags,
+    tags = auto_runnable_tags if test in bigtable_autorun_examples else integration_test_tags,
     deps = [
         ":bigtable_examples_common",
         "//google/cloud/bigtable:bigtable_client",
@@ -76,4 +71,4 @@ integration_test_tags = [
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
         "@com_google_googletest//:gtest",
     ],
-) for test in bigtable_examples]
+) for test in bigtable_examples + bigtable_autorun_examples]
