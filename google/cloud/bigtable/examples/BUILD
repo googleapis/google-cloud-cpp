@@ -61,7 +61,7 @@ integration_test_tags = [
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    tags = auto_runnable_tags if test in bigtableª_autorun_examples else integration_test_tags,
+    tags = auto_runnable_tags if test in bigtable_autorun_examples else integration_test_tags,
     deps = [
         ":bigtable_examples_common",
         "//google/cloud/bigtable:bigtable_client",
