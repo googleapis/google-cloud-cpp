@@ -147,14 +147,14 @@ int main(int argc, char* argv[]) {
     config.database_id =
         google::cloud::spanner_testing::RandomDatabaseName(generator);
   }
-  spanner::Database database(config.project_id, config.instance_id,
-                             config.database_id);
+  google::cloud::spanner::Database database(
+      config.project_id, config.instance_id, config.database_id);
 
   // Once the configuration is fully initialized and the database name set,
   // print everything out.
   std::cout << config << std::flush;
 
-  spanner::DatabaseAdminClient admin_client;
+  google::cloud::spanner::DatabaseAdminClient admin_client;
   std::vector<std::string> additional_statements = [&available, generator] {
     std::vector<std::string> statements;
     for (auto const& kv : available) {

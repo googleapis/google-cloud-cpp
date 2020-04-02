@@ -90,8 +90,8 @@ int main(int argc, char* argv[]) {
     config.database_id =
         google::cloud::spanner_testing::RandomDatabaseName(generator);
   }
-  spanner::Database database(config.project_id, config.instance_id,
-                             config.database_id);
+  google::cloud::spanner::Database database(
+      config.project_id, config.instance_id, config.database_id);
   auto available = AvailableExperiments();
   auto e = available.find(config.experiment);
   if (e == available.end()) {
@@ -99,7 +99,7 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  spanner::DatabaseAdminClient admin_client;
+  google::cloud::spanner::DatabaseAdminClient admin_client;
   auto create_future =
       admin_client.CreateDatabase(database, {R"sql(CREATE TABLE KeyValue (
                                 Key   INT64 NOT NULL,
