@@ -49,10 +49,8 @@ class SignedUrlIntegrationTest
 };
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
+  // The testbench does not implement signed URLs.
+  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -84,10 +82,8 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlGet) {
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
+  // The testbench does not implement signed URLs.
+  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -119,10 +115,8 @@ TEST_F(SignedUrlIntegrationTest, CreateV2SignedUrlPut) {
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
+  // The testbench does not implement signed URLs.
+  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -154,10 +148,8 @@ TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlGet) {
 }
 
 TEST_F(SignedUrlIntegrationTest, CreateV4SignedUrlPut) {
-  if (UsingTestbench()) {
-    // The testbench does not implement signed URLs.
-    return;
-  }
+  // The testbench does not implement signed URLs.
+  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

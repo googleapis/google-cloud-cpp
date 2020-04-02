@@ -328,7 +328,7 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithXUploadContentLengthRandom) {
 }
 
 TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
-  if (UsingTestbench()) return;
+  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

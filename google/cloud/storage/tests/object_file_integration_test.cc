@@ -212,10 +212,8 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
 }
 
 TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
-  if (UsingTestbench()) {
-    // The testbench does not support binary payloads.
-    return;
-  }
+  // The testbench does not support binary payloads.
+  if (UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

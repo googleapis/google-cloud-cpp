@@ -641,9 +641,7 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureUploadFile) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
-  if (!UsingTestbench()) {
-    return;
-  }
+  if (!UsingTestbench()) GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
@@ -676,9 +674,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeout) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
-  if (!UsingTestbench()) {
-    return;
-  }
+  if (!UsingTestbench()) GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
@@ -717,9 +713,7 @@ TEST_F(ObjectMediaIntegrationTest, StreamingReadTimeoutContinues) {
 }
 
 TEST_F(ObjectMediaIntegrationTest, StreamingReadInternalError) {
-  if (!UsingTestbench()) {
-    return;
-  }
+  if (!UsingTestbench()) GTEST_SKIP();
 
   auto options = ClientOptions::CreateDefaultClientOptions();
   ASSERT_STATUS_OK(options);
