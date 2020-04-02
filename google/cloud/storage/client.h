@@ -2679,10 +2679,10 @@ class Client {
    * @return the signed URL.
    *
    * @par Example
-   * @snippet storage_object_samples.cc sign url v2
+   * @snippet storage_signed_url_v2_samples.cc sign url v2
    *
    * @par Example
-   * @snippet storage_object_samples.cc create put signed url v2
+   * @snippet storage_signed_url_v2_samples.cc create put signed url v2
    *
    * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
    *     a general description of signed URLs and how they can be used.
@@ -2742,10 +2742,10 @@ class Client {
    * @return the signed URL.
    *
    * @par Example
-   * @snippet storage_object_samples.cc sign url v4
+   * @snippet storage_signed_url_v4_samples.cc sign url v4
    *
    * @par Example
-   * @snippet storage_object_samples.cc create put signed url v4
+   * @snippet storage_signed_url_v4_samples.cc create put signed url v4
    *
    * @see https://cloud.google.com/storage/docs/access-control/signed-urls for
    *     a general description of signed URLs and how they can be used.

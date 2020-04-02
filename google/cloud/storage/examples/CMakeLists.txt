@@ -19,8 +19,10 @@ add_library(storage_examples_common storage_examples_common.cc
 target_link_libraries(storage_examples_common storage_client
                       google_cloud_cpp_common)
 
-set(storage_autorun_examples # cmake-format: sort
-                             storage_bucket_acl_samples.cc)
+set(storage_autorun_examples
+    # cmake-format: sort
+    storage_bucket_acl_samples.cc storage_signed_url_v2_samples.cc
+    storage_signed_url_v4_samples.cc)
 
 set(storage_examples
     # cmake-format: sort

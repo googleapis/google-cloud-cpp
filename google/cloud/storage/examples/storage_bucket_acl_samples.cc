@@ -225,29 +225,6 @@ void RemoveBucketOwner(google::cloud::storage::Client client,
   (std::move(client), argv[0], argv[1]);
 }
 
-using ClientCommand = std::function<void(google::cloud::storage::Client,
-                                         std::vector<std::string> argv)>;
-
-Commands::value_type CreateCommandEntry(std::string const& name,
-                                        std::vector<std::string> const& args,
-                                        ClientCommand const& command) {
-  auto adapter = [=](std::vector<std::string> argv) {
-    if (argv.size() != 1 + args.size()) {
-      std::ostringstream os;
-      os << name << " <bucket-name>";
-      char const* sep = " ";
-      for (auto const& a : args) {
-        os << sep << a;
-      }
-      throw Usage{std::move(os).str()};
-    }
-    auto client = google::cloud::storage::Client::CreateDefaultClient().value();
-    command(std::move(client), std::move(argv));
-  };
-
-  return {name, std::move(adapter)};
-}
-
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix) {
   // The total length of a bucket name must be <= 63 characters,
@@ -329,21 +306,24 @@ void RunAll(std::vector<std::string> const& argv) {
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::storage::examples;
+  auto make_entry = [](std::string const& name,
+                       std::vector<std::string> arg_names,
+                       examples::ClientCommand const& cmd) {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
+  };
   google::cloud::storage::examples::Example example({
-      CreateCommandEntry("list-bucket-acl", {}, ListBucketAcl),
-      CreateCommandEntry("create-bucket-acl", {"<entity>", "<role>"},
-                         CreateBucketAcl),
-      CreateCommandEntry("delete-bucket-acl", {"<entity>"}, DeleteBucketAcl),
-      CreateCommandEntry("get-bucket-acl", {"<entity>"}, GetBucketAcl),
-      CreateCommandEntry("update-bucket-acl", {"<entity>", "<role>"},
-                         UpdateBucketAcl),
-      CreateCommandEntry("patch-bucket-acl", {"<entity>", "<role>"},
-                         PatchBucketAcl),
-      CreateCommandEntry("patch-bucket-acl-no-read", {"<entity>", "<role>"},
-                         PatchBucketAclNoRead),
-      CreateCommandEntry("add-bucket-owner", {"<entity>"}, AddBucketOwner),
-      CreateCommandEntry("remove-bucket-owner", {"<entity>"},
-                         RemoveBucketOwner),
+      make_entry("list-bucket-acl", {}, ListBucketAcl),
+      make_entry("create-bucket-acl", {"<entity>", "<role>"}, CreateBucketAcl),
+      make_entry("delete-bucket-acl", {"<entity>"}, DeleteBucketAcl),
+      make_entry("get-bucket-acl", {"<entity>"}, GetBucketAcl),
+      make_entry("update-bucket-acl", {"<entity>", "<role>"}, UpdateBucketAcl),
+      make_entry("patch-bucket-acl", {"<entity>", "<role>"}, PatchBucketAcl),
+      make_entry("patch-bucket-acl-no-read", {"<entity>", "<role>"},
+                 PatchBucketAclNoRead),
+      make_entry("add-bucket-owner", {"<entity>"}, AddBucketOwner),
+      make_entry("remove-bucket-owner", {"<entity>"}, RemoveBucketOwner),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

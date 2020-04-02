@@ -1620,108 +1620,6 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
   (std::move(client), bucket_name, object_name);
 }
 
-void CreateGetSignedUrlV2(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-get-signed-url-v2 <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [sign url v2] [START storage_generate_signed_url_v2]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
-        "GET", std::move(bucket_name), std::move(object_name),
-        gcs::ExpirationTime(std::chrono::system_clock::now() +
-                            std::chrono::minutes(15)));
-
-    if (!signed_url) throw std::runtime_error(signed_url.status().message());
-    std::cout << "The signed url is: " << *signed_url << "\n\n"
-              << "You can use this URL with any user agent, for example:\n"
-              << "curl '" << *signed_url << "'\n";
-  }
-  //! [sign url v2] [END storage_generate_signed_url_v2]
-  (std::move(client), bucket_name, object_name);
-}
-
-void CreatePutSignedUrlV2(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-put-signed-url-v2 <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [create put signed url v2]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<std::string> signed_url = client.CreateV2SignedUrl(
-        "PUT", std::move(bucket_name), std::move(object_name),
-        gcs::ExpirationTime(std::chrono::system_clock::now() +
-                            std::chrono::minutes(15)),
-        gcs::ContentType("application/octet-stream"));
-
-    if (!signed_url) throw std::runtime_error(signed_url.status().message());
-    std::cout << "The signed url is: " << *signed_url << "\n\n"
-              << "You can use this URL with any user agent, for example:\n"
-              << "curl -X PUT -H 'Content-Type: application/octet-stream'"
-              << " --upload-file my-file '" << *signed_url << "'\n";
-  }
-  //! [create put signed url v2]
-  (std::move(client), bucket_name, object_name);
-}
-
-void CreateGetSignedUrlV4(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-get-signed-url-v4 <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [sign url v4] [START storage_generate_signed_url_v4]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<std::string> signed_url = client.CreateV4SignedUrl(
-        "GET", std::move(bucket_name), std::move(object_name),
-        gcs::SignedUrlDuration(std::chrono::minutes(15)));
-
-    if (!signed_url) throw std::runtime_error(signed_url.status().message());
-    std::cout << "The signed url is: " << *signed_url << "\n\n"
-              << "You can use this URL with any user agent, for example:\n"
-              << "curl '" << *signed_url << "'\n";
-  }
-  //! [sign url v4] [END storage_generate_signed_url_v4]
-  (std::move(client), bucket_name, object_name);
-}
-
-void CreatePutSignedUrlV4(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-put-signed-url-v4 <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [create put signed url v4] [START storage_generate_upload_signed_url_v4]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<std::string> signed_url = client.CreateV4SignedUrl(
-        "PUT", std::move(bucket_name), std::move(object_name),
-        gcs::SignedUrlDuration(std::chrono::minutes(15)),
-        gcs::AddExtensionHeader("content-type", "application/octet-stream"));
-
-    if (!signed_url) throw std::runtime_error(signed_url.status().message());
-    std::cout << "The signed url is: " << *signed_url << "\n\n"
-              << "You can use this URL with any user agent, for example:\n"
-              << "curl -X PUT -H 'Content-Type: application/octet-stream'"
-              << " --upload-file my-file '" << *signed_url << "'\n";
-  }
-  //! [create put signed url v4] [END storage_generate_upload_signed_url_v4]
-  (std::move(client), bucket_name, object_name);
-}
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -1786,10 +1684,6 @@ int main(int argc, char* argv[]) try {
       {"release-event-based-hold", ReleaseObjectEventBasedHold},
       {"set-temporary-hold", SetObjectTemporaryHold},
       {"release-temporary-hold", ReleaseObjectTemporaryHold},
-      {"create-get-signed-url-v2", CreateGetSignedUrlV2},
-      {"create-put-signed-url-v2", CreatePutSignedUrlV2},
-      {"create-get-signed-url-v4", CreateGetSignedUrlV4},
-      {"create-put-signed-url-v4", CreatePutSignedUrlV4},
   };
   for (auto&& kv : commands) {
     try {
