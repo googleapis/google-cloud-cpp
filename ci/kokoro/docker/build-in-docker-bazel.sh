@@ -98,6 +98,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       # Common configuration
       "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
       "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+      "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
 
       # Bigtable
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
@@ -125,8 +126,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # Run the integration tests using Bazel to drive them.
   "${BAZEL_BIN}" test \
       "${bazel_args[@]}" \
-      "--test_tag_filters=bigtable-integration-tests" \
-      "--test_tag_filters=storage-integration-tests" \
+      "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
       -- //google/cloud/...:all
 
   export INTEGRATION_TESTS_CONFIG

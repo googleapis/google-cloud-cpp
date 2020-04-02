@@ -13,43 +13,21 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/examples/storage_examples_common.h"
+#include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
 #include <map>
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
+using google::cloud::storage::examples::Commands;
+using google::cloud::storage::examples::CommandType;
+using google::cloud::storage::examples::Usage;
 
-std::string command_usage;
-
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
-
-void ListBucketAcl(google::cloud::storage::Client client, int& argc,
-                   char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"list-bucket-acl <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void ListBucketAcl(google::cloud::storage::Client client,
+                   std::vector<std::string> const& argv) {
   //! [list bucket acl] [START storage_print_bucket_acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -64,17 +42,11 @@ void ListBucketAcl(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [list bucket acl] [END storage_print_bucket_acl]
-  (std::move(client), bucket_name);
+  (std::move(client), argv[0]);
 }
 
-void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
-                     char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"create-bucket-acl <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void CreateBucketAcl(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [create bucket acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -90,16 +62,11 @@ void CreateBucketAcl(google::cloud::storage::Client client, int& argc,
               << "Full attributes: " << *bucket_acl << "\n";
   }
   //! [create bucket acl]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
-                     char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"delete-bucket-acl <bucket-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void DeleteBucketAcl(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [delete bucket acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string entity) {
@@ -110,16 +77,11 @@ void DeleteBucketAcl(google::cloud::storage::Client client, int& argc,
               << bucket_name << "\n";
   }
   //! [delete bucket acl]
-  (std::move(client), bucket_name, entity);
+  (std::move(client), argv[0], argv[1]);
 }
 
-void GetBucketAcl(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"get-bucket-acl <bucket-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void GetBucketAcl(google::cloud::storage::Client client,
+                  std::vector<std::string> const& argv) {
   //! [get bucket acl] [START storage_print_bucket_acl_for_user]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -132,17 +94,11 @@ void GetBucketAcl(google::cloud::storage::Client client, int& argc,
               << acl->bucket() << " is " << *acl << "\n";
   }
   //! [get bucket acl] [END storage_print_bucket_acl_for_user]
-  (std::move(client), bucket_name, entity);
+  (std::move(client), argv[0], argv[1]);
 }
 
-void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
-                     char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"update-bucket-acl <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void UpdateBucketAcl(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [update bucket acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -160,17 +116,11 @@ void UpdateBucketAcl(google::cloud::storage::Client client, int& argc,
               << " is " << *updated_acl << "\n";
   }
   //! [update bucket acl]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
-                    char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"patch-bucket-acl <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void PatchBucketAcl(google::cloud::storage::Client client,
+                    std::vector<std::string> const& argv) {
   //! [patch bucket acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -194,17 +144,11 @@ void PatchBucketAcl(google::cloud::storage::Client client, int& argc,
               << patched_acl->bucket() << " is now " << *patched_acl << "\n";
   }
   //! [patch bucket acl]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"patch-bucket-acl-no-read <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void PatchBucketAclNoRead(google::cloud::storage::Client client,
+                          std::vector<std::string> const& argv) {
   //! [patch bucket acl no-read]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -219,16 +163,11 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client, int& argc,
               << patched_acl->bucket() << " is now " << *patched_acl << "\n";
   }
   //! [patch bucket acl no-read]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv[0], argv[1], argv[2]);
 }
 
-void AddBucketOwner(google::cloud::storage::Client client, int& argc,
-                    char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"add-bucket-owner <bucket-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void AddBucketOwner(google::cloud::storage::Client client,
+                    std::vector<std::string> const& argv) {
   //! [add bucket owner] [START storage_add_bucket_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -243,16 +182,11 @@ void AddBucketOwner(google::cloud::storage::Client client, int& argc,
               << patched_acl->bucket() << " is now " << *patched_acl << "\n";
   }
   //! [add bucket owner] [END storage_add_bucket_owner]
-  (std::move(client), bucket_name, entity);
+  (std::move(client), argv[0], argv[1]);
 }
 
-void RemoveBucketOwner(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"remove-bucket-owner <bucket-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void RemoveBucketOwner(google::cloud::storage::Client client,
+                       std::vector<std::string> const& argv) {
   //! [remove bucket owner] [START storage_remove_bucket_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -288,65 +222,129 @@ void RemoveBucketOwner(google::cloud::storage::Client client, int& argc,
               << bucket_name << "\n";
   }
   //! [remove bucket owner] [END storage_remove_bucket_owner]
-  (std::move(client), bucket_name, entity);
+  (std::move(client), argv[0], argv[1]);
 }
+
+using ClientCommand = std::function<void(google::cloud::storage::Client,
+                                         std::vector<std::string> argv)>;
+
+Commands::value_type CreateCommandEntry(std::string const& name,
+                                        std::vector<std::string> const& args,
+                                        ClientCommand const& command) {
+  auto adapter = [=](std::vector<std::string> argv) {
+    if (argv.size() != 1 + args.size()) {
+      std::ostringstream os;
+      os << name << " <bucket-name>";
+      char const* sep = " ";
+      for (auto const& a : args) {
+        os << sep << a;
+      }
+      throw Usage{std::move(os).str()};
+    }
+    auto client = google::cloud::storage::Client::CreateDefaultClient().value();
+    command(std::move(client), std::move(argv));
+  };
+
+  return {name, std::move(adapter)};
+}
+
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
+                                 std::string const& prefix) {
+  // The total length of a bucket name must be <= 63 characters,
+  static std::size_t const kMaxBucketNameLength = 63;
+  std::size_t const max_random_characters =
+      kMaxBucketNameLength - prefix.size();
+  // bucket names might also contain `-` and `_` characters, but we do not
+  // *need* to use them.
+  return prefix + google::cloud::internal::Sample(
+                      gen, static_cast<int>(max_random_characters),
+                      "abcdefghijklmnopqrstuvwxyz012456789");
+}
+
+void RunAll(std::vector<std::string> const& argv) {
+  if (!argv.empty()) throw Usage{"auto"};
+
+  namespace examples = ::google::cloud::storage::examples;
+  namespace gcs = ::google::cloud::storage;
+
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+  if (project_id.empty()) {
+    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
+  }
+  auto const service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
+          .value_or("");
+  if (service_account.empty()) {
+    throw std::runtime_error(
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT is not set or is "
+        "empty");
+  }
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const bucket_name =
+      MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto const entity = "user-" + service_account;
+  auto client = gcs::Client::CreateDefaultClient().value();
+  std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
+            << std::endl;
+  auto bucket_metadata = client
+                             .CreateBucketForProject(bucket_name, project_id,
+                                                     gcs::BucketMetadata{})
+                             .value();
+
+  auto const reader = gcs::BucketAccessControl::ROLE_READER();
+  auto const owner = gcs::BucketAccessControl::ROLE_OWNER();
+
+  std::cout << "\nRunning ListBucketAcl() example" << std::endl;
+  ListBucketAcl(client, {bucket_name});
+
+  std::cout << "\nRunning CreateBucketAcl() example" << std::endl;
+  CreateBucketAcl(client, {bucket_name, "allAuthenticatedUsers", reader});
+
+  std::cout << "\nRunning GetBucketAcl() example" << std::endl;
+  GetBucketAcl(client, {bucket_name, "allAuthenticatedUsers"});
+
+  std::cout << "\nRunning UpdateBucketAcl() example" << std::endl;
+  UpdateBucketAcl(client, {bucket_name, entity, owner});
+
+  std::cout << "\nRunning PatchBucketAcl() example" << std::endl;
+  PatchBucketAcl(client, {bucket_name, entity, reader});
+
+  std::cout << "\nRunning PatchBucketAcl() example" << std::endl;
+  PatchBucketAclNoRead(client, {bucket_name, entity, owner});
+
+  std::cout << "\nRunning DeleteBucketAcl() example" << std::endl;
+  DeleteBucketAcl(client, {bucket_name, entity});
+
+  std::cout << "\nRunning AddBucketOwner() example" << std::endl;
+  AddBucketOwner(client, {bucket_name, entity});
+
+  std::cout << "\nRunning RemoveBucketOwner() example" << std::endl;
+  RemoveBucketOwner(client, {bucket_name, entity});
+
+  (void)client.DeleteBucket(bucket_name);
+}
+
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  // Create a client to communicate with Google Cloud Storage.
-  google::cloud::StatusOr<google::cloud::storage::Client> client =
-      google::cloud::storage::Client::CreateDefaultClient();
-  if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << "\n";
-    return 1;
-  }
-
-  // Build the list of commands and the usage string from that list.
-  using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
-  std::map<std::string, CommandType> commands = {
-      {"list-bucket-acl", ListBucketAcl},
-      {"create-bucket-acl", CreateBucketAcl},
-      {"delete-bucket-acl", DeleteBucketAcl},
-      {"get-bucket-acl", GetBucketAcl},
-      {"update-bucket-acl", UpdateBucketAcl},
-      {"patch-bucket-acl", PatchBucketAcl},
-      {"patch-bucket-acl-no-read", PatchBucketAclNoRead},
-      {"add-bucket-owner", AddBucketOwner},
-      {"remove-bucket-owner", RemoveBucketOwner},
-  };
-  for (auto&& kv : commands) {
-    try {
-      int fake_argc = 1;
-      kv.second(*client, fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    }
-  }
-
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing command");
-    return 1;
-  }
-
-  std::string const command = ConsumeArg(argc, argv);
-  auto it = commands.find(command);
-  if (commands.end() == it) {
-    PrintUsage(argc, argv, "Unknown command: " + command);
-    return 1;
-  }
-
-  // Call the command with that client.
-  it->second(*client, argc, argv);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+int main(int argc, char* argv[]) {
+  google::cloud::storage::examples::Example example({
+      CreateCommandEntry("list-bucket-acl", {}, ListBucketAcl),
+      CreateCommandEntry("create-bucket-acl", {"<entity>", "<role>"},
+                         CreateBucketAcl),
+      CreateCommandEntry("delete-bucket-acl", {"<entity>"}, DeleteBucketAcl),
+      CreateCommandEntry("get-bucket-acl", {"<entity>"}, GetBucketAcl),
+      CreateCommandEntry("update-bucket-acl", {"<entity>", "<role>"},
+                         UpdateBucketAcl),
+      CreateCommandEntry("patch-bucket-acl", {"<entity>", "<role>"},
+                         PatchBucketAcl),
+      CreateCommandEntry("patch-bucket-acl-no-read", {"<entity>", "<role>"},
+                         PatchBucketAclNoRead),
+      CreateCommandEntry("add-bucket-owner", {"<entity>"}, AddBucketOwner),
+      CreateCommandEntry("remove-bucket-owner", {"<entity>"},
+                         RemoveBucketOwner),
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }
