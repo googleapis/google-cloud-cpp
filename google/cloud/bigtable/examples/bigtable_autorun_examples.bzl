@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_autorun_examples = [
+    "bigtable_grpc_credentials.cc",
     "bigtable_hello_app_profile.cc",
     "data_snippets.cc",
 ]

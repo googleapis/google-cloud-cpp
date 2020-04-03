@@ -17,7 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 bigtable_examples = [
-    "bigtable_grpc_credentials.cc",
     "bigtable_hello_instance_admin.cc",
     "bigtable_hello_table_admin.cc",
     "bigtable_hello_world.cc",
