@@ -27,12 +27,12 @@ target_link_libraries(
     protobuf::libprotobuf
     bigtable_common_options)
 
-set(bigtable_autorun_examples # cmake-format: sort
-                              bigtable_hello_app_profile.cc data_snippets.cc)
+set(bigtable_autorun_examples
+    # cmake-format: sort
+    bigtable_grpc_credentials.cc bigtable_hello_app_profile.cc data_snippets.cc)
 
 set(bigtable_examples
     # cmake-format: sort
-    bigtable_grpc_credentials.cc
     bigtable_hello_instance_admin.cc
     bigtable_hello_table_admin.cc
     bigtable_hello_world.cc
@@ -79,7 +79,7 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-# TODO(#3524) - merge these loops when `storage_examples` is empty.
+# TODO(#3524) - merge these loops two when `bigtable_examples` is empty.
 foreach (fname ${bigtable_examples} ${bigtable_autorun_examples})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
@@ -105,4 +105,11 @@ foreach (fname ${bigtable_autorun_examples})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;bigtable-integration-tests")
+endforeach ()
+
+# We just know that these tests need to be run against production.
+foreach (target bigtable_grpc_credentials)
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-tests;integration-tests-no-emulator")
 endforeach ()

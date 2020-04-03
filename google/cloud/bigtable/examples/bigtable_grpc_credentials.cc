@@ -122,7 +122,7 @@ void RunAll(std::vector<std::string> argv) {
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
-      "ACCESS_TOKEN",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN",
       "GOOGLE_APPLICATION_CREDENTIALS",
   });
 
@@ -131,8 +131,9 @@ void RunAll(std::vector<std::string> argv) {
   auto const instance_id = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value_or("");
-  auto const access_token =
-      google::cloud::internal::GetEnv("ACCESS_TOKEN").value_or("");
+  auto const access_token = google::cloud::internal::GetEnv(
+                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN")
+                                .value_or("");
   auto const credentials_file =
       google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS")
           .value_or("");

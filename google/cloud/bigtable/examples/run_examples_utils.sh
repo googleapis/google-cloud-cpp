@@ -568,14 +568,3 @@ run_hello_world_example() {
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_world
 }
-
-run_all_grpc_credentials_examples() {
-  local project_id=$1
-  local instance_id=$2
-  shift 2
-
-  run_example ./bigtable_grpc_credentials auto
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./bigtable_grpc_credentials
-}
