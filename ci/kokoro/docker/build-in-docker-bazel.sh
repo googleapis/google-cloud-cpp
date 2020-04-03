@@ -127,7 +127,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B}"
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT}"
       "--test_env=ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS=${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-no}"
-      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}"
 
       # Storage
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
@@ -145,11 +144,22 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
   readonly BAZEL_BIN_DIR
 
-  # Run the integration tests using Bazel to drive them.
+  # Run the integration tests using Bazel to drive them, see below as to why
+  # bigtable_grpc_credentials is special.
   "${BAZEL_BIN}" test \
       "${bazel_args[@]}" \
       "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
-      -- //google/cloud/...:all
+      -- //google/cloud/...:all \
+         -//google/cloud/bigtable/examples:bigtable_grpc_credentials
+
+  # Run the integration tests that need an access token. We separate them
+  # because adding the access token to the `bazel_args` invalidates the build
+  # cache for all builds.
+  "${BAZEL_BIN}" test \
+      "${bazel_args[@]}" \
+      "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
+      -- //google/cloud/bigtable/examples:bigtable_grpc_credentials
+
 
   export INTEGRATION_TESTS_CONFIG
   export TEST_KEY_FILE_JSON
@@ -171,8 +181,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo "================================================================"
   (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
       "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
-  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
-      "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_grpc_credential_examples_production.sh")
 
   echo
   echo "================================================================"
