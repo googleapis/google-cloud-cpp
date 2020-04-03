@@ -17,8 +17,17 @@
 #include "google/cloud/storage/internal/nljson.h"
 #include "google/cloud/storage/internal/openssl_util.h"
 #include "google/cloud/internal/format_time_point.h"
+#if GOOGLE_CLOUD_CPP_HAVE_CODECVT
+#include <codecvt>
+#include <locale>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT
 #include <iomanip>
 #include <sstream>
+
+// Some MSVC versions need this.
+#if (!_DLL) && (_MSC_VER >= 1900) && (_MSC_VER <= 1911)
+std::locale::id std::codecvt<char16_t, char, _Mbstatet>::id;
+#endif
 
 namespace google {
 namespace cloud {
@@ -53,7 +62,90 @@ internal::nl::json TransformConditions(
   }
   return res;
 }
+
+/// If c is ASCII escape it and append it to result. Return if it is ASCII.
+bool EscapeAsciiChar(std::string& result, char32_t c) {
+  switch (c) {
+    case '\\':
+      result.append("\\\\");
+      return true;
+    case '\b':
+      result.append("\\b");
+      return true;
+    case '\f':
+      result.append("\\f");
+      return true;
+    case '\n':
+      result.append("\\n");
+      return true;
+    case '\r':
+      result.append("\\r");
+      return true;
+    case '\t':
+      result.append("\\t");
+      return true;
+    case '\v':
+      result.append("\\v");
+      return true;
+  }
+  char32_t constexpr kMaxAsciiChar = 127;
+  if (c > kMaxAsciiChar) {
+    return false;
+  }
+  result.append(1, static_cast<char>(c));
+  return true;
+}
 }  // namespace
+
+#if GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const& utf8_bytes) {
+  std::string result;
+
+  std::wstring_convert<std::codecvt_utf8<char32_t>, char32_t> conv;
+  std::basic_string<char32_t> utf32;
+  try {
+    utf32 = conv.from_bytes(utf8_bytes);
+  } catch (std::exception const& ex) {
+    return Status(StatusCode::kInvalidArgument,
+                  std::string("string failed to parse as UTF-8: ") + ex.what());
+  }
+  utf32 = conv.from_bytes(utf8_bytes);
+  for (char32_t c : utf32) {
+    bool is_ascii = EscapeAsciiChar(result, c);
+    if (!is_ascii) {
+      // All unicode characters should be encoded as \udead.
+      std::ostringstream os;
+      os << "\\u" << std::setw(4) << std::setfill('0') << std::hex
+         << static_cast<std::uint32_t>(c);
+      result.append(os.str());
+    }
+  }
+  return result;
+}
+#else   // GOOGLE_CLOUD_CPP_HAVE_CODECVT && GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
+StatusOr<std::string> PostPolicyV4EscapeUTF8(std::string const&) {
+  return Status(StatusCode::kUnimplemented,
+                "Signing POST policies is unavailable with this compiler due "
+                "to the lack of `codecvt` header or exception support.");
+}
+#endif  // GOOGLE_CLOUD_CPP_HAVE_CODECVT
+
+StatusOr<std::string> PostPolicyV4Escape(std::string const& utf8_bytes) {
+  std::string result;
+
+  for (char32_t c : utf8_bytes) {
+    bool is_ascii = EscapeAsciiChar(result, c);
+    if (!is_ascii) {
+      // We first try to escape the string assuming it's plain ASCII. If it
+      // turns out that there are non-ASCII characters, we fall back to
+      // interpreting it as proper UTF-8. We do it because it will be faster in
+      // the common case and, more importantly, this allows the common case to
+      // work properly on compilers which don't have UTF8 support.
+      return PostPolicyV4EscapeUTF8(utf8_bytes);
+    }
+  }
+  return result;
+}
 
 std::string PolicyDocumentRequest::StringToSign() const {
   using internal::nl::json;

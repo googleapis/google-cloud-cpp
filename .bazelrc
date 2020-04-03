@@ -49,7 +49,7 @@ build:ubsan --copt=-fsanitize=undefined
 build:ubsan --copt=-fno-omit-frame-pointer
 build:ubsan --linkopt=-fsanitize=undefined
 build:ubsan --linkopt=-lubsan
-build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
+build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1:suppressions=/v/bazel/ubsan_suppressions.txt
 
 # --config msan: Memory Sanitizer
 build:msan --strip=never

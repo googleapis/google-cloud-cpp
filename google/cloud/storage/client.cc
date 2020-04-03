@@ -347,7 +347,9 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   request.SetSigningEmail(signing_email);
 
   auto string_to_sign = request.StringToSign();
-  auto base64_policy = internal::Base64Encode(string_to_sign);
+  auto escaped = internal::PostPolicyV4Escape(string_to_sign);
+  if (!escaped) return escaped.status();
+  auto base64_policy = internal::Base64Encode(*escaped);
   auto signed_blob = SignBlobImpl(signing_account, base64_policy);
   if (!signed_blob) {
     return signed_blob.status();
