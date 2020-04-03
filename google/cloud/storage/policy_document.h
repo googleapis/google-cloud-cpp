@@ -143,6 +143,17 @@ std::ostream& operator<<(std::ostream& os, PolicyDocument const& rhs);
  * for general information on policy documents in Google Cloud Storage.
  */
 struct PolicyDocumentV4 {
+  PolicyDocumentV4() = default;
+  PolicyDocumentV4(std::string bucket, std::string object,
+                   std::chrono::seconds expiration,
+                   std::chrono::system_clock::time_point timestamp,
+                   std::vector<PolicyDocumentCondition> conditions = {})
+      : bucket(std::move(bucket)),
+        object(std::move(object)),
+        expiration(std::move(expiration)),
+        timestamp(std::move(timestamp)),
+        conditions(std::move(conditions)) {}
+
   std::string bucket;
   std::string object;
   std::chrono::seconds expiration;
