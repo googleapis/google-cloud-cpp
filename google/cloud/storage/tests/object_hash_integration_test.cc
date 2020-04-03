@@ -413,11 +413,9 @@ TEST_F(ObjectHashIntegrationTest, DisableHashesStreamingWriteJSON) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -457,11 +455,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -502,11 +498,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON) {
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -539,11 +533,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
 
 /// @test Verify that MD5 hash mismatches are reported when using .read().
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -577,11 +569,9 @@ TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
 
 /// @test Verify that MD5 hash mismatches are reported by default on downloads.
 TEST_F(ObjectHashIntegrationTest, MismatchedMD5StreamingWriteJSON) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

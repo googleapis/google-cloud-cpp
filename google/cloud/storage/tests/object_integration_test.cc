@@ -321,7 +321,7 @@ TEST_F(ObjectIntegrationTest, ListObjectsVersions) {
 }
 
 TEST_F(ObjectIntegrationTest, ListObjectsDelimiter) {
-  if (UsingTestbench()) return;
+  if (UsingTestbench()) GTEST_SKIP();
 
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);

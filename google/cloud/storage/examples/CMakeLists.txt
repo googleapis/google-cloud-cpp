@@ -75,7 +75,7 @@ if (BUILD_TESTING)
     endforeach ()
 endif ()
 
-# TODO(#3524) - merge these loops when `storage_examples` is empty.
+# TODO(#3524) - merge these two loops when `storage_examples` is empty.
 foreach (fname ${storage_examples} ${storage_autorun_examples})
     string(REPLACE "/" "_" target ${fname})
     string(REPLACE ".cc" "" target ${target})
@@ -93,4 +93,11 @@ foreach (fname ${storage_autorun_examples})
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;storage-integration-tests")
+endforeach ()
+
+# We just know that these tests need to be run against production.
+foreach (target storage_signed_url_v4_samples storage_signed_url_v2_samples)
+    set_tests_properties(
+        ${target} PROPERTIES LABELS
+                             "integration-tests;integration-tests-no-emulator")
 endforeach ()

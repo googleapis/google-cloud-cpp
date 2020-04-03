@@ -22,6 +22,11 @@ export DISTRO=ubuntu-install
 export DISTRO_VERSION=18.04
 export CMAKE_SOURCE_DIR="."
 
+# By default we run the integration tests *if* all the configuration files
+# are present. This makes it convenient to run locally, where sometimes we
+# do not have the configuration files and we would rather skip some tests.
+RUN_INTEGRATION_TESTS="auto"
+
 in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 
 if [[ $# -ge 1 ]]; then

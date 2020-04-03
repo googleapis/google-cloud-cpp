@@ -76,7 +76,7 @@ echo "================================================================"
     "${bazel_args[@]}" \
     -- //google/cloud/...:all
 
-readonly INTEGRATION_TESTS_CONFIG="/c/test-configuration.sh"
+readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 readonly TEST_KEY_FILE_JSON="/c/service-account.json"
 readonly TEST_KEY_FILE_P12="/c/service-account.p12"
 readonly GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"

@@ -301,11 +301,9 @@ TEST_F(ObjectChecksumIntegrationTest, DefaultCrc32cStreamingWriteJSON) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -347,11 +345,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadXML) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -393,11 +389,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingReadJSON) {
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -431,11 +425,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadXML_Read) {
 /// @test Verify that CRC32C checksum mismatches are reported when using
 /// .read().
 TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -470,11 +462,9 @@ TEST_F(ObjectChecksumIntegrationTest, MismatchedMD5StreamingReadJSON_Read) {
 /// @test Verify that CRC32C checksum mismatches are reported by default on
 /// downloads.
 TEST_F(ObjectChecksumIntegrationTest, MismatchedCrc32cStreamingWriteJSON) {
-  if (!UsingTestbench()) {
-    // This test is disabled when not using the testbench as it relies on the
-    // testbench to inject faults.
-    return;
-  }
+  // This test is disabled when not using the testbench as it relies on the
+  // testbench to inject faults.
+  if (!UsingTestbench()) GTEST_SKIP();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 

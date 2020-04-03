@@ -182,6 +182,44 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         "${BINARY_DIR}" "${ctest_args[@]}"
   fi
 
+  readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+  readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/service-account.json"
+  readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/service-account.p12"
+  readonly GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"
+
+  if [[ # yes: always try to run the integration tests
+        ( ("${RUN_INTEGRATION_TESTS}" == "yes" ) ||
+          # auto: only try to run integration tests if the config files are present
+          ( "${RUN_INTEGRATION_TESTS}" == "auto" &&
+            -r "${INTEGRATION_TESTS_CONFIG}" &&
+            -r "${GOOGLE_APPLICATION_CREDENTIALS}" &&
+            -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" &&
+            -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ) ) &&
+        # super builds cannot run the integration tests
+        ( "${SOURCE_DIR}" != "super" ) ]]; then
+    echo "================================================================"
+    echo "${COLOR_YELLOW}$(date -u): Running the integration tests against" \
+        "production${COLOR_RESET}"
+
+    # shellcheck disable=SC1091
+    source "${INTEGRATION_TESTS_CONFIG}"
+    export GOOGLE_APPLICATION_CREDENTIALS
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON
+    export GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12
+    export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
+
+    # Since we already run multiple integration tests against the emulator we
+    # only need to run the tests here that cannot use the emulator. Some libraries
+    # will tag all their tests as "integration-tests-no-emulator", that is fine
+    # too. As long as we do not repeat all the tests we are winning.
+    env -C "${BINARY_DIR}" ctest \
+        -L integration-tests-no-emulator "${ctest_args[@]}"
+
+    echo "================================================================"
+    echo "${COLOR_YELLOW}$(date -u): Completed the integration tests against" \
+        "production${COLOR_RESET}"
+  fi
+
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     echo
     echo "${COLOR_YELLOW}$(date -u): Running integration tests${COLOR_RESET}"
