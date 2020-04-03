@@ -65,11 +65,8 @@ foreach (fname ${storage_client_integration_tests})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (
-    target
-    # cmake-format: sort
-    error_injection_integration_test key_file_integration_test
-    signed_url_integration_test)
+foreach (target # cmake-format: sort
+                key_file_integration_test signed_url_integration_test)
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")
