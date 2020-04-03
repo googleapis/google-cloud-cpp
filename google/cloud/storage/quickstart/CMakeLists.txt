@@ -21,7 +21,7 @@
 # configuration files are usable.
 
 cmake_minimum_required(VERSION 3.5)
-project(google-cloud-cpp-storage-install-integration-test CXX C)
+project(google-cloud-cpp-storage-quickstart CXX C)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,5 +30,5 @@ find_package(CURL REQUIRED)
 find_package(storage_client REQUIRED)
 
 # Once the packages are found, define the targets.
-add_executable(storage_install_test storage_install_test.cc)
-target_link_libraries(storage_install_test storage_client)
+add_executable(quickstart quickstart.cc)
+target_link_libraries(quickstart storage_client)

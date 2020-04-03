@@ -1,4 +1,4 @@
-# Copyright 2018 Google Inc.
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -24,19 +24,7 @@ CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
 
-all: bigtable_install_test storage_install_test
-
-# Configuration variables to compile and link against the Cloud Bigtable C++
-# client library.
-CBT_DEPS := bigtable_client
-CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
-CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
-CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
-
-# A target using the Cloud Bigtable C++ client library.
-bigtable_install_test: bigtable/bigtable_install_test.cc
-	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
-
+all: quickstart
 
 # Configuration variables to compile and link against the Google Cloud Storage
 # C++ client library.
@@ -46,5 +34,5 @@ GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
 GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
 
 # A target using the Google Cloud Storage C++ client library.
-storage_install_test: storage/storage_install_test.cc
+quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)

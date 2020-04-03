@@ -37,7 +37,6 @@ set(bigtable_examples
     bigtable_hello_table_admin.cc
     bigtable_hello_world.cc
     bigtable_instance_admin_snippets.cc
-    bigtable_quickstart.cc
     data_async_snippets.cc
     instance_admin_async_snippets.cc
     table_admin_async_snippets.cc

@@ -15,7 +15,8 @@
 
 CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
 readonly CONFIG_DIRECTORY
-if [[ -f "${CONFIG_DIRECTORY}/test-configuration.sh" ]]; then
+if [[ -r "${CONFIG_DIRECTORY}/service-account.json" && \
+      -r "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh" ]]; then
   source "${CONFIG_DIRECTORY}/test-configuration.sh"
 
   run_args=(
@@ -24,7 +25,7 @@ if [[ -f "${CONFIG_DIRECTORY}/test-configuration.sh" ]]; then
 
     # Set the environment variables for the test program.
     "--env" "GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
-    "--env" "GOOGLE_CLOUD_PROJECT=${PROJECT_ID}"
+    "--env" "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
 
     # Mount the config directory as a volume in `/c`
     "--volume" "${CONFIG_DIRECTORY}:/c"
@@ -32,15 +33,18 @@ if [[ -f "${CONFIG_DIRECTORY}/test-configuration.sh" ]]; then
   readonly NONCE="$(date +%s)-${RANDOM}"
 
   echo "================================================================"
-  echo "Run Bigtable test programs against installed libraries ${DISTRO}."
+  echo "$(date -u): Run Bigtable test programs against installed libraries" \
+      "${DISTRO}."
   docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-      "/i/bigtable/bigtable_install_test" \
-      "${PROJECT_ID}" "${INSTANCE_ID}" "tbl-${NONCE}"
+      "/i/bigtable/quickstart" \
+      "${GOOGLE_CLOUD_PROJECT}" \
+      "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}" "quickstart"
 
 
-  echo "Run Storage test programs against installed libraries ${DISTRO}."
-  docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
-      "/i/storage/storage_install_test" \
-      "${BUCKET_NAME}" "object-${NONCE}.txt"
   echo "================================================================"
+  echo "$(date -u): Run Storage test programs against installed libraries" \
+      "${DISTRO}."
+  docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
+      "/i/storage/quickstart" \
+      "${GOOGLE_CLOUD_PROJECT}" "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
 fi

@@ -1118,26 +1118,6 @@ run_mocking_client_examples() {
 }
 
 ################################################
-# Run the quickstart.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_quickstart() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_quickstart "${bucket_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-
-  run_example_usage ./storage_quickstart
-}
-
-################################################
 # Run all the examples.
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
@@ -1157,7 +1137,6 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
-  run_quickstart
   run_all_bucket_examples
   run_default_event_based_hold_examples
   run_retention_policy_examples

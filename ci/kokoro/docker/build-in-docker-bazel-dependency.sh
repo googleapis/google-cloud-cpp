@@ -38,52 +38,70 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # ci/Dockerfile.* build scripts.
 
 echo
-echo "${COLOR_YELLOW}Starting docker build $(date) with ${NCPU} cores${COLOR_RESET}"
+echo "${COLOR_YELLOW}$(date -u): compiling quickstart programs${COLOR_RESET}"
 echo
 
 readonly BAZEL_BIN="/usr/local/bin/bazel"
-echo "Using Bazel in ${BAZEL_BIN}"
+echo "$(date -u): ising Bazel in ${BAZEL_BIN}"
 
-echo "================================================================"
-echo "Compile a project that depends on google-cloud-cpp-pubsub $(date)"
-echo "================================================================"
+run_vars=()
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
 if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=(--config "${BAZEL_CONFIG}")
 fi
 
-cd ci/test-install
-
-echo "================================================================"
-echo "Fetching dependencies $(date)"
-echo "================================================================"
-"${PROJECT_ROOT}/ci/retry-command.sh" \
-    "${BAZEL_BIN}" fetch -- //...:all
-
-echo "================================================================"
-echo "Compiling tests program $(date)"
-echo "================================================================"
-"${BAZEL_BIN}" build  "${bazel_args[@]}" \
-    -- //...:all
+declare -A quickstart_args=()
 
 if [[ -r "/c/test-configuration.sh" ]]; then
-  echo "================================================================"
-  echo "Running the dependent program $(date)"
-  echo "================================================================"
   # shellcheck disable=SC1091
-  source "/c/test-configuration.sh"
-
-  # Run the test programs using Bazel to drive them.
-  env "GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json" \
-      "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}" \
-      "${BAZEL_BIN}" run \
-      "${bazel_args[@]}" \
-      "--spawn_strategy=local" \
-      -- //...:all
+  source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+  # TODO(#3604) - figure out how to run pass arguments safely
+  quickstart_args=(
+    ["storage"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    ["bigtable"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID} quickstart"
+  )
+  run_vars+=(
+      "GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
+      "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
+  )
 fi
 
+build_service() {
+  local -r service="$1"
+
+  echo "================================================================"
+  echo "${COLOR_YELLOW}$(date -u): building ${service}${COLOR_RESET}"
+  ( cd "google/cloud/${service}/quickstart";
+    echo "$(date -u): capture bazel version"
+    ${BAZEL_BIN} version
+    echo "$(date -u): fetch dependencies to avoid flaky builds"
+    "${PROJECT_ROOT}/ci/retry-command.sh" \
+        "${BAZEL_BIN}" fetch -- ...
+    echo
+    echo "$(date -u): compiling quickstart program for ${service}"
+    "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
+
+    if [[ -r "/c/test-configuration.sh" ]]; then
+      echo "$(date -u): running quickstart program for ${service}"
+      env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
+          "--spawn_strategy=local" \
+          :quickstart -- ${quickstart_args["${service}"]}
+    fi
+  )
+}
+
+errors=""
+for service in bigtable storage; do
+  if ! build_service "${service}"; then
+    errors="${errors} ${service}"
+  fi
+done
+
 echo "================================================================"
-echo "Build finished at $(date)"
-echo "================================================================"
+if [[ -z "${errors}" ]]; then
+  echo "${COLOR_GREEN}$(date -u): Build finished${COLOR_RESET}"
+else
+  echo "${COLOR_GREEN}$(date -u): Build failed for ${errors}${COLOR_RESET}"
+fi
 
 exit 0

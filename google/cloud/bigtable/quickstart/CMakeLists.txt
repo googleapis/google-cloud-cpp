@@ -21,7 +21,7 @@
 # configuration files are usable.
 
 cmake_minimum_required(VERSION 3.5)
-project(google-cloud-cpp-bigtable-install-integration-test CXX C)
+project(google-cloud-cpp-bigtable-quickstart CXX C)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,5 +30,5 @@ find_package(Threads REQUIRED)
 find_package(bigtable_client REQUIRED)
 
 # Once the bigtable_client package is found, define new targets.
-add_executable(bigtable_install_test bigtable_install_test.cc)
-target_link_libraries(bigtable_install_test bigtable::client)
+add_executable(quickstart quickstart.cc)
+target_link_libraries(quickstart bigtable::client)
