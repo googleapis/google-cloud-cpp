@@ -186,16 +186,17 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/service-account.json"
   readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/service-account.p12"
   readonly GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"
+
   if [[ # yes: always try to run the integration tests
-        "${RUN_INTEGRATION_TESTS}" == "yes" || \
-        # auto: only try to run integration tests if the config files are present
-        ( "${RUN_INTEGRATION_TESTS}" == "auto" && \
-          -r "${INTEGRATION_TESTS_CONFIG}" && \
-          -r "${GOOGLE_APPLICATION_CREDENTIALS}" && \
-          -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" && \
-          -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ) ]] && \
-      # super builds cannot run the integration tests
-      [[ "${SOURCE_DIR}" != "super" ]]; then
+        ( ("${RUN_INTEGRATION_TESTS}" == "yes" ) ||
+          # auto: only try to run integration tests if the config files are present
+          ( "${RUN_INTEGRATION_TESTS}" == "auto" &&
+            -r "${INTEGRATION_TESTS_CONFIG}" &&
+            -r "${GOOGLE_APPLICATION_CREDENTIALS}" &&
+            -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON}" &&
+            -r "${GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12}" ) ) &&
+        # super builds cannot run the integration tests
+        ( "${SOURCE_DIR}" != "super" ) ]]; then
     echo "================================================================"
     echo "${COLOR_YELLOW}$(date -u): Running the integration tests against" \
         "production${COLOR_RESET}"
