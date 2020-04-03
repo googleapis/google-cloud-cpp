@@ -27,8 +27,9 @@ target_link_libraries(
     protobuf::libprotobuf
     bigtable_common_options)
 
-set(bigtable_autorun_examples # cmake-format: sort
-        bigtable_grpc_credentials.cc bigtable_hello_app_profile.cc data_snippets.cc)
+set(bigtable_autorun_examples
+    # cmake-format: sort
+    bigtable_grpc_credentials.cc bigtable_hello_app_profile.cc data_snippets.cc)
 
 set(bigtable_examples
     # cmake-format: sort
@@ -109,6 +110,6 @@ endforeach ()
 # We just know that these tests need to be run against production.
 foreach (target bigtable_grpc_credentials)
     set_tests_properties(
-            ${target} PROPERTIES LABELS
-            "integration-tests;integration-tests-no-emulator")
+        ${target} PROPERTIES LABELS
+                             "integration-tests;integration-tests-no-emulator")
 endforeach ()
