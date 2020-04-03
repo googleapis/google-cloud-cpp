@@ -83,7 +83,7 @@ find_package(Threads REQUIRED)
 # where protobuf was compiled and installed with `CMake`. Note that on Linux
 # this *must* be all lowercase ``protobuf``, while on Windows it does not
 # matter.
-find_package(protobuf CONFIG QUIET)
+find_package(Protobuf CONFIG QUIET)
 
 if (protobuf_DEBUG)
     message(STATUS "[ ${CMAKE_CURRENT_LIST_FILE}:${CMAKE_CURRENT_LIST_LINE} ] "
