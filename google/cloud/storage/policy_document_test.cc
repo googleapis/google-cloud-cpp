@@ -197,6 +197,17 @@ TEST(PolicyDocumentTests, PolicyDocumentV4ResultStreaming) {
                 ", policy=test-policy, signature=test-sig, "
                 "signing_algorithm=test-alg}");
 }
+
+/// @test Verify that PolicyDocumentV4 ctor works.
+TEST(PolicyDocumentTests, PolicyDocumentV4Ctor) {
+  auto const now = std::chrono::system_clock::now();
+  PolicyDocumentV4 doc("bucket", "object", std::chrono::seconds(42), now);
+  EXPECT_EQ("bucket", doc.bucket);
+  EXPECT_EQ("object", doc.object);
+  EXPECT_EQ(42, doc.expiration.count());
+  EXPECT_EQ(now, doc.timestamp);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
