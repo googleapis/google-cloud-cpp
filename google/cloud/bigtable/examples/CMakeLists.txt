@@ -29,12 +29,12 @@ target_link_libraries(
 
 set(bigtable_autorun_examples
     # cmake-format: sort
-    bigtable_grpc_credentials.cc bigtable_hello_app_profile.cc data_snippets.cc)
+    bigtable_grpc_credentials.cc bigtable_hello_app_profile.cc
+    bigtable_hello_table_admin.cc data_snippets.cc)
 
 set(bigtable_examples
     # cmake-format: sort
     bigtable_hello_instance_admin.cc
-    bigtable_hello_table_admin.cc
     bigtable_hello_world.cc
     bigtable_instance_admin_snippets.cc
     bigtable_quickstart.cc

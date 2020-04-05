@@ -504,37 +504,6 @@ run_hello_instance_admin_example() {
 }
 
 ################################################
-# Run the Bigtable hello world for Table Admin example.
-# Globals:
-#   None
-# Arguments:
-#   project_id: the Google Cloud Platform project used in the test. Can be a
-#       fake project when testing against the emulator, as the emulator creates
-#       projects on demand. It must be a valid, existing instance when testing
-#       against production.
-#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
-#       fake instance when testing against the emulator, as the emulator creates
-#       instances on demand. It must be a valid, existing instance when testing
-#       against production.
-# Returns:
-#   None
-################################################
-run_hello_table_admin_example() {
-  local project_id=$1
-  local instance_id=$2
-  shift 2
-
-  # Use the same table in all the tests.
-  local -r TABLE="hello-table-admin-${RANDOM}"
-  run_example ./bigtable_hello_table_admin \
-      "${project_id}" "${instance_id}" "${TABLE}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./bigtable_hello_table_admin
-}
-
-################################################
 # Run the Bigtable hello world example.
 # Globals:
 #   None
