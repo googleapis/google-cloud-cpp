@@ -114,16 +114,16 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
   }
 
   switch (t.code()) {
-    case google::spanner::v1::BOOL:
+    case google::spanner::v1::TypeCode::BOOL:
       return os << v.bool_value();
 
-    case google::spanner::v1::INT64:
+    case google::spanner::v1::TypeCode::INT64:
       return os << internal::FromProto(t, v).get<std::int64_t>().value();
 
-    case google::spanner::v1::FLOAT64:
+    case google::spanner::v1::TypeCode::FLOAT64:
       return os << internal::FromProto(t, v).get<double>().value();
 
-    case google::spanner::v1::STRING:
+    case google::spanner::v1::TypeCode::STRING:
       switch (mode) {
         case StreamMode::kScalar:
           return os << v.string_value();
@@ -134,14 +134,14 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       }
       return os;  // Unreachable, but quiets warning.
 
-    case google::spanner::v1::BYTES:
+    case google::spanner::v1::TypeCode::BYTES:
       return os << internal::BytesFromBase64(v.string_value()).value();
 
-    case google::spanner::v1::TIMESTAMP:
-    case google::spanner::v1::DATE:
+    case google::spanner::v1::TypeCode::TIMESTAMP:
+    case google::spanner::v1::TypeCode::DATE:
       return os << v.string_value();
 
-    case google::spanner::v1::ARRAY: {
+    case google::spanner::v1::TypeCode::ARRAY: {
       const char* delimiter = "";
       os << '[';
       for (auto const& e : v.list_value().values()) {
@@ -152,7 +152,7 @@ std::ostream& StreamHelper(std::ostream& os, google::protobuf::Value const& v,
       return os << ']';
     }
 
-    case google::spanner::v1::STRUCT: {
+    case google::spanner::v1::TypeCode::STRUCT: {
       const char* delimiter = "";
       os << '(';
       for (int i = 0; i < v.list_value().values_size(); ++i) {

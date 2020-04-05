@@ -944,7 +944,7 @@ TEST(Value, GetBadStruct) {
 TEST(Value, CommitTimestamp) {
   auto const v = Value(CommitTimestamp{});
   auto tv = internal::ToProto(v);
-  EXPECT_EQ(google::spanner::v1::TIMESTAMP, tv.first.code());
+  EXPECT_EQ(google::spanner::v1::TypeCode::TIMESTAMP, tv.first.code());
 
   google::protobuf::Value pv;
   ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(
