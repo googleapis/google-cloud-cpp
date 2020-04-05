@@ -88,6 +88,19 @@ bool UsingTestbench() {
               .empty();
 }
 
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
+                                 std::string const& prefix) {
+  // The total length of a bucket name must be <= 63 characters,
+  static std::size_t const kMaxBucketNameLength = 63;
+  std::size_t const max_random_characters =
+      kMaxBucketNameLength - prefix.size();
+  // bucket names might also contain `-` and `_` characters, but we do not
+  // *need* to use them.
+  return prefix + google::cloud::internal::Sample(
+                      gen, static_cast<int>(max_random_characters),
+                      "abcdefghijklmnopqrstuvwxyz012456789");
+}
+
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix) {
   // The total length of an object name is something like 1024 characters (UTF-8

@@ -53,6 +53,8 @@ class Example {
 };
 
 bool UsingTestbench();
+std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
+                                 std::string const& prefix);
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
 
