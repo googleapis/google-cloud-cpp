@@ -12,18 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [full quickstart] [START storage_quickstart]
 #include "google/cloud/storage/client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) {
   if (argc != 3) {
     std::cerr << "Missing project id and/or bucket name.\n";
-    std::cerr << "Usage: storage_quickstart <bucket-name> <project-id>\n";
+    std::cerr << "Usage: quickstart <project-id> <bucket-name>\n";
     return 1;
   }
-  std::string bucket_name = argv[1];
-  std::string project_id = argv[2];
+  std::string const project_id = argv[1];
+  std::string const bucket_name = argv[2];
 
   // Create aliases to make the code easier to read.
   namespace gcs = google::cloud::storage;
@@ -38,18 +37,20 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  google::cloud::StatusOr<gcs::BucketMetadata> bucket_metadata =
-      client->CreateBucketForProject(bucket_name, project_id,
-                                     gcs::BucketMetadata());
-
-  if (!bucket_metadata) {
-    std::cerr << "Error creating bucket " << bucket_name
-              << ", status=" << bucket_metadata.status() << "\n";
+  auto writer = client->WriteObject(bucket_name, "quickstart.txt");
+  writer << "Hello World!";
+  writer.Close();
+  if (writer.metadata()) {
+    std::cout << "Successfully created object: " << *writer.metadata() << "\n";
+  } else {
+    std::cerr << "Error creating object: " << writer.metadata().status()
+              << "\n";
     return 1;
   }
 
-  std::cout << "Created bucket " << bucket_metadata->name() << "\n";
+  auto reader = client->ReadObject(bucket_name, "quickstart.txt");
+  std::string contents{std::istreambuf_iterator<char>{reader}, {}};
+  std::cout << contents << "\n";
 
   return 0;
 }
-//! [full quickstart] [END storage_quickstart]

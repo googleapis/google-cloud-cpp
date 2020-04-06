@@ -12,16 +12,11 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# A minimal CMakeList.txt to *test* the install Cloud Bigtable C++ client.
-#
-# This is not intended to be a demonstration of how to write good CMakeList.txt
-# files, nor is it a general solution to create CMake files for google-cloud-
-# cpp. It is simply a minimal CMake file to verify that (a) the installed
-# libraries contain all required headers, and (b) the installed CMake
-# configuration files are usable.
+# A minimal CMakeList.txt showing how to use the Cloud Bigtable C++ client
+# library in CMake-based projects.
 
 cmake_minimum_required(VERSION 3.5)
-project(google-cloud-cpp-bigtable-install-integration-test CXX C)
+project(google-cloud-cpp-bigtable-quickstart CXX C)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,5 +25,5 @@ find_package(Threads REQUIRED)
 find_package(bigtable_client REQUIRED)
 
 # Once the bigtable_client package is found, define new targets.
-add_executable(bigtable_install_test bigtable_install_test.cc)
-target_link_libraries(bigtable_install_test bigtable::client)
+add_executable(quickstart quickstart.cc)
+target_link_libraries(quickstart bigtable::client)

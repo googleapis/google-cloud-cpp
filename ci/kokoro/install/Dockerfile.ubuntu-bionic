@@ -162,16 +162,20 @@ RUN cmake --build . --target install
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig
 
 # Verify that the installed files are actually usable
-WORKDIR /home/build/test-install-plain-make
-COPY ci/test-install /home/build/test-install-plain-make
+WORKDIR /home/build/bigtable-make
+COPY google/cloud/bigtable/quickstart /home/build/bigtable-make
 RUN make
 
-WORKDIR /home/build/test-install-cmake-bigtable
-COPY ci/test-install/bigtable /home/build/test-install-cmake-bigtable
+WORKDIR /home/build/bigtable-cmake
+COPY google/cloud/bigtable/quickstart /home/build/bigtable-cmake
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/bigtable
 RUN cmake --build /i/bigtable -- -j ${NCPU:-4}
 
-WORKDIR /home/build/test-install-cmake-storage
-COPY ci/test-install/storage /home/build/test-install-cmake-storage
+WORKDIR /home/build/storage-make
+COPY google/cloud/storage/quickstart /home/build/storage-make
+RUN make
+
+WORKDIR /home/build/storage-cmake
+COPY google/cloud/storage/quickstart /home/build/storage-cmake
 RUN env -u PKG_CONFIG_PATH cmake -H. -B/i/storage
 RUN cmake --build /i/storage -- -j ${NCPU:-4}

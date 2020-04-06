@@ -32,7 +32,6 @@ set(storage_examples
     storage_notification_samples.cc
     storage_object_acl_samples.cc
     storage_object_samples.cc
-    storage_quickstart.cc
     storage_service_account_samples.cc)
 
 set(storage_examples_unit_tests # cmake-format: sort

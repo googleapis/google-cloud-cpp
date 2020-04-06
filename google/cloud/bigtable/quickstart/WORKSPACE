@@ -1,4 +1,4 @@
-# Copyright 2018 Google LLC
+# Copyright 2020 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,25 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This WORKSPACE verifies that the google-cloud-cpp libraries can be loaded
-# into a different Bazel project.
-workspace(name = "com_github_googleapis_google_cloud_cpp_test_install")
+# A minimal WORKSPACE file showing how to use the Cloud Bigtable C++ client
+# library in Bazel-based projects.
+workspace(name = "com_github_googleapis_google_cloud_cpp_bigtable_quickstart")
 
-# Applications should use (maybe with a different version):
-#
-# http_archive(
-#     name = "com_github_googleapis_google_cloud_cpp",
-#     url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.9.0.tar.gz",
-#     strip_prefix = "google-cloud-cpp-0.9.0",
-#     sha256 = "a072103546cfa041ad8bfc599fe5a20c58e005a1a0ee18e94b2554dc3d485604",
-# )
-#
-# But we want to test that the *current* version is correct.
-local_repository(
+# Add the necessary Starlark functions to fetch google-cloud-cpp.
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Fetch the Google Cloud C++ libraries.
+# NOTE: Update this version and SHA256 as needed.
+http_archive(
     name = "com_github_googleapis_google_cloud_cpp",
-    path = "../..",
+    sha256 = "a370bcf2913717c674a7250c4a310250448ffeb751b930be559a6f1887155f3b",
+    strip_prefix = "google-cloud-cpp-0.21.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v0.21.0.tar.gz",
 )
 
+# Load indirect dependencies due to
+#     https://github.com/bazelbuild/bazel/issues/1943
 load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()

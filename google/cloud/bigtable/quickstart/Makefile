@@ -12,11 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A simple Makefile to test the `install` target.
-#
-# This is not intended to be a demonstration of how to write good Makefiles,
-# nor is it a general solution on how to build Makefiles for google-cloud-cpp.
-# It is simply a minimal file to test the installed pkg-config support files.
+# This is a minimal Makefile to show how to use the Cloud Bigtable C++ client
+# for developers that use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.
@@ -24,7 +21,7 @@ CXX=g++
 CXXFLAGS=-std=c++11
 CXXLD=$(CXX)
 
-all: bigtable_install_test storage_install_test
+all: quickstart
 
 # Configuration variables to compile and link against the Cloud Bigtable C++
 # client library.
@@ -34,17 +31,5 @@ CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
 CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
 
 # A target using the Cloud Bigtable C++ client library.
-bigtable_install_test: bigtable/bigtable_install_test.cc
+quickstart: quickstart.cc
 	$(CXXLD) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
-
-
-# Configuration variables to compile and link against the Google Cloud Storage
-# C++ client library.
-GCS_DEPS := storage_client
-GCS_CXXFLAGS   := $(shell pkg-config $(GCS_DEPS) --cflags)
-GCS_CXXLDFLAGS := $(shell pkg-config $(GCS_DEPS) --libs-only-L)
-GCS_LIBS       := $(shell pkg-config $(GCS_DEPS) --libs-only-l)
-
-# A target using the Google Cloud Storage C++ client library.
-storage_install_test: storage/storage_install_test.cc
-	$(CXXLD) $(CXXFLAGS) $(GCS_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(GCS_LIBS)

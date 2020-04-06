@@ -14,166 +14,57 @@ It offers access to the Cloud Bigtable API, including operations to list, read,
 write, and delete [Instances and Clusters][read-instances-clusters],
 [Tables][read-tables] and [Application Profiles][read-app-profiles].
 
-## Quick Start
+## Quickstart
 
 The following instructions show you how to perform basic tasks in Cloud Bigtable
 using the C++ client library.
-
-If you have never used Cloud Bigtable we recommend that you first follow one of
-the [language neutral quickstart guides][cbt-quickstart] before you follow this
-guide.
 
 ### Before you begin
 
 1. Select or create a Google Cloud Platform (GCP) project using the
    [manage resource page][resource-link]. Make a note of the project id, you
    will need to use it later.
-2. Make sure that [billing is enabled][billing-link] for your project. **Costs
-   that you incur in Cloud Bigtable are based on the resources you use.**
-3. Learn about [key terms and concepts][concepts-link] for Cloud Storage.
+2. Make sure that [billing is enabled][billing-link] for your project.
+3. Learn about [key terms and concepts][concepts-link] for Cloud Spanner.
 4. Setup the authentication for the examples:
    - [Configure a service account][authentication-quickstart],
    - or [login with your personal account][gcloud-quickstart]
 
-### Download and Compile C++ Client Library
+### Setting up your repo
 
-The source code for the Cloud Bigtable C++ Client Library can be found on
-[GitHub][github-link]. Download or clone this repository as usual:
+In order to use the Cloud Bigtable C++ client library from your own code, you'll
+need to configure your build system how to fetch and compile the Cloud C++
+client library. The Cloud C++ client library natively supports the
+[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
+We've created a minimal, "Hello world", [quickstart repo][quickstart-link] that
+includes detailed instructions on how to compile the library for use in your
+application. You can fetch the source from [GitHub][github-link] as normal:
 
-```
+@code{.sh}
 git clone https://github.com/googleapis/google-cloud-cpp.git
-```
-
-The top-level [README][github-readme] file in this repository includes detailed
-instructions on how to compile the library. The examples used in this guide
-should be automatically compiled when you follow said instructions.
-
-### Configuring authentication for the C++ Client Library
-
-This library uses the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to
-find the credentials file. For example:
-
-| Shell              | Command                                        |
-| :----------------- | ---------------------------------------------- |
-| Bash/zsh/ksh/etc.  | `export GOOGLE_APPLICATION_CREDENTIALS=[PATH]` |
-| sh                 | `GOOGLE_APPLICATION_CREDENTIALS=[PATH];` `export GOOGLE_APPLICATION_CREDENTIALS` |
-| csh/tsch           | `setenv GOOGLE_APPLICATION_CREDENTIALS [PATH]` |
-| Windows Powershell | `$env:GOOGLE_APPLICATION_CREDENTIALS=[PATH]`   |
-| Windows cmd.exe    | `set GOOGLE_APPLICATION_CREDENTIALS=[PATH]`    |
-
-Setting this environment variable is the recommended way to configure the
-authentication preferences, though if the environment variable is not set, the
-library searches for a credentials file in the same location as the [Cloud
-SDK](https://cloud.google.com/sdk/). For more details about authentication and
-Google Cloud Platform consult the
-[Authentication Overview][authentication-overview] page.
-
-### Read a Row
-
-This is a short example showing how to read a row from Cloud Bigtable:
-This example assumes you have configured the authentication using
-`GOOGLE_APPLICATION_CREDENTIALS`:
-
-@snippet bigtable_quickstart.cc all code
-
-This quickstart will always read a single row with key `r1` from family `cf1`.
-You must provide a project id, instance id, and table id in the command-line
-when you run the quickstart program. Assuming you followed the build
-instructions referenced above this would be:
-
-@code
-./cmake-out/google/cloud/bigtable/bigtable_quickstart [PROJECT_ID] [INSTANCE ID] [TABLE ID]
+cd google-cloud-cpp/google/cloud/bigtable/quickstart
 @endcode
 
-<!-- START bigtable_hw_install -->
+@par Example: Quickstart
 
-## Using the library in your own project
+The following shows the code that you'll run in the
+`google/cloud/bigtable/quickstart/` directory,
+which should give you a taste of the Cloud Bigtable C++ client library API.
 
-Our continuous integration builds compile and test the code using both
-[Bazel](https://bazel.build/), and [CMake](https://cmake.org/).
+@include quickstart.cc
 
-### Integrating with Bazel
+## API Notes
 
-In your [WORKSPACE][workspace-definition-link] file add a dependency to download
-and install the library, for example:
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
 
-@code {.py}
-# Change the version and SHA256 hash as needed.
-http_archive(
-    name = "com_github_googleapis_google_cloud_cpp",
-    url = "http://github.com/googleapis/google-cloud-cpp/archive/v0.9.0.tar.gz",
-    strip_prefix = "google-cloud-cpp-0.9.0",
-    sha256 = "a072103546cfa041ad8bfc599fe5a20c58e005a1a0ee18e94b2554dc3d485604",
-)
-@endcode
+- `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
+  configure the GCP project.
 
-Then load the dependencies of the library:
-
-```{.py}
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
-google_cloud_cpp_deps()
-# Configure @com_google_googleapis to only compile C++ and gRPC:
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    cc = True,  # C++ support is only "Partially implemented", roll our own.
-    grpc = True,
-)
-# Have to manually call the corresponding function for gRPC:
-#   https://github.com/bazelbuild/bazel/issues/1550
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-grpc_deps()
-```
-
-You can now use the library as a dependency in your `BUILD` files, for example:
-
-```{.py}
-cc_binary(
-    name = "my_program",
-    srcs = [
-        "my_program.cc",
-    ],
-    deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
-    ],
-)
-```
-
-#### Integrating with CMake
-
-Follow the instructions on the top-level [INSTALL][github-INSTALL] file on
-[GitHub][github-link] for details on how to compile and install the library for
-your platform and distribution. Once the library is installed, you can use it in
-your `CMakeLists.txt` file like any other package:
-
-```
-cmake_minimum_required(VERSION 3.5)
-find_package(bigtable_client REQUIRED)
-
-add_executable(my_program my_program.cc)
-target_link_libraries(my_program bigtable_client)
-```
-
-#### Integrating with Make
-
-The installation instructions on the top-level [INSTALL][github-INSTALL] file on
-[GitHub][github-link] also create `pkg-config` support files for application
-developers that prefer to use `make` as their build system. Once the library
-is installed, you can use it in your `Makefile` like any other `pkg-config`
-module:
-
-```
-CBT_DEPS := bigtable_client
-CBT_CXXFLAGS   := $(shell pkg-config $(CBT_DEPS) --cflags)
-CBT_CXXLDFLAGS := $(shell pkg-config $(CBT_DEPS) --libs-only-L)
-CBT_LIBS       := $(shell pkg-config $(CBT_DEPS) --libs-only-l)
-
-# A target using the Cloud Bigtable C++ client library.
-bigtable_install_test: bigtable_install_test.cc
-	$(CXX) $(CXXFLAGS) $(CBT_CXXFLAGS) $(GCS_CXXLDFLAGS) -o $@ $^ $(CBT_LIBS)
-```
-
-<!-- END bigtable_hw_install -->
+- `BIGTABLE_EMULATOR_HOST=host:port` tells the library to connect to the
+  specified emulator rather than the default endpoint.
 
 ## Next Steps
 

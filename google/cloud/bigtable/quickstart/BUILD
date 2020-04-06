@@ -17,21 +17,11 @@ package(default_visibility = ["//visibility:public"])
 licenses(["notice"])  # Apache 2.0
 
 cc_binary(
-    name = "bigtable_install_test",
+    name = "quickstart",
     srcs = [
-        "bigtable/bigtable_install_test.cc",
+        "quickstart.cc",
     ],
     deps = [
         "@com_github_googleapis_google_cloud_cpp//google/cloud/bigtable:bigtable_client",
-    ],
-)
-
-cc_binary(
-    name = "storage_install_test",
-    srcs = [
-        "storage/storage_install_test.cc",
-    ],
-    deps = [
-        "@com_github_googleapis_google_cloud_cpp//google/cloud/storage:storage_client",
     ],
 )
