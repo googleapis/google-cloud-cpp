@@ -12,11 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# A simple Makefile to test the `install` target.
-#
-# This is not intended to be a demonstration of how to write good Makefiles,
-# nor is it a general solution on how to build Makefiles for google-cloud-cpp.
-# It is simply a minimal file to test the installed pkg-config support files.
+# This is a minimal Makefile to show how to use the Cloud Bigtable C++ client
+# for developers that use make(1) as their build system.
 
 # The CXX, CXXFLAGS and CXXLD variables are hard-coded. These values work for
 # our tests, but applications would typically make them configurable parameters.
