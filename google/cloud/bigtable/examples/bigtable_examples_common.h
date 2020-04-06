@@ -62,6 +62,13 @@ bool UsingEmulator();
 bool RunAdminIntegrationTests();
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
+using TableAdminCommandType = std::function<void(
+    google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
+
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    TableAdminCommandType const& function);
+
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud

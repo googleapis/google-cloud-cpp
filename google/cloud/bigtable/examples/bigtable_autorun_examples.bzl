@@ -21,4 +21,5 @@ bigtable_autorun_examples = [
     "bigtable_hello_app_profile.cc",
     "bigtable_hello_table_admin.cc",
     "data_snippets.cc",
+    "table_admin_snippets.cc",
 ]

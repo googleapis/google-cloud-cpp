@@ -30,7 +30,7 @@ target_link_libraries(
 set(bigtable_autorun_examples
     # cmake-format: sort
     bigtable_grpc_credentials.cc bigtable_hello_app_profile.cc
-    bigtable_hello_table_admin.cc data_snippets.cc)
+    bigtable_hello_table_admin.cc data_snippets.cc table_admin_snippets.cc)
 
 set(bigtable_examples
     # cmake-format: sort
@@ -40,8 +40,7 @@ set(bigtable_examples
     bigtable_quickstart.cc
     data_async_snippets.cc
     instance_admin_async_snippets.cc
-    table_admin_async_snippets.cc
-    table_admin_snippets.cc)
+    table_admin_async_snippets.cc)
 
 set(bigtable_examples_unit_tests # cmake-format: sort
                                  bigtable_examples_common_test.cc)
