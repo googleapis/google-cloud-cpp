@@ -984,58 +984,6 @@ run_all_notification_examples() {
 }
 
 ################################################
-# Run all Bucket IAM examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_all_bucket_iam_examples() {
-  # Use a fresh bucket to avoid flaky tests due to other tests also making
-  # changes on the bucket.
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_bucket_samples enable-uniform-bucket-level-access \
-      "${bucket_name}"
-  run_example ./storage_bucket_iam_samples get-bucket-iam-policy \
-      "${bucket_name}"
-  run_example ./storage_bucket_iam_samples add-bucket-iam-member \
-      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
-  run_example ./storage_bucket_iam_samples remove-bucket-iam-member \
-      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
-  run_example ./storage_bucket_iam_samples test-bucket-iam-permissions \
-      "${bucket_name}" "storage.objects.list" "storage.objects.delete"
-  run_example ./storage_bucket_iam_samples set-bucket-public-iam \
-      "${bucket_name}"
-  run_example ./storage_bucket_iam_samples native-get-bucket-iam-policy \
-      "${bucket_name}"
-  run_example ./storage_bucket_iam_samples native-add-bucket-iam-member \
-      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
-  run_example ./storage_bucket_iam_samples native-remove-bucket-iam-member \
-      "${bucket_name}" "roles/storage.objectViewer" "allAuthenticatedUsers"
-  run_example ./storage_bucket_iam_samples native-add-bucket-conditional-iam-binding \
-      "${bucket_name}" "roles/storage.objectViewer" "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
-      "match-prefix" "description" "resource.name.startsWith(\"projects/_/buckets/bucket-name/objects/prefix-a-\")"
-  run_example ./storage_bucket_iam_samples native-remove-bucket-conditional-iam-binding \
-      "${bucket_name}" "roles/storage.objectViewer" "match-prefix" "description" \
-      "resource.name.startsWith(\"projects/_/buckets/bucket-name/objects/prefix-a-\")"
-  run_example ./storage_bucket_iam_samples native-set-bucket-public-iam \
-      "${bucket_name}"
-
-  run_example ./storage_bucket_samples delete-bucket \
-      "${bucket_name}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_bucket_iam_samples
-}
-
-################################################
 # Run the examples showing how to use cors configuration.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -1128,7 +1076,6 @@ run_all_storage_examples() {
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"
-  run_all_bucket_iam_examples
   run_all_service_account_examples
   run_cors_configuration_examples
   run_mocking_client_examples "test-bucket-name" "test-object-name"
