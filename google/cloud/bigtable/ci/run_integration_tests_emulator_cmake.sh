@@ -38,6 +38,7 @@ source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
 # production. Easier to maintain just one copy.
 source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
+export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
 
 cd "${BINARY_DIR}"
 start_emulators
