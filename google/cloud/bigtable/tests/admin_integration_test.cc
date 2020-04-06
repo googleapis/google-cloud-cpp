@@ -368,6 +368,9 @@ TEST_F(AdminIntegrationTest, SetGetTestIamAPIsTest) {
 /// @test Verify that `bigtable::TableAdmin` Backup CRUD operations work as
 /// expected.
 TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP();
+  }
   using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
 
@@ -460,6 +463,9 @@ TEST_F(AdminIntegrationTest, CreateListGetUpdateDeleteBackup) {
 /// @test Verify that `bigtable::TableAdmin` Backup and Restore work as
 /// expected.
 TEST_F(AdminIntegrationTest, RestoreTableFromBackup) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP();
+  }
   using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
 

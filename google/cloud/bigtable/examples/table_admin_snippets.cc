@@ -15,12 +15,7 @@
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
-//=======
-//#include <google/protobuf/text_format.h>
-//#include <google/protobuf/util/time_util.h>
-//#include <deque>
-//#include <list>
-//>>>>>>> 520a818e7... feat: add CreateBackup and AsyncCreateBackup
+#include <google/protobuf/util/time_util.h>
 #include <sstream>
 
 namespace {
@@ -167,18 +162,12 @@ void ModifyTable(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), argv.at(0));
 }
 
-void CreateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
-                  char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "create-backup <project-id> <instance-id> <table-id> <cluster-id> "
-        "<backup-id> <expire_time>"};
-  }
-  std::string const table_id = ConsumeArg(argc, argv);
-  std::string const cluster_id = ConsumeArg(argc, argv);
-  std::string const backup_id = ConsumeArg(argc, argv);
-  std::string const expire_time_string = ConsumeArg(argc, argv);
-
+void CreateBackup(google::cloud::bigtable::TableAdmin admin,
+                  std::vector<std::string> const& argv) {
+  std::string const table_id = argv[1];
+  std::string const cluster_id = argv[2];
+  std::string const backup_id = argv[3];
+  std::string const expire_time_string = argv[4];
   //! [create backup]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -205,17 +194,11 @@ void CreateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
    std::move(backup_id), std::move(expire_time_string));
 }
 
-void ListBackups(google::cloud::bigtable::TableAdmin admin, int argc,
-                 char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "list-backups <project-id> <instance-id> <cluster-id> <filter> "
-        "<order_by>"};
-  }
-
-  std::string const cluster_id = ConsumeArg(argc, argv);
-  std::string const filter = ConsumeArg(argc, argv);
-  std::string const order_by = ConsumeArg(argc, argv);
+void ListBackups(google::cloud::bigtable::TableAdmin admin,
+                 std::vector<std::string> const& argv) {
+  std::string const cluster_id = argv[1];
+  std::string const filter = argv[2];
+  std::string const order_by = argv[3];
 
   //! [list backups]
   namespace cbt = google::cloud::bigtable;
@@ -241,14 +224,10 @@ void ListBackups(google::cloud::bigtable::TableAdmin admin, int argc,
    std::move(order_by));
 }
 
-void GetBackup(google::cloud::bigtable::TableAdmin admin, int argc,
-               char* argv[]) {
-  if (argc != 3) {
-    throw Usage{
-        "get-backup <project-id> <instance-id> <cluster-id> <backup-id>"};
-  }
-  std::string const cluster_id = ConsumeArg(argc, argv);
-  std::string const backup_id = ConsumeArg(argc, argv);
+void GetBackup(google::cloud::bigtable::TableAdmin admin,
+               std::vector<std::string> const& argv) {
+  std::string const cluster_id = argv[1];
+  std::string const backup_id = argv[2];
 
   //! [get backup]
   namespace cbt = google::cloud::bigtable;
@@ -266,14 +245,10 @@ void GetBackup(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), std::move(cluster_id), std::move(backup_id));
 }
 
-void DeleteBackup(google::cloud::bigtable::TableAdmin admin, int argc,
-                  char* argv[]) {
-  if (argc != 3) {
-    throw Usage{
-        "delete-backup <project-id> <instance-id> <cluster-id> <table-id>"};
-  }
-  std::string const cluster_id = ConsumeArg(argc, argv);
-  std::string const backup_id = ConsumeArg(argc, argv);
+void DeleteBackup(google::cloud::bigtable::TableAdmin admin,
+                  std::vector<std::string> const& argv) {
+  std::string const cluster_id = argv[1];
+  std::string const backup_id = argv[2];
 
   //! [delete backup]
   namespace cbt = google::cloud::bigtable;
@@ -289,16 +264,11 @@ void DeleteBackup(google::cloud::bigtable::TableAdmin admin, int argc,
   (std::move(admin), std::move(cluster_id), std::move(backup_id));
 }
 
-void UpdateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
-                  char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "update-backup <project-id> <instance-id> <cluster-id> <backup-id> "
-        "<expire-time>"};
-  }
-  std::string const cluster_id = ConsumeArg(argc, argv);
-  std::string const backup_id = ConsumeArg(argc, argv);
-  std::string const expire_time_string = ConsumeArg(argc, argv);
+void UpdateBackup(google::cloud::bigtable::TableAdmin admin,
+                  std::vector<std::string> const& argv) {
+  std::string const cluster_id = argv[1];
+  std::string const backup_id = argv[2];
+  std::string const expire_time_string = argv[3];
   //! [update backup]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -326,16 +296,11 @@ void UpdateBackup(google::cloud::bigtable::TableAdmin admin, int argc,
    std::move(expire_time_string));
 }
 
-void RestoreTable(google::cloud::bigtable::TableAdmin admin, int argc,
-                  char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "restore-table <project-id> <instance-id> <table-id> <cluster-id> "
-        "<backup-id>"};
-  }
-  std::string const table_id = ConsumeArg(argc, argv);
-  std::string const cluster_id = ConsumeArg(argc, argv);
-  std::string const backup_id = ConsumeArg(argc, argv);
+void RestoreTable(google::cloud::bigtable::TableAdmin admin,
+                  std::vector<std::string> const& argv) {
+  std::string const table_id = argv[1];
+  std::string const cluster_id = argv[2];
+  std::string const backup_id = argv[3];
 
   //! [restore table]
   namespace cbt = google::cloud::bigtable;
@@ -994,6 +959,32 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry(
           "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
       {"test-iam-permissions", TestIamPermissions},
+      examples::MakeCommandEntry(
+          "create-backup",
+          {"<project-id>", "<instance-id>", "<table-id>", "<cluster-id>",
+           "<backup-id>", "<expire_time>"},
+          CreateBackup),
+      examples::MakeCommandEntry("list-backups",
+                                 {"<project-id>", "<instance-id>",
+                                  "<cluster-id>", "<filter>", "<order_by>"},
+                                 ListBackups),
+      examples::MakeCommandEntry(
+          "get-backup",
+          {"<project-id>", "<instance-id>", "<cluster-id>", "<backup-id>"},
+          GetBackup),
+      examples::MakeCommandEntry(
+          "delete-backup",
+          {"<project-id>", "<instance-id>", "<cluster-id>", "<table-id>"},
+          DeleteBackup),
+      examples::MakeCommandEntry(
+          "update-backup",
+          {"<project-id>", "<instance-id>", "<cluster-id>", "<backup-id>",
+           "<expire-time>"},
+          UpdateBackup),
+      examples::MakeCommandEntry("restore-table",
+                                 {"<project-id>", "<instance-id>", "<table-id>",
+                                  "<cluster-id>", "<backup-id>"},
+                                 RestoreTable),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

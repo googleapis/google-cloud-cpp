@@ -379,10 +379,13 @@ TEST_F(AdminAsyncFutureIntegrationTest, AsyncCheckConsistencyIntegrationTest) {
   cq.Shutdown();
   pool.join();
 }
-#if 0
+
 /// @test Verify that `bigtable::TableAdmin` Backup Async CRUD operations work
 /// as expected.
 TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP();
+  }
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -402,7 +405,6 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
   // create table
   ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
 
-
   auto clusters_list =
       instance_admin_->ListClusters(table_admin_->instance_id());
   ASSERT_STATUS_OK(clusters_list);
@@ -412,8 +414,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
       backup_cluster_full_name.rfind("/") + 1,
       backup_cluster_full_name.size() - backup_cluster_full_name.rfind("/"));
   std::string const backup_id = RandomBackupId();
-  std::string const backup_full_name = backup_cluster_full_name + "/backups/" +
-          backup_id;
+  std::string const backup_full_name =
+      backup_cluster_full_name + "/backups/" + backup_id;
   google::protobuf::Timestamp const expire_time =
       google::protobuf::util::TimeUtil::GetCurrentTime() +
       google::protobuf::util::TimeUtil::HoursToDuration(12);
@@ -488,6 +490,10 @@ TEST_F(AdminAsyncFutureIntegrationTest, CreateListGetUpdateDeleteBackup) {
 /// @test Verify that `bigtable::TableAdmin` Async Backup and Restore
 /// operations work as expected.
 TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
+  if (UsingCloudBigtableEmulator()) {
+    GTEST_SKIP();
+  }
+
   std::string const table_id = RandomTableId();
   CompletionQueue cq;
   std::thread pool([&cq] { cq.Run(); });
@@ -516,8 +522,8 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
       backup_cluster_full_name.rfind("/") + 1,
       backup_cluster_full_name.size() - backup_cluster_full_name.rfind("/"));
   std::string const backup_id = RandomBackupId();
-  std::string const backup_full_name = backup_cluster_full_name + "/backups/" +
-          backup_id;
+  std::string const backup_full_name =
+      backup_cluster_full_name + "/backups/" + backup_id;
   google::protobuf::Timestamp const expire_time =
       google::protobuf::util::TimeUtil::GetCurrentTime() +
       google::protobuf::util::TimeUtil::HoursToDuration(12);
@@ -570,7 +576,7 @@ TEST_F(AdminAsyncFutureIntegrationTest, RestoreTableFromBackup) {
   cq.Shutdown();
   pool.join();
 }
-#endif
+
 }  // namespace
 }  // namespace BIGTABLE_CLIENT_NS
 }  // namespace bigtable
