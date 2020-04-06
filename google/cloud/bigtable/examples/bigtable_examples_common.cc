@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/internal/getenv.h"
+#include <sstream>
 
 namespace google {
 namespace cloud {
@@ -147,6 +148,33 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
                                " environment variable has an empty value");
     }
   }
+}
+
+using TableAdminCommandType = std::function<void(
+    google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
+
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    TableAdminCommandType const& function) {
+  auto command = [=](std::vector<std::string> argv) {
+    auto constexpr kFixedArguments = 2;
+    if (argv.size() != args.size() + kFixedArguments) {
+      std::ostringstream os;
+      os << name << " <project-id> <instance-id>";
+      char const* sep = " ";
+      for (auto const& a : args) {
+        os << sep << a;
+      }
+      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
+    }
+    google::cloud::bigtable::TableAdmin table(
+        google::cloud::bigtable::CreateDefaultAdminClient(
+            argv[0], google::cloud::bigtable::ClientOptions()),
+        argv[1]);
+    argv.erase(argv.begin(), argv.begin() + kFixedArguments);
+    function(table, argv);
+  };
+  return {name, command};
 }
 
 }  // namespace examples
