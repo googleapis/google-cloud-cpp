@@ -572,7 +572,7 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
   echo "${COLOR_YELLOW}$(date -u): cleaning up artifacts.${COLOR_RESET}"
-  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -print0 \
+  find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 \
     | xargs -0 -t rm -rf
 else
   echo "${COLOR_YELLOW}$(date -u): Not a CI build; " \
