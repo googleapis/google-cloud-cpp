@@ -22,6 +22,7 @@ namespace storage {
 namespace examples {
 
 using ::testing::HasSubstr;
+using ::testing::StartsWith;
 
 TEST(StorageExamplesCommon, Simple) {
   int test_calls = 0;
@@ -135,6 +136,24 @@ TEST(StorageExamplesCommon, UsingTestbenchFalse) {
   google::cloud::testing_util::ScopedEnvironment env(
       "CLOUD_STORAGE_TESTBENCH_ENDPOINT", {});
   EXPECT_FALSE(UsingTestbench());
+}
+
+TEST(StorageExamplesCommon, RandomBucket) {
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const actual_1 = MakeRandomBucketName(generator, "test-prefix-");
+  EXPECT_THAT(actual_1, StartsWith("test-prefix-"));
+  auto const actual_2 = MakeRandomBucketName(generator, "test-prefix-");
+  EXPECT_THAT(actual_2, StartsWith("test-prefix-"));
+  EXPECT_NE(actual_1, actual_2);
+}
+
+TEST(StorageExamplesCommon, RandomObject) {
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const actual_1 = MakeRandomObjectName(generator, "test-prefix-");
+  EXPECT_THAT(actual_1, StartsWith("test-prefix-"));
+  auto const actual_2 = MakeRandomObjectName(generator, "test-prefix-");
+  EXPECT_THAT(actual_2, StartsWith("test-prefix-"));
+  EXPECT_NE(actual_1, actual_2);
 }
 
 TEST(StorageExamplesCommon, CreateCommandEntryUsage) {

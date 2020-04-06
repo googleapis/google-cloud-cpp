@@ -1377,125 +1377,6 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
-void GetStaticWebsiteConfiguration(google::cloud::storage::Client client,
-                                   int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-static-website-configuration <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  //! [print bucket website configuration]
-  // [START storage_print_bucket_website_configuration]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> bucket_metadata =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
-
-    if (!bucket_metadata->has_website()) {
-      std::cout << "Static website configuration is not set for bucket "
-                << bucket_metadata->name() << "\n";
-      return;
-    }
-
-    std::cout << "Static website configuration set for bucket "
-              << bucket_metadata->name() << "\nThe main page suffix is: "
-              << bucket_metadata->website().main_page_suffix
-              << "\nThe not found page is: "
-              << bucket_metadata->website().not_found_page << "\n";
-  }
-  // [END storage_print_bucket_website_configuration]
-  //! [print bucket website configuration]
-  (std::move(client), bucket_name);
-}
-
-void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
-                                   int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "set-static-website-configuration <bucket-name> <main-page-suffix> "
-        "<not-found-page>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto main_page_suffix = ConsumeArg(argc, argv);
-  auto not_found_page = ConsumeArg(argc, argv);
-  //! [define bucket website configuration]
-  // [START storage_define_bucket_website_configuration]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string main_page_suffix,
-     std::string not_found_page) {
-    StatusOr<gcs::BucketMetadata> original =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
-        bucket_name,
-        gcs::BucketMetadataPatchBuilder().SetWebsite(
-            gcs::BucketWebsite{main_page_suffix, not_found_page}),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
-
-    if (!patched_metadata->has_website()) {
-      std::cout << "Static website configuration is not set for bucket "
-                << patched_metadata->name() << "\n";
-      return;
-    }
-
-    std::cout << "Static website configuration successfully set for bucket "
-              << patched_metadata->name() << "\nNew main page suffix is: "
-              << patched_metadata->website().main_page_suffix
-              << "\nNew not found page is: "
-              << patched_metadata->website().not_found_page << "\n";
-  }
-  // [END storage_define_bucket_website_configuration]
-  //! [define bucket website configuration]
-  (std::move(client), bucket_name, main_page_suffix, not_found_page);
-}
-
-void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
-                                      int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"remove-static-website-configuration <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  //! [remove bucket website configuration]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> original =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().ResetWebsite(),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
-
-    if (!patched_metadata->has_website()) {
-      std::cout << "Static website configuration removed for bucket "
-                << patched_metadata->name() << "\n";
-      return;
-    }
-
-    std::cout << "Static website configuration is set for bucket "
-              << patched_metadata->name()
-              << "\nThis is unexpected, and may indicate that another"
-              << " application has modified the bucket concurrently.\n";
-  }
-  //! [remove bucket website configuration]
-  (std::move(client), bucket_name);
-}
-
 void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
   if (argc != 3) {
@@ -1669,9 +1550,6 @@ int main(int argc, char* argv[]) try {
       {"set-retention-policy", SetRetentionPolicy},
       {"remove-retention-policy", RemoveRetentionPolicy},
       {"lock-retention-policy", LockRetentionPolicy},
-      {"get-static-website-configuration", GetStaticWebsiteConfiguration},
-      {"set-static-website-configuration", SetStaticWebsiteConfiguration},
-      {"remove-static-website-configuration", RemoveStaticWebsiteConfiguration},
       {"set-cors-configuration", SetCorsConfiguration},
       {"create-signed-policy-document", CreateSignedPolicyDocument},
       {"create-signed-policy-document-v4", CreateSignedPolicyDocumentV4},

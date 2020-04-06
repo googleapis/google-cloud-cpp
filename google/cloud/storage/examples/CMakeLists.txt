@@ -22,7 +22,7 @@ target_link_libraries(storage_examples_common storage_client
 set(storage_autorun_examples
     # cmake-format: sort
     storage_bucket_acl_samples.cc storage_signed_url_v2_samples.cc
-    storage_signed_url_v4_samples.cc)
+    storage_signed_url_v4_samples.cc storage_website_samples.cc)
 
 set(storage_examples
     # cmake-format: sort

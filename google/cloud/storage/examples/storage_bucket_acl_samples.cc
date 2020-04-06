@@ -225,19 +225,6 @@ void RemoveBucketOwner(google::cloud::storage::Client client,
   (std::move(client), argv[0], argv[1]);
 }
 
-std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
-                                 std::string const& prefix) {
-  // The total length of a bucket name must be <= 63 characters,
-  static std::size_t const kMaxBucketNameLength = 63;
-  std::size_t const max_random_characters =
-      kMaxBucketNameLength - prefix.size();
-  // bucket names might also contain `-` and `_` characters, but we do not
-  // *need* to use them.
-  return prefix + google::cloud::internal::Sample(
-                      gen, static_cast<int>(max_random_characters),
-                      "abcdefghijklmnopqrstuvwxyz012456789");
-}
-
 void RunAll(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw Usage{"auto"};
 
@@ -260,7 +247,7 @@ void RunAll(std::vector<std::string> const& argv) {
   }
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =
-      MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
   auto const entity = "user-" + service_account;
   auto client = gcs::Client::CreateDefaultClient().value();
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
