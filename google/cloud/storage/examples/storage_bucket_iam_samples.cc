@@ -224,14 +224,11 @@ void NativeRemoveBucketConditionalIamBinding(
      std::string condition_expression) {
     auto policy = client.GetNativeBucketIamPolicy(
         bucket_name, gcs::RequestedPolicyVersion(3));
-    if (!policy) {
-      throw std::runtime_error(policy.status().message());
-    }
+    if (!policy) throw std::runtime_error(policy.status().message());
 
     policy->set_version(3);
     auto& bindings = policy->bindings();
-    auto original_size = bindings.size();
-    bindings.erase(std::remove_if(
+    auto e = std::remove_if(
         bindings.begin(), bindings.end(),
         [role, condition_title, condition_description,
          condition_expression](gcs::NativeIamBinding b) {
@@ -239,15 +236,16 @@ void NativeRemoveBucketConditionalIamBinding(
                   b.condition().title() == condition_title &&
                   b.condition().description() == condition_description &&
                   b.condition().expression() == condition_expression);
-        }));
+        });
+    if (e == bindings.end()) {
+      std::cout << "No matching binding group found.\n";
+      return;
+    }
+    bindings.erase(e);
     auto updated = client.SetNativeBucketIamPolicy(bucket_name, *policy);
     if (!updated) throw std::runtime_error(updated.status().message());
 
-    if (original_size > updated->bindings().size()) {
-      std::cout << "Conditional Binding was removed.\n";
-    } else {
-      std::cout << "No matching binding group found.\n";
-    }
+    std::cout << "Conditional binding was removed.\n";
   }
   //! [native remove bucket conditional iam binding]
   // [END storage_remove_bucket_conditional_iam_binding]
@@ -441,20 +439,25 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning NativeAddBucketConditionalIamBinding() example"
             << std::endl;
+  std::string const condition_title = "A match-prefix conditional IAM";
+  std::string const condition_description = "Not a good description";
+  std::string const condition_expression =
+      R"expr(resource.name.startsWith("projects/_/buckets/bucket-name/objects/prefix-a-"))expr";
   NativeAddBucketConditionalIamBinding(
-      client,
-      {bucket_name, "roles/storage.objectViewer",
-       "serviceAccount:" + service_account, "A match-prefix conditional IAM",
-       "Not a good description",
-       R"expr(resource.name.startsWith("projects/_/buckets/bucket-name/objects/prefix-a-"))expr"});
+      client, {bucket_name, "roles/storage.objectViewer",
+               "serviceAccount:" + service_account, condition_title,
+               condition_description, condition_expression});
 
-  std::cout << "\nRunning NativeAddBucketConditionalIamBinding() example"
+  std::cout << "\nRunning NativeRemoveBucketConditionalIamBinding() example [1]"
             << std::endl;
   NativeRemoveBucketConditionalIamBinding(
-      client,
-      {bucket_name, "roles/storage.objectViewer",
-       "A match-prefix conditional IAM", "Not a good description",
-       R"expr(resource.name.startsWith("projects/_/buckets/bucket-name/objects/prefix-a-"))expr"});
+      client, {bucket_name, "roles/storage.objectViewer", condition_title,
+               condition_description, condition_expression});
+  std::cout << "\nRunning NativeRemoveBucketConditionalIamBinding() example [2]"
+            << std::endl;
+  NativeRemoveBucketConditionalIamBinding(
+      client, {bucket_name, "roles/storage.objectViewer", condition_title,
+               condition_description, condition_expression});
 
   std::cout << "\nRunning NativeSetBucketPublicIam() example" << std::endl;
   NativeSetBucketPublicIam(client, {bucket_name});
@@ -467,7 +470,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
   auto make_entry = [](std::string const& name,
                        std::vector<std::string> arg_names,
@@ -500,7 +503,4 @@ int main(int argc, char* argv[]) try {
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
 }
