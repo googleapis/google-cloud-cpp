@@ -34,18 +34,14 @@ PROJECT_ROOT="$(cd "${CMDDIR}/../../../.."; pwd)"
 readonly PROJECT_ROOT
 source "${PROJECT_ROOT}/google/cloud/bigtable/tools/run_emulator_utils.sh"
 
+# Use the same configuration parameters as we use for testing against
+# production. Easier to maintain just one copy.
+source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
+export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
+
 cd "${BINARY_DIR}"
 start_emulators
-
-NONCE="$(date +%s)-${RANDOM}"
-readonly NONCE
-export GOOGLE_CLOUD_PROJECT="emulated-${NONCE}"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="it-${NONCE}"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="fake-region1-a"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="fake-region1-b"
-export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="fake-sa@emulated-${NONCE}.iam.gserviceaccount.com"
-export ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS="yes"
-export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 
 ctest -L "bigtable-integration-tests" "${ctest_args[@]}"
 exit_status=$?

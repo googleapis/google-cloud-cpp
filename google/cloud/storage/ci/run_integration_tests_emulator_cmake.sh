@@ -32,19 +32,13 @@ PROJECT_ROOT="$(cd "${CMDDIR}/../../../.."; pwd)"
 readonly PROJECT_ROOT
 source "${PROJECT_ROOT}/google/cloud/storage/tools/run_testbench_utils.sh"
 
-NONCE="$(date +%s)-${RANDOM}"
-readonly NONCE
-# Create most likely unique names for the project and bucket so multiple tests
-# can use the same testbench.
-export GOOGLE_CLOUD_PROJECT="fake-project-${NONCE}"
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="fake-bucket-${NONCE}"
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID="fake-region-${NONCE}"
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${GOOGLE_CLOUD_PROJECT}/topics/fake-topic-${NONCE}"
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account@example.com"
+# Use the same configuration parameters as we use for testing against
+# production. Easier to maintain just one copy.
+source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="fake-service-account@example.com"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
-export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes
 
 cd "${BINARY_DIR}"
 start_testbench
