@@ -12,13 +12,8 @@
 # License for the specific language governing permissions and limitations under
 # the License.
 
-# A minimal CMakeList.txt to *test* the install Google Cloud Storage C++ client.
-#
-# This is not intended to be a demonstration of how to write good CMakeList.txt
-# files, nor is it a general solution to create CMake files for google-cloud-
-# cpp. It is simply a minimal CMake file to verify that (a) the installed
-# libraries contain all required headers, and (b) the installed CMake
-# configuration files are usable.
+# A minimal CMakeList.txt showing how to use the Google Cloud Storage C++ client
+# library in CMake-based projects.
 
 cmake_minimum_required(VERSION 3.5)
 project(google-cloud-cpp-storage-quickstart CXX C)
