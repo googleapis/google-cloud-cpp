@@ -12,6 +12,16 @@ versioning of this repo will be changing to have a single per-repo version.
 version.** See https://github.com/googleapis/google-cloud-cpp/issues/3615 for
 more info.
 
+### Bigtable (v1.9.x)
+
+**BREAKING CHANGES**
+
+* fix!: moved IAM-related symbols to the correct inlined namespace (#3453)
+ Most users should not notice any difference, but those that explicitly referenced
+ symbols through the `google::cloud::bigtable::v0` namespace may need to switch
+ to `google::cloud::bigtable` (the recommended approach) or
+`google::cloud::bigtable::v1`. We apologize if this causes you inconvenience.
+
 ### Storage (v1.12.x)
 
 **BREAKING CHANGES**
@@ -33,21 +43,15 @@ more info.
 * doc: add doxygen comments for ParallelUploadFile (#3448)
 * feat: support x-goog-content-sha256 for V4 signed URLs (#3435)
 
-### Bigtable (v1.9.x)
-
-**BREAKING CHANGES**
-
-* fix!: moved IAM-related symbols to the correct inlined namespace (#3453)
- Most users should not notice any difference, but those that explicitly referenced
- symbols through the `google::cloud::bigtable::v0` namespace may need to switch
- to `google::cloud::bigtable` (the recommended approach) or
-`google::cloud::bigtable::v1`. We apologize if this causes you inconvenience.
-
 **Other Changes**
 
 * None
 
 ## v0.20.0 - 2020-03
+
+### Bigtable (v1.8.x)
+
+* No changes to the Bigtable client in this release.
 
 ### Storage (v1.11.x)
 
@@ -57,10 +61,6 @@ more info.
   application restarts.
 * chore: upgrade testbench to Python 3 (#3402) - you will need to have Python 3
   installed to run the integration tests.
-
-### Bigtable (v1.8.x)
-
-* No changes to the Bigtable client in this release.
 
 ## v0.19.0 - 2020-02
 
@@ -174,11 +174,11 @@ more info.
 
 ## v0.14.0 - 2019-10
 
-### Common (v0.12.x)
+### Bigtable (v1.3.x)
 
 * bug: fix runtime install directory (#3063)
 
-### Bigtable (v1.3.x)
+### Common (v0.12.x)
 
 * bug: fix runtime install directory (#3063)
 
@@ -354,15 +354,6 @@ more info.
 
 ## v0.9.0 - 2019-05
 
-### Storage (v1.0.0)
-
-* Declared GA and updated major number.
-* Support signed policy documents.
-* Support service account key files in PKCS#12 format (aka `.p12`).
-* Support signing URLs and policy documents using the SignBlob API, this is
-  useful when using the default service account in GCE to sign URLs and policy
-  documents.
-
 ### Bigtable (v0.9.0)
 
 * **Breaking Changes**
@@ -387,6 +378,15 @@ more info.
 
 * Support move-only callables in `future<T>`
 * Avoid `std::make_exception_ptr()` in `future_shared_state_base::abandon()`.
+
+### Storage (v1.0.0)
+
+* Declared GA and updated major number.
+* Support signed policy documents.
+* Support service account key files in PKCS#12 format (aka `.p12`).
+* Support signing URLs and policy documents using the SignBlob API, this is
+  useful when using the default service account in GCE to sign URLs and policy
+  documents.
 
 ## v0.8.1 - 2019-04
 
@@ -418,6 +418,11 @@ more info.
   downloads all deps.
 * No longer throw exceptions from `ClientOptions`.
 
+### Common
+
+* Removed the googleapis submodule. The build system now automatically
+  downloads all deps.
+
 ### Storage (v0.6.x)
 
 * Added initial support for HMAC key-related functions.
@@ -428,11 +433,6 @@ more info.
 * Handle object names with slashes.
 * Added `ObjectMetadata::set_storage_class`
 * Added support for policy documents.
-
-### Common
-
-* Removed the googleapis submodule. The build system now automatically
-  downloads all deps.
 
 ## v0.7.0 - 2019-03
 
@@ -449,14 +449,6 @@ more info.
 * First version of async `Apply` batching.
 * Keep `Apply` callbacks in `MutationData`.
 
-### Storage (v0.5.x)
-
-* Properly handle subresources in V2 signed URLs.
-* Allow specifying non-default `ServiceAccountCredentials` scope and subject.
-* Add `make install` instructions.
-* Change the storage examples to throw a `std::runtime_error` on failure.
-* Add Bucket Policy Only samples.
-
 ### Common
 
 * **Breaking change**: Make `google::cloud::optional::operator bool()` explicit.
@@ -466,9 +458,21 @@ more info.
 * Change `std::endl` -> `"\n"`.
 * Enforce formatting of `.cc` files.
 
+### Storage (v0.5.x)
+
+* Properly handle subresources in V2 signed URLs.
+* Allow specifying non-default `ServiceAccountCredentials` scope and subject.
+* Add `make install` instructions.
+* Change the storage examples to throw a `std::runtime_error` on failure.
+* Add Bucket Policy Only samples.
+
 ## v0.6.1 - 2019-02
 
 ### Bigtable (v0.6.x)
+
+* No changes from v0.6.0
+
+### Common
 
 * No changes from v0.6.0
 
@@ -476,10 +480,6 @@ more info.
 
 * The library is now **Beta**. We no longer expect changes to the API.
 * No other changes from v0.6.0
-
-### Common
-
-* No changes from v0.6.0
 
 ## v0.6.0 - 2019-02
 
@@ -495,6 +495,13 @@ more info.
 * Increased default message length limit.
 * Now testing build with libc++ on Linux.
 * Fixed some bugs found by Coverity scans.
+
+### Common
+
+* Fixed some documentation.
+* **Breaking change**: Removed `StatusOr<void>`.
+* Updated `StatusOr` documentation.
+* Fixed some (minor) issues found by coverity.
 
 ### Storage (v0.4.x)
 
@@ -515,13 +522,6 @@ more info.
 * Moved some internal-only APIs out of public interfaces.
 * Fixed resuming uploads when the server responds with a 308.
 
-### Common
-
-* Fixed some documentation.
-* **Breaking change**: Removed `StatusOr<void>`.
-* Updated `StatusOr` documentation.
-* Fixed some (minor) issues found by coverity.
-
 ## v0.5.0 - 2019-01
 
 ### Bigtable (v0.5.x)
@@ -537,6 +537,15 @@ more info.
 * **Breaking Change**: remove the `as_proto_move()` member functions in favor
   of `as_proto() &&`. With the latter newer compilers will warn if the object
   is used after the destructive operation.
+
+### Common
+
+* Support compiling with gcc-4.8.
+* Fix `GCP_LOG()` macro so it works on platforms that define a `DEBUG`
+  pre-processor symbol.
+* Use different PRNG sequences for each backoff instance, previously all the
+  clones of a backoff policy shared the same sequence.
+* Workaround build problems with Xcode 7.3.
 
 ### Storage (v0.3.x)
 
@@ -556,15 +565,6 @@ more info.
 * Implement a function to create signed URLs (`Client::CreateV2SignedUrl`).
 * Support resumable uploads in any upload operation.
 
-### Common
-
-* Support compiling with gcc-4.8.
-* Fix `GCP_LOG()` macro so it works on platforms that define a `DEBUG`
-  pre-processor symbol.
-* Use different PRNG sequences for each backoff instance, previously all the
-  clones of a backoff policy shared the same sequence.
-* Workaround build problems with Xcode 7.3.
-
 ## v0.4.0 - 2018-12
 
 ### Bigtable (v0.4.x)
@@ -577,6 +577,12 @@ more info.
 * Prototype asynchronous APIs returning a `google::cloud::future<T>`,
   applications can attach callbacks and/or block on a
   `google::cloud::future<T>`.
+
+### Common
+
+* Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
+  ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
+  specification, also known as "futures with continuations".
 
 ### Storage (v0.2.x)
 
@@ -597,12 +603,6 @@ more info.
 * Applications can configure the library to only retry idempotent operations.
 * The client library can use Google Compute Engine credentials to access the
   service.
-
-### Common
-
-* Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
-  ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
-  specification, also known as "futures with continuations".
 
 ## 0.4.0-pre1 - 2018-12
 
@@ -617,6 +617,12 @@ more info.
   applications can attach callbacks and/or block on a
   `google::cloud::future<T>`.
 
+### Common
+
+* Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
+  ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
+  specification, also known as "futures with continuations".
+
 ### Storage (v0.2.x)
 
 * Use resumable uploads for large files in `Client::UploadFile()`.
@@ -636,12 +642,6 @@ more info.
 * Applications can configure the library to only retry idempotent operations.
 * The client library can use Google Compute Engine credentials to access the
   service.
-
-### Common
-
-* Implement `google::cloud::future<T>` and `google::cloud::promise<T>` based on
-  ISO/IEC TS 19571:2016, the "C++ Extensions for Concurrency" technical
-  specification, also known as "futures with continuations".
 
 ## v0.3.0 - 2018-11
 
@@ -659,6 +659,18 @@ This is the v0.3.0 release of the Google Cloud C++ Client Libraries.
 * Fixed multiple documentation issues, including a much better landing page
   in the Doxygen documentation.
 
+### Common
+
+* `google::cloud::optional<T>` an intentionally incomplete implementation of
+  `std::optional<T>` to support C++11 and C++14 users.
+* Applications can configure `google::cloud::LogSink` to enable logging in some
+  of the libraries and to redirect the logs to their preferred destination.
+  The libraries do not enable any logging by default, not even to `stderr`.
+* `google::cloud::SetTerminateHandler()` allows applications compiled without
+  exceptions, but using the APIs that rely on exceptions to report errors, to
+  configure how the application terminates when an unrecoverable error is
+  detected by the libraries.
+
 ### Storage (v0.1.x)
 
 * Automatically compute MD5 hashes and CRC32C checksums when objects are
@@ -672,18 +684,6 @@ This is the v0.3.0 release of the Google Cloud C++ Client Libraries.
   or has invalid contents.
 * Jason Zaman contributed improvements and fixes to support soversion numbers
   with CMake.
-
-### Common
-
-* `google::cloud::optional<T>` an intentionally incomplete implementation of
-  `std::optional<T>` to support C++11 and C++14 users.
-* Applications can configure `google::cloud::LogSink` to enable logging in some
-  of the libraries and to redirect the logs to their preferred destination.
-  The libraries do not enable any logging by default, not even to `stderr`.
-* `google::cloud::SetTerminateHandler()` allows applications compiled without
-  exceptions, but using the APIs that rely on exceptions to report errors, to
-  configure how the application terminates when an unrecoverable error is
-  detected by the libraries.
 
 ## v0.3.0-pre1 - 2018-11
 
@@ -699,6 +699,18 @@ This is the v0.3.0 release of the Google Cloud C++ Client Libraries.
 * Fixed multiple documentation issues, including a much better landing page
   in the Doxygen documentation.
 
+### Common
+
+* `google::cloud::optional<T>` an intentionally incomplete implementation of
+  `std::optional<T>` to support C++11 and C++14 users.
+* Applications can configure `google::cloud::LogSink` to enable logging in some
+  of the libraries and to redirect the logs to their preferred destination.
+  The libraries do not enable any logging by default, not even to `stderr`.
+* `google::cloud::SetTerminateHandler()` allows applications compiled without
+  exceptions, but using the APIs that rely on exceptions to report errors, to
+  configure how the application terminates when an unrecoverable error is
+  detected by the libraries.
+
 ### Storage (v0.1.x)
 
 * Automatically compute MD5 hashes and CRC32C checksums when objects are
@@ -712,18 +724,6 @@ This is the v0.3.0 release of the Google Cloud C++ Client Libraries.
   or has invalid contents.
 * Jason Zaman contributed improvements and fixes to support soversion numbers
   with CMake.
-
-### Common
-
-* `google::cloud::optional<T>` an intentionally incomplete implementation of
-  `std::optional<T>` to support C++11 and C++14 users.
-* Applications can configure `google::cloud::LogSink` to enable logging in some
-  of the libraries and to redirect the logs to their preferred destination.
-  The libraries do not enable any logging by default, not even to `stderr`.
-* `google::cloud::SetTerminateHandler()` allows applications compiled without
-  exceptions, but using the APIs that rely on exceptions to report errors, to
-  configure how the application terminates when an unrecoverable error is
-  detected by the libraries.
 
 ## v0.2.0 - 2018-08
 
