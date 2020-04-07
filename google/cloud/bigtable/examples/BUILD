@@ -38,6 +38,7 @@ load(":bigtable_examples_unit_tests.bzl", "bigtable_examples_unit_tests")
     deps = [
         ":bigtable_examples_common",
         "//google/cloud/bigtable:bigtable_client",
+        "//google/cloud/bigtable:bigtable_client_testing",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
