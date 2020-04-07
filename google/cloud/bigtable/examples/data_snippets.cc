@@ -67,7 +67,7 @@ void ApplyRelaxedIdempotency(google::cloud::bigtable::Table table,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply relaxed idempotency]
-  (table.project_id(), table.instance_id(), table.table_id(), argv[0]);
+  (table.project_id(), table.instance_id(), table.table_id(), argv.at(0));
 }
 
 void ApplyCustomRetry(google::cloud::bigtable::Table table,
@@ -86,7 +86,7 @@ void ApplyCustomRetry(google::cloud::bigtable::Table table,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [apply custom retry]
-  (table.project_id(), table.instance_id(), table.table_id(), argv[0]);
+  (table.project_id(), table.instance_id(), table.table_id(), argv.at(0));
 }
 
 void BulkApply(google::cloud::bigtable::Table table,
@@ -162,7 +162,7 @@ void ReadRow(google::cloud::bigtable::Table table,
     }
   }
   //! [read row] [END bigtable_read_error]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void ReadRows(google::cloud::bigtable::Table table,
@@ -286,7 +286,7 @@ void ReadRowSetPrefix(google::cloud::bigtable::Table table,
     }
   }
   //! [read rowset prefix] [END bigtable_read_prefix]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void ReadPrefixList(google::cloud::bigtable::Table table,
@@ -332,12 +332,12 @@ void ReadMultipleRanges(std::vector<std::string> argv) {
 
   std::vector<std::pair<std::string, std::string>> ranges;
   while (!argv.empty()) {
-    auto begin = argv[0];
+    auto begin = argv.at(0);
     argv.erase(argv.begin());
     if (argv.empty()) {
       throw Usage{"read-multiple-ranges - error: mismatched [begin,end) pair"};
     }
-    auto end = argv[0];
+    auto end = argv.at(0);
     argv.erase(argv.begin());
     ranges.emplace_back(std::make_pair(begin, end));
   }
@@ -396,7 +396,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table,
     }
   }
   //! [check and mutate]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
@@ -424,7 +424,7 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
     }
   }
   //! [check and mutate not present]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void ReadModifyWrite(google::cloud::bigtable::Table table,
@@ -441,7 +441,7 @@ void ReadModifyWrite(google::cloud::bigtable::Table table,
     std::cout << row->row_key() << "\n";
   }
   //! [read modify write]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void SampleRows(google::cloud::bigtable::Table table,
@@ -472,7 +472,7 @@ void DeleteAllCells(google::cloud::bigtable::Table table,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete all cells]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void DeleteFamilyCells(google::cloud::bigtable::Table table,
@@ -487,7 +487,7 @@ void DeleteFamilyCells(google::cloud::bigtable::Table table,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete family cells]
-  (std::move(table), argv[0], argv[1]);
+  (std::move(table), argv.at(0), argv.at(1));
 }
 
 void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table,
@@ -503,7 +503,7 @@ void DeleteSelectiveFamilyCells(google::cloud::bigtable::Table table,
     if (!status.ok()) throw std::runtime_error(status.message());
   }
   //! [delete selective family cells]
-  (std::move(table), argv[0], argv[1], argv[2]);
+  (std::move(table), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void RowExists(google::cloud::bigtable::Table table,
@@ -527,7 +527,7 @@ void RowExists(google::cloud::bigtable::Table table,
     std::cout << "Row exists.\n";
   }
   //! [row exists]
-  (std::move(table), argv[0]);
+  (std::move(table), argv.at(0));
 }
 
 void MutateDeleteColumns(std::vector<std::string> argv) {
@@ -545,7 +545,7 @@ void MutateDeleteColumns(std::vector<std::string> argv) {
       argv[2]);
   argv.erase(argv.begin(), argv.begin() + 3);
 
-  auto key = argv[0];
+  auto key = argv.at(0);
   argv.erase(argv.begin());
   std::vector<std::pair<std::string, std::string>> columns;
   for (auto arg : argv) {
@@ -641,7 +641,7 @@ void MutateInsertUpdateRows(google::cloud::bigtable::Table table,
     return InsertOrUpdate{family, column, value};
   };
 
-  auto key = argv[0];
+  auto key = argv.at(0);
   argv.erase(argv.begin());
   std::vector<InsertOrUpdate> mutations;
   for (auto& a : argv) {
@@ -711,7 +711,7 @@ void RenameColumn(google::cloud::bigtable::Table table,
     std::cout << "Row successfully updated\n";
   }
   // [END bigtable_mutate_mix_match]
-  (std::move(table), argv[0], argv[1], argv[2], argv[3]);
+  (std::move(table), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
 // This command just generates data suitable for other examples to run. This
