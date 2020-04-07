@@ -47,7 +47,7 @@ void AccessToken(std::vector<std::string> argv) {
     if (!tables) throw std::runtime_error(tables.status().message());
   }
   //! [test access token]
-  (argv[0], argv[1], argv[2]);
+  (argv.at(0), argv.at(1), argv.at(2));
 }
 
 void JWTAccessToken(std::vector<std::string> argv) {
@@ -86,7 +86,7 @@ void JWTAccessToken(std::vector<std::string> argv) {
     if (!tables) throw std::runtime_error(tables.status().message());
   }
   //! [test jwt access token]
-  (argv[0], argv[1], argv[2]);
+  (argv.at(0), argv.at(1), argv.at(2));
 }
 
 void GCECredentials(std::vector<std::string> argv) {
@@ -112,7 +112,7 @@ void GCECredentials(std::vector<std::string> argv) {
     if (!tables) throw std::runtime_error(tables.status().message());
   }
   //! [test gce credentials]
-  (argv[0], argv[1]);
+  (argv.at(0), argv.at(1));
 }
 
 void RunAll(std::vector<std::string> argv) {

@@ -42,7 +42,7 @@ void ListBucketAcl(google::cloud::storage::Client client,
     }
   }
   //! [list bucket acl] [END storage_print_bucket_acl]
-  (std::move(client), argv[0]);
+  (std::move(client), argv.at(0));
 }
 
 void CreateBucketAcl(google::cloud::storage::Client client,
@@ -62,7 +62,7 @@ void CreateBucketAcl(google::cloud::storage::Client client,
               << "Full attributes: " << *bucket_acl << "\n";
   }
   //! [create bucket acl]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteBucketAcl(google::cloud::storage::Client client,
@@ -77,7 +77,7 @@ void DeleteBucketAcl(google::cloud::storage::Client client,
               << bucket_name << "\n";
   }
   //! [delete bucket acl]
-  (std::move(client), argv[0], argv[1]);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void GetBucketAcl(google::cloud::storage::Client client,
@@ -94,7 +94,7 @@ void GetBucketAcl(google::cloud::storage::Client client,
               << acl->bucket() << " is " << *acl << "\n";
   }
   //! [get bucket acl] [END storage_print_bucket_acl_for_user]
-  (std::move(client), argv[0], argv[1]);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateBucketAcl(google::cloud::storage::Client client,
@@ -116,7 +116,7 @@ void UpdateBucketAcl(google::cloud::storage::Client client,
               << " is " << *updated_acl << "\n";
   }
   //! [update bucket acl]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void PatchBucketAcl(google::cloud::storage::Client client,
@@ -144,7 +144,7 @@ void PatchBucketAcl(google::cloud::storage::Client client,
               << patched_acl->bucket() << " is now " << *patched_acl << "\n";
   }
   //! [patch bucket acl]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void PatchBucketAclNoRead(google::cloud::storage::Client client,
@@ -163,7 +163,7 @@ void PatchBucketAclNoRead(google::cloud::storage::Client client,
               << patched_acl->bucket() << " is now " << *patched_acl << "\n";
   }
   //! [patch bucket acl no-read]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void AddBucketOwner(google::cloud::storage::Client client,
@@ -182,7 +182,7 @@ void AddBucketOwner(google::cloud::storage::Client client,
               << patched_acl->bucket() << " is now " << *patched_acl << "\n";
   }
   //! [add bucket owner] [END storage_add_bucket_owner]
-  (std::move(client), argv[0], argv[1]);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void RemoveBucketOwner(google::cloud::storage::Client client,
@@ -222,7 +222,7 @@ void RemoveBucketOwner(google::cloud::storage::Client client,
               << bucket_name << "\n";
   }
   //! [remove bucket owner] [END storage_remove_bucket_owner]
-  (std::move(client), argv[0], argv[1]);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void RunAll(std::vector<std::string> const& argv) {

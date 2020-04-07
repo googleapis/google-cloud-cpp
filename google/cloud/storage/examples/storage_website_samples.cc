@@ -53,7 +53,7 @@ void GetStaticWebsiteConfiguration(google::cloud::storage::Client client,
   }
   // [END storage_print_bucket_website_configuration]
   //! [print bucket website configuration]
-  (std::move(client), argv[0]);
+  (std::move(client), argv.at(0));
 }
 
 void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
@@ -92,7 +92,7 @@ void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
   }
   // [END storage_define_bucket_website_configuration]
   //! [define bucket website configuration]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
@@ -125,7 +125,7 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
               << " application has modified the bucket concurrently.\n";
   }
   //! [remove bucket website configuration]
-  (std::move(client), argv[0]);
+  (std::move(client), argv.at(0));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
