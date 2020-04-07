@@ -146,7 +146,8 @@ struct PolicyDocumentV4 {
   PolicyDocumentV4() = default;
   PolicyDocumentV4(std::string bucket, std::string object,
                    std::chrono::seconds expiration,
-                   std::chrono::system_clock::time_point timestamp,
+                   std::chrono::system_clock::time_point timestamp =
+                       std::chrono::system_clock::now(),
                    std::vector<PolicyDocumentCondition> conditions = {})
       : bucket(std::move(bucket)),
         object(std::move(object)),

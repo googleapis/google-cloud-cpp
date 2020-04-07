@@ -208,6 +208,15 @@ TEST(PolicyDocumentTests, PolicyDocumentV4Ctor) {
   EXPECT_EQ(now, doc.timestamp);
 }
 
+/// @test Verify that PolicyDocumentV4 ctor works.
+TEST(PolicyDocumentTests, PolicyDocumentV4CtorDefaultTime) {
+  auto const before = std::chrono::system_clock::now();
+  PolicyDocumentV4 doc("bucket", "object", std::chrono::seconds(42));
+  auto const after = std::chrono::system_clock::now();
+  EXPECT_LE(before, doc.timestamp);
+  EXPECT_GE(after, doc.timestamp);
+}
+
 }  // namespace
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
