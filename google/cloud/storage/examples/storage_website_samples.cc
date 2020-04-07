@@ -129,16 +129,15 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
 }
 
 void RunAll(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw Usage{"auto"};
-
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
+  if (!argv.empty()) throw Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+  });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  if (project_id.empty()) {
-    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
-  }
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =
       examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
