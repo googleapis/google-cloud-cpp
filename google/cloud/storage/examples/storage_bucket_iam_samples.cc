@@ -497,6 +497,7 @@ int main(int argc, char* argv[]) {
                  NativeRemoveBucketConditionalIamBinding),
       make_entry("native-remove-bucket-iam-member", {},
                  NativeRemoveBucketIamMember),
+      // Cannot use make_entry(), it parses a variable number of arguments
       {"test-bucket-iam-permissions", TestBucketIamPermissions},
       make_entry("set-bucket-public-iam", {}, SetBucketPublicIam),
       make_entry("native-set-bucket-public-iam", {}, NativeSetBucketPublicIam),
