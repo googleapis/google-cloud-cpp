@@ -98,15 +98,18 @@ std::string RandomTableId(std::string const& prefix,
 
 void CleanupOldTables(std::string const& prefix,
                       google::cloud::bigtable::TableAdmin admin) {
+  namespace cbt = google::cloud::bigtable;
+
   auto const threshold =
       std::chrono::system_clock::now() - std::chrono::hours(48);
-  auto const max_table_name = TablePrefix(prefix, threshold);
+  auto const max_table_id = TablePrefix(prefix, threshold);
+  auto const max_table_name = admin.TableName(max_table_id);
+  auto const prefix_name = admin.TableName(prefix);
 
-  namespace cbt = google::cloud::bigtable;
   auto tables = admin.ListTables(cbt::TableAdmin::NAME_ONLY);
   if (!tables) return;
   for (auto const& t : *tables) {
-    if (t.name().rfind(prefix, 0) != 0) continue;
+    if (t.name().rfind(prefix_name, 0) != 0) continue;
     // Eventually (I heard from good authority around year 2286) the date
     // formatted in seconds will gain an extra digit and this will no longer
     // work. If you are a programmer from the future, I (coryan) am (a) almost
@@ -114,7 +117,74 @@ void CleanupOldTables(std::string const& prefix,
     // maintained or used, and (c) a bit sorry that this caused you problems.
     if (t.name() >= max_table_name) continue;
     // Failure to cleanup is not an error.
-    (void)admin.DeleteTable(t.name());
+    auto const table_id = t.name().substr(t.name().find_last_of('/') + 1);
+    std::cout << "Deleting table " << table_id << std::endl;
+    (void)admin.DeleteTable(table_id);
+  }
+}
+
+std::string InstancePrefix(std::string const& prefix,
+                           std::chrono::system_clock::time_point tp) {
+  auto as_seconds =
+      std::chrono::duration_cast<std::chrono::seconds>(tp.time_since_epoch());
+  return prefix + std::to_string(as_seconds.count()) + "-";
+}
+
+auto constexpr kMaxClusterIdLength = 30;
+
+std::string RandomInstanceId(std::string const& prefix,
+                             google::cloud::internal::DefaultPRNG& generator) {
+  // Cloud Bigtable instance ids must have at least 6 characters, and can have
+  // up to 33 characters. But many of the examples append `-c1` or `-c2` to
+  // create cluster ids based on the instance id. So we make the generated ids
+  // even shorter.
+  auto constexpr kMaxInstanceIdLength = kMaxClusterIdLength - 3;
+  auto const timestamped_prefix =
+      InstancePrefix(prefix, std::chrono::system_clock::now());
+  if (timestamped_prefix.size() >= kMaxInstanceIdLength) {
+    throw std::invalid_argument("prefix too long for RandomInstanceId()");
+  }
+  auto const suffix_len = kMaxInstanceIdLength - timestamped_prefix.size();
+  return timestamped_prefix +
+         google::cloud::internal::Sample(generator, suffix_len,
+                                         "abcdefhijklmnopqrstuvwxyz0123456789");
+}
+
+std::string RandomClusterId(std::string const& prefix,
+                            google::cloud::internal::DefaultPRNG& generator) {
+  if (prefix.size() >= kMaxClusterIdLength) {
+    throw std::invalid_argument("prefix too long for RandomClusterId()");
+  }
+  auto const suffix_len = kMaxClusterIdLength - prefix.size();
+  return prefix +
+         google::cloud::internal::Sample(generator, suffix_len,
+                                         "abcdefhijklmnopqrstuvwxyz0123456789");
+}
+
+void CleanupOldInstances(std::string const& prefix,
+                         google::cloud::bigtable::InstanceAdmin admin) {
+  namespace cbt = google::cloud::bigtable;
+
+  auto const threshold =
+      std::chrono::system_clock::now() - std::chrono::hours(48);
+  auto const max_instance_id = InstancePrefix(prefix, threshold);
+  auto const max_instance_name = admin.InstanceName(max_instance_id);
+  auto const prefix_name = admin.InstanceName(prefix);
+
+  auto instances = admin.ListInstances();
+  if (!instances) return;
+  for (auto const& i : instances->instances) {
+    if (i.name().rfind(prefix_name, 0) != 0) continue;
+    // Eventually (I heard from good authority around year 2286) the date
+    // formatted in seconds will gain an extra digit and this will no longer
+    // work. If you are a programmer from the future, I (coryan) am (a) almost
+    // certainly dead, (b) very confused that this code is still being
+    // maintained or used, and (c) a bit sorry that this caused you problems.
+    if (i.name() >= max_instance_name) continue;
+    // Failure to cleanup is not an error.
+    auto const instance_id = i.name().substr(i.name().find_last_of('/') + 1);
+    std::cout << "Deleting instance " << instance_id << std::endl;
+    (void)admin.DeleteInstance(instance_id);
   }
 }
 
@@ -150,9 +220,6 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
   }
 }
 
-using TableAdminCommandType = std::function<void(
-    google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
-
 google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     TableAdminCommandType const& function) {
@@ -173,6 +240,29 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
         argv[1]);
     argv.erase(argv.begin(), argv.begin() + kFixedArguments);
     function(table, argv);
+  };
+  return {name, command};
+}
+
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    InstanceAdminCommandType const& function) {
+  auto command = [=](std::vector<std::string> argv) {
+    auto constexpr kFixedArguments = 1;
+    if (argv.size() != args.size() + kFixedArguments) {
+      std::ostringstream os;
+      os << name << " <project-id>";
+      char const* sep = " ";
+      for (auto const& a : args) {
+        os << sep << a;
+      }
+      throw google::cloud::bigtable::examples::Usage{std::move(os).str()};
+    }
+    google::cloud::bigtable::InstanceAdmin instance(
+        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
+            argv[0], google::cloud::bigtable::ClientOptions()));
+    argv.erase(argv.begin(), argv.begin() + kFixedArguments);
+    function(instance, argv);
   };
   return {name, command};
 }

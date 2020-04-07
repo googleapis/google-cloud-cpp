@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
 
+#include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
 #include <functional>
@@ -58,6 +59,17 @@ std::string RandomTableId(std::string const& prefix,
                           google::cloud::internal::DefaultPRNG& generator);
 void CleanupOldTables(std::string const& prefix,
                       google::cloud::bigtable::TableAdmin admin);
+
+std::string InstancePrefix(std::string const& prefix,
+                           std::chrono::system_clock::time_point tp);
+std::string RandomInstanceId(std::string const& prefix,
+                             google::cloud::internal::DefaultPRNG& generator);
+void CleanupOldInstances(std::string const& prefix,
+                         google::cloud::bigtable::InstanceAdmin admin);
+
+std::string RandomClusterId(std::string const& prefix,
+                            google::cloud::internal::DefaultPRNG& generator);
+
 bool UsingEmulator();
 bool RunAdminIntegrationTests();
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
@@ -68,6 +80,13 @@ using TableAdminCommandType = std::function<void(
 google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     TableAdminCommandType const& function);
+
+using InstanceAdminCommandType = std::function<void(
+    google::cloud::bigtable::InstanceAdmin, std::vector<std::string>)>;
+
+google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+    std::string const& name, std::vector<std::string> const& args,
+    InstanceAdminCommandType const& function);
 
 }  // namespace examples
 }  // namespace bigtable
