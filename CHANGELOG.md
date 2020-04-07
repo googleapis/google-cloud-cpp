@@ -125,7 +125,7 @@ more info.
 * feat: implement parallel uploads. For large files this can improve the upload
   bandwidth by a factor of 20. Note that in this release such uploads cannot be
   resumed after a program restart. (#3279)
-* feat: support optionsRequestedPolicyVersion query parameter in 
+* feat: support optionsRequestedPolicyVersion query parameter in
 * fix: setting options in requests accepts crefs (#3287)
 
 ## v0.16.0 - 2019-12
