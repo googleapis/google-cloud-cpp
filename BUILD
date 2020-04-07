@@ -19,3 +19,17 @@ licenses(["notice"])  # Apache 2.0
 exports_files([
     "LICENSE",
 ])
+
+cc_library(
+    name = "bigtable_client",
+    deps = [
+        "//google/cloud/bigtable:bigtable_client",
+    ],
+)
+
+cc_library(
+    name = "storage_client",
+    deps = [
+        "//google/cloud/storage:storage_client",
+    ],
+)
