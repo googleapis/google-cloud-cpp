@@ -30,8 +30,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 
 if [[ "${CHECK_ABI:-}" != "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}Skipping ABI check as it is disabled for this build." \
-      "${COLOR_RESET}"
+  log_yellow "Skipping ABI check as it is disabled for this build."
   exit 0
 fi
 
@@ -40,7 +39,7 @@ check_library() {
   local return_status=0
 
   echo
-  echo "${COLOR_YELLOW}Checking ABI for ${library} library.${COLOR_RESET}"
+  log_yellow "Checking ABI for ${library} library."
   libdir="$(pkg-config "${library}" --variable=libdir)"
   includedir="$(pkg-config "${library}" --variable=includedir)"
   new_dump_file="${library}.actual.abi.dump"

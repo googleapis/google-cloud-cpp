@@ -30,7 +30,7 @@ readonly NCPU
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Update or install dependencies.${COLOR_RESET}"
+log_yellow "Update or install dependencies."
 
 brew_env=()
 if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
@@ -39,7 +39,7 @@ fi
 env ${brew_env[@]+"${brew_env[@]}"} brew install libressl
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+log_yellow "ccache stats"
 ccache --show-stats
 ccache --zero-stats
 
@@ -52,11 +52,11 @@ cmake_flags=(
 )
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Configure CMake.${COLOR_RESET}"
+log_yellow "Configure CMake."
 cmake "-H${SOURCE_DIR}" "-B${BINARY_DIR}" "${cmake_flags[@]}"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Compiling with ${NCPU} cpus.${COLOR_RESET}"
+log_yellow "Compiling with ${NCPU} cpus."
 cmake --build "${BINARY_DIR}" -- -j "${NCPU}"
 
 # When user a super-build the tests are hidden in a subdirectory. We can tell
@@ -65,7 +65,7 @@ if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
   # If the file is not present, then this is a super build, which automatically
   # run the tests anyway, no need to run them again.
   echo "================================================================"
-  echo "${COLOR_YELLOW}$(date -u): Running unit tests.${COLOR_RESET}"
+  log_yellow "Running unit tests."
   (cd "${BINARY_DIR}"; ctest \
       -LE integration-tests \
       --output-on-failure -j "${NCPU}")
@@ -73,12 +73,12 @@ if [[ -r "${BINARY_DIR}/CTestTestfile.cmake" ]]; then
 fi
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+log_yellow "ccache stats"
 ccache --show-stats
 ccache --zero-stats
 
 echo "================================================================"
-echo "${COLOR_GREEN}$(date -u): Build finished sucessfully${COLOR_RESET}"
+log_green "Build finished sucessfully"
 echo "================================================================"
 
 exit 0

@@ -38,11 +38,11 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 # ci/Dockerfile.* build scripts.
 
 echo
-echo "${COLOR_YELLOW}$(date -u): compiling quickstart programs${COLOR_RESET}"
+log_yellow "compiling quickstart programs"
 echo
 
 readonly BAZEL_BIN="/usr/local/bin/bazel"
-echo "$(date -u): ising Bazel in ${BAZEL_BIN}"
+log_normal "Using Bazel in ${BAZEL_BIN}"
 
 run_vars=()
 bazel_args=("--test_output=errors" "--verbose_failures=true" "--keep_going")
@@ -70,22 +70,22 @@ build_service() {
   local -r service="$1"
 
   echo "================================================================"
-  echo "${COLOR_YELLOW}$(date -u): building ${service}${COLOR_RESET}"
+  log_yellow "building ${service}"
   ( cd "google/cloud/${service}/quickstart";
-    echo "$(date -u): capture bazel version"
+    log_normal "capture bazel version"
     ${BAZEL_BIN} version
-    echo "$(date -u): fetch dependencies to avoid flaky builds"
+    log_normal "fetch dependencies to avoid flaky builds"
     "${PROJECT_ROOT}/ci/retry-command.sh" \
         "${BAZEL_BIN}" fetch -- ...
     echo
-    echo "$(date -u): compiling quickstart program for ${service}"
+    log_normal "compiling quickstart program for ${service}"
     "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
 
     if [[ -r "/c/test-configuration.sh" ]]; then
-      echo "$(date -u): running quickstart program for ${service}"
+      log_normal "running quickstart program for ${service}"
       env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
           "--spawn_strategy=local" \
-          :quickstart -- ${quickstart_args["${service}"]}
+          :quickstart -- "${quickstart_args["${service}"]}"
     fi
   )
 }
@@ -99,9 +99,9 @@ done
 
 echo "================================================================"
 if [[ -z "${errors}" ]]; then
-  echo "${COLOR_GREEN}$(date -u): Build finished${COLOR_RESET}"
+  log_green "Build finished"
 else
-  echo "${COLOR_GREEN}$(date -u): Build failed for ${errors}${COLOR_RESET}"
+  log_red "Build failed for ${errors}"
 fi
 
 exit 0

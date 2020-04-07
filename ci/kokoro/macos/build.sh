@@ -54,8 +54,7 @@ source "${PROJECT_ROOT}/ci/colors.sh"
 source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): change working directory to project root."\
-    "${COLOR_RESET}"
+log_yellow "change working directory to project root."
 cd "${PROJECT_ROOT}"
 
 NCPU="$(sysctl -n hw.logicalcpu)"
@@ -65,8 +64,7 @@ KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
 readonly KOKORO_GFILE_DIR
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): building with ${NCPU} cores on ${PWD}."\
-    "${COLOR_RESET}"
+log_yellow "building with ${NCPU} cores on ${PWD}."
 
 script_flags=("${PROJECT_ROOT}")
 
@@ -76,8 +74,7 @@ elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   driver_script="ci/kokoro/macos/build-cmake.sh"
   script_flags+=("super" "cmake-out/macos")
 else
-  echo "${COLOR_RED}$(date -u): unknown BUILD_NAME (${BUILD_NAME})."\
-      "${COLOR_RESET}"
+  log_red "unknown BUILD_NAME (${BUILD_NAME})."
   exit 1
 fi
 
@@ -85,8 +82,7 @@ fi
 # find the credentials, even if you do not use them. Some of the unit tests do
 # exactly that.
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): define GOOGLE_APPLICATION_CREDENTIALS."\
-    "${COLOR_RESET}"
+log_yellow "define GOOGLE_APPLICATION_CREDENTIALS."
 export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 
 # Download the gRPC `roots.pem` file. On macOS gRPC does not use the native
@@ -96,7 +92,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
 # But it was closed without being merged, and there are open bugs:
 #    https://github.com/grpc/grpc/issues/16571
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): getting roots.pem for gRPC.${COLOR_RESET}"
+log_yellow "getting roots.pem for gRPC."
 export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH="${KOKORO_GFILE_DIR}/roots.pem"
 rm -f "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}"
 wget -O "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
@@ -105,8 +101,7 @@ wget -O "${GRPC_DEFAULT_SSL_ROOTS_FILE_PATH}" \
 BRANCH="${KOKORO_GITHUB_PULL_REQUEST_TARGET_BRANCH:-master}"
 readonly BRANCH
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): detected the branch name:"\
-    "${BRANCH}.${COLOR_RESET}"
+log_yellow "detected the branch name: ${BRANCH}."
 
 CACHE_BUCKET="${GOOGLE_CLOUD_CPP_KOKORO_RESULTS:-cloud-cpp-kokoro-results}"
 readonly CACHE_BUCKET
@@ -120,13 +115,13 @@ readonly CACHE_NAME
       "${CACHE_FOLDER}" "${CACHE_NAME}" || true
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): starting build script.${COLOR_RESET}"
+log_yellow "starting build script."
 
 if "${driver_script}" "${script_flags[@]}"; then
-  echo "${COLOR_GREEN}$(date -u): build script was successful.${COLOR_RESET}"
+  log_green "build script was successful."
   exit_status=0
 else
-  echo "${COLOR_RED}$(date -u): build script reported errors.${COLOR_RESET}"
+  log_red "build script reported errors."
   exit_status=1
 fi
 
