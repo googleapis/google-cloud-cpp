@@ -33,8 +33,7 @@ fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo
-echo "${COLOR_YELLOW}$(date -u): Starting docker build with ${NCPU}"\
-    "cores${COLOR_RESET}"
+log_yellow "Starting docker build with ${NCPU} cores"
 echo
 
 # Run the configure / compile / test cycle inside a docker image.
@@ -42,22 +41,22 @@ echo
 # ci/Dockerfile.* build scripts.
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Verify formatting${COLOR_RESET}"
+log_yellow "Verify formatting"
 (cd "${PROJECT_ROOT}" ; ./ci/check-style.sh)
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Verify markdown${COLOR_RESET}"
+log_yellow "Verify markdown"
 (cd "${PROJECT_ROOT}" ; ./ci/check-markdown.sh)
 
 if command -v ccache; then
   echo "================================================================"
-  echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+  log_yellow "ccache stats"
   ccache --show-stats
   ccache --zero-stats
 fi
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Configure CMake${COLOR_RESET}"
+log_yellow "Configure CMake"
 
 CMAKE_COMMAND="cmake"
 
@@ -108,12 +107,12 @@ ${CMAKE_COMMAND} \
     "-H${SOURCE_DIR}" \
     "-B${BINARY_DIR}"
 echo
-echo "${COLOR_YELLOW}$(date -u): Finished CMake config${COLOR_RESET}"
+log_yellow "Finished CMake config"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): started build${COLOR_RESET}"
+log_yellow "started build"
 ${CMAKE_COMMAND} --build "${BINARY_DIR}" -- -j "${NCPU}"
-echo "${COLOR_YELLOW}$(date -u): finished build${COLOR_RESET}"
+log_yellow "finished build"
 
 TEST_JOB_COUNT="${NCPU}"
 if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
@@ -137,12 +136,12 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     # It is Okay to skip the tests in this case because the super build
     # automatically runs them.
     echo
-    echo "${COLOR_YELLOW}$(date -u): Running unit tests${COLOR_RESET}"
+    log_yellow "Running unit tests"
     echo
     (cd "${BINARY_DIR}" && ctest "-LE" "integration-tests" "${ctest_args[@]}")
 
     echo
-    echo "${COLOR_YELLOW}$(date -u): Completed unit tests${COLOR_RESET}"
+    log_yellow "Completed unit tests"
     echo
   fi
 
@@ -157,8 +156,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     success=no
     for attempt in 1 2 3; do
       echo
-      echo "${COLOR_YELLOW}$(date -u): running bigtable integration tests" \
-          "via CTest [${attempt}]${COLOR_RESET}"
+      log_yellow "running bigtable integration tests via CTest [${attempt}]"
       echo
       # TODO(#441) - when the emulator crashes the tests can take a long time.
       # The slowest test normally finishes in about 6 seconds, 60 seems safe.
@@ -169,14 +167,12 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
       fi
     done
     if [ "${success}" != "yes" ]; then
-      echo "${COLOR_RED}$(date -u): integration tests failed multiple times," \
-          "aborting tests.${COLOR_RESET}"
+      log_red "integration tests failed multiple times, aborting tests."
       exit 1
     fi
     set -e
     echo
-    echo "${COLOR_YELLOW}$(date -u): running storage integration tests via" \
-        "CTest [${attempt}]${COLOR_RESET}"
+    log_yellow "running storage integration tests via CTest [${attempt}]"
     echo
     "${PROJECT_ROOT}/google/cloud/storage/ci/${EMULATOR_SCRIPT}" \
         "${BINARY_DIR}" "${ctest_args[@]}"
@@ -198,8 +194,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         # super builds cannot run the integration tests
         ( "${SOURCE_DIR}" != "super" ) ]]; then
     echo "================================================================"
-    echo "${COLOR_YELLOW}$(date -u): Running the integration tests against" \
-        "production${COLOR_RESET}"
+    log_yellow "Running the integration tests against production"
 
     # shellcheck disable=SC1091
     source "${INTEGRATION_TESTS_CONFIG}"
@@ -239,27 +234,25 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         -L integration-tests-no-emulator "${ctest_args[@]}"
 
     echo "================================================================"
-    echo "${COLOR_YELLOW}$(date -u): Completed the integration tests against" \
-        "production${COLOR_RESET}"
+    log_yellow "Completed the integration tests against production"
   fi
 
   if [[ "${RUN_INTEGRATION_TESTS:-}" != "no" ]]; then
     echo
-    echo "${COLOR_YELLOW}$(date -u): Running integration tests${COLOR_RESET}"
+    log_yellow "Running integration tests"
     echo
 
     # Run the integration tests. Not all projects have them, so just iterate
     # over the ones that do.
     for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
       echo
-      echo "${COLOR_YELLOW}$(date -u): Running integration tests for" \
-          " ${subdir}${COLOR_RESET}"
+      log_yellow "Running integration tests for ${subdir}"
       (cd "${BINARY_DIR}" && \
           "${PROJECT_ROOT}/${subdir}/ci/run_integration_tests.sh")
     done
 
     echo
-    echo "${COLOR_YELLOW}$(date -u): Completed integration tests${COLOR_RESET}"
+    log_yellow "Completed integration tests"
     echo
   fi
 fi
@@ -267,14 +260,13 @@ fi
 # Test the install rule and that the installation works.
 if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}$(date -u): testing install rule${COLOR_RESET}"
+  log_yellow "testing install rule"
   cmake --build "${BINARY_DIR}" --target install
 
   # Also verify that the install directory does not get unexpected files or
   # directories installed.
   echo
-  echo "${COLOR_YELLOW}$(date -u): Verify installed headers created only" \
-      "expected directories.${COLOR_RESET}"
+  log_yellow "Verify installed headers created only expected directories."
   if comm -23 \
       <(find /var/tmp/staging/include/google/cloud -type d | sort) \
       <(echo /var/tmp/staging/include/google/cloud ; \
@@ -286,11 +278,9 @@ if [[ "${TEST_INSTALL:-}" = "yes" ]]; then
         echo /var/tmp/staging/include/google/cloud/storage/oauth2 ; \
         echo /var/tmp/staging/include/google/cloud/storage/testing ; \
         /bin/true) | grep -q /var/tmp; then
-      echo "${COLOR_RED}$(date -u): Installed directories do not match" \
-          "expectation.${COLOR_RESET}"
-      echo "${COLOR_RED}Found:"
+      log_red "Installed directories do not match expectation."
+      echo "Found:"
       find /var/tmp/staging/include/google/cloud -type d | sort
-      echo "${COLOR_RESET}"
       /bin/false
    fi
 
@@ -304,14 +294,13 @@ fi
 # If document generation is enabled, run it now.
 if [[ "${GENERATE_DOCS}" == "yes" ]]; then
   echo
-  echo "${COLOR_YELLOW}$(date -u): Generating Doxygen" \
-      "documentation${COLOR_RESET}"
+  log_yellow "Generating Doxygen documentation"
   cmake --build "${BINARY_DIR}" --target doxygen-docs -- -j "${NCPU}"
 fi
 
 if command -v ccache; then
   echo "================================================================"
-  echo "${COLOR_YELLOW}$(date -u): ccache stats${COLOR_RESET}"
+  log_yellow "ccache stats"
   ccache --show-stats
   ccache --zero-stats
 fi

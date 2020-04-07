@@ -25,7 +25,7 @@ readonly PROJECT_ROOT="$1"
 source "${PROJECT_ROOT}/ci/colors.sh"
 echo
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): update or install Bazel.${COLOR_RESET}"
+log_yellow "update or install Bazel."
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
@@ -58,24 +58,23 @@ fi
 echo
 echo "================================================================"
 for repeat in 1 2 3; do
-  echo "${COLOR_YELLOW}$(date -u): Fetch bazel dependencies" \
-      "[${repeat}/3].${COLOR_RESET}"
+  log_yellow "Fetch bazel dependencies [${repeat}/3]."
   if "${BAZEL_BIN}" fetch -- //google/cloud/...; then
     break;
   else
-    echo "${COLOR_YELLOW}$(date -u): bazel fetch failed with $?${COLOR_RESET}"
+    log_yellow "bazel fetch failed with $?"
   fi
 done
 
 echo
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): build and run unit tests.${COLOR_RESET}"
+log_yellow "build and run unit tests."
 "${BAZEL_BIN}" test \
     "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
     -- //google/cloud/...:all
 
 echo
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): build all targets.${COLOR_RESET}"
+log_yellow "build all targets."
 "${BAZEL_BIN}" build \
     "${bazel_args[@]}" -- //google/cloud/...:all

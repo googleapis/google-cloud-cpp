@@ -13,6 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Prefer the log_* functions, such as log_yellow, instead of directly using
+# these variables. The functions don't require the caller to remember to reset
+# the terminal.
 if [ -z "${COLOR_RESET+x}" ]; then
   if type tput >/dev/null 2>&1; then
     readonly COLOR_RED="$(tput setaf 1)"
@@ -26,3 +29,30 @@ if [ -z "${COLOR_RESET+x}" ]; then
     readonly COLOR_RESET=""
   fi
 fi
+
+# Logs a message using the given color. The first argument must be one of the
+# COLOR_* variables defined above, such as "${COLOR_YELLOW}". The remaining
+# arguments will be logged in the given color. The log message will also have
+# an RFC-3339 timestamp prepended (in UTC).
+function log_color_impl() {
+  local color="$1"
+  shift
+  local timestamp
+  timestamp="$(date -u "+%Y-%m-%dT%H:%M:%SZ")"
+  echo "${color}${timestamp}: " "$@" "${COLOR_RESET}"
+}
+
+# Logs the given message in green with a timestamp.
+function log_green() {
+  log_color_impl "${COLOR_GREEN}" "$@"
+}
+
+# Logs the given message in yellow with a timestamp.
+function log_yellow() {
+  log_color_impl "${COLOR_YELLOW}" "$@"
+}
+
+# Logs the given message in red with a timestamp.
+function log_red() {
+  log_color_impl "${COLOR_RED}" "$@"
+}

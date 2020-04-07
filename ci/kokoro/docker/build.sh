@@ -230,19 +230,16 @@ fi
 source "${PROJECT_ROOT}/ci/colors.sh"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): change working directory to project root."\
-    "${COLOR_RESET}"
+log_yellow "change working directory to project root."
 cd "${PROJECT_ROOT}"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Capture Docker version to" \
-    "troubleshoot.${COLOR_RESET}"
+log_yellow "Capture Docker version to troubleshoot."
 sudo docker version
 
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh" ]]; then
   echo "================================================================"
-  echo "${COLOR_YELLOW}$(date -u): Load Google Container Registry" \
-      "configuration parameters.${COLOR_RESET}"
+  log_yellow "Load Google Container Registry configuration parameters."
   source "${KOKORO_GFILE_DIR:-}/gcr-configuration.sh"
 fi
 
@@ -251,12 +248,10 @@ source "${PROJECT_ROOT}/ci/etc/repo-config.sh"
 source "${PROJECT_ROOT}/ci/define-dump-log.sh"
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Building with ${NCPU} cores on" \
-    "${PWD}.${COLOR_RESET}"
+log_yellow "Building with ${NCPU} cores on ${PWD}."
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Setup Google Container Registry" \
-    "access.${COLOR_RESET}"
+log_yellow "Setup Google Container Registry access."
 if [[ -f "${KOKORO_GFILE_DIR:-}/gcr-service-account.json" ]]; then
   gcloud auth activate-service-account --key-file \
     "${KOKORO_GFILE_DIR}/gcr-service-account.json"
@@ -267,8 +262,7 @@ if [[ "${RUNNING_CI:-}" == "yes" ]]; then
 fi
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Download existing image (if available)" \
-    "for ${DISTRO}.${COLOR_RESET}"
+log_yellow "Download existing image (if available) for ${DISTRO}."
 has_cache="false"
 if [[ -n "${PROJECT_ID:-}" ]] && docker pull "${IMAGE}:latest"; then
   echo "Existing image successfully downloaded."
@@ -276,8 +270,7 @@ if [[ -n "${PROJECT_ID:-}" ]] && docker pull "${IMAGE}:latest"; then
 fi
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Build Docker image ${IMAGE} with" \
-    "development tools for ${DISTRO}.${COLOR_RESET}"
+log_yellow "Build Docker image ${IMAGE} with development tools for ${DISTRO}."
 update_cache="false"
 
 docker_build_flags=(
@@ -299,11 +292,9 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && \
 fi
 
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Creating Docker image with all the" \
-    "development tools.${COLOR_RESET}"
+log_yellow "Creating Docker image with all the development tools."
 echo "    docker build ${docker_build_flags[*]} ci"
-echo "${COLOR_YELLOW}$(date -u): Logging to" \
-    "${BUILD_OUTPUT}/create-build-docker-image.log${COLOR_RESET}"
+log_yellow "Logging to ${BUILD_OUTPUT}/create-build-docker-image.log"
 # We do not want to print the log unless there is an error, so disable the -e
 # flag. Later, we will want to print out the emulator(s) logs *only* if there
 # is an error, so disabling from this point on is the right choice.
@@ -312,19 +303,16 @@ mkdir -p "${BUILD_OUTPUT}"
 if timeout 3600s docker build "${docker_build_flags[@]}" ci \
     >"${BUILD_OUTPUT}/create-build-docker-image.log" 2>&1 </dev/null; then
   update_cache="true"
-  echo "${COLOR_GREEN}$(date -u): Docker image successfully rebuilt"\
-      "${COLOR_RESET}"
+  log_green "Docker image successfully rebuilt"
 else
-  echo "${COLOR_YELLOW}$(date -u): Error updating Docker image, using cached" \
-      "image for this build${COLOR_RESET}"
+  log_yellow "Error updating Docker image, using cached image for this build"
   dump_log "${BUILD_OUTPUT}/create-build-docker-image.log"
 fi
 
 if "${update_cache}" && [[ "${RUNNING_CI:-}" == "yes" ]] &&
    [[ -z "${KOKORO_GITHUB_PULL_REQUEST_NUMBER:-}" ]]; then
   echo "================================================================"
-  echo "${COLOR_YELLOW}$(date -u): Uploading updated base image for" \
-      "${DISTRO}.${COLOR_RESET}"
+  log_yellow "Uploading updated base image for ${DISTRO}."
   # Do not stop the build on a failure to update the cache.
   docker push "${IMAGE}:latest" || true
 fi
@@ -338,7 +326,7 @@ fi
 # - Choose the branch from the bottom of the list.
 # - Typically this is the branch that was checked out by Kokoro.
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Detecting the branch name.${COLOR_RESET}"
+log_yellow "Detecting the branch name."
 BRANCH="$(git branch --all --no-color --contains "$(git rev-parse HEAD)" | \
   grep -v 'HEAD' | tail -1 || exit 0)"
 # Enable extglob if not enabled
@@ -349,8 +337,7 @@ BRANCH="${BRANCH##remotes/origin/}"
 BRANCH="${BRANCH##remotes/upstream/}"
 export BRANCH
 echo "================================================================"
-echo "${COLOR_YELLOW}$(date -u): Detected the branch name: ${BRANCH}." \
-    "${COLOR_RESET}"
+log_yellow "Detected the branch name: ${BRANCH}."
 
 # The default user for a Docker container has uid 0 (root). To avoid creating
 # root-owned files in the build directory we tell docker to use the current
@@ -520,12 +507,10 @@ readonly CACHE_NAME
 # appropriate arguments.
 echo "================================================================"
 if [[ $# -ge 2 ]]; then
-  echo "${COLOR_YELLOW}$(date -u): Running the given commands '" \
-      "${@:2}" "' in the container.${COLOR_RESET}"
+  log_yellow "Running the given commands '" "${@:2}" "' in the container."
   readonly commands=( "${@:2}" )
 else
-  echo "${COLOR_YELLOW}$(date -u): Running the full build inside docker." \
-      "${COLOR_RESET}"
+  log_yellow "Running the full build inside docker."
   readonly commands=(
     "/v/${in_docker_script}"
     "${CMAKE_SOURCE_DIR}"
@@ -538,8 +523,7 @@ echo sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 sudo docker run "${docker_flags[@]}" "${IMAGE}:latest" "${commands[@]}"
 
 exit_status=$?
-echo "${COLOR_YELLOW}$(date -u): Build finished with ${exit_status} exit" \
-    "status.${COLOR_RESET}"
+log_yellow "Build finished with ${exit_status} exit status."
 
 echo "================================================================"
 if [[ "${BUILD_NAME}" == "publish-refdocs" ]]; then
@@ -559,7 +543,7 @@ fi
 
 if [[ "${exit_status}" != 0 ]]; then
   echo "================================================================"
-  echo "${COLOR_RED}$(date -u): Build failed printing logs.${COLOR_RESET}"
+  log_red "Build failed printing logs."
   "${PROJECT_ROOT}/ci/kokoro/docker/dump-logs.sh"
 fi
 
@@ -571,22 +555,19 @@ if [[ "${RUNNING_CI:-}" == "yes" ]] && [[ -n "${KOKORO_ARTIFACTS_DIR:-}" ]]; the
   # Our CI system (kokoro) syncs the data in this directory to somewhere after
   # the build completes. Removing the cmake-out/ dir shaves minutes off this
   # process. This is safe as long as we don't wish to save any build artifacts.
-  echo "${COLOR_YELLOW}$(date -u): cleaning up artifacts.${COLOR_RESET}"
+  log_yellow "cleaning up artifacts."
   find "${KOKORO_ARTIFACTS_DIR}" -name cmake-out -type d -prune -print0 \
     | xargs -0 -t rm -rf
 else
-  echo "${COLOR_YELLOW}$(date -u): Not a CI build; " \
-    skipping artifact cleanup".${COLOR_RESET}"
+  log_yellow "Not a CI build; skipping artifact cleanup"
 fi
 
 echo
 echo "================================================================"
 if [[ ${exit_status} -eq 0 ]]; then
-  echo "${COLOR_GREEN}$(date -u): Build script finished successfully."\
-      "${COLOR_RESET}"
+  log_green "$(date -u): Build script finished successfully."
 else
-  echo "${COLOR_RED}$(date -u): Build script failed with status"\
-      "${exit_status}${COLOR_RESET}"
+  log_red "$(date -u): Build script failed with status ${exit_status}"
 fi
 
 exit ${exit_status}
