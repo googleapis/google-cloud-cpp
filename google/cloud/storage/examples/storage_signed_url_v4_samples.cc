@@ -76,10 +76,10 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME",
   });
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const bucket_name = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                               .value_or("");
+                               .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const object_name =
       examples::MakeRandomObjectName(generator, "cloud-cpp-test-examples-");

@@ -379,11 +379,11 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT",
   });
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const service_account =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
-          .value_or("");
+          .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =
       examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
