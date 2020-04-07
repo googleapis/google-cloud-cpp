@@ -18,7 +18,7 @@ release notes.
 
 ### Update CHANGELOG.md
 
-Update `google/cloud/bigtable/CHANGELOG.md` based on the release notes:
+Update `CHANGELOG.md` based on the release notes for both Bigtable and Storage:
 
 ```bash
 # Summarize the output of this into google/cloud/bigtable/README.md
@@ -26,8 +26,6 @@ git log --no-merges --format="format:* %s" \
     $(git describe --tags --abbrev=0 upstream/master)..HEAD \
     upstream/master -- google/cloud/bigtable
 ```
-
-Update `google/cloud/storage/CHANGELOG.md` based on the release notes:
 
 ```bash
 # Summarize the output of this into google/cloud/storage/README.md
