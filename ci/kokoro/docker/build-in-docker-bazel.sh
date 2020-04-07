@@ -41,7 +41,7 @@ echo
 
 echo "================================================================"
 readonly BAZEL_BIN="/usr/local/bin/bazel"
-echo "$(date -u): Using Bazel in ${BAZEL_BIN}"
+log_normal "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 echo "================================================================"
 
@@ -55,20 +55,20 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
 fi
 
 echo "================================================================"
-echo "$(date -u): Fetching dependencies"
+log_normal "Fetching dependencies"
 echo "================================================================"
 "${PROJECT_ROOT}/ci/retry-command.sh" \
     "${BAZEL_BIN}" fetch -- //google/cloud/...:all
 
 echo "================================================================"
-echo "$(date -u): Compiling and running unit tests"
+log_normal "Compiling and running unit tests"
 echo "================================================================"
 "${BAZEL_BIN}" test \
     "${bazel_args[@]}" "--test_tag_filters=-integration-tests" \
     -- //google/cloud/...:all
 
 echo "================================================================"
-echo "$(date -u): Compiling all the code, including integration tests"
+log_normal "Compiling all the code, including integration tests"
 echo "================================================================"
 # Then build everything else (integration tests, examples, etc). So we can run
 # them next.
@@ -89,7 +89,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
         -r "${TEST_KEY_FILE_P12}" && \
         -r "${GOOGLE_APPLICATION_CREDENTIALS}" ) ]]; then
   echo "================================================================"
-  echo "$(date -u): Running the integration tests"
+  log_normal "Running the integration tests"
   echo "================================================================"
 
   # shellcheck disable=SC1091
@@ -170,7 +170,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
     echo
     echo "================================================================"
-    echo "$(date -u): Running Google Cloud Bigtable Admin Examples"
+    log_normal "Running Google Cloud Bigtable Admin Examples"
     echo "================================================================"
     (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
        "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
@@ -178,14 +178,14 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  echo "$(date -u): Running Google Cloud Bigtable Examples"
+  log_normal "Running Google Cloud Bigtable Examples"
   echo "================================================================"
   (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
       "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
 
   echo
   echo "================================================================"
-  echo "$(date -u): Create service account to run the storage HMAC tests."
+  log_normal "Create service account to run the storage HMAC tests."
   echo "================================================================"
   # Recall that each evaluation of ${RANDOM} produces a different value.
   HMAC_SERVICE_ACCOUNT_NAME="hmac-sa-$(date +%s)-${RANDOM}"
@@ -196,7 +196,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   "${GCLOUD}" --quiet iam service-accounts create "--project=${PROJECT_ID}" \
       "${HMAC_SERVICE_ACCOUNT_NAME}"
-  echo "$(date -u): Grant service account permissions to create HMAC keys."
+  log_normal "Grant service account permissions to create HMAC keys."
   "${GCLOUD}" --quiet projects add-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
       --role roles/iam.serviceAccountTokenCreator >/dev/null
@@ -205,7 +205,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  echo "$(date -u): Running Google Cloud Storage Examples"
+  log_normal "Running Google Cloud Storage Examples"
   echo "================================================================"
   set +e
   echo "Running Google Cloud Storage Examples"
@@ -216,27 +216,27 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  echo "$(date -u): Delete service account to used in the storage HMAC tests."
+  log_normal "Delete service account to used in the storage HMAC tests."
   echo "================================================================"
   "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   "${GCLOUD}" --quiet projects remove-iam-policy-binding "${PROJECT_ID}" \
       --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
       --role roles/iam.serviceAccountTokenCreator >/dev/null
-  echo "$(date -u): Revoke service account permissions to create HMAC keys."
+  log_normal "Revoke service account permissions to create HMAC keys."
   "${GCLOUD}" --quiet iam service-accounts delete --quiet \
       "${HMAC_SERVICE_ACCOUNT}" >/dev/null
   # Deactivate the recently activated service account to prevent accidents.
   "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
 
   if [[ "${storage_examples_status}" != 0 ]]; then
-    echo "$(date -u): Error in storage examples."
+    log_red "Error in storage examples."
     exit 1
   fi
 fi
 
 echo "================================================================"
-echo "$(date -u): Build finished successfully"
+log_normal "Build finished successfully"
 echo "================================================================"
 
 exit 0

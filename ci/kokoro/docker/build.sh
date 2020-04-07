@@ -565,9 +565,9 @@ fi
 echo
 echo "================================================================"
 if [[ ${exit_status} -eq 0 ]]; then
-  log_green "$(date -u): Build script finished successfully."
+  log_green "Build script finished successfully."
 else
-  log_red "$(date -u): Build script failed with status ${exit_status}"
+  log_red "Build script failed with status ${exit_status}"
 fi
 
 exit ${exit_status}

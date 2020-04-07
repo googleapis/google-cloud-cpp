@@ -39,7 +39,12 @@ function log_color_impl() {
   shift
   local timestamp
   timestamp="$(date -u "+%Y-%m-%dT%H:%M:%SZ")"
-  echo "${color}${timestamp}: " "$@" "${COLOR_RESET}"
+  echo "${color}${timestamp}:" "$@" "${COLOR_RESET}"
+}
+
+# Logs the given message with normal coloring and a timestamp.
+function log_normal() {
+  log_color_impl "${COLOR_RESET}" "$@"
 }
 
 # Logs the given message in green with a timestamp.

@@ -37,7 +37,7 @@ mkdir -p "cmake-out/download"
 echo
 echo "================================================================"
 readonly BAZEL_BIN="$HOME/bin/bazel"
-echo "$(date -u): using Bazel in ${BAZEL_BIN}"
+log_normal "Using Bazel in ${BAZEL_BIN}"
 "${BAZEL_BIN}" version
 "${BAZEL_BIN}" shutdown
 
