@@ -870,27 +870,6 @@ run_all_cmek_examples() {
 }
 
 ################################################
-# Run the examples to create signed policy documents.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_signed_policy_document_examples() {
-  if [[ -n "${CLOUD_STORAGE_TESTBENCH_ENDPOINT:-}" ]]; then
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " Signed policy document examples disabled when using the testbench."
-    return
-  fi
-
-  run_example ./storage_bucket_samples create-signed-policy-document
-  run_example ./storage_bucket_samples create-signed-policy-document-v4
-}
-
-################################################
 # Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -1072,7 +1051,6 @@ run_all_storage_examples() {
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
   run_object_versioning_examples
-  run_signed_policy_document_examples
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_cmek_examples "${STORAGE_CMEK_KEY}"

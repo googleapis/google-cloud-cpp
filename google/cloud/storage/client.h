@@ -2788,7 +2788,7 @@ class Client {
    * `ExactMatch()`, `ContentLengthRange()`.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc create signed policy document
+   * @snippet storage_policy_doc_samples.cc create signed policy document
    *
    * @see
    * https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
@@ -2829,7 +2829,7 @@ class Client {
    * `ExactMatch()`, `ContentLengthRange()`.
    *
    * @par Example
-   * @snippet storage_bucket_samples.cc create signed policy document v4
+   * @snippet storage_policy_doc_samples.cc create signed policy document v4
    *
    * @see
    * https://cloud.google.com/storage/docs/xml-api/post-object#policydocument
