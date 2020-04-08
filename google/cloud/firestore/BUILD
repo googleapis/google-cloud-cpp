@@ -22,9 +22,7 @@ cc_library(
     name = "firestore_client",
     srcs = firestore_client_srcs,
     hdrs = firestore_client_hdrs,
-    deps = [
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-    ],
+    deps = [],
 )
 
 load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
@@ -38,8 +36,6 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
     }),
     deps = [
         ":firestore_client",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
-        "@com_github_googleapis_google_cloud_cpp_common//google/cloud/testing_util:google_cloud_cpp_testing",
-        "@com_google_googletest//:gtest",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in firestore_client_unit_tests]

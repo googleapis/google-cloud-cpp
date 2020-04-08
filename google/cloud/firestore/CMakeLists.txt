@@ -48,10 +48,7 @@ include(CreateBazelConfig)
 
 # the client library
 add_library(firestore_client field_path.cc field_path.h)
-target_link_libraries(
-    firestore_client
-    PUBLIC google_cloud_cpp_common
-    PRIVATE firestore_common_options)
+target_link_libraries(firestore_client PRIVATE firestore_common_options)
 target_include_directories(
     firestore_client
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -86,14 +83,8 @@ if (BUILD_TESTING)
         string(REPLACE ".cc" "" target ${target})
         add_executable(${target} ${fname})
         target_link_libraries(
-            ${target}
-            PRIVATE firestore_client
-                    google_cloud_cpp_testing
-                    google_cloud_cpp_common
-                    GTest::gmock_main
-                    GTest::gmock
-                    GTest::gtest
-                    firestore_common_options)
+            ${target} PRIVATE firestore_client GTest::gmock_main GTest::gmock
+                              GTest::gtest firestore_common_options)
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")
         endif ()
