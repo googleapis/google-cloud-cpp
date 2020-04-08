@@ -20,6 +20,10 @@ cmake_minimum_required(VERSION 3.5)
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 project(google-cloud-cpp CXX C)
 
+set(GOOGLE_CLOUD_CPP_VERSION_MAJOR 1)
+set(GOOGLE_CLOUD_CPP_VERSION_MINOR 13)
+set(GOOGLE_CLOUD_CPP_VERSION_PATCH 0)
+
 # Configure the Compiler options, we use C++11 features by default.
 set(GOOGLE_CLOUD_CPP_CXX_STANDARD
     11
