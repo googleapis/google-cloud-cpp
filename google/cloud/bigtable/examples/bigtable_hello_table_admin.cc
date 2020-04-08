@@ -127,10 +127,10 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
   });
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const instance_id = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
-                               .value_or("");
+                               .value();
 
   cbt::TableAdmin admin(
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
