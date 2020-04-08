@@ -23,6 +23,7 @@ set(storage_autorun_examples
     # cmake-format: sort
     storage_bucket_acl_samples.cc
     storage_bucket_iam_samples.cc
+    storage_policy_doc_samples.cc
     storage_signed_url_v2_samples.cc
     storage_signed_url_v4_samples.cc
     storage_website_samples.cc)
@@ -97,7 +98,11 @@ foreach (fname ${storage_autorun_examples})
 endforeach ()
 
 # We just know that these tests need to be run against production.
-foreach (target storage_signed_url_v4_samples storage_signed_url_v2_samples)
+foreach (
+    target
+    # cmake-format: sort
+    storage_policy_doc_samples storage_signed_url_v2_samples
+    storage_signed_url_v4_samples)
     set_tests_properties(
         ${target} PROPERTIES LABELS
                              "integration-tests;integration-tests-no-emulator")

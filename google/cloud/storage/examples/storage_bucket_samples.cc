@@ -1421,74 +1421,6 @@ void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, origin);
 }
 
-void CreateSignedPolicyDocument(google::cloud::storage::Client client,
-                                int& argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"create-signed-policy-document"};
-  }
-  //! [create signed policy document]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client) {
-    StatusOr<gcs::PolicyDocumentResult> signed_document =
-        client.CreateSignedPolicyDocument(gcs::PolicyDocument{
-            std::chrono::system_clock::now() + std::chrono::minutes(15),
-            {
-                gcs::PolicyDocumentCondition::StartsWith("key", ""),
-                gcs::PolicyDocumentCondition::ExactMatchObject(
-                    "acl", "bucket-owner-read"),
-                gcs::PolicyDocumentCondition::ExactMatchObject("bucket",
-                                                               "travel-maps"),
-                gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
-                                                         "image/jpeg"),
-                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),
-            }});
-
-    if (!signed_document) {
-      throw std::runtime_error(signed_document.status().message());
-    }
-
-    std::cout << "The signed document is: " << *signed_document << "\n\n"
-              << "You can use this with an HTML form.\n";
-  }
-  //! [create signed policy document]
-  (std::move(client));
-}
-
-void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
-                                  int& argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"create-signed-policy-document-v4"};
-  }
-  //! [create signed policy document v4]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client) {
-    StatusOr<gcs::PolicyDocumentV4Result> signed_document =
-        client.GenerateSignedPostPolicyV4(gcs::PolicyDocumentV4{
-            "travel-maps",
-            "scan_0001.jpg",
-            std::chrono::minutes(15),
-            std::chrono::system_clock::now(),
-            {
-                gcs::PolicyDocumentCondition::StartsWith("key", ""),
-                gcs::PolicyDocumentCondition::ExactMatchObject(
-                    "acl", "bucket-owner-read"),
-                gcs::PolicyDocumentCondition::ExactMatch("Content-Type",
-                                                         "image/jpeg"),
-                gcs::PolicyDocumentCondition::ContentLengthRange(0, 1000000),
-            }});
-
-    if (!signed_document) {
-      throw std::runtime_error(signed_document.status().message());
-    }
-
-    std::cout << "The signed document is: " << *signed_document << "\n\n"
-              << "You can use this with an HTML form.\n";
-  }
-  //! [create signed policy document v4]
-  (std::move(client));
-}
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -1551,8 +1483,6 @@ int main(int argc, char* argv[]) try {
       {"remove-retention-policy", RemoveRetentionPolicy},
       {"lock-retention-policy", LockRetentionPolicy},
       {"set-cors-configuration", SetCorsConfiguration},
-      {"create-signed-policy-document", CreateSignedPolicyDocument},
-      {"create-signed-policy-document-v4", CreateSignedPolicyDocumentV4},
   };
   for (auto&& kv : commands) {
     try {
