@@ -16,19 +16,26 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_INIT_GOOGLE_MOCK_H
 
 #include "google/cloud/version.h"
+#include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
 inline namespace GOOGLE_CLOUD_CPP_NS {
 namespace testing_util {
 /**
- * Initialize the GoogleTest framework including some custom settings for
- * google-cloud-cpp
+ * @deprecated
+ * This function will be deleted soon. Callers should directly use
+ * `::testing::InitGoogleMock` instead.
  *
- * @param argc the number of elements in @p argv
- * @param argv the command-line parameters for the program.
+ * We used to need to work around a gmock issue on Windows, but it has since
+ * been fixed by https://github.com/google/googletest/pull/2372 and included in
+ * googletest v1.10.0.
+ *
+ * See also https://github.com/googleapis/google-cloud-cpp/issues/3713.
  */
-void InitGoogleMock(int& argc, char* argv[]);
+inline void InitGoogleMock(int& argc, char* argv[]) {
+  ::testing::InitGoogleMock(&argc, argv);
+}
 }  // namespace testing_util
 }  // namespace GOOGLE_CLOUD_CPP_NS
 }  // namespace cloud

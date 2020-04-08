@@ -32,7 +32,6 @@ google_cloud_cpp_testing_srcs = [
     "assert_ok.cc",
     "capture_log_lines_backend.cc",
     "custom_google_mock_main.cc",
-    "init_google_mock.cc",
     "scoped_environment.cc",
     "testing_types.cc",
 ]

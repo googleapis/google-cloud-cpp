@@ -28,7 +28,6 @@ if (BUILD_TESTING OR GOOGLE_CLOUD_CPP_TESTING_UTIL_ENABLE_INSTALL)
         custom_google_mock_main.cc
         expect_exception.h
         expect_future_error.h
-        init_google_mock.cc
         init_google_mock.h
         scoped_environment.cc
         scoped_environment.h

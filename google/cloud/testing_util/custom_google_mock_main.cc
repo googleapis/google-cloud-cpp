@@ -12,10 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/testing_util/init_google_mock.h"
 #include <gmock/gmock.h>
 
+/**
+ * @deprecated
+ * Callers should instead directly use `::testing::InitGoogleMock`, or link
+ * with googlemock's `:gmock_main` build target. See also
+ * https://github.com/googleapis/google-cloud-cpp/issues/3713.
+ */
 int main(int argc, char* argv[]) {
-  google::cloud::testing_util::InitGoogleMock(argc, argv);
+  ::testing::InitGoogleMock(&argc, argv);
   return RUN_ALL_TESTS();
 }
