@@ -101,16 +101,15 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
     std::ostringstream os;
     os << "<form action='" << document->url << "' method='POST'"
        << " enctype='multipart/form-data'>\n"
-       << "  <input name='key' value='" << object_name
-       << "' type='hidden' />\n"
+       << "  <input name='key' value='" << object_name << "' type='hidden' />\n"
        << "  <input name='policy' value='" << document->policy
        << "' type='hidden' />\n"
        << "  <input name='x-goog-algorithm' value='"
        << document->signing_algorithm << "' type='hidden' />\n"
        << "  <input name='x-goog-credential' value='" << document->access_id
        << "' type='hidden' />\n"
-       << "  <input name='x-goog-date' value='" << gcs::FormatDateForForm(*document)
-       << "' type='hidden' />\n"
+       << "  <input name='x-goog-date' value='"
+       << gcs::FormatDateForForm(*document) << "' type='hidden' />\n"
        << "  <input name='signature' value='" << document->signature
        << "' type='hidden' />\n"
        << "  <input type='submit' value='Upload File' name='submit' /><br />\n"
