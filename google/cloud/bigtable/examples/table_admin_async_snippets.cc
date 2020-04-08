@@ -766,6 +766,26 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry("async-wait-for-consistency",
                                  {"<table-id>", "<consistency-token>"},
                                  AsyncWaitForConsistency),
+      examples::MakeCommandEntry(
+          "async-create-backup",
+          {"<table-id>", "<cluster-id>", "<backup-id>", "<expire_time>"},
+          AsyncCreateBackup),
+      examples::MakeCommandEntry("async-list-backups",
+                                 {"<cluster-id>", "<filter>", "<order_by>"},
+                                 AsyncListBackups),
+      examples::MakeCommandEntry(
+          "async-get-backup", {"<cluster-id>", "<backup-id>"}, AsyncGetBackup),
+      examples::MakeCommandEntry("async-delete-backup",
+                                 {"<cluster-id>", "<table-id>"},
+                                 AsyncDeleteBackup),
+      examples::MakeCommandEntry("async-update-backup",
+                                 {"<cluster-id>", "<backup-id>",
+                                  "<expire-time(1980-06-20T00:00:00Z)>"},
+                                 AsyncUpdateBackup),
+      examples::MakeCommandEntry("async-restore-table",
+                                 {"<table-id>", "<cluster-id>", "<backup-id>"},
+                                 AsyncRestoreTable),
+
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

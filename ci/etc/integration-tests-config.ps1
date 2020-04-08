@@ -19,6 +19,7 @@ $env:GOOGLE_CLOUD_PROJECT="cloud-cpp-testing-resources"
 
 # Cloud Bigtable configuration parameters
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="test-instance"
+$env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID="test-instance-c1"
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A="us-west2-b"
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="us-west2-c"
 $env:GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="bigtable-test-iam-sa@${env:GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"

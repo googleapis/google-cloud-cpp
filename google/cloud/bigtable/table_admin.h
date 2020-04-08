@@ -660,6 +660,19 @@ class TableAdmin {
                       std::string const& backup_id);
 
   /**
+   * Delete a backup.
+   *
+   * @param backup typically returned by a call to `GetBackup` or `ListBackups`.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc delete backup
+   */
+  Status DeleteBackup(google::bigtable::admin::v2::Backup const& backup);
+
+  /**
    * Sends an asynchronous request to delete a backup.
    *
    * @warning This is an early version of the asynchronous APIs for Cloud
@@ -676,8 +689,7 @@ class TableAdmin {
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object.
    * @param backup_id the name of the backup relative to the cluster specified.
    *     The full backup name is
-   *
-   `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
+   *    `projects/<PROJECT_ID>/instances/<INSTANCE_ID>/clusters/<CLUSTER_ID>/backups/<backup_id>`
    *     where PROJECT_ID is obtained from the associated AdminClient,
    *     INSTANCE_ID is the instance_id() of the `TableAdmin` object, and
    *     CLUSTER_ID is the cluster_id previously specified.
@@ -685,7 +697,7 @@ class TableAdmin {
    *   retry policy expires. In the first case, the future will contain the
    *   response from the service. In the second case, the future is satisfied
    *   with an exception.
-
+   *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
    *
@@ -695,6 +707,32 @@ class TableAdmin {
   future<Status> AsyncDeleteBackup(CompletionQueue& cq,
                                    std::string const& cluster_id,
                                    std::string const& backup_id);
+
+  /**
+   * Sends an asynchronous request to delete a backup.
+   *
+   * @warning This is an early version of the asynchronous APIs for Cloud
+   *     Bigtable. These APIs might be changed in backward-incompatible ways. It
+   *     is not subject to any SLA or deprecation policy.
+   *
+   * @param cq the completion queue that will execute the asynchronous calls,
+   *     the application must ensure that one or more threads are blocked on
+   *     `cq.Run()`.
+   * @param backup typically returned by a call to `GetBackup` or `ListBackups`.
+   *
+   * @return a future that will be satisfied when the request succeeds or the
+   *   retry policy expires. In the first case, the future will contain the
+   *   response from the service. In the second case, the future is satisfied
+   *   with an exception.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_async_snippets.cc async delete backup
+   */
+  future<Status> AsyncDeleteBackup(
+      CompletionQueue& cq, google::bigtable::admin::v2::Backup const& backup);
 
   /**
    * Parameters for `ListBackups` and `AsyncListBackups`.

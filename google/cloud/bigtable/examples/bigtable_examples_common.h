@@ -39,6 +39,9 @@ std::string RandomTableId(std::string const& prefix,
 void CleanupOldTables(std::string const& prefix,
                       google::cloud::bigtable::TableAdmin admin);
 
+void CleanupOldBackups(std::string const& cluster_id,
+                       google::cloud::bigtable::TableAdmin admin);
+
 std::string InstancePrefix(std::string const& prefix,
                            std::chrono::system_clock::time_point tp);
 std::string RandomInstanceId(std::string const& prefix,
