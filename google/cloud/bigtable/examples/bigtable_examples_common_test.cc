@@ -187,6 +187,10 @@ TEST(BigtableExamplesCommon, RunAdminIntegrationTestsProductionAndEnabled) {
 }
 
 TEST(BigtableExamplesCommon, MakeTableAdminCommandEntry) {
+  // Pretend we are using the emulator to avoid loading the default
+  // credentials from $HOME, which do not exist when running with Bazel.
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
   int call_count = 0;
   auto command = [&call_count](bigtable::TableAdmin const&,
                                std::vector<std::string> const& argv) {
@@ -347,6 +351,11 @@ TEST(BigtableExamplesCommon, CleanupOldInstances) {
 }
 
 TEST(BigtableExamplesCommon, MakeInstanceAdminCommandEntry) {
+  // Pretend we are using the emulator to avoid loading the default
+  // credentials from $HOME, which do not exist when running with Bazel.
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
+
   int call_count = 0;
   auto command = [&call_count](bigtable::InstanceAdmin const&,
                                std::vector<std::string> const& argv) {
@@ -367,6 +376,36 @@ TEST(BigtableExamplesCommon, MakeInstanceAdminCommandEntry) {
       Usage);
 
   ASSERT_NO_FATAL_FAILURE(actual.second({"unused", "a", "b"}));
+  EXPECT_EQ(1, call_count);
+}
+
+TEST(BigtableExamplesCommon, MakeTableAsyncCommandEntry) {
+  // Pretend we are using the emulator to avoid loading the default
+  // credentials from $HOME, which do not exist when running with Bazel.
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
+
+  int call_count = 0;
+  auto command = [&call_count](bigtable::Table const&, CompletionQueue const&,
+                               std::vector<std::string> const& argv) {
+    ++call_count;
+    ASSERT_EQ(2, argv.size());
+    EXPECT_EQ("a", argv[0]);
+    EXPECT_EQ("b", argv[1]);
+  };
+  auto const actual = MakeCommandEntry("command-name", {"foo", "bar"}, command);
+  EXPECT_EQ("command-name", actual.first);
+  EXPECT_THROW(
+      try { actual.second({}); } catch (Usage const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("command-name"));
+        EXPECT_THAT(ex.what(), HasSubstr("foo"));
+        EXPECT_THAT(ex.what(), HasSubstr("bar"));
+        throw;
+      },
+      Usage);
+
+  ASSERT_NO_FATAL_FAILURE(actual.second(
+      {"unused-project", "unused-instance", "unused-table", "a", "b"}));
   EXPECT_EQ(1, call_count);
 }
 

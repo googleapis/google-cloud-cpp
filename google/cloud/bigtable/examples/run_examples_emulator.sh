@@ -33,7 +33,6 @@ export ZONE_A="fake-region1-a"
 export ZONE_B="fake-region1-b"
 export SERVICE_ACCOUNT="fake-sa@${PROJECT_ID}.iam.gserviceaccount.com"
 
-"${BINDIR}/run_examples_production.sh" || EXIT_STATUS=1
 "${BINDIR}/run_admin_examples_production.sh" || EXIT_STATUS=1
 
 exit_example_runner
