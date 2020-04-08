@@ -187,6 +187,10 @@ TEST(BigtableExamplesCommon, RunAdminIntegrationTestsProductionAndEnabled) {
 }
 
 TEST(BigtableExamplesCommon, MakeTableAdminCommandEntry) {
+  // Pretend we are using the emulator to avoid loading the default
+  // credentials from $HOME, which do not exist when running with Bazel.
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
   int call_count = 0;
   auto command = [&call_count](bigtable::TableAdmin const&,
                                std::vector<std::string> const& argv) {
@@ -347,6 +351,11 @@ TEST(BigtableExamplesCommon, CleanupOldInstances) {
 }
 
 TEST(BigtableExamplesCommon, MakeInstanceAdminCommandEntry) {
+  // Pretend we are using the emulator to avoid loading the default
+  // credentials from $HOME, which do not exist when running with Bazel.
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
+
   int call_count = 0;
   auto command = [&call_count](bigtable::InstanceAdmin const&,
                                std::vector<std::string> const& argv) {
@@ -371,6 +380,11 @@ TEST(BigtableExamplesCommon, MakeInstanceAdminCommandEntry) {
 }
 
 TEST(BigtableExamplesCommon, MakeTableAsyncCommandEntry) {
+  // Pretend we are using the emulator to avoid loading the default
+  // credentials from $HOME, which do not exist when running with Bazel.
+  google::cloud::testing_util::ScopedEnvironment emulator(
+      "BIGTABLE_EMULATOR_HOST", "localhost:9090");
+
   int call_count = 0;
   auto command = [&call_count](bigtable::Table const&, CompletionQueue const&,
                                std::vector<std::string> const& argv) {
