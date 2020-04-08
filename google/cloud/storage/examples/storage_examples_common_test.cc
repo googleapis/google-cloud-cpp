@@ -138,6 +138,36 @@ TEST(StorageExamplesCommon, UsingTestbenchFalse) {
   EXPECT_FALSE(UsingTestbench());
 }
 
+TEST(StorageExamplesCommon, CheckEnvironmentVariablesNormal) {
+  google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", "a");
+  google::cloud::testing_util::ScopedEnvironment test_b("TEST_B", "b");
+  EXPECT_NO_THROW(CheckEnvironmentVariablesAreSet({"TEST_A", "TEST_B"}));
+}
+
+TEST(StorageExamplesCommon, CheckEnvironmentVariablesNotSet) {
+  google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", {});
+  EXPECT_THROW(
+      try {
+        CheckEnvironmentVariablesAreSet({"TEST_A"});
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("TEST_A"));
+        throw;
+      },
+      std::runtime_error);
+}
+
+TEST(StorageExamplesCommon, CheckEnvironmentVariablesSetEmpty) {
+  google::cloud::testing_util::ScopedEnvironment test_a("TEST_A", "");
+  EXPECT_THROW(
+      try {
+        CheckEnvironmentVariablesAreSet({"TEST_A"});
+      } catch (std::runtime_error const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("TEST_A"));
+        throw;
+      },
+      std::runtime_error);
+}
+
 TEST(StorageExamplesCommon, RandomBucket) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const actual_1 = MakeRandomBucketName(generator, "test-prefix-");

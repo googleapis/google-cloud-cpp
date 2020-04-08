@@ -231,20 +231,16 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT",
+  });
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  if (project_id.empty()) {
-    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
-  }
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const service_account =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
-          .value_or("");
-  if (service_account.empty()) {
-    throw std::runtime_error(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT is not set or is "
-        "empty");
-  }
+          .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =
       examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");

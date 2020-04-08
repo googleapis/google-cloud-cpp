@@ -71,19 +71,15 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace gcs = ::google::cloud::storage;
 
   if (!argv.empty()) throw Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME",
+  });
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
-  if (project_id.empty()) {
-    throw std::runtime_error("GOOGLE_CLOUD_PROJECT is not set or is empty");
-  }
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const bucket_name = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME")
-                               .value_or("");
-  if (bucket_name.empty()) {
-    throw std::runtime_error(
-        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is not set or is "
-        "empty");
-  }
+                               .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const object_name =
       examples::MakeRandomObjectName(generator, "cloud-cpp-test-examples-");

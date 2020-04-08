@@ -53,6 +53,10 @@ class Example {
 };
 
 bool UsingTestbench();
+
+// TODO(#3624) - refactor this function to -common
+void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
+
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen,
                                  std::string const& prefix);
 std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,

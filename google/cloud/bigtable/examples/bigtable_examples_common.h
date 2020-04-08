@@ -72,6 +72,8 @@ std::string RandomClusterId(std::string const& prefix,
 
 bool UsingEmulator();
 bool RunAdminIntegrationTests();
+
+// TODO(#3624) - refactor this function to -common
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
 using TableAdminCommandType = std::function<void(
