@@ -110,7 +110,7 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
        << "' type='hidden' />\n"
        << "  <input name='x-goog-date' value='"
        << gcs::FormatDateForForm(*document) << "' type='hidden' />\n"
-       << "  <input name='signature' value='" << document->signature
+       << "  <input name='x-goog-signature' value='" << document->signature
        << "' type='hidden' />\n"
        << "  <input type='submit' value='Upload File' name='submit' /><br />\n"
        << "  <input type='file' name='file' /><br />\n"
