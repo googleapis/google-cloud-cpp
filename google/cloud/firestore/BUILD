@@ -36,6 +36,6 @@ load(":firestore_client_unit_tests.bzl", "firestore_client_unit_tests")
     }),
     deps = [
         ":firestore_client",
-        "@com_google_googletest//:gmock_main",
+        "@com_google_googletest//:gtest_main",
     ],
 ) for test in firestore_client_unit_tests]
