@@ -77,6 +77,11 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentResult const& rhs) {
             << "}";
 }
 
+std::string FormatDateForForm(PolicyDocumentV4Result const&) {
+  return google::cloud::internal::FormatV4SignedUrlTimestamp(
+      std::chrono::system_clock::now()).substr(0, 8);
+}
+
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs) {
   return os << "PolicyDocumentV4Result={"
             << "url=" << rhs.url << ", access_id=" << rhs.access_id
