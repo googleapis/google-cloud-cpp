@@ -13,7 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/getenv.h"
+#include <google/protobuf/util/time_util.h>
 #include <sstream>
 
 namespace google {
@@ -120,6 +122,24 @@ void CleanupOldTables(std::string const& prefix,
     auto const table_id = t.name().substr(t.name().find_last_of('/') + 1);
     std::cout << "Deleting table " << table_id << std::endl;
     (void)admin.DeleteTable(table_id);
+  }
+}
+
+void CleanupOldBackups(std::string const& cluster_id,
+                       google::cloud::bigtable::TableAdmin admin) {
+  std::string expire_time = google::protobuf::util::TimeUtil::ToString(
+      google::protobuf::util::TimeUtil::GetCurrentTime() -
+      google::protobuf::util::TimeUtil::HoursToDuration(24 * 7));
+  std::string filter = "expire_time < " + expire_time;
+  auto params = google::cloud::bigtable::TableAdmin::ListBackupsParams()
+                    .set_cluster(cluster_id)
+                    .set_filter(filter);
+  auto backups = admin.ListBackups(params);
+  if (!backups) return;
+  for (auto const& backup : *backups) {
+    std::cout << "Deleting backup " << backup.name() << "in cluster "
+              << cluster_id << std::endl;
+    (void)admin.DeleteBackup(backup);
   }
 }
 

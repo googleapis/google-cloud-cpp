@@ -343,7 +343,6 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 TEST_F(AdminIntegrationTest, SetGetTestIamAPIsTest) {
   // TODO(#151) - remove workarounds for emulator bugs(s)
   if (UsingCloudBigtableEmulator()) GTEST_SKIP();
-  using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});

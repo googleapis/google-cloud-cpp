@@ -102,6 +102,9 @@ auto create_policy_with_params = []() {
         *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
     EXPECT_NE(nullptr, response);
     *response = request.policy();
+    return grpc::Status::OK;
+  };
+};
 
 auto create_list_backups_lambda = [](std::string expected_token,
                                      std::string returned_token,
@@ -712,10 +715,18 @@ TEST_F(TableAdminTest, DeleteBackup) {
   auto mock = MockRpcFactory<btadmin::DeleteBackupRequest, Empty>::Create(
       expected_text,
       "google.bigtable.admin.v2.BigtableTableAdmin.DeleteBackup");
-  EXPECT_CALL(*client_, DeleteBackup(_, _, _)).WillOnce(Invoke(mock));
+  EXPECT_CALL(*client_, DeleteBackup(_, _, _))
+      .WillOnce(Invoke(mock))
+      .WillOnce(Invoke(mock));
 
   // After all the setup, make the actual call we want to test.
   EXPECT_STATUS_OK(tested.DeleteBackup("the-cluster", "the-backup"));
+
+  google::bigtable::admin::v2::Backup backup;
+  backup.set_name(
+      "projects/the-project/instances/the-instance/clusters/the-cluster/"
+      "backups/the-backup");
+  EXPECT_STATUS_OK(tested.DeleteBackup(backup));
 }
 
 /**
