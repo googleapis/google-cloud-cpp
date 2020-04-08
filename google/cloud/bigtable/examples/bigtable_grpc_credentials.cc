@@ -127,16 +127,15 @@ void RunAll(std::vector<std::string> argv) {
   });
 
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const instance_id = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
-                               .value_or("");
+                               .value();
   auto const access_token = google::cloud::internal::GetEnv(
                                 "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN")
-                                .value_or("");
+                                .value();
   auto const credentials_file =
-      google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS")
-          .value_or("");
+      google::cloud::internal::GetEnv("GOOGLE_APPLICATION_CREDENTIALS").value();
 
   AccessToken({project_id, instance_id, access_token});
   JWTAccessToken({project_id, instance_id, credentials_file});

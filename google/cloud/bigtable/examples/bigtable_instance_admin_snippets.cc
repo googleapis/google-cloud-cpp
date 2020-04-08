@@ -738,17 +738,17 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B",
   });
   auto const project_id =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const service_account =
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
-          .value_or("");
+          .value();
   auto const zone_a =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
-          .value_or("");
+          .value();
   auto const zone_b =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
-          .value_or("");
+          .value();
 
   cbt::InstanceAdmin admin(
       cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
