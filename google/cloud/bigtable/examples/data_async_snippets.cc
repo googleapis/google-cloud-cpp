@@ -291,23 +291,6 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
   (std::move(table), std::move(cq), argv.at(0));
 }
 
-class AutoShutdownCQ {
- public:
-  AutoShutdownCQ(google::cloud::CompletionQueue cq, std::thread th)
-      : cq_(std::move(cq)), th_(std::move(th)) {}
-  ~AutoShutdownCQ() {
-    cq_.Shutdown();
-    th_.join();
-  }
-
-  AutoShutdownCQ(AutoShutdownCQ&&) = delete;
-  AutoShutdownCQ& operator=(AutoShutdownCQ&&) = delete;
-
- private:
-  google::cloud::CompletionQueue cq_;
-  std::thread th_;
-};
-
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
 
@@ -351,7 +334,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   google::cloud::CompletionQueue cq;
   std::thread th([&cq] { cq.Run(); });
-  AutoShutdownCQ shutdown(cq, std::move(th));
+  examples::AutoShutdownCQ shutdown(cq, std::move(th));
 
   std::cout << "\nRunning the AsyncApply() example" << std::endl;
   AsyncApply(table, cq, {"row-0001"});
@@ -386,57 +369,21 @@ void RunAll(std::vector<std::string> const& argv) {
   (void)admin.DeleteTable(table_id);
 }
 
-using AsyncCommandType = std::function<void(google::cloud::bigtable::Table,
-                                            google::cloud::CompletionQueue,
-                                            std::vector<std::string>)>;
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::bigtable::examples;
-  auto make_entry = [](std::string const& name,
-                       std::vector<std::string> const& args,
-                       AsyncCommandType command) {
-    auto adapter = [=](std::vector<std::string> argv) {
-      std::vector<std::string> const common{"<project-id>", "<instance-id>",
-                                            "<table-id>"};
-      if (argv.size() != common.size() + args.size()) {
-        std::ostringstream os;
-        os << name;
-        for (auto const& a : common) {
-          os << " " << a;
-        }
-        for (auto const& a : args) {
-          os << " " << a;
-        }
-        throw Usage{std::move(os).str()};
-      }
-      google::cloud::bigtable::Table table(
-          google::cloud::bigtable::CreateDefaultDataClient(
-              argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
-          argv[2]);
-      google::cloud::CompletionQueue cq;
-      std::thread t([&cq] { cq.Run(); });
-      struct Deferred {
-        ~Deferred() {
-          cq_.Shutdown();
-          t_.join();
-        }
-        google::cloud::CompletionQueue cq_;
-        std::thread t_;
-      } deferred{std::move(cq), std::move(t)};
-      argv.erase(argv.begin(), argv.begin() + common.size());
-      command(std::move(table), std::move(cq), std::move(argv));
-    };
-    return examples::Commands::value_type{name, std::move(adapter)};
-  };
   examples::Example example({
-      make_entry("async-apply", {"<row-key>"}, AsyncApply),
-      make_entry("async-bulk-apply", {}, AsyncBulkApply),
-      make_entry("async-read-rows", {}, AsyncReadRows),
-      make_entry("async-read-rows-with-limit", {}, AsyncReadRowsWithLimit),
-      make_entry("async-read-row", {"<row-key>"}, AsyncReadRow),
-      make_entry("async-check-and-mutate", {"<row-key>"}, AsyncCheckAndMutate),
-      make_entry("async-read-modify-write", {}, AsyncReadModifyWrite),
+      examples::MakeCommandEntry("async-apply", {"<row-key>"}, AsyncApply),
+      examples::MakeCommandEntry("async-bulk-apply", {}, AsyncBulkApply),
+      examples::MakeCommandEntry("async-read-rows", {}, AsyncReadRows),
+      examples::MakeCommandEntry("async-read-rows-with-limit", {},
+                                 AsyncReadRowsWithLimit),
+      examples::MakeCommandEntry("async-read-row", {"<row-key>"}, AsyncReadRow),
+      examples::MakeCommandEntry("async-check-and-mutate", {"<row-key>"},
+                                 AsyncCheckAndMutate),
+      examples::MakeCommandEntry("async-read-modify-write", {},
+                                 AsyncReadModifyWrite),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

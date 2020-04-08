@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_EXAMPLES_BIGTABLE_EXAMPLES_COMMON_H
 
 #include "google/cloud/bigtable/instance_admin.h"
+#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/internal/random.h"
 #include <functional>
@@ -76,19 +77,44 @@ bool RunAdminIntegrationTests();
 // TODO(#3624) - refactor this function to -common
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const&);
 
+class AutoShutdownCQ {
+ public:
+  AutoShutdownCQ(google::cloud::CompletionQueue cq, std::thread th)
+      : cq_(std::move(cq)), th_(std::move(th)) {}
+  ~AutoShutdownCQ() {
+    cq_.Shutdown();
+    th_.join();
+  }
+
+  AutoShutdownCQ(AutoShutdownCQ&&) = delete;
+  AutoShutdownCQ& operator=(AutoShutdownCQ&&) = delete;
+
+ private:
+  google::cloud::CompletionQueue cq_;
+  std::thread th_;
+};
+
 using TableAdminCommandType = std::function<void(
     google::cloud::bigtable::TableAdmin, std::vector<std::string>)>;
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableAdminCommandType const& function);
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableAdminCommandType const& function);
 
 using InstanceAdminCommandType = std::function<void(
     google::cloud::bigtable::InstanceAdmin, std::vector<std::string>)>;
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    InstanceAdminCommandType const& function);
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      InstanceAdminCommandType const& function);
+
+using TableAsyncCommandType = std::function<void(google::cloud::bigtable::Table,
+                                                 google::cloud::CompletionQueue,
+                                                 std::vector<std::string>)>;
+
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableAsyncCommandType const& command);
 
 }  // namespace examples
 }  // namespace bigtable

@@ -370,6 +370,31 @@ TEST(BigtableExamplesCommon, MakeInstanceAdminCommandEntry) {
   EXPECT_EQ(1, call_count);
 }
 
+TEST(BigtableExamplesCommon, MakeTableAsyncCommandEntry) {
+  int call_count = 0;
+  auto command = [&call_count](bigtable::Table const&, CompletionQueue const&,
+                               std::vector<std::string> const& argv) {
+    ++call_count;
+    ASSERT_EQ(2, argv.size());
+    EXPECT_EQ("a", argv[0]);
+    EXPECT_EQ("b", argv[1]);
+  };
+  auto const actual = MakeCommandEntry("command-name", {"foo", "bar"}, command);
+  EXPECT_EQ("command-name", actual.first);
+  EXPECT_THROW(
+      try { actual.second({}); } catch (Usage const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("command-name"));
+        EXPECT_THAT(ex.what(), HasSubstr("foo"));
+        EXPECT_THAT(ex.what(), HasSubstr("bar"));
+        throw;
+      },
+      Usage);
+
+  ASSERT_NO_FATAL_FAILURE(actual.second(
+      {"unused-project", "unused-instance", "unused-table", "a", "b"}));
+  EXPECT_EQ(1, call_count);
+}
+
 }  // namespace examples
 }  // namespace bigtable
 }  // namespace cloud

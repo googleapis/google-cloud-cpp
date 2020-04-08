@@ -220,9 +220,9 @@ void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
   }
 }
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
-    std::string const& name, std::vector<std::string> const& args,
-    TableAdminCommandType const& function) {
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableAdminCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
     auto constexpr kFixedArguments = 2;
     if (argv.size() != args.size() + kFixedArguments) {
@@ -244,7 +244,7 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
   return {name, command};
 }
 
-google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
+Commands::value_type MakeCommandEntry(
     std::string const& name, std::vector<std::string> const& args,
     InstanceAdminCommandType const& function) {
   auto command = [=](std::vector<std::string> argv) {
@@ -265,6 +265,36 @@ google::cloud::bigtable::examples::Commands::value_type MakeCommandEntry(
     function(instance, argv);
   };
   return {name, command};
+}
+
+Commands::value_type MakeCommandEntry(std::string const& name,
+                                      std::vector<std::string> const& args,
+                                      TableAsyncCommandType const& command) {
+  auto adapter = [=](std::vector<std::string> argv) {
+    std::vector<std::string> const common{"<project-id>", "<instance-id>",
+                                          "<table-id>"};
+    if (argv.size() != common.size() + args.size()) {
+      std::ostringstream os;
+      os << name;
+      for (auto const& a : common) {
+        os << " " << a;
+      }
+      for (auto const& a : args) {
+        os << " " << a;
+      }
+      throw Usage{std::move(os).str()};
+    }
+    google::cloud::bigtable::Table table(
+        google::cloud::bigtable::CreateDefaultDataClient(
+            argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+        argv[2]);
+    google::cloud::CompletionQueue cq;
+    std::thread t([&cq] { cq.Run(); });
+    AutoShutdownCQ shutdown(cq, std::move(t));
+    argv.erase(argv.begin(), argv.begin() + common.size());
+    command(std::move(table), std::move(cq), std::move(argv));
+  };
+  return examples::Commands::value_type{name, std::move(adapter)};
 }
 
 }  // namespace examples
