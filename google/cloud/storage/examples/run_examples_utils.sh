@@ -814,62 +814,6 @@ run_object_versioning_examples() {
 }
 
 ################################################
-# Run all Customer-managed Encryption Keys examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   cmek: the name of the Customer-managed Encryption Key used in the tests.
-# Returns:
-#   None
-################################################
-run_all_cmek_examples() {
-  local cmek=$1
-
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-  local encrypted_object_name="enc-obj-${RANDOM}-${RANDOM}.txt"
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_object_samples write-object-with-kms-key \
-      "${bucket_name}" "${object_name}" "${cmek}"
-  run_example ./storage_object_samples get-object-kms-key \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples read-object \
-      "${bucket_name}" "${object_name}"
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-
-  local key
-  key="$(./storage_object_samples generate-encryption-key |
-      grep 'Base64 encoded key' | awk '{print $5}')"
-  run_example ./storage_object_samples write-encrypted-object \
-      "${bucket_name}" "${encrypted_object_name}" "${key}"
-  run_example ./storage_object_samples object-csek-to-cmek \
-      "${bucket_name}" "${encrypted_object_name}" "${key}" "${cmek}"
-  run_example ./storage_object_samples read-object \
-      "${bucket_name}" "${object_name}"
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${encrypted_object_name}"
-
-  run_example ./storage_bucket_samples get-bucket-default-kms-key \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples add-bucket-default-kms-key \
-      "${bucket_name}" "${cmek}"
-  run_example ./storage_bucket_samples get-bucket-default-kms-key \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples remove-bucket-default-kms-key \
-      "${bucket_name}"
-
-  run_example ./storage_bucket_samples delete-bucket \
-      "${bucket_name}"
-}
-
-################################################
 # Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -1024,7 +968,6 @@ run_mocking_client_examples() {
 #   DESTINATION_BUCKET_NAME: a different bucket to test object rewrites
 #   TOPIC_NAME: a Cloud Pub/Sub topic configured to receive notifications
 #       from GCS.
-#   STORAGE_CMEK_KEY: a Cloud KMS key name.
 #   COLOR_*: colorize output messages, defined in colors.sh
 #   EXIT_STATUS: control the final exit status for the program.
 # Arguments:
@@ -1053,7 +996,6 @@ run_all_storage_examples() {
   run_object_versioning_examples
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
-  run_all_cmek_examples "${STORAGE_CMEK_KEY}"
   run_all_service_account_examples
   run_cors_configuration_examples
   run_mocking_client_examples "test-bucket-name" "test-object-name"

@@ -337,94 +337,6 @@ void GetBucketClassAndLocation(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
-void AddBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"add-bucket-default-kms-key <bucket-name> <key-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto key_name = ConsumeArg(argc, argv);
-  //! [add bucket kms key] [START storage_set_bucket_default_kms_key]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string key_name) {
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
-                         gcs::BucketEncryption{key_name}));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
-
-    if (!updated_metadata->has_encryption()) {
-      std::cerr << "The change to set the encryption attribute on bucket "
-                << updated_metadata->name()
-                << " was sucessful, but the encryption is not set."
-                << "This is unexpected, maybe a concurrent change?\n";
-      return;
-    }
-
-    std::cout << "Successfully set default KMS key on bucket  "
-              << updated_metadata->name() << " to "
-              << updated_metadata->encryption().default_kms_key_name << "."
-              << "\nFull metadata: " << *updated_metadata << "\n";
-  }
-  //! [add bucket kms key] [END storage_set_bucket_default_kms_key]
-  (std::move(client), bucket_name, key_name);
-}
-
-void GetBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-bucket-default-kms-key <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  //! [get bucket default kms key] [START storage_bucket_get_default_kms_key]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
-
-    if (!meta) throw std::runtime_error(meta.status().message());
-    if (!meta->has_encryption()) {
-      std::cout << "The bucket " << meta->name()
-                << " does not have a default KMS key set.\n";
-      return;
-    }
-
-    std::cout << "The default KMS key for bucket " << meta->name()
-              << " is: " << meta->encryption().default_kms_key_name << "\n";
-  }
-  //! [get bucket default kms key] [END storage_bucket_get_default_kms_key]
-  (std::move(client), bucket_name);
-}
-
-void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client, int& argc,
-                               char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"remove-bucket-default-kms-key <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  //! [remove bucket default kms key]
-  // [START storage_bucket_delete_default_kms_key]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
-        bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
-
-    std::cout << "Successfully removed default KMS key on bucket "
-              << updated_metadata->name() << "\n";
-  }
-  // [END storage_bucket_delete_default_kms_key]
-  //! [remove bucket default kms key]
-  (std::move(client), bucket_name);
-}
-
 void EnableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
                             char* argv[]) {
   if (argc != 2) {
@@ -1451,9 +1363,6 @@ int main(int argc, char* argv[]) try {
       {"patch-bucket-storage-class-with-builder",
        PatchBucketStorageClassWithBuilder},
       {"get-bucket-class-and-location", GetBucketClassAndLocation},
-      {"add-bucket-default-kms-key", AddBucketDefaultKmsKey},
-      {"get-bucket-default-kms-key", GetBucketDefaultKmsKey},
-      {"remove-bucket-default-kms-key", RemoveBucketDefaultKmsKey},
       {"enable-bucket-policy-only", EnableBucketPolicyOnly},
       {"disable-bucket-policy-only", DisableBucketPolicyOnly},
       {"get-bucket-policy-only", GetBucketPolicyOnly},

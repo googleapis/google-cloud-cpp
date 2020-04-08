@@ -1110,7 +1110,7 @@ class Client {
    * @snippet storage_object_samples.cc write object
    *
    * @par Example: write an object with a CMEK.
-   * @snippet storage_object_samples.cc write object with kms key
+   * @snippet storage_object_cmek_samples.cc write object with kms key
    *
    * @par Example: starting a resumable upload.
    * @snippet storage_object_samples.cc start resumable upload
