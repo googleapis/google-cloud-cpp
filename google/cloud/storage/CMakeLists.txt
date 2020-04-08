@@ -24,7 +24,7 @@ set(DOXYGEN_PROJECT_NUMBER
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
                          "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
-                       "STORAGE_CLIENT_NS=v${GOOGLE_CLOUD_CPP_MAJOR}")
+                       "STORAGE_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/storage/README.md"
     "*/google/cloud/storage/ci/*"
