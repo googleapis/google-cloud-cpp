@@ -1135,43 +1135,6 @@ void ComposeObjectFromMany(google::cloud::storage::Client client, int& argc,
    std::move(compose_objects));
 }
 
-void WriteObjectWithKmsKey(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "write-object-with-kms-key <bucket-name> <object-name>"
-        " <kms-key-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto kms_key_name = ConsumeArg(argc, argv);
-
-  //! [write object with kms key] [START storage_upload_with_kms_key]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string kms_key_name) {
-    gcs::ObjectWriteStream stream = client.WriteObject(
-        bucket_name, object_name, gcs::KmsKeyName(kms_key_name));
-
-    // Line numbers start at 1.
-    for (int lineno = 1; lineno <= 10; ++lineno) {
-      stream << lineno << ": placeholder text for CMEK example.\n";
-    }
-
-    stream.Close();
-
-    StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
-
-    if (!metadata) throw std::runtime_error(metadata.status().message());
-    std::cout << "Successfully wrote to object " << metadata->name()
-              << " its size is: " << metadata->size()
-              << "\nFull metadata: " << *metadata << "\n";
-  }
-  //! [write object with kms key] [END storage_upload_with_kms_key]
-  (std::move(client), bucket_name, object_name, kms_key_name);
-}
-
 void RewriteObject(google::cloud::storage::Client client, int& argc,
                    char* argv[]) {
   if (argc != 5) {
@@ -1406,70 +1369,6 @@ void RotateEncryptionKey(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, old_key_base64, new_key_base64);
 }
 
-void ObjectCsekToCmek(google::cloud::storage::Client client, int& argc,
-                      char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "object-csek-to-cmek <bucket-name> <object-name>"
-        " <old-csek-encryption-key> <new-cmek-encryption-key-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto old_csek_key_base64 = ConsumeArg(argc, argv);
-  auto new_cmek_key_name = ConsumeArg(argc, argv);
-
-  //! [object csek to cmek] [START storage_object_csek_to_cmek]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string old_csek_key_base64, std::string new_cmek_key_name) {
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.RewriteObjectBlocking(
-            bucket_name, object_name, bucket_name, object_name,
-            gcs::SourceEncryptionKey::FromBase64Key(old_csek_key_base64),
-            gcs::DestinationKmsKeyName(new_cmek_key_name));
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Changed object " << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << " from using CSEK to CMEK key.\nFull Metadata: "
-              << *object_metadata << "\n";
-  }
-  //! [object csek to cmek] [END storage_object_csek_to_cmek]
-  (std::move(client), bucket_name, object_name, old_csek_key_base64,
-   new_cmek_key_name);
-}
-
-void GetObjectKmsKey(google::cloud::storage::Client client, int& argc,
-                     char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"get-object-kms-key <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-
-  //! [get object kms key] [START storage_object_get_kms_key]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.GetObjectMetadata(bucket_name, object_name);
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "KMS key on object " << object_metadata->name()
-              << " in bucket " << object_metadata->bucket() << ": "
-              << object_metadata->kms_key_name() << "\n";
-  }
-  //! [get object kms key] [END storage_object_get_kms_key]
-  (std::move(client), bucket_name, object_name);
-}
-
 void RenameObject(google::cloud::storage::Client client, int& argc,
                   char* argv[]) {
   if (argc != 4) {
@@ -1670,15 +1569,12 @@ int main(int argc, char* argv[]) try {
       {"compose-object-from-encrypted-objects",
        ComposeObjectFromEncryptedObjects},
       {"compose-object-from-many", ComposeObjectFromMany},
-      {"write-object-with-kms-key", WriteObjectWithKmsKey},
       {"rewrite-object", RewriteObject},
       {"rewrite-object-non-blocking", RewriteObjectNonBlocking},
       {"rewrite-object-token", RewriteObjectToken},
       {"rewrite-object-resume", RewriteObjectResume},
       {"change-object-storage-class", ChangeObjectStorageClass},
       {"rotate-encryption-key", RotateEncryptionKey},
-      {"object-csek-to-cmek", ObjectCsekToCmek},
-      {"get-object-kms-key", GetObjectKmsKey},
       {"rename-object", RenameObject},
       {"set-event-based-hold", SetObjectEventBasedHold},
       {"release-event-based-hold", ReleaseObjectEventBasedHold},
