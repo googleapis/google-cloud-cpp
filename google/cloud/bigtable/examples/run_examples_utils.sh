@@ -165,65 +165,6 @@ function run_all_table_admin_async_examples {
 }
 
 ################################################
-# Run the Bigtable examples for Async* operations on data.
-# Globals:
-#   None
-# Arguments:
-#   project_id: the Google Cloud Storage project used in the test. Can be a
-#       fake project when testing against the emulator, as the emulator creates
-#       projects on demand. It must be a valid, existing instance when testing
-#       against production.
-#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
-#       fake instance when testing against the emulator, as the emulator creates
-#       instances on demand. It must be a valid, existing instance when testing
-#       against production.
-# Returns:
-#   None
-################################################
-function run_all_data_async_examples {
-  local project_id=$1
-  local instance_id=$2
-  shift 2
-
-  EMULATOR_LOG="instance-admin-emulator.log"
-
-  # Use the same table in all the tests.
-  local -r TABLE="data-ex-tbl-${RANDOM}-${RANDOM}"
-  local -r APPLY_ROW_KEY="async-apply-row-${RANDOM}"
-  local -r CHECK_AND_MUTATE_ROW_KEY="check-and-mutate-row-${RANDOM}"
-  local -r READ_MODIFY_WRITE_ROW_KEY="read-modify-write-row-${RANDOM}"
-  run_example ./table_admin_snippets create-table \
-      "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-apply \
-      "${project_id}" "${instance_id}" "${TABLE}" "${APPLY_ROW_KEY}"
-  run_example ./data_async_snippets async-bulk-apply \
-      "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-read-rows \
-      "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-read-rows-with-limit \
-      "${project_id}" "${instance_id}" "${TABLE}"
-  run_example ./data_async_snippets async-read-row \
-      "${project_id}" "${instance_id}" "${TABLE}" "${APPLY_ROW_KEY}"
-
-  run_example ./data_async_snippets async-apply \
-      "${project_id}" "${instance_id}" "${TABLE}" "${CHECK_AND_MUTATE_ROW_KEY}"
-  run_example ./data_async_snippets async-check-and-mutate \
-      "${project_id}" "${instance_id}" "${TABLE}" "${CHECK_AND_MUTATE_ROW_KEY}"
-
-  run_example ./data_async_snippets async-apply \
-      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_ROW_KEY}"
-  run_example ./data_async_snippets async-read-modify-write \
-      "${project_id}" "${instance_id}" "${TABLE}" "${READ_MODIFY_WRITE_ROW_KEY}"
-
-  run_example ./table_admin_snippets delete-table \
-      "${project_id}" "${instance_id}" "${TABLE}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./data_async_snippets
-}
-
-################################################
 # Run the Bigtable quick start example.
 # Globals:
 #   None

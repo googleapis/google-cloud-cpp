@@ -12,36 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all code]
-
 //! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 //! [bigtable includes]
-#include <google/protobuf/text_format.h>
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-std::string command_usage;
-
-void PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
+using google::cloud::bigtable::examples::CleanupOldTables;
+using google::cloud::bigtable::examples::RandomTableId;
+using google::cloud::bigtable::examples::Usage;
 
 void AsyncApply(google::cloud::bigtable::Table table,
                 google::cloud::bigtable::CompletionQueue cq,
                 std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-apply <project-id> <instance-id> <table-id> <row-key>"};
-  }
-
   //! [async-apply]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -64,16 +51,12 @@ void AsyncApply(google::cloud::bigtable::Table table,
     std::cout << "Successfully applied mutation\n";
   }
   //! [async-apply]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq), argv.at(0));
 }
 
 void AsyncBulkApply(google::cloud::bigtable::Table table,
                     google::cloud::bigtable::CompletionQueue cq,
-                    std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw Usage{"async-bulk-apply <project-id> <instance-id> <table-id>"};
-  }
-
+                    std::vector<std::string>) {
   //! [bulk async-bulk-apply]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -126,11 +109,7 @@ void AsyncBulkApply(google::cloud::bigtable::Table table,
 
 void AsyncReadRows(google::cloud::bigtable::Table table,
                    google::cloud::bigtable::CompletionQueue cq,
-                   std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw Usage{"async-read-rows <project-id> <instance-id> <table-id>"};
-  }
-
+                   std::vector<std::string>) {
   //! [async read rows]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::make_ready_future;
@@ -171,12 +150,7 @@ void AsyncReadRows(google::cloud::bigtable::Table table,
 
 void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
                             google::cloud::bigtable::CompletionQueue cq,
-                            std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw Usage{
-        "async-read-rows-with-limit <project-id> <instance-id> <table-id>"};
-  }
-
+                            std::vector<std::string>) {
   //! [async read rows with limit]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::make_ready_future;
@@ -218,11 +192,6 @@ void AsyncReadRowsWithLimit(google::cloud::bigtable::Table table,
 void AsyncReadRow(google::cloud::bigtable::Table table,
                   google::cloud::bigtable::CompletionQueue cq,
                   std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{
-        "async-read-row <project-id> <instance-id> <table-id> <row-key>"};
-  }
-
   //! [async read row]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -259,18 +228,12 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example
   }
   //! [async read row]
-  (std::move(cq), std::move(table), argv[1]);
+  (std::move(cq), std::move(table), argv.at(0));
 }
 
 void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{
-        "async-check-and-mutate <project-id> <instance-id> <table-id>"
-        " <row-key>"};
-  }
-
   //! [async check and mutate]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -301,120 +264,180 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
         .get();  // block to simplify the example.
   }
   //! [async check and mutate]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq), argv.at(0));
 }
 
 void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{
-        "async-read-modify-write <project-id> <instance-id> <table-id>"
-        " <row-key>"};
-  }
-
   //! [async read modify write]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::Table table, cbt::CompletionQueue cq, std::string row_key) {
     future<StatusOr<cbt::Row>> row_future = table.AsyncReadModifyWriteRow(
-        row_key, cq,
+        std::move(row_key), cq,
         cbt::ReadModifyWriteRule::AppendValue("fam", "list", ";element"));
 
     row_future
         .then([](future<StatusOr<cbt::Row>> f) {
           auto row = f.get();
           if (!row) throw std::runtime_error(row.status().message());
+          std::cout << "Successfully appended to " << row->row_key() << "\n";
         })
         .get();  // block to simplify example.
   }
   //! [async read modify write]
-  (std::move(table), std::move(cq), argv[1]);
+  (std::move(table), std::move(cq), argv.at(0));
 }
-}  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(
-      google::cloud::bigtable::Table, google::cloud::bigtable::CompletionQueue,
-      std::vector<std::string>)>;
-
-  std::map<std::string, CommandType> commands = {
-      {"async-apply", AsyncApply},
-      {"async-bulk-apply", AsyncBulkApply},
-      {"async-read-rows", AsyncReadRows},
-      {"async-read-rows-with-limit", AsyncReadRowsWithLimit},
-      {"async-read-row", AsyncReadRow},
-      {"async-check-and-mutate", AsyncCheckAndMutate},
-      {"async-read-modify-write", AsyncReadModifyWrite}};
-
-  google::cloud::bigtable::CompletionQueue cq;
-
-  {
-    // Force each command to generate its Usage string, so we can provide a good
-    // usage string for the whole program. We need to create an Table
-    // object to do this, but that object is never used, it is passed to the
-    // commands, without any calls made to it.
-    google::cloud::bigtable::Table unused(
-        google::cloud::bigtable::CreateDefaultDataClient(
-            "unused-project", "Unused-instance",
-            google::cloud::bigtable::ClientOptions()),
-        "Unused-table");
-    for (auto&& kv : commands) {
-      try {
-        kv.second(unused, cq, {});
-      } catch (Usage const& u) {
-        command_usage += "    ";
-        command_usage += u.msg;
-        command_usage += "\n";
-      }
-    }
+class AutoShutdownCQ {
+ public:
+  AutoShutdownCQ(google::cloud::CompletionQueue cq, std::thread th)
+      : cq_(std::move(cq)), th_(std::move(th)) {}
+  ~AutoShutdownCQ() {
+    cq_.Shutdown();
+    th_.join();
   }
 
-  if (argc < 5) {
-    PrintUsage(argv[0],
-               "Missing command and/or project-id/ or instance-id or table-id");
-    return 1;
-  }
+  AutoShutdownCQ(AutoShutdownCQ&&) = delete;
+  AutoShutdownCQ& operator=(AutoShutdownCQ&&) = delete;
 
-  std::vector<std::string> args;
-  args.emplace_back(argv[0]);
-  std::string const command_name = argv[1];
-  std::string const project_id = argv[2];
-  std::string const instance_id = argv[3];
-  std::string const table_id = argv[4];
-  std::transform(argv + 5, argv + argc, std::back_inserter(args),
-                 [](char* x) { return std::string(x); });
+ private:
+  google::cloud::CompletionQueue cq_;
+  std::thread th_;
+};
 
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    PrintUsage(argv[0], "Unknown command: " + command_name);
-    return 1;
-  }
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
 
-  // Start a thread to run the completion queue event loop.
-  std::thread runner([&cq] { cq.Run(); });
+  if (!argv.empty()) throw Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const instance_id = google::cloud::internal::GetEnv(
+                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                               .value();
 
-  // Connect to the Cloud Bigtable endpoint.
-  //! [connect data]
+  namespace cbt = google::cloud::bigtable;
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
+
+  // If a previous run of these samples crashes before cleaning up there may be
+  // old tables left over. As there are quotas on the total number of tables we
+  // remove stale tables after 48 hours.
+  CleanupOldTables("data-async-", admin);
+
+  // Initialize a generator with some amount of entropy.
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const table_id = examples::RandomTableId("data-async-", generator);
+
+  std::cout << "\nCreating table to run the examples (" << table_id << ")"
+            << std::endl;
+  auto schema = admin.CreateTable(
+      table_id,
+      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));
+  if (!schema) throw std::runtime_error(schema.status().message());
+
   google::cloud::bigtable::Table table(
       google::cloud::bigtable::CreateDefaultDataClient(
-          project_id, instance_id, google::cloud::bigtable::ClientOptions()),
+          admin.project(), admin.instance_id(),
+          google::cloud::bigtable::ClientOptions()),
       table_id);
-  //! [connect data]
 
-  command->second(table, cq, args);
+  google::cloud::CompletionQueue cq;
+  std::thread th([&cq] { cq.Run(); });
+  AutoShutdownCQ shutdown(cq, std::move(th));
 
-  // Shutdown the completion queue event loop and join the thread.
-  cq.Shutdown();
-  runner.join();
+  std::cout << "\nRunning the AsyncApply() example" << std::endl;
+  AsyncApply(table, cq, {"row-0001"});
 
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argv[0], ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  std::cout << "\nRunning the AsyncBulkApply() example" << std::endl;
+  AsyncBulkApply(table, cq, {});
+
+  std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
+  AsyncReadRows(table, cq, {});
+
+  std::cout << "\nRunning the AsyncReadRows() example" << std::endl;
+  AsyncReadRowsWithLimit(table, cq, {});
+
+  std::cout << "\nRunning the AsyncReadRow() example [1]" << std::endl;
+  AsyncReadRow(table, cq, {"row-0001"});
+
+  std::cout << "\nRunning the AsyncReadRow() example [2]" << std::endl;
+  AsyncReadRow(table, cq, {"row-not-found-key"});
+
+  std::cout << "\nRunning the AsyncApply() example [2]" << std::endl;
+  AsyncApply(table, cq, {"check-and-mutate-row-key"});
+
+  std::cout << "\nRunning the AsyncCheckAndMutate() example" << std::endl;
+  AsyncCheckAndMutate(table, cq, {"check-and-mutate-row-key"});
+
+  std::cout << "\nRunning the AsyncApply() example [3]" << std::endl;
+  AsyncApply(table, cq, {"read-modify-write-row-key"});
+
+  std::cout << "\nRunning the AsyncReadModifyWrite() example" << std::endl;
+  AsyncReadModifyWrite(table, cq, {"read-modify-write-row-key"});
+
+  (void)admin.DeleteTable(table_id);
 }
-//! [all code]
+
+using AsyncCommandType = std::function<void(google::cloud::bigtable::Table,
+                                            google::cloud::CompletionQueue,
+                                            std::vector<std::string>)>;
+}  // anonymous namespace
+
+int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  auto make_entry = [](std::string const& name,
+                       std::vector<std::string> const& args,
+                       AsyncCommandType command) {
+    auto adapter = [=](std::vector<std::string> argv) {
+      std::vector<std::string> const common{"<project-id>", "<instance-id>",
+                                            "<table-id>"};
+      if (argv.size() != common.size() + args.size()) {
+        std::ostringstream os;
+        os << name;
+        for (auto const& a : common) {
+          os << " " << a;
+        }
+        for (auto const& a : args) {
+          os << " " << a;
+        }
+        throw Usage{std::move(os).str()};
+      }
+      google::cloud::bigtable::Table table(
+          google::cloud::bigtable::CreateDefaultDataClient(
+              argv[0], argv[1], google::cloud::bigtable::ClientOptions()),
+          argv[2]);
+      google::cloud::CompletionQueue cq;
+      std::thread t([&cq] { cq.Run(); });
+      struct Deferred {
+        ~Deferred() {
+          cq_.Shutdown();
+          t_.join();
+        }
+        google::cloud::CompletionQueue cq_;
+        std::thread t_;
+      } deferred{std::move(cq), std::move(t)};
+      argv.erase(argv.begin(), argv.begin() + common.size());
+      command(std::move(table), std::move(cq), std::move(argv));
+    };
+    return examples::Commands::value_type{name, std::move(adapter)};
+  };
+  examples::Example example({
+      make_entry("async-apply", {"<row-key>"}, AsyncApply),
+      make_entry("async-bulk-apply", {}, AsyncBulkApply),
+      make_entry("async-read-rows", {}, AsyncReadRows),
+      make_entry("async-read-rows-with-limit", {}, AsyncReadRowsWithLimit),
+      make_entry("async-read-row", {"<row-key>"}, AsyncReadRow),
+      make_entry("async-check-and-mutate", {"<row-key>"}, AsyncCheckAndMutate),
+      make_entry("async-read-modify-write", {}, AsyncReadModifyWrite),
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
+}

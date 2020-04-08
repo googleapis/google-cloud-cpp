@@ -178,13 +178,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  log_normal "Running Google Cloud Bigtable Examples"
-  echo "================================================================"
-  (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
-      "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_examples_production.sh")
-
-  echo
-  echo "================================================================"
   log_normal "Create service account to run the storage HMAC tests."
   echo "================================================================"
   # Recall that each evaluation of ${RANDOM} produces a different value.

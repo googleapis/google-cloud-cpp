@@ -19,7 +19,6 @@
 bigtable_examples = [
     "bigtable_hello_instance_admin.cc",
     "bigtable_hello_world.cc",
-    "data_async_snippets.cc",
     "instance_admin_async_snippets.cc",
     "table_admin_async_snippets.cc",
 ]
