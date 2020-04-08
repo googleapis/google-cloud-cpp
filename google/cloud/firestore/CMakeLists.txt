@@ -16,18 +16,13 @@
 
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 
-# This should be included from the top level CMakeLists file
-set(FIRESTORE_CLIENT_VERSION_MAJOR 0)
-set(FIRESTORE_CLIENT_VERSION_MINOR 0)
-set(FIRESTORE_CLIENT_VERSION_PATCH 1)
-
 set(DOXYGEN_PROJECT_NAME "Google Cloud Firestore C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Firestore")
 set(DOXYGEN_PROJECT_NUMBER
-    "${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}"
+    "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}"
 )
 set(DOXYGEN_PREDEFINED "GOOGLE_CLOUD_CPP_NS=v0"
-                       "FIRESTORE_CLIENT_NS=v${FIRESTORE_CLIENT_VERSION_MAJOR}")
+                       "FIRESTORE_CLIENT_NS=v${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 set(DOXYGEN_EXCLUDE_PATTERNS
     "*/google/cloud/firestore/README.md" "*/google/cloud/firestore/internal/*"
     "*/google/cloud/firestore/*_test.cc")
@@ -68,8 +63,8 @@ set_target_properties(
     firestore_client
     PROPERTIES
         VERSION
-        ${FIRESTORE_CLIENT_VERSION_MAJOR}.${FIRESTORE_CLIENT_VERSION_MINOR}.${FIRESTORE_CLIENT_VERSION_PATCH}
-        SOVERSION ${FIRESTORE_CLIENT_VERSION_MAJOR})
+        ${GOOGLE_CLOUD_CPP_VERSION_MAJOR}.${GOOGLE_CLOUD_CPP_VERSION_MINOR}.${GOOGLE_CLOUD_CPP_VERSION_PATCH}
+        SOVERSION ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
 add_library(firestore::client ALIAS firestore_client)
 
 create_bazel_config(firestore_client)
@@ -130,9 +125,9 @@ google_cloud_cpp_install_headers(firestore_client
                                  include/google/cloud/firestore)
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${FIRESTORE_CLIENT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${FIRESTORE_CLIENT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${FIRESTORE_CLIENT_VERSION_PATCH})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
+set(GOOGLE_CLOUD_CPP_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
 set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Firestore C++ Client Library")
 set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud Firestore.")
