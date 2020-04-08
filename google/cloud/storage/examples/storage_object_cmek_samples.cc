@@ -43,8 +43,8 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client,
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
-
     if (!metadata) throw std::runtime_error(metadata.status().message());
+
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
               << "\nFull metadata: " << *metadata << "\n";
@@ -60,20 +60,16 @@ void ObjectCsekToCmek(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
      std::string old_csek_key_base64, std::string new_cmek_key_name) {
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.RewriteObjectBlocking(
-            bucket_name, object_name, bucket_name, object_name,
-            gcs::SourceEncryptionKey::FromBase64Key(old_csek_key_base64),
-            gcs::DestinationKmsKeyName(new_cmek_key_name));
+    StatusOr<gcs::ObjectMetadata> metadata = client.RewriteObjectBlocking(
+        bucket_name, object_name, bucket_name, object_name,
+        gcs::SourceEncryptionKey::FromBase64Key(old_csek_key_base64),
+        gcs::DestinationKmsKeyName(new_cmek_key_name));
+    if (!metadata) throw std::runtime_error(metadata.status().message());
 
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Changed object " << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << " from using CSEK to CMEK key.\nFull Metadata: "
-              << *object_metadata << "\n";
+    std::cout << "Changed object " << metadata->name() << " in bucket "
+              << metadata->bucket()
+              << " from using CSEK to CMEK key.\nFull Metadata: " << *metadata
+              << "\n";
   }
   //! [object csek to cmek] [END storage_object_csek_to_cmek]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
