@@ -196,7 +196,11 @@ struct PolicyDocumentV4Result {
   std::string signing_algorithm;
 };
 
+/// Format the current date in the format expected by a POST form
+std::string FormatDateForForm(PolicyDocumentV4Result const&);
+
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs);
+
 }  // namespace STORAGE_CLIENT_NS
 }  // namespace storage
 }  // namespace cloud

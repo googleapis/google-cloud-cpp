@@ -77,6 +77,16 @@ std::ostream& operator<<(std::ostream& os, PolicyDocumentResult const& rhs) {
             << "}";
 }
 
+std::string FormatDateForForm(PolicyDocumentV4Result const&) {
+  // The V4 signed URL format for timestamps and the format for dates in the V4
+  // policy docs are fortunately the same, so we can just call the existing
+  // function and truncate the sub-day parts.
+  auto constexpr kDateLength = sizeof("YYYYMMDD");
+  return google::cloud::internal::FormatV4SignedUrlTimestamp(
+             std::chrono::system_clock::now())
+      .substr(0, kDateLength);
+}
+
 std::ostream& operator<<(std::ostream& os, PolicyDocumentV4Result const& rhs) {
   return os << "PolicyDocumentV4Result={"
             << "url=" << rhs.url << ", access_id=" << rhs.access_id

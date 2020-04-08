@@ -82,6 +82,46 @@ void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
+void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
+                                std::vector<std::string> const& argv) {
+  // [START storage_generate_signed_post_policy_v4]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name, std::string object_name) {
+    auto document = client.GenerateSignedPostPolicyV4(
+        gcs::PolicyDocumentV4{
+            bucket_name,
+            object_name,
+            /*expiration=*/std::chrono::minutes(10),
+        },
+        gcs::AddExtensionFieldOption("x-goog-meta-test", "data"));
+    if (!document) throw std::runtime_error(document.status().message());
+
+    // Create the HTML form for the computed policy.
+    std::ostringstream os;
+    os << "<form action='" << document->url << "' method='POST'"
+       << " enctype='multipart/form-data'>\n"
+       << "  <input name='key' value='" << object_name << "' type='hidden' />\n"
+       << "  <input name='policy' value='" << document->policy
+       << "' type='hidden' />\n"
+       << "  <input name='x-goog-algorithm' value='"
+       << document->signing_algorithm << "' type='hidden' />\n"
+       << "  <input name='x-goog-credential' value='" << document->access_id
+       << "' type='hidden' />\n"
+       << "  <input name='x-goog-date' value='"
+       << gcs::FormatDateForForm(*document) << "' type='hidden' />\n"
+       << "  <input name='signature' value='" << document->signature
+       << "' type='hidden' />\n"
+       << "  <input type='submit' value='Upload File' name='submit' /><br />\n"
+       << "  <input type='file' name='file' /><br />\n"
+       << "</form>";
+
+    std::cout << "A sample HTML form:\n" << os.str() << "\n";
+  }
+  // [END storage_generate_signed_post_policy_v4]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -113,6 +153,10 @@ void RunAll(std::vector<std::string> const& argv) {
             << std::endl;
   CreateSignedPolicyDocumentV4(client, {bucket_name});
 
+  std::cout << "\nRunning the CreatePolicyDocumentFormV4() example"
+            << std::endl;
+  CreatePolicyDocumentFormV4(client, {bucket_name, object_name});
+
   (void)client.DeleteBucket(bucket_name);
 }
 
@@ -127,6 +171,9 @@ int main(int argc, char* argv[]) {
       examples::CreateCommandEntry("create-signed-policy-document-v4",
                                    {"<bucket-name>"},
                                    CreateSignedPolicyDocumentV4),
+      examples::CreateCommandEntry("create-policy-document-form-v4",
+                                   {"<bucket-name>", "<object-name>"},
+                                   CreatePolicyDocumentFormV4),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
