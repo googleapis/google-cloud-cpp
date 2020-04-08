@@ -292,7 +292,7 @@ Commands::value_type MakeCommandEntry(std::string const& name,
     std::thread t([&cq] { cq.Run(); });
     AutoShutdownCQ shutdown(cq, std::move(t));
     argv.erase(argv.begin(), argv.begin() + common.size());
-    command(std::move(table), std::move(cq), std::move(argv));
+    command(std::move(table), cq, std::move(argv));
   };
   return examples::Commands::value_type{name, std::move(adapter)};
 }
