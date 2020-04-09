@@ -180,6 +180,8 @@ if (#TODO(coryan) - DO NOT MERGE (-not $IsPR) -and
         "-snl",
         # Preserve full path
         "-spf",
+        # Exclude directories named "install"
+        "-xr!install",
         # Suppress standard logging
         "-bso0",
         # Suppress progress
