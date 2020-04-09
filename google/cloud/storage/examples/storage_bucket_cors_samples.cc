@@ -64,7 +64,7 @@ void SetCorsConfiguration(google::cloud::storage::Client client,
 
 void RemoveCorsConfiguration(google::cloud::storage::Client client,
                              std::vector<std::string> const& argv) {
-  //! [START storage_remove_cors_configuration]
+  // [START storage_remove_cors_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
@@ -80,7 +80,7 @@ void RemoveCorsConfiguration(google::cloud::storage::Client client,
     std::cout << "Cors configuration successfully removed for bucket "
               << patched->name() << "\n";
   }
-  //! [END storage_remove_cors_configuration]
+  // [END storage_remove_cors_configuration]
   (std::move(client), argv.at(0));
 }
 
