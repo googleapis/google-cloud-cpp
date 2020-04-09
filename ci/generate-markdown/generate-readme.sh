@@ -80,9 +80,9 @@ Versioning](http://semver.org/).
 
 Each library (linked above) contains a directory named `quickstart/` that's
 intended to help you get up and running in a matter of minutes. This
-`quickstart/` directory contains a minimal "Hello World" programing
-demonstrating how to use the library, along with minimal build files for common
-build systems, such as CMake and Bazel.
+`quickstart/` directory contains a minimal "Hello World" program demonstrating
+how to use the library, along with minimal build files for common build
+systems, such as CMake and Bazel.
 
 As an example, the following code snippet, taken from [Google Cloud
 Storage](google/cloud/storage/README.md), should give you a taste of what it's

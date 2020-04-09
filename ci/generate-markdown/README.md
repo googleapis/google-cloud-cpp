@@ -44,7 +44,7 @@ frequently, you may need to manually delete that base image from your cache to
 get newer versions of said image.
 
 Note that any change to the `google-cloud-cpp` contents, including changes to
-the README, doc/packaging.md, or any other documentation, starts the docker
-build almost from the beginning. This is working as intended, we want these
-scripts to simulate the experience of a user downloading `google-cloud-cpp` on
-a fresh workstation.
+the `README.md`, `doc/packaging.md`, or any other documentation, starts the
+docker build almost from the beginning. This is working as intended, we want
+these scripts to simulate the experience of a user downloading
+`google-cloud-cpp` on a fresh workstation.

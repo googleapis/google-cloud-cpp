@@ -19,13 +19,13 @@ set -eu
 readonly BINDIR=$(dirname "$0")
 
 cat <<'END_OF_PREAMBLE'
-# Packaging google-cloud-cpp
+# Packaging `google-cloud-cpp`
 
 <!-- This is an automatically generated file -->
 <!-- Make changes in ci/test-markdown/generate-packaging.sh -->
 
 This document is intended for package maintainers or anyone else who might like
-to "install" the google-cloud-cpp libraries.
+to "install" the `google-cloud-cpp` libraries.
 
 There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
 
@@ -44,17 +44,17 @@ wget -q https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz
 tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
 ```
 
-# Installing google-cloud-cpp
+# Installing `google-cloud-cpp`
 
 <!-- This is an automatically generated file -->
 <!-- Make changes in ci/test-markdown/generate-packaging.sh -->
 
-By default google-cloud-cpp libraries download and compile all their
+By default `google-cloud-cpp` libraries download and compile all their
 dependencies ([see below](#required-libraries) for a complete list). This makes
 it easier for users to "take the library for a spin", and works well for users
 that "Live at Head", but does not work for package maintainers or users that
-prefer to compile their dependencies once and install them in `/usr/local/` or a
-similar directory.
+prefer to compile their dependencies once and install them in `/usr/local/` or
+a similar directory.
 
 This document provides instructions to install the dependencies of
 `google-cloud-cpp`.
