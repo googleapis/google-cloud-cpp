@@ -155,6 +155,11 @@ ForEach($library in ("bigtable", "storage")) {
             throw "Integration tests failed with exit code ${LastExitCode}."
         }
     }
+
+    # Need to free up the open files or the caching below fails.
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+        "Shutting down Bazel for ${library}"
+    bazel $common_flags shutdown
 }
 Set-Location "${project_root}"
 
@@ -187,20 +192,21 @@ if (#TODO(coryan) - DO NOT MERGE (-not $IsPR) -and
         # not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "zipping cache contents failed with exit code ${LastExitCode}."
-    }
-    gcloud auth activate-service-account --key-file `
-        "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-        "uploading Bazel cache."
-    gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
-        "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
-    if ($LastExitCode) {
-        # Just report these errors and continue, caching failures should
-        # not break the build.
+    } else {
+        gcloud auth activate-service-account --key-file `
+            "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "uploading cache failed exit code ${LastExitCode}."
-        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "cache not updated, this will not cause a build failure."
+            "uploading Bazel cache."
+        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
+            "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
+        if ($LastExitCode) {
+            # Just report these errors and continue, caching failures should
+            # not break the build.
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "uploading cache failed exit code ${LastExitCode}."
+            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+                "cache not updated, this will not cause a build failure."
+        }
     }
 }
 
