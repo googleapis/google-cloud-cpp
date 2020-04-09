@@ -1289,50 +1289,6 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name);
 }
 
-void SetCorsConfiguration(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"set-cors-configuration <bucket-name> <origin>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto origin = ConsumeArg(argc, argv);
-  //! [cors configuration] [START storage_cors_configuration]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string origin) {
-    StatusOr<gcs::BucketMetadata> original =
-        client.GetBucketMetadata(bucket_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    std::vector<gcs::CorsEntry> cors_configuration;
-    cors_configuration.emplace_back(
-        gcs::CorsEntry{3600, {"GET"}, {origin}, {"Content-Type"}});
-
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
-        bucket_name,
-        gcs::BucketMetadataPatchBuilder().SetCors(cors_configuration),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
-
-    if (patched_metadata->cors().empty()) {
-      std::cout << "Cors configuration is not set for bucket "
-                << patched_metadata->name() << "\n";
-      return;
-    }
-
-    std::cout << "Cors configuration successfully set for bucket "
-              << patched_metadata->name() << "\nNew cors configuration: ";
-    for (auto const& cors_entry : patched_metadata->cors()) {
-      std::cout << "\n  " << cors_entry;
-    }
-  }
-  //! [cors configuration] [END storage_cors_configuration]
-  (std::move(client), bucket_name, origin);
-}
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -1391,7 +1347,6 @@ int main(int argc, char* argv[]) try {
       {"set-retention-policy", SetRetentionPolicy},
       {"remove-retention-policy", RemoveRetentionPolicy},
       {"lock-retention-policy", LockRetentionPolicy},
-      {"set-cors-configuration", SetCorsConfiguration},
   };
   for (auto&& kv : commands) {
     try {
