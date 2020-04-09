@@ -28,10 +28,12 @@ EOF
 
 cat <<"EOF"
 [![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link]
-[![Kokoro CI status][kokoro-integration-shield]][kokoro-integration-link]
 [![Kokoro CI status][kokoro-windows-cmake-shield]][kokoro-windows-cmake-link]
+[![Kokoro CI status][kokoro-macos-cmake-shield]][kokoro-macos-cmake-link]
+[![Codecov Coverage status][codecov-shield]][codecov-link]<br>
+[![Kokoro CI status][kokoro-integration-shield]][kokoro-integration-link]
+[![Kokoro CI status][kokoro-windows-bazel-shield]][kokoro-windows-bazel-link]
 [![Kokoro CI status][kokoro-macos-bazel-shield]][kokoro-macos-bazel-link]
-[![Codecov Coverage status][codecov-shield]][codecov-link]
 
 [kokoro-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy.svg
 [kokoro-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy-link.html
@@ -39,6 +41,10 @@ cat <<"EOF"
 [kokoro-integration-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-integration-link.html
 [kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
 [kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
+[kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
+[kokoro-windows-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel-link.html
+[kokoro-macos-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-super.svg
+[kokoro-macos-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-super-link.html
 [kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg
 [kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
