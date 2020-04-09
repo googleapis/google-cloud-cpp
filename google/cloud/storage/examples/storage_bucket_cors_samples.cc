@@ -62,6 +62,28 @@ void SetCorsConfiguration(google::cloud::storage::Client client,
   (std::move(client), argv.at(0), argv.at(1));
 }
 
+void RemoveCorsConfiguration(google::cloud::storage::Client client,
+                             std::vector<std::string> const& argv) {
+  //! [START storage_remove_cors_configuration]
+  namespace gcs = google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string bucket_name) {
+    StatusOr<gcs::BucketMetadata> original =
+        client.GetBucketMetadata(bucket_name);
+    if (!original) throw std::runtime_error(original.status().message());
+
+    StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
+        bucket_name, gcs::BucketMetadataPatchBuilder().ResetCors(),
+        gcs::IfMetagenerationMatch(original->metageneration()));
+    if (!patched) throw std::runtime_error(patched.status().message());
+
+    std::cout << "Cors configuration successfully removed for bucket "
+              << patched->name() << "\n";
+  }
+  //! [END storage_remove_cors_configuration]
+  (std::move(client), argv.at(0));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -87,6 +109,9 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning the SetCorsConfiguration() example" << std::endl;
   SetCorsConfiguration(client, {bucket_name, "http://origin1.example.com"});
 
+  std::cout << "\nRunning the RemoveCorsConfiguration() example" << std::endl;
+  RemoveCorsConfiguration(client, {bucket_name});
+
   (void)client.DeleteBucket(bucket_name);
 }
 
@@ -98,6 +123,8 @@ int main(int argc, char* argv[]) {
       examples::CreateCommandEntry("set-cors-configuration",
                                    {"<bucket-name>", "<config>"},
                                    SetCorsConfiguration),
+      examples::CreateCommandEntry("remove-cors-configuration",
+                                   {"<bucket-name>"}, RemoveCorsConfiguration),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
