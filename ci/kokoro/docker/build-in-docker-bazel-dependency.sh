@@ -57,7 +57,7 @@ if [[ -r "/c/test-configuration.sh" ]]; then
   source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
   # TODO(#3604) - figure out how to run pass arguments safely
   quickstart_args=(
-    ["storage"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+    ["storage"]="${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
     ["bigtable"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID} quickstart"
   )
   run_vars+=(

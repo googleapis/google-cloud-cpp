@@ -46,5 +46,5 @@ if [[ -r "${CONFIG_DIRECTORY}/service-account.json" && \
       "${DISTRO}."
   docker run "${run_args[@]}" "${INSTALL_RUN_IMAGE}" \
       "/i/storage/quickstart" \
-      "${GOOGLE_CLOUD_PROJECT}" "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+      "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
 fi

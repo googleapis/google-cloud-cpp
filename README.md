@@ -74,13 +74,12 @@ like to use one of these C++ libraries.
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-  if (argc != 3) {
-    std::cerr << "Missing project id and/or bucket name.\n";
-    std::cerr << "Usage: quickstart <project-id> <bucket-name>\n";
+  if (argc != 2) {
+    std::cerr << "Missing bucket name.\n";
+    std::cerr << "Usage: quickstart <bucket-name>\n";
     return 1;
   }
-  std::string const project_id = argv[1];
-  std::string const bucket_name = argv[2];
+  std::string const bucket_name = argv[1];
 
   // Create aliases to make the code easier to read.
   namespace gcs = google::cloud::storage;
