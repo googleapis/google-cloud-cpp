@@ -27,21 +27,11 @@ cat <<EOF
 EOF
 
 cat <<"EOF"
-> **NOTICE:** This repo will soon contain the code for all the other related
-`google-cloud-cpp-*` repos. As a new monorepo
-([#3612](https://github.com/googleapis/google-cloud-cpp/issues/3612)), the
-versioning of this repo will be changing to have a single per-repo version. See
-https://github.com/googleapis/google-cloud-cpp/issues/3615 for more info.
-
-C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
-
 [![Kokoro CI status][kokoro-clang-tidy-shield]][kokoro-clang-tidy-link]
-[![Kokoro CI status][kokoro-windows-cmake-shield]][kokoro-windows-cmake-link]
-[![Kokoro CI status][kokoro-macos-cmake-shield]][kokoro-macos-cmake-link]
-[![Codecov Coverage status][codecov-shield]][codecov-link]<br>
 [![Kokoro CI status][kokoro-integration-shield]][kokoro-integration-link]
-[![Kokoro CI status][kokoro-windows-bazel-shield]][kokoro-windows-bazel-link]
+[![Kokoro CI status][kokoro-windows-cmake-shield]][kokoro-windows-cmake-link]
 [![Kokoro CI status][kokoro-macos-bazel-shield]][kokoro-macos-bazel-link]
+[![Codecov Coverage status][codecov-shield]][codecov-link]
 
 [kokoro-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy.svg
 [kokoro-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-clang-tidy-link.html
@@ -49,52 +39,64 @@ C++ Idiomatic Clients for [Google Cloud Platform][cloud-platform] services.
 [kokoro-integration-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-integration-link.html
 [kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
 [kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
-[kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
-[kokoro-windows-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel-link.html
-[kokoro-macos-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-super.svg
-[kokoro-macos-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-super-link.html
 [kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg
 [kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
 [codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/master/graph/badge.svg
 [codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
 
-[cloud-platform]: https://cloud.google.com/
-[cloud-platform-docs]: https://cloud.google.com/docs/
+> **NOTICE:** This repo will soon contain the code for all the other related
+`google-cloud-cpp-*` repos. As a new monorepo
+([#3612](https://github.com/googleapis/google-cloud-cpp/issues/3612)), the
+versioning of this repo will be changing to have a single per-repo version. See
+https://github.com/googleapis/google-cloud-cpp/issues/3615 for more info.
 
-This repository contains client libraries for the following services, unless
-noted in their **README.md** files these are all
-[Generally Available](#Versioning):
+This repository contains idiomatic C++ client libraries for the following
+[Google Cloud Platform](https://cloud.google.com/) services.
 
-- [Google Cloud Storage](google/cloud/storage/README.md)
-- [Google Cloud Bigtable](google/cloud/bigtable/README.md)
+* [Google Cloud Bigtable](google/cloud/bigtable/README.md)
+* [Google Cloud Spanner](https://github.com/googleapis/google-cloud-cpp-spanner)
+  (This currently lives in another repo, but is moving into this repo by June 2020).
+* [Google Cloud Storage](google/cloud/storage/README.md)
 
-These links contain information about:
+See each library's `README.md` file for more information about:
 
 * Where to find the documentation for the library and the service.
 * How to get started using the library.
 * How to incorporate the library into your build system.
+* The library's support status if not Generally Available (GA); unless noted in
+  a library's `README.md`, these libraries are all GA and supported by Google.
 
-The [INSTALL.md](INSTALL.md) file documents how to install the library in your
-workstation.
+**NOTE:** This repo and these libraries do **not** follow [Semantic
+Versioning](http://semver.org/).
 
-## Versioning
+## Supported Platforms
 
-Please note that the Google Cloud C++ client libraries do **not** follow
-[Semantic Versioning](http://semver.org/).
+* Windows, macOS, Linux
+* C++11 (and higher) compilers (we test with GCC \>= 4.9, Clang >= 3.8, and MSVC \>= 2019)
+* Environments with or without exceptions
+* Bazel and CMake builds
 
-**GA**: Libraries defined at a GA quality level are expected to be stable and
-any backwards-incompatible changes will be noted in the documentation. Major
-changes to the API will signaled by changing major version number
-(e.g. 1.x.y -> 2.0.0).
+## Quickstart
 
-**Beta**: Libraries defined at a Beta quality level are expected to be mostly
-stable and we're working towards their release candidate. We will address issues
-and requests with a higher priority.
+Each library (linked above) contains a directory named `quickstart/` that's
+intended to help you get up and running in a matter of minutes. This
+`quickstart/` directory contains a minimal "Hello World" programing
+demonstrating how to use the library, along with minimal build files for common
+build systems, such as CMake and Bazel.
 
-**Alpha**: Libraries defined at an Alpha quality level are still a
-work-in-progress and are more likely to get backwards-incompatible updates.
-Additionally, it's possible for Alpha libraries to get deprecated and deleted
-before ever being promoted to Beta or GA.
+As an example, the following code snippet, taken from [Google Cloud
+Storage](google/cloud/storage/README.md), should give you a taste of what it's
+like to use one of these C++ libraries.
+
+```cc
+EOF
+
+# Dumps the contents of GCS's quickstart.cc starting at the first #include, so
+# we skip the license header comment.
+sed -n '/^#/,$p' "${BINDIR}/../../google/cloud/storage/quickstart/quickstart.cc"
+
+cat <<"EOF"
+```
 
 ## Contributing changes
 
