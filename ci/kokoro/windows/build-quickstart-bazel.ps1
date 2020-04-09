@@ -168,8 +168,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel 
 bazel $common_flags shutdown
 bazel shutdown
 
-if (#TODO(coryan) - DO NOT MERGE (-not $IsPR) -and
-    $CacheConfigured -and $Has7z) {
+if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
