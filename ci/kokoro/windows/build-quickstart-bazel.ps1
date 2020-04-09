@@ -161,8 +161,10 @@ Set-Location "${project_root}"
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
+bazel shutdown
 
-if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
+if (#TODO(coryan) - DO NOT MERGE (-not $IsPR) -and
+    $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
     # We use 7z because it knows how to handle locked files better than Unix
     # tools like tar(1).
@@ -173,33 +175,32 @@ if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
         "-snl",
         # Preserve full path
         "-spf",
-        # Exclude directories named "install"
-        "-xr!install",
-        # Suppress errors
-        "-bse0",
-        # Suppress progress
-        "-bsp0",
         # Suppress standard logging
-        "-bso0"
+        "-bso0",
+        # Suppress progress
+        "-bsp0"
     )
+    Remove-Item "${download_dir}\${CACHE_BASENAME}.tar" -ErrorAction SilentlyContinue
     7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
     if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
+        # Just report these errors and continue, caching failures should
+        # not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "zipping cache contents failed with exit code ${LastExitCode}."
-    } else {
-        gcloud auth activate-service-account --key-file `
-            "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    }
+    gcloud auth activate-service-account --key-file `
+        "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+        "uploading Bazel cache."
+    gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
+        "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
+    if ($LastExitCode) {
+        # Just report these errors and continue, caching failures should
+        # not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-            "uploading Bazel cache."
-        gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
-            "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
-        if ($LastExitCode) {
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "uploading cache failed exit code ${LastExitCode}."
-            Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
-                "cache not updated, this will not cause a build failure."
-        }
+            "uploading cache failed exit code ${LastExitCode}."
+        Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
+            "cache not updated, this will not cause a build failure."
     }
 }
 
