@@ -12,35 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [all code]
-
 //! [bigtable includes]
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
 //! [bigtable includes]
-#include <google/protobuf/text_format.h>
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
+#include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-std::string command_usage;
-
-void PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
+using google::cloud::bigtable::examples::Usage;
 
 void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{"async-create-instance <project-id> <instance-id> <zone>"};
-  }
   //! [async create instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -67,16 +54,12 @@ void AsyncCreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "DONE, details=" << instance->name() << "\n";
   }
   //! [async create instance]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 4) {
-    throw Usage{
-        "async-create-cluster <project-id> <instance-id> <cluster-id> <zone>"};
-  }
   //! [async create cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -98,18 +81,14 @@ void AsyncCreateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "DONE, details=" << cluster->DebugString() << "\n";
   }
   //! [async create cluster]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1),
+   argv.at(2));
 }
 
 void AsyncCreateAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-create-app-profile <project-id> <instance-id> <profile-id>"};
-  }
-
   //! [async create app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -131,16 +110,12 @@ void AsyncCreateAppProfile(
     std::cout << "DONE, details=" << app_profile->DebugString() << "\n";
   }
   //! [async create app profile]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncGetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-get-instance <project-id> <instance-id>"};
-  }
-
   //! [async get instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -162,16 +137,12 @@ void AsyncGetInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     final.get();  // block to keep the example simple
   }
   //! [async get instance]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
-                        std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw Usage{"async-list-instances <project-id>"};
-  }
-
+                        std::vector<std::string> const&) {
   //! [async list instances]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -209,10 +180,6 @@ void AsyncListInstances(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                      google::cloud::bigtable::CompletionQueue cq,
                      std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{"async-get-cluster <project-id> <instance-id> <cluster-id>"};
-  }
-
   //! [async get cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -223,32 +190,23 @@ void AsyncGetCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
         instance_admin.AsyncGetCluster(cq, instance_id, cluster_id);
 
     future<google::cloud::Status> final = cluster_future.then(
-        [](google::cloud::future<
-            google::cloud::StatusOr<google::bigtable::admin::v2::Cluster>>
-               f) {
+        [](future<StatusOr<google::bigtable::admin::v2::Cluster>> f) {
           StatusOr<google::bigtable::admin::v2::Cluster> cluster = f.get();
           if (!cluster) throw std::runtime_error(cluster.status().message());
-          std::string cluster_detail;
-          google::protobuf::TextFormat::PrintToString(*cluster,
-                                                      &cluster_detail);
-          std::cout << "GetCluster details : " << cluster_detail << "\n";
+          std::cout << "GetCluster details : " << cluster->DebugString()
+                    << "\n";
           return google::cloud::Status();
         });
 
     final.get();  // block to keep the example simple
   }
   //! [async get cluster]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-get-app-profile <project-id> <instance-id> <app_profile-id>"};
-  }
-
   //! [async get app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -257,34 +215,25 @@ void AsyncGetAppProfile(google::cloud::bigtable::InstanceAdmin instance_admin,
      std::string instance_id, std::string app_profile_id) {
     future<void> final =
         instance_admin.AsyncGetAppProfile(cq, instance_id, app_profile_id)
-            .then([](google::cloud::future<
-                      StatusOr<google::bigtable::admin::v2::AppProfile>>
+            .then([](future<StatusOr<google::bigtable::admin::v2::AppProfile>>
                          f) {
-              StatusOr<google::bigtable::admin::v2::AppProfile> app_profile =
-                  f.get();
+              auto app_profile = f.get();
               if (!app_profile) {
                 throw std::runtime_error(app_profile.status().message());
               }
-              std::string app_profile_detail;
-              google::protobuf::TextFormat::PrintToString(*app_profile,
-                                                          &app_profile_detail);
-              std::cout << "GetAppProfile details : " << app_profile_detail
-                        << "\n";
+              std::cout << "GetAppProfile details : "
+                        << app_profile->DebugString() << "\n";
             });
 
     final.get();  // block to keep the example simple
   }
   //! [async get app profile]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-get-iam-policy <project-id> <instance-id>"};
-  }
-
   //! [async get iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -294,8 +243,8 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     future<StatusOr<google::cloud::IamPolicy>> policy_future =
         instance_admin.AsyncGetIamPolicy(cq, instance_id);
 
-    future<void> final = policy_future.then(
-        [](google::cloud::future<StatusOr<google::cloud::IamPolicy>> f) {
+    future<void> final =
+        policy_future.then([](future<StatusOr<google::cloud::IamPolicy>> f) {
           StatusOr<google::cloud::IamPolicy> iam_policy = f.get();
           if (!iam_policy) {
             throw std::runtime_error(iam_policy.status().message());
@@ -306,17 +255,13 @@ void AsyncGetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
     final.get();  // block to keep the example simple
   }
   //! [async get iam policy]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncGetNativeIamPolicy(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-get-native-iam-policy <project-id> <instance-id>"};
-  }
-
   //! [async get native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -329,27 +274,20 @@ void AsyncGetNativeIamPolicy(
 
     future<void> final =
         policy_future.then([](future<StatusOr<google::iam::v1::Policy>> f) {
-          StatusOr<google::iam::v1::Policy> iam_policy = f.get();
-          if (!iam_policy) {
-            throw std::runtime_error(iam_policy.status().message());
-          }
-          using cbt::operator<<;
-          std::cout << "IamPolicy details : " << *iam_policy << "\n";
+          StatusOr<google::iam::v1::Policy> iam = f.get();
+          if (!iam) throw std::runtime_error(iam.status().message());
+          std::cout << "IamPolicy details : " << iam->DebugString() << "\n";
         });
 
     final.get();  // block to keep the example simple
   }
   //! [async get native iam policy]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-list-clusters: <project-id> <instance-id>"};
-  }
-
   //! [async list clusters]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -381,16 +319,12 @@ void AsyncListClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
     final.get();  // block to keep the example simple
   }
   //! [async list clusters]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
                           google::cloud::bigtable::CompletionQueue cq,
-                          std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw Usage{"async-list-all-clusters: <project-id>"};
-  }
-
+                          std::vector<std::string> const&) {
   //! [async list all clusters]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -427,10 +361,6 @@ void AsyncListAllClusters(google::cloud::bigtable::InstanceAdmin instance_admin,
 void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
                           google::cloud::bigtable::CompletionQueue cq,
                           std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-list-app-profiles: <project-id> <instance-id>"};
-  }
-
   //! [async list app_profiles]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -457,16 +387,12 @@ void AsyncListAppProfiles(google::cloud::bigtable::InstanceAdmin instance_admin,
     final.get();  // block to keep the example simple
   }
   //! [async list app_profiles]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"update-instance: <project-id> <instance-id>"};
-  }
-
   //! [async update instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -505,16 +431,12 @@ void AsyncUpdateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     final.get();  // block to keep example simple.
   }
   //! [async update instance]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{"async-update-cluster <project-id> <instance-id> <cluster-id>"};
-  }
-
   //! [async update cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -551,17 +473,13 @@ void AsyncUpdateCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     final.get();  // block to keep example simple.
   }
   //! [async update cluster]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncUpdateAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{"update-cluster: <project-id> <instance-id> <profile-id>"};
-  }
-
   //! [async update app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -585,16 +503,12 @@ void AsyncUpdateAppProfile(
     std::cout << "DONE, details=" << app_profile->DebugString() << "\n";
   }
   //! [async update app profile]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
                          google::cloud::bigtable::CompletionQueue cq,
                          std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-delete-instance: <project-id> <instance-id> "};
-  }
-
   //! [async-delete-instance] [START bigtable_async_delete_instance]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -608,17 +522,12 @@ void AsyncDeleteInstance(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Instance " << instance_id << " successfully deleted\n";
   }
   //! [async-delete-instance] [END bigtable_async_delete_instance]
-  (std::move(instance_admin), std::move(cq), argv[1]);
+  (std::move(instance_admin), std::move(cq), argv.at(0));
 }
 
 void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
                         google::cloud::bigtable::CompletionQueue cq,
                         std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-delete-cluster: <project-id> <instance-id> <cluster-id> "};
-  }
-
   //! [async delete cluster]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -632,19 +541,13 @@ void AsyncDeleteCluster(google::cloud::bigtable::InstanceAdmin instance_admin,
     std::cout << "Cluster " << cluster_id << " successfully deleted\n";
   }
   //! [async delete cluster]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncDeleteAppProfile(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-delete-app-profile <project-id> <instance-id> "
-        "<app-profile-id> "};
-  }
-
   //! [async delete app profile]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -659,20 +562,12 @@ void AsyncDeleteAppProfile(
     std::cout << "Profile " << app_profile_id << " successfully deleted\n";
   }
   //! [async delete app profile]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
                        google::cloud::bigtable::CompletionQueue cq,
                        std::vector<std::string> argv) {
-  if (argv.size() < 2) {
-    throw Usage{
-        "async-set-iam-policy: <project-id> <instance-id>"
-        " <permission> <new-member>\n"
-        "        Example: set-iam-policy my-project my-instance"
-        " roles/bigtable.user user:my-user@example.com"};
-  }
-
   //! [async set iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -705,21 +600,14 @@ void AsyncSetIamPolicy(google::cloud::bigtable::InstanceAdmin instance_admin,
               << *result << "\n";
   }
   //! [async set iam policy]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1),
+   argv.at(2));
 }
 
 void AsyncSetNativeIamPolicy(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() < 2) {
-    throw Usage{
-        "async-set-native-iam-policy: <project-id> <instance-id>"
-        " <permission> <new-member>\n"
-        "        Example: set-native-iam-policy my-project my-instance"
-        " roles/bigtable.user user:my-user@example.com"};
-  }
-
   //! [async set native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -766,30 +654,25 @@ void AsyncSetNativeIamPolicy(
               << *result << "\n";
   }
   //! [async set native iam policy]
-  (std::move(instance_admin), std::move(cq), argv[1], argv[2], argv[3]);
+  (std::move(instance_admin), std::move(cq), argv.at(0), argv.at(1),
+   argv.at(2));
 }
 
 void AsyncTestIamPermissions(
     google::cloud::bigtable::InstanceAdmin instance_admin,
     google::cloud::bigtable::CompletionQueue cq,
     std::vector<std::string> argv) {
-  if (argv.size() < 2) {
-    throw Usage{
-        "async-test-iam-permissions: <project-id> <resource-id> "
-        "[permission ...]"};
-  }
-
   //! [async test iam permissions]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::InstanceAdmin instance_admin, cbt::CompletionQueue cq,
-     std::string resource, std::vector<std::string>(permissions)) {
+     std::string resource, std::vector<std::string> permissions) {
     future<StatusOr<std::vector<std::string>>> permissions_future =
         instance_admin.AsyncTestIamPermissions(cq, resource, permissions);
     // Show how to perform additional work while the long running operation
     // completes. The application could use permissions_future.then() instead.
-    std::cout << "Waiting for app profile update to complete " << std::flush;
+    std::cout << "Waiting for TestIamPermissions " << std::flush;
     permissions_future.wait_for(std::chrono::seconds(2));
     std::cout << '.' << std::flush;
     auto result = permissions_future.get();
@@ -803,101 +686,195 @@ void AsyncTestIamPermissions(
     std::cout << "]\n";
   }
   //! [async test iam permissions]
-  (std::move(instance_admin), std::move(cq), argv[1],
-   std::vector<std::string>(argv.begin() + 2, argv.end()));
+  (std::move(instance_admin), std::move(cq), argv.at(0),
+   {argv.begin() + 1, argv.end()});
+}
+
+void AsyncTestIamPermissionsCommand(std::vector<std::string> argv) {
+  if (argv.size() < 2) {
+    throw Usage{
+        "async-test-iam-permissions <project-id> <resource-id>"
+        "<permission> [permission ...]"};
+  }
+  auto const project_id = argv[0];
+  argv.erase(argv.begin());
+  google::cloud::CompletionQueue cq;
+  std::thread th([&cq] { cq.Run(); });
+  google::cloud::bigtable::examples::AutoShutdownCQ shutdown(cq, std::move(th));
+
+  google::cloud::bigtable::InstanceAdmin admin(
+      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
+          project_id, google::cloud::bigtable::ClientOptions()));
+
+  AsyncTestIamPermissions(admin, cq, std::move(argv));
+}
+
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  namespace cbt = google::cloud::bigtable;
+
+  if (!argv.empty()) throw Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
+          .value();
+  auto const zone_a =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_A")
+          .value();
+  auto const zone_b =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B")
+          .value();
+
+  cbt::InstanceAdmin admin(
+      cbt::CreateDefaultInstanceAdminClient(project_id, cbt::ClientOptions{}));
+
+  examples::CleanupOldInstances("exin-", admin);
+
+  google::cloud::CompletionQueue cq;
+  std::thread th([&cq] { cq.Run(); });
+  examples::AutoShutdownCQ shutdown(cq, std::move(th));
+
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const instance_id = examples::RandomInstanceId("exin-", generator);
+
+  std::cout << "\nRunning AsyncCreateInstance() example" << std::endl;
+  AsyncCreateInstance(admin, cq, {instance_id, zone_a});
+
+  std::cout << "\nRunning AsyncUpdateInstance() example" << std::endl;
+  AsyncUpdateInstance(admin, cq, {instance_id});
+
+  std::cout << "\nRunning AsyncGetInstance() example" << std::endl;
+  AsyncGetInstance(admin, cq, {instance_id});
+
+  std::cout << "\nRunning AsyncListInstances() example" << std::endl;
+  AsyncListInstances(admin, cq, {});
+
+  std::cout << "\nRunning AsyncListClusters() example" << std::endl;
+  AsyncListClusters(admin, cq, {instance_id});
+
+  std::cout << "\nRunning AsyncListAllClusters() example" << std::endl;
+  AsyncListAllClusters(admin, cq, {});
+
+  std::cout << "\nRunning AsyncListAppProfiles() example" << std::endl;
+  AsyncListAppProfiles(admin, cq, {instance_id});
+
+  std::cout << "\nRunning AsyncCreateCluster() example" << std::endl;
+  AsyncCreateCluster(admin, cq, {instance_id, instance_id + "-c2", zone_b});
+
+  std::cout << "\nRunning AsyncUpdateCluster() example" << std::endl;
+  AsyncUpdateCluster(admin, cq, {instance_id, instance_id + "-c2"});
+
+  std::cout << "\nRunning AsyncGetCluster() example" << std::endl;
+  AsyncGetCluster(admin, cq, {instance_id, instance_id + "-c2"});
+
+  std::cout << "\nRunning AsyncDeleteCluster() example" << std::endl;
+  AsyncDeleteCluster(admin, cq, {instance_id, instance_id + "-c2"});
+
+  std::cout << "\nRunning AsyncCreateAppProfile() example" << std::endl;
+  AsyncCreateAppProfile(admin, cq, {instance_id, "my-app-profile"});
+
+  std::cout << "\nRunning AsyncGetAppProfile() example" << std::endl;
+  AsyncGetAppProfile(admin, cq, {instance_id, "my-app-profile"});
+
+  std::cout << "\nRunning AsyncUpdateAppProfile() example" << std::endl;
+  AsyncUpdateAppProfile(admin, cq, {instance_id, "my-app-profile"});
+
+  std::cout << "\nRunning AsyncDeleteAppProfile() example" << std::endl;
+  AsyncDeleteAppProfile(admin, cq, {instance_id, "my-app-profile"});
+
+  std::cout << "\nRunning AsyncGetIamPolicy() example" << std::endl;
+  AsyncGetIamPolicy(admin, cq, {instance_id});
+
+  std::cout << "\nRunning AsyncSetIamPolicy() example" << std::endl;
+  AsyncSetIamPolicy(admin, cq,
+                    {instance_id, "roles/bigtable.user",
+                     "serviceAccount:" + service_account});
+
+  std::cout << "\nRunning AsyncGetNativeIamPolicy() example" << std::endl;
+  AsyncGetNativeIamPolicy(admin, cq, {instance_id});
+
+  std::cout << "\nRunning AsyncSetNativeIamPolicy() example" << std::endl;
+  AsyncSetNativeIamPolicy(admin, cq,
+                          {instance_id, "roles/bigtable.user",
+                           "serviceAccount:" + service_account});
+
+  std::cout << "\nRunning AsyncTestIamPermissions() example [1]" << std::endl;
+  AsyncTestIamPermissionsCommand(
+      {project_id, instance_id, "bigtable.instances.delete"});
+
+  std::cout << "\nRunning AsyncTestIamPermissions() example [2]" << std::endl;
+  AsyncTestIamPermissions(admin, cq,
+                          {instance_id, "bigtable.instances.delete"});
+
+  std::cout << "\nRunning AsyncDeleteInstance() example" << std::endl;
+  AsyncDeleteInstance(admin, cq, {instance_id});
 }
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(
-      google::cloud::bigtable::InstanceAdmin,
-      google::cloud::bigtable::CompletionQueue, std::vector<std::string>)>;
-
-  std::map<std::string, CommandType> commands = {
-      {"async-create-instance", AsyncCreateInstance},
-      {"async-create-cluster", AsyncCreateCluster},
-      {"async-create-app-profile", AsyncCreateAppProfile},
-      {"async-get-instance", AsyncGetInstance},
-      {"async-get-cluster", AsyncGetCluster},
-      {"async-get-app-profile", AsyncGetAppProfile},
-      {"async-get-iam-policy", AsyncGetIamPolicy},
-      {"async-get-native-iam-policy", AsyncGetNativeIamPolicy},
-      {"async-list-instances", AsyncListInstances},
-      {"async-list-clusters", AsyncListClusters},
-      {"async-list-all-clusters", AsyncListAllClusters},
-      {"async-list-app-profiles", AsyncListAppProfiles},
-      {"async-update-instance", AsyncUpdateInstance},
-      {"async-update-cluster", AsyncUpdateCluster},
-      {"async-update-app-profile", AsyncUpdateAppProfile},
-      {"async-delete-instance", AsyncDeleteInstance},
-      {"async-delete-cluster", AsyncDeleteCluster},
-      {"async-delete-app-profile", AsyncDeleteAppProfile},
-      {"async-set-iam-policy", AsyncSetIamPolicy},
-      {"async-set-native-iam-policy", AsyncSetNativeIamPolicy},
-      {"async-test-iam-permissions", AsyncTestIamPermissions}};
-
-  google::cloud::bigtable::CompletionQueue cq;
-
-  {
-    // Force each command to generate its Usage string, so we can provide a good
-    // usage string for the whole program. We need to create an InstanceAdmin
-    // object to do this, but that object is never used, it is passed to the
-    // commands, without any calls made to it.
-    google::cloud::bigtable::InstanceAdmin unused(
-        google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-            "unused-project", google::cloud::bigtable::ClientOptions()));
-    for (auto&& kv : commands) {
-      try {
-        kv.second(unused, cq, {});
-      } catch (Usage const& u) {
-        command_usage += "    ";
-        command_usage += u.msg;
-        command_usage += "\n";
-      }
-    }
-  }
-
-  if (argc < 3) {
-    PrintUsage(argv[0], "Missing command and/or project-id");
-    return 1;
-  }
-
-  std::vector<std::string> args;
-  args.emplace_back(argv[0]);
-  std::string const command_name = argv[1];
-  std::string const project_id = argv[2];
-  std::transform(argv + 3, argv + argc, std::back_inserter(args),
-                 [](char* x) { return std::string(x); });
-
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    PrintUsage(argv[0], "Unknown command: " + command_name);
-    return 1;
-  }
-
-  // Start a thread to run the completion queue event loop.
-  std::thread runner([&cq] { cq.Run(); });
-
-  // Create an instance admin endpoint.
-  //! [connect instance admin]
-  google::cloud::bigtable::InstanceAdmin instance_admin(
-      google::cloud::bigtable::CreateDefaultInstanceAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()));
-  //! [connect instance admin]
-
-  command->second(instance_admin, cq, args);
-
-  // Shutdown the completion queue event loop and join the thread.
-  cq.Shutdown();
-  runner.join();
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argv[0], ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+int main(int argc, char* argv[]) {
+  namespace examples = google::cloud::bigtable::examples;
+  examples::Example example({
+      examples::MakeCommandEntry("async-create-instance",
+                                 {"<instance-id>", "<zone>"},
+                                 AsyncCreateInstance),
+      examples::MakeCommandEntry("async-create-cluster",
+                                 {"<instance-id>", "<cluster-id>", "<zone>"},
+                                 AsyncCreateCluster),
+      examples::MakeCommandEntry("async-create-app-profile",
+                                 {"<instance-id>", "<profile-id>"},
+                                 AsyncCreateAppProfile),
+      examples::MakeCommandEntry("async-get-instance", {"<instance-id>"},
+                                 AsyncGetInstance),
+      examples::MakeCommandEntry("async-list-instances", {},
+                                 AsyncListInstances),
+      examples::MakeCommandEntry("async-get-cluster",
+                                 {"<instance-id>", "<cluster-id>"},
+                                 AsyncGetCluster),
+      examples::MakeCommandEntry("async-get-app-profile",
+                                 {"<instance-id>", "<app-profile-id>"},
+                                 AsyncGetAppProfile),
+      examples::MakeCommandEntry("async-get-iam-policy", {"<instance-id>"},
+                                 AsyncGetIamPolicy),
+      examples::MakeCommandEntry("async-get-native-iam-policy",
+                                 {"<instance-id>"}, AsyncGetNativeIamPolicy),
+      examples::MakeCommandEntry("async-list-clusters", {}, AsyncListClusters),
+      examples::MakeCommandEntry("async-list-all-clusters", {},
+                                 AsyncListAllClusters),
+      examples::MakeCommandEntry("async-list-app-profiles", {"<instance-id>"},
+                                 AsyncListAppProfiles),
+      examples::MakeCommandEntry("async-update-instance", {"<instance-id>"},
+                                 AsyncUpdateInstance),
+      examples::MakeCommandEntry("async-update-cluster",
+                                 {"<instance-id>", "<cluster-id>"},
+                                 AsyncUpdateCluster),
+      examples::MakeCommandEntry("async-update-app-profile",
+                                 {"<instance-id>", "<profile-id>"},
+                                 AsyncUpdateAppProfile),
+      examples::MakeCommandEntry("async-delete-instance", {"<instance-id>"},
+                                 AsyncDeleteInstance),
+      examples::MakeCommandEntry("async-delete-cluster",
+                                 {"<instance-id>", "<cluster-id>"},
+                                 AsyncDeleteCluster),
+      examples::MakeCommandEntry("async-delete-app-profile",
+                                 {"<instance-id>", "<app-profile-id>"},
+                                 AsyncDeleteAppProfile),
+      examples::MakeCommandEntry("async-set-iam-policy",
+                                 {"<instance-id>", "<role>", "<member>"},
+                                 AsyncSetIamPolicy),
+      examples::MakeCommandEntry("async-set-native-iam-policy",
+                                 {"<instance-id>", "<role>", "<member>"},
+                                 AsyncSetNativeIamPolicy),
+      {"async-test-iam-permissions", AsyncTestIamPermissionsCommand},
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }
-//! [all code]
