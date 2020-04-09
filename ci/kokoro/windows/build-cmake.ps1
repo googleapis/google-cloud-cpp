@@ -17,19 +17,23 @@
 $ErrorActionPreference = "Stop"
 
 # First check the required environment variables.
-if (-not (Test-Path env:CONFIG)) {
-    throw "Aborting build because the CONFIG environment variable is not set."
+$missing=@()
+ForEach($var in ("CONFIG", "GENERATOR", "VCPKG_TRIPLET")) {
+    if (-not (Test-Path env:${var})) {
+        $missing+=(${var})
+    }
+}
+if ($missing.count -ge 1) {
+    throw "Aborting build because the ${missing} environment variables are not set."
 }
 
+$binary_dir="cmake-out\msvc-${env:VCPKG_TRIPLET}"
 # By default assume "module", use the configuration parameters and build in the `cmake-out` directory.
-$cmake_flags=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-Bcmake-out")
-
-# This script expects vcpkg to be installed in ..\vcpkg, discover the full
-# path to that directory:
-$dir = Split-Path (Get-Item -Path ".\" -Verbose).FullName
+$cmake_flags=@("-G$env:GENERATOR", "-DCMAKE_BUILD_TYPE=$env:CONFIG", "-H.", "-B${binary_dir}")
 
 # Setup the environment for vcpkg:
-$cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"$dir\vcpkg\scripts\buildsystems\vcpkg.cmake`""
+$project_root = (Get-Item -Path ".\" -Verbose).FullName
+$cmake_flags += "-DCMAKE_TOOLCHAIN_FILE=`"${project_root}\cmake-out\vcpkg\scripts\buildsystems\vcpkg.cmake`""
 $cmake_flags += "-DVCPKG_TARGET_TRIPLET=$env:VCPKG_TRIPLET"
 $cmake_flags += "-DCMAKE_C_COMPILER=cl.exe"
 $cmake_flags += "-DCMAKE_CXX_COMPILER=cl.exe"
@@ -42,13 +46,14 @@ if ($LastExitCode) {
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Compiling with CMake $env:CONFIG"
-cmake --build cmake-out --config $env:CONFIG
+cmake --build "${binary_dir}" --config $env:CONFIG
 if ($LastExitCode) {
     throw "cmake for 'all' target failed with exit code $LastExitCode"
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Running unit tests $env:CONFIG"
-Set-Location cmake-out
+Set-Location "${binary_dir}"
+
 if (Test-Path env:RUNNING_CI) {
     # On Kokoro we need to define %TEMP% or the tests do not have a valid directory for
     # temporary files.

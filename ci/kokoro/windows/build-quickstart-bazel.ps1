@@ -152,7 +152,7 @@ ForEach($library in ("bigtable", "storage")) {
         bazel $common_flags run "--spawn_strategy=local" `
             ":quickstart" -- $quickstart_args[${library}]
         if ($LastExitCode) {
-            throw "Integration tests failed with exit code ${LastExitCode}."
+            throw "quickstart test for ${library} failed with exit code ${LastExitCode}."
         }
     }
 

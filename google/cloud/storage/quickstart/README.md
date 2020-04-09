@@ -78,6 +78,17 @@ https://cloud.google.com/docs/authentication/production
    .build/quickstart [GCP PROJECT] [BUCKET NAME]
    ```
 
+## Platform Specific Notes
+
+### Windows
+
+We only test these instructions with the `x64-windows-static` triplet for
+`vcpkg`, that is, we install the dependencies using:
+
+```bash
+.\vcpkg.exe -triplet x64-windows-static google-cloud-cpp
+```
+
 [bazel-install]: https://docs.bazel.build/versions/master/install.html
 [choco-cmake-link]: https://chocolatey.org/packages/cmake
 [homebrew-cmake-link]: https://formulae.brew.sh/formula/cmake

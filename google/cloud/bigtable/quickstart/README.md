@@ -119,6 +119,13 @@ trust store for SSL certificates, you can download and configure this using:
 set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=%cd%\roots.pem
 ```
 
+We only test these instructions with the `x64-windows-static` triplet for
+`vcpkg`, that is, we install the dependencies using:
+
+```bash
+.\vcpkg.exe -triplet x64-windows-static google-cloud-cpp
+```
+
 <!-- END bigtable_hw_install -->
 
 [bazel-install]: https://docs.bazel.build/versions/master/install.html
