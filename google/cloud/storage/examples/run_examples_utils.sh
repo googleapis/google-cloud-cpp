@@ -907,30 +907,6 @@ run_all_notification_examples() {
 }
 
 ################################################
-# Run the examples showing how to use cors configuration.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_cors_configuration_examples() {
-  # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_bucket_samples set-cors-configuration \
-      "${bucket_name}" "http://origin1.example.com"
-
-  run_example ./storage_bucket_samples delete-bucket \
-      "${bucket_name}"
-}
-
-################################################
 # Run mocking client examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -997,7 +973,6 @@ run_all_storage_examples() {
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_all_notification_examples "${TOPIC_NAME}"
   run_all_service_account_examples
-  run_cors_configuration_examples
   run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
