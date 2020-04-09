@@ -145,6 +145,7 @@ if ((Test-Path env:RUN_INTEGRATION_TESTS) -and ($env:RUN_INTEGRATION_TESTS -eq "
 # Shutdown the Bazel server to release any locks
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Shutting down Bazel server"
 bazel $common_flags shutdown
+bazel shutdown
 
 if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating Bazel cache"
@@ -159,16 +160,16 @@ if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
         "-spf",
         # Exclude directories named "install"
         "-xr!install",
-        # Suppress errors
-        "-bse0",
-        # Suppress progress
-        "-bsp0",
         # Suppress standard logging
-        "-bso0"
+        "-bso0",
+        # Suppress progress
+        "-bsp0"
     )
+    Remove-Item "${download_dir}\${CACHE_BASENAME}.tar" -ErrorAction SilentlyContinue
     7z a "${download_dir}\${CACHE_BASENAME}.tar" "${bazel_root}" ${archive_flags}
     if ($LastExitCode) {
-        # Ignore errors, caching failures should not break the build.
+        # Just report these errors and continue, caching failures should
+        # not break the build.
         Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
             "zipping cache contents failed with exit code ${LastExitCode}."
     } else {
@@ -179,6 +180,8 @@ if ((-not $IsPR) -and $CacheConfigured -and $Has7z) {
         gsutil -q cp "${download_dir}\${CACHE_BASENAME}.tar" `
             "gs://${CACHE_FOLDER}/${CACHE_BASENAME}.tar"
         if ($LastExitCode) {
+            # Just report these errors and continue, caching failures should
+            # not break the build.
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
                 "uploading cache failed exit code ${LastExitCode}."
             Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
