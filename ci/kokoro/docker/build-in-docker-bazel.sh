@@ -98,6 +98,9 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
 
+  echo
+  echo "================================================================"
+  log_normal "Create an access token to run the Bigtable credential examples."
   "${GCLOUD}" --quiet auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
@@ -105,6 +108,23 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # for use by `gcloud` the token remains valid for about 1 hour.
   ACCESS_TOKEN="$("${GCLOUD}" --quiet auth print-access-token)"
   readonly ACCESS_TOKEN
+
+  echo
+  echo "================================================================"
+  log_normal "Create a service account to run the storage HMAC tests."
+  # Recall that each evaluation of ${RANDOM} produces a different value.
+  HMAC_SERVICE_ACCOUNT_NAME="hmac-sa-$(date +%s)-${RANDOM}"
+  GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+  export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT
+
+  "${GCLOUD}" --quiet iam service-accounts create \
+      "--project=${GOOGLE_CLOUD_PROJECT}" \
+      "${HMAC_SERVICE_ACCOUNT_NAME}"
+  log_normal "Grant service account permissions to create HMAC keys."
+  "${GCLOUD}" --quiet projects add-iam-policy-binding \
+      "${GOOGLE_CLOUD_PROJECT}" \
+      --member "serviceAccount:${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+      --role roles/iam.serviceAccountTokenCreator >/dev/null
 
   # Extract the service account name so we can deactivate it.
   GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT="$(sed -n \
@@ -133,7 +153,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID=${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME}"
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT}"
-      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
@@ -142,17 +161,19 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12=${TEST_KEY_FILE_P12}"
   )
 
-
   BAZEL_BIN_DIR="$("${BAZEL_BIN}" info bazel-bin)"
   readonly BAZEL_BIN_DIR
 
-  # Run the integration tests using Bazel to drive them, see below as to why
-  # bigtable_grpc_credentials is special.
+  # Run the integration tests using Bazel to drive them. Some of the tests and
+  # examples require environment variables with dynamic values, we run them
+  # below to avoid invalidating the cached test results for all the other tests.
   "${BAZEL_BIN}" test \
       "${bazel_args[@]}" \
       "--test_tag_filters=bigtable-integration-tests,storage-integration-tests" \
       -- //google/cloud/...:all \
-         -//google/cloud/bigtable/examples:bigtable_grpc_credentials
+         -//google/cloud/bigtable/examples:bigtable_grpc_credentials \
+         -//google/cloud/storage/examples:storage_service_account_samples \
+         -//google/cloud/storage/tests:service_account_integration_test
 
   # Run the integration tests that need an access token. We separate them
   # because adding the access token to the `bazel_args` invalidates the build
@@ -162,6 +183,37 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "--test_env=GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN=${ACCESS_TOKEN}" \
       -- //google/cloud/bigtable/examples:bigtable_grpc_credentials
 
+  # Run the integration tests and examples that need the HMAC service account.
+  # Note the special error handling to avoid leaking the service account.
+  errors=""
+  if ! "${BAZEL_BIN}" test \
+      "${bazel_args[@]}" \
+      "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+       -- //google/cloud/storage/examples:storage_service_account_samples \
+          //google/cloud/storage/tests:service_account_integration_test; then
+    errors="${errors} 'hmac tests'"
+  fi
+
+  echo
+  echo "================================================================"
+  log_normal "Delete service account to used in the storage HMAC tests."
+  echo "================================================================"
+  "${GCLOUD}" --quiet auth activate-service-account --key-file \
+      "${GOOGLE_APPLICATION_CREDENTIALS}"
+  "${GCLOUD}" --quiet projects remove-iam-policy-binding \
+      "${GOOGLE_CLOUD_PROJECT}" \
+      --member "serviceAccount:${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
+      --role roles/iam.serviceAccountTokenCreator >/dev/null
+  log_normal "Revoke service account permissions to create HMAC keys."
+  "${GCLOUD}" --quiet iam service-accounts delete --quiet \
+      "${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" >/dev/null
+  # Deactivate the recently activated service account to prevent accidents.
+  "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
+
+  if [[ -n "${errors}" ]]; then
+    log_red "Error in ${errors}"
+    exit 1
+  fi
 
   export INTEGRATION_TESTS_CONFIG
   export TEST_KEY_FILE_JSON
@@ -179,54 +231,11 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  log_normal "Create service account to run the storage HMAC tests."
-  echo "================================================================"
-  # Recall that each evaluation of ${RANDOM} produces a different value.
-  HMAC_SERVICE_ACCOUNT_NAME="hmac-sa-$(date +%s)-${RANDOM}"
-  HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${PROJECT_ID}.iam.gserviceaccount.com"
-  export HMAC_SERVICE_ACCOUNT
-
-  "${GCLOUD}" --quiet auth activate-service-account --key-file \
-      "${GOOGLE_APPLICATION_CREDENTIALS}"
-  "${GCLOUD}" --quiet iam service-accounts create "--project=${PROJECT_ID}" \
-      "${HMAC_SERVICE_ACCOUNT_NAME}"
-  log_normal "Grant service account permissions to create HMAC keys."
-  "${GCLOUD}" --quiet projects add-iam-policy-binding "${PROJECT_ID}" \
-      --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
-      --role roles/iam.serviceAccountTokenCreator >/dev/null
-  # Deactivate the recently activated service account to prevent accidents.
-  "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
-
-  echo
-  echo "================================================================"
   log_normal "Running Google Cloud Storage Examples"
   echo "================================================================"
-  set +e
   echo "Running Google Cloud Storage Examples"
   (cd "${BAZEL_BIN_DIR}/google/cloud/storage/examples" && \
       "${PROJECT_ROOT}/google/cloud/storage/examples/run_examples_production.sh")
-  storage_examples_status=$?
-  set -e
-
-  echo
-  echo "================================================================"
-  log_normal "Delete service account to used in the storage HMAC tests."
-  echo "================================================================"
-  "${GCLOUD}" --quiet auth activate-service-account --key-file \
-      "${GOOGLE_APPLICATION_CREDENTIALS}"
-  "${GCLOUD}" --quiet projects remove-iam-policy-binding "${PROJECT_ID}" \
-      --member "serviceAccount:${HMAC_SERVICE_ACCOUNT}" \
-      --role roles/iam.serviceAccountTokenCreator >/dev/null
-  log_normal "Revoke service account permissions to create HMAC keys."
-  "${GCLOUD}" --quiet iam service-accounts delete --quiet \
-      "${HMAC_SERVICE_ACCOUNT}" >/dev/null
-  # Deactivate the recently activated service account to prevent accidents.
-  "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
-
-  if [[ "${storage_examples_status}" != 0 ]]; then
-    log_red "Error in storage examples."
-    exit 1
-  fi
 fi
 
 echo "================================================================"

@@ -233,13 +233,13 @@ void RunAll(std::vector<std::string> const& argv) {
 
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
-      "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const service_account =
       google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
           .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =

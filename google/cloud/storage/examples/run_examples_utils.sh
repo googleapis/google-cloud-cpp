@@ -91,64 +91,6 @@ run_all_bucket_examples() {
 }
 
 ################################################
-# Run all examples about service accounts.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_all_service_account_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_service_account_samples \
-      get-service-account-for-project "${PROJECT_ID}"
-
-  # Run the examples where the project id is obtained from the environment:
-  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
-  run_example ./storage_service_account_samples get-service-account
-
-  # Create a key, we need to capture the access id, so this does not run like
-  # a normal example.
-  local access_id
-  access_id=$(./storage_service_account_samples \
-      create-hmac-key-for-project "${PROJECT_ID}" "${HMAC_SERVICE_ACCOUNT}" | \
-      sed -n 's;.*, access_id=\([^,]*\),.*;\1;p')
-  run_example ./storage_service_account_samples \
-      list-hmac-keys
-  run_example ./storage_service_account_samples \
-      list-hmac-keys-with-service-account "${HMAC_SERVICE_ACCOUNT}"
-  run_example ./storage_service_account_samples \
-      deactivate-hmac-key "${access_id}"
-  run_example ./storage_service_account_samples \
-      delete-hmac-key "${access_id}"
-
-  # Create another key to test `update-hmac-key`.
-  access_id=$(./storage_service_account_samples \
-      create-hmac-key "${HMAC_SERVICE_ACCOUNT}" | \
-      sed -n 's;.*, access_id=\([^,]*\),.*;\1;p')
-  run_example ./storage_service_account_samples \
-      get-hmac-key "${access_id}"
-  run_example ./storage_service_account_samples \
-      update-hmac-key "${access_id}" "INACTIVE"
-  run_example ./storage_service_account_samples \
-      activate-hmac-key "${access_id}"
-  run_example ./storage_service_account_samples \
-      deactivate-hmac-key "${access_id}"
-  run_example ./storage_service_account_samples \
-      delete-hmac-key "${access_id}"
-
-  unset GOOGLE_CLOUD_PROJECT
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_service_account_samples
-}
-
-################################################
 # Run all examples showing how to use default event based holds.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -868,7 +810,6 @@ run_all_storage_examples() {
   run_temporary_hold_examples "${BUCKET_NAME}"
   run_object_versioning_examples
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_all_service_account_examples
   run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
