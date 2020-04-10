@@ -172,46 +172,6 @@ run_lifecycle_management_examples() {
 }
 
 ################################################
-# Run all Default Object ACL examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_all_default_object_acl_examples() {
-  # Use a fresh bucket to avoid flaky tests due to other tests also making
-  # changes on the bucket.
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_default_object_acl_samples list-default-object-acl \
-      "${bucket_name}"
-  run_example ./storage_default_object_acl_samples create-default-object-acl \
-      "${bucket_name}" allAuthenticatedUsers READER
-  run_example ./storage_default_object_acl_samples get-default-object-acl \
-      "${bucket_name}" allAuthenticatedUsers
-  run_example ./storage_default_object_acl_samples update-default-object-acl \
-      "${bucket_name}" allAuthenticatedUsers OWNER
-  run_example ./storage_default_object_acl_samples patch-default-object-acl \
-      "${bucket_name}" allAuthenticatedUsers READER
-  run_example ./storage_default_object_acl_samples patch-default-object-acl-no-read \
-      "${bucket_name}" allAuthenticatedUsers OWNER
-  run_example ./storage_default_object_acl_samples delete-default-object-acl \
-      "${bucket_name}" allAuthenticatedUsers
-
-  run_example ./storage_bucket_samples delete-bucket \
-      "${bucket_name}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_default_object_acl_samples
-}
-
-################################################
 # Run all Object examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -800,7 +760,6 @@ run_all_storage_examples() {
   run_default_event_based_hold_examples
   run_retention_policy_examples
   run_lifecycle_management_examples
-  run_all_default_object_acl_examples
   run_all_object_examples "${BUCKET_NAME}"
   run_upload_and_download_examples "${BUCKET_NAME}"
   run_resumable_file_upload_examples "${BUCKET_NAME}"
