@@ -29,27 +29,24 @@ void GetBilling(google::cloud::storage::Client client,
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string bucket_name) {
-    StatusOr<gcs::BucketMetadata> bucket_metadata =
+    StatusOr<gcs::BucketMetadata> metadata =
         client.GetBucketMetadata(bucket_name);
+    if (!metadata) throw std::runtime_error(metadata.status().message());
 
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
-
-    if (!bucket_metadata->has_billing()) {
+    if (!metadata->has_billing()) {
       std::cout
-          << "The bucket " << bucket_metadata->name() << " does not have a"
+          << "The bucket " << metadata->name() << " does not have a"
           << " billing configuration. The default applies, i.e., the project"
           << " that owns the bucket pays for the requests.\n";
       return;
     }
 
-    if (bucket_metadata->billing().requester_pays) {
+    if (metadata->billing().requester_pays) {
       std::cout
-          << "The bucket " << bucket_metadata->name()
+          << "The bucket " << metadata->name()
           << " is configured to charge the calling project for the requests.\n";
     } else {
-      std::cout << "The bucket " << bucket_metadata->name()
+      std::cout << "The bucket " << metadata->name()
                 << " is configured to charge the project that owns the bucket "
                    "for the requests.\n";
     }
@@ -215,6 +212,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DisableRequesterPays() example" << std::endl;
   DisableRequesterPays(client, {bucket_name, project_id});
+
+  std::cout << "\nRunning GetBilling() example [3]" << std::endl;
+  GetBilling(client, {bucket_name});
 
   (void)client.DeleteBucket(bucket_name);
 }
