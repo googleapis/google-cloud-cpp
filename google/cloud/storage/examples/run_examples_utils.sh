@@ -806,49 +806,6 @@ run_all_object_acl_examples() {
 }
 
 ################################################
-# Run all Notification examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   topic_name: the topic used to create notifications.
-# Returns:
-#   None
-################################################
-run_all_notification_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-  local topic_name=$1
-  shift
-
-  # Create a new bucket for each run so the list of notifications is initially
-  # empty
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_notification_samples create-notification \
-      "${bucket_name}" "${topic_name}"
-  run_example ./storage_notification_samples list-notifications \
-      "${bucket_name}"
-  # The notifications ids are assigned by the server, so we need to discover it
-  # here. Parse the output from the list-notifications command to extract what
-  # we need.
-  local id
-  id="$(./storage_notification_samples list-notifications \
-     "${bucket_name}" | grep -E -o 'id=[^,]*' | sed 's/id=//')"
-  run_example ./storage_notification_samples get-notification \
-      "${bucket_name}" "${id}"
-  run_example ./storage_notification_samples delete-notification \
-      "${bucket_name}" "${id}"
-
-  run_example ./storage_bucket_samples delete-bucket \
-      "${bucket_name}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_notification_samples
-}
-
-################################################
 # Run mocking client examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -911,7 +868,6 @@ run_all_storage_examples() {
   run_temporary_hold_examples "${BUCKET_NAME}"
   run_object_versioning_examples
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_all_notification_examples "${TOPIC_NAME}"
   run_all_service_account_examples
   run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
