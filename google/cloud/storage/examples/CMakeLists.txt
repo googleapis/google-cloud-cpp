@@ -30,6 +30,7 @@ set(storage_autorun_examples
     storage_object_cmek_samples.cc
     storage_policy_doc_samples.cc
     storage_public_object_samples.cc
+    storage_service_account_samples.cc
     storage_signed_url_v2_samples.cc
     storage_signed_url_v4_samples.cc
     storage_website_samples.cc)
@@ -39,8 +40,7 @@ set(storage_examples
     storage_bucket_samples.cc
     storage_default_object_acl_samples.cc
     storage_object_acl_samples.cc
-    storage_object_samples.cc
-    storage_service_account_samples.cc)
+    storage_object_samples.cc)
 
 set(storage_examples_unit_tests # cmake-format: sort
                                 storage_examples_common_test.cc)
