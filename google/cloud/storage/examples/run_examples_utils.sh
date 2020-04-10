@@ -149,39 +149,6 @@ run_all_service_account_examples() {
 }
 
 ################################################
-# Run all examples using a Requester Pays bucket.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_all_requester_pays_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  run_example ./storage_bucket_samples get-billing \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples enable-requester-pays \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples write-object-requester-pays \
-      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples read-object-requester-pays \
-      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples delete-object-requester-pays \
-      "${bucket_name}" "${object_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples disable-requester-pays \
-      "${bucket_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-}
-
-################################################
 # Run all examples showing how to use default event based holds.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -960,7 +927,6 @@ run_all_storage_examples() {
   run_retention_policy_examples
   run_lifecycle_management_examples
   run_all_default_object_acl_examples
-  run_all_requester_pays_examples
   run_all_object_examples "${BUCKET_NAME}"
   run_upload_and_download_examples "${BUCKET_NAME}"
   run_resumable_file_upload_examples "${BUCKET_NAME}"
