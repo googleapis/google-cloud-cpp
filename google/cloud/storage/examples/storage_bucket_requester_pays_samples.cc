@@ -195,11 +195,14 @@ void RunAll(std::vector<std::string> const& argv) {
                                                      gcs::BucketMetadata{})
                              .value();
 
-  std::cout << "\nRunning GetBilling() example" << std::endl;
+  std::cout << "\nRunning GetBilling() example [1]" << std::endl;
   GetBilling(client, {bucket_name});
 
   std::cout << "\nRunning EnableRequesterPays() example" << std::endl;
   EnableRequesterPays(client, {bucket_name});
+
+  std::cout << "\nRunning GetBilling() example [2]" << std::endl;
+  GetBilling(client, {bucket_name});
 
   std::cout << "\nRunning WriteObjectRequesterPays() example" << std::endl;
   WriteObjectRequesterPays(client, {bucket_name, object_name, project_id});
@@ -209,6 +212,9 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteObjectRequesterPays() example" << std::endl;
   DeleteObjectRequesterPays(client, {bucket_name, object_name, project_id});
+
+  std::cout << "\nRunning DisableRequesterPays() example" << std::endl;
+  DisableRequesterPays(client, {bucket_name, project_id});
 
   (void)client.DeleteBucket(bucket_name);
 }
