@@ -28,7 +28,7 @@ Example::Example(std::map<std::string, CommandType> commands)
   for (auto const& kv : commands_) {
     if (kv.first == "auto") continue;
     try {
-      kv.second({});
+      kv.second({"--help"});
     } catch (Usage const& u) {
       full_usage_ += "    ";
       full_usage_ += u.what();
@@ -133,7 +133,8 @@ Commands::value_type CreateCommandEntry(
     std::string const& name, std::vector<std::string> const& arg_names,
     ClientCommand const& command) {
   auto adapter = [=](std::vector<std::string> argv) {
-    if (argv.size() != arg_names.size()) {
+    if ((argv.size() == 1 && argv[0] == "--help") ||
+        argv.size() != arg_names.size()) {
       std::ostringstream os;
       os << name;
       for (auto& a : arg_names) {

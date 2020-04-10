@@ -45,7 +45,7 @@ class BucketIntegrationTest
                       .value_or("");
     ASSERT_FALSE(topic_name_.empty());
     service_account_ = google::cloud::internal::GetEnv(
-                           "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
+                           "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
                            .value_or("");
     ASSERT_FALSE(service_account_.empty());
   }

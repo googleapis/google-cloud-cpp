@@ -21,5 +21,4 @@ storage_examples = [
     "storage_default_object_acl_samples.cc",
     "storage_object_acl_samples.cc",
     "storage_object_samples.cc",
-    "storage_service_account_samples.cc",
 ]

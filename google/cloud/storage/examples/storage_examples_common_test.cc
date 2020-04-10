@@ -31,6 +31,7 @@ TEST(StorageExamplesCommon, Simple) {
        [&](std::vector<std::string> const& args) {
          ++test_calls;
          if (args.empty()) throw Usage("test-usage");
+         if (args[0] == "--help") throw Usage("usage with --help");
          ASSERT_EQ(2, args.size());
          EXPECT_EQ("a0", args[0]);
          EXPECT_EQ("a1", args[1]);
@@ -117,6 +118,7 @@ TEST(StorageExamplesCommon, CommandError) {
        [&](std::vector<std::string> const& args) {
          ++test_calls;
          if (args.empty()) throw Usage("test-usage");
+         if (args[0] == "--help") throw Usage("usage with --help");
          throw std::runtime_error("some problem");
        }},
   });
@@ -187,6 +189,35 @@ TEST(StorageExamplesCommon, RandomObject) {
 }
 
 TEST(StorageExamplesCommon, CreateCommandEntryUsage) {
+  // Set the client to use the testbench, this avoids any problems trying to
+  // find and load the default credentials file.
+  google::cloud::testing_util::ScopedEnvironment env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+
+  int call_count = 0;
+  auto command = [&call_count](google::cloud::storage::Client const&,
+                               std::vector<std::string> const& argv) {
+    ++call_count;
+    ASSERT_EQ(2, argv.size());
+    EXPECT_EQ("1", argv.at(0));
+    EXPECT_EQ("2", argv.at(1));
+  };
+  auto entry = CreateCommandEntry("my-test", {"foo", "bar"}, command);
+  EXPECT_EQ("my-test", entry.first);
+
+  EXPECT_THROW(
+      try { entry.second({}); } catch (Usage const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("my-test foo bar"));
+        throw;
+      },
+      Usage);
+
+  EXPECT_EQ(0, call_count);
+  entry.second({"1", "2"});
+  EXPECT_EQ(1, call_count);
+}
+
+TEST(StorageExamplesCommon, CreateCommandEntryNoArguments) {
   // Set the client to use the testbench, this avoids any problems trying to
   // find and load the default credentials file.
   google::cloud::testing_util::ScopedEnvironment env(
