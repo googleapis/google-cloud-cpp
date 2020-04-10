@@ -20,39 +20,55 @@ $ErrorActionPreference = "Stop"
 if (-not (Test-Path env:CONFIG)) {
     throw "Aborting build because the CONFIG environment variable is not set."
 }
-$CONFIG = $env:CONFIG
+if (-not (Test-Path env:VCPKG_TRIPLET)) {
+    throw "Aborting build because the VCPKG_TRIPLET environment variable is not set."
+}
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName
+$vcpkg_dir = "cmake-out\vcpkg"
+$packages = @("zlib", "openssl",
+              "protobuf", "c-ares",
+              "grpc", "gtest", "crc32c", "curl",
+              "googleapis", "google-cloud-cpp-common[test]")
+$vcpkg_flags=@(
+    "--triplet", "${env:VCPKG_TRIPLET}",
+    "--overlay-ports=${project_root}/ci/kokoro/windows/vcpkg-ports")
+if ($args.count -ge 1) {
+    $vcpkg_dir, $packages = $args
+    $vcpkg_flags=("--triplet", "${env:VCPKG_TRIPLET}")
+}
 
 # Update or clone the 'vcpkg' package manager, this is a bit overly complicated,
 # but it works well on your workstation where you may want to run this script
-# multiple times while debugging vcpkg installs.  It also works on AppVeyor
+# multiple times while debugging vcpkg installs.  It also works on Kokoro
 # where we cache the vcpkg installation, but it might be empty on the first
 # build.
-Set-Location ..
 if (Test-Path env:RUNNING_CI) {
+    Remove-Item -LiteralPath "${vcpkg_dir}" -Force -Recurse
+}
+if (-not (Test-Path ${vcpkg_dir})) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cloning vcpkg repository."
-    if (Test-Path "vcpkg") {
-        Remove-Item -LiteralPath "vcpkg" -Force -Recurse
-    }
-    git clone --quiet --depth 10 https://github.com/Microsoft/vcpkg.git
+    git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
     if ($LastExitCode) {
       throw "vcpkg git setup failed with exit code $LastExitCode"
     }
+} else {
+    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Updating vcpkg repository."
+    git -C "${vcpkg_dir}" pull
 }
-if (-not (Test-Path "vcpkg")) {
-    throw "Missing vcpkg directory."
+if (-not (Test-Path "${vcpkg_dir}")) {
+    throw "Missing vcpkg directory (${vcpkg_dir})."
 }
-Set-Location vcpkg
+Set-Location "${vcpkg_dir}"
 
 # If BUILD_CACHE is set (which typically is on Kokoro builds), try
 # to download and extract the build cache.
-if (Test-Path env:BUILD_CACHE) {
+if ((Test-Path env:BUILD_CACHE) -and (Test-Path env:KOKORO_GFILE_DIR)) {
     gcloud auth activate-service-account `
         --key-file "${env:KOKORO_GFILE_DIR}/build-results-service-account.json"
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
         "downloading build cache."
-    gsutil -q cp $env:BUILD_CACHE vcpkg-installed.zip
+    gsutil -q cp ${env:BUILD_CACHE} vcpkg-installed.zip
     if ($LastExitCode) {
         # Ignore errors, caching failures should not break the build.
         Write-Host "gsutil download failed with exit code $LastExitCode"
@@ -77,21 +93,11 @@ if ($LastExitCode) {
   Write-Host -ForegroundColor Red "bootstrap[1] failed"
 }
 
-# Only compile the release version of the packages we need, for Debug builds
-# this trick does not work, so we need to compile all versions (yuck).
-if ($CONFIG -eq "Release") {
-#    Add-Content triplets\x64-windows-static.cmake "set(VCPKG_BUILD_TYPE release)"
-}
-
 # Integrate installed packages into the build environment.
 .\vcpkg.exe integrate install
 if ($LastExitCode) {
     throw "vcpkg integrate failed with exit code $LastExitCode"
 }
-
-$vcpkg_flags=@(
-    "--triplet", "${env:VCPKG_TRIPLET}",
-    "--overlay-ports=${project_root}/ci/kokoro/windows/vcpkg-ports")
 
 # Remove old versions of the packages.
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup old vcpkg package versions."
@@ -101,10 +107,6 @@ if ($LastExitCode) {
 }
 
 Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Building vcpkg package versions."
-$packages = @("zlib", "openssl",
-              "protobuf", "c-ares",
-              "grpc", "gtest", "crc32c", "curl",
-              "googleapis", "google-cloud-cpp-common[test]")
 foreach ($pkg in $packages) {
     .\vcpkg.exe install ${vcpkg_flags} "${pkg}"
     if ($LastExitCode) {
@@ -118,7 +120,7 @@ Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) vcpkg list"
 # Do not update the vcpkg cache on PRs, it might dirty the cache for any
 # PRs running in parallel, and it is a waste of time in most cases.
 $IsPR = (Test-Path env:KOKORO_JOB_TYPE) -and `
-    ($env:KOKORO_JOB_TYPE -eq "GITHUB_PULL_REQUEST")
+    ($env:KOKORO_JOB_TYPE -eq "PRESUBMIT_GITHUB")
 $HasBuildCache = (Test-Path env:BUILD_CACHE)
 if ((-not $IsPR) -and $HasBuildCache) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) " `
