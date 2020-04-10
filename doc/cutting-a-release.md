@@ -45,10 +45,9 @@ to create the release at an specific point in the revision history.
 
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. These steps are handled automatically for us by the
-`./release/release.sh` script that lives in the
-[googleapis/google-cloud-cpp-common](https://github.com/googleapis/google-cloud-cpp-common/blob/master/release/release.sh)
-repo. The following steps assume you have that script in your path or that
-you're specifying the full path to that script.
+[`./release/release.sh`
+script](https://github.com/googleapis/google-cloud-cpp/blob/master/release/release.sh)
+repo.
 
 *No PR is needed for this step.*
 
@@ -56,32 +55,26 @@ First run the following command -- which will *NOT* make any changes to any
 repos -- and verify that the output and *version numbers* look correct.
 
 ```bash
-$ release.sh googleapis/google-cloud-cpp
+$ ./release/release.sh googleapis/google-cloud-cpp
 ```
 
 If the output from the previous command looks OK, rerun the command with the
 `-f` flag, which will make the changes and push them to the remote repo.
 
 ```bash
-$ release.sh -f googleapis/google-cloud-cpp
+$ ./release/release.sh -f googleapis/google-cloud-cpp
 ```
 
 **NOTE:** This script can be run from any directory. It operates only on the
 specified repo.
 
-## Add the release notes to the GitHub release
-
-The `release.sh` script that was run in the previous step should have created a
-new "pre-release" at
-https://github.com/googleapis/google-cloud-cpp/releases. Add the release
-notes to the Release.
-
-Ask your colleagues to review the release notes. There should be few/no edits
-needed at this point since the release notes were already reviewed in step 1.
-
 ### Publish the release
 
-Uncheck the pre-release checkbox and publish.
+Review the new release in the GitHub web UI. Ask your colleagues to review the
+release notes too. There should be few/no edits needed at this point since the
+release notes were already reviewed in step 1.
+
+If everything looks OK, uncheck the pre-release checkbox and publish.
 
 ## Generate and upload the documentation to googleapis.dev
 
