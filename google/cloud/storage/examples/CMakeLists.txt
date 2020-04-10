@@ -37,10 +37,8 @@ set(storage_autorun_examples
 
 set(storage_examples
     # cmake-format: sort
-    storage_bucket_samples.cc
-    storage_default_object_acl_samples.cc
-    storage_object_acl_samples.cc
-    storage_object_samples.cc)
+    storage_bucket_samples.cc storage_default_object_acl_samples.cc
+    storage_object_acl_samples.cc storage_object_samples.cc)
 
 set(storage_examples_unit_tests # cmake-format: sort
                                 storage_examples_common_test.cc)
