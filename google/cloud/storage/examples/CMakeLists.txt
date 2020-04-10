@@ -26,6 +26,7 @@ set(storage_autorun_examples
     storage_bucket_default_kms_key_samples.cc
     storage_bucket_iam_samples.cc
     storage_bucket_requester_pays_samples.cc
+    storage_notification_samples.cc
     storage_object_cmek_samples.cc
     storage_policy_doc_samples.cc
     storage_public_object_samples.cc
@@ -37,7 +38,6 @@ set(storage_examples
     # cmake-format: sort
     storage_bucket_samples.cc
     storage_default_object_acl_samples.cc
-    storage_notification_samples.cc
     storage_object_acl_samples.cc
     storage_object_samples.cc
     storage_service_account_samples.cc)
