@@ -99,10 +99,41 @@ function banner() {
 }
 
 function run() {
-  echo "# $*" | paste -d' ' -s -
+  printf "# "
+  for arg in "$@"; do
+    printf "%s " "'$arg'"
+  done
+  printf "\n"
   if [[ "${FORCE_FLAG}" == "yes" ]]; then
     "$@"
   fi
+}
+
+# Outputs the release notes for the given tag. Looks for the release notes in
+# the CHANGELOG.md file starting at a heading that looks like "## <tag>". For
+# example `get_release notes v0.6.0` would look for a line like "## v0.6.0". If
+# no release notes could be found, a default string is output telling the
+# operator to insert the release notes manually.
+function get_release_notes() {
+  local tag="$1"
+  local found=false
+  local notes=()
+  while IFS= read -r line; do
+    if grep -q "^## " <<<"${line}"; then
+      if grep -q "${tag}" <<<"${line}"; then
+        found=true
+        continue  # Skip the heading
+      fi
+      $found && break  # Found the following heading; done
+    fi
+    $found && notes+=("$line")
+  done < CHANGELOG.md
+  # The sed here removes leading blank lines
+  local clean="$(printf "%s\n" "${notes[@]}" | sed '/./,$!d')"
+  if [[ -z "${clean}" ]]; then
+    clean="*Insert release notes from CHANGELOG.md*"
+  fi
+  echo "${clean}"
 }
 
 function exit_handler() {
@@ -126,7 +157,10 @@ if ! command -v hub > /dev/null; then
 fi
 
 banner "Starting release for ${PROJECT_ARG} (${CLONE_URL})"
-hub clone "${PROJECT_ARG}" "${REPO_DIR}"  # May force login to GH at this point
+# Only clones the last 90 days worth of commits, which should be more than
+# enough to get the most recent release tags.
+readonly SINCE="$(date --date="90 days ago" +"%Y-%m-%d")"
+hub clone --shallow-since="${SINCE}" "${PROJECT_ARG}" "${REPO_DIR}"
 cd "${REPO_DIR}"
 
 # Figures out the most recent tagged version, and computes the next version.
@@ -164,25 +198,18 @@ banner "Creating and pushing branch ${NEW_BRANCH}"
 run git checkout -b "${NEW_BRANCH}" "${NEW_TAG}"
 run git push --set-upstream origin "${NEW_BRANCH}"
 
-# Maybe todo: extract the release notes from the CHANGELOG.md file and stick
-#             them in the release body.
+banner "Using release notes for ${NEW_TAG}"
+readonly RELEASE_NOTES="$(get_release_notes "${NEW_TAG}")"
+echo "${RELEASE_NOTES}"
+
 banner "Creating release"
 run hub release create \
   --prerelease \
-  --message="${NEW_TAG} Release" \
-  --message="*Paste release notes here*" \
+  --file=<(printf "%s\n\n%s" "${NEW_TAG} Release" "${RELEASE_NOTES}") \
   "${NEW_TAG}"
 
 banner "Success!"
-readonly release_fmt="
-   date: %cI
-    url: %U
-tarball: %uT
-zipball: %uZ
-  state: %S
-  title: %t
-   body: %b
-"
+readonly release_fmt="%n date: %cI %n  url: %U %nstate: %S %ntitle: %t %n"
 run hub release show --format="${release_fmt}" "${NEW_TAG}"
 
 # Clean up
