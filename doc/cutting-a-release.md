@@ -46,8 +46,7 @@ to create the release at an specific point in the revision history.
 We next need to create the release tag, the release branch, and create the
 release in the GitHub UI. These steps are handled automatically for us by the
 [`./release/release.sh`
-script](https://github.com/googleapis/google-cloud-cpp/blob/master/release/release.sh)
-repo.
+script](https://github.com/googleapis/google-cloud-cpp/blob/master/release/release.sh).
 
 *No PR is needed for this step.*
 
