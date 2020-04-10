@@ -43,7 +43,7 @@ if ($args.count -ge 1) {
 # multiple times while debugging vcpkg installs.  It also works on Kokoro
 # where we cache the vcpkg installation, but it might be empty on the first
 # build.
-if (Test-Path env:RUNNING_CI) {
+if ((Test-Path env:RUNNING_CI) -and (Test-Path "${vcpkg_dir}")) {
     Remove-Item -LiteralPath "${vcpkg_dir}" -Force -Recurse
 }
 if (-not (Test-Path ${vcpkg_dir})) {
