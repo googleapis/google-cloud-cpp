@@ -27,6 +27,7 @@ set(storage_autorun_examples
     storage_bucket_iam_samples.cc
     storage_object_cmek_samples.cc
     storage_policy_doc_samples.cc
+    storage_public_object_samples.cc
     storage_signed_url_v2_samples.cc
     storage_signed_url_v4_samples.cc
     storage_website_samples.cc)

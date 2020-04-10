@@ -872,29 +872,6 @@ void PatchObjectContentType(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, object_name, content_type);
 }
 
-void MakeObjectPublic(google::cloud::storage::Client client, int& argc,
-                      char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"make-object-public <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [make object public] [START storage_make_public]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
-        bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
-        gcs::PredefinedAcl::PublicRead());
-
-    if (!updated) throw std::runtime_error(updated.status().message());
-    std::cout << "Object updated. The full metadata after the update is: "
-              << *updated << "\n";
-  }
-  //! [make object public] [END storage_make_public]
-  (std::move(client), bucket_name, object_name);
-}
-
 void GenerateEncryptionKey(google::cloud::storage::Client, int& argc, char*[]) {
   if (argc != 1) {
     throw Usage{"generate-encryption-key"};
@@ -937,33 +914,6 @@ void GenerateEncryptionKey(google::cloud::storage::Client, int& argc, char*[]) {
   std::cout << "Base64 encoded key = " << data.key << "\n"
             << "Base64 encoded SHA256 of key = " << data.sha256 << "\n";
   //! [generate encryption key] [END storage_generate_encryption_key]
-}
-
-void ReadObjectUnauthenticated(google::cloud::storage::Client, int& argc,
-                               char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"read-object-unauthenticated <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [download_public_file] [START storage_download_public_file]
-  namespace gcs = google::cloud::storage;
-  [](std::string bucket_name, std::string object_name) {
-    // Create a client that does not authenticate with the server.
-    gcs::Client client{gcs::oauth2::CreateAnonymousCredentials()};
-
-    // Read an object, the object must have been made public.
-    gcs::ObjectReadStream stream = client.ReadObject(bucket_name, object_name);
-
-    int count = 0;
-    std::string line;
-    while (std::getline(stream, line, '\n')) {
-      ++count;
-    }
-    std::cout << "The object has " << count << " lines\n";
-  }
-  //! [download_public_file] [END storage_download_public_file]
-  (bucket_name, object_name);
 }
 
 void WriteEncryptedObject(google::cloud::storage::Client client, int& argc,
@@ -1560,8 +1510,6 @@ int main(int argc, char* argv[]) try {
       {"update-object-metadata", UpdateObjectMetadata},
       {"patch-object-delete-metadata", PatchObjectDeleteMetadata},
       {"patch-object-content-type", PatchObjectContentType},
-      {"make-object-public", MakeObjectPublic},
-      {"read-object-unauthenticated", ReadObjectUnauthenticated},
       {"generate-encryption-key", GenerateEncryptionKey},
       {"write-encrypted-object", WriteEncryptedObject},
       {"read-encrypted-object", ReadEncryptedObject},
