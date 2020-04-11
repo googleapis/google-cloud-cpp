@@ -23,8 +23,7 @@
 #include <iostream>
 
 namespace {
-using google::cloud::bigtable::examples::CleanupOldTables;
-using google::cloud::bigtable::examples::RandomTableId;
+
 using google::cloud::bigtable::examples::Usage;
 
 void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
@@ -136,10 +135,10 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  CleanupOldTables("hw-admin-tbl-", admin);
+  examples::CleanupOldTables("hw-admin-tbl-", admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = RandomTableId("hw-admin-tbl-", generator);
+  auto table_id = examples::RandomTableId("hw-admin-tbl-", generator);
 
   std::cout << "\nRunning the HelloWorldTableAdmin() example" << std::endl;
   HelloWorldTableAdmin({project_id, instance_id, table_id});

@@ -19,6 +19,7 @@
 #include <sstream>
 
 namespace {
+
 using google::cloud::bigtable::examples::Usage;
 
 void AccessToken(std::vector<std::string> argv) {
@@ -116,9 +117,9 @@ void GCECredentials(std::vector<std::string> argv) {
 }
 
 void RunAll(std::vector<std::string> argv) {
-  if (!argv.empty()) throw Usage{"auto"};
-
   namespace examples = ::google::cloud::bigtable::examples;
+
+  if (!argv.empty()) throw Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",

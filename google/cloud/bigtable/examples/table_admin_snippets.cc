@@ -13,18 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
-//! [bigtable includes]
-#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-//! [bigtable includes]
 #include "google/cloud/internal/getenv.h"
 #include <sstream>
 
 namespace {
-
-using google::cloud::bigtable::examples::CleanupOldTables;
-using google::cloud::bigtable::examples::RandomTableId;
-using google::cloud::bigtable::examples::Usage;
 
 void CreateTable(google::cloud::bigtable::TableAdmin admin,
                  std::vector<std::string> const& argv) {
@@ -509,7 +502,7 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
 
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
@@ -529,7 +522,7 @@ void RunAll(std::vector<std::string> const& argv) {
   // remove stale tables after 48 hours.
   std::cout << "\nCleaning up old tables" << std::endl;
   std::string const prefix = "table-admin-snippets-";
-  CleanupOldTables(prefix, admin);
+  examples::CleanupOldTables(prefix, admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.

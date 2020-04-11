@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
 #include <google/protobuf/text_format.h>
 #include <algorithm>

@@ -21,8 +21,6 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
-
 void SetCorsConfiguration(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
   //! [cors configuration] [START storage_cors_configuration]
@@ -88,7 +86,7 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
   });

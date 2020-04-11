@@ -12,19 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [bigtable includes]
-#include "google/cloud/bigtable/table.h"
-//! [bigtable includes]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/table.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
 
 namespace {
-
-using google::cloud::bigtable::examples::CleanupOldTables;
-using google::cloud::bigtable::examples::RandomTableId;
-using google::cloud::bigtable::examples::Usage;
 
 void AsyncApply(google::cloud::bigtable::Table table,
                 google::cloud::bigtable::CompletionQueue cq,
@@ -293,8 +287,9 @@ void AsyncReadModifyWrite(google::cloud::bigtable::Table table,
 
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
+  namespace cbt = google::cloud::bigtable;
 
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
@@ -305,7 +300,6 @@ void RunAll(std::vector<std::string> const& argv) {
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
 
-  namespace cbt = google::cloud::bigtable;
   cbt::TableAdmin admin(
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
@@ -313,7 +307,7 @@ void RunAll(std::vector<std::string> const& argv) {
   // If a previous run of these samples crashes before cleaning up there may be
   // old tables left over. As there are quotas on the total number of tables we
   // remove stale tables after 48 hours.
-  CleanupOldTables("data-async-", admin);
+  examples::CleanupOldTables("data-async-", admin);
 
   // Initialize a generator with some amount of entropy.
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());

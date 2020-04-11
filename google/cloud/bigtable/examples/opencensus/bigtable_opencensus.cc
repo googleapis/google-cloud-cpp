@@ -14,11 +14,8 @@
 
 //! [all code]
 
-//! [bigtable includes]
 #include "google/cloud/bigtable/table.h"
 #include "google/cloud/bigtable/table_admin.h"
-//! [bigtable includes]
-
 #include "opencensus/exporters/stats/stackdriver/stackdriver_exporter.h"
 #include "opencensus/exporters/stats/stdout/stdout_exporter.h"
 #include "opencensus/exporters/trace/stackdriver/stackdriver_exporter.h"

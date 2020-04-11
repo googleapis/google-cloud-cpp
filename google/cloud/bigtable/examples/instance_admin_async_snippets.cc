@@ -12,11 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [bigtable includes]
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/bigtable/instance_admin_client.h"
-//! [bigtable includes]
-#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include <sstream>
