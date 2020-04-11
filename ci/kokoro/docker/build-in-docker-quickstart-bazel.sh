@@ -52,7 +52,7 @@ fi
 
 declare -A quickstart_args=()
 
-if [[ -r "/c/test-configuration.sh" ]]; then
+if [[ -r "/c/service-account.json" ]]; then
   # shellcheck disable=SC1091
   source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
   # TODO(#3604) - figure out how to run pass arguments safely
@@ -81,7 +81,7 @@ build_service() {
     log_normal "compiling quickstart program for ${service}"
     "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
 
-    if [[ -r "/c/test-configuration.sh" ]]; then
+    if [[ -r "/c/service-account.json" ]]; then
       log_normal "running quickstart program for ${service}"
       env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
           "--spawn_strategy=local" \

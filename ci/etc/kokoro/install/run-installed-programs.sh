@@ -17,7 +17,7 @@ CONFIG_DIRECTORY="${KOKORO_GFILE_DIR:-/dev/shm}"
 readonly CONFIG_DIRECTORY
 if [[ -r "${CONFIG_DIRECTORY}/service-account.json" && \
       -r "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh" ]]; then
-  source "${CONFIG_DIRECTORY}/test-configuration.sh"
+  source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
 
   run_args=(
     # Remove the container after running
