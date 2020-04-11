@@ -19,8 +19,6 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
-
 void GetServiceAccount(google::cloud::storage::Client client,
                        std::vector<std::string> const&) {
   //! [START storage_get_service_account] [get service account]
@@ -235,7 +233,7 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT",

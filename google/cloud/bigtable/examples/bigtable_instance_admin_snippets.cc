@@ -12,15 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [bigtable includes]
-#include "google/cloud/bigtable/instance_admin.h"
-//! [bigtable includes]
 #include "google/cloud/bigtable/examples/bigtable_examples_common.h"
+#include "google/cloud/bigtable/instance_admin.h"
 #include "google/cloud/internal/getenv.h"
 
 namespace {
 
-using google::cloud::bigtable::examples::RandomTableId;
 using google::cloud::bigtable::examples::Usage;
 
 void CreateInstance(google::cloud::bigtable::InstanceAdmin instance_admin,

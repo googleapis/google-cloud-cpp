@@ -18,13 +18,8 @@
 #include <functional>
 #include <iostream>
 #include <map>
-#include <sstream>
 
 namespace {
-
-using google::cloud::storage::examples::Commands;
-using google::cloud::storage::examples::CommandType;
-using google::cloud::storage::examples::Usage;
 
 void ListBucketAcl(google::cloud::storage::Client client,
                    std::vector<std::string> const& argv) {
@@ -226,11 +221,10 @@ void RemoveBucketOwner(google::cloud::storage::Client client,
 }
 
 void RunAll(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw Usage{"auto"};
-
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT",

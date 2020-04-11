@@ -25,8 +25,6 @@ namespace cbt = google::cloud::bigtable;
 
 namespace {
 
-using google::cloud::bigtable::examples::CleanupOldTables;
-using google::cloud::bigtable::examples::RandomTableId;
 using google::cloud::bigtable::examples::Usage;
 
 void HelloWorldAppProfile(std::vector<std::string> argv) {
@@ -103,9 +101,9 @@ void HelloWorldAppProfile(std::vector<std::string> argv) {
 }
 
 void RunAll(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw google::cloud::bigtable::examples::Usage{"auto"};
-
   namespace examples = ::google::cloud::bigtable::examples;
+
+  if (!argv.empty()) throw examples::Usage{"auto"};
   if (!examples::RunAdminIntegrationTests()) return;
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
@@ -121,10 +119,10 @@ void RunAll(std::vector<std::string> const& argv) {
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  CleanupOldTables("hw-app-profile-tbl-", admin);
+  examples::CleanupOldTables("hw-app-profile-tbl-", admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto table_id = RandomTableId("hw-app-profile-tbl-", generator);
+  auto table_id = examples::RandomTableId("hw-app-profile-tbl-", generator);
   auto schema = admin.CreateTable(
       table_id,
       cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(10)}}, {}));

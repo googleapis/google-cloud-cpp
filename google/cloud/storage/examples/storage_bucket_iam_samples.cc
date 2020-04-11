@@ -15,12 +15,10 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
-#include <functional>
 #include <iostream>
 
 namespace {
-using google::cloud::storage::examples::Commands;
-using google::cloud::storage::examples::CommandType;
+
 using google::cloud::storage::examples::Usage;
 
 void GetBucketIamPolicy(google::cloud::storage::Client client,

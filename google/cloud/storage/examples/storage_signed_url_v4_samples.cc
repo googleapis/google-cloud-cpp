@@ -15,16 +15,9 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/internal/getenv.h"
-#include <functional>
 #include <iostream>
-#include <map>
-#include <sstream>
 
 namespace {
-
-using google::cloud::storage::examples::Commands;
-using google::cloud::storage::examples::CommandType;
-using google::cloud::storage::examples::Usage;
 
 void CreateGetSignedUrlV4(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
@@ -70,7 +63,7 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME",

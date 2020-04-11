@@ -21,8 +21,6 @@
 
 namespace {
 
-using google::cloud::storage::examples::Usage;
-
 void GetBilling(google::cloud::storage::Client client,
                 std::vector<std::string> const& argv) {
   //! [get billing] [START storage_get_requester_pays_status]
@@ -172,7 +170,7 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
-  if (!argv.empty()) throw Usage{"auto"};
+  if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
   });
