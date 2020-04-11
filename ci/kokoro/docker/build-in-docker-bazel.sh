@@ -97,6 +97,105 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
+  readonly GCLOUD_CONFIG="cloud-cpp-integration"
+
+  cleanup_hmac_service_account() {
+    local -r ACCOUNT="$1"
+    log_normal "Deleting account ${ACCOUNT}"
+    # We can ignore errors here, sometime the account exists, but the bindings
+    # are gone (or were never created). The binding is harmless if the account
+    # is deleted.
+    "${GCLOUD}" --quiet projects remove-iam-policy-binding \
+        "${GOOGLE_CLOUD_PROJECT}" \
+        --member "serviceAccount:${ACCOUNT}" \
+        --role roles/iam.serviceAccountTokenCreator || true >/dev/null
+    "${GCLOUD}" --quiet iam service-accounts delete --quiet \
+        "${ACCOUNT}" >/dev/null
+  }
+
+  cleanup_stale_hmac_service_accounts() {
+    # The service accounts created below start with hmac-YYYYMMDD-, we list the
+    # accounts with that prefix, and with a date from at least 2 days ago to
+    # find and remove any stale accounts.
+    local THRESHOLD="$(date +%Y%m%d --date='2 days ago')"
+    readonly THRESHOLD
+    local email
+    "${GCLOUD}" --quiet iam service-accounts list \
+        --project="${GOOGLE_CLOUD_PROJECT}" \
+        --filter="email~^hmac-[0-9]{8}- AND email<hmac-${THRESHOLD}-" \
+        --format='csv(email)[no-heading]' | \
+    while read -r email; do
+      cleanup_hmac_service_account "${email}"
+    done
+  }
+
+  create_hmac_service_account() {
+    local -r ACCOUNT="$1"
+    local -r EMAIL="${ACCOUNT}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+    "${GCLOUD}" --quiet iam service-accounts create \
+        "--project=${GOOGLE_CLOUD_PROJECT}" "${ACCOUNT}"
+    log_normal "Grant service account permissions to create HMAC keys."
+    "${GCLOUD}" --quiet projects add-iam-policy-binding \
+        "${GOOGLE_CLOUD_PROJECT}" \
+        --member "serviceAccount:${EMAIL}" \
+        --role roles/iam.serviceAccountTokenCreator >/dev/null
+  }
+
+  trap restore_default_gcloud_config EXIT
+  restore_default_gcloud_config() {
+    "${GCLOUD}" --quiet config configurations activate default
+    "${GCLOUD}" --quiet config configurations delete "${GCLOUD_CONFIG}"
+  }
+
+  echo
+  echo "================================================================"
+  if ! "${GCLOUD}" --quiet config configurations \
+           describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
+    log_normal "Create the gcloud configuration for the cloud-cpp tests."
+    "${GCLOUD}" --quiet config configurations create "${GCLOUD_CONFIG}"
+  else
+    log_normal "Activate the gcloud configuration for the cloud-cpp tests."
+    "${GCLOUD}" --quiet config configurations activate "${GCLOUD_CONFIG}"
+  fi
+
+  echo
+  echo "================================================================"
+  log_normal "Delete any stale service account used in HMAC key tests."
+  "${GCLOUD}" --quiet auth activate-service-account --key-file \
+      "${GOOGLE_APPLICATION_CREDENTIALS}"
+  cleanup_stale_hmac_service_accounts
+
+  echo
+  echo "================================================================"
+  log_normal "Create a service account to run the storage HMAC tests."
+  # Recall that each evaluation of ${RANDOM} produces a different value, note
+  # the YYYY-MM-DD prefix used above to delete stale accounts. We use the
+  # hour, minute and seconds because ${RANDOM} is a small random number: while
+  # we do not expect ${RANDOM} to repeat in the same second, it could repeat in
+  # the same day. In addition, the format must be compact because the service
+  # account name cannot be longer than 30 characters.
+  HMAC_SERVICE_ACCOUNT_NAME="$(date +hmac-%Y%m%d-%H%M%S-${RANDOM})"
+  create_hmac_service_account "${HMAC_SERVICE_ACCOUNT_NAME}"
+  GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
+  export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT
+
+  trap delete_hmac_service_account EXIT
+  delete_hmac_service_account() {
+    local -r ACCOUNT="${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
+    set +e
+    echo
+    echo "================================================================"
+    log_normal "Delete service account used in the storage HMAC tests."
+    "${GCLOUD}" --quiet auth activate-service-account --key-file \
+        "${GOOGLE_APPLICATION_CREDENTIALS}"
+    cleanup_hmac_service_account "${ACCOUNT}"
+    # Deactivate the recently activated service account to prevent accidents.
+    log_normal "Revoke service account permissions to create HMAC keys."
+    "${GCLOUD}" --quiet auth revoke --all
+    echo "================================================================"
+
+    restore_default_gcloud_config
+  }
 
   echo
   echo "================================================================"
@@ -108,33 +207,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # for use by `gcloud` the token remains valid for about 1 hour.
   ACCESS_TOKEN="$("${GCLOUD}" --quiet auth print-access-token)"
   readonly ACCESS_TOKEN
-
-  echo
-  echo "================================================================"
-  log_normal "Create a service account to run the storage HMAC tests."
-  # Recall that each evaluation of ${RANDOM} produces a different value.
-  # TODO(#3746) - use a trap to delete this account
-  HMAC_SERVICE_ACCOUNT_NAME="hmac-sa-$(date +%s)-${RANDOM}"
-  GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
-  export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT
-
-  "${GCLOUD}" --quiet iam service-accounts create \
-      "--project=${GOOGLE_CLOUD_PROJECT}" \
-      "${HMAC_SERVICE_ACCOUNT_NAME}"
-  log_normal "Grant service account permissions to create HMAC keys."
-  "${GCLOUD}" --quiet projects add-iam-policy-binding \
-      "${GOOGLE_CLOUD_PROJECT}" \
-      --member "serviceAccount:${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-      --role roles/iam.serviceAccountTokenCreator >/dev/null
-
-  # Extract the service account name so we can deactivate it.
-  GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT="$(sed -n \
-      's/.*"client_email": "\(.*\)",.*/\1/p' \
-      "${GOOGLE_APPLICATION_CREDENTIALS}")"
-  readonly GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT
-
-  # Deactivate the recently activated service account to prevent accidents.
-  "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
+  # Deactivate the recently activated service accounts to prevent accidents.
+  "${GCLOUD}" --quiet auth revoke --all
 
   bazel_args+=(
       # Common configuration
@@ -186,35 +260,11 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   # Run the integration tests and examples that need the HMAC service account.
   # Note the special error handling to avoid leaking the service account.
-  errors=""
-  if ! "${BAZEL_BIN}" test \
+  "${BAZEL_BIN}" test \
       "${bazel_args[@]}" \
       "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
        -- //google/cloud/storage/examples:storage_service_account_samples \
-          //google/cloud/storage/tests:service_account_integration_test; then
-    errors="${errors} 'hmac tests'"
-  fi
-
-  echo
-  echo "================================================================"
-  log_normal "Delete service account to used in the storage HMAC tests."
-  echo "================================================================"
-  "${GCLOUD}" --quiet auth activate-service-account --key-file \
-      "${GOOGLE_APPLICATION_CREDENTIALS}"
-  "${GCLOUD}" --quiet projects remove-iam-policy-binding \
-      "${GOOGLE_CLOUD_PROJECT}" \
-      --member "serviceAccount:${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" \
-      --role roles/iam.serviceAccountTokenCreator >/dev/null
-  log_normal "Revoke service account permissions to create HMAC keys."
-  "${GCLOUD}" --quiet iam service-accounts delete --quiet \
-      "${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}" >/dev/null
-  # Deactivate the recently activated service account to prevent accidents.
-  "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
-
-  if [[ -n "${errors}" ]]; then
-    log_red "Error in ${errors}"
-    exit 1
-  fi
+          //google/cloud/storage/tests:service_account_integration_test
 
   export INTEGRATION_TESTS_CONFIG
   export TEST_KEY_FILE_JSON
