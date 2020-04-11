@@ -544,6 +544,182 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
       });
 }
 
+StatusOr<google::cloud::IamPolicy> TableAdmin::GetIamPolicy(
+    std::string const& table_id) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::GetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::GetIamPolicy, request, "GetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return ProtoToWrapper(std::move(proto));
+}
+
+StatusOr<google::iam::v1::Policy> TableAdmin::GetNativeIamPolicy(
+    std::string const& table_id) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::GetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::GetIamPolicy, request, "GetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return proto;
+}
+
+StatusOr<google::cloud::IamPolicy> TableAdmin::SetIamPolicy(
+    std::string const& table_id, google::cloud::IamBindings const& iam_bindings,
+    std::string const& etag) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::Policy policy;
+  policy.set_etag(etag);
+  auto role_bindings = iam_bindings.bindings();
+  for (auto& binding : role_bindings) {
+    auto new_binding = policy.add_bindings();
+    new_binding->set_role(binding.first);
+    for (auto& member : binding.second) {
+      new_binding->add_members(member);
+    }
+  }
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+  *request.mutable_policy() = std::move(policy);
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::SetIamPolicy, request, "SetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return ProtoToWrapper(std::move(proto));
+}
+
+StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
+    std::string const& table_id, google::iam::v1::Policy const& iam_policy) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+  *request.mutable_policy() = iam_policy;
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::SetIamPolicy, request, "SetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return proto;
+}
+
+StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
+    std::string const& table_id, std::vector<std::string> const& permissions) {
+  grpc::Status status;
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  for (auto& permission : permissions) {
+    request.add_permissions(permission);
+  }
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto response = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::TestIamPermissions, request, "TestIamPermissions", status,
+      true);
+
+  std::vector<std::string> resource_permissions;
+
+  for (auto& permission : *response.mutable_permissions()) {
+    resource_permissions.push_back(permission);
+  }
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return resource_permissions;
+}
+
+StatusOr<google::cloud::IamPolicy> TableAdmin::ProtoToWrapper(
+    google::iam::v1::Policy proto) {
+  google::cloud::IamPolicy result;
+  result.version = proto.version();
+  result.etag = std::move(*proto.mutable_etag());
+  for (auto& binding : *proto.mutable_bindings()) {
+    std::vector<google::protobuf::FieldDescriptor const*> field_descs;
+    // On newer versions of Protobuf (circa 3.9.1) `GetReflection()` changed
+    // from a virtual member function to a static member function. clang-tidy
+    // warns (and we turn all warnings to errors) about using the static
+    // version via the object, as we do below. Disable the warning because that
+    // seems like the only portable solution.
+    // NOLINTNEXTLINE(readability-static-accessed-through-instance)
+    binding.GetReflection()->ListFields(binding, &field_descs);
+    for (auto field_desc : field_descs) {
+      if (field_desc->name() != "members" && field_desc->name() != "role") {
+        std::stringstream os;
+        os << "IamBinding field \"" << field_desc->name()
+           << "\" is unknown to Bigtable C++ client. Please use "
+              "[Async]GetNativeIamPolicy() and their respective "
+              "[Async]SetIamPolicy() overloads.";
+        return Status(StatusCode::kUnimplemented, os.str());
+      }
+    }
+    for (auto& member : *binding.mutable_members()) {
+      result.bindings.AddMember(binding.role(), std::move(member));
+    }
+  }
+  return result;
+}
+
 std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
 }

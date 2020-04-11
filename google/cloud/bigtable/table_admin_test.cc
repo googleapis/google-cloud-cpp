@@ -80,6 +80,31 @@ auto create_list_tables_lambda = [](std::string expected_token,
   };
 };
 
+auto create_get_policy_mock = []() {
+  return [](grpc::ClientContext* context,
+            ::google::iam::v1::GetIamPolicyRequest const&,
+            ::google::iam::v1::Policy* response) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
+    EXPECT_NE(nullptr, response);
+    response->set_version(3);
+    response->set_etag("random-tag");
+    return grpc::Status::OK;
+  };
+};
+
+auto create_policy_with_params = []() {
+  return [](grpc::ClientContext* context,
+            ::google::iam::v1::SetIamPolicyRequest const& request,
+            ::google::iam::v1::Policy* response) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
+    EXPECT_NE(nullptr, response);
+    *response = request.policy();
+    return grpc::Status::OK;
+  };
+};
+
 /**
  * Helper class to create the expectations for a simple RPC call.
  *
@@ -623,6 +648,376 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
 
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.CheckConsistency("other-table", "test-token"));
+}
+/// @test Verify positive scenario for TableAdmin::GetIamPolicy.
+TEST_F(TableAdminTest, GetIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_get_policy_mock();
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  tested.GetIamPolicy(resource);
+}
+
+/// @test Verify that IamPolicies with conditions cause failures.
+TEST_F(TableAdminTest, GetIamPolicyWithConditionsFails) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(Invoke([](grpc::ClientContext* context,
+                          ::google::iam::v1::GetIamPolicyRequest const&,
+                          ::google::iam::v1::Policy* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
+        EXPECT_NE(nullptr, response);
+        response->set_version(3);
+        response->set_etag("random-tag");
+        auto new_binding = response->add_bindings();
+        new_binding->set_role("writer");
+        new_binding->add_members("abc@gmail.com");
+        new_binding->add_members("xyz@gmail.com");
+        new_binding->set_allocated_condition(new google::type::Expr);
+
+        return grpc::Status::OK;
+      }));
+
+  std::string resource = "test-resource";
+  auto res = tested.GetIamPolicy(resource);
+  ASSERT_FALSE(res);
+  EXPECT_EQ(google::cloud::StatusCode::kUnimplemented, res.status().code());
+}
+
+/// @test Verify unrecoverable errors for TableAdmin::GetIamPolicy.
+TEST_F(TableAdminTest, GetIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "other-resource";
+
+  EXPECT_FALSE(tested.GetIamPolicy(resource));
+}
+
+/// @test Verify recoverable errors for TableAdmin::GetIamPolicy.
+TEST_F(TableAdminTest, GetIamPolicyRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     iamproto::GetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto mock_policy = create_get_policy_mock();
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  tested.GetIamPolicy(resource);
+}
+
+/// @test Verify positive scenario for TableAdmin::GetNativeIamPolicy.
+TEST_F(TableAdminTest, GetNativeIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_get_policy_mock();
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  auto policy = tested.GetNativeIamPolicy(resource);
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
+/// @test Verify unrecoverable errors for TableAdmin::GetNativeIamPolicy.
+TEST_F(TableAdminTest, GetNativeIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "other-resource";
+
+  EXPECT_FALSE(tested.GetNativeIamPolicy(resource));
+}
+
+/// @test Verify recoverable errors for TableAdmin::GetNativeIamPolicy.
+TEST_F(TableAdminTest, GetNativeIamPolicyRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     iamproto::GetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.GetIamPolicy"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto mock_policy = create_get_policy_mock();
+
+  EXPECT_CALL(*client_, GetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  auto policy = tested.GetNativeIamPolicy(resource);
+  ASSERT_STATUS_OK(policy);
+  EXPECT_EQ(3, policy->version());
+  EXPECT_EQ("random-tag", policy->etag());
+}
+
+/// @test Verify positive scenario for TableAdmin::SetIamPolicy.
+TEST_F(TableAdminTest, SetIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_policy_with_params();
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  google::cloud::IamBindings iam_bindings =
+      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings.size());
+  EXPECT_EQ("test-tag", policy->etag);
+}
+
+/// @test Verify unrecoverable errors for TableAdmin::SetIamPolicy.
+TEST_F(TableAdminTest, SetIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "test-resource";
+  google::cloud::IamBindings iam_bindings =
+      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  EXPECT_FALSE(tested.SetIamPolicy(resource, iam_bindings, "test-tag"));
+}
+
+/// @test Verify recoverable errors for TableAdmin::SetIamPolicy.
+TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     iamproto::SetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto mock_policy = create_policy_with_params();
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  google::cloud::IamBindings iam_bindings =
+      google::cloud::IamBindings("writer", {"abc@gmail.com", "xyz@gmail.com"});
+  auto policy = tested.SetIamPolicy(resource, iam_bindings, "test-tag");
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings.size());
+  EXPECT_EQ("test-tag", policy->etag);
+}
+
+/// @test Verify positive scenario for TableAdmin::SetIamPolicy (native).
+TEST_F(TableAdminTest, SetNativeIamPolicy) {
+  using ::testing::_;
+  using ::testing::Invoke;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+  auto mock_policy = create_policy_with_params();
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _)).WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  auto iam_policy = bigtable::IamPolicy(
+      {bigtable::IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      "test-tag", 0);
+  auto policy = tested.SetIamPolicy(resource, iam_policy);
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
+
+/// @test Verify unrecoverable errors for TableAdmin::SetIamPolicy (native).
+TEST_F(TableAdminTest, SetNativeIamPolicyUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "test-resource";
+  auto iam_policy = bigtable::IamPolicy(
+      {bigtable::IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      "test-tag", 0);
+  EXPECT_FALSE(tested.SetIamPolicy(resource, iam_policy));
+}
+
+/// @test Verify recoverable errors for TableAdmin::SetIamPolicy (native).
+TEST_F(TableAdminTest, SetNativeIamPolicyRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     iamproto::SetIamPolicyRequest const&,
+                                     iamproto::Policy*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context, "google.bigtable.admin.v2.BigtableTableAdmin.SetIamPolicy"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+  auto mock_policy = create_policy_with_params();
+
+  EXPECT_CALL(*client_, SetIamPolicy(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_policy));
+
+  std::string resource = "test-resource";
+  auto iam_policy = bigtable::IamPolicy(
+      {bigtable::IamBinding("writer", {"abc@gmail.com", "xyz@gmail.com"})},
+      "test-tag", 0);
+  auto policy = tested.SetIamPolicy(resource, iam_policy);
+  ASSERT_STATUS_OK(policy);
+
+  EXPECT_EQ(1, policy->bindings().size());
+  EXPECT_EQ("test-tag", policy->etag());
+}
+/// @test Verify that TableAdmin::TestIamPermissions works in simple case.
+TEST_F(TableAdminTest, TestIamPermissions) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  auto mock_permission_set =
+      [](grpc::ClientContext* context,
+         iamproto::TestIamPermissionsRequest const&,
+         iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions"));
+        EXPECT_NE(nullptr, response);
+        std::vector<std::string> permissions = {"writer", "reader"};
+        response->add_permissions(permissions[0]);
+        response->add_permissions(permissions[1]);
+        return grpc::Status::OK;
+      };
+
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillOnce(Invoke(mock_permission_set));
+
+  std::string resource = "the-resource";
+  auto permission_set =
+      tested.TestIamPermissions(resource, {"reader", "writer", "owner"});
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2, permission_set->size());
+}
+
+/// @test Test for unrecoverable errors for TableAdmin::TestIamPermissions.
+TEST_F(TableAdminTest, TestIamPermissionsUnrecoverableError) {
+  using ::testing::_;
+  using ::testing::Return;
+
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillRepeatedly(
+          Return(grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "err!")));
+
+  std::string resource = "other-resource";
+
+  EXPECT_FALSE(
+      tested.TestIamPermissions(resource, {"reader", "writer", "owner"}));
+}
+
+/// @test Test for recoverable errors for TableAdmin::TestIamPermissions.
+TEST_F(TableAdminTest, TestIamPermissionsRecoverableError) {
+  using ::testing::_;
+  using ::testing::Invoke;
+  namespace iamproto = ::google::iam::v1;
+  bigtable::TableAdmin tested(client_, "the-instance");
+
+  auto mock_recoverable_failure = [](grpc::ClientContext* context,
+                                     iamproto::TestIamPermissionsRequest const&,
+                                     iamproto::TestIamPermissionsResponse*) {
+    EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+        *context,
+        "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions"));
+    return grpc::Status(grpc::StatusCode::UNAVAILABLE, "try-again");
+  };
+
+  auto mock_permission_set =
+      [](grpc::ClientContext* context,
+         iamproto::TestIamPermissionsRequest const&,
+         iamproto::TestIamPermissionsResponse* response) {
+        EXPECT_STATUS_OK(google::cloud::bigtable::testing::IsContextMDValid(
+            *context,
+            "google.bigtable.admin.v2.BigtableTableAdmin.TestIamPermissions"));
+        EXPECT_NE(nullptr, response);
+        std::vector<std::string> permissions = {"writer", "reader"};
+        response->add_permissions(permissions[0]);
+        response->add_permissions(permissions[1]);
+        return grpc::Status::OK;
+      };
+  EXPECT_CALL(*client_, TestIamPermissions(_, _, _))
+      .WillOnce(Invoke(mock_recoverable_failure))
+      .WillOnce(Invoke(mock_permission_set));
+
+  std::string resource = "the-resource";
+  auto permission_set =
+      tested.TestIamPermissions(resource, {"writer", "reader", "owner"});
+  ASSERT_STATUS_OK(permission_set);
+
+  EXPECT_EQ(2, permission_set->size());
 }
 
 using MockAsyncCheckConsistencyResponse =

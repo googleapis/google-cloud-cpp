@@ -498,6 +498,142 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
   (std::move(admin), argv.at(0));
 }
 
+void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
+                  std::vector<std::string> const& argv) {
+  //! [get iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string table_id) {
+    StatusOr<google::cloud::IamPolicy> policy = admin.GetIamPolicy(table_id);
+    if (!policy) throw std::runtime_error(policy.status().message());
+    std::cout << "The IAM Policy for " << table_id << " is\n";
+    for (auto const& kv : policy->bindings) {
+      std::cout << "role " << kv.first << " includes [";
+      char const* sep = "";
+      for (auto const& member : kv.second) {
+        std::cout << sep << member;
+        sep = ", ";
+      }
+      std::cout << "]\n";
+    }
+  }
+  //! [get iam policy]
+  (std::move(admin), argv.at(0));
+}
+
+void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
+                  std::vector<std::string> const& argv) {
+  //! [set iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string table_id, std::string role,
+     std::string member) {
+    StatusOr<google::cloud::IamPolicy> current = admin.GetIamPolicy(table_id);
+    if (!current) throw std::runtime_error(current.status().message());
+    auto bindings = current->bindings;
+    bindings.AddMember(role, member);
+    StatusOr<google::cloud::IamPolicy> policy =
+        admin.SetIamPolicy(table_id, bindings, current->etag);
+    if (!policy) throw std::runtime_error(policy.status().message());
+    std::cout << "The IAM Policy for " << table_id << " is\n";
+    for (auto const& kv : policy->bindings) {
+      std::cout << "role " << kv.first << " includes [";
+      char const* sep = "";
+      for (auto const& m : kv.second) {
+        std::cout << sep << m;
+        sep = ", ";
+      }
+      std::cout << "]\n";
+    }
+  }
+  //! [set iam policy]
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void GetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
+                        std::vector<std::string> const& argv) {
+  //! [get native iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string table_id) {
+    StatusOr<google::iam::v1::Policy> policy =
+        admin.GetNativeIamPolicy(table_id);
+    if (!policy) throw std::runtime_error(policy.status().message());
+    std::cout << "The IAM Policy for " << table_id << " is\n"
+              << policy->DebugString() << "\n";
+  }
+  //! [get native iam policy]
+  (std::move(admin), argv.at(0));
+}
+
+void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
+                        std::vector<std::string> const& argv) {
+  //! [set native iam policy]
+  namespace cbt = google::cloud::bigtable;
+  using google::cloud::StatusOr;
+  [](cbt::TableAdmin admin, std::string table_id, std::string role,
+     std::string member) {
+    StatusOr<google::iam::v1::Policy> current =
+        admin.GetNativeIamPolicy(table_id);
+    if (!current) throw std::runtime_error(current.status().message());
+    // This example adds the member to all existing bindings for that role. If
+    // there are no such bindgs, it adds a new one. This might not be what the
+    // user wants, e.g. in case of conditional bindings.
+    size_t num_added = 0;
+    for (auto& binding : *current->mutable_bindings()) {
+      if (binding.role() == role) {
+        binding.add_members(member);
+        ++num_added;
+      }
+    }
+    if (num_added == 0) {
+      *current->add_bindings() = cbt::IamBinding(role, {member});
+    }
+    StatusOr<google::iam::v1::Policy> policy =
+        admin.SetIamPolicy(table_id, *current);
+    if (!policy) throw std::runtime_error(policy.status().message());
+    std::cout << "The IAM Policy for " << table_id << " is\n"
+              << policy->DebugString() << "\n";
+  }
+  //! [set native iam policy]
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
+}
+
+void TestIamPermissions(std::vector<std::string> argv) {
+  using google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
+  if (argv.size() < 4) {
+    throw Usage{
+        "test-iam-permissions <project-id> <instance-id> <resource-id>"
+        " <permission> [permission ...]"};
+  }
+
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(argv[0], cbt::ClientOptions{}), argv[1]);
+
+  std::string resource = argv[2];
+  argv.erase(argv.begin(), argv.begin() + 3);
+  auto permissions = std::move(argv);
+
+  //! [test iam permissions]
+
+  [](cbt::TableAdmin admin, std::string resource,
+     std::vector<std::string> permissions) {
+    StatusOr<std::vector<std::string>> result =
+        admin.TestIamPermissions(resource, permissions);
+    if (!result) throw std::runtime_error(result.status().message());
+    std::cout << "The current user has the following permissions [";
+    char const* sep = "";
+    for (auto const& p : *result) {
+      std::cout << sep << p;
+      sep = ", ";
+    }
+    std::cout << "]\n";
+  }
+  //! [test iam permissions]
+  (std::move(admin), std::move(resource), std::move(permissions));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::bigtable::examples;
   namespace cbt = google::cloud::bigtable;
@@ -506,12 +642,17 @@ void RunAll(std::vector<std::string> const& argv) {
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
   auto const instance_id = google::cloud::internal::GetEnv(
                                "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
                                .value();
+  auto const service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
+          .value();
 
   cbt::TableAdmin admin(
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
@@ -619,6 +760,24 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DropAllRows() example" << std::endl;
   DropAllRows(admin, {table_id_1});
 
+  std::cout << "\nRunning GetIamPolicy() example" << std::endl;
+  GetIamPolicy(admin, {table_id_1});
+
+  std::cout << "\nRunning SetIamPolicy() example" << std::endl;
+  SetIamPolicy(admin, {table_id_1, "roles/bigtable.user",
+                       "serviceAccount:" + service_account});
+
+  std::cout << "\nRunning GetNativeIamPolicy() example" << std::endl;
+  GetNativeIamPolicy(admin, {table_id_1});
+
+  std::cout << "\nRunning SetNativeIamPolicy() example" << std::endl;
+  SetNativeIamPolicy(admin, {table_id_1, "roles/bigtable.user",
+                             "serviceAccount:" + service_account});
+
+  std::cout << "\nRunning TestIamPermissions() example" << std::endl;
+  TestIamPermissions(
+      {project_id, instance_id, table_id_1, "bigtable.instances.delete"});
+
   (void)admin.DeleteTable(table_id_1);
 }
 
@@ -677,6 +836,16 @@ int main(int argc, char* argv[]) {
                                  CheckConsistency),
       examples::MakeCommandEntry("generate-consistency-token", {"<table-id>"},
                                  GenerateConsistencyToken),
+      examples::MakeCommandEntry("get-iam-policy", {"<table-id>"},
+                                 GetIamPolicy),
+      examples::MakeCommandEntry(
+          "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
+      examples::MakeCommandEntry("get-native-iam-policy", {"<table-id>"},
+                                 GetNativeIamPolicy),
+      examples::MakeCommandEntry("set-native-iam-policy",
+                                 {"<table-id>", "<role>", "<member>"},
+                                 SetNativeIamPolicy),
+      {"test-iam-permissions", TestIamPermissions},
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

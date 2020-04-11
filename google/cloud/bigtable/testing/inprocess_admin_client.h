@@ -101,10 +101,21 @@ class InProcessAdminClient : public bigtable::AdminClient {
       grpc::ClientContext* context,
       google::bigtable::admin::v2::CheckConsistencyRequest const& request,
       google::bigtable::admin::v2::CheckConsistencyResponse* response) override;
+  grpc::Status GetIamPolicy(grpc::ClientContext* context,
+                            google::iam::v1::GetIamPolicyRequest const& request,
+                            google::iam::v1::Policy* response) override;
+  grpc::Status SetIamPolicy(grpc::ClientContext* context,
+                            google::iam::v1::SetIamPolicyRequest const& request,
+                            google::iam::v1::Policy* response) override;
+  grpc::Status TestIamPermissions(
+      grpc::ClientContext* context,
+      google::iam::v1::TestIamPermissionsRequest const& request,
+      google::iam::v1::TestIamPermissionsResponse* response) override;
   grpc::Status GetOperation(
       grpc::ClientContext* context,
       google::longrunning::GetOperationRequest const& request,
       google::longrunning::Operation* response) override;
+
   std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
       google::bigtable::admin::v2::Table>>
   AsyncModifyColumnFamilies(
