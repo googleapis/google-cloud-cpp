@@ -505,8 +505,7 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
 
 void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
                   std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::bigtable::examples;
-  if (examples::UsingEmulator()) {
+  if (UsingEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
   }
@@ -533,8 +532,7 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 
 void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
                   std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::bigtable::examples;
-  if (examples::UsingEmulator()) {
+  if (UsingEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
   }
@@ -567,8 +565,7 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 
 void GetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
                         std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::bigtable::examples;
-  if (examples::UsingEmulator()) {
+  if (UsingEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
   }
@@ -588,8 +585,7 @@ void GetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
 
 void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
                         std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::bigtable::examples;
-  if (examples::UsingEmulator()) {
+  if (UsingEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
   }
@@ -805,7 +801,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning TestIamPermissions() example" << std::endl;
   TestIamPermissions(
-      {project_id, instance_id, table_id_1, "bigtable.instances.delete"});
+      {project_id, instance_id, table_id_1, "bigtable.tables.get"});
 
   (void)admin.DeleteTable(table_id_1);
 }
