@@ -108,9 +108,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     "${GCLOUD}" --quiet projects remove-iam-policy-binding \
         "${GOOGLE_CLOUD_PROJECT}" \
         --member "serviceAccount:${ACCOUNT}" \
-        --role roles/iam.serviceAccountTokenCreator || true >/dev/null
-    "${GCLOUD}" --quiet iam service-accounts delete --quiet \
-        "${ACCOUNT}" >/dev/null
+        --role roles/iam.serviceAccountTokenCreator >/dev/null || true
+    "${GCLOUD}" --quiet iam service-accounts delete "${ACCOUNT}" >/dev/null
   }
 
   cleanup_stale_hmac_service_accounts() {
@@ -149,13 +148,15 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   echo
   echo "================================================================"
-  if ! "${GCLOUD}" --quiet config configurations \
+  if "${GCLOUD}" --quiet config configurations \
            describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
-    log_normal "Create the gcloud configuration for the cloud-cpp tests."
-    "${GCLOUD}" --quiet config configurations create "${GCLOUD_CONFIG}"
-  else
     log_normal "Activate the gcloud configuration for the cloud-cpp tests."
-    "${GCLOUD}" --quiet config configurations activate "${GCLOUD_CONFIG}"
+    "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
+        activate "${GCLOUD_CONFIG}"
+  else
+    log_normal "Create the gcloud configuration for the cloud-cpp tests."
+    "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
+        create "${GCLOUD_CONFIG}"
   fi
 
   echo
@@ -169,7 +170,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo "================================================================"
   log_normal "Create a service account to run the storage HMAC tests."
   # Recall that each evaluation of ${RANDOM} produces a different value, note
-  # the YYYY-MM-DD prefix used above to delete stale accounts. We use the
+  # the YYYYMMDD prefix used above to delete stale accounts. We use the
   # hour, minute and seconds because ${RANDOM} is a small random number: while
   # we do not expect ${RANDOM} to repeat in the same second, it could repeat in
   # the same day. In addition, the format must be compact because the service
