@@ -663,12 +663,7 @@ class TableAdmin {
    * Gets the policy for @p table_id.
    *
    * @param table_id the table to query.
-   * @return Policy the full IAM policy for the table.
-   *
-   * @deprecated this function is deprecated; it doesn't support conditional
-   *     bindings and will not support any other features to come; please use
-   *     `GetNativeIamPolicy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
+   * @return google::iam::v1::Policy the full IAM policy for the table.
    *
    * @par Idempotency
    * This operation is read-only and therefore it is always idempotent.
@@ -676,56 +671,7 @@ class TableAdmin {
    * @par Example
    * @snippet table_admin_snippets.cc get iam policy
    */
-  StatusOr<google::cloud::IamPolicy> GetIamPolicy(std::string const& table_id);
-
-  /**
-   * Gets the native policy for @p table_id.
-   *
-   * This is the preferred way to `GetIamPolicy()`. This is more closely coupled
-   * to the underlying protocol, enable more actions and is more likely to
-   * tolerate future protocol changes.
-   *
-   * @param table_id the table to query.
-   * @return google::iam::v1::Policy the full IAM policy for the table.
-   *
-   * @par Idempotency
-   * This operation is read-only and therefore it is always idempotent.
-   *
-   * @par Example
-   * @snippet table_admin_snippets.cc get native iam policy
-   */
-  StatusOr<google::iam::v1::Policy> GetNativeIamPolicy(
-      std::string const& table_id);
-
-  /**
-   * Sets the IAM policy for a table.
-   *
-   * Applications can provide the @p etag to implement optimistic concurrency
-   * control. If @p etag is not empty, the server will reject calls where the
-   * provided ETag does not match the ETag value stored in the server.
-   *
-   * @param table_id which table to set the IAM policy for.
-   * @param iam_bindings IamBindings object containing role and members.
-   * @param etag the expected ETag value for the current policy.
-   * @return Policy the current IAM bindings for the table.
-   *
-   * @deprecated this function is deprecated; it doesn't support conditional
-   *     bindings and will not support any other features to come; please use
-   *     the overload for `google::iam::v1::Policy` instead.
-   *     TODO(#2857): Use proper deprecation attributes.
-   *
-   * @warning ETags are currently not used by Cloud Bigtable.
-   *
-   * @par Idempotency
-   * This operation is always treated as non-idempotent.
-   *
-   * @par Example
-   * @snippet table_admin_snippets.cc set iam policy
-   */
-  StatusOr<google::cloud::IamPolicy> SetIamPolicy(
-      std::string const& table_id,
-      google::cloud::IamBindings const& iam_bindings,
-      std::string const& etag = std::string{});
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& table_id);
 
   /**
    * Sets the IAM policy for a table.
@@ -745,7 +691,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc set native iam policy
+   * @snippet table_admin_snippets.cc set iam policy
    */
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       std::string const& table_id, google::iam::v1::Policy const& iam_policy);
@@ -819,9 +765,6 @@ class TableAdmin {
 
   /// Compute the fully qualified instance name.
   std::string InstanceName() const;
-
-  static StatusOr<google::cloud::IamPolicy> ProtoToWrapper(
-      google::iam::v1::Policy proto);
 
   std::shared_ptr<AdminClient> client_;
   std::string instance_id_;

@@ -321,56 +321,8 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(AdminIntegrationTest, SetGetTestIamAPIsTest) {
-  if (UsingCloudBigtableEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
-
-  using GC = bigtable::GcRule;
-  std::string const table_id = RandomTableId();
-
-  // verify new table id in current table list
-  auto previous_table_list =
-      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
-  ASSERT_STATUS_OK(previous_table_list);
-  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
-  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
-                               << " This is unexpected, as the table ids are"
-                               << " generated at random.";
-  // create table config
-  bigtable::TableConfig table_config(
-      {{"fam", GC::MaxNumVersions(5)},
-       {"foo", GC::MaxAge(std::chrono::hours(24))}},
-      {"a1000", "a2000", "b3000", "m5000"});
-
-  // create table
-  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
-  auto iam_bindings = google::cloud::IamBindings(
-      "roles/bigtable.reader", {"serviceAccount:" + service_account_});
-
-  auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_bindings);
-  ASSERT_STATUS_OK(initial_policy);
-
-  auto fetched_policy = table_admin_->GetIamPolicy(table_id);
-  ASSERT_STATUS_OK(fetched_policy);
-
-  EXPECT_EQ(initial_policy->version, fetched_policy->version);
-  EXPECT_EQ(initial_policy->etag, fetched_policy->etag);
-
-  auto permission_set = table_admin_->TestIamPermissions(
-      table_id, {"bigtable.tables.get", "bigtable.tables.readRows"});
-  ASSERT_STATUS_OK(permission_set);
-
-  EXPECT_EQ(2, permission_set->size());
-  EXPECT_STATUS_OK(table_admin_->DeleteTable(table_id));
-}
-
-/// @test Verify that IAM Policy Native APIs work as expected.
-TEST_F(AdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
-  if (UsingCloudBigtableEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
+  // TODO(#151) - remove workarounds for emulator bugs(s)
+  if (UsingCloudBigtableEmulator()) GTEST_SKIP();
 
   using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
@@ -398,7 +350,7 @@ TEST_F(AdminIntegrationTest, SetGetTestIamNativeAPIsTest) {
   auto initial_policy = table_admin_->SetIamPolicy(table_id, iam_policy);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = table_admin_->GetNativeIamPolicy(table_id);
+  auto fetched_policy = table_admin_->GetIamPolicy(table_id);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version(), fetched_policy->version());

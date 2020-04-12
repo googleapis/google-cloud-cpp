@@ -19,8 +19,6 @@
 
 namespace {
 
-using google::cloud::bigtable::examples::CleanupOldTables;
-using google::cloud::bigtable::examples::RandomTableId;
 using google::cloud::bigtable::examples::Usage;
 using google::cloud::bigtable::examples::UsingEmulator;
 
@@ -513,18 +511,10 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id) {
-    StatusOr<google::cloud::IamPolicy> policy = admin.GetIamPolicy(table_id);
+    StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(table_id);
     if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy for " << table_id << " is\n";
-    for (auto const& kv : policy->bindings) {
-      std::cout << "role " << kv.first << " includes [";
-      char const* sep = "";
-      for (auto const& member : kv.second) {
-        std::cout << sep << member;
-        sep = ", ";
-      }
-      std::cout << "]\n";
-    }
+    std::cout << "The IAM Policy for " << table_id << " is\n"
+              << policy->DebugString() << "\n";
   }
   //! [get iam policy]
   (std::move(admin), argv.at(0));
@@ -541,61 +531,7 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, std::string table_id, std::string role,
      std::string member) {
-    StatusOr<google::cloud::IamPolicy> current = admin.GetIamPolicy(table_id);
-    if (!current) throw std::runtime_error(current.status().message());
-    auto bindings = current->bindings;
-    bindings.AddMember(role, member);
-    StatusOr<google::cloud::IamPolicy> policy =
-        admin.SetIamPolicy(table_id, bindings, current->etag);
-    if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy for " << table_id << " is\n";
-    for (auto const& kv : policy->bindings) {
-      std::cout << "role " << kv.first << " includes [";
-      char const* sep = "";
-      for (auto const& m : kv.second) {
-        std::cout << sep << m;
-        sep = ", ";
-      }
-      std::cout << "]\n";
-    }
-  }
-  //! [set iam policy]
-  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
-}
-
-void GetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
-                        std::vector<std::string> const& argv) {
-  if (UsingEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
-  //! [get native iam policy]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string table_id) {
-    StatusOr<google::iam::v1::Policy> policy =
-        admin.GetNativeIamPolicy(table_id);
-    if (!policy) throw std::runtime_error(policy.status().message());
-    std::cout << "The IAM Policy for " << table_id << " is\n"
-              << policy->DebugString() << "\n";
-  }
-  //! [get native iam policy]
-  (std::move(admin), argv.at(0));
-}
-
-void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
-                        std::vector<std::string> const& argv) {
-  if (UsingEmulator()) {
-    // TODO(#151) - remove workarounds for emulator bug(s).
-    return;
-  }
-  //! [set native iam policy]
-  namespace cbt = google::cloud::bigtable;
-  using google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string table_id, std::string role,
-     std::string member) {
-    StatusOr<google::iam::v1::Policy> current =
-        admin.GetNativeIamPolicy(table_id);
+    StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(table_id);
     if (!current) throw std::runtime_error(current.status().message());
     // This example adds the member to all existing bindings for that role. If
     // there are no such bindgs, it adds a new one. This might not be what the
@@ -616,7 +552,7 @@ void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
     std::cout << "The IAM Policy for " << table_id << " is\n"
               << policy->DebugString() << "\n";
   }
-  //! [set native iam policy]
+  //! [set iam policy]
   (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
@@ -792,13 +728,6 @@ void RunAll(std::vector<std::string> const& argv) {
   SetIamPolicy(admin, {table_id_1, "roles/bigtable.user",
                        "serviceAccount:" + service_account});
 
-  std::cout << "\nRunning GetNativeIamPolicy() example" << std::endl;
-  GetNativeIamPolicy(admin, {table_id_1});
-
-  std::cout << "\nRunning SetNativeIamPolicy() example" << std::endl;
-  SetNativeIamPolicy(admin, {table_id_1, "roles/bigtable.user",
-                             "serviceAccount:" + service_account});
-
   std::cout << "\nRunning TestIamPermissions() example" << std::endl;
   TestIamPermissions(
       {project_id, instance_id, table_id_1, "bigtable.tables.get"});
@@ -865,11 +794,6 @@ int main(int argc, char* argv[]) {
                                  GetIamPolicy),
       examples::MakeCommandEntry(
           "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
-      examples::MakeCommandEntry("get-native-iam-policy", {"<table-id>"},
-                                 GetNativeIamPolicy),
-      examples::MakeCommandEntry("set-native-iam-policy",
-                                 {"<table-id>", "<role>", "<member>"},
-                                 SetNativeIamPolicy),
       {"test-iam-permissions", TestIamPermissions},
       {"auto", RunAll},
   });
