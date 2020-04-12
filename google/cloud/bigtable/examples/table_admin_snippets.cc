@@ -500,6 +500,11 @@ void GenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
 
 void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
                   std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (examples::UsingEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
   //! [get iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -523,6 +528,11 @@ void GetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 
 void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
                   std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (examples::UsingEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
   //! [set iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -552,6 +562,11 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 
 void GetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
                         std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (examples::UsingEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
   //! [get native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -568,6 +583,11 @@ void GetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
 
 void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
                         std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (examples::UsingEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
   //! [set native iam policy]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::StatusOr;
@@ -602,6 +622,11 @@ void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
 void TestIamPermissions(std::vector<std::string> argv) {
   using google::cloud::StatusOr;
   namespace cbt = google::cloud::bigtable;
+  namespace examples = ::google::cloud::bigtable::examples;
+  if (examples::UsingEmulator()) {
+    // TODO(#151) - remove workarounds for emulator bug(s).
+    return;
+  }
   if (argv.size() < 4) {
     throw Usage{
         "test-iam-permissions <project-id> <instance-id> <resource-id>"
