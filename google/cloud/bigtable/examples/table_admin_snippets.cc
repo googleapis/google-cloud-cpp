@@ -19,6 +19,11 @@
 
 namespace {
 
+using google::cloud::bigtable::examples::CleanupOldTables;
+using google::cloud::bigtable::examples::RandomTableId;
+using google::cloud::bigtable::examples::Usage;
+using google::cloud::bigtable::examples::UsingEmulator;
+
 void CreateTable(google::cloud::bigtable::TableAdmin admin,
                  std::vector<std::string> const& argv) {
   //! [create table] [START bigtable_create_table]
@@ -622,8 +627,7 @@ void SetNativeIamPolicy(google::cloud::bigtable::TableAdmin admin,
 void TestIamPermissions(std::vector<std::string> argv) {
   using google::cloud::StatusOr;
   namespace cbt = google::cloud::bigtable;
-  namespace examples = ::google::cloud::bigtable::examples;
-  if (examples::UsingEmulator()) {
+  if (UsingEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
   }
