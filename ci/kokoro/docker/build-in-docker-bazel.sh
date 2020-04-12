@@ -98,6 +98,30 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
   readonly GCLOUD_CONFIG="cloud-cpp-integration"
+  readonly GCLOUD_ARGS=(
+      # Do not seek confirmation for any actions, assume the default
+      "--quiet"
+
+      # Run the command using a custom configuration, this avoids affecting the
+      # user's `default` configuration
+      "--configuration=${GCLOUD_CONFIG}"
+  )
+
+  restore_default_gcloud_config() {
+    "${GCLOUD}" --quiet config configurations delete "${GCLOUD_CONFIG}"
+  }
+
+  create_gcloud_config() {
+    echo
+    echo "================================================================"
+    if ! "${GCLOUD}" --quiet config configurations \
+             describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
+      log_normal "Create the gcloud configuration for the cloud-cpp tests."
+      "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
+          create --no-activate "${GCLOUD_CONFIG}" >/dev/null
+    fi
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" config set project "${GOOGLE_CLOUD_PROJECT}"
+  }
 
   cleanup_hmac_service_account() {
     local -r ACCOUNT="$1"
@@ -105,11 +129,12 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     # We can ignore errors here, sometime the account exists, but the bindings
     # are gone (or were never created). The binding is harmless if the account
     # is deleted.
-    "${GCLOUD}" --quiet projects remove-iam-policy-binding \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects remove-iam-policy-binding \
         "${GOOGLE_CLOUD_PROJECT}" \
         --member "serviceAccount:${ACCOUNT}" \
         --role roles/iam.serviceAccountTokenCreator >/dev/null || true
-    "${GCLOUD}" --quiet iam service-accounts delete "${ACCOUNT}" >/dev/null
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts delete \
+        "${ACCOUNT}" >/dev/null
   }
 
   cleanup_stale_hmac_service_accounts() {
@@ -119,8 +144,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     local THRESHOLD="$(date +%Y%m%d --date='2 days ago')"
     readonly THRESHOLD
     local email
-    "${GCLOUD}" --quiet iam service-accounts list \
-        --project="${GOOGLE_CLOUD_PROJECT}" \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts list \
         --filter="email~^hmac-[0-9]{8}- AND email<hmac-${THRESHOLD}-" \
         --format='csv(email)[no-heading]' | \
     while read -r email; do
@@ -131,38 +155,29 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   create_hmac_service_account() {
     local -r ACCOUNT="$1"
     local -r EMAIL="${ACCOUNT}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
-    "${GCLOUD}" --quiet iam service-accounts create \
-        "--project=${GOOGLE_CLOUD_PROJECT}" "${ACCOUNT}"
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts create "${ACCOUNT}"
     log_normal "Grant service account permissions to create HMAC keys."
-    "${GCLOUD}" --quiet projects add-iam-policy-binding \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects add-iam-policy-binding \
         "${GOOGLE_CLOUD_PROJECT}" \
         --member "serviceAccount:${EMAIL}" \
         --role roles/iam.serviceAccountTokenCreator >/dev/null
   }
 
   trap restore_default_gcloud_config EXIT
-  restore_default_gcloud_config() {
-    "${GCLOUD}" --quiet config configurations activate default
-    "${GCLOUD}" --quiet config configurations delete "${GCLOUD_CONFIG}"
-  }
+  create_gcloud_config
 
-  echo
-  echo "================================================================"
-  if "${GCLOUD}" --quiet config configurations \
-           describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
-    log_normal "Activate the gcloud configuration for the cloud-cpp tests."
-    "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
-        activate "${GCLOUD_CONFIG}"
-  else
-    log_normal "Create the gcloud configuration for the cloud-cpp tests."
-    "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
-        create "${GCLOUD_CONFIG}"
-  fi
+  log_normal "DEBUG DEBUG configurations list"
+  "${GCLOUD}" "${GCLOUD_ARGS[@]}" config configurations list
+  log_normal "DEBUG DEBUG config list"
+  "${GCLOUD}" "${GCLOUD_ARGS[@]}" config list
+  log_normal "DEBUG DEBUG auth list"
+  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth list
+  log_normal "DEBUG DEBUG"
 
   echo
   echo "================================================================"
   log_normal "Delete any stale service account used in HMAC key tests."
-  "${GCLOUD}" --quiet auth activate-service-account --key-file \
+  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   cleanup_stale_hmac_service_accounts
 
@@ -187,7 +202,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     echo
     echo "================================================================"
     log_normal "Delete service account used in the storage HMAC tests."
-    "${GCLOUD}" --quiet auth activate-service-account --key-file \
+    "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
         "${GOOGLE_APPLICATION_CREDENTIALS}"
     cleanup_hmac_service_account "${ACCOUNT}"
     # Deactivate the recently activated service account to prevent accidents.
@@ -201,15 +216,15 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo
   echo "================================================================"
   log_normal "Create an access token to run the Bigtable credential examples."
-  "${GCLOUD}" --quiet auth activate-service-account --key-file \
+  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
       "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
   # create a grpc::Credentials object. Even though the account is deactivated
   # for use by `gcloud` the token remains valid for about 1 hour.
-  ACCESS_TOKEN="$("${GCLOUD}" --quiet auth print-access-token)"
+  ACCESS_TOKEN="$("${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
   readonly ACCESS_TOKEN
   # Deactivate the recently activated service accounts to prevent accidents.
-  "${GCLOUD}" --quiet auth revoke --all
+  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth revoke --all
 
   bazel_args+=(
       # Common configuration
