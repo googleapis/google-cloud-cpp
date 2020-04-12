@@ -21,9 +21,8 @@
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
+
+using ::google::cloud::storage::examples::Usage;
 
 void ListDefaultObjectAcl(google::cloud::storage::Client client,
                           std::vector<std::string> const& argv) {
@@ -41,7 +40,7 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client,
     }
   }
   //! [list default object acl]
-  (std::move(client), argv[0]);
+  (std::move(client), argv.at(0));
 }
 
 void CreateDefaultObjectAcl(google::cloud::storage::Client client,
@@ -65,7 +64,7 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client,
               << "Full attributes: " << *default_object_acl << "\n";
   }
   //! [create default object acl] [END storage_add_bucket_default_owner]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void GetDefaultObjectAcl(google::cloud::storage::Client client,
@@ -82,7 +81,7 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client,
               << " in bucket " << acl->bucket() << " is " << *acl << "\n";
   }
   //! [get default object acl]
-  (std::move(client), argv[0], argv[1]);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void UpdateDefaultObjectAcl(google::cloud::storage::Client client,
@@ -113,7 +112,7 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client,
               << *updated_acl << "\n";
   }
   //! [update default object acl]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void PatchDefaultObjectAcl(google::cloud::storage::Client client,
@@ -143,7 +142,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client,
               << *patched_acl << "\n";
   }
   //! [patch default object acl]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
@@ -164,7 +163,7 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
               << *patched_acl << "\n";
   }
   //! [patch default object acl no-read]
-  (std::move(client), argv[0], argv[1], argv[2]);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void DeleteDefaultObjectAcl(google::cloud::storage::Client client,
@@ -180,25 +179,19 @@ void DeleteDefaultObjectAcl(google::cloud::storage::Client client,
               << bucket_name << "\n";
   }
   //! [delete default object acl] [END storage_remove_bucket_default_owner]
-  (std::move(client), argv[0], argv[1]);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void RunAll(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw Usage{"auto"};
-
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
 
+  if (!argv.empty()) throw Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
-      "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
-  auto const service_account =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT")
-          .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =
       examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
@@ -238,6 +231,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   (void)client.DeleteBucket(bucket_name);
 }
+
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) {
