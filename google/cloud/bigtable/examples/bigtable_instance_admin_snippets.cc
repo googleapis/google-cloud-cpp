@@ -728,6 +728,7 @@ void RunAll(std::vector<std::string> const& argv) {
   namespace cbt = google::cloud::bigtable;
 
   if (!argv.empty()) throw Usage{"auto"};
+  if (!examples::RunAdminIntegrationTests()) return;
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT",
