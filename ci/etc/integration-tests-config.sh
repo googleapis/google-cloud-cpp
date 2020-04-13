@@ -25,7 +25,12 @@ export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ZONE_B="us-west2-c"
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT="bigtable-test-iam-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 
 # Cloud Storage configuration parameters
+# An existing bucket, used in small tests that do not change the bucket metadata.
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="cloud-cpp-testing-bucket"
+# A bucket with a different location and/or storage class from
+# `cloud-cpp-testing-bucket`, some requests (object copy and rewrite) succeed
+# immediately with buckets in the same location, and we want to demonstrate we
+# can handle partial success.
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME="cloud-cpp-testing-regional"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID="us-central1"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_LOCATION="${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
