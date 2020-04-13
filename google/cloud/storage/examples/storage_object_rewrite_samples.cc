@@ -163,7 +163,7 @@ void RunAll(std::vector<std::string> const& argv) {
   RewriteObjectNonBlocking(client, {bucket_name, src_object_name,
                                     destination_bucket_name, dst_object_name});
 
-  std::cout << "\nRunning the RewriteObjectToken() example" << std::endl;
+  std::cout << "\nRunning the RewriteObjectToken() example [1]" << std::endl;
   RewriteObjectToken(client, {bucket_name, src_object_name,
                               destination_bucket_name, dst_object_name});
 
@@ -198,6 +198,10 @@ void RunAll(std::vector<std::string> const& argv) {
   RewriteObjectResume(client,
                       {bucket_name, src_object_name, destination_bucket_name,
                        dst_object_name, rewriter.token()});
+
+  std::cout << "\nRunning the RewriteObjectToken() example [2]" << std::endl;
+  RewriteObjectToken(client, {bucket_name, src_object_name,
+                              destination_bucket_name, dst_object_name});
 
   (void)client.DeleteObject(destination_bucket_name, dst_object_name);
   (void)client.DeleteObject(bucket_name, src_object_name);
