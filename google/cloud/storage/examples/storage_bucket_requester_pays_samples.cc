@@ -26,9 +26,9 @@ void GetBilling(google::cloud::storage::Client client,
   //! [get billing] [START storage_get_requester_pays_status]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name) {
+  [](gcs::Client client, std::string bucket_name, std::string user_project) {
     StatusOr<gcs::BucketMetadata> metadata =
-        client.GetBucketMetadata(bucket_name);
+        client.GetBucketMetadata(bucket_name, gcs::UserProject(user_project));
     if (!metadata) throw std::runtime_error(metadata.status().message());
 
     if (!metadata->has_billing()) {
@@ -50,7 +50,7 @@ void GetBilling(google::cloud::storage::Client client,
     }
   }
   //! [get billing] [END storage_get_requester_pays_status]
-  (std::move(client), argv.at(0));
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void EnableRequesterPays(google::cloud::storage::Client client,
@@ -191,13 +191,13 @@ void RunAll(std::vector<std::string> const& argv) {
                              .value();
 
   std::cout << "\nRunning GetBilling() example [1]" << std::endl;
-  GetBilling(client, {bucket_name});
+  GetBilling(client, {bucket_name, project_id});
 
   std::cout << "\nRunning EnableRequesterPays() example" << std::endl;
   EnableRequesterPays(client, {bucket_name});
 
   std::cout << "\nRunning GetBilling() example [2]" << std::endl;
-  GetBilling(client, {bucket_name});
+  GetBilling(client, {bucket_name, project_id});
 
   std::cout << "\nRunning WriteObjectRequesterPays() example" << std::endl;
   WriteObjectRequesterPays(client, {bucket_name, object_name, project_id});
@@ -212,7 +212,7 @@ void RunAll(std::vector<std::string> const& argv) {
   DisableRequesterPays(client, {bucket_name, project_id});
 
   std::cout << "\nRunning GetBilling() example [3]" << std::endl;
-  GetBilling(client, {bucket_name});
+  GetBilling(client, {bucket_name, project_id});
 
   (void)client.DeleteBucket(bucket_name);
 }
@@ -222,8 +222,8 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
   google::cloud::storage::examples::Example example({
-      examples::CreateCommandEntry("get-billing", {"<bucket-name>"},
-                                   GetBilling),
+      examples::CreateCommandEntry(
+          "get-billing", {"<bucket-name>", "<user-project>"}, GetBilling),
       examples::CreateCommandEntry("enable-requester-pays", {"<bucket-name>"},
                                    EnableRequesterPays),
       examples::CreateCommandEntry("disable-requester-pays",
