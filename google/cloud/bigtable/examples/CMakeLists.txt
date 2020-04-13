@@ -36,12 +36,11 @@ set(bigtable_autorun_examples
     data_async_snippets.cc
     data_snippets.cc
     instance_admin_async_snippets.cc
+    table_admin_async_snippets.cc
     table_admin_snippets.cc)
 
-set(bigtable_examples
-    # cmake-format: sort
-    bigtable_hello_instance_admin.cc bigtable_hello_world.cc
-    table_admin_async_snippets.cc)
+set(bigtable_examples # cmake-format: sort
+                      bigtable_hello_instance_admin.cc bigtable_hello_world.cc)
 
 set(bigtable_examples_unit_tests # cmake-format: sort
                                  bigtable_examples_common_test.cc)

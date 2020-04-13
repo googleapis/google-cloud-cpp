@@ -12,32 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/bigtable/examples/bigtable_examples_common.h"
 #include "google/cloud/bigtable/table_admin.h"
-#include <google/protobuf/text_format.h>
-#include <algorithm>
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-std::string command_usage;
-
-void PrintUsage(std::string const& cmd, std::string const& msg) {
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
+using ::google::cloud::bigtable::examples::Usage;
 
 void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-create-table <project-id> <instance-id> <table-id>"};
-  }
-
   //! [async create table]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -61,16 +47,12 @@ void AsyncCreateTable(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify the example.
   }
   //! [async create table]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv.at(0));
 }
 
 void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
                      google::cloud::bigtable::CompletionQueue cq,
-                     std::vector<std::string> argv) {
-  if (argv.size() != 1) {
-    throw Usage{"async-list-tables <project-id> <instance-id>"};
-  }
-
+                     std::vector<std::string> const&) {
   //! [async list tables]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -98,10 +80,6 @@ void AsyncListTables(google::cloud::bigtable::TableAdmin admin,
 void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
                    google::cloud::bigtable::CompletionQueue cq,
                    std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-get-table <project-id> <instance-id> <table-id>"};
-  }
-
   //! [async get table]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -118,10 +96,8 @@ void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
           std::cout << table->name() << "\n";
           for (auto const& family : table->column_families()) {
             std::string const& family_name = family.first;
-            std::string gc_rule;
-            google::protobuf::TextFormat::PrintToString(family.second.gc_rule(),
-                                                        &gc_rule);
-            std::cout << "\t" << family_name << "\t\t" << gc_rule << "\n";
+            std::cout << "\t" << family_name << "\t\t"
+                      << family.second.DebugString() << "\n";
           }
           return google::cloud::Status();
         });
@@ -129,16 +105,12 @@ void AsyncGetTable(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify the example.
   }
   //! [async get table]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv.at(0));
 }
 
 void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-delete-table <project-id> <instance-id> <table-id>"};
-  }
-
   //! [async delete table]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -156,16 +128,12 @@ void AsyncDeleteTable(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify example.
   }
   //! [async delete table]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv.at(0));
 }
 
 void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-modify-table <project-id> <instance-id> <table-id>"};
-  }
-
   //! [async modify table]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -195,45 +163,35 @@ void AsyncModifyTable(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify example.
   }
   //! [async modify table]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv.at(0));
 }
 
 void AsyncDropRowsByPrefix(google::cloud::bigtable::TableAdmin admin,
                            google::cloud::bigtable::CompletionQueue cq,
                            std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-drop-rows-by-prefix <project-id> <instance-id> <table-id> "
-        "<row-key>"};
-  }
-
   //! [async drop rows by prefix]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
   using google::cloud::StatusOr;
   [](cbt::TableAdmin admin, cbt::CompletionQueue cq, std::string table_id,
-     std::string row_key) {
+     std::string prefix) {
     future<google::cloud::Status> status_future =
-        admin.AsyncDropRowsByPrefix(cq, table_id, row_key);
-    auto final = status_future.then([row_key](future<google::cloud::Status> f) {
+        admin.AsyncDropRowsByPrefix(cq, table_id, prefix);
+    auto final = status_future.then([prefix](future<google::cloud::Status> f) {
       auto status = f.get();
       if (!status.ok()) throw std::runtime_error(status.message());
-      std::cout << "Successfully dropped rows with prefix " << row_key << "\n";
+      std::cout << "Successfully dropped rows with prefix " << prefix << "\n";
     });
 
     final.get();  // block to simplify example.
   }
   //! [async drop rows by prefix]
-  (std::move(admin), std::move(cq), argv[1], argv[2]);
+  (std::move(admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
                       google::cloud::bigtable::CompletionQueue cq,
                       std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{"async-drop-all-rows <project-id> <instance-id> <table-id>"};
-  }
-
   //! [async drop all rows]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -251,18 +209,12 @@ void AsyncDropAllRows(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify example.
   }
   //! [async drop all rows]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv.at(0));
 }
 
 void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
                            google::cloud::bigtable::CompletionQueue cq,
                            std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-check-consistency <project-id> <instance-id> <table-id> "
-        "<consistency_token>"};
-  }
-
   //! [async check consistency]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -287,18 +239,12 @@ void AsyncCheckConsistency(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify example.
   }
   //! [async check consistency]
-  (std::move(admin), std::move(cq), argv[1], argv[2]);
+  (std::move(admin), std::move(cq), argv.at(0), argv.at(1));
 }
 
 void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
                                    google::cloud::bigtable::CompletionQueue cq,
                                    std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw Usage{
-        "async-generate-consistency-token <project-id> <instance-id> "
-        "<table-id>"};
-  }
-
   //! [async generate consistency token]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -314,18 +260,12 @@ void AsyncGenerateConsistencyToken(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify example.
   }
   //! [async generate consistency token]
-  (std::move(admin), std::move(cq), argv[1]);
+  (std::move(admin), std::move(cq), argv.at(0));
 }
 
 void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
                              google::cloud::bigtable::CompletionQueue cq,
                              std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw Usage{
-        "async-wait-for-consistency <project-id> <instance-id> "
-        "<table-id> <consistency-token>"};
-  }
-
   //! [async wait for consistency]
   namespace cbt = google::cloud::bigtable;
   using google::cloud::future;
@@ -350,91 +290,108 @@ void AsyncWaitForConsistency(google::cloud::bigtable::TableAdmin admin,
     final.get();  // block to simplify example.
   }
   //! [async wait for consistency]
-  (std::move(admin), std::move(cq), argv[1], argv[2]);
+  (std::move(admin), std::move(cq), argv.at(0), argv.at(1));
 }
-}  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(
-      google::cloud::bigtable::TableAdmin,
-      google::cloud::bigtable::CompletionQueue, std::vector<std::string>)>;
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::bigtable::examples;
+  namespace cbt = google::cloud::bigtable;
 
-  std::map<std::string, CommandType> commands = {
-      {"async-create-table", AsyncCreateTable},
-      {"async-list-tables", AsyncListTables},
-      {"async-get-table", AsyncGetTable},
-      {"async-delete-table", AsyncDeleteTable},
-      {"async-modify-table", AsyncModifyTable},
-      {"async-drop-rows-by-prefix", AsyncDropRowsByPrefix},
-      {"async-drop-all-rows", AsyncDropAllRows},
-      {"async-check-consistency", AsyncCheckConsistency},
-      {"async-generate-consistency-token", AsyncGenerateConsistencyToken},
-      {"async-wait-for-consistency", AsyncWaitForConsistency},
-  };
+  if (!argv.empty()) throw Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const instance_id = google::cloud::internal::GetEnv(
+                               "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID")
+                               .value();
 
-  google::cloud::bigtable::CompletionQueue cq;
-
-  {
-    // Force each command to generate its Usage string, so we can provide a good
-    // usage string for the whole program. We need to create an TableAdmin
-    // object to do this, but that object is never used, it is passed to the
-    // commands, without any calls made to it.
-    google::cloud::bigtable::TableAdmin unused(
-        google::cloud::bigtable::CreateDefaultAdminClient(
-            "unused-project", google::cloud::bigtable::ClientOptions()),
-        "Unused-instance");
-    for (auto&& kv : commands) {
-      try {
-        kv.second(unused, cq, {});
-      } catch (Usage const& u) {
-        command_usage += "    ";
-        command_usage += u.msg;
-        command_usage += "\n";
-      } catch (...) {
-        // ignore other exceptions.
-      }
-    }
-  }
-
-  if (argc < 4) {
-    PrintUsage(argv[0], "Missing command and/or project-id/ or instance-id");
-    return 1;
-  }
-
-  std::vector<std::string> args;
-  args.emplace_back(argv[0]);
-  std::string const command_name = argv[1];
-  std::string const project_id = argv[2];
-  std::string const instance_id = argv[3];
-  std::transform(argv + 4, argv + argc, std::back_inserter(args),
-                 [](char* x) { return std::string(x); });
-
-  auto command = commands.find(command_name);
-  if (commands.end() == command) {
-    PrintUsage(argv[0], "Unknown command: " + command_name);
-    return 1;
-  }
-
-  // Start a thread to run the completion queue event loop.
-  std::thread runner([&cq] { cq.Run(); });
-
-  // Connect to the Cloud Bigtable admin endpoint.
-  google::cloud::bigtable::TableAdmin admin(
-      google::cloud::bigtable::CreateDefaultAdminClient(
-          project_id, google::cloud::bigtable::ClientOptions()),
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
       instance_id);
 
-  command->second(admin, cq, args);
+  google::cloud::CompletionQueue cq;
+  std::thread th([&cq] { cq.Run(); });
+  examples::AutoShutdownCQ shutdown(cq, std::move(th));
 
-  // Shutdown the completion queue event loop and join the thread.
-  cq.Shutdown();
-  runner.join();
+  // If a previous run of these samples crashes before cleaning up there may be
+  // old tables left over. As there are quotas on the total number of tables we
+  // remove stale tables after 48 hours.
+  std::cout << "\nCleaning up old tables" << std::endl;
+  std::string const prefix = "table-admin-snippets-";
+  examples::CleanupOldTables(prefix, admin);
 
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argv[0], ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto table_id = examples::RandomTableId(prefix, generator);
+
+  std::cout << "\nRunning the AsyncListTables() example [1]" << std::endl;
+  AsyncListTables(admin, cq, {});
+
+  std::cout << "\nRunning the AsyncCreateTable() example" << std::endl;
+  AsyncCreateTable(admin, cq, {table_id});
+
+  std::cout << "\nRunning the AsyncListTables() example [2]" << std::endl;
+  AsyncListTables(admin, cq, {});
+
+  std::cout << "\nRunning the AsyncGetTable() example" << std::endl;
+  AsyncGetTable(admin, cq, {table_id});
+
+  std::cout << "\nRunning the AsyncModifyTable() example" << std::endl;
+  AsyncModifyTable(admin, cq, {table_id});
+
+  std::cout << "\nRunning the AsyncGenerateConsistencyToken() example"
+            << std::endl;
+  AsyncGenerateConsistencyToken(admin, cq, {table_id});
+
+  auto token = admin.GenerateConsistencyToken(table_id);
+  if (!token) throw std::runtime_error(token.status().message());
+
+  std::cout << "\nRunning the AsyncCheckConsistency() example" << std::endl;
+  AsyncCheckConsistency(admin, cq, {table_id, *token});
+
+  std::cout << "\nRunning the AsyncWaitForConsistency() example" << std::endl;
+  AsyncWaitForConsistency(admin, cq, {table_id, *token});
+
+  std::cout << "\nRunning the AsyncDropRowsByPrefix() example" << std::endl;
+  AsyncDropRowsByPrefix(admin, cq, {table_id, "sample/prefix/"});
+
+  std::cout << "\nRunning the AsyncDropAllRows() example" << std::endl;
+  AsyncDropAllRows(admin, cq, {table_id});
+
+  std::cout << "\nRunning the AsyncDeleteTable() example" << std::endl;
+  AsyncDeleteTable(admin, cq, {table_id});
+}
+
+}  // anonymous namespace
+
+int main(int argc, char* argv[]) {
+  namespace examples = google::cloud::bigtable::examples;
+  examples::Example example({
+      examples::MakeCommandEntry("async-create-table", {"<table-id>"},
+                                 AsyncCreateTable),
+      examples::MakeCommandEntry("async-list-tables", {}, AsyncListTables),
+      examples::MakeCommandEntry("async-get-table", {"<table-id>"},
+                                 AsyncGetTable),
+      examples::MakeCommandEntry("async-delete-table", {"<table-id>"},
+                                 AsyncDeleteTable),
+      examples::MakeCommandEntry("async-modify-table", {"<table-id>"},
+                                 AsyncModifyTable),
+      examples::MakeCommandEntry("async-drop-rows-by-prefix",
+                                 {"<table-id>", "<prefix>"},
+                                 AsyncDropRowsByPrefix),
+      examples::MakeCommandEntry("async-drop-all-rows", {"<table-id>"},
+                                 AsyncDropAllRows),
+      examples::MakeCommandEntry("async-check-consistency",
+                                 {"<table-id>", "<consistency-token>"},
+                                 AsyncCheckConsistency),
+      examples::MakeCommandEntry("async-generate-consistency-token",
+                                 {"<table-id>"}, AsyncGenerateConsistencyToken),
+      examples::MakeCommandEntry("async-wait-for-consistency",
+                                 {"<table-id>", "<consistency-token>"},
+                                 AsyncWaitForConsistency),
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }

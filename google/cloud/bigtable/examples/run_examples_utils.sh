@@ -42,62 +42,6 @@ function exit_handler {
   fi
 }
 
-# Run all the table admin async examples.
-#
-# This function allows us to keep a single place where all the examples are
-# listed. We want to run these examples in the continuous integration builds
-# because they rot otherwise.
-function run_all_table_admin_async_examples {
-  local project_id=$1
-  local zone_id=$2
-  shift 2
-
-  EMULATOR_LOG="emulator.log"
-
-  # Create a (very likely unique) instance name.
-  local -r INSTANCE="in-${RANDOM}-${RANDOM}"
-
-  # Use the same table in all the tests.
-  local -r TABLE="sample-table-for-admin-${RANDOM}"
-
-  # Use sample row key wherever needed.
-  local -r ROW_KEY="sample-row-key-${RANDOM}"
-
-  run_example ./bigtable_instance_admin_snippets create-instance \
-      "${project_id}" "${INSTANCE}" "${zone_id}"
-
-  run_example ./table_admin_async_snippets async-create-table \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_async_snippets async-list-tables \
-      "${project_id}" "${INSTANCE}"
-  run_example ./table_admin_async_snippets async-get-table \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_async_snippets async-modify-table \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_async_snippets async-generate-consistency-token \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
-  local token
-  token="$(./table_admin_async_snippets async-generate-consistency-token \
-      "${project_id}" "${INSTANCE}" "${TABLE}" | awk '{print $5}')"
-  run_example ./table_admin_async_snippets async-check-consistency \
-      "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
-  run_example ./table_admin_async_snippets async-wait-for-consistency \
-      "${project_id}" "${INSTANCE}" "${TABLE}" "${token}"
-  run_example ./table_admin_async_snippets async-drop-rows-by-prefix \
-      "${project_id}" "${INSTANCE}" "${TABLE}" "${ROW_KEY}"
-  run_example ./table_admin_async_snippets async-drop-all-rows \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
-  run_example ./table_admin_async_snippets async-delete-table \
-      "${project_id}" "${INSTANCE}" "${TABLE}"
-
-  run_example ./bigtable_instance_admin_snippets delete-instance \
-      "${project_id}" "${INSTANCE}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./table_admin_async_snippets
-}
-
 ################################################
 # Run the Bigtable quick start example.
 # Globals:
