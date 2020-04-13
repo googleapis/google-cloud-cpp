@@ -187,12 +187,18 @@ void RunAll(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
+          .value();
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name =
       examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto const entity = "user-" + service_account;
   auto client = gcs::Client::CreateDefaultClient().value();
   std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
             << std::endl;
@@ -208,24 +214,22 @@ void RunAll(std::vector<std::string> const& argv) {
   ListDefaultObjectAcl(client, {bucket_name});
 
   std::cout << "\nRunning CreateDefaultObjectAcl() example" << std::endl;
-  CreateDefaultObjectAcl(client,
-                         {bucket_name, "allAuthenticatedUsers", reader});
+  CreateDefaultObjectAcl(client, {bucket_name, entity, reader});
 
   std::cout << "\nRunning GetDefaultObjectAcl() example" << std::endl;
-  GetDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers"});
+  GetDefaultObjectAcl(client, {bucket_name, entity});
 
   std::cout << "\nRunning UpdateDefaultObjectAcl() example" << std::endl;
-  UpdateDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers", owner});
+  UpdateDefaultObjectAcl(client, {bucket_name, entity, owner});
 
   std::cout << "\nRunning PatchDefaultObjectAcl() example" << std::endl;
-  PatchDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers", reader});
+  PatchDefaultObjectAcl(client, {bucket_name, entity, reader});
 
   std::cout << "\nRunning PatchDefaultObjectAclNoRead() example" << std::endl;
-  PatchDefaultObjectAclNoRead(client,
-                              {bucket_name, "allAuthenticatedUsers", owner});
+  PatchDefaultObjectAclNoRead(client, {bucket_name, entity, owner});
 
   std::cout << "\nRunning DeleteDefaultObjectAcl() example" << std::endl;
-  DeleteDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers"});
+  DeleteDefaultObjectAcl(client, {bucket_name, entity});
 
   (void)client.DeleteBucket(bucket_name);
 }
