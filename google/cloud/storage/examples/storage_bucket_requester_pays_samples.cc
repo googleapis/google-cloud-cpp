@@ -222,8 +222,8 @@ void RunAll(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {
   namespace examples = ::google::cloud::storage::examples;
   google::cloud::storage::examples::Example example({
-      examples::CreateCommandEntry("get-billing", {"<bucket-name>", "<user-project>"},
-                                   GetBilling),
+      examples::CreateCommandEntry(
+          "get-billing", {"<bucket-name>", "<user-project>"}, GetBilling),
       examples::CreateCommandEntry("enable-requester-pays", {"<bucket-name>"},
                                    EnableRequesterPays),
       examples::CreateCommandEntry("disable-requester-pays",
