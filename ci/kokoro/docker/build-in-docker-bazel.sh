@@ -107,7 +107,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
       "--configuration=${GCLOUD_CONFIG}"
   )
 
-  restore_default_gcloud_config() {
+  delete_gcloud_config() {
     "${GCLOUD}" --quiet config configurations delete "${GCLOUD_CONFIG}"
   }
 
@@ -163,16 +163,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
         --role roles/iam.serviceAccountTokenCreator >/dev/null
   }
 
-  trap restore_default_gcloud_config EXIT
+  trap delete_gcloud_config EXIT
   create_gcloud_config
-
-  log_normal "DEBUG DEBUG configurations list"
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" config configurations list
-  log_normal "DEBUG DEBUG config list"
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" config list
-  log_normal "DEBUG DEBUG auth list"
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth list
-  log_normal "DEBUG DEBUG"
 
   echo
   echo "================================================================"
@@ -210,7 +202,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     "${GCLOUD}" --quiet auth revoke --all
     echo "================================================================"
 
-    restore_default_gcloud_config
+    delete_gcloud_config
   }
 
   echo
