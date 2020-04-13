@@ -83,7 +83,7 @@ fi
 # exactly that.
 echo "================================================================"
 log_yellow "define GOOGLE_APPLICATION_CREDENTIALS."
-export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/service-account.json"
+export GOOGLE_APPLICATION_CREDENTIALS="${KOKORO_GFILE_DIR}/kokoro-run-key.json"
 
 # Download the gRPC `roots.pem` file. On macOS gRPC does not use the native
 # trust store. One needs to set GRPC_DEFAULT_SSL_ROOTS_FILE_PATH. There was

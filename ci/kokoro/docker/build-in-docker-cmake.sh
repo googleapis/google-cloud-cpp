@@ -179,9 +179,9 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
   fi
 
   readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-  readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/service-account.json"
-  readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/service-account.p12"
-  readonly GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"
+  readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
+  readonly GOOGLE_CLOUD_CPP_STORAGE_TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
+  readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
 
   if [[ # yes: always try to run the integration tests
         ( ("${RUN_INTEGRATION_TESTS}" == "yes" ) ||

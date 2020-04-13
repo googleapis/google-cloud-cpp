@@ -52,7 +52,7 @@ fi
 
 declare -A quickstart_args=()
 
-if [[ -r "/c/service-account.json" ]]; then
+if [[ -r "/c/kokoro-run-key.json" ]]; then
   # shellcheck disable=SC1091
   source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
   # TODO(#3604) - figure out how to run pass arguments safely
@@ -61,7 +61,7 @@ if [[ -r "/c/service-account.json" ]]; then
     ["bigtable"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID} quickstart"
   )
   run_vars+=(
-      "GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
+      "GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
       "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
   )
 fi
@@ -81,7 +81,7 @@ build_service() {
     log_normal "compiling quickstart program for ${service}"
     "${BAZEL_BIN}" build  "${bazel_args[@]}" -- ...
 
-    if [[ -r "/c/service-account.json" ]]; then
+    if [[ -r "/c/kokoro-run-key.json" ]]; then
       log_normal "running quickstart program for ${service}"
       env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
           "--spawn_strategy=local" \
