@@ -29,17 +29,13 @@ void RewriteObject(google::cloud::storage::Client client,
   [](gcs::Client client, std::string source_bucket_name,
      std::string source_object_name, std::string destination_bucket_name,
      std::string destination_object_name) {
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        client.RewriteObjectBlocking(source_bucket_name, source_object_name,
-                                     destination_bucket_name,
-                                     destination_object_name);
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
+    StatusOr<gcs::ObjectMetadata> metadata = client.RewriteObjectBlocking(
+        source_bucket_name, source_object_name, destination_bucket_name,
+        destination_object_name);
+    if (!metadata) throw std::runtime_error(metadata.status().message());
 
     std::cout << "Rewrote object " << destination_object_name
-              << " Metadata: " << *object_metadata << "\n";
+              << " Metadata: " << *metadata << "\n";
   }
   //! [rewrite object]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
@@ -57,24 +53,17 @@ void RewriteObjectNonBlocking(google::cloud::storage::Client client,
         client.RewriteObject(source_bucket_name, source_object_name,
                              destination_bucket_name, destination_object_name);
 
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        rewriter.ResultWithProgressCallback(
-            [](StatusOr<gcs::RewriteProgress> const& progress) {
-              if (!progress) {
-                throw std::runtime_error(progress.status().message());
-              }
-              std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
-                        << progress->object_size << "\n";
-            });
+    auto callback = [](StatusOr<gcs::RewriteProgress> const& progress) {
+      if (!progress) throw std::runtime_error(progress.status().message());
+      std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
+                << progress->object_size << "\n";
+    };
+    StatusOr<gcs::ObjectMetadata> metadata =
+        rewriter.ResultWithProgressCallback(std::move(callback));
+    if (!metadata) throw std::runtime_error(metadata.status().message());
 
-    if (!object_metadata) {
-      // Won't happen if we throw on error from the callback.
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Rewrote object " << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << "\nFull Metadata: " << *object_metadata << "\n";
+    std::cout << "Rewrote object " << metadata->name() << " in bucket "
+              << metadata->bucket() << "\nFull Metadata: " << *metadata << "\n";
   }
   //! [rewrite object non blocking]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
@@ -93,8 +82,8 @@ void RewriteObjectToken(google::cloud::storage::Client client,
         destination_object_name, gcs::MaxBytesRewrittenPerCall(1024 * 1024));
 
     StatusOr<gcs::RewriteProgress> progress = rewriter.Iterate();
-
     if (!progress) throw std::runtime_error(progress.status().message());
+
     if (progress->done) {
       std::cout
           << "The rewrite completed immediately, no token to resume later\n";
@@ -119,24 +108,17 @@ void RewriteObjectResume(google::cloud::storage::Client client,
         destination_object_name, rewrite_token,
         gcs::MaxBytesRewrittenPerCall(1024 * 1024));
 
-    StatusOr<gcs::ObjectMetadata> object_metadata =
-        rewriter.ResultWithProgressCallback(
-            [](StatusOr<gcs::RewriteProgress> const& progress) {
-              if (!progress) {
-                throw std::runtime_error(progress.status().message());
-              }
-              std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
-                        << progress->object_size << "\n";
-            });
+    auto callback = [](StatusOr<gcs::RewriteProgress> const& progress) {
+      if (!progress) throw std::runtime_error(progress.status().message());
+      std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
+                << progress->object_size << "\n";
+    };
+    StatusOr<gcs::ObjectMetadata> metadata =
+        rewriter.ResultWithProgressCallback(std::move(callback));
+    if (!metadata) throw std::runtime_error(metadata.status().message());
 
-    if (!object_metadata) {
-      // Won't happen if we throw on error from the callback.
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Rewrote object " << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << "\nFull Metadata: " << *object_metadata << "\n";
+    std::cout << "Rewrote object " << metadata->name() << " in bucket "
+              << metadata->bucket() << "\nFull Metadata: " << *metadata << "\n";
   }
   //! [rewrite object resume]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3),
