@@ -611,53 +611,6 @@ run_temporary_hold_examples() {
 }
 
 ################################################
-# Run the examples showing how to use object versioning.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_object_versioning_examples() {
-  # Create the bucket to avoid changing the configuration for "${BUCKET_NAME}"
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-  local copied_object_name="object-${RANDOM}-${RANDOM}.txt"
-  run_example ./storage_bucket_samples enable-object-versioning \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples get-object-versioning \
-      "${bucket_name}"
-  local archived_generation
-  archived_generation=$(./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media" | \
-      sed -n 's/.*, generation=\([0-9]*\).*/\1/p')
-  local live_generation
-  live_generation=$(./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media" | \
-      sed -n 's/.*, generation=\([0-9]*\).*/\1/p')
-  run_example ./storage_object_samples copy-versioned-object \
-      "${bucket_name}" "${object_name}" \
-      "${bucket_name}" "${copied_object_name}" "${archived_generation}"
-  run_example ./storage_object_samples delete-versioned-object \
-      "${bucket_name}" "${object_name}" "${archived_generation}"
-  run_example ./storage_object_samples delete-versioned-object \
-      "${bucket_name}" "${object_name}" "${live_generation}"
-  run_example ./storage_bucket_samples disable-object-versioning \
-      "${bucket_name}"
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${copied_object_name}"
-
-  run_example ./storage_bucket_samples delete-bucket \
-      "${bucket_name}"
-}
-
-################################################
 # Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -767,7 +720,6 @@ run_all_storage_examples() {
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   run_event_based_hold_examples "${BUCKET_NAME}"
   run_temporary_hold_examples "${BUCKET_NAME}"
-  run_object_versioning_examples
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
