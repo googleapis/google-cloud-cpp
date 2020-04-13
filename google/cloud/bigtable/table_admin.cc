@@ -544,6 +544,91 @@ future<StatusOr<Consistency>> TableAdmin::AsyncCheckConsistency(
       });
 }
 
+StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
+    std::string const& table_id) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::GetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::GetIamPolicy, request, "GetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return proto;
+}
+
+StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
+    std::string const& table_id, google::iam::v1::Policy const& iam_policy) {
+  grpc::Status status;
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  ::google::iam::v1::SetIamPolicyRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+  *request.mutable_policy() = iam_policy;
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto proto = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::SetIamPolicy, request, "SetIamPolicy", status, true);
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return proto;
+}
+
+StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
+    std::string const& table_id, std::vector<std::string> const& permissions) {
+  grpc::Status status;
+  ::google::iam::v1::TestIamPermissionsRequest request;
+  auto resource = TableName(table_id);
+  request.set_resource(resource);
+
+  // Copy the policies in effect for the operation.
+  auto rpc_policy = clone_rpc_retry_policy();
+  auto backoff_policy = clone_rpc_backoff_policy();
+
+  for (auto& permission : permissions) {
+    request.add_permissions(permission);
+  }
+
+  MetadataUpdatePolicy metadata_update_policy(resource,
+                                              MetadataParamTypes::RESOURCE);
+
+  auto response = ClientUtils::MakeCall(
+      *(client_), *rpc_policy, *backoff_policy, metadata_update_policy,
+      &AdminClient::TestIamPermissions, request, "TestIamPermissions", status,
+      true);
+
+  std::vector<std::string> resource_permissions;
+
+  for (auto& permission : *response.mutable_permissions()) {
+    resource_permissions.push_back(permission);
+  }
+
+  if (!status.ok()) {
+    return MakeStatusFromRpcError(status);
+  }
+
+  return resource_permissions;
+}
+
 std::string TableAdmin::InstanceName() const {
   return "projects/" + client_->project() + "/instances/" + instance_id_;
 }

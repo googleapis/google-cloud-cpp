@@ -18,12 +18,14 @@
 #include "google/cloud/bigtable/admin_client.h"
 #include "google/cloud/bigtable/column_family.h"
 #include "google/cloud/bigtable/completion_queue.h"
+#include "google/cloud/bigtable/iam_policy.h"
 #include "google/cloud/bigtable/metadata_update_policy.h"
 #include "google/cloud/bigtable/polling_policy.h"
 #include "google/cloud/bigtable/table_config.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/iam_policy.h"
 #include "google/cloud/status_or.h"
 #include <future>
 #include <memory>
@@ -656,6 +658,61 @@ class TableAdmin {
    */
   future<Status> AsyncDropAllRows(CompletionQueue& cq,
                                   std::string const& table_id);
+
+  /**
+   * Gets the policy for @p table_id.
+   *
+   * @param table_id the table to query.
+   * @return google::iam::v1::Policy the full IAM policy for the table.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc get iam policy
+   */
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& table_id);
+
+  /**
+   * Sets the IAM policy for a table.
+   *
+   * This is the preferred way to the overload for `IamBindings`. This is more
+   * closely coupled to the underlying protocol, enable more actions and is more
+   * likely to tolerate future protocol changes.
+   *
+   * @param table_id which table to set the IAM policy for.
+   * @param iam_policy google::iam::v1::Policy object containing role and
+   * members.
+   * @return google::iam::v1::Policy the current IAM policy for the table.
+   *
+   * @warning ETags are currently not used by Cloud Bigtable.
+   *
+   * @par Idempotency
+   * This operation is always treated as non-idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc set iam policy
+   */
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      std::string const& table_id, google::iam::v1::Policy const& iam_policy);
+
+  /**
+   * Returns a permission set that the caller has on the specified table.
+   *
+   * @param table_id the ID of the table to query.
+   * @param permissions set of permissions to check for the resource.
+   *
+   * @par Idempotency
+   * This operation is read-only and therefore it is always idempotent.
+   *
+   * @par Example
+   * @snippet table_admin_snippets.cc test iam permissions
+   *
+   * @see https://cloud.google.com/bigtable/docs/access-control for a list of
+   *     valid permissions on Google Cloud Bigtable.
+   */
+  StatusOr<std::vector<std::string>> TestIamPermissions(
+      std::string const& table_id, std::vector<std::string> const& permissions);
 
   /// Return the fully qualified name of a table in this object's instance.
   std::string TableName(std::string const& table_id) const {

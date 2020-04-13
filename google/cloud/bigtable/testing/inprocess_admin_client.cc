@@ -104,6 +104,27 @@ grpc::Status InProcessAdminClient::CheckConsistency(
   return Stub()->CheckConsistency(context, request, response);
 }
 
+grpc::Status InProcessAdminClient::GetIamPolicy(
+    grpc::ClientContext* context,
+    google::iam::v1::GetIamPolicyRequest const& request,
+    google::iam::v1::Policy* response) {
+  return Stub()->GetIamPolicy(context, request, response);
+}
+
+grpc::Status InProcessAdminClient::SetIamPolicy(
+    grpc::ClientContext* context,
+    google::iam::v1::SetIamPolicyRequest const& request,
+    google::iam::v1::Policy* response) {
+  return Stub()->SetIamPolicy(context, request, response);
+}
+
+grpc::Status InProcessAdminClient::TestIamPermissions(
+    grpc::ClientContext* context,
+    google::iam::v1::TestIamPermissionsRequest const& request,
+    google::iam::v1::TestIamPermissionsResponse* response) {
+  return Stub()->TestIamPermissions(context, request, response);
+}
+
 grpc::Status InProcessAdminClient::GetOperation(
     grpc::ClientContext* context,
     google::longrunning::GetOperationRequest const& request,

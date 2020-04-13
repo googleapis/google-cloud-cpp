@@ -97,11 +97,26 @@ class MockAdminClient : public bigtable::AdminClient {
           grpc::ClientContext* context,
           google::bigtable::admin::v2::CheckConsistencyRequest const& request,
           google::bigtable::admin::v2::CheckConsistencyResponse* response));
+  MOCK_METHOD3(GetIamPolicy,
+               grpc::Status(grpc::ClientContext* context,
+                            google::iam::v1::GetIamPolicyRequest const& request,
+                            google::iam::v1::Policy* response));
+  MOCK_METHOD3(SetIamPolicy,
+               grpc::Status(grpc::ClientContext* context,
+                            google::iam::v1::SetIamPolicyRequest const& request,
+                            google::iam::v1::Policy* response));
+  MOCK_METHOD3(
+      TestIamPermissions,
+      grpc::Status(grpc::ClientContext* context,
+                   google::iam::v1::TestIamPermissionsRequest const& request,
+                   google::iam::v1::TestIamPermissionsResponse* response));
+
   MOCK_METHOD3(
       GetOperation,
       grpc::Status(grpc::ClientContext* context,
                    google::longrunning::GetOperationRequest const& request,
                    google::longrunning::Operation* response));
+
   MOCK_METHOD3(
       AsyncModifyColumnFamilies,
       std::unique_ptr<grpc::ClientAsyncResponseReaderInterface<
@@ -143,6 +158,13 @@ class MockAdminClient : public bigtable::AdminClient {
                    grpc::ClientContext* context,
                    const google::longrunning::GetOperationRequest& request,
                    grpc::CompletionQueue* cq));
+  MOCK_METHOD3(
+      AsyncGetIamPolicy,
+      std::unique_ptr<
+          grpc::ClientAsyncResponseReaderInterface<google::iam::v1::Policy>>(
+          grpc::ClientContext* context,
+          google::iam::v1::GetIamPolicyRequest const& request,
+          grpc::CompletionQueue* cq));
 };
 
 }  // namespace testing
