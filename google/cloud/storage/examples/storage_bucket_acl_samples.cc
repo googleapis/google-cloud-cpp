@@ -254,10 +254,10 @@ void RunAll(std::vector<std::string> const& argv) {
   ListBucketAcl(client, {bucket_name});
 
   std::cout << "\nRunning CreateBucketAcl() example" << std::endl;
-  CreateBucketAcl(client, {bucket_name, "allAuthenticatedUsers", reader});
+  CreateBucketAcl(client, {bucket_name, entity, reader});
 
   std::cout << "\nRunning GetBucketAcl() example" << std::endl;
-  GetBucketAcl(client, {bucket_name, "allAuthenticatedUsers"});
+  GetBucketAcl(client, {bucket_name, entity});
 
   std::cout << "\nRunning UpdateBucketAcl() example" << std::endl;
   UpdateBucketAcl(client, {bucket_name, entity, owner});
