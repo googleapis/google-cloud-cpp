@@ -80,6 +80,7 @@ readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-conf
 readonly TEST_KEY_FILE_JSON="/c/service-account.json"
 readonly TEST_KEY_FILE_P12="/c/service-account.p12"
 readonly GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"
+readonly KOKORO_SETUP_KEY="/c/kokoro-setup-key.json"
 # yes: always try to run integration tests
 # auto: only try to run integration tests if the config file is executable.
 if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
@@ -87,7 +88,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
         -r "${INTEGRATION_TESTS_CONFIG}" && \
         -r "${TEST_KEY_FILE_JSON}" && \
         -r "${TEST_KEY_FILE_P12}" && \
-        -r "${GOOGLE_APPLICATION_CREDENTIALS}" ) ]]; then
+        -r "${GOOGLE_APPLICATION_CREDENTIALS}" && \
+        -r "${KOKORO_SETUP_KEY}" ) ]]; then
   echo "================================================================"
   log_normal "Running the integration tests"
   echo "================================================================"
@@ -141,7 +143,8 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     # The service accounts created below start with hmac-YYYYMMDD-, we list the
     # accounts with that prefix, and with a date from at least 2 days ago to
     # find and remove any stale accounts.
-    local THRESHOLD="$(date +%Y%m%d --date='2 days ago')"
+    local THRESHOLD
+    THRESHOLD="$(date +%Y%m%d --date='2 days ago')"
     readonly THRESHOLD
     local email
     "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts list \
@@ -170,7 +173,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo "================================================================"
   log_normal "Delete any stale service account used in HMAC key tests."
   "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
-      "${GOOGLE_APPLICATION_CREDENTIALS}"
+      "${KOKORO_SETUP_KEY}"
   cleanup_stale_hmac_service_accounts
 
   echo
@@ -195,7 +198,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     echo "================================================================"
     log_normal "Delete service account used in the storage HMAC tests."
     "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
-        "${GOOGLE_APPLICATION_CREDENTIALS}"
+        "${KOKORO_SETUP_KEY}"
     cleanup_hmac_service_account "${ACCOUNT}"
     # Deactivate the recently activated service account to prevent accidents.
     log_normal "Revoke service account permissions to create HMAC keys."
