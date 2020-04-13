@@ -649,6 +649,7 @@ TEST_F(TableAdminTest, CheckConsistencyFailure) {
   // After all the setup, make the actual call we want to test.
   EXPECT_FALSE(tested.CheckConsistency("other-table", "test-token"));
 }
+
 /// @test Verify positive scenario for TableAdmin::GetIamPolicy.
 TEST_F(TableAdminTest, GetIamPolicy) {
   using ::testing::_;
@@ -778,6 +779,7 @@ TEST_F(TableAdminTest, SetIamPolicyRecoverableError) {
   EXPECT_EQ(1, policy->bindings().size());
   EXPECT_EQ("test-tag", policy->etag());
 }
+
 /// @test Verify that TableAdmin::TestIamPermissions works in simple case.
 TEST_F(TableAdminTest, TestIamPermissions) {
   using ::testing::_;

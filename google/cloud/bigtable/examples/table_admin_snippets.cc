@@ -557,8 +557,6 @@ void SetIamPolicy(google::cloud::bigtable::TableAdmin admin,
 }
 
 void TestIamPermissions(std::vector<std::string> argv) {
-  using google::cloud::StatusOr;
-  namespace cbt = google::cloud::bigtable;
   if (UsingEmulator()) {
     // TODO(#151) - remove workarounds for emulator bug(s).
     return;
@@ -569,14 +567,19 @@ void TestIamPermissions(std::vector<std::string> argv) {
         " <permission> [permission ...]"};
   }
 
-  cbt::TableAdmin admin(
-      cbt::CreateDefaultAdminClient(argv[0], cbt::ClientOptions{}), argv[1]);
+  google::cloud::bigtable::TableAdmin admin(
+      google::cloud::bigtable::CreateDefaultAdminClient(
+          argv[0], google::cloud::bigtable::ClientOptions{}),
+      argv[1]);
 
   std::string resource = argv[2];
   argv.erase(argv.begin(), argv.begin() + 3);
   auto permissions = std::move(argv);
 
   //! [test iam permissions]
+
+  using google::cloud::StatusOr;
+  namespace cbt = google::cloud::bigtable;
 
   [](cbt::TableAdmin admin, std::string resource,
      std::vector<std::string> permissions) {
