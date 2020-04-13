@@ -13,43 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/examples/storage_examples_common.h"
+#include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
 #include <map>
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
-std::string command_usage;
-
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
-
-void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
-                          char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"list-default-object-acl <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void ListDefaultObjectAcl(google::cloud::storage::Client client,
+                          std::vector<std::string> const& argv) {
   //! [list default object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -64,17 +38,11 @@ void ListDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [list default object acl]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"create-default-object-acl <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void CreateDefaultObjectAcl(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
   //! [create default object acl] [START storage_add_bucket_default_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -94,37 +62,11 @@ void CreateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
               << "Full attributes: " << *default_object_acl << "\n";
   }
   //! [create default object acl] [END storage_add_bucket_default_owner]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void DeleteDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"delete-default-object-acl <bucket-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  //! [delete default object acl] [START storage_remove_bucket_default_owner]
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string entity) {
-    google::cloud::Status status =
-        client.DeleteDefaultObjectAcl(bucket_name, entity);
-
-    if (!status.ok()) throw std::runtime_error(status.message());
-    std::cout << "Deleted ACL entry for " << entity << " in bucket "
-              << bucket_name << "\n";
-  }
-  //! [delete default object acl] [END storage_remove_bucket_default_owner]
-  (std::move(client), bucket_name, entity);
-}
-
-void GetDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"get-default-object-acl <bucket-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void GetDefaultObjectAcl(google::cloud::storage::Client client,
+                         std::vector<std::string> const& argv) {
   //! [get default object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -137,17 +79,11 @@ void GetDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
               << " in bucket " << acl->bucket() << " is " << *acl << "\n";
   }
   //! [get default object acl]
-  (std::move(client), bucket_name, entity);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void UpdateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"update-default-object-acl <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void UpdateDefaultObjectAcl(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
   //! [update default object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -174,17 +110,11 @@ void UpdateDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
               << *updated_acl << "\n";
   }
   //! [update default object acl]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"patch-default-object-acl <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void PatchDefaultObjectAcl(google::cloud::storage::Client client,
+                           std::vector<std::string> const& argv) {
   //! [patch default object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -210,18 +140,11 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client, int& argc,
               << *patched_acl << "\n";
   }
   //! [patch default object acl]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
-                                 int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "patch-default-object-acl-no-read <bucket-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+                                 std::vector<std::string> const& argv) {
   //! [patch default object acl no-read]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -238,63 +161,100 @@ void PatchDefaultObjectAclNoRead(google::cloud::storage::Client client,
               << *patched_acl << "\n";
   }
   //! [patch default object acl no-read]
-  (std::move(client), bucket_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
+
+void DeleteDefaultObjectAcl(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
+  //! [delete default object acl] [START storage_remove_bucket_default_owner]
+  namespace gcs = google::cloud::storage;
+  [](gcs::Client client, std::string bucket_name, std::string entity) {
+    google::cloud::Status status =
+        client.DeleteDefaultObjectAcl(bucket_name, entity);
+
+    if (!status.ok()) throw std::runtime_error(status.message());
+    std::cout << "Deleted ACL entry for " << entity << " in bucket "
+              << bucket_name << "\n";
+  }
+  //! [delete default object acl] [END storage_remove_bucket_default_owner]
+  (std::move(client), argv.at(0), argv.at(1));
+}
+
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::storage::examples;
+  namespace gcs = ::google::cloud::storage;
+
+  if (!argv.empty()) throw examples::Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const bucket_name =
+      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto client = gcs::Client::CreateDefaultClient().value();
+  std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
+            << std::endl;
+  auto bucket_metadata = client
+                             .CreateBucketForProject(bucket_name, project_id,
+                                                     gcs::BucketMetadata{})
+                             .value();
+
+  auto const reader = gcs::BucketAccessControl::ROLE_READER();
+  auto const owner = gcs::BucketAccessControl::ROLE_OWNER();
+
+  std::cout << "\nRunning ListDefaultObjectAcl() example" << std::endl;
+  ListDefaultObjectAcl(client, {bucket_name});
+
+  std::cout << "\nRunning CreateDefaultObjectAcl() example" << std::endl;
+  CreateDefaultObjectAcl(client,
+                         {bucket_name, "allAuthenticatedUsers", reader});
+
+  std::cout << "\nRunning GetDefaultObjectAcl() example" << std::endl;
+  GetDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers"});
+
+  std::cout << "\nRunning UpdateDefaultObjectAcl() example" << std::endl;
+  UpdateDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers", owner});
+
+  std::cout << "\nRunning PatchDefaultObjectAcl() example" << std::endl;
+  PatchDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers", reader});
+
+  std::cout << "\nRunning PatchDefaultObjectAclNoRead() example" << std::endl;
+  PatchDefaultObjectAclNoRead(client,
+                              {bucket_name, "allAuthenticatedUsers", owner});
+
+  std::cout << "\nRunning DeleteDefaultObjectAcl() example" << std::endl;
+  DeleteDefaultObjectAcl(client, {bucket_name, "allAuthenticatedUsers"});
+
+  (void)client.DeleteBucket(bucket_name);
+}
+
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  // Create a client to communicate with Google Cloud Storage.
-  google::cloud::StatusOr<google::cloud::storage::Client> client =
-      google::cloud::storage::Client::CreateDefaultClient();
-  if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << "\n";
-    return 1;
-  }
-
-  // Build the list of commands and the usage string from that list.
-  using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
-  std::map<std::string, CommandType> commands = {
-      {"list-default-object-acl", ListDefaultObjectAcl},
-      {"create-default-object-acl", CreateDefaultObjectAcl},
-      {"delete-default-object-acl", DeleteDefaultObjectAcl},
-      {"get-default-object-acl", GetDefaultObjectAcl},
-      {"update-default-object-acl", UpdateDefaultObjectAcl},
-      {"patch-default-object-acl", PatchDefaultObjectAcl},
-      {"patch-default-object-acl-no-read", PatchDefaultObjectAclNoRead},
+int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::storage::examples;
+  auto make_entry = [](std::string const& name,
+                       std::vector<std::string> arg_names,
+                       examples::ClientCommand const& cmd) {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  for (auto&& kv : commands) {
-    try {
-      int fake_argc = 1;
-      kv.second(*client, fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    }
-  }
 
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing command");
-    return 1;
-  }
-
-  std::string const command = ConsumeArg(argc, argv);
-  auto it = commands.find(command);
-  if (commands.end() == it) {
-    PrintUsage(argc, argv, "Unknown command: " + command);
-    return 1;
-  }
-
-  // Call the command with that client.
-  it->second(*client, argc, argv);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  google::cloud::storage::examples::Example example({
+      make_entry("list-default-object-acl", {}, ListDefaultObjectAcl),
+      make_entry("create-default-object-acl", {"<entity>", "<role>"},
+                 CreateDefaultObjectAcl),
+      make_entry("get-default-object-acl", {"<entity>"}, GetDefaultObjectAcl),
+      make_entry("update-default-object-acl", {"<entity>", "<role>"},
+                 UpdateDefaultObjectAcl),
+      make_entry("patch-default-object-acl", {"<entity>", "<role>"},
+                 PatchDefaultObjectAcl),
+      make_entry("patch-default-object-acl-no-read", {"<entity>", "<role>"},
+                 PatchDefaultObjectAclNoRead),
+      make_entry("delete-default-object-acl", {"<entity>"},
+                 DeleteDefaultObjectAcl),
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }
