@@ -425,50 +425,6 @@ run_resumable_write_object_examples() {
 }
 
 ################################################
-# Run the example showing how to rewrite one object.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   source_bucket_name: an existing bucket where the source object will be
-#     created.
-#   target_bucket_name: an existing bucket where the target object will be
-#     created.
-# Returns:
-#   None
-################################################
-run_rewrite_object_example() {
-  local source_bucket_name=$1
-  local target_bucket_name=$2
-  shift 2
-
-  local source_object_name="rewrite-source-object-${RANDOM}-${RANDOM}.txt"
-  local target_object_name="rewrite-target-object-${RANDOM}-${RANDOM}.txt"
-  run_example ./storage_object_samples insert-object \
-      "${source_bucket_name}" "${source_object_name}" \
-      "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples rewrite-object \
-      "${source_bucket_name}" "${source_object_name}" \
-      "${source_bucket_name}" "${target_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${target_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${source_object_name}"
-
-  run_example ./storage_object_samples insert-object \
-      "${source_bucket_name}" "${source_object_name}" \
-      "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples rewrite-object-non-blocking \
-      "${source_bucket_name}" "${source_object_name}" \
-      "${source_bucket_name}" "${target_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${target_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${source_object_name}"
-
-}
-
-################################################
 # Run the example showing how to rename one object.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -495,49 +451,6 @@ run_rename_object_example() {
 }
 
 ################################################
-# Run the example showing how to resume a partially completed rewrite.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   source_bucket_name: an existing bucket where the source object will be
-#     created.
-#   target_bucket_name: an existing bucket where the target object will be
-#     created.
-# Returns:
-#   None
-################################################
-run_resume_rewrite_example() {
-  local source_bucket_name=$1
-  local target_bucket_name=$2
-  shift 2
-
-  local source_object_name="rewrite-resume-source-object-${RANDOM}-${RANDOM}.txt"
-  local target_object_name="rewrite-resume-target-object-${RANDOM}-${RANDOM}.txt"
-  run_example ./storage_object_samples write-large-object \
-      "${source_bucket_name}" "${source_object_name}" "16"
-  local msg
-  msg=$(./storage_object_samples rewrite-object-token \
-      "${source_bucket_name}" "${source_object_name}" \
-      "${target_bucket_name}" "${target_object_name}")
-
-  if echo "${msg}" | grep -q "Rewrite in progress"; then
-    local token
-    token=$(echo "${msg}" | awk '{print $5}')
-    run_example ./storage_object_samples rewrite-object-resume \
-        "${source_bucket_name}" "${source_object_name}" \
-        "${target_bucket_name}" "${target_object_name}" "${token}"
-  else
-    echo "${COLOR_YELLOW}[  SKIPPED ]${COLOR_RESET}" \
-        " rewrite-object-resume the rewrite completed in one step."
-  fi
-  run_example ./storage_object_samples delete-object \
-      "${target_bucket_name}" "${target_object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${source_bucket_name}" "${source_object_name}"
-}
-
-################################################
 # Run the examples showing how to rewrite objects.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -555,9 +468,7 @@ run_all_object_rewrite_examples() {
   local target_bucket_name=$2
   shift 2
 
-  run_rewrite_object_example "${source_bucket_name}" "${target_bucket_name}"
   run_rename_object_example "${source_bucket_name}"
-  run_resume_rewrite_example "${source_bucket_name}" "${target_bucket_name}"
 }
 
 ################################################

@@ -44,6 +44,17 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROO
 cd "${BINARY_DIR}"
 start_testbench
 
+# GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME is automatically created, but we
+# need to create the *DESTINATION_BUCKET_NAME too. Note that when the
+# `storage_bucket_samples` binary is missing the examples that use said bucket
+# are missing too.
+if [[ -x "google/cloud/storage/examples/storage_bucket_samples" ]]; then
+  google/cloud/storage/examples/storage_bucket_samples \
+      create-bucket-for-project \
+      "${GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME}" \
+      "${GOOGLE_CLOUD_PROJECT}" >/dev/null
+fi
+
 ctest -L "storage-integration-tests" "${ctest_args[@]}"
 exit_status=$?
 

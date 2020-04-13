@@ -1399,10 +1399,10 @@ class Client {
    * case, `IfGenerationMatch`.
    *
    * @par Example
-   * @snippet storage_object_samples.cc rewrite object non blocking
+   * @snippet storage_object_rewrite_samples.cc rewrite object non blocking
    *
    * @par Example
-   * @snippet storage_object_samples.cc rewrite object resume
+   * @snippet storage_object_rewrite_samples.cc rewrite object resume
    */
   template <typename... Options>
   ObjectRewriter RewriteObject(std::string source_bucket_name,
@@ -1454,7 +1454,7 @@ class Client {
    * case, `IfGenerationMatch`.
    *
    * @par Example
-   * @snippet storage_object_samples.cc rewrite object resume
+   * @snippet storage_object_rewrite_samples.cc rewrite object resume
    */
   template <typename... Options>
   ObjectRewriter ResumeRewriteObject(std::string source_bucket_name,
@@ -1506,7 +1506,7 @@ class Client {
    * case, `IfGenerationMatch`.
    *
    * @par Example
-   * @snippet storage_object_samples.cc rewrite object
+   * @snippet storage_object_rewrite_samples.cc rewrite object
    *
    * @par Example: using rewrite object to rotate the encryption key
    * @snippet storage_object_samples.cc rotate encryption key
