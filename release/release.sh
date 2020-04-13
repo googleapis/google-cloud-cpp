@@ -99,8 +99,8 @@ function banner() {
 }
 
 function run() {
-  printf "# "
-  printf "%q " "$@"
+  printf "#"
+  printf " %q" "$@"
   printf "\n"
   if [[ "${FORCE_FLAG}" == "yes" ]]; then
     "$@"
