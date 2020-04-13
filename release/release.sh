@@ -100,9 +100,7 @@ function banner() {
 
 function run() {
   printf "# "
-  for arg in "$@"; do
-    printf "%s " "'$arg'"
-  done
+  printf "%q " "$@"
   printf "\n"
   if [[ "${FORCE_FLAG}" == "yes" ]]; then
     "$@"
@@ -209,7 +207,7 @@ run hub release create \
   "${NEW_TAG}"
 
 banner "Success!"
-readonly release_fmt="%n date: %cI %n  url: %U %nstate: %S %ntitle: %t %n"
+readonly release_fmt="%n date: %cI%n  url: %U%nstate: %S%ntitle: %t%n"
 run hub release show --format="${release_fmt}" "${NEW_TAG}"
 
 # Clean up
