@@ -42,7 +42,4 @@ run_hello_instance_admin_example "${PROJECT_ID}" "${ZONE_A}"
 echo "${COLOR_YELLOW}run_hello_world_example${COLOR_RESET}"
 run_hello_world_example "${PROJECT_ID}" "${INSTANCE_ID}"
 
-echo "${COLOR_YELLOW}run_all_table_admin_async_examples${COLOR_RESET}"
-run_all_table_admin_async_examples "${PROJECT_ID}" "${ZONE_A}" "${ZONE_B}"
-
 exit_example_runner
