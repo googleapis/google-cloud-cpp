@@ -14,9 +14,13 @@
 # limitations under the License.
 # ~~~
 
-include(EnableClangTidy)
-include(EnableWerror)
-include(GoogleCloudCppBigQueryFunctions)
+function (google_cloud_cpp_test_name_to_target var fname)
+    string(REPLACE "/" "_" target ${fname})
+    string(REPLACE ".cc" "" target ${target})
+    set("${var}"
+        "${target}"
+        PARENT_SCOPE)
+endfunction ()
 
 function (bigquery_client_define_samples)
     set(bigquery_client_integration_samples # cmake-format: sort
@@ -36,7 +40,6 @@ function (bigquery_client_define_samples)
                    ${bigquery_client_unit_samples})
         google_cloud_cpp_test_name_to_target(target "${fname}")
         add_executable(${target} ${fname})
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(${target} PRIVATE googleapis-c++::bigquery_client)

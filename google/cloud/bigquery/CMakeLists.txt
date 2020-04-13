@@ -17,13 +17,12 @@
 find_package(google_cloud_cpp_common CONFIG REQUIRED)
 find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 
-include(EnableClangTidy)
-include(EnableWerror)
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
 set(DOXYGEN_PROJECT_NUMBER "${BIGQUERY_CLIENT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
-include(EnableDoxygen)
+
+include(GoogleCloudCppCommon)
 
 # Define a function to fetch the current git revision. Using a function creates
 # a new scope, so the CMake variables do not leak to the global namespace.
@@ -120,7 +119,6 @@ set_target_properties(
 target_compile_options(bigquery_client
                        PUBLIC ${GOOGLE_CLOUD_CPP_BIGQUERY_EXCEPTIONS_FLAG})
 
-google_cloud_cpp_add_clang_tidy(bigquery_client)
 google_cloud_cpp_add_common_options(bigquery_client)
 
 add_library(googleapis-c++::bigquery_client ALIAS bigquery_client)
@@ -176,7 +174,6 @@ function (bigquery_client_define_tests)
             PRIVATE bigquery_client_testing googleapis-c++::bigquery_client
                     google_cloud_cpp_testing GTest::gmock_main GTest::gmock
                     GTest::gtest)
-        google_cloud_cpp_add_clang_tidy(${target})
         google_cloud_cpp_add_common_options(${target})
 
         # With googletest it is relatively easy to exceed the default number of
