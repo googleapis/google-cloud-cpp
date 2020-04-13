@@ -21,4 +21,5 @@ bigquery_client_testing_hdrs = [
 ]
 
 bigquery_client_testing_srcs = [
+    "testing/mock_storage_stub.cc",
 ]

@@ -100,14 +100,13 @@ TEST(ConnectionImplTest, ParallelReadRpcSuccess) {
             EXPECT_THAT(request.read_options().selected_fields(1), Eq("col-1"));
 
             bigquerystorage_proto::ReadSession response;
-            EXPECT_TRUE(TextFormat::ParseFromString(
-                R"pb(
-                  name: "my-session"
-                  streams { name: "stream-0" }
-                  streams { name: "stream-1" }
-                  streams { name: "stream-2" }
-                )pb",
-                &response));
+            std::string const text = R"pb(
+              name: "my-session"
+              streams { name: "stream-0" }
+              streams { name: "stream-1" }
+              streams { name: "stream-2" }
+            )pb";
+            EXPECT_TRUE(TextFormat::ParseFromString(text, &response));
             return response;
           }));
 

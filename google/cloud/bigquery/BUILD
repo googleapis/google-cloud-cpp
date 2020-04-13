@@ -23,6 +23,7 @@ cc_library(
     deps = [
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud/grpc_utils:google_cloud_cpp_grpc_utils",
+        "@com_google_googleapis//:grpc_utils_protos",
         "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_proto",
     ],

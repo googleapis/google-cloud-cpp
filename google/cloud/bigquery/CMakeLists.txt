@@ -138,8 +138,10 @@ function (bigquery_client_define_tests)
 
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
-    add_library(bigquery_client_testing
-                ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_storage_stub.h)
+    add_library(
+        bigquery_client_testing
+        ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_storage_stub.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/testing/mock_storage_stub.cc)
     target_link_libraries(
         bigquery_client_testing
         PUBLIC googleapis-c++::bigquery_client google_cloud_cpp_testing
