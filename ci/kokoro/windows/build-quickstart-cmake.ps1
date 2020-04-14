@@ -34,8 +34,8 @@ if (-not (Test-Path env:KOKORO_GFILE_DIR)) {
     ${env:RUN_INTEGRATION_TESTS}=""
 } else {
     $integration_tests_config="${project_root}/ci/etc/integration-tests-config.ps1"
-    $test_key_file_json="${env:KOKORO_GFILE_DIR}/service-account.json"
-    $test_key_file_p12="${env:KOKORO_GFILE_DIR}/service-account.p12"
+    $test_key_file_json="${env:KOKORO_GFILE_DIR}/kokoro-run-key.json"
+    $test_key_file_p12="${env:KOKORO_GFILE_DIR}/kokoro-run-key.p12"
     if ((Test-Path "${integration_tests_config}") -and
         (Test-Path "${test_key_file_json}") -and
         (Test-Path "${test_key_file_p12}")) {

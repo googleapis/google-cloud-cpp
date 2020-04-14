@@ -77,9 +77,9 @@ echo "================================================================"
     -- //google/cloud/...:all
 
 readonly INTEGRATION_TESTS_CONFIG="${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-readonly TEST_KEY_FILE_JSON="/c/service-account.json"
-readonly TEST_KEY_FILE_P12="/c/service-account.p12"
-readonly GOOGLE_APPLICATION_CREDENTIALS="/c/service-account.json"
+readonly TEST_KEY_FILE_JSON="/c/kokoro-run-key.json"
+readonly TEST_KEY_FILE_P12="/c/kokoro-run-key.p12"
+readonly GOOGLE_APPLICATION_CREDENTIALS="/c/kokoro-run-key.json"
 readonly KOKORO_SETUP_KEY="/c/kokoro-setup-key.json"
 # yes: always try to run integration tests
 # auto: only try to run integration tests if the config file is executable.
@@ -223,7 +223,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   bazel_args+=(
       # Common configuration
-      "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/service-account.json"
+      "--test_env=GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
       "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
       "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=yes"
 
