@@ -1082,122 +1082,6 @@ void RenameObject(google::cloud::storage::Client client, int& argc,
   (std::move(client), bucket_name, old_object_name, new_object_name);
 }
 
-void SetObjectEventBasedHold(google::cloud::storage::Client client, int& argc,
-                             char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"set-object-event-based-hold <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [set event based hold] [START storage_set_event_based_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<gcs::ObjectMetadata> original =
-        client.GetObjectMetadata(bucket_name, object_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
-        bucket_name, object_name,
-        gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(true),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!updated) throw std::runtime_error(updated.status().message());
-    std::cout << "The event hold for object " << updated->name()
-              << " in bucket " << updated->bucket() << " is "
-              << (updated->event_based_hold() ? "enabled" : "disabled") << "\n";
-  }
-  //! [set event based hold] [END storage_set_event_based_hold]
-  (std::move(client), bucket_name, object_name);
-}
-
-void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
-                                 int& argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"release-object-event-based-hold <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [release event based hold] [START storage_release_event_based_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<gcs::ObjectMetadata> original =
-        client.GetObjectMetadata(bucket_name, object_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
-        bucket_name, object_name,
-        gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(false),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!updated) throw std::runtime_error(updated.status().message());
-    std::cout << "The event hold for object " << updated->name()
-              << " in bucket " << updated->bucket() << " is "
-              << (updated->event_based_hold() ? "enabled" : "disabled") << "\n";
-  }
-  //! [release event based hold] [END storage_release_event_based_hold]
-  (std::move(client), bucket_name, object_name);
-}
-
-void SetObjectTemporaryHold(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"set-object-temporary-hold <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [set temporary hold] [START storage_set_temporary_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<gcs::ObjectMetadata> original =
-        client.GetObjectMetadata(bucket_name, object_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
-        bucket_name, object_name,
-        gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(true),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!updated) throw std::runtime_error(updated.status().message());
-    std::cout << "The temporary hold for object " << updated->name()
-              << " in bucket " << updated->bucket() << " is "
-              << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";
-  }
-  //! [set temporary hold] [END storage_set_temporary_hold]
-  (std::move(client), bucket_name, object_name);
-}
-
-void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
-                                int& argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"release-object-temporary-hold <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  //! [release temporary hold] [START storage_release_temporary_hold]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string bucket_name, std::string object_name) {
-    StatusOr<gcs::ObjectMetadata> original =
-        client.GetObjectMetadata(bucket_name, object_name);
-
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
-        bucket_name, object_name,
-        gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(false),
-        gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!updated) throw std::runtime_error(updated.status().message());
-    std::cout << "The temporary hold for object " << updated->name()
-              << " in bucket " << updated->bucket() << " is "
-              << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";
-  }
-  //! [release temporary hold] [END storage_release_temporary_hold]
-  (std::move(client), bucket_name, object_name);
-}
-
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
@@ -1246,10 +1130,6 @@ int main(int argc, char* argv[]) try {
       {"change-object-storage-class", ChangeObjectStorageClass},
       {"rotate-encryption-key", RotateEncryptionKey},
       {"rename-object", RenameObject},
-      {"set-event-based-hold", SetObjectEventBasedHold},
-      {"release-event-based-hold", ReleaseObjectEventBasedHold},
-      {"set-temporary-hold", SetObjectTemporaryHold},
-      {"release-temporary-hold", ReleaseObjectTemporaryHold},
   };
   for (auto&& kv : commands) {
     try {
