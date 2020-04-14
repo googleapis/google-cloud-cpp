@@ -343,7 +343,27 @@ TEST_F(AdminIntegrationTest, WaitForConsistencyCheck) {
 TEST_F(AdminIntegrationTest, SetGetTestIamAPIsTest) {
   // TODO(#151) - remove workarounds for emulator bugs(s)
   if (UsingCloudBigtableEmulator()) GTEST_SKIP();
+
+  using GC = bigtable::GcRule;
   std::string const table_id = RandomTableId();
+
+  // verify new table id in current table list
+  auto previous_table_list =
+      table_admin_->ListTables(btadmin::Table::NAME_ONLY);
+  ASSERT_STATUS_OK(previous_table_list);
+  auto previous_count = CountMatchingTables(table_id, *previous_table_list);
+  ASSERT_EQ(0, previous_count) << "Table (" << table_id << ") already exists."
+                               << " This is unexpected, as the table ids are"
+                               << " generated at random.";
+  // create table config
+  bigtable::TableConfig table_config(
+      {{"fam", GC::MaxNumVersions(5)},
+       {"foo", GC::MaxAge(std::chrono::hours(24))}},
+      {"a1000", "a2000", "b3000", "m5000"});
+
+  // create table
+  ASSERT_STATUS_OK(table_admin_->CreateTable(table_id, table_config));
+
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
