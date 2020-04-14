@@ -31,12 +31,8 @@ cc_library(
 
 cc_proto_library(
     name = "bigtableadmin_cc_proto",
+    visibility = ["//visibility:private"],
     deps = ["//google/bigtable/admin/v2:admin_proto"],
-)
-
-cc_proto_library(
-    name = "bigtable_cc_proto",
-    deps = ["//google/bigtable/v2:bigtable_proto"],
 )
 
 cc_grpc_library(
@@ -45,37 +41,19 @@ cc_grpc_library(
         "//google/bigtable/admin/v2:admin_proto",
     ],
     grpc_only = True,
-    use_external = True,
-    well_known_protos = True,
+    visibility = ["//visibility:private"],
     deps = [
         ":bigtableadmin_cc_proto",
         "//google/longrunning:longrunning_cc_grpc",
-        "@com_github_grpc_grpc//:grpc++",
-    ],
-)
-
-cc_grpc_library(
-    name = "bigtable_cc_grpc",
-    srcs = ["//google/bigtable/v2:bigtable_proto"],
-    grpc_only = True,
-    use_external = True,
-    well_known_protos = True,
-    deps = [
-        ":bigtable_cc_proto",
-        "@com_github_grpc_grpc//:grpc++",
     ],
 )
 
 cc_library(
     name = "bigtable_protos",
-    includes = [
-        ".",
-    ],
+    # Do not sort: grpc++ must come last
     deps = [
-        ":bigtable_cc_grpc",
-        ":bigtable_cc_proto",
         ":bigtableadmin_cc_grpc",
-        ":bigtableadmin_cc_proto",
+        "//google/bigtable/v2:bigtable_cc_grpc",
         "//google/rpc:error_details_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
     ],
