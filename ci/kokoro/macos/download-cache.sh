@@ -66,7 +66,8 @@ activate_service_account_keyfile "${KEYFILE}"
 
 echo "================================================================"
 log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
-gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
+env CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG} \
+    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
 
 echo "================================================================"
 log_normal "Extracting build cache"
