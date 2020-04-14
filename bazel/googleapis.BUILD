@@ -29,6 +29,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "bigquery_protos",
+    # Do not sort: grpc++ must come last
+    deps = [
+        "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_grpc",
+        "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_proto",
+        "@com_github_grpc_grpc//:grpc++",
+    ],
+)
+
 cc_proto_library(
     name = "bigtableadmin_cc_proto",
     visibility = ["//visibility:private"],
