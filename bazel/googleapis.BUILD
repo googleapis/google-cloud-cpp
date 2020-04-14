@@ -34,27 +34,7 @@ cc_library(
     # Do not sort: grpc++ must come last
     deps = [
         "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_grpc",
-        "@com_google_googleapis//google/cloud/bigquery/storage/v1beta1:storage_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
-    ],
-)
-
-cc_proto_library(
-    name = "bigtableadmin_cc_proto",
-    visibility = ["//visibility:private"],
-    deps = ["//google/bigtable/admin/v2:admin_proto"],
-)
-
-cc_grpc_library(
-    name = "bigtableadmin_cc_grpc",
-    srcs = [
-        "//google/bigtable/admin/v2:admin_proto",
-    ],
-    grpc_only = True,
-    visibility = ["//visibility:private"],
-    deps = [
-        ":bigtableadmin_cc_proto",
-        "//google/longrunning:longrunning_cc_grpc",
     ],
 )
 
@@ -62,9 +42,8 @@ cc_library(
     name = "bigtable_protos",
     # Do not sort: grpc++ must come last
     deps = [
-        ":bigtableadmin_cc_grpc",
+        "//google/bigtable/admin/v2:admin_cc_grpc",
         "//google/bigtable/v2:bigtable_cc_grpc",
-        "//google/rpc:error_details_cc_proto",
         "@com_github_grpc_grpc//:grpc++",
     ],
 )
