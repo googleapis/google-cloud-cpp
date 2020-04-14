@@ -386,56 +386,6 @@ run_all_object_rewrite_examples() {
 }
 
 ################################################
-# Run all Object ACL examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_all_object_acl_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-
-  # We need to create an object to run the examples on.
-  run_example ./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "some-string-to-serve-as-object-media"
-
-  run_example ./storage_object_acl_samples list-object-acl \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_acl_samples create-object-acl \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers READER
-  run_example ./storage_object_acl_samples get-object-acl \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers
-  run_example ./storage_object_acl_samples update-object-acl \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
-  run_example ./storage_object_acl_samples patch-object-acl \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers READER
-  run_example ./storage_object_acl_samples patch-object-acl-no-read \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers OWNER
-  run_example ./storage_object_acl_samples delete-object-acl \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers
-
-  run_example ./storage_object_acl_samples add-object-owner \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers
-  run_example ./storage_object_acl_samples get-object-acl \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers
-  run_example ./storage_object_acl_samples remove-object-owner \
-      "${bucket_name}" "${object_name}" allAuthenticatedUsers
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_object_acl_samples
-}
-
-################################################
 # Run all the examples.
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
@@ -461,7 +411,6 @@ run_all_storage_examples() {
   run_all_object_examples "${BUCKET_NAME}"
   run_resumable_write_object_examples "${BUCKET_NAME}"
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
-  run_all_object_acl_examples "${BUCKET_NAME}"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   exit "${EXIT_STATUS}"
