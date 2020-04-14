@@ -549,128 +549,6 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   (std::move(client), bucket_name, object_name, session_id);
 }
 
-void UploadFile(google::cloud::storage::Client client, int& argc,
-                char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"upload-file <file-name> <bucket-name> <object-name>"};
-  }
-  auto file_name = ConsumeArg(argc, argv);
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-
-  //! [upload file] [START storage_upload_file]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string file_name, std::string bucket_name,
-     std::string object_name) {
-    // Note that the client library automatically computes a hash on the
-    // client-side to verify data integrity during transmission.
-    StatusOr<gcs::ObjectMetadata> object_metadata = client.UploadFile(
-        file_name, bucket_name, object_name, gcs::IfGenerationMatch(0));
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Uploaded " << file_name << " to object "
-              << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << "\n";
-  }
-  //! [upload file] [END storage_upload_file]
-  (std::move(client), file_name, bucket_name, object_name);
-}
-
-void UploadFileResumable(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "upload-file-resumable <file-name> <bucket-name> <object-name>"};
-  }
-  auto file_name = ConsumeArg(argc, argv);
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-
-  //! [upload file resumable]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string file_name, std::string bucket_name,
-     std::string object_name) {
-    // Note that the client library automatically computes a hash on the
-    // client-side to verify data integrity during transmission.
-    StatusOr<gcs::ObjectMetadata> object_metadata = client.UploadFile(
-        file_name, bucket_name, object_name, gcs::IfGenerationMatch(0),
-        gcs::NewResumableUploadSession());
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Uploaded " << file_name << " to object "
-              << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << "\n";
-  }
-  //! [upload file resumable]
-  (std::move(client), file_name, bucket_name, object_name);
-}
-
-void ParallelUploadFile(google::cloud::storage::Client client, int& argc,
-                        char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"parallel-upload-file <file-name> <bucket-name> <object-name>"};
-  }
-  auto file_name = ConsumeArg(argc, argv);
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-
-  //! [parallel upload file]
-  namespace gcs = google::cloud::storage;
-  using ::google::cloud::StatusOr;
-  [](gcs::Client client, std::string file_name, std::string bucket_name,
-     std::string object_name) {
-    // Pick a unique random prefix for the temporary objects created by the
-    // parallel upload.
-    auto prefix = gcs::CreateRandomPrefixName("");
-
-    auto object_metadata = gcs::ParallelUploadFile(
-        client, file_name, bucket_name, object_name, prefix, false);
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
-
-    std::cout << "Uploaded " << file_name << " to object "
-              << object_metadata->name() << " in bucket "
-              << object_metadata->bucket()
-              << "\nFull metadata: " << *object_metadata << "\n";
-  }
-  //! [parallel upload file]
-  (std::move(client), file_name, bucket_name, object_name);
-}
-
-void DownloadFile(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"download-file <bucket-name> <object-name> <file-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto file_name = ConsumeArg(argc, argv);
-
-  //! [download file]
-  namespace gcs = google::cloud::storage;
-  [](gcs::Client client, std::string bucket_name, std::string object_name,
-     std::string file_name) {
-    google::cloud::Status status =
-        client.DownloadToFile(bucket_name, object_name, file_name);
-
-    if (!status.ok()) throw std::runtime_error(status.message());
-    std::cout << "Downloaded " << object_name << " to " << file_name << "\n";
-  }
-  //! [download file]
-  (std::move(client), bucket_name, object_name, file_name);
-}
-
 void UpdateObjectMetadata(google::cloud::storage::Client client, int& argc,
                           char* argv[]) {
   if (argc != 5) {
@@ -1113,10 +991,6 @@ int main(int argc, char* argv[]) try {
       {"write-object", WriteObject},
       {"start-resumable-upload", StartResumableUpload},
       {"resume-resumable-upload", ResumeResumableUpload},
-      {"upload-file", UploadFile},
-      {"upload-file-resumable", UploadFileResumable},
-      {"parallel-upload-file", ParallelUploadFile},
-      {"download-file", DownloadFile},
       {"update-object-metadata", UpdateObjectMetadata},
       {"patch-object-delete-metadata", PatchObjectDeleteMetadata},
       {"patch-object-content-type", PatchObjectContentType},

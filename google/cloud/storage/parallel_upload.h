@@ -1047,7 +1047,7 @@ struct PrepareParallelUploadApplyHelper {
  * on the first request that fails.
  *
  * @par Example
- * @snippet storage_object_samples.cc parallel upload file
+ * @snippet storage_object_file_transfer_samples.cc parallel upload file
  */
 template <typename... Options>
 StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
@@ -1159,7 +1159,7 @@ StatusOr<std::vector<ParallelUploadFileShard>> CreateUploadShards(
  * on the first request that fails.
  *
  * @par Example
- * @snippet storage_object_samples.cc parallel upload file
+ * @snippet storage_object_file_transfer_samples.cc parallel upload file
  */
 template <typename... Options>
 StatusOr<ObjectMetadata> ParallelUploadFile(

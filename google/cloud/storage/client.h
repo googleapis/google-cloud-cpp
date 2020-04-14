@@ -1152,10 +1152,10 @@ class Client {
    * case, `IfGenerationMatch`.
    *
    * @par Example
-   * @snippet storage_object_samples.cc upload file
+   * @snippet storage_object_file_transfer_samples.cc upload file
    *
    * @par Example: manually selecting a resumable upload
-   * @snippet storage_object_samples.cc upload file resumable
+   * @snippet storage_object_file_transfer_samples.cc upload file resumable
    */
   template <typename... Options>
   StatusOr<ObjectMetadata> UploadFile(std::string const& file_name,
@@ -1190,7 +1190,7 @@ class Client {
    * This is a read-only operation and is always idempotent.
    *
    * @par Example
-   * @snippet storage_object_samples.cc download file
+   * @snippet storage_object_file_transfer_samples.cc download file
    */
   template <typename... Options>
   Status DownloadToFile(std::string const& bucket_name,

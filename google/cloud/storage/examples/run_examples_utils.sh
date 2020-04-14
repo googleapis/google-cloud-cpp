@@ -300,92 +300,6 @@ run_all_object_examples() {
 }
 
 ################################################
-# Run upload and download examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_upload_and_download_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="uploaded-${RANDOM}-${RANDOM}.txt"
-  local upload_file_name
-  upload_file_name="$(mktemp -t "upload.XXXXXX")"
-  local download_file_name
-  download_file_name="$(mktemp -t "download.XXXXXX")"
-  cat > "${upload_file_name}" <<_EOF_
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-_EOF_
-
-  run_example ./storage_object_samples upload-file \
-      "${upload_file_name}" "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples download-file \
-      "${bucket_name}" "${object_name}" "${download_file_name}"
-  diff "${upload_file_name}" "${download_file_name}"
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-
-  run_example ./storage_object_samples parallel-upload-file \
-      "${upload_file_name}" "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples download-file \
-      "${bucket_name}" "${object_name}" "${download_file_name}"
-  diff "${upload_file_name}" "${download_file_name}"
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-
-}
-
-################################################
-# Run resumable file upload examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_resumable_file_upload_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="uploaded-resumable-${RANDOM}-${RANDOM}.txt"
-  local upload_file_name
-  upload_file_name="$(mktemp -t "upload.XXXXXX")"
-  local download_file_name
-  download_file_name="$(mktemp -t "download.XXXXXX")"
-  cat > "${upload_file_name}" <<_EOF_
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-culpa qui officia deserunt mollit anim id est laborum.
-_EOF_
-
-  run_example ./storage_object_samples upload-file-resumable \
-      "${upload_file_name}" "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples download-file \
-      "${bucket_name}" "${object_name}" "${download_file_name}"
-  diff "${upload_file_name}" "${download_file_name}"
-
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-}
-
-################################################
 # Run resumable write object examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -575,8 +489,6 @@ run_all_storage_examples() {
   run_retention_policy_examples
   run_lifecycle_management_examples
   run_all_object_examples "${BUCKET_NAME}"
-  run_upload_and_download_examples "${BUCKET_NAME}"
-  run_resumable_file_upload_examples "${BUCKET_NAME}"
   run_resumable_write_object_examples "${BUCKET_NAME}"
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
