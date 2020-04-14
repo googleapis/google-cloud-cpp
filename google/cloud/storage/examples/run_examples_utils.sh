@@ -472,56 +472,6 @@ run_all_object_rewrite_examples() {
 }
 
 ################################################
-# Run the examples showing how to use event based holds.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_event_based_hold_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-  run_example ./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples set-event-based-hold \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples release-event-based-hold \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-}
-
-################################################
-# Run the examples showing how to use temporary holds.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-# Returns:
-#   None
-################################################
-run_temporary_hold_examples() {
-  local bucket_name=$1
-  shift
-
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-  run_example ./storage_object_samples insert-object \
-      "${bucket_name}" "${object_name}" "a-string-to-serve-as-object-media"
-  run_example ./storage_object_samples set-temporary-hold \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples release-temporary-hold \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_object_samples delete-object \
-      "${bucket_name}" "${object_name}"
-}
-
-################################################
 # Run all Object ACL examples.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -629,8 +579,6 @@ run_all_storage_examples() {
   run_resumable_file_upload_examples "${BUCKET_NAME}"
   run_resumable_write_object_examples "${BUCKET_NAME}"
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
-  run_event_based_hold_examples "${BUCKET_NAME}"
-  run_temporary_hold_examples "${BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
   run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
