@@ -99,72 +99,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
   # Changing the PATH disables the Bazel cache, so use an absolute path.
   readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
-  readonly GCLOUD_CONFIG="cloud-cpp-integration"
-  readonly GCLOUD_ARGS=(
-      # Do not seek confirmation for any actions, assume the default
-      "--quiet"
-
-      # Run the command using a custom configuration, this avoids affecting the
-      # user's `default` configuration
-      "--configuration=${GCLOUD_CONFIG}"
-  )
-
-  delete_gcloud_config() {
-    "${GCLOUD}" --quiet config configurations delete "${GCLOUD_CONFIG}"
-  }
-
-  create_gcloud_config() {
-    echo
-    echo "================================================================"
-    if ! "${GCLOUD}" --quiet config configurations \
-             describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
-      log_normal "Create the gcloud configuration for the cloud-cpp tests."
-      "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
-          create --no-activate "${GCLOUD_CONFIG}" >/dev/null
-    fi
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" config set project "${GOOGLE_CLOUD_PROJECT}"
-  }
-
-  cleanup_hmac_service_account() {
-    local -r ACCOUNT="$1"
-    log_normal "Deleting account ${ACCOUNT}"
-    # We can ignore errors here, sometime the account exists, but the bindings
-    # are gone (or were never created). The binding is harmless if the account
-    # is deleted.
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects remove-iam-policy-binding \
-        "${GOOGLE_CLOUD_PROJECT}" \
-        --member "serviceAccount:${ACCOUNT}" \
-        --role roles/iam.serviceAccountTokenCreator >/dev/null || true
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts delete \
-        "${ACCOUNT}" >/dev/null
-  }
-
-  cleanup_stale_hmac_service_accounts() {
-    # The service accounts created below start with hmac-YYYYMMDD-, we list the
-    # accounts with that prefix, and with a date from at least 2 days ago to
-    # find and remove any stale accounts.
-    local THRESHOLD
-    THRESHOLD="$(date +%Y%m%d --date='2 days ago')"
-    readonly THRESHOLD
-    local email
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts list \
-        --filter="email~^hmac-[0-9]{8}- AND email<hmac-${THRESHOLD}-" \
-        --format='csv(email)[no-heading]' | \
-    while read -r email; do
-      cleanup_hmac_service_account "${email}"
-    done
-  }
-
-  create_hmac_service_account() {
-    local -r ACCOUNT="$1"
-    local -r EMAIL="${ACCOUNT}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" iam service-accounts create "${ACCOUNT}"
-    log_normal "Grant service account permissions to create HMAC keys."
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" projects add-iam-policy-binding \
-        "${GOOGLE_CLOUD_PROJECT}" \
-        --member "serviceAccount:${EMAIL}" \
-        --role roles/iam.serviceAccountTokenCreator >/dev/null
-  }
+  source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 
   trap delete_gcloud_config EXIT
   create_gcloud_config
@@ -197,12 +132,12 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     echo
     echo "================================================================"
     log_normal "Delete service account used in the storage HMAC tests."
-    "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
-        "${KOKORO_SETUP_KEY}"
+    activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
     cleanup_hmac_service_account "${ACCOUNT}"
-    # Deactivate the recently activated service account to prevent accidents.
+
+    # Deactivate all the service accounts to prevent accidents.
     log_normal "Revoke service account permissions to create HMAC keys."
-    "${GCLOUD}" --quiet auth revoke --all
+    remove_service_account_keyfile "${KOKORO_SETUP_KEY}"
     echo "================================================================"
 
     delete_gcloud_config
@@ -211,15 +146,15 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo
   echo "================================================================"
   log_normal "Create an access token to run the Bigtable credential examples."
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
-      "${GOOGLE_APPLICATION_CREDENTIALS}"
+  activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
   # This is used in a Bigtable example showing how to use access tokens to
   # create a grpc::Credentials object. Even though the account is deactivated
   # for use by `gcloud` the token remains valid for about 1 hour.
   ACCESS_TOKEN="$("${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
   readonly ACCESS_TOKEN
+
   # Deactivate the recently activated service accounts to prevent accidents.
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth revoke --all
+  revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
   bazel_args+=(
       # Common configuration

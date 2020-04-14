@@ -205,25 +205,21 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
     # Changing the PATH disables the Bazel cache, so use an absolute path.
     readonly GCLOUD="/usr/local/google-cloud-sdk/bin/gcloud"
+    source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
 
-    "${GCLOUD}" --quiet auth activate-service-account --key-file \
-        "${GOOGLE_APPLICATION_CREDENTIALS}"
+    trap delete_gcloud_config EXIT
+    create_gcloud_config
+    activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
     # This is used in a Bigtable example showing how to use access tokens to
     # create a grpc::Credentials object. Even though the account is deactivated
     # for use by `gcloud` the token remains valid for about 1 hour.
     GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN="$(
-        "${GCLOUD}" --quiet auth print-access-token)"
-    readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
+        "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
     export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
-
-    # Extract the service account name so we can deactivate it.
-    GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT="$(sed -n \
-        's/.*"client_email": "\(.*\)",.*/\1/p' \
-        "${GOOGLE_APPLICATION_CREDENTIALS}")"
-    readonly GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT
+    readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
 
     # Deactivate the recently activated service account to prevent accidents.
-    "${GCLOUD}" --quiet auth revoke "${GOOGLE_APPLICATION_CREDENTIALS_ACCOUNT}"
+    revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
     # Since we already run multiple integration tests against the emulator we
     # only need to run the tests here that cannot use the emulator. Some

@@ -20,6 +20,13 @@ if [[ $# != 3 ]]; then
   exit 1
 fi
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
+GCLOUD=gcloud
+source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 readonly HOME_DIR="$3"
@@ -27,26 +34,28 @@ readonly HOME_DIR="$3"
 readonly KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
   echo "================================================================"
-  echo "Service account for cache access is not configured."
-  echo "No attempt will be made to download the cache, exit with success."
+  log_normal "Service account for cache access is not configured."
+  log_normal "No attempt will be made to upload the cache, exit with success."
   exit 0
 fi
 
 if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
-  echo "This is a presubmit build, cache will not be updated, exist with success."
+  log_normal "Cache not updated as this is a PR build."
   exit 0
 fi
 
 echo "================================================================"
-echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
+log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
 
-set -v
 tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
     "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
-gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
+
+trap delete_gcloud_config EXIT
+create_gcloud_config
+activate_service_account_keyfile "${KEYFILE}"
 gsutil -q cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
-gcloud --quiet auth revoke --all >/dev/null 2>&1 || echo "Ignore revoke failure"
+revoke_service_account_keyfile "${KEYFILE}"
 
 exit 0

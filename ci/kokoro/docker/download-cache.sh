@@ -20,6 +20,13 @@ if [[ $# != 3 ]]; then
   exit 1
 fi
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
+GCLOUD=gcloud
+source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 readonly HOME_DIR="$3"
@@ -31,20 +38,30 @@ echo "max_size = 4.0G" >"${HOME_DIR}/.ccache/ccache.conf"
 readonly KEYFILE="${KOKORO_GFILE_DIR:-/dev/shm}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
   echo "================================================================"
-  echo "Service account for cache access is not configured."
-  echo "No attempt will be made to download the cache, exit with success."
+  log_normal "Service account for cache access is not configured."
+  log_normal "No attempt will be made to download the cache, exit with success."
+  exit 0
+fi
+
+if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
+   [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
+  echo "================================================================"
+  log_normal "Cache not downloaded as this is not a PR build."
   exit 0
 fi
 
 echo "================================================================"
-echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
+log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 
-set -v
-gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
+trap delete_gcloud_config EXIT
+create_gcloud_config
+activate_service_account_keyfile "${KEYFILE}"
 gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
-gcloud --quiet auth revoke --all || echo "Ignore revoke failure"
+
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
 tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" 2>&1 | grep -E -v 'tar:.*in the future'
+
+revoke_service_account_keyfile "${KEYFILE}"
 
 exit 0
