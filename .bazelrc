@@ -41,16 +41,6 @@ build:tsan --copt=-fno-omit-frame-pointer
 build:tsan --linkopt=-fsanitize=thread
 build:tsan --action_env=TSAN_OPTIONS=halt_on_error=1:second_deadlock_stack=1
 
-# --config ubsan: Undefined Behavior Sanitizer
-build:ubsan --strip=never
-build:ubsan --copt=-Og
-build:ubsan --copt=-g
-build:ubsan --copt=-fsanitize=undefined
-build:ubsan --copt=-fno-omit-frame-pointer
-build:ubsan --linkopt=-fsanitize=undefined
-build:ubsan --linkopt=-lubsan
-build:ubsan --action_env=UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1
-
 # --config msan: Memory Sanitizer
 build:msan --strip=never
 build:msan --copt=-Og

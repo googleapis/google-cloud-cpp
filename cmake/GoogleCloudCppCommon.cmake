@@ -33,6 +33,9 @@ endif ()
 # If possible, enable a code coverage build type.
 include(EnableCoverage)
 
+# If possible, enable a UBSan build type.
+include(EnableUBSan)
+
 # Include support for clang-tidy if available
 include(EnableClangTidy)
 

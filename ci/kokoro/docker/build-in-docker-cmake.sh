@@ -123,6 +123,13 @@ if [[ "${BUILD_TYPE}" == "Coverage" ]]; then
 fi
 readonly TEST_JOB_COUNT
 
+if [[ "${BUILD_TYPE}" == "UBSan" ]]; then
+  # Make sure that tests which don't pass UBSan produce a meaningful error.
+  ABS_SOURCE_DIR=$( cd "${SOURCE_DIR}" ; pwd)
+  readonly UBSAN_OPTIONS=halt_on_error=1:print_stacktrace=1:suppressions=${ABS_SOURCE_DIR}/.ubsan_suppressions.txt
+  export UBSAN_OPTIONS
+fi
+
 ctest_args=("--output-on-failure" "-j" "${TEST_JOB_COUNT}")
 if [[ -n "${RUNS_PER_TEST}" ]]; then
     ctest_args+=("--repeat-until-fail" "${RUNS_PER_TEST}")

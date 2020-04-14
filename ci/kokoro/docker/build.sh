@@ -121,12 +121,12 @@ elif [[ "${BUILD_NAME}" = "tsan" ]]; then
   in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
 elif [[ "${BUILD_NAME}" = "ubsan" ]]; then
   # Compile with the UndefinedBehaviorSanitizer enabled.
+  export DISTRO=fedora-install
+  export DISTRO_VERSION=31
   export CC=clang
   export CXX=clang++
-  export DISTRO=ubuntu
-  export DISTRO_VERSION=18.04
-  export BAZEL_CONFIG="ubsan"
-  in_docker_script="ci/kokoro/docker/build-in-docker-bazel.sh"
+  export BUILD_TYPE=UBSan
+  in_docker_script="ci/kokoro/docker/build-in-docker-cmake.sh"
 elif [[ "${BUILD_NAME}" = "cmake-super" ]]; then
   export CMAKE_SOURCE_DIR="super"
   export BUILD_TYPE=Release
