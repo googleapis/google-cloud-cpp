@@ -20,6 +20,13 @@ if [[ $# != 2 ]]; then
   exit 1
 fi
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
+GCLOUD=gcloud
+source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 
@@ -29,15 +36,15 @@ readonly KOKORO_GFILE_DIR
 readonly KEYFILE="${KOKORO_GFILE_DIR}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
   echo "================================================================"
-  echo "Service account for cache access is not configured."
-  echo "No attempt will be made to download the cache, exit with success."
+  log_normal "Service account for cache access is not configured."
+  log_normal "No attempt will be made to upload the cache, exit with success."
   exit 0
 fi
 
 if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
    [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
-  echo "This is a presubmit build, cache will not be updated, exist with success."
+  log_normal "Cache not updated as this is a PR build."
   exit 0
 fi
 
@@ -59,19 +66,24 @@ readonly UPLOAD="cmake-out/upload"
 mkdir -p "${UPLOAD}"
 
 echo "================================================================"
-echo "$(date -u): Preparing cache tarball for ${CACHE_NAME}"
+log_normal "Preparing cache tarball for ${CACHE_NAME}"
 tar -C / -zcf "${UPLOAD}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 
 echo "================================================================"
-echo "$(date -u): Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
-gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
+log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
+
+trap cleanup EXIT
+cleanup() {
+  revoke_service_account_keyfile "${KEYFILE}" || true
+  delete_gcloud_config
+}
+
+create_gcloud_config
+activate_service_account_keyfile "${KEYFILE}"
+env CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG} \
+    gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 
 echo "================================================================"
-echo "$(date -u): Upload completed"
-ACCOUNT="$(sed -n 's/.*"client_email": "\(.*\)",.*/\1/p' "${KEYFILE}")"
-readonly ACCOUNT
-gcloud --quiet auth revoke "${ACCOUNT}" >/dev/null 2>&1 || \
-    echo "Ignore revoke failure"
+log_normal "Upload completed"
 
 exit 0

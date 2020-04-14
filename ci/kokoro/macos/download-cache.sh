@@ -20,6 +20,13 @@ if [[ $# != 2 ]]; then
   exit 1
 fi
 
+if [[ -z "${PROJECT_ROOT+x}" ]]; then
+  readonly PROJECT_ROOT="$(cd "$(dirname "$0")/../../.."; pwd)"
+fi
+GCLOUD=gcloud
+source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/ci/kokoro/gcloud-functions.sh"
+
 readonly CACHE_FOLDER="$1"
 readonly CACHE_NAME="$2"
 
@@ -33,38 +40,41 @@ readonly KOKORO_GFILE_DIR
 readonly KEYFILE="${KOKORO_GFILE_DIR}/build-results-service-account.json"
 if [[ ! -f "${KEYFILE}" ]]; then
   echo "================================================================"
-  echo "Service account for cache access is not configured."
-  echo "No attempt will be made to download the cache, exit with success."
+  log_normal "Service account for cache access is not configured."
+  log_normal "No attempt will be made to download the cache, exit with success."
   exit 0
 fi
 
 if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
    [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GITHUB" ]]; then
   echo "================================================================"
-  echo "This is not a presubmit build, not using the cache."
+  log_normal "Cache not downloaded as this is not a PR build."
   exit 0
 fi
 
-echo "================================================================"
-echo "$(date -u): Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
+trap cleanup EXIT
+cleanup() {
+  revoke_service_account_keyfile "${KEYFILE}" || true
+  delete_gcloud_config
+}
+
 readonly DOWNLOAD="cmake-out/download"
 mkdir -p "${DOWNLOAD}"
-gcloud --quiet auth activate-service-account --key-file "${KEYFILE}"
-gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
 
-ACCOUNT="$(sed -n 's/.*"client_email": "\(.*\)",.*/\1/p' "${KEYFILE}")"
-readonly ACCOUNT
-gcloud --quiet auth revoke "${ACCOUNT}" >/dev/null 2>&1 || \
-    echo "Ignore revoke failure"
+create_gcloud_config
+activate_service_account_keyfile "${KEYFILE}"
 
 echo "================================================================"
-echo "$(date -u): Extracting build cache ${CACHE_NAME}"
+log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
+env CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG} \
+    gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${DOWNLOAD}"
+
+echo "================================================================"
+log_normal "Extracting build cache"
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
 tar -C / -zxf "${DOWNLOAD}/${CACHE_NAME}.tar.gz" 2>&1 | \
     grep -E -v 'tar:.*in the future'
-
-echo "================================================================"
-echo "$(date -u): build cache extracted"
+log_normal "Extraction completed"
 
 exit 0
