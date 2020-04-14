@@ -131,12 +131,13 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
     set +e
     echo
     echo "================================================================"
-    log_normal "Delete service account used in the storage HMAC tests."
+    log_normal "Activate service account used to manage HMAC service accounts."
     activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
+    log_normal "Delete service account used in HMAC key tests."
     cleanup_hmac_service_account "${ACCOUNT}"
 
-    # Deactivate all the service accounts to prevent accidents.
-    log_normal "Revoke service account permissions to create HMAC keys."
+    # Deactivate the recently activated service accounts to prevent accidents.
+    log_normal "Revoke service account used to manage HMAC service accounts."
     remove_service_account_keyfile "${KOKORO_SETUP_KEY}"
     echo "================================================================"
 

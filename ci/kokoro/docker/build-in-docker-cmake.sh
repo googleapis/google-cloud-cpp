@@ -210,6 +210,14 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
     trap delete_gcloud_config EXIT
     create_gcloud_config
     activate_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
+
+    trap cleanup_gcloud EXIT
+    cleanup_gcloud() {
+      # Deactivate the recently activated service account to prevent accidents.
+      revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
+      delete_gcloud_config
+    }
+
     # This is used in a Bigtable example showing how to use access tokens to
     # create a grpc::Credentials object. Even though the account is deactivated
     # for use by `gcloud` the token remains valid for about 1 hour.
@@ -217,9 +225,6 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
     export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
     readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
-
-    # Deactivate the recently activated service account to prevent accidents.
-    revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
     # Since we already run multiple integration tests against the emulator we
     # only need to run the tests here that cannot use the emulator. Some

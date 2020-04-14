@@ -17,6 +17,9 @@ set -eu
 
 if [[ -z "${GCLOUD_CONFIG:-}" ]]; then
   readonly GCLOUD_CONFIG="cloud-cpp-integration"
+fi
+
+if [[ -z "${GCLOUD_ARGS:-}" ]]; then
   readonly GCLOUD_ARGS=(
       # Do not seek confirmation for any actions, assume the default
       "--quiet"
@@ -46,10 +49,10 @@ delete_gcloud_config() {
 }
 
 create_gcloud_config() {
-  echo
-  echo "================================================================"
   if ! "${GCLOUD}" --quiet config configurations \
            describe "${GCLOUD_CONFIG}" >/dev/null 2>&1; then
+    echo
+    echo "================================================================"
     log_normal "Create the gcloud configuration for the cloud-cpp tests."
     "${GCLOUD}" --quiet --no-user-output-enabled config configurations \
         create --no-activate "${GCLOUD_CONFIG}" >/dev/null
