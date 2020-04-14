@@ -47,15 +47,24 @@ if [[ "${KOKORO_JOB_TYPE:-}" == "PRESUBMIT_GERRIT_ON_BORG" ]] || \
 fi
 
 echo "================================================================"
-log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
-
+log_normal "Preparing cache tarball for ${CACHE_NAME}"
 tar -zcf "${HOME_DIR}/${CACHE_NAME}.tar.gz" \
     "${HOME_DIR}/.cache" "${HOME_DIR}/.ccache"
 
-trap delete_gcloud_config EXIT
+echo "================================================================"
+log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
+
+trap cleanup EXIT
+cleanup() {
+  revoke_service_account_keyfile "${KEYFILE}" || true
+  delete_gcloud_config
+}
+
 create_gcloud_config
 activate_service_account_keyfile "${KEYFILE}"
 gsutil -q cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
-revoke_service_account_keyfile "${KEYFILE}"
+
+echo "================================================================"
+log_normal "Upload completed"
 
 exit 0

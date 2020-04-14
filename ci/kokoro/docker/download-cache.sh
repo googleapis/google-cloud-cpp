@@ -50,18 +50,24 @@ if [[ "${KOKORO_JOB_TYPE:-}" != "PRESUBMIT_GERRIT_ON_BORG" ]] && \
   exit 0
 fi
 
-echo "================================================================"
-log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
+trap cleanup EXIT
+cleanup() {
+  revoke_service_account_keyfile "${KEYFILE}" || true
+  delete_gcloud_config
+}
 
-trap delete_gcloud_config EXIT
 create_gcloud_config
 activate_service_account_keyfile "${KEYFILE}"
+
+echo "================================================================"
+log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
 gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years
 # into the future :shrug:
+echo "================================================================"
+log_normal "Extracting build cache"
 tar -zxf "${HOME_DIR}/${CACHE_NAME}.tar.gz" 2>&1 | grep -E -v 'tar:.*in the future'
-
-revoke_service_account_keyfile "${KEYFILE}"
+log_normal "Extraction completed"
 
 exit 0

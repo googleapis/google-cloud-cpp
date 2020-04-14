@@ -71,13 +71,18 @@ tar -C / -zcf "${UPLOAD}/${CACHE_NAME}.tar.gz" "${dirs[@]}"
 
 echo "================================================================"
 log_normal "Uploading build cache ${CACHE_NAME} to ${CACHE_FOLDER}"
-trap delete_gcloud_config EXIT
+
+trap cleanup EXIT
+cleanup() {
+  revoke_service_account_keyfile "${KEYFILE}" || true
+  delete_gcloud_config
+}
+
 create_gcloud_config
 activate_service_account_keyfile "${KEYFILE}"
 gsutil -q cp "${UPLOAD}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 
 echo "================================================================"
 log_normal "Upload completed"
-revoke_service_account_keyfile "${KEYFILE}"
 
 exit 0
