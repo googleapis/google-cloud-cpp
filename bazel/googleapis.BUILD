@@ -31,8 +31,8 @@ cc_library(
 
 cc_proto_library(
     name = "bigtableadmin_cc_proto",
+    visibility = ["//visibility:private"],
     deps = ["//google/bigtable/admin/v2:admin_proto"],
-    visibility = [ "//visibility:private"],
 )
 
 cc_grpc_library(
@@ -41,11 +41,11 @@ cc_grpc_library(
         "//google/bigtable/admin/v2:admin_proto",
     ],
     grpc_only = True,
+    visibility = ["//visibility:private"],
     deps = [
         ":bigtableadmin_cc_proto",
         "//google/longrunning:longrunning_cc_grpc",
     ],
-    visibility = [ "//visibility:private"],
 )
 
 cc_library(
