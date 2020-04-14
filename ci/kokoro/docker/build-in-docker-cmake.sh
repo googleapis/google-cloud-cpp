@@ -213,9 +213,19 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
     trap cleanup_gcloud EXIT
     cleanup_gcloud() {
-      # Deactivate the recently activated service account to prevent accidents.
-      revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
+      set +e
+      echo
+      echo "================================================================"
+      log_yellow "Performing cleanup actions."
+      # This is normally revoked manually, but in case we exit before that point
+      # we try again, ignore any errors.
+      revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}" >/dev/null 2>&1
+
       delete_gcloud_config
+      log_yellow "Cleanup actions completed."
+      echo "================================================================"
+      echo
+      set -e
     }
 
     # This is used in a Bigtable example showing how to use access tokens to
@@ -225,6 +235,10 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
         "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth print-access-token)"
     export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
     readonly GOOGLE_CLOUD_CPP_BIGTABLE_TEST_ACCESS_TOKEN
+
+    # Deactivate the recently activated service accounts to prevent accidents.
+    log_normal "Revoke service account after creating the access token."
+    revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
     # Since we already run multiple integration tests against the emulator we
     # only need to run the tests here that cannot use the emulator. Some

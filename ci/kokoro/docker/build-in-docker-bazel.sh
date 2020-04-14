@@ -107,8 +107,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   echo
   echo "================================================================"
   log_normal "Delete any stale service account used in HMAC key tests."
-  "${GCLOUD}" "${GCLOUD_ARGS[@]}" auth activate-service-account --key-file \
-      "${KOKORO_SETUP_KEY}"
+  activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
   cleanup_stale_hmac_service_accounts
 
   echo
@@ -125,12 +124,17 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="${HMAC_SERVICE_ACCOUNT_NAME}@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
   export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT
 
+  # Deactivate the recently activated service accounts to prevent accidents.
+  log_normal "Revoke service account used to manage HMAC service accounts."
+  revoke_service_account_keyfile "${KOKORO_SETUP_KEY}"
+
   trap delete_hmac_service_account EXIT
   delete_hmac_service_account() {
     local -r ACCOUNT="${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
     set +e
     echo
     echo "================================================================"
+    log_yellow "Performing cleanup actions."
     log_normal "Activate service account used to manage HMAC service accounts."
     activate_service_account_keyfile "${KOKORO_SETUP_KEY}"
     log_normal "Delete service account used in HMAC key tests."
@@ -138,10 +142,18 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
 
     # Deactivate the recently activated service accounts to prevent accidents.
     log_normal "Revoke service account used to manage HMAC service accounts."
-    remove_service_account_keyfile "${KOKORO_SETUP_KEY}"
-    echo "================================================================"
+    revoke_service_account_keyfile "${KOKORO_SETUP_KEY}"
+
+    # This is normally revoked manually, but in case we exit before that point
+    # we try again, ignore any errors.
+    revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}" >/dev/null 2>&1
 
     delete_gcloud_config
+
+    log_yellow "Cleanup actions completed."
+    echo "================================================================"
+    echo
+    set -e
   }
 
   echo
@@ -155,6 +167,7 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   readonly ACCESS_TOKEN
 
   # Deactivate the recently activated service accounts to prevent accidents.
+  log_normal "Revoke service account after creating the access token."
   revoke_service_account_keyfile "${GOOGLE_APPLICATION_CREDENTIALS}"
 
   bazel_args+=(
