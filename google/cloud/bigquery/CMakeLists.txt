@@ -19,7 +19,7 @@ find_package(google_cloud_cpp_grpc_utils CONFIG REQUIRED)
 
 set(DOXYGEN_PROJECT_NAME "Google Cloud BigQuery C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud BigQuery")
-set(DOXYGEN_PROJECT_NUMBER "${BIGQUERY_CLIENT_VERSION}")
+set(DOXYGEN_PROJECT_NUMBER "${GOOGLE_CLOUD_CPP_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples)
 
 include(GoogleCloudCppCommon)
@@ -114,10 +114,10 @@ target_link_libraries(
     bigquery_client PUBLIC google_cloud_cpp_grpc_utils google_cloud_cpp_common
                            googleapis-c++::cloud_bigquery_protos)
 set_target_properties(
-    bigquery_client PROPERTIES VERSION "${BIGQUERY_CLIENT_VERSION}"
-                               SOVERSION "${BIGQUERY_CLIENT_VERSION_MAJOR}")
+    bigquery_client PROPERTIES VERSION "${GOOGLE_CLOUD_CPP_VERSION}"
+                               SOVERSION "${GOOGLE_CLOUD_CPP_VERSION_MAJOR}")
 target_compile_options(bigquery_client
-                       PUBLIC ${GOOGLE_CLOUD_CPP_BIGQUERY_EXCEPTIONS_FLAG})
+                       PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
 google_cloud_cpp_add_common_options(bigquery_client)
 
@@ -153,7 +153,7 @@ function (bigquery_client_define_tests)
                $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
                $<INSTALL_INTERFACE:include>)
     target_compile_options(bigquery_client_testing
-                           PUBLIC ${GOOGLE_CLOUD_CPP_SPANNER_EXCEPTIONS_FLAG})
+                           PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
     set(bigquery_client_unit_tests # cmake-format: sort
                                    internal/connection_impl_test.cc)
@@ -198,12 +198,9 @@ endif (BUILD_TESTING)
 
 # Only compile the samples if we're building with exceptions enabled. They
 # require exceptions to keep them simple and idiomatic.
-if (GOOGLE_CLOUD_CPP_BIGQUERY_ENABLE_CXX_EXCEPTIONS)
+if (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_subdirectory(samples)
-endif (GOOGLE_CLOUD_CPP_BIGQUERY_ENABLE_CXX_EXCEPTIONS)
-
-# Get the destination directories based on the GNU recommendations.
-include(GNUInstallDirs)
+endif (GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
 
 # Export the CMake targets to make it easy to create configuration files.
 install(EXPORT bigquery-targets
@@ -235,16 +232,15 @@ google_cloud_cpp_install_headers("bigquery_client"
                                  "include/google/cloud/bigquery")
 
 # Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_MAJOR ${BIGQUERY_CLIENT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_MINOR ${BIGQUERY_CLIENT_VERSION_MINOR})
-set(GOOGLE_CLOUD_BIGQUERY_CONFIG_VERSION_PATCH ${BIGQUERY_CLIENT_VERSION_PATCH})
-set(GOOGLE_CLOUD_BIGQUERY_PC_NAME
-    "The Google Cloud BigQuery C++ Client Library")
-set(GOOGLE_CLOUD_BIGQUERY_PC_DESCRIPTION
+set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${GOOGLE_CLOUD_CPP_VERSION_MAJOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${GOOGLE_CLOUD_CPP_VERSION_MINOR})
+set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${GOOGLE_CLOUD_CPP_VERSION_PATCH})
+set(GOOGLE_CLOUD_PC_NAME "The Google Cloud BigQuery C++ Client Library")
+set(GOOGLE_CLOUD_PC_DESCRIPTION
     "Provides C++ APIs to access Google Cloud BigQuery.")
-set(GOOGLE_CLOUD_BIGQUERY_PC_REQUIRES
+set(GOOGLE_CLOUD_PC_REQUIRES
     "google_cloud_cpp_grpc_utils google_cloud_cpp_common")
-set(GOOGLE_CLOUD_BIGQUERY_PC_LIBS "-lbigquery_client")
+set(GOOGLE_CLOUD_PC_LIBS "-lbigquery_client")
 
 # Create and install the pkg-config files.
 configure_file("${PROJECT_SOURCE_DIR}/google/cloud/bigquery/config.pc.in"
