@@ -116,10 +116,10 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
            cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
     if (!row) throw std::runtime_error(row.status().message());
     std::cout << row->row_key() << ":\n";
-    for (cbt::Cell const& cell : row->cells()) {
-      std::cout << "\t" << cell.family_name() << ":" << cell.column_qualifier()
-                << "    @ " << cell.timestamp().count() << "us\n"
-                << "\t\"" << cell.value() << '"' << "\n";
+    for (cbt::Cell const& c : row->cells()) {
+      std::cout << "\t" << c.family_name() << ":" << c.column_qualifier()
+                << "    @ " << c.timestamp().count() << "us\n"
+                << "\t\"" << c.value() << '"' << "\n";
     }
   }
   //! [scan all] [END bigtable_hw_scan_with_filter]
@@ -162,14 +162,11 @@ void RunAll(std::vector<std::string> const& argv) {
 
 }  // namespace
 
-int main(int argc, char* argv[]) try {
+int main(int argc, char* argv[]) {
   google::cloud::bigtable::examples::Example example({
       {"auto", RunAll},
       {"hello-world", BigtableHelloWorld},
   });
   return example.Run(argc, argv);
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
 }
 //! [all code]
