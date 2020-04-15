@@ -14,7 +14,10 @@
 
 #include "google/cloud/bigtable/mutation_batcher.h"
 #include "google/cloud/bigtable/table.h"
+#include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/storage/client.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/random.h"
 #include <condition_variable>
 #include <fstream>
 #include <future>
@@ -50,79 +53,28 @@ struct Options {
   char separator;
   std::vector<int> keys;
   std::string keys_separator;
-
-  std::string ConsumeArg(int& argc, char* argv[], char const* arg_name) {
-    std::string const separator_option = "--separator=";
-    std::string const key_option = "--key=";
-    std::string const keys_separator_option = "--key-separator=";
-
-    std::string const usage = R""(
-[options] <project> <instance> <table> <family> <bucket> <object>
-The options are:
-    --help: produce this help.
-    --separator=c: use the 'c' character instead of comma (',') to separate the
-        values in the CSV file.
-    --key=N: use field number N as part of the row key. The fields are numbered
-        starting at one. They are concatenated in the order provided.
-    --key-separator=sep: use 'sep' to separate the fields when forming the row
-        key.
-    project: the Google Cloud Platform project id for your table.
-    instance: the Cloud Bigtable instance hosting your table.
-    table: the table where you want to upload the CSV file.
-    family: the column family where you want to upload the CSV file.
-    bucket: the name of the GCS bucket that contains the data.
-    object: the name of the GCS object that contains the data.
-)"";
-    while (argc >= 2) {
-      std::string argument(argv[1]);
-      std::copy(argv + 2, argv + argc, argv + 1);
-      argc--;
-      if (argument == "--help") {
-      } else if (0 == argument.find(separator_option)) {
-        separator = argument.substr(separator_option.size())[0];
-      } else if (0 == argument.find(key_option)) {
-        keys.push_back(std::stoi(argument.substr(key_option.size())) - 1);
-      } else if (0 == argument.find(keys_separator_option)) {
-        keys_separator = argument.substr(keys_separator_option.size());
-      } else {
-        return argument;
-      }
-    }
-    std::string cmd = argv[0];
-    auto last_slash = std::string(cmd).find_last_of('/');
-    cmd = cmd.substr(last_slash);
-
-    std::ostringstream os;
-    os << "Missing argument " << arg_name << "\n";
-    os << "Usage: " << cmd << usage << "\n";
-    throw std::runtime_error(os.str());
-  }
+  std::string project_id;
+  std::string instance_id;
+  std::string table_id;
+  std::string family;
+  std::string bucket;
+  std::string object;
 };
+
+Options ParseArgs(int argc, char* argv[]);
 
 }  // anonymous namespace
 
 int main(int argc, char* argv[]) try {
-  // Parse the command-line arguments.
-  Options options;
-  std::string const project_id = options.ConsumeArg(argc, argv, "project_id");
-  std::string const instance_id = options.ConsumeArg(argc, argv, "instance_id");
-  std::string const table_id = options.ConsumeArg(argc, argv, "table_id");
-  std::string const family = options.ConsumeArg(argc, argv, "family");
-  std::string const bucket = options.ConsumeArg(argc, argv, "bucket");
-  std::string const object = options.ConsumeArg(argc, argv, "object");
-
-  // If the user does not say, use the first column as the row key.
-  if (options.keys.empty()) {
-    options.keys.push_back(0);
-  }
+  auto const options = ParseArgs(argc, argv);
 
   // Create a connection to Cloud Bigtable and an object to manipulate the
   // specific table used in this demo.
   cbt::Table table(cbt::CreateDefaultDataClient(
-                       project_id, instance_id,
+                       options.project_id, options.instance_id,
                        cbt::ClientOptions().set_connection_pool_size(
                            std::thread::hardware_concurrency())),
-                   table_id);
+                   options.table_id);
   cbt::MutationBatcher batcher(table);
 
   // How often do we print a progress marker ('.') in the reader thread.
@@ -151,9 +103,9 @@ int main(int argc, char* argv[]) try {
     std::cerr << "Couldn't create gcs::ClientOptions, status=" << opts.status();
     return 1;
   }
-  gcs::Client client(opts->set_project_id(project_id));
+  gcs::Client client(opts->set_project_id(options.project_id));
   // The main thread just reads the file one line at a time.
-  auto is = client.ReadObject(bucket, object);
+  auto is = client.ReadObject(options.bucket, options.object);
   std::string line;
   std::getline(is, line, '\n');
   int lineno = 0;
@@ -209,7 +161,8 @@ int main(int argc, char* argv[]) try {
     cbt::SingleRowMutation mutation(row_key);
     auto field_count = std::min(headers.size(), parsed.size());
     for (std::size_t i = 0; i != field_count; ++i) {
-      mutation.emplace_back(cbt::SetCell(family, headers[i], ts, parsed[i]));
+      mutation.emplace_back(
+          cbt::SetCell(options.family, headers[i], ts, parsed[i]));
     }
     auto admission_and_completion = batcher.AsyncApply(cq, std::move(mutation));
     admission_and_completion.second.then(report_progress_callback);
@@ -258,6 +211,128 @@ std::vector<std::string> ParseLine(long lineno, std::string const& line,
   std::ostringstream os;
   os << ex.what() << " in line #" << lineno << " (" << line << ")";
   throw std::runtime_error(os.str());
+}
+
+std::string ConsumeArg(Options& options, std::vector<std::string>& argv,
+                       char const* arg_name) {
+  std::string const separator_option = "--separator=";
+  std::string const key_option = "--key=";
+  std::string const keys_separator_option = "--key-separator=";
+
+  std::string const usage = R""(
+[options] <project> <instance> <table> <family> <bucket> <object>
+The options are:
+    --help: produce this help.
+    --separator=c: use the 'c' character instead of comma (',') to separate the
+        values in the CSV file.
+    --key=N: use field number N as part of the row key. The fields are numbered
+        starting at one. They are concatenated in the order provided.
+    --key-separator=sep: use 'sep' to separate the fields when forming the row
+        key.
+    project: the Google Cloud Platform project id for your table.
+    instance: the Cloud Bigtable instance hosting your table.
+    table: the table where you want to upload the CSV file.
+    family: the column family where you want to upload the CSV file.
+    bucket: the name of the GCS bucket that contains the data.
+    object: the name of the GCS object that contains the data.
+)"";
+  while (argv.size() >= 2) {
+    std::string argument(argv[1]);
+    argv.erase(argv.begin() + 1);
+    if (argument == "--help") {
+    } else if (0 == argument.find(separator_option)) {
+      options.separator = argument.substr(separator_option.size())[0];
+    } else if (0 == argument.find(key_option)) {
+      options.keys.push_back(std::stoi(argument.substr(key_option.size())) - 1);
+    } else if (0 == argument.find(keys_separator_option)) {
+      options.keys_separator = argument.substr(keys_separator_option.size());
+    } else {
+      return argument;
+    }
+  }
+  std::string cmd = argv[0];
+  auto last_slash = std::string(cmd).find_last_of('/');
+  cmd = cmd.substr(last_slash);
+
+  std::ostringstream os;
+  os << "Missing argument " << arg_name << "\n";
+  os << "Usage: " << cmd << usage << "\n";
+  throw std::runtime_error(os.str());
+}
+
+Options ParseArgsNoAutoRun(int argc, char const* const argv[]) {
+  // Parse the command-line arguments.
+  Options options;
+  std::vector<std::string> args(argv, argv + argc);
+  options.project_id = ConsumeArg(options, args, "project_id");
+  options.instance_id = ConsumeArg(options, args, "instance_id");
+  options.table_id = ConsumeArg(options, args, "table_id");
+  options.family = ConsumeArg(options, args, "family");
+  options.bucket = ConsumeArg(options, args, "bucket");
+  options.object = ConsumeArg(options, args, "object");
+  // If the user does not say, use the first column as the row key.
+  if (options.keys.empty()) {
+    options.keys.push_back(0);
+  }
+  return options;
+}
+
+/// Setup test versions of the Bigtable and Google Cloud Storage environments
+/// and return options pointing to those versions.
+Options AutoRun() {
+  using google::cloud::internal::GetEnv;
+  using google::cloud::internal::Sample;
+
+  for (auto const& var :
+       {"GOOGLE_CLOUD_PROJECT", "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
+        "GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME"}) {
+    auto const value = GetEnv(var).value_or("");
+    if (!value.empty()) continue;
+    std::ostringstream os;
+    os << "The environment variable " << var << " is not set or empty";
+    throw std::runtime_error(std::move(os).str());
+  }
+  auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const instance_id =
+      GetEnv("GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID").value();
+  auto const bucket_name =
+      GetEnv("GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME").value();
+  auto const table_id = "gcs2cbt-auto-run";
+  auto const object_name = "gcs2cbt-sample-data.csv";
+  auto gcs_client = gcs::Client::CreateDefaultClient().value();
+  auto const test_data = R"""(RowId,Header1,Header2,Header3
+1,v1,v2,v3
+3,v1,v2,v3
+)""";
+  gcs_client.InsertObject(bucket_name, object_name, test_data).value();
+
+  cbt::TableAdmin admin(
+      cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
+      instance_id);
+  auto schema = admin.CreateTable(
+      table_id,
+      cbt::TableConfig({{"fam", cbt::GcRule::MaxNumVersions(2)}}, {}));
+  // Throw the error unless it is "already exists"
+  if (!schema &&
+      schema.status().code() != google::cloud::StatusCode::kAlreadyExists) {
+    (void)schema.value();
+  }
+
+  char const* argv[] = {
+      "auto-run",          "--key=1", "--separator=,", project_id.c_str(),
+      instance_id.c_str(), table_id,  "fam",           bucket_name.c_str(),
+      object_name};
+  int argc = sizeof(argv) / sizeof(argv[0]);
+  return ParseArgsNoAutoRun(argc, argv);
+}
+
+Options ParseArgs(int argc, char* argv[]) {
+  bool auto_run =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
+          .value_or("") == "yes";
+  if (auto_run) return AutoRun();
+
+  return ParseArgsNoAutoRun(argc, argv);
 }
 
 }  // namespace
