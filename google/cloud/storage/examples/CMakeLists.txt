@@ -29,6 +29,7 @@ set(storage_autorun_examples
     storage_default_object_acl_samples.cc
     storage_notification_samples.cc
     storage_object_cmek_samples.cc
+    storage_object_file_transfer_samples.cc
     storage_object_hold_samples.cc
     storage_object_rewrite_samples.cc
     storage_object_versioning_samples.cc
