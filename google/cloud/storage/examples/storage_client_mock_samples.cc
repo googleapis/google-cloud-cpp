@@ -20,7 +20,6 @@
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/internal/make_unique.h"
 #include <gmock/gmock.h>
-#include <functional>
 #include <iostream>
 #include <string>
 
