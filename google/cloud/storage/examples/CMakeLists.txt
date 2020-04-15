@@ -62,11 +62,6 @@ create_bazel_config(storage_examples_common)
 if (BUILD_TESTING)
     find_package(google_cloud_cpp_testing CONFIG REQUIRED)
 
-    add_executable(storage_client_mock_samples storage_client_mock_samples.cc)
-    target_link_libraries(
-        storage_client_mock_samples storage_client storage_common_options
-        GTest::gmock_main GTest::gmock GTest::gtest)
-
     foreach (fname ${storage_examples_unit_tests})
         string(REPLACE "/" "_" target ${fname})
         string(REPLACE ".cc" "" target ${target})

@@ -13,54 +13,29 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/examples/storage_examples_common.h"
 #include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_client.h"
 #include "google/cloud/storage/well_known_parameters.h"
 #include "google/cloud/internal/make_unique.h"
 #include <gmock/gmock.h>
-#include <functional>
 #include <iostream>
-#include <map>
 #include <string>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-namespace gcs = google::cloud::storage;
-using ::google::cloud::StatusOr;
+using google::cloud::storage::examples::Usage;
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
-std::string command_usage;
-
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
-
-void MockReadObject(int& argc, char* argv[]) {
-  if (argc != 3) {
+void MockReadObject(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
     throw Usage{"mock-read-object <bucket-name> <object-name>"};
   }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+  auto bucket_name = argv[0];
+  auto object_name = argv[1];
 
   //! [mock successful readobject]
+  namespace gcs = google::cloud::storage;
   gcs::ClientOptions client_options =
       gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
@@ -108,14 +83,15 @@ void MockReadObject(int& argc, char* argv[]) {
   //! [mock successful readobject]
 }
 
-void MockWriteObject(int& argc, char* argv[]) {
-  if (argc != 3) {
+void MockWriteObject(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
     throw Usage{"mock-write-object <bucket-name> <object-name>"};
   }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+  auto bucket_name = argv[0];
+  auto object_name = argv[1];
 
   //! [mock successful writeobject]
+  namespace gcs = google::cloud::storage;
   gcs::ClientOptions client_options =
       gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
@@ -168,14 +144,15 @@ void MockWriteObject(int& argc, char* argv[]) {
   //! [mock successful writeobject]
 }
 
-void MockReadObjectFailure(int& argc, char* argv[]) {
-  if (argc != 3) {
+void MockReadObjectFailure(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
     throw Usage{"mock-read-object-failure <bucket-name> <object-name>"};
   }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+  auto bucket_name = argv[0];
+  auto object_name = argv[1];
 
   //! [mock failed readobject]
+  namespace gcs = google::cloud::storage;
   gcs::ClientOptions client_options =
       gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
@@ -234,14 +211,15 @@ void MockReadObjectFailure(int& argc, char* argv[]) {
   //! [mock failed readobject]
 }
 
-void MockWriteObjectFailure(int& argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"mock-write-object-failure <bucket-name> <object-name>"};
+void MockWriteObjectFailure(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw Usage{"mock-read-object-failure <bucket-name> <object-name>"};
   }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+  auto bucket_name = argv[0];
+  auto object_name = argv[1];
 
   //! [mock failed writeobject]
+  namespace gcs = google::cloud::storage;
   gcs::ClientOptions client_options =
       gcs::ClientOptions(gcs::oauth2::CreateAnonymousCredentials());
 
@@ -290,46 +268,32 @@ void MockWriteObjectFailure(int& argc, char* argv[]) {
   //! [mock failed writeobject]
 }
 
+void RunAll(std::vector<std::string> const& argv) {
+  if (!argv.empty()) throw Usage{"auto"};
+
+  std::cout << "\nRunning the MockReadObject() example" << std::endl;
+  MockReadObject({"test-bucket-name", "test-object-name"});
+
+  std::cout << "\nRunning the MockWriteObject() example" << std::endl;
+  MockWriteObject({"test-bucket-name", "test-object-name"});
+
+  std::cout << "\nRunning the MockReadObjectFailure() example" << std::endl;
+  MockReadObjectFailure({"test-bucket-name", "test-object-name"});
+
+  std::cout << "\nRunning the MockWriteObjectFailure() example" << std::endl;
+  MockWriteObjectFailure({"test-bucket-name", "test-object-name"});
+}
+
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  using CommandType = std::function<void(int&, char*[])>;
-  std::map<std::string, CommandType> commands = {
+int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::storage::examples;
+  google::cloud::storage::examples::Example example({
       {"mock-read-object", MockReadObject},
       {"mock-write-object", MockWriteObject},
       {"mock-read-object-failure", MockReadObjectFailure},
       {"mock-write-object-failure", MockWriteObjectFailure},
-  };
-  for (auto&& kv : commands) {
-    try {
-      int fake_argc = 0;
-      kv.second(fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    }
-  }
-
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing command");
-    return 1;
-  }
-
-  std::string const command = ConsumeArg(argc, argv);
-  auto it = commands.find(command);
-  if (commands.end() == it) {
-    PrintUsage(argc, argv, "Unknown command: " + command);
-    return 1;
-  }
-
-  it->second(argc, argv);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }
