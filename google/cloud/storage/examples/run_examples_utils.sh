@@ -436,36 +436,6 @@ run_all_object_acl_examples() {
 }
 
 ################################################
-# Run mocking client examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-# Arguments:
-#   bucket_name: the name of the bucket to run the examples against.
-#   object_name: the name of the object to run the examples against.
-# Returns:
-#   None
-################################################
-run_mocking_client_examples() {
-  local bucket_name=$1
-  local object_name=$2
-  shift 2
-
-  run_example ./storage_client_mock_samples mock-read-object \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_client_mock_samples mock-write-object \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_client_mock_samples mock-read-object-failure \
-      "${bucket_name}" "${object_name}"
-  run_example ./storage_client_mock_samples mock-write-object-failure \
-      "${bucket_name}" "${object_name}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_client_mock_samples
-}
-
-################################################
 # Run all the examples.
 # Globals:
 #   PROJECT_ID: the id of a GCP project, do not use a project number.
@@ -492,7 +462,6 @@ run_all_storage_examples() {
   run_resumable_write_object_examples "${BUCKET_NAME}"
   run_all_object_rewrite_examples "${BUCKET_NAME}" "${DESTINATION_BUCKET_NAME}"
   run_all_object_acl_examples "${BUCKET_NAME}"
-  run_mocking_client_examples "test-bucket-name" "test-object-name"
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Google Cloud Storage Examples Finished"
   exit "${EXIT_STATUS}"
