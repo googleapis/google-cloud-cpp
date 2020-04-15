@@ -1,5 +1,5 @@
 # ~~~
-# Copyright 2020 Google LLC
+# Copyright 2018 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ endfunction ()
 function (create_bazel_config TARGET)
     cmake_parse_arguments(_CREATE_BAZEL_CONFIG_OPT "" "YEAR" "" ${ARGN})
     if ("${_CREATE_BAZEL_CONFIG_OPT_YEAR}" STREQUAL "")
-        set(_CREATE_BAZEL_CONFIG_OPT_YEAR "2020")
+        set(_CREATE_BAZEL_CONFIG_OPT_YEAR "2018")
     endif ()
     if (NOT TARGET ${TARGET})
         message(
@@ -101,7 +101,7 @@ endfunction ()
 function (export_list_to_bazel filename VAR)
     cmake_parse_arguments(_EXPORT_LIST_TO_BAZEL_OPT "" "YEAR" "" ${ARGN})
     if ("${_EXPORT_LIST_TO_BAZEL_OPT_YEAR}" STREQUAL "")
-        set(_EXPORT_LIST_TO_BAZEL_OPT_YEAR "2020")
+        set(_EXPORT_LIST_TO_BAZEL_OPT_YEAR "2018")
     endif ()
     write_bazel_copyright(${filename} ${_EXPORT_LIST_TO_BAZEL_OPT_YEAR})
     file(
