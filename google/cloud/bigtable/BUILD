@@ -29,6 +29,8 @@ cc_library(
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_common",
         "@com_github_googleapis_google_cloud_cpp_common//google/cloud:google_cloud_cpp_grpc_utils",
         "@com_google_googleapis//:bigtable_protos",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@com_google_googleapis//google/rpc:error_details_cc_proto",
     ],
 )
 
