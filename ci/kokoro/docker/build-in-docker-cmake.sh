@@ -259,7 +259,7 @@ if [[ "${BUILD_TESTING:-}" = "yes" ]]; then
 
     # Run the integration tests. Not all projects have them, so just iterate
     # over the ones that do.
-    for subdir in google/cloud google/cloud/bigtable google/cloud/storage; do
+    for subdir in google/cloud/bigtable google/cloud/storage; do
       echo
       log_yellow "Running integration tests for ${subdir}"
       (cd "${BINARY_DIR}" && \
