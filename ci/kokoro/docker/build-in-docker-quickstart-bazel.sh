@@ -32,6 +32,8 @@ if [[ -z "${PROJECT_ROOT+x}" ]]; then
   readonly PROJECT_ROOT="/v"
 fi
 source "${PROJECT_ROOT}/ci/colors.sh"
+source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
+source "${PROJECT_ROOT}/ci/etc/quickstart-config.sh"
 
 # Run the "bazel build"/"bazel test" cycle inside a Docker image.
 # This script is designed to work in the context created by the
@@ -50,16 +52,7 @@ if [[ -n "${BAZEL_CONFIG}" ]]; then
     bazel_args+=(--config "${BAZEL_CONFIG}")
 fi
 
-declare -A quickstart_args=()
-
 if [[ -r "/c/kokoro-run-key.json" ]]; then
-  # shellcheck disable=SC1091
-  source "${PROJECT_ROOT}/ci/etc/integration-tests-config.sh"
-  # TODO(#3604) - figure out how to run pass arguments safely
-  quickstart_args=(
-    ["storage"]="${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-    ["bigtable"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID} quickstart"
-  )
   run_vars+=(
       "GOOGLE_APPLICATION_CREDENTIALS=/c/kokoro-run-key.json"
       "GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
@@ -74,7 +67,7 @@ build_service() {
   ( cd "google/cloud/${service}/quickstart";
     log_normal "capture bazel version"
     ${BAZEL_BIN} version
-    log_normal "fetch dependencies to avoid flaky builds"
+    log_normal "fetch dependencies for ${service}'s quickstart"
     "${PROJECT_ROOT}/ci/retry-command.sh" \
         "${BAZEL_BIN}" fetch -- ...
     echo
@@ -83,15 +76,17 @@ build_service() {
 
     if [[ -r "/c/kokoro-run-key.json" ]]; then
       log_normal "running quickstart program for ${service}"
+      # We want the word splitting for $quickstart_args
+      # shellcheck disable=SC2086
       env "${run_vars[@]}" "${BAZEL_BIN}" run "${bazel_args[@]}" \
           "--spawn_strategy=local" \
-          :quickstart -- "${quickstart_args["${service}"]}"
+          :quickstart -- ${quickstart_args["${service}"]}
     fi
   )
 }
 
 errors=""
-for service in bigtable storage; do
+for service in "${!quickstart_args[@]}"; do
   if ! build_service "${service}"; then
     errors="${errors} ${service}"
   fi
