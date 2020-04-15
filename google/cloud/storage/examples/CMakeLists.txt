@@ -44,8 +44,9 @@ set(storage_autorun_examples
 set(storage_examples # cmake-format: sort
                      storage_bucket_samples.cc storage_object_samples.cc)
 
-set(storage_examples_unit_tests # cmake-format: sort
-                                storage_examples_common_test.cc)
+set(storage_examples_unit_tests
+    # cmake-format: sort
+    storage_client_mock_samples.cc storage_examples_common_test.cc)
 
 include(CreateBazelConfig)
 export_list_to_bazel("storage_autorun_examples.bzl" "storage_autorun_examples")
