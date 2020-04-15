@@ -270,7 +270,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateObjectAcl() example" << std::endl;
   CreateObjectAcl(client, {bucket_name, object_name, entity, reader});
 
-  std::cout << "\nRunning GetObjectAcl() example" << std::endl;
+  std::cout << "\nRunning GetObjectAcl() example [1]" << std::endl;
   GetObjectAcl(client, {bucket_name, object_name, entity});
 
   std::cout << "\nRunning UpdateObjectAcl() example" << std::endl;
@@ -288,7 +288,7 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning AddObjectOwner() example" << std::endl;
   AddObjectOwner(client, {bucket_name, object_name, entity});
 
-  std::cout << "\nRunning GetObjectAcl() example" << std::endl;
+  std::cout << "\nRunning GetObjectAcl() example [2]" << std::endl;
   GetObjectAcl(client, {bucket_name, object_name, entity});
 
   std::cout << "\nRunning RemoveObjectOwner() example" << std::endl;
