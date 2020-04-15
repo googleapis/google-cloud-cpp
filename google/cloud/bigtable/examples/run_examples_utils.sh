@@ -119,38 +119,3 @@ run_hello_instance_admin_example() {
   # some kind of Usage message.
   run_example_usage ./bigtable_hello_instance_admin
 }
-
-################################################
-# Run the Bigtable hello world example.
-# Globals:
-#   None
-# Arguments:
-#   project_id: the Google Cloud Storage project used in the test. Can be a
-#       fake project when testing against the emulator, as the emulator creates
-#       projects on demand. It must be a valid, existing instance when testing
-#       against production.
-#   instance_id: the Google Cloud Bigtable instance used in the test. Can be a
-#       fake instance when testing against the emulator, as the emulator creates
-#       instances on demand. It must be a valid, existing instance when testing
-#       against production.
-# Returns:
-#   None
-################################################
-#
-# This function allows us to keep a single place where all the examples are
-# listed. We want to run these examples in the continuous integration builds
-# because they rot otherwise.
-run_hello_world_example() {
-  local project_id=$1
-  local instance_id=$2
-  shift 2
-
-  # Use the same table in all the tests.
-  local -r TABLE="hello-world-tbl-${RANDOM}"
-
-  run_example ./bigtable_hello_world "${project_id}" "${instance_id}" "${TABLE}"
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./bigtable_hello_world
-}
