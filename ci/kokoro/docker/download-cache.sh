@@ -61,7 +61,7 @@ activate_service_account_keyfile "${KEYFILE}"
 
 echo "================================================================"
 log_normal "Downloading build cache ${CACHE_NAME} from ${CACHE_FOLDER}"
-env CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG} \
+env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
     gsutil -q cp "gs://${CACHE_FOLDER}/${CACHE_NAME}.tar.gz" "${HOME_DIR}"
 
 # Ignore timestamp warnings, Bazel has files with timestamps 10 years

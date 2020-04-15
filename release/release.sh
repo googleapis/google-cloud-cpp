@@ -127,7 +127,8 @@ function get_release_notes() {
     $found && notes+=("$line")
   done < CHANGELOG.md
   # The sed here removes leading blank lines
-  local clean="$(printf "%s\n" "${notes[@]}" | sed '/./,$!d')"
+  local clean
+  clean="$(printf "%s\n" "${notes[@]}" | sed '/./,$!d')"
   if [[ -z "${clean}" ]]; then
     clean="*Insert release notes from CHANGELOG.md*"
   fi

@@ -62,7 +62,7 @@ cleanup() {
 
 create_gcloud_config
 activate_service_account_keyfile "${KEYFILE}"
-env CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG} \
+env "CLOUDSDK_ACTIVE_CONFIG_NAME=${GCLOUD_CONFIG}" \
     gsutil -q cp "${HOME_DIR}/${CACHE_NAME}.tar.gz" "gs://${CACHE_FOLDER}/"
 
 echo "================================================================"
