@@ -465,7 +465,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc create backup
+   * @snippet bigtable_table_admin_backup_snippets.cc create backup
    */
   StatusOr<google::bigtable::admin::v2::Backup> CreateBackup(
       CreateBackupParams const& params);
@@ -517,7 +517,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc get backup
+   * @snippet bigtable_table_admin_backup_snippets.cc get backup
    */
   StatusOr<google::bigtable::admin::v2::Backup> GetBackup(
       std::string const& cluster_id, std::string const& backup_id);
@@ -602,7 +602,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc update backup
+   * @snippet bigtable_table_admin_backup_snippets.cc update backup
    */
   StatusOr<google::bigtable::admin::v2::Backup> UpdateBackup(
       UpdateBackupParams const& params);
@@ -654,7 +654,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc delete backup
+   * @snippet bigtable_table_admin_backup_snippets.cc delete backup
    */
   Status DeleteBackup(std::string const& cluster_id,
                       std::string const& backup_id);
@@ -668,7 +668,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc delete backup
+   * @snippet bigtable_table_admin_backup_snippets.cc delete backup
    */
   Status DeleteBackup(google::bigtable::admin::v2::Backup const& backup);
 
@@ -843,7 +843,7 @@ class TableAdmin {
    * This operation is read-only and therefore it is always idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc list backups
+   * @snippet bigtable_table_admin_backup_snippets.cc list backups
    */
   StatusOr<std::vector<google::bigtable::admin::v2::Backup>> ListBackups(
       ListBackupsParams const& params);
@@ -921,7 +921,7 @@ class TableAdmin {
    * This operation is always treated as non-idempotent.
    *
    * @par Example
-   * @snippet table_admin_snippets.cc restore table
+   * @snippet bigtable_table_admin_backup_snippets.cc restore table
    */
   StatusOr<google::bigtable::admin::v2::Table> RestoreTable(
       RestoreTableParams const& params);

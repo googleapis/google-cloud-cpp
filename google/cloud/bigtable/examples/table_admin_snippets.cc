@@ -522,7 +522,6 @@ void RunAll(std::vector<std::string> const& argv) {
       "GOOGLE_CLOUD_PROJECT",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID",
       "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT",
-      "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID",
   });
   auto const project_id =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
@@ -533,9 +532,6 @@ void RunAll(std::vector<std::string> const& argv) {
       google::cloud::internal::GetEnv(
           "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_SERVICE_ACCOUNT")
           .value();
-  auto const cluster_id = google::cloud::internal::GetEnv(
-                              "GOOGLE_CLOUD_CPP_BIGTABLE_TEST_CLUSTER_ID")
-                              .value();
 
   cbt::TableAdmin admin(
       cbt::CreateDefaultAdminClient(project_id, cbt::ClientOptions{}),
@@ -547,8 +543,6 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nCleaning up old tables" << std::endl;
   std::string const prefix = "table-admin-snippets-";
   examples::CleanupOldTables(prefix, admin);
-  std::string const backup_prefix = "table-admin-snippets-backup-";
-  examples::CleanupOldBackups(cluster_id, admin);
 
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   // This table is actually created and used to test the positive case (e.g.
@@ -566,36 +560,6 @@ void RunAll(std::vector<std::string> const& argv) {
                       },
                       {}));
   if (!table_1) throw std::runtime_error(table_1.status().message());
-
-  std::cout << "\nRunning CreateBackup() example" << std::endl;
-  auto backup_id_1 = examples::RandomTableId(backup_prefix, generator);
-  CreateBackup(admin,
-               {table_id_1, cluster_id, backup_id_1,
-                google::protobuf::util::TimeUtil::ToString(
-                    google::protobuf::util::TimeUtil::GetCurrentTime() +
-                    google::protobuf::util::TimeUtil::HoursToDuration(12))});
-
-  std::cout << "\nRunning ListBackups() example" << std::endl;
-  ListBackups(admin, {"-", {}, {}});
-
-  std::cout << "\nRunning GetBackup() example" << std::endl;
-  GetBackup(admin, {cluster_id, backup_id_1});
-
-  std::cout << "\nRunning UpdateBackup() example" << std::endl;
-  UpdateBackup(admin,
-               {cluster_id, backup_id_1,
-                google::protobuf::util::TimeUtil::ToString(
-                    google::protobuf::util::TimeUtil::GetCurrentTime() +
-                    google::protobuf::util::TimeUtil::HoursToDuration(24))});
-
-  std::cout << "\nRunning DeleteTable() example" << std::endl;
-  DeleteTable(admin, {table_id_1});
-
-  std::cout << "\nRunning RestoreTable() example" << std::endl;
-  RestoreTable(admin, {table_id_1, cluster_id, backup_id_1});
-
-  std::cout << "\nRunning DeleteBackup() example" << std::endl;
-  DeleteBackup(admin, {cluster_id, backup_id_1});
 
   std::cout << "\nRunning ListTables() example" << std::endl;
   ListTables(admin, {});
@@ -740,24 +704,6 @@ int main(int argc, char* argv[]) {
       examples::MakeCommandEntry(
           "set-iam-policy", {"<table-id>", "<role>", "<member>"}, SetIamPolicy),
       {"test-iam-permissions", TestIamPermissions},
-      examples::MakeCommandEntry(
-          "create-backup",
-          {"<table-id>", "<cluster-id>", "<backup-id>", "<expire_time>"},
-          CreateBackup),
-      examples::MakeCommandEntry("list-backups",
-                                 {"<cluster-id>", "<filter>", "<order_by>"},
-                                 ListBackups),
-      examples::MakeCommandEntry("get-backup", {"<cluster-id>", "<backup-id>"},
-                                 GetBackup),
-      examples::MakeCommandEntry("delete-backup",
-                                 {"<cluster-id>", "<table-id>"}, DeleteBackup),
-      examples::MakeCommandEntry("update-backup",
-                                 {"<cluster-id>", "<backup-id>",
-                                  "<expire-time(1980-06-20T00:00:00Z)>"},
-                                 UpdateBackup),
-      examples::MakeCommandEntry("restore-table",
-                                 {"<table-id>", "<cluster-id>", "<backup-id>"},
-                                 RestoreTable),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);
