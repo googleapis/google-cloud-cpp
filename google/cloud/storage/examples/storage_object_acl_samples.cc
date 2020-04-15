@@ -13,6 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/examples/storage_examples_common.h"
+#include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
 #include <map>
@@ -21,37 +23,8 @@
 namespace gcs = google::cloud::storage;
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
-std::string command_usage;
-
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
-
-void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"list-object-acl <bucket-name> <object-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
+void ListObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   //! [list object acl] [START storage_print_file_acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -67,18 +40,10 @@ void ListObjectAcl(gcs::Client client, int& argc, char* argv[]) {
     }
   }
   //! [list object acl] [END storage_print_file_acl]
-  (std::move(client), bucket_name, object_name);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "create-object-acl <bucket-name> <object-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void CreateObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   //! [create object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -93,16 +58,10 @@ void CreateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << "\nFull attributes: " << *object_acl << "\n";
   }
   //! [create object acl]
-  (std::move(client), bucket_name, object_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"delete-object-acl <bucket-name> <object-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void DeleteObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   //! [delete object acl]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name, std::string object_name,
@@ -115,16 +74,10 @@ void DeleteObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << object_name << " in bucket " << bucket_name << "\n";
   }
   //! [delete object acl]
-  (std::move(client), bucket_name, object_name, entity);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"get-object-acl <bucket-name> <object-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void GetObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   //! [print file acl for user] [START storage_print_file_acl_for_user]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -139,18 +92,10 @@ void GetObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << *acl << "\n";
   }
   //! [print file acl for user] [END storage_print_file_acl_for_user]
-  (std::move(client), bucket_name, object_name, entity);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "update-object-acl <bucket-name> <object-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void UpdateObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   //! [update object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -171,17 +116,10 @@ void UpdateObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << " is now " << *updated_acl << "\n";
   }
   //! [update object acl]
-  (std::move(client), bucket_name, object_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 5) {
-    throw Usage{"patch-object-acl <bucket-name> <object-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void PatchObjectAcl(gcs::Client client, std::vector<std::string> const& argv) {
   //! [patch object acl]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -206,18 +144,11 @@ void PatchObjectAcl(gcs::Client client, int& argc, char* argv[]) {
               << " is now " << *patched_acl << "\n";
   }
   //! [patch object acl]
-  (std::move(client), bucket_name, object_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 5) {
-    throw Usage{
-        "patch-object-acl-no-read <bucket-name> <object-name> <entity> <role>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
-  auto role = ConsumeArg(argc, argv);
+void PatchObjectAclNoRead(gcs::Client client,
+                          std::vector<std::string> const& argv) {
   //! [patch object acl no-read]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -233,16 +164,10 @@ void PatchObjectAclNoRead(gcs::Client client, int& argc, char* argv[]) {
               << " is now " << *patched_acl << "\n";
   }
   //! [patch object acl no-read]
-  (std::move(client), bucket_name, object_name, entity, role);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-void AddObjectOwner(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"add-object-owner <bucket-name> <object-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void AddObjectOwner(gcs::Client client, std::vector<std::string> const& argv) {
   //! [add file owner] [START storage_add_file_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -258,16 +183,11 @@ void AddObjectOwner(gcs::Client client, int& argc, char* argv[]) {
               << " is now " << *patched_acl << "\n";
   }
   //! [add file owner] [END storage_add_file_owner]
-  (std::move(client), bucket_name, object_name, entity);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void RemoveObjectOwner(gcs::Client client, int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"remove-object-owner <bucket-name> <object-name> <entity>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto object_name = ConsumeArg(argc, argv);
-  auto entity = ConsumeArg(argc, argv);
+void RemoveObjectOwner(gcs::Client client,
+                       std::vector<std::string> const& argv) {
   //! [remove file owner] [START storage_remove_file_owner]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -305,64 +225,109 @@ void RemoveObjectOwner(gcs::Client client, int& argc, char* argv[]) {
               << object_name << " in bucket " << bucket_name << "\n";
   }
   //! [remove file owner] [END storage_remove_file_owner]
-  (std::move(client), bucket_name, object_name, entity);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
+
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::storage::examples;
+  namespace gcs = ::google::cloud::storage;
+
+  if (!argv.empty()) throw examples::Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+      "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto const service_account =
+      google::cloud::internal::GetEnv(
+          "GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT")
+          .value();
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const bucket_name =
+      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto const entity = "user-" + service_account;
+  auto client = gcs::Client::CreateDefaultClient().value();
+  std::cout << "\nCreating bucket to run the example (" << bucket_name << ")"
+            << std::endl;
+  auto bucket_metadata = client
+                             .CreateBucketForProject(bucket_name, project_id,
+                                                     gcs::BucketMetadata{})
+                             .value();
+  auto const object_name = examples::MakeRandomObjectName(generator, "object-");
+  auto object_metadata =
+      client
+          .InsertObject(bucket_name, object_name,
+                        "some-string-to-serve-as-object-media")
+          .value();
+
+  auto const reader = gcs::BucketAccessControl::ROLE_READER();
+  auto const owner = gcs::BucketAccessControl::ROLE_OWNER();
+
+  std::cout << "\nRunning ListObjectAcl() example" << std::endl;
+  ListObjectAcl(client, {bucket_name, object_name});
+
+  std::cout << "\nRunning CreateObjectAcl() example" << std::endl;
+  CreateObjectAcl(client, {bucket_name, object_name, entity, reader});
+
+  std::cout << "\nRunning GetObjectAcl() example [1]" << std::endl;
+  GetObjectAcl(client, {bucket_name, object_name, entity});
+
+  std::cout << "\nRunning UpdateObjectAcl() example" << std::endl;
+  UpdateObjectAcl(client, {bucket_name, object_name, entity, owner});
+
+  std::cout << "\nRunning PatchObjectAcl() example" << std::endl;
+  PatchObjectAcl(client, {bucket_name, object_name, entity, reader});
+
+  std::cout << "\nRunning PatchObjectAclNoRead() example" << std::endl;
+  PatchObjectAclNoRead(client, {bucket_name, object_name, entity, owner});
+
+  std::cout << "\nRunning DeleteObjectAcl() example" << std::endl;
+  DeleteObjectAcl(client, {bucket_name, object_name, entity});
+
+  std::cout << "\nRunning AddObjectOwner() example" << std::endl;
+  AddObjectOwner(client, {bucket_name, object_name, entity});
+
+  std::cout << "\nRunning GetObjectAcl() example [2]" << std::endl;
+  GetObjectAcl(client, {bucket_name, object_name, entity});
+
+  std::cout << "\nRunning RemoveObjectOwner() example" << std::endl;
+  RemoveObjectOwner(client, {bucket_name, object_name, entity});
+
+  (void)client.DeleteObject(bucket_name, object_name);
+  (void)client.DeleteBucket(bucket_name);
+}
+
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  // Create a client to communicate with Google Cloud Storage.
-  google::cloud::StatusOr<google::cloud::storage::Client> client =
-      google::cloud::storage::Client::CreateDefaultClient();
-  if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << "\n";
-    return 1;
-  }
-
-  // Build the list of commands and the usage string from that list.
-  using CommandType = std::function<void(gcs::Client, int&, char*[])>;
-  std::map<std::string, CommandType> commands = {
-      {"list-object-acl", ListObjectAcl},
-      {"create-object-acl", CreateObjectAcl},
-      {"delete-object-acl", DeleteObjectAcl},
-      {"get-object-acl", GetObjectAcl},
-      {"update-object-acl", UpdateObjectAcl},
-      {"patch-object-acl", PatchObjectAcl},
-      {"patch-object-acl-no-read", PatchObjectAclNoRead},
-      {"add-object-owner", AddObjectOwner},
-      {"remove-object-owner", RemoveObjectOwner},
+int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::storage::examples;
+  auto make_entry = [](std::string const& name,
+                       std::vector<std::string> arg_names,
+                       examples::ClientCommand const& cmd) {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  for (auto&& kv : commands) {
-    try {
-      int fake_argc = 1;
-      kv.second(*client, fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    }
-  }
 
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing command");
-    return 1;
-  }
+  google::cloud::storage::examples::Example example({
+      make_entry("list-object-acl", {"<object-name>"}, ListObjectAcl),
+      make_entry("create-object-acl", {"<object-name>", "<entity>", "<role>"},
+                 CreateObjectAcl),
+      make_entry("delete-object-acl", {"<object-name>", "<entity>"},
+                 DeleteObjectAcl),
+      make_entry("get-object-acl", {"<object-name>", "<entity>"}, GetObjectAcl),
+      make_entry("update-object-acl", {"<object-name>", "<entity>", "<role>"},
+                 UpdateObjectAcl),
+      make_entry("patch-object-acl", {"<object-name>", "<entity>", "<role>"},
+                 PatchObjectAcl),
+      make_entry("patch-object-acl-no-read",
+                 {"<object-name>", "<entity>", "<role>"}, PatchObjectAclNoRead),
+      make_entry("add-object-owner", {"<object-name>", "<entity>"},
+                 AddObjectOwner),
+      make_entry("remove-object-owner", {"<object-name>", "<entity>"},
+                 RemoveObjectOwner),
+      {"auto", RunAll},
 
-  std::string const command = ConsumeArg(argc, argv);
-  auto it = commands.find(command);
-  if (commands.end() == it) {
-    PrintUsage(argc, argv, "Unknown command: " + command);
-    return 1;
-  }
-
-  // Call the command with that client.
-  it->second(*client, argc, argv);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  });
+  return example.Run(argc, argv);
 }
