@@ -15,12 +15,11 @@
 # ~~~
 
 function (write_bazel_copyright FILENAME YEAR)
-    file(WRITE "${FILENAME}" [=[
-# Copyright ]=])
-    file(APPEND "${FILENAME}" ${YEAR})
+    file(WRITE "${FILENAME}" "# Copyright ${YEAR} Google LLC")
     file(
         APPEND "${FILENAME}"
-        [=[ Google LLC
+        [=[
+
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -61,16 +60,20 @@ function (create_bazel_config TARGET)
         get_target_property(sources ${TARGET} SOURCES)
     endif ()
     foreach (src ${sources})
+        # Some files need to be specificied with an absolute path (mainly
+        # sources for INTERFACE libraries). Compute the relative path because
+        # Bazel does not like absolute filenames.
+        string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/" "" relative "${src}")
         string(FIND "${src}" "${CMAKE_CURRENT_BINARY_DIR}" in_binary_dir)
         if ("${in_binary_dir}" EQUAL 0)
             # Skip files in the binary directory, they are generated and handled
             # differently by our Bazel BUILD files.
         elseif ("${src}" MATCHES "\\.inc$")
-            list(APPEND H ${src})
+            list(APPEND H ${relative})
         elseif ("${src}" MATCHES "\\.h$")
-            list(APPEND H ${src})
+            list(APPEND H ${relative})
         elseif ("${src}" MATCHES "\\.cc$")
-            list(APPEND CC ${src})
+            list(APPEND CC ${relative})
         endif ()
     endforeach ()
     write_bazel_copyright(${filename} ${_CREATE_BAZEL_CONFIG_OPT_YEAR})
@@ -119,7 +122,7 @@ endfunction ()
 function (export_variables_to_bazel filename)
     cmake_parse_arguments(_EXPORT_VARIABLES_TO_BAZEL_OPT "" "YEAR" "" ${ARGN})
     if ("${_EXPORT_VARIABLES_TO_BAZEL_OPT_YEAR}" STREQUAL "")
-        set(_EXPORT_VARIABLES_TO_BAZEL_OPT_YEAR "2018")
+        set(_EXPORT_VARIABLES_TO_BAZEL_OPT_YEAR "2019")
     endif ()
     write_bazel_copyright(${filename} ${_EXPORT_VARIABLES_TO_BAZEL_OPT_YEAR})
     file(
