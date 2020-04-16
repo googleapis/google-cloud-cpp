@@ -76,7 +76,6 @@ build_quickstart() {
 
   echo
   log_yellow "Configure CMake for ${library}'s quickstart."
-  cd "${PROJECT_ROOT}"
   source_dir="google/cloud/${library}/quickstart"
   binary_dir="cmake-out/quickstart-${library}"
   cmake "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
@@ -88,14 +87,13 @@ build_quickstart() {
   if [[ "${run_quickstart}" == "true" ]]; then
     echo
     log_yellow "Running ${library}'s quickstart."
-    cd "${binary_dir}"
     args=()
     while IFS="" read -r line; do
       args+=("${line}")
     done < <(quickstart_arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
-      ./quickstart "${args[@]}"
+      "${binary_dir}/quickstart" "${args[@]}"
   fi
 }
 

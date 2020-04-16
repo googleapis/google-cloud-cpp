@@ -77,7 +77,8 @@ cd "${PROJECT_ROOT}"
 build_quickstart() {
   local -r library="$1"
 
-  cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
+  pushd "${PROJECT_ROOT}/google/cloud/${library}/quickstart" >/dev/null
+  trap "popd >/dev/null" RETURN
   log_normal "capture bazel version"
   ${BAZEL_BIN} version
   for repeat in 1 2 3; do
