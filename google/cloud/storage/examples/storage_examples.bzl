@@ -17,4 +17,26 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_examples = [
+    "storage_bucket_acl_samples.cc",
+    "storage_bucket_cors_samples.cc",
+    "storage_bucket_default_kms_key_samples.cc",
+    "storage_bucket_iam_samples.cc",
+    "storage_bucket_requester_pays_samples.cc",
+    "storage_bucket_samples.cc",
+    "storage_default_object_acl_samples.cc",
+    "storage_notification_samples.cc",
+    "storage_object_acl_samples.cc",
+    "storage_object_cmek_samples.cc",
+    "storage_object_file_transfer_samples.cc",
+    "storage_object_hold_samples.cc",
+    "storage_object_rewrite_samples.cc",
+    "storage_object_samples.cc",
+    "storage_object_versioning_samples.cc",
+    "storage_policy_doc_samples.cc",
+    "storage_public_object_samples.cc",
+    "storage_quickstart.cc",
+    "storage_service_account_samples.cc",
+    "storage_signed_url_v2_samples.cc",
+    "storage_signed_url_v4_samples.cc",
+    "storage_website_samples.cc",
 ]
