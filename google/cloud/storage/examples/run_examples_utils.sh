@@ -22,75 +22,6 @@ fi
 source "${PROJECT_ROOT}/ci/define-example-runner.sh"
 
 ################################################
-# Run all Bucket examples.
-# Globals:
-#   COLOR_*: colorize output messages, defined in colors.sh
-#   EXIT_STATUS: control the final exit status for the program.
-#   PROJECT_ID: the Google Cloud Project used for the test.
-# Arguments:
-#   None
-# Returns:
-#   None
-################################################
-run_all_bucket_examples() {
-  local bucket_name="cloud-cpp-test-bucket-${RANDOM}-${RANDOM}-${RANDOM}"
-  local object_name="object-${RANDOM}-${RANDOM}.txt"
-
-  run_example ./storage_bucket_samples list-buckets-for-project \
-      "${PROJECT_ID}"
-  run_example ./storage_bucket_samples create-bucket-for-project \
-      "${bucket_name}" "${PROJECT_ID}"
-  run_example ./storage_bucket_samples get-bucket-metadata \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples change-default-storage-class \
-      "${bucket_name}" "NEARLINE"
-  run_example ./storage_bucket_samples patch-bucket-storage-class \
-      "${bucket_name}" "STANDARD"
-  run_example ./storage_bucket_samples patch-bucket-storage-class-with-builder \
-      "${bucket_name}" "COLDLINE"
-  run_example ./storage_bucket_samples get-bucket-class-and-location \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples enable-bucket-policy-only \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples disable-bucket-policy-only \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples get-bucket-policy-only \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples enable-uniform-bucket-level-access \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples disable-uniform-bucket-level-access \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples get-uniform-bucket-level-access \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples add-bucket-label \
-      "${bucket_name}" "test-label" "test-label-value"
-  run_example ./storage_bucket_samples get-bucket-labels \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples remove-bucket-label \
-      "${bucket_name}" "test-label"
-  run_example ./storage_bucket_samples get-bucket-labels \
-      "${bucket_name}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-
-  # Run the examples where the project id is obtained from the environment:
-  export GOOGLE_CLOUD_PROJECT="${PROJECT_ID}"
-  run_example ./storage_bucket_samples list-buckets
-  run_example ./storage_bucket_samples create-bucket "${bucket_name}"
-  run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
-  run_example ./storage_bucket_samples get-bucket-metadata "${bucket_name}"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-
-  run_example ./storage_bucket_samples create-bucket-with-storage-class-location \
-      "${bucket_name}" "STANDARD" "US"
-  run_example ./storage_bucket_samples delete-bucket "${bucket_name}"
-  unset GOOGLE_CLOUD_PROJECT
-
-  # Verify that calling without a command produces the right exit status and
-  # some kind of Usage message.
-  run_example_usage ./storage_bucket_samples
-}
-
-################################################
 # Run all examples showing how to use default event based holds.
 # Globals:
 #   COLOR_*: colorize output messages, defined in colors.sh
@@ -276,7 +207,6 @@ run_all_storage_examples() {
   echo "${COLOR_GREEN}[ ======== ]${COLOR_RESET}" \
       " Running Google Cloud Storage Examples"
   EMULATOR_LOG="testbench.log"
-  run_all_bucket_examples
   run_default_event_based_hold_examples
   run_retention_policy_examples
   run_lifecycle_management_examples
