@@ -74,10 +74,14 @@ readonly run_quickstart
 echo "================================================================"
 cd "${PROJECT_ROOT}"
 
-for library in $(quickstart_libraries); do
-  echo "================================================================"
+build_quickstart() {
+  local -r library="$1"
+
   cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
+  log_normal "capture bazel version"
+  ${BAZEL_BIN} version
   for repeat in 1 2 3; do
+    echo
     log_yellow "Fetching deps for ${library}'s quickstart [${repeat}/3]."
     if "${BAZEL_BIN}" fetch -- ...; then
       break
@@ -86,17 +90,43 @@ for library in $(quickstart_libraries); do
     fi
   done
 
-  echo "================================================================"
-  log_yellow "Build ${library}'s quickstart"
+  echo
+  log_yellow "Compiling ${library}'s quickstart"
   "${BAZEL_BIN}" build "${bazel_args[@]}" ...
 
   if [[ "${run_quickstart}" == "true" ]]; then
-    echo "================================================================"
+    echo
     log_yellow "Running ${library}'s quickstart."
-    args=($(quickstart_arguments "${service}"))
+    args=()
+    while IFS="" read -r line; do
+      args+=("${line}")
+    done < <(quickstart_arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       "${BAZEL_BIN}" run "${bazel_args[@]}" "--spawn_strategy=local" \
       :quickstart -- "${args[@]}"
   fi
+}
+
+errors=""
+for library in $(quickstart_libraries); do
+  echo
+  echo "================================================================"
+  log_yellow "Building ${library}'s quickstart"
+  if ! build_quickstart "${library}"; then
+    log_red "Building ${library}'s quickstart failed"
+    errors="${errors} ${library}"
+  else
+    log_green "Building ${library}'s quickstart was successful"
+  fi
 done
+
+echo "================================================================"
+if [[ -z "${errors}" ]]; then
+  log_green "All quickstart builds were successful"
+else
+  log_red "Build failed for ${errors}"
+  exit 1
+fi
+
+exit 0

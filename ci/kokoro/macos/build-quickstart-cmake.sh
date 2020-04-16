@@ -32,13 +32,14 @@ log_yellow "Update or install dependencies."
 # Clone and build vcpkg
 vcpkg_dir="cmake-out/vcpkg-quickstart"
 if [[ -d "${vcpkg_dir}" ]]; then
-  git -C "${vcpkg_dir}" pull
+  git -C "${vcpkg_dir}" pull --quiet
 else
   git clone --quiet --depth 10 https://github.com/microsoft/vcpkg.git "${vcpkg_dir}"
 fi
 
-if [[ -d "cmake-out/vcpkg-quickstart-cache" ]]; then
-  mv "cmake-out/vcpkg-quickstart-cache" "${vcpkg_dir}/installed"
+if [[ -d "cmake-out/vcpkg-quickstart-cache" && \
+    ! -d "${vcpkg_dir}/installed" ]]; then
+  cp -r "cmake-out/vcpkg-quickstart-cache" "${vcpkg_dir}/installed"
 fi
 
 (
@@ -47,6 +48,8 @@ fi
   ./vcpkg remove --outdated --recurse
   ./vcpkg install google-cloud-cpp
 )
+# Use the new installed/ directory to create the cache.
+rm -fr "cmake-out/vcpkg-quickstart-cache"
 cp -r "${vcpkg_dir}/installed" "cmake-out/vcpkg-quickstart-cache"
 
 run_quickstart="false"
@@ -68,25 +71,53 @@ cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${PROJECT_ROOT}/${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
 )
 
-for library in $(quickstart_libraries); do
-  echo "================================================================"
+build_quickstart() {
+  local -r library="$1"
+
+  echo
   log_yellow "Configure CMake for ${library}'s quickstart."
   cd "${PROJECT_ROOT}"
   source_dir="google/cloud/${library}/quickstart"
   binary_dir="cmake-out/quickstart-${library}"
   cmake "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
 
-  echo "================================================================"
+  echo
   log_yellow "Compiling ${library}'s quickstart."
   cmake --build "${binary_dir}"
 
   if [[ "${run_quickstart}" == "true" ]]; then
-    echo "================================================================"
+    echo
     log_yellow "Running ${library}'s quickstart."
     cd "${binary_dir}"
-    args=($(quickstart_arguments "${service}"))
+    args=()
+    while IFS="" read -r line; do
+      args+=("${line}")
+    done < <(quickstart_arguments "${library}")
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       ./quickstart "${args[@]}"
   fi
+}
+
+errors=""
+for library in $(quickstart_libraries); do
+  echo
+  echo "================================================================"
+  log_yellow "Building ${library}'s quickstart"
+  if ! build_quickstart "${library}"; then
+    log_red "Building ${library}'s quickstart failed"
+    errors="${errors} ${library}"
+  else
+    log_green "Building ${library}'s quickstart was successful"
+  fi
 done
+
+echo "================================================================"
+if [[ -z "${errors}" ]]; then
+  log_green "All quickstart builds were successful"
+else
+  log_red "Build failed for ${errors}"
+  exit 1
+fi
+
+exit 0
