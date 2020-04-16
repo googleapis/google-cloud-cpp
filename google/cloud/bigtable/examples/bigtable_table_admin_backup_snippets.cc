@@ -224,7 +224,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteBackup() example" << std::endl;
   DeleteBackup(admin, {cluster_id, backup_id_1});
-  
+
   (void)admin.DeleteTable(table_id_1);
 }
 
