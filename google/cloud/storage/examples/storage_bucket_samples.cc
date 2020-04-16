@@ -13,41 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/client.h"
+#include "google/cloud/storage/examples/storage_examples_common.h"
+#include "google/cloud/internal/getenv.h"
 #include <functional>
 #include <iostream>
 #include <map>
 #include <sstream>
 
 namespace {
-struct Usage {
-  std::string msg;
-};
 
-char const* ConsumeArg(int& argc, char* argv[]) {
-  if (argc < 2) {
-    return nullptr;
-  }
-  char const* result = argv[1];
-  std::copy(argv + 2, argv + argc, argv + 1);
-  argc--;
-  return result;
-}
-
-std::string command_usage;
-
-void PrintUsage(int, char* argv[], std::string const& msg) {
-  std::string const cmd = argv[0];
-  auto last_slash = std::string(cmd).find_last_of('/');
-  auto program = cmd.substr(last_slash + 1);
-  std::cerr << msg << "\nUsage: " << program << " <command> [arguments]\n\n"
-            << "Commands:\n"
-            << command_usage << "\n";
-}
-
-void ListBuckets(google::cloud::storage::Client client, int& argc, char*[]) {
-  if (argc != 1) {
-    throw Usage{"list-buckets"};
-  }
+void ListBuckets(google::cloud::storage::Client client,
+                 std::vector<std::string> const& /*argv*/) {
   //! [list buckets] [START storage_list_buckets]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -71,12 +47,8 @@ void ListBuckets(google::cloud::storage::Client client, int& argc, char*[]) {
   (std::move(client));
 }
 
-void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"list-buckets-for-project <project-id>"};
-  }
-  auto project_id = ConsumeArg(argc, argv);
+void ListBucketsForProject(google::cloud::storage::Client client,
+                           std::vector<std::string> const& argv) {
   //! [list buckets for project]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string project_id) {
@@ -95,15 +67,11 @@ void ListBucketsForProject(google::cloud::storage::Client client, int& argc,
     }
   }
   //! [list buckets for project]
-  (std::move(client), project_id);
+  (std::move(client), argv.at(0));
 }
 
-void CreateBucket(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"create-bucket <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void CreateBucket(google::cloud::storage::Client client,
+                  std::vector<std::string> const& argv) {
   //! [create bucket] [START storage_create_bucket]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -119,16 +87,11 @@ void CreateBucket(google::cloud::storage::Client client, int& argc,
               << "\nFull Metadata: " << *bucket_metadata << "\n";
   }
   //! [create bucket] [END storage_create_bucket]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"create-bucket-for-project <bucket-name> <project-id>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto project_id = ConsumeArg(argc, argv);
+void CreateBucketForProject(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
   //! [create bucket for project]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -146,19 +109,12 @@ void CreateBucketForProject(google::cloud::storage::Client client, int& argc,
               << "\nFull Metadata: " << *bucket_metadata << "\n";
   }
   //! [create bucket for project]
-  (std::move(client), bucket_name, project_id);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void CreateBucketWithStorageClassLocation(google::cloud::storage::Client client,
-                                          int& argc, char* argv[]) {
-  if (argc != 4) {
-    throw Usage{
-        "create-bucket-with-storage-class-location <bucket-name> "
-        "<storage-class> <location>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto storage_class = ConsumeArg(argc, argv);
-  auto location = ConsumeArg(argc, argv);
+void CreateBucketWithStorageClassLocation(
+    google::cloud::storage::Client client,
+    std::vector<std::string> const& argv) {
   //! [create bucket class location]
   // [START storage_create_bucket_class_location]
   namespace gcs = google::cloud::storage;
@@ -179,15 +135,11 @@ void CreateBucketWithStorageClassLocation(google::cloud::storage::Client client,
   }
   // [END storage_create_bucket_class_location]
   //! [create bucket class location]
-  (std::move(client), bucket_name, storage_class, location);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-bucket-metadata <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void GetBucketMetadata(google::cloud::storage::Client client,
+                       std::vector<std::string> const& argv) {
   //! [get bucket metadata]
   // [START storage_get_bucket_metadata]
   namespace gcs = google::cloud::storage;
@@ -205,15 +157,11 @@ void GetBucketMetadata(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_get_bucket_metadata]
   //! [get bucket metadata]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void DeleteBucket(google::cloud::storage::Client client, int& argc,
-                  char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"delete-bucket <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void DeleteBucket(google::cloud::storage::Client client,
+                  std::vector<std::string> const& argv) {
   //! [delete bucket] [START storage_delete_bucket]
   namespace gcs = google::cloud::storage;
   [](gcs::Client client, std::string bucket_name) {
@@ -223,16 +171,11 @@ void DeleteBucket(google::cloud::storage::Client client, int& argc,
     std::cout << "The bucket " << bucket_name << " was deleted successfully.\n";
   }
   //! [delete bucket] [END storage_delete_bucket]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
-                               char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"change-default-storage-class <bucket-name> <new-class>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto storage_class = ConsumeArg(argc, argv);
+void ChangeDefaultStorageClass(google::cloud::storage::Client client,
+                               std::vector<std::string> const& argv) {
   //! [update bucket]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -253,16 +196,11 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata:" << *updated_meta << "\n";
   }
   //! [update bucket]
-  (std::move(client), bucket_name, storage_class);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
-                             char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"patch-bucket-storage-class <bucket-name> <storage-class>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto storage_class = ConsumeArg(argc, argv);
+void PatchBucketStorageClass(google::cloud::storage::Client client,
+                             std::vector<std::string> const& argv) {
   //! [patch bucket storage class] [START storage_change_default_storage_class]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -283,17 +221,11 @@ void PatchBucketStorageClass(google::cloud::storage::Client client, int& argc,
               << "\nFull metadata: " << *patched << "\n";
   }
   //! [patch bucket storage class] [END storage_change_default_storage_class]
-  (std::move(client), bucket_name, storage_class);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
-                                        int& argc, char* argv[]) {
-  if (argc != 3) {
-    throw Usage{
-        "patch-bucket-storage-classwith-builder <bucket-name> <storage-class>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto storage_class = ConsumeArg(argc, argv);
+                                        std::vector<std::string> const& argv) {
   //! [patch bucket storage class with builder]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -308,15 +240,11 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
               << "\nFull metadata: " << *patched << "\n";
   }
   //! [patch bucket storage class with builder]
-  (std::move(client), bucket_name, storage_class);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
-void GetBucketClassAndLocation(google::cloud::storage::Client client, int& argc,
-                               char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-bucket-class-and-location <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void GetBucketClassAndLocation(google::cloud::storage::Client client,
+                               std::vector<std::string> const& argv) {
   // [START storage_get_bucket_class_and_location]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -334,15 +262,11 @@ void GetBucketClassAndLocation(google::cloud::storage::Client client, int& argc,
               << bucket_metadata->location() << '\n';
   }
   // [END storage_get_bucket_class_and_location]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void EnableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
-                            char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"enable-bucket-policy-only <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void EnableBucketPolicyOnly(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
   //! [enable bucket policy only]
   // [START storage_enable_bucket_policy_only]
   namespace gcs = google::cloud::storage;
@@ -363,15 +287,11 @@ void EnableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_enable_bucket_policy_only]
   //! [enable bucket policy only]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void DisableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
-                             char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"disable-bucket-policy-only <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void DisableBucketPolicyOnly(google::cloud::storage::Client client,
+                             std::vector<std::string> const& argv) {
   //! [disable bucket policy only]
   // [START storage_disable_bucket_policy_only]
   namespace gcs = google::cloud::storage;
@@ -392,15 +312,11 @@ void DisableBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_disable_bucket_policy_only]
   //! [disable bucket policy only]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void GetBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-bucket-policy-only <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void GetBucketPolicyOnly(google::cloud::storage::Client client,
+                         std::vector<std::string> const& argv) {
   //! [get bucket policy only]
   // [START storage_get_bucket_policy_only]
   namespace gcs = google::cloud::storage;
@@ -428,15 +344,11 @@ void GetBucketPolicyOnly(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_get_bucket_policy_only]
   //! [get bucket policy only]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
-                                    int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"enable-uniform-bucket-level-access <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                    std::vector<std::string> const& argv) {
   //! [enable uniform bucket level access]
   // [START storage_enable_uniform_bucket_level_access]
   namespace gcs = google::cloud::storage;
@@ -458,15 +370,11 @@ void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
   }
   // [END storage_enable_uniform_bucket_level_access]
   //! [enable uniform bucket level access]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
-                                     int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"disable-uniform-bucket-level-access <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                     std::vector<std::string> const& argv) {
   //! [disable uniform bucket level access]
   // [START storage_disable_uniform_bucket_level_access]
   namespace gcs = google::cloud::storage;
@@ -488,15 +396,11 @@ void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
   }
   // [END storage_disable_uniform_bucket_level_access]
   //! [disable uniform bucket level access]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
-                                 int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-uniform-bucket-level-access <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                 std::vector<std::string> const& argv) {
   //! [get uniform bucket level access]
   // [START storage_get_uniform_bucket_level_access]
   namespace gcs = google::cloud::storage;
@@ -526,17 +430,11 @@ void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
   }
   // [END storage_get_uniform_bucket_level_access]
   //! [get uniform bucket level access]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void AddBucketLabel(google::cloud::storage::Client client, int& argc,
-                    char* argv[]) {
-  if (argc != 4) {
-    throw Usage{"add-bucket-label <bucket-name> <label-key> <label-value>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto label_key = ConsumeArg(argc, argv);
-  auto label_value = ConsumeArg(argc, argv);
+void AddBucketLabel(google::cloud::storage::Client client,
+                    std::vector<std::string> const& argv) {
   //! [add bucket label] [START storage_add_bucket_label]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -559,15 +457,11 @@ void AddBucketLabel(google::cloud::storage::Client client, int& argc,
     std::cout << "\n";
   }
   //! [add bucket label] [END storage_add_bucket_label]
-  (std::move(client), bucket_name, label_key, label_value);
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
-void GetBucketLabels(google::cloud::storage::Client client, int& argc,
-                     char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-bucket-labels <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void GetBucketLabels(google::cloud::storage::Client client,
+                     std::vector<std::string> const& argv) {
   //! [get bucket labels] [START storage_get_bucket_labels]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -591,16 +485,11 @@ void GetBucketLabels(google::cloud::storage::Client client, int& argc,
     std::cout << "\n";
   }
   //! [get bucket label] [END storage_get_bucket_labels]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
-                       char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"remove-bucket-label <bucket-name> <label-key>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto label_key = ConsumeArg(argc, argv);
+void RemoveBucketLabel(google::cloud::storage::Client client,
+                       std::vector<std::string> const& argv) {
   //! [remove bucket label] [START storage_remove_bucket_label]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -625,15 +514,11 @@ void RemoveBucketLabel(google::cloud::storage::Client client, int& argc,
     std::cout << "\n";
   }
   //! [remove bucket label] [END storage_remove_bucket_label]
-  (std::move(client), bucket_name, label_key);
+  (std::move(client), argv.at(0), argv.at(1));
 }
 
 void GetBucketLifecycleManagement(google::cloud::storage::Client client,
-                                  int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-bucket-lifecycle-management <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                  std::vector<std::string> const& argv) {
   // [START storage_view_lifecycle_management_configuration]
   namespace gcs = google::cloud::storage;
   using ::google::cloud::StatusOr;
@@ -660,15 +545,11 @@ void GetBucketLifecycleManagement(google::cloud::storage::Client client,
     std::cout << "\n";
   }
   // [END storage_view_lifecycle_management_configuration]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void EnableBucketLifecycleManagement(google::cloud::storage::Client client,
-                                     int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"enable-bucket-lifecycle-management <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                     std::vector<std::string> const& argv) {
   //! [enable_bucket_lifecycle_management]
   // [START storage_enable_bucket_lifecycle_management]
   namespace gcs = google::cloud::storage;
@@ -704,15 +585,11 @@ void EnableBucketLifecycleManagement(google::cloud::storage::Client client,
   }
   // [END storage_enable_bucket_lifecycle_management]
   //! [storage_enable_bucket_lifecycle_management]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
-                                      int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"disable-bucket-lifecycle-management <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                      std::vector<std::string> const& argv) {
   //! [disable_bucket_lifecycle_management]
   // [START storage_disable_bucket_lifecycle_management]
   namespace gcs = google::cloud::storage;
@@ -730,15 +607,11 @@ void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
   }
   // [END storage_disable_bucket_lifecycle_management]
   //! [storage_disable_bucket_lifecycle_management]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
-                              char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-default-event-based-hold <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void GetDefaultEventBasedHold(google::cloud::storage::Client client,
+                              std::vector<std::string> const& argv) {
   //! [get default event based hold]
   // [START storage_get_default_event_based_hold]
   namespace gcs = google::cloud::storage;
@@ -759,15 +632,11 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_get_default_event_based_hold]
   //! [get default event based hold]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
-                                 int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"enable-default-event-based-hold <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                 std::vector<std::string> const& argv) {
   //! [enable default event based hold]
   // [START storage_enable_default_event_based_hold]
   namespace gcs = google::cloud::storage;
@@ -794,15 +663,11 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
   }
   // [END storage_enable_default_event_based_hold]
   //! [enable default event based hold]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
 void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
-                                  int& argc, char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"disable-default-event-based-hold <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+                                  std::vector<std::string> const& argv) {
   //! [disable default event based hold]
   // [START storage_disable_default_event_based_hold]
   namespace gcs = google::cloud::storage;
@@ -829,15 +694,11 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
   }
   // [END storage_disable_default_event_based_hold]
   //! [disable default event based hold]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void GetRetentionPolicy(google::cloud::storage::Client client, int& argc,
-                        char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"get-retention-policy <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void GetRetentionPolicy(google::cloud::storage::Client client,
+                        std::vector<std::string> const& argv) {
   //! [get retention policy]
   // [START storage_get_retention_policy]
   namespace gcs = google::cloud::storage;
@@ -862,16 +723,11 @@ void GetRetentionPolicy(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_get_retention_policy]
   //! [get retention policy]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
-                        char* argv[]) {
-  if (argc != 3) {
-    throw Usage{"set-retention-policy <bucket-name> <period>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
-  auto period = std::stol(ConsumeArg(argc, argv));
+void SetRetentionPolicy(google::cloud::storage::Client client,
+                        std::vector<std::string> const& argv) {
   //! [set retention policy]
   // [START storage_set_retention_policy]
   namespace gcs = google::cloud::storage;
@@ -902,15 +758,11 @@ void SetRetentionPolicy(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_set_retention_policy]
   //! [set retention policy]
-  (std::move(client), bucket_name, std::chrono::seconds(period));
+  (std::move(client), argv.at(0), std::chrono::seconds(std::stol(argv.at(1))));
 }
 
-void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
-                           char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"remove-retention-policy <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void RemoveRetentionPolicy(google::cloud::storage::Client client,
+                           std::vector<std::string> const& argv) {
   //! [remove retention policy]
   // [START storage_remove_retention_policy]
   namespace gcs = google::cloud::storage;
@@ -942,15 +794,11 @@ void RemoveRetentionPolicy(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_remove_retention_policy]
   //! [remove retention policy]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
 }
 
-void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
-                         char* argv[]) {
-  if (argc != 2) {
-    throw Usage{"lock-retention-policy <bucket-name>"};
-  }
-  auto bucket_name = ConsumeArg(argc, argv);
+void LockRetentionPolicy(google::cloud::storage::Client client,
+                         std::vector<std::string> const& argv) {
   //! [lock retention policy]
   // [START storage_lock_retention_policy]
   namespace gcs = google::cloud::storage;
@@ -984,91 +832,161 @@ void LockRetentionPolicy(google::cloud::storage::Client client, int& argc,
   }
   // [END storage_lock_retention_policy]
   //! [lock retention policy]
-  (std::move(client), bucket_name);
+  (std::move(client), argv.at(0));
+}
+
+void RunAll(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::storage::examples;
+  namespace gcs = ::google::cloud::storage;
+
+  if (!argv.empty()) throw examples::Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet({
+      "GOOGLE_CLOUD_PROJECT",
+  });
+  auto const project_id =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value();
+  auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
+  auto const bucket_name =
+      examples::MakeRandomBucketName(generator, "cloud-cpp-test-examples-");
+  auto client = gcs::Client::CreateDefaultClient().value();
+
+  std::cout << "\nRunning ListBucketsForProject() example" << std::endl;
+  ListBucketsForProject(client, {project_id});
+
+  std::cout << "\nRunning CreateBucketForProject() example" << std::endl;
+  CreateBucketForProject(client, {bucket_name, project_id});
+
+  std::cout << "\nRunning GetBucketMetadata() example [1]" << std::endl;
+  GetBucketMetadata(client, {bucket_name});
+
+  std::cout << "\nRunning ChangeDefaultStorageClass() example" << std::endl;
+  ChangeDefaultStorageClass(client, {bucket_name, "NEARLINE"});
+
+  std::cout << "\nRunning PatchBucketStorageClass() example" << std::endl;
+  PatchBucketStorageClass(client, {bucket_name, "STANDARD"});
+
+  std::cout << "\nRunning PatchBucketStorageClassWithBuilder() example"
+            << std::endl;
+  PatchBucketStorageClassWithBuilder(client, {bucket_name, "COLDLINE"});
+
+  std::cout << "\nRunning GetBucketClassAndLocation() example" << std::endl;
+  GetBucketClassAndLocation(client, {bucket_name});
+
+  std::cout << "\nRunning EnableBucketPolicyOnly() example" << std::endl;
+  EnableBucketPolicyOnly(client, {bucket_name});
+
+  std::cout << "\nRunning DisableBucketPolicyOnly() example" << std::endl;
+  DisableBucketPolicyOnly(client, {bucket_name});
+
+  std::cout << "\nRunning GetBucketPolicyOnly() example" << std::endl;
+  GetBucketPolicyOnly(client, {bucket_name});
+
+  std::cout << "\nRunning EnableUniformBucketLevelAccess() example"
+            << std::endl;
+  EnableUniformBucketLevelAccess(client, {bucket_name});
+
+  std::cout << "\nRunning DisableUniformBucketLevelAccess() example"
+            << std::endl;
+  DisableUniformBucketLevelAccess(client, {bucket_name});
+
+  std::cout << "\nRunning GetUniformBucketLevelAccess() example" << std::endl;
+  GetUniformBucketLevelAccess(client, {bucket_name});
+
+  std::cout << "\nRunning AddBucketLabel() example" << std::endl;
+  AddBucketLabel(client, {bucket_name, "test-label", "test-label-value"});
+
+  std::cout << "\nRunning GetBucketLabels() example [1]" << std::endl;
+  GetBucketLabels(client, {bucket_name});
+
+  std::cout << "\nRunning RemoveBucketLabel() example" << std::endl;
+  RemoveBucketLabel(client, {bucket_name, "test-label"});
+
+  std::cout << "\nRunning GetBucketLabels() example [2]" << std::endl;
+  GetBucketLabels(client, {bucket_name});
+
+  std::cout << "\nRunning DeleteBucket() example [3]" << std::endl;
+  DeleteBucket(client, {bucket_name});
+
+  std::cout << "\nRunning ListBuckets() example" << std::endl;
+  ListBuckets(client, {});
+
+  std::cout << "\nRunning CreateBucket() example" << std::endl;
+  CreateBucket(client, {bucket_name});
+
+  std::cout << "\nRunning GetBucketMetadata() example [2]" << std::endl;
+  GetBucketMetadata(client, {bucket_name});
+
+  std::cout << "\nRunning DeleteBucket() example [2]" << std::endl;
+  DeleteBucket(client, {bucket_name});
+
+  std::cout << "\nRunning CreateBucketWithStorageClassLocation() example"
+            << std::endl;
+  CreateBucketWithStorageClassLocation(client, {bucket_name, "STANDARD", "US"});
+
+  std::cout << "\nRunning DeleteBucket() example [3]" << std::endl;
+  DeleteBucket(client, {bucket_name});
 }
 
 }  // anonymous namespace
 
-int main(int argc, char* argv[]) try {
-  // Create a client to communicate with Google Cloud Storage.
-  //! [create client]
-  google::cloud::StatusOr<google::cloud::storage::Client> client =
-      google::cloud::storage::Client::CreateDefaultClient();
-  if (!client) {
-    std::cerr << "Failed to create Storage Client, status=" << client.status()
-              << "\n";
-    return 1;
-  }
-  //! [create client]
-
-  using CommandType =
-      std::function<void(google::cloud::storage::Client, int&, char*[])>;
-  std::map<std::string, CommandType> commands = {
-      {"list-buckets", ListBuckets},
-      {"list-buckets-for-project", ListBucketsForProject},
-      {"create-bucket", CreateBucket},
-      {"create-bucket-for-project", CreateBucketForProject},
-      {"create-bucket-with-storage-class-location",
-       CreateBucketWithStorageClassLocation},
-      {"get-bucket-metadata", GetBucketMetadata},
-      {"delete-bucket", DeleteBucket},
-      {"change-default-storage-class", ChangeDefaultStorageClass},
-      {"patch-bucket-storage-class", PatchBucketStorageClass},
-      {"patch-bucket-storage-class-with-builder",
-       PatchBucketStorageClassWithBuilder},
-      {"get-bucket-class-and-location", GetBucketClassAndLocation},
-      {"enable-bucket-policy-only", EnableBucketPolicyOnly},
-      {"disable-bucket-policy-only", DisableBucketPolicyOnly},
-      {"get-bucket-policy-only", GetBucketPolicyOnly},
-      {"enable-uniform-bucket-level-access", EnableUniformBucketLevelAccess},
-      {"disable-uniform-bucket-level-access", DisableUniformBucketLevelAccess},
-      {"get-uniform-bucket-level-access", GetUniformBucketLevelAccess},
-      {"add-bucket-label", AddBucketLabel},
-      {"get-bucket-labels", GetBucketLabels},
-      {"remove-bucket-label", RemoveBucketLabel},
-      {"get-bucket-lifecycle-management", GetBucketLifecycleManagement},
-      {"enable-bucket-lifecycle-management", EnableBucketLifecycleManagement},
-      {"disable-bucket-lifecycle-management", DisableBucketLifecycleManagement},
-      {"get-default-event-based-hold", GetDefaultEventBasedHold},
-      {"enable-default-event-based-hold", EnableDefaultEventBasedHold},
-      {"disable-default-event-based-hold", DisableDefaultEventBasedHold},
-      {"get-retention-policy", GetRetentionPolicy},
-      {"set-retention-policy", SetRetentionPolicy},
-      {"remove-retention-policy", RemoveRetentionPolicy},
-      {"lock-retention-policy", LockRetentionPolicy},
+int main(int argc, char* argv[]) {
+  namespace examples = ::google::cloud::storage::examples;
+  auto make_entry = [](std::string const& name,
+                       std::vector<std::string> arg_names,
+                       examples::ClientCommand const& cmd) {
+    arg_names.insert(arg_names.begin(), "<bucket-name>");
+    return examples::CreateCommandEntry(name, std::move(arg_names), cmd);
   };
-  for (auto&& kv : commands) {
-    try {
-      int fake_argc = 0;
-      kv.second(*client, fake_argc, argv);
-    } catch (Usage const& u) {
-      command_usage += "    ";
-      command_usage += u.msg;
-      command_usage += "\n";
-    } catch (...) {
-      // ignore other exceptions.
-    }
-  }
 
-  if (argc < 2) {
-    PrintUsage(argc, argv, "Missing command");
-    return 1;
-  }
-
-  std::string const command = ConsumeArg(argc, argv);
-  auto it = commands.find(command);
-  if (commands.end() == it) {
-    PrintUsage(argc, argv, "Unknown command: " + command);
-    return 1;
-  }
-
-  it->second(*client, argc, argv);
-
-  return 0;
-} catch (Usage const& ex) {
-  PrintUsage(argc, argv, ex.msg);
-  return 1;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
-  return 1;
+  google::cloud::storage::examples::Example example({
+      examples::CreateCommandEntry("list-buckets", {}, ListBuckets),
+      examples::CreateCommandEntry("list-buckets-for-project", {"<project-id>"},
+                                   ListBucketsForProject),
+      make_entry("create-bucket", {}, CreateBucket),
+      make_entry("create-bucket-for-project", {"<project-id>"},
+                 CreateBucketForProject),
+      make_entry("create-bucket-with-storage-class-location",
+                 {"<storage-class>", "<location>"},
+                 CreateBucketWithStorageClassLocation),
+      make_entry("get-bucket-metadata", {}, GetBucketMetadata),
+      make_entry("delete-bucket", {}, DeleteBucket),
+      make_entry("change-default-storage-class", {"<new-class>"},
+                 ChangeDefaultStorageClass),
+      make_entry("patch-bucket-storage-class", {"<storage-class>"},
+                 PatchBucketStorageClass),
+      make_entry("patch-bucket-storage-classwith-builder", {"<storage-class>"},
+                 PatchBucketStorageClassWithBuilder),
+      make_entry("get-bucket-class-and-location", {},
+                 GetBucketClassAndLocation),
+      make_entry("enable-bucket-policy-only", {}, EnableBucketPolicyOnly),
+      make_entry("disable-bucket-policy-only", {}, DisableBucketPolicyOnly),
+      make_entry("get-bucket-policy-only", {}, GetBucketPolicyOnly),
+      make_entry("enable-uniform-bucket-level-access", {},
+                 EnableUniformBucketLevelAccess),
+      make_entry("disable-uniform-bucket-level-access", {},
+                 DisableUniformBucketLevelAccess),
+      make_entry("get-uniform-bucket-level-access", {},
+                 GetUniformBucketLevelAccess),
+      make_entry("add-bucket-label", {"<label-key>", "<label-value>"},
+                 AddBucketLabel),
+      make_entry("get-bucket-labels", {}, GetBucketLabels),
+      make_entry("remove-bucket-label", {"<label-key>"}, RemoveBucketLabel),
+      make_entry("get-bucket-lifecycle-management", {},
+                 GetBucketLifecycleManagement),
+      make_entry("enable-bucket-lifecycle-management", {},
+                 EnableBucketLifecycleManagement),
+      make_entry("disable-bucket-lifecycle-management", {},
+                 DisableBucketLifecycleManagement),
+      make_entry("get-default-event-based-hold", {}, GetDefaultEventBasedHold),
+      make_entry("enable-default-event-based-hold", {},
+                 EnableDefaultEventBasedHold),
+      make_entry("disable-default-event-based-hold", {},
+                 DisableDefaultEventBasedHold),
+      make_entry("get-retention-policy", {}, GetRetentionPolicy),
+      make_entry("set-retention-policy", {"<period>"}, SetRetentionPolicy),
+      make_entry("remove-retention-policy", {}, RemoveRetentionPolicy),
+      make_entry("lock-retention-policy", {}, LockRetentionPolicy),
+      {"auto", RunAll},
+  });
+  return example.Run(argc, argv);
 }

@@ -17,5 +17,4 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 storage_examples = [
-    "storage_bucket_samples.cc",
 ]
