@@ -232,15 +232,6 @@ if [[ "${RUN_INTEGRATION_TESTS}" == "yes" || \
   export TEST_KEY_FILE_P12
   export GOOGLE_APPLICATION_CREDENTIALS
 
-  if [[ "${ENABLE_BIGTABLE_ADMIN_INTEGRATION_TESTS:-}" = "yes" ]]; then
-    echo
-    echo "================================================================"
-    log_normal "Running Google Cloud Bigtable Admin Examples"
-    echo "================================================================"
-    (cd "${BAZEL_BIN_DIR}/google/cloud/bigtable/examples" && \
-       "${PROJECT_ROOT}/google/cloud/bigtable/examples/run_admin_examples_production.sh")
-  fi
-
   echo
   echo "================================================================"
   log_normal "Running Google Cloud Storage Examples"
