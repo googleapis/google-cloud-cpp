@@ -74,7 +74,7 @@ readonly run_quickstart
 echo "================================================================"
 cd "${PROJECT_ROOT}"
 
-for library in "${!quickstart_args[@]}"; do
+for library in $(quickstart_libraries); do
   echo "================================================================"
   cd "${PROJECT_ROOT}/google/cloud/${library}/quickstart"
   for repeat in 1 2 3; do
@@ -93,11 +93,10 @@ for library in "${!quickstart_args[@]}"; do
   if [[ "${run_quickstart}" == "true" ]]; then
     echo "================================================================"
     log_yellow "Running ${library}'s quickstart."
-    # We want the word splitting for $quickstart_args
-    # shellcheck disable=SC2086
+    args=($(quickstart_arguments "${service}"))
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
       "${BAZEL_BIN}" run "${bazel_args[@]}" "--spawn_strategy=local" \
-      :quickstart -- ${quickstart_args[$library]}
+      :quickstart -- "${args[@]}"
   fi
 done

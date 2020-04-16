@@ -68,7 +68,7 @@ cmake_flags=(
   "-DCMAKE_TOOLCHAIN_FILE=${PROJECT_ROOT}/${vcpkg_dir}/scripts/buildsystems/vcpkg.cmake"
 )
 
-for library in "${!quickstart_args[@]}"; do
+for library in $(quickstart_libraries); do
   echo "================================================================"
   log_yellow "Configure CMake for ${library}'s quickstart."
   cd "${PROJECT_ROOT}"
@@ -84,10 +84,9 @@ for library in "${!quickstart_args[@]}"; do
     echo "================================================================"
     log_yellow "Running ${library}'s quickstart."
     cd "${binary_dir}"
-    # We want the word splitting for $quickstart_args
-    # shellcheck disable=SC2086
+    args=($(quickstart_arguments "${service}"))
     env "GOOGLE_APPLICATION_CREDENTIALS=${CREDENTIALS_FILE}" \
       "GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${CONFIG_DIR}/roots.pem" \
-      ./quickstart ${quickstart_args[$library]}
+      ./quickstart "${args[@]}"
   fi
 done

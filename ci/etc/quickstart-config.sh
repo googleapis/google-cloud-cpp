@@ -13,11 +13,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+quickstart_libraries() {
+  echo "bigtable"
+  echo "storage"
+}
+
 # TODO(#3798) - figure out a better way to represent the argument lists
 # We would like to declare an associate array of arrays, but not sure how to
 # do that. This works because all the variables below are "words", without
 # spaces, but it would be nice to have something more robust.
-declare -A -r quickstart_args=(
-  ["storage"]="${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
-  ["bigtable"]="${GOOGLE_CLOUD_PROJECT} ${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID} quickstart"
-)
+quickstart_arguments() {
+  local -r library="$1"
+  case "${library}" in
+    "bigtable")
+        echo "${GOOGLE_CLOUD_PROJECT}"
+        echo "${GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID}"
+        echo "quickstart"
+        return 0
+        ;;
+    "storage")
+        echo "${GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME}"
+        return 0
+        ;;
+    *)
+        echo "Unknown argument list for ${library}'s quickstart"
+  esac
+  return 1
+}
