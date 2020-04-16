@@ -60,10 +60,7 @@ replace_original_if_changed() {
 find . \( "${ignore[@]}" \) -prune -o \
        \( -name 'CMakeLists.txt' -o -name '*.cmake' \) \
        -print0 |
-  while IFS= read -r -d $'\0' file; do
-    cmake-format "${file}" >"${file}.tmp"
-    replace_original_if_changed "${file}" "${file}.tmp"
-  done
+  xargs -0 cmake-format -i
 
 # Apply clang-format(1) to fix whitespace and other formatting rules.
 # The version of clang-format is important, different versions have slightly
