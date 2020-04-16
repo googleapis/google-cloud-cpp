@@ -251,16 +251,11 @@ void NativeRemoveBucketConditionalIamBinding(
    argv.at(4));
 }
 
-void TestBucketIamPermissions(std::vector<std::string> argv) {
-  if (argv.size() < 2) {
-    throw Usage{
-        "test-bucket-iam-permissions <bucket_name> <permission>"
-        " [permission ...]"};
-  }
-  auto bucket_name = argv[0];
-  argv.erase(argv.begin());
-  std::vector<std::string> permissions = std::move(argv);
-  auto client = google::cloud::storage::Client::CreateDefaultClient().value();
+void TestBucketIamPermissions(google::cloud::storage::Client client,
+                              std::vector<std::string> const& argv) {
+  auto it = argv.cbegin();
+  auto bucket_name = *it++;
+  std::vector<std::string> permissions(it, argv.cend());
 
   //! [test bucket iam permissions]
   namespace gcs = google::cloud::storage;
@@ -416,7 +411,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning TestBucketIamPermissions() example" << std::endl;
   TestBucketIamPermissions(
-      {bucket_name, "storage.objects.list", "storage.objects.delete"});
+      client, {bucket_name, "storage.objects.list", "storage.objects.delete"});
 
   std::cout << "\nRunning NativeGetBucketIamPolicy() example" << std::endl;
   NativeGetBucketIamPolicy(client, {bucket_name});
@@ -490,8 +485,8 @@ int main(int argc, char* argv[]) {
                  NativeRemoveBucketConditionalIamBinding),
       make_entry("native-remove-bucket-iam-member", {},
                  NativeRemoveBucketIamMember),
-      // Cannot use make_entry(), it parses a variable number of arguments
-      {"test-bucket-iam-permissions", TestBucketIamPermissions},
+      make_entry("test-bucket-iam-permissions",
+                 {"<permission>", "[permission...]"}, TestBucketIamPermissions),
       make_entry("set-bucket-public-iam", {}, SetBucketPublicIam),
       make_entry("native-set-bucket-public-iam", {}, NativeSetBucketPublicIam),
       {"auto", RunAll},

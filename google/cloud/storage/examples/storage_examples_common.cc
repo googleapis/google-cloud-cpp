@@ -132,9 +132,13 @@ std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen,
 Commands::value_type CreateCommandEntry(
     std::string const& name, std::vector<std::string> const& arg_names,
     ClientCommand const& command) {
+  bool allow_varargs =
+      !arg_names.empty() &&
+      arg_names[arg_names.size() - 1].find("...") != std::string::npos;
   auto adapter = [=](std::vector<std::string> argv) {
     if ((argv.size() == 1 && argv[0] == "--help") ||
-        argv.size() != arg_names.size()) {
+        (allow_varargs ? argv.size() < (arg_names.size() - 1)
+                       : argv.size() != arg_names.size())) {
       std::ostringstream os;
       os << name;
       for (auto& a : arg_names) {

@@ -244,6 +244,62 @@ TEST(StorageExamplesCommon, CreateCommandEntryNoArguments) {
   EXPECT_EQ(0, call_count);
   entry.second({"1", "2"});
   EXPECT_EQ(1, call_count);
+
+  // Too many args when not using varargs is an error.
+  EXPECT_THROW(
+      try {
+        entry.second({"1", "2", "3"});
+      } catch (Usage const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("my-test foo bar"));
+        throw;
+      },
+      Usage);
+  EXPECT_EQ(1, call_count);
+}
+
+TEST(StorageExamplesCommon, CreateCommandEntryVarargs) {
+  // Set the client to use the testbench, this avoids any problems trying to
+  // find and load the default credentials file.
+  google::cloud::testing_util::ScopedEnvironment env(
+      "CLOUD_STORAGE_TESTBENCH_ENDPOINT", "http://localhost:9090");
+
+  int call_count = 0;
+  auto command = [&call_count](google::cloud::storage::Client const&,
+                               std::vector<std::string> const& argv) {
+    switch (++call_count) {
+      case 1:
+        ASSERT_EQ(2, argv.size());
+        EXPECT_EQ("1", argv.at(0));
+        EXPECT_EQ("fixed", argv.at(1));
+        break;
+      case 2:
+        ASSERT_EQ(4, argv.size());
+        EXPECT_EQ("1", argv.at(0));
+        EXPECT_EQ("var", argv.at(1));
+        EXPECT_EQ("3", argv.at(2));
+        EXPECT_EQ("4", argv.at(3));
+        break;
+      default:
+        FAIL() << "command called more times than expected";
+        break;
+    }
+  };
+  auto entry =
+      CreateCommandEntry("my-test", {"foo", "bar", "[bar...]"}, command);
+  EXPECT_EQ("my-test", entry.first);
+
+  EXPECT_THROW(
+      try { entry.second({}); } catch (Usage const& ex) {
+        EXPECT_THAT(ex.what(), HasSubstr("my-test foo bar [bar...]"));
+        throw;
+      },
+      Usage);
+
+  EXPECT_EQ(0, call_count);
+  ASSERT_NO_FATAL_FAILURE(entry.second({"1", "fixed"}));
+  EXPECT_EQ(1, call_count);
+  ASSERT_NO_FATAL_FAILURE(entry.second({"1", "var", "3", "4"}));
+  EXPECT_EQ(2, call_count);
 }
 
 }  // namespace examples
