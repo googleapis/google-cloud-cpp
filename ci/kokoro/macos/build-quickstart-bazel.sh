@@ -32,7 +32,8 @@ log_yellow "update or install Bazel."
 
 # macOS does not have sha256sum by default, but `shasum -a 256` does the same
 # thing:
-function sha256sum() { shasum -a 256 "$@"; } && export -f sha256sum
+function sha256sum() { shasum -a 256 "$@"; }
+export -f sha256sum
 
 mkdir -p "cmake-out/download"
 (

@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3604) - figure out how to run pass arguments safely
+# TODO(#3798) - figure out a better way to represent the argument lists
 # We would like to declare an associate array of arrays, but not sure how to
 # do that. This works because all the variables below are "words", without
 # spaces, but it would be nice to have something more robust.
