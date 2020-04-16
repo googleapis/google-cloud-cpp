@@ -144,7 +144,7 @@ fi
 # formatted files in their local git repo so they can diff them and commit the
 # correctly formatted files.
 if [[ -n "${problems}" ]]; then
-  log_red "Detected style problems (${problems})"
+  log_red "Detected style problems (${problems:1})"
   if [[ "${RUNNING_CI}" != "no" ]]; then
     exit 1
   fi
